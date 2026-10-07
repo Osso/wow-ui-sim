@@ -1,0 +1,191 @@
+[
+  {
+    "source_id": "wt-global-api-C_CraftingOrders.GetNumFavoriteCustomerOptions-20",
+    "symbol": "C_CraftingOrders.GetNumFavoriteCustomerOptions",
+    "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/CraftingOrderUIDocumentation.lua",
+    "line": 181,
+    "text": "181: \t\t\tName = \"GetNumFavoriteCustomerOptions\",\n182: \t\t\tType = \"Function\",\n183: \n184: \t\t\tReturns =\n185: \t\t\t{\n186: \t\t\t\t{ Name = \"numFavorites\", Type = \"BigUInteger\", Nilable = false },\n187: \t\t\t},\n188: \t\t},"
+  },
+  {
+    "source_id": "wt-global-api-C_EditMode.OnLayoutAdded-82",
+    "symbol": "C_EditMode.OnLayoutAdded",
+    "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/EditModeManagerDocumentation.lua",
+    "line": 79,
+    "text": "79: \t\t\tName = \"OnLayoutAdded\",\n80: \t\t\tType = \"Function\",\n81: \t\t\tSecretArguments = \"AllowedWhenUntainted\",\n82: \n83: \t\t\tArguments =\n84: \t\t\t{\n85: \t\t\t\t{ Name = \"addedLayoutIndex\", Type = \"luaIndex\", Nilable = false },\n86: \t\t\t\t{ Name = \"activateNewLayout\", Type = \"bool\", Nilable = false },\n87: \t\t\t\t{ Name = \"isLayoutImported\", Type = \"bool\", Nilable = false },\n88: \t\t\t},\n89: \t\t},"
+  },
+  {
+    "source_id": "wt-global-api-C_MountJournal.GetAllCreatureDisplayIDsForMountID-23",
+    "symbol": "C_MountJournal.GetAllCreatureDisplayIDsForMountID",
+    "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/MountJournalDocumentation.lua",
+    "line": 53,
+    "text": "53: \t\t\tName = \"GetAllCreatureDisplayIDsForMountID\",\n54: \t\t\tType = \"Function\",\n55: \t\t\tSecretArguments = \"AllowedWhenUntainted\",\n56: \n57: \t\t\tArguments =\n58: \t\t\t{\n59: \t\t\t\t{ Name = \"mountID\", Type = \"number\", Nilable = false },\n60: \t\t\t},\n61: \n62: \t\t\tReturns =\n63: \t\t\t{\n64: \t\t\t\t{ Name = \"creatureDisplayIDs\", Type = \"table\", InnerType = \"number\", Nilable = false },\n65: \t\t\t},\n66: \t\t},"
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.ClearFrozenPerksVendorItem-33",
+    "symbol": "C_PerksProgram.ClearFrozenPerksVendorItem",
+    "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua",
+    "line": 11,
+    "text": "11: \t\t\tName = \"ClearFrozenPerksVendorItem\",\n12: \t\t\tType = \"Function\",\n13: \t\t},"
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.CloseInteraction-34",
+    "symbol": "C_PerksProgram.CloseInteraction",
+    "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua",
+    "line": 15,
+    "text": "15: \t\t\tName = \"CloseInteraction\",\n16: \t\t\tType = \"Function\",\n17: \t\t},"
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.GetDraggedPerksVendorItem-39",
+    "symbol": "C_PerksProgram.GetDraggedPerksVendorItem",
+    "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua",
+    "line": 61,
+    "text": "61: \t\t\tName = \"GetDraggedPerksVendorItem\",\n62: \t\t\tType = \"Function\",\n63: \n64: \t\t\tReturns =\n65: \t\t\t{\n66: \t\t\t\t{ Name = \"perksVendorItemID\", Type = \"number\", Nilable = false },\n67: \t\t\t},\n68: \t\t},"
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.GetFrozenPerksVendorItemInfo-40",
+    "symbol": "C_PerksProgram.GetFrozenPerksVendorItemInfo",
+    "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua",
+    "line": 70,
+    "text": "70: \t\t\tName = \"GetFrozenPerksVendorItemInfo\",\n71: \t\t\tType = \"Function\",\n72: \t\t\tMayReturnNothing = true,\n73: \n74: \t\t\tReturns =\n75: \t\t\t{\n76: \t\t\t\t{ Name = \"vendorItemInfo\", Type = \"PerksVendorItemInfo\", Nilable = false },\n77: \t\t\t},\n78: \t\t},"
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.GetPerksProgramItemDisplayInfo-42",
+    "symbol": "C_PerksProgram.GetPerksProgramItemDisplayInfo",
+    "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua",
+    "line": 89,
+    "text": "89: \t\t\tName = \"GetPerksProgramItemDisplayInfo\",\n90: \t\t\tType = \"Function\",\n91: \t\t\tSecretArguments = \"AllowedWhenUntainted\",\n92: \n93: \t\t\tArguments =\n94: \t\t\t{\n95: \t\t\t\t{ Name = \"id\", Type = \"number\", Nilable = false },\n96: \t\t\t},\n97: \n98: \t\t\tReturns =\n99: \t\t\t{\n100: \t\t\t\t{ Name = \"item\", Type = \"PerksProgramItemDisplayInfo\", Nilable = false },\n101: \t\t\t},\n102: \t\t},"
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.GetTimeRemaining-43",
+    "symbol": "C_PerksProgram.GetTimeRemaining",
+    "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua",
+    "line": 104,
+    "text": "104: \t\t\tName = \"GetTimeRemaining\",\n105: \t\t\tType = \"Function\",\n106: \t\t\tSecretArguments = \"AllowedWhenUntainted\",\n107: \n108: \t\t\tArguments =\n109: \t\t\t{\n110: \t\t\t\t{ Name = \"vendorItemID\", Type = \"number\", Nilable = false },\n111: \t\t\t},\n112: \n113: \t\t\tReturns =\n114: \t\t\t{\n115: \t\t\t\t{ Name = \"timeRemaining\", Type = \"time_t\", Nilable = false },\n116: \t\t\t},\n117: \t\t},"
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.GetVendorItemInfo-45",
+    "symbol": "C_PerksProgram.GetVendorItemInfo",
+    "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua",
+    "line": 119,
+    "text": "119: \t\t\tName = \"GetVendorItemInfo\",\n120: \t\t\tType = \"Function\",\n121: \t\t\tSecretArguments = \"AllowedWhenUntainted\",\n122: \n123: \t\t\tArguments =\n124: \t\t\t{\n125: \t\t\t\t{ Name = \"vendorItemID\", Type = \"number\", Nilable = false },\n126: \t\t\t},\n127: \n128: \t\t\tReturns =\n129: \t\t\t{\n130: \t\t\t\t{ Name = \"vendorItemInfo\", Type = \"PerksVendorItemInfo\", Nilable = false },\n131: \t\t\t},\n132: \t\t},"
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.GetVendorItemInfoRefundTimeLeft-44",
+    "symbol": "C_PerksProgram.GetVendorItemInfoRefundTimeLeft",
+    "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua",
+    "line": 134,
+    "text": "134: \t\t\tName = \"GetVendorItemInfoRefundTimeLeft\",\n135: \t\t\tType = \"Function\",\n136: \t\t\tSecretArguments = \"AllowedWhenUntainted\",\n137: \n138: \t\t\tArguments =\n139: \t\t\t{\n140: \t\t\t\t{ Name = \"vendorItemID\", Type = \"number\", Nilable = false },\n141: \t\t\t},\n142: \n143: \t\t\tReturns =\n144: \t\t\t{\n145: \t\t\t\t{ Name = \"refundTimeRemaining\", Type = \"time_t\", Nilable = false },\n146: \t\t\t},\n147: \t\t},"
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.ItemSelectedTelemetry-46",
+    "symbol": "C_PerksProgram.ItemSelectedTelemetry",
+    "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua",
+    "line": 182,
+    "text": "182: \t\t\tName = \"ItemSelectedTelemetry\",\n183: \t\t\tType = \"Function\",\n184: \t\t\tSecretArguments = \"AllowedWhenUntainted\",\n185: \n186: \t\t\tArguments =\n187: \t\t\t{\n188: \t\t\t\t{ Name = \"perksVendorItemID\", Type = \"number\", Nilable = false },\n189: \t\t\t},\n190: \t\t},"
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.PickupPerksVendorItem-47",
+    "symbol": "C_PerksProgram.PickupPerksVendorItem",
+    "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua",
+    "line": 192,
+    "text": "192: \t\t\tName = \"PickupPerksVendorItem\",\n193: \t\t\tType = \"Function\",\n194: \t\t\tSecretArguments = \"AllowedWhenUntainted\",\n195: \n196: \t\t\tArguments =\n197: \t\t\t{\n198: \t\t\t\t{ Name = \"perksVendorItemID\", Type = \"number\", Nilable = false },\n199: \t\t\t},\n200: \t\t},"
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.RequestPurchase-49",
+    "symbol": "C_PerksProgram.RequestPurchase",
+    "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua",
+    "line": 216,
+    "text": "216: \t\t\tName = \"RequestPurchase\",\n217: \t\t\tType = \"Function\",\n218: \t\t\tSecretArguments = \"AllowedWhenUntainted\",\n219: \n220: \t\t\tArguments =\n221: \t\t\t{\n222: \t\t\t\t{ Name = \"perksVendorItemID\", Type = \"number\", Nilable = false },\n223: \t\t\t},\n224: \t\t},"
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.RequestRefund-50",
+    "symbol": "C_PerksProgram.RequestRefund",
+    "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua",
+    "line": 226,
+    "text": "226: \t\t\tName = \"RequestRefund\",\n227: \t\t\tType = \"Function\",\n228: \t\t\tSecretArguments = \"AllowedWhenUntainted\",\n229: \n230: \t\t\tArguments =\n231: \t\t\t{\n232: \t\t\t\t{ Name = \"perksVendorItemID\", Type = \"number\", Nilable = false },\n233: \t\t\t},\n234: \t\t},"
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.ResetHeldItemDragAndDrop-51",
+    "symbol": "C_PerksProgram.ResetHeldItemDragAndDrop",
+    "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua",
+    "line": 236,
+    "text": "236: \t\t\tName = \"ResetHeldItemDragAndDrop\",\n237: \t\t\tType = \"Function\",\n238: \t\t},"
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.SetFrozenPerksVendorItem-52",
+    "symbol": "C_PerksProgram.SetFrozenPerksVendorItem",
+    "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua",
+    "line": 240,
+    "text": "240: \t\t\tName = \"SetFrozenPerksVendorItem\",\n241: \t\t\tType = \"Function\",\n242: \t\t},\n243: \t},\n244: \n245: \tEvents =\n246: \t{"
+  },
+  {
+    "source_id": "wt-global-api-C_PlayerInfo.CanUseItem-53",
+    "symbol": "C_PlayerInfo.CanUseItem",
+    "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PlayerInfoDocumentation.lua",
+    "line": 39,
+    "text": "39: \t\t\tName = \"CanUseItem\",\n40: \t\t\tType = \"Function\",\n41: \t\t\tSecretArguments = \"AllowedWhenUntainted\",\n42: \n43: \t\t\tArguments =\n44: \t\t\t{\n45: \t\t\t\t{ Name = \"itemID\", Type = \"number\", Nilable = false },\n46: \t\t\t},\n47: \n48: \t\t\tReturns =\n49: \t\t\t{\n50: \t\t\t\t{ Name = \"isUseable\", Type = \"bool\", Nilable = false },\n51: \t\t\t},\n52: \t\t},"
+  },
+  {
+    "source_id": "wt-global-api-C_PlayerInfo.GetPlayerCharacterData-56",
+    "symbol": "C_PlayerInfo.GetPlayerCharacterData",
+    "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PlayerInfoDocumentation.lua",
+    "line": 155,
+    "text": "155: \t\t\tName = \"GetPlayerCharacterData\",\n156: \t\t\tType = \"Function\",\n157: \t\t\tMayReturnNothing = true,\n158: \n159: \t\t\tReturns =\n160: \t\t\t{\n161: \t\t\t\t{ Name = \"characterData\", Type = \"PlayerInfoCharacterData\", Nilable = false },\n162: \t\t\t},\n163: \t\t},"
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.ArePvpTalentsUnlocked-59",
+    "symbol": "C_PvP.ArePvpTalentsUnlocked",
+    "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PvpInfoDocumentation.lua",
+    "line": 11,
+    "text": "11: \t\t\tName = \"ArePvpTalentsUnlocked\",\n12: \t\t\tType = \"Function\",\n13: \n14: \t\t\tReturns =\n15: \t\t\t{\n16: \t\t\t\t{ Name = \"arePvpTalentsUnlocked\", Type = \"bool\", Nilable = false },\n17: \t\t\t},\n18: \t\t},"
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetPVPActiveRatedMatchDeserterPenalty-60",
+    "symbol": "C_PvP.GetPVPActiveRatedMatchDeserterPenalty",
+    "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PvpInfoDocumentation.lua",
+    "line": 460,
+    "text": "460: \t\t\tName = \"GetPVPActiveRatedMatchDeserterPenalty\",\n461: \t\t\tType = \"Function\",\n462: \n463: \t\t\tReturns =\n464: \t\t\t{\n465: \t\t\t\t{ Name = \"deserterPenalty\", Type = \"RatedMatchDeserterPenalty\", Nilable = true },\n466: \t\t\t},\n467: \t\t},"
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.IsInRatedMatchWithDeserterPenalty-62",
+    "symbol": "C_PvP.IsInRatedMatchWithDeserterPenalty",
+    "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PvpInfoDocumentation.lua",
+    "line": 928,
+    "text": "928: \t\t\tName = \"IsInRatedMatchWithDeserterPenalty\",\n929: \t\t\tType = \"Function\",\n930: \n931: \t\t\tReturns =\n932: \t\t\t{\n933: \t\t\t\t{ Name = \"isInRatedMatchWithDeserterPenalty\", Type = \"bool\", Nilable = false },\n934: \t\t\t},\n935: \t\t},"
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.IsRecipeFirstCraft-64",
+    "symbol": "C_TradeSkillUI.IsRecipeFirstCraft",
+    "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TradeSkillUIDocumentation.lua",
+    "line": 956,
+    "text": "956: \t\t\tName = \"IsRecipeFirstCraft\",\n957: \t\t\tType = \"Function\",\n958: \t\t\tSecretArguments = \"AllowedWhenUntainted\",\n959: \n960: \t\t\tArguments =\n961: \t\t\t{\n962: \t\t\t\t{ Name = \"recipeID\", Type = \"number\", Nilable = false },\n963: \t\t\t},\n964: \n965: \t\t\tReturns =\n966: \t\t\t{\n967: \t\t\t\t{ Name = \"result\", Type = \"bool\", Nilable = false },\n968: \t\t\t},\n969: \t\t},"
+  },
+  {
+    "source_id": "wt-global-api-C_Traits.GenerateInspectImportString-65",
+    "symbol": "C_Traits.GenerateInspectImportString",
+    "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SharedTraitsDocumentation.lua",
+    "line": 137,
+    "text": "137: \t\t\tName = \"GenerateInspectImportString\",\n138: \t\t\tType = \"Function\",\n139: \t\t\tSecretArguments = \"AllowedWhenUntainted\",\n140: \n141: \t\t\tArguments =\n142: \t\t\t{\n143: \t\t\t\t{ Name = \"target\", Type = \"cstring\", Nilable = false },\n144: \t\t\t},\n145: \n146: \t\t\tReturns =\n147: \t\t\t{\n148: \t\t\t\t{ Name = \"importString\", Type = \"string\", Nilable = false },\n149: \t\t\t},\n150: \t\t},"
+  },
+  {
+    "source_id": "wt-global-api-C_Traits.ResetTreeByCurrency-66",
+    "symbol": "C_Traits.ResetTreeByCurrency",
+    "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SharedTraitsDocumentation.lua",
+    "line": 640,
+    "text": "640: \t\t\tName = \"ResetTreeByCurrency\",\n641: \t\t\tType = \"Function\",\n642: \t\t\tSecretArguments = \"AllowedWhenUntainted\",\n643: \n644: \t\t\tArguments =\n645: \t\t\t{\n646: \t\t\t\t{ Name = \"configID\", Type = \"number\", Nilable = false },\n647: \t\t\t\t{ Name = \"treeID\", Type = \"number\", Nilable = false },\n648: \t\t\t\t{ Name = \"traitCurrencyID\", Type = \"number\", Nilable = false },\n649: \t\t\t},\n650: \n651: \t\t\tReturns =\n652: \t\t\t{\n653: \t\t\t\t{ Name = \"success\", Type = \"bool\", Nilable = false },\n654: \t\t\t},\n655: \t\t},"
+  },
+  {
+    "source_id": "wt-global-api-IsUsingGamepad-67",
+    "symbol": "IsUsingGamepad",
+    "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/InputDocumentation.lua",
+    "line": 226,
+    "text": "226: \t\t\tName = \"IsUsingGamepad\",\n227: \t\t\tType = \"Function\",\n228: \n229: \t\t\tReturns =\n230: \t\t\t{\n231: \t\t\t\t{ Name = \"down\", Type = \"bool\", Nilable = false },\n232: \t\t\t},\n233: \t\t},"
+  },
+  {
+    "source_id": "wt-global-api-IsUsingMouse-68",
+    "symbol": "IsUsingMouse",
+    "file": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/InputDocumentation.lua",
+    "line": 235,
+    "text": "235: \t\t\tName = \"IsUsingMouse\",\n236: \t\t\tType = \"Function\",\n237: \n238: \t\t\tReturns =\n239: \t\t\t{\n240: \t\t\t\t{ Name = \"down\", Type = \"bool\", Nilable = false },\n241: \t\t\t},\n242: \t\t},"
+  }
+]

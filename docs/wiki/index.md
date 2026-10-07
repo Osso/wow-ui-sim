@@ -2558,3 +2558,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-01] evidence | Reconcile 30 current-Retail enum contracts
 
 [[patch-12-0-5-api-audit#Current-Retail enums — bounded independent PASS]] links the [durable contract/proof](../specs/patch-12-0-5-enum-additions.md#reconciled-bounded-proof--2026-10-01): exact 30 pending rows accepted from unchanged-source saved batch7 20/20 PASS. External publication/removal/rename/member metadata only; no downstream domain requirement. 362 IDs/source hash and concurrent housing accounting preserved; current totals 278 pending / 70 bounded / 14 partial. Historical numbering, PTR/native/all-profile/current-binary execution unproved. No rerun or page closure.
+
+## [2026-10-07] evidence | 10.0.5 page audit
+
+[Audit](investigations/patch-10-0-5-api-audit.md) accounts for revision 742761, 93 inventory + 67 extract IDs, three unused retail retirements and 27 exact publication gaps. All 24 isolated sweeps, negative control, bare/cached/classic behavior, nine successor regressions, Mists warning boundary and exit-0 startup `[]` pass; 146 prior inputs preserved.

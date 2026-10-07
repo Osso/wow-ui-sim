@@ -1,0 +1,471 @@
+[
+  {
+    "source_id": "source-context-001",
+    "line": 1,
+    "literal": "Patch 10.0.5 API changes",
+    "status": "metadata-only",
+    "proof_boundary": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-003",
+    "line": 3,
+    "literal": "== Summary ==",
+    "status": "metadata-only",
+    "proof_boundary": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-004",
+    "line": 4,
+    "literal": "* Added instanceId to GetSavedInstanceInfo as the 14th return value.",
+    "status": "audit-pending",
+    "proof_boundary": "Requires populated saved-instance producer and exact 14th return instanceId tuple proof; no occurrence-specific behavior executed."
+  },
+  {
+    "source_id": "prose-undated-005",
+    "line": 5,
+    "literal": "* Certain items and spells no longer return information from the server. For example itemID 17 still returns true for C_Item.DoesItemExistByID but ITEM_DATA_LOAD_RESULT will have success:false and GetItemInfo will never return information, resulting in ItemMixin:ContinueOnItemLoad never firing the callback.",
+    "status": "audit-pending",
+    "proof_boundary": "Requires item 17 existence but failed server data load (success=false), persistent unavailable GetItemInfo and non-fired ItemMixin completion callback across asynchronous process lifetime; no native/server producer proof."
+  },
+  {
+    "source_id": "source-context-007",
+    "line": 7,
+    "literal": "== Resources ==",
+    "status": "metadata-only",
+    "proof_boundary": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "source-context-008",
+    "line": 8,
+    "literal": "* TOC: 100005",
+    "status": "metadata-only",
+    "proof_boundary": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-009",
+    "line": 9,
+    "literal": "* Diffs: wow-ui-source, BlizzardInterfaceResources",
+    "status": "metadata-only",
+    "proof_boundary": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-010",
+    "line": 10,
+    "literal": "* Official patch notes: Dragonflight: 10.0.5 Content Update Notes",
+    "status": "metadata-only",
+    "proof_boundary": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-012",
+    "line": 12,
+    "literal": "== Structures ==",
+    "status": "metadata-only",
+    "proof_boundary": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "structures-Enum-BattlepetDbFlags-013",
+    "line": 13,
+    "literal": " Enum.BattlepetDbFlags",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-BattlepetDbFlags-014",
+    "line": 14,
+    "literal": "   + 12: TradingPost",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-CraftingOrderResult-015",
+    "line": 15,
+    "literal": " Enum.CraftingOrderResult",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-CraftingOrderResult-016",
+    "line": 16,
+    "literal": "   + 2: Aborted",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-CraftingOrderResult-017",
+    "line": 17,
+    "literal": "   + 23: InvalidRealm",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-CraftingOrderResult-018",
+    "line": 18,
+    "literal": "   + 42: TargetLocked",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-CurrencyFlagsB-019",
+    "line": 19,
+    "literal": " Enum.CurrencyFlagsB",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-CurrencyFlagsB-020",
+    "line": 20,
+    "literal": "   + 4: CurrencyBBattlenetVirtualCurrency",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-EditModeAccountSetting-021",
+    "line": 21,
+    "literal": " Enum.EditModeAccountSetting",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-EditModeAccountSetting-022",
+    "line": 22,
+    "literal": "   + 21: ShowReputationBar",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-EditModeAccountSetting-023",
+    "line": 23,
+    "literal": "   + 22: ShowDurabilityFrame",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-EditModeAuraFrameSetting-024",
+    "line": 24,
+    "literal": " Enum.EditModeAuraFrameSetting",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-EditModeAuraFrameSetting-025",
+    "line": 25,
+    "literal": "   + 8: DeprecatedShowFull",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-EditModeAuraFrameSetting-026",
+    "line": 26,
+    "literal": "   - 8: ShowFull",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-EditModeSystem-027",
+    "line": 27,
+    "literal": " Enum.EditModeSystem",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-EditModeSystem-028",
+    "line": 28,
+    "literal": "   + 14: MicroMenu",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-EditModeSystem-029",
+    "line": 29,
+    "literal": "   + 15: Bags",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-EditModeSystem-030",
+    "line": 30,
+    "literal": "   + 16: StatusTrackingBar",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-EditModeSystem-031",
+    "line": 31,
+    "literal": "   + 17: DurabilityFrame",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-HolidayFlags-032",
+    "line": 32,
+    "literal": " Enum.HolidayFlags",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-HolidayFlags-033",
+    "line": 33,
+    "literal": "   + 7: BeginEventOnlyOnStageChange",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-QuestTagType-034",
+    "line": 34,
+    "literal": " Enum.QuestTagType",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-QuestTagType-035",
+    "line": 35,
+    "literal": "   + 17: DragonRiderRacing",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-ReportType-036",
+    "line": 36,
+    "literal": " Enum.ReportType",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-ReportType-037",
+    "line": 37,
+    "literal": "   + 16: PvPGroupMember",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-TooltipDataLineType-038",
+    "line": 38,
+    "literal": " Enum.TooltipDataLineType",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-TooltipDataLineType-039",
+    "line": 39,
+    "literal": "   + 22: RestrictedRaceClass",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-TooltipDataLineType-040",
+    "line": 40,
+    "literal": "   + 23: RestrictedFaction",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-TooltipDataLineType-041",
+    "line": 41,
+    "literal": "   + 24: RestrictedSkill",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-TooltipDataLineType-042",
+    "line": 42,
+    "literal": "   + 25: RestrictedPvPMedal",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-TooltipDataLineType-043",
+    "line": 43,
+    "literal": "   + 26: RestrictedReputation",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-TooltipDataLineType-044",
+    "line": 44,
+    "literal": "   + 27: RestrictedSpellKnown",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-TooltipDataLineType-045",
+    "line": 45,
+    "literal": "   + 28: RestrictedLevel",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-TooltipDataLineType-046",
+    "line": 46,
+    "literal": "   + 29: EquipSlot",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-TooltipDataLineType-047",
+    "line": 47,
+    "literal": "   + 30: ItemName",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-TrackedSpellCategory-048",
+    "line": 48,
+    "literal": " Enum.TrackedSpellCategory",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-TrackedSpellCategory-049",
+    "line": 49,
+    "literal": "   + 4: RacialAbility",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-TradeskillRecipeType-050",
+    "line": 50,
+    "literal": " Enum.TradeskillRecipeType",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-TradeskillRecipeType-051",
+    "line": 51,
+    "literal": "   + 5: Gathering",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-UICursorType-052",
+    "line": 52,
+    "literal": " Enum.UICursorType",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Enum-UICursorType-053",
+    "line": 53,
+    "literal": "   + 21: PerksProgramVendorItem",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+  },
+  {
+    "source_id": "structures-Constants-CurrencyConsts-CURRENCY_ID_PERKS_PROGRAM_DISPLAY_INFO = 2032-055",
+    "line": 55,
+    "literal": " Constants.CurrencyConsts.CURRENCY_ID_PERKS_PROGRAM_DISPLAY_INFO = 2032",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact current numeric constant identity and historical/current supersession review; no source-specific numeric assertion executed."
+  },
+  {
+    "source_id": "structures-Constants-ProfessionConsts-CRAFTING_ORDER_ITEM_RETENTION = 30-056",
+    "line": 56,
+    "literal": " Constants.ProfessionConsts.CRAFTING_ORDER_ITEM_RETENTION = 30",
+    "status": "audit-pending",
+    "proof_boundary": "Requires exact current numeric constant identity and historical/current supersession review; no source-specific numeric assertion executed."
+  },
+  {
+    "source_id": "structures-CraftingItemResultData-058",
+    "line": 58,
+    "literal": " CraftingItemResultData",
+    "status": "audit-pending",
+    "proof_boundary": "Requires populated DTO/schema consumer proof for this field addition/removal and missing/nil/type boundary; parent label is context, not a separate Rust type or parity proof."
+  },
+  {
+    "source_id": "structures-CraftingItemResultData-059",
+    "line": 59,
+    "literal": "   + 3: qualityProgress",
+    "status": "audit-pending",
+    "proof_boundary": "Requires populated DTO/schema consumer proof for this field addition/removal and missing/nil/type boundary; parent label is context, not a separate Rust type or parity proof."
+  },
+  {
+    "source_id": "structures-CraftingItemResultData-060",
+    "line": 60,
+    "literal": "   + 15: isEnchant",
+    "status": "audit-pending",
+    "proof_boundary": "Requires populated DTO/schema consumer proof for this field addition/removal and missing/nil/type boundary; parent label is context, not a separate Rust type or parity proof."
+  },
+  {
+    "source_id": "structures-CraftingOrderCustomerOptionInfo-061",
+    "line": 61,
+    "literal": " CraftingOrderCustomerOptionInfo",
+    "status": "audit-pending",
+    "proof_boundary": "Requires populated DTO/schema consumer proof for this field addition/removal and missing/nil/type boundary; parent label is context, not a separate Rust type or parity proof."
+  },
+  {
+    "source_id": "structures-CraftingOrderCustomerOptionInfo-062",
+    "line": 62,
+    "literal": "   + 9: canUse",
+    "status": "audit-pending",
+    "proof_boundary": "Requires populated DTO/schema consumer proof for this field addition/removal and missing/nil/type boundary; parent label is context, not a separate Rust type or parity proof."
+  },
+  {
+    "source_id": "structures-CraftingOrderCustomerOptionInfo-063",
+    "line": 63,
+    "literal": "   + 10: bindOnPickup",
+    "status": "audit-pending",
+    "proof_boundary": "Requires populated DTO/schema consumer proof for this field addition/removal and missing/nil/type boundary; parent label is context, not a separate Rust type or parity proof."
+  },
+  {
+    "source_id": "structures-CraftingRecipeSchematic-064",
+    "line": 64,
+    "literal": " CraftingRecipeSchematic",
+    "status": "audit-pending",
+    "proof_boundary": "Requires populated DTO/schema consumer proof for this field addition/removal and missing/nil/type boundary; parent label is context, not a separate Rust type or parity proof."
+  },
+  {
+    "source_id": "structures-CraftingRecipeSchematic-065",
+    "line": 65,
+    "literal": "   - 12: hasGatheringOperationInfo",
+    "status": "audit-pending",
+    "proof_boundary": "Requires populated DTO/schema consumer proof for this field addition/removal and missing/nil/type boundary; parent label is context, not a separate Rust type or parity proof."
+  },
+  {
+    "source_id": "structures-ItemUpgradeLevelInfo-066",
+    "line": 66,
+    "literal": " ItemUpgradeLevelInfo",
+    "status": "audit-pending",
+    "proof_boundary": "Requires populated DTO/schema consumer proof for this field addition/removal and missing/nil/type boundary; parent label is context, not a separate Rust type or parity proof."
+  },
+  {
+    "source_id": "structures-ItemUpgradeLevelInfo-067",
+    "line": 67,
+    "literal": "   + 5: currencyCostsToUpgrade",
+    "status": "audit-pending",
+    "proof_boundary": "Requires populated DTO/schema consumer proof for this field addition/removal and missing/nil/type boundary; parent label is context, not a separate Rust type or parity proof."
+  },
+  {
+    "source_id": "structures-ItemUpgradeLevelInfo-068",
+    "line": 68,
+    "literal": "   + 6: itemCostsToUpgrade",
+    "status": "audit-pending",
+    "proof_boundary": "Requires populated DTO/schema consumer proof for this field addition/removal and missing/nil/type boundary; parent label is context, not a separate Rust type or parity proof."
+  },
+  {
+    "source_id": "structures-ItemUpgradeLevelInfo-069",
+    "line": 69,
+    "literal": "   - 5: costsToUpgrade",
+    "status": "audit-pending",
+    "proof_boundary": "Requires populated DTO/schema consumer proof for this field addition/removal and missing/nil/type boundary; parent label is context, not a separate Rust type or parity proof."
+  },
+  {
+    "source_id": "structures-TradeSkillRecipeInfo-070",
+    "line": 70,
+    "literal": " TradeSkillRecipeInfo",
+    "status": "audit-pending",
+    "proof_boundary": "Requires populated DTO/schema consumer proof for this field addition/removal and missing/nil/type boundary; parent label is context, not a separate Rust type or parity proof."
+  },
+  {
+    "source_id": "structures-TradeSkillRecipeInfo-071",
+    "line": 71,
+    "literal": "   + 33: canCreateMultiple",
+    "status": "audit-pending",
+    "proof_boundary": "Requires populated DTO/schema consumer proof for this field addition/removal and missing/nil/type boundary; parent label is context, not a separate Rust type or parity proof."
+  },
+  {
+    "source_id": "structures-TradeSkillRecipeInfo-072",
+    "line": 72,
+    "literal": "   - 33: createsItem",
+    "status": "audit-pending",
+    "proof_boundary": "Requires populated DTO/schema consumer proof for this field addition/removal and missing/nil/type boundary; parent label is context, not a separate Rust type or parity proof."
+  }
+]

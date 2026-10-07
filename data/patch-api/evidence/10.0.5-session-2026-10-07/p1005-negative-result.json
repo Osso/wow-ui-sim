@@ -1,0 +1,9 @@
+{
+  "flipped_id": "wt-global-api-C_Mail.SetOpeningAll-22",
+  "baseline_gaps": 27,
+  "negative_gaps": 28,
+  "new": [
+    "wt-global-api-C_Mail.SetOpeningAll-22"
+  ],
+  "resolved": []
+}

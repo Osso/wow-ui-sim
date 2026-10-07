@@ -1,0 +1,5 @@
+tests/patch_10_0_5_classic_surfaces.rs:9:        for _, name in ipairs({'ContinueRecast', 'GetRecipeRepeatCount', 'HasRecipesTracked'}) do
+tests/patch_10_0_5_publication_fixes.rs:5:for _, name in ipairs({'ContinueRecast', 'GetRecipeRepeatCount', 'HasRecipesTracked'}) do
+src/c_api/patch_retired_members.rs:42:        "ContinueRecast",
+src/c_api/patch_retired_members.rs:43:        "GetRecipeRepeatCount",
+src/c_api/patch_retired_members.rs:44:        "HasRecipesTracked",

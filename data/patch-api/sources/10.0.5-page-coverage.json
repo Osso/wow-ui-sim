@@ -1,0 +1,1129 @@
+{
+  "schema": "patch-page-coverage/v1",
+  "patch": "10.0.5",
+  "source_register": "data/patch-api/sources/10.0.5-wikitext-register.json",
+  "source_sha256": "336973622327eddaf6d21111354402b4b1faf424a0701e34a99c3a56640be0b1",
+  "audit_status": "in-progress",
+  "proof_policy": "Complete occurrence accounting against current retail 12.1.0 with 23 chronological later registers. Publication sweep 66 OK / 27 exact gaps; three unused namespace retirements. Pending substantive extracts receive no runtime credit. Local targeted evidence is not native or independent acceptance.",
+  "capabilities": [
+    {
+      "id": "publication-sweep-10-0-5",
+      "symbols": [
+        "93 inventory occurrences"
+      ],
+      "scope": "Cached publication/absence/event registration and current CVar queries only; not signatures, populated outputs, event payloads, security, historical or native parity.",
+      "spec": "docs/specs/patch-10-0-5-publication-sweep.md",
+      "tests": [
+        "tests/patch_10_0_5_publication_sweep.rs",
+        "tests/patch_10_0_5_publication_fixes.rs",
+        "tests/patch_10_0_5_cached_surfaces.rs",
+        "tests/patch_10_0_5_classic_surfaces.rs"
+      ],
+      "compiled_revision": "263574c2f359774716895ef2c8c8e38a616ab48f",
+      "ledger": "data/patch-api/evidence/10.0.5-session-2026-10-07/p1005-proof.json",
+      "proof": "24 isolated sweeps, bare retirement RED/GREEN, one cached Game prefork, nine tracked-recipe regressions, exact one-row negative control, Mists preservation/check and exit-0 startup []."
+    }
+  ],
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/10.0.5-api-changes.txt",
+    "sha256": "60f99c9d781367178a5a2220c4bb71cb59b8dd91b02a48959e8e2237a8119a20",
+    "wikitext_revid": 742761,
+    "wikitext_sha256": "1a87bf3e9a5d52171e3ce04565c648a22b5ec9c791126ff42e0a4d659470c687",
+    "extract_tool": "tools/extract_patch_non_inventory.py",
+    "preserve_examples": true
+  },
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-C_CraftingOrders.GetNumFavoriteCustomerOptions-20",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Favorite-customer option catalog/count is absent. The local order placement model in src/c_api/c_crafting_orders.rs registers PlaceNewOrder/GetMyOrders, not favorite-customer options; returning zero would invent catalog state."
+    },
+    {
+      "source_id": "wt-global-api-C_CraftingOrders.GetPersonalOrdersInfo-21",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_Mail.SetOpeningAll-22",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_MountJournal.GetAllCreatureDisplayIDsForMountID-23",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires the complete mountID-to-display-ID catalog. Existing GetMountInfoExtraByID returns a single display, not proof of every variant; cannot wrap it as a singleton without source evidence."
+    },
+    {
+      "source_id": "wt-global-api-C_PerksActivities.AddTrackedPerksActivity-24",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PerksActivities.ClearPerksActivitiesPendingCompletion-25",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PerksActivities.GetAllPerksActivityTags-26",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PerksActivities.GetPerksActivitiesInfo-27",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PerksActivities.GetPerksActivitiesPendingCompletion-28",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PerksActivities.GetPerksActivityChatLink-29",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PerksActivities.GetPerksActivityInfo-30",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PerksActivities.GetTrackedPerksActivities-31",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PerksActivities.RemoveTrackedPerksActivity-32",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PerksProgram.ClearFrozenPerksVendorItem-33",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires clearing the frozen vendor item and its event/catalog effects; no frozen-item model exists."
+    },
+    {
+      "source_id": "wt-global-api-C_PerksProgram.CloseInteraction-34",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires Trading Post interaction close lifecycle/event, not C_WeeklyRewards.CloseInteraction or an inert no-op."
+    },
+    {
+      "source_id": "wt-global-api-C_PerksProgram.GetAvailableCategoryIDs-35",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PerksProgram.GetAvailableVendorItemIDs-36",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PerksProgram.GetCategoryInfo-37",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PerksProgram.GetCurrencyAmount-38",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PerksProgram.GetDraggedPerksVendorItem-39",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires current dragged vendor-item identity/nil boundary, distinct from empty catalog defaults."
+    },
+    {
+      "source_id": "wt-global-api-C_PerksProgram.GetFrozenPerksVendorItemInfo-40",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires frozen vendor-item DTO and nullable state, not an empty table."
+    },
+    {
+      "source_id": "wt-global-api-C_PerksProgram.GetPendingChestRewards-41",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PerksProgram.GetPerksProgramItemDisplayInfo-42",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires item-display catalog identity/DTO keyed by itemID; generic item existence does not supply its display contract."
+    },
+    {
+      "source_id": "wt-global-api-C_PerksProgram.GetTimeRemaining-43",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires a modeled program refresh/end clock and resulting time units, not a constant timer."
+    },
+    {
+      "source_id": "wt-global-api-C_PerksProgram.GetVendorItemInfoRefundTimeLeft-44",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires purchase timestamp/refund eligibility and remaining refund-window clock per vendor item."
+    },
+    {
+      "source_id": "wt-global-api-C_PerksProgram.GetVendorItemInfo-45",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires populated vendor-item DTO keyed by perksVendorItemID with unknown-ID boundary; catalog is not modeled."
+    },
+    {
+      "source_id": "wt-global-api-C_PerksProgram.ItemSelectedTelemetry-46",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires a defined telemetry sink/selection side effect and contract. This audit neither invents a sink nor declares telemetry intentionally unsupported."
+    },
+    {
+      "source_id": "wt-global-api-C_PerksProgram.PickupPerksVendorItem-47",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires drag-item state and cursor transfer tied to the vendor catalog."
+    },
+    {
+      "source_id": "wt-global-api-C_PerksProgram.RequestPendingChestRewards-48",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PerksProgram.RequestPurchase-49",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires validated vendor purchase, currency deduction, ownership, failure/success and refresh events. Empty catalog/currency startup defaults are not transaction state."
+    },
+    {
+      "source_id": "wt-global-api-C_PerksProgram.RequestRefund-50",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires refund eligibility/window, ownership reversal, currency refund and events, not a placeholder request."
+    },
+    {
+      "source_id": "wt-global-api-C_PerksProgram.ResetHeldItemDragAndDrop-51",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires resetting held-item drag/cursor state consistently with pickup; no vendor drag lifecycle exists."
+    },
+    {
+      "source_id": "wt-global-api-C_PerksProgram.SetFrozenPerksVendorItem-52",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires catalog-valid frozen-item selection and persistence/event behavior, not storing an unchecked integer."
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerInfo.CanUseItem-53",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires modeled item-use eligibility for the supplied itemID. Current item existence/inventory presence does not establish usability or native restriction decisions."
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerInfo.GetDisplayID-54",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerInfo.GetGlidingInfo-55",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerInfo.GetPlayerCharacterData-56",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires populated PlayerInfoCharacterData and its MayReturnNothing boundary (PlayerInfoDocumentation.lua:155-162); existing GetDisplayID is not this DTO."
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerInfo.IsTradingPostAvailable-57",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerInfo.IsTravelersLogAvailable-58",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.ArePvpTalentsUnlocked-59",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires modeled player PvP-talent unlock eligibility. Native bool declaration does not specify a sufficient level-only rule; existing unlocked-level query is not proof of that rule."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetPVPActiveRatedMatchDeserterPenalty-60",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires active rated-match penalty identity and nullable RatedMatchDeserterPenalty data. Existing queue/catalog state does not model rated-match penalty lifecycle."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetPvpTalentsUnlockedLevel-61",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.IsInRatedMatchWithDeserterPenalty-62",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires active rated-match membership tied to deserter-penalty state. A permanent false default would fabricate the absent model."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetRemainingRecasts-63",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.IsRecipeFirstCraft-64",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires per-character/per-recipe completion history and first-craft transitions. Existing crafting result firstCraftReward field is input/output metadata, not a persistent recipe completion predicate."
+    },
+    {
+      "source_id": "wt-global-api-C_Traits.GenerateInspectImportString-65",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires inspected target talent snapshot and serialization; existing GenerateImportString serializes local config and is not a remote inspect-target alias."
+    },
+    {
+      "source_id": "wt-global-api-C_Traits.ResetTreeByCurrency-66",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires resetting/refunding only nodes spending traitCurrencyID within configID/treeID, preserving other currencies and commit/event semantics; no currency-scoped tree-reset implementation exists."
+    },
+    {
+      "source_id": "wt-global-api-IsUsingGamepad-67",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "The current IsUsingGamepad implementation and input_interface_style state are explicitly client-wowforever-only (globals/register.rs:186-187, state/sim_state.rs:18-19). Retail has no modeled active-device-style producer; promoting capability/frame-enable flags would not answer active use."
+    },
+    {
+      "source_id": "wt-global-api-IsUsingMouse-68",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retail has no active input-device-style producer. Mouse-button state, cursor visibility, or lack of gamepad capability do not establish the native active-use predicate."
+    },
+    {
+      "source_id": "wt-global-api-BNSendSoR-71",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.ContinueRecast-72",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeRepeatCount-73",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.HasRecipesTracked-74",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_BarberShop.GetCurrentCharacterData-77",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ClassTalents.LoadConfig-79",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_EditMode.OnLayoutAdded-82",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires addedLayoutIndex, activateNewLayout and isLayoutImported transitions in the native layout model (EditModeManagerDocumentation.lua:79-88), not a no-op accepting the two new arguments."
+    },
+    {
+      "source_id": "wt-global-api-C_ModelInfo.GetModelSceneInfoByID-85",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeOutputItemData-87",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetRecipesTracked-89",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.IsRecipeTracked-91",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.SetRecipeTracked-93",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-CHEST_REWARDS_UPDATED_FROM_SERVER-106",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-CRAFTINGORDERS_UNEXPECTED_ERROR-107",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-CRAFTINGORDERS_UPDATE_PERSONAL_ORDER_COUNTS-108",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-PERKS_ACTIVITIES_TRACKED_UPDATED-109",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-PERKS_ACTIVITIES_UPDATED-110",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-PERKS_ACTIVITY_COMPLETED-111",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-PERKS_PROGRAM_CLOSE-112",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-PERKS_PROGRAM_CURRENCY_AWARDED-113",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-PERKS_PROGRAM_CURRENCY_REFRESH-114",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-PERKS_PROGRAM_DATA_REFRESH-115",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-PERKS_PROGRAM_DATA_SPECIFIC_ITEM_REFRESH-116",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-PERKS_PROGRAM_DISABLED-117",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-PERKS_PROGRAM_OPEN-118",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-PERKS_PROGRAM_PURCHASE_SUCCESS-119",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-PERKS_PROGRAM_REFUND_SUCCESS-120",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-PERKS_PROGRAM_SET_FROZEN_ITEM-121",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-PLAYER_CAN_GLIDE_CHANGED-122",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-WEAR_EQUIPMENT_SET-125",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-AZERITE_ITEM_POWER_LEVEL_CHANGED-128",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-events-EDIT_MODE_LAYOUTS_UPDATED-130",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-cvars-DisableAdvancedFlyingVelocityVFX-141",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-cvars-motionSicknessFocalCircle-142",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-cvars-motionSicknessLandscapeDarkening-143",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-cvars-perksActivitiesCurrentMonth-144",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-cvars-perksActivitiesLastPoints-145",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-cvars-perksActivitiesPendingCompletion-146",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-cvars-professionsAllocateBestQualityReagentsCustomer-147",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-cvars-trackedPerksActivities-148",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-cvars-trackedProfessionRecraftRecipes-149",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-cvars-autoOpenLootHistory-152",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-cvars-nameplateShowOnlyNames-153",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "wt-cvars-TargetPriorityValueBank-154",
+      "capabilities": [
+        "publication-sweep-10-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact cached publication/absence/event registration or current CVar value/default only; signatures, populated outputs, payloads, security and historical/native parity remain unproved."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires populated saved-instance producer and exact 14th return instanceId tuple proof; no occurrence-specific behavior executed."
+    },
+    {
+      "source_id": "prose-undated-005",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires item 17 existence but failed server data load (success=false), persistent unavailable GetItemInfo and non-fired ItemMixin completion callback across asynchronous process lifetime; no native/server producer proof."
+    },
+    {
+      "source_id": "source-context-007",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-008",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-009",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-010",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-012",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "structures-Enum-BattlepetDbFlags-013",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-BattlepetDbFlags-014",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-CraftingOrderResult-015",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-CraftingOrderResult-016",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-CraftingOrderResult-017",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-CraftingOrderResult-018",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-CurrencyFlagsB-019",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-CurrencyFlagsB-020",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-EditModeAccountSetting-021",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-EditModeAccountSetting-022",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-EditModeAccountSetting-023",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-EditModeAuraFrameSetting-024",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-EditModeAuraFrameSetting-025",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-EditModeAuraFrameSetting-026",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-EditModeSystem-027",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-EditModeSystem-028",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-EditModeSystem-029",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-EditModeSystem-030",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-EditModeSystem-031",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-HolidayFlags-032",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-HolidayFlags-033",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-QuestTagType-034",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-QuestTagType-035",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-ReportType-036",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-ReportType-037",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-TooltipDataLineType-038",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-TooltipDataLineType-039",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-TooltipDataLineType-040",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-TooltipDataLineType-041",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-TooltipDataLineType-042",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-TooltipDataLineType-043",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-TooltipDataLineType-044",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-TooltipDataLineType-045",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-TooltipDataLineType-046",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-TooltipDataLineType-047",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-TrackedSpellCategory-048",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-TrackedSpellCategory-049",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-TradeskillRecipeType-050",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-TradeskillRecipeType-051",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-UICursorType-052",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Enum-UICursorType-053",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact enum member identity/value and add/remove/rename semantics. Page numeric labels may denote ordinal/flag positions; publication sweeps do not prove numeric or native parity."
+    },
+    {
+      "source_id": "structures-Constants-CurrencyConsts-CURRENCY_ID_PERKS_PROGRAM_DISPLAY_INFO = 2032-055",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact current numeric constant identity and historical/current supersession review; no source-specific numeric assertion executed."
+    },
+    {
+      "source_id": "structures-Constants-ProfessionConsts-CRAFTING_ORDER_ITEM_RETENTION = 30-056",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires exact current numeric constant identity and historical/current supersession review; no source-specific numeric assertion executed."
+    },
+    {
+      "source_id": "structures-CraftingItemResultData-058",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires populated DTO/schema consumer proof for this field addition/removal and missing/nil/type boundary; parent label is context, not a separate Rust type or parity proof."
+    },
+    {
+      "source_id": "structures-CraftingItemResultData-059",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires populated DTO/schema consumer proof for this field addition/removal and missing/nil/type boundary; parent label is context, not a separate Rust type or parity proof."
+    },
+    {
+      "source_id": "structures-CraftingItemResultData-060",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires populated DTO/schema consumer proof for this field addition/removal and missing/nil/type boundary; parent label is context, not a separate Rust type or parity proof."
+    },
+    {
+      "source_id": "structures-CraftingOrderCustomerOptionInfo-061",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires populated DTO/schema consumer proof for this field addition/removal and missing/nil/type boundary; parent label is context, not a separate Rust type or parity proof."
+    },
+    {
+      "source_id": "structures-CraftingOrderCustomerOptionInfo-062",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires populated DTO/schema consumer proof for this field addition/removal and missing/nil/type boundary; parent label is context, not a separate Rust type or parity proof."
+    },
+    {
+      "source_id": "structures-CraftingOrderCustomerOptionInfo-063",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires populated DTO/schema consumer proof for this field addition/removal and missing/nil/type boundary; parent label is context, not a separate Rust type or parity proof."
+    },
+    {
+      "source_id": "structures-CraftingRecipeSchematic-064",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires populated DTO/schema consumer proof for this field addition/removal and missing/nil/type boundary; parent label is context, not a separate Rust type or parity proof."
+    },
+    {
+      "source_id": "structures-CraftingRecipeSchematic-065",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires populated DTO/schema consumer proof for this field addition/removal and missing/nil/type boundary; parent label is context, not a separate Rust type or parity proof."
+    },
+    {
+      "source_id": "structures-ItemUpgradeLevelInfo-066",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires populated DTO/schema consumer proof for this field addition/removal and missing/nil/type boundary; parent label is context, not a separate Rust type or parity proof."
+    },
+    {
+      "source_id": "structures-ItemUpgradeLevelInfo-067",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires populated DTO/schema consumer proof for this field addition/removal and missing/nil/type boundary; parent label is context, not a separate Rust type or parity proof."
+    },
+    {
+      "source_id": "structures-ItemUpgradeLevelInfo-068",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires populated DTO/schema consumer proof for this field addition/removal and missing/nil/type boundary; parent label is context, not a separate Rust type or parity proof."
+    },
+    {
+      "source_id": "structures-ItemUpgradeLevelInfo-069",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires populated DTO/schema consumer proof for this field addition/removal and missing/nil/type boundary; parent label is context, not a separate Rust type or parity proof."
+    },
+    {
+      "source_id": "structures-TradeSkillRecipeInfo-070",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires populated DTO/schema consumer proof for this field addition/removal and missing/nil/type boundary; parent label is context, not a separate Rust type or parity proof."
+    },
+    {
+      "source_id": "structures-TradeSkillRecipeInfo-071",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires populated DTO/schema consumer proof for this field addition/removal and missing/nil/type boundary; parent label is context, not a separate Rust type or parity proof."
+    },
+    {
+      "source_id": "structures-TradeSkillRecipeInfo-072",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires populated DTO/schema consumer proof for this field addition/removal and missing/nil/type boundary; parent label is context, not a separate Rust type or parity proof."
+    }
+  ]
+}

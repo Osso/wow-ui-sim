@@ -1,0 +1,296 @@
+[
+  {
+    "patch": "10.0.5",
+    "attempts": [
+      {
+        "inventory_only": false,
+        "exit": 0,
+        "byte_identical": true,
+        "stderr": ""
+      }
+    ],
+    "reproducible": true
+  },
+  {
+    "patch": "10.0.7",
+    "attempts": [
+      {
+        "inventory_only": false,
+        "exit": 0,
+        "byte_identical": true,
+        "stderr": ""
+      }
+    ],
+    "reproducible": true
+  },
+  {
+    "patch": "10.1.0",
+    "attempts": [
+      {
+        "inventory_only": false,
+        "exit": 0,
+        "byte_identical": true,
+        "stderr": ""
+      }
+    ],
+    "reproducible": true
+  },
+  {
+    "patch": "10.1.5",
+    "attempts": [
+      {
+        "inventory_only": false,
+        "exit": 0,
+        "byte_identical": true,
+        "stderr": ""
+      }
+    ],
+    "reproducible": true
+  },
+  {
+    "patch": "10.1.7",
+    "attempts": [
+      {
+        "inventory_only": false,
+        "exit": 0,
+        "byte_identical": true,
+        "stderr": ""
+      }
+    ],
+    "reproducible": true
+  },
+  {
+    "patch": "10.2.0",
+    "attempts": [
+      {
+        "inventory_only": false,
+        "exit": 0,
+        "byte_identical": true,
+        "stderr": ""
+      }
+    ],
+    "reproducible": true
+  },
+  {
+    "patch": "10.2.5",
+    "attempts": [
+      {
+        "inventory_only": false,
+        "exit": 0,
+        "byte_identical": true,
+        "stderr": ""
+      }
+    ],
+    "reproducible": true
+  },
+  {
+    "patch": "10.2.6",
+    "attempts": [
+      {
+        "inventory_only": false,
+        "exit": 0,
+        "byte_identical": true,
+        "stderr": ""
+      }
+    ],
+    "reproducible": true
+  },
+  {
+    "patch": "10.2.7",
+    "attempts": [
+      {
+        "inventory_only": false,
+        "exit": 0,
+        "byte_identical": true,
+        "stderr": ""
+      }
+    ],
+    "reproducible": true
+  },
+  {
+    "patch": "11.0.0",
+    "attempts": [
+      {
+        "inventory_only": false,
+        "exit": 0,
+        "byte_identical": true,
+        "stderr": ""
+      }
+    ],
+    "reproducible": true
+  },
+  {
+    "patch": "11.0.2",
+    "attempts": [
+      {
+        "inventory_only": false,
+        "exit": 0,
+        "byte_identical": true,
+        "stderr": ""
+      }
+    ],
+    "reproducible": true
+  },
+  {
+    "patch": "11.0.5",
+    "attempts": [
+      {
+        "inventory_only": false,
+        "exit": 0,
+        "byte_identical": true,
+        "stderr": ""
+      }
+    ],
+    "reproducible": true
+  },
+  {
+    "patch": "11.0.7",
+    "attempts": [
+      {
+        "inventory_only": false,
+        "exit": 0,
+        "byte_identical": true,
+        "stderr": ""
+      }
+    ],
+    "reproducible": true
+  },
+  {
+    "patch": "11.1.0",
+    "attempts": [
+      {
+        "inventory_only": false,
+        "exit": 0,
+        "byte_identical": true,
+        "stderr": ""
+      }
+    ],
+    "reproducible": true
+  },
+  {
+    "patch": "11.1.5",
+    "attempts": [
+      {
+        "inventory_only": false,
+        "exit": 0,
+        "byte_identical": true,
+        "stderr": ""
+      }
+    ],
+    "reproducible": true
+  },
+  {
+    "patch": "11.1.7",
+    "attempts": [
+      {
+        "inventory_only": false,
+        "exit": 0,
+        "byte_identical": true,
+        "stderr": ""
+      }
+    ],
+    "reproducible": true
+  },
+  {
+    "patch": "11.2.0",
+    "attempts": [
+      {
+        "inventory_only": false,
+        "exit": 0,
+        "byte_identical": true,
+        "stderr": ""
+      }
+    ],
+    "reproducible": true
+  },
+  {
+    "patch": "11.2.5",
+    "attempts": [
+      {
+        "inventory_only": false,
+        "exit": 0,
+        "byte_identical": true,
+        "stderr": ""
+      }
+    ],
+    "reproducible": true
+  },
+  {
+    "patch": "11.2.7",
+    "attempts": [
+      {
+        "inventory_only": false,
+        "exit": 0,
+        "byte_identical": true,
+        "stderr": ""
+      }
+    ],
+    "reproducible": true
+  },
+  {
+    "patch": "12.0.0",
+    "attempts": [
+      {
+        "inventory_only": false,
+        "exit": 0,
+        "byte_identical": true,
+        "stderr": ""
+      }
+    ],
+    "reproducible": true
+  },
+  {
+    "patch": "12.0.1",
+    "attempts": [
+      {
+        "inventory_only": false,
+        "exit": 0,
+        "byte_identical": true,
+        "stderr": ""
+      }
+    ],
+    "reproducible": true
+  },
+  {
+    "patch": "12.0.5",
+    "attempts": [
+      {
+        "inventory_only": false,
+        "exit": 0,
+        "byte_identical": true,
+        "stderr": ""
+      }
+    ],
+    "reproducible": true
+  },
+  {
+    "patch": "12.0.7",
+    "attempts": [
+      {
+        "inventory_only": false,
+        "exit": 0,
+        "byte_identical": true,
+        "stderr": ""
+      }
+    ],
+    "reproducible": true
+  },
+  {
+    "patch": "12.1.0",
+    "attempts": [
+      {
+        "inventory_only": false,
+        "exit": 0,
+        "byte_identical": false,
+        "stderr": ""
+      },
+      {
+        "inventory_only": true,
+        "exit": 0,
+        "byte_identical": true,
+        "stderr": ""
+      }
+    ],
+    "reproducible": true
+  }
+]

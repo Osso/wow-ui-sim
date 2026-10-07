@@ -1,0 +1,422 @@
+[
+  {
+    "source_id": "wt-global-api-C_CraftingOrders.GetNumFavoriteCustomerOptions-20",
+    "symbol": "C_CraftingOrders.GetNumFavoriteCustomerOptions",
+    "whole_src_tests": {
+      "exit": 0,
+      "stdout": "tests/data/patch_10_0_5_sweep_known_gaps.json:2:  \"wt-global-api-C_CraftingOrders.GetNumFavoriteCustomerOptions-20\",\n",
+      "stderr": ""
+    },
+    "native_declaration": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/CraftingOrderUIDocumentation.lua:181:\t\t\tName = \"GetNumFavoriteCustomerOptions\",\n",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_EditMode.OnLayoutAdded-82",
+    "symbol": "C_EditMode.OnLayoutAdded",
+    "whole_src_tests": {
+      "exit": 0,
+      "stdout": "tests/data/patch_10_0_5_sweep_known_gaps.json:3:  \"wt-global-api-C_EditMode.OnLayoutAdded-82\",\n",
+      "stderr": ""
+    },
+    "native_declaration": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/EditModeManagerDocumentation.lua:79:\t\t\tName = \"OnLayoutAdded\",\n",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_MountJournal.GetAllCreatureDisplayIDsForMountID-23",
+    "symbol": "C_MountJournal.GetAllCreatureDisplayIDsForMountID",
+    "whole_src_tests": {
+      "exit": 0,
+      "stdout": "tests/data/patch_10_0_5_sweep_known_gaps.json:4:  \"wt-global-api-C_MountJournal.GetAllCreatureDisplayIDsForMountID-23\",\n",
+      "stderr": ""
+    },
+    "native_declaration": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/MountJournalDocumentation.lua:53:\t\t\tName = \"GetAllCreatureDisplayIDsForMountID\",\n",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.ClearFrozenPerksVendorItem-33",
+    "symbol": "C_PerksProgram.ClearFrozenPerksVendorItem",
+    "whole_src_tests": {
+      "exit": 0,
+      "stdout": "tests/data/patch_10_0_5_sweep_known_gaps.json:5:  \"wt-global-api-C_PerksProgram.ClearFrozenPerksVendorItem-33\",\n",
+      "stderr": ""
+    },
+    "native_declaration": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua:11:\t\t\tName = \"ClearFrozenPerksVendorItem\",\n",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.CloseInteraction-34",
+    "symbol": "C_PerksProgram.CloseInteraction",
+    "whole_src_tests": {
+      "exit": 0,
+      "stdout": "tests/blizzard_weekly_rewards_loads.rs:350:         C_WeeklyRewards.CloseInteraction; SetUpConditionalActivities walks the activity list \\\ntests/data/patch_10_0_5_sweep_known_gaps.json:6:  \"wt-global-api-C_PerksProgram.CloseInteraction-34\",\n",
+      "stderr": ""
+    },
+    "native_declaration": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/WeeklyRewardsDocumentation.lua:39:\t\t\tName = \"CloseInteraction\",\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua:15:\t\t\tName = \"CloseInteraction\",\n",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.GetDraggedPerksVendorItem-39",
+    "symbol": "C_PerksProgram.GetDraggedPerksVendorItem",
+    "whole_src_tests": {
+      "exit": 0,
+      "stdout": "tests/data/patch_10_0_5_sweep_known_gaps.json:7:  \"wt-global-api-C_PerksProgram.GetDraggedPerksVendorItem-39\",\n",
+      "stderr": ""
+    },
+    "native_declaration": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua:61:\t\t\tName = \"GetDraggedPerksVendorItem\",\n",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.GetFrozenPerksVendorItemInfo-40",
+    "symbol": "C_PerksProgram.GetFrozenPerksVendorItemInfo",
+    "whole_src_tests": {
+      "exit": 0,
+      "stdout": "tests/data/patch_10_0_5_sweep_known_gaps.json:8:  \"wt-global-api-C_PerksProgram.GetFrozenPerksVendorItemInfo-40\",\n",
+      "stderr": ""
+    },
+    "native_declaration": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua:70:\t\t\tName = \"GetFrozenPerksVendorItemInfo\",\n",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.GetPerksProgramItemDisplayInfo-42",
+    "symbol": "C_PerksProgram.GetPerksProgramItemDisplayInfo",
+    "whole_src_tests": {
+      "exit": 0,
+      "stdout": "tests/data/patch_10_0_5_sweep_known_gaps.json:9:  \"wt-global-api-C_PerksProgram.GetPerksProgramItemDisplayInfo-42\",\n",
+      "stderr": ""
+    },
+    "native_declaration": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua:89:\t\t\tName = \"GetPerksProgramItemDisplayInfo\",\n",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.GetTimeRemaining-43",
+    "symbol": "C_PerksProgram.GetTimeRemaining",
+    "whole_src_tests": {
+      "exit": 0,
+      "stdout": "tests/data/patch_10_0_5_sweep_known_gaps.json:10:  \"wt-global-api-C_PerksProgram.GetTimeRemaining-43\",\n",
+      "stderr": ""
+    },
+    "native_declaration": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua:104:\t\t\tName = \"GetTimeRemaining\",\n",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.GetVendorItemInfo-45",
+    "symbol": "C_PerksProgram.GetVendorItemInfo",
+    "whole_src_tests": {
+      "exit": 0,
+      "stdout": "tests/data/patch_10_0_5_sweep_known_gaps.json:11:  \"wt-global-api-C_PerksProgram.GetVendorItemInfo-45\",\ntests/data/patch_10_0_5_sweep_known_gaps.json:12:  \"wt-global-api-C_PerksProgram.GetVendorItemInfoRefundTimeLeft-44\",\n",
+      "stderr": ""
+    },
+    "native_declaration": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua:119:\t\t\tName = \"GetVendorItemInfo\",\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua:134:\t\t\tName = \"GetVendorItemInfoRefundTimeLeft\",\n",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.GetVendorItemInfoRefundTimeLeft-44",
+    "symbol": "C_PerksProgram.GetVendorItemInfoRefundTimeLeft",
+    "whole_src_tests": {
+      "exit": 0,
+      "stdout": "tests/data/patch_10_0_5_sweep_known_gaps.json:12:  \"wt-global-api-C_PerksProgram.GetVendorItemInfoRefundTimeLeft-44\",\n",
+      "stderr": ""
+    },
+    "native_declaration": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua:134:\t\t\tName = \"GetVendorItemInfoRefundTimeLeft\",\n",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.ItemSelectedTelemetry-46",
+    "symbol": "C_PerksProgram.ItemSelectedTelemetry",
+    "whole_src_tests": {
+      "exit": 0,
+      "stdout": "tests/data/patch_10_0_5_sweep_known_gaps.json:13:  \"wt-global-api-C_PerksProgram.ItemSelectedTelemetry-46\",\n",
+      "stderr": ""
+    },
+    "native_declaration": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua:182:\t\t\tName = \"ItemSelectedTelemetry\",\n",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.PickupPerksVendorItem-47",
+    "symbol": "C_PerksProgram.PickupPerksVendorItem",
+    "whole_src_tests": {
+      "exit": 0,
+      "stdout": "tests/data/patch_10_0_5_sweep_known_gaps.json:14:  \"wt-global-api-C_PerksProgram.PickupPerksVendorItem-47\",\n",
+      "stderr": ""
+    },
+    "native_declaration": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua:192:\t\t\tName = \"PickupPerksVendorItem\",\n",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.RequestPurchase-49",
+    "symbol": "C_PerksProgram.RequestPurchase",
+    "whole_src_tests": {
+      "exit": 0,
+      "stdout": "tests/data/patch_10_0_5_sweep_known_gaps.json:15:  \"wt-global-api-C_PerksProgram.RequestPurchase-49\",\n",
+      "stderr": ""
+    },
+    "native_declaration": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua:216:\t\t\tName = \"RequestPurchase\",\n",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.RequestRefund-50",
+    "symbol": "C_PerksProgram.RequestRefund",
+    "whole_src_tests": {
+      "exit": 0,
+      "stdout": "tests/data/patch_10_0_5_sweep_known_gaps.json:16:  \"wt-global-api-C_PerksProgram.RequestRefund-50\",\n",
+      "stderr": ""
+    },
+    "native_declaration": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua:226:\t\t\tName = \"RequestRefund\",\n",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.ResetHeldItemDragAndDrop-51",
+    "symbol": "C_PerksProgram.ResetHeldItemDragAndDrop",
+    "whole_src_tests": {
+      "exit": 0,
+      "stdout": "tests/data/patch_10_0_5_sweep_known_gaps.json:17:  \"wt-global-api-C_PerksProgram.ResetHeldItemDragAndDrop-51\",\n",
+      "stderr": ""
+    },
+    "native_declaration": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua:236:\t\t\tName = \"ResetHeldItemDragAndDrop\",\n",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.SetFrozenPerksVendorItem-52",
+    "symbol": "C_PerksProgram.SetFrozenPerksVendorItem",
+    "whole_src_tests": {
+      "exit": 0,
+      "stdout": "tests/data/patch_10_0_5_sweep_known_gaps.json:18:  \"wt-global-api-C_PerksProgram.SetFrozenPerksVendorItem-52\",\n",
+      "stderr": ""
+    },
+    "native_declaration": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua:240:\t\t\tName = \"SetFrozenPerksVendorItem\",\n",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_PlayerInfo.CanUseItem-53",
+    "symbol": "C_PlayerInfo.CanUseItem",
+    "whole_src_tests": {
+      "exit": 0,
+      "stdout": "tests/data/patch_10_0_5_sweep_known_gaps.json:19:  \"wt-global-api-C_PlayerInfo.CanUseItem-53\",\n",
+      "stderr": ""
+    },
+    "native_declaration": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PlayerInfoDocumentation.lua:39:\t\t\tName = \"CanUseItem\",\n",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_PlayerInfo.GetPlayerCharacterData-56",
+    "symbol": "C_PlayerInfo.GetPlayerCharacterData",
+    "whole_src_tests": {
+      "exit": 0,
+      "stdout": "tests/data/patch_10_0_5_sweep_known_gaps.json:20:  \"wt-global-api-C_PlayerInfo.GetPlayerCharacterData-56\",\n",
+      "stderr": ""
+    },
+    "native_declaration": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PlayerInfoDocumentation.lua:155:\t\t\tName = \"GetPlayerCharacterData\",\n",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.ArePvpTalentsUnlocked-59",
+    "symbol": "C_PvP.ArePvpTalentsUnlocked",
+    "whole_src_tests": {
+      "exit": 0,
+      "stdout": "tests/data/patch_10_0_5_sweep_known_gaps.json:21:  \"wt-global-api-C_PvP.ArePvpTalentsUnlocked-59\",\n",
+      "stderr": ""
+    },
+    "native_declaration": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PvpInfoDocumentation.lua:11:\t\t\tName = \"ArePvpTalentsUnlocked\",\n",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetPVPActiveRatedMatchDeserterPenalty-60",
+    "symbol": "C_PvP.GetPVPActiveRatedMatchDeserterPenalty",
+    "whole_src_tests": {
+      "exit": 0,
+      "stdout": "tests/data/patch_10_0_5_sweep_known_gaps.json:22:  \"wt-global-api-C_PvP.GetPVPActiveRatedMatchDeserterPenalty-60\",\n",
+      "stderr": ""
+    },
+    "native_declaration": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PvpInfoDocumentation.lua:460:\t\t\tName = \"GetPVPActiveRatedMatchDeserterPenalty\",\n",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.IsInRatedMatchWithDeserterPenalty-62",
+    "symbol": "C_PvP.IsInRatedMatchWithDeserterPenalty",
+    "whole_src_tests": {
+      "exit": 0,
+      "stdout": "tests/data/patch_10_0_5_sweep_known_gaps.json:23:  \"wt-global-api-C_PvP.IsInRatedMatchWithDeserterPenalty-62\",\n",
+      "stderr": ""
+    },
+    "native_declaration": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PvpInfoDocumentation.lua:928:\t\t\tName = \"IsInRatedMatchWithDeserterPenalty\",\n",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.ContinueRecast-72",
+    "symbol": "C_TradeSkillUI.ContinueRecast",
+    "whole_src_tests": {
+      "exit": 0,
+      "stdout": "src/c_api/patch_retired_members.rs:42:        \"ContinueRecast\",\ntests/patch_10_0_5_classic_surfaces.rs:9:        for _, name in ipairs({'ContinueRecast', 'GetRecipeRepeatCount', 'HasRecipesTracked'}) do\ntests/patch_10_0_5_publication_fixes.rs:5:for _, name in ipairs({'ContinueRecast', 'GetRecipeRepeatCount', 'HasRecipesTracked'}) do\n",
+      "stderr": ""
+    },
+    "native_declaration": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeRepeatCount-73",
+    "symbol": "C_TradeSkillUI.GetRecipeRepeatCount",
+    "whole_src_tests": {
+      "exit": 0,
+      "stdout": "src/c_api/patch_retired_members.rs:43:        \"GetRecipeRepeatCount\",\ntests/patch_10_0_5_publication_fixes.rs:5:for _, name in ipairs({'ContinueRecast', 'GetRecipeRepeatCount', 'HasRecipesTracked'}) do\ntests/patch_10_0_5_classic_surfaces.rs:9:        for _, name in ipairs({'ContinueRecast', 'GetRecipeRepeatCount', 'HasRecipesTracked'}) do\n",
+      "stderr": ""
+    },
+    "native_declaration": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.HasRecipesTracked-74",
+    "symbol": "C_TradeSkillUI.HasRecipesTracked",
+    "whole_src_tests": {
+      "exit": 0,
+      "stdout": "src/c_api/patch_retired_members.rs:44:        \"HasRecipesTracked\",\ntests/patch_10_0_5_classic_surfaces.rs:9:        for _, name in ipairs({'ContinueRecast', 'GetRecipeRepeatCount', 'HasRecipesTracked'}) do\ntests/patch_10_0_5_publication_fixes.rs:5:for _, name in ipairs({'ContinueRecast', 'GetRecipeRepeatCount', 'HasRecipesTracked'}) do\n",
+      "stderr": ""
+    },
+    "native_declaration": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.IsRecipeFirstCraft-64",
+    "symbol": "C_TradeSkillUI.IsRecipeFirstCraft",
+    "whole_src_tests": {
+      "exit": 0,
+      "stdout": "tests/data/patch_10_0_5_sweep_known_gaps.json:24:  \"wt-global-api-C_TradeSkillUI.IsRecipeFirstCraft-64\",\n",
+      "stderr": ""
+    },
+    "native_declaration": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TradeSkillUIDocumentation.lua:956:\t\t\tName = \"IsRecipeFirstCraft\",\n",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_Traits.GenerateInspectImportString-65",
+    "symbol": "C_Traits.GenerateInspectImportString",
+    "whole_src_tests": {
+      "exit": 0,
+      "stdout": "tests/data/patch_10_0_5_sweep_known_gaps.json:25:  \"wt-global-api-C_Traits.GenerateInspectImportString-65\",\n",
+      "stderr": ""
+    },
+    "native_declaration": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SharedTraitsDocumentation.lua:137:\t\t\tName = \"GenerateInspectImportString\",\n",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_Traits.ResetTreeByCurrency-66",
+    "symbol": "C_Traits.ResetTreeByCurrency",
+    "whole_src_tests": {
+      "exit": 0,
+      "stdout": "tests/data/patch_10_0_5_sweep_known_gaps.json:26:  \"wt-global-api-C_Traits.ResetTreeByCurrency-66\",\n",
+      "stderr": ""
+    },
+    "native_declaration": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SharedTraitsDocumentation.lua:640:\t\t\tName = \"ResetTreeByCurrency\",\n",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-IsUsingGamepad-67",
+    "symbol": "IsUsingGamepad",
+    "whole_src_tests": {
+      "exit": 0,
+      "stdout": "src/lua_api/globals/real/input_interface.rs:15:    LuaApiMut::register_function(lua, \"IsUsingGamepad\", is_using_gamepad)\ntests/data/patch_10_0_5_sweep_known_gaps.json:27:  \"wt-global-api-IsUsingGamepad-67\",\ntests/gamepad_mapped_state.rs:176:            assert(not IsUsingGamepad())\ntests/gamepad_mapped_state.rs:187:            assert(IsUsingGamepad())\ntests/gamepad_mapped_state.rs:192:            assert(IsUsingGamepad())\ntests/gamepad_mapped_state.rs:207:            assert(IsUsingGamepad())\ntests/gamepad_mapped_state.rs:430:    first.exec(\"local f = CreateFrame('Frame'); f:EnableGamePadStick(true); f:EnableGamePadButton(true); assert(f:IsGamePadStickEnabled() and f:IsGamePadButtonEnabled()); assert(not IsUsingGamepad()); assert(C_GamePad.GetDeviceMappedState().sticks[1].len == 1)\").unwrap();\ntests/gamepad_mapped_state.rs:431:    second.exec(\"assert(IsUsingGamepad()); assert(C_GamePad.GetDeviceMappedState() == nil); assert(C_GamePad.StickIndexToConfigName(0) == nil)\").unwrap();\ntests/wowforever_input_style.rs:13:        assert(IsUsingGamepad() == false)\ntests/wowforever_input_style.rs:20:        assert(IsUsingGamepad() == false)\ntests/wowforever_input_style.rs:29:        assert(IsUsingGamepad() == true)\ntests/wowforever_input_style.rs:33:        assert(IsUsingGamepad() == true)\ntests/wowforever_input_style.rs:37:    assert!(!other.eval::<bool>(\"return IsUsingGamepad()\").unwrap());\ntests/wowforever_input_style.rs:41:    assert!(!env.eval::<bool>(\"return IsUsingGamepad()\").unwrap());\ntests/wowforever_input_style.rs:55:            table.insert(inputObservations, IsUsingGamepad())\ntests/wowforever_input_style.rs:56:            assert(IsUsingGamepad() == (new == Enum.InputDeviceInterfaceType.Gamepad))\n",
+      "stderr": ""
+    },
+    "native_declaration": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/InputDocumentation.lua:226:\t\t\tName = \"IsUsingGamepad\",\n",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-IsUsingMouse-68",
+    "symbol": "IsUsingMouse",
+    "whole_src_tests": {
+      "exit": 0,
+      "stdout": "tests/data/patch_10_0_5_sweep_known_gaps.json:28:  \"wt-global-api-IsUsingMouse-68\"\n",
+      "stderr": ""
+    },
+    "native_declaration": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/InputDocumentation.lua:235:\t\t\tName = \"IsUsingMouse\",\n",
+      "stderr": ""
+    }
+  }
+]

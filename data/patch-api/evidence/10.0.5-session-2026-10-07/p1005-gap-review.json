@@ -1,0 +1,1403 @@
+[
+  {
+    "source_id": "wt-global-api-C_CraftingOrders.GetNumFavoriteCustomerOptions-20",
+    "symbol": "C_CraftingOrders.GetNumFavoriteCustomerOptions",
+    "disposition": "retained-gap",
+    "reason": "Favorite-customer option catalog/count is absent. The local order placement model in src/c_api/c_crafting_orders.rs registers PlaceNewOrder/GetMyOrders, not favorite-customer options; returning zero would invent catalog state.",
+    "discovery": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_CraftingOrders.GetNumFavoriteCustomerOptions"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "final": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_CraftingOrders.GetNumFavoriteCustomerOptions"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "native_contract": {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/CraftingOrderUIDocumentation.lua",
+      "line": 181
+    },
+    "source_scan": "p1005-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_EditMode.OnLayoutAdded-82",
+    "symbol": "C_EditMode.OnLayoutAdded",
+    "disposition": "retained-gap",
+    "reason": "Requires addedLayoutIndex, activateNewLayout and isLayoutImported transitions in the native layout model (EditModeManagerDocumentation.lua:79-88), not a no-op accepting the two new arguments.",
+    "discovery": {
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_EditMode.OnLayoutAdded"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "final": {
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_EditMode.OnLayoutAdded"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "native_contract": {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/EditModeManagerDocumentation.lua",
+      "line": 79
+    },
+    "source_scan": "p1005-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_MountJournal.GetAllCreatureDisplayIDsForMountID-23",
+    "symbol": "C_MountJournal.GetAllCreatureDisplayIDsForMountID",
+    "disposition": "retained-gap",
+    "reason": "Requires the complete mountID-to-display-ID catalog. Existing GetMountInfoExtraByID returns a single display, not proof of every variant; cannot wrap it as a singleton without source evidence.",
+    "discovery": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_MountJournal.GetAllCreatureDisplayIDsForMountID"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "final": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_MountJournal.GetAllCreatureDisplayIDsForMountID"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "native_contract": {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/MountJournalDocumentation.lua",
+      "line": 53
+    },
+    "source_scan": "p1005-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.ClearFrozenPerksVendorItem-33",
+    "symbol": "C_PerksProgram.ClearFrozenPerksVendorItem",
+    "disposition": "retained-gap",
+    "reason": "Requires clearing the frozen vendor item and its event/catalog effects; no frozen-item model exists.",
+    "discovery": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PerksProgram.ClearFrozenPerksVendorItem"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "final": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PerksProgram.ClearFrozenPerksVendorItem"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "native_contract": {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua",
+      "line": 11
+    },
+    "source_scan": "p1005-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.CloseInteraction-34",
+    "symbol": "C_PerksProgram.CloseInteraction",
+    "disposition": "retained-gap",
+    "reason": "Requires Trading Post interaction close lifecycle/event, not C_WeeklyRewards.CloseInteraction or an inert no-op.",
+    "discovery": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PerksProgram.CloseInteraction"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "final": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PerksProgram.CloseInteraction"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "native_contract": {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua",
+      "line": 15
+    },
+    "source_scan": "p1005-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.GetDraggedPerksVendorItem-39",
+    "symbol": "C_PerksProgram.GetDraggedPerksVendorItem",
+    "disposition": "retained-gap",
+    "reason": "Requires current dragged vendor-item identity/nil boundary, distinct from empty catalog defaults.",
+    "discovery": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PerksProgram.GetDraggedPerksVendorItem"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "final": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PerksProgram.GetDraggedPerksVendorItem"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "native_contract": {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua",
+      "line": 61
+    },
+    "source_scan": "p1005-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.GetFrozenPerksVendorItemInfo-40",
+    "symbol": "C_PerksProgram.GetFrozenPerksVendorItemInfo",
+    "disposition": "retained-gap",
+    "reason": "Requires frozen vendor-item DTO and nullable state, not an empty table.",
+    "discovery": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PerksProgram.GetFrozenPerksVendorItemInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "final": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PerksProgram.GetFrozenPerksVendorItemInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "native_contract": {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua",
+      "line": 70
+    },
+    "source_scan": "p1005-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.GetPerksProgramItemDisplayInfo-42",
+    "symbol": "C_PerksProgram.GetPerksProgramItemDisplayInfo",
+    "disposition": "retained-gap",
+    "reason": "Requires item-display catalog identity/DTO keyed by itemID; generic item existence does not supply its display contract.",
+    "discovery": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PerksProgram.GetPerksProgramItemDisplayInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "final": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PerksProgram.GetPerksProgramItemDisplayInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "native_contract": {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua",
+      "line": 89
+    },
+    "source_scan": "p1005-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.GetTimeRemaining-43",
+    "symbol": "C_PerksProgram.GetTimeRemaining",
+    "disposition": "retained-gap",
+    "reason": "Requires a modeled program refresh/end clock and resulting time units, not a constant timer.",
+    "discovery": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PerksProgram.GetTimeRemaining"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "final": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PerksProgram.GetTimeRemaining"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "native_contract": {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua",
+      "line": 104
+    },
+    "source_scan": "p1005-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.GetVendorItemInfo-45",
+    "symbol": "C_PerksProgram.GetVendorItemInfo",
+    "disposition": "retained-gap",
+    "reason": "Requires populated vendor-item DTO keyed by perksVendorItemID with unknown-ID boundary; catalog is not modeled.",
+    "discovery": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PerksProgram.GetVendorItemInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "final": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PerksProgram.GetVendorItemInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "native_contract": {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua",
+      "line": 119
+    },
+    "source_scan": "p1005-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.GetVendorItemInfoRefundTimeLeft-44",
+    "symbol": "C_PerksProgram.GetVendorItemInfoRefundTimeLeft",
+    "disposition": "retained-gap",
+    "reason": "Requires purchase timestamp/refund eligibility and remaining refund-window clock per vendor item.",
+    "discovery": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PerksProgram.GetVendorItemInfoRefundTimeLeft"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "final": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PerksProgram.GetVendorItemInfoRefundTimeLeft"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "native_contract": {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua",
+      "line": 134
+    },
+    "source_scan": "p1005-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.ItemSelectedTelemetry-46",
+    "symbol": "C_PerksProgram.ItemSelectedTelemetry",
+    "disposition": "retained-gap",
+    "reason": "Requires a defined telemetry sink/selection side effect and contract. This audit neither invents a sink nor declares telemetry intentionally unsupported.",
+    "discovery": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PerksProgram.ItemSelectedTelemetry"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "final": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PerksProgram.ItemSelectedTelemetry"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "native_contract": {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua",
+      "line": 182
+    },
+    "source_scan": "p1005-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.PickupPerksVendorItem-47",
+    "symbol": "C_PerksProgram.PickupPerksVendorItem",
+    "disposition": "retained-gap",
+    "reason": "Requires drag-item state and cursor transfer tied to the vendor catalog.",
+    "discovery": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PerksProgram.PickupPerksVendorItem"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "final": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PerksProgram.PickupPerksVendorItem"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "native_contract": {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua",
+      "line": 192
+    },
+    "source_scan": "p1005-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.RequestPurchase-49",
+    "symbol": "C_PerksProgram.RequestPurchase",
+    "disposition": "retained-gap",
+    "reason": "Requires validated vendor purchase, currency deduction, ownership, failure/success and refresh events. Empty catalog/currency startup defaults are not transaction state.",
+    "discovery": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PerksProgram.RequestPurchase"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "final": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PerksProgram.RequestPurchase"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "native_contract": {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua",
+      "line": 216
+    },
+    "source_scan": "p1005-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.RequestRefund-50",
+    "symbol": "C_PerksProgram.RequestRefund",
+    "disposition": "retained-gap",
+    "reason": "Requires refund eligibility/window, ownership reversal, currency refund and events, not a placeholder request.",
+    "discovery": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PerksProgram.RequestRefund"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "final": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PerksProgram.RequestRefund"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "native_contract": {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua",
+      "line": 226
+    },
+    "source_scan": "p1005-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.ResetHeldItemDragAndDrop-51",
+    "symbol": "C_PerksProgram.ResetHeldItemDragAndDrop",
+    "disposition": "retained-gap",
+    "reason": "Requires resetting held-item drag/cursor state consistently with pickup; no vendor drag lifecycle exists.",
+    "discovery": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PerksProgram.ResetHeldItemDragAndDrop"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "final": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PerksProgram.ResetHeldItemDragAndDrop"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "native_contract": {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua",
+      "line": 236
+    },
+    "source_scan": "p1005-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.SetFrozenPerksVendorItem-52",
+    "symbol": "C_PerksProgram.SetFrozenPerksVendorItem",
+    "disposition": "retained-gap",
+    "reason": "Requires catalog-valid frozen-item selection and persistence/event behavior, not storing an unchecked integer.",
+    "discovery": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PerksProgram.SetFrozenPerksVendorItem"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "final": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PerksProgram.SetFrozenPerksVendorItem"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "native_contract": {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PerksProgramDocumentation.lua",
+      "line": 240
+    },
+    "source_scan": "p1005-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PlayerInfo.CanUseItem-53",
+    "symbol": "C_PlayerInfo.CanUseItem",
+    "disposition": "retained-gap",
+    "reason": "Requires modeled item-use eligibility for the supplied itemID. Current item existence/inventory presence does not establish usability or native restriction decisions.",
+    "discovery": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PlayerInfo.CanUseItem"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "final": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PlayerInfo.CanUseItem"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "native_contract": {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PlayerInfoDocumentation.lua",
+      "line": 39
+    },
+    "source_scan": "p1005-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PlayerInfo.GetPlayerCharacterData-56",
+    "symbol": "C_PlayerInfo.GetPlayerCharacterData",
+    "disposition": "retained-gap",
+    "reason": "Requires populated PlayerInfoCharacterData and its MayReturnNothing boundary (PlayerInfoDocumentation.lua:155-162); existing GetDisplayID is not this DTO.",
+    "discovery": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PlayerInfo.GetPlayerCharacterData"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "final": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PlayerInfo.GetPlayerCharacterData"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "native_contract": {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PlayerInfoDocumentation.lua",
+      "line": 155
+    },
+    "source_scan": "p1005-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.ArePvpTalentsUnlocked-59",
+    "symbol": "C_PvP.ArePvpTalentsUnlocked",
+    "disposition": "retained-gap",
+    "reason": "Requires modeled player PvP-talent unlock eligibility. Native bool declaration does not specify a sufficient level-only rule; existing unlocked-level query is not proof of that rule.",
+    "discovery": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PvP.ArePvpTalentsUnlocked"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "final": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PvP.ArePvpTalentsUnlocked"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "native_contract": {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PvpInfoDocumentation.lua",
+      "line": 11
+    },
+    "source_scan": "p1005-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetPVPActiveRatedMatchDeserterPenalty-60",
+    "symbol": "C_PvP.GetPVPActiveRatedMatchDeserterPenalty",
+    "disposition": "retained-gap",
+    "reason": "Requires active rated-match penalty identity and nullable RatedMatchDeserterPenalty data. Existing queue/catalog state does not model rated-match penalty lifecycle.",
+    "discovery": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PvP.GetPVPActiveRatedMatchDeserterPenalty"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "final": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PvP.GetPVPActiveRatedMatchDeserterPenalty"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "native_contract": {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PvpInfoDocumentation.lua",
+      "line": 460
+    },
+    "source_scan": "p1005-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.IsInRatedMatchWithDeserterPenalty-62",
+    "symbol": "C_PvP.IsInRatedMatchWithDeserterPenalty",
+    "disposition": "retained-gap",
+    "reason": "Requires active rated-match membership tied to deserter-penalty state. A permanent false default would fabricate the absent model.",
+    "discovery": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PvP.IsInRatedMatchWithDeserterPenalty"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "final": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PvP.IsInRatedMatchWithDeserterPenalty"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "native_contract": {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PvpInfoDocumentation.lua",
+      "line": 928
+    },
+    "source_scan": "p1005-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.ContinueRecast-72",
+    "symbol": "C_TradeSkillUI.ContinueRecast",
+    "disposition": "closed-retirement",
+    "reason": "No qualified or bare cached Lua consumers, and no pre-existing src/tests callers. Prevent namespace fallback fabrication under the existing retail epoch module gate; preserve classic lookup and tracked-recipe successors.",
+    "discovery": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_TradeSkillUI.ContinueRecast"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "final": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_TradeSkillUI.ContinueRecast"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "member",
+        "value": null
+      },
+      "ok": true
+    },
+    "native_contract": null,
+    "source_scan": "p1005-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeRepeatCount-73",
+    "symbol": "C_TradeSkillUI.GetRecipeRepeatCount",
+    "disposition": "closed-retirement",
+    "reason": "No qualified or bare cached Lua consumers, and no pre-existing src/tests callers. Prevent namespace fallback fabrication under the existing retail epoch module gate; preserve classic lookup and tracked-recipe successors.",
+    "discovery": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_TradeSkillUI.GetRecipeRepeatCount"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "final": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_TradeSkillUI.GetRecipeRepeatCount"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "member",
+        "value": null
+      },
+      "ok": true
+    },
+    "native_contract": null,
+    "source_scan": "p1005-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.HasRecipesTracked-74",
+    "symbol": "C_TradeSkillUI.HasRecipesTracked",
+    "disposition": "closed-retirement",
+    "reason": "No qualified or bare cached Lua consumers, and no pre-existing src/tests callers. Prevent namespace fallback fabrication under the existing retail epoch module gate; preserve classic lookup and tracked-recipe successors.",
+    "discovery": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_TradeSkillUI.HasRecipesTracked"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "final": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_TradeSkillUI.HasRecipesTracked"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "member",
+        "value": null
+      },
+      "ok": true
+    },
+    "native_contract": null,
+    "source_scan": "p1005-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.IsRecipeFirstCraft-64",
+    "symbol": "C_TradeSkillUI.IsRecipeFirstCraft",
+    "disposition": "retained-gap",
+    "reason": "Requires per-character/per-recipe completion history and first-craft transitions. Existing crafting result firstCraftReward field is input/output metadata, not a persistent recipe completion predicate.",
+    "discovery": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_TradeSkillUI.IsRecipeFirstCraft"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "final": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_TradeSkillUI.IsRecipeFirstCraft"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "native_contract": {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TradeSkillUIDocumentation.lua",
+      "line": 956
+    },
+    "source_scan": "p1005-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_Traits.GenerateInspectImportString-65",
+    "symbol": "C_Traits.GenerateInspectImportString",
+    "disposition": "retained-gap",
+    "reason": "Requires inspected target talent snapshot and serialization; existing GenerateImportString serializes local config and is not a remote inspect-target alias.",
+    "discovery": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_Traits.GenerateInspectImportString"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "final": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_Traits.GenerateInspectImportString"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "native_contract": {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SharedTraitsDocumentation.lua",
+      "line": 137
+    },
+    "source_scan": "p1005-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_Traits.ResetTreeByCurrency-66",
+    "symbol": "C_Traits.ResetTreeByCurrency",
+    "disposition": "retained-gap",
+    "reason": "Requires resetting/refunding only nodes spending traitCurrencyID within configID/treeID, preserving other currencies and commit/event semantics; no currency-scoped tree-reset implementation exists.",
+    "discovery": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_Traits.ResetTreeByCurrency"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "final": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_Traits.ResetTreeByCurrency"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "native_contract": {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SharedTraitsDocumentation.lua",
+      "line": 640
+    },
+    "source_scan": "p1005-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-IsUsingGamepad-67",
+    "symbol": "IsUsingGamepad",
+    "disposition": "retained-gap",
+    "reason": "The current IsUsingGamepad implementation and input_interface_style state are explicitly client-wowforever-only (globals/register.rs:186-187, state/sim_state.rs:18-19). Retail has no modeled active-device-style producer; promoting capability/frame-enable flags would not answer active use.",
+    "discovery": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "IsUsingGamepad"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    },
+    "final": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "IsUsingGamepad"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    },
+    "native_contract": {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/InputDocumentation.lua",
+      "line": 226
+    },
+    "source_scan": "p1005-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-IsUsingMouse-68",
+    "symbol": "IsUsingMouse",
+    "disposition": "retained-gap",
+    "reason": "Retail has no active input-device-style producer. Mouse-button state, cursor visibility, or lack of gamepad capability do not establish the native active-use predicate.",
+    "discovery": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "IsUsingMouse"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    },
+    "final": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "IsUsingMouse"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    },
+    "native_contract": {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/InputDocumentation.lua",
+      "line": 235
+    },
+    "source_scan": "p1005-gap-source-scans.json"
+  }
+]
