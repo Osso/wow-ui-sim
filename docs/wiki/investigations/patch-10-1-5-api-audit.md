@@ -12,7 +12,7 @@ The old parser silently dropped all level-two inventories and the extractor stop
 
 ## Bounded closures
 
-Discovery 67 OK / 34 gaps. Expected final 69 OK / 32 gaps:
+Discovery 67 OK / 34 gaps. Final 69 OK / 32 gaps:
 
 - C_CampaignInfo.UsesNormalQuestIcons autostub is retired only for retail/PTR. Qualified cached retail search has no consumer. Bare search finds `Blizzard_ObjectAPI/Mainline/Campaign.lua:53` defining CampaignMixin:UsesNormalQuestIcons, an unrelated Lua method. GetCampaignInfo remains published.
 - RequestArtifactCompletionHistory registration is omitted for retail/PTR; no current cached retail Lua consumer. Classic retains the modeled request and its availability-state test. IsArtifactCompletionHistoryAvailable/GetArtifactInfoByRace remain unchanged. Whole src/tests caller search identifies the single legacy request test, now classic-only.
@@ -31,7 +31,34 @@ Read-only comparison with 10.1.7 revision 6473483 finds no add/remove intersecti
 
 ## Verification
 
-Final targeted gates pending. Parser/extractor fixtures: 23 GREEN after two observed RED failures. First campaign retirement has RED/GREEN; archaeology retirement has observed RED. No full suite, agents/models/CLIs, push, merge, sibling target reuse, canonical working-file edits or cache/vendor changes. Every command uses explicit cwd `p1015-page` and its own target. Worktree creation used only the prescribed canonical Git metadata operation with cwd in the empty destination.
+Current runtime/test revision `2474d039a`. Twenty isolated publication sweeps pass exact fixtures; table below. Both retirement boundaries have observed RED and final GREEN; combined bare-environment assertions and one cached Game prefork pass. Eight archaeology completion-history regressions, one campaign state case and two campaign/covenant-default cases pass. The classic-only history request test passes under Mists. Whole src/tests caller searches find no other direct retired-member callers; no retail successor exists for the removed request, so its legacy request test is classic-only rather than redirected to a fabricated API.
+
+Negative control changes only Frame:AbortDrag added → removed: exactly one new failure, no resolved failures, 32 → 33, expected exit 101. Parser/extractor fixtures: 23 GREEN after two observed RED failures. All twenty registers regenerate byte-identically; seventeen generated extracts reproduce exactly. The three later 12.0.5/12.0.7/12.1.0 plaintext files are MediaWiki/crawler captures, not extractor outputs; attempted local extraction differs (12.1.0 has an unsupported description template). Their original capture bytes, like all 122 previous source/register/ledger/fixture inputs, remain unchanged. No unsupported capture was rewritten or silently labeled reproducible.
+
+Cargo fmt --check and Mists test check pass with zero non-vendor warnings. Six iced vendor manifest deprecations and their summary remain unsuppressed. Separate retail build passes; bounded startup exits 0 and returns `[]`. [Proof ledger](../../../data/patch-api/evidence/10.1.5-session-2026-10-07/p1015-proof.json) binds commands, exact scope/revision, logs, hashes and expected exits. Earlier parser proof remains valid at unchanged parser scope; final runtime proof supersedes initial retirement-only runs. Saved cargo outputs are inspected rather than rerun for logs. Changed Rust manually audited for readability: flat data marker, bounded profile registration and short state assertions; no changed-line violations found. No full suite, agents/models/CLIs, push, merge, sibling target reuse, canonical working-file edits or cache/vendor changes. Every command uses explicit cwd `p1015-page` and its own target. Worktree creation used only the prescribed canonical Git metadata operation with cwd in the empty destination.
+
+| Patch | Rows | OK | Gaps | Isolated exit |
+|---|---:|---:|---:|---:|
+| 10.1.5 | 101 | 69 | 32 | 0 |
+| 10.2.0 | 150 | 120 | 30 | 0 |
+| 10.2.5 | 59 | 45 | 14 | 0 |
+| 10.2.6 | 220 | 200 | 20 | 0 |
+| 10.2.7 | 104 | 68 | 36 | 0 |
+| 11.0.0 | 495 | 329 | 166 | 0 |
+| 11.0.2 | 34 | 22 | 12 | 0 |
+| 11.0.5 | 48 | 38 | 10 | 0 |
+| 11.0.7 | 98 | 70 | 28 | 0 |
+| 11.1.0 | 116 | 97 | 19 | 0 |
+| 11.1.5 | 125 | 89 | 36 | 0 |
+| 11.1.7 | 48 | 40 | 8 | 0 |
+| 11.2.0 | 162 | 135 | 27 | 0 |
+| 11.2.5 | 163 | 118 | 45 | 0 |
+| 11.2.7 | 508 | 414 | 94 | 0 |
+| 12.0.0 | 1010 | 989 | 21 | 0 |
+| 12.0.1 | 225 | 222 | 3 | 0 |
+| 12.0.5 | 363 | 352 | 11 | 0 |
+| 12.0.7 | 174 | 171 | 3 | 0 |
+| 12.1.0 | 778 | 773 | 5 | 0 |
 
 ## Sources
 

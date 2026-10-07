@@ -11,16 +11,16 @@
       "symbols": [
         "101 inventory occurrences"
       ],
-      "scope": "Publication/absence and event registration only; 69 OK / 32 exact gaps expected after two retirements. One historical CVar default mismatch grants no default parity.",
+      "scope": "Publication/absence and event registration only; 69 OK / 32 exact gaps after two retirements. One historical CVar default mismatch grants no default parity.",
       "spec": "docs/specs/patch-10-1-5-publication-sweep.md",
       "tests": [
         "tests/patch_10_1_5_publication_sweep.rs",
         "tests/patch_10_1_5_publication_fixes.rs",
         "tests/patch_10_1_5_cached_surfaces.rs"
       ],
-      "compiled_revision": "pending",
+      "compiled_revision": "2474d039a",
       "ledger": "data/patch-api/evidence/10.1.5-session-2026-10-07/p1015-proof.json",
-      "proof": "Final targeted gates pending; first retirement RED/GREEN, second RED observed."
+      "proof": "Twenty isolated exact sweeps, both retirements RED/GREEN, one cached Game prefork, affected history/campaign tests, Mists request preservation, exact negative control 32 to 33, formatting, Mists tests check zero non-vendor warnings, retail build and exit-0 startup []."
     }
   ],
   "non_inventory_source": {

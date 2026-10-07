@@ -1,6 +1,6 @@
 ## [2026-10-07] evidence | 10.1.5 page audit
 
-[Audit](investigations/patch-10-1-5-api-audit.md) retains revision 3807695, 101 inventory / 98 extract rows, level-two heading fixtures and two retail-only retirements. Thirty-two exact gaps and one historical default mismatch remain; targeted final proof pending.
+[Audit](investigations/patch-10-1-5-api-audit.md) retains revision 3807695, 101 inventory / 98 extract rows, level-two heading fixtures and two retail-only retirements. Thirty-two exact gaps and one historical default mismatch remain. Twenty isolated sweeps, exact negative control, retirement/regression/prefork proof, Mists warning boundary and exit-0 startup `[]` pass. All 199 IDs accounted; 122 prior inputs preserved.
 
 ## [2026-10-07] evidence | 10.2.0 page audit
 
