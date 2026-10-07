@@ -1,0 +1,981 @@
+[
+  {
+    "source_id": "wt-events-SPELL_TEXT_UPDATE-626",
+    "symbol": "SPELL_TEXT_UPDATE",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "SPELL_TEXT_UPDATE",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Cata/Blizzard_EncounterJournal.lua:572:\tself:RegisterEvent(\"SPELL_TEXT_UPDATE\");",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Cata/Blizzard_EncounterJournal.lua:628:\tself:UnregisterEvent(\"SPELL_TEXT_UPDATE\");",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Cata/Blizzard_EncounterJournal.lua:749:\telseif event == \"SPELL_TEXT_UPDATE\" then",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_EncounterJournal.lua:785:\tself:RegisterEvent(\"SPELL_TEXT_UPDATE\");",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_EncounterJournal.lua:899:\tself:UnregisterEvent(\"SPELL_TEXT_UPDATE\");",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_EncounterJournal.lua:1031:\telseif event == \"SPELL_TEXT_UPDATE\" then",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/CharacterFrame.lua:312:\tself:RegisterEvent(\"SPELL_TEXT_UPDATE\");",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/CharacterFrame.lua:321:\telseif event == \"SPELL_TEXT_UPDATE\" then",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CovenantSanctum/Blizzard_CovenantSanctumUpgrades.lua:151:\t\"SPELL_TEXT_UPDATE\",",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_OrderHallUI/Blizzard_OrderHallTalents.lua:488:\tself:RegisterEvent(\"SPELL_TEXT_UPDATE\");",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_OrderHallUI/Blizzard_OrderHallTalents.lua:521:\tself:UnregisterEvent(\"SPELL_TEXT_UPDATE\");",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_OrderHallUI/Blizzard_OrderHallTalents.lua:534:\telseif event == \"SPELL_TEXT_UPDATE\" then",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Professions/Blizzard_ProfessionsSpecializationsTemplates.lua:339:\tif event == \"SPELL_TEXT_UPDATE\" then",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Professions/Blizzard_ProfessionsSpecializationsTemplates.lua:363:\tself:RegisterEvent(\"SPELL_TEXT_UPDATE\");",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Professions/Blizzard_ProfessionsSpecializationsTemplates.lua:376:\tself:UnregisterEvent(\"SPELL_TEXT_UPDATE\");",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Professions/Blizzard_ProfessionsSpecializationsTemplates.lua:699:\tif event == \"SPELL_TEXT_UPDATE\" then",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Professions/Blizzard_ProfessionsSpecializationsTemplates.lua:732:\tself:RegisterEvent(\"SPELL_TEXT_UPDATE\");",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Professions/Blizzard_ProfessionsSpecializationsTemplates.lua:740:\tself:UnregisterEvent(\"SPELL_TEXT_UPDATE\");",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SpellBookDocumentation.lua:266:\t\t\t\t{ Name = \"description\", Type = \"string\", Nilable = false, Documentation = { \"May be empty if spell's data isn't loaded yet; Listen for SPELL_TEXT_UPDATE event, or use SpellMixin to load asynchronously\" } },",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SpellBookDocumentation.lua:373:\t\t\t\t{ Name = \"subName\", Type = \"string\", Nilable = false, Documentation = { \"May be empty if spell's data isn't loaded yet; Listen for SPELL_TEXT_UPDATE event, or use SpellMixin to load asynchronously\" } },",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SpellBookDocumentation.lua:955:\t\t\t\t{ Name = \"subName\", Type = \"string\", Nilable = false, Documentation = { \"May be empty if flyout, or if spell's data isn't loaded yet; Listen for SPELL_TEXT_UPDATE event, or use SpellMixin to load asynchronously\" } },",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SpellDocumentation.lua:317:\t\t\t\t{ Name = \"description\", Type = \"string\", Nilable = false, Documentation = { \"May be empty if spell's data isn't loaded yet; Listen for SPELL_TEXT_UPDATE event, or use SpellMixin to load asynchronously\" } },",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SpellDocumentation.lua:335:\t\t\t\t{ Name = \"description\", Type = \"string\", Nilable = false, Documentation = { \"May be empty if spell's data isn't loaded yet; Listen for SPELL_TEXT_UPDATE event, or use SpellMixin to load asynchronously\" } },",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SpellDocumentation.lua:550:\t\t\t\t{ Name = \"subtext\", Type = \"string\", Nilable = false, Documentation = { \"May be empty if spell's data isn't loaded yet; Listen for SPELL_TEXT_UPDATE event, or use SpellMixin to load asynchronously\" } },",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SpellDocumentation.lua:1070:\t\t\tLiteralName = \"SPELL_TEXT_UPDATE\","
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_MajorFactions.GetFeatureAbilities-398",
+    "symbol": "C_MajorFactions.GetFeatureAbilities",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "GetFeatureAbilities",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 1,
+    "matches": [],
+    "qualified_command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "C_MajorFactions.GetFeatureAbilities",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "qualified_matches": []
+  },
+  {
+    "source_id": "wt-global-api-C_MajorFactions.IsPlayerInRenownCatchUpMode-399",
+    "symbol": "C_MajorFactions.IsPlayerInRenownCatchUpMode",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "IsPlayerInRenownCatchUpMode",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CovenantRenown/Blizzard_CovenantRenown.lua:359:\telseif (C_CovenantSanctumUI.IsPlayerInRenownCatchUpMode()) then ",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/CovenantSanctumDocumentation.lua:132:\t\t\tName = \"IsPlayerInRenownCatchUpMode\","
+    ],
+    "qualified_command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "C_MajorFactions.IsPlayerInRenownCatchUpMode",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "qualified_matches": []
+  },
+  {
+    "source_id": "wt-global-api-C_MajorFactions.RequestCatchUpState-400",
+    "symbol": "C_MajorFactions.RequestCatchUpState",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "RequestCatchUpState",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CovenantRenown/Blizzard_CovenantRenown.lua:75:\tC_CovenantSanctumUI.RequestCatchUpState();",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/CovenantSanctumDocumentation.lua:150:\t\t\tName = \"RequestCatchUpState\","
+    ],
+    "qualified_command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "C_MajorFactions.RequestCatchUpState",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "qualified_matches": []
+  },
+  {
+    "source_id": "wt-global-api-C_Map.IsMapValidForNavBarDropDown-401",
+    "symbol": "C_Map.IsMapValidForNavBarDropDown",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "IsMapValidForNavBarDropDown",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 1,
+    "matches": [],
+    "qualified_command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "C_Map.IsMapValidForNavBarDropDown",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "qualified_matches": []
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetSoloRBGMinItemLevel-402",
+    "symbol": "C_PvP.GetSoloRBGMinItemLevel",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "GetSoloRBGMinItemLevel",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 1,
+    "matches": [],
+    "qualified_command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "C_PvP.GetSoloRBGMinItemLevel",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "qualified_matches": []
+  },
+  {
+    "source_id": "wt-global-api-C_Reputation.SetWatchedFaction-403",
+    "symbol": "C_Reputation.SetWatchedFaction",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "SetWatchedFaction",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MajorFactions/Blizzard_MajorFactionsLandingTemplates.lua:466:\tC_Reputation.SetWatchedFactionByID(factionID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_Journeys.lua:932:\tC_Reputation.SetWatchedFactionByID(self:GetChecked() and self.factionID or 0);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/ReputationFrame.lua:832:\tC_Reputation.SetWatchedFactionByIndex(self:GetChecked() and C_Reputation.GetSelectedFaction() or 0);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PVPUI/Mainline/Blizzard_PVPUI.lua:1966:\t\t\t\t\tC_Reputation.SetWatchedFactionByIndex(0);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ReputationInfoDocumentation.lua:279:\t\t\tName = \"SetWatchedFactionByID\",",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ReputationInfoDocumentation.lua:289:\t\t\tName = \"SetWatchedFactionByIndex\","
+    ],
+    "qualified_command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "C_Reputation.SetWatchedFaction",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "qualified_matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/ReputationFrame.lua:832:\tC_Reputation.SetWatchedFactionByIndex(self:GetChecked() and C_Reputation.GetSelectedFaction() or 0);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_Journeys.lua:932:\tC_Reputation.SetWatchedFactionByID(self:GetChecked() and self.factionID or 0);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MajorFactions/Blizzard_MajorFactionsLandingTemplates.lua:466:\tC_Reputation.SetWatchedFactionByID(factionID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PVPUI/Mainline/Blizzard_PVPUI.lua:1966:\t\t\t\t\tC_Reputation.SetWatchedFactionByIndex(0);"
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_Scenario.GetCriteriaInfo-405",
+    "symbol": "C_Scenario.GetCriteriaInfo",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "GetCriteriaInfo",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ScenarioInfoDocumentation.lua:11:\t\t\tName = \"GetCriteriaInfo\",",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ScenarioInfoDocumentation.lua:27:\t\t\tName = \"GetCriteriaInfoByStep\",",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_ScenarioObjectiveTracker.lua:386:\t\tlocal criteriaInfo = C_ScenarioInfo.GetCriteriaInfo(criteriaIndex);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_ScenarioObjectiveTracker.lua:1064:\t\tlocal criteriaInfo = C_ScenarioInfo.GetCriteriaInfo(criteriaIndex);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_BonusObjectiveTracker.lua:106:\t\t\t\t\tlocal criteriaInfo = C_ScenarioInfo.GetCriteriaInfoByStep(bonusStepIndex, criteriaIndex);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_BonusObjectiveTracker.lua:248:\t\t\t\t\tlocal criteriaInfo = C_ScenarioInfo.GetCriteriaInfoByStep(bonusStepIndex, criteriaIndex);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_BonusObjectiveTracker.lua:279:\t\t\t\t\tlocal criteriaInfo = C_ScenarioInfo.GetCriteriaInfoByStep(bonusStepIndex, criteriaIndex);"
+    ],
+    "qualified_command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "C_Scenario.GetCriteriaInfo",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "qualified_matches": []
+  },
+  {
+    "source_id": "wt-global-api-C_Scenario.GetCriteriaInfoByStep-404",
+    "symbol": "C_Scenario.GetCriteriaInfoByStep",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "GetCriteriaInfoByStep",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ScenarioInfoDocumentation.lua:27:\t\t\tName = \"GetCriteriaInfoByStep\",",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_BonusObjectiveTracker.lua:106:\t\t\t\t\tlocal criteriaInfo = C_ScenarioInfo.GetCriteriaInfoByStep(bonusStepIndex, criteriaIndex);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_BonusObjectiveTracker.lua:248:\t\t\t\t\tlocal criteriaInfo = C_ScenarioInfo.GetCriteriaInfoByStep(bonusStepIndex, criteriaIndex);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_BonusObjectiveTracker.lua:279:\t\t\t\t\tlocal criteriaInfo = C_ScenarioInfo.GetCriteriaInfoByStep(bonusStepIndex, criteriaIndex);"
+    ],
+    "qualified_command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "C_Scenario.GetCriteriaInfoByStep",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "qualified_matches": []
+  },
+  {
+    "source_id": "wt-global-api-C_SpellBook.GetDeadlyDebuffInfo-406",
+    "symbol": "C_SpellBook.GetDeadlyDebuffInfo",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "GetDeadlyDebuffInfo",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:140:C_SpellBook.GetDeadlyDebuffInfo = C_Spell.GetDeadlyDebuffInfo",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_BuffFrame/BuffFrame.lua:775:\t\tlocal deadlyDebuffInfo = C_Spell.GetDeadlyDebuffInfo and C_Spell.GetDeadlyDebuffInfo(auraData.spellId);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SpellDocumentation.lua:82:\t\t\tName = \"GetDeadlyDebuffInfo\","
+    ],
+    "qualified_command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "C_SpellBook.GetDeadlyDebuffInfo",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "qualified_matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:140:C_SpellBook.GetDeadlyDebuffInfo = C_Spell.GetDeadlyDebuffInfo"
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_SpellBook.GetOverrideSpell-407",
+    "symbol": "C_SpellBook.GetOverrideSpell",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "GetOverrideSpell",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ZoneAbility/ZoneAbility.lua:256:\tGameTooltip:SetSpellByID(self:GetOverrideSpellID());",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ZoneAbility/ZoneAbility.lua:275:\tlocal spellID = self:GetOverrideSpellID();",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ZoneAbility/ZoneAbility.lua:312:function ZoneAbilityFrameSpellButtonMixin:GetOverrideSpellID()",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ZoneAbility/ZoneAbility.lua:331:\t\tid = self:GetOverrideSpellID()",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ActionBar/Mainline/AssistedCombatManager.lua:349:\t\tlocal overrideSpellID = C_Spell.GetOverrideSpell(overriddenSpellID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:142:C_SpellBook.GetOverrideSpell = C_Spell.GetOverrideSpell",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SpellDocumentation.lua:165:\t\t\tName = \"GetOverrideSpell\",",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PlayerScriptDocumentation.lua:559:\t\t\tName = \"GetOverrideSpellPowerByAP\",",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua:964:\tif (GetOverrideSpellPowerByAP() > 0) then",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua:965:\t\tstatFrame.tooltip2 = format(MELEE_ATTACK_POWER_SPELL_POWER_TOOLTIP, damageBonus, BreakUpLargeNumbers(effectiveAP * GetOverrideSpellPowerByAP() + 0.5));",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PlayerSpells/SpellBook/Blizzard_SpellBookFrame.lua:594:\t\tspellID = C_Spell.GetOverrideSpell(spellID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedTalentUI/Blizzard_TalentDisplay.lua:297:\t\tlocal overrideSpellID = C_Spell.GetOverrideSpell(spellID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedTalentUI/Blizzard_SharedTalentUtil.lua:112:\t\tlocal overriddenSpellID = C_Spell.GetOverrideSpell(definitionInfo.overriddenSpellID);"
+    ],
+    "qualified_command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "C_SpellBook.GetOverrideSpell",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "qualified_matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:142:C_SpellBook.GetOverrideSpell = C_Spell.GetOverrideSpell"
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_SpellBook.GetSpellInfo-408",
+    "symbol": "C_SpellBook.GetSpellInfo",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "GetSpellInfo",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_WorldLootObjectList/Blizzard_WorldLootObjectList.lua:31:\tlocal spellData = C_Spell.GetSpellInfo(spellInfo.spellID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_WorldLootObjectList/Blizzard_WorldLootObjectList.lua:92:\tlocal spellData = C_Spell.GetSpellInfo(spellInfo.spellID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:132:C_SpellBook.GetSpellInfo = C_Spell.GetSpellInfo;",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DelvesCompanionConfiguration/Blizzard_DelvesCompanionConfiguration.lua:631:                local spell = C_Spell.GetSpellInfo(spellID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIWidgets/Blizzard_UIWidgetTemplateBase.lua:529:\t\tlocal spellData = C_Spell.GetSpellInfo(self.spellInfo.spellID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIWidgets/Blizzard_UIWidgetTemplateBase.lua:584:\tlocal spellData = C_Spell.GetSpellInfo(self.spellInfo.spellID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ClickBindingUI/Blizzard_ClickBindingUI.lua:171:\t\t\tlocal spellInfo = C_Spell.GetSpellInfo(overrideID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Contribution/Blizzard_Contribution.lua:9:\tlocal spellInfo = C_Spell.GetSpellInfo(rewardID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Contribution/Blizzard_Contribution.lua:45:\tlocal spellInfo = C_Spell.GetSpellInfo(self.rewardID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeathRecap/Blizzard_DeathRecap.lua:7:function DeathRecapEntryMixin:GetSpellInfo()",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeathRecap/Blizzard_DeathRecap.lua:31:function DeathRecapEntryMixin:GetSpellInfoCaster()",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeathRecap/Blizzard_DeathRecap.lua:32:\treturn self:GetSpellInfo().Caster;",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeathRecap/Blizzard_DeathRecap.lua:35:function DeathRecapEntryMixin:GetSpellInfoIcon()",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeathRecap/Blizzard_DeathRecap.lua:36:\treturn self:GetSpellInfo().Icon;",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeathRecap/Blizzard_DeathRecap.lua:39:function DeathRecapEntryMixin:GetSpellInfoName()",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeathRecap/Blizzard_DeathRecap.lua:40:\treturn self:GetSpellInfo().Name;",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeathRecap/Blizzard_DeathRecap.lua:87:\tself:GetSpellInfo():SetScript(\"OnEnter\", function(spellInfoFrame)",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeathRecap/Blizzard_DeathRecap.lua:95:\tself:GetSpellInfo():SetScript(\"OnLeave\", function()",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeathRecap/Blizzard_DeathRecap.lua:211:\tlocal spellInfo = self:GetSpellInfo();",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/SlashCommandsOverrides.lua:86:\t\t\tlocal spellInfo = C_Spell.GetSpellInfo(spell);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXMLUtil/RenownRewardUtil.lua:22:\t\tlocal spellInfo = C_Spell.GetSpellInfo(rewardInfo.spellID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_BoostTutorial/Blizzard_TutorialLogic.lua:34:\t\t\tlocal spellInfo = C_Spell.GetSpellInfo(spellID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_BoostTutorial/Blizzard_TutorialLogic.lua:965:\t\tlocal spellInfo = C_Spell.GetSpellInfo(spellID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_BoostTutorial/Blizzard_TutorialLogic.lua:2193:\t\tlocal spellInfo = C_Spell.GetSpellInfo(self.SpellID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_OrderHallMissionUI.lua:660:\t\t\tlocal spellInfo = C_Spell.GetSpellInfo(followerInfo.zoneSupportSpellID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CombatAudioAlerts/Blizzard_CombatAudioAlertManager.lua:1003:\t\tlocal spellInfo = C_Spell.GetSpellInfo(spellID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Commentator/Classic/Blizzard_CommentatorUnitFrame.lua:401:\t\tlocal textureID = select(3, GetSpellInfo(spellID));",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Commentator/Classic/Blizzard_CommentatorUnitFrame.lua:449:\t\tlocal textureID = select(3, GetSpellInfo(spellID));",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Commentator/Classic/Blizzard_CommentatorUnitFrame.lua:475:\t\tlocal textureID = select(3, GetSpellInfo(spellID));",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Commentator/Classic/Blizzard_CommentatorUnitFrame.lua:519:\t\tlocal textureID = select(3, GetSpellInfo(spellID));",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Commentator/Classic/Blizzard_CommentatorSpell.lua:7:\tself.Icon:SetTexture(select(3, GetSpellInfo(spellID)))",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXMLUtil/AzeriteEssenceUtil.lua:42:\tlocal spellInfo = C_Spell.GetSpellInfo(spellID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanelTemplates/Shared/UIPanelSpellButtonFrame.lua:84:\t\tlocal spellInfo = C_Spell.GetSpellInfo(self.spellID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PlayerSpells/SpellBook/Blizzard_SpellBookFrame.lua:582:\t\tlocal newInfo = C_Spell.GetSpellInfo(spellID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_TalentUI/Mists/Blizzard_TalentUI.lua:671:\t\t\tlocal spellName, subSpellName = GetSpellInfo(talentName);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_TalentUI/Mists/Blizzard_TalentUI.lua:1303:\t\t\tlocal spellName, subname = GetSpellInfo(bonuses[i]);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua:673:\tlocal name, subname, icon = GetSpellInfo(spellId);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua:675:\t\tlocal name2, _, _ = GetSpellInfo(spellId2);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua:842:\t\t\t\tlocal _, _, masteryTexture = GetSpellInfo(CLASS_MASTERY_SPELLS[class]);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StableUI/Blizzard_StableUI.lua:664:\t\t\tlocal spellInfo = C_Spell.GetSpellInfo(nextCallPetSpellID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StableUI/Blizzard_StableUI.lua:1034:\t\tlocal abilityInfo = C_Spell.GetSpellInfo(abilityID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StableUI/Blizzard_StableUI.lua:1124:\tlocal spellInfo = C_Spell.GetSpellInfo(spellID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SpellDocumentation.lua:375:\t\t\tName = \"GetSpellInfo\","
+    ],
+    "qualified_command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "C_SpellBook.GetSpellInfo",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "qualified_matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:132:C_SpellBook.GetSpellInfo = C_Spell.GetSpellInfo;"
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_SpellBook.GetSpellLinkFromSpellID-409",
+    "symbol": "C_SpellBook.GetSpellLinkFromSpellID",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "GetSpellLinkFromSpellID",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:138:C_SpellBook.GetSpellLinkFromSpellID = C_Spell.GetSpellLink"
+    ],
+    "qualified_command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "C_SpellBook.GetSpellLinkFromSpellID",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "qualified_matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:138:C_SpellBook.GetSpellLinkFromSpellID = C_Spell.GetSpellLink"
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_SpellBook.IsSpellDisabled-410",
+    "symbol": "C_SpellBook.IsSpellDisabled",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "IsSpellDisabled",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SpellDocumentation.lua:816:\t\t\tName = \"IsSpellDisabled\",",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:130:C_SpellBook.IsSpellDisabled = C_Spell.IsSpellDisabled"
+    ],
+    "qualified_command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "C_SpellBook.IsSpellDisabled",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "qualified_matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:130:C_SpellBook.IsSpellDisabled = C_Spell.IsSpellDisabled"
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_Traits.GetStagedPurchases-411",
+    "symbol": "C_Traits.GetStagedPurchases",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "GetStagedPurchases",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 1,
+    "matches": [],
+    "qualified_command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "C_Traits.GetStagedPurchases",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "qualified_matches": []
+  },
+  {
+    "source_id": "wt-global-api-C_TransmogSets.GetBaseSetsCounts-412",
+    "symbol": "C_TransmogSets.GetBaseSetsCounts",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "GetBaseSetsCounts",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 1,
+    "matches": [],
+    "qualified_command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "C_TransmogSets.GetBaseSetsCounts",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "qualified_matches": []
+  },
+  {
+    "source_id": "wt-global-api-CloseBankFrame-413",
+    "symbol": "CloseBankFrame",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "CloseBankFrame",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/BankDocumentation.lua:105:\t\t\tName = \"CloseBankFrame\",",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/BankFrame.lua:82:\tC_Bank.CloseBankFrame();",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/BankFrame.lua:89:\t\tC_Bank.CloseBankFrame();",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/BankFrame.lua:97:\t\tC_Bank.CloseBankFrame();"
+    ]
+  },
+  {
+    "source_id": "wt-global-api-GetFactionInfoByID-423",
+    "symbol": "GetFactionInfoByID",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "GetFactionInfoByID",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 1,
+    "matches": []
+  },
+  {
+    "source_id": "wt-global-api-GetGuildFactionInfo-426",
+    "symbol": "GetGuildFactionInfo",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "GetGuildFactionInfo",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 1,
+    "matches": []
+  },
+  {
+    "source_id": "wt-global-api-GetMouseFocus-428",
+    "symbol": "GetMouseFocus",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "GetMouseFocus",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ActionBar/WoWLabs/ActionButtonOverrides.lua:398:\tlocal isMouseOverButton =  GetMouseFocus() == self;",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PTRFeedback/Blizzard_PTRFeedback_Tooltips.lua:72:\t\t   --if (id == \"\" or id == \"0\") and TradeSkillFrame ~= nil and TradeSkillFrame:IsVisible() and GetMouseFocus().reagentIndex then",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PTRFeedback/Blizzard_PTRFeedback_Tooltips.lua:75:\t\t   --        if GetMouseFocus().reagentIndex == i then"
+    ]
+  },
+  {
+    "source_id": "wt-global-api-GetSelectedFaction-435",
+    "symbol": "GetSelectedFaction",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "GetSelectedFaction",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ReputationInfoDocumentation.lua:135:\t\t\tName = \"GetSelectedFaction\",",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/ReputationFrame.lua:411:\treturn C_Reputation.GetSelectedFaction() == self.factionIndex;",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/ReputationFrame.lua:721:\tlocal selectedFactionIndex = C_Reputation.GetSelectedFaction();",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/ReputationFrame.lua:758:\tlocal factionData = C_Reputation.GetFactionDataByIndex(C_Reputation.GetSelectedFaction());",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/ReputationFrame.lua:789:\tC_Reputation.ToggleFactionAtWar(C_Reputation.GetSelectedFaction());",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/ReputationFrame.lua:812:\tC_Reputation.SetFactionActive(C_Reputation.GetSelectedFaction(), shouldBeActive);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/ReputationFrame.lua:832:\tC_Reputation.SetWatchedFactionByIndex(self:GetChecked() and C_Reputation.GetSelectedFaction() or 0);"
+    ]
+  },
+  {
+    "source_id": "wt-global-api-GetSpellAutocast-436",
+    "symbol": "GetSpellAutocast",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "GetSpellAutocast",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:74:GetSpellAutocast(spellID/name) = C_Spell.GetSpellAutoCast(spellIdentifier)",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:75:GetSpellAutocast(index, bookType) = C_SpellBook.GetSpellBookItemAutoCast(index, spellBank)"
+    ]
+  },
+  {
+    "source_id": "wt-global-api-GetSpellBookItemInfo-438",
+    "symbol": "GetSpellBookItemInfo",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "GetSpellBookItemInfo",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SpellBookDocumentation.lua:270:\t\t\tName = \"GetSpellBookItemInfo\",",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:92:-- New C_SpellBook.GetSpellBookItemInfo contains far more info than old GetSpellBookItemInfo",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:93:-- C_SpellBook.GetSpellBookItemType is the direct replacement for just the type info that the old GetSpellBookItemInfo returned (+spellID as a new bonus 3rd return value)",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:94:GetSpellBookItemInfo(index, bookType) = C_SpellBook.GetSpellBookItemType(index, spellBank)",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ProfessionsBook/Blizzard_ProfessionsBook.lua:313:\tlocal spellBookItemInfo = C_SpellBook.GetSpellBookItemInfo(spellIndex, activeSpellBank);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PlayerSpells/SpellBook/Blizzard_SpellBookSearch.lua:321:\t\tspellBookItemData.spellBookItemInfo = C_SpellBook.GetSpellBookItemInfo(spellBookItemData.slotIndex, spellBookItemData.spellBank);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PlayerSpells/SpellBook/Blizzard_SpellBookItem.lua:88:\tlocal spellBookItemInfo = C_SpellBook.GetSpellBookItemInfo(self.elementData.slotIndex, self.elementData.spellBank);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SpellSearch/Blizzard_SpellSearchUtil.lua:64:\tlocal spellBookItemInfo = C_SpellBook.GetSpellBookItemInfo(slotIndex, spellBank);"
+    ]
+  },
+  {
+    "source_id": "wt-global-api-GetSpellBookItemTexture-440",
+    "symbol": "GetSpellBookItemTexture",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "GetSpellBookItemTexture",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:96:GetSpellBookItemTexture(index, bookType) = C_SpellBook.GetSpellBookItemTexture(index, spellBank)",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXMLBase/Mainline/IconDataProviderOverrides.lua:11:\t\t\t\t\tlocal fileID = C_SpellBook.GetSpellBookItemTexture(spellIndex, Enum.SpellBookSpellBank.Player);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PlayerSpells/SpellBook/Blizzard_SpellBookItem.lua:322:\tself.Button.Icon:SetTexture(C_SpellBook.GetSpellBookItemTexture(self.slotIndex, self.spellBank));",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SpellBookDocumentation.lua:412:\t\t\tName = \"GetSpellBookItemTexture\","
+    ]
+  },
+  {
+    "source_id": "wt-global-api-GetSpellLevelLearned-446",
+    "symbol": "GetSpellLevelLearned",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "GetSpellLevelLearned",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:49:GetSpellLevelLearned(spellID/name) = C_Spell.GetSpellLevelLearned(spellIdentifier)",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:50:GetSpellLevelLearned(index, bookType) = C_SpellBook.GetSpellBookItemLevelLearned(index, spellBank)",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:70:-- GetSpellAvailableLevel and GetSpellLevelLearned have been unified",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:71:GetSpellAvailableLevel/GetSpellLevelLearned(spellID/name) = C_Spell.GetSpellLevelLearned(spellIdentifier)",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:72:GetSpellAvailableLevel/GetSpellLevelLearned(index, bookType) = C_SpellBook.GetSpellBookItemLevelLearned(index, spellBank)",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_TalentUI/Mists/Blizzard_TalentUI.lua:1310:\t\t\tlocal level = C_Spell.GetSpellLevelLearned(bonuses[i]);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SpellDocumentation.lua:392:\t\t\tName = \"GetSpellLevelLearned\","
+    ]
+  },
+  {
+    "source_id": "wt-global-api-GetSpellLink-447",
+    "symbol": "GetSpellLink",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "GetSpellLink",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ActionBar/Shared/SpellFlyout.lua:40:\t\t\t\tlocal spellLink = C_Spell.GetSpellLink(self.spellID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AzeriteUI/AzeriteEmpoweredItemPowerMixin.lua:555:\t\tlocal spellLink = C_Spell.GetSpellLink(self:GetSpellID());",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/GuildPerks.lua:44:\tlocal spellLink = C_Spell.GetSpellLink(self.spellID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/GuildPerks.lua:54:\t\tlocal spellLink = C_Spell.GetSpellLink(self.spellID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SpellDocumentation.lua:408:\t\t\tName = \"GetSpellLink\",",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestInfo.lua:1372:\t\tChatFrameUtil.InsertLink(C_Spell.GetSpellLink(self.rewardSpellID));",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:27:GetSpellLink(spellID/name) = C_Spell.GetSpellLink(spellIdentifier)",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:28:GetSpellLink(index, bookType) = C_SpellBook.GetSpellBookItemLink(index, spellBank)",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:138:C_SpellBook.GetSpellLinkFromSpellID = C_Spell.GetSpellLink",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Collections/Shared/Blizzard_PetCollection.lua:570:\t\t\t\tlocal spellLink = C_Spell.GetSpellLink(UNLOCK_REQUIREMENTS[i].id);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CombatLog/Mainline/Blizzard_CombatLog.lua:1360:\t\tlocal spellLink = C_Spell.GetSpellLink(spellId);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CombatLog/Mainline/Blizzard_CombatLog.lua:1543:\t\t\tlocal spellLink = C_Spell.GetSpellLink(spellId, glyphId);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXMLUtil/RuneforgeUtil.lua:125:\t\tChatFrameUtil.InsertLink(C_Spell.GetSpellLink(powerInfo.descriptionSpellID));",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/Mainline/GameDialogDefs.lua:1148:\t\t\tlocal queuePenaltySpellLink, queuePenaltyDuration = C_Spell.GetSpellLink(ratedDeserterPenalty.queuePenaltySpellID), SecondsToTime(ratedDeserterPenalty.queuePenaltyDuration);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Soulbinds/Blizzard_SoulbindsTree.lua:144:\t\t\tlocal link = C_Spell.GetSpellLink(button:GetSpellID());",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedTalentUI/Blizzard_TalentButtonSpend.lua:13:\t\t\tlocal spellLink = C_Spell.GetSpellLink(self:GetSpellID());",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedTalentUI/Blizzard_TalentButtonSelect.lua:77:\t\t\t\tlocal spellLink = C_Spell.GetSpellLink(spellID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedTalentUI/Blizzard_SharedTalentSelectionTemplates.lua:203:\t\t\tlocal spellLink = C_Spell.GetSpellLink(self:GetSpellID());"
+    ]
+  },
+  {
+    "source_id": "wt-global-api-GetWatchedFactionInfo-455",
+    "symbol": "GetWatchedFactionInfo",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "GetWatchedFactionInfo",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 1,
+    "matches": []
+  },
+  {
+    "source_id": "wt-global-api-HasPetSpells-456",
+    "symbol": "HasPetSpells",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "HasPetSpells",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:101:HasPetSpells() = C_SpellBook.HasPetSpells()",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PlayerSpells/SpellBook/Blizzard_SpellBookCategory.lua:317:\tlocal numPetSpells = C_SpellBook.HasPetSpells() or 0;",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PlayerSpells/SpellBook/Blizzard_SpellBookCategory.lua:340:\treturn C_SpellBook.HasPetSpells() and PetHasSpellbook();",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SpellBookDocumentation.lua:482:\t\t\tName = \"HasPetSpells\","
+    ]
+  },
+  {
+    "source_id": "wt-global-api-IsCurrentSpell-459",
+    "symbol": "IsCurrentSpell",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "IsCurrentSpell",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ActionBar/Shared/SpellFlyout.lua:113:\tif ( C_Spell.IsCurrentSpell(self.spellID) ) then",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SpellDocumentation.lua:672:\t\t\tName = \"IsCurrentSpell\",",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:115:IsCurrentSpell(spellID/name) = C_Spell.IsCurrentSpell(spellIdentifier)",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_TalentUI/Mists/Blizzard_TalentUI.lua:774:\t\tif (C_Spell.IsCurrentSpell(TALENT_ACTIVATION_SPELLS[spec.talentGroup])) then",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua:1300:\t\tif (C_Spell.IsCurrentSpell(TALENT_ACTIVATION_SPELLS[spec.talentGroup])) then",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StableUI/Blizzard_StableUI.lua:95:\t\tif C_Spell.IsCurrentSpell(CALL_PET_SPELL_IDS[i]) then"
+    ]
+  },
+  {
+    "source_id": "wt-global-api-IsHarmfulSpell-461",
+    "symbol": "IsHarmfulSpell",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "IsHarmfulSpell",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:38:IsHarmfulSpell(spellID/name) = C_Spell.IsSpellHarmful(spellIdentifier)",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:39:IsHarmfulSpell(index, bookType) = C_SpellBook.IsSpellBookItemHarmful(index, spellBank)"
+    ]
+  },
+  {
+    "source_id": "wt-global-api-IsHelpfulSpell-462",
+    "symbol": "IsHelpfulSpell",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "IsHelpfulSpell",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:36:IsHelpfulSpell(spellID/name) = C_Spell.IsSpellHelpful(spellIdentifier)",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:37:IsHelpfulSpell(index, bookType) = C_SpellBook.IsSpellBookItemHelpful(index, spellBank)"
+    ]
+  },
+  {
+    "source_id": "wt-global-api-IsPassiveSpell-463",
+    "symbol": "IsPassiveSpell",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "IsPassiveSpell",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:33:IsPassiveSpell(spellID/name) = C_Spell.IsSpellPassive(spellIdentifier)",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:34:IsPassiveSpell(index, bookType) = C_SpellBook.IsSpellBookItemPassive(index, spellBank)",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_TalentUI/Mists/Blizzard_TalentUI.lua:672:\t\t\tif ( spellName and not IsPassiveSpell(spellName) ) then"
+    ]
+  },
+  {
+    "source_id": "wt-global-api-IsPressHoldReleaseSpell-464",
+    "symbol": "IsPressHoldReleaseSpell",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "IsPressHoldReleaseSpell",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:116:IsPressHoldReleaseSpell(spellID/name) = C_Spell.IsPressHoldReleaseSpell(spellIdentifier)",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ActionBar/WoWLabs/ActionButtonOverrides.lua:113:\t\t\tself.pressAndHoldAction = C_Spell.IsPressHoldReleaseSpell(id);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ActionBar/WoWLabs/ActionButtonOverrides.lua:117:\t\t\t\tself.pressAndHoldAction = C_Spell.IsPressHoldReleaseSpell(spellID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ActionBar/Shared/ActionButton.lua:517:\t\t\tpressAndHoldAction = C_Spell.IsPressHoldReleaseSpell(id);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_RestrictedAddOnEnvironment/RestrictedEnvironment.lua:156:ENV.IsPressHoldReleaseSpell = C_Spell.IsPressHoldReleaseSpell;",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SpellDocumentation.lua:704:\t\t\tName = \"IsPressHoldReleaseSpell\","
+    ]
+  },
+  {
+    "source_id": "wt-global-api-IsSpellInRange-466",
+    "symbol": "IsSpellInRange",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "IsSpellInRange",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:46:IsSpellInRange(spellID/name) C_Spell.IsSpellInRange(spellIdentifier)",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:47:IsSpellInRange(index, bookType) C_SpellBook.IsSpellBookItemInRange(index, spellBank)",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SpellDocumentation.lua:879:\t\t\tName = \"IsSpellInRange\",",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CooldownViewer/CooldownViewer.lua:744:\t\tself.spellOutOfRange = C_Spell.IsSpellInRange(self.rangeCheckSpellID) == false;"
+    ]
+  },
+  {
+    "source_id": "wt-global-api-PickupSpell-470",
+    "symbol": "PickupSpell",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "PickupSpell",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ZoneAbility/ZoneAbility.lua:269:\tC_Spell.PickupSpell(self:GetSpellID());",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AzeriteEssenceUI/Blizzard_AzeriteEssenceUI.lua:1113:\t\tC_Spell.PickupSpell(spellID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ActionBar/Shared/SpellFlyout.lua:74:\t\t\tC_Spell.PickupSpell(self.spellID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SpellDocumentation.lua:928:\t\t\tName = \"PickupSpell\",",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SpellBookDocumentation.lua:719:\t\t\tName = \"PickupSpellBookItem\",",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:84:PickupSpell(spellID/name) = C_Spell.PickupSpell(spellIdentifier)",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:85:PickupSpellBookItem(index, bookType) = C_SpellBook.PickupSpellBookItem(index, spellBank)",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanelTemplates/Shared/UIPanelSpellButtonFrame.lua:64:\tC_Spell.PickupSpell(self.spellID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PlayerSpells/ClassSpecializations/Blizzard_ClassSpecializationsFrame.lua:510:\t\tC_Spell.PickupSpell(self.spellID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PlayerSpells/ClassSpecializations/Blizzard_ClassSpecializationsFrame.lua:515:\t\tC_Spell.PickupSpell(self.spellID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PlayerSpells/SpellBook/Blizzard_SpellBookItem.lua:633:\t\tC_SpellBook.PickupSpellBookItem(self.slotIndex, self.spellBank);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PlayerSpells/SpellBook/Blizzard_SpellBookItem.lua:644:\tC_SpellBook.PickupSpellBookItem(self.slotIndex, self.spellBank);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_RestrictedAddOnEnvironment/SecureHandlers.lua:153:\t\tC_Spell.PickupSpell(target)",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ProfessionsBook/Blizzard_ProfessionsBook.lua:241:\t\tC_SpellBook.PickupSpellBookItem(slotIndex, activeSpellBank);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ProfessionsBook/Blizzard_ProfessionsBook.lua:264:\tC_SpellBook.PickupSpellBookItem(slotIndex, activeSpellBank);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedTalentUI/Blizzard_SharedTalentSelectionTemplates.lua:236:\t\tC_Spell.PickupSpell(spellID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedTalentUI/Blizzard_TalentButtonBase.lua:32:\t\tC_Spell.PickupSpell(spellID);"
+    ]
+  },
+  {
+    "source_id": "wt-global-api-SetSelectedFaction-476",
+    "symbol": "SetSelectedFaction",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "SetSelectedFaction",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MajorFactions/Blizzard_MajorFactionsLandingTemplates.lua:111:\t\tself:SetSelectedFaction(newMajorFactionID);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MajorFactions/Blizzard_MajorFactionsLandingTemplates.lua:115:function MajorFactionListMixin:SetSelectedFaction(majorFactionID)",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/ReputationFrame.lua:286:\tC_Reputation.SetSelectedFaction(not alreadySelected and self.factionIndex or 0);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/ReputationFrame.lua:751:\tC_Reputation.SetSelectedFaction(0);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ReputationInfoDocumentation.lua:269:\t\t\tName = \"SetSelectedFaction\","
+    ]
+  }
+]

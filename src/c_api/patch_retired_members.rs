@@ -1,4 +1,4 @@
-//! Namespace members (and whole namespaces) the Patch 11.0.2 / 11.0.5 / 11.0.7 / 11.1.0 / 11.1.5 / 11.1.7 / 11.2.0 / 11.2.7 / 12.0.0 / 12.0.1 / 12.0.5 / 12.0.7
+//! Namespace members (and whole namespaces) the Patch 11.0.0 / 11.0.2 / 11.0.5 / 11.0.7 / 11.1.0 / 11.1.5 / 11.1.7 / 11.2.0 / 11.2.7 / 12.0.0 / 12.0.1 / 12.0.5 / 12.0.7
 //! consolidated API tables list as removed that no other module retires.
 //! Marking keeps the namespace `__index` autostub from fabricating them on
 //! ordinary lookup.
@@ -9,6 +9,23 @@ use rilua::vm::state::LuaState;
 // No current cached retail Lua consumers of these seven members. Do not retire
 // UpdateUIParentPosition: cached UIParentUtil still defines and uses it.
 // No cached retail Lua consumers; deprecated wrappers remain untouched.
+// Qualified and bare-name cached Lua searches retained in the 11.0.0 audit.
+// SpellBook transition aliases are deliberately not retired here.
+const RETIRED_11_0_0_MEMBERS: &[(&str, &[&str])] = &[
+    (
+        "C_MajorFactions",
+        &[
+            "GetFeatureAbilities",
+            "IsPlayerInRenownCatchUpMode",
+            "RequestCatchUpState",
+        ],
+    ),
+    ("C_Map", &["IsMapValidForNavBarDropDown"]),
+    ("C_PvP", &["GetSoloRBGMinItemLevel"]),
+    ("C_Scenario", &["GetCriteriaInfo", "GetCriteriaInfoByStep"]),
+    ("C_Traits", &["GetStagedPurchases"]),
+    ("C_TransmogSets", &["GetBaseSetsCounts"]),
+];
 const RETIRED_11_0_2_MEMBERS: &[(&str, &[&str])] = &[
     (
         "C_GameModeManager",
@@ -212,6 +229,7 @@ const RETIRED_12_0_7_MEMBERS: &[(&str, &[&str])] = &[
 ];
 
 pub(crate) fn mark_retired_members(state: &mut LuaState) -> LuaResult<()> {
+    mark_members(state, RETIRED_11_0_0_MEMBERS)?;
     mark_members(state, RETIRED_11_0_2_MEMBERS)?;
     mark_members(state, RETIRED_11_0_5_MEMBERS)?;
     mark_members(state, RETIRED_11_0_7_MEMBERS)?;
