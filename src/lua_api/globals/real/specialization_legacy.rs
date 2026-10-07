@@ -36,6 +36,10 @@ const LEGACY_SPECIALIZATION_GLOBALS: &[(&str, RustLuaFn)] = &[
     ("GetNumSpecializations", get_num_specializations),
     ("GetSpecializationInfoByID", get_specialization_info_by_id),
     (
+        "GetSpecializationNameForSpecID",
+        get_specialization_name_for_spec_id,
+    ),
+    (
         "GetSpecializationInfoForClassID",
         get_specialization_info_for_class_id,
     ),
@@ -92,6 +96,20 @@ fn get_specialization_info_by_id(state: &mut LuaState) -> LuaResult<u32> {
     state.push(class_file);
     state.push(class_name);
     Ok(7)
+}
+
+fn get_specialization_name_for_spec_id(state: &mut LuaState) -> LuaResult<u32> {
+    let spec_id = match stack_val(state, 1) {
+        Val::Num(n) => n as u32,
+        _ => return Ok(0),
+    };
+    let Some(spec) = specializations::spec_by_id(spec_id) else {
+        return Ok(0);
+    };
+    // The simulator's English catalog has no gender-specific name variants.
+    let name = create_string(state, spec.name);
+    state.push(name);
+    Ok(1)
 }
 
 fn get_specialization_info_for_class_id(state: &mut LuaState) -> LuaResult<u32> {

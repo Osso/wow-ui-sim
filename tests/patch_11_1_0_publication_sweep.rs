@@ -9,7 +9,7 @@ fn patch_11_1_0_publication_sweep() {
     sweep::run_publication_sweep(&sweep::SweepSpec {
         register: include_str!("../data/patch-api/sources/11.1.0-wikitext-register.json"),
         known_gaps: include_str!("data/patch_11_1_0_sweep_known_gaps.json"),
-        row_count: 115,
+        row_count: 116,
         register_env: "P1110_SWEEP_REGISTER",
         out_env: "P1110_SWEEP_OUT",
         later_registers: &[
