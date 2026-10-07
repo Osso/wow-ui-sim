@@ -8,7 +8,7 @@ Account for Warcraft Wiki page 442982, revision 6473483 (2025-09-15T16:55:36Z), 
 - [x] Preserve stale header counts: 19 declared versus 28 global additions; eight declared versus three added events. Do not invent omitted rows.
 - [x] Apply eighteen later registers, 10.2.5 through 12.1.0; inserting 10.2.0 is one line at the beginning after integration.
 - [x] Keep fourteen precise publication gaps, not inert new functions or incompatible aliases.
-- [x] Apply XML template attributes to runtime-created frames and children before OnLoad, with existing typed SetAttribute semantics and derived overrides.
+- [x] Apply XML template attributes to runtime-created frames and children before OnLoad, with existing typed storage, derived overrides and no premature attribute notification; ordinary post-construction SetAttribute still notifies.
 - [ ] Exact one-row negative control adds one publication failure.
 - [ ] All nineteen isolated sweeps, bounded behavior and cached prefork tests, format/Mists checks and startup [] pass.
 

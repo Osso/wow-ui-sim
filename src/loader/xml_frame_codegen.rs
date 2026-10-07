@@ -35,7 +35,7 @@ pub(super) fn build_frame_lua_code(
     if !key_values_initialized_during_create {
         append_key_values_code(&mut lua_code, frame, inherits);
     }
-    append_xml_attributes_code(&mut lua_code, frame);
+    append_xml_attributes_code(&mut lua_code, frame, "SetAttribute");
     // SetID must be in the Lua chunk (not deferred to Rust direct-set) because
     // template child OnLoad handlers may call GetParent():GetID() during
     // fire_deferred_child_onloads, which runs before apply_xml_properties_direct.
@@ -362,7 +362,11 @@ fn format_key_value_lua(
 }
 
 /// Append SetAttribute calls for `<Attributes>` XML elements.
-pub(crate) fn append_xml_attributes_code(lua_code: &mut String, frame: &crate::xml::FrameXml) {
+pub(crate) fn append_xml_attributes_code(
+    lua_code: &mut String,
+    frame: &crate::xml::FrameXml,
+    method: &str,
+) {
     if let Some(attrs) = frame.xml_attributes() {
         for attr in &attrs.entries {
             let value = match attr.attr_type.as_deref() {
@@ -375,7 +379,7 @@ pub(crate) fn append_xml_attributes_code(lua_code: &mut String, frame: &crate::x
                 ),
             };
             lua_code.push_str(&format!(
-                "\n        frame:SetAttribute(\"{}\", {})",
+                "\n        frame:{method}(\"{}\", {})",
                 escape_lua_string(&attr.name),
                 value
             ));

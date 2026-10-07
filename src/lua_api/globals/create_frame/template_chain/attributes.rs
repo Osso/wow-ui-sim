@@ -1,4 +1,4 @@
-//! Apply runtime template attributes through the same SetAttribute code as XML loading.
+//! Initialize typed runtime XML attributes without notifying uninitialized frame scripts.
 use crate::lua_api::methods::frame_ref;
 use rilua::vm::state::LuaState;
 use rilua::{LuaResult, Val};
@@ -12,7 +12,9 @@ pub(super) fn apply_xml_attributes(
         return Ok(());
     }
     let mut code = String::from("local frame = ...");
-    crate::loader::append_xml_attributes_code(&mut code, frame);
+    // Initial values precede OnLoad; ordinary SetAttribute would call mixin handlers
+    // before their fields/children are initialized (for example ActionButton.icon).
+    crate::loader::append_xml_attributes_code(&mut code, frame, "SetAttributeNoHandler");
     let function = crate::loader::chunk_cache::load_chunk(state, &code, "template-attributes")
         .map_err(|error| rilua::runtime_error(error.to_string()))?;
     let frame = frame_ref(state, frame_id)?;
