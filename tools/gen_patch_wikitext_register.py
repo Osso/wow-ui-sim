@@ -69,7 +69,7 @@ def make_entry(section, direction, line_no, text):
     return entry
 
 
-def parse_section(section, lines, *, expand_shared_changes=False):
+def parse_section(section, lines, *, expand_shared_changes=False, capture_span_defaults=False):
     """lines: [(line_no, text)] between this heading and the next."""
     entries, headers, columns = [], [], 0
     mode = None
@@ -93,6 +93,10 @@ def parse_section(section, lines, *, expand_shared_changes=False):
             continue  # Category label, not an API occurrence.
         elif mode in ("added", "removed") and text.startswith(":"):
             entry = make_entry(section, mode, line_no, text)
+            if section == 'cvars' and capture_span_defaults:
+                default = re.search(r'Default:\s*<code>(.*?)</code>', text)
+                if default:
+                    entry['page_default'] = FONT.sub('', default[1]).strip()
             if inline_commands:
                 entry["kind"] = "command"
             entries.append(entry)
@@ -156,6 +160,8 @@ def main():
                         help="Account for every API on shared changed lines; opt-in preserves prior registers")
     parser.add_argument('--separate-inline-structures', action='store_true',
                         help='Exclude unheaded Structures from API annotations; opt-in preserves prior registers')
+    parser.add_argument('--capture-span-defaults', action='store_true',
+                        help='Retain hidden-span CVar defaults; opt-in preserves prior registers')
     args = parser.parse_args()
     patch, path, revid, out = args.patch, args.path, args.revid, args.out
     raw = Path(path).read_bytes()
@@ -166,7 +172,8 @@ def main():
         entry_section = "cvars" if section == "commands" else section
         section_entries, section_counts = parse_section(
             entry_section, buckets.get(section, []),
-            expand_shared_changes=args.expand_shared_changes)
+            expand_shared_changes=args.expand_shared_changes,
+            capture_span_defaults=args.capture_span_defaults)
         if section == "commands":
             for count in section_counts:
                 count["section"] = "commands"

@@ -8,6 +8,7 @@
   "wikitext_sha256": "f0c554edcdce15afe3cfa3a2dfaf3c723d11864d377613640538d43596cb12e3",
   "generator_flags": [
     "--expand-shared-changes",
-    "--separate-inline-structures"
+    "--separate-inline-structures",
+    "--capture-span-defaults"
   ]
 }

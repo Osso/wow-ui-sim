@@ -5,6 +5,15 @@ from gen_patch_wikitext_register import parse_section, split_sections
 
 
 class InventoryTests(unittest.TestCase):
+    def test_span_cvar_defaults_are_opt_in_and_keep_literal_values(self):
+        lines = [(1, '| valign="top" | <div>'),
+                 (2, ': <span>[[CVar cameraFov|cameraFov]]</span>'
+                     '<span style="display:none">Default: <code><span>90</span></code>, Scope: Account</span>')]
+        entries, _ = parse_section('cvars', lines, capture_span_defaults=True)
+        self.assertEqual(entries[0]['page_default'], '90')
+        legacy, _ = parse_section('cvars', lines)
+        self.assertNotIn('page_default', legacy[0])
+
     def test_inline_structures_do_not_attach_fields_to_last_changed_api(self):
         raw = ('==Global API==\n|}\n {{api|C_TransmogCollection.GetCategoryAppearances}}\n'
                '   + arg transmogLocation\nStructures\n ClubInfo\n   + crossFaction\n'
