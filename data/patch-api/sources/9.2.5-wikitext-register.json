@@ -712,7 +712,7 @@
       "symbol": "cameraFov",
       "annotation": "",
       "wikitext_line": 242,
-      "page_default": "<span class=\"apitype\">90</span>"
+      "page_default": "90"
     },
     {
       "id": "wt-cvars-enableSourceLocationLookup-243",
@@ -721,7 +721,7 @@
       "symbol": "enableSourceLocationLookup",
       "annotation": "",
       "wikitext_line": 243,
-      "page_default": "<span class=\"apitype\">0</span>"
+      "page_default": "0"
     },
     {
       "id": "wt-cvars-GamePadEmulateTapWindowMs-244",
@@ -730,7 +730,7 @@
       "symbol": "GamePadEmulateTapWindowMs",
       "annotation": "",
       "wikitext_line": 244,
-      "page_default": "<span class=\"apitype\">350</span>"
+      "page_default": "350"
     }
   ]
 }

@@ -96,7 +96,7 @@ def parse_section(section, lines, *, expand_shared_changes=False, capture_span_d
             if section == 'cvars' and capture_span_defaults:
                 default = re.search(r'Default:\s*<code>(.*?)</code>', text)
                 if default:
-                    entry['page_default'] = FONT.sub('', default[1]).strip()
+                    entry['page_default'] = re.sub(r'<[^>]+>', '', default[1]).strip()
             if inline_commands:
                 entry["kind"] = "command"
             entries.append(entry)
