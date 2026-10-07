@@ -1,1 +1,20 @@
-[]
+[
+  "wt-cvars-clearSeenDelvesCurios-204",
+  "wt-global-api-C_AchievementTelemetry.LinkAchievementInClub-51",
+  "wt-global-api-C_AchievementTelemetry.LinkAchievementInWhisper-52",
+  "wt-global-api-C_AchievementTelemetry.ShowAchievements-53",
+  "wt-global-api-C_AddOns.DoesAddOnHaveLoadError-58",
+  "wt-global-api-C_Commentator.SpellUsesItemCharges-63",
+  "wt-global-api-C_Debug.ToggleDebugCharInfo-64",
+  "wt-global-api-C_Item.GetDelvePreviewItemQuality-76",
+  "wt-global-api-C_SpecializationInfo.SetPetSpecialization-80",
+  "wt-global-api-C_StableInfo.GetAvailablePetSpecInfos-82",
+  "wt-global-api-C_TradeSkillUI.CancelProfessionRespec-83",
+  "wt-global-api-C_TradeSkillUI.CheckRespecNPC-84",
+  "wt-global-api-C_TradeSkillUI.ConfirmProfessionRespec-85",
+  "wt-global-api-ConsoleEcho-92",
+  "wt-global-api-DeclineName-120",
+  "wt-global-api-GetNativeRealmID-94",
+  "wt-global-api-GetNumDeclensionSets-122",
+  "wt-global-api-SetSpecialization-102"
+]

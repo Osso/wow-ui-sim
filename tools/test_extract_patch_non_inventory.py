@@ -8,6 +8,14 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 class ExtractTests(unittest.TestCase):
+    def test_11_1_0_build_context_preserves_category_contract(self):
+        rows = seed_rows('Patch 11.1.0 API changes\n'
+                         '## Category-deDE: Dies ist ein Test\n'
+                         ': 11.0.7 (58238) → 11.1.0 (59466) Feb 27 2025\n',
+                         patch='11.1.0')
+        self.assertEqual(rows[1]['status'], 'audit-pending')
+        self.assertEqual(rows[2]['status'], 'metadata-only')
+
     def test_11_1_5_toc_example_preserves_symbolic_interface_and_directives(self):
         raw = ('==TOC format changes==\n{{#tag:syntaxhighlight|\n'
                '## Interface: {{API LatestInterface}}\n'
