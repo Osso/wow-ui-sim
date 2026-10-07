@@ -1,0 +1,454 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "11.1.7",
+  "source": {
+    "path": "data/patch-api/sources/11.1.7-api-changes.wikitext",
+    "revid": 6726774,
+    "sha256": "c934013da17b5072d32f4b0ce0427572d6b26835d7abc1da4ab16c8dcae05ee7"
+  },
+  "header_counts": [
+    {
+      "section": "global-api",
+      "direction": "added",
+      "header_count": 16,
+      "parsed_count": 16
+    },
+    {
+      "section": "global-api",
+      "direction": "removed",
+      "header_count": 2,
+      "parsed_count": 2
+    },
+    {
+      "section": "widgets",
+      "direction": "added",
+      "header_count": 1,
+      "parsed_count": 1
+    },
+    {
+      "section": "widgets",
+      "direction": "removed",
+      "header_count": 0,
+      "parsed_count": 0
+    },
+    {
+      "section": "events",
+      "direction": "added",
+      "header_count": 2,
+      "parsed_count": 2
+    },
+    {
+      "section": "events",
+      "direction": "removed",
+      "header_count": 0,
+      "parsed_count": 0
+    },
+    {
+      "section": "cvars",
+      "direction": "added",
+      "header_count": 22,
+      "parsed_count": 22
+    },
+    {
+      "section": "cvars",
+      "direction": "removed",
+      "header_count": 3,
+      "parsed_count": 3
+    }
+  ],
+  "entries": [
+    {
+      "id": "wt-global-api-C_ActionBar.FindAssistedCombatActionButtons-23",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ActionBar.FindAssistedCombatActionButtons",
+      "annotation": "",
+      "wikitext_line": 23
+    },
+    {
+      "id": "wt-global-api-C_ActionBar.ForceUpdateAction-24",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_ActionBar.ForceUpdateAction",
+      "annotation": "",
+      "wikitext_line": 24
+    },
+    {
+      "id": "wt-global-api-C_ActionBar.HasAssistedCombatActionButtons-25",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ActionBar.HasAssistedCombatActionButtons",
+      "annotation": "",
+      "wikitext_line": 25
+    },
+    {
+      "id": "wt-global-api-C_ActionBar.IsAssistedCombatAction-26",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ActionBar.IsAssistedCombatAction",
+      "annotation": "",
+      "wikitext_line": 26
+    },
+    {
+      "id": "wt-global-api-C_AddOnProfiler.AddMeasuredCallEvent-27",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AddOnProfiler.AddMeasuredCallEvent",
+      "annotation": "",
+      "wikitext_line": 27
+    },
+    {
+      "id": "wt-global-api-C_AddOnProfiler.GetTicksPerSecond-28",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AddOnProfiler.GetTicksPerSecond",
+      "annotation": "",
+      "wikitext_line": 28
+    },
+    {
+      "id": "wt-global-api-C_AddOnProfiler.MeasureCall-29",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AddOnProfiler.MeasureCall",
+      "annotation": "",
+      "wikitext_line": 29
+    },
+    {
+      "id": "wt-global-api-C_AddOns.GetAddOnLocalTable-30",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AddOns.GetAddOnLocalTable",
+      "annotation": "",
+      "wikitext_line": 30
+    },
+    {
+      "id": "wt-global-api-C_AssistedCombat.GetActionSpell-31",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AssistedCombat.GetActionSpell",
+      "annotation": "",
+      "wikitext_line": 31
+    },
+    {
+      "id": "wt-global-api-C_AssistedCombat.GetNextCastSpell-32",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AssistedCombat.GetNextCastSpell",
+      "annotation": "",
+      "wikitext_line": 32
+    },
+    {
+      "id": "wt-global-api-C_AssistedCombat.GetRotationSpells-33",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AssistedCombat.GetRotationSpells",
+      "annotation": "",
+      "wikitext_line": 33
+    },
+    {
+      "id": "wt-global-api-C_AssistedCombat.IsAvailable-34",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AssistedCombat.IsAvailable",
+      "annotation": "",
+      "wikitext_line": 34
+    },
+    {
+      "id": "wt-global-api-C_CurrencyInfo.IsCurrencyTransferInProgress-35",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CurrencyInfo.IsCurrencyTransferInProgress",
+      "annotation": "",
+      "wikitext_line": 35
+    },
+    {
+      "id": "wt-global-api-C_Spell.GetBaseSpell-36",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Spell.GetBaseSpell",
+      "annotation": "",
+      "wikitext_line": 36
+    },
+    {
+      "id": "wt-global-api-C_UIWidgetManager.GetButtonHeaderWidgetVisualizationInfo-37",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_UIWidgetManager.GetButtonHeaderWidgetVisualizationInfo",
+      "annotation": "",
+      "wikitext_line": 37
+    },
+    {
+      "id": "wt-global-api-table.create-38",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "table.create",
+      "annotation": "",
+      "wikitext_line": 38
+    },
+    {
+      "id": "wt-global-api-C_Debug.PrintToDebugWindow-41",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Debug.PrintToDebugWindow",
+      "annotation": "",
+      "wikitext_line": 41
+    },
+    {
+      "id": "wt-global-api-C_Debug.ViewInDebugWindow-42",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Debug.ViewInDebugWindow",
+      "annotation": "",
+      "wikitext_line": 42
+    },
+    {
+      "id": "wt-global-api-C_CooldownViewer.IsCooldownViewerAvailable-45",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_CooldownViewer.IsCooldownViewerAvailable",
+      "annotation": "# ret 1: available -> isAvailable\n+ ret 2: failureReason",
+      "wikitext_line": 45
+    },
+    {
+      "id": "wt-widgets-Frame:GetHighestFrameLevel-56",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Frame:GetHighestFrameLevel",
+      "annotation": "",
+      "wikitext_line": 56
+    },
+    {
+      "id": "wt-events-ASSISTED_COMBAT_ACTION_SPELL_CAST-69",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ASSISTED_COMBAT_ACTION_SPELL_CAST",
+      "annotation": "",
+      "wikitext_line": 69
+    },
+    {
+      "id": "wt-events-CURRENCY_TRANSFER_INITIATED-70",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CURRENCY_TRANSFER_INITIATED",
+      "annotation": "",
+      "wikitext_line": 70
+    },
+    {
+      "id": "wt-events-REPORT_PLAYER_RESULT-75",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "REPORT_PLAYER_RESULT",
+      "annotation": "# 1: success -> result",
+      "wikitext_line": 75
+    },
+    {
+      "id": "wt-cvars-assistedCombatHighlight-85",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "assistedCombatHighlight",
+      "annotation": "",
+      "wikitext_line": 85,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-assistedCombatIconUpdateRate-86",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "assistedCombatIconUpdateRate",
+      "annotation": "",
+      "wikitext_line": 86,
+      "page_default": "0.100000"
+    },
+    {
+      "id": "wt-cvars-ClientSettings_ClusteredShading-87",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "ClientSettings_ClusteredShading",
+      "annotation": "",
+      "wikitext_line": 87
+    },
+    {
+      "id": "wt-cvars-ClientSettings_CMAA2-88",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "ClientSettings_CMAA2",
+      "annotation": "",
+      "wikitext_line": 88
+    },
+    {
+      "id": "wt-cvars-ClientSettings_CMD_LIST_MT-89",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "ClientSettings_CMD_LIST_MT",
+      "annotation": "",
+      "wikitext_line": 89
+    },
+    {
+      "id": "wt-cvars-ClientSettings_FSR-90",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "ClientSettings_FSR",
+      "annotation": "",
+      "wikitext_line": 90
+    },
+    {
+      "id": "wt-cvars-ClientSettings_HIGH_MEM_FEATURES-91",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "ClientSettings_HIGH_MEM_FEATURES",
+      "annotation": "",
+      "wikitext_line": 91
+    },
+    {
+      "id": "wt-cvars-ClientSettings_LowLatency-92",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "ClientSettings_LowLatency",
+      "annotation": "",
+      "wikitext_line": 92
+    },
+    {
+      "id": "wt-cvars-ClientSettings_MemoryAllocationTraces-93",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "ClientSettings_MemoryAllocationTraces",
+      "annotation": "",
+      "wikitext_line": 93
+    },
+    {
+      "id": "wt-cvars-ClientSettings_MSAA-94",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "ClientSettings_MSAA",
+      "annotation": "",
+      "wikitext_line": 94
+    },
+    {
+      "id": "wt-cvars-ClientSettings_NeedsGxRestart-95",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "ClientSettings_NeedsGxRestart",
+      "annotation": "",
+      "wikitext_line": 95
+    },
+    {
+      "id": "wt-cvars-ClientSettings_OPT_FEATURES-96",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "ClientSettings_OPT_FEATURES",
+      "annotation": "",
+      "wikitext_line": 96
+    },
+    {
+      "id": "wt-cvars-ClientSettings_RAY_TRACING-97",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "ClientSettings_RAY_TRACING",
+      "annotation": "",
+      "wikitext_line": 97
+    },
+    {
+      "id": "wt-cvars-ClientSettings_RTShadows-98",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "ClientSettings_RTShadows",
+      "annotation": "",
+      "wikitext_line": 98
+    },
+    {
+      "id": "wt-cvars-ClientSettings_SHADER_MT-99",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "ClientSettings_SHADER_MT",
+      "annotation": "",
+      "wikitext_line": 99
+    },
+    {
+      "id": "wt-cvars-ClientSettings_SM6-100",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "ClientSettings_SM6",
+      "annotation": "",
+      "wikitext_line": 100
+    },
+    {
+      "id": "wt-cvars-ClientSettings_VolumeFog-101",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "ClientSettings_VolumeFog",
+      "annotation": "",
+      "wikitext_line": 101
+    },
+    {
+      "id": "wt-cvars-ClientSettings_WORK_OPTIMS-102",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "ClientSettings_WORK_OPTIMS",
+      "annotation": "",
+      "wikitext_line": 102
+    },
+    {
+      "id": "wt-cvars-GxCompatAllowSM6-103",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "GxCompatAllowSM6",
+      "annotation": "",
+      "wikitext_line": 103,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-GxCompatAsyncShaderCompilation-104",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "GxCompatAsyncShaderCompilation",
+      "annotation": "",
+      "wikitext_line": 104,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-GxMemReport-105",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "GxMemReport",
+      "annotation": "",
+      "wikitext_line": 105,
+      "kind": "command"
+    },
+    {
+      "id": "wt-cvars-GxSimulateEvent-106",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "GxSimulateEvent",
+      "annotation": "",
+      "wikitext_line": 106,
+      "kind": "command"
+    },
+    {
+      "id": "wt-cvars-GxCompatAsyncFrameEnd-109",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "GxCompatAsyncFrameEnd",
+      "annotation": "",
+      "wikitext_line": 109,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-GxCompatDeviceMultiThreading-110",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "GxCompatDeviceMultiThreading",
+      "annotation": "",
+      "wikitext_line": 110,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-worldMaxMipLevel-111",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "worldMaxMipLevel",
+      "annotation": "",
+      "wikitext_line": 111,
+      "page_default": "12"
+    }
+  ]
+}

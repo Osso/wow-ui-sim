@@ -1,0 +1,15 @@
+{
+  "command": [
+    "timeout",
+    "90",
+    "/home/osso/.worktrees/wow-ui-sim-p1117-page/target/debug/wow-sim",
+    "--no-addons",
+    "--no-saved-vars",
+    "lua-errors"
+  ],
+  "revision": "210e4e23c7465f98970e808ac00ffc183397490d",
+  "exit_code": 0,
+  "stdout_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1117-startup.stdout",
+  "stderr_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1117-startup.stderr",
+  "json": []
+}

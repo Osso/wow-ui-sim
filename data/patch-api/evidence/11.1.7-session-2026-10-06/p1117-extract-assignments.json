@@ -1,0 +1,39 @@
+{
+  "batches": {
+    "B01-summary": [
+      "prose-undated-004",
+      "prose-undated-005",
+      "prose-undated-006"
+    ],
+    "B02-enums": [
+      "enumerations-Enum-AccountCurrencyTransferResult-017",
+      "enumerations-Enum-AccountCurrencyTransferResult-018",
+      "enumerations-Enum-ReportMinorCategory-019",
+      "enumerations-Enum-ReportMinorCategory-020",
+      "enumerations-Enum-ReportMinorCategory-021",
+      "enumerations-Enum-UIWidgetVisualizationType-022",
+      "enumerations-Enum-UIWidgetVisualizationType-023"
+    ],
+    "B03-structures": [
+      "structures-BattlemasterListInfo-026",
+      "structures-BattlemasterListInfo-027",
+      "structures-PlayerChoiceOptionButtonInfo-028",
+      "structures-PlayerChoiceOptionButtonInfo-029",
+      "structures-TransmogCategoryAppearanceInfo-030",
+      "structures-TransmogCategoryAppearanceInfo-031"
+    ]
+  },
+  "metadata": [
+    "source-context-001",
+    "source-context-003",
+    "source-context-008",
+    "source-context-009",
+    "source-context-010",
+    "source-context-011",
+    "source-context-012",
+    "source-context-014",
+    "source-context-015",
+    "source-context-016",
+    "source-context-025"
+  ]
+}

@@ -1,0 +1,80 @@
+[
+  {
+    "patch": "11.2.0",
+    "baseline_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-sweep-result.json",
+    "identical_observations": true,
+    "changed_ids": []
+  },
+  {
+    "patch": "11.2.5",
+    "baseline_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1125-sweep-result.json",
+    "identical_observations": true,
+    "changed_ids": []
+  },
+  {
+    "patch": "11.2.7",
+    "baseline_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1127-sweep-result.json",
+    "identical_observations": false,
+    "changed_ids": [
+      "wt-global-api-C_DyeColor.GetAllDyeColorCategories-25",
+      "wt-global-api-C_DyeColor.GetAllDyeColors-26",
+      "wt-global-api-C_DyeColor.GetDyeColorCategoryInfo-27",
+      "wt-global-api-C_DyeColor.GetDyeColorInfo-30",
+      "wt-global-api-C_DyeColor.GetDyeColorsInCategory-31",
+      "wt-global-api-C_DyeColor.IsDyeColorOwned-32",
+      "wt-global-api-C_HouseEditor.ActivateHouseEditorMode-40",
+      "wt-global-api-C_HouseEditor.EnterHouseEditor-41",
+      "wt-global-api-C_HouseEditor.GetHouseEditorAvailability-43",
+      "wt-global-api-C_HouseEditor.GetHouseEditorModeAvailability-44",
+      "wt-global-api-C_HouseEditor.IsHouseEditorActive-45",
+      "wt-global-api-C_HouseEditor.IsHouseEditorModeActive-46",
+      "wt-global-api-C_HouseEditor.IsHouseEditorStatusAvailable-47",
+      "wt-global-api-C_HouseEditor.LeaveHouseEditor-48",
+      "wt-global-api-C_Housing.GetCurrentNeighborhoodGUID-70",
+      "wt-global-api-C_Housing.IsInsidePlot-90",
+      "wt-global-api-C_Housing.IsOnNeighborhoodMap-91",
+      "wt-global-api-C_Housing.SetTrackedHouseGuid-107",
+      "wt-global-api-C_HousingDecor.IsHouseExteriorDoorHovered-201",
+      "wt-global-api-C_HousingLayout.GetNumActiveRooms-232",
+      "wt-global-api-C_KeyBindings.ActivateBindingContext-290",
+      "wt-global-api-C_KeyBindings.DeactivateBindingContext-291",
+      "wt-global-api-C_KeyBindings.IsBindingContextActive-296",
+      "wt-global-api-GetAutoDeclineNeighborhoodInvites-315",
+      "wt-global-api-SetAutoDeclineNeighborhoodInvites-318",
+      "wt-widgets-ModelSceneActorBase:IsPreferringModelCollisionBounds-351",
+      "wt-widgets-ModelSceneActorBase:SetPreferModelCollisionBounds-353"
+    ],
+    "preexisting_follow_up_closures": 27,
+    "all_changes_are_preexisting_closures": true
+  },
+  {
+    "patch": "12.0.0",
+    "baseline_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1200-sweep-result.json",
+    "identical_observations": true,
+    "changed_ids": []
+  },
+  {
+    "patch": "12.0.1",
+    "baseline_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1201-sweep-result.json",
+    "identical_observations": true,
+    "changed_ids": []
+  },
+  {
+    "patch": "12.0.5",
+    "baseline_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1205-sweep-result.json",
+    "identical_observations": true,
+    "changed_ids": []
+  },
+  {
+    "patch": "12.0.7",
+    "baseline_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1207-sweep-result.json",
+    "identical_observations": true,
+    "changed_ids": []
+  },
+  {
+    "patch": "12.1.0",
+    "baseline_path": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1210-sweep-result.json",
+    "identical_observations": true,
+    "changed_ids": []
+  }
+]

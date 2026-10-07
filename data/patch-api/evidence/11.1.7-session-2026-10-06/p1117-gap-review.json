@@ -1,0 +1,532 @@
+{
+  "rows": [
+    {
+      "source_id": "wt-cvars-GxMemReport-105",
+      "symbol": "GxMemReport",
+      "category": "command-catalog",
+      "investigate": "src/c_api/c_console.rs",
+      "decision": "fixed",
+      "reason": "Extend existing explicit typed command catalog; not CVar storage. Catalog-only closure; graphics command execution and native metadata remain unmodeled.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "GxMemReport"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "Command record present=false",
+          "kind": "command",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "GxMemReport"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "Command record present=true",
+          "kind": "command",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-cvars-GxSimulateEvent-106",
+      "symbol": "GxSimulateEvent",
+      "category": "command-catalog",
+      "investigate": "src/c_api/c_console.rs",
+      "decision": "fixed",
+      "reason": "Extend existing explicit typed command catalog; not CVar storage. Catalog-only closure; graphics command execution and native metadata remain unmodeled.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "GxSimulateEvent"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "Command record present=false",
+          "kind": "command",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "GxSimulateEvent"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "Command record present=true",
+          "kind": "command",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_ActionBar.FindAssistedCombatActionButtons-23",
+      "symbol": "C_ActionBar.FindAssistedCombatActionButtons",
+      "category": "assisted-action-identity",
+      "investigate": "src/lua_api/state/support_types.rs; src/lua_api/globals/action_bar_api.rs; cached ActionBarFrameDocumentation.lua",
+      "decision": "retained-gap",
+      "reason": "AssistedCombatState models next_cast_spell_id only; GetActionSpell currently returns nil and action predicates are placeholders. The documented query selects rotation-action spell slots, not next-cast recommendations. Needs explicit assisted action identity and shared predicates, not an empty-table registration.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ActionBar.FindAssistedCombatActionButtons"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ActionBar.FindAssistedCombatActionButtons"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_AddOnProfiler.AddMeasuredCallEvent-27",
+      "symbol": "C_AddOnProfiler.AddMeasuredCallEvent",
+      "category": "call-profiler",
+      "investigate": "src/c_api/c_addon_profiler.rs",
+      "decision": "retained-gap",
+      "reason": "Existing metrics aggregate frame costs; no measured-call record/instrumentation model exists. Requires measured-call event storage and call attribution, not an untracked no-op.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_AddOnProfiler.AddMeasuredCallEvent"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_AddOnProfiler.AddMeasuredCallEvent"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_AddOnProfiler.GetTicksPerSecond-28",
+      "symbol": "C_AddOnProfiler.GetTicksPerSecond",
+      "category": "call-profiler",
+      "investigate": "src/c_api/c_addon_profiler.rs",
+      "decision": "retained-gap",
+      "reason": "No measured-call clock/tick domain exists. A standalone arbitrary frequency would not establish the paired profiling contract. Implement with the actual MeasureCall clock and tick outputs.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_AddOnProfiler.GetTicksPerSecond"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_AddOnProfiler.GetTicksPerSecond"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_AddOnProfiler.MeasureCall-29",
+      "symbol": "C_AddOnProfiler.MeasureCall",
+      "category": "call-profiler",
+      "investigate": "src/c_api/c_addon_profiler.rs",
+      "decision": "retained-gap",
+      "reason": "Missing individual call metering and protected invocation/result forwarding. Requires clock, errors, nil/multiple return preservation and nested/tainted caller proof; frame-average metrics cannot substitute.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_AddOnProfiler.MeasureCall"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_AddOnProfiler.MeasureCall"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_AddOns.GetAddOnLocalTable-30",
+      "symbol": "C_AddOns.GetAddOnLocalTable",
+      "category": "addon-namespace-access",
+      "investigate": "src/c_api/c_addons.rs; src/loader/addon.rs; cached AddOnsDocumentation.lua",
+      "decision": "retained-gap",
+      "reason": "Loader creates the shared file-argument table but does not retain a queryable opted-in table or enforce AllowAddOnTableAccess and insecure Blizzard-access denial. Requires rooted lifecycle retention, TOC opt-in and security proof through real addon loading; no nil-return shim.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_AddOns.GetAddOnLocalTable"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_AddOns.GetAddOnLocalTable"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_CooldownViewer.IsCooldownViewerAvailable-45",
+      "symbol": "C_CooldownViewer.IsCooldownViewerAvailable",
+      "category": "availability-policy",
+      "investigate": "src/c_api/c_cooldown_viewer.rs",
+      "decision": "retained-gap",
+      "reason": "Existing cooldown entries do not model availability or failureReason. Empty entries do not imply unavailable, nor does a frame imply available. Needs explicit availability policy/state and two-result contract, not constant true/nil.",
+      "initial": {
+        "expected": {
+          "direction": "changed",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_CooldownViewer.IsCooldownViewerAvailable"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "changed",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_CooldownViewer.IsCooldownViewerAvailable"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_CurrencyInfo.IsCurrencyTransferInProgress-35",
+      "symbol": "C_CurrencyInfo.IsCurrencyTransferInProgress",
+      "category": "currency-transfer-lifecycle",
+      "investigate": "src/c_api/item_spell/c_currency.rs",
+      "decision": "retained-gap",
+      "reason": "Currency DTO transfer metadata exists, but request/in-flight/completion state and CURRENCY_TRANSFER_INITIATED dispatch are absent. Needs a shared transfer lifecycle producer; static false would fabricate behavior.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_CurrencyInfo.IsCurrencyTransferInProgress"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_CurrencyInfo.IsCurrencyTransferInProgress"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Debug.PrintToDebugWindow-41",
+      "symbol": "C_Debug.PrintToDebugWindow",
+      "category": "retirement",
+      "investigate": "src/c_api/c_debug.rs; src/c_api/patch_retired_members.rs",
+      "decision": "fixed",
+      "reason": "Stop simulator registration at every supported retail epoch and block autostub lookup. Retain pre-retirement implementation and do not alter cached deprecation wrappers.",
+      "initial": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Debug.PrintToDebugWindow"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Debug.PrintToDebugWindow"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Debug.ViewInDebugWindow-42",
+      "symbol": "C_Debug.ViewInDebugWindow",
+      "category": "retirement",
+      "investigate": "src/c_api/c_debug.rs; src/c_api/patch_retired_members.rs",
+      "decision": "fixed",
+      "reason": "Stop simulator registration at every supported retail epoch and block autostub lookup. Retain pre-retirement implementation and do not alter cached deprecation wrappers.",
+      "initial": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Debug.ViewInDebugWindow"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Debug.ViewInDebugWindow"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_UIWidgetManager.GetButtonHeaderWidgetVisualizationInfo-37",
+      "symbol": "C_UIWidgetManager.GetButtonHeaderWidgetVisualizationInfo",
+      "category": "widget-dto",
+      "investigate": "src/lua_api/globals/missing_surface/ui_widget_manager.rs",
+      "decision": "retained-gap",
+      "reason": "Existing narrow world-quest IconAndText producer does not hold ButtonHeader visualization records. Needs typed host widget inputs and concrete ButtonHeader DTO outputs; generic namespace autostub is not a producer.",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_UIWidgetManager.GetButtonHeaderWidgetVisualizationInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_UIWidgetManager.GetButtonHeaderWidgetVisualizationInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,432 @@
+{
+  "runtime_revision": "210e4e23c7465f98970e808ac00ffc183397490d",
+  "results": [
+    {
+      "name": "initial-sweep",
+      "command": [
+        "python3",
+        "scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_11_1_7_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "caace4c0bdf0a99b7196553c2a955ef192341886",
+      "exit_code": 101,
+      "log_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1117-initial.log",
+      "invalidated_by": null
+    },
+    {
+      "name": "fixes-red",
+      "command": [
+        "python3",
+        "scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_11_1_7_publication_fixes",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "caace4c0bdf0a99b7196553c2a955ef192341886",
+      "scope": "new uncommitted behavioral tests; no implementation changes",
+      "exit_code": 101,
+      "log_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1117-fixes-red.log"
+    },
+    {
+      "name": "fixes-red-bounded",
+      "command": [
+        "python3",
+        "scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_11_1_7_publication_fixes",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "caace4c0bdf0a99b7196553c2a955ef192341886",
+      "scope": "two uncommitted tests; assisted-slot candidate withdrawn: no action-spell field exists, next-cast is not action-spell identity",
+      "exit_code": 101,
+      "log_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1117-fixes-red-bounded.log"
+    },
+    {
+      "name": "fixes-green",
+      "command": [
+        "python3",
+        "scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_11_1_7_publication_fixes",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "084bde1ee9df05ecbb0f5805b3bb93ef86f61424",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1117-fixes-green.log",
+      "invalidated_by": null
+    },
+    {
+      "name": "extract-red",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "test_extract_patch_non_inventory.ExtractTests.test_11_1_7_summary_contracts_are_pending_but_build_transition_is_editorial"
+      ],
+      "cwd": "tools",
+      "revision": "084bde1ee9df05ecbb0f5805b3bb93ef86f61424",
+      "scope": "new uncommitted extractor fixture",
+      "exit_code": 1,
+      "log_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1117-extract-red.log"
+    },
+    {
+      "name": "p1117-sweep",
+      "command": [
+        "python3",
+        "scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_11_1_7_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "210e4e23c7465f98970e808ac00ffc183397490d",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1117-sweep.log",
+      "result_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1117-sweep-result.json",
+      "rows": 48,
+      "ok": 40,
+      "gaps": 8,
+      "invalidated_by": null
+    },
+    {
+      "name": "p1120-sweep",
+      "command": [
+        "python3",
+        "scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_11_2_0_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "210e4e23c7465f98970e808ac00ffc183397490d",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1120-sweep.log",
+      "result_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1120-sweep-result.json",
+      "rows": 162,
+      "ok": 136,
+      "gaps": 26,
+      "invalidated_by": null
+    },
+    {
+      "name": "p1125-sweep",
+      "command": [
+        "python3",
+        "scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_11_2_5_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "210e4e23c7465f98970e808ac00ffc183397490d",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1125-sweep.log",
+      "result_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1125-sweep-result.json",
+      "rows": 163,
+      "ok": 118,
+      "gaps": 45,
+      "invalidated_by": null
+    },
+    {
+      "name": "p1127-sweep",
+      "command": [
+        "python3",
+        "scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_11_2_7_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "210e4e23c7465f98970e808ac00ffc183397490d",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1127-sweep.log",
+      "result_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1127-sweep-result.json",
+      "rows": 508,
+      "ok": 414,
+      "gaps": 94,
+      "invalidated_by": null
+    },
+    {
+      "name": "p1200-sweep",
+      "command": [
+        "python3",
+        "scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_0_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "210e4e23c7465f98970e808ac00ffc183397490d",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1200-sweep.log",
+      "result_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1200-sweep-result.json",
+      "rows": 1010,
+      "ok": 987,
+      "gaps": 23,
+      "invalidated_by": null
+    },
+    {
+      "name": "p1201-sweep",
+      "command": [
+        "python3",
+        "scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_1_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "210e4e23c7465f98970e808ac00ffc183397490d",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1201-sweep.log",
+      "result_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1201-sweep-result.json",
+      "rows": 225,
+      "ok": 222,
+      "gaps": 3,
+      "invalidated_by": null
+    },
+    {
+      "name": "p1205-sweep",
+      "command": [
+        "python3",
+        "scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_5_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "210e4e23c7465f98970e808ac00ffc183397490d",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1205-sweep.log",
+      "result_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1205-sweep-result.json",
+      "rows": 363,
+      "ok": 352,
+      "gaps": 11,
+      "invalidated_by": null
+    },
+    {
+      "name": "p1207-sweep",
+      "command": [
+        "python3",
+        "scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_0_7_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "210e4e23c7465f98970e808ac00ffc183397490d",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1207-sweep.log",
+      "result_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1207-sweep-result.json",
+      "rows": 174,
+      "ok": 171,
+      "gaps": 3,
+      "invalidated_by": null
+    },
+    {
+      "name": "p1210-sweep",
+      "command": [
+        "python3",
+        "scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_12_1_0_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "210e4e23c7465f98970e808ac00ffc183397490d",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1210-sweep.log",
+      "result_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1210-sweep-result.json",
+      "rows": 778,
+      "ok": 773,
+      "gaps": 5,
+      "invalidated_by": null
+    },
+    {
+      "name": "negative-control",
+      "command": [
+        "python3",
+        "scripts/build-host.py",
+        "--build-host",
+        "local",
+        "--test",
+        "--test",
+        "integration",
+        "patch_11_1_7_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "210e4e23c7465f98970e808ac00ffc183397490d",
+      "exit_code": 101,
+      "expected_exit_code": 101,
+      "log_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1117-negative.log",
+      "invalidated_by": null
+    },
+    {
+      "name": "extract-green",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "test_extract_patch_non_inventory",
+        "test_gen_patch_wikitext_register"
+      ],
+      "cwd": "tools",
+      "revision": "210e4e23c7465f98970e808ac00ffc183397490d",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1117-extract-green.log",
+      "invalidated_by": null
+    },
+    {
+      "name": "extract-reproduce",
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "11.1.7",
+        "--text-only",
+        "--check"
+      ],
+      "cwd": ".",
+      "revision": "210e4e23c7465f98970e808ac00ffc183397490d",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1117-extract-reproduce.log",
+      "invalidated_by": null
+    },
+    {
+      "name": "fmt-final",
+      "command": [
+        "cargo",
+        "fmt",
+        "--check"
+      ],
+      "cwd": ".",
+      "revision": "210e4e23c7465f98970e808ac00ffc183397490d",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1117-fmt-final.log",
+      "invalidated_by": null
+    },
+    {
+      "name": "mists-check",
+      "command": [
+        "cargo",
+        "check",
+        "--no-default-features",
+        "--features",
+        "sound,gui,casc,client-mists",
+        "--tests"
+      ],
+      "revision": "210e4e23c7465f98970e808ac00ffc183397490d",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1117-mists-check.log",
+      "invalidated_by": null
+    },
+    {
+      "name": "build-final",
+      "command": [
+        "cargo",
+        "build",
+        "--bin",
+        "wow-sim"
+      ],
+      "revision": "210e4e23c7465f98970e808ac00ffc183397490d",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1117-build.log",
+      "invalidated_by": null
+    },
+    {
+      "name": "startup-final",
+      "command": [
+        "timeout",
+        "90",
+        "/home/osso/.worktrees/wow-ui-sim-p1117-page/target/debug/wow-sim",
+        "--no-addons",
+        "--no-saved-vars",
+        "lua-errors"
+      ],
+      "revision": "210e4e23c7465f98970e808ac00ffc183397490d",
+      "exit_code": 0,
+      "stdout_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1117-startup.stdout",
+      "stderr_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1117-startup.stderr",
+      "json": [],
+      "invalidated_by": null
+    }
+  ],
+  "notes": [
+    "Source/test revision 210e4e23c; runtime code unchanged from 084bde1ee. Later evidence/docs/validator changes do not invalidate runtime proof.",
+    "Initial assisted-slot candidate failed compilation; withdrawn because next_cast_spell_id is not rotation-action identity. No action model fabricated.",
+    "Changed Rust lines manually audited for readability: short explicit registration gates, data-only console additions, consolidated legacy output handler, no new warning suppressions.",
+    "Captured Cargo logs inspected without rerunning commands; only six pre-existing iced manifest warnings plus vendor summary.",
+    "Eight later gap fixtures, raw sources, registers and coverage ledgers remain byte-identical to starting master. Seven observation maps match older 11.2.0 proof; 11.2.7 differs only by 27 modeled/permanent closures already present on starting master."
+  ]
+}
