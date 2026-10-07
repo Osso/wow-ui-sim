@@ -12,3 +12,9 @@ Shared publication sweep requires exact reviewed gap IDs. P1117_SWEEP_OUT writes
 - [ ] Retain exact fixture, non-inventory extract and exhaustive page ledger.
 - [ ] Run nine isolated publication sweeps and one-row negative control.
 - [ ] Run new behavioral tests, formatting, Mists test check and startup [].
+
+## Bounded fixes
+
+Two removed C_Debug members were registered unconditionally. Move the retained pre-retirement implementation under src/c_api/c_debug.rs and register only outside retail-12-0-0; mark removed keys to prevent namespace autostub fabrication. Never remove cached Blizzard deprecated wrappers. Existing legacy test runs only before retirement. Two documented graphics commands join the existing typed console catalog, not CVar storage; execution and native metadata remain unmodeled.
+
+Two behavioral tests reproduce all four defects before implementation. An earlier assisted-slot candidate did not compile: AssistedCombatState contains only next_cast_spell_id, not an assisted action spell identity. Next-cast recommendation is not the rotation action spell; defer that producer rather than fabricate it.

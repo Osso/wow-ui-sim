@@ -62,6 +62,10 @@ This is simulator behavioral/publication evidence, not native-client metadata or
 
 The ten command names in revision 6726771's separate Commands table are published as Command records from the earliest supported retail epoch, 12.0.0. `tests/patch_11_2_7_retirement.rs` verifies all ten exact names/types; `tests/patch_11_2_7_publication_sweep.rs` observes each occurrence after cached Game load. Classic profiles omit these records. No neighborhood command execution, service effects or native metadata fidelity is claimed.
 
+## 11.1.7 baseline catalog — 2026-10-06
+
+Revision 6726774 lists `GxMemReport` and `GxSimulateEvent` as commands, not CVars. Both publish Command records from the earliest supported retail epoch, 12.0.0. `tests/patch_11_1_7_publication_fixes.rs` requires one typed record per name and nil CVar/default queries. Existing inferred category/help fields and lack of execution apply unchanged. Classic profiles omit these records.
+
 ## Out of scope
 
-Commands beyond the ten documented 11.2.7 and two 12.0.7 additions, macro/script records, native category/help metadata, command execution, full client catalog completeness and native-client conformance. Cached Forever `ConsoleDocumentation.lua` establishes the global and record shape; local Wowless `data/impl/ConsoleGetAllCommands.lua` supplies the CVar-only precedent, not native verification.
+Commands beyond the two documented 11.1.7, ten 11.2.7 and two 12.0.7 additions, macro/script records, native category/help metadata, command execution, full client catalog completeness and native-client conformance. Cached Forever `ConsoleDocumentation.lua` establishes the global and record shape; local Wowless `data/impl/ConsoleGetAllCommands.lua` supplies the CVar-only precedent, not native verification.

@@ -1,3 +1,5 @@
+#![cfg(not(feature = "retail-12-0-0"))]
+
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 fn env() -> WowLuaEnv {

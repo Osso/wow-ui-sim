@@ -79,6 +79,8 @@ pub mod c_cursor;
 pub mod c_curve_util;
 pub mod c_damage_meter;
 pub mod c_death_recap;
+#[cfg(not(feature = "retail-12-0-0"))]
+pub(crate) mod c_debug;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_delves_entrance;
 pub mod c_discord;

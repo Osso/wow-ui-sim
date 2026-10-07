@@ -38,9 +38,11 @@ fn native_command_names(
     profile: crate::client_profile::ClientProfile,
     version: u32,
 ) -> impl Iterator<Item = &'static str> {
-    // 11.2.7 additions precede all supported retail epochs. These are catalog
-    // records only: command execution and neighborhood service effects are unmodeled.
+    // 11.1.7/11.2.7 additions precede all supported retail epochs. These are
+    // catalog records only: graphics/neighborhood command execution is unmodeled.
     const BASELINE: &[&str] = &[
+        "GxMemReport",
+        "GxSimulateEvent",
         "NeighborhoodAddManager",
         "NeighborhoodCancelInvitation",
         "NeighborhoodGetInvites",
