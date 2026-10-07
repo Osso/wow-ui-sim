@@ -4,7 +4,7 @@ Page 12983, revision 6473470 (September 15, 2025, 16:50:03 UTC), retrieved Octob
 
 ## Source and accounting
 
-150 inventory occurrences: 79 added, 64 removed, seven changed. All eight headers match: global API 46/46, widgets 15/5, events 4/9, CVars 14/4. Seventeen later registers, 10.2.6 through 12.1.0, supersede chronologically; three expectations reverse direction. The independent 10.2.5 register is deliberately not an input yet. Adding it before 10.2.6 requires one later-register list entry.
+150 inventory occurrences: 79 added, 64 removed, seven changed. All eight headers match: global API 46/46, widgets 15/5, events 4/9, CVars 14/4. Eighteen later registers, 10.2.5 through 12.1.0, supersede chronologically (10.2.5 added at integration; the thirty exact gaps are unchanged); three expectations reverse direction. The independent 10.2.5 register is deliberately not an input yet. Adding it before 10.2.6 requires one later-register list entry.
 
 284 unique source IDs: 150 inventory + 134 extract. Ledger counts: 64 bounded-coverage, 51 partial-development-green, 151 audit-pending, 18 metadata-only. Inventory pending comprises 30 exact publication gaps and five serialized-default mismatches. All 116 substantive extract occurrences remain pending: 33 enumeration, four constant, 28 structure, 19 deprecated API, 21 texture-slicing/example and 11 prose rows. Eighteen editorial/source rows grant no runtime credit. Raw wikitext is authoritative; normalized plaintext is not executable Lua and does not preserve Lua long-string delimiters.
 

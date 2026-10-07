@@ -4,7 +4,7 @@ Account for Warcraft Wiki page 12983, revision 6473470 (2025-09-15T16:50:03Z). [
 
 ## What it must do
 
-- [x] Probe all 150 inventory occurrences against seventeen chronological later registers, 10.2.6 through 12.1.0; require exact reviewed gaps. Adding 10.2.5 is one list entry, not a new classifier.
+- [x] Probe all 150 inventory occurrences against eighteen chronological later registers, 10.2.5 through 12.1.0; require exact reviewed gaps.
 - [x] Account for every inventory/extract occurrence once. Publication/absence, default values and event registration never imply signatures, populated DTOs, security or native parity.
 - [x] Retail/PTR must not fabricate three unused C_Console members (`GetFontHeight`, `PrintAllMatchingCommands`, `SetFontHeight`) or register five retired legacy addon globals (`GetNumAddOns`, `IsAddOnLoaded`, `GetAddOnEnableState`, `IsAddOnLoadOnDemand`, `LoadAddOn`). Classic registrations, C_AddOns successors, GetAddOnMetadata and cached deprecation wrappers remain unchanged.
 - [x] ClearParentKey removes existing child mappings from both Lua parent fields and Rust widget state; repeated clears preserve mappings owned by another child. Existing SetParentKey clearOtherKeys behavior remains.
