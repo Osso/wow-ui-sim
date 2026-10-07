@@ -26,6 +26,26 @@ fn patch_11_0_5_retired_members_survive_repeated_lookup() {
 }
 
 #[test]
+fn patch_11_0_5_chroma_cvars_have_mutable_values_and_immutable_defaults() {
+    let env = WowLuaEnv::new().unwrap();
+    env.exec(
+        r#"
+        for _, name in ipairs({'ChromaEffectsEnable', 'ChromaEffectsFactionColor'}) do
+            assert(GetCVarDefault(name) == '1', name)
+            assert(C_CVar.GetCVarDefault(name) == '1', name)
+            assert(GetCVar(name) == '1', name)
+            assert(C_CVar.SetCVar(string.upper(name), '0'))
+            assert(GetCVarBool(name) == false)
+            assert(GetCVarDefault(name) == '1')
+            assert(SetCVar(name, GetCVarDefault(name)))
+            assert(C_CVar.GetCVarBool(name) == true)
+        end
+        "#,
+    )
+    .unwrap();
+}
+
+#[test]
 fn patch_11_0_5_altered_form_availability_uses_character_snapshot() {
     let env = WowLuaEnv::new().unwrap();
     let has_altered_form = || env.eval::<bool>("return C_BarberShop.HasAlteredForm()").unwrap();

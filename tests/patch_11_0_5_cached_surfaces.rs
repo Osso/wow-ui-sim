@@ -28,6 +28,12 @@ fn patch_11_0_5_cached_surfaces_preserve_retirements_and_character_query(env: &W
         assert(C_Glue.IsOnGlueScreen() == false)
         assert(IsOnGlueScreen == false)
         assert(GetCVarBool('loadDeprecationFallbacks'))
+        for _, name in ipairs({'ChromaEffectsEnable', 'ChromaEffectsFactionColor'}) do
+            assert(GetCVarDefault(name) == '1')
+            assert(SetCVar(name, '0'))
+            assert(C_CVar.GetCVarBool(name) == false)
+            assert(GetCVarDefault(name) == '1')
+        end
         "#,
     ).unwrap();
     assert_eq!(env.state().borrow().lua_errors.len(), errors_before);
