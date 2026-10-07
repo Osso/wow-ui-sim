@@ -58,12 +58,14 @@ fn patch_11_2_0_removed_members_stay_absent_on_repeated_lookup() {
 }
 
 #[test]
-fn patch_11_2_0_browser_retains_home_not_removed_navigation() {
+fn patch_11_2_0_browser_keeps_navigation_used_by_current_photo_sharing() {
     let env = WowLuaEnv::new().unwrap();
     env.exec(
         r#"
         local browser = CreateFrame('Browser')
-        assert(browser.NavigateTo == nil)
+        -- Page row says removed; Blizzard_PhotoSharingBrowser.lua:66,73 still calls it.
+        assert(type(browser.NavigateTo) == 'function')
+        assert(select('#', browser:NavigateTo('https://example.invalid')) == 0)
         assert(type(browser.NavigateHome) == 'function')
         assert(select('#', browser:NavigateHome()) == 0)
         "#,

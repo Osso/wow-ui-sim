@@ -18,7 +18,7 @@
         "tests/common/publication_sweep.rs",
         "tests/patch_11_2_0_publication_fixes.rs"
       ],
-      "implementation": "Twelve bounded fixes: combat/gradient readback, four fog CVars, five namespace retirements and Browser NavigateTo exclusion. Retail-12-0-0 gates preserve classic profiles.",
+      "implementation": "Eleven bounded fixes: combat/gradient readback, four fog CVars, five namespace retirements. Retail-12-0-0 gates preserve classic profiles.",
       "compiled_revision": "2bd77f4d44bea86a5b361c675a8eed56dfe21f13",
       "proof": "Eight isolated GREEN sweeps; seven later observations identical; negative control adds exactly one gap. Five bounded behavioral tests GREEN after RED.",
       "ledger": "data/patch-api/evidence/11.2.0-session-2026-10-06/p1120-sweep-result.json"
@@ -934,11 +934,9 @@
     },
     {
       "source_id": "wt-widgets-Browser:NavigateTo-173",
-      "capabilities": [
-        "publication-sweep-11-2-0"
-      ],
-      "status": "bounded-coverage",
-      "note": "Bounded absence/registration-rejection proof only; no behavior or historical/native parity credit."
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained gap: page row lists removal, but current retail Blizzard_PhotoSharingBrowser.lua:66,73 calls PhotoSharingBrowser/PhotoSharingBrowserPopup:NavigateTo. Method stays published (no-result navigate); needs later re-publication/supersession evidence before retiring."
     },
     {
       "source_id": "wt-events-CHALLENGE_MODE_COMPLETED_REWARDS-184",

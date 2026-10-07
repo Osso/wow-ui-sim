@@ -48,3 +48,5 @@ No existing coverage ledger, catalog shop implementation, 11.2.7 fixture, vendor
 - [[patch-11-2-5-api-audit]] — template and next supersession boundary.
 - [[patch-11-2-7-api-audit]] — later-page publication boundary.
 - [[client-profiles]] — supported runtime profiles and retail epochs.
+
+**Correction (2026-10-07):** the `Browser:NavigateTo` exclusion was reverted. The page row lists it as removed, but current retail `Blizzard_PhotoSharingBrowser.lua:66,73` still calls `NavigateTo`, and the exclusion broke the `blizzard_photo_sharing` prefork test. The row is now an exact retained gap (27 total) and audit-pending until later re-publication/supersession evidence exists.

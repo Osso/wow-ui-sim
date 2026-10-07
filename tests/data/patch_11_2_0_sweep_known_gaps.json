@@ -24,5 +24,6 @@
   "wt-global-api-C_SpecializationInfo.GetTalentInfo-79",
   "wt-global-api-C_Spell.CancelSpellByID-80",
   "wt-global-api-GetLootMethod-111",
-  "wt-global-api-SendChatMessage-136"
+  "wt-global-api-SendChatMessage-136",
+  "wt-widgets-Browser:NavigateTo-173"
 ]
