@@ -1,0 +1,12 @@
+{
+  "changed_source_id": "wt-global-api-C_AccountStore.BeginPurchase-43",
+  "original_direction": "added",
+  "negative_direction": "removed",
+  "new_gaps": [
+    "wt-global-api-C_AccountStore.BeginPurchase-43"
+  ],
+  "resolved_gaps": [],
+  "original_gap_count": 28,
+  "negative_gap_count": 29,
+  "expected_exit_code": 101
+}

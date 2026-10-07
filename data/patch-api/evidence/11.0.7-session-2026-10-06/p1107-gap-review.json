@@ -1,0 +1,667 @@
+{
+  "initial_gaps": 33,
+  "closed": 5,
+  "remaining": 28,
+  "outcomes": [
+    {
+      "source_id": "wt-global-api-AreClassRolesSoftSuggestions-42",
+      "symbol": "AreClassRolesSoftSuggestions",
+      "outcome": "retained-gap",
+      "initial_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "final_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "Missing explicit global; needs class-role eligibility/soft-suggestion policy, not a constant answer."
+    },
+    {
+      "source_id": "wt-global-api-C_EndOfMatchUI.GetEndOfMatchDetails-57",
+      "symbol": "C_EndOfMatchUI.GetEndOfMatchDetails",
+      "outcome": "retained-gap",
+      "initial_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "parent raw-absent; raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "parent raw-absent; raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "Missing explicit producer for match outcome/team/reward DTOs; needs match completion input and lifecycle."
+    },
+    {
+      "source_id": "wt-global-api-C_GameRules.GetGameRuleAsFrameStrata-60",
+      "symbol": "C_GameRules.GetGameRuleAsFrameStrata",
+      "outcome": "retained-gap",
+      "initial_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "Existing GameRulesState stores integer/float/string interpretations (src/lua_api/sim_substates/mod.rs:113\u2013144), but no frame-strata getter. Cached GameRulesDocumentation.lua:143\u2013156 specifies a nonnil string, not numeric encoding/default/error policy; do not guess that policy from renderer ordering."
+    },
+    {
+      "source_id": "wt-global-api-C_Garrison.IsLandingPageMinimapButtonVisible-61",
+      "symbol": "C_Garrison.IsLandingPageMinimapButtonVisible",
+      "outcome": "retained-gap",
+      "initial_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "Missing explicit query; needs landing-page ownership/availability and minimap-button visibility policy, not unconditional true."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGInfo.AreCrossFactionGroupQueuesAllowed-62",
+      "symbol": "C_LFGInfo.AreCrossFactionGroupQueuesAllowed",
+      "outcome": "retained-gap",
+      "initial_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "Missing explicit queue eligibility policy per dungeon/group; existing category probes do not establish cross-faction launch rules."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGInfo.DoesActivePartyMeetPremadeLaunchCount-63",
+      "symbol": "C_LFGInfo.DoesActivePartyMeetPremadeLaunchCount",
+      "outcome": "retained-gap",
+      "initial_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "Missing explicit query and per-activity premade launch-count requirement; party size alone cannot determine eligibility."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGInfo.DoesCrossFactionQueueRequireFullPremade-64",
+      "symbol": "C_LFGInfo.DoesCrossFactionQueueRequireFullPremade",
+      "outcome": "retained-gap",
+      "initial_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "Missing explicit activity/queue full-premade cross-faction policy; no constant compatibility placeholder added."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.GetSearchResultLeaderInfo-66",
+      "symbol": "C_LFGList.GetSearchResultLeaderInfo",
+      "outcome": "retained-gap",
+      "initial_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "Missing explicit leader metadata producer keyed by result ID; needs populated leader identity/role DTOs."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.GetSearchResultPlayerInfo-67",
+      "symbol": "C_LFGList.GetSearchResultPlayerInfo",
+      "outcome": "retained-gap",
+      "initial_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "Missing explicit per-result member producer keyed by result/player index. Cached Deprecated_LFG.lua:10\u201315 delegates to it, but its wrapper publication does not prove member DTO behavior."
+    },
+    {
+      "source_id": "wt-global-api-C_LobbyMatchmakerInfo.AbandonQueue-69",
+      "symbol": "C_LobbyMatchmakerInfo.AbandonQueue",
+      "outcome": "retained-gap",
+      "initial_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "Missing explicit lobby cancellation transition, pending request handling and QUEUE_ABANDONED event producer."
+    },
+    {
+      "source_id": "wt-global-api-C_LobbyMatchmakerInfo.EnterQueue-70",
+      "symbol": "C_LobbyMatchmakerInfo.EnterQueue",
+      "outcome": "retained-gap",
+      "initial_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "Missing explicit playlist eligibility and enter-queue state transition; needs authoritative queue input/reply handling."
+    },
+    {
+      "source_id": "wt-global-api-C_LobbyMatchmakerInfo.GetCurrQueuePlaylistEntry-71",
+      "symbol": "C_LobbyMatchmakerInfo.GetCurrQueuePlaylistEntry",
+      "outcome": "retained-gap",
+      "initial_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "Missing explicit selected/current playlist-entry producer; requires matchmaking queue state, not a fabricated entry."
+    },
+    {
+      "source_id": "wt-global-api-C_LobbyMatchmakerInfo.GetCurrQueueState-72",
+      "symbol": "C_LobbyMatchmakerInfo.GetCurrQueueState",
+      "outcome": "retained-gap",
+      "initial_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "Missing explicit queue lifecycle enum query; requires entry/pop/expiry/error state transitions."
+    },
+    {
+      "source_id": "wt-global-api-C_LobbyMatchmakerInfo.GetQueueStartTime-74",
+      "symbol": "C_LobbyMatchmakerInfo.GetQueueStartTime",
+      "outcome": "retained-gap",
+      "initial_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "Missing explicit start-time query tied to a real queue transition and simulator clock; returning current time would be incorrect."
+    },
+    {
+      "source_id": "wt-global-api-C_LobbyMatchmakerInfo.RespondToQueuePop-76",
+      "symbol": "C_LobbyMatchmakerInfo.RespondToQueuePop",
+      "outcome": "retained-gap",
+      "initial_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "Missing explicit pop acceptance/decline transaction and events; needs active queue-pop state."
+    },
+    {
+      "source_id": "wt-global-api-C_Minimap.IsInsideQuestBlob-77",
+      "symbol": "C_Minimap.IsInsideQuestBlob",
+      "outcome": "retained-gap",
+      "initial_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "Missing explicit spatial-membership query; needs quest blob geometry and player-position containment, not only map ID."
+    },
+    {
+      "source_id": "wt-global-api-C_RaidLocks.GetRedirectedDifficultyID-78",
+      "symbol": "C_RaidLocks.GetRedirectedDifficultyID",
+      "outcome": "retained-gap",
+      "initial_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "Missing explicit difficulty redirection resolver and authoritative mapping; identity-only passthrough would conceal redirected cases."
+    },
+    {
+      "source_id": "wt-global-api-C_SpectatingUI.StartSpectating-79",
+      "symbol": "C_SpectatingUI.StartSpectating",
+      "outcome": "retained-gap",
+      "initial_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "parent raw-absent; raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "parent raw-absent; raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "Missing explicit spectating request/authorization and target/session transition; not a harmless no-op."
+    },
+    {
+      "source_id": "wt-global-api-C_SuperTrack.GetSuperTrackedItemName-81",
+      "symbol": "C_SuperTrack.GetSuperTrackedItemName",
+      "outcome": "retained-gap",
+      "initial_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "Missing explicit tracked-item producer. src/lua_api/workarounds/temporary/super_track_defaults.rs:1\u20135 explicitly leaves quest/content/map-pin state unmodeled; item identity/name must come from navigation state."
+    },
+    {
+      "source_id": "wt-global-api-C_VignetteInfo.GetHealthPercent-82",
+      "symbol": "C_VignetteInfo.GetHealthPercent",
+      "outcome": "retained-gap",
+      "initial_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "Missing explicit vignette target-health producer; empty vignette compatibility defaults are not GUID-to-unit health state."
+    },
+    {
+      "source_id": "wt-global-api-C_VignetteInfo.GetRecommendedGroupSize-83",
+      "symbol": "C_VignetteInfo.GetRecommendedGroupSize",
+      "outcome": "retained-gap",
+      "initial_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "Missing explicit per-vignette group-size metadata producer; no universal size can satisfy content-specific values."
+    },
+    {
+      "source_id": "wt-global-api-C_WorldLootObject.DoesSlotMatchInventoryType-84",
+      "symbol": "C_WorldLootObject.DoesSlotMatchInventoryType",
+      "outcome": "retained-gap",
+      "initial_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "parent raw-absent; raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "Missing explicit world-loot equipment-slot compatibility resolver; requires actual object item/equipment inventory types."
+    },
+    {
+      "source_id": "wt-global-api-C_WorldLootObject.GetWorldLootObjectDistanceSquared-85",
+      "symbol": "C_WorldLootObject.GetWorldLootObjectDistanceSquared",
+      "outcome": "retained-gap",
+      "initial_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "Missing explicit world-loot position producer and player/object squared-distance computation."
+    },
+    {
+      "source_id": "wt-global-api-C_WorldLootObject.GetWorldLootObjectInfoByGUID-86",
+      "symbol": "C_WorldLootObject.GetWorldLootObjectInfoByGUID",
+      "outcome": "retained-gap",
+      "initial_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "Missing explicit GUID-keyed world-loot object DTO registry and object lifetime updates."
+    },
+    {
+      "source_id": "wt-global-api-C_WorldLootObject.IsWorldLootObjectByGUID-87",
+      "symbol": "C_WorldLootObject.IsWorldLootObjectByGUID",
+      "outcome": "retained-gap",
+      "initial_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "Missing explicit GUID classification query over live world-loot state; a prefix heuristic would misclassify unloaded/dead objects."
+    },
+    {
+      "source_id": "wt-global-api-IsCpuBound-98",
+      "symbol": "IsCpuBound",
+      "outcome": "retained-gap",
+      "initial_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "final_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "Missing explicit CPU/GPU frame bottleneck telemetry; profiler addon timings alone do not classify renderer bottlenecks."
+    },
+    {
+      "source_id": "wt-global-api-RemoveRaidTargets-99",
+      "symbol": "RemoveRaidTargets",
+      "outcome": "bounded-closure",
+      "initial_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "final_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=function; lookup=function",
+        "kind": "global",
+        "value": null
+      },
+      "reason": "Existing GUID marker map cleared before notification, no return values; two-event idempotence and cached secure clear-all path proven. Native restrictions/timing remain unmodeled."
+    },
+    {
+      "source_id": "wt-global-api-C_ArrowCalloutManager.HideWorldLootObjectCallout-102",
+      "symbol": "C_ArrowCalloutManager.HideWorldLootObjectCallout",
+      "outcome": "bounded-closure",
+      "initial_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "Repeated raw/ordinary namespace absence; zero cached retail Lua consumers, existing AcknowledgeCallout retained; no deprecation wrapper deleted."
+    },
+    {
+      "source_id": "wt-global-api-C_ArrowCalloutManager.SetWorldLootObjectCalloutFromGUID-103",
+      "symbol": "C_ArrowCalloutManager.SetWorldLootObjectCalloutFromGUID",
+      "outcome": "bounded-closure",
+      "initial_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "Repeated raw/ordinary namespace absence; zero cached retail Lua consumers, existing AcknowledgeCallout retained; no deprecation wrapper deleted."
+    },
+    {
+      "source_id": "wt-global-api-C_ArrowCalloutManager.SwapWorldLootObjectCallout-104",
+      "symbol": "C_ArrowCalloutManager.SwapWorldLootObjectCallout",
+      "outcome": "bounded-closure",
+      "initial_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "Repeated raw/ordinary namespace absence; zero cached retail Lua consumers, existing AcknowledgeCallout retained; no deprecation wrapper deleted."
+    },
+    {
+      "source_id": "wt-global-api-C_WorldLootObject.GetCurrentWorldLootObjectSwapInventoryType-109",
+      "symbol": "C_WorldLootObject.GetCurrentWorldLootObjectSwapInventoryType",
+      "outcome": "bounded-closure",
+      "initial_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "Repeated raw/ordinary namespace absence; zero cached retail Lua consumers, existing AcknowledgeCallout retained; no deprecation wrapper deleted."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.IsPlayerAuthenticatedForLFG-113",
+      "symbol": "C_LFGList.IsPlayerAuthenticatedForLFG",
+      "outcome": "retained-gap",
+      "initial_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "Missing explicit activity-category authentication/entitlement policy; changed argument is not covered by function publication."
+    },
+    {
+      "source_id": "wt-global-api-C_WorldLootObject.OnWorldLootObjectClick-119",
+      "symbol": "C_WorldLootObject.OnWorldLootObjectClick",
+      "outcome": "retained-gap",
+      "initial_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "final_observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "reason": "Missing explicit click interaction/loot transition; changed isLeftClick argument requires a real command producer."
+    }
+  ]
+}

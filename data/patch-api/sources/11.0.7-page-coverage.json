@@ -1,0 +1,1265 @@
+{
+  "schema": "patch-page-coverage/v1",
+  "patch": "11.0.7",
+  "source_register": "data/patch-api/sources/11.0.7-wikitext-register.json",
+  "source_sha256": "0e3807e89614ed0cca38ba8d80c803a5cbab8df45d6213255512f952f03071ae",
+  "audit_status": "in-progress",
+  "proof_policy": "Publication/absence only; no signature/output/security/behavior/native parity. Default retail 12.1.0, not historical 11.0.7. Eleven later registers chronological. Local development proof, not independent/native acceptance. Cached deprecation wrappers unchanged and accepted as bounded loaded aliases, not strict absence. Non-inventory candidates pending; linked external pages and enum transclusion not expanded.",
+  "capabilities": [
+    {
+      "id": "publication-sweep-11-0-7",
+      "symbols": [
+        "98 inventory occurrences"
+      ],
+      "scope": "70 OK / 28 exact gaps; three superseded OK; nine strict unsuperseded removals and two cached deprecated wrapper/alias acceptances.",
+      "spec": "docs/specs/patch-11-0-7-publication-sweep.md",
+      "tests": [
+        "tests/patch_11_0_7_publication_sweep.rs",
+        "tests/patch_11_0_7_publication_fixes.rs",
+        "tests/patch_11_0_7_cached_raid_targets.rs",
+        "tests/common/publication_sweep.rs"
+      ],
+      "implementation": "Four unused namespace member retirements and modeled GUID raid-marker clear-all operation.",
+      "compiled_revision": "9b4119c9e1a7419402f5765212aabff896e2d9e8",
+      "cached_consumer_test_revision": "e29e8b98f",
+      "proof_scope": "Each command's exact compiled/test revision is retained in p1107-proof.json; later evidence/docs edits do not invalidate runtime proof.",
+      "proof": "Twelve isolated sweeps GREEN; exact negative control 28 -> 29. Two behavior tests GREEN after RED; cached secure-action dispatch and two deprecated-LFG prefork cases GREEN. Mists check zero non-vendor warnings; build and bounded exit-0 startup [].",
+      "ledger": "data/patch-api/evidence/11.0.7-session-2026-10-06/p1107-sweep-result.json"
+    }
+  ],
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/11.0.7-api-changes.txt",
+    "sha256": "581f98e5dcb3d350df424725839f281dda7c90e015870d05c92e25a55d931cb1",
+    "wikitext_revid": 6726777,
+    "wikitext_sha256": "7452477854beac6fe0155caaf283801f15eb46acf20b69e90c8b8eb589ccb061",
+    "extract_tool": "tools/extract_patch_non_inventory.py"
+  },
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-AreClassRolesSoftSuggestions-42",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1107-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_AccountStore.BeginPurchase-43",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_AccountStore.GetCategories-44",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_AccountStore.GetCategoryInfo-45",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_AccountStore.GetCategoryItems-46",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_AccountStore.GetCurrencyAvailable-47",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_AccountStore.GetCurrencyIDForStore-48",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_AccountStore.GetCurrencyInfo-49",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_AccountStore.GetItemInfo-50",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_AccountStore.GetStoreFrontState-51",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_AccountStore.RefundItem-52",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_AccountStore.RequestStoreFrontInfoUpdate-53",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_AddOnProfiler.GetAddOnMetric-54",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_AddOnProfiler.GetOverallMetric-55",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_AddOnProfiler.IsEnabled-56",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_EndOfMatchUI.GetEndOfMatchDetails-57",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1107-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_GameModeManager.GetCurrentGameModeRecordID-58",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Later register reverses publication; current surface only, no historical behavior credit. Superseded by wt-global-api-C_GameModeManager.GetCurrentGameModeRecordID-140."
+    },
+    {
+      "source_id": "wt-global-api-C_GameModeManager.GetGameModeDisplayInfo-59",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Later register reverses publication; current surface only, no historical behavior credit. Superseded by wt-global-api-C_GameModeManager.GetGameModeDisplayInfo-142."
+    },
+    {
+      "source_id": "wt-global-api-C_GameRules.GetGameRuleAsFrameStrata-60",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1107-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Garrison.IsLandingPageMinimapButtonVisible-61",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1107-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGInfo.AreCrossFactionGroupQueuesAllowed-62",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1107-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGInfo.DoesActivePartyMeetPremadeLaunchCount-63",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1107-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGInfo.DoesCrossFactionQueueRequireFullPremade-64",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1107-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.GetPremadeGroupFinderStyle-65",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.GetSearchResultLeaderInfo-66",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1107-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.GetSearchResultPlayerInfo-67",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1107-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.IsPremadeGroupFinderEnabled-68",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_LobbyMatchmakerInfo.AbandonQueue-69",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1107-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_LobbyMatchmakerInfo.EnterQueue-70",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1107-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_LobbyMatchmakerInfo.GetCurrQueuePlaylistEntry-71",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1107-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_LobbyMatchmakerInfo.GetCurrQueueState-72",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1107-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_LobbyMatchmakerInfo.GetQueueFromMainlineEnabled-73",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_LobbyMatchmakerInfo.GetQueueStartTime-74",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1107-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_LobbyMatchmakerInfo.IsInQueue-75",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_LobbyMatchmakerInfo.RespondToQueuePop-76",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1107-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Minimap.IsInsideQuestBlob-77",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1107-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_RaidLocks.GetRedirectedDifficultyID-78",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1107-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_SpectatingUI.StartSpectating-79",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1107-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_SuperTrack.GetNextWaypointForMap-80",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Later register reverses publication; current surface only, no historical behavior credit. Superseded by wt-global-api-C_SuperTrack.GetNextWaypointForMap-572."
+    },
+    {
+      "source_id": "wt-global-api-C_SuperTrack.GetSuperTrackedItemName-81",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1107-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_VignetteInfo.GetHealthPercent-82",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1107-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_VignetteInfo.GetRecommendedGroupSize-83",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1107-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_WorldLootObject.DoesSlotMatchInventoryType-84",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1107-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_WorldLootObject.GetWorldLootObjectDistanceSquared-85",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1107-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_WorldLootObject.GetWorldLootObjectInfoByGUID-86",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1107-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_WorldLootObject.IsWorldLootObjectByGUID-87",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1107-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_WowLabsDataManager.GetConfirmedWoWLabsArea-88",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_WowLabsDataManager.GetWoWLabsAreaInfo-89",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_WowLabsDataManager.IsInPrematch-90",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_WowLabsDataManager.QuerySelectedWoWLabsArea-91",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_WowLabsDataManager.QueryWoWLabsAreaInfo-92",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_WowLabsDataManager.SelectWoWLabsArea-93",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_WoWLabsMatchmaking.ClearFastLogin-94",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_WoWLabsMatchmaking.GetAutoQueueOnLogout-95",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_WoWLabsMatchmaking.IsFastLogin-96",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_WoWLabsMatchmaking.SetAutoQueueOnLogout-97",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-IsCpuBound-98",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1107-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-RemoveRaidTargets-99",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_ArrowCalloutManager.HideWorldLootObjectCallout-102",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Strict bounded raw/ordinary absence or event-registration rejection; no historical behavior/native credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ArrowCalloutManager.SetWorldLootObjectCalloutFromGUID-103",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Strict bounded raw/ordinary absence or event-registration rejection; no historical behavior/native credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ArrowCalloutManager.SwapWorldLootObjectCallout-104",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Strict bounded raw/ordinary absence or event-registration rejection; no historical behavior/native credit."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGInfo.IsPremadeGroupEnabled-105",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Loaded cached deprecation wrapper/alias accepted with source/identity attribution; still callable, not strict absence or successor behavior proof."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.GetSearchResultMemberInfo-106",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Loaded cached deprecation wrapper/alias accepted with source/identity attribution; still callable, not strict absence or successor behavior proof."
+    },
+    {
+      "source_id": "wt-global-api-C_QuestLog.IsLegendaryQuest-107",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Strict bounded raw/ordinary absence or event-registration rejection; no historical behavior/native credit."
+    },
+    {
+      "source_id": "wt-global-api-C_QuestLog.IsQuestRepeatableType-108",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Strict bounded raw/ordinary absence or event-registration rejection; no historical behavior/native credit."
+    },
+    {
+      "source_id": "wt-global-api-C_WorldLootObject.GetCurrentWorldLootObjectSwapInventoryType-109",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Strict bounded raw/ordinary absence or event-registration rejection; no historical behavior/native credit."
+    },
+    {
+      "source_id": "wt-global-api-IsActiveQuestLegendary-110",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Strict bounded raw/ordinary absence or event-registration rejection; no historical behavior/native credit."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.IsPlayerAuthenticatedForLFG-113",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1107-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.Search-115",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_QuestInfoSystem.GetQuestClassification-117",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_WorldLootObject.OnWorldLootObjectClick-119",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact reviewed publication gap; see p1107-gap-review.json. No runtime credit."
+    },
+    {
+      "source_id": "wt-widgets-Font:SetFontHeight-129",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-events-ACCOUNT_STORE_CURRENCY_AVAILABLE_UPDATED-142",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-events-ACCOUNT_STORE_ITEM_INFO_UPDATED-143",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-events-HANDLE_UI_ACTION-144",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-events-LOBBY_MATCHMAKER_QUEUE_ABANDONED-145",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-events-LOBBY_MATCHMAKER_QUEUE_ERROR-146",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-events-LOBBY_MATCHMAKER_QUEUE_EXPIRED-147",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-events-LOBBY_MATCHMAKER_QUEUE_POPPED-148",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-events-LOBBY_MATCHMAKER_QUEUE_STATUS_UPDATE-149",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-events-NAVIGATION_DESTINATION_REACHED-150",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-events-PLAYER_INSIDE_QUEST_BLOB_STATE_CHANGED-151",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-events-SHOW_END_OF_MATCH_UI-152",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-events-SPELL_PUSHED_TO_FLYOUT_ON_ACTIONBAR-153",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-events-STORE_FRONT_STATE_UPDATED-154",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-events-SUPER_TRACKING_PATH_UPDATED-155",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-events-WORLD_LOOT_OBJECT_SWAP_INVENTORY_TYPE_UPDATED-158",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Strict bounded raw/ordinary absence or event-registration rejection; no historical behavior/native credit."
+    },
+    {
+      "source_id": "wt-events-CRITERIA_EARNED-161",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-events-UPDATE_WEB_TICKET-163",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-cvars-characterSocialRestrictionSettingsApplied-174",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-cvars-craftingOrdersOnlyPreferredArmorCollectable-175",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-cvars-currentGameMode-176",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-cvars-doNotShowTWFraudWarning-177",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-cvars-enableQuestCacheLogging-178",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-cvars-hideFastLoginLoadingScreen-179",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-cvars-plunderstormRealm-180",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-cvars-sortCharListByLastActive-181",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication only; no signature/output/security/behavior credit. Explicit registration may still be a placeholder."
+    },
+    {
+      "source_id": "wt-cvars-processAffinityMask-184",
+      "capabilities": [
+        "publication-sweep-11-0-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Strict bounded raw/ordinary absence or event-registration rejection; no historical behavior/native credit."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "source-context-006",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-007",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-008",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-009",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-010",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-012",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-014",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "prose-undated-016",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "prose-undated-018",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "prose-undated-019",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "prose-undated-020",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "prose-undated-022",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "prose-undated-024",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "source-context-026",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-027",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "source-context-029",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-030",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "source-context-032",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-033",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-035",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "enumerations-Enum-AccountTransType-036",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-AccountTransType-037",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-AccountTransType-038",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-AccountTransType-039",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-AccountTransType-040",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-AccountTransType-041",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-AccountTransType-042",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-AccountTransType-043",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-BattlepetDbFlags-044",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-BattlepetDbFlags-045",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-BattlepetDeletedReason-046",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-BattlepetDeletedReason-047",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-Cursormode-048",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-Cursormode-049",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-Cursormode-050",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-EventRealmQueues-051",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-EventRealmQueues-052",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-GameRuleFlags-053",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-GameRuleFlags-054",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-ItemGemColor-055",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-ItemGemColor-056",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-ItemGemColor-057",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-ItemGemColor-058",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-ItemSocketType-059",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-ItemSocketType-060",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-ItemSocketType-061",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-ItemSocketType-062",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-ReportMinorCategory-063",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-ReportMinorCategory-064",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataItemBinding-065",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataItemBinding-066",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "source-context-068",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "structures-AdvancedFilterOptions-069",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "structures-AdvancedFilterOptions-070",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "structures-FontScriptInfo-071",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "structures-FontScriptInfo-072",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "structures-GroupFinderActivityInfo-073",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "structures-GroupFinderActivityInfo-074",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "structures-GroupFinderActivityInfo-075",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "structures-GroupFinderActivityInfo-076",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "structures-GroupFinderActivityInfo-077",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "structures-GroupFinderActivityInfo-078",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "structures-LfgEntryData-079",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "structures-LfgEntryData-080",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "structures-LfgEntryData-081",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "structures-LfgSearchResultData-082",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "structures-LfgSearchResultData-083",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "structures-LfgSearchResultData-084",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "structures-LfgSearchResultData-085",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "structures-LfgSearchResultData-086",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "structures-PerksVendorItemInfo-087",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "structures-PerksVendorItemInfo-088",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "structures-PerksVendorItemInfo-089",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "structures-PvpBrawlInfo-090",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "structures-PvpBrawlInfo-091",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "structures-QuestLineInfo-092",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "structures-QuestLineInfo-093",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "structures-VignetteInfo-094",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "structures-VignetteInfo-095",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    },
+    {
+      "source_id": "structures-VignetteInfo-096",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Non-inventory statement requires behavioral audit; see p1107-extract-scout.md."
+    }
+  ],
+  "summary": {
+    "audit-pending": 97,
+    "partial-development-green": 56,
+    "metadata-only": 17,
+    "bounded-coverage": 11
+  }
+}

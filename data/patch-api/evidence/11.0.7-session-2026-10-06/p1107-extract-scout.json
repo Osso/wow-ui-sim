@@ -1,0 +1,749 @@
+[
+  {
+    "source_id": "source-context-001",
+    "line": 1,
+    "source_text": "Patch 11.0.7 API changes",
+    "batch": "editorial",
+    "status": "metadata-only",
+    "reason": "Source/build context or heading; no runtime contract or credit.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "source-context-003",
+    "line": 3,
+    "source_text": "== Summary ==",
+    "batch": "editorial",
+    "status": "metadata-only",
+    "reason": "Source/build context or heading; no runtime contract or credit.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "prose-undated-004",
+    "line": 4,
+    "source_text": "* A new addon profiling API has been added.",
+    "batch": "B01-profiler",
+    "status": "audit-pending",
+    "reason": "Existing src/c_api/c_addon_profiler.rs and tests/addon_api/profiler.rs are candidates. Need page-specific timing units, user-addon exclusion, aggregate/blame and reload-reset proof; no credit from registration alone.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "source-context-006",
+    "line": 6,
+    "source_text": "== Resources ==",
+    "batch": "editorial",
+    "status": "metadata-only",
+    "reason": "Source/build context or heading; no runtime contract or credit.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "source-context-007",
+    "line": 7,
+    "source_text": "* TOC: 110007",
+    "batch": "editorial",
+    "status": "metadata-only",
+    "reason": "Source/build context or heading; no runtime contract or credit.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "source-context-008",
+    "line": 8,
+    "source_text": "* Official patch notes: Siren Isle Update Notes",
+    "batch": "editorial",
+    "status": "metadata-only",
+    "reason": "Source/build context or heading; no runtime contract or credit.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "source-context-009",
+    "line": 9,
+    "source_text": "* Diffs: wow-ui-source, BlizzardInterfaceResources",
+    "batch": "editorial",
+    "status": "metadata-only",
+    "reason": "Source/build context or heading; no runtime contract or credit.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "source-context-010",
+    "line": 10,
+    "source_text": "* Deprecated API: Blizzard_Deprecated",
+    "batch": "editorial",
+    "status": "metadata-only",
+    "reason": "Source/build context or heading; no runtime contract or credit.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "source-context-012",
+    "line": 12,
+    "source_text": "== Addon Profiling API ==",
+    "batch": "editorial",
+    "status": "metadata-only",
+    "reason": "Source/build context or heading; no runtime contract or credit.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "prose-undated-014",
+    "line": 14,
+    "source_text": "A new C_AddOnProfiler namespace has been added with functions for querying CPU performance metrics associated with addons.",
+    "batch": "B01-profiler",
+    "status": "audit-pending",
+    "reason": "Existing src/c_api/c_addon_profiler.rs and tests/addon_api/profiler.rs are candidates. Need page-specific timing units, user-addon exclusion, aggregate/blame and reload-reset proof; no credit from registration alone.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "prose-undated-016",
+    "line": 16,
+    "source_text": "The measurements recorded by this new profiler are always enabled and do not require the scriptProfile CVar to be enabled. As with existing profiling functions, these APIs only return values for user-installed addons and cannot be used to query the performance of secure Blizzard addons, nor can they be used to measure the performance of macro commands such as /run. Metrics are reset with UI reloads.",
+    "batch": "B01-profiler",
+    "status": "audit-pending",
+    "reason": "Existing src/c_api/c_addon_profiler.rs and tests/addon_api/profiler.rs are candidates. Need page-specific timing units, user-addon exclusion, aggregate/blame and reload-reset proof; no credit from registration alone.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "prose-undated-018",
+    "line": 18,
+    "source_text": "* C_AddOnProfiler.GetAddOnMetric(name, metric) : result - Returns a time value measured in milliseconds.",
+    "batch": "B01-profiler",
+    "status": "audit-pending",
+    "reason": "Existing src/c_api/c_addon_profiler.rs and tests/addon_api/profiler.rs are candidates. Need page-specific timing units, user-addon exclusion, aggregate/blame and reload-reset proof; no credit from registration alone.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "prose-undated-019",
+    "line": 19,
+    "source_text": "* C_AddOnProfiler.GetOverallMetric(metric) : result - As above, but returned value is the sum across all loaded addons.",
+    "batch": "B01-profiler",
+    "status": "audit-pending",
+    "reason": "Existing src/c_api/c_addon_profiler.rs and tests/addon_api/profiler.rs are candidates. Need page-specific timing units, user-addon exclusion, aggregate/blame and reload-reset proof; no credit from registration alone.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "prose-undated-020",
+    "line": 20,
+    "source_text": "* C_AddOnProfiler.IsEnabled() : enabled - Currently this function always returns true.",
+    "batch": "B01-profiler",
+    "status": "audit-pending",
+    "reason": "Existing src/c_api/c_addon_profiler.rs and tests/addon_api/profiler.rs are candidates. Need page-specific timing units, user-addon exclusion, aggregate/blame and reload-reset proof; no credit from registration alone.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "prose-undated-022",
+    "line": 22,
+    "source_text": "The metric parameter in the listed APIs corresponds to entries in Enum.AddOnProfilerMetric, listed below.",
+    "batch": "B01-profiler",
+    "status": "audit-pending",
+    "reason": "Existing src/c_api/c_addon_profiler.rs and tests/addon_api/profiler.rs are candidates. Need page-specific timing units, user-addon exclusion, aggregate/blame and reload-reset proof; no credit from registration alone.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "prose-undated-024",
+    "line": 24,
+    "source_text": "[Transcluded source: Enum.AddOnProfilerMetric; not expanded]",
+    "batch": "B01-profiler",
+    "status": "audit-pending",
+    "reason": "External Enum.AddOnProfilerMetric transclusion retained as one pending source reference, not expanded. Numeric metric catalog and all transcluded native semantics remain unproven; the linked-page boundary matches later audits.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "source-context-026",
+    "line": 26,
+    "source_text": "=== Details ===",
+    "batch": "editorial",
+    "status": "metadata-only",
+    "reason": "Source/build context or heading; no runtime contract or credit.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "prose-undated-027",
+    "line": 27,
+    "source_text": "See C_AddOnProfiler.GetAddOnMetric for implementation details, including how profiling blame is attributed.",
+    "batch": "B01-profiler",
+    "status": "audit-pending",
+    "reason": "External implementation-detail link not expanded; profiling blame attribution remains pending, not editorial credit.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "source-context-029",
+    "line": 29,
+    "source_text": "== C_LFGList ==",
+    "batch": "editorial",
+    "status": "metadata-only",
+    "reason": "Source/build context or heading; no runtime contract or credit.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "prose-undated-030",
+    "line": 30,
+    "source_text": "* C_LFGList.GetSearchResultInfo(searchResultID) - Changed activityID return field to activityIDs.",
+    "batch": "B02-lfg-search",
+    "status": "audit-pending",
+    "reason": "Existing C_LFGList search producers and metadata serializer (src/c_api/c_lfg_list_search.rs) are candidates; needs populated result activityIDs and removal of legacy activityID in the exact cached consumer. Publication is not DTO proof.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "source-context-032",
+    "line": 32,
+    "source_text": "== Consolidated changes ==",
+    "batch": "editorial",
+    "status": "metadata-only",
+    "reason": "Source/build context or heading; no runtime contract or credit.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "source-context-033",
+    "line": 33,
+    "source_text": ": 11.0.5 (57212) → 11.0.7 (58238) Dec 19 2024",
+    "batch": "editorial",
+    "status": "metadata-only",
+    "reason": "Source/build context or heading; no runtime contract or credit.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "source-context-035",
+    "line": 35,
+    "source_text": "=== Enumerations ===",
+    "batch": "editorial",
+    "status": "metadata-only",
+    "reason": "Source/build context or heading; no runtime contract or credit.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "enumerations-Enum-AccountTransType-036",
+    "line": 36,
+    "source_text": "Enum.AccountTransType",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "reason": "Needs current enum value and later supersession reconciliation plus consumer behavior. Wikitext lists member names, not numeric values; symbol matches do not prove those contracts.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "enumerations-Enum-AccountTransType-037",
+    "line": 37,
+    "source_text": "+ AccountStore",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "reason": "Needs current enum value and later supersession reconciliation plus consumer behavior. Wikitext lists member names, not numeric values; symbol matches do not prove those contracts.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "enumerations-Enum-AccountTransType-038",
+    "line": 38,
+    "source_text": "+ WarbandGroups",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "reason": "Needs current enum value and later supersession reconciliation plus consumer behavior. Wikitext lists member names, not numeric values; symbol matches do not prove those contracts.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "enumerations-Enum-AccountTransType-039",
+    "line": 39,
+    "source_text": "+ Mapping",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "reason": "Needs current enum value and later supersession reconciliation plus consumer behavior. Wikitext lists member names, not numeric values; symbol matches do not prove those contracts.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "enumerations-Enum-AccountTransType-040",
+    "line": 40,
+    "source_text": "+ CharacterItems",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "reason": "Needs current enum value and later supersession reconciliation plus consumer behavior. Wikitext lists member names, not numeric values; symbol matches do not prove those contracts.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "enumerations-Enum-AccountTransType-041",
+    "line": 41,
+    "source_text": "+ CurrencyTransferLog",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "reason": "Needs current enum value and later supersession reconciliation plus consumer behavior. Wikitext lists member names, not numeric values; symbol matches do not prove those contracts.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "enumerations-Enum-AccountTransType-042",
+    "line": 42,
+    "source_text": "+ LgVendorPurchase",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "reason": "Needs current enum value and later supersession reconciliation plus consumer behavior. Wikitext lists member names, not numeric values; symbol matches do not prove those contracts.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "enumerations-Enum-AccountTransType-043",
+    "line": 43,
+    "source_text": "- PerkRecentPurchases",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "reason": "Needs current enum value and later supersession reconciliation plus consumer behavior. Wikitext lists member names, not numeric values; symbol matches do not prove those contracts.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "enumerations-Enum-BattlepetDbFlags-044",
+    "line": 44,
+    "source_text": "Enum.BattlepetDbFlags",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "reason": "Needs current enum value and later supersession reconciliation plus consumer behavior. Wikitext lists member names, not numeric values; symbol matches do not prove those contracts.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "enumerations-Enum-BattlepetDbFlags-045",
+    "line": 45,
+    "source_text": "+ AccountStore",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "reason": "Needs current enum value and later supersession reconciliation plus consumer behavior. Wikitext lists member names, not numeric values; symbol matches do not prove those contracts.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "enumerations-Enum-BattlepetDeletedReason-046",
+    "line": 46,
+    "source_text": "Enum.BattlepetDeletedReason",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "reason": "Needs current enum value and later supersession reconciliation plus consumer behavior. Wikitext lists member names, not numeric values; symbol matches do not prove those contracts.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "enumerations-Enum-BattlepetDeletedReason-047",
+    "line": 47,
+    "source_text": "+ AccountStore",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "reason": "Needs current enum value and later supersession reconciliation plus consumer behavior. Wikitext lists member names, not numeric values; symbol matches do not prove those contracts.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "enumerations-Enum-Cursormode-048",
+    "line": 48,
+    "source_text": "Enum.Cursormode",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "reason": "Needs current enum value and later supersession reconciliation plus consumer behavior. Wikitext lists member names, not numeric values; symbol matches do not prove those contracts.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "enumerations-Enum-Cursormode-049",
+    "line": 49,
+    "source_text": "+ StablemasterCursor",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "reason": "Needs current enum value and later supersession reconciliation plus consumer behavior. Wikitext lists member names, not numeric values; symbol matches do not prove those contracts.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "enumerations-Enum-Cursormode-050",
+    "line": 50,
+    "source_text": "+ StablemasterErrorCursor",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "reason": "Needs current enum value and later supersession reconciliation plus consumer behavior. Wikitext lists member names, not numeric values; symbol matches do not prove those contracts.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "enumerations-Enum-EventRealmQueues-051",
+    "line": 51,
+    "source_text": "Enum.EventRealmQueues",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "reason": "Needs current enum value and later supersession reconciliation plus consumer behavior. Wikitext lists member names, not numeric values; symbol matches do not prove those contracts.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "enumerations-Enum-EventRealmQueues-052",
+    "line": 52,
+    "source_text": "+ PlunderstormTraining",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "reason": "Needs current enum value and later supersession reconciliation plus consumer behavior. Wikitext lists member names, not numeric values; symbol matches do not prove those contracts.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "enumerations-Enum-GameRuleFlags-053",
+    "line": 53,
+    "source_text": "Enum.GameRuleFlags",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "reason": "Needs current enum value and later supersession reconciliation plus consumer behavior. Wikitext lists member names, not numeric values; symbol matches do not prove those contracts.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "enumerations-Enum-GameRuleFlags-054",
+    "line": 54,
+    "source_text": "+ RequiresDefault",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "reason": "Needs current enum value and later supersession reconciliation plus consumer behavior. Wikitext lists member names, not numeric values; symbol matches do not prove those contracts.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "enumerations-Enum-ItemGemColor-055",
+    "line": 55,
+    "source_text": "Enum.ItemGemColor",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "reason": "Needs current enum value and later supersession reconciliation plus consumer behavior. Wikitext lists member names, not numeric values; symbol matches do not prove those contracts.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "enumerations-Enum-ItemGemColor-056",
+    "line": 56,
+    "source_text": "+ SingingThunder",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "reason": "Needs current enum value and later supersession reconciliation plus consumer behavior. Wikitext lists member names, not numeric values; symbol matches do not prove those contracts.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "enumerations-Enum-ItemGemColor-057",
+    "line": 57,
+    "source_text": "+ SingingSea",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "reason": "Needs current enum value and later supersession reconciliation plus consumer behavior. Wikitext lists member names, not numeric values; symbol matches do not prove those contracts.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "enumerations-Enum-ItemGemColor-058",
+    "line": 58,
+    "source_text": "+ SingingWind",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "reason": "Needs current enum value and later supersession reconciliation plus consumer behavior. Wikitext lists member names, not numeric values; symbol matches do not prove those contracts.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "enumerations-Enum-ItemSocketType-059",
+    "line": 59,
+    "source_text": "Enum.ItemSocketType",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "reason": "Needs current enum value and later supersession reconciliation plus consumer behavior. Wikitext lists member names, not numeric values; symbol matches do not prove those contracts.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "enumerations-Enum-ItemSocketType-060",
+    "line": 60,
+    "source_text": "+ SingingThunder",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "reason": "Needs current enum value and later supersession reconciliation plus consumer behavior. Wikitext lists member names, not numeric values; symbol matches do not prove those contracts.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "enumerations-Enum-ItemSocketType-061",
+    "line": 61,
+    "source_text": "+ SingingSea",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "reason": "Needs current enum value and later supersession reconciliation plus consumer behavior. Wikitext lists member names, not numeric values; symbol matches do not prove those contracts.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "enumerations-Enum-ItemSocketType-062",
+    "line": 62,
+    "source_text": "+ SingingWind",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "reason": "Needs current enum value and later supersession reconciliation plus consumer behavior. Wikitext lists member names, not numeric values; symbol matches do not prove those contracts.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "enumerations-Enum-ReportMinorCategory-063",
+    "line": 63,
+    "source_text": "Enum.ReportMinorCategory",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "reason": "Needs current enum value and later supersession reconciliation plus consumer behavior. Wikitext lists member names, not numeric values; symbol matches do not prove those contracts.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "enumerations-Enum-ReportMinorCategory-064",
+    "line": 64,
+    "source_text": "+ Disruption",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "reason": "Needs current enum value and later supersession reconciliation plus consumer behavior. Wikitext lists member names, not numeric values; symbol matches do not prove those contracts.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "enumerations-Enum-TooltipDataItemBinding-065",
+    "line": 65,
+    "source_text": "Enum.TooltipDataItemBinding",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "reason": "Needs current enum value and later supersession reconciliation plus consumer behavior. Wikitext lists member names, not numeric values; symbol matches do not prove those contracts.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "enumerations-Enum-TooltipDataItemBinding-066",
+    "line": 66,
+    "source_text": "+ BindToAccountUntilEquipped",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "reason": "Needs current enum value and later supersession reconciliation plus consumer behavior. Wikitext lists member names, not numeric values; symbol matches do not prove those contracts.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "source-context-068",
+    "line": 68,
+    "source_text": "=== Structures ===",
+    "batch": "editorial",
+    "status": "metadata-only",
+    "reason": "Source/build context or heading; no runtime contract or credit.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "structures-AdvancedFilterOptions-069",
+    "line": 69,
+    "source_text": "AdvancedFilterOptions",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "reason": "Needs populated parent API DTO fixture with exact field/type/nilability semantics; empty defaults or namespace publication cannot prove this field.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "structures-AdvancedFilterOptions-070",
+    "line": 70,
+    "source_text": "# activities, Documentation",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "reason": "Needs populated parent API DTO fixture with exact field/type/nilability semantics; empty defaults or namespace publication cannot prove this field.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "structures-FontScriptInfo-071",
+    "line": 71,
+    "source_text": "FontScriptInfo",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "reason": "Needs populated parent API DTO fixture with exact field/type/nilability semantics; empty defaults or namespace publication cannot prove this field.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "structures-FontScriptInfo-072",
+    "line": 72,
+    "source_text": "+ fontObject",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "reason": "Needs populated parent API DTO fixture with exact field/type/nilability semantics; empty defaults or namespace publication cannot prove this field.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "structures-GroupFinderActivityInfo-073",
+    "line": 73,
+    "source_text": "GroupFinderActivityInfo",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "reason": "Needs populated parent API DTO fixture with exact field/type/nilability semantics; empty defaults or namespace publication cannot prove this field.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "structures-GroupFinderActivityInfo-074",
+    "line": 74,
+    "source_text": "+ minLevelSuggestion",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "reason": "Needs populated parent API DTO fixture with exact field/type/nilability semantics; empty defaults or namespace publication cannot prove this field.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "structures-GroupFinderActivityInfo-075",
+    "line": 75,
+    "source_text": "+ maxLevelSuggestion",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "reason": "Needs populated parent API DTO fixture with exact field/type/nilability semantics; empty defaults or namespace publication cannot prove this field.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "structures-GroupFinderActivityInfo-076",
+    "line": 76,
+    "source_text": "+ mapID",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "reason": "Needs populated parent API DTO fixture with exact field/type/nilability semantics; empty defaults or namespace publication cannot prove this field.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "structures-GroupFinderActivityInfo-077",
+    "line": 77,
+    "source_text": "+ difficultyID",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "reason": "Needs populated parent API DTO fixture with exact field/type/nilability semantics; empty defaults or namespace publication cannot prove this field.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "structures-GroupFinderActivityInfo-078",
+    "line": 78,
+    "source_text": "+ redirectedDifficultyID",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "reason": "Needs populated parent API DTO fixture with exact field/type/nilability semantics; empty defaults or namespace publication cannot prove this field.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "structures-LfgEntryData-079",
+    "line": 79,
+    "source_text": "LfgEntryData",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "reason": "Needs populated parent API DTO fixture with exact field/type/nilability semantics; empty defaults or namespace publication cannot prove this field.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "structures-LfgEntryData-080",
+    "line": 80,
+    "source_text": "+ activityID -> activityIDs",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "reason": "Needs populated parent API DTO fixture with exact field/type/nilability semantics; empty defaults or namespace publication cannot prove this field.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "structures-LfgEntryData-081",
+    "line": 81,
+    "source_text": "+ newPlayerFriendly",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "reason": "Needs populated parent API DTO fixture with exact field/type/nilability semantics; empty defaults or namespace publication cannot prove this field.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "structures-LfgSearchResultData-082",
+    "line": 82,
+    "source_text": "LfgSearchResultData",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "reason": "Needs populated parent API DTO fixture with exact field/type/nilability semantics; empty defaults or namespace publication cannot prove this field.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "structures-LfgSearchResultData-083",
+    "line": 83,
+    "source_text": "# activityID -> activityIDs",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "reason": "Needs populated parent API DTO fixture with exact field/type/nilability semantics; empty defaults or namespace publication cannot prove this field.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "structures-LfgSearchResultData-084",
+    "line": 84,
+    "source_text": "# leaderDungeonScoreInfo, Type: BestDungeonScoreMapInfo -> table, InnerType: BestDungeonScoreMapInfo, Nilable: true -> false",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "reason": "Needs populated parent API DTO fixture with exact field/type/nilability semantics; empty defaults or namespace publication cannot prove this field.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "structures-LfgSearchResultData-085",
+    "line": 85,
+    "source_text": "# leaderPvpRatingInfo, Type: PvpRatingInfo -> table, InnerType: PvpRatingInfo, Nilable: true -> false",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "reason": "Needs populated parent API DTO fixture with exact field/type/nilability semantics; empty defaults or namespace publication cannot prove this field.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "structures-LfgSearchResultData-086",
+    "line": 86,
+    "source_text": "+ newPlayerFriendly",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "reason": "Needs populated parent API DTO fixture with exact field/type/nilability semantics; empty defaults or namespace publication cannot prove this field.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "structures-PerksVendorItemInfo-087",
+    "line": 87,
+    "source_text": "PerksVendorItemInfo",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "reason": "Needs populated parent API DTO fixture with exact field/type/nilability semantics; empty defaults or namespace publication cannot prove this field.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "structures-PerksVendorItemInfo-088",
+    "line": 88,
+    "source_text": "+ originalPrice",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "reason": "Needs populated parent API DTO fixture with exact field/type/nilability semantics; empty defaults or namespace publication cannot prove this field.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "structures-PerksVendorItemInfo-089",
+    "line": 89,
+    "source_text": "+ showSaleBanner",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "reason": "Needs populated parent API DTO fixture with exact field/type/nilability semantics; empty defaults or namespace publication cannot prove this field.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "structures-PvpBrawlInfo-090",
+    "line": 90,
+    "source_text": "PvpBrawlInfo",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "reason": "Needs populated parent API DTO fixture with exact field/type/nilability semantics; empty defaults or namespace publication cannot prove this field.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "structures-PvpBrawlInfo-091",
+    "line": 91,
+    "source_text": "+ crossFactionAllowed",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "reason": "Needs populated parent API DTO fixture with exact field/type/nilability semantics; empty defaults or namespace publication cannot prove this field.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "structures-QuestLineInfo-092",
+    "line": 92,
+    "source_text": "QuestLineInfo",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "reason": "Needs populated parent API DTO fixture with exact field/type/nilability semantics; empty defaults or namespace publication cannot prove this field.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "structures-QuestLineInfo-093",
+    "line": 93,
+    "source_text": "+ startMapID",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "reason": "Needs populated parent API DTO fixture with exact field/type/nilability semantics; empty defaults or namespace publication cannot prove this field.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "structures-VignetteInfo-094",
+    "line": 94,
+    "source_text": "VignetteInfo",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "reason": "Needs populated parent API DTO fixture with exact field/type/nilability semantics; empty defaults or namespace publication cannot prove this field.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "structures-VignetteInfo-095",
+    "line": 95,
+    "source_text": "+ mapPin",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "reason": "Needs populated parent API DTO fixture with exact field/type/nilability semantics; empty defaults or namespace publication cannot prove this field.",
+    "behavioral_credit": false
+  },
+  {
+    "source_id": "structures-VignetteInfo-096",
+    "line": 96,
+    "source_text": "+ objectiveType",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "reason": "Needs populated parent API DTO fixture with exact field/type/nilability semantics; empty defaults or namespace publication cannot prove this field.",
+    "behavioral_credit": false
+  }
+]

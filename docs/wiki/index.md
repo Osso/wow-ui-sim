@@ -1,3 +1,7 @@
+## [2026-10-07] evidence | 11.0.7 page audit
+
+[Audit](investigations/patch-11-0-7-api-audit.md) accounts for 98 inventory + 83 extract rows, five bounded publication closures and 28 exact retained gaps. Twelve isolated sweeps, negative control, cached secure clear-all and two deprecated-LFG prefork cases pass; Mists check has zero non-vendor warnings and startup returns `[]`. [Ledger](../../data/patch-api/sources/11.0.7-page-coverage.json) distinguishes publication/absence from pending behavior; artifact reproduction validation pending at this checkpoint.
+
 ## [2026-10-07] evidence | 11.1.0 page audit
 
 [Audit](investigations/patch-11-1-0-api-audit.md) accounts for 116 inventory + 100 extract rows, parser omission, three bounded closures and 19 exact gaps. Eleven isolated sweeps, negative control, behavior/prefork tests, Mists check and startup [] pass. SetSpecialization retained for cached consumer; later fixtures/ledgers unchanged. Sibling build-cache path violation documented.

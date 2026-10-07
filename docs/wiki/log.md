@@ -1,3 +1,7 @@
+## [2026-10-07] evidence | 11.0.7 page audit
+
+[Audit](investigations/patch-11-0-7-api-audit.md) retains revision 6726777, exhaustive 181-row accounting and per-ID review/scout. Four autostub retirements and modeled GUID clear-all close five publication gaps; 28 remain. Twelve isolated sweeps, exact negative control, two behavioral tests, three prefork cases, formatting, Mists warning boundary and exit-0 startup `[]` proven. Later inputs/vendor files unchanged; artifact validation/reproduction pending at this checkpoint.
+
 ## [2026-10-06] investigation | Prefork catalog contract drift
 
 [Investigation](investigations/prefork-catalog-contract-drift.md) records first-bad category/base-selector/product migrations, retained cached wrappers, explicit full-UI fixtures and independent redeemable-count producer. [Proof](investigations/prefork-catalog-contract-drift.md#verification): all requested filters, formatting and Mists check pass, zero non-vendor warnings. No vendor changes or runtime seed restoration.
