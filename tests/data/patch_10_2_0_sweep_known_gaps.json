@@ -4,9 +4,6 @@
   "wt-global-api-C_CVar.GetCVarInfo-87",
   "wt-global-api-C_Console.GetAllCommands-116",
   "wt-global-api-C_Console.GetColorFromType-117",
-  "wt-global-api-C_Console.GetFontHeight-118",
-  "wt-global-api-C_Console.PrintAllMatchingCommands-119",
-  "wt-global-api-C_Console.SetFontHeight-120",
   "wt-global-api-C_CurrencyInfo.GetDragonIslesSuppliesCurrencyID-86",
   "wt-global-api-C_FriendList.SendWho-164",
   "wt-global-api-C_LFGInfo.IsGroupFinderEnabled-88",
@@ -36,7 +33,5 @@
   "wt-widgets-Line:GetHitRectThickness-186",
   "wt-widgets-Line:SetHitRectThickness-187",
   "wt-widgets-ModelSceneActor:ResetNextHandSlot-194",
-  "wt-widgets-OnMovieHideSubtitle-202",
-  "wt-widgets-OnMovieShowSubtitle-203",
   "wt-widgets-TabardModel:IsGuildTabard-193"
 ]

@@ -1,4 +1,4 @@
-//! Namespace members (and whole namespaces) the Patch 10.2.6 / 11.0.0 / 11.0.2 / 11.0.5 / 11.0.7 / 11.1.0 / 11.1.5 / 11.1.7 / 11.2.0 / 11.2.7 / 12.0.0 / 12.0.1 / 12.0.5 / 12.0.7
+//! Namespace members (and whole namespaces) the Patch 10.2.0 / 10.2.6 / 11.0.0 / 11.0.2 / 11.0.5 / 11.0.7 / 11.1.0 / 11.1.5 / 11.1.7 / 11.2.0 / 11.2.7 / 12.0.0 / 12.0.1 / 12.0.5 / 12.0.7
 //! consolidated API tables list as removed that no other module retires.
 //! Marking keeps the namespace `__index` autostub from fabricating them on
 //! ordinary lookup.
@@ -12,6 +12,11 @@ use rilua::vm::state::LuaState;
 // Qualified and bare-name cached Lua searches retained in the 11.0.0 audit.
 // SpellBook transition aliases are deliberately not retired here.
 // Qualified current cached retail searches find no consumers of these 10.2.6 removals.
+// Bare-name matches are current global Console* successors, not these members.
+const RETIRED_10_2_0_MEMBERS: &[(&str, &[&str])] = &[(
+    "C_Console",
+    &["GetFontHeight", "PrintAllMatchingCommands", "SetFontHeight"],
+)];
 const RETIRED_10_2_6_MEMBERS: &[(&str, &[&str])] = &[
     ("C_CameraDefaults", &["GetCameraFOVDefaults"]),
     ("C_TaskQuest", &["GetUIWidgetSetIDFromQuestID"]),
@@ -234,6 +239,7 @@ const RETIRED_12_0_7_MEMBERS: &[(&str, &[&str])] = &[
 ];
 
 pub(crate) fn mark_retired_members(state: &mut LuaState) -> LuaResult<()> {
+    mark_members(state, RETIRED_10_2_0_MEMBERS)?;
     mark_members(state, RETIRED_10_2_6_MEMBERS)?;
     mark_members(state, RETIRED_11_0_0_MEMBERS)?;
     mark_members(state, RETIRED_11_0_2_MEMBERS)?;
