@@ -13,6 +13,12 @@ if GetCurrentEnvironment == nil then
   end
 end
 
+if IsInGlobalEnvironment == nil then
+  function IsInGlobalEnvironment()
+    return getfenv(2) == _G
+  end
+end
+
 if SwapToGlobalEnvironment == nil then
   function SwapToGlobalEnvironment()
     setfenv(2, _G)
