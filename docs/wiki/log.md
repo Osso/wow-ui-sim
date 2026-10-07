@@ -1,7 +1,3 @@
-## [2026-10-06] investigation | Prefork catalog contract drift
-
-[Investigation](investigations/prefork-catalog-contract-drift.md) distinguishes housing wrapper removal (`bf6c3e3ea`, manifest evidence) from storefront product migration (`a0e23199d`, adjacent execution bisect). Full-UI fixtures follow explicit host DTO contracts; no restored vendor wrappers or runtime seeds.
-
 ## [2026-10-06] evidence | 11.2.7 producer follow-up
 
 [Audit](investigations/patch-11-2-7-api-audit.md#publication-gap-follow-up--2026-10-06) links all 121 original gap outcomes: 25 modeled, two permanent 3D workarounds, 94 retained model/source boundaries. [Proof](../../data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-gaps-proof.json) covers behavioral fixtures, unchanged-master subsystem comparisons, six isolated sweeps, Mists warning scope and startup `[]`. Page-coverage/vendor/11.2.5 files unchanged.
