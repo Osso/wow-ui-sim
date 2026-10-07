@@ -41,6 +41,7 @@ Seven later observation maps match retained 11.2.0 evidence exactly. 11.2.7 diff
 
 ## See Also
 
+- [[patch-11-1-5-api-audit]] — preceding page audit and caller-environment proof.
 - [[patch-11-2-0-api-audit]] — template and next supersession boundary.
 - [[patch-11-2-7-api-audit]] — pre-existing follow-up closures.
 - [[console-command-registry]] — modeled catalog, not graphics command execution.

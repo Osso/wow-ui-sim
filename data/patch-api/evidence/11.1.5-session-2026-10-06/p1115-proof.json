@@ -14,7 +14,8 @@
       ],
       "revision": "8bfa4a9af0c9a47addcfc318da74e66a1a9b61a1",
       "exit_code": 101,
-      "log_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-initial.log"
+      "log_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-initial.log",
+      "scope": "Runner discovery error: autotests=false; use generated integration target, not a standalone test target."
     },
     {
       "name": "initial-sweep",
@@ -30,7 +31,9 @@
       ],
       "revision": "8bfa4a9af0c9a47addcfc318da74e66a1a9b61a1",
       "exit_code": 101,
-      "log_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-initial-integration.log"
+      "log_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-initial-integration.log",
+      "invalidated_by": "e06d1f0b5",
+      "scope": "Historical baseline before eight bounded fixes; not current acceptance."
     },
     {
       "name": "fixes-red",
@@ -47,7 +50,8 @@
       "revision": "8bfa4a9af0c9a47addcfc318da74e66a1a9b61a1",
       "scope": "new uncommitted behavioral tests; no implementation change",
       "exit_code": 101,
-      "log_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-fixes-red.log"
+      "log_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-fixes-red.log",
+      "invalidated_by": "e06d1f0b5"
     },
     {
       "name": "fixes-green",
@@ -63,7 +67,9 @@
       ],
       "revision": "e06d1f0b53b3dd1b7534500cb1a8bb485924fd2c",
       "exit_code": 101,
-      "log_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-fixes-green.log"
+      "log_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-fixes-green.log",
+      "invalidated_by": "fd6117247",
+      "scope": "First implementation failed custom-environment tail call; retained as intermediate RED."
     },
     {
       "name": "fixes-native-green",
@@ -94,7 +100,8 @@
       "revision": "fd61172475d8bd636f2397cf51288067ca544cf2",
       "scope": "uncommitted new extractor tests",
       "exit_code": 1,
-      "log_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-extract-red.log"
+      "log_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-extract-red.log",
+      "invalidated_by": "837135fc2"
     },
     {
       "name": "extract-green",
@@ -309,6 +316,118 @@
       "rows": 778,
       "ok": 773,
       "gaps": 5
+    },
+    {
+      "name": "negative-control",
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_11_1_5_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "1fb6571e1be9194c70087b9df2441305e90c0be3",
+      "exit_code": 101,
+      "expected_exit_code": 101,
+      "env": {
+        "P1115_SWEEP_REGISTER": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-negative-register.json"
+      },
+      "log_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-negative.log"
+    },
+    {
+      "name": "prefork-edit-mode",
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "blizzard_edit_mode_loads_without_errors"
+      ],
+      "revision": "bc72538b5c5225a3d7145d97cff6d3b5ce9c9261",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/prefork-edit-mode.log"
+    },
+    {
+      "name": "environment-regression",
+      "command": [
+        "cargo",
+        "test",
+        "--lib",
+        "environment_helpers_track_and_swap_caller_environment",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "bc72538b5c5225a3d7145d97cff6d3b5ce9c9261",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/environment-regression.log"
+    },
+    {
+      "name": "fmt-final",
+      "command": [
+        "cargo",
+        "fmt",
+        "--check"
+      ],
+      "revision": "bc72538b5c5225a3d7145d97cff6d3b5ce9c9261",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/fmt-final.log"
+    },
+    {
+      "name": "mists-check",
+      "command": [
+        "cargo",
+        "check",
+        "--no-default-features",
+        "--features",
+        "sound,gui,casc,client-mists",
+        "--tests"
+      ],
+      "revision": "bc72538b5c5225a3d7145d97cff6d3b5ce9c9261",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/mists-check.log"
+    },
+    {
+      "name": "build-final",
+      "command": [
+        "cargo",
+        "build",
+        "--bin",
+        "wow-sim"
+      ],
+      "revision": "bc72538b5c5225a3d7145d97cff6d3b5ce9c9261",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/build-final.log"
+    },
+    {
+      "command": [
+        "timeout",
+        "90",
+        "target/debug/wow-sim",
+        "--no-addons",
+        "--no-saved-vars",
+        "lua-errors"
+      ],
+      "revision": "bc72538b5c5225a3d7145d97cff6d3b5ce9c9261",
+      "exit_code": 0,
+      "json": [],
+      "stdout_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-startup.stdout.json",
+      "stderr_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-startup.stderr.log",
+      "name": "startup"
+    },
+    {
+      "name": "fmt-development",
+      "command": [
+        "cargo",
+        "fmt"
+      ],
+      "revision": "fd6117247",
+      "scope": "Executed immediately before fd6117247 commit; formatted changes. Tool returned exit 0. Later fmt-final independently confirms current Rust formatting.",
+      "exit_code": 0
     }
-  ]
+  ],
+  "revision_scope_note": "Runtime/Rust code unchanged since fd6117247; fixture finalized at 1fb6571e1. Subsequent changes affect only extract tooling/tests, data, evidence and docs; cargo/runtime proof is not invalidated."
 }

@@ -1,0 +1,70 @@
+[
+  {
+    "patch": "11.1.7",
+    "baseline_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1117-sweep-result.json",
+    "identical_observations": true,
+    "changed_ids": [],
+    "reason": "No changes."
+  },
+  {
+    "patch": "11.2.0",
+    "baseline_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1120-sweep-result.json",
+    "identical_observations": false,
+    "changed_ids": [
+      "wt-widgets-Browser:NavigateTo-173"
+    ],
+    "reason": "Pre-existing Browser:NavigateTo correction (c24d5e709)."
+  },
+  {
+    "patch": "11.2.5",
+    "baseline_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1125-sweep-result.json",
+    "identical_observations": true,
+    "changed_ids": [],
+    "reason": "No changes."
+  },
+  {
+    "patch": "11.2.7",
+    "baseline_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1127-sweep-result.json",
+    "identical_observations": true,
+    "changed_ids": [],
+    "reason": "No changes."
+  },
+  {
+    "patch": "12.0.0",
+    "baseline_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1200-sweep-result.json",
+    "identical_observations": false,
+    "changed_ids": [
+      "wt-global-api-dropsecretaccess-470",
+      "wt-global-api-issecrettable-472"
+    ],
+    "reason": "Pre-existing rilua secret-helper closures (7010474cb)."
+  },
+  {
+    "patch": "12.0.1",
+    "baseline_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1201-sweep-result.json",
+    "identical_observations": true,
+    "changed_ids": [],
+    "reason": "No changes."
+  },
+  {
+    "patch": "12.0.5",
+    "baseline_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1205-sweep-result.json",
+    "identical_observations": true,
+    "changed_ids": [],
+    "reason": "No changes."
+  },
+  {
+    "patch": "12.0.7",
+    "baseline_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1207-sweep-result.json",
+    "identical_observations": true,
+    "changed_ids": [],
+    "reason": "No changes."
+  },
+  {
+    "patch": "12.1.0",
+    "baseline_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1210-sweep-result.json",
+    "identical_observations": true,
+    "changed_ids": [],
+    "reason": "No changes."
+  }
+]

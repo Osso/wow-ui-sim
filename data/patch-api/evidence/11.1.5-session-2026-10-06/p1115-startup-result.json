@@ -1,0 +1,15 @@
+{
+  "command": [
+    "timeout",
+    "90",
+    "target/debug/wow-sim",
+    "--no-addons",
+    "--no-saved-vars",
+    "lua-errors"
+  ],
+  "revision": "bc72538b5c5225a3d7145d97cff6d3b5ce9c9261",
+  "exit_code": 0,
+  "json": [],
+  "stdout_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-startup.stdout.json",
+  "stderr_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-startup.stderr.log"
+}

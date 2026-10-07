@@ -163,3 +163,7 @@ Updated [audit](investigations/patch-12-0-1-api-audit.md), [spec](../specs/patch
 
 [Audit](investigations/patch-11-1-7-api-audit.md) retains revision 6726774, 48 inventory + 27 extract rows, four bounded closures and eight exact producer/policy gaps. New 75-ID ledger: 28 partial, five bounded, 24 pending, 18 metadata. Nine isolated sweeps, negative control, two behavior tests, extraction fixtures, formatting, Mists test check and exit-0 startup `[]` pass. Existing later fixtures/ledgers unchanged; older 11.2.7 observations differ only by 27 closures already on starting master.
 
+
+## [2026-10-07] evidence | 11.1.5 page audit
+
+[Audit](investigations/patch-11-1-5-api-audit.md) retains revision 6726775, exhaustive 224-row ledger, eight closures and 36 publication gaps. Ten isolated sweeps, exact negative control, behavior/environment/prefork regressions, Mists check and exit-0 startup `[]` pass. [Validator](../../data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-validate.py) checks portable evidence; later fixtures/ledgers unchanged. Current UpdateUIParentPosition consumers preserved. Temporary canonical cwd violation restored and recorded, not concealed.

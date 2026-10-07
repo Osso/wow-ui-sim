@@ -269,8 +269,8 @@
       "symbol": "C_GameRules.AutoConnectToGameModeRealm",
       "direction": "added",
       "decision": "retained-gap",
-      "reason": "No game-mode record/display/promo catalogue or realm-login transition model backs this query/action. Generic namespace lookup is not an explicit producer.",
-      "investigate": "src/c_api/registration/; cached GameRulesDocumentation.lua",
+      "reason": "Explicit publication missing. Existing GameRulesState stores rule values, active_game_mode and glue_screen_name, but not display/promo catalogue records or realm-login requests. Mode ID is not a game-mode record ID; scalar substitution would fabricate the contract.",
+      "investigate": "src/lua_api/globals/game_rules.rs:171-232; cached GameRulesDocumentation.lua",
       "initial": {
         "expected": {
           "direction": "added",
@@ -313,8 +313,8 @@
       "symbol": "C_GameRules.GetCurrentGameModeDisplayInfo",
       "direction": "added",
       "decision": "retained-gap",
-      "reason": "No game-mode record/display/promo catalogue or realm-login transition model backs this query/action. Generic namespace lookup is not an explicit producer.",
-      "investigate": "src/c_api/registration/; cached GameRulesDocumentation.lua",
+      "reason": "Explicit publication missing. Existing GameRulesState stores rule values, active_game_mode and glue_screen_name, but not display/promo catalogue records or realm-login requests. Mode ID is not a game-mode record ID; scalar substitution would fabricate the contract.",
+      "investigate": "src/lua_api/globals/game_rules.rs:171-232; cached GameRulesDocumentation.lua",
       "initial": {
         "expected": {
           "direction": "added",
@@ -357,8 +357,8 @@
       "symbol": "C_GameRules.GetCurrentGameModeRecordID",
       "direction": "added",
       "decision": "retained-gap",
-      "reason": "No game-mode record/display/promo catalogue or realm-login transition model backs this query/action. Generic namespace lookup is not an explicit producer.",
-      "investigate": "src/c_api/registration/; cached GameRulesDocumentation.lua",
+      "reason": "Explicit publication missing. Existing GameRulesState stores rule values, active_game_mode and glue_screen_name, but not display/promo catalogue records or realm-login requests. Mode ID is not a game-mode record ID; scalar substitution would fabricate the contract.",
+      "investigate": "src/lua_api/globals/game_rules.rs:171-232; cached GameRulesDocumentation.lua",
       "initial": {
         "expected": {
           "direction": "added",
@@ -401,8 +401,8 @@
       "symbol": "C_GameRules.GetGameModeDisplayInfoByRecordID",
       "direction": "added",
       "decision": "retained-gap",
-      "reason": "No game-mode record/display/promo catalogue or realm-login transition model backs this query/action. Generic namespace lookup is not an explicit producer.",
-      "investigate": "src/c_api/registration/; cached GameRulesDocumentation.lua",
+      "reason": "Explicit publication missing. Existing GameRulesState stores rule values, active_game_mode and glue_screen_name, but not display/promo catalogue records or realm-login requests. Mode ID is not a game-mode record ID; scalar substitution would fabricate the contract.",
+      "investigate": "src/lua_api/globals/game_rules.rs:171-232; cached GameRulesDocumentation.lua",
       "initial": {
         "expected": {
           "direction": "added",
@@ -445,8 +445,8 @@
       "symbol": "C_GameRules.GetGameModePromoGlobalString",
       "direction": "added",
       "decision": "retained-gap",
-      "reason": "No game-mode record/display/promo catalogue or realm-login transition model backs this query/action. Generic namespace lookup is not an explicit producer.",
-      "investigate": "src/c_api/registration/; cached GameRulesDocumentation.lua",
+      "reason": "Explicit publication missing. Existing GameRulesState stores rule values, active_game_mode and glue_screen_name, but not display/promo catalogue records or realm-login requests. Mode ID is not a game-mode record ID; scalar substitution would fabricate the contract.",
+      "investigate": "src/lua_api/globals/game_rules.rs:171-232; cached GameRulesDocumentation.lua",
       "initial": {
         "expected": {
           "direction": "added",
@@ -489,8 +489,8 @@
       "symbol": "C_GameRules.IsCharacterlessLoginActive",
       "direction": "added",
       "decision": "retained-gap",
-      "reason": "No game-mode record/display/promo catalogue or realm-login transition model backs this query/action. Generic namespace lookup is not an explicit producer.",
-      "investigate": "src/c_api/registration/; cached GameRulesDocumentation.lua",
+      "reason": "Explicit publication missing. Existing GameRulesState stores rule values, active_game_mode and glue_screen_name, but not display/promo catalogue records or realm-login requests. Mode ID is not a game-mode record ID; scalar substitution would fabricate the contract.",
+      "investigate": "src/lua_api/globals/game_rules.rs:171-232; cached GameRulesDocumentation.lua",
       "initial": {
         "expected": {
           "direction": "added",
@@ -974,7 +974,7 @@
       "direction": "added",
       "decision": "retained-gap",
       "reason": "Owned-pet collection and journal search-filter state are not modeled; empty/generic results would fabricate pet ownership or search state.",
-      "investigate": "cached PetJournalInfoDocumentation.lua:107,219; src/c_api/c_pet_battles.rs",
+      "investigate": "src/lua_api/globals/font_strings_collection/pet_journal.rs:381-427; cached PetJournalInfoDocumentation.lua:107,219",
       "initial": {
         "expected": {
           "direction": "added",
@@ -1018,7 +1018,7 @@
       "direction": "added",
       "decision": "retained-gap",
       "reason": "Owned-pet collection and journal search-filter state are not modeled; empty/generic results would fabricate pet ownership or search state.",
-      "investigate": "cached PetJournalInfoDocumentation.lua:107,219; src/c_api/c_pet_battles.rs",
+      "investigate": "src/lua_api/globals/font_strings_collection/pet_journal.rs:381-427; cached PetJournalInfoDocumentation.lua:107,219",
       "initial": {
         "expected": {
           "direction": "added",
@@ -1854,7 +1854,7 @@
       "direction": "added",
       "decision": "retained-gap",
       "reason": "3D customization/texture-file selection lies in intentionally unsupported model rendering. Upper/lower tabard border IDs have no modeled producer.",
-      "investigate": "src/lua_api/frame/methods/widget_model.rs; CLAUDE.md Intentional Gaps",
+      "investigate": "src/lua_api/frame/methods/widgets/model.rs; CLAUDE.md Intentional Gaps",
       "initial": {
         "expected": {
           "direction": "added",
@@ -1898,7 +1898,7 @@
       "direction": "added",
       "decision": "retained-gap",
       "reason": "3D customization/texture-file selection lies in intentionally unsupported model rendering. Upper/lower tabard border IDs have no modeled producer.",
-      "investigate": "src/lua_api/frame/methods/widget_model.rs; CLAUDE.md Intentional Gaps",
+      "investigate": "src/lua_api/frame/methods/widgets/model.rs; CLAUDE.md Intentional Gaps",
       "initial": {
         "expected": {
           "direction": "added",
