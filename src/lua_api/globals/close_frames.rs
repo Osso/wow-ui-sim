@@ -13,7 +13,7 @@
 //! | CloseSocketInfo     | socket_frame_open            | SOCKET_INFO_CLOSE   |
 //! | CloseLoot           | loot_frame_open              | LOOT_CLOSED         |
 //! | CloseGuildRegistrar | guild_registrar_open         | PETITION_CLOSED     |
-//! | ClosePetStables     | pet_stables_open             | PET_STABLE_CLOSED   |
+//! `ClosePetStables` is a classic-only wrapper for the `C_StableInfo` model.
 //!
 //! `CloseInbox` is handled by `mail_verbs.rs` since it fires `MAIL_CLOSED`
 //! and belongs to the mail pipeline.
@@ -62,7 +62,6 @@ define_close_verb!(
     guild_registrar_open,
     "PETITION_CLOSED"
 );
-define_close_verb!(close_pet_stables, pet_stables_open, "PET_STABLE_CLOSED");
 
 pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "CloseBankFrame", close_bank_frame)?;
@@ -73,6 +72,11 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "CloseSocketInfo", close_socket_info)?;
     LuaApiMut::register_function(lua, "CloseLoot", close_loot)?;
     LuaApiMut::register_function(lua, "CloseGuildRegistrar", close_guild_registrar)?;
-    LuaApiMut::register_function(lua, "ClosePetStables", close_pet_stables)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-ptr")))]
+    LuaApiMut::register_function(
+        lua,
+        "ClosePetStables",
+        crate::c_api::c_stable_info::close_pet_stables,
+    )?;
     Ok(())
 }

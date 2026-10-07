@@ -524,6 +524,7 @@ fn register_world_pvp_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     LuaApiMut::register_function(lua, "ClearBattlemaster", clear_battlemaster)?;
     LuaApiMut::register_function(lua, "GetPersonalRatedInfo", get_personal_rated_info)?;
     LuaApiMut::register_function(lua, "IsSubZonePVP", is_sub_zone_pvp)?;
+    #[cfg(not(any(feature = "client-retail", feature = "client-ptr")))]
     LuaApiMut::register_function(lua, "GetWorldPVPAreaInfo", get_world_pvp_area_info)?;
     LuaApiMut::register_function(lua, "GetHolidayBGInfo", get_holiday_bg_info)?;
     LuaApiMut::register_function(lua, "GetLocklistMap", get_locklist_map)?;
