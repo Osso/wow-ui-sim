@@ -1,0 +1,688 @@
+[
+  {
+    "source_id": "source-context-001",
+    "text": "Patch 10.1.5 API changes",
+    "section": "prose",
+    "status": "metadata-only",
+    "reason": "Editorial heading, build context or resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-003",
+    "text": "== Summary ==",
+    "section": "summary",
+    "status": "metadata-only",
+    "reason": "Editorial heading, build context or resource link; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-004",
+    "text": "* Various API changes have been made to optimize range checks for actions and units.",
+    "section": "summary",
+    "status": "audit-pending",
+    "reason": "Retained statement '* Various API changes have been made to optimize range checks for actions and units.'. Range optimization/performance claim requires action/unit range transitions and profiling; combat-insecure SetPropagateKeyboardInput/SetPassThroughButtons calls require taint/combat rejection tests. Existing method publication is insufficient."
+  },
+  {
+    "source_id": "prose-undated-005",
+    "text": "* The following widget API functions are now restricted and may not be called by insecure code while in combat:",
+    "section": "summary",
+    "status": "audit-pending",
+    "reason": "Retained statement '* The following widget API functions are now restricted and may not be called by insecure code while in combat:'. Range optimization/performance claim requires action/unit range transitions and profiling; combat-insecure SetPropagateKeyboardInput/SetPassThroughButtons calls require taint/combat rejection tests. Existing method publication is insufficient."
+  },
+  {
+    "source_id": "prose-undated-006",
+    "text": "** Frame:SetPropagateKeyboardInput",
+    "section": "summary",
+    "status": "audit-pending",
+    "reason": "Retained statement '** Frame:SetPropagateKeyboardInput'. Range optimization/performance claim requires action/unit range transitions and profiling; combat-insecure SetPropagateKeyboardInput/SetPassThroughButtons calls require taint/combat rejection tests. Existing method publication is insufficient."
+  },
+  {
+    "source_id": "prose-undated-007",
+    "text": "** ScriptRegion:SetPassThroughButtons",
+    "section": "summary",
+    "status": "audit-pending",
+    "reason": "Retained statement '** ScriptRegion:SetPassThroughButtons'. Range optimization/performance claim requires action/unit range transitions and profiling; combat-insecure SetPropagateKeyboardInput/SetPassThroughButtons calls require taint/combat rejection tests. Existing method publication is insufficient."
+  },
+  {
+    "source_id": "source-context-009",
+    "text": "== Resources ==",
+    "section": "resources",
+    "status": "metadata-only",
+    "reason": "Editorial heading, build context or resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-010",
+    "text": "* TOC: 100105",
+    "section": "resources",
+    "status": "metadata-only",
+    "reason": "Editorial heading, build context or resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-011",
+    "text": "* Diffs: wow-ui-source, BlizzardInterfaceResources",
+    "section": "resources",
+    "status": "metadata-only",
+    "reason": "Editorial heading, build context or resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-012",
+    "text": "* Official patch notes: Dragonflight: Fractures in Time Content Update Notes",
+    "section": "resources",
+    "status": "metadata-only",
+    "reason": "Editorial heading, build context or resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-014",
+    "text": "== Enumerations ==",
+    "section": "enumerations",
+    "status": "metadata-only",
+    "reason": "Editorial heading, build context or resource link; no runtime credit."
+  },
+  {
+    "source_id": "enumerations-Enum-ChatWhisperTargetStatus-015",
+    "text": " Enum.ChatWhisperTargetStatus",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement 'Enum.ChatWhisperTargetStatus'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-ChatWhisperTargetStatus-016",
+    "text": "   + CanWhisperGuild = 1",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ CanWhisperGuild = 1'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-ClickBindingType-017",
+    "text": " Enum.ClickBindingType",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement 'Enum.ClickBindingType'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-ClickBindingType-018",
+    "text": "   + PetAction = 4",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ PetAction = 4'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-CraftingOrderItemType-019",
+    "text": " Enum.CraftingOrderItemType",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement 'Enum.CraftingOrderItemType'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-CraftingOrderItemType-020",
+    "text": "   + RemoveReagent = 3",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ RemoveReagent = 3'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-ContentTrackingTargetType-021",
+    "text": " Enum.ContentTrackingTargetType",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement 'Enum.ContentTrackingTargetType'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-ContentTrackingTargetType-022",
+    "text": "   + Quest = 4",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ Quest = 4'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-Cursormode-023",
+    "text": " Enum.Cursormode",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement 'Enum.Cursormode'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-Cursormode-024",
+    "text": "   + QuestImportantCursor = 30",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ QuestImportantCursor = 30'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-Cursormode-025",
+    "text": "   + QuestImportantTurninCursor = 31",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ QuestImportantTurninCursor = 31'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-Cursormode-026",
+    "text": "   + QuestImportantErrorCursor = 65",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ QuestImportantErrorCursor = 65'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-Cursormode-027",
+    "text": "   + QuestImportantTurninErrorCursor = 66",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ QuestImportantTurninErrorCursor = 66'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-EditModeAccountSetting-028",
+    "text": " Enum.EditModeAccountSetting",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement 'Enum.EditModeAccountSetting'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-EditModeAccountSetting-029",
+    "text": "   + ShowTimerBars = 25",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ ShowTimerBars = 25'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-EditModeAccountSetting-030",
+    "text": "   + ShowVehicleSeatIndicator = 26",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ ShowVehicleSeatIndicator = 26'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-EditModeAccountSetting-031",
+    "text": "   + ShowArchaeologyBar = 27",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ ShowArchaeologyBar = 27'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-EditModeSystem-032",
+    "text": " Enum.EditModeSystem",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement 'Enum.EditModeSystem'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-EditModeSystem-033",
+    "text": "   + TimerBars = 17",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ TimerBars = 17'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-EditModeSystem-034",
+    "text": "   + VehicleSeatIndicator = 18",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ VehicleSeatIndicator = 18'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-EditModeSystem-035",
+    "text": "   + ArchaeologyBar = 19",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ ArchaeologyBar = 19'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-EditModeUnitFrameSetting-036",
+    "text": " Enum.EditModeUnitFrameSetting",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement 'Enum.EditModeUnitFrameSetting'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-EditModeUnitFrameSetting-037",
+    "text": "   + ViewArenaSize = 17",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ ViewArenaSize = 17'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-PvPMatchState-038",
+    "text": " Enum.PvPMatchState",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement 'Enum.PvPMatchState'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-PvPMatchState-039",
+    "text": "   + Waiting = 1",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ Waiting = 1'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-PvPMatchState-040",
+    "text": "   + StartUp = 2",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ StartUp = 2'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-PvPMatchState-041",
+    "text": "   + Engaged = 3",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ Engaged = 3'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-PvPMatchState-042",
+    "text": "   + PostRound = 4",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ PostRound = 4'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-PvPMatchState-043",
+    "text": "   - Active",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '- Active'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-SuperTrackingType-044",
+    "text": " Enum.SuperTrackingType",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement 'Enum.SuperTrackingType'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-SuperTrackingType-045",
+    "text": "   + Content = 4",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ Content = 4'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-TooltipDataLineType-046",
+    "text": " Enum.TooltipDataLineType",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement 'Enum.TooltipDataLineType'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-TooltipDataLineType-047",
+    "text": "   + ToyName = 31",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ ToyName = 31'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-TooltipDataLineType-048",
+    "text": "   + ToyText = 32",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ ToyText = 32'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-TooltipDataLineType-049",
+    "text": "   + ToyEffect = 33",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ ToyEffect = 33'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-TooltipDataLineType-050",
+    "text": "   + ToyDuration = 34",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ ToyDuration = 34'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-TooltipDataLineType-051",
+    "text": "   + RestrictedArena = 35",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ RestrictedArena = 35'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-TooltipDataLineType-052",
+    "text": "   + RestrictedBg = 36",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ RestrictedBg = 36'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-TooltipDataLineType-053",
+    "text": "   + ToyFlavorText = 37",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ ToyFlavorText = 37'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-TooltipDataLineType-054",
+    "text": "   + ToyDescription = 38",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ ToyDescription = 38'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-TooltipDataLineType-055",
+    "text": "   + ToySource = 39",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ ToySource = 39'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-ReportType-056",
+    "text": " Enum.ReportType",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement 'Enum.ReportType'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-ReportType-057",
+    "text": "   + CraftingOrder = 16",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ CraftingOrder = 16'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-TrackedSpellCategory-058",
+    "text": " Enum.TrackedSpellCategory",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement 'Enum.TrackedSpellCategory'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-TrackedSpellCategory-059",
+    "text": "   + None = 0",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ None = 0'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-TrackedSpellCategory-060",
+    "text": "   - Count",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '- Count'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-UIMapFlag-061",
+    "text": " Enum.UIMapFlag",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement 'Enum.UIMapFlag'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "enumerations-Enum-UIMapFlag-062",
+    "text": "   + ForceAllowMapLinks = 0x40000",
+    "section": "enumerations",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ ForceAllowMapLinks = 0x40000'. Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+  },
+  {
+    "source_id": "source-context-064",
+    "text": "== Constants ==",
+    "section": "constants",
+    "status": "metadata-only",
+    "reason": "Editorial heading, build context or resource link; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-065",
+    "text": " ContentTrackingConsts",
+    "section": "constants",
+    "status": "audit-pending",
+    "reason": "Retained statement 'ContentTrackingConsts'. ContentTrackingConsts limits require exact values plus enforcing tracked achievement/collectable source capacity; no policy proof credited."
+  },
+  {
+    "source_id": "prose-undated-066",
+    "text": "   + MaxTrackedAchievements = 10",
+    "section": "constants",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ MaxTrackedAchievements = 10'. ContentTrackingConsts limits require exact values plus enforcing tracked achievement/collectable source capacity; no policy proof credited."
+  },
+  {
+    "source_id": "prose-undated-067",
+    "text": "   + MaxTrackedCollectableSources = 15",
+    "section": "constants",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ MaxTrackedCollectableSources = 15'. ContentTrackingConsts limits require exact values plus enforcing tracked achievement/collectable source capacity; no policy proof credited."
+  },
+  {
+    "source_id": "source-context-069",
+    "text": "== Structures ==",
+    "section": "structures",
+    "status": "metadata-only",
+    "reason": "Editorial heading, build context or resource link; no runtime credit."
+  },
+  {
+    "source_id": "structures-BattlefieldRewards-070",
+    "text": " BattlefieldRewards",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement 'BattlefieldRewards'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  },
+  {
+    "source_id": "structures-BattlefieldRewards-071",
+    "text": "   + roleShortageBonus",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ roleShortageBonus'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  },
+  {
+    "source_id": "structures-CampaignInfo (C_CampaignInfo-GetCampaignInfo)-072",
+    "text": " CampaignInfo (C_CampaignInfo.GetCampaignInfo)",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement 'CampaignInfo (C_CampaignInfo.GetCampaignInfo)'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  },
+  {
+    "source_id": "structures-CampaignInfo (C_CampaignInfo-GetCampaignInfo)-073",
+    "text": "   + usesNormalQuestIcons",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ usesNormalQuestIcons'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  },
+  {
+    "source_id": "structures-CampaignInfo (C_CampaignInfo-GetCampaignInfo)-074",
+    "text": "   + isContainerCampaign",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ isContainerCampaign'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  },
+  {
+    "source_id": "structures-CharCustomizationCategory (C_BarberShop-GetAvailableCustomizations)-075",
+    "text": " CharCustomizationCategory (C_BarberShop.GetAvailableCustomizations)",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement 'CharCustomizationCategory (C_BarberShop.GetAvailableCustomizations)'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  },
+  {
+    "source_id": "structures-CharCustomizationCategory (C_BarberShop-GetAvailableCustomizations)-076",
+    "text": "   + needsNativeFormCategory",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ needsNativeFormCategory'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  },
+  {
+    "source_id": "structures-ChromieTimeExpansionInfo (C_ChromieTime-GetChromieTimeExpansionOption, C_ChromieTime-GetChromieTimeExpansionOptions)-077",
+    "text": " ChromieTimeExpansionInfo (C_ChromieTime.GetChromieTimeExpansionOption, C_ChromieTime.GetChromieTimeExpansionOptions)",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement 'ChromieTimeExpansionInfo (C_ChromieTime.GetChromieTimeExpansionOption, C_ChromieTime.GetChromieTimeExpansionOptions)'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  },
+  {
+    "source_id": "structures-ChromieTimeExpansionInfo (C_ChromieTime-GetChromieTimeExpansionOption, C_ChromieTime-GetChromieTimeExpansionOptions)-078",
+    "text": "   + recommended",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ recommended'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  },
+  {
+    "source_id": "structures-ChromieTimeExpansionInfo (C_ChromieTime-GetChromieTimeExpansionOption, C_ChromieTime-GetChromieTimeExpansionOptions)-079",
+    "text": "   + sortPriority",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ sortPriority'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  },
+  {
+    "source_id": "structures-ContainerItemInfo (C_Container-GetContainerItemInfo)-080",
+    "text": " ContainerItemInfo (C_Container.GetContainerItemInfo)",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement 'ContainerItemInfo (C_Container.GetContainerItemInfo)'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  },
+  {
+    "source_id": "structures-ContainerItemInfo (C_Container-GetContainerItemInfo)-081",
+    "text": "   + itemName",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ itemName'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  },
+  {
+    "source_id": "structures-CraftingOrderClaimsRemainingInfo (C_CraftingOrders-GetOrderClaimInfo)-082",
+    "text": " CraftingOrderClaimsRemainingInfo (C_CraftingOrders.GetOrderClaimInfo)",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement 'CraftingOrderClaimsRemainingInfo (C_CraftingOrders.GetOrderClaimInfo)'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  },
+  {
+    "source_id": "structures-CraftingOrderClaimsRemainingInfo (C_CraftingOrders-GetOrderClaimInfo)-083",
+    "text": "   # hoursToRecharge -> secondsToRecharge",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement '# hoursToRecharge -> secondsToRecharge'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  },
+  {
+    "source_id": "structures-CraftingOrderReagentInfo (C_CraftingOrders-GetCrafterOrders, ---)-084",
+    "text": " CraftingOrderReagentInfo (C_CraftingOrders.GetCrafterOrders, ...)",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement 'CraftingOrderReagentInfo (C_CraftingOrders.GetCrafterOrders, ...)'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  },
+  {
+    "source_id": "structures-CraftingOrderReagentInfo (C_CraftingOrders-GetCrafterOrders, ---)-085",
+    "text": "   # reagentSlot -> slotIndex",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement '# reagentSlot -> slotIndex'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  },
+  {
+    "source_id": "structures-DeadlyDebuffInfo (C_SpellBook-GetDeadlyDebuffInfo)-086",
+    "text": " DeadlyDebuffInfo (C_SpellBook.GetDeadlyDebuffInfo)",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement 'DeadlyDebuffInfo (C_SpellBook.GetDeadlyDebuffInfo)'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  },
+  {
+    "source_id": "structures-DeadlyDebuffInfo (C_SpellBook-GetDeadlyDebuffInfo)-087",
+    "text": "   + criticalTimeRemainingMs",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ criticalTimeRemainingMs'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  },
+  {
+    "source_id": "structures-DeadlyDebuffInfo (C_SpellBook-GetDeadlyDebuffInfo)-088",
+    "text": "   + criticalStacks",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ criticalStacks'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  },
+  {
+    "source_id": "structures-DeadlyDebuffInfo (C_SpellBook-GetDeadlyDebuffInfo)-089",
+    "text": "   - overrideCriticalTimeRemaining",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement '- overrideCriticalTimeRemaining'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  },
+  {
+    "source_id": "structures-GossipQuestUIInfo (C_GossipInfo-GetActiveQuests, C_GossipInfo-GetAvailableQuests)-090",
+    "text": " GossipQuestUIInfo (C_GossipInfo.GetActiveQuests, C_GossipInfo.GetAvailableQuests)",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement 'GossipQuestUIInfo (C_GossipInfo.GetActiveQuests, C_GossipInfo.GetAvailableQuests)'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  },
+  {
+    "source_id": "structures-GossipQuestUIInfo (C_GossipInfo-GetActiveQuests, C_GossipInfo-GetAvailableQuests)-091",
+    "text": "   + isImportant",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ isImportant'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  },
+  {
+    "source_id": "structures-LossOfControlData (C_LossOfControl-GetActiveLossOfControlData)-092",
+    "text": " LossOfControlData (C_LossOfControl.GetActiveLossOfControlData)",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement 'LossOfControlData (C_LossOfControl.GetActiveLossOfControlData)'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  },
+  {
+    "source_id": "structures-LossOfControlData (C_LossOfControl-GetActiveLossOfControlData)-093",
+    "text": "   + auraInstanceID",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ auraInstanceID'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  },
+  {
+    "source_id": "structures-PerksProgramItemDisplayInfo (C_PerksProgram-GetPerksProgramItemDisplayInfo)-094",
+    "text": " PerksProgramItemDisplayInfo (C_PerksProgram.GetPerksProgramItemDisplayInfo)",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement 'PerksProgramItemDisplayInfo (C_PerksProgram.GetPerksProgramItemDisplayInfo)'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  },
+  {
+    "source_id": "structures-PerksProgramItemDisplayInfo (C_PerksProgram-GetPerksProgramItemDisplayInfo)-095",
+    "text": "   + creatureDisplayInfoID",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ creatureDisplayInfoID'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  },
+  {
+    "source_id": "structures-PerksVendorItemInfo (C_PerksProgram-GetVendorItemInfo, C_PerksProgram-GetFrozenPerksVendorItemInfo)-096",
+    "text": " PerksVendorItemInfo (C_PerksProgram.GetVendorItemInfo, C_PerksProgram.GetFrozenPerksVendorItemInfo)",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement 'PerksVendorItemInfo (C_PerksProgram.GetVendorItemInfo, C_PerksProgram.GetFrozenPerksVendorItemInfo)'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  },
+  {
+    "source_id": "structures-PerksVendorItemInfo (C_PerksProgram-GetVendorItemInfo, C_PerksProgram-GetFrozenPerksVendorItemInfo)-097",
+    "text": "   + pending",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ pending'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  },
+  {
+    "source_id": "structures-QuestLineInfo (C_QuestLine-GetQuestLineInfo, C_QuestLine-GetAvailableQuestLines)-098",
+    "text": " QuestLineInfo (C_QuestLine.GetQuestLineInfo, C_QuestLine.GetAvailableQuestLines)",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement 'QuestLineInfo (C_QuestLine.GetQuestLineInfo, C_QuestLine.GetAvailableQuestLines)'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  },
+  {
+    "source_id": "structures-QuestLineInfo (C_QuestLine-GetQuestLineInfo, C_QuestLine-GetAvailableQuestLines)-099",
+    "text": "   + isImportant",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ isImportant'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  },
+  {
+    "source_id": "structures-ScenarioInformation (C_ScenarioInfo-GetScenarioInfo)-100",
+    "text": " ScenarioInformation (C_ScenarioInfo.GetScenarioInfo)",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement 'ScenarioInformation (C_ScenarioInfo.GetScenarioInfo)'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  },
+  {
+    "source_id": "structures-ScenarioInformation (C_ScenarioInfo-GetScenarioInfo)-101",
+    "text": "   + scenarioID",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ scenarioID'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  },
+  {
+    "source_id": "structures-TradeSkillRecipeInfo (C_TradeSkillUI-GetRecipeInfo, C_TradeSkillUI-GetRecipeInfoForSkillLineAbility)-102",
+    "text": " TradeSkillRecipeInfo (C_TradeSkillUI.GetRecipeInfo, C_TradeSkillUI.GetRecipeInfoForSkillLineAbility)",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement 'TradeSkillRecipeInfo (C_TradeSkillUI.GetRecipeInfo, C_TradeSkillUI.GetRecipeInfoForSkillLineAbility)'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  },
+  {
+    "source_id": "structures-TradeSkillRecipeInfo (C_TradeSkillUI-GetRecipeInfo, C_TradeSkillUI-GetRecipeInfoForSkillLineAbility)-103",
+    "text": "   + alwaysUsesLowestQuality",
+    "section": "structures",
+    "status": "audit-pending",
+    "reason": "Retained statement '+ alwaysUsesLowestQuality'. Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+  }
+]

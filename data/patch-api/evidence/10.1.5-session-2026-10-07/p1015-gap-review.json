@@ -1,0 +1,823 @@
+{
+  "discovery_gaps": 34,
+  "closed": 2,
+  "remaining": 32,
+  "rows": [
+    {
+      "source_id": "wt-global-api-C_Commentator.GetPlayerItemCooldownInfoByUnit-25",
+      "symbol": "C_Commentator.GetPlayerItemCooldownInfoByUnit",
+      "outcome": "retained-gap",
+      "reason": "Requires unit-to-commentator player mapping and populated item cooldown DTOs.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Commentator.GetPlayerItemCooldownInfoByUnit"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Commentator.GetPlayerItemCooldownInfo-26",
+      "symbol": "C_Commentator.GetPlayerItemCooldownInfo",
+      "outcome": "retained-gap",
+      "reason": "Requires item cooldown snapshots indexed by player identity and item; no real producer registered.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Commentator.GetPlayerItemCooldownInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Commentator.SetBlocklistedItemCooldowns-27",
+      "symbol": "C_Commentator.SetBlocklistedItemCooldowns",
+      "outcome": "retained-gap",
+      "reason": "Requires mutable commentator item exclusion lists and downstream cooldown filtering.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Commentator.SetBlocklistedItemCooldowns"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Commentator.SetRequestedItemCooldowns-28",
+      "symbol": "C_Commentator.SetRequestedItemCooldowns",
+      "outcome": "retained-gap",
+      "reason": "Requires requested-item tracking state and delivery policy; inert setter grants no modeled behavior.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Commentator.SetRequestedItemCooldowns"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_ContentTracking.GetBestMapForTrackable-29",
+      "symbol": "C_ContentTracking.GetBestMapForTrackable",
+      "outcome": "retained-gap",
+      "reason": "Requires trackable-to-map candidates and a selected best-map policy.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ContentTracking.GetBestMapForTrackable"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_ContentTracking.GetCurrentTrackingTarget-32",
+      "symbol": "C_ContentTracking.GetCurrentTrackingTarget",
+      "outcome": "retained-gap",
+      "reason": "Requires per-trackable active target identity and target type state.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ContentTracking.GetCurrentTrackingTarget"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_ContentTracking.GetEncounterTrackingInfo-33",
+      "symbol": "C_ContentTracking.GetEncounterTrackingInfo",
+      "outcome": "retained-gap",
+      "reason": "Requires populated encounter source records, not empty tracking defaults.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ContentTracking.GetEncounterTrackingInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_ContentTracking.GetNextWaypointForTrackable-34",
+      "symbol": "C_ContentTracking.GetNextWaypointForTrackable",
+      "outcome": "retained-gap",
+      "reason": "Requires route/waypoint progression tied to trackable source and current map.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ContentTracking.GetNextWaypointForTrackable"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_ContentTracking.GetObjectiveText-35",
+      "symbol": "C_ContentTracking.GetObjectiveText",
+      "outcome": "retained-gap",
+      "reason": "Requires objective metadata and localization keyed by target identity.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ContentTracking.GetObjectiveText"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_ContentTracking.GetTitle-36",
+      "symbol": "C_ContentTracking.GetTitle",
+      "outcome": "retained-gap",
+      "reason": "Requires trackable title metadata and valid/unknown identity behavior.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ContentTracking.GetTitle"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_ContentTracking.GetVendorTrackingInfo-39",
+      "symbol": "C_ContentTracking.GetVendorTrackingInfo",
+      "outcome": "retained-gap",
+      "reason": "Requires vendor/source catalog records and associated location DTOs.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ContentTracking.GetVendorTrackingInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_ContentTracking.GetWaypointText-40",
+      "symbol": "C_ContentTracking.GetWaypointText",
+      "outcome": "retained-gap",
+      "reason": "Requires waypoint identity/text derived from a selected trackable route.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ContentTracking.GetWaypointText"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_ContentTracking.IsNavigable-41",
+      "symbol": "C_ContentTracking.IsNavigable",
+      "outcome": "retained-gap",
+      "reason": "Requires source availability and navigation reachability; constant false is not a model.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ContentTracking.IsNavigable"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_ContentTracking.IsTrackable-42",
+      "symbol": "C_ContentTracking.IsTrackable",
+      "outcome": "retained-gap",
+      "reason": "Requires supported-type/source eligibility and unknown-ID policy.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ContentTracking.IsTrackable"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_ContentTracking.StartTracking-44",
+      "symbol": "C_ContentTracking.StartTracking",
+      "outcome": "retained-gap",
+      "reason": "Requires mutable tracked IDs, target selection and CONTENT_TRACKING event semantics.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ContentTracking.StartTracking"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_ContentTracking.StopTracking-45",
+      "symbol": "C_ContentTracking.StopTracking",
+      "outcome": "retained-gap",
+      "reason": "Requires state removal, super-track interaction and event ordering.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ContentTracking.StopTracking"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_ContentTracking.ToggleTracking-46",
+      "symbol": "C_ContentTracking.ToggleTracking",
+      "outcome": "retained-gap",
+      "reason": "Requires idempotent per-type tracking state transition, not an inert closure.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ContentTracking.ToggleTracking"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_EncounterJournal.GetEncounterJournalLink-47",
+      "symbol": "C_EncounterJournal.GetEncounterJournalLink",
+      "outcome": "retained-gap",
+      "reason": "Requires journal identity/link encoding and missing-entry semantics.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_EncounterJournal.GetEncounterJournalLink"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_EncounterJournal.GetInstanceForGameMap-48",
+      "symbol": "C_EncounterJournal.GetInstanceForGameMap",
+      "outcome": "retained-gap",
+      "reason": "Requires game-map-to-journal-instance catalog relation.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_EncounterJournal.GetInstanceForGameMap"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Loot.GetLootRollDuration-49",
+      "symbol": "C_Loot.GetLootRollDuration",
+      "outcome": "retained-gap",
+      "reason": "Requires active roll timing state and missing/completed roll behavior; namespace itself absent.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Loot.GetLootRollDuration"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "parent raw-absent; raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_MerchantFrame.GetNumJunkItems-50",
+      "symbol": "C_MerchantFrame.GetNumJunkItems",
+      "outcome": "retained-gap",
+      "reason": "Existing inferred sellable-poor-quality unit policy is gated to client-wowforever (src/c_api/c_merchant_frame.rs:27); retail lacks a defined count/eligibility contract. Do not promote Forever inference to native retail parity.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_MerchantFrame.GetNumJunkItems"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_SuperTrack.IsSuperTrackingContent-59",
+      "symbol": "C_SuperTrack.IsSuperTrackingContent",
+      "outcome": "retained-gap",
+      "reason": "Requires active super-track target type and content identity; existing defaults only model no-active-target placeholders.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_SuperTrack.IsSuperTrackingContent"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_SuperTrack.SetSuperTrackedContent-60",
+      "symbol": "C_SuperTrack.SetSuperTrackedContent",
+      "outcome": "retained-gap",
+      "reason": "Requires target mutation, priority arbitration and event semantics; no registered real setter.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_SuperTrack.SetSuperTrackedContent"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-UpdateUIParentPosition-61",
+      "symbol": "UpdateUIParentPosition",
+      "outcome": "retained-gap",
+      "reason": "Later 11.1.5 removes this global, but current cached Blizzard UI defines and calls it; retain cached vendor behavior and record exact removal mismatch.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": "wt-global-api-UpdateUIParentPosition-145",
+          "symbol": "UpdateUIParentPosition"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_CampaignInfo.UsesNormalQuestIcons-65",
+      "symbol": "C_CampaignInfo.UsesNormalQuestIcons",
+      "outcome": "closed",
+      "reason": "Unused namespace autostub retired; bare-name CampaignMixin method is not this namespace member.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_CampaignInfo.UsesNormalQuestIcons"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-RequestArtifactCompletionHistory-71",
+      "symbol": "RequestArtifactCompletionHistory",
+      "outcome": "closed",
+      "reason": "Unused retail history request omitted; classic state-backed request remains.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "RequestArtifactCompletionHistory"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetArenaRewards-74",
+      "symbol": "C_PvP.GetArenaRewards",
+      "outcome": "retained-gap",
+      "reason": "Requires concrete reward tuples for this queue and fifth roleShortageBonus result; namespace lookup autostub is not a producer.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "changed",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PvP.GetArenaRewards"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetArenaSkirmishRewards-76",
+      "symbol": "C_PvP.GetArenaSkirmishRewards",
+      "outcome": "retained-gap",
+      "reason": "Requires concrete reward tuples for this queue and fifth roleShortageBonus result; namespace lookup autostub is not a producer.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "changed",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PvP.GetArenaSkirmishRewards"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetBrawlRewards-78",
+      "symbol": "C_PvP.GetBrawlRewards",
+      "outcome": "retained-gap",
+      "reason": "Requires concrete reward tuples for this queue and fifth roleShortageBonus result; namespace lookup autostub is not a producer.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "changed",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PvP.GetBrawlRewards"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetRandomBGRewards-80",
+      "symbol": "C_PvP.GetRandomBGRewards",
+      "outcome": "retained-gap",
+      "reason": "Requires concrete reward tuples for this queue and fifth roleShortageBonus result; namespace lookup autostub is not a producer.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "changed",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PvP.GetRandomBGRewards"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetRandomEpicBGRewards-82",
+      "symbol": "C_PvP.GetRandomEpicBGRewards",
+      "outcome": "retained-gap",
+      "reason": "Requires concrete reward tuples for this queue and fifth roleShortageBonus result; namespace lookup autostub is not a producer.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "changed",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PvP.GetRandomEpicBGRewards"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetRatedBGRewards-84",
+      "symbol": "C_PvP.GetRatedBGRewards",
+      "outcome": "retained-gap",
+      "reason": "Requires concrete reward tuples for this queue and fifth roleShortageBonus result; namespace lookup autostub is not a producer.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "changed",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PvP.GetRatedBGRewards"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetRatedSoloShuffleRewards-86",
+      "symbol": "C_PvP.GetRatedSoloShuffleRewards",
+      "outcome": "retained-gap",
+      "reason": "Requires concrete reward tuples for this queue and fifth roleShortageBonus result; namespace lookup autostub is not a producer.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "changed",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PvP.GetRatedSoloShuffleRewards"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.IsEnchantTargetValid-88",
+      "symbol": "C_TradeSkillUI.IsEnchantTargetValid",
+      "outcome": "retained-gap",
+      "reason": "Requires item/enchant eligibility with supplied craftingReagents; inert function would hide policy gap.",
+      "discovery_observation": {
+        "expected": {
+          "direction": "changed",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_TradeSkillUI.IsEnchantTargetValid"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    }
+  ]
+}

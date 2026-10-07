@@ -1,3 +1,7 @@
+## [2026-10-07] evidence | 10.1.5 page audit
+
+[Audit](investigations/patch-10-1-5-api-audit.md) retains revision 3807695, 101 inventory / 98 extract rows, level-two heading fixtures and two retail-only retirements. Thirty-two exact gaps and one historical default mismatch remain; targeted final proof pending.
+
 ## [2026-10-07] evidence | 10.2.0 page audit
 
 [Audit](investigations/patch-10-2-0-api-audit.md) accounts for 150 inventory + 134 extract IDs, eight unused retail retirements, modeled parent-key clearing and corrected interface/script probes. Thirty exact publication gaps and five serialized-default mismatches remain. Eighteen isolated sweeps, negative control, behavior/prefork tests, Mists check and exit-0 startup `[]` pass. All 102 later inputs preserved; read-only 10.2.5 register has no add/remove intersection with retained gaps.

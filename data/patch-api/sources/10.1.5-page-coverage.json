@@ -1,0 +1,1365 @@
+{
+  "schema": "patch-page-coverage/v1",
+  "patch": "10.1.5",
+  "source_register": "data/patch-api/sources/10.1.5-wikitext-register.json",
+  "source_sha256": "cbd9a9de7fff6b6e8d77e352dccbe96b21caed7650577d432eaa24673fb8746f",
+  "audit_status": "in-progress",
+  "proof_policy": "Complete occurrence accounting against current retail 12.1.0. Nineteen later registers; 10.1.7 independently pending integration. Publication/absence/default/event registration does not establish signatures, populated DTOs, combat/security, historical or native parity. Two unused retirements; 32 exact publication gaps. All substantive extracts remain audit-pending. Local targeted development proof only.",
+  "capabilities": [
+    {
+      "id": "publication-sweep-10-1-5",
+      "symbols": [
+        "101 inventory occurrences"
+      ],
+      "scope": "Publication/absence and event registration only; 69 OK / 32 exact gaps expected after two retirements. One historical CVar default mismatch grants no default parity.",
+      "spec": "docs/specs/patch-10-1-5-publication-sweep.md",
+      "tests": [
+        "tests/patch_10_1_5_publication_sweep.rs",
+        "tests/patch_10_1_5_publication_fixes.rs",
+        "tests/patch_10_1_5_cached_surfaces.rs"
+      ],
+      "compiled_revision": "pending",
+      "ledger": "data/patch-api/evidence/10.1.5-session-2026-10-07/p1015-proof.json",
+      "proof": "Final targeted gates pending; first retirement RED/GREEN, second RED observed."
+    }
+  ],
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/10.1.5-api-changes.txt",
+    "sha256": "d871bfe9ac485926da1fb380b1a7f1e7eb9aa18025b9f7b09354e43f4f66b1f1",
+    "wikitext_revid": 3807695,
+    "wikitext_sha256": "9a0f1759634bf56323e005271e909439905662d6411f01768641a59114c4ed08",
+    "extract_tool": "tools/extract_patch_non_inventory.py"
+  },
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-C_ActionBar.EnableActionRangeCheck-22",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_CharacterServices.RPEResetCharacter-23",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_Item.GetItemIDForItemInfo-24",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_Commentator.GetPlayerItemCooldownInfoByUnit-25",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires unit-to-commentator player mapping and populated item cooldown DTOs."
+    },
+    {
+      "source_id": "wt-global-api-C_Commentator.GetPlayerItemCooldownInfo-26",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires item cooldown snapshots indexed by player identity and item; no real producer registered."
+    },
+    {
+      "source_id": "wt-global-api-C_Commentator.SetBlocklistedItemCooldowns-27",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires mutable commentator item exclusion lists and downstream cooldown filtering."
+    },
+    {
+      "source_id": "wt-global-api-C_Commentator.SetRequestedItemCooldowns-28",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires requested-item tracking state and delivery policy; inert setter grants no modeled behavior."
+    },
+    {
+      "source_id": "wt-global-api-C_ContentTracking.GetBestMapForTrackable-29",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires trackable-to-map candidates and a selected best-map policy."
+    },
+    {
+      "source_id": "wt-global-api-C_ContentTracking.GetCollectableSourceTrackingEnabled-30",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ContentTracking.GetCollectableSourceTypes-31",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ContentTracking.GetCurrentTrackingTarget-32",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires per-trackable active target identity and target type state."
+    },
+    {
+      "source_id": "wt-global-api-C_ContentTracking.GetEncounterTrackingInfo-33",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires populated encounter source records, not empty tracking defaults."
+    },
+    {
+      "source_id": "wt-global-api-C_ContentTracking.GetNextWaypointForTrackable-34",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires route/waypoint progression tied to trackable source and current map."
+    },
+    {
+      "source_id": "wt-global-api-C_ContentTracking.GetObjectiveText-35",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires objective metadata and localization keyed by target identity."
+    },
+    {
+      "source_id": "wt-global-api-C_ContentTracking.GetTitle-36",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires trackable title metadata and valid/unknown identity behavior."
+    },
+    {
+      "source_id": "wt-global-api-C_ContentTracking.GetTrackablesOnMap-37",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ContentTracking.GetTrackedIDs-38",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ContentTracking.GetVendorTrackingInfo-39",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires vendor/source catalog records and associated location DTOs."
+    },
+    {
+      "source_id": "wt-global-api-C_ContentTracking.GetWaypointText-40",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires waypoint identity/text derived from a selected trackable route."
+    },
+    {
+      "source_id": "wt-global-api-C_ContentTracking.IsNavigable-41",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires source availability and navigation reachability; constant false is not a model."
+    },
+    {
+      "source_id": "wt-global-api-C_ContentTracking.IsTrackable-42",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires supported-type/source eligibility and unknown-ID policy."
+    },
+    {
+      "source_id": "wt-global-api-C_ContentTracking.IsTracking-43",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_ContentTracking.StartTracking-44",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires mutable tracked IDs, target selection and CONTENT_TRACKING event semantics."
+    },
+    {
+      "source_id": "wt-global-api-C_ContentTracking.StopTracking-45",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires state removal, super-track interaction and event ordering."
+    },
+    {
+      "source_id": "wt-global-api-C_ContentTracking.ToggleTracking-46",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires idempotent per-type tracking state transition, not an inert closure."
+    },
+    {
+      "source_id": "wt-global-api-C_EncounterJournal.GetEncounterJournalLink-47",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires journal identity/link encoding and missing-entry semantics."
+    },
+    {
+      "source_id": "wt-global-api-C_EncounterJournal.GetInstanceForGameMap-48",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires game-map-to-journal-instance catalog relation."
+    },
+    {
+      "source_id": "wt-global-api-C_Loot.GetLootRollDuration-49",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires active roll timing state and missing/completed roll behavior; namespace itself absent."
+    },
+    {
+      "source_id": "wt-global-api-C_MerchantFrame.GetNumJunkItems-50",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Existing inferred sellable-poor-quality unit policy is gated to client-wowforever (src/c_api/c_merchant_frame.rs:27); retail lacks a defined count/eligibility contract. Do not promote Forever inference to native retail parity."
+    },
+    {
+      "source_id": "wt-global-api-C_PetInfo.GetSpellForPetAction-51",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.IsMatchActive-52",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.IsMatchComplete-53",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_QuestLine.GetForceVisibleQuests-54",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_QuestLog.IsImportantQuest-55",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_SpecializationInfo.GetClassIDFromSpecID-56",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_SuperTrack.ClearSuperTrackedContent-57",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_SuperTrack.GetSuperTrackedContent-58",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_SuperTrack.IsSuperTrackingContent-59",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires active super-track target type and content identity; existing defaults only model no-active-target placeholders."
+    },
+    {
+      "source_id": "wt-global-api-C_SuperTrack.SetSuperTrackedContent-60",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires target mutation, priority arbitration and event semantics; no registered real setter."
+    },
+    {
+      "source_id": "wt-global-api-UpdateUIParentPosition-61",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Later 11.1.5 removes this global, but current cached Blizzard UI defines and calls it; retain cached vendor behavior and record exact removal mismatch."
+    },
+    {
+      "source_id": "wt-global-api-AddTrackedAchievement-64",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_CampaignInfo.UsesNormalQuestIcons-65",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetClassIDFromSpecID-66",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetNumTrackedAchievements-67",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-GetTrackedAchievements-68",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-IsTrackedAchievement-69",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-RemoveTrackedAchievement-70",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-RequestArtifactCompletionHistory-71",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetArenaRewards-74",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires concrete reward tuples for this queue and fifth roleShortageBonus result; namespace lookup autostub is not a producer."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetArenaSkirmishRewards-76",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires concrete reward tuples for this queue and fifth roleShortageBonus result; namespace lookup autostub is not a producer."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetBrawlRewards-78",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires concrete reward tuples for this queue and fifth roleShortageBonus result; namespace lookup autostub is not a producer."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetRandomBGRewards-80",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires concrete reward tuples for this queue and fifth roleShortageBonus result; namespace lookup autostub is not a producer."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetRandomEpicBGRewards-82",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires concrete reward tuples for this queue and fifth roleShortageBonus result; namespace lookup autostub is not a producer."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetRatedBGRewards-84",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires concrete reward tuples for this queue and fifth roleShortageBonus result; namespace lookup autostub is not a producer."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetRatedSoloShuffleRewards-86",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires concrete reward tuples for this queue and fifth roleShortageBonus result; namespace lookup autostub is not a producer."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.IsEnchantTargetValid-88",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires item/enchant eligibility with supplied craftingReagents; inert function would hide policy gap."
+    },
+    {
+      "source_id": "wt-widgets-Frame:AbortDrag-98",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-widgets-Frame:InterceptStartDrag-99",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-widgets-PlayerModel:SetCustomRace-102",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-widgets-UnitPositionFrame:AddUnitAtlas-103",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-widgets-UnitPositionFrame:AddUnitFileID-104",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-events-ACTION_RANGE_CHECK_UPDATE-115",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-events-AJ_OPEN_COLLECTIONS_ACTION-116",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-events-AUCTION_HOUSE_ITEM_DELIVERY_DELAY_UPDATE-117",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-events-CANCEL_ALL_LOOT_ROLLS-118",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-events-CONTENT_TRACKING_IS_ENABLED_UPDATE-119",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-events-CONTENT_TRACKING_LIST_UPDATE-120",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-events-CONTENT_TRACKING_UPDATE-121",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-events-DUEL_TO_THE_DEATH_REQUESTED-122",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-events-MAIN_SPEC_NEED_ROLL-123",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-events-PERKS_PROGRAM_ADD_PENDING_SHOP_ITEM-124",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-events-PERKS_PROGRAM_REMOVE_PENDING_SHOP_ITEM-125",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-events-TRACKABLE_INFO_UPDATE-126",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-events-TRACKING_TARGET_INFO_UPDATE-127",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-events-UNIT_DISTANCE_CHECK_UPDATE-128",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-events-UNIT_IN_RANGE_UPDATE-129",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-events-UNIT_SPELLCAST_RETICLE_CLEAR-130",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-events-UNIT_SPELLCAST_RETICLE_TARGET-131",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-events-AUCTION_HOUSE_PURCHASE_DELIVERY_DELAY_UPDATE-134",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-events-RESEARCH_ARTIFACT_HISTORY_READY-135",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-events-CINEMATIC_START-138",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-events-LOSS_OF_CONTROL_ADDED-140",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-events-LOSS_OF_CONTROL_UPDATE-142",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-events-UNIT_SPELLCAST_EMPOWER_STOP-144",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-cvars-contentTrackingFilter-154",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-cvars-gxMTAlphaWater-155",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-cvars-gxMTParticulateVolumes-156",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-cvars-pvpFramesDisplayClassColor-157",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-cvars-pvpFramesDisplayOnlyHealerPowerBars-158",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-cvars-pvpFramesDisplayPowerBars-159",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-cvars-pvpFramesHealthText-160",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-cvars-pvpOptionDisplayPets-161",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-cvars-raidFramesDisplayOnlyHealerPowerBars-162",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-cvars-ReplaceMyPlayerPortrait-163",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-cvars-ReplaceOtherPlayerPortraits-164",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-cvars-SpellVisuals-165",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-cvars-TargetAutoLock-166",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-cvars-wmoPortalFadeScale-167",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-cvars-wmoPortalInteriorFade-168",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current default 1 differs from historical page 0; no historical default parity."
+    },
+    {
+      "source_id": "wt-cvars-uieditor_enabled-171",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "wt-cvars-wmoPortalMinScreenSize-172",
+      "capabilities": [
+        "publication-sweep-10-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Publication/absence/event registration only; populated output, signatures, security and native parity unproved."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, build context or resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, build context or resource link; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Range optimization/performance claim requires action/unit range transitions and profiling; combat-insecure SetPropagateKeyboardInput/SetPassThroughButtons calls require taint/combat rejection tests. Existing method publication is insufficient."
+    },
+    {
+      "source_id": "prose-undated-005",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Range optimization/performance claim requires action/unit range transitions and profiling; combat-insecure SetPropagateKeyboardInput/SetPassThroughButtons calls require taint/combat rejection tests. Existing method publication is insufficient."
+    },
+    {
+      "source_id": "prose-undated-006",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Range optimization/performance claim requires action/unit range transitions and profiling; combat-insecure SetPropagateKeyboardInput/SetPassThroughButtons calls require taint/combat rejection tests. Existing method publication is insufficient."
+    },
+    {
+      "source_id": "prose-undated-007",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Range optimization/performance claim requires action/unit range transitions and profiling; combat-insecure SetPropagateKeyboardInput/SetPassThroughButtons calls require taint/combat rejection tests. Existing method publication is insufficient."
+    },
+    {
+      "source_id": "source-context-009",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, build context or resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-010",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, build context or resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-011",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, build context or resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-012",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, build context or resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-014",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, build context or resource link; no runtime credit."
+    },
+    {
+      "source_id": "enumerations-Enum-ChatWhisperTargetStatus-015",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-ChatWhisperTargetStatus-016",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-ClickBindingType-017",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-ClickBindingType-018",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-CraftingOrderItemType-019",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-CraftingOrderItemType-020",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-ContentTrackingTargetType-021",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-ContentTrackingTargetType-022",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-Cursormode-023",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-Cursormode-024",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-Cursormode-025",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-Cursormode-026",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-Cursormode-027",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeAccountSetting-028",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeAccountSetting-029",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeAccountSetting-030",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeAccountSetting-031",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeSystem-032",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeSystem-033",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeSystem-034",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeSystem-035",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeUnitFrameSetting-036",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-EditModeUnitFrameSetting-037",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-PvPMatchState-038",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-PvPMatchState-039",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-PvPMatchState-040",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-PvPMatchState-041",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-PvPMatchState-042",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-PvPMatchState-043",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-SuperTrackingType-044",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-SuperTrackingType-045",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-046",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-047",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-048",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-049",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-050",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-051",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-052",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-053",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-054",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataLineType-055",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-ReportType-056",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-ReportType-057",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-TrackedSpellCategory-058",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-TrackedSpellCategory-059",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-TrackedSpellCategory-060",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-UIMapFlag-061",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "enumerations-Enum-UIMapFlag-062",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum numeric addition/removal requires current lookup and later-value reconciliation; raw page retained, no numeric behavioral test credited for this occurrence."
+    },
+    {
+      "source_id": "source-context-064",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, build context or resource link; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-065",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "ContentTrackingConsts limits require exact values plus enforcing tracked achievement/collectable source capacity; no policy proof credited."
+    },
+    {
+      "source_id": "prose-undated-066",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "ContentTrackingConsts limits require exact values plus enforcing tracked achievement/collectable source capacity; no policy proof credited."
+    },
+    {
+      "source_id": "prose-undated-067",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "ContentTrackingConsts limits require exact values plus enforcing tracked achievement/collectable source capacity; no policy proof credited."
+    },
+    {
+      "source_id": "source-context-069",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading, build context or resource link; no runtime credit."
+    },
+    {
+      "source_id": "structures-BattlefieldRewards-070",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    },
+    {
+      "source_id": "structures-BattlefieldRewards-071",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    },
+    {
+      "source_id": "structures-CampaignInfo (C_CampaignInfo-GetCampaignInfo)-072",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    },
+    {
+      "source_id": "structures-CampaignInfo (C_CampaignInfo-GetCampaignInfo)-073",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    },
+    {
+      "source_id": "structures-CampaignInfo (C_CampaignInfo-GetCampaignInfo)-074",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    },
+    {
+      "source_id": "structures-CharCustomizationCategory (C_BarberShop-GetAvailableCustomizations)-075",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    },
+    {
+      "source_id": "structures-CharCustomizationCategory (C_BarberShop-GetAvailableCustomizations)-076",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    },
+    {
+      "source_id": "structures-ChromieTimeExpansionInfo (C_ChromieTime-GetChromieTimeExpansionOption, C_ChromieTime-GetChromieTimeExpansionOptions)-077",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    },
+    {
+      "source_id": "structures-ChromieTimeExpansionInfo (C_ChromieTime-GetChromieTimeExpansionOption, C_ChromieTime-GetChromieTimeExpansionOptions)-078",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    },
+    {
+      "source_id": "structures-ChromieTimeExpansionInfo (C_ChromieTime-GetChromieTimeExpansionOption, C_ChromieTime-GetChromieTimeExpansionOptions)-079",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    },
+    {
+      "source_id": "structures-ContainerItemInfo (C_Container-GetContainerItemInfo)-080",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    },
+    {
+      "source_id": "structures-ContainerItemInfo (C_Container-GetContainerItemInfo)-081",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    },
+    {
+      "source_id": "structures-CraftingOrderClaimsRemainingInfo (C_CraftingOrders-GetOrderClaimInfo)-082",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    },
+    {
+      "source_id": "structures-CraftingOrderClaimsRemainingInfo (C_CraftingOrders-GetOrderClaimInfo)-083",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    },
+    {
+      "source_id": "structures-CraftingOrderReagentInfo (C_CraftingOrders-GetCrafterOrders, ---)-084",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    },
+    {
+      "source_id": "structures-CraftingOrderReagentInfo (C_CraftingOrders-GetCrafterOrders, ---)-085",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    },
+    {
+      "source_id": "structures-DeadlyDebuffInfo (C_SpellBook-GetDeadlyDebuffInfo)-086",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    },
+    {
+      "source_id": "structures-DeadlyDebuffInfo (C_SpellBook-GetDeadlyDebuffInfo)-087",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    },
+    {
+      "source_id": "structures-DeadlyDebuffInfo (C_SpellBook-GetDeadlyDebuffInfo)-088",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    },
+    {
+      "source_id": "structures-DeadlyDebuffInfo (C_SpellBook-GetDeadlyDebuffInfo)-089",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    },
+    {
+      "source_id": "structures-GossipQuestUIInfo (C_GossipInfo-GetActiveQuests, C_GossipInfo-GetAvailableQuests)-090",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    },
+    {
+      "source_id": "structures-GossipQuestUIInfo (C_GossipInfo-GetActiveQuests, C_GossipInfo-GetAvailableQuests)-091",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    },
+    {
+      "source_id": "structures-LossOfControlData (C_LossOfControl-GetActiveLossOfControlData)-092",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    },
+    {
+      "source_id": "structures-LossOfControlData (C_LossOfControl-GetActiveLossOfControlData)-093",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    },
+    {
+      "source_id": "structures-PerksProgramItemDisplayInfo (C_PerksProgram-GetPerksProgramItemDisplayInfo)-094",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    },
+    {
+      "source_id": "structures-PerksProgramItemDisplayInfo (C_PerksProgram-GetPerksProgramItemDisplayInfo)-095",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    },
+    {
+      "source_id": "structures-PerksVendorItemInfo (C_PerksProgram-GetVendorItemInfo, C_PerksProgram-GetFrozenPerksVendorItemInfo)-096",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    },
+    {
+      "source_id": "structures-PerksVendorItemInfo (C_PerksProgram-GetVendorItemInfo, C_PerksProgram-GetFrozenPerksVendorItemInfo)-097",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    },
+    {
+      "source_id": "structures-QuestLineInfo (C_QuestLine-GetQuestLineInfo, C_QuestLine-GetAvailableQuestLines)-098",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    },
+    {
+      "source_id": "structures-QuestLineInfo (C_QuestLine-GetQuestLineInfo, C_QuestLine-GetAvailableQuestLines)-099",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    },
+    {
+      "source_id": "structures-ScenarioInformation (C_ScenarioInfo-GetScenarioInfo)-100",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    },
+    {
+      "source_id": "structures-ScenarioInformation (C_ScenarioInfo-GetScenarioInfo)-101",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    },
+    {
+      "source_id": "structures-TradeSkillRecipeInfo (C_TradeSkillUI-GetRecipeInfo, C_TradeSkillUI-GetRecipeInfoForSkillLineAbility)-102",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    },
+    {
+      "source_id": "structures-TradeSkillRecipeInfo (C_TradeSkillUI-GetRecipeInfo, C_TradeSkillUI-GetRecipeInfoForSkillLineAbility)-103",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Populated DTO field addition/rename/removal must be tested through listed producer with concrete host state and nil/error boundaries; publication or empty-return defaults insufficient."
+    }
+  ]
+}

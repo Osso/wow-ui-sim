@@ -1,3 +1,7 @@
+## [2026-10-07] evidence | 10.1.5 page audit
+
+[Audit](investigations/patch-10-1-5-api-audit.md) retains revision 3807695, 101 inventory / 98 extract rows, level-two heading fixtures and two retail-only retirements. Thirty-two exact gaps and one historical default mismatch remain; targeted final proof pending.
+
 ## [2026-10-07] evidence | 10.2.5 page audit
 
 ## [2026-10-07] evidence | 10.1.7 page audit
