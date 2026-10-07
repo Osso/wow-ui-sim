@@ -30,6 +30,8 @@ def render_line(line):
     line = re.sub(r"\{\{(?:apisummary.header|text\|blizz)\|([^{}]+)\}\}",
                   r"=== \1 ===", line)
     line = line.replace('{{apisummary.blizzquote}}', '')
+    line = line.replace('{{:Settings_API}}',
+                        '[Transcluded source: Settings_API; not expanded]')
     line = line.replace('{{:Enum.AddOnProfilerMetric}}',
                         '[Transcluded source: Enum.AddOnProfilerMetric; not expanded]')
     # Retain the TOC example's symbolic interface, not today's expanded version.
@@ -79,6 +81,8 @@ def extract_text(raw):
 def is_source_context(value, number, patch):
     if number == 1 or value.startswith(('* TOC:', '* Official', '* Diffs:', '* Deprecated')):
         return True
+    if patch == '11.0.2':
+        return value.startswith((': 11.0.0', '[Transcluded source:'))
     if patch == '11.0.5':
         return value.startswith(': 11.0.2')
     if patch == '11.0.7':

@@ -1,0 +1,336 @@
+{{apichanges|11.0.2|prev=11.0.0|next=11.0.5}}
+
+==Resources==
+* TOC: <code>110002</code>
+* Official patch notes: [https://worldofwarcraft.blizzard.com/en-us/news/24124914/1102-updates#item4 11.0.2 Updates]
+* Diffs: [https://github.com/Gethe/wow-ui-source/compare/11.0.0..11.0.2 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/10.2.7..11.0.2 BlizzardInterfaceResources]
+
+==Breaking changes==
+* The Settings API has been changed, particularly around the creation of settings. Refer to [[#Settings_API_changes|Settings API changes]] for more details.
+* Macros and the macrotext attribute of [[SecureActionButtonTemplate]] have new limitations:
+** macrotext limited to 255 characters (same length as real macros)
+** All macros (real and macrotext-based) can no longer chain macros. One macro cannot [[MACRO click|/click]] a button that would execute another macro
+
+==Settings API changes==
+
+The [[Settings API]] has been updated to resolve a few usability issues with respect to the creation and management of settings.
+
+* The {{api|Settings.RegisterAddOnSetting}} function has had its signature changed significantly and now requires two additional parameters (<code>variableKey</code> and <code>variableTbl</code>) in the middle of the parameter list. These are used to directly read and write settings from a supplied table, which is typically expected to be the addon's saved variables.
+* The {{api|Settings.RegisterProxySetting}} function has been adjusted and can now be called from insecure code. Proxy settings can be used to execute author-supplied callbacks when reading and writing settings as an alternative to RegisterAddOnSetting.
+* The {{api|Settings.OpenToCategory}} function has been improved and now supports directly opening to a subcategory, as well as automatically expanding any categories that it opens.
+
+{{:Settings_API}}
+
+==Consolidated changes==
+: <font color="pink">11.0.0 (55818)</font> &rarr; <font color="lightgreen">11.0.2 (56819)</font> Sep 27 2024
+
+===Global API===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-global-c"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(17)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(3)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|C_ClubFinder.IsValidSearchString}}
+: {{api|t=a|C_DelvesUI.RequestPartyEligibilityForDelveTiers}}
+: {{api|t=a|C_EditMode.IsValidLayoutName}}
+: {{api|t=a|C_GameRules.GetGameRuleAsFloat}}
+: {{api|t=a|C_GameRules.IsGameRuleActive}}
+: {{api|t=a|C_GuildBank.IsGuildBankEnabled}}
+: {{api|t=a|C_GuildInfo.AreGuildEventsEnabled}}
+: {{api|t=a|C_Item.CanBeRefunded}}
+: {{api|t=a|C_Item.GetDelvePreviewItemLink}}
+: {{api|t=a|C_Item.IsItemBindToAccountUntilEquip}}
+: {{api|t=a|C_Map.GetMapArtZoneTextPosition}}
+: {{api|t=a|C_Minimap.ClearMinimapInsetInfo}}
+: {{api|t=a|C_Minimap.SetMinimapInsetInfo}}
+: {{api|t=a|C_QuestLog.QuestContainsFirstTimeRepBonusForPlayer}}
+: {{api|t=a|C_Traits.CanEditConfig}}
+: {{api|t=a|C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo}}
+: {{api|t=a|C_VoiceChat.CanAccessSettings}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|C_GameModeManager.GetFeatureSetting}}
+: {{api|t=a|C_GameModeManager.IsFeatureEnabled}}
+: {{api|t=a|C_WeeklyRewards.GetWeeklyRewardTextureKit}}
+</div>
+|}
+ {{api|t=a|C_QuestLog.DoesQuestAwardReputationWithFaction}}
+   # arg 2: <font color="#ff6767">factionID</font> -> <font color="#00b400">targetFactionID</font>
+
+===Events===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-events"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(5)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(0)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|CRAFTINGORDERS_UPDATE_REWARDS}}
+: {{api|t=e|DELVES_ACCOUNT_DATA_ELEMENT_CHANGED}}
+: {{api|t=e|PARTY_ELIGIBILITY_FOR_DELVE_TIERS_CHANGED}}
+: {{api|t=e|REMIX_END_OF_EVENT}}
+: {{api|t=e|SHOW_DELVES_COMPANION_CONFIGURATION_UI}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+|}
+ {{api|t=e|CURRENCY_DISPLAY_UPDATE}}
+   # 5: <font color="#ff6767">quantityLostSource</font> -> <font color="#00b400">destroyReason</font>
+ {{api|t=e|START_TIMER}}
+   # 1: <font color="#ecbc2a">timerType</font>, Type: luaIndex -> StartTimerType
+ {{api|t=e|STOP_TIMER_OF_TYPE}}
+   # 1: <font color="#ecbc2a">timerType</font>, Type: luaIndex -> StartTimerType
+
+===CVars===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-cvars"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(4)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(1)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-cvars"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=minimapTrackedInfov2}}
+: {{apitooltip|type=cvar|name=mouseAcceleration|default=-1|cat=4|desc=-1: use desktop mouse acceleration, 0: disable mouse acceleration, 1: enable mouse acceleration}}
+: {{apitooltip|type=cvar|name=useCompactPartyFrames}}
+: {{apitooltip|type=cvar|name=UseOldVolumeFog|default=0.000000|cat=1|desc=Use old volume fog system instead of the rework.}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=mouseAccel|default=1|cat=4}}
+</div>
+|}
+
+===Enums===
+ Enum.BagFlag
+   + <font color="#00b400">SkipValidCountCheck</font>
+ Enum.EventToastDisplayType
+   + <font color="#00b400">SingleLineWithIcon</font>
+ Enum.MountType
+   + <font color="#00b400">RideAlong</font>
+ Enum.MountTypeFlag
+   + <font color="#00b400">IsRideAlongMount</font>
+ Enum.QuestClassification
+   + <font color="#00b400">BonusObjective</font>
+   + <font color="#00b400">Threat</font>
+   + <font color="#00b400">WorldQuest</font>
+ Enum.TooltipDataItemBinding
+   + <font color="#00b400">AccountUntilEquipped</font>
+ Enum.TraitConditionType
+   + <font color="#00b400">DisplayError</font>
+ Enum.UIMapFlag
+   + <font color="#00b400">IgnoreInTranslationsToParent</font>
+ Enum.UIWidgetVisualizationType
+   + <font color="#00b400">ScenarioHeaderDelves</font>
+
+===Structures===
+ CampaignInfo
+   + <font color="#00b400">sortAsNormalQuest</font>
+ CharacterCurrencyData
+   + <font color="#00b400">fullCharacterName</font>
+ CraftingOrderRewardInfo
+   # <font color="#ff6767">currencyAmount</font> -> <font color="#00b400">count</font>
+ CurrencyTransferTransaction
+   + <font color="#00b400">fullSourceCharacterName</font>
+   + <font color="#00b400">fullDestinationCharacterName</font>
+ GossipOptionRewardInfo
+   + <font color="#00b400">context</font>
+ HorizontalCurrenciesWidgetVisualizationInfo
+   - <font color="#ff6767">updateAnimType</font>
+ PlayerChoiceOptionInfo
+   + <font color="#00b400">consolidateWidgets</font>
+ QuestInfo
+   + <font color="#00b400">sortAsNormalQuest</font>
+   + <font color="#00b400">questClassification</font>
+   - <font color="#ff6767">isLegendarySort</font>
+ ScenarioCriteriaInfo
+   + <font color="#00b400">quantityString</font>
+ SpellDisplayVisualizationInfo
+   - <font color="#ff6767">shownState</font>
+   - <font color="#ff6767">enabledState</font>
+ TraitCondInfo
+   + <font color="#00b400">isSufficient</font>
+   + <font color="#00b400">type</font>
+ TraitEntryInfo
+   + <font color="#00b400">isDisplayError</font>
+ TraitNodeInfo
+   + <font color="#00b400">isDisplayError</font>
+ UIWidgetCurrencyInfo
+   + <font color="#00b400">textEnabledState</font>
+   + <font color="#00b400">iconSizeType</font>
+   + <font color="#00b400">updateAnimType</font>
+ UIWidgetItemInfo
+   + <font color="#00b400">itemNameCustomColor</font>
+   + <font color="#00b400">itemNameCustomColorOverrideState</font>
+ UIWidgetSpellInfo
+   + <font color="#00b400">shownState</font>
+   + <font color="#00b400">enabledState</font>
+   + <font color="#00b400">showGlowState</font>
+
+==Deprecated API==
+These API functions are deprecated and will be removed in patch 11.0.2
+{| class="darktable"
+|
+===[https://github.com/Gethe/wow-ui-source/blob/10.2.7/Interface/AddOns/Blizzard_Deprecated/Deprecated_10_0_0.lua 10.0.0]===
+: {{api|CursorCanGoInSlot}} → {{api|C_PaperDollInfo.CanCursorCanGoInSlot}}
+: {{api|C_TradeSkillUI.GetRecipeRepeatCount}} → {{api|C_TradeSkillUI.GetRemainingRecasts}}
+
+===[https://github.com/Gethe/wow-ui-source/blob/10.2.7/Interface/AddOns/Blizzard_Deprecated/Deprecated_10_0_7.lua 10.0.7]===
+<syntaxhighlight lang="lua">
+Enum.GarrisonType["Type_6_0"] = Enum.GarrisonType["Type_6_0_Garrison"]
+Enum.GarrisonType["Type_7_0"] = Enum.GarrisonType["Type_7_0_Garrison"]
+Enum.GarrisonType["Type_8_0"] = Enum.GarrisonType["Type_8_0_Garrison"]
+Enum.GarrisonType["Type_9_0"] = Enum.GarrisonType["Type_9_0_Garrison"]
+
+Enum.GarrisonFollowerType["FollowerType_6_0"] = Enum.GarrisonFollowerType["FollowerType_6_0_GarrisonFollower"]
+Enum.GarrisonFollowerType["FollowerType_6_2"] = Enum.GarrisonFollowerType["FollowerType_6_0_Boat"]
+Enum.GarrisonFollowerType["FollowerType_7_0"] = Enum.GarrisonFollowerType["FollowerType_7_0_GarrisonFollower"]
+Enum.GarrisonFollowerType["FollowerType_8_0"] = Enum.GarrisonFollowerType["FollowerType_8_0_GarrisonFollower"]
+Enum.GarrisonFollowerType["FollowerType_9_0"] = Enum.GarrisonFollowerType["FollowerType_9_0_GarrisonFollower"]
+</syntaxhighlight>
+
+===[https://github.com/Gethe/wow-ui-source/blob/10.2.7/Interface/AddOns/Blizzard_Deprecated/Deprecated_10_1_0.lua 10.1.0]===
+: {{api|GetAddOnMetadata}} → {{api|C_AddOns.GetAddOnMetadata}}
+
+===[https://github.com/Gethe/wow-ui-source/blob/10.2.7/Interface/AddOns/Blizzard_Deprecated/Deprecated_10_1_5.lua 10.1.5]===
+: {{api|GetClassIDFromSpecID}} → {{api|C_SpecializationInfo.GetClassIDFromSpecID}}
+
+===[https://github.com/Gethe/wow-ui-source/blob/10.2.7/Interface/AddOns/Blizzard_Deprecated/Deprecated_10_2_0.lua 10.2.0]===
+: {{api|GetCVarInfo}} → {{api|C_CVar.GetCVarInfo}}
+: {{api|EnableAddOn}} → {{api|C_AddOns.EnableAddOn}}
+: {{api|DisableAddOn}} → {{api|C_AddOns.DisableAddOn}}
+: {{api|GetAddOnEnableState}} → {{api|C_AddOns.GetAddOnEnableState}}
+: {{api|LoadAddOn}} → {{api|C_AddOns.LoadAddOn}}
+: {{api|IsAddOnLoaded}} → {{api|C_AddOns.IsAddOnLoaded}}
+: {{api|EnableAllAddOns}} → {{api|C_AddOns.EnableAllAddOns}}
+: {{api|DisableAllAddOns}} → {{api|C_AddOns.DisableAllAddOns}}
+: {{api|GetAddOnInfo}} → {{api|C_AddOns.GetAddOnInfo}}
+: {{api|GetAddOnDependencies}} → {{api|C_AddOns.GetAddOnDependencies}}
+: {{api|GetAddOnOptionalDependencies}} → {{api|C_AddOns.GetAddOnOptionalDependencies}}
+: {{api|GetNumAddOns}} → {{api|C_AddOns.GetNumAddOns}}
+: {{api|SaveAddOns}} → {{api|C_AddOns.SaveAddOns}}
+: {{api|ResetAddOns}} → {{api|C_AddOns.ResetAddOns}}
+: {{api|ResetDisabledAddOns}} → {{api|C_AddOns.ResetDisabledAddOns}}
+: {{api|IsAddonVersionCheckEnabled}} → {{api|C_AddOns.IsAddonVersionCheckEnabled}}
+: {{api|SetAddonVersionCheck}} → {{api|C_AddOns.SetAddonVersionCheck}}
+: {{api|IsAddOnLoadOnDemand}} → {{api|C_AddOns.IsAddOnLoadOnDemand}}
+
+===[https://github.com/Gethe/wow-ui-source/blob/10.2.7/Interface/AddOns/Blizzard_Deprecated/Deprecated_10_2_5.lua 10.2.5]===
+: {{api|FillLocalizedClassList}} → {{api|LocalizedClassList}}
+: {{api|GetSetBonusesForSpecializationByItemID}} → {{api|C_Item.GetSetBonusesForSpecializationByItemID}}
+: {{api|GetItemStats}} → {{api|C_Item.GetItemStats}}
+: {{api|GetItemStatDelta}} → {{api| C_Item.GetItemStatDelta}}
+: {{api|UnitAura}} → {{api|C_UnitAuras.GetAuraDataByIndex}}
+: {{api|UnitBuff}} → {{api|C_UnitAuras.GetBuffDataByIndex}}
+: {{api|UnitDebuff}} → {{api|C_UnitAuras.GetDebuffDataByIndex}}
+: {{api|UnitAuraBySlot}} → {{api|C_UnitAuras.GetAuraDataBySlot}}
+: {{api|UnitAuraSlots}} → {{api|C_UnitAuras.GetAuraSlots}}
+
+===[https://github.com/Gethe/wow-ui-source/blob/10.2.7/Interface/AddOns/Blizzard_Deprecated/Deprecated_10_2_6.lua 10.2.6]===
+: {{api|FrameXML_Debug}} → {{api|C_Debug.FrameXMLDebug}}
+: {{api|GetMawPowerLinkBySpellID}} → {{api|C_Spell.GetMawPowerLinkBySpellID}}
+: {{api|C_TaskQuest.GetUIWidgetSetIDFromQuestID}} → {{api|C_TaskQuest.GetQuestTooltipUIWidgetSet}}
+
+===[https://github.com/Gethe/wow-ui-source/blob/10.2.7/Interface/AddOns/Blizzard_Deprecated/Deprecated_10_2_7.lua 10.2.7]===
+: {{api|ClosePetStables}} → {{api|C_StableInfo.ClosePetStables}}
+: {{api|GetStablePetInfo}} → {{api|C_StableInfo.GetStablePetInfo}}
+: {{api|PickupStablePet}} → {{api|C_StableInfo.PickupStablePet}}
+: {{api|GetStablePetFoodTypes}} → {{api|C_StableInfo.GetStablePetFoodTypes}}
+: {{api|IsAtStableMaster}} → {{api|C_StableInfo.IsAtStableMaster}}
+: {{api|SetPetSlot}} → {{api|C_StableInfo.SetPetSlot}}
+: {{api|PetAbandon}} → {{api|C_PetInfo.PetAbandon}}
+: {{api|PetRename}} → {{api|C_PetInfo.PetRename}}
+: {{api|PetCanBeRenamed}}
+
+===[https://github.com/Gethe/wow-ui-source/blob/11.0.0/Interface/AddOns/Blizzard_Deprecated/Deprecated_11_0_0.lua 11.0.0]===
+: {{api|GetSpellInfo}} → {{api|C_Spell.GetSpellInfo}}
+: {{api|GetNumSpellTabs}} → {{api|C_SpellBook.GetNumSpellBookSkillLines}}
+: {{api|GetSpellTabInfo}} → {{api|C_SpellBook.GetSpellBookSkillLineInfo}}
+: {{api|GetSpellCooldown}} → {{api|C_Spell.GetSpellCooldown}}
+: {{api|GetSpellBookItemName}} → {{api|C_SpellBook.GetSpellBookItemName}}
+: {{api|GetSpellTexture}} → {{api|C_Spell.GetSpellTexture}}
+: {{api|GetSpellCharges}} → {{api|C_Spell.GetSpellCharges}}
+: {{api|GetSpellDescription}} → {{api|C_Spell.GetSpellDescription}}
+: {{api|GetSpellCount}} → {{api|C_Spell.GetSpellCastCount}}
+: {{api|IsUsableSpell}} → {{api|C_Spell.IsSpellUsable}}
+|}
+
+These functions were deprecated in patch 10.2.6 but do not appear to be removed on the 11.0.2 beta.
+{| class="darktable"
+|
+'''[https://github.com/Gethe/wow-ui-source/blob/10.2.7/Interface/AddOns/Blizzard_DeprecatedCurrencyScript/Deprecated_CurrencyScript.lua Deprecated_CurrencyScript.lua]'''
+: {{api|GetCoinIcon}} → {{api|C_CurrencyInfo.GetCoinIcon}}
+: {{api|GetCoinText}} → {{api|C_CurrencyInfo.GetCoinText}}
+: {{api|GetCoinTextureString}} → {{api|C_CurrencyInfo.GetCoinTextureString}}
+
+'''[https://github.com/Gethe/wow-ui-source/blob/10.2.7/Interface/AddOns/Blizzard_DeprecatedGuildScript/Deprecated_GuildScript.lua Deprecated_GuildScript.lua]'''
+: {{api|GuildInvite}} → {{api|C_GuildInfo.Invite}}
+: {{api|GuildUninvite}} → {{api|C_GuildInfo.Uninvite}}
+: {{api|GuildPromote}} → {{api|C_GuildInfo.Promote}}
+: {{api|GuildDemote}} → {{api|C_GuildInfo.Demote}}
+: {{api|GuildSetLeader}} → {{api|C_GuildInfo.SetLeader}}
+: {{api|GuildSetMOTD}} → {{api|C_GuildInfo.SetMOTD}}
+: {{api|GuildLeave}} → {{api|C_GuildInfo.Leave}}
+: {{api|GuildDisband}} → {{api|C_GuildInfo.Disband}}
+
+'''[https://github.com/Gethe/wow-ui-source/blob/10.2.7/Interface/AddOns/Blizzard_DeprecatedItemScript/Deprecated_ItemScript.lua Deprecated_ItemScript.lua]'''
+: {{api|GetItemQualityColor}} → {{api|C_Item.GetItemQualityColor}}
+: {{api|GetItemInfoInstant}} → {{api|C_Item.GetItemInfoInstant}}
+: {{api|GetItemSetInfo}} → {{api|C_Item.GetItemSetInfo}}
+: {{api|GetItemChildInfo}} → {{api|C_Item.GetItemChildInfo}}
+: {{api|DoesItemContainSpec}} → {{api|C_Item.DoesItemContainSpec}}
+: {{api|GetItemGem}} → {{api|C_Item.GetItemGem}}
+: {{api|GetItemCreationContext}} → {{api|C_Item.GetItemCreationContext}}
+: {{api|GetItemIcon}} → {{api|C_Item.GetItemIconByID}}
+: {{api|GetItemFamily}} → {{api|C_Item.GetItemFamily}}
+: {{api|GetItemSpell}} → {{api|C_Item.GetItemSpell}}
+: {{api|IsArtifactPowerItem}} → {{api|C_Item.IsArtifactPowerItem}}
+: {{api|IsCurrentItem}} → {{api|C_Item.IsCurrentItem}}
+: {{api|IsUsableItem}} → {{api|C_Item.IsUsableItem}}
+: {{api|IsHelpfulItem}} → {{api|C_Item.IsHelpfulItem}}
+: {{api|IsHarmfulItem}} → {{api|C_Item.IsHarmfulItem}}
+: {{api|IsConsumableItem}} → {{api|C_Item.IsConsumableItem}}
+: {{api|IsEquippableItem}} → {{api|C_Item.IsEquippableItem}}
+: {{api|IsEquippedItem}} → {{api|C_Item.IsEquippedItem}}
+: {{api|IsEquippedItemType}} → {{api|C_Item.IsEquippedItemType}}
+: {{api|ItemHasRange}} → {{api|C_Item.ItemHasRange}}
+: {{api|IsItemInRange}} → {{api|C_Item.IsItemInRange}}
+: {{api|GetItemClassInfo}} → {{api|C_Item.GetItemClassInfo}}
+: {{api|GetItemInventorySlotInfo}} → {{api|C_Item.GetItemInventorySlotInfo}}
+: {{api|BindEnchant}} → {{api|C_Item.BindEnchant}}
+: {{api|ActionBindsItem}} → {{api|C_Item.ActionBindsItem}}
+: {{api|ReplaceEnchant}} → {{api|C_Item.ReplaceEnchant}}
+: {{api|ReplaceTradeEnchant}} → {{api|C_Item.ReplaceTradeEnchant}}
+: {{api|ConfirmBindOnUse}} → {{api|C_Item.ConfirmBindOnUse}}
+: {{api|ConfirmOnUse}} → {{api|C_Item.ConfirmOnUse}}
+: {{api|ConfirmNoRefundOnUse}} → {{api|C_Item.ConfirmNoRefundOnUse}}
+: {{api|DropItemOnUnit}} → {{api|C_Item.DropItemOnUnit}}
+: {{api|EndBoundTradeable}} → {{api|C_Item.EndBoundTradeable}}
+: {{api|EndRefund}} → {{api|C_Item.EndRefund}}
+: {{api|GetItemInfo}} → {{api|C_Item.GetItemInfo}}
+: {{api|GetDetailedItemLevelInfo}} → {{api|C_Item.GetDetailedItemLevelInfo}}
+: {{api|GetItemSpecInfo}} → {{api|C_Item.GetItemSpecInfo}}
+: {{api|GetItemUniqueness}} → {{api|C_Item.GetItemUniqueness}}
+: {{api|GetItemCount}} → {{api|C_Item.GetItemCount}}
+: {{api|PickupItem}} → {{api|C_Item.PickupItem}}
+: {{api|GetItemSubClassInfo}} → {{api|C_Item.GetItemSubClassInfo}}
+: {{api|UseItemByName}} → {{api|C_Item.UseItemByName}}
+: {{api|EquipItemByName}} → {{api|C_Item.EquipItemByName}}
+: {{api|ReplaceTradeskillEnchant}} → {{api|C_Item.ReplaceTradeskillEnchant}}
+: {{api|GetItemCooldown}} → {{api|C_Item.GetItemCooldown}}
+: {{api|IsCorruptedItem}} → {{api|C_Item.IsCorruptedItem}}
+: {{api|IsCosmeticItem}} → {{api|C_Item.IsCosmeticItem}}
+: {{api|IsDressableItem}} → <s>{{api|C_Item.IsDressableItem}}</s> {{api|C_Item.IsDressableItemByID}}
+
+'''[https://github.com/Gethe/wow-ui-source/blob/10.2.7/Interface/AddOns/Blizzard_DeprecatedPvpScript/Deprecated_PvpScript.lua Deprecated_PvpScript.lua]'''
+: {{api|IsSubZonePVPPOI}} → {{api|C_PvP.IsSubZonePVPPOI}}
+: {{api|GetZonePVPInfo}} → {{api|C_PvP.GetZonePVPInfo}}
+: {{api|TogglePVP}} → {{api|C_PvP.TogglePVP}}
+: {{api|SetPVP}} → {{api|C_PvP.SetPVP}}
+
+'''[https://github.com/Gethe/wow-ui-source/blob/10.2.7/Interface/AddOns/Blizzard_DeprecatedSoundScript/Deprecated_SoundScript.lua Deprecated_SoundScript.lua]'''
+: {{api|PlayVocalErrorSoundID}} → {{api|C_Sound.PlayVocalErrorSound}}
+
+'''[https://github.com/Gethe/wow-ui-source/blob/10.2.7/Interface/AddOns/Blizzard_DeprecatedSpellScript/Deprecated_SpellScript.lua Deprecated_SpellScript.lua]'''
+: {{api|TargetSpellReplacesBonusTree}} → {{api|C_Spell.TargetSpellReplacesBonusTree}}
+: {{api|GetMaxSpellStartRecoveryOffset}} → {{api|C_Spell.GetSpellQueueWindow}}
+: {{api|GetSpellQueueWindow}} → {{api|C_Spell.GetSpellQueueWindow}}
+: {{api|GetSchoolString}} → {{api|C_Spell.GetSchoolString}}
+|}
