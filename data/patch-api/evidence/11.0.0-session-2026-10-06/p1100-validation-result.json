@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "data/patch-api/evidence/11.0.0-session-2026-10-06/p1100-validate.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+  "revision": "e1e3a63bf",
+  "exit_code": 0,
+  "stdout": "PASS: 842 unique IDs; 495 inventory + 347 extract; 15 exact isolated sweeps; nine closures, 166 gaps, source hashes, 92 preserved inputs, reproduction, negative control and local proof",
+  "invalidated": false,
+  "scope": "source/register/ledger, fifteen exact sweeps, current local gates; later result/doc-only edits do not invalidate proof"
+}
