@@ -1,5 +1,11 @@
 # Patch 12.0.5 API Audit
 
+### Rilua capability follow-up — 2026-10-07
+
+[Contract](../../specs/rilua-capability-rows.md) and [proof](../../../data/patch-api/evidence/rilua-rows-2026-10-07/proof.md) supersede the old VM-blocker notes below. `Ambiguate` and `C_ChatInfo.ReplaceIconAndGroupExpressions` now transform genuine secret strings with opaque host primitives, retaining secrecy/taint for addon and revoked callers. Original NeverSecret context/flags authenticate before text processing. Chat expansion uses per-environment typed host icon/group maps; English raid tags have cache-derived icon defaults, while group/localized vocabulary needs host input. Native complete grammar/context/output policy is not claimed.
+
+050/095 **remain pending**: frame-event dispatch now exhausts trusted-owner instruction budgets and exempts both shutdown events without refund, but non-frame ownership/event-wide exemptions, native time thresholds and dedicated load/OnUpdate proof remain gaps. Default quota/reset are inferred host policy. Eight new tests, 26 controls and the 57-test 12.0.5 filter pass; publication observes 352 OK / 11 unchanged exact gaps. Grouped sweeps require bytecode caching disabled to avoid the pre-existing parent-bypass precondition. Mists --tests check/formatting pass with zero non-vendor warnings; startup exits0 `[]`. No delegation or native/full-suite parity credit.
+
 ### Pending non-sweep follow-up — 2026-10-04
 
 [Per-row evidence and proof ledger](../../../data/patch-api/evidence/12.0.5-session-2026-10-03/pending-rows-follow-up.md) audits all 24 remaining non-sweep rows; coverage JSON remains main-session-owned and unchanged. `71a694e82` implements four current leadership successors' addon-combat denial over existing role/leader state ([contract](../../specs/patch-12-0-5-pending-leadership.md)); aggregate row03-25-074 remains pending for conversion APIs/historical publication. `e74034ec9` adds three unchanged-vendor `HANDLE:IsUnderMouse` fixtures for parent geometry, recursive visibility/protection and scale (row099, bounded proof, no production patch). 55 targeted GREEN tests, formatting/check exit0 and startup `[]`; expected leadership RED also reproduces at baseline `7f22dc66a`. No publication-sweep or native historical regression credit.

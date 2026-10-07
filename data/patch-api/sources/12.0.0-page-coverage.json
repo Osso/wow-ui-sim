@@ -72,7 +72,7 @@
       "symbols": [
         "removed CombatLog*/DeathRecap*/CombatText globals, GetBattlegroundInfo, SetPortraitToTexture; added Unit*/Show*Cloak/Helm/SetCursorPosition/GetCollapsingStarCost/IsRaidMarkerSystemEnabled/canaccesssecrets/hasanysecretvalues"
       ],
-      "scope": "Removed globals: native copies epoch-gated off at retail-12-0-0; 15 legitimately republished by cached Blizzard_DeprecatedCombatLog as native aliases, verified by exact cached assignment and destination identity (sweep rule). Added globals from simulator state; canaccesssecrets/hasanysecretvalues use real VM secret machinery. Blocked: dropsecretaccess, issecrettable (no VM primitive).",
+      "scope": "Removed globals: native copies epoch-gated off at retail-12-0-0; 15 legitimately republished by cached Blizzard_DeprecatedCombatLog as native aliases, verified by exact cached assignment and destination identity (sweep rule). Added globals from simulator state; canaccesssecrets/hasanysecretvalues use real VM secret machinery. dropsecretaccess/issecrettable now have separate rilua-backed capabilities below; this older proof does not cover them.",
       "spec": "docs/specs/patch-12-0-0-publication-sweep.md",
       "tests": [
         "tests/publication_deprecated_alias.rs",
@@ -169,6 +169,38 @@
       "implementation": "commits through f1b6977a9",
       "compiled_revision": "f1b6977a9",
       "proof": "Sol worker GREEN; main-thread full integration 0 new vs d1a2a0250, prefork 2016/3, startup [] (addons: only pre-existing EllesmereUI error); no independent review"
+    },
+    {
+      "id": "rilua-dropsecretaccess",
+      "symbols": [
+        "dropsecretaccess",
+        "canaccesssecrets"
+      ],
+      "scope": "retail-12-0-0: immediate caller revocation independent of taint; inherited denial through protected/secure/coroutine calls; ancestors recover after normal/error return. Scope/lifetime inferred from rilua primitive.",
+      "tests": [
+        "tests/rilua_rows.rs::rilua_rows_drop_access_denies_descendants_without_taint_and_recovers",
+        "tests/p1200_global_security.rs::p1200_secret_helpers_are_published"
+      ],
+      "implementation": "src/lua_api/globals/security/retail_secret_helpers.rs",
+      "spec": "docs/specs/rilua-capability-rows.md",
+      "compiled_revision": "83dfb7f168634311b474c2e5fca7da53f5fecea6",
+      "proof": "Main-thread bounded PASS: 8 rilua_rows tests; 22 Ambiguate context controls and 4 p1200 security controls. Mists --tests check and formatting exit0 with zero non-vendor warnings; startup exit0 []. No independent review, historical-epoch runtime or native parity credit.",
+      "ledger": "data/patch-api/evidence/rilua-rows-2026-10-07/proof.md"
+    },
+    {
+      "id": "rilua-issecrettable",
+      "symbols": [
+        "issecrettable"
+      ],
+      "scope": "retail-12-0-0: metadata-only payload/SecretWrapContents classification, including addon/revoked caller policy; no payload decoding, contents walk or complete native annotation-permission parity.",
+      "tests": [
+        "tests/rilua_rows.rs::rilua_rows_secret_table_predicate_classifies_metadata_in_both_callers"
+      ],
+      "implementation": "src/lua_api/globals/security/retail_secret_helpers.rs",
+      "spec": "docs/specs/rilua-capability-rows.md",
+      "compiled_revision": "83dfb7f168634311b474c2e5fca7da53f5fecea6",
+      "proof": "Main-thread bounded PASS: 8 rilua_rows tests; 22 Ambiguate context controls and 4 p1200 security controls. Mists --tests check and formatting exit0 with zero non-vendor warnings; startup exit0 []. No independent review, historical-epoch runtime or native parity credit.",
+      "ledger": "data/patch-api/evidence/rilua-rows-2026-10-07/proof.md"
     }
   ],
   "source_rows": [
@@ -8017,9 +8049,11 @@
     },
     {
       "source_id": "wt-global-api-dropsecretaccess-470",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Blocked: pinned rilua lacks caller-context secret-access revocation / public secret payload-kind accessor."
+      "capabilities": [
+        "rilua-dropsecretaccess"
+      ],
+      "status": "bounded-coverage",
+      "note": "VM caller-context revocation now modeled at retail-12-0-0 via revoke_secret_access; canaccesssecrets uses can_access_secrets. Secure/addon callers, descendant secret-unwrapping denial, securecall/coroutine entry, taint preservation and normal/error recovery pass. Descendant lifetime is inferred VM policy, not native parity."
     },
     {
       "source_id": "wt-global-api-hasanysecretvalues-471",
@@ -8032,9 +8066,11 @@
     },
     {
       "source_id": "wt-global-api-issecrettable-472",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Blocked: pinned rilua lacks caller-context secret-access revocation / public secret payload-kind accessor."
+      "capabilities": [
+        "rilua-issecrettable"
+      ],
+      "status": "bounded-coverage",
+      "note": "VM metadata predicate recognizes wrapped table payloads and SecretWrapContents tables without exposing contents; ordinary tables merely containing wrappers remain false. Secure/addon/revoked metadata queries preserve taint and survive collection. Addon query availability is bounded simulator policy despite cached AllowedWhenUntainted annotation; no full native permission-parity claim."
     },
     {
       "source_id": "wt-global-api-issecretvalue-473",

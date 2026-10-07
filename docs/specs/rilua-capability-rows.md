@@ -4,11 +4,11 @@ Bounded Retail 12.0.0/12.0.5 contracts unlocked by rilua `842e4d3`. Source decla
 
 ## What it must do
 
-- [ ] At `retail-12-0-0`, `dropsecretaccess` revokes the immediate caller's secret access without tainting it; descendants, protected/secure calls and coroutine entry remain denied. Normal/error return restores ancestor access. `canaccesssecrets` uses the same guard as VM secret unwrapping. Descendant propagation/lifetime are inferred VM policy.
-- [ ] `issecrettable` recognizes wrapped tables and `SecretWrapContents` tables, not ordinary tables merely containing wrappers. Metadata queries preserve caller taint, including addon/revoked callers; addon availability is bounded simulator policy despite the cached `AllowedWhenUntainted` annotation.
-- [ ] At `retail-12-0-5`, `Ambiguate` accepts genuine secret strings even in tainted/revoked callers; returns transformed secret strings without changing taint. Context remains `NeverSecret`, rejected before fullName processing. Existing public shortening (`none` unchanged, otherwise first hyphen with nonempty suffix) remains simulator policy, not native context enumeration.
-- [ ] `C_ChatInfo.ReplaceIconAndGroupExpressions` rejects original secret flags before text processing; accepts public/secret byte strings, independently applies icon/group vocabularies, and retains secret output/taint for secret input. Host-owned lowercase brace-token maps define vocabulary; English raid names/rt1–rt8 default to cached icon paths. Groups/localized aliases require explicit host input. One-pass expansion/unknown-token preservation and secret output propagation are inferred simulator policy.
-- [ ] Host-owned addon load chunks and frame scripts consume configured cumulative instruction budgets. `PLAYER_LOGOUT`/`ADDONS_UNLOADING` handler scopes (including nested execution) are exempt, with no usage refund. Exhaustion errors recover VM state; host reset permits subsequent execution. Default 10 million instructions per addon per host frame (reset before OnUpdate) is inferred policy, not a native time threshold.
+- [x] At `retail-12-0-0`, `dropsecretaccess` revokes the immediate caller's secret access without tainting it; descendants, protected/secure calls and coroutine entry remain denied. Normal/error return restores ancestor access. `canaccesssecrets` uses the same guard as VM secret unwrapping. Descendant propagation/lifetime are inferred VM policy.
+- [x] `issecrettable` recognizes wrapped tables and `SecretWrapContents` tables, not ordinary tables merely containing wrappers. Metadata queries preserve caller taint, including addon/revoked callers; addon availability is bounded simulator policy despite the cached `AllowedWhenUntainted` annotation.
+- [x] At `retail-12-0-5`, `Ambiguate` accepts genuine secret strings even in tainted/revoked callers; returns transformed secret strings without changing taint. Context remains `NeverSecret`, rejected before fullName processing. Existing public shortening (`none` unchanged, otherwise first hyphen with nonempty suffix) remains simulator policy, not native context enumeration.
+- [x] `C_ChatInfo.ReplaceIconAndGroupExpressions` rejects original secret flags before text processing; accepts public/secret byte strings, independently applies icon/group vocabularies, and retains secret output/taint for secret input. Host-owned lowercase brace-token maps define vocabulary; English raid names/rt1–rt8 default to cached icon paths. Groups/localized aliases require explicit host input. One-pass expansion/unknown-token preservation and secret output propagation are inferred simulator policy.
+- [x] Host-owned frame-event scripts consume configured cumulative instruction budgets through both WowLuaEnv and LoaderEnv dispatch. `PLAYER_LOGOUT`/`ADDONS_UNLOADING` handler scopes (including nested execution) are exempt, with no usage refund. Exhaustion errors recover VM state; host reset permits subsequent execution. Default 10 million instructions per addon per host frame (reset before OnUpdate) is inferred policy, not a native time threshold.
 
 ## How it works
 
@@ -30,7 +30,11 @@ Bounded Retail 12.0.0/12.0.5 contracts unlocked by rilua `842e4d3`. Source decla
 
 ## Known gaps (current cycle)
 
-- [ ] Native throttle thresholds, elapsed-time accounting, complete timer/slash/key/callback ownership and full event-wide exemption outside frame handlers remain unproven. The two prose rows retain pending status until those boundaries are accounted for.
+- [ ] Dedicated addon-load/OnUpdate runtime proof, native throttle thresholds, elapsed-time accounting, complete timer/slash/key/callback ownership and full event-wide exemption outside frame handlers remain unproven. The two prose rows retain pending status until those boundaries are accounted for.
+
+## Verification — 2026-10-07
+
+[Revision-scoped proof](../../data/patch-api/evidence/rilua-rows-2026-10-07/proof.md): 8 new tests, 22 name controls, 4 security controls, 21/57 tests in the requested patch filters; Mists --tests check and formatting exit0, zero non-vendor warnings; startup exit0 `[]`. Patch filters require `WOW_SIM_ENABLE_BYTECODE_CACHE=0` because grouped tests otherwise initialize cache before prefork parent bypass. This preserves the same test scopes and source loading. Two helper fixture IDs removed; remaining exact gaps unchanged.
 
 ## Out of scope
 

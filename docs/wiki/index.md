@@ -2,6 +2,10 @@
 
 [Audit](investigations/patch-11-2-0-api-audit.md) links 162 inventory + 82 extract rows, twelve bounded publication fixes, 26 exact gaps and exhaustive five-batch scout. Eight isolated sweeps preserve later observations; negative control, Mists check and exit-0 startup `[]` pass. Existing ledgers and concurrent catalog/11.2.7 work untouched.
 
+## [2026-10-07] evidence | Rilua capability rows
+
+[12.0.0 helpers](investigations/patch-12-0-0-api-audit.md#rilua-secret-helper-follow-up--2026-10-07) and [12.0.5 transforms/budgets](investigations/patch-12-0-5-api-audit.md#rilua-capability-follow-up--2026-10-07) link bounded secret/string closure and retained event-wide throttle gaps. [Proof](../../data/patch-api/evidence/rilua-rows-2026-10-07/proof.md) records scoped tests, grouped-sweep cache configuration and warning boundaries.
+
 ## [2026-10-06] evidence | 11.2.5 page audit
 
 [Audit](investigations/patch-11-2-5-api-audit.md) links 163 inventory + 73 extract rows, two modeled-global profile-gate fixes, 45 exact retained gaps and exhaustive scout. Seven isolated sweeps, negative control, Mists check and startup `[]` pass; deprecated aliases distinguished from absence. Existing coverage ledgers and concurrent 11.2.7 producers unchanged.

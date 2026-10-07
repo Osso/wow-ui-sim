@@ -1,0 +1,238 @@
+{
+  "schema": "rilua-rows-proof/v1",
+  "base_revision": "13283ab24",
+  "branch": "rilua-rows",
+  "verification_revision": "5f2500dd74e4a55bef659b13a5c7895fa93c98d9",
+  "behavior_revision": "83dfb7f168634311b474c2e5fca7da53f5fecea6",
+  "checks": [
+    {
+      "command": "cargo test --test integration rilua_rows",
+      "compiled_revision": "83dfb7f168634311b474c2e5fca7da53f5fecea6",
+      "exit_code": 0,
+      "passed": 8,
+      "failed": 0,
+      "ignored": 0,
+      "log": "/tmp/claude-1000/-syncthing-Sync-Projects-wow-wow-ui-sim/56956906-948b-4106-9c94-29106d4ca10a/scratchpad/rilua-rows-proof.log"
+    },
+    {
+      "command": "cargo test --test integration ambiguate_context",
+      "compiled_revision": "5f2500dd74e4a55bef659b13a5c7895fa93c98d9",
+      "exit_code": 0,
+      "passed": 22,
+      "failed": 0,
+      "ignored": 0,
+      "log": "/tmp/claude-1000/-syncthing-Sync-Projects-wow-wow-ui-sim/56956906-948b-4106-9c94-29106d4ca10a/scratchpad/ambiguate_context-proof.log"
+    },
+    {
+      "command": "cargo test --test integration p1200_global_security",
+      "compiled_revision": "5f2500dd74e4a55bef659b13a5c7895fa93c98d9",
+      "exit_code": 0,
+      "passed": 4,
+      "failed": 0,
+      "ignored": 0,
+      "log": "/tmp/claude-1000/-syncthing-Sync-Projects-wow-wow-ui-sim/56956906-948b-4106-9c94-29106d4ca10a/scratchpad/p1200_global_security-proof.log"
+    },
+    {
+      "command": "WOW_SIM_ENABLE_BYTECODE_CACHE=0 cargo test --test integration patch_12_0_0",
+      "compiled_revision": "5f2500dd74e4a55bef659b13a5c7895fa93c98d9",
+      "exit_code": 0,
+      "passed": 21,
+      "failed": 0,
+      "ignored": 0,
+      "log": "/tmp/claude-1000/-syncthing-Sync-Projects-wow-wow-ui-sim/56956906-948b-4106-9c94-29106d4ca10a/scratchpad/patch_12_0_0-no-cache-proof.log"
+    },
+    {
+      "command": "WOW_SIM_ENABLE_BYTECODE_CACHE=0 cargo test --test integration patch_12_0_5",
+      "compiled_revision": "5f2500dd74e4a55bef659b13a5c7895fa93c98d9",
+      "exit_code": 0,
+      "passed": 57,
+      "failed": 0,
+      "ignored": 0,
+      "log": "/tmp/claude-1000/-syncthing-Sync-Projects-wow-wow-ui-sim/56956906-948b-4106-9c94-29106d4ca10a/scratchpad/patch_12_0_5-no-cache-proof.log"
+    },
+    {
+      "command": "cargo check --no-default-features --features sound,gui,casc,client-mists --tests",
+      "compiled_revision": "5f2500dd74e4a55bef659b13a5c7895fa93c98d9",
+      "exit_code": 0,
+      "non_vendor_warnings": 0,
+      "vendor_manifest_warnings": 6,
+      "log": "/tmp/claude-1000/-syncthing-Sync-Projects-wow-wow-ui-sim/56956906-948b-4106-9c94-29106d4ca10a/scratchpad/mists-check.log"
+    },
+    {
+      "command": "cargo fmt --check",
+      "revision": "5f2500dd74e4a55bef659b13a5c7895fa93c98d9",
+      "exit_code": 0
+    },
+    {
+      "command": "rustfmt --edition 2024 --check tests/rilua_rows.rs tests/p1200_global_security.rs",
+      "revision": "5f2500dd74e4a55bef659b13a5c7895fa93c98d9",
+      "exit_code": 0
+    },
+    {
+      "command": "timeout 90 target/debug/wow-sim --no-addons --no-saved-vars lua-errors",
+      "compiled_revision": "5f2500dd74e4a55bef659b13a5c7895fa93c98d9",
+      "env": {
+        "WOW_SIM_ENABLE_BYTECODE_CACHE": "0"
+      },
+      "exit_code": 0,
+      "stdout": "[]"
+    }
+  ],
+  "publication": {
+    "12.0.0": {
+      "rows": 1010,
+      "ok": 989,
+      "known_gaps": [
+        "wt-cvars-nameplateShowFriendlyNPCs-1100",
+        "wt-events-HOUSE_LEVEL_CHANGED-812",
+        "wt-events-SETTINGS_LOADED-816",
+        "wt-events-TRANSMOG_OUTFITS_CHANGED-818",
+        "wt-events-UNIT_SPELLCAST_SENT-819",
+        "wt-global-api-C_CatalogShop.BulkPurchaseProducts-91",
+        "wt-global-api-C_CatalogShop.RefreshRefundableDecors-101",
+        "wt-global-api-C_CatalogShop.StartHousingVCPurchaseConfirmation-103",
+        "wt-global-api-C_CharacterServices.AssignFCMDistribution-104",
+        "wt-global-api-C_Commentator.GetCombatEventInfo-141",
+        "wt-global-api-C_CurveUtil.EvaluateGameCurve-148",
+        "wt-global-api-C_DelvesUI.GetLockedTextForCompanion-159",
+        "wt-global-api-C_DelvesUI.IsTraitTreeForCompanion-160",
+        "wt-global-api-C_LFGList.DoesEntryTitleMatchPrebuiltTitle-627",
+        "wt-global-api-C_LFGList.SetEntryTitle-631",
+        "wt-global-api-C_PvP.GetRandomTrainingGroundRewards-262",
+        "wt-global-api-C_RestrictedActions.IsAddOnRestrictionActive-273",
+        "wt-global-api-C_TooltipComparison.CompareItem-333",
+        "wt-global-api-C_TradeSkillUI.GetEnchantItems-643",
+        "wt-global-api-C_TradeSkillUI.IsRecraftReagentValid-647",
+        "wt-global-api-string.concat-478"
+      ],
+      "target_observations": {
+        "wt-global-api-dropsecretaccess-470": {
+          "expected": {
+            "direction": "added",
+            "page_default": null,
+            "publication": "published",
+            "section": "global-api",
+            "superseded_by": null,
+            "symbol": "dropsecretaccess"
+          },
+          "observed": {
+            "default": null,
+            "default_mismatch": false,
+            "detail": "raw=function; lookup=function",
+            "kind": "global",
+            "value": null
+          },
+          "ok": true
+        },
+        "wt-global-api-issecrettable-472": {
+          "expected": {
+            "direction": "added",
+            "page_default": null,
+            "publication": "published",
+            "section": "global-api",
+            "superseded_by": null,
+            "symbol": "issecrettable"
+          },
+          "observed": {
+            "default": null,
+            "default_mismatch": false,
+            "detail": "raw=function; lookup=function",
+            "kind": "global",
+            "value": null
+          },
+          "ok": true
+        }
+      },
+      "full_output": "/tmp/claude-1000/-syncthing-Sync-Projects-wow-wow-ui-sim/56956906-948b-4106-9c94-29106d4ca10a/scratchpad/p1200-sweep.json"
+    },
+    "12.0.5": {
+      "rows": 363,
+      "ok": 352,
+      "known_gaps": [
+        "wt-events-CLASS_TALENTS_SWITCH_TO_LOADOUT_BY_INDEX-777",
+        "wt-events-CLASS_TALENTS_SWITCH_TO_SPECIALIZATION_BY_INDEX-779",
+        "wt-events-CLASS_TALENTS_SWITCH_TO_SPECIALIZATION_BY_NAME-780",
+        "wt-scriptobjects-HousingCatalogSearcher:IsOwnedOnlyActive-712",
+        "wt-scriptobjects-HousingCatalogSearcher:SetOwnedOnly-714",
+        "wt-scriptobjects-HousingCatalogSearcher:ToggleOwnedOnly-716",
+        "wt-scriptobjects-NamePlate:CanChangeHitTestPoints-655",
+        "wt-scriptobjects-NamePlate:ClearAllHitTestPoints-656",
+        "wt-scriptobjects-NamePlate:GetHitTestPoints-657",
+        "wt-scriptobjects-NamePlate:SetAllHitTestPoints-658",
+        "wt-scriptobjects-NamePlate:SetHitTestPoints-659"
+      ],
+      "target_observations": {
+        "wt-global-api-Ambiguate-538": {
+          "expected": {
+            "direction": "changed",
+            "page_default": null,
+            "publication": "published",
+            "section": "global-api",
+            "superseded_by": null,
+            "symbol": "Ambiguate"
+          },
+          "observed": {
+            "default": null,
+            "default_mismatch": false,
+            "detail": "raw=function; lookup=function",
+            "kind": "global",
+            "value": null
+          },
+          "ok": true
+        },
+        "wt-global-api-C_ChatInfo.ReplaceIconAndGroupExpressions-376": {
+          "expected": {
+            "direction": "changed",
+            "page_default": null,
+            "publication": "published",
+            "section": "global-api",
+            "superseded_by": null,
+            "symbol": "C_ChatInfo.ReplaceIconAndGroupExpressions"
+          },
+          "observed": {
+            "default": null,
+            "default_mismatch": false,
+            "detail": "raw=function; lookup=function",
+            "kind": "member",
+            "value": null
+          },
+          "ok": true
+        }
+      },
+      "full_output": "/tmp/claude-1000/-syncthing-Sync-Projects-wow-wow-ui-sim/56956906-948b-4106-9c94-29106d4ca10a/scratchpad/p1205-sweep.json"
+    }
+  },
+  "non_acceptance_history": [
+    "Initial RED accidentally ran from the persistent Pyrun canonical cwd; 0 tests, no behavioral credit. All later commands set cwd to the authorized worktree explicitly.",
+    "Authorized worktree RED at 13283ab24 plus new tests: 0 PASS / 6 FAIL (missing helpers, secret transforms and budget scopes).",
+    "68563746e did not compile: result alias mismatch and unused imports; fixed in 893ac4e18.",
+    "Four initial secret/string tests passed; budget fixture initially used built-in index 0. Corrected to actual appended addon index and explicitly exempted __BuiltIn owner.",
+    "Quota calibrated to 1000 instructions so the one-iteration recovery bridge fits while the 1000-iteration workload still exhausts.",
+    "Post-addon global reads can taint Lua observers: final tests inspect newly published secret payloads from trusted host and check restored Lua entry taint before reading tainted globals. No caller taint is cleared.",
+    "First requested sweep filters: 20 PASS / 1 FAIL and 56 PASS / 1 FAIL before observations; shared cache initialized before prefork parent bypass. Same filters pass with WOW_SIM_ENABLE_BYTECODE_CACHE=0. No harness edits."
+  ],
+  "readability": "Changed Rust inspected: bounded transform/dispatch functions, nesting <=2, no new suppressions or new placeholder APIs. Existing test scaffolding receives no native-parity claim.",
+  "proof_invalidation": "Only JSON/docs change after verification_revision; changed source and behavioral test bodies remain unchanged. No full-suite, independent-review, historical-epoch runtime or native-client parity claim.",
+  "contract_sources": [
+    {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/FrameScriptDocumentation.lua",
+      "sha256": "00f538cb711b5baa0a7f819fae4b038c9189e234ac70c1aaf8c51e4d9335628c"
+    },
+    {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PlayerScriptDocumentation.lua",
+      "sha256": "6d2687568a7b144cd40579f5f9f3c68db478652257ce7e6c12b385f57a1eff67"
+    },
+    {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ChatInfoDocumentation.lua",
+      "sha256": "20c308e8f42dfa73bf0254ae6620eda44834c07f787456168df587c337e5c02c"
+    },
+    {
+      "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/ChatFrameConstants.lua",
+      "sha256": "359687c47f2d9ab1760743652dfb502ec66ff5eeeb18852588a66fa353a83f54"
+    },
+    {
+      "path": "/home/osso/.worktrees/wow-ui-sim-rilua-rows/data/patch-api/sources/12.0.5-api-changes.txt",
+      "sha256": "4da3872aa566695f46e2dacd4e79992f5b06be9541f0d19cf0e8dba45cea8329"
+    }
+  ]
+}

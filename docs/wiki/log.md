@@ -147,3 +147,7 @@ Updated [audit](investigations/patch-12-0-1-api-audit.md), [spec](../specs/patch
 
 [Audit](investigations/patch-11-2-0-api-audit.md) retains revision 6726773, 162 inventory + 82 extract rows, twelve bounded simulator publication fixes, 26 exact gaps and exhaustive scout. Eight isolated sweeps, one-row negative control, local retail/Mists checks and exit-0 startup `[]` pass. New 244-ID coverage ledger distinguishes publication, absence, cached aliases and pending behavior; existing ledgers/registers/raw sources/later fixtures unchanged.
 
+
+## [2026-10-07] evidence | Rilua capability rows
+
+[Helper audit](investigations/patch-12-0-0-api-audit.md#rilua-secret-helper-follow-up--2026-10-07) and [string/budget audit](investigations/patch-12-0-5-api-audit.md#rilua-capability-follow-up--2026-10-07) link bounded secret closures and retained shutdown-wide throttle gaps. [Proof](../../data/patch-api/evidence/rilua-rows-2026-10-07/proof.md) retains revisions, targeted results, bytecode-cache precondition and vendor warning limits.

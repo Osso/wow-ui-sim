@@ -2356,6 +2356,58 @@
       "compiled_revision": "8e3f007d5",
       "proof": "Sol worker GREEN; main-thread re-run on master 8e3f007d5 (pending_party 2, pending_mouse 3, party_ 184, chat_lockdown 6); no independent review",
       "ledger": "data/patch-api/evidence/12.0.5-session-2026-10-03/pending-rows-follow-up.md"
+    },
+    {
+      "id": "rilua-secret-ambiguate",
+      "symbols": [
+        "Ambiguate"
+      ],
+      "scope": "retail-12-0-5: opaque secret strings accepted for tainted/revoked callers and stay secret; original context identity authenticates before fullname processing. Public shortening/context semantics and output propagation are inferred simulator behavior.",
+      "tests": [
+        "tests/rilua_rows.rs::rilua_rows_ambiguate_transforms_secret_names_without_revealing_or_changing_taint",
+        "tests/rilua_rows.rs::rilua_rows_string_transforms_preserve_bytes_and_reject_nonstring_secrets",
+        "tests/ambiguate_context.rs"
+      ],
+      "implementation": "src/lua_api/globals/real/ambiguate.rs",
+      "spec": "docs/specs/rilua-capability-rows.md",
+      "compiled_revision": "83dfb7f168634311b474c2e5fca7da53f5fecea6",
+      "proof": "Main-thread bounded PASS: 8 rilua_rows tests; 22 Ambiguate context controls and 4 p1200 security controls. Mists --tests check and formatting exit0 with zero non-vendor warnings; startup exit0 []. No independent review, historical-epoch runtime or native parity credit.",
+      "ledger": "data/patch-api/evidence/rilua-rows-2026-10-07/proof.md"
+    },
+    {
+      "id": "rilua-secret-chat-expressions",
+      "symbols": [
+        "C_ChatInfo.ReplaceIconAndGroupExpressions"
+      ],
+      "scope": "retail-12-0-5: NeverSecret flags and opaque secret byte-string transformation over typed host icon/group snapshots, independent flags/live updates/isolation. English raid tags/rt1-rt8 defaults are cache-derived; complete native vocabulary/roster/localization and output-propagation parity are unproved.",
+      "tests": [
+        "tests/rilua_rows.rs::rilua_rows_chat_expressions_replace_icons_and_reject_secret_flags",
+        "tests/rilua_rows.rs::rilua_rows_chat_host_vocabulary_flags_live_updates_and_isolation",
+        "tests/rilua_rows.rs::rilua_rows_string_transforms_preserve_bytes_and_reject_nonstring_secrets"
+      ],
+      "implementation": "src/c_api/chat_expressions.rs; src/c_api/c_chat_info.rs; SimState::chat_expression_inputs",
+      "spec": "docs/specs/rilua-capability-rows.md",
+      "compiled_revision": "83dfb7f168634311b474c2e5fca7da53f5fecea6",
+      "proof": "Main-thread bounded PASS: 8 rilua_rows tests; 22 Ambiguate context controls and 4 p1200 security controls. Mists --tests check and formatting exit0 with zero non-vendor warnings; startup exit0 []. No independent review, historical-epoch runtime or native parity credit.",
+      "ledger": "data/patch-api/evidence/rilua-rows-2026-10-07/proof.md"
+    },
+    {
+      "id": "rilua-addon-instruction-budgets",
+      "symbols": [
+        "addon instruction budgets",
+        "PLAYER_LOGOUT",
+        "ADDONS_UNLOADING"
+      ],
+      "scope": "retail-12-0-5: trusted host frame-addon ownership, cumulative VM instruction metering/exhaustion, shutdown frame-handler exemptions without refund, host-reset recovery. Loader/OnUpdate wiring source-inspected only. Quota/reset are inferred; unaccounted non-frame dispatches and full event-wide exemptions keep both prose rows audit-pending.",
+      "tests": [
+        "tests/rilua_rows.rs::rilua_rows_host_event_budget_exhaustion_shutdown_exemption_and_recovery",
+        "tests/rilua_rows.rs::rilua_rows_named_event_budget_exhaustion_shutdown_exemption_and_recovery"
+      ],
+      "implementation": "src/lua_api/execution_budget.rs; src/loader/lua_file.rs; host/LoaderEnv/named/script/OnUpdate frame dispatch",
+      "spec": "docs/specs/rilua-capability-rows.md",
+      "compiled_revision": "83dfb7f168634311b474c2e5fca7da53f5fecea6",
+      "proof": "Main-thread bounded PASS: 8 rilua_rows tests; 22 Ambiguate context controls and 4 p1200 security controls. Mists --tests check and formatting exit0 with zero non-vendor warnings; startup exit0 []. No independent review, historical-epoch runtime or native parity credit.",
+      "ledger": "data/patch-api/evidence/rilua-rows-2026-10-07/proof.md"
     }
   ],
   "source_rows": [
@@ -2438,9 +2490,11 @@
     },
     {
       "source_id": "prose-2026-03-12-038",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "rilua-secret-ambiguate"
+      ],
+      "status": "bounded-coverage",
+      "note": "Genuine secret fullName strings accepted from addon/revoked callers using transform_host_secret_string; short/none results remain secret and preserve caller taint. Public mappings and NeverSecret context rejection controls pass. Shortening/output secrecy/error ordering are bounded simulator policy, not native context enumeration."
     },
     {
       "source_id": "prose-2026-03-12-039",
@@ -2490,9 +2544,11 @@
     },
     {
       "source_id": "prose-2026-03-12-050",
-      "capabilities": [],
+      "capabilities": [
+        "rilua-addon-instruction-budgets"
+      ],
       "status": "audit-pending",
-      "note": "Pinned rilua a76ffa8 has allocation limits and a debug instruction hook but no trusted execution-budget metering; script-execution-limits head 690fc3b only wires table-security tests. Blocked on a rilua metering capability."
+      "note": "VM blocker removed by rilua 842e4d3. Host-owned addon chunks/frame scripts now enter instruction-owner scopes; both shutdown frame-event scopes use trusted budget exemptions. Two dispatch-path tests prove exhaustion, PLAYER_LOGOUT/ADDONS_UNLOADING completion without budget refill, restored caller taint and host-reset recovery. Still pending: native elapsed-time thresholds/periods, complete timer/slash/key/callback ownership and event-wide exemption outside frame handlers. Default instruction quota and OnUpdate reset are inferred; source chronology retained."
     },
     {
       "source_id": "prose-2026-03-12-054",
@@ -2654,9 +2710,11 @@
     },
     {
       "source_id": "prose-2026-03-25-095",
-      "capabilities": [],
+      "capabilities": [
+        "rilua-addon-instruction-budgets"
+      ],
       "status": "audit-pending",
-      "note": "Pinned rilua a76ffa8 has allocation limits and a debug instruction hook but no trusted execution-budget metering; script-execution-limits head 690fc3b only wires table-security tests. Blocked on a rilua metering capability."
+      "note": "Same bounded exemption model/proof as 050; VM metering capability is no longer the blocker. Still pending complete non-frame event/callback ownership and event-wide shutdown processing, native time thresholds/periods, and dedicated addon-load/OnUpdate runtime proof. Host quota/OnUpdate reset are inferred and these cumulative instruction tests do not establish native elapsed-time throttle parity. Superseded/pre-release chronology retained."
     },
     {
       "source_id": "prose-2026-03-25-098",
@@ -3307,9 +3365,11 @@
     },
     {
       "source_id": "global api-C_ChatInfo-ReplaceIconAndGroupExpressions-253",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "rilua-secret-chat-expressions"
+      ],
+      "status": "bounded-coverage",
+      "note": "Real C API replaces the modern identity shim: original secret flags reject before malformed text processing in secure/addon/revoked callers; opaque secret strings transform to secret output. Independent flags, host-owned icon/group vocabulary, live updates, environment isolation, byte preservation and invalid payloads pass. Native grammar/localization/automatic roster expansion are not claimed."
     },
     {
       "source_id": "global api-C_ClickBindings-CanSpellBeClickBound-255",
@@ -4026,16 +4086,19 @@
     {
       "source_id": "global api-PlayerScript Ambiguate-415",
       "capabilities": [
-        "ambiguate-context-neversecret"
+        "ambiguate-context-neversecret",
+        "rilua-secret-ambiguate"
       ],
       "status": "bounded-coverage",
-      "note": "Exact415 accepted625 at9441f7c7c: secret arg2 identity rejects before fullname processing, no payload decoding;22 new Retail+2 inert PASS, separate Forever2 public controls/startup0[]/scopedfmt/check0. Old public mapping retained, inferred error/order/native context limits explicit. Row416 secret-fullName and output secrecy remain unmodeled; Forever8 warnings and original full-suite failures retained, no all-profile/current-whole-tree clearance."
+      "note": "Exact415 accepted625 at9441f7c7c: secret arg2 identity rejects before fullname processing, no payload decoding;22 new Retail+2 inert PASS, separate Forever2 public controls/startup0[]/scopedfmt/check0. Old public mapping retained, inferred error/order/native context limits explicit. Historical B74 did not cover row416; current rilua-secret-ambiguate separately proves bounded secret-fullName/output behavior; Forever8 warnings and original full-suite failures retained, no all-profile/current-whole-tree clearance."
     },
     {
       "source_id": "global api-PlayerScript Ambiguate-416",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Source retained; behavioral applicability audit not completed."
+      "capabilities": [
+        "rilua-secret-ambiguate"
+      ],
+      "status": "bounded-coverage",
+      "note": "AllowedWhenTainted acceptance now uses opaque host secret-string transform, never taint-clearing unwrap or Lua plaintext callbacks. Secure/addon/revoked first-argument calls, short/none secret results, exact trusted-host payloads and caller taint are tested; wrong secret payload kinds reject. Native context enumeration/output propagation remain inferred."
     },
     {
       "source_id": "global api-PlayerScript GetAttackPowerForStat-418",
@@ -5500,10 +5563,11 @@
     {
       "source_id": "wt-global-api-Ambiguate-538",
       "capabilities": [
-        "publication-sweep-12-0-5"
+        "publication-sweep-12-0-5",
+        "rilua-secret-ambiguate"
       ],
-      "status": "partial-development-green",
-      "note": "Publication only (sweep); behavior unproved."
+      "status": "bounded-coverage",
+      "note": "Publication plus bounded behavior: opaque secret fullName transformation in addon/revoked callers, secret output and original NeverSecret context validation. Existing public shortening controls pass. No native-context or historical-epoch runtime parity claim."
     },
     {
       "source_id": "wt-global-api-BreakUpLargeNumbers-534",
@@ -5668,10 +5732,11 @@
     {
       "source_id": "wt-global-api-C_ChatInfo.ReplaceIconAndGroupExpressions-376",
       "capabilities": [
-        "publication-sweep-12-0-5"
+        "publication-sweep-12-0-5",
+        "rilua-secret-chat-expressions"
       ],
-      "status": "partial-development-green",
-      "note": "Publication only (sweep); behavior unproved."
+      "status": "bounded-coverage",
+      "note": "Publication plus bounded host-vocabulary replacement and secret-string behavior. C API implementation reads per-environment typed maps; English raid tags/rt1-rt8 have cached icon-path defaults, group/localized vocabulary requires explicit host snapshots. No native complete expansion claim."
     },
     {
       "source_id": "wt-global-api-C_ClassTalents.SwitchToLoadoutByIndex-258",

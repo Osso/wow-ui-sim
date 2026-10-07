@@ -1,3 +1,9 @@
+## Rilua secret helper follow-up — 2026-10-07
+
+[Contract](../../specs/rilua-capability-rows.md) and [revision-scoped proof](../../../data/patch-api/evidence/rilua-rows-2026-10-07/proof.md) close `dropsecretaccess`/`issecrettable` to bounded coverage using rilua caller revocation and metadata predicates. Revocation is independent of taint; `canaccesssecrets` now matches the VM unwrap guard. Wrapped tables differ from plain tables containing wrappers; SecretWrapContents is recognized without decoding. Addon predicate availability and descendant revocation lifetime remain explicit inferred policy, not native annotation/parity claims.
+
+Current 12.0.0 filter passes 21 tests with bytecode caching disabled for grouped-filter parent-bypass compatibility; sweep observes 989 OK / 21 exact gaps. Only these two helper IDs leave the known-gap fixture. Shared proof covers 8 new tests, 26 controls, Mists --tests check (zero non-vendor warnings), formatting and startup `[]`; no vendor/dependency changes.
+
 ## Non-inventory extract supplement
 
 Verified: 2026-10-05. [Scout and proof batches](../../../data/patch-api/evidence/12.0.0-session-2026-10-05/p1200-extract-scout.md) cover every retained non-inventory line from revision 6747189. [Extractor](../../../tools/extract_patch_non_inventory.py) produces [plaintext](../../../data/patch-api/sources/12.0.0-api-changes.txt) and seeds 143 supplemental rows: 32 ENUM, 56 STRUCT, 24 PROSE-MODELABLE remain audit-pending; 31 editorial/context rows are metadata-only. All 1,010 existing `wt-` row objects remain unchanged. This captured revision contains no Notes/Blue posts; linked pages are not expanded.

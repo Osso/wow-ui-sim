@@ -1,5 +1,7 @@
 # Ambiguate context boundary
 
+Current follow-up: [rilua capability rows](rilua-capability-rows.md) now covers bounded row416 secret-fullName acceptance/output secrecy with host primitives. B74 evidence below remains historical exact415 proof, not proof of that later implementation.
+
 B74 covers only retail 12.0.5 source occurrence `global api-PlayerScript Ambiguate-415`: argument 2 is `NeverSecret`. [Retained changes](../../data/patch-api/sources/12.0.5-api-changes.txt), lines 415–416, separate this annotation from row 416's `AllowedWhenTainted` change. Cached retail `Blizzard_APIDocumentationGenerated/PlayerScriptDocumentation.lua:22–35` declares non-nil cstring `fullName` and `context`, with `NeverSecret` on context. Architecture: [Lua API](../lua-api.md).
 
 ## What it must do
