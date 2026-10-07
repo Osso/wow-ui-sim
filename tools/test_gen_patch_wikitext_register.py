@@ -31,6 +31,14 @@ class InventoryTests(unittest.TestCase):
         self.assertEqual([(e['symbol'], e['annotation']) for e in entries], [
             ('C_PlayerInfo.GetSex', '# ret 1: sex, Type: number -> UnitSex')])
 
+    def test_widget_script_label_is_not_an_inventory_member(self):
+        entries, _ = parse_section('widgets', [
+            (1, '| valign="top" | <div>'),
+            (2, ': Widget Scripts'),
+            (3, ': [[UIHANDLER OnMovieHideSubtitle|OnMovieHideSubtitle]]'),
+        ])
+        self.assertEqual([e['symbol'] for e in entries], ['OnMovieHideSubtitle'])
+
     def test_uncollapsed_added_scriptobjects(self):
         entries, counts = parse_section("scriptobjects", [
             (1, '{| class="wikitable"'),

@@ -80,6 +80,8 @@ def parse_section(section, lines):
             mode = None
         elif text.startswith("|}") or "'''Changed'''" in text:
             mode = "changed"
+        elif section == "widgets" and text.strip() == ": Widget Scripts":
+            continue  # Category label, not an API occurrence.
         elif mode in ("added", "removed") and text.startswith(":"):
             entries.append(make_entry(section, mode, line_no, text))
         # Changed entries may carry a documentation-system label (" PlayerScript {{api|...}}").

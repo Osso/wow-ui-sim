@@ -30,6 +30,7 @@ def render_line(line):
     line = re.sub(r"\{\{(?:apisummary.header|text\|blizz)\|([^{}]+)\}\}",
                   r"=== \1 ===", line)
     line = line.replace('{{apisummary.blizzquote}}', '')
+    line = line.replace('{{Reflist}}', '[References list; not expanded]')
     line = line.replace('{{:Settings_API}}',
                         '[Transcluded source: Settings_API; not expanded]')
     line = line.replace('{{:Enum.AddOnProfilerMetric}}',
@@ -56,6 +57,7 @@ def extract_text(raw, *, preserve_examples=False):
     lines = []
     inventory = False
     in_example = False
+    xml_example = False
     unheaded = "===Global API===" not in raw.splitlines()
     for line in raw.splitlines():
         if preserve_examples:
@@ -85,7 +87,13 @@ def extract_text(raw, *, preserve_examples=False):
             continue
         if line.startswith("=="):
             line = re.sub(r"^(=+)\s*(.*?)\s*\1$", r"\1 \2 \1", line)
-        rendered = render_line(line)
+        if line.startswith('<syntaxhighlight lang="xml"'):
+            xml_example = True
+            continue
+        if xml_example and line == '</syntaxhighlight>':
+            xml_example = False
+            continue
+        rendered = line if xml_example else render_line(line)
         if '{{' in rendered or '}}' in rendered:
             raise ValueError(f"unhandled template: {line}")
         lines.append(rendered)

@@ -22,6 +22,15 @@ class ExtractTests(unittest.TestCase):
                          '  <StartColor r="1" g="0" b="0"/>\n'
                          '</VertexColor>\n```\n')
 
+    def test_reference_list_is_context_and_xml_example_is_preserved(self):
+        raw = ('<syntaxhighlight lang="xml">\n'
+               '<Texture file="example">\n'
+               '    <TextureSliceMode mode="Tiled"/>\n'
+               '</Texture>\n</syntaxhighlight>\n{{Reflist}}\n')
+        self.assertEqual(extract_text(raw), '<Texture file="example">\n'
+                         '    <TextureSliceMode mode="Tiled"/>\n'
+                         '</Texture>\n[References list; not expanded]\n')
+
     def test_11_0_2_settings_transclusion_and_transition_are_editorial(self):
         text = extract_text('{{:Settings_API}}\n'
                             ': 11.0.0 (55818) → 11.0.2 (56819) Sep 27 2024\n'

@@ -1,0 +1,153 @@
+Patch 10.2.0 API changes
+
+== Summary ==
+* Added a new texture slicing system that can be used as a replacement for backdrops and nineslice layouts.
+* Addon management functions such as EnableAddOn and IsAddOnLoaded have been moved to the C_AddOns namespace.
+** Most functions have the same signatures as before, however one exception to this is GetAddOnEnableState which had the order of its parameters swapped.
+** Aliases from the old function names exist, but are deprecated and will be removed in a future patch.
+* The GetCVarInfo function has been moved to the C_CVar namespace. An alias for the old name still exists, but is deprecated and will be removed in a future patch.
+* The SetPortraitToTexture function now requires that the initial texture parameter be a texture object. Previously, this function would also accept string values if they named a global texture object.
+* The C_Console namespace has been removed, with its functions moved back to the global namespace.
+* The auto-generated API documentation has been expanded to include many global functions that were previously undocumented.
+* The auto-generated API documentation now contains a pony.
+* Addons can no longer be loaded before FrameXML has fully loaded.
+* Fixed an issue where newly created characters would have all addons enabled by defaultWoWUIBugs#41 https://github.com/Stanzilla/WoWUIBugs/issues/41.
+* Fixed an issue where NaN values could be used as table keys.
+* (Nov 16 2023) The CheckInteractDistance and IsItemInRange APIs are now protected and cannot be called by insecure code in combat as of build 52188.
+
+== Resources ==
+* TOC: 100200
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+* Official patch notes: Dragonflight: Guardians of the Dream Content Update Notes
+* Deprecated API: Blizzard_Deprecated
+
+== Texture Slicing ==
+
+A new texture slicing system has been implemented that allows a single Texture object to render a grid of nine sub-textures without distortion at the corners. The edges and central fill of the rendered texture can be configured to either tile or stretch across their respective dimensions.
+
+This system is recommended to be used in new code going forward as a replacement for both the deprecated Backdrop system and the script-based NineSlice panel layout utility. One of the advantages of this new system is that it only requires a single texture object to render the grid, whereas both the old systems required nine separate objects. This system is fully compatible with custom texture assets and does not require the use of atlases.
+
+To use this system from Lua the TextureBase:SetTextureSliceMargins method should be called to specify the pixel margins that represent the edges of the underlying asset. The TextureBase:SetTextureSliceMode method controls whether or not the central portion of the texture and its surrounding edges will be tiled or stretched, with the default being stretched. The below example demonstrates the usage of these APIs.
+
+
+local SliceDemo = CreateFrame("Frame", nil, UIParent);
+SliceDemo:SetPoint("CENTER");
+SliceDemo:SetSize(256, 256);
+SliceDemo:SetResizable(true);
+
+SliceDemo.Texture = SliceDemo:CreateTexture();
+SliceDemo.Texture:SetTexture(interface/soulbinds/soulbindsconduitpendinganimationmask)
+SliceDemo.Texture:SetTextureSliceMargins(24, 24, 24, 24);
+SliceDemo.Texture:SetTextureSliceMode(Enum.UITextureSliceMode.Tiled);
+SliceDemo.Texture:SetAllPoints(SliceDemo);
+SliceDemo.Texture:SetVertexColor(0, 1, 0);
+
+SliceDemo.ResizeButton = CreateFrame("Button", nil, SliceDemo, "PanelResizeButtonTemplate");
+SliceDemo.ResizeButton:SetPoint("BOTTOMRIGHT");
+SliceDemo.ResizeButton:Init(SliceDemo, 64, 64, 512, 512);
+
+
+The following new elements in XML can be supplied when defining a Texture object to configure this functionality.
+
+<Texture file="interface/soulbinds/soulbindsconduitpendinganimationmask">
+    <TextureSliceMargins left="24" right="24" top="24" bottom="24"/>
+    <TextureSliceMode mode="Tiled"/>  <!-- Can be "Tiled" or "Stretched" -->
+</Texture>
+
+== Diffs ==
+=== Enumerations ===
+ Enum.AccountStateFlags
+   + PerksPendingPurchaseLoaded = 0x0000000080000000
+   + WoWTokenPurchaseLoaded = 0x0000001000000000
+ Enum.BrawlType
+   + SoloRbg = 5
+ Enum.ChrCustomizationCategoryFlag
+   + Subcategory = 2
+ Enum.CurrencyGainFlags
+   + None = 0
+ Enum.CurrencySource
+   # QuestRewardIgnoreCaps -> QuestRewardIgnoreCapsDeprecated
+   # WorldQuestRewardIgnoreCaps -> WorldQuestRewardIgnoreCapsDeprecated
+   + ConvertItemsToCurrencyAndReputation = 62
+   + PhBuffer_63 = 63
+   + PhBuffer_64 = 64
+ Enum.EventToastDisplayType
+   + WeeklyRewardUnlock = 9
+   + WeeklyRewardUpgrade = 10
+ Enum.EventToastEventType
+   + WeeklyRewardUnlock = 23
+   + WeeklyRewardUpgrade = 24,
+ Enum.GossipNpcOption
+   # TabardVendor -> GuildTabardVendor
+   + PersonalTabardVendor = 54
+ Enum.ItemDisplayTextDisplayStyle
+   + PlayerChoiceReward = 3
+ Enum.LinkedCurrencyFlags
+   + AddIgnoresMax = 0x8
+ Enum.PlayerInteractionType
+   # TabardVendor -> GuildTabardVendor
+   + PersonalTabardVendor = 65
+ Enum.UIMapFlag
+   + DoNotShowOnNavbar = 0x80000
+
+=== Constants ===
+ CurrencyConsts
+  - DRAGON_ISLES_SUPPLIES_CURRENCY_ID
+ ItemConsts
+  + MAX_LOOT_OBJECT_ITEMS = 31
+
+=== Structures ===
+ AtlasInfo
+   + rawSize
+   + sliceData
+ CharCustomizationCategory
+   + subcategory
+ ItemUpgradeSeasonalCostType
+   # itemID, Nilable: false -> true
+   + currencyID
+ PerksVendorItemInfo
+   # pending -> isPurchasePending
+   + uiGroupInfo
+ PvpBrawlInfo
+   + minItemLevel
+ QuestInfo
+   + isInternalOnly
+ StatusBarWidgetVisualizationInfo
+   + glowAnimType
+   + showGlowState
+   + fillMinOpacity
+   + fillMaxOpacity
+ TraitNodeInfoPartial
+   + activeEntryID
+ UIWidgetItemInfo
+   + showAsEarned
+ WeeklyRewardActivityInfo
+   + activityTierID
+ XMLTemplateInfo
+   + sourceLocation
+
+== Deprecated API ==
+These are functions that were deprecated and will be removed in the future.
+
+Deprecated_10_2_0.lua
+: GetCVarInfo → C_CVar.GetCVarInfo
+: EnableAddOn → C_AddOns.EnableAddOn
+: DisableAddOn → C_AddOns.DisableAddOn
+: GetAddOnEnableState → C_AddOns.GetAddOnEnableState
+: LoadAddOn → C_AddOns.LoadAddOn
+: IsAddOnLoaded → C_AddOns.IsAddOnLoaded
+: EnableAllAddOns → C_AddOns.EnableAllAddOns
+: DisableAllAddOns → C_AddOns.DisableAllAddOns
+: GetAddOnInfo → C_AddOns.GetAddOnInfo
+: GetAddOnDependencies → C_AddOns.GetAddOnDependencies
+: GetAddOnOptionalDependencies → C_AddOns.GetAddOnOptionalDependencies
+: GetNumAddOns → C_AddOns.GetNumAddOns
+: SaveAddOns → C_AddOns.SaveAddOns
+: ResetAddOns → C_AddOns.ResetAddOns
+: ResetDisabledAddOns → C_AddOns.ResetDisabledAddOns
+: IsAddonVersionCheckEnabled → C_AddOns.IsAddonVersionCheckEnabled
+: SetAddonVersionCheck → C_AddOns.SetAddonVersionCheck
+: IsAddOnLoadOnDemand → C_AddOns.IsAddOnLoadOnDemand
+
+== References ==
+[References list; not expanded]
