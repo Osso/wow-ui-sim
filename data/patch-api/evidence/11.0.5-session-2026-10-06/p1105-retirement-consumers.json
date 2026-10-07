@@ -1,0 +1,82 @@
+[
+  {
+    "symbol": "C_AuctionHouse.RequestFavorites",
+    "command": [
+      "rg",
+      "--line-number",
+      "--glob",
+      "*.lua",
+      "(?<![\\w.])C_AuctionHouse\\.RequestFavorites\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "--pcre2"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1105-page",
+    "exit_code": 1,
+    "matches": []
+  },
+  {
+    "symbol": "C_AuctionHouse.RequestFavorites",
+    "command": [
+      "rg",
+      "--line-number",
+      "--glob",
+      "*.lua",
+      "\\bRequestFavorites\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "--pcre2"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1105-page",
+    "exit_code": 1,
+    "matches": []
+  },
+  {
+    "symbol": "C_MajorFactions.GetCovenantIDForMajorFaction",
+    "command": [
+      "rg",
+      "--line-number",
+      "--glob",
+      "*.lua",
+      "(?<![\\w.])C_MajorFactions\\.GetCovenantIDForMajorFaction\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "--pcre2"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1105-page",
+    "exit_code": 1,
+    "matches": []
+  },
+  {
+    "symbol": "C_MajorFactions.GetCovenantIDForMajorFaction",
+    "command": [
+      "rg",
+      "--line-number",
+      "--glob",
+      "*.lua",
+      "\\bGetCovenantIDForMajorFaction\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "--pcre2"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1105-page",
+    "exit_code": 1,
+    "matches": []
+  },
+  {
+    "symbol": "IsOnGlueScreen",
+    "command": [
+      "rg",
+      "--line-number",
+      "--glob",
+      "*.lua",
+      "(?<![\\w.])IsOnGlueScreen\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "--pcre2"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1105-page",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedGlue/Deprecated_Glue.lua:9:\tIsOnGlueScreen = C_Glue.IsOnGlueScreen();",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/GlueDocumentation.lua:20:\t\t\tName = \"IsOnGlueScreen\",",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:223:\t\t-- MENU RETEST IsOnGlueScreen",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:247:\t\t-- MENU RETEST IsOnGlueScreen"
+    ]
+  }
+]

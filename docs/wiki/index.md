@@ -1,3 +1,7 @@
+## [2026-10-07] evidence | 11.0.5 page audit
+
+[Audit](investigations/patch-11-0-5-api-audit.md) accounts for 48 inventory + 34 extract rows, five bounded publication closures and ten exact gaps. Thirteen isolated sweeps, exact negative control, three behavior tests and three prefork cases pass; Mists has zero non-vendor warnings and exit-0 startup returns `[]`. [Ledger](../../data/patch-api/sources/11.0.5-page-coverage.json) distinguishes publication/absence from 24 pending extract contracts. Cached boolean/alias deprecation surfaces and later inputs preserved; own target only.
+
 ## [2026-10-07] evidence | 11.0.7 page audit
 
 [Audit](investigations/patch-11-0-7-api-audit.md) accounts for 98 inventory + 83 extract rows, five bounded publication closures and 28 exact retained gaps. Twelve isolated sweeps, negative control, cached secure clear-all and two deprecated-LFG prefork cases pass; Mists check has zero non-vendor warnings and startup returns `[]`. [Ledger](../../data/patch-api/sources/11.0.7-page-coverage.json) distinguishes publication/absence from pending behavior; artifact/reproduction validation passes, later inputs unchanged.

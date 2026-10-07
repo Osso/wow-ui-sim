@@ -1,0 +1,243 @@
+{
+  "rows": 34,
+  "assignments": [
+    {
+      "source_id": "source-context-001",
+      "batch": "editorial",
+      "status": "metadata-only",
+      "statement": "Patch 11.0.5 API changes",
+      "boundary": "Source/build context or heading; no runtime contract or credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "batch": "editorial",
+      "status": "metadata-only",
+      "statement": "== Resources ==",
+      "boundary": "Source/build context or heading; no runtime contract or credit."
+    },
+    {
+      "source_id": "source-context-004",
+      "batch": "editorial",
+      "status": "metadata-only",
+      "statement": "* TOC: 110005",
+      "boundary": "Source/build context or heading; no runtime contract or credit."
+    },
+    {
+      "source_id": "source-context-005",
+      "batch": "editorial",
+      "status": "metadata-only",
+      "statement": "* Official patch notes: 20th Anniversary Celebration Update Notes",
+      "boundary": "Source/build context or heading; no runtime contract or credit."
+    },
+    {
+      "source_id": "source-context-006",
+      "batch": "editorial",
+      "status": "metadata-only",
+      "statement": "* Diffs: wow-ui-source, BlizzardInterfaceResources",
+      "boundary": "Source/build context or heading; no runtime contract or credit."
+    },
+    {
+      "source_id": "source-context-007",
+      "batch": "editorial",
+      "status": "metadata-only",
+      "statement": "* Deprecated API: Blizzard_Deprecated",
+      "boundary": "Source/build context or heading; no runtime contract or credit."
+    },
+    {
+      "source_id": "source-context-009",
+      "batch": "editorial",
+      "status": "metadata-only",
+      "statement": "== Consolidated changes ==",
+      "boundary": "Source/build context or heading; no runtime contract or credit."
+    },
+    {
+      "source_id": "source-context-010",
+      "batch": "editorial",
+      "status": "metadata-only",
+      "statement": ": 11.0.2 (56819) → 11.0.5 (57212) Oct 22 2024",
+      "boundary": "Source/build context or heading; no runtime contract or credit."
+    },
+    {
+      "source_id": "source-context-012",
+      "batch": "editorial",
+      "status": "metadata-only",
+      "statement": "=== Enumerations ===",
+      "boundary": "Source/build context or heading; no runtime contract or credit."
+    },
+    {
+      "source_id": "enumerations-Enum-AccountCurrencyTransferResult-013",
+      "batch": "B01-enums",
+      "status": "audit-pending",
+      "statement": "Enum.AccountCurrencyTransferResult",
+      "boundary": "Current sequential enum candidate is ACCOUNT_CURRENCY_TRANSFER_RESULT in src/lua_api/globals/enum_data/addon_system.rs:879-893 (TransactionInProgress is present). Need independently grounded numeric catalog, later supersession and actual transaction-in-progress producer/result proof; presence alone receives no credit."
+    },
+    {
+      "source_id": "enumerations-Enum-AccountCurrencyTransferResult-014",
+      "batch": "B01-enums",
+      "status": "audit-pending",
+      "statement": "+ TransactionInProgress",
+      "boundary": "Current sequential enum candidate is ACCOUNT_CURRENCY_TRANSFER_RESULT in src/lua_api/globals/enum_data/addon_system.rs:879-893 (TransactionInProgress is present). Need independently grounded numeric catalog, later supersession and actual transaction-in-progress producer/result proof; presence alone receives no credit."
+    },
+    {
+      "source_id": "enumerations-Enum-AccountTransType-015",
+      "batch": "B01-enums",
+      "status": "audit-pending",
+      "statement": "Enum.AccountTransType",
+      "boundary": "CharacterDataMerge is catalogued in src/lua_api/globals/enum_data/missing_enums.lua:390. Page gives no number. Need catalog authority and populated account character-data merge transaction consumer proof, not enum-name publication."
+    },
+    {
+      "source_id": "enumerations-Enum-AccountTransType-016",
+      "batch": "B01-enums",
+      "status": "audit-pending",
+      "statement": "+ CharacterDataMerge",
+      "boundary": "CharacterDataMerge is catalogued in src/lua_api/globals/enum_data/missing_enums.lua:390. Page gives no number. Need catalog authority and populated account character-data merge transaction consumer proof, not enum-name publication."
+    },
+    {
+      "source_id": "enumerations-Enum-BagFlag-017",
+      "batch": "B01-enums",
+      "status": "audit-pending",
+      "statement": "Enum.BagFlag",
+      "boundary": "AllowSoulboundItemInAccountBank is catalogued in src/lua_api/globals/enum_data/missing_enums.lua:972. Need value authority plus actual soulbound/account-bank eligibility and item-move behavior; name/flag alone is not bank policy proof."
+    },
+    {
+      "source_id": "enumerations-Enum-BagFlag-018",
+      "batch": "B01-enums",
+      "status": "audit-pending",
+      "statement": "+ AllowSoulboundItemInAccountBank",
+      "boundary": "AllowSoulboundItemInAccountBank is catalogued in src/lua_api/globals/enum_data/missing_enums.lua:972. Need value authority plus actual soulbound/account-bank eligibility and item-move behavior; name/flag alone is not bank policy proof."
+    },
+    {
+      "source_id": "enumerations-Enum-CurrencyFlags-019",
+      "batch": "B01-enums",
+      "status": "audit-pending",
+      "statement": "Enum.CurrencyFlags",
+      "boundary": "CurrencyUsesLedgerBalance is catalogued in src/lua_api/globals/enum_data/missing_enums.lua:4325. Need numeric catalog and removal/supersession reconciliation for DeprecatedCurrencyFlag, then populated ledger-balance currency behavior. Existing scalar quantity is not ledger policy proof."
+    },
+    {
+      "source_id": "enumerations-Enum-CurrencyFlags-020",
+      "batch": "B01-enums",
+      "status": "audit-pending",
+      "statement": "# DeprecatedCurrencyFlag -> CurrencyUsesLedgerBalance",
+      "boundary": "CurrencyUsesLedgerBalance is catalogued in src/lua_api/globals/enum_data/missing_enums.lua:4325. Need numeric catalog and removal/supersession reconciliation for DeprecatedCurrencyFlag, then populated ledger-balance currency behavior. Existing scalar quantity is not ledger policy proof."
+    },
+    {
+      "source_id": "enumerations-Enum-PowerType-021",
+      "batch": "B01-enums",
+      "status": "audit-pending",
+      "statement": "Enum.PowerType",
+      "boundary": "Current table in src/lua_api/globals/enum_data/missing_enums.lua:11002-11033 contains BurningEmbers, DemonicFury, Happiness, ShadowOrbs and RuneChromatic. Need pinned numeric identity/obsolete-alias absence or later supersession plus nonempty UnitPower consumers for each resource; no historical/native power behavior credit from table presence."
+    },
+    {
+      "source_id": "enumerations-Enum-PowerType-022",
+      "batch": "B01-enums",
+      "status": "audit-pending",
+      "statement": "# Obsolete -> BurningEmbers",
+      "boundary": "Current table in src/lua_api/globals/enum_data/missing_enums.lua:11002-11033 contains BurningEmbers, DemonicFury, Happiness, ShadowOrbs and RuneChromatic. Need pinned numeric identity/obsolete-alias absence or later supersession plus nonempty UnitPower consumers for each resource; no historical/native power behavior credit from table presence."
+    },
+    {
+      "source_id": "enumerations-Enum-PowerType-023",
+      "batch": "B01-enums",
+      "status": "audit-pending",
+      "statement": "# Obsolete2 -> DemonicFury",
+      "boundary": "Current table in src/lua_api/globals/enum_data/missing_enums.lua:11002-11033 contains BurningEmbers, DemonicFury, Happiness, ShadowOrbs and RuneChromatic. Need pinned numeric identity/obsolete-alias absence or later supersession plus nonempty UnitPower consumers for each resource; no historical/native power behavior credit from table presence."
+    },
+    {
+      "source_id": "enumerations-Enum-PowerType-024",
+      "batch": "B01-enums",
+      "status": "audit-pending",
+      "statement": "+ Happiness",
+      "boundary": "Current table in src/lua_api/globals/enum_data/missing_enums.lua:11002-11033 contains BurningEmbers, DemonicFury, Happiness, ShadowOrbs and RuneChromatic. Need pinned numeric identity/obsolete-alias absence or later supersession plus nonempty UnitPower consumers for each resource; no historical/native power behavior credit from table presence."
+    },
+    {
+      "source_id": "enumerations-Enum-PowerType-025",
+      "batch": "B01-enums",
+      "status": "audit-pending",
+      "statement": "+ ShadowOrbs",
+      "boundary": "Current table in src/lua_api/globals/enum_data/missing_enums.lua:11002-11033 contains BurningEmbers, DemonicFury, Happiness, ShadowOrbs and RuneChromatic. Need pinned numeric identity/obsolete-alias absence or later supersession plus nonempty UnitPower consumers for each resource; no historical/native power behavior credit from table presence."
+    },
+    {
+      "source_id": "enumerations-Enum-PowerType-026",
+      "batch": "B01-enums",
+      "status": "audit-pending",
+      "statement": "+ RuneChromatic",
+      "boundary": "Current table in src/lua_api/globals/enum_data/missing_enums.lua:11002-11033 contains BurningEmbers, DemonicFury, Happiness, ShadowOrbs and RuneChromatic. Need pinned numeric identity/obsolete-alias absence or later supersession plus nonempty UnitPower consumers for each resource; no historical/native power behavior credit from table presence."
+    },
+    {
+      "source_id": "enumerations-Enum-SubcontainerType-027",
+      "batch": "B01-enums",
+      "status": "audit-pending",
+      "statement": "Enum.SubcontainerType",
+      "boundary": "Keyring is present in src/lua_api/globals/enum_data/missing_enums.lua:13125. Need KeyringObsolete rename/supersession reconciliation and real populated keyring container addressing; native number/policy not stated by page."
+    },
+    {
+      "source_id": "enumerations-Enum-SubcontainerType-028",
+      "batch": "B01-enums",
+      "status": "audit-pending",
+      "statement": "+ KeyringObsolete -> Keyring",
+      "boundary": "Keyring is present in src/lua_api/globals/enum_data/missing_enums.lua:13125. Need KeyringObsolete rename/supersession reconciliation and real populated keyring container addressing; native number/policy not stated by page."
+    },
+    {
+      "source_id": "enumerations-Enum-TraitSystemFlag-029",
+      "batch": "B01-enums",
+      "status": "audit-pending",
+      "statement": "Enum.TraitSystemFlag",
+      "boundary": "AllowEditInCombat is catalogued in src/lua_api/globals/enum_data/missing_enums.lua:13849. Need numeric authority and actual trait editing validation in combat; existing publication/trait flags do not prove combat authorization."
+    },
+    {
+      "source_id": "enumerations-Enum-TraitSystemFlag-030",
+      "batch": "B01-enums",
+      "status": "audit-pending",
+      "statement": "+ AllowEditInCombat",
+      "boundary": "AllowEditInCombat is catalogued in src/lua_api/globals/enum_data/missing_enums.lua:13849. Need numeric authority and actual trait editing validation in combat; existing publication/trait flags do not prove combat authorization."
+    },
+    {
+      "source_id": "source-context-032",
+      "batch": "editorial",
+      "status": "metadata-only",
+      "statement": "=== Structures ===",
+      "boundary": "Source/build context or heading; no runtime contract or credit."
+    },
+    {
+      "source_id": "structures-BNetGameAccountInfo-033",
+      "batch": "B02-structures",
+      "status": "audit-pending",
+      "statement": "BNetGameAccountInfo",
+      "boundary": "src/c_api/c_battle_net.rs game-account DTO builders are candidates. Must seed concrete game-account records and exercise real C_BattleNet parent query, asserting isWowMobile absent while current identity/class fields remain. No credit from a nil/missing account result; page-specific populated DTO proof remains pending."
+    },
+    {
+      "source_id": "structures-BNetGameAccountInfo-034",
+      "batch": "B02-structures",
+      "status": "audit-pending",
+      "statement": "- isWowMobile",
+      "boundary": "src/c_api/c_battle_net.rs game-account DTO builders are candidates. Must seed concrete game-account records and exercise real C_BattleNet parent query, asserting isWowMobile absent while current identity/class fields remain. No credit from a nil/missing account result; page-specific populated DTO proof remains pending."
+    },
+    {
+      "source_id": "structures-FriendInfo-035",
+      "batch": "B02-structures",
+      "status": "audit-pending",
+      "statement": "FriendInfo",
+      "boundary": "src/lua_api/globals/missing_surface/friend_list.rs GetFriendInfoByIndex/GetFriendInfoByName are candidates. Need populated friend records through public queries, assert mobile absent without dropping name/online/level fields. Nil/default-empty friend result cannot prove removed-field behavior."
+    },
+    {
+      "source_id": "structures-FriendInfo-036",
+      "batch": "B02-structures",
+      "status": "audit-pending",
+      "statement": "- mobile",
+      "boundary": "src/lua_api/globals/missing_surface/friend_list.rs GetFriendInfoByIndex/GetFriendInfoByName are candidates. Need populated friend records through public queries, assert mobile absent without dropping name/online/level fields. Nil/default-empty friend result cannot prove removed-field behavior."
+    },
+    {
+      "source_id": "structures-IconAndTextWidgetVisualizationInfo-037",
+      "batch": "B02-structures",
+      "status": "audit-pending",
+      "statement": "IconAndTextWidgetVisualizationInfo",
+      "boundary": "src/lua_api/globals/missing_surface/ui_widget_manager.rs:95 writes shiftTextType as constant 0. Requires populated visualization parent query, nondefault host shift type and corresponding cached widget text behavior. Constant field publication is not modeled shift semantics."
+    },
+    {
+      "source_id": "structures-IconAndTextWidgetVisualizationInfo-038",
+      "batch": "B02-structures",
+      "status": "audit-pending",
+      "statement": "+ shiftTextType",
+      "boundary": "src/lua_api/globals/missing_surface/ui_widget_manager.rs:95 writes shiftTextType as constant 0. Requires populated visualization parent query, nondefault host shift type and corresponding cached widget text behavior. Constant field publication is not modeled shift semantics."
+    }
+  ]
+}

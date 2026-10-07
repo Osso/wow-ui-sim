@@ -1,0 +1,13 @@
+{
+  "revision": "5fb610fa3",
+  "method": "Manual changed-line audit using git diff ff1d68d24 HEAD; no independent review",
+  "files": [
+    "src/c_api/c_barber_shop.rs",
+    "src/c_api/patch_retired_members.rs",
+    "tests/patch_11_0_5_publication_sweep.rs",
+    "tests/patch_11_0_5_publication_fixes.rs",
+    "tests/patch_11_0_5_cached_surfaces.rs"
+  ],
+  "findings": [],
+  "scope": "New query is a named ten-line state read and boolean derivation; registration/retirement are existing-table additions. Concrete tests expose state transitions and full-preload boundary. No warning suppression, new dependency, hidden mutation, deep nesting or speculative abstraction introduced."
+}

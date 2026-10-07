@@ -1,3 +1,7 @@
+## [2026-10-07] evidence | 11.0.5 page audit
+
+[Audit](investigations/patch-11-0-5-api-audit.md) retains revision 6726778, exhaustive 82-row accounting and per-ID review/scout. Two autostub retirements, host alternate-race availability and two mutable Chroma CVar defaults close five publication gaps; ten remain. Thirteen isolated sweeps, exact 10 → 11 negative control, three behavior tests and three one-filter prefork cases pass. Mists has zero non-vendor warnings; exit-0 startup returns `[]`. Seventeen extractor/register fixtures pass. [Proof ledger](../../data/patch-api/evidence/11.0.5-session-2026-10-06/p1105-proof.json) records exact revisions, failed development scopes and pending artifact/format validation. Later inputs/vendor sources unchanged; no sibling target reuse, agents/models, full suite, push or merge.
+
 ## [2026-10-07] evidence | 11.0.7 page audit
 
 [Audit](investigations/patch-11-0-7-api-audit.md) retains revision 6726777, exhaustive 181-row accounting and per-ID review/scout. Four autostub retirements and modeled GUID clear-all close five publication gaps; 28 remain. Twelve isolated sweeps, exact negative control, two behavioral tests, three prefork cases, formatting, Mists warning boundary and exit-0 startup `[]` proven. Sixteen extractor/register fixtures, extract reproduction, twelve byte-identical regenerated registers and artifact validation pass at `45e5d932a`. Later inputs/vendor files unchanged; no sibling target reuse, agents/models, full suite, push or merge.
