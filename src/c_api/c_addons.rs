@@ -51,7 +51,20 @@ pub fn register_c_addons(state: &mut LuaState) -> LuaResult<()> {
 }
 
 pub fn register_legacy_addon_globals(state: &mut LuaState) -> LuaResult<()> {
-    register_legacy_addon_fns(state)?;
+    table_set_rust_fn_static(
+        state,
+        state.global,
+        "GetAddOnMetadata",
+        c_addons_get_addon_metadata,
+    )?;
+    // 10.2.0 moved these five queries/actions to C_AddOns. Classic retains them.
+    let retail = matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    );
+    if !retail {
+        register_legacy_addon_fns(state)?;
+    }
     register_addon_actions_blocked(state);
     Ok(())
 }
@@ -63,12 +76,6 @@ fn register_legacy_addon_fns(state: &mut LuaState) -> LuaResult<()> {
         state.global,
         "IsAddOnLoaded",
         c_addons_is_addon_loaded,
-    )?;
-    table_set_rust_fn_static(
-        state,
-        state.global,
-        "GetAddOnMetadata",
-        c_addons_get_addon_metadata,
     )?;
     table_set_rust_fn_static(
         state,
