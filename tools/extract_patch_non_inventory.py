@@ -52,11 +52,25 @@ def render_line(line):
     return html.unescape(line).rstrip()
 
 
-def extract_text(raw):
+def extract_text(raw, *, preserve_examples=False):
     lines = []
     inventory = False
+    in_example = False
     unheaded = "===Global API===" not in raw.splitlines()
     for line in raw.splitlines():
+        if preserve_examples:
+            opening = re.fullmatch(r'<syntaxhighlight lang="(lua|xml)">', line)
+            if opening:
+                in_example = True
+                lines.append(f'```{opening[1]}')
+                continue
+            if in_example:
+                if line == '</syntaxhighlight>':
+                    in_example = False
+                    lines.append('```')
+                else:
+                    lines.append(line)
+                continue
         if line == "===Global API===" or (unheaded and line.startswith('{| class="wikitable"')):
             inventory = True
         if line == "===Enums===" or (unheaded and line == "===Structures==="):
@@ -183,6 +197,8 @@ def main():
     parser.add_argument('--check', action='store_true')
     parser.add_argument('--self-test', action='store_true')
     parser.add_argument('--patch', default='12.0.0')
+    parser.add_argument('--preserve-examples', action='store_true',
+                        help='Retain Lua/XML syntaxhighlight contents verbatim in fenced blocks')
     parser.add_argument('--text-only', action='store_true',
                         help='Write/check plaintext only; never read or modify a coverage ledger')
     args = parser.parse_args()
@@ -194,7 +210,7 @@ def main():
     raw_path = base / f'{args.patch}-api-changes.wikitext'
     text_path = base / f'{args.patch}-api-changes.txt'
     coverage_path = base / f'{args.patch}-page-coverage.json'
-    text = extract_text(raw_path.read_text())
+    text = extract_text(raw_path.read_text(), preserve_examples=args.preserve_examples)
     rows = seed_rows(text, args.patch)
     if args.text_only:
         if args.check:
