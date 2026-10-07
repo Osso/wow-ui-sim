@@ -200,6 +200,8 @@ fn register_frame_context_globals(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::real::guild_logo::register_all(lua)?;
     super::guild_control::register_all(lua)?;
     super::targeting_verbs::register_all(lua)?;
+    #[cfg(feature = "retail-12-0-0")]
+    super::real::raid_targets::register_all(lua)?;
     super::game_rules::register_all(lua)?;
     super::guild_info::register_all(lua)?;
     super::housing::register_all(lua)?;

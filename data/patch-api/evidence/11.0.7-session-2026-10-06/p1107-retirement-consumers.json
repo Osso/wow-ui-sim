@@ -1,0 +1,193 @@
+[
+  {
+    "source_id": "wt-global-api-C_ArrowCalloutManager.HideWorldLootObjectCallout-102",
+    "symbol": "C_ArrowCalloutManager.HideWorldLootObjectCallout",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "HideWorldLootObjectCallout",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1107-page",
+    "exit_code": 1,
+    "matches": [],
+    "stderr": ""
+  },
+  {
+    "source_id": "wt-global-api-C_ArrowCalloutManager.SetWorldLootObjectCalloutFromGUID-103",
+    "symbol": "C_ArrowCalloutManager.SetWorldLootObjectCalloutFromGUID",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "SetWorldLootObjectCalloutFromGUID",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1107-page",
+    "exit_code": 1,
+    "matches": [],
+    "stderr": ""
+  },
+  {
+    "source_id": "wt-global-api-C_ArrowCalloutManager.SwapWorldLootObjectCallout-104",
+    "symbol": "C_ArrowCalloutManager.SwapWorldLootObjectCallout",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "SwapWorldLootObjectCallout",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1107-page",
+    "exit_code": 1,
+    "matches": [],
+    "stderr": ""
+  },
+  {
+    "source_id": "wt-global-api-C_LFGInfo.IsPremadeGroupEnabled-105",
+    "symbol": "C_LFGInfo.IsPremadeGroupEnabled",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "IsPremadeGroupEnabled",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1107-page",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedLFG/Deprecated_LFG.lua:9:\tC_LFGInfo.IsPremadeGroupEnabled = C_LFGList.IsPremadeGroupFinderEnabled;"
+    ],
+    "stderr": ""
+  },
+  {
+    "source_id": "wt-global-api-C_LFGList.GetSearchResultMemberInfo-106",
+    "symbol": "C_LFGList.GetSearchResultMemberInfo",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "GetSearchResultMemberInfo",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1107-page",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedLFG/Deprecated_LFG.lua:10:\tC_LFGList.GetSearchResultMemberInfo = function(...)"
+    ],
+    "stderr": ""
+  },
+  {
+    "source_id": "wt-global-api-C_QuestLog.IsLegendaryQuest-107",
+    "symbol": "C_QuestLog.IsLegendaryQuest",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "IsLegendaryQuest",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1107-page",
+    "exit_code": 1,
+    "matches": [],
+    "stderr": ""
+  },
+  {
+    "source_id": "wt-global-api-C_QuestLog.IsQuestRepeatableType-108",
+    "symbol": "C_QuestLog.IsQuestRepeatableType",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "IsQuestRepeatableType",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1107-page",
+    "exit_code": 1,
+    "matches": [],
+    "stderr": ""
+  },
+  {
+    "source_id": "wt-global-api-C_WorldLootObject.GetCurrentWorldLootObjectSwapInventoryType-109",
+    "symbol": "C_WorldLootObject.GetCurrentWorldLootObjectSwapInventoryType",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "GetCurrentWorldLootObjectSwapInventoryType",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1107-page",
+    "exit_code": 1,
+    "matches": [],
+    "stderr": ""
+  },
+  {
+    "source_id": "wt-global-api-IsActiveQuestLegendary-110",
+    "symbol": "IsActiveQuestLegendary",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "IsActiveQuestLegendary",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1107-page",
+    "exit_code": 1,
+    "matches": [],
+    "stderr": ""
+  },
+  {
+    "source_id": "wt-events-WORLD_LOOT_OBJECT_SWAP_INVENTORY_TYPE_UPDATED-158",
+    "symbol": "WORLD_LOOT_OBJECT_SWAP_INVENTORY_TYPE_UPDATED",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "WORLD_LOOT_OBJECT_SWAP_INVENTORY_TYPE_UPDATED",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1107-page",
+    "exit_code": 1,
+    "matches": [],
+    "stderr": ""
+  },
+  {
+    "source_id": "wt-cvars-processAffinityMask-184",
+    "symbol": "processAffinityMask",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "--glob",
+      "*.lua",
+      "processAffinityMask",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1107-page",
+    "exit_code": 1,
+    "matches": [],
+    "stderr": ""
+  }
+]
