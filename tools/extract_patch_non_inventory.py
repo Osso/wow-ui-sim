@@ -30,6 +30,8 @@ def render_line(line):
     line = re.sub(r"\{\{(?:apisummary.header|text\|blizz)\|([^{}]+)\}\}",
                   r"=== \1 ===", line)
     line = line.replace('{{apisummary.blizzquote}}', '')
+    # Retain the TOC example's symbolic interface, not today's expanded version.
+    line = line.replace('{{API LatestInterface}}', '[API LatestInterface]')
     line = re.sub(r"\{\{(?:g|tlygo|api.inline|apisummary.title)\|([^{}]+)\}\}",
                   r"\1", line)
     line = re.sub(r"\{\{api.system\|[^|{}]+\|([^{}]+)\}\}", r"\1", line)
@@ -59,6 +61,8 @@ def extract_text(raw):
                 line = "=== Enumerations ==="
         if inventory:
             continue
+        if line.strip() in ('{{#tag:syntaxhighlight|', '|lang="wowtoc"}}'):
+            continue
         if line.strip() in ('{| class="darktable"', '|', '|}'):
             continue
         if line.startswith("=="):
@@ -73,6 +77,8 @@ def extract_text(raw):
 def is_source_context(value, number, patch):
     if number == 1 or value.startswith(('* TOC:', '* Official', '* Diffs:', '* Deprecated')):
         return True
+    if patch == '11.1.5':
+        return value.startswith(': 11.1.0')
     if patch == '11.1.7':
         return value.startswith(': 11.1.5')
     if patch == '11.2.0':

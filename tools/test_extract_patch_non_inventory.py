@@ -8,6 +8,26 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 class ExtractTests(unittest.TestCase):
+    def test_11_1_5_toc_example_preserves_symbolic_interface_and_directives(self):
+        raw = ('==TOC format changes==\n{{#tag:syntaxhighlight|\n'
+               '## Interface: {{API LatestInterface}}\n'
+               '[Family]\\File.lua\n'
+               'MainlineOnly.lua [AllowLoadGameType mainline]\n'
+               '|lang="wowtoc"}}\n')
+        self.assertEqual(extract_text(raw), '== TOC format changes ==\n'
+                         '## Interface: [API LatestInterface]\n'
+                         '[Family]\\File.lua\n'
+                         'MainlineOnly.lua [AllowLoadGameType mainline]\n')
+
+    def test_11_1_5_build_transition_is_context_but_toc_directive_is_pending(self):
+        rows = seed_rows('Patch 11.1.5 API changes\n'
+                         'MainlineOnly.lua [AllowLoadGameType mainline]\n'
+                         ': 11.1.0 (59466) → 11.1.5 (61265) Jun 3 2025\n',
+                         patch='11.1.5')
+        self.assertEqual(rows[1]['status'], 'audit-pending')
+        self.assertEqual(rows[2]['status'], 'metadata-only')
+        self.assertEqual(rows[2]['source_id'], 'source-context-003')
+
     def test_unheaded_inventory_stops_at_structures(self):
         raw = ('==Consolidated changes==\n: 11.2.5 → 11.2.7\n'
                '{| class="wikitable"\n: {{api|IgnoreMe}}\n|}\n'
