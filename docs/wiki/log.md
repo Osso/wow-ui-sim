@@ -256,3 +256,7 @@ Pinned revision 1063344; [audit](investigations/patch-10-0-7-api-audit.md) links
 ## [2026-10-07] evidence | 10.0.5 page audit
 
 [10.0.5 page audit](investigations/patch-10-0-5-api-audit.md): pinned revision, complete occurrence ledger and retained-gap reasons; three unused namespace retirements. Targeted proof preserves all existing sources/registers/ledgers/fixtures and extract-mode boundaries. No vendor or classic behavior edits.
+
+## [2026-10-07] investigation | 9.2.0 page audit
+
+Retained revision 4788278 and 80-row register; corrected unbolded Commands/HTML defaults, retired two unused retail PvP lazy lookups. See [[patch-9-2-0-api-audit]]; verification pending.

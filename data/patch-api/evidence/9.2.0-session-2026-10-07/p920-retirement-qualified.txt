@@ -1,0 +1,2 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedMapDataProviders/BattlefieldFlagDataProvider.lua:43:	local flagX, flagY, flagTexture = C_PvP.GetBattlefieldFlagPosition(self.flagIndex, self:GetMap():GetMapID());
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PvpInfoDocumentation.lua:246:			Name = "GetBattlefieldFlagPosition",

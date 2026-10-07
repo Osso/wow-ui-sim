@@ -1,0 +1,49 @@
+[
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "patch_9_2_0_publication_sweep"
+    ],
+    "revision": "b6d183045",
+    "scope": "Initial 80-row publication discovery; empty fixture",
+    "exit": 1,
+    "output": "p920-initial-sweep.txt",
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_9_2_0_unused_pvp_members_stay_absent",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "b6d183045 plus retirement regression",
+    "scope": "Malformed marker compile failure, not RED behavior proof",
+    "exit": 101,
+    "output": "p920-retirement-red.txt",
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_9_2_0_unused_pvp_members_stay_absent",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "b6d183045 plus corrected retirement regression",
+    "scope": "Repeated removed-member lookup RED",
+    "exit": 101,
+    "output": "p920-retirement-red-behavior.txt",
+    "invalidated": false
+  }
+]

@@ -1,0 +1,226 @@
+src/startup.rs:227:    time_startup_step(env, "FIRST_FRAME_RENDERED", || {
+src/startup.rs:228:        fire_simple_event(env, "FIRST_FRAME_RENDERED")
+src/cvars.yaml:89:BeckonTriggerEventlog: '0'
+src/cvars.yaml:525:CMAA2ExtraSharpness: '0'
+src/cvars.yaml:527:CMAA2Quality: '3'
+src/cvars.yaml:622:enableMouseoverCast: '0'
+src/cvars.yaml:751:GamePadFactionColor: '1'
+src/cvars.yaml:1031:NotchedDisplayMode: '1'
+src/event/valid_events_c.rs:211:    "STOP_MOVIE",
+src/event/valid_events_b.rs:135:    "ITEM_CONVERSION_DATA_READY",
+src/event/valid_events_b.rs:138:    "ITEM_INTERACTION_CHARGE_INFO_UPDATED",
+src/event/valid_events_b.rs:319:    "NOTCHED_DISPLAY_MODE_CHANGED",
+src/event/valid_events_b.rs:527:    "PVP_ROLE_POPUP_HIDE",
+src/event/valid_events_b.rs:528:    "PVP_ROLE_POPUP_SHOW",
+src/event/valid_events_a.rs:117:    "AUCTION_HOUSE_SHOW_COMMODITY_WON_NOTIFICATION",
+src/event/valid_events_a.rs:118:    "AUCTION_HOUSE_SHOW_ERROR",
+src/event/valid_events_a.rs:119:    "AUCTION_HOUSE_SHOW_FORMATTED_NOTIFICATION",
+src/event/valid_events_a.rs:120:    "AUCTION_HOUSE_SHOW_NOTIFICATION",
+src/event/valid_events_a.rs:390:    "CLICKBINDINGS_SET_HIGHLIGHTS_SHOWN",
+src/event/valid_events_a.rs:620:    "FIRST_FRAME_RENDERED",
+src/c_api/permanent_shims/c_ui.rs:17:        "ShouldUIParentAvoidNotch",
+src/c_api/permanent_shims/c_ui.rs:23:        "DoesAnyDisplayHaveNotch",
+src/c_api/permanent_shims/c_ui.rs:29:        "GetTopLeftNotchSafeRegion",
+src/c_api/patch_retired_members.rs:26:            "SetItemConversionOutputTooltip",
+src/c_api/patch_retired_members.rs:237:            "CanDisplayDamage",
+src/c_api/patch_retired_members.rs:238:            "CanDisplayHealing",
+src/c_api/patch_retired_members.rs:239:            "CanDisplayKillingBlows",
+src/c_api/c_click_bindings_spell.rs:13:        "CanSpellBeClickBound",
+src/c_api/c_click_bindings_spell.rs:23:        "C_ClickBindings.CanSpellBeClickBound",
+src/c_api/c_click_bindings.rs:35:    function C_ClickBindings.GetBindingType(button, modifiers)
+src/c_api/c_click_bindings.rs:40:    function C_ClickBindings.GetEffectiveInteractionButton(button, modifiers)
+src/c_api/c_click_bindings.rs:52:    function C_ClickBindings.GetProfileInfo()
+src/c_api/c_click_bindings.rs:60:    function C_ClickBindings.SetProfileByInfo(infos)
+src/c_api/c_click_bindings.rs:72:    function C_ClickBindings.ResetCurrentProfile()
+tests/timerunning.rs:20:        .eval("return IsTimerunningEnabled(), GetRemainingTimerunningSeasonSeconds()")
+tests/timerunning.rs:31:        .eval("return IsTimerunningEnabled(), GetRemainingTimerunningSeasonSeconds()")
+tests/timerunning.rs:38:        .eval("return IsTimerunningEnabled(), GetRemainingTimerunningSeasonSeconds()")
+src/loader/tests/wow_api_globals/startup_globals.rs:335:                "C_ClickBindings.GetStringFromModifiers",
+src/loader/tests/wow_api_globals/startup_globals.rs:336:                "C_ClickBindings.MakeModifiers",
+src/loader/tests/wow_api_globals/startup_globals.rs:396:        "BNInviteFriend=nil,C_ClickBindings.GetStringFromModifiers=function,C_ClickBindings.MakeModifiers=function,C_Spell.GetMawPowerBorderAtlasBySpellID=function,ConfirmReadyCheck=nil,DemoteAssistant=nil,DoReadyCheck=nil,GetMerchantCurrencies=nil,IsGUIDInGroup=nil,PromoteToAssistant=nil,PromoteToLeader=nil,SetEveryoneIsAssistant=nil,UninviteUnit=function,GetAutoCompletePresenceID=nil,GetAutoCompleteResults=function,GetAutoCompleteRealms=function,IsRecognizedName=nil"
+src/loader/tests/wow_api_globals/startup_globals.rs:401:        "BNInviteFriend=nil,C_ClickBindings.GetStringFromModifiers=nil,C_ClickBindings.MakeModifiers=nil,C_Spell.GetMawPowerBorderAtlasBySpellID=nil,ConfirmReadyCheck=nil,DemoteAssistant=nil,DoReadyCheck=nil,GetMerchantCurrencies=nil,IsGUIDInGroup=nil,PromoteToAssistant=nil,PromoteToLeader=nil,SetEveryoneIsAssistant=nil,UninviteUnit=nil,GetAutoCompletePresenceID=nil,GetAutoCompleteResults=nil,GetAutoCompleteRealms=nil,IsRecognizedName=nil"
+src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs:570:            if C_PlayerChoice.GetRemainingTime() ~= nil then return "default-time" end
+src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs:684:            if C_PlayerChoice.GetRemainingTime() ~= 30.5 then return "time" end
+tests/startup_special_frames.rs:23:        watcher:RegisterEvent("FIRST_FRAME_RENDERED")
+tests/startup_special_frames.rs:42:        "windows should be hidden before FIRST_FRAME_RENDERED"
+tests/startup_api_glue.rs:80:                   C_UI.ShouldUIParentAvoidNotch(),
+tests/startup_api_glue.rs:81:                   C_UI.DoesAnyDisplayHaveNotch(),
+tests/startup_api_events.rs:107:        end, "VARIABLES_LOADED", "PLAYER_ENTERING_WORLD", "FIRST_FRAME_RENDERED")
+tests/startup_api_events.rs:149:    env.fire_event("FIRST_FRAME_RENDERED")
+tests/startup_api_events.rs:150:        .expect("FIRST_FRAME_RENDERED should dispatch");
+tests/spacing_roundtrip.rs:236:            fs:SetTextScale(1.5)
+tests/security_state_drivers.rs:136:            child:SetAttributeNoHandler(
+tests/security_state_drivers.rs:160:            parent:SetAttributeNoHandler("_onstate-page", [[
+tests/security_state_drivers.rs:165:            child:SetAttributeNoHandler(
+tests/protected_attribute_enforcement.rs:3://! Real WoW rejects `SetAttribute` / `SetAttributeNoHandler` on protected
+tests/protected_attribute_enforcement.rs:233:        Protected:SetAttributeNoHandler("foo", "attempted")
+tests/protected_attribute_enforcement.rs:245:        "insecure SetAttributeNoHandler on a protected frame must be dropped silently"
+tests/prefork_full_ui.rs:703:        ("blizzard_spectate_frame_loads::", 13),
+tests/patch_12_0_7_removed_native_surface.rs:71:    assert_native_absent(&env, "C_ClickBindings.GetStringFromModifiers");
+tests/patch_12_0_7_removed_native_surface.rs:77:    assert_native_absent(&env, "C_ClickBindings.MakeModifiers");
+tests/patch_12_0_7_removed_native_surface.rs:204:        "C_ClickBindings.MakeModifiers",
+tests/patch_12_0_7_removed_native_surface.rs:205:        "C_ClickBindings.GetStringFromModifiers",
+tests/patch_12_0_7_removed_native_surface.rs:215:        function MakeModifiers(...) assert(select('#', ...) == 0); return 5, 'mod-tail' end
+tests/patch_12_0_7_removed_native_surface.rs:216:        function GetStringFromModifiers(value, ...)
+tests/patch_12_0_7_removed_native_surface.rs:238:        local n, v = exact(C_ClickBindings.MakeModifiers('discarded'))
+tests/patch_12_0_7_removed_native_surface.rs:240:        n, v = exact(C_ClickBindings.GetStringFromModifiers(5, 'discarded'))
+tests/patch_12_0_7_removed_native_surface.rs:504:    "C_ClickBindings.GetStringFromModifiers",
+tests/patch_12_0_7_removed_native_surface.rs:505:    "C_ClickBindings.MakeModifiers",
+src/lua_api/workarounds/temporary/ui_parent_panel_toggles.rs:30:                if type(panel.SetAttributeNoHandler) == "function" then
+src/lua_api/workarounds/temporary/ui_parent_panel_toggles.rs:31:                    panel:SetAttributeNoHandler("UIPanelLayout-" .. key, value)
+src/lua_api/workarounds/temporary/ui_parent_panel_toggles.rs:38:        if type(panel.SetAttributeNoHandler) == "function" then
+src/lua_api/workarounds/temporary/ui_parent_panel_toggles.rs:39:            panel:SetAttributeNoHandler("UIPanelLayout-defined", true)
+tests/patch_10_0_2_publication_fixes.rs:10:for _, name in ipairs({'SetCorruptionReforgerItemTooltip', 'SetItemConversionOutputTooltip'}) do
+tests/patch_10_0_2_classic_surfaces.rs:11:for _, name in ipairs({'SetCorruptionReforgerItemTooltip', 'SetItemConversionOutputTooltip'}) do
+src/c_api/c_player_choice.rs:37:    table_set_rust_fn_static(state, player_choice, "GetRemainingTime", get_remaining_time)?;
+src/lua_api/env_init/shared_bootstrap.lua:1013:if FadingFrame_GetRemainingTime == nil then
+src/lua_api/env_init/shared_bootstrap.lua:1014:  function FadingFrame_GetRemainingTime(fadingFrame)
+tests/glue_character_select.rs:123:                    || msg.contains("GetCharacterServiceDisplayDataByVASType")
+tests/fontstring_smooth_scaling.rs:99:        fs:SetTextScale(1.1)
+src/lua_api/frame/methods/text_attribute_event/mod.rs:306:    table_set_rust_fn_static(state, table, "GetTextScale", text::get_text_scale)?;
+src/lua_api/frame/methods/text_attribute_event/mod.rs:307:    table_set_rust_fn_static(state, table, "SetTextScale", text::set_text_scale)?;
+src/lua_api/frame/methods/text_attribute_event/mod.rs:393:        "SetAttributeNoHandler",
+tests/data/patch_12_0_0_sweep_known_gaps.json:15:  "wt-global-api-C_LFGList.DoesEntryTitleMatchPrebuiltTitle-627",
+src/lua_api/workarounds/temporary/loot_journal_defaults.rs:9:if rawget(C_LootJournal, "GetItemSets") == nil then
+src/lua_api/workarounds/temporary/loot_journal_defaults.rs:10:    function C_LootJournal.GetItemSets(_classID, _specID)
+src/lua_api/workarounds/temporary/loot_journal_defaults.rs:14:if rawget(C_LootJournal, "GetItemSetItems") == nil then
+src/lua_api/workarounds/temporary/loot_journal_defaults.rs:15:    function C_LootJournal.GetItemSetItems(_itemSetID)
+src/lua_api/workarounds/temporary/loot_journal_defaults.rs:37:                if #C_LootJournal.GetItemSets(1, 1) ~= 0 then return "sets" end
+src/lua_api/workarounds/temporary/loot_journal_defaults.rs:38:                if #C_LootJournal.GetItemSetItems(1) ~= 0 then return "items" end
+src/lua_api/workarounds/temporary/loot_journal_defaults.rs:52:            function C_LootJournal.GetItemSets()
+src/lua_api/workarounds/temporary/loot_journal_defaults.rs:55:            function C_LootJournal.GetItemSetItems()
+src/lua_api/workarounds/temporary/loot_journal_defaults.rs:67:                return C_LootJournal.GetItemSets()[1] .. ":" .. C_LootJournal.GetItemSetItems()[1]
+tests/click_targeting.rs:263:        let modifiers = "C_ClickBindings.MakeModifiers()";
+tests/click_targeting.rs:266:            env.exec("assert(rawget(C_ClickBindings, 'MakeModifiers') == nil)").unwrap();
+tests/click_targeting.rs:267:            "MakeModifiers()"
+tests/click_targeting.rs:270:            .eval(&format!("return C_ClickBindings.GetBindingType('LeftButton', {modifiers})"))
+tests/click_targeting.rs:274:        env.exec("C_ClickBindings.ExecuteBinding('party1', 'LeftButton', 0)")
+tests/click_targeting.rs:340:        local profile = api.GetProfileInfo()
+tests/click_targeting.rs:344:        assert(api.GetBindingType('RightButton', 0) == 3)
+tests/click_targeting.rs:345:        assert(api.GetBindingType('LeftButton', 1) == 0)
+tests/click_targeting.rs:347:        assert(api.GetBindingType('LeftButton', 0) == 3, 'returned profile must not alias stored state')
+tests/click_targeting.rs:348:        api.SetProfileByInfo({
+tests/click_targeting.rs:352:        assert(api.GetBindingType('LeftButton', 0) == 3)
+tests/click_targeting.rs:353:        assert(api.GetBindingType('Button4', 2) == 3)
+tests/click_targeting.rs:354:        assert(api.GetBindingType('RightButton', 0) == 0)
+tests/click_targeting.rs:355:        assert(api.GetEffectiveInteractionButton('LeftButton', 0) == 'RightButton')
+tests/click_targeting.rs:356:        assert(api.GetEffectiveInteractionButton('Button4', 2) == 'LeftButton')
+tests/click_targeting.rs:357:        assert(api.GetProfileInfo()[1].button == 'Button4')
+tests/click_targeting.rs:358:        api.ResetCurrentProfile()
+tests/click_targeting.rs:359:        assert(api.GetBindingType('LeftButton', 0) == 3)
+tests/click_targeting.rs:360:        assert(api.GetBindingType('RightButton', 0) == 3)
+tests/click_targeting.rs:361:        assert(api.GetBindingType('Button4', 2) == 0)
+tests/click_targeting.rs:502:        env.eval::<String>(r#"return tostring(PlayerFrame:GetScript('OnClick')) .. ' unit=' .. tostring(PlayerFrame:GetAttribute('unit')) .. ' type1=' .. tostring(PlayerFrame:GetAttribute('*type1')) .. ' binding=' .. tostring(C_ClickBindings.GetBindingType('LeftButton', 0))"#).unwrap()
+tests/click_binding_spell_identifier.rs:23:            check(C_ClickBindings.CanSpellBeClickBound(identifier))
+tests/click_binding_spell_identifier.rs:26:            local ok, err = pcall(C_ClickBindings.CanSpellBeClickBound, ...)
+tests/click_binding_spell_identifier.rs:28:            assert(string.find(err, 'C_ClickBindings.CanSpellBeClickBound:', 1, true), 'API error context')
+tests/click_binding_spell_identifier.rs:60:        local profile = C_ClickBindings.GetProfileInfo()
+tests/click_binding_spell_identifier.rs:64:        assert(C_ClickBindings.GetBindingType('LeftButton', 0) == Enum.ClickBindingType.Interaction)
+tests/click_binding_spell_identifier.rs:65:        assert(C_ClickBindings.GetBindingType('RightButton', 0) == Enum.ClickBindingType.Interaction)
+tests/click_binding_spell_identifier.rs:157:        C_ClickBindings.SetProfileByInfo({
+tests/click_binding_spell_identifier.rs:160:        assert(C_ClickBindings.GetBindingType('Button4', 0) == Enum.ClickBindingType.Spell)
+tests/click_binding_spell_identifier.rs:163:        C_ClickBindings.ResetCurrentProfile()
+tests/click_binding_spell_identifier.rs:270:                local ok, err = pcall(C_ClickBindings.CanSpellBeClickBound, value)
+src/lua_api/globals/real/timerunning.rs:37:        "GetRemainingTimerunningSeasonSeconds",
+tests/c_ui.rs:10:            if C_UI.ShouldUIParentAvoidNotch() ~= false then return "avoid" end
+tests/c_ui.rs:11:            if C_UI.DoesAnyDisplayHaveNotch() ~= false then return "display" end
+tests/c_ui.rs:13:            local left, top, right, bottom = C_UI.GetTopLeftNotchSafeRegion()
+tests/c_journal_defaults_probes.rs:13:            if #C_LootJournal.GetItemSets(1, 1) ~= 0 then return "sets" end
+tests/c_journal_defaults_probes.rs:14:            if #C_LootJournal.GetItemSetItems(1) ~= 0 then return "items" end
+tests/c_color_pvp_defaults_probes.rs:29:            if C_PvP.IsSoloShuffle() ~= false then return "solo-shuffle" end
+tests/c_character_services_probes.rs:101:                #C_CharacterServices.GetCharacterServiceDisplayInfo(),
+tests/c_character_services_probes.rs:102:                #C_CharacterServices.GetVASDistributions()
+tests/c_character_services_probes.rs:133:            C_CharacterServices.AssignPCTDistribution()
+src/lua_api/globals/create_frame/template_chain/attributes.rs:17:    crate::loader::append_xml_attributes_code(&mut code, frame, "SetAttributeNoHandler");
+tests/c_auction_house_bid_purchase.rs:2://! `PlaceBid`, `GetAuctionInfoByID`, `RequestOwnedAuctionBidderInfo`,
+tests/c_auction_house_bid_purchase.rs:190:        .eval("return C_AuctionHouse.GetAuctionInfoByID(42)")
+tests/c_auction_house_bid_purchase.rs:203:        .eval("return C_AuctionHouse.GetAuctionInfoByID(404)")
+tests/blizzard_glue_parent_loads.rs:324:             NOTCHED_DISPLAY_MODE_CHANGED), and the 3 EventRegistry callbacks \
+tests/blizzard_frame_xml_util_loads.rs:460:         _SetFadeInTime / _SetHoldTime / _SetFadeOutTime / _GetRemainingTime / \
+src/lua_api/globals/missing_surface/small_namespaces.rs:77:    ("GetCustomVictoryStatID", c_pvp_get_custom_victory_stat_id),
+src/lua_api/workarounds/temporary/click_bindings_defaults.rs:12:    removed.GetStringFromModifiers = true
+src/lua_api/workarounds/temporary/click_bindings_defaults.rs:13:    removed.MakeModifiers = true
+src/lua_api/workarounds/temporary/click_bindings_defaults.rs:17:if rawget(C_ClickBindings, "CanSpellBeClickBound") == nil then
+src/lua_api/workarounds/temporary/click_bindings_defaults.rs:18:    function C_ClickBindings.CanSpellBeClickBound(_spellID)
+src/lua_api/workarounds/temporary/click_bindings_defaults.rs:23:if rawget(C_ClickBindings, "ExecuteBinding") == nil then
+src/lua_api/workarounds/temporary/click_bindings_defaults.rs:24:    function C_ClickBindings.ExecuteBinding(_targetToken, _button, _modifiers)
+src/lua_api/workarounds/temporary/click_bindings_defaults.rs:32:if rawget(_G, "GetStringFromModifiers") == nil then
+src/lua_api/workarounds/temporary/click_bindings_defaults.rs:33:    function GetStringFromModifiers(_modifiers)
+src/lua_api/workarounds/temporary/click_bindings_defaults.rs:38:if publishLegacyNative and rawget(C_ClickBindings, "GetStringFromModifiers") == nil then
+src/lua_api/workarounds/temporary/click_bindings_defaults.rs:39:    function C_ClickBindings.GetStringFromModifiers(modifiers)
+src/lua_api/workarounds/temporary/click_bindings_defaults.rs:40:        return GetStringFromModifiers(modifiers)
+src/lua_api/workarounds/temporary/click_bindings_defaults.rs:44:if rawget(C_ClickBindings, "GetTutorialShown") == nil then
+src/lua_api/workarounds/temporary/click_bindings_defaults.rs:45:    function C_ClickBindings.GetTutorialShown()
+src/lua_api/workarounds/temporary/click_bindings_defaults.rs:50:if rawget(_G, "MakeModifiers") == nil then
+src/lua_api/workarounds/temporary/click_bindings_defaults.rs:51:    function MakeModifiers()
+src/lua_api/workarounds/temporary/click_bindings_defaults.rs:66:if publishLegacyNative and rawget(C_ClickBindings, "MakeModifiers") == nil then
+src/lua_api/workarounds/temporary/click_bindings_defaults.rs:67:    function C_ClickBindings.MakeModifiers()
+src/lua_api/workarounds/temporary/click_bindings_defaults.rs:68:        return MakeModifiers()
+src/lua_api/workarounds/temporary/click_bindings_defaults.rs:72:if rawget(C_ClickBindings, "SetTutorialShown") == nil then
+src/lua_api/workarounds/temporary/click_bindings_defaults.rs:73:    function C_ClickBindings.SetTutorialShown(_shown)
+src/lua_api/workarounds/temporary/click_bindings_defaults.rs:100:            .eval("return C_ClickBindings.GetBindingType('LeftButton', MakeModifiers())")
+src/lua_api/workarounds/temporary/click_bindings_defaults.rs:104:        env.exec("C_ClickBindings.ExecuteBinding('party1', 'LeftButton', 0)")
+src/lua_api/workarounds/temporary/click_bindings_defaults.rs:118:            .eval("return MakeModifiers()")
+src/lua_api/workarounds/temporary/click_bindings_defaults.rs:127:        let shifted_alt: i32 = env.eval("return MakeModifiers()").expect("held modifiers");
+src/lua_api/workarounds/temporary/click_bindings_defaults.rs:138:            function C_ClickBindings.GetBindingType(_button, _modifiers)
+src/lua_api/workarounds/temporary/click_bindings_defaults.rs:142:            function C_ClickBindings.ExecuteBinding(targetToken, _button, _modifiers)
+src/lua_api/workarounds/temporary/click_bindings_defaults.rs:154:                C_ClickBindings.ExecuteBinding("party2", "LeftButton", 0)
+src/lua_api/workarounds/temporary/click_bindings_defaults.rs:155:                return C_ClickBindings.GetBindingType("LeftButton", 0), _G.existingClickBindingTarget
+tests/blizzard_item_interaction_ui_loads.rs:171:         driven (C_ItemInteraction.GetItemInteractionInfo / GetChargeInfo) and resets every time \
+tests/blizzard_item_belt_frame_loads.rs:247:fn blizzard_item_belt_button_mixin_carries_two_spectate_methods(env: &WowLuaEnv) {
+src/lua_api/state_types/auction_house.rs:194:/// `C_AuctionHouse.GetAuctionInfoByID` can answer in O(1) without
+src/lua_api/state_types/auction_house.rs:196:/// `GetAuctionInfoByID` returns: `(owner, bid, buyout, deposit,
+tests/blizzard_spectate_frame_loads.rs:13:fn spectate_dir() -> PathBuf {
+tests/blizzard_spectate_frame_loads.rs:17:fn spectate_toc() -> PathBuf {
+tests/blizzard_spectate_frame_loads.rs:18:    spectate_dir().join("Blizzard_SpectateFrame.toc")
+tests/blizzard_spectate_frame_loads.rs:50:fn load_spectate_frame(env: &WowLuaEnv) {
+tests/blizzard_spectate_frame_loads.rs:51:    load_addon(&env.loader_env(), &spectate_toc())
+tests/blizzard_spectate_frame_loads.rs:57:    let resolved = find_toc_file(&spectate_dir()).expect("SpectateFrame TOC should resolve");
+tests/blizzard_spectate_frame_loads.rs:60:        spectate_toc(),
+tests/blizzard_spectate_frame_loads.rs:69:    let toc = TocFile::from_file(&spectate_toc()).expect("SpectateFrame TOC parses");
+tests/blizzard_spectate_frame_loads.rs:101:    let toc = TocFile::from_file(&spectate_toc()).expect("SpectateFrame TOC parses");
+tests/blizzard_spectate_frame_loads.rs:118:        "`## AllowLoad: Game` MUST exclude Login glue — spectate mode is \
+tests/blizzard_spectate_frame_loads.rs:127:    let raw = std::fs::read_to_string(spectate_toc()).expect("TOC reads utf-8");
+tests/blizzard_spectate_frame_loads.rs:157:    let toc = TocFile::from_file(&spectate_toc()).expect("TOC parses");
+tests/blizzard_spectate_frame_loads.rs:222:    load_spectate_frame(env);
+tests/blizzard_spectate_frame_loads.rs:262:    load_spectate_frame(env);
+tests/blizzard_spectate_frame_loads.rs:279:    load_spectate_frame(env);
+tests/blizzard_spectate_frame_loads.rs:294:             dispatches C_SpectatingUI.SpectateChange(self.spectateNext) \
+tests/blizzard_spectate_frame_loads.rs:299:             OnClick exits spectate mode then triggers \
+tests/blizzard_spectate_frame_loads.rs:307:fn spectate_frame_mixin_publishes_thirteen_canonical_methods(env: &WowLuaEnv) {
+tests/blizzard_spectate_frame_loads.rs:308:    load_spectate_frame(env);
+tests/blizzard_spectate_frame_loads.rs:336:    load_spectate_frame(env);
+tests/blizzard_spectate_frame_loads.rs:345:         spectateNext KeyValue boolean) and SetArrowText (writes both \
+tests/blizzard_spectate_frame_loads.rs:355:    load_spectate_frame(env);
+tests/blizzard_spectate_frame_loads.rs:375:    load_spectate_frame(env);
+tests/blizzard_spectate_frame_loads.rs:392:    load_spectate_frame(env);
+tests/blizzard_spectate_frame_loads.rs:412:    load_spectate_frame(env);
+tests/blizzard_spectate_frame_loads.rs:437:    load_spectate_frame(env);
+tests/blizzard_spectate_frame_loads.rs:457:fn named_spectate_frame_publishes_with_arrow_buttons_and_setallpoints(env: &WowLuaEnv) {
+tests/blizzard_spectate_frame_loads.rs:458:    load_spectate_frame(env);
+tests/blizzard_spectate_frame_loads.rs:479:         Texture (atlas plunderstorm-spectate-background, useAtlasSize), \
+tests/blizzard_spectate_frame_loads.rs:489:fn arrow_buttons_carry_spectate_next_key_value_booleans(env: &WowLuaEnv) {
+tests/blizzard_spectate_frame_loads.rs:490:    load_spectate_frame(env);
+tests/blizzard_spectate_frame_loads.rs:492:    let probe = "return tostring(SpectateFrameArrowLeft.spectateNext) \
+tests/blizzard_spectate_frame_loads.rs:493:                 .. ',' .. tostring(SpectateFrameArrowRight.spectateNext)";
+tests/blizzard_spectate_frame_loads.rs:494:    let report: String = env.eval(probe).expect("spectateNext probe");
+tests/blizzard_spectate_frame_loads.rs:497:        "SpectateFrameArrowLeft.spectateNext MUST be false and \
+tests/blizzard_spectate_frame_loads.rs:498:         SpectateFrameArrowRight.spectateNext MUST be true — declared \
+tests/blizzard_spectate_frame_loads.rs:499:         via `<KeyValue key=\"spectateNext\" value=\"false|true\" \
+tests/blizzard_spectate_frame_loads.rs:513:    load_spectate_frame(env);
+tests/blizzard_ui/blizzard_accessibilitytemplates/surface_mixins.rs:65:    "SetTextScale",
+tests/blizzard_ui/blizzard_accessibilitytemplates/behavior_text_size_manager.rs:22://! hasn't fired during a smoke load, so the eventual `SetTextScale` side
+tests/blizzard_ui/blizzard_accessibilitytemplates/behavior_text_size_manager.rs:82:             returns an empty list — downstream SetTextScale iterates this \
+tests/blizzard_ui/blizzard_accessibilitytemplates/behavior_text_size_manager.rs:98:             this, slider changes never propagate to UpdateFonts/SetTextScale \
+src/lua_api/workarounds/temporary/character_services_defaults.rs:22:if rawget(C_CharacterServices, "GetCharacterServiceDisplayInfo") == nil then
+src/lua_api/workarounds/temporary/character_services_defaults.rs:23:    function C_CharacterServices.GetCharacterServiceDisplayInfo()
+src/lua_api/workarounds/temporary/character_services_defaults.rs:28:if rawget(C_CharacterServices, "GetVASDistributions") == nil then
+src/lua_api/workarounds/temporary/character_services_defaults.rs:29:    function C_CharacterServices.GetVASDistributions()
+src/lua_api/workarounds/temporary/character_services_defaults.rs:51:if rawget(C_CharacterServices, "AssignPCTDistribution") == nil then
+src/lua_api/workarounds/temporary/character_services_defaults.rs:52:    function C_CharacterServices.AssignPCTDistribution()
+src/lua_api/workarounds/temporary/character_services_defaults.rs:74:                C_CharacterServices.AssignPCTDistribution()
+src/lua_api/workarounds/temporary/character_services_defaults.rs:78:                       #C_CharacterServices.GetCharacterServiceDisplayInfo(),
+src/lua_api/workarounds/temporary/character_services_defaults.rs:79:                       #C_CharacterServices.GetVASDistributions(),
+src/lua_api/globals/missing_surface/auction_house/registry_and_rows.rs:195:        "GetAuctionInfoByID",
+src/lua_api/workarounds/temporary/color_defaults.rs:193:  IsSoloShuffle = function()
+src/lua_api/workarounds/temporary/color_defaults.rs:326:                if C_PvP.IsSoloShuffle() ~= false then return "shuffle" end
