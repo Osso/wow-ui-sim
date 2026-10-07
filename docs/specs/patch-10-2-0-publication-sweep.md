@@ -4,11 +4,11 @@ Account for Warcraft Wiki page 12983, revision 6473470 (2025-09-15T16:50:03Z). [
 
 ## What it must do
 
-- [ ] Probe all 150 inventory occurrences against seventeen chronological later registers, 10.2.6 through 12.1.0; require exact reviewed gaps. Adding 10.2.5 is one list entry, not a new classifier.
-- [ ] Account for every inventory/extract occurrence once. Publication/absence, default values and event registration never imply signatures, populated DTOs, security or native parity.
-- [ ] Retail/PTR must not fabricate three unused C_Console members (`GetFontHeight`, `PrintAllMatchingCommands`, `SetFontHeight`) or register five retired legacy addon globals (`GetNumAddOns`, `IsAddOnLoaded`, `GetAddOnEnableState`, `IsAddOnLoadOnDemand`, `LoadAddOn`). Classic registrations, C_AddOns successors, GetAddOnMetadata and cached deprecation wrappers remain unchanged.
-- [ ] ClearParentKey removes existing child mappings from both Lua parent fields and Rust widget state; repeated clears preserve mappings owned by another child. Existing SetParentKey clearOtherKeys behavior remains.
-- [ ] Object methods use a Frame implementing that interface; removed movie scripts use MovieFrame:HasScript, never failed construction of a script-name frame.
+- [x] Probe all 150 inventory occurrences against seventeen chronological later registers, 10.2.6 through 12.1.0; require exact reviewed gaps. Adding 10.2.5 is one list entry, not a new classifier.
+- [x] Account for every inventory/extract occurrence once. Publication/absence, default values and event registration never imply signatures, populated DTOs, security or native parity.
+- [x] Retail/PTR must not fabricate three unused C_Console members (`GetFontHeight`, `PrintAllMatchingCommands`, `SetFontHeight`) or register five retired legacy addon globals (`GetNumAddOns`, `IsAddOnLoaded`, `GetAddOnEnableState`, `IsAddOnLoadOnDemand`, `LoadAddOn`). Classic registrations, C_AddOns successors, GetAddOnMetadata and cached deprecation wrappers remain unchanged.
+- [x] ClearParentKey removes existing child mappings from both Lua parent fields and Rust widget state; repeated clears preserve mappings owned by another child. Existing SetParentKey clearOtherKeys behavior remains.
+- [x] Object methods use a Frame implementing that interface; removed movie scripts use MovieFrame:HasScript, never failed construction of a script-name frame.
 
 ## How it works
 
@@ -39,3 +39,28 @@ Account for Warcraft Wiki page 12983, revision 6473470 (2025-09-15T16:50:03Z). [
 ## Out of scope
 
 Historical epochs, native parity, linked-page expansion, new placeholders, vendor/Blizzard cache changes, 3D rendering, full suites, push, merge and agent/model review.
+
+## Local proof
+
+Runtime/test revision `06326ad3e`. [Proof ledger](../../data/patch-api/evidence/10.2.0-session-2026-10-07/p1020-proof.json) binds commands, revisions and output hashes. Eight retirements and parent-key state have RED/GREEN proof; three behavior/probe tests, cached Game prefork, four existing SetParentKey cases and one cached groupfinder case pass at their recorded scopes. Negative control produces exactly one new failure, 30 → 31, expected exit 101. Twenty parser/extractor fixtures and eighteen byte-identical register regenerations pass. Formatting, Mists tests check (zero non-vendor warnings), retail build and exit-0 startup `[]` pass. Only existing iced vendor manifest warnings remain. Local targeted proof is not native or independent acceptance.
+
+| Patch | Rows | OK | Gaps | Isolated exit |
+|---|---:|---:|---:|---:|
+| 10.2.0 | 150 | 120 | 30 | 0 |
+| 10.2.6 | 220 | 200 | 20 | 0 |
+| 10.2.7 | 104 | 68 | 36 | 0 |
+| 11.0.0 | 495 | 329 | 166 | 0 |
+| 11.0.2 | 34 | 22 | 12 | 0 |
+| 11.0.5 | 48 | 38 | 10 | 0 |
+| 11.0.7 | 98 | 70 | 28 | 0 |
+| 11.1.0 | 116 | 97 | 19 | 0 |
+| 11.1.5 | 125 | 89 | 36 | 0 |
+| 11.1.7 | 48 | 40 | 8 | 0 |
+| 11.2.0 | 162 | 135 | 27 | 0 |
+| 11.2.5 | 163 | 118 | 45 | 0 |
+| 11.2.7 | 508 | 414 | 94 | 0 |
+| 12.0.0 | 1010 | 989 | 21 | 0 |
+| 12.0.1 | 225 | 222 | 3 | 0 |
+| 12.0.5 | 363 | 352 | 11 | 0 |
+| 12.0.7 | 174 | 171 | 3 | 0 |
+| 12.1.0 | 778 | 773 | 5 | 0 |

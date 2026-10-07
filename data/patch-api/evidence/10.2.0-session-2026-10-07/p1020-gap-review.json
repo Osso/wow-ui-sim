@@ -1,0 +1,1058 @@
+[
+  {
+    "source_id": "wt-global-api-C_AddOns.GetAddOnOptionalDependencies-75",
+    "symbol": "C_AddOns.GetAddOnOptionalDependencies",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Optional-dependency metadata needs a real query over parsed addon TOCs with indexed/name input and multiple-return ordering; lookup autostub is not explicit publication.",
+    "implementation_candidates": [],
+    "candidate_match_count": 0,
+    "candidate_search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_AddOns.ResetDisabledAddOns-83",
+    "symbol": "C_AddOns.ResetDisabledAddOns",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Resetting disabled-addon state needs defined per-character/account reset scope, persistence and reload behavior; publishing an inert reset would erase the missing state contract.",
+    "implementation_candidates": [],
+    "candidate_match_count": 0,
+    "candidate_search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_CVar.GetCVarInfo-87",
+    "symbol": "C_CVar.GetCVarInfo",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "CVar value/default storage does not establish the full metadata tuple, scope/read-only/secure flags or validation/error contract of this query.",
+    "implementation_candidates": [],
+    "candidate_match_count": 0,
+    "candidate_search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_Console.GetAllCommands-116",
+    "symbol": "C_Console.GetAllCommands",
+    "direction": "removed",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Existing C_Console registration shares the live CVar/command catalog producer with ConsoleGetAllCommands. Cached qualified searches find no consumer, but shared command classifier and existing console tests explicitly use the old namespace. Retiring this real modeled entry requires that consumer migration; left as an exact historical-removal gap, not credited as a Blizzard deprecation alias.",
+    "implementation_candidates": [
+      "src/lua_api/globals/register.rs:155:        \"ConsoleGetAllCommands\",",
+      "src/lua_api/globals/missing_surface/small_namespaces.rs:180:    (\"GetAllCommands\", crate::c_api::c_console::get_all_commands),"
+    ],
+    "candidate_match_count": 2,
+    "candidate_search_exit_code": 0
+  },
+  {
+    "source_id": "wt-global-api-C_Console.GetColorFromType-117",
+    "symbol": "C_Console.GetColorFromType",
+    "direction": "removed",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Existing explicit console-color producer is still registered under C_Console; cached bare-name matches use global ConsoleGetColorFromType. Namespace absence needs migration of the existing color producer/tests to the global successor without losing color values; no cached wrapper attribution or namespace-removal credit.",
+    "implementation_candidates": [
+      "src/lua_api/workarounds/temporary/formatting_utility_defaults.rs:272:if ConsoleGetColorFromType == nil then",
+      "src/lua_api/workarounds/temporary/formatting_utility_defaults.rs:273:  function ConsoleGetColorFromType(_colorType)",
+      "src/lua_api/workarounds/temporary/formatting_utility_defaults.rs:377:                if type(ConsoleGetColorFromType(0).GetRGB) ~= \"function\" then return \"console_color\" end",
+      "src/lua_api/globals/missing_surface/small_namespaces.rs:181:    (\"GetColorFromType\", c_console_get_color_from_type),"
+    ],
+    "candidate_match_count": 4,
+    "candidate_search_exit_code": 0
+  },
+  {
+    "source_id": "wt-global-api-C_Console.GetFontHeight-118",
+    "symbol": "C_Console.GetFontHeight",
+    "direction": "removed",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "closed bounded gap",
+    "reason": "Unused retail/PTR registration retired; namespace/global successors and classic registrations preserved. Qualified and disambiguated bare-name cached searches retained; no Blizzard wrapper removed.",
+    "implementation_candidates": [
+      "src/lua_api/globals/font_strings_collection/fonts.rs:84:    table_set_rust_fn_static(state, font_ref, \"GetFontHeight\", font_get_font_height)?;",
+      "src/c_api/patch_retired_members.rs:18:    &[\"GetFontHeight\", \"PrintAllMatchingCommands\", \"SetFontHeight\"],",
+      "src/lua_api/frame/methods/text_attribute_event/mod.rs:224:    table_set_rust_fn_static(state, table, \"GetFontHeight\", text::get_font_height)?;",
+      "src/lua_api/workarounds/temporary/formatting_utility_defaults.rs:278:if ConsoleGetFontHeight == nil then",
+      "src/lua_api/workarounds/temporary/formatting_utility_defaults.rs:279:  function ConsoleGetFontHeight()",
+      "src/lua_api/workarounds/temporary/formatting_utility_defaults.rs:376:                if ConsoleGetFontHeight() ~= 18 then return \"console_font\" end"
+    ],
+    "candidate_match_count": 6,
+    "candidate_search_exit_code": 0
+  },
+  {
+    "source_id": "wt-global-api-C_Console.PrintAllMatchingCommands-119",
+    "symbol": "C_Console.PrintAllMatchingCommands",
+    "direction": "removed",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "closed bounded gap",
+    "reason": "Unused retail/PTR registration retired; namespace/global successors and classic registrations preserved. Qualified and disambiguated bare-name cached searches retained; no Blizzard wrapper removed.",
+    "implementation_candidates": [
+      "src/c_api/patch_retired_members.rs:18:    &[\"GetFontHeight\", \"PrintAllMatchingCommands\", \"SetFontHeight\"],"
+    ],
+    "candidate_match_count": 1,
+    "candidate_search_exit_code": 0
+  },
+  {
+    "source_id": "wt-global-api-C_Console.SetFontHeight-120",
+    "symbol": "C_Console.SetFontHeight",
+    "direction": "removed",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "closed bounded gap",
+    "reason": "Unused retail/PTR registration retired; namespace/global successors and classic registrations preserved. Qualified and disambiguated bare-name cached searches retained; no Blizzard wrapper removed.",
+    "implementation_candidates": [
+      "src/c_api/patch_retired_members.rs:18:    &[\"GetFontHeight\", \"PrintAllMatchingCommands\", \"SetFontHeight\"],",
+      "src/lua_api/frame/methods/text_attribute_event/mod.rs:222:    table_set_rust_fn_static(state, table, \"SetFontHeight\", text::set_font_height)?;",
+      "src/lua_api/globals/font_strings_collection/fonts.rs:83:    table_set_rust_fn_static(state, font_ref, \"SetFontHeight\", font_set_font_height)?;",
+      "src/lua_api/workarounds/temporary/formatting_utility_defaults.rs:284:if ConsoleSetFontHeight == nil then",
+      "src/lua_api/workarounds/temporary/formatting_utility_defaults.rs:285:  function ConsoleSetFontHeight(fontHeightInPixels)",
+      "src/lua_api/workarounds/temporary/formatting_utility_defaults.rs:375:                ConsoleSetFontHeight(18)"
+    ],
+    "candidate_match_count": 6,
+    "candidate_search_exit_code": 0
+  },
+  {
+    "source_id": "wt-global-api-C_CurrencyInfo.GetDragonIslesSuppliesCurrencyID-86",
+    "symbol": "C_CurrencyInfo.GetDragonIslesSuppliesCurrencyID",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Requires explicit currency-record identity metadata for Dragon Isles supplies; generic currency storage and the removed CurrencyConsts field do not supply this API contract.",
+    "implementation_candidates": [],
+    "candidate_match_count": 0,
+    "candidate_search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_FriendList.SendWho-164",
+    "symbol": "C_FriendList.SendWho",
+    "direction": "changed",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Who-request origin, filtering, asynchronous query results and roster/chat delivery need a real Who query model; a namespace autostub cannot prove publication or the added origin argument.",
+    "implementation_candidates": [],
+    "candidate_match_count": 0,
+    "candidate_search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_LFGInfo.IsGroupFinderEnabled-88",
+    "symbol": "C_LFGInfo.IsGroupFinderEnabled",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Group-finder availability depends on modeled account/player access and queue policy; generic LFG data and an autostub do not publish this query.",
+    "implementation_candidates": [],
+    "candidate_match_count": 0,
+    "candidate_search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_LFGInfo.IsLFDEnabled-89",
+    "symbol": "C_LFGInfo.IsLFDEnabled",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Dungeon-finder availability needs player/account access and queue-policy state, distinct from the presence of LFG records.",
+    "implementation_candidates": [],
+    "candidate_match_count": 0,
+    "candidate_search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_LFGInfo.IsLFREnabled-90",
+    "symbol": "C_LFGInfo.IsLFREnabled",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Raid-finder availability needs player/account access and raid queue-policy state; no explicit producer currently published.",
+    "implementation_candidates": [],
+    "candidate_match_count": 0,
+    "candidate_search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_PartyInfo.GetMinItemLevel-92",
+    "symbol": "C_PartyInfo.GetMinItemLevel",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Requires a party-wide item-level aggregation contract and member metadata, not a constant derived from the local player alone.",
+    "implementation_candidates": [],
+    "candidate_match_count": 0,
+    "candidate_search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_PerksProgram.IsFrozenPerksVendorItem-94",
+    "symbol": "C_PerksProgram.IsFrozenPerksVendorItem",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Frozen Trading Post item identity and vendor-item linkage require perks vendor/account state; an inert boolean is not a meaningful fix.",
+    "implementation_candidates": [],
+    "candidate_match_count": 0,
+    "candidate_search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_PlayerInfo.IsDisplayRaceNative-96",
+    "symbol": "C_PlayerInfo.IsDisplayRaceNative",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Display/native-race comparison requires transformation/display identity state; generic unit race does not establish native display parity.",
+    "implementation_candidates": [],
+    "candidate_match_count": 0,
+    "candidate_search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_PlayerInfo.IsMirrorImage-97",
+    "symbol": "C_PlayerInfo.IsMirrorImage",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Requires mirror-image/transformation identity state; a false placeholder or unsupported model rendering supplies no proof.",
+    "implementation_candidates": [],
+    "candidate_match_count": 0,
+    "candidate_search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.IsBrawlSoloRBG-99",
+    "symbol": "C_PvP.IsBrawlSoloRBG",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Requires active/advertised brawl mode identity and Solo RBG classification, not generic PvP flags.",
+    "implementation_candidates": [],
+    "candidate_match_count": 0,
+    "candidate_search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_Texture.GetAtlasElementID-101",
+    "symbol": "C_Texture.GetAtlasElementID",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Atlas lookup currently exposes rendering metadata, not native element-ID identity. Requires a backing atlas element ID map and missing-name behavior.",
+    "implementation_candidates": [],
+    "candidate_match_count": 0,
+    "candidate_search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_Texture.GetAtlasID-102",
+    "symbol": "C_Texture.GetAtlasID",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Requires native atlas database ID metadata; existing named atlas dimensions/UVs cannot be substituted for a numeric atlas record identity.",
+    "implementation_candidates": [],
+    "candidate_match_count": 0,
+    "candidate_search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_Traits.CascadeRepurchaseRanks-166",
+    "symbol": "C_Traits.CascadeRepurchaseRanks",
+    "direction": "changed",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Cascade rank repurchase requires staged talent graph, entry-ID validation, dependencies and purchase ordering; a no-op would hide the model gap.",
+    "implementation_candidates": [],
+    "candidate_match_count": 0,
+    "candidate_search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_WeeklyRewards.GetDifficultyIDForActivityTier-103",
+    "symbol": "C_WeeklyRewards.GetDifficultyIDForActivityTier",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Requires activity-tier to difficulty-ID mapping and validation from weekly-reward data, not a guessed difficulty.",
+    "implementation_candidates": [],
+    "candidate_match_count": 0,
+    "candidate_search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_WeeklyRewards.GetNextActivitiesIncrease-104",
+    "symbol": "C_WeeklyRewards.GetNextActivitiesIncrease",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Next reward thresholds require weekly activity progress and tier rules with populated output contract.",
+    "implementation_candidates": [],
+    "candidate_match_count": 0,
+    "candidate_search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-C_WeeklyRewards.GetNumCompletedDungeonRuns-105",
+    "symbol": "C_WeeklyRewards.GetNumCompletedDungeonRuns",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Requires recorded dungeon-run completion history and counting policy, not a synthetic count.",
+    "implementation_candidates": [],
+    "candidate_match_count": 0,
+    "candidate_search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-ConsoleIsActive-109",
+    "symbol": "ConsoleIsActive",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Requires a console open/active lifecycle query synchronized with the simulated console UI; no explicit producer is published.",
+    "implementation_candidates": [],
+    "candidate_match_count": 0,
+    "candidate_search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-ConsolePrintAllMatchingCommands-110",
+    "symbol": "ConsolePrintAllMatchingCommands",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Needs observable matched-command output and console diagnostic sink behavior; adding an inert global would not be meaningful.",
+    "implementation_candidates": [],
+    "candidate_match_count": 0,
+    "candidate_search_exit_code": 1
+  },
+  {
+    "source_id": "wt-global-api-GetAddOnEnableState-126",
+    "symbol": "GetAddOnEnableState",
+    "direction": "removed",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "decision": "closed bounded gap",
+    "reason": "Unused retail/PTR registration retired; namespace/global successors and classic registrations preserved. Qualified and disambiguated bare-name cached searches retained; no Blizzard wrapper removed.",
+    "implementation_candidates": [
+      "src/c_api/c_addons_registration.rs:12:    (\"GetAddOnEnableState\", c_addons_get_addon_enable_state),",
+      "src/bin/wow_sim/addon_loading/tests.rs:72:        assert(C_AddOns.GetAddOnEnableState('LazyMetadata') == 2)",
+      "src/bin/wow_sim/addon_loading/tests.rs:134:        assert(C_AddOns.GetAddOnEnableState('DisabledLazyMetadata') == 0)",
+      "src/c_api/c_addons.rs:83:        \"GetAddOnEnableState\","
+    ],
+    "candidate_match_count": 4,
+    "candidate_search_exit_code": 0
+  },
+  {
+    "source_id": "wt-global-api-GetNumAddOns-130",
+    "symbol": "GetNumAddOns",
+    "direction": "removed",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "decision": "closed bounded gap",
+    "reason": "Unused retail/PTR registration retired; namespace/global successors and classic registrations preserved. Qualified and disambiguated bare-name cached searches retained; no Blizzard wrapper removed.",
+    "implementation_candidates": [
+      "src/bin/wow_sim/addon_loading/tests.rs:78:        MetadataAddonCount = C_AddOns.GetNumAddOns()",
+      "src/bin/wow_sim/addon_loading/tests.rs:98:        assert(C_AddOns.GetNumAddOns() == MetadataAddonCount)",
+      "src/bin/wow_sim/addon_loading/tests.rs:106:        assert(C_AddOns.GetNumAddOns() == MetadataAddonCount and EagerMetadataRuns == 1)",
+      "src/bin/wow_sim/addon_loading/tests.rs:136:        local before = C_AddOns.GetNumAddOns()",
+      "src/bin/wow_sim/addon_loading/tests.rs:140:        assert(C_AddOns.GetNumAddOns() == before)",
+      "src/bin/wow_sim/addon_loading/tests.rs:372:            for i = 1, C_AddOns.GetNumAddOns() do",
+      "src/c_api/c_addons.rs:73:    table_set_rust_fn_static(state, state.global, \"GetNumAddOns\", c_addons_get_num_addons)?;",
+      "src/c_api/c_addons_registration.rs:7:    (\"GetNumAddOns\", c_addons_get_num_addons),"
+    ],
+    "candidate_match_count": 8,
+    "candidate_search_exit_code": 0
+  },
+  {
+    "source_id": "wt-global-api-IsAddOnLoadOnDemand-132",
+    "symbol": "IsAddOnLoadOnDemand",
+    "direction": "removed",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "decision": "closed bounded gap",
+    "reason": "Unused retail/PTR registration retired; namespace/global successors and classic registrations preserved. Qualified and disambiguated bare-name cached searches retained; no Blizzard wrapper removed.",
+    "implementation_candidates": [
+      "src/bin/wow_sim/addon_loading/tests.rs:67:        assert(C_AddOns.IsAddOnLoadOnDemand('LazyMetadata'))",
+      "src/bin/wow_sim/addon_loading/tests.rs:68:        assert(C_AddOns.IsAddOnLoadOnDemand('Blizzard_LodMetadataDependency'))",
+      "src/bin/wow_sim/addon_loading/tests.rs:102:        assert(C_AddOns.IsAddOnLoadOnDemand('LazyMetadata'))",
+      "src/bin/wow_sim/addon_loading/tests.rs:131:        assert(C_AddOns.IsAddOnLoadOnDemand('DisabledLazyMetadata'))",
+      "src/c_api/c_addons_registration.rs:11:    (\"IsAddOnLoadOnDemand\", c_addons_is_addon_load_on_demand),",
+      "src/c_api/c_addons.rs:89:        \"IsAddOnLoadOnDemand\",",
+      "src/loader/tests/lua_loading.rs:268:                   C_AddOns.IsAddOnLoadOnDemand(\"Blizzard_BootstrapProbe\")"
+    ],
+    "candidate_match_count": 7,
+    "candidate_search_exit_code": 0
+  },
+  {
+    "source_id": "wt-global-api-IsAddOnLoaded-131",
+    "symbol": "IsAddOnLoaded",
+    "direction": "removed",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "decision": "closed bounded gap",
+    "reason": "Unused retail/PTR registration retired; namespace/global successors and classic registrations preserved. Qualified and disambiguated bare-name cached searches retained; no Blizzard wrapper removed.",
+    "implementation_candidates": [
+      "src/startup.rs:137:        if not C_AddOns or type(C_AddOns.LoadAddOn) ~= \"function\" or type(C_AddOns.IsAddOnLoaded) ~= \"function\" then",
+      "src/startup.rs:141:        if not C_AddOns.IsAddOnLoaded(\"Blizzard_PlayerSpells\") then",
+      "src/startup.rs:149:        return C_AddOns.IsAddOnLoaded(\"Blizzard_PlayerSpells\")",
+      "src/c_api/c_addons_registration.rs:9:    (\"IsAddOnLoaded\", c_addons_is_addon_loaded),",
+      "src/c_api/c_addons.rs:77:        \"IsAddOnLoaded\",",
+      "src/bin/wow_sim/addon_loading/tests.rs:74:        local loading, loaded = C_AddOns.IsAddOnLoaded('LazyMetadata')",
+      "src/bin/wow_sim/addon_loading/tests.rs:91:        assert(not C_AddOns.IsAddOnLoaded('Blizzard_LodMetadataDependency'))",
+      "src/bin/wow_sim/addon_loading/tests.rs:93:        local loading, loaded = C_AddOns.IsAddOnLoaded('LazyMetadata')",
+      "src/bin/wow_sim/addon_loading/tests.rs:97:        assert(C_AddOns.IsAddOnLoaded('Blizzard_LodMetadataDependency'))",
+      "src/bin/wow_sim/addon_loading/tests.rs:139:        assert(not C_AddOns.IsAddOnLoaded('DisabledLazyMetadata'))",
+      "src/bin/wow_sim/addon_loading/tests.rs:206:    std::fs::write(temp.path().join(\"B/bootstrap.lua\"), \"table.insert(order, 'B:bootstrap'); duringLoaded, duringFinished = C_AddOns.IsAddOnLoaded('B')\").unwrap();",
+      "src/bin/wow_sim/addon_loading/tests.rs:222:    env.exec(\"assert(table.concat(order, ',') == 'A,B:bootstrap,C', table.concat(order, ',')); assert(duringLoaded and not duringFinished); local loaded, finished = C_AddOns.IsAddOnLoaded('B'); assert(not loaded and not finished); assert(not loadedEvents.B); assert(loadedEvents.C)\").unwrap();"
+    ],
+    "candidate_match_count": 26,
+    "candidate_search_exit_code": 0
+  },
+  {
+    "source_id": "wt-global-api-LoadAddOn-157",
+    "symbol": "LoadAddOn",
+    "direction": "removed",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "decision": "closed bounded gap",
+    "reason": "Unused retail/PTR registration retired; namespace/global successors and classic registrations preserved. Qualified and disambiguated bare-name cached searches retained; no Blizzard wrapper removed.",
+    "implementation_candidates": [
+      "src/startup.rs:137:        if not C_AddOns or type(C_AddOns.LoadAddOn) ~= \"function\" or type(C_AddOns.IsAddOnLoaded) ~= \"function\" then",
+      "src/startup.rs:142:            C_AddOns.LoadAddOn(\"Blizzard_PlayerSpells\")",
+      "src/bin/wow_sim/gui_commands.rs:134:            C_AddOns.LoadAddOn(\"Blizzard_Collections\")",
+      "src/loader/load_addon_trace.rs:18:            Self::Lua => \"[lua LoadAddOn]\",",
+      "src/loader/load_addon_trace.rs:19:            Self::Xml => \"[xml LoadAddOn]\",",
+      "src/loader/load_addon_trace.rs:20:            Self::Toc => \"[toc LoadAddOn]\",",
+      "src/loader/load_addon_trace.rs:94:        assert_eq!(LoadAddonTraceOrigin::Lua.prefix(), \"[lua LoadAddOn]\");",
+      "src/loader/load_addon_trace.rs:95:        assert_eq!(LoadAddonTraceOrigin::Xml.prefix(), \"[xml LoadAddOn]\");",
+      "src/loader/load_addon_trace.rs:96:        assert_eq!(LoadAddonTraceOrigin::Toc.prefix(), \"[toc LoadAddOn]\");",
+      "src/bin/wow_sim/addon_loading/tests.rs:92:        assert(C_AddOns.LoadAddOn('LazyMetadata'))",
+      "src/bin/wow_sim/addon_loading/tests.rs:104:        assert(C_AddOns.LoadAddOn('LazyMetadata'))",
+      "src/bin/wow_sim/addon_loading/tests.rs:137:        local loaded, failure = C_AddOns.LoadAddOn('DisabledLazyMetadata')"
+    ],
+    "candidate_match_count": 65,
+    "candidate_search_exit_code": 0
+  },
+  {
+    "source_id": "wt-widgets-Button:LockHighlight-197",
+    "symbol": "Button:LockHighlight",
+    "direction": "removed",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Button; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Button; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Retained current inherited Frame highlight method: Blizzard_AutoComplete/AutoComplete.lua:252:\t\t_G[\"AutoCompleteButton\"..index]:LockHighlight();. Button calls still use the Frame-level method after migration; removing it from buttons would break current cached UI. Historical owner removal is not current inherited-method absence.",
+    "implementation_candidates": [
+      "src/cvars.yaml:1437:TargetPriorityCombatLockHighlight: '0'",
+      "src/lua_api/frame/methods/misc/highlight.rs:14:    table_set_rust_fn_static(state, mt, \"LockHighlight\", lock_highlight)?;"
+    ],
+    "candidate_match_count": 2,
+    "candidate_search_exit_code": 0
+  },
+  {
+    "source_id": "wt-widgets-Button:SetHighlightLocked-198",
+    "symbol": "Button:SetHighlightLocked",
+    "direction": "removed",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Button; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Button; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Retained current inherited Frame highlight method: Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseSharedTemplates.lua:401:function AuctionHouseItemDisplayMixin:SetHighlightLocked(locked). Button calls still use the Frame-level method after migration; removing it from buttons would break current cached UI. Historical owner removal is not current inherited-method absence.",
+    "implementation_candidates": [
+      "src/loader/tests/frame_state.rs:292:        MiscStateRootFrame:SetHighlightLocked(true)",
+      "src/loader/tests/frame_state.rs:301:        MiscStateRootFrame:SetHighlightLocked(false)",
+      "src/lua_api/frame/methods/misc/highlight.rs:21:    table_set_rust_fn_static(state, mt, \"SetHighlightLocked\", set_highlight_locked)?;"
+    ],
+    "candidate_match_count": 3,
+    "candidate_search_exit_code": 0
+  },
+  {
+    "source_id": "wt-widgets-Button:UnlockHighlight-199",
+    "symbol": "Button:UnlockHighlight",
+    "direction": "removed",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Button; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Button; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Retained current inherited Frame highlight method: Blizzard_ActionBar/Shared/VehicleLeaveButton.lua:47:\t\tself:UnlockHighlight();. Button calls still use the Frame-level method after migration; removing it from buttons would break current cached UI. Historical owner removal is not current inherited-method absence.",
+    "implementation_candidates": [
+      "src/lua_api/frame/methods/misc/highlight.rs:28:    table_set_rust_fn_static(state, mt, \"UnlockHighlight\", unlock_highlight)?;"
+    ],
+    "candidate_match_count": 1,
+    "candidate_search_exit_code": 0
+  },
+  {
+    "source_id": "wt-widgets-Line:GetHitRectThickness-186",
+    "symbol": "Line:GetHitRectThickness",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Line; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Line; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Line hit-test thickness has no published getter/backing hit-region contract. Rendering line thickness is not evidence of input hit thickness.",
+    "implementation_candidates": [],
+    "candidate_match_count": 0,
+    "candidate_search_exit_code": 1
+  },
+  {
+    "source_id": "wt-widgets-Line:SetHitRectThickness-187",
+    "symbol": "Line:SetHitRectThickness",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Line; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Line; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Needs modeled hit-region thickness updates and hit testing; storing an unused number is not a complete meaningful fix.",
+    "implementation_candidates": [],
+    "candidate_match_count": 0,
+    "candidate_search_exit_code": 1
+  },
+  {
+    "source_id": "wt-widgets-ModelSceneActor:ResetNextHandSlot-194",
+    "symbol": "ModelSceneActor:ResetNextHandSlot",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "ModelSceneActor; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "ModelSceneActor; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "3D actor equipment/hand-slot state is intentionally unsupported; no native model/reset behavior or explicit publication credit.",
+    "implementation_candidates": [],
+    "candidate_match_count": 0,
+    "candidate_search_exit_code": 1
+  },
+  {
+    "source_id": "wt-widgets-Object:ClearParentKey-180",
+    "symbol": "Object:ClearParentKey",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "factory: unknown frame type 'Object'",
+      "kind": "unprobeable",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Object; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "decision": "closed bounded gap",
+    "reason": "Corrected Object interface factory probes Frame, which exposes this method; bounded parent-key state proof in new behavior/prefork tests. No invented Object frame kind.",
+    "implementation_candidates": [
+      "src/lua_api/frame/methods/button_anchor_hierarchy/mod.rs:278:    table_set_rust_fn_static(state, table, \"ClearParentKey\", hierarchy::clear_parent_key)?;"
+    ],
+    "candidate_match_count": 1,
+    "candidate_search_exit_code": 0
+  },
+  {
+    "source_id": "wt-widgets-Object:SetParentKey-206",
+    "symbol": "Object:SetParentKey",
+    "direction": "changed",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "factory: unknown frame type 'Object'",
+      "kind": "unprobeable",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Object; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "decision": "closed bounded gap",
+    "reason": "Corrected Object interface factory probes Frame, which exposes this method; bounded parent-key state proof in new behavior/prefork tests. No invented Object frame kind.",
+    "implementation_candidates": [
+      "src/lua_api/frame/methods/button_anchor_hierarchy/mod.rs:277:    table_set_rust_fn_static(state, table, \"SetParentKey\", hierarchy::set_parent_key)?;",
+      "src/lua_api/methods.rs:210:    // SetParentKey on every OnShow pass; a no-op second pass must not",
+      "src/loader/tests/wow_api_globals/frames_and_attributes.rs:483:            child:SetParentKey(\"childFrame\")",
+      "src/loader/tests/wow_api_globals/frames_and_attributes.rs:485:            texture:SetParentKey(\"regionTexture\")",
+      "src/loader/tests/wow_api_globals/frames_and_attributes.rs:487:            fontString:SetParentKey(\"regionText\")",
+      "src/lua_api/workarounds/temporary/tooltip_nineslice_surface.rs:24:    if type(nineSlice.SetParentKey) == \"function\" then",
+      "src/lua_api/workarounds/temporary/tooltip_nineslice_surface.rs:25:        pcall(nineSlice.SetParentKey, nineSlice, \"NineSlice\", true)",
+      "src/lua_api/workarounds/temporary/tooltip_nineslice_surface.rs:70:                    SetParentKey = function(self, key, isGlobal)",
+      "src/lua_api/workarounds/temporary/chat_voice_button_surface.rs:38:            if type(icon.SetParentKey) == \"function\" then",
+      "src/lua_api/workarounds/temporary/chat_voice_button_surface.rs:39:                pcall(icon.SetParentKey, icon, \"Icon\", true)",
+      "src/lua_api/workarounds/temporary/chat_voice_button_surface.rs:121:                SetParentKey = function(self, key, propagate)",
+      "src/lua_api/workarounds/temporary/item_button_helper_defaults.rs:19:        if type(icon.SetParentKey) == \"function\" then"
+    ],
+    "candidate_match_count": 15,
+    "candidate_search_exit_code": 0
+  },
+  {
+    "source_id": "wt-widgets-TabardModel:IsGuildTabard-193",
+    "symbol": "TabardModel:IsGuildTabard",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "TabardModel; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "TabardModel; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Tabard model guild/personal state is intentionally unsupported with 3D models; a constant boolean would only be a placeholder.",
+    "implementation_candidates": [],
+    "candidate_match_count": 0,
+    "candidate_search_exit_code": 1
+  }
+]

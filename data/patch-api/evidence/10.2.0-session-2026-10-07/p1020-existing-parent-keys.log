@@ -1,0 +1,86 @@
+
+running 4 tests
+
+running 1 test
+test runtime_set_parent_key::runtime_set_parent_key_with_force_clears_existing_aliases ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10822 filtered out; finished in 0.19s
+
+
+running 1 test
+test runtime_set_parent_key::runtime_set_parent_key_exposes_child_on_parent_and_child_getter ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10822 filtered out; finished in 0.18s
+
+test runtime_set_parent_key::runtime_set_parent_key_with_force_clears_existing_aliases ... ok
+test runtime_set_parent_key::runtime_set_parent_key_exposes_child_on_parent_and_child_getter ... ok
+
+running 1 test
+test runtime_set_parent_key::runtime_set_parent_key_with_false_clear_existing_preserves_existing_aliases ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10822 filtered out; finished in 0.20s
+
+test runtime_set_parent_key::runtime_set_parent_key_with_false_clear_existing_preserves_existing_aliases ... ok
+
+running 1 test
+test runtime_set_parent_key::runtime_set_parent_key_without_force_keeps_existing_parent_key_alias ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10822 filtered out; finished in 0.20s
+
+test runtime_set_parent_key::runtime_set_parent_key_without_force_keeps_existing_parent_key_alias ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 10819 filtered out; finished in 0.44s
+
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.33s
+     Running tests/integration.rs (target/debug/deps/integration-aef10a2b503e13d5)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.003s] [Startup] SimState::default complete in 2.96ms
+[  0.003s] [Startup] rilua VM created in 134.26µs
+[  0.003s] [Startup] builtin frames initialized in 84.17µs
+[  0.003s] [Startup] template registry cleared in 8.75µs
+[  0.003s] [Startup] intrinsic templates registered in 8.93µs
+[  0.003s] [Startup] initial app_data lua handle installed in 621.00ns
+[  0.176s] [Startup] init_lua_state complete in 172.54ms
+[  0.176s] [Startup] final app_data lua handle installed in 330.00ns
+[  0.176s] [Startup] initial screen globals installed in 111.21µs
+[  0.176s] [Startup] WowLuaEnv::new complete
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 2.31ms
+[  0.002s] [Startup] rilua VM created in 121.86µs
+[  0.003s] [Startup] builtin frames initialized in 80.27µs
+[  0.003s] [Startup] template registry cleared in 3.52µs
+[  0.003s] [Startup] intrinsic templates registered in 6.17µs
+[  0.003s] [Startup] initial app_data lua handle installed in 390.00ns
+[  0.177s] [Startup] init_lua_state complete in 174.64ms
+[  0.177s] [Startup] final app_data lua handle installed in 260.00ns
+[  0.177s] [Startup] initial screen globals installed in 106.12µs
+[  0.177s] [Startup] WowLuaEnv::new complete
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.003s] [Startup] SimState::default complete in 2.55ms
+[  0.003s] [Startup] rilua VM created in 116.24µs
+[  0.003s] [Startup] builtin frames initialized in 101.50µs
+[  0.003s] [Startup] template registry cleared in 3.90µs
+[  0.003s] [Startup] intrinsic templates registered in 6.20µs
+[  0.003s] [Startup] initial app_data lua handle installed in 450.00ns
+[  0.195s] [Startup] init_lua_state complete in 191.96ms
+[  0.195s] [Startup] final app_data lua handle installed in 341.00ns
+[  0.195s] [Startup] initial screen globals installed in 146.13µs
+[  0.195s] [Startup] WowLuaEnv::new complete
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.003s] [Startup] SimState::default complete in 2.48ms
+[  0.003s] [Startup] rilua VM created in 114.65µs
+[  0.003s] [Startup] builtin frames initialized in 77.86µs
+[  0.003s] [Startup] template registry cleared in 8.70µs
+[  0.003s] [Startup] intrinsic templates registered in 10.73µs
+[  0.003s] [Startup] initial app_data lua handle installed in 651.00ns
+[  0.196s] [Startup] init_lua_state complete in 193.25ms
+[  0.196s] [Startup] final app_data lua handle installed in 341.00ns
+[  0.196s] [Startup] initial screen globals installed in 140.27µs
+[  0.196s] [Startup] WowLuaEnv::new complete

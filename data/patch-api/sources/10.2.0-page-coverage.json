@@ -1,0 +1,1988 @@
+{
+  "schema": "patch-page-coverage/v1",
+  "patch": "10.2.0",
+  "source_register": "data/patch-api/sources/10.2.0-wikitext-register.json",
+  "source_sha256": "beaf8a6dd57229712abf3366b8ffc29163e75aa827533e108d59b89f6c56b979",
+  "audit_status": "in-progress",
+  "proof_policy": "Complete source occurrence accounting against current retail 12.1.0. Seventeen chronological later registers; 10.2.5 independently pending integration. Publication/absence/default/event support is not signature, populated DTO, security or native parity. Ten discovery closures: eight retail-only retirements and two interface probe corrections; bounded parent-key behavior separately proven. Thirty exact publication gaps and five numeric-equal serialized CVar default mismatches retained. All substantive extract contracts remain pending. Local targeted proof only.",
+  "capabilities": [
+    {
+      "id": "publication-sweep-10-2-0",
+      "symbols": [
+        "150 inventory occurrences"
+      ],
+      "scope": "120 OK / 30 exact gaps; no full behavior parity",
+      "spec": "docs/specs/patch-10-2-0-publication-sweep.md",
+      "tests": [
+        "tests/patch_10_2_0_publication_sweep.rs",
+        "tests/patch_10_2_0_publication_fixes.rs",
+        "tests/patch_10_2_0_cached_surfaces.rs"
+      ],
+      "compiled_revision": "06326ad3e",
+      "ledger": "data/patch-api/evidence/10.2.0-session-2026-10-07/p1020-sweep-final-result.json",
+      "proof": "Eighteen isolated exact sweeps, RED/GREEN, bounded cached Game prefork and one-row negative control (30 to 31); formatting, Mists test check zero non-vendor warnings, retail build and startup [] pass."
+    },
+    {
+      "id": "parent-key-state-10-2-0",
+      "symbols": [
+        "Object:ClearParentKey",
+        "Object:SetParentKey"
+      ],
+      "scope": "Concrete Frame/Texture child mappings only; parentless, all object kinds, native protection/error and ambiguous multiple aliases not proved",
+      "spec": "docs/specs/patch-10-2-0-publication-sweep.md",
+      "tests": [
+        "tests/patch_10_2_0_publication_fixes.rs",
+        "tests/runtime_set_parent_key.rs",
+        "tests/patch_10_2_0_cached_surfaces.rs"
+      ],
+      "compiled_revision": "06326ad3e",
+      "ledger": "data/patch-api/evidence/10.2.0-session-2026-10-07/p1020-proof.json",
+      "proof": "New parent-key RED/GREEN and cached Game prefork; four existing SetParentKey cases retain their original bounded proof scope at 5b80a176a."
+    }
+  ],
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/10.2.0-api-changes.txt",
+    "sha256": "9354b5bfd77b78079a216766945da4ad04c979c2bb3b723cc5fd86adc73af5fd",
+    "wikitext_revid": 6473470,
+    "wikitext_sha256": "11c35f322614c8645658d9a601df1b3b60eb44e559a38bc8dfa48bf5a8f4d0a5",
+    "extract_tool": "tools/extract_patch_non_inventory.py"
+  },
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-C_AddOns.DisableAddOn-68",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_AddOns.DisableAllAddOns-69",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_AddOns.EnableAddOn-70",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_AddOns.EnableAllAddOns-71",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_AddOns.GetAddOnDependencies-72",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_AddOns.GetAddOnEnableState-73",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_AddOns.GetAddOnInfo-74",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_AddOns.GetAddOnOptionalDependencies-75",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Optional-dependency metadata needs a real query over parsed addon TOCs with indexed/name input and multiple-return ordering; lookup autostub is not explicit publication."
+    },
+    {
+      "source_id": "wt-global-api-C_AddOns.GetNumAddOns-76",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_AddOns.IsAddOnLoadable-77",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_AddOns.IsAddOnLoaded-78",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_AddOns.IsAddOnLoadOnDemand-79",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_AddOns.IsAddonVersionCheckEnabled-80",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_AddOns.LoadAddOn-81",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_AddOns.ResetAddOns-82",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_AddOns.ResetDisabledAddOns-83",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Resetting disabled-addon state needs defined per-character/account reset scope, persistence and reload behavior; publishing an inert reset would erase the missing state contract."
+    },
+    {
+      "source_id": "wt-global-api-C_AddOns.SaveAddOns-84",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_AddOns.SetAddonVersionCheck-85",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_CurrencyInfo.GetDragonIslesSuppliesCurrencyID-86",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires explicit currency-record identity metadata for Dragon Isles supplies; generic currency storage and the removed CurrencyConsts field do not supply this API contract."
+    },
+    {
+      "source_id": "wt-global-api-C_CVar.GetCVarInfo-87",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "CVar value/default storage does not establish the full metadata tuple, scope/read-only/secure flags or validation/error contract of this query."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGInfo.IsGroupFinderEnabled-88",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Group-finder availability depends on modeled account/player access and queue policy; generic LFG data and an autostub do not publish this query."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGInfo.IsLFDEnabled-89",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Dungeon-finder availability needs player/account access and queue-policy state, distinct from the presence of LFG records."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGInfo.IsLFREnabled-90",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Raid-finder availability needs player/account access and raid queue-policy state; no explicit producer currently published."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGInfo.IsPremadeGroupEnabled-91",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.GetMinItemLevel-92",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires a party-wide item-level aggregation contract and member metadata, not a constant derived from the local player alone."
+    },
+    {
+      "source_id": "wt-global-api-C_PerksActivities.GetPerksUIThemePrefix-93",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PerksProgram.IsFrozenPerksVendorItem-94",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Frozen Trading Post item identity and vendor-item linkage require perks vendor/account state; an inert boolean is not a meaningful fix."
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerInfo.GetNativeDisplayID-95",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerInfo.IsDisplayRaceNative-96",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Display/native-race comparison requires transformation/display identity state; generic unit race does not establish native display parity."
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerInfo.IsMirrorImage-97",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires mirror-image/transformation identity state; a false placeholder or unsupported model rendering supplies no proof."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetSoloRBGMinItemLevel-98",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.IsBrawlSoloRBG-99",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires active/advertised brawl mode identity and Solo RBG classification, not generic PvP flags."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.IsSoloRBG-100",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_Texture.GetAtlasElementID-101",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Atlas lookup currently exposes rendering metadata, not native element-ID identity. Requires a backing atlas element ID map and missing-name behavior."
+    },
+    {
+      "source_id": "wt-global-api-C_Texture.GetAtlasID-102",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires native atlas database ID metadata; existing named atlas dimensions/UVs cannot be substituted for a numeric atlas record identity."
+    },
+    {
+      "source_id": "wt-global-api-C_WeeklyRewards.GetDifficultyIDForActivityTier-103",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires activity-tier to difficulty-ID mapping and validation from weekly-reward data, not a guessed difficulty."
+    },
+    {
+      "source_id": "wt-global-api-C_WeeklyRewards.GetNextActivitiesIncrease-104",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Next reward thresholds require weekly activity progress and tier rules with populated output contract."
+    },
+    {
+      "source_id": "wt-global-api-C_WeeklyRewards.GetNumCompletedDungeonRuns-105",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires recorded dungeon-run completion history and counting policy, not a synthetic count."
+    },
+    {
+      "source_id": "wt-global-api-ConsoleGetAllCommands-106",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-ConsoleGetColorFromType-107",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-ConsoleGetFontHeight-108",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-ConsoleIsActive-109",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Requires a console open/active lifecycle query synchronized with the simulated console UI; no explicit producer is published."
+    },
+    {
+      "source_id": "wt-global-api-ConsolePrintAllMatchingCommands-110",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs observable matched-command output and console diagnostic sink behavior; adding an inert global would not be meaningful."
+    },
+    {
+      "source_id": "wt-global-api-ConsoleSetFontHeight-111",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-CreateWindow-112",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-LaunchURL-113",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_Console.GetAllCommands-116",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Existing C_Console registration shares the live CVar/command catalog producer with ConsoleGetAllCommands. Cached qualified searches find no consumer, but shared command classifier and existing console tests explicitly use the old namespace. Retiring this real modeled entry requires that consumer migration; left as an exact historical-removal gap, not credited as a Blizzard deprecation alias."
+    },
+    {
+      "source_id": "wt-global-api-C_Console.GetColorFromType-117",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Existing explicit console-color producer is still registered under C_Console; cached bare-name matches use global ConsoleGetColorFromType. Namespace absence needs migration of the existing color producer/tests to the global successor without losing color values; no cached wrapper attribution or namespace-removal credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Console.GetFontHeight-118",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-C_Console.PrintAllMatchingCommands-119",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-C_Console.SetFontHeight-120",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-DisableAddOn-121",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-DisableAllAddOns-122",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-EnableAddOn-123",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-EnableAllAddOns-124",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-GetAddOnDependencies-125",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-GetAddOnEnableState-126",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-GetAddOnInfo-127",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-GetAddOnOptionalDependencies-128",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-GetCVarInfo-129",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-GetNumAddOns-130",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-IsAddOnLoaded-131",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-IsAddOnLoadOnDemand-132",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-IsAddonVersionCheckEnabled-133",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-IsCompetitiveModeEnabled-134",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-KBArticle_BeginLoading-135",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-KBArticle_GetData-136",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-KBArticle_IsLoaded-137",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-KBQuery_BeginLoading-138",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-KBQuery_GetArticleHeaderCount-139",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-KBQuery_GetArticleHeaderData-140",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-KBQuery_GetTotalArticleCount-141",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-KBQuery_IsLoaded-142",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-KBSetup_BeginLoading-143",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-KBSetup_GetArticleHeaderCount-144",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-KBSetup_GetArticleHeaderData-145",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-KBSetup_GetCategoryCount-146",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-KBSetup_GetCategoryData-147",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-KBSetup_GetLanguageCount-148",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-KBSetup_GetLanguageData-149",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-KBSetup_GetSubCategoryCount-150",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-KBSetup_GetSubCategoryData-151",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-KBSetup_GetTotalArticleCount-152",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-KBSetup_IsLoaded-153",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-KBSystem_GetMOTD-154",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-KBSystem_GetServerNotice-155",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-KBSystem_GetServerStatus-156",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-LoadAddOn-157",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-ResetAddOns-158",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-ResetDisabledAddOns-159",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-SaveAddOns-160",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-SetAddonVersionCheck-161",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-global-api-C_FriendList.SendWho-164",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Who-request origin, filtering, asynchronous query results and roster/chat delivery need a real Who query model; a namespace autostub cannot prove publication or the added origin argument."
+    },
+    {
+      "source_id": "wt-global-api-C_Traits.CascadeRepurchaseRanks-166",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cascade rank repurchase requires staged talent graph, entry-ID validation, dependencies and purchase ordering; a no-op would hide the model gap."
+    },
+    {
+      "source_id": "wt-global-api-C_Traits.RefundRank-168",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-global-api-C_Traits.SetSelection-170",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-widgets-Object:ClearParentKey-180",
+      "capabilities": [
+        "publication-sweep-10-2-0",
+        "parent-key-state-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Frame implements Object interface. Concrete child/texture key set/clear, forced rename and repeated clear preserve other-child mappings in Lua and Rust. General object kinds, native errors/protection and unsupported parentless/alias behavior remain unproved."
+    },
+    {
+      "source_id": "wt-widgets-TextureBase:ClearTextureSlice-181",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-widgets-TextureBase:GetTextureSliceMargins-182",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-widgets-TextureBase:GetTextureSliceMode-183",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-widgets-TextureBase:SetTextureSliceMargins-184",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-widgets-TextureBase:SetTextureSliceMode-185",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-widgets-Line:GetHitRectThickness-186",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Line hit-test thickness has no published getter/backing hit-region contract. Rendering line thickness is not evidence of input hit thickness."
+    },
+    {
+      "source_id": "wt-widgets-Line:SetHitRectThickness-187",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs modeled hit-region thickness updates and hit testing; storing an unused number is not a complete meaningful fix."
+    },
+    {
+      "source_id": "wt-widgets-Frame:GetWindow-188",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-widgets-Frame:LockHighlight-189",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-widgets-Frame:SetHighlightLocked-190",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-widgets-Frame:SetWindow-191",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-widgets-Frame:UnlockHighlight-192",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-widgets-TabardModel:IsGuildTabard-193",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Tabard model guild/personal state is intentionally unsupported with 3D models; a constant boolean would only be a placeholder."
+    },
+    {
+      "source_id": "wt-widgets-ModelSceneActor:ResetNextHandSlot-194",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "3D actor equipment/hand-slot state is intentionally unsupported; no native model/reset behavior or explicit publication credit."
+    },
+    {
+      "source_id": "wt-widgets-Button:LockHighlight-197",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained current inherited Frame highlight method: Blizzard_AutoComplete/AutoComplete.lua:252:\t\t_G[\"AutoCompleteButton\"..index]:LockHighlight();. Button calls still use the Frame-level method after migration; removing it from buttons would break current cached UI. Historical owner removal is not current inherited-method absence."
+    },
+    {
+      "source_id": "wt-widgets-Button:SetHighlightLocked-198",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained current inherited Frame highlight method: Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseSharedTemplates.lua:401:function AuctionHouseItemDisplayMixin:SetHighlightLocked(locked). Button calls still use the Frame-level method after migration; removing it from buttons would break current cached UI. Historical owner removal is not current inherited-method absence."
+    },
+    {
+      "source_id": "wt-widgets-Button:UnlockHighlight-199",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained current inherited Frame highlight method: Blizzard_ActionBar/Shared/VehicleLeaveButton.lua:47:\t\tself:UnlockHighlight();. Button calls still use the Frame-level method after migration; removing it from buttons would break current cached UI. Historical owner removal is not current inherited-method absence."
+    },
+    {
+      "source_id": "wt-widgets-OnMovieHideSubtitle-202",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-widgets-OnMovieShowSubtitle-203",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-widgets-Object:SetParentKey-206",
+      "capabilities": [
+        "publication-sweep-10-2-0",
+        "parent-key-state-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Frame implements Object interface. Concrete child/texture key set/clear, forced rename and repeated clear preserve other-child mappings in Lua and Rust. General object kinds, native errors/protection and unsupported parentless/alias behavior remain unproved."
+    },
+    {
+      "source_id": "wt-events-ACTION_USABLE_CHANGED-216",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-events-GLUE_SCREENSHOT_STARTED-217",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-events-GLUE_SCREENSHOT_SUCCEEDED-218",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-events-SHOW_SUBTITLE-219",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-events-EXECUTE_CHAT_LINE-222",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-events-KNOWLEDGE_BASE_ARTICLE_LOAD_FAILURE-223",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-events-KNOWLEDGE_BASE_ARTICLE_LOAD_SUCCESS-224",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-events-KNOWLEDGE_BASE_QUERY_LOAD_FAILURE-225",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-events-KNOWLEDGE_BASE_QUERY_LOAD_SUCCESS-226",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-events-KNOWLEDGE_BASE_SERVER_MESSAGE-227",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-events-KNOWLEDGE_BASE_SETUP_LOAD_FAILURE-228",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-events-KNOWLEDGE_BASE_SETUP_LOAD_SUCCESS-229",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-events-KNOWLEDGE_BASE_SYSTEM_MOTD_UPDATED-230",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-events-GOSSIP_CLOSED-233",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-events-PVP_ROLE_POPUP_HIDE-235",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-cvars-advFlyKeyboardMaxPitchFactor-245",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication passes, but exact default-string contract is unproved: page 5.0 versus current 5.000000. Numeric equivalence does not supply historical serialized-default proof."
+    },
+    {
+      "source_id": "wt-cvars-advFlyKeyboardMaxTurnFactor-246",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication passes, but exact default-string contract is unproved: page 8.0 versus current 8.000000. Numeric equivalence does not supply historical serialized-default proof."
+    },
+    {
+      "source_id": "wt-cvars-advFlyKeyboardMinPitchFactor-247",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication passes, but exact default-string contract is unproved: page 2.5 versus current 2.500000. Numeric equivalence does not supply historical serialized-default proof."
+    },
+    {
+      "source_id": "wt-cvars-advFlyKeyboardMinTurnFactor-248",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication passes, but exact default-string contract is unproved: page 5.0 versus current 5.000000. Numeric equivalence does not supply historical serialized-default proof."
+    },
+    {
+      "source_id": "wt-cvars-advFlyPitchControlCameraChase-249",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Publication passes, but exact default-string contract is unproved: page 20.0 versus current 20.000000. Numeric equivalence does not supply historical serialized-default proof."
+    },
+    {
+      "source_id": "wt-cvars-advFlyPitchControlGroundDebounce-250",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-cvars-advFlyPitchControl-251",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-cvars-gxMTAlphaPass-252",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-cvars-gxMTRefraction-253",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-cvars-gxMTVolFog-254",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-cvars-lastRenownForMajorFaction2574-255",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-cvars-ThreadPoolLimitHP-256",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-cvars-ThreadPoolLimitLP-257",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-cvars-ThreadPoolLimitMP-258",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Explicit publication/value/event registration only; signature, populated output, security and native/historical parity unproved."
+    },
+    {
+      "source_id": "wt-cvars-dragonRidingPitchSensitivity-261",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-cvars-dragonRidingTurnSensitivity-262",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-cvars-gxMTAlphaWater-263",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "wt-cvars-gxMTParticulateVolumes-264",
+      "capabilities": [
+        "publication-sweep-10-2-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence, script support absence or loaded cached deprecation wrapper/alias only; wrapper call behavior/security remains unproved. Blizzard wrappers preserved."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Texture slicing render/layout contract needs nine-piece tiling/stretching and corner-preserving screenshot geometry; publication alone is not rendering proof."
+    },
+    {
+      "source_id": "prose-undated-005",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Addon namespace migration needs per-function input, output, errors and security parity; namespace publication does not prove all aliases or behavior."
+    },
+    {
+      "source_id": "prose-undated-006",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "GetAddOnEnableState parameter-order migration needs fixtures for character and addon identity in both legacy/current orders; retirement only proves current publication boundary."
+    },
+    {
+      "source_id": "prose-undated-007",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Deprecated alias existence/future-removal statement needs exact loaded wrapper attribution and call parity; no blanket removal authorization."
+    },
+    {
+      "source_id": "prose-undated-008",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "C_CVar.GetCVarInfo migration lacks explicit namespace metadata producer and tuple/error contract; legacy name removal or an autostub is not behavioral parity."
+    },
+    {
+      "source_id": "prose-undated-009",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "SetPortraitToTexture needs exact texture-object acceptance and named-string rejection fixtures; no argument-type or error proof from inventory."
+    },
+    {
+      "source_id": "prose-undated-010",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "C_Console namespace removal is partial: three unused members retired, two real existing namespace producers retained pending successor/consumer migration. No complete namespace-removal credit."
+    },
+    {
+      "source_id": "prose-undated-011",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial documentation/reference context; no runtime contract or credit."
+    },
+    {
+      "source_id": "prose-undated-012",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial documentation/reference context; no runtime contract or credit."
+    },
+    {
+      "source_id": "prose-undated-013",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Addon load timing needs real process/load-order tests before FrameXML completion; current cached Game startup alone is not proof of prohibited early loads."
+    },
+    {
+      "source_id": "prose-undated-014",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "New-character addon enable defaults require persisted character/account fixture transitions; ordinary registration does not prove new-character behavior."
+    },
+    {
+      "source_id": "prose-undated-015",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "NaN table-key rejection requires direct rilua assignment/lookup error fixtures; no VM semantic proof in this publication sweep."
+    },
+    {
+      "source_id": "prose-undated-016",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "CheckInteractDistance and IsItemInRange require combat/insecure-call rejection fixtures at the security boundary; no protected-call parity credit."
+    },
+    {
+      "source_id": "source-context-018",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-019",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-020",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-021",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-022",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-024",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-026",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: A new texture slicing system has been implemented that allows a single Texture object to render a grid of nine sub-textures without distortion at the corners. The edges and central fill of the rendered texture can be configured to either tile or stretch across their respective dimensions."
+    },
+    {
+      "source_id": "prose-undated-028",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: This system is recommended to be used in new code going forward as a replacement for both the deprecated Backdrop system and the script-based NineSlice panel layout utility. One of the advantages of this new system is that it only requires a single texture object to render the grid, whereas both the old systems required nine separate objects. This system is fully compatible with custom texture assets and does not require the use of atlases."
+    },
+    {
+      "source_id": "prose-undated-030",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: To use this system from Lua the TextureBase:SetTextureSliceMargins method should be called to specify the pixel margins that represent the edges of the underlying asset. The TextureBase:SetTextureSliceMode method controls whether or not the central portion of the texture and its surrounding edges will be tiled or stretched, with the default being stretched. The below example demonstrates the usage of these APIs."
+    },
+    {
+      "source_id": "prose-undated-033",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: local SliceDemo = CreateFrame(\"Frame\", nil, UIParent);"
+    },
+    {
+      "source_id": "prose-undated-034",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: SliceDemo:SetPoint(\"CENTER\");"
+    },
+    {
+      "source_id": "prose-undated-035",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: SliceDemo:SetSize(256, 256);"
+    },
+    {
+      "source_id": "prose-undated-036",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: SliceDemo:SetResizable(true);"
+    },
+    {
+      "source_id": "prose-undated-038",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: SliceDemo.Texture = SliceDemo:CreateTexture();"
+    },
+    {
+      "source_id": "prose-undated-039",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: SliceDemo.Texture:SetTexture(interface/soulbinds/soulbindsconduitpendinganimationmask)"
+    },
+    {
+      "source_id": "prose-undated-040",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: SliceDemo.Texture:SetTextureSliceMargins(24, 24, 24, 24);"
+    },
+    {
+      "source_id": "prose-undated-041",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: SliceDemo.Texture:SetTextureSliceMode(Enum.UITextureSliceMode.Tiled);"
+    },
+    {
+      "source_id": "prose-undated-042",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: SliceDemo.Texture:SetAllPoints(SliceDemo);"
+    },
+    {
+      "source_id": "prose-undated-043",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: SliceDemo.Texture:SetVertexColor(0, 1, 0);"
+    },
+    {
+      "source_id": "prose-undated-045",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: SliceDemo.ResizeButton = CreateFrame(\"Button\", nil, SliceDemo, \"PanelResizeButtonTemplate\");"
+    },
+    {
+      "source_id": "prose-undated-046",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: SliceDemo.ResizeButton:SetPoint(\"BOTTOMRIGHT\");"
+    },
+    {
+      "source_id": "prose-undated-047",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: SliceDemo.ResizeButton:Init(SliceDemo, 64, 64, 512, 512);"
+    },
+    {
+      "source_id": "prose-undated-050",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: The following new elements in XML can be supplied when defining a Texture object to configure this functionality."
+    },
+    {
+      "source_id": "prose-undated-052",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: <Texture file=\"interface/soulbinds/soulbindsconduitpendinganimationmask\">"
+    },
+    {
+      "source_id": "prose-undated-053",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: <TextureSliceMargins left=\"24\" right=\"24\" top=\"24\" bottom=\"24\"/>"
+    },
+    {
+      "source_id": "prose-undated-054",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: <TextureSliceMode mode=\"Tiled\"/>  <!-- Can be \"Tiled\" or \"Stretched\" -->"
+    },
+    {
+      "source_id": "prose-undated-055",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: </Texture>"
+    },
+    {
+      "source_id": "source-context-057",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-058",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "enumerations-Enum-AccountStateFlags-059",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.AccountStateFlags: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: Enum.AccountStateFlags"
+    },
+    {
+      "source_id": "enumerations-Enum-AccountStateFlags-060",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.AccountStateFlags: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + PerksPendingPurchaseLoaded = 0x0000000080000000"
+    },
+    {
+      "source_id": "enumerations-Enum-AccountStateFlags-061",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.AccountStateFlags: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + WoWTokenPurchaseLoaded = 0x0000001000000000"
+    },
+    {
+      "source_id": "enumerations-Enum-BrawlType-062",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.BrawlType: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: Enum.BrawlType"
+    },
+    {
+      "source_id": "enumerations-Enum-BrawlType-063",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.BrawlType: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + SoloRbg = 5"
+    },
+    {
+      "source_id": "enumerations-Enum-ChrCustomizationCategoryFlag-064",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.ChrCustomizationCategoryFlag: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: Enum.ChrCustomizationCategoryFlag"
+    },
+    {
+      "source_id": "enumerations-Enum-ChrCustomizationCategoryFlag-065",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.ChrCustomizationCategoryFlag: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + Subcategory = 2"
+    },
+    {
+      "source_id": "enumerations-Enum-CurrencyGainFlags-066",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.CurrencyGainFlags: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: Enum.CurrencyGainFlags"
+    },
+    {
+      "source_id": "enumerations-Enum-CurrencyGainFlags-067",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.CurrencyGainFlags: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + None = 0"
+    },
+    {
+      "source_id": "enumerations-Enum-CurrencySource-068",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.CurrencySource: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: Enum.CurrencySource"
+    },
+    {
+      "source_id": "enumerations-Enum-CurrencySource-069",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.CurrencySource: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: # QuestRewardIgnoreCaps -> QuestRewardIgnoreCapsDeprecated"
+    },
+    {
+      "source_id": "enumerations-Enum-CurrencySource-070",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.CurrencySource: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: # WorldQuestRewardIgnoreCaps -> WorldQuestRewardIgnoreCapsDeprecated"
+    },
+    {
+      "source_id": "enumerations-Enum-CurrencySource-071",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.CurrencySource: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + ConvertItemsToCurrencyAndReputation = 62"
+    },
+    {
+      "source_id": "enumerations-Enum-CurrencySource-072",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.CurrencySource: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + PhBuffer_63 = 63"
+    },
+    {
+      "source_id": "enumerations-Enum-CurrencySource-073",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.CurrencySource: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + PhBuffer_64 = 64"
+    },
+    {
+      "source_id": "enumerations-Enum-EventToastDisplayType-074",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.EventToastDisplayType: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: Enum.EventToastDisplayType"
+    },
+    {
+      "source_id": "enumerations-Enum-EventToastDisplayType-075",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.EventToastDisplayType: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + WeeklyRewardUnlock = 9"
+    },
+    {
+      "source_id": "enumerations-Enum-EventToastDisplayType-076",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.EventToastDisplayType: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + WeeklyRewardUpgrade = 10"
+    },
+    {
+      "source_id": "enumerations-Enum-EventToastEventType-077",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.EventToastEventType: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: Enum.EventToastEventType"
+    },
+    {
+      "source_id": "enumerations-Enum-EventToastEventType-078",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.EventToastEventType: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + WeeklyRewardUnlock = 23"
+    },
+    {
+      "source_id": "enumerations-Enum-EventToastEventType-079",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.EventToastEventType: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + WeeklyRewardUpgrade = 24,"
+    },
+    {
+      "source_id": "enumerations-Enum-GossipNpcOption-080",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.GossipNpcOption: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: Enum.GossipNpcOption"
+    },
+    {
+      "source_id": "enumerations-Enum-GossipNpcOption-081",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.GossipNpcOption: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: # TabardVendor -> GuildTabardVendor"
+    },
+    {
+      "source_id": "enumerations-Enum-GossipNpcOption-082",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.GossipNpcOption: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + PersonalTabardVendor = 54"
+    },
+    {
+      "source_id": "enumerations-Enum-ItemDisplayTextDisplayStyle-083",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.ItemDisplayTextDisplayStyle: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: Enum.ItemDisplayTextDisplayStyle"
+    },
+    {
+      "source_id": "enumerations-Enum-ItemDisplayTextDisplayStyle-084",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.ItemDisplayTextDisplayStyle: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + PlayerChoiceReward = 3"
+    },
+    {
+      "source_id": "enumerations-Enum-LinkedCurrencyFlags-085",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.LinkedCurrencyFlags: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: Enum.LinkedCurrencyFlags"
+    },
+    {
+      "source_id": "enumerations-Enum-LinkedCurrencyFlags-086",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.LinkedCurrencyFlags: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + AddIgnoresMax = 0x8"
+    },
+    {
+      "source_id": "enumerations-Enum-PlayerInteractionType-087",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.PlayerInteractionType: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: Enum.PlayerInteractionType"
+    },
+    {
+      "source_id": "enumerations-Enum-PlayerInteractionType-088",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.PlayerInteractionType: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: # TabardVendor -> GuildTabardVendor"
+    },
+    {
+      "source_id": "enumerations-Enum-PlayerInteractionType-089",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.PlayerInteractionType: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + PersonalTabardVendor = 65"
+    },
+    {
+      "source_id": "enumerations-Enum-UIMapFlag-090",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.UIMapFlag: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: Enum.UIMapFlag"
+    },
+    {
+      "source_id": "enumerations-Enum-UIMapFlag-091",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum.UIMapFlag: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + DoNotShowOnNavbar = 0x80000"
+    },
+    {
+      "source_id": "source-context-093",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-094",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "CurrencyConsts: constant publication/value or removed-member absence requires a direct assertion; native identity not inferred from another API. Retained contract: CurrencyConsts"
+    },
+    {
+      "source_id": "prose-undated-095",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "CurrencyConsts: constant publication/value or removed-member absence requires a direct assertion; native identity not inferred from another API. Retained contract: - DRAGON_ISLES_SUPPLIES_CURRENCY_ID"
+    },
+    {
+      "source_id": "prose-undated-096",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "ItemConsts: constant publication/value or removed-member absence requires a direct assertion; native identity not inferred from another API. Retained contract: ItemConsts"
+    },
+    {
+      "source_id": "prose-undated-097",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "ItemConsts: constant publication/value or removed-member absence requires a direct assertion; native identity not inferred from another API. Retained contract: + MAX_LOOT_OBJECT_ITEMS = 31"
+    },
+    {
+      "source_id": "source-context-099",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "structures-AtlasInfo-100",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "AtlasInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: AtlasInfo"
+    },
+    {
+      "source_id": "structures-AtlasInfo-101",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "AtlasInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: + rawSize"
+    },
+    {
+      "source_id": "structures-AtlasInfo-102",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "AtlasInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: + sliceData"
+    },
+    {
+      "source_id": "structures-CharCustomizationCategory-103",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "CharCustomizationCategory: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: CharCustomizationCategory"
+    },
+    {
+      "source_id": "structures-CharCustomizationCategory-104",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "CharCustomizationCategory: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: + subcategory"
+    },
+    {
+      "source_id": "structures-ItemUpgradeSeasonalCostType-105",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "ItemUpgradeSeasonalCostType: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: ItemUpgradeSeasonalCostType"
+    },
+    {
+      "source_id": "structures-ItemUpgradeSeasonalCostType-106",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "ItemUpgradeSeasonalCostType: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: # itemID, Nilable: false -> true"
+    },
+    {
+      "source_id": "structures-ItemUpgradeSeasonalCostType-107",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "ItemUpgradeSeasonalCostType: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: + currencyID"
+    },
+    {
+      "source_id": "structures-PerksVendorItemInfo-108",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "PerksVendorItemInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: PerksVendorItemInfo"
+    },
+    {
+      "source_id": "structures-PerksVendorItemInfo-109",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "PerksVendorItemInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: # pending -> isPurchasePending"
+    },
+    {
+      "source_id": "structures-PerksVendorItemInfo-110",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "PerksVendorItemInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: + uiGroupInfo"
+    },
+    {
+      "source_id": "structures-PvpBrawlInfo-111",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "PvpBrawlInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: PvpBrawlInfo"
+    },
+    {
+      "source_id": "structures-PvpBrawlInfo-112",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "PvpBrawlInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: + minItemLevel"
+    },
+    {
+      "source_id": "structures-QuestInfo-113",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "QuestInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: QuestInfo"
+    },
+    {
+      "source_id": "structures-QuestInfo-114",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "QuestInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: + isInternalOnly"
+    },
+    {
+      "source_id": "structures-StatusBarWidgetVisualizationInfo-115",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "StatusBarWidgetVisualizationInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: StatusBarWidgetVisualizationInfo"
+    },
+    {
+      "source_id": "structures-StatusBarWidgetVisualizationInfo-116",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "StatusBarWidgetVisualizationInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: + glowAnimType"
+    },
+    {
+      "source_id": "structures-StatusBarWidgetVisualizationInfo-117",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "StatusBarWidgetVisualizationInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: + showGlowState"
+    },
+    {
+      "source_id": "structures-StatusBarWidgetVisualizationInfo-118",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "StatusBarWidgetVisualizationInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: + fillMinOpacity"
+    },
+    {
+      "source_id": "structures-StatusBarWidgetVisualizationInfo-119",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "StatusBarWidgetVisualizationInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: + fillMaxOpacity"
+    },
+    {
+      "source_id": "structures-TraitNodeInfoPartial-120",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "TraitNodeInfoPartial: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: TraitNodeInfoPartial"
+    },
+    {
+      "source_id": "structures-TraitNodeInfoPartial-121",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "TraitNodeInfoPartial: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: + activeEntryID"
+    },
+    {
+      "source_id": "structures-UIWidgetItemInfo-122",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "UIWidgetItemInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: UIWidgetItemInfo"
+    },
+    {
+      "source_id": "structures-UIWidgetItemInfo-123",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "UIWidgetItemInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: + showAsEarned"
+    },
+    {
+      "source_id": "structures-WeeklyRewardActivityInfo-124",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "WeeklyRewardActivityInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: WeeklyRewardActivityInfo"
+    },
+    {
+      "source_id": "structures-WeeklyRewardActivityInfo-125",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "WeeklyRewardActivityInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: + activityTierID"
+    },
+    {
+      "source_id": "structures-XMLTemplateInfo-126",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "XMLTemplateInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: XMLTemplateInfo"
+    },
+    {
+      "source_id": "structures-XMLTemplateInfo-127",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "XMLTemplateInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: + sourceLocation"
+    },
+    {
+      "source_id": "source-context-129",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "deprecated api-removal-summary-130",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: These are functions that were deprecated and will be removed in the future."
+    },
+    {
+      "source_id": "source-context-132",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Deprecated-source heading/context; no runtime credit."
+    },
+    {
+      "source_id": "deprecated api-GetCVarInfo-133",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : GetCVarInfo → C_CVar.GetCVarInfo"
+    },
+    {
+      "source_id": "deprecated api-EnableAddOn-134",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : EnableAddOn → C_AddOns.EnableAddOn"
+    },
+    {
+      "source_id": "deprecated api-DisableAddOn-135",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : DisableAddOn → C_AddOns.DisableAddOn"
+    },
+    {
+      "source_id": "deprecated api-GetAddOnEnableState-136",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : GetAddOnEnableState → C_AddOns.GetAddOnEnableState"
+    },
+    {
+      "source_id": "deprecated api-LoadAddOn-137",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : LoadAddOn → C_AddOns.LoadAddOn"
+    },
+    {
+      "source_id": "deprecated api-IsAddOnLoaded-138",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : IsAddOnLoaded → C_AddOns.IsAddOnLoaded"
+    },
+    {
+      "source_id": "deprecated api-EnableAllAddOns-139",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : EnableAllAddOns → C_AddOns.EnableAllAddOns"
+    },
+    {
+      "source_id": "deprecated api-DisableAllAddOns-140",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : DisableAllAddOns → C_AddOns.DisableAllAddOns"
+    },
+    {
+      "source_id": "deprecated api-GetAddOnInfo-141",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : GetAddOnInfo → C_AddOns.GetAddOnInfo"
+    },
+    {
+      "source_id": "deprecated api-GetAddOnDependencies-142",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : GetAddOnDependencies → C_AddOns.GetAddOnDependencies"
+    },
+    {
+      "source_id": "deprecated api-GetAddOnOptionalDependencies-143",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : GetAddOnOptionalDependencies → C_AddOns.GetAddOnOptionalDependencies"
+    },
+    {
+      "source_id": "deprecated api-GetNumAddOns-144",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : GetNumAddOns → C_AddOns.GetNumAddOns"
+    },
+    {
+      "source_id": "deprecated api-SaveAddOns-145",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : SaveAddOns → C_AddOns.SaveAddOns"
+    },
+    {
+      "source_id": "deprecated api-ResetAddOns-146",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : ResetAddOns → C_AddOns.ResetAddOns"
+    },
+    {
+      "source_id": "deprecated api-ResetDisabledAddOns-147",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : ResetDisabledAddOns → C_AddOns.ResetDisabledAddOns"
+    },
+    {
+      "source_id": "deprecated api-IsAddonVersionCheckEnabled-148",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : IsAddonVersionCheckEnabled → C_AddOns.IsAddonVersionCheckEnabled"
+    },
+    {
+      "source_id": "deprecated api-SetAddonVersionCheck-149",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : SetAddonVersionCheck → C_AddOns.SetAddonVersionCheck"
+    },
+    {
+      "source_id": "deprecated api-IsAddOnLoadOnDemand-150",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : IsAddOnLoadOnDemand → C_AddOns.IsAddOnLoadOnDemand"
+    },
+    {
+      "source_id": "source-context-152",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-153",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial documentation/reference context; no runtime contract or credit."
+    }
+  ]
+}

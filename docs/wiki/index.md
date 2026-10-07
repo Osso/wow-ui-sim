@@ -1,3 +1,7 @@
+## [2026-10-07] evidence | 10.2.0 page audit
+
+[Audit](investigations/patch-10-2-0-api-audit.md) accounts for 150 inventory + 134 extract IDs, eight unused retail retirements, modeled parent-key clearing and corrected interface/script probes. Thirty exact publication gaps and five serialized-default mismatches remain. Eighteen isolated sweeps, negative control, behavior/prefork tests, Mists check and exit-0 startup `[]` pass. All 102 later inputs preserved; read-only 10.2.5 register has no add/remove intersection with retained gaps.
+
 ## [2026-10-07] evidence | 10.2.6 page audit
 
 [Audit](investigations/patch-10-2-6-api-audit.md) accounts for 220 inventory + 138 extract occurrences, three unused retail retirements, twenty exact publication gaps and one historical CVar default mismatch. Seventeen isolated sweeps, negative control, repeated lookup and cached prefork pass; format, Mists check (zero non-vendor warnings), retail build and exit-0 startup `[]` pass. All 104 later inputs preserved; substantive extract behavior remains pending.

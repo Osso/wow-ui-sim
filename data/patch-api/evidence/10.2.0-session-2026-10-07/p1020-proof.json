@@ -1,0 +1,1324 @@
+[
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_10_2_0_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "054fc2ff9191a0141405e31c9e2a6a842cfafc6e",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 101,
+    "log": "p1020-discovery-configured.log",
+    "log_sha256": "5da39a978b14ce45e80350f8d88418696c2715f62ca49fd3f0bcf1bf8b4b9420",
+    "scope": "discovery empty fixture",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1020_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1020-discovery-result.json"
+    },
+    "invalidated": true,
+    "invalidated_reason": "Development/RED or earlier runtime scope retained; replaced by final proof after five legacy addon global retirements. Expected-negative controls are successful failure-detection proof, not normal GREEN."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_10_2_0_publication_fixes",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "3ada3fc912fa06a07cce38a6a5accdee8ca7c40b",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 101,
+    "log": "p1020-fixes-red.log",
+    "log_sha256": "060605ebab0b5f88e0fe551735ce8b5cd4cc65596f2e5acf1b25fc6af9f2a5d3",
+    "scope": "parent-key and probe RED",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target"
+    },
+    "invalidated": true,
+    "invalidated_reason": "Development/RED or earlier runtime scope retained; replaced by final proof after five legacy addon global retirements. Expected-negative controls are successful failure-detection proof, not normal GREEN."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_10_2_0_publication_fixes",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "ef8ca1c2eec6f3233e739efae1a3d4a67451002d",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 101,
+    "log": "p1020-fixes-green.log",
+    "log_sha256": "5edd84db89463abcb38d7f035854a3e5723602cac5312b98450e735ca934f495",
+    "scope": "parent-key and probe GREEN",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target"
+    },
+    "invalidated": true,
+    "invalidated_reason": "Development/RED or earlier runtime scope retained; replaced by final proof after five legacy addon global retirements. Expected-negative controls are successful failure-detection proof, not normal GREEN."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_10_2_0_publication_fixes",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "70c85874c0fd10548cc71a584bbb79dbe8a0857a",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 101,
+    "log": "p1020-retirements-red.log",
+    "log_sha256": "23bdd9a4d5f64626b34d14ecc3adcd71df634819bbe25bf5964b79ba6fcfbf61",
+    "scope": "retirement RED; parent-key/interface GREEN",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target"
+    },
+    "invalidated": true,
+    "invalidated_reason": "Development/RED or earlier runtime scope retained; replaced by final proof after five legacy addon global retirements. Expected-negative controls are successful failure-detection proof, not normal GREEN."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_10_2_0_publication_fixes",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "5b80a176abdabd86e5901ca8769d3bc6ccbe924a",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1020-fixes-final-green.log",
+    "log_sha256": "a57e7027505c126f53604f8a3f181c7bafe7f640447a02255a4b32212af663e3",
+    "scope": "three behavior tests GREEN",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target"
+    },
+    "invalidated": true,
+    "invalidated_reason": "Development/RED or earlier runtime scope retained; replaced by final proof after five legacy addon global retirements. Expected-negative controls are successful failure-detection proof, not normal GREEN."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_10_2_0_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "5b80a176abdabd86e5901ca8769d3bc6ccbe924a",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1020-sweep.log",
+    "log_sha256": "a16819879c6050bab7c34346ec779c94d59bd27399d4076c0a67f91b640ba197",
+    "scope": "10.2.0 isolated publication sweep",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1020_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1020-sweep-result.json"
+    },
+    "invalidated": true,
+    "invalidated_reason": "Development/RED or earlier runtime scope retained; replaced by final proof after five legacy addon global retirements. Expected-negative controls are successful failure-detection proof, not normal GREEN."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_10_2_6_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "5b80a176abdabd86e5901ca8769d3bc6ccbe924a",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1026-sweep.log",
+    "log_sha256": "d1eafb45503772ef223f040941a11b8c74bf7b22c88b68cca63914ff8c37ef52",
+    "scope": "10.2.6 isolated publication sweep",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1026_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1026-sweep-result.json"
+    },
+    "invalidated": true,
+    "invalidated_reason": "Development/RED or earlier runtime scope retained; replaced by final proof after five legacy addon global retirements. Expected-negative controls are successful failure-detection proof, not normal GREEN."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_10_2_7_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "5b80a176abdabd86e5901ca8769d3bc6ccbe924a",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1027-sweep.log",
+    "log_sha256": "6bf0d091a8f11ae61486a203da1ab7e6d2798a119bb47c3f187c0f88d2b1eb15",
+    "scope": "10.2.7 isolated publication sweep",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1027_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1027-sweep-result.json"
+    },
+    "invalidated": true,
+    "invalidated_reason": "Development/RED or earlier runtime scope retained; replaced by final proof after five legacy addon global retirements. Expected-negative controls are successful failure-detection proof, not normal GREEN."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_0_0_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "5b80a176abdabd86e5901ca8769d3bc6ccbe924a",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1100-sweep.log",
+    "log_sha256": "92d00f9ab81bfda501639ec5466b406a2ff9740c9987b135e4bd4e1b9d8f066a",
+    "scope": "11.0.0 isolated publication sweep",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1100_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1100-sweep-result.json"
+    },
+    "invalidated": true,
+    "invalidated_reason": "Development/RED or earlier runtime scope retained; replaced by final proof after five legacy addon global retirements. Expected-negative controls are successful failure-detection proof, not normal GREEN."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_0_2_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "5b80a176abdabd86e5901ca8769d3bc6ccbe924a",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1102-sweep.log",
+    "log_sha256": "5ee905d889bacc99a2d2917aac7efbd6378c649e85720524cf5e4507a15a6cf5",
+    "scope": "11.0.2 isolated publication sweep",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1102_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1102-sweep-result.json"
+    },
+    "invalidated": true,
+    "invalidated_reason": "Development/RED or earlier runtime scope retained; replaced by final proof after five legacy addon global retirements. Expected-negative controls are successful failure-detection proof, not normal GREEN."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_0_5_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "5b80a176abdabd86e5901ca8769d3bc6ccbe924a",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1105-sweep.log",
+    "log_sha256": "b94f9e6f22cdcfcb06d7af67f390185d9b0a8db7d83b1abf9bc62767e1113559",
+    "scope": "11.0.5 isolated publication sweep",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1105_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1105-sweep-result.json"
+    },
+    "invalidated": true,
+    "invalidated_reason": "Development/RED or earlier runtime scope retained; replaced by final proof after five legacy addon global retirements. Expected-negative controls are successful failure-detection proof, not normal GREEN."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_0_7_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "5b80a176abdabd86e5901ca8769d3bc6ccbe924a",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1107-sweep.log",
+    "log_sha256": "891efbf630d6b372af9eb401b3d5eda4c3a3d041ec4b61cdee43d05def41a760",
+    "scope": "11.0.7 isolated publication sweep",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1107_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1107-sweep-result.json"
+    },
+    "invalidated": true,
+    "invalidated_reason": "Development/RED or earlier runtime scope retained; replaced by final proof after five legacy addon global retirements. Expected-negative controls are successful failure-detection proof, not normal GREEN."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_1_0_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "5b80a176abdabd86e5901ca8769d3bc6ccbe924a",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1110-sweep.log",
+    "log_sha256": "0ac9269ad8c50fecfca085e5309125f606f8b1677fe4b319699d286f65d9a18d",
+    "scope": "11.1.0 isolated publication sweep",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1110_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1110-sweep-result.json"
+    },
+    "invalidated": true,
+    "invalidated_reason": "Development/RED or earlier runtime scope retained; replaced by final proof after five legacy addon global retirements. Expected-negative controls are successful failure-detection proof, not normal GREEN."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_1_5_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "5b80a176abdabd86e5901ca8769d3bc6ccbe924a",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1115-sweep.log",
+    "log_sha256": "88730ceb7fa30a90dacc2b2d0efc7b0a4788b26e4e1a6f672c2b33d3c58092fc",
+    "scope": "11.1.5 isolated publication sweep",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1115_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1115-sweep-result.json"
+    },
+    "invalidated": true,
+    "invalidated_reason": "Development/RED or earlier runtime scope retained; replaced by final proof after five legacy addon global retirements. Expected-negative controls are successful failure-detection proof, not normal GREEN."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_1_7_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "5b80a176abdabd86e5901ca8769d3bc6ccbe924a",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1117-sweep.log",
+    "log_sha256": "a3af93abae00b5037b8652a1b4ed8ea8a465c17f93ffefc0e208bbb0b261673f",
+    "scope": "11.1.7 isolated publication sweep",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1117_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1117-sweep-result.json"
+    },
+    "invalidated": true,
+    "invalidated_reason": "Development/RED or earlier runtime scope retained; replaced by final proof after five legacy addon global retirements. Expected-negative controls are successful failure-detection proof, not normal GREEN."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_2_0_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "5b80a176abdabd86e5901ca8769d3bc6ccbe924a",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1120-sweep.log",
+    "log_sha256": "dc5ab7a9f8ab7e41c9a32366e60a14898cb066205a5aa0fcb9d54733b4be3d75",
+    "scope": "11.2.0 isolated publication sweep",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1120_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1120-sweep-result.json"
+    },
+    "invalidated": true,
+    "invalidated_reason": "Development/RED or earlier runtime scope retained; replaced by final proof after five legacy addon global retirements. Expected-negative controls are successful failure-detection proof, not normal GREEN."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_2_5_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "5b80a176abdabd86e5901ca8769d3bc6ccbe924a",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1125-sweep.log",
+    "log_sha256": "13661bfcf77a27375a85de9bf5265faf239d41f61ca06e7e0b838de81de225e3",
+    "scope": "11.2.5 isolated publication sweep",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1125_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1125-sweep-result.json"
+    },
+    "invalidated": true,
+    "invalidated_reason": "Development/RED or earlier runtime scope retained; replaced by final proof after five legacy addon global retirements. Expected-negative controls are successful failure-detection proof, not normal GREEN."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_2_7_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "5b80a176abdabd86e5901ca8769d3bc6ccbe924a",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1127-sweep.log",
+    "log_sha256": "014a346688072b39d80434bfe5c97b141bcba413cb0ba9a384f41bcd02f07bcd",
+    "scope": "11.2.7 isolated publication sweep",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1127_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1127-sweep-result.json"
+    },
+    "invalidated": true,
+    "invalidated_reason": "Development/RED or earlier runtime scope retained; replaced by final proof after five legacy addon global retirements. Expected-negative controls are successful failure-detection proof, not normal GREEN."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_12_0_0_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "5b80a176abdabd86e5901ca8769d3bc6ccbe924a",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1200-sweep.log",
+    "log_sha256": "e758e1d9b8b6f479aa1a4a54f851f7a448c6f8fb20ac4c3cded802e0e85009eb",
+    "scope": "12.0.0 isolated publication sweep",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1200_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1200-sweep-result.json"
+    },
+    "invalidated": true,
+    "invalidated_reason": "Development/RED or earlier runtime scope retained; replaced by final proof after five legacy addon global retirements. Expected-negative controls are successful failure-detection proof, not normal GREEN."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_12_0_1_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "5b80a176abdabd86e5901ca8769d3bc6ccbe924a",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1201-sweep.log",
+    "log_sha256": "240d17f24728ef47756db61ceecd74a9883f47500d62b91b02f9ebcbf8a892cc",
+    "scope": "12.0.1 isolated publication sweep",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1201_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1201-sweep-result.json"
+    },
+    "invalidated": true,
+    "invalidated_reason": "Development/RED or earlier runtime scope retained; replaced by final proof after five legacy addon global retirements. Expected-negative controls are successful failure-detection proof, not normal GREEN."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_12_0_5_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "5b80a176abdabd86e5901ca8769d3bc6ccbe924a",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1205-sweep.log",
+    "log_sha256": "d149cb7209110d29e9370b0b076ff1ab9b6ae290d134db178fe063656d591b2b",
+    "scope": "12.0.5 isolated publication sweep",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1205_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1205-sweep-result.json"
+    },
+    "invalidated": true,
+    "invalidated_reason": "Development/RED or earlier runtime scope retained; replaced by final proof after five legacy addon global retirements. Expected-negative controls are successful failure-detection proof, not normal GREEN."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_12_0_7_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "5b80a176abdabd86e5901ca8769d3bc6ccbe924a",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1207-sweep.log",
+    "log_sha256": "3eeea87dda010ec651845d1f21fba1513b4b48535f223e2063df47ef742561ac",
+    "scope": "12.0.7 isolated publication sweep",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1207_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1207-sweep-result.json"
+    },
+    "invalidated": true,
+    "invalidated_reason": "Development/RED or earlier runtime scope retained; replaced by final proof after five legacy addon global retirements. Expected-negative controls are successful failure-detection proof, not normal GREEN."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_12_1_0_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "5b80a176abdabd86e5901ca8769d3bc6ccbe924a",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1210-sweep.log",
+    "log_sha256": "0af519f68416347d004e06087b6be7e5804d6ff25380a31fe31370741fd7fbdd",
+    "scope": "12.1.0 isolated publication sweep",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1210_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1210-sweep-result.json"
+    },
+    "invalidated": true,
+    "invalidated_reason": "Development/RED or earlier runtime scope retained; replaced by final proof after five legacy addon global retirements. Expected-negative controls are successful failure-detection proof, not normal GREEN."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "patch_10_2_0_cached_parent_keys_and_console_retirements"
+    ],
+    "revision": "5b80a176abdabd86e5901ca8769d3bc6ccbe924a",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1020-prefork.log",
+    "log_sha256": "ddc4933986670df4c4a06c8929a06c8d511d95583cd640a2e8a6e86a0053613c",
+    "scope": "p1020-prefork",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target"
+    },
+    "invalidated": true,
+    "invalidated_reason": "Development/RED or earlier runtime scope retained; replaced by final proof after five legacy addon global retirements. Expected-negative controls are successful failure-detection proof, not normal GREEN."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "runtime_set_parent_key",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "5b80a176abdabd86e5901ca8769d3bc6ccbe924a",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1020-existing-parent-keys.log",
+    "log_sha256": "4d0417b675ca4a7dc215450c9695ea736f4f6355f979ff30cec1d346c5cc5dc1",
+    "scope": "p1020-existing-parent-keys",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target"
+    },
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "groupfinder_queue_frames_keep_party_backfill_parent_keys_after_startup"
+    ],
+    "revision": "5b80a176abdabd86e5901ca8769d3bc6ccbe924a",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1020-prefork-groupfinder.log",
+    "log_sha256": "87bd84396cd54b999ccb48f487f840c70c2190c51962f1cc82e6b73eb1b7adc6",
+    "scope": "p1020-prefork-groupfinder",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target"
+    },
+    "invalidated": true,
+    "invalidated_reason": "Development/RED or earlier runtime scope retained; replaced by final proof after five legacy addon global retirements. Expected-negative controls are successful failure-detection proof, not normal GREEN."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_10_2_0_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "5b80a176abdabd86e5901ca8769d3bc6ccbe924a",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 101,
+    "log": "p1020-negative.log",
+    "log_sha256": "2615962754e5e884b5f217b4f28b3852c542af1852019ce4dfe11b68090868e5",
+    "environment": {
+      "P1020_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1020-negative-register.json",
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1020_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1020-negative-result.json"
+    },
+    "scope": "negative control expected exit 101",
+    "invalidated": true,
+    "invalidated_reason": "Development/RED or earlier runtime scope retained; replaced by final proof after five legacy addon global retirements. Expected-negative controls are successful failure-detection proof, not normal GREEN."
+  },
+  {
+    "command": [
+      "cargo",
+      "fmt",
+      "--check"
+    ],
+    "revision": "5b80a176abdabd86e5901ca8769d3bc6ccbe924a",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1020-format.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scope": "p1020-format",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target"
+    },
+    "invalidated": true,
+    "invalidated_reason": "Development/RED or earlier runtime scope retained; replaced by final proof after five legacy addon global retirements. Expected-negative controls are successful failure-detection proof, not normal GREEN."
+  },
+  {
+    "command": [
+      "cargo",
+      "check",
+      "--no-default-features",
+      "--features",
+      "sound,gui,casc,client-mists",
+      "--tests"
+    ],
+    "revision": "5b80a176abdabd86e5901ca8769d3bc6ccbe924a",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1020-mists-check.log",
+    "log_sha256": "0265a2b52b967fc9de12477bd6afe97a0f906d846d802b67592e1897d1089a73",
+    "scope": "p1020-mists-check",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target"
+    },
+    "invalidated": true,
+    "invalidated_reason": "Development/RED or earlier runtime scope retained; replaced by final proof after five legacy addon global retirements. Expected-negative controls are successful failure-detection proof, not normal GREEN."
+  },
+  {
+    "command": [
+      "cargo",
+      "build",
+      "--bin",
+      "wow-sim"
+    ],
+    "revision": "5b80a176abdabd86e5901ca8769d3bc6ccbe924a",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1020-retail-build.log",
+    "log_sha256": "787fc08bb41f5e7f1a053df93afd8a7266a77b293886deae1548615e3b4d9c3c",
+    "scope": "p1020-retail-build",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target"
+    },
+    "invalidated": true,
+    "invalidated_reason": "Development/RED or earlier runtime scope retained; replaced by final proof after five legacy addon global retirements. Expected-negative controls are successful failure-detection proof, not normal GREEN."
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "/home/osso/.worktrees/wow-ui-sim-p1020-page/target/debug/wow-sim",
+      "--no-addons",
+      "--no-saved-vars",
+      "lua-errors"
+    ],
+    "revision": "5b80a176abdabd86e5901ca8769d3bc6ccbe924a",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1020-startup.log",
+    "stdout": "p1020-startup-stdout.json",
+    "log_sha256": "2d150c05e1446751abdd40606bcf2bf9b873fd647a18c3fb2f5e0c414336ca07",
+    "scope": "bounded retail startup",
+    "environment": {},
+    "invalidated": true,
+    "invalidated_reason": "Development/RED or earlier runtime scope retained; replaced by final proof after five legacy addon global retirements. Expected-negative controls are successful failure-detection proof, not normal GREEN."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_10_2_0_publication_fixes",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "8fefd6acd1d4119e156cfb6bceccc5c1211696b5",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 101,
+    "log": "p1020-addon-retirements-red.log",
+    "log_sha256": "45f6ab1993d6fe9c8615b6b2ca2d4db80be32ed79410c2961c4ebff8c37282fd",
+    "scope": "legacy addon global retirement RED",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target"
+    },
+    "invalidated": true,
+    "invalidated_reason": "Development/RED or earlier runtime scope retained; replaced by final proof after five legacy addon global retirements. Expected-negative controls are successful failure-detection proof, not normal GREEN."
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_10_2_0_publication_fixes",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "06326ad3e1a2023a8db7a8d198ff57d0cca3c67b",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1020-all-fixes-green.log",
+    "log_sha256": "feec4c0871641bdb4d0202106604add9b8e102a47a36ee9b660c5de7955a304f",
+    "scope": "all behavior tests GREEN",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target"
+    },
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_10_2_0_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "06326ad3e1a2023a8db7a8d198ff57d0cca3c67b",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1020-sweep-final.log",
+    "log_sha256": "a7c9b69001427f69785a67e8b5fb8265e43cceb254ee44bc956582dbf6ffaacd",
+    "scope": "10.2.0 final isolated sweep after legacy global retirement",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1020_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1020-sweep-final-result.json"
+    },
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_10_2_6_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "06326ad3e1a2023a8db7a8d198ff57d0cca3c67b",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1026-sweep-final.log",
+    "log_sha256": "086f30e76a9bf528cacceaf42578af28ba06c5a046fe0c9c23e7af7d31e6ac38",
+    "scope": "10.2.6 final isolated sweep after legacy global retirement",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1026_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1026-sweep-final-result.json"
+    },
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_10_2_7_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "06326ad3e1a2023a8db7a8d198ff57d0cca3c67b",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1027-sweep-final.log",
+    "log_sha256": "3d53456124895a8c67d0c914161d79fba8dd1283ee5ae5259dd62c1cb1e6a749",
+    "scope": "10.2.7 final isolated sweep after legacy global retirement",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1027_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1027-sweep-final-result.json"
+    },
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_0_0_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "06326ad3e1a2023a8db7a8d198ff57d0cca3c67b",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1100-sweep-final.log",
+    "log_sha256": "58d8430fcc189eb2827c2da0f5cb3d45c20db32f939d21eb0cc775b73e2be947",
+    "scope": "11.0.0 final isolated sweep after legacy global retirement",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1100_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1100-sweep-final-result.json"
+    },
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_0_2_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "06326ad3e1a2023a8db7a8d198ff57d0cca3c67b",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1102-sweep-final.log",
+    "log_sha256": "35fda5efc8082fb264c6d66bc53376b80d184d8a1830b7e24fb175e52330b786",
+    "scope": "11.0.2 final isolated sweep after legacy global retirement",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1102_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1102-sweep-final-result.json"
+    },
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_0_5_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "06326ad3e1a2023a8db7a8d198ff57d0cca3c67b",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1105-sweep-final.log",
+    "log_sha256": "42bbc504ca4055f7cf13d977381580810bc11d6715d456bd49ae909690744037",
+    "scope": "11.0.5 final isolated sweep after legacy global retirement",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1105_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1105-sweep-final-result.json"
+    },
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_0_7_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "06326ad3e1a2023a8db7a8d198ff57d0cca3c67b",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1107-sweep-final.log",
+    "log_sha256": "4c60f2a68ff31ec5cb9a9326ec9582533b662417dd1c7521f4d5656ead401841",
+    "scope": "11.0.7 final isolated sweep after legacy global retirement",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1107_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1107-sweep-final-result.json"
+    },
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_1_0_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "06326ad3e1a2023a8db7a8d198ff57d0cca3c67b",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1110-sweep-final.log",
+    "log_sha256": "7fba3a3770514a97ec8abc4f3418f8eba3b8f3ead54febb5d9819f51f0959b29",
+    "scope": "11.1.0 final isolated sweep after legacy global retirement",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1110_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1110-sweep-final-result.json"
+    },
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_1_5_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "06326ad3e1a2023a8db7a8d198ff57d0cca3c67b",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1115-sweep-final.log",
+    "log_sha256": "80978eb6f411d8b02c5d91178b057bf4b252540fa95768792101a2f7341d289d",
+    "scope": "11.1.5 final isolated sweep after legacy global retirement",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1115_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1115-sweep-final-result.json"
+    },
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_1_7_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "06326ad3e1a2023a8db7a8d198ff57d0cca3c67b",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1117-sweep-final.log",
+    "log_sha256": "c097c289aae959f25dcacaeba50ad51399d34187e23ba75c96a39599b62e1831",
+    "scope": "11.1.7 final isolated sweep after legacy global retirement",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1117_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1117-sweep-final-result.json"
+    },
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_2_0_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "06326ad3e1a2023a8db7a8d198ff57d0cca3c67b",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1120-sweep-final.log",
+    "log_sha256": "e7889da9c5941290032f5e0b9224a78a6b0b2cea8b8ae8abe45a6eea775a6387",
+    "scope": "11.2.0 final isolated sweep after legacy global retirement",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1120_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1120-sweep-final-result.json"
+    },
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_2_5_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "06326ad3e1a2023a8db7a8d198ff57d0cca3c67b",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1125-sweep-final.log",
+    "log_sha256": "6deee927704f151e589c4f4804b82bf749cd839aa9c65feffe39dc564e96bbe6",
+    "scope": "11.2.5 final isolated sweep after legacy global retirement",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1125_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1125-sweep-final-result.json"
+    },
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_2_7_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "06326ad3e1a2023a8db7a8d198ff57d0cca3c67b",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1127-sweep-final.log",
+    "log_sha256": "e4271f7540e4927ad95cee27230db4be4a57a6bf69d20436530cf746d4ab4981",
+    "scope": "11.2.7 final isolated sweep after legacy global retirement",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1127_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1127-sweep-final-result.json"
+    },
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_12_0_0_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "06326ad3e1a2023a8db7a8d198ff57d0cca3c67b",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1200-sweep-final.log",
+    "log_sha256": "d892aed93ec901cb7a49c77cba9721e4ae76e1fb2f454df99643bafa6ffb7b9e",
+    "scope": "12.0.0 final isolated sweep after legacy global retirement",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1200_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1200-sweep-final-result.json"
+    },
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_12_0_1_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "06326ad3e1a2023a8db7a8d198ff57d0cca3c67b",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1201-sweep-final.log",
+    "log_sha256": "6d2c97c7cba6ea1492aaad5d4c8171ba513717f631114d435fb29cf062a427c0",
+    "scope": "12.0.1 final isolated sweep after legacy global retirement",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1201_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1201-sweep-final-result.json"
+    },
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_12_0_5_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "06326ad3e1a2023a8db7a8d198ff57d0cca3c67b",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1205-sweep-final.log",
+    "log_sha256": "72c2a8c073b3666a69866e6214d780aa60060bf00b20b0fa81bf97f70778ae77",
+    "scope": "12.0.5 final isolated sweep after legacy global retirement",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1205_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1205-sweep-final-result.json"
+    },
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_12_0_7_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "06326ad3e1a2023a8db7a8d198ff57d0cca3c67b",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1207-sweep-final.log",
+    "log_sha256": "54dcf1503a2ee65824dae363e77e7097977285e73411d2d7d394e5f651f7c5c0",
+    "scope": "12.0.7 final isolated sweep after legacy global retirement",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1207_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1207-sweep-final-result.json"
+    },
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_12_1_0_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "06326ad3e1a2023a8db7a8d198ff57d0cca3c67b",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1210-sweep-final.log",
+    "log_sha256": "691f9d17abd00b51587b0ce8320569a20efce9707d4e04cffbff0415e74c1a98",
+    "scope": "12.1.0 final isolated sweep after legacy global retirement",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1210_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1210-sweep-final-result.json"
+    },
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "patch_10_2_0_cached_parent_keys_and_console_retirements"
+    ],
+    "revision": "06326ad3e1a2023a8db7a8d198ff57d0cca3c67b",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1020-prefork-final.log",
+    "log_sha256": "a2dfb762d8f9373480ad8507ef36229560c04c3226b6ef76904ed9970a4e4472",
+    "scope": "p1020-prefork-final",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target"
+    },
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "fmt",
+      "--check"
+    ],
+    "revision": "06326ad3e1a2023a8db7a8d198ff57d0cca3c67b",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1020-format-final.log",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scope": "p1020-format-final",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target"
+    },
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "check",
+      "--no-default-features",
+      "--features",
+      "sound,gui,casc,client-mists",
+      "--tests"
+    ],
+    "revision": "06326ad3e1a2023a8db7a8d198ff57d0cca3c67b",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1020-mists-check-final.log",
+    "log_sha256": "1bde7624b4aed91bd6356ed8eed684ee1ed66713b862735009983b463ce0a6e3",
+    "scope": "p1020-mists-check-final",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target"
+    },
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "build",
+      "--bin",
+      "wow-sim"
+    ],
+    "revision": "06326ad3e1a2023a8db7a8d198ff57d0cca3c67b",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1020-retail-build-final.log",
+    "log_sha256": "9ba4223fc8a9b65652f9dcb6cbfc5f9db3bd75eb9d68f8afab966816bf27ba14",
+    "scope": "p1020-retail-build-final",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target"
+    },
+    "invalidated": false
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "/home/osso/.worktrees/wow-ui-sim-p1020-page/target/debug/wow-sim",
+      "--no-addons",
+      "--no-saved-vars",
+      "lua-errors"
+    ],
+    "revision": "06326ad3e1a2023a8db7a8d198ff57d0cca3c67b",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1020-startup-final.log",
+    "log_sha256": "fcb9af19da4402e6a6f8a0947ebb98bc42e6c26873a09374fc972489c3c244f0",
+    "scope": "p1020-startup-final",
+    "environment": {},
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_10_2_0_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "06326ad3e1a2023a8db7a8d198ff57d0cca3c67b",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 101,
+    "log": "p1020-negative-final.log",
+    "log_sha256": "6d17b4625188b24408578b93de21c951b96496d1651baa7e4618a625595124b9",
+    "scope": "final negative control expected exit 101",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target",
+      "P1020_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1020-negative-register.json",
+      "P1020_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1020-page/data/patch-api/evidence/10.2.0-session-2026-10-07/p1020-negative-final-result.json"
+    },
+    "invalidated": false,
+    "expected_exit_code": 101
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "patch_10_2_0_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "054fc2ff9",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 101,
+    "log": "p1020-discovery.log",
+    "log_sha256": "5ccf93da2685bc7c852427d28170e6502f290fb9eaf93dde5b1a02001dcbb42f",
+    "scope": "initial wrong test-target setup failure",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1020-page/target"
+    },
+    "invalidated": true
+  },
+  {
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "tools/test_gen_patch_wikitext_register.py",
+      "tools/test_extract_patch_non_inventory.py"
+    ],
+    "revision": "5b80a176a",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 0,
+    "log": "p1020-parser-final-green.log",
+    "log_sha256": "327468a9a7740f65b7968ec02d948b3b3183b0865d969307a91db022a03a6de0",
+    "scope": "20 parser/extractor fixtures; later c_addons-only changes do not invalidate",
+    "environment": {
+      "PYTHONPATH": "/home/osso/.worktrees/wow-ui-sim-p1020-page/tools"
+    },
+    "invalidated": false
+  },
+  {
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "tools/test_gen_patch_wikitext_register.py",
+      "tools/test_extract_patch_non_inventory.py"
+    ],
+    "revision": "e403fd39e + test fixtures",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 1,
+    "log": "p1020-parser-red.log",
+    "log_sha256": "f5e5cb6cbd8e3e9077618f347ec82262411a7df6fd6d256e98b7ec28902f21c3",
+    "scope": "initial parser RED",
+    "environment": {
+      "PYTHONPATH": "/home/osso/.worktrees/wow-ui-sim-p1020-page/tools"
+    },
+    "invalidated": true
+  },
+  {
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "tools/test_gen_patch_wikitext_register.py"
+    ],
+    "revision": "3ada3fc91 + fixture",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+    "exit_code": 1,
+    "log": "p1020-widget-script-parser-red.log",
+    "log_sha256": "446520e4c23a72e538ee3b36bf43961c4acd263ad1c68d7dff94d51953a84c57",
+    "scope": "widget-script kind RED",
+    "environment": {
+      "PYTHONPATH": "/home/osso/.worktrees/wow-ui-sim-p1020-page/tools"
+    },
+    "invalidated": true
+  }
+]

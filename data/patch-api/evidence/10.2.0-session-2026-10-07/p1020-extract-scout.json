@@ -1,0 +1,1074 @@
+[
+  {
+    "source_id": "source-context-001",
+    "statement": "Patch 10.2.0 API changes",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial/source/build context or external resource link; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "source-context-003",
+    "statement": "== Summary ==",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial heading; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-004",
+    "statement": "* Added a new texture slicing system that can be used as a replacement for backdrops and nineslice layouts.",
+    "group": "prose",
+    "proof": "audit-pending",
+    "decision": "Texture slicing render/layout contract needs nine-piece tiling/stretching and corner-preserving screenshot geometry; publication alone is not rendering proof.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-005",
+    "statement": "* Addon management functions such as EnableAddOn and IsAddOnLoaded have been moved to the C_AddOns namespace.",
+    "group": "prose",
+    "proof": "audit-pending",
+    "decision": "Addon namespace migration needs per-function input, output, errors and security parity; namespace publication does not prove all aliases or behavior.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-006",
+    "statement": "** Most functions have the same signatures as before, however one exception to this is GetAddOnEnableState which had the order of its parameters swapped.",
+    "group": "prose",
+    "proof": "audit-pending",
+    "decision": "GetAddOnEnableState parameter-order migration needs fixtures for character and addon identity in both legacy/current orders; retirement only proves current publication boundary.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-007",
+    "statement": "** Aliases from the old function names exist, but are deprecated and will be removed in a future patch.",
+    "group": "prose",
+    "proof": "audit-pending",
+    "decision": "Deprecated alias existence/future-removal statement needs exact loaded wrapper attribution and call parity; no blanket removal authorization.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-008",
+    "statement": "* The GetCVarInfo function has been moved to the C_CVar namespace. An alias for the old name still exists, but is deprecated and will be removed in a future patch.",
+    "group": "prose",
+    "proof": "audit-pending",
+    "decision": "C_CVar.GetCVarInfo migration lacks explicit namespace metadata producer and tuple/error contract; legacy name removal or an autostub is not behavioral parity.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-009",
+    "statement": "* The SetPortraitToTexture function now requires that the initial texture parameter be a texture object. Previously, this function would also accept string values if they named a global texture object.",
+    "group": "prose",
+    "proof": "audit-pending",
+    "decision": "SetPortraitToTexture needs exact texture-object acceptance and named-string rejection fixtures; no argument-type or error proof from inventory.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-010",
+    "statement": "* The C_Console namespace has been removed, with its functions moved back to the global namespace.",
+    "group": "prose",
+    "proof": "audit-pending",
+    "decision": "C_Console namespace removal is partial: three unused members retired, two real existing namespace producers retained pending successor/consumer migration. No complete namespace-removal credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-011",
+    "statement": "* The auto-generated API documentation has been expanded to include many global functions that were previously undocumented.",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial documentation/reference context; no runtime contract or credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-012",
+    "statement": "* The auto-generated API documentation now contains a pony.",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial documentation/reference context; no runtime contract or credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-013",
+    "statement": "* Addons can no longer be loaded before FrameXML has fully loaded.",
+    "group": "prose",
+    "proof": "audit-pending",
+    "decision": "Addon load timing needs real process/load-order tests before FrameXML completion; current cached Game startup alone is not proof of prohibited early loads.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-014",
+    "statement": "* Fixed an issue where newly created characters would have all addons enabled by defaultWoWUIBugs#41 https://github.com/Stanzilla/WoWUIBugs/issues/41.",
+    "group": "prose",
+    "proof": "audit-pending",
+    "decision": "New-character addon enable defaults require persisted character/account fixture transitions; ordinary registration does not prove new-character behavior.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-015",
+    "statement": "* Fixed an issue where NaN values could be used as table keys.",
+    "group": "prose",
+    "proof": "audit-pending",
+    "decision": "NaN table-key rejection requires direct rilua assignment/lookup error fixtures; no VM semantic proof in this publication sweep.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-016",
+    "statement": "* (Nov 16 2023) The CheckInteractDistance and IsItemInRange APIs are now protected and cannot be called by insecure code in combat as of build 52188.",
+    "group": "prose",
+    "proof": "audit-pending",
+    "decision": "CheckInteractDistance and IsItemInRange require combat/insecure-call rejection fixtures at the security boundary; no protected-call parity credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "source-context-018",
+    "statement": "== Resources ==",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial heading; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "source-context-019",
+    "statement": "* TOC: 100200",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial/source/build context or external resource link; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "source-context-020",
+    "statement": "* Diffs: wow-ui-source, BlizzardInterfaceResources",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial/source/build context or external resource link; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "source-context-021",
+    "statement": "* Official patch notes: Dragonflight: Guardians of the Dream Content Update Notes",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial/source/build context or external resource link; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "source-context-022",
+    "statement": "* Deprecated API: Blizzard_Deprecated",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial/source/build context or external resource link; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "source-context-024",
+    "statement": "== Texture Slicing ==",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial heading; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-026",
+    "statement": "A new texture slicing system has been implemented that allows a single Texture object to render a grid of nine sub-textures without distortion at the corners. The edges and central fill of the rendered texture can be configured to either tile or stretch across their respective dimensions.",
+    "group": "texture slicing",
+    "proof": "audit-pending",
+    "decision": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: A new texture slicing system has been implemented that allows a single Texture object to render a grid of nine sub-textures without distortion at the corners. The edges and central fill of the rendered texture can be configured to either tile or stretch across their respective dimensions.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-028",
+    "statement": "This system is recommended to be used in new code going forward as a replacement for both the deprecated Backdrop system and the script-based NineSlice panel layout utility. One of the advantages of this new system is that it only requires a single texture object to render the grid, whereas both the old systems required nine separate objects. This system is fully compatible with custom texture assets and does not require the use of atlases.",
+    "group": "texture slicing",
+    "proof": "audit-pending",
+    "decision": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: This system is recommended to be used in new code going forward as a replacement for both the deprecated Backdrop system and the script-based NineSlice panel layout utility. One of the advantages of this new system is that it only requires a single texture object to render the grid, whereas both the old systems required nine separate objects. This system is fully compatible with custom texture assets and does not require the use of atlases.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-030",
+    "statement": "To use this system from Lua the TextureBase:SetTextureSliceMargins method should be called to specify the pixel margins that represent the edges of the underlying asset. The TextureBase:SetTextureSliceMode method controls whether or not the central portion of the texture and its surrounding edges will be tiled or stretched, with the default being stretched. The below example demonstrates the usage of these APIs.",
+    "group": "texture slicing",
+    "proof": "audit-pending",
+    "decision": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: To use this system from Lua the TextureBase:SetTextureSliceMargins method should be called to specify the pixel margins that represent the edges of the underlying asset. The TextureBase:SetTextureSliceMode method controls whether or not the central portion of the texture and its surrounding edges will be tiled or stretched, with the default being stretched. The below example demonstrates the usage of these APIs.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-033",
+    "statement": "local SliceDemo = CreateFrame(\"Frame\", nil, UIParent);",
+    "group": "texture slicing",
+    "proof": "audit-pending",
+    "decision": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: local SliceDemo = CreateFrame(\"Frame\", nil, UIParent);",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-034",
+    "statement": "SliceDemo:SetPoint(\"CENTER\");",
+    "group": "texture slicing",
+    "proof": "audit-pending",
+    "decision": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: SliceDemo:SetPoint(\"CENTER\");",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-035",
+    "statement": "SliceDemo:SetSize(256, 256);",
+    "group": "texture slicing",
+    "proof": "audit-pending",
+    "decision": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: SliceDemo:SetSize(256, 256);",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-036",
+    "statement": "SliceDemo:SetResizable(true);",
+    "group": "texture slicing",
+    "proof": "audit-pending",
+    "decision": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: SliceDemo:SetResizable(true);",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-038",
+    "statement": "SliceDemo.Texture = SliceDemo:CreateTexture();",
+    "group": "texture slicing",
+    "proof": "audit-pending",
+    "decision": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: SliceDemo.Texture = SliceDemo:CreateTexture();",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-039",
+    "statement": "SliceDemo.Texture:SetTexture(interface/soulbinds/soulbindsconduitpendinganimationmask)",
+    "group": "texture slicing",
+    "proof": "audit-pending",
+    "decision": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: SliceDemo.Texture:SetTexture(interface/soulbinds/soulbindsconduitpendinganimationmask)",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-040",
+    "statement": "SliceDemo.Texture:SetTextureSliceMargins(24, 24, 24, 24);",
+    "group": "texture slicing",
+    "proof": "audit-pending",
+    "decision": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: SliceDemo.Texture:SetTextureSliceMargins(24, 24, 24, 24);",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-041",
+    "statement": "SliceDemo.Texture:SetTextureSliceMode(Enum.UITextureSliceMode.Tiled);",
+    "group": "texture slicing",
+    "proof": "audit-pending",
+    "decision": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: SliceDemo.Texture:SetTextureSliceMode(Enum.UITextureSliceMode.Tiled);",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-042",
+    "statement": "SliceDemo.Texture:SetAllPoints(SliceDemo);",
+    "group": "texture slicing",
+    "proof": "audit-pending",
+    "decision": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: SliceDemo.Texture:SetAllPoints(SliceDemo);",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-043",
+    "statement": "SliceDemo.Texture:SetVertexColor(0, 1, 0);",
+    "group": "texture slicing",
+    "proof": "audit-pending",
+    "decision": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: SliceDemo.Texture:SetVertexColor(0, 1, 0);",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-045",
+    "statement": "SliceDemo.ResizeButton = CreateFrame(\"Button\", nil, SliceDemo, \"PanelResizeButtonTemplate\");",
+    "group": "texture slicing",
+    "proof": "audit-pending",
+    "decision": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: SliceDemo.ResizeButton = CreateFrame(\"Button\", nil, SliceDemo, \"PanelResizeButtonTemplate\");",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-046",
+    "statement": "SliceDemo.ResizeButton:SetPoint(\"BOTTOMRIGHT\");",
+    "group": "texture slicing",
+    "proof": "audit-pending",
+    "decision": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: SliceDemo.ResizeButton:SetPoint(\"BOTTOMRIGHT\");",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-047",
+    "statement": "SliceDemo.ResizeButton:Init(SliceDemo, 64, 64, 512, 512);",
+    "group": "texture slicing",
+    "proof": "audit-pending",
+    "decision": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: SliceDemo.ResizeButton:Init(SliceDemo, 64, 64, 512, 512);",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-050",
+    "statement": "The following new elements in XML can be supplied when defining a Texture object to configure this functionality.",
+    "group": "texture slicing",
+    "proof": "audit-pending",
+    "decision": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: The following new elements in XML can be supplied when defining a Texture object to configure this functionality.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-052",
+    "statement": "<Texture file=\"interface/soulbinds/soulbindsconduitpendinganimationmask\">",
+    "group": "texture slicing",
+    "proof": "audit-pending",
+    "decision": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: <Texture file=\"interface/soulbinds/soulbindsconduitpendinganimationmask\">",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-053",
+    "statement": "<TextureSliceMargins left=\"24\" right=\"24\" top=\"24\" bottom=\"24\"/>",
+    "group": "texture slicing",
+    "proof": "audit-pending",
+    "decision": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: <TextureSliceMargins left=\"24\" right=\"24\" top=\"24\" bottom=\"24\"/>",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-054",
+    "statement": "<TextureSliceMode mode=\"Tiled\"/>  <!-- Can be \"Tiled\" or \"Stretched\" -->",
+    "group": "texture slicing",
+    "proof": "audit-pending",
+    "decision": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: <TextureSliceMode mode=\"Tiled\"/>  <!-- Can be \"Tiled\" or \"Stretched\" -->",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-055",
+    "statement": "</Texture>",
+    "group": "texture slicing",
+    "proof": "audit-pending",
+    "decision": "Texture slicing Lua/XML example or rendering contract remains pending; margins, slice mode, tiled/stretched corner geometry and resize behavior require output/render proof. Plaintext is normalized, not executable source; authoritative wikitext preserves code literals. Retained statement: </Texture>",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "source-context-057",
+    "statement": "== Diffs ==",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial heading; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "source-context-058",
+    "statement": "=== Enumerations ===",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial heading; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-AccountStateFlags-059",
+    "statement": "Enum.AccountStateFlags",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.AccountStateFlags: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: Enum.AccountStateFlags",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-AccountStateFlags-060",
+    "statement": "+ PerksPendingPurchaseLoaded = 0x0000000080000000",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.AccountStateFlags: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + PerksPendingPurchaseLoaded = 0x0000000080000000",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-AccountStateFlags-061",
+    "statement": "+ WoWTokenPurchaseLoaded = 0x0000001000000000",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.AccountStateFlags: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + WoWTokenPurchaseLoaded = 0x0000001000000000",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-BrawlType-062",
+    "statement": "Enum.BrawlType",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.BrawlType: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: Enum.BrawlType",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-BrawlType-063",
+    "statement": "+ SoloRbg = 5",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.BrawlType: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + SoloRbg = 5",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-ChrCustomizationCategoryFlag-064",
+    "statement": "Enum.ChrCustomizationCategoryFlag",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.ChrCustomizationCategoryFlag: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: Enum.ChrCustomizationCategoryFlag",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-ChrCustomizationCategoryFlag-065",
+    "statement": "+ Subcategory = 2",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.ChrCustomizationCategoryFlag: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + Subcategory = 2",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencyGainFlags-066",
+    "statement": "Enum.CurrencyGainFlags",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.CurrencyGainFlags: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: Enum.CurrencyGainFlags",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencyGainFlags-067",
+    "statement": "+ None = 0",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.CurrencyGainFlags: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + None = 0",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencySource-068",
+    "statement": "Enum.CurrencySource",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.CurrencySource: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: Enum.CurrencySource",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencySource-069",
+    "statement": "# QuestRewardIgnoreCaps -> QuestRewardIgnoreCapsDeprecated",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.CurrencySource: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: # QuestRewardIgnoreCaps -> QuestRewardIgnoreCapsDeprecated",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencySource-070",
+    "statement": "# WorldQuestRewardIgnoreCaps -> WorldQuestRewardIgnoreCapsDeprecated",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.CurrencySource: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: # WorldQuestRewardIgnoreCaps -> WorldQuestRewardIgnoreCapsDeprecated",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencySource-071",
+    "statement": "+ ConvertItemsToCurrencyAndReputation = 62",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.CurrencySource: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + ConvertItemsToCurrencyAndReputation = 62",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencySource-072",
+    "statement": "+ PhBuffer_63 = 63",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.CurrencySource: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + PhBuffer_63 = 63",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencySource-073",
+    "statement": "+ PhBuffer_64 = 64",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.CurrencySource: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + PhBuffer_64 = 64",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-EventToastDisplayType-074",
+    "statement": "Enum.EventToastDisplayType",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.EventToastDisplayType: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: Enum.EventToastDisplayType",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-EventToastDisplayType-075",
+    "statement": "+ WeeklyRewardUnlock = 9",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.EventToastDisplayType: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + WeeklyRewardUnlock = 9",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-EventToastDisplayType-076",
+    "statement": "+ WeeklyRewardUpgrade = 10",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.EventToastDisplayType: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + WeeklyRewardUpgrade = 10",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-EventToastEventType-077",
+    "statement": "Enum.EventToastEventType",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.EventToastEventType: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: Enum.EventToastEventType",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-EventToastEventType-078",
+    "statement": "+ WeeklyRewardUnlock = 23",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.EventToastEventType: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + WeeklyRewardUnlock = 23",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-EventToastEventType-079",
+    "statement": "+ WeeklyRewardUpgrade = 24,",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.EventToastEventType: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + WeeklyRewardUpgrade = 24,",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-GossipNpcOption-080",
+    "statement": "Enum.GossipNpcOption",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.GossipNpcOption: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: Enum.GossipNpcOption",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-GossipNpcOption-081",
+    "statement": "# TabardVendor -> GuildTabardVendor",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.GossipNpcOption: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: # TabardVendor -> GuildTabardVendor",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-GossipNpcOption-082",
+    "statement": "+ PersonalTabardVendor = 54",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.GossipNpcOption: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + PersonalTabardVendor = 54",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-ItemDisplayTextDisplayStyle-083",
+    "statement": "Enum.ItemDisplayTextDisplayStyle",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.ItemDisplayTextDisplayStyle: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: Enum.ItemDisplayTextDisplayStyle",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-ItemDisplayTextDisplayStyle-084",
+    "statement": "+ PlayerChoiceReward = 3",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.ItemDisplayTextDisplayStyle: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + PlayerChoiceReward = 3",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-LinkedCurrencyFlags-085",
+    "statement": "Enum.LinkedCurrencyFlags",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.LinkedCurrencyFlags: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: Enum.LinkedCurrencyFlags",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-LinkedCurrencyFlags-086",
+    "statement": "+ AddIgnoresMax = 0x8",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.LinkedCurrencyFlags: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + AddIgnoresMax = 0x8",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-PlayerInteractionType-087",
+    "statement": "Enum.PlayerInteractionType",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.PlayerInteractionType: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: Enum.PlayerInteractionType",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-PlayerInteractionType-088",
+    "statement": "# TabardVendor -> GuildTabardVendor",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.PlayerInteractionType: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: # TabardVendor -> GuildTabardVendor",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-PlayerInteractionType-089",
+    "statement": "+ PersonalTabardVendor = 65",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.PlayerInteractionType: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + PersonalTabardVendor = 65",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-UIMapFlag-090",
+    "statement": "Enum.UIMapFlag",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.UIMapFlag: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: Enum.UIMapFlag",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-UIMapFlag-091",
+    "statement": "+ DoNotShowOnNavbar = 0x80000",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.UIMapFlag: assert numeric value/member membership or rename/absence in current retail after later supersession. An enum symbol search is only a candidate, not proof of this statement: + DoNotShowOnNavbar = 0x80000",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "source-context-093",
+    "statement": "=== Constants ===",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial heading; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-094",
+    "statement": "CurrencyConsts",
+    "group": "constants",
+    "proof": "audit-pending",
+    "decision": "CurrencyConsts: constant publication/value or removed-member absence requires a direct assertion; native identity not inferred from another API. Retained contract: CurrencyConsts",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-095",
+    "statement": "- DRAGON_ISLES_SUPPLIES_CURRENCY_ID",
+    "group": "constants",
+    "proof": "audit-pending",
+    "decision": "CurrencyConsts: constant publication/value or removed-member absence requires a direct assertion; native identity not inferred from another API. Retained contract: - DRAGON_ISLES_SUPPLIES_CURRENCY_ID",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-096",
+    "statement": "ItemConsts",
+    "group": "constants",
+    "proof": "audit-pending",
+    "decision": "ItemConsts: constant publication/value or removed-member absence requires a direct assertion; native identity not inferred from another API. Retained contract: ItemConsts",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-097",
+    "statement": "+ MAX_LOOT_OBJECT_ITEMS = 31",
+    "group": "constants",
+    "proof": "audit-pending",
+    "decision": "ItemConsts: constant publication/value or removed-member absence requires a direct assertion; native identity not inferred from another API. Retained contract: + MAX_LOOT_OBJECT_ITEMS = 31",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "source-context-099",
+    "statement": "=== Structures ===",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial heading; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-AtlasInfo-100",
+    "statement": "AtlasInfo",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "AtlasInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: AtlasInfo",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-AtlasInfo-101",
+    "statement": "+ rawSize",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "AtlasInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: + rawSize",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-AtlasInfo-102",
+    "statement": "+ sliceData",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "AtlasInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: + sliceData",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-CharCustomizationCategory-103",
+    "statement": "CharCustomizationCategory",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "CharCustomizationCategory: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: CharCustomizationCategory",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-CharCustomizationCategory-104",
+    "statement": "+ subcategory",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "CharCustomizationCategory: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: + subcategory",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-ItemUpgradeSeasonalCostType-105",
+    "statement": "ItemUpgradeSeasonalCostType",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "ItemUpgradeSeasonalCostType: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: ItemUpgradeSeasonalCostType",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-ItemUpgradeSeasonalCostType-106",
+    "statement": "# itemID, Nilable: false -> true",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "ItemUpgradeSeasonalCostType: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: # itemID, Nilable: false -> true",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-ItemUpgradeSeasonalCostType-107",
+    "statement": "+ currencyID",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "ItemUpgradeSeasonalCostType: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: + currencyID",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-PerksVendorItemInfo-108",
+    "statement": "PerksVendorItemInfo",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "PerksVendorItemInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: PerksVendorItemInfo",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-PerksVendorItemInfo-109",
+    "statement": "# pending -> isPurchasePending",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "PerksVendorItemInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: # pending -> isPurchasePending",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-PerksVendorItemInfo-110",
+    "statement": "+ uiGroupInfo",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "PerksVendorItemInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: + uiGroupInfo",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-PvpBrawlInfo-111",
+    "statement": "PvpBrawlInfo",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "PvpBrawlInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: PvpBrawlInfo",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-PvpBrawlInfo-112",
+    "statement": "+ minItemLevel",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "PvpBrawlInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: + minItemLevel",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-QuestInfo-113",
+    "statement": "QuestInfo",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "QuestInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: QuestInfo",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-QuestInfo-114",
+    "statement": "+ isInternalOnly",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "QuestInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: + isInternalOnly",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-StatusBarWidgetVisualizationInfo-115",
+    "statement": "StatusBarWidgetVisualizationInfo",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "StatusBarWidgetVisualizationInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: StatusBarWidgetVisualizationInfo",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-StatusBarWidgetVisualizationInfo-116",
+    "statement": "+ glowAnimType",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "StatusBarWidgetVisualizationInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: + glowAnimType",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-StatusBarWidgetVisualizationInfo-117",
+    "statement": "+ showGlowState",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "StatusBarWidgetVisualizationInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: + showGlowState",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-StatusBarWidgetVisualizationInfo-118",
+    "statement": "+ fillMinOpacity",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "StatusBarWidgetVisualizationInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: + fillMinOpacity",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-StatusBarWidgetVisualizationInfo-119",
+    "statement": "+ fillMaxOpacity",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "StatusBarWidgetVisualizationInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: + fillMaxOpacity",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-TraitNodeInfoPartial-120",
+    "statement": "TraitNodeInfoPartial",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "TraitNodeInfoPartial: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: TraitNodeInfoPartial",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-TraitNodeInfoPartial-121",
+    "statement": "+ activeEntryID",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "TraitNodeInfoPartial: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: + activeEntryID",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-UIWidgetItemInfo-122",
+    "statement": "UIWidgetItemInfo",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "UIWidgetItemInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: UIWidgetItemInfo",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-UIWidgetItemInfo-123",
+    "statement": "+ showAsEarned",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "UIWidgetItemInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: + showAsEarned",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-WeeklyRewardActivityInfo-124",
+    "statement": "WeeklyRewardActivityInfo",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "WeeklyRewardActivityInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: WeeklyRewardActivityInfo",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-WeeklyRewardActivityInfo-125",
+    "statement": "+ activityTierID",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "WeeklyRewardActivityInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: + activityTierID",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-XMLTemplateInfo-126",
+    "statement": "XMLTemplateInfo",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "XMLTemplateInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: XMLTemplateInfo",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-XMLTemplateInfo-127",
+    "statement": "+ sourceLocation",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "XMLTemplateInfo: populated producer DTO, field type/nilability and renamed/added-field behavior need concrete input/output fixtures. Empty/default DTO or candidate source mention is not proof. Retained contract: + sourceLocation",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "source-context-129",
+    "statement": "== Deprecated API ==",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial heading; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-removal-summary-130",
+    "statement": "These are functions that were deprecated and will be removed in the future.",
+    "group": "deprecated api",
+    "proof": "audit-pending",
+    "decision": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: These are functions that were deprecated and will be removed in the future.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "source-context-132",
+    "statement": "Deprecated_10_2_0.lua",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Deprecated-source heading/context; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-GetCVarInfo-133",
+    "statement": ": GetCVarInfo → C_CVar.GetCVarInfo",
+    "group": "deprecated api",
+    "proof": "audit-pending",
+    "decision": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : GetCVarInfo → C_CVar.GetCVarInfo",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-EnableAddOn-134",
+    "statement": ": EnableAddOn → C_AddOns.EnableAddOn",
+    "group": "deprecated api",
+    "proof": "audit-pending",
+    "decision": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : EnableAddOn → C_AddOns.EnableAddOn",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-DisableAddOn-135",
+    "statement": ": DisableAddOn → C_AddOns.DisableAddOn",
+    "group": "deprecated api",
+    "proof": "audit-pending",
+    "decision": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : DisableAddOn → C_AddOns.DisableAddOn",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-GetAddOnEnableState-136",
+    "statement": ": GetAddOnEnableState → C_AddOns.GetAddOnEnableState",
+    "group": "deprecated api",
+    "proof": "audit-pending",
+    "decision": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : GetAddOnEnableState → C_AddOns.GetAddOnEnableState",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-LoadAddOn-137",
+    "statement": ": LoadAddOn → C_AddOns.LoadAddOn",
+    "group": "deprecated api",
+    "proof": "audit-pending",
+    "decision": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : LoadAddOn → C_AddOns.LoadAddOn",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-IsAddOnLoaded-138",
+    "statement": ": IsAddOnLoaded → C_AddOns.IsAddOnLoaded",
+    "group": "deprecated api",
+    "proof": "audit-pending",
+    "decision": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : IsAddOnLoaded → C_AddOns.IsAddOnLoaded",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-EnableAllAddOns-139",
+    "statement": ": EnableAllAddOns → C_AddOns.EnableAllAddOns",
+    "group": "deprecated api",
+    "proof": "audit-pending",
+    "decision": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : EnableAllAddOns → C_AddOns.EnableAllAddOns",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-DisableAllAddOns-140",
+    "statement": ": DisableAllAddOns → C_AddOns.DisableAllAddOns",
+    "group": "deprecated api",
+    "proof": "audit-pending",
+    "decision": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : DisableAllAddOns → C_AddOns.DisableAllAddOns",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-GetAddOnInfo-141",
+    "statement": ": GetAddOnInfo → C_AddOns.GetAddOnInfo",
+    "group": "deprecated api",
+    "proof": "audit-pending",
+    "decision": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : GetAddOnInfo → C_AddOns.GetAddOnInfo",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-GetAddOnDependencies-142",
+    "statement": ": GetAddOnDependencies → C_AddOns.GetAddOnDependencies",
+    "group": "deprecated api",
+    "proof": "audit-pending",
+    "decision": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : GetAddOnDependencies → C_AddOns.GetAddOnDependencies",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-GetAddOnOptionalDependencies-143",
+    "statement": ": GetAddOnOptionalDependencies → C_AddOns.GetAddOnOptionalDependencies",
+    "group": "deprecated api",
+    "proof": "audit-pending",
+    "decision": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : GetAddOnOptionalDependencies → C_AddOns.GetAddOnOptionalDependencies",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-GetNumAddOns-144",
+    "statement": ": GetNumAddOns → C_AddOns.GetNumAddOns",
+    "group": "deprecated api",
+    "proof": "audit-pending",
+    "decision": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : GetNumAddOns → C_AddOns.GetNumAddOns",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-SaveAddOns-145",
+    "statement": ": SaveAddOns → C_AddOns.SaveAddOns",
+    "group": "deprecated api",
+    "proof": "audit-pending",
+    "decision": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : SaveAddOns → C_AddOns.SaveAddOns",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-ResetAddOns-146",
+    "statement": ": ResetAddOns → C_AddOns.ResetAddOns",
+    "group": "deprecated api",
+    "proof": "audit-pending",
+    "decision": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : ResetAddOns → C_AddOns.ResetAddOns",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-ResetDisabledAddOns-147",
+    "statement": ": ResetDisabledAddOns → C_AddOns.ResetDisabledAddOns",
+    "group": "deprecated api",
+    "proof": "audit-pending",
+    "decision": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : ResetDisabledAddOns → C_AddOns.ResetDisabledAddOns",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-IsAddonVersionCheckEnabled-148",
+    "statement": ": IsAddonVersionCheckEnabled → C_AddOns.IsAddonVersionCheckEnabled",
+    "group": "deprecated api",
+    "proof": "audit-pending",
+    "decision": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : IsAddonVersionCheckEnabled → C_AddOns.IsAddonVersionCheckEnabled",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-SetAddonVersionCheck-149",
+    "statement": ": SetAddonVersionCheck → C_AddOns.SetAddonVersionCheck",
+    "group": "deprecated api",
+    "proof": "audit-pending",
+    "decision": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : SetAddonVersionCheck → C_AddOns.SetAddonVersionCheck",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-IsAddOnLoadOnDemand-150",
+    "statement": ": IsAddOnLoadOnDemand → C_AddOns.IsAddOnLoadOnDemand",
+    "group": "deprecated api",
+    "proof": "audit-pending",
+    "decision": "Exact legacy-to-namespace call migration requires argument/return/error/security parity and loaded wrapper identity; publication/retirement tests confer no alias-call proof. Retained mapping: : IsAddOnLoadOnDemand → C_AddOns.IsAddOnLoadOnDemand",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "source-context-152",
+    "statement": "== References ==",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial heading; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-153",
+    "statement": "[References list; not expanded]",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial documentation/reference context; no runtime contract or credit.",
+    "implementation_candidates": []
+  }
+]

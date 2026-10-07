@@ -1,0 +1,27 @@
+{
+  "GetAddOnEnableState": {
+    "pattern": "(?<![\\w.:])GetAddOnEnableState\\s*\\(",
+    "exit_code": 1,
+    "matches": []
+  },
+  "GetNumAddOns": {
+    "pattern": "(?<![\\w.:])GetNumAddOns\\s*\\(",
+    "exit_code": 1,
+    "matches": []
+  },
+  "IsAddOnLoadOnDemand": {
+    "pattern": "(?<![\\w.:])IsAddOnLoadOnDemand\\s*\\(",
+    "exit_code": 1,
+    "matches": []
+  },
+  "IsAddOnLoaded": {
+    "pattern": "(?<![\\w.:])IsAddOnLoaded\\s*\\(",
+    "exit_code": 1,
+    "matches": []
+  },
+  "LoadAddOn": {
+    "pattern": "(?<![\\w.:])LoadAddOn\\s*\\(",
+    "exit_code": 1,
+    "matches": []
+  }
+}

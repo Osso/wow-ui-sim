@@ -1,0 +1,10 @@
+{
+  "source_id": "wt-widgets-TextureBase:GetTextureSliceMargins-182",
+  "before": 35,
+  "after": 36,
+  "new": [
+    "wt-widgets-TextureBase:GetTextureSliceMargins-182"
+  ],
+  "resolved": [],
+  "exit_code": 101
+}

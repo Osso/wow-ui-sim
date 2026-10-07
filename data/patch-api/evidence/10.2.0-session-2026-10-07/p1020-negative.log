@@ -1,0 +1,170 @@
+
+running 1 test
+test patch_10_2_0_publication_sweep::patch_10_2_0_publication_sweep ... FAILED
+
+failures:
+
+failures:
+    patch_10_2_0_publication_sweep::patch_10_2_0_publication_sweep
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10822 filtered out; finished in 7.99s
+
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.25s
+     Running tests/integration.rs (target/debug/deps/integration-aef10a2b503e13d5)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 2.46ms
+[  0.003s] [Startup] rilua VM created in 102.60µs
+[  0.003s] [Startup] builtin frames initialized in 72.76µs
+[  0.003s] [Startup] template registry cleared in 5.90µs
+[  0.003s] [Startup] intrinsic templates registered in 5.97µs
+[  0.003s] [Startup] initial app_data lua handle installed in 541.00ns
+[  0.161s] [Startup] init_lua_state complete in 158.42ms
+[  0.161s] [Startup] final app_data lua handle installed in 321.00ns
+[  0.161s] [Startup] initial screen globals installed in 133.42µs
+[  0.161s] [Startup] WowLuaEnv::new complete
+[  2.747s] [Startup] apply_post_load_workarounds: begin
+[  2.747s] [Workarounds] starting patch_edit_mode_manager
+[  2.747s] [Workarounds] finished patch_edit_mode_manager in 301.25µs
+[  2.747s] [Workarounds] starting init_edit_mode_layout
+[  2.747s] [EditMode] starting setup_layout_info
+[  2.751s] [EditMode] finished setup_layout_info in 3.36ms
+[  2.751s] [EditMode] starting apply_system_anchors
+[  2.896s] [EditMode] finished apply_system_anchors in 144.89ms
+[  2.896s] [EditMode] starting finalize_action_bar_positions
+[  2.897s] [EditMode] finished finalize_action_bar_positions in 1.72ms
+[  2.897s] [EditMode] starting invoke_anchor_changed_hooks
+[  2.898s] [EditMode] finished invoke_anchor_changed_hooks in 380.53µs
+[  2.898s] [EditMode] starting fix_action_bar_nan_size
+[  2.898s] [EditMode] finished fix_action_bar_nan_size in 41.23µs
+[  2.898s] [EditMode] starting fix_action_bar_scale
+[  2.898s] [EditMode] finished fix_action_bar_scale in 4.73µs
+[  2.898s] [Workarounds] finished init_edit_mode_layout in 150.43ms
+[  2.898s] [Workarounds] starting patch_ui_parent_panel_toggles
+[  2.898s] [Workarounds] finished patch_ui_parent_panel_toggles in 223.90µs
+[  2.898s] [Workarounds] starting patch_uiparent_onupdate_worklists
+[  2.898s] [Workarounds] finished patch_uiparent_onupdate_worklists in 99.11µs
+[  2.898s] [Workarounds] starting init_chat_type_colors
+[  2.898s] [Workarounds] finished init_chat_type_colors in 111.83µs
+[  2.898s] [Workarounds] starting patch_chat_voice_button_surface
+[  2.898s] [Workarounds] finished patch_chat_voice_button_surface in 113.18µs
+[  2.898s] [Workarounds] starting patch_item_socketing_tooltips
+[  2.899s] [Workarounds] finished patch_item_socketing_tooltips in 54.86µs
+[  2.899s] [Workarounds] starting patch_character_select_selected_name
+[  2.899s] [Workarounds] finished patch_character_select_selected_name in 29.96µs
+[  2.899s] [Workarounds] starting patch_character_create_defaults
+[  2.899s] [Workarounds] finished patch_character_create_defaults in 220.91µs
+[  2.899s] [Workarounds] starting patch_character_frame_title_refresh
+[  2.904s] [Workarounds] finished patch_character_frame_title_refresh in 5.59ms
+[  2.904s] [Workarounds] starting patch_vignette_pin_template
+[  2.904s] [Workarounds] finished patch_vignette_pin_template in 95.86µs
+[  2.904s] [Workarounds] starting patch_fog_of_war_pin_mixin
+[  2.905s] [Workarounds] finished patch_fog_of_war_pin_mixin in 281.32µs
+[  2.905s] [Workarounds] starting patch_map_exploration_pin_mixin
+[  2.911s] [Workarounds] finished patch_map_exploration_pin_mixin in 6.05ms
+[  2.911s] [Workarounds] starting patch_map_canvas_data_provider_attachment
+[  2.911s] [Workarounds] finished patch_map_canvas_data_provider_attachment in 86.83µs
+[  2.911s] [Workarounds] starting ensure_adventure_map_frame_surface
+[  2.911s] [Workarounds] finished ensure_adventure_map_frame_surface in 491.91µs
+[  2.911s] [Workarounds] starting patch_action_bar_button_event_fanout
+[  2.912s] [Workarounds] finished patch_action_bar_button_event_fanout in 108.93µs
+[  2.912s] [Workarounds] starting patch_paging_controls_page_text
+[  2.912s] [Workarounds] finished patch_paging_controls_page_text in 40.14µs
+[  2.912s] [Workarounds] starting patch_talent_edge_frame_level_sync
+[  2.912s] [Workarounds] finished patch_talent_edge_frame_level_sync in 30.86µs
+[  2.912s] [Workarounds] starting patch_catalog_shop_product_card_defaults
+[  2.912s] [Workarounds] finished patch_catalog_shop_product_card_defaults in 63.59µs
+[  2.912s] [Workarounds] starting patch_game_time_defaults
+[  2.912s] [Workarounds] finished patch_game_time_defaults in 7.27µs
+[  2.912s] [Workarounds] starting patch_tooltip_nineslice_surface
+[  2.912s] [Workarounds] finished patch_tooltip_nineslice_surface in 42.52µs
+[  2.912s] [Workarounds] starting patch_container_frame_token_tracker
+[  2.912s] [Workarounds] finished patch_container_frame_token_tracker in 41.63µs
+[  2.912s] [Workarounds] starting patch_achievement_display_set_achievements
+[  2.912s] [Workarounds] finished patch_achievement_display_set_achievements in 8.67µs
+[  2.912s] [Workarounds] starting patch_housing_dashboard_preload
+[  2.912s] [Workarounds] finished patch_housing_dashboard_preload in 169.52µs
+[  2.912s] [Workarounds] starting patch_lfg_lock_list
+[  2.912s] [Workarounds] finished patch_lfg_lock_list in 36.51µs
+[  2.912s] [Workarounds] starting patch_auction_house_browse_results_event
+[  2.912s] [Workarounds] finished patch_auction_house_browse_results_event in 63.75µs
+[  2.912s] [Workarounds] starting patch_auction_house_search_context_aliases
+[  2.912s] [Workarounds] finished patch_auction_house_search_context_aliases in 28.57µs
+[  2.912s] [Workarounds] starting patch_auth_challenge_frame_parent
+[  2.912s] [Workarounds] finished patch_auth_challenge_frame_parent in 68.83µs
+[  2.912s] [Workarounds] starting patch_settings_surface_defaults
+[  2.912s] [Workarounds] finished patch_settings_surface_defaults in 353.53µs
+[  2.912s] [Workarounds] starting patch_settings_canvas_layout_visibility
+[  2.913s] [Workarounds] finished patch_settings_canvas_layout_visibility in 111.34µs
+[  2.913s] [Startup] apply_post_load_workarounds: workarounds complete
+[  2.978s] [Startup] apply_post_load_workarounds: globals restored
+[  2.979s] [Startup] apply_post_load_workarounds: patch 12.1 compatibility restored
+[  2.979s] [Startup] apply_post_load_workarounds: seterrorhandler restored
+[  3.118s] [Startup] begin login sequence
+[  3.118s] [Startup] Firing ADDON_LOADED
+[  3.118s] [Startup] Firing VARIABLES_LOADED
+[  3.215s] [Startup] Firing DISPLAY_SIZE_CHANGED
+[  3.263s] [Startup] Firing UI_SCALE_CHANGED
+[  3.265s] [Startup] Firing PLAYER_LOGIN
+[  3.265s] [Startup] end login sequence in 147.12ms
+[  3.265s] [Startup] begin world enter sequence
+[  3.265s] [Startup] Skipping EDIT_MODE_LAYOUTS_UPDATED
+[  3.265s] [Startup] Firing TIME_PLAYED_MSG via RequestTimePlayed
+[  3.265s] [Startup] Firing PLAYER_ENTERING_WORLD
+[  3.510s] [EditMode] starting setup_layout_info
+[  3.514s] [EditMode] finished setup_layout_info in 3.75ms
+[  3.514s] [EditMode] starting apply_system_anchors
+[  3.654s] [EditMode] finished apply_system_anchors in 140.14ms
+[  3.654s] [EditMode] starting finalize_action_bar_positions
+[  3.657s] [EditMode] finished finalize_action_bar_positions in 2.54ms
+[  3.657s] [EditMode] starting invoke_anchor_changed_hooks
+[  3.662s] [EditMode] finished invoke_anchor_changed_hooks in 5.50ms
+[  3.662s] [EditMode] starting fix_action_bar_nan_size
+[  3.662s] [EditMode] finished fix_action_bar_nan_size in 68.33µs
+[  3.662s] [EditMode] starting fix_action_bar_scale
+[  3.662s] [EditMode] finished fix_action_bar_scale in 4.63µs
+[  3.662s] [EditMode] starting reapply_player_frame_anchor
+[  3.664s] [EditMode] finished reapply_player_frame_anchor in 1.44ms
+[  3.672s] [Startup] end world enter sequence in 407.24ms
+[  3.672s] [Startup] begin post-login events
+[  3.673s] [Startup] Firing UNIT_AURA
+[  3.674s] [Startup] Firing PET_UI_UPDATE
+[  3.675s] [Startup] Firing BAG_UPDATE_DELAYED
+[  3.677s] [Startup] Firing QUEST_LOG_UPDATE
+[  3.678s] [Startup] Firing GROUP_ROSTER_UPDATE
+[  3.770s] [Startup] Firing ACTIONBAR_UPDATE_STATE
+[  3.770s] [Startup] Firing ACTIONBAR_UPDATE_COOLDOWN
+[  3.771s] [Startup] Firing UPDATE_BONUS_ACTIONBAR
+[  3.783s] [Startup] Firing PLAYER_CAN_GLIDE_CHANGED
+[  3.783s] [Startup] Firing PLAYER_IS_GLIDING_CHANGED
+[  3.783s] [Startup] Firing UPDATE_BINDINGS
+[  3.786s] [Startup] Firing UPDATE_CHAT_WINDOWS
+[  3.789s] [Startup] Firing LFG_UPDATE_RANDOM_INFO
+[  3.790s] [Startup] end post-login events in 118.12ms
+[  3.790s] [Startup] begin close startup special windows
+[  3.791s] [Startup] end close startup special windows in 278.07µs
+[  3.791s] [Startup] begin FIRST_FRAME_RENDERED
+[  3.791s] [Startup] Firing FIRST_FRAME_RENDERED
+[  3.791s] [Startup] end FIRST_FRAME_RENDERED in 171.17µs
+[  3.791s] [Startup] begin unblock hidden splash alerts
+[  3.791s] [Startup] end unblock hidden splash alerts in 14.70µs
+[  3.791s] [Startup] begin post-event workarounds
+[  3.791s] [Startup] end post-event workarounds in 972.00ns
+CVar default mismatch wt-cvars-advFlyKeyboardMaxPitchFactor-245: page=Some("5.0"), observed=Some("5.000000")
+CVar default mismatch wt-cvars-advFlyKeyboardMaxTurnFactor-246: page=Some("8.0"), observed=Some("8.000000")
+CVar default mismatch wt-cvars-advFlyKeyboardMinPitchFactor-247: page=Some("2.5"), observed=Some("2.500000")
+CVar default mismatch wt-cvars-advFlyKeyboardMinTurnFactor-248: page=Some("5.0"), observed=Some("5.000000")
+CVar default mismatch wt-cvars-advFlyPitchControlCameraChase-249: page=Some("20.0"), observed=Some("20.000000")
+
+thread 'patch_10_2_0_publication_sweep::patch_10_2_0_publication_sweep' (2685874) panicked at /home/osso/.worktrees/wow-ui-sim-p1020-page/tests/common/publication_sweep.rs:498:5:
+assertion `left == right` failed: new gaps: ["wt-widgets-TextureBase:GetTextureSliceMargins-182"]; resolved/stale gaps: []
+  left: {"wt-global-api-C_AddOns.GetAddOnOptionalDependencies-75", "wt-global-api-C_AddOns.ResetDisabledAddOns-83", "wt-global-api-C_CVar.GetCVarInfo-87", "wt-global-api-C_Console.GetAllCommands-116", "wt-global-api-C_Console.GetColorFromType-117", "wt-global-api-C_CurrencyInfo.GetDragonIslesSuppliesCurrencyID-86", "wt-global-api-C_FriendList.SendWho-164", "wt-global-api-C_LFGInfo.IsGroupFinderEnabled-88", "wt-global-api-C_LFGInfo.IsLFDEnabled-89", "wt-global-api-C_LFGInfo.IsLFREnabled-90", "wt-global-api-C_PartyInfo.GetMinItemLevel-92", "wt-global-api-C_PerksProgram.IsFrozenPerksVendorItem-94", "wt-global-api-C_PlayerInfo.IsDisplayRaceNative-96", "wt-global-api-C_PlayerInfo.IsMirrorImage-97", "wt-global-api-C_PvP.IsBrawlSoloRBG-99", "wt-global-api-C_Texture.GetAtlasElementID-101", "wt-global-api-C_Texture.GetAtlasID-102", "wt-global-api-C_Traits.CascadeRepurchaseRanks-166", "wt-global-api-C_WeeklyRewards.GetDifficultyIDForActivityTier-103", "wt-global-api-C_WeeklyRewards.GetNextActivitiesIncrease-104", "wt-global-api-C_WeeklyRewards.GetNumCompletedDungeonRuns-105", "wt-global-api-ConsoleIsActive-109", "wt-global-api-ConsolePrintAllMatchingCommands-110", "wt-global-api-GetAddOnEnableState-126", "wt-global-api-GetNumAddOns-130", "wt-global-api-IsAddOnLoadOnDemand-132", "wt-global-api-IsAddOnLoaded-131", "wt-global-api-LoadAddOn-157", "wt-widgets-Button:LockHighlight-197", "wt-widgets-Button:SetHighlightLocked-198", "wt-widgets-Button:UnlockHighlight-199", "wt-widgets-Line:GetHitRectThickness-186", "wt-widgets-Line:SetHitRectThickness-187", "wt-widgets-ModelSceneActor:ResetNextHandSlot-194", "wt-widgets-TabardModel:IsGuildTabard-193", "wt-widgets-TextureBase:GetTextureSliceMargins-182"}
+ right: {"wt-global-api-C_AddOns.GetAddOnOptionalDependencies-75", "wt-global-api-C_AddOns.ResetDisabledAddOns-83", "wt-global-api-C_CVar.GetCVarInfo-87", "wt-global-api-C_Console.GetAllCommands-116", "wt-global-api-C_Console.GetColorFromType-117", "wt-global-api-C_CurrencyInfo.GetDragonIslesSuppliesCurrencyID-86", "wt-global-api-C_FriendList.SendWho-164", "wt-global-api-C_LFGInfo.IsGroupFinderEnabled-88", "wt-global-api-C_LFGInfo.IsLFDEnabled-89", "wt-global-api-C_LFGInfo.IsLFREnabled-90", "wt-global-api-C_PartyInfo.GetMinItemLevel-92", "wt-global-api-C_PerksProgram.IsFrozenPerksVendorItem-94", "wt-global-api-C_PlayerInfo.IsDisplayRaceNative-96", "wt-global-api-C_PlayerInfo.IsMirrorImage-97", "wt-global-api-C_PvP.IsBrawlSoloRBG-99", "wt-global-api-C_Texture.GetAtlasElementID-101", "wt-global-api-C_Texture.GetAtlasID-102", "wt-global-api-C_Traits.CascadeRepurchaseRanks-166", "wt-global-api-C_WeeklyRewards.GetDifficultyIDForActivityTier-103", "wt-global-api-C_WeeklyRewards.GetNextActivitiesIncrease-104", "wt-global-api-C_WeeklyRewards.GetNumCompletedDungeonRuns-105", "wt-global-api-ConsoleIsActive-109", "wt-global-api-ConsolePrintAllMatchingCommands-110", "wt-global-api-GetAddOnEnableState-126", "wt-global-api-GetNumAddOns-130", "wt-global-api-IsAddOnLoadOnDemand-132", "wt-global-api-IsAddOnLoaded-131", "wt-global-api-LoadAddOn-157", "wt-widgets-Button:LockHighlight-197", "wt-widgets-Button:SetHighlightLocked-198", "wt-widgets-Button:UnlockHighlight-199", "wt-widgets-Line:GetHitRectThickness-186", "wt-widgets-Line:SetHitRectThickness-187", "wt-widgets-ModelSceneActor:ResetNextHandSlot-194", "wt-widgets-TabardModel:IsGuildTabard-193"}
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+error: test failed, to rerun pass `--test integration`
