@@ -1,0 +1,8 @@
+{
+  "cause": "Pyrun default cwd remained canonical after change_working_directory; filesystem relative paths and first source commit used canonical unexpectedly.",
+  "accidental_commit": "07727f8787f55811a99725f764f277bf4124bdaa",
+  "recovered_worktree_commit": "7d6052e2c",
+  "canonical_restored_to": "f3c07b9bd",
+  "restoration": "Verified canonical clean and HEAD was exactly accidental commit; cherry-picked to required worktree, then git reset --keep to original HEAD. Canonical status confirmed clean master. No tests ran there. All subsequent commands/files use explicit absolute worktree cwd/paths.",
+  "unmet_process_constraint": "Canonical was temporarily modified; cannot claim never touched. Final state restored."
+}

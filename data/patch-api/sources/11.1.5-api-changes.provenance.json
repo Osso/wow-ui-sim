@@ -8,8 +8,9 @@
     "method": "MediaWiki action=query prop=revisions rvprop=ids|timestamp|content rvslots=main; read-only browser fetch (direct HTTP returned 403)",
     "revid": 6726775,
     "revision_timestamp": "2026-05-25T20:31:56Z",
-    "retrieved": "2026-10-06",
+    "retrieved": "2026-10-07",
     "sha256": "c77d271d67c0080d17f3e1610a7e0d11eb9ec64863cf75545d264f441582707e",
-    "register": "11.1.5-wikitext-register.json"
+    "register": "11.1.5-wikitext-register.json",
+    "retrieval_note": "UTC audit date; host logs stamp October 6 (America/Chicago). Requested evidence directory retains October 6 name."
   }
 }

@@ -1,0 +1,314 @@
+{
+  "runtime_revision": "1fb6571e1be9194c70087b9df2441305e90c0be3",
+  "results": [
+    {
+      "name": "initial",
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "patch_11_1_5_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "8bfa4a9af0c9a47addcfc318da74e66a1a9b61a1",
+      "exit_code": 101,
+      "log_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-initial.log"
+    },
+    {
+      "name": "initial-sweep",
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_11_1_5_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "8bfa4a9af0c9a47addcfc318da74e66a1a9b61a1",
+      "exit_code": 101,
+      "log_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-initial-integration.log"
+    },
+    {
+      "name": "fixes-red",
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_11_1_5_publication_fixes",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "8bfa4a9af0c9a47addcfc318da74e66a1a9b61a1",
+      "scope": "new uncommitted behavioral tests; no implementation change",
+      "exit_code": 101,
+      "log_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-fixes-red.log"
+    },
+    {
+      "name": "fixes-green",
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_11_1_5_publication_fixes",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "e06d1f0b53b3dd1b7534500cb1a8bb485924fd2c",
+      "exit_code": 101,
+      "log_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-fixes-green.log"
+    },
+    {
+      "name": "fixes-native-green",
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_11_1_5_publication_fixes",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "fd61172475d8bd636f2397cf51288067ca544cf2",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-fixes-native-green.log"
+    },
+    {
+      "name": "extract-red",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "test_extract_patch_non_inventory.ExtractTests.test_11_1_5_toc_example_preserves_symbolic_interface_and_directives",
+        "test_extract_patch_non_inventory.ExtractTests.test_11_1_5_build_transition_is_context_but_toc_directive_is_pending"
+      ],
+      "cwd": "tools",
+      "revision": "fd61172475d8bd636f2397cf51288067ca544cf2",
+      "scope": "uncommitted new extractor tests",
+      "exit_code": 1,
+      "log_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-extract-red.log"
+    },
+    {
+      "name": "extract-green",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "test_extract_patch_non_inventory",
+        "test_gen_patch_wikitext_register"
+      ],
+      "cwd": "tools",
+      "revision": "837135fc2e9572283a30315b0c8d4a87c6f1418f",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-extract-green.log"
+    },
+    {
+      "name": "p1115-sweep",
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_11_1_5_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "1fb6571e1be9194c70087b9df2441305e90c0be3",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-sweep.log",
+      "result_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-sweep-result.json",
+      "rows": 125,
+      "ok": 89,
+      "gaps": 36
+    },
+    {
+      "name": "p1117-sweep",
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_11_1_7_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "1fb6571e1be9194c70087b9df2441305e90c0be3",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1117-sweep.log",
+      "result_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1117-sweep-result.json",
+      "rows": 48,
+      "ok": 40,
+      "gaps": 8
+    },
+    {
+      "name": "p1120-sweep",
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_11_2_0_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "1fb6571e1be9194c70087b9df2441305e90c0be3",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1120-sweep.log",
+      "result_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1120-sweep-result.json",
+      "rows": 162,
+      "ok": 135,
+      "gaps": 27
+    },
+    {
+      "name": "p1125-sweep",
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_11_2_5_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "1fb6571e1be9194c70087b9df2441305e90c0be3",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1125-sweep.log",
+      "result_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1125-sweep-result.json",
+      "rows": 163,
+      "ok": 118,
+      "gaps": 45
+    },
+    {
+      "name": "p1127-sweep",
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_11_2_7_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "1fb6571e1be9194c70087b9df2441305e90c0be3",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1127-sweep.log",
+      "result_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1127-sweep-result.json",
+      "rows": 508,
+      "ok": 414,
+      "gaps": 94
+    },
+    {
+      "name": "p1200-sweep",
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_12_0_0_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "1fb6571e1be9194c70087b9df2441305e90c0be3",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1200-sweep.log",
+      "result_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1200-sweep-result.json",
+      "rows": 1010,
+      "ok": 989,
+      "gaps": 21
+    },
+    {
+      "name": "p1201-sweep",
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_12_0_1_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "1fb6571e1be9194c70087b9df2441305e90c0be3",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1201-sweep.log",
+      "result_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1201-sweep-result.json",
+      "rows": 225,
+      "ok": 222,
+      "gaps": 3
+    },
+    {
+      "name": "p1205-sweep",
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_12_0_5_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "1fb6571e1be9194c70087b9df2441305e90c0be3",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1205-sweep.log",
+      "result_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1205-sweep-result.json",
+      "rows": 363,
+      "ok": 352,
+      "gaps": 11
+    },
+    {
+      "name": "p1207-sweep",
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_12_0_7_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "1fb6571e1be9194c70087b9df2441305e90c0be3",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1207-sweep.log",
+      "result_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1207-sweep-result.json",
+      "rows": 174,
+      "ok": 171,
+      "gaps": 3
+    },
+    {
+      "name": "p1210-sweep",
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_12_1_0_publication_sweep",
+        "--",
+        "--nocapture",
+        "--test-threads=1"
+      ],
+      "revision": "1fb6571e1be9194c70087b9df2441305e90c0be3",
+      "exit_code": 0,
+      "log_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1210-sweep.log",
+      "result_path": "data/patch-api/evidence/11.1.5-session-2026-10-06/p1210-sweep-result.json",
+      "rows": 778,
+      "ok": 773,
+      "gaps": 5
+    }
+  ]
+}

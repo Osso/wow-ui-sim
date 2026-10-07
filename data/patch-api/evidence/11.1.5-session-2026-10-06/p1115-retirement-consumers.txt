@@ -1,0 +1,9 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EditMode/Shared/EditModeUtil.lua:88:hooksecurefunc("UpdateUIParentPosition", function() EditModeMagnetismManager:UpdateTopLevelParentPoints() end);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EditMode/Shared/EditModeManager.lua:1680:	hooksecurefunc("UpdateUIParentPosition", function() if self:IsShown() then self:UpdateGrid() end end);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Game/Vanilla/EventImplementation.lua:130:	UpdateUIParentPosition();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Game/Shared/EventImplementation.lua:48:	UpdateUIParentPosition();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Game/Shared/EventImplementation.lua:304:	UpdateUIParentPosition();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIParentUtil/UIParentUtil.lua:13:function UpdateUIParentPosition()
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/DebugBarManager.lua:2:-- to DISPLAY_SIZE_CHANGED events, calling UpdateUIParentPosition and giving UIParent
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/DebugBarManager.lua:97:	if UpdateUIParentPosition then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/DebugBarManager.lua:98:		UpdateUIParentPosition();

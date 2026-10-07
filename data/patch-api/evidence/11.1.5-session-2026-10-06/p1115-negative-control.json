@@ -1,0 +1,11 @@
+{
+  "changed_ids": [
+    "wt-global-api-C_ChatInfo.DropCautionaryChatMessage-70"
+  ],
+  "new_ids": [
+    "wt-global-api-C_ChatInfo.DropCautionaryChatMessage-70"
+  ],
+  "resolved_ids": [],
+  "actual_exit_code": 101,
+  "expected_exit_code": 101
+}

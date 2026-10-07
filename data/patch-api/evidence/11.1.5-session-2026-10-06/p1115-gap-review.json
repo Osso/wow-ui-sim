@@ -1,0 +1,1940 @@
+{
+  "rows": [
+    {
+      "source_id": "wt-global-api-C_AddOns.GetAddOnInterfaceVersion-69",
+      "symbol": "C_AddOns.GetAddOnInterfaceVersion",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "TOC metadata exists, but no interface-version selection producer is registered. A TOC may list several interface versions; do not invent a scalar selection policy.",
+      "investigate": "src/c_api/c_addons.rs; src/toc/mod.rs:328; cached AddOnsDocumentation.lua:134",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_AddOns.GetAddOnInterfaceVersion"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_AddOns.GetAddOnInterfaceVersion"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_ColorOverrides.ClearColorOverrides-72",
+      "symbol": "C_ColorOverrides.ClearColorOverrides",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "Only GetColorForQuality placeholder/default and cached override-info glue are published. No persistent per-quality override state, default reader, mutation/reset lifecycle or notification model exists.",
+      "investigate": "src/lua_api/workarounds/temporary/color_defaults.rs:183; cached ColorOverridesDocumentation.lua",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ColorOverrides.ClearColorOverrides"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ColorOverrides.ClearColorOverrides"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_ColorOverrides.GetDefaultColorForQuality-75",
+      "symbol": "C_ColorOverrides.GetDefaultColorForQuality",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "Only GetColorForQuality placeholder/default and cached override-info glue are published. No persistent per-quality override state, default reader, mutation/reset lifecycle or notification model exists.",
+      "investigate": "src/lua_api/workarounds/temporary/color_defaults.rs:183; cached ColorOverridesDocumentation.lua",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ColorOverrides.GetDefaultColorForQuality"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ColorOverrides.GetDefaultColorForQuality"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_ColorOverrides.RemoveColorOverride-76",
+      "symbol": "C_ColorOverrides.RemoveColorOverride",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "Only GetColorForQuality placeholder/default and cached override-info glue are published. No persistent per-quality override state, default reader, mutation/reset lifecycle or notification model exists.",
+      "investigate": "src/lua_api/workarounds/temporary/color_defaults.rs:183; cached ColorOverridesDocumentation.lua",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ColorOverrides.RemoveColorOverride"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ColorOverrides.RemoveColorOverride"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_ColorOverrides.SetColorOverride-77",
+      "symbol": "C_ColorOverrides.SetColorOverride",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "Only GetColorForQuality placeholder/default and cached override-info glue are published. No persistent per-quality override state, default reader, mutation/reset lifecycle or notification model exists.",
+      "investigate": "src/lua_api/workarounds/temporary/color_defaults.rs:183; cached ColorOverridesDocumentation.lua",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ColorOverrides.SetColorOverride"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_ColorOverrides.SetColorOverride"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_CooldownViewer.IsCooldownViewerAvailable-80",
+      "symbol": "C_CooldownViewer.IsCooldownViewerAvailable",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "Cooldown entry records exist, but availability/failure-reason policy is absent. Nonempty entries or cooldownViewerEnabled alone cannot establish availability.",
+      "investigate": "src/c_api/c_cooldown_viewer.rs; retained 11.1.7 cooldown gap",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_CooldownViewer.IsCooldownViewerAvailable"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_CooldownViewer.IsCooldownViewerAvailable"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_GameRules.AutoConnectToGameModeRealm-95",
+      "symbol": "C_GameRules.AutoConnectToGameModeRealm",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "No game-mode record/display/promo catalogue or realm-login transition model backs this query/action. Generic namespace lookup is not an explicit producer.",
+      "investigate": "src/c_api/registration/; cached GameRulesDocumentation.lua",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GameRules.AutoConnectToGameModeRealm"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GameRules.AutoConnectToGameModeRealm"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_GameRules.GetCurrentGameModeDisplayInfo-99",
+      "symbol": "C_GameRules.GetCurrentGameModeDisplayInfo",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "No game-mode record/display/promo catalogue or realm-login transition model backs this query/action. Generic namespace lookup is not an explicit producer.",
+      "investigate": "src/c_api/registration/; cached GameRulesDocumentation.lua",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GameRules.GetCurrentGameModeDisplayInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GameRules.GetCurrentGameModeDisplayInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_GameRules.GetCurrentGameModeRecordID-100",
+      "symbol": "C_GameRules.GetCurrentGameModeRecordID",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "No game-mode record/display/promo catalogue or realm-login transition model backs this query/action. Generic namespace lookup is not an explicit producer.",
+      "investigate": "src/c_api/registration/; cached GameRulesDocumentation.lua",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GameRules.GetCurrentGameModeRecordID"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GameRules.GetCurrentGameModeRecordID"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_GameRules.GetGameModeDisplayInfoByRecordID-102",
+      "symbol": "C_GameRules.GetGameModeDisplayInfoByRecordID",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "No game-mode record/display/promo catalogue or realm-login transition model backs this query/action. Generic namespace lookup is not an explicit producer.",
+      "investigate": "src/c_api/registration/; cached GameRulesDocumentation.lua",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GameRules.GetGameModeDisplayInfoByRecordID"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GameRules.GetGameModeDisplayInfoByRecordID"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_GameRules.GetGameModePromoGlobalString-104",
+      "symbol": "C_GameRules.GetGameModePromoGlobalString",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "No game-mode record/display/promo catalogue or realm-login transition model backs this query/action. Generic namespace lookup is not an explicit producer.",
+      "investigate": "src/c_api/registration/; cached GameRulesDocumentation.lua",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GameRules.GetGameModePromoGlobalString"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GameRules.GetGameModePromoGlobalString"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_GameRules.IsCharacterlessLoginActive-106",
+      "symbol": "C_GameRules.IsCharacterlessLoginActive",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "No game-mode record/display/promo catalogue or realm-login transition model backs this query/action. Generic namespace lookup is not an explicit producer.",
+      "investigate": "src/c_api/registration/; cached GameRulesDocumentation.lua",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GameRules.IsCharacterlessLoginActive"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GameRules.IsCharacterlessLoginActive"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_GuildInfo.RequestGuildRenameRefund-107",
+      "symbol": "C_GuildInfo.RequestGuildRenameRefund",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "Guild data does not model rename purchase/refund, validation requests or asynchronous status replies. Registering a no-op would conceal the missing service lifecycle.",
+      "investigate": "cached GuildInfoDocumentation.lua; src/lua_api/workarounds/temporary/",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GuildInfo.RequestGuildRenameRefund"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GuildInfo.RequestGuildRenameRefund"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_GuildInfo.RequestGuildRename-108",
+      "symbol": "C_GuildInfo.RequestGuildRename",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "Guild data does not model rename purchase/refund, validation requests or asynchronous status replies. Registering a no-op would conceal the missing service lifecycle.",
+      "investigate": "cached GuildInfoDocumentation.lua; src/lua_api/workarounds/temporary/",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GuildInfo.RequestGuildRename"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GuildInfo.RequestGuildRename"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_GuildInfo.RequestRenameNameCheck-109",
+      "symbol": "C_GuildInfo.RequestRenameNameCheck",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "Guild data does not model rename purchase/refund, validation requests or asynchronous status replies. Registering a no-op would conceal the missing service lifecycle.",
+      "investigate": "cached GuildInfoDocumentation.lua; src/lua_api/workarounds/temporary/",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GuildInfo.RequestRenameNameCheck"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GuildInfo.RequestRenameNameCheck"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_GuildInfo.RequestRenameStatus-110",
+      "symbol": "C_GuildInfo.RequestRenameStatus",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "Guild data does not model rename purchase/refund, validation requests or asynchronous status replies. Registering a no-op would conceal the missing service lifecycle.",
+      "investigate": "cached GuildInfoDocumentation.lua; src/lua_api/workarounds/temporary/",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GuildInfo.RequestRenameStatus"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GuildInfo.RequestRenameStatus"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Item.GetItemUpgradeInfo-111",
+      "symbol": "C_Item.GetItemUpgradeInfo",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "Existing item records do not provide the documented upgrade-track/level DTO producer. Publication needs explicit upgrade state and concrete returned fields.",
+      "investigate": "cached ItemDocumentation.lua:1052; src/c_api/c_item.rs",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Item.GetItemUpgradeInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Item.GetItemUpgradeInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Log.LogErrorMessage-112",
+      "symbol": "C_Log.LogErrorMessage",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "No priority-bearing console log sink/filter lifecycle is modeled. Forwarding arbitrary messages to print would not implement priority routing or warning/error channels.",
+      "investigate": "cached LogDocumentation.lua; src/c_api/c_console.rs",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Log.LogErrorMessage"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Log.LogErrorMessage"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Log.LogMessageWithPriority-113",
+      "symbol": "C_Log.LogMessageWithPriority",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "No priority-bearing console log sink/filter lifecycle is modeled. Forwarding arbitrary messages to print would not implement priority routing or warning/error channels.",
+      "investigate": "cached LogDocumentation.lua; src/c_api/c_console.rs",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Log.LogMessageWithPriority"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Log.LogMessageWithPriority"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Log.LogWarningMessage-114",
+      "symbol": "C_Log.LogWarningMessage",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "No priority-bearing console log sink/filter lifecycle is modeled. Forwarding arbitrary messages to print would not implement priority routing or warning/error channels.",
+      "investigate": "cached LogDocumentation.lua; src/c_api/c_console.rs",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Log.LogWarningMessage"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Log.LogWarningMessage"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Map.OpenWorldMap-115",
+      "symbol": "C_Map.OpenWorldMap",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "No registered OpenWorldMap request bridges optional uiMapID to cached map selection/open lifecycle and WORLD_MAP_OPEN payload. Existing map queries are not that action.",
+      "investigate": "cached MapDocumentation.lua; src/c_api/c_map.rs",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Map.OpenWorldMap"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Map.OpenWorldMap"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_PerksProgram.RequestCartCheckout-116",
+      "symbol": "C_PerksProgram.RequestCartCheckout",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "Cart checkout needs validated cart entries, currency/account transactions and asynchronous purchase outcomes; no backing checkout model.",
+      "investigate": "cached PerksProgramDocumentation.lua",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PerksProgram.RequestCartCheckout"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PerksProgram.RequestCartCheckout"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_PetJournal.GetOwnedPetIDs-117",
+      "symbol": "C_PetJournal.GetOwnedPetIDs",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "Owned-pet collection and journal search-filter state are not modeled; empty/generic results would fabricate pet ownership or search state.",
+      "investigate": "cached PetJournalInfoDocumentation.lua:107,219; src/c_api/c_pet_battles.rs",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PetJournal.GetOwnedPetIDs"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PetJournal.GetOwnedPetIDs"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_PetJournal.GetSearchFilter-118",
+      "symbol": "C_PetJournal.GetSearchFilter",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "Owned-pet collection and journal search-filter state are not modeled; empty/generic results would fabricate pet ownership or search state.",
+      "investigate": "cached PetJournalInfoDocumentation.lua:107,219; src/c_api/c_pet_battles.rs",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PetJournal.GetSearchFilter"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_PetJournal.GetSearchFilter"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Spell.EnableSpellRangeCheck-119",
+      "symbol": "C_Spell.EnableSpellRangeCheck",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "Range checks need enabled-spell subscriptions, current-target range state and SPELL_RANGE_CHECK_UPDATE dispatch; existing range queries do not supply the lifecycle.",
+      "investigate": "cached SpellDocumentation.lua:38,1059; src/c_api/c_spell.rs",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Spell.EnableSpellRangeCheck"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Spell.EnableSpellRangeCheck"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_SplashScreen.SendSplashScreenActionLaunchedTelem-120",
+      "symbol": "C_SplashScreen.SendSplashScreenActionLaunchedTelem",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "Telemetry actions need splash-session attribution and an observable telemetry sink; no modeled telemetry boundary. Not closed by no-op registration.",
+      "investigate": "cached SplashScreenDocumentation.lua",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_SplashScreen.SendSplashScreenActionLaunchedTelem"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "parent raw-absent; raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_SplashScreen.SendSplashScreenActionLaunchedTelem"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "parent raw-absent; raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_SplashScreen.SendSplashScreenCloseTelem-121",
+      "symbol": "C_SplashScreen.SendSplashScreenCloseTelem",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "Telemetry actions need splash-session attribution and an observable telemetry sink; no modeled telemetry boundary. Not closed by no-op registration.",
+      "investigate": "cached SplashScreenDocumentation.lua",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_SplashScreen.SendSplashScreenCloseTelem"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_SplashScreen.SendSplashScreenCloseTelem"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Texture.GetAtlasElements-123",
+      "symbol": "C_Texture.GetAtlasElements",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "Atlas metadata exists, but no explicit element-enumeration producer/ordered collection is exposed. Enumerating only a matching atlas name is not element data.",
+      "investigate": "cached TextureUtilsDocumentation.lua:36; src/c_api/c_texture.rs",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Texture.GetAtlasElements"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Texture.GetAtlasElements"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-GetSourceLocation-128",
+      "symbol": "GetSourceLocation",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "Global function source-location query is absent; Frame:GetSourceLocation is a different contract. Needs caller/function source and line behavior, including native functions.",
+      "investigate": "cached FrameScriptDocumentation.lua:219; src/lua_api/frame/methods/core_state/region.rs",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "GetSourceLocation"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "GetSourceLocation"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-IsInGlobalEnvironment-129",
+      "symbol": "IsInGlobalEnvironment",
+      "direction": "added",
+      "decision": "fixed",
+      "reason": "Native predicate compares actual nearest Lua caller environment to global table; secure swap and custom-environment tail calls tested. Initial Lua helper failed tail-call frame replacement and was replaced.",
+      "investigate": "src/lua_api/globals/security/environment.rs; tests/patch_11_1_5_publication_fixes.rs",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "IsInGlobalEnvironment"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "IsInGlobalEnvironment"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-global-api-UnitOwnerGUID-132",
+      "symbol": "UnitOwnerGUID",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "Unit identity state has GUIDs but no owner relationship producer for pets, guardians and ownerless units. Do not substitute the player GUID.",
+      "investigate": "cached UnitDocumentation.lua:2496; src/lua_api/state_types/",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "UnitOwnerGUID"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "UnitOwnerGUID"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-setsecurehookforbidden-133",
+      "symbol": "setsecurehookforbidden",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "Secure-hook prohibition needs per-function hook eligibility enforced by hooksecurefunc, including Lua library/native functions. No such policy is modeled.",
+      "investigate": "src/lua_api/env_init/runtime_surface_bootstrap.lua; summary line 13",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "setsecurehookforbidden"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "setsecurehookforbidden"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_GameEnvironmentManager.GetCurrentEventRealmQueues-137",
+      "symbol": "C_GameEnvironmentManager.GetCurrentEventRealmQueues",
+      "direction": "removed",
+      "decision": "fixed",
+      "reason": "Removed member existed only through generic namespace autostub. Cached retail Lua search found no consumers; mark removed keys under existing retail epoch to preserve classic and prevent repeated lookup fabrication.",
+      "investigate": "src/c_api/patch_retired_members.rs; p1115-retirement-consumers.txt; tests/patch_11_1_5_publication_fixes.rs",
+      "initial": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GameEnvironmentManager.GetCurrentEventRealmQueues"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "parent raw-absent; raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GameEnvironmentManager.GetCurrentEventRealmQueues"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_GameEnvironmentManager.GetCurrentGameEnvironment-138",
+      "symbol": "C_GameEnvironmentManager.GetCurrentGameEnvironment",
+      "direction": "removed",
+      "decision": "fixed",
+      "reason": "Removed member existed only through generic namespace autostub. Cached retail Lua search found no consumers; mark removed keys under existing retail epoch to preserve classic and prevent repeated lookup fabrication.",
+      "investigate": "src/c_api/patch_retired_members.rs; p1115-retirement-consumers.txt; tests/patch_11_1_5_publication_fixes.rs",
+      "initial": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GameEnvironmentManager.GetCurrentGameEnvironment"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GameEnvironmentManager.GetCurrentGameEnvironment"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_GameEnvironmentManager.RequestGameEnvironment-139",
+      "symbol": "C_GameEnvironmentManager.RequestGameEnvironment",
+      "direction": "removed",
+      "decision": "fixed",
+      "reason": "Removed member existed only through generic namespace autostub. Cached retail Lua search found no consumers; mark removed keys under existing retail epoch to preserve classic and prevent repeated lookup fabrication.",
+      "investigate": "src/c_api/patch_retired_members.rs; p1115-retirement-consumers.txt; tests/patch_11_1_5_publication_fixes.rs",
+      "initial": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GameEnvironmentManager.RequestGameEnvironment"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GameEnvironmentManager.RequestGameEnvironment"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_GameModeManager.GetCurrentGameModeRecordID-140",
+      "symbol": "C_GameModeManager.GetCurrentGameModeRecordID",
+      "direction": "removed",
+      "decision": "fixed",
+      "reason": "Removed member existed only through generic namespace autostub. Cached retail Lua search found no consumers; mark removed keys under existing retail epoch to preserve classic and prevent repeated lookup fabrication.",
+      "investigate": "src/c_api/patch_retired_members.rs; p1115-retirement-consumers.txt; tests/patch_11_1_5_publication_fixes.rs",
+      "initial": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GameModeManager.GetCurrentGameModeRecordID"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "parent raw-absent; raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GameModeManager.GetCurrentGameModeRecordID"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_GameModeManager.GetCurrentGameMode-141",
+      "symbol": "C_GameModeManager.GetCurrentGameMode",
+      "direction": "removed",
+      "decision": "fixed",
+      "reason": "Removed member existed only through generic namespace autostub. Cached retail Lua search found no consumers; mark removed keys under existing retail epoch to preserve classic and prevent repeated lookup fabrication.",
+      "investigate": "src/c_api/patch_retired_members.rs; p1115-retirement-consumers.txt; tests/patch_11_1_5_publication_fixes.rs",
+      "initial": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GameModeManager.GetCurrentGameMode"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GameModeManager.GetCurrentGameMode"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_GameModeManager.GetGameModeDisplayInfo-142",
+      "symbol": "C_GameModeManager.GetGameModeDisplayInfo",
+      "direction": "removed",
+      "decision": "fixed",
+      "reason": "Removed member existed only through generic namespace autostub. Cached retail Lua search found no consumers; mark removed keys under existing retail epoch to preserve classic and prevent repeated lookup fabrication.",
+      "investigate": "src/c_api/patch_retired_members.rs; p1115-retirement-consumers.txt; tests/patch_11_1_5_publication_fixes.rs",
+      "initial": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GameModeManager.GetGameModeDisplayInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_GameModeManager.GetGameModeDisplayInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_SpellBook.GetTrackedNameplateCooldownSpells-143",
+      "symbol": "C_SpellBook.GetTrackedNameplateCooldownSpells",
+      "direction": "removed",
+      "decision": "fixed",
+      "reason": "Removed member existed only through generic namespace autostub. Cached retail Lua search found no consumers; mark removed keys under existing retail epoch to preserve classic and prevent repeated lookup fabrication.",
+      "investigate": "src/c_api/patch_retired_members.rs; p1115-retirement-consumers.txt; tests/patch_11_1_5_publication_fixes.rs",
+      "initial": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_SpellBook.GetTrackedNameplateCooldownSpells"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_SpellBook.GetTrackedNameplateCooldownSpells"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-global-api-UpdateUIParentPosition-145",
+      "symbol": "UpdateUIParentPosition",
+      "direction": "removed",
+      "decision": "retained-gap",
+      "reason": "Retain published function: current cached Blizzard Lua still defines and calls it. Removing or deleting its wrapper violates current retail consumers; no later register reverses the page row.",
+      "investigate": "Blizzard_UIParentUtil/UIParentUtil.lua:13; Blizzard_Game/Shared/EventImplementation.lua:48,304; Blizzard_EditMode/Shared/EditModeUtil.lua:88",
+      "initial": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "UpdateUIParentPosition"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "UpdateUIParentPosition"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-FlashClientIcon-148",
+      "symbol": "FlashClientIcon",
+      "direction": "changed",
+      "decision": "retained-gap",
+      "reason": "Host application-attention/briefly state and side effect are not modeled. UI-only focus/window behavior needs an observable host boundary, not an empty function.",
+      "investigate": "cached ClientDocumentation.lua; page wikitext line 148",
+      "initial": {
+        "expected": {
+          "direction": "changed",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "FlashClientIcon"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "changed",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "FlashClientIcon"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-widgets-FontString:OnColorsUpdated-168",
+      "symbol": "FontString:OnColorsUpdated",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "Color update invalidation is not exposed as OnColorsUpdated. Needs text-color/token cache invalidation with rendered-output proof, not a no-op method.",
+      "investigate": "src/lua_api/frame/methods/; page wikitext line 168",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "widgets",
+          "superseded_by": null,
+          "symbol": "FontString:OnColorsUpdated"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "FontString; lookup=nil",
+          "kind": "object-method",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "widgets",
+          "superseded_by": null,
+          "symbol": "FontString:OnColorsUpdated"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "FontString; lookup=nil",
+          "kind": "object-method",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-widgets-TabardModel:GetLowerBorderFile-171",
+      "symbol": "TabardModel:GetLowerBorderFile",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "3D customization/texture-file selection lies in intentionally unsupported model rendering. Upper/lower tabard border IDs have no modeled producer.",
+      "investigate": "src/lua_api/frame/methods/widget_model.rs; CLAUDE.md Intentional Gaps",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "widgets",
+          "superseded_by": null,
+          "symbol": "TabardModel:GetLowerBorderFile"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "TabardModel; lookup=nil",
+          "kind": "object-method",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "widgets",
+          "superseded_by": null,
+          "symbol": "TabardModel:GetLowerBorderFile"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "TabardModel; lookup=nil",
+          "kind": "object-method",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-widgets-TabardModel:GetUpperBorderFile-172",
+      "symbol": "TabardModel:GetUpperBorderFile",
+      "direction": "added",
+      "decision": "retained-gap",
+      "reason": "3D customization/texture-file selection lies in intentionally unsupported model rendering. Upper/lower tabard border IDs have no modeled producer.",
+      "investigate": "src/lua_api/frame/methods/widget_model.rs; CLAUDE.md Intentional Gaps",
+      "initial": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "widgets",
+          "superseded_by": null,
+          "symbol": "TabardModel:GetUpperBorderFile"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "TabardModel; lookup=nil",
+          "kind": "object-method",
+          "value": null
+        },
+        "ok": false
+      },
+      "final": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "widgets",
+          "superseded_by": null,
+          "symbol": "TabardModel:GetUpperBorderFile"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "TabardModel; lookup=nil",
+          "kind": "object-method",
+          "value": null
+        },
+        "ok": false
+      }
+    }
+  ]
+}
