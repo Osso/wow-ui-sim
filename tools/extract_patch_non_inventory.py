@@ -60,10 +60,23 @@ def extract_text(raw, *, preserve_examples=False):
     inventory = False
     in_example = False
     xml_example = False
+    in_ambox = False
     unheaded = "===Global API===" not in raw.splitlines()
     level_two = any(heading in raw.splitlines() for heading in (
         "==Global API==", "==Events=="))
     for line in raw.splitlines():
+        if line == '{{Ambox':
+            in_ambox = True
+            continue
+        if in_ambox:
+            if line == '}}':
+                in_ambox = False
+                continue
+            if line.startswith('| type = '):
+                lines.append(f'[Warning: {line.removeprefix("| type = ")}]')
+                continue
+            if line.startswith('|'):
+                continue
         if preserve_examples:
             opening = re.fullmatch(r'<syntaxhighlight lang="(lua|xml)">', line)
             if opening:
@@ -79,6 +92,11 @@ def extract_text(raw, *, preserve_examples=False):
                 continue
         if line in ("===Global API===", "==Global API==", "==Events==") or (unheaded and line.startswith('{| class="wikitable"')):
             inventory = True
+        if level_two and line in ('==Widgets==', '==CVars=='):
+            inventory = True
+        if level_two and line == 'Structures':
+            inventory = False
+            line = '==Structures=='
         if level_two and line in ("==Enums==", "==Structures==", "==References=="):
             inventory = False
             if line == "==Enums==":

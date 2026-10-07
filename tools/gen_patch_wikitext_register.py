@@ -120,9 +120,12 @@ def parse_section(section, lines, *, expand_shared_changes=False):
     return entries, counts
 
 
-def split_sections(text):
+def split_sections(text, *, separate_inline_structures=False):
     current, buckets = None, {}
     for line_no, line in enumerate(text.split("\n"), start=1):
+        if separate_inline_structures and line.strip() == 'Structures':
+            current = None
+            continue
         if line.strip() == "==Type Changes==":
             break  # Historical type annotations are extract rows, not publication inventories.
         heading = re.match(r"^(={2,3})([^=]+)\1\s*$", line)
@@ -151,10 +154,13 @@ def main():
                         help="Omit optional metadata for legacy inventory-only registers")
     parser.add_argument("--expand-shared-changes", action="store_true",
                         help="Account for every API on shared changed lines; opt-in preserves prior registers")
+    parser.add_argument('--separate-inline-structures', action='store_true',
+                        help='Exclude unheaded Structures from API annotations; opt-in preserves prior registers')
     args = parser.parse_args()
     patch, path, revid, out = args.patch, args.path, args.revid, args.out
     raw = Path(path).read_bytes()
-    buckets = split_sections(raw.decode("utf-8"))
+    buckets = split_sections(raw.decode("utf-8"),
+                             separate_inline_structures=args.separate_inline_structures)
     entries, counts = [], []
     for section in SECTIONS.values():
         entry_section = "cvars" if section == "commands" else section

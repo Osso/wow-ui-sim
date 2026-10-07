@@ -8,6 +8,23 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 class ExtractTests(unittest.TestCase):
+    def test_multiline_ambox_preserves_security_warning(self):
+        raw = ('==UnitPopup Changes==\n{{Ambox\n'
+               '| image = [[Image:Icon.png]]\n| border = red\n'
+               '| type = Secure Execution and Tainting\n| info = \n'
+               '* Modifying menus will [[Secure Execution and Tainting|taint]].\n}}\n')
+        self.assertEqual(extract_text(raw), '== UnitPopup Changes ==\n'
+                         '[Warning: Secure Execution and Tainting]\n'
+                         '* Modifying menus will taint.\n')
+
+    def test_inline_structures_are_retained_without_widget_inventory(self):
+        raw = ('==Global API==\n: {{api|IgnoreMe}}\n|}\n'
+               'Structures\n ClubInfo\n   + crossFaction\n'
+               '==Widgets==\n: {{api|Region:GetSourceLocation}}\n'
+               '==CVars==\n: cameraFov\n==Enums==\n + Enum.ReportType\n')
+        self.assertEqual(extract_text(raw), '== Structures ==\n ClubInfo\n'
+                         '   + crossFaction\n== Enumerations ==\n + Enum.ReportType\n')
+
     def test_level_two_structures_end_inventory_before_type_changes(self):
         raw = ('==Global API==\n{| class="wikitable"\n: {{api|IgnoreMe}}\n|}\n'
                '==Structures==\n Enum.ItemGemColor\n   + Primordial\n'

@@ -5,6 +5,17 @@ from gen_patch_wikitext_register import parse_section, split_sections
 
 
 class InventoryTests(unittest.TestCase):
+    def test_inline_structures_do_not_attach_fields_to_last_changed_api(self):
+        raw = ('==Global API==\n|}\n {{api|C_TransmogCollection.GetCategoryAppearances}}\n'
+               '   + arg transmogLocation\nStructures\n ClubInfo\n   + crossFaction\n'
+               '==Widgets==\n| valign="top" | <div>\n: {{api|Region:GetSourceLocation}}\n')
+        buckets = split_sections(raw, separate_inline_structures=True)
+        entries, _ = parse_section('global-api', buckets['global-api'])
+        self.assertEqual([(e['symbol'], e['annotation']) for e in entries],
+                         [('C_TransmogCollection.GetCategoryAppearances', '+ arg transmogLocation')])
+        widgets, _ = parse_section('widgets', buckets['widgets'])
+        self.assertEqual([e['symbol'] for e in widgets], ['Region:GetSourceLocation'])
+
     def test_inline_plain_commands_do_not_turn_removed_cvars_into_commands(self):
         entries, counts = parse_section('cvars', [
             (1, '! Added <small>(3)</small>'),
