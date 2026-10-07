@@ -86,5 +86,21 @@
   "data/patch-api/sources/12.1.0-page-coverage.json": "328bbb571f06940dc4af61809d99115f1967ddf5bde2ecc1b1e326000b88c5a2",
   "data/patch-api/sources/12.1.0-ptr-cache-manifest.txt": "fa104a0f58bb1f86949aeec78fd82388b8d1cb8da39a1f3b51b4e3bd89e4ac66",
   "data/patch-api/sources/12.1.0-wikitext-register.json": "924774ddea912d58af87211b41549d550a12594cc2b5de0b8b3de7574e9e8311",
-  "data/patch-api/sources/12.1.5-register.json": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+  "data/patch-api/sources/12.1.5-register.json": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+  "tests/data/patch_10_2_7_sweep_known_gaps.json": "cca99a02aff745936c4946f5bd9c411b295df017f485c471d2799b35e8d38d5d",
+  "tests/data/patch_11_0_0_sweep_known_gaps.json": "582c6722cdbf1f5c714e79285d733aa16b576bd1150f014e79263757c80c59fe",
+  "tests/data/patch_11_0_2_sweep_known_gaps.json": "2b67f011dada188c6e29edeb2c354ec1b022898de7f09973e29f18a9a9019ccc",
+  "tests/data/patch_11_0_5_sweep_known_gaps.json": "ac7849ac53136a8fd0069b1a8cd5b1ed1ec479ebd0dc91f26a61caf6d82de001",
+  "tests/data/patch_11_0_7_sweep_known_gaps.json": "862a753dd970643fbb6c6a2e1ff5bd020b852f3ddca5bb0302d2824e2017e505",
+  "tests/data/patch_11_1_0_sweep_known_gaps.json": "37060e5e90811b78acf06a9f218fc3e44e7ac8dfe340afd8b4b75f1b8ecb099b",
+  "tests/data/patch_11_1_5_sweep_known_gaps.json": "faff51bfc8c5353064e898599684424b20729a10878ce3a499598eb2397b48c3",
+  "tests/data/patch_11_1_7_sweep_known_gaps.json": "ca385ab6271755b60fe494629ebaf9ea3f9b27a4c004ca9127aa74403b9641df",
+  "tests/data/patch_11_2_0_sweep_known_gaps.json": "790565e283a5d9d4439fbe8906247aad9e4048aced21a7b76e9cd7d322614504",
+  "tests/data/patch_11_2_5_sweep_known_gaps.json": "724d83c4a636dbd978da250b22b24ae0868bb08521306df0bf8afe82647fd8e0",
+  "tests/data/patch_11_2_7_sweep_known_gaps.json": "c430f3939ffa83b5a6875dbcb8c9f4d77df186e6d43dfffe174af11a4981d904",
+  "tests/data/patch_12_0_0_sweep_known_gaps.json": "1631c386c966967440bed0feed597ce6d920ca0ee6ff15384482ea531446d54f",
+  "tests/data/patch_12_0_1_sweep_known_gaps.json": "e54f1163d3973d114fad6b278305877871970457724b9e0b8698197bb8e061e8",
+  "tests/data/patch_12_0_5_sweep_known_gaps.json": "b7f23ae23eb3a727b315e4b2da0ceb241fe97f4fb7a267d0dfeb160129ed168b",
+  "tests/data/patch_12_0_7_sweep_known_gaps.json": "4e8adaddfec027082455f008704102e9a96af42335317a543f0522b58bb078d0",
+  "tests/data/patch_12_1_0_sweep_known_gaps.json": "8771981d939bf6072c33d443cb84de299243a0dbbaeeee780b1c87d776226b39"
 }

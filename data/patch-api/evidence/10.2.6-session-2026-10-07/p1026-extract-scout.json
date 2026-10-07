@@ -1,0 +1,1537 @@
+[
+  {
+    "source_id": "source-context-001",
+    "statement": "Patch 10.2.6 API changes",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial/source/build context or external resource link; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "source-context-003",
+    "statement": "== Summary ==",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial heading; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "prose-undated-005",
+    "statement": "* Many global functions have been moved to various C_* namespaces. Refer to Deprecated API.",
+    "group": "prose",
+    "proof": "audit-pending",
+    "decision": "Global-to-namespace migration summary needs each cached wrapper/successor contract. Inventory accounts publication/absence only; it does not prove argument/return/security parity for the full migration.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "source-context-007",
+    "statement": "== Resources ==",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial heading; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "source-context-008",
+    "statement": "* TOC: 100206",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial/source/build context or external resource link; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "source-context-009",
+    "statement": "* Diffs: wow-ui-source, BlizzardInterfaceResources",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial/source/build context or external resource link; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "source-context-010",
+    "statement": "* Official patch notes: None (Dragonflight: Plunderstorm Content Update Notes)",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial/source/build context or external resource link; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "source-context-012",
+    "statement": "== Diffs ==",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial heading; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "source-context-013",
+    "statement": "=== Enumerations ===",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial heading; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-AccountData-014",
+    "statement": "Enum.AccountData",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.AccountData: Enum.AccountData. Current enum publication is a candidate only; exact numeric values, historical member rename/addition and later supersession require explicit assertions. No inventory sweep credit for this extract ID.",
+    "implementation_candidates": [
+      "src/c_api/c_account_services.rs:40:        \"SaveAccountData\",",
+      "src/lua_api/state_types/character_world.rs:383:    /// `GetRestrictedAccountData()` first return \u2014 the level cap a",
+      "src/lua_api/state_types/character_world.rs:387:    /// `GetRestrictedAccountData()` second return \u2014 copper cap.",
+      "src/lua_api/state_types/character_world.rs:389:    /// `GetRestrictedAccountData()` third return \u2014 profession-skill cap.",
+      "src/loader/tests/wow_api_globals/account_state_flags.rs:149:    assert_enum_family(&env, \"CreateAllAccountData\", CREATE_ALL_ACCOUNT_DATA);",
+      "src/loader/tests/wow_api_globals/account_state_flags.rs:156:                    CreateAllAccountDataMeta = 48,",
+      "src/lua_api/globals/enum_data/missing_enums.lua:34:if not Enum.AccountData then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:35:  Enum.AccountData = {"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-AccountData-015",
+    "statement": "+ FrontendChatSettings",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.AccountData: + FrontendChatSettings. Current enum publication is a candidate only; exact numeric values, historical member rename/addition and later supersession require explicit assertions. No inventory sweep credit for this extract ID.",
+    "implementation_candidates": [
+      "src/c_api/c_account_services.rs:40:        \"SaveAccountData\",",
+      "src/lua_api/state_types/character_world.rs:383:    /// `GetRestrictedAccountData()` first return \u2014 the level cap a",
+      "src/lua_api/state_types/character_world.rs:387:    /// `GetRestrictedAccountData()` second return \u2014 copper cap.",
+      "src/lua_api/state_types/character_world.rs:389:    /// `GetRestrictedAccountData()` third return \u2014 profession-skill cap.",
+      "src/lua_api/globals/enum_data/missing_enums.lua:34:if not Enum.AccountData then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:35:  Enum.AccountData = {",
+      "src/lua_api/globals/enum_data/missing_enums.lua:59:if not Enum.AccountDataMeta then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:60:  Enum.AccountDataMeta = {"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-PointsModifierSourceType-016",
+    "statement": "Enum.PointsModifierSourceType",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.PointsModifierSourceType: Enum.PointsModifierSourceType. Current enum publication is a candidate only; exact numeric values, historical member rename/addition and later supersession require explicit assertions. No inventory sweep credit for this extract ID.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-PointsModifierSourceType-017",
+    "statement": "+ FirstTimeQuestCompletionRewards",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.PointsModifierSourceType: + FirstTimeQuestCompletionRewards. Current enum publication is a candidate only; exact numeric values, historical member rename/addition and later supersession require explicit assertions. No inventory sweep credit for this extract ID.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-SuperTrackingType-018",
+    "statement": "Enum.SuperTrackingType",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.SuperTrackingType: Enum.SuperTrackingType. Current enum publication is a candidate only; exact numeric values, historical member rename/addition and later supersession require explicit assertions. No inventory sweep credit for this extract ID.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/addon_system.rs:931:    \"SuperTrackingType\",",
+      "src/lua_api/globals/enum_data/missing_enums.lua:13212:if not Enum.SuperTrackingTypeMeta then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:13213:  Enum.SuperTrackingTypeMeta = {",
+      "src/lua_api/workarounds/temporary/super_track_defaults.rs:20:installSuperTrackDefault(\"GetHighestPrioritySuperTrackingType\", function()",
+      "src/lua_api/workarounds/temporary/super_track_defaults.rs:58:                if C_SuperTrack.GetHighestPrioritySuperTrackingType() ~= nil then return \"type\" end",
+      "src/lua_api/workarounds/temporary/super_track_defaults.rs:82:            function C_SuperTrack.GetHighestPrioritySuperTrackingType()",
+      "src/lua_api/workarounds/temporary/super_track_defaults.rs:95:                    C_SuperTrack.GetHighestPrioritySuperTrackingType()"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-SuperTrackingType-019",
+    "statement": "+ PartyMember",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.SuperTrackingType: + PartyMember. Current enum publication is a candidate only; exact numeric values, historical member rename/addition and later supersession require explicit assertions. No inventory sweep credit for this extract ID.",
+    "implementation_candidates": [
+      "src/lua_api/workarounds/temporary/super_track_defaults.rs:20:installSuperTrackDefault(\"GetHighestPrioritySuperTrackingType\", function()",
+      "src/lua_api/workarounds/temporary/super_track_defaults.rs:58:                if C_SuperTrack.GetHighestPrioritySuperTrackingType() ~= nil then return \"type\" end",
+      "src/lua_api/workarounds/temporary/super_track_defaults.rs:82:            function C_SuperTrack.GetHighestPrioritySuperTrackingType()",
+      "src/lua_api/workarounds/temporary/super_track_defaults.rs:95:                    C_SuperTrack.GetHighestPrioritySuperTrackingType()",
+      "src/lua_api/globals/enum_data/missing_enums.lua:13212:if not Enum.SuperTrackingTypeMeta then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:13213:  Enum.SuperTrackingTypeMeta = {",
+      "src/lua_api/globals/enum_data/addon_system.rs:931:    \"SuperTrackingType\","
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetScale-020",
+    "statement": "Enum.UIWidgetScale",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.UIWidgetScale: Enum.UIWidgetScale. Current enum publication is a candidate only; exact numeric values, historical member rename/addition and later supersession require explicit assertions. No inventory sweep credit for this extract ID.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/widget.rs:493:    \"UIWidgetScale\",",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15167:if not Enum.UIWidgetScale then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15168:  Enum.UIWidgetScale = {",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15188:if not Enum.UIWidgetScaleMeta then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15189:  Enum.UIWidgetScaleMeta = {"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetScale-021",
+    "statement": "+ OneHundredTen",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.UIWidgetScale: + OneHundredTen. Current enum publication is a candidate only; exact numeric values, historical member rename/addition and later supersession require explicit assertions. No inventory sweep credit for this extract ID.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/widget.rs:493:    \"UIWidgetScale\",",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15167:if not Enum.UIWidgetScale then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15168:  Enum.UIWidgetScale = {",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15188:if not Enum.UIWidgetScaleMeta then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15189:  Enum.UIWidgetScaleMeta = {"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetScale-022",
+    "statement": "+ OneHundredTwenty",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.UIWidgetScale: + OneHundredTwenty. Current enum publication is a candidate only; exact numeric values, historical member rename/addition and later supersession require explicit assertions. No inventory sweep credit for this extract ID.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/widget.rs:493:    \"UIWidgetScale\",",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15167:if not Enum.UIWidgetScale then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15168:  Enum.UIWidgetScale = {",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15188:if not Enum.UIWidgetScaleMeta then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15189:  Enum.UIWidgetScaleMeta = {"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetScale-023",
+    "statement": "+ OneHundredThirty",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.UIWidgetScale: + OneHundredThirty. Current enum publication is a candidate only; exact numeric values, historical member rename/addition and later supersession require explicit assertions. No inventory sweep credit for this extract ID.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/widget.rs:493:    \"UIWidgetScale\",",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15167:if not Enum.UIWidgetScale then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15168:  Enum.UIWidgetScale = {",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15188:if not Enum.UIWidgetScaleMeta then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15189:  Enum.UIWidgetScaleMeta = {"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetScale-024",
+    "statement": "+ OneHundredForty",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.UIWidgetScale: + OneHundredForty. Current enum publication is a candidate only; exact numeric values, historical member rename/addition and later supersession require explicit assertions. No inventory sweep credit for this extract ID.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/widget.rs:493:    \"UIWidgetScale\",",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15167:if not Enum.UIWidgetScale then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15168:  Enum.UIWidgetScale = {",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15188:if not Enum.UIWidgetScaleMeta then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15189:  Enum.UIWidgetScaleMeta = {"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetScale-025",
+    "statement": "+ OneHundredFifty",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.UIWidgetScale: + OneHundredFifty. Current enum publication is a candidate only; exact numeric values, historical member rename/addition and later supersession require explicit assertions. No inventory sweep credit for this extract ID.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/widget.rs:493:    \"UIWidgetScale\",",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15167:if not Enum.UIWidgetScale then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15168:  Enum.UIWidgetScale = {",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15188:if not Enum.UIWidgetScaleMeta then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15189:  Enum.UIWidgetScaleMeta = {"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetScale-026",
+    "statement": "+ OneHundredSixty",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.UIWidgetScale: + OneHundredSixty. Current enum publication is a candidate only; exact numeric values, historical member rename/addition and later supersession require explicit assertions. No inventory sweep credit for this extract ID.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/widget.rs:493:    \"UIWidgetScale\",",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15167:if not Enum.UIWidgetScale then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15168:  Enum.UIWidgetScale = {",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15188:if not Enum.UIWidgetScaleMeta then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15189:  Enum.UIWidgetScaleMeta = {"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetScale-027",
+    "statement": "+ OneHundredSeventy",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.UIWidgetScale: + OneHundredSeventy. Current enum publication is a candidate only; exact numeric values, historical member rename/addition and later supersession require explicit assertions. No inventory sweep credit for this extract ID.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/widget.rs:493:    \"UIWidgetScale\",",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15167:if not Enum.UIWidgetScale then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15168:  Enum.UIWidgetScale = {",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15188:if not Enum.UIWidgetScaleMeta then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15189:  Enum.UIWidgetScaleMeta = {"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetScale-028",
+    "statement": "+ OneHundredEighty",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.UIWidgetScale: + OneHundredEighty. Current enum publication is a candidate only; exact numeric values, historical member rename/addition and later supersession require explicit assertions. No inventory sweep credit for this extract ID.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/widget.rs:493:    \"UIWidgetScale\",",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15167:if not Enum.UIWidgetScale then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15168:  Enum.UIWidgetScale = {",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15188:if not Enum.UIWidgetScaleMeta then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15189:  Enum.UIWidgetScaleMeta = {"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetScale-029",
+    "statement": "+ OneHundredNinety",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.UIWidgetScale: + OneHundredNinety. Current enum publication is a candidate only; exact numeric values, historical member rename/addition and later supersession require explicit assertions. No inventory sweep credit for this extract ID.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/widget.rs:493:    \"UIWidgetScale\",",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15167:if not Enum.UIWidgetScale then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15168:  Enum.UIWidgetScale = {",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15188:if not Enum.UIWidgetScaleMeta then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15189:  Enum.UIWidgetScaleMeta = {"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetScale-030",
+    "statement": "+ TwoHundred",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.UIWidgetScale: + TwoHundred. Current enum publication is a candidate only; exact numeric values, historical member rename/addition and later supersession require explicit assertions. No inventory sweep credit for this extract ID.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/widget.rs:493:    \"UIWidgetScale\",",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15167:if not Enum.UIWidgetScale then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15168:  Enum.UIWidgetScale = {",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15188:if not Enum.UIWidgetScaleMeta then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15189:  Enum.UIWidgetScaleMeta = {"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetSetLayoutDirection-031",
+    "statement": "Enum.UIWidgetSetLayoutDirection",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.UIWidgetSetLayoutDirection: Enum.UIWidgetSetLayoutDirection. Current enum publication is a candidate only; exact numeric values, historical member rename/addition and later supersession require explicit assertions. No inventory sweep credit for this extract ID.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/missing_enums.lua:15196:if not Enum.UIWidgetSetLayoutDirection then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15197:  Enum.UIWidgetSetLayoutDirection = {",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15204:if not Enum.UIWidgetSetLayoutDirectionMeta then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15205:  Enum.UIWidgetSetLayoutDirectionMeta = {"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetSetLayoutDirection-032",
+    "statement": "+ Overlap",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.UIWidgetSetLayoutDirection: + Overlap. Current enum publication is a candidate only; exact numeric values, historical member rename/addition and later supersession require explicit assertions. No inventory sweep credit for this extract ID.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/missing_enums.lua:15196:if not Enum.UIWidgetSetLayoutDirection then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15197:  Enum.UIWidgetSetLayoutDirection = {",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15204:if not Enum.UIWidgetSetLayoutDirectionMeta then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15205:  Enum.UIWidgetSetLayoutDirectionMeta = {"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetTextureAndTextSizeType-033",
+    "statement": "Enum.UIWidgetTextureAndTextSizeType",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.UIWidgetTextureAndTextSizeType: Enum.UIWidgetTextureAndTextSizeType. Current enum publication is a candidate only; exact numeric values, historical member rename/addition and later supersession require explicit assertions. No inventory sweep credit for this extract ID.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/widget.rs:690:    \"UIWidgetTextureAndTextSizeType\",",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15267:if not Enum.UIWidgetTextureAndTextSizeType then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15268:  Enum.UIWidgetTextureAndTextSizeType = {",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15278:if not Enum.UIWidgetTextureAndTextSizeTypeMeta then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15279:  Enum.UIWidgetTextureAndTextSizeTypeMeta = {"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetTextureAndTextSizeType-034",
+    "statement": "+ Medium2",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.UIWidgetTextureAndTextSizeType: + Medium2. Current enum publication is a candidate only; exact numeric values, historical member rename/addition and later supersession require explicit assertions. No inventory sweep credit for this extract ID.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/widget.rs:690:    \"UIWidgetTextureAndTextSizeType\",",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15267:if not Enum.UIWidgetTextureAndTextSizeType then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15268:  Enum.UIWidgetTextureAndTextSizeType = {",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15278:if not Enum.UIWidgetTextureAndTextSizeTypeMeta then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15279:  Enum.UIWidgetTextureAndTextSizeTypeMeta = {"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetVisualizationType-035",
+    "statement": "Enum.UIWidgetVisualizationType",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.UIWidgetVisualizationType: Enum.UIWidgetVisualizationType. Current enum publication is a candidate only; exact numeric values, historical member rename/addition and later supersession require explicit assertions. No inventory sweep credit for this extract ID.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/widget.rs:402:    \"UIWidgetVisualizationType\",",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15324:if not Enum.UIWidgetVisualizationType then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15325:  Enum.UIWidgetVisualizationType = {",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15361:if not Enum.UIWidgetVisualizationTypeMeta then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15362:  Enum.UIWidgetVisualizationTypeMeta = {",
+      "src/loader/tests/wow_api_globals/patch_12_0_0_small_enums.rs:85:    (\"UIWidgetVisualizationType\", &[(\"PreyHuntProgress\", 31)]),",
+      "src/loader/tests/wow_api_globals/patch_12_0_0_small_enums.rs:87:        \"UIWidgetVisualizationTypeMeta\","
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-UIWidgetVisualizationType-036",
+    "statement": "# WorldLootObject -> MapPinAnimation",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.UIWidgetVisualizationType: # WorldLootObject -> MapPinAnimation. Current enum publication is a candidate only; exact numeric values, historical member rename/addition and later supersession require explicit assertions. No inventory sweep credit for this extract ID.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/widget.rs:402:    \"UIWidgetVisualizationType\",",
+      "src/loader/tests/wow_api_globals/patch_12_0_0_small_enums.rs:85:    (\"UIWidgetVisualizationType\", &[(\"PreyHuntProgress\", 31)]),",
+      "src/loader/tests/wow_api_globals/patch_12_0_0_small_enums.rs:87:        \"UIWidgetVisualizationTypeMeta\",",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15324:if not Enum.UIWidgetVisualizationType then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15325:  Enum.UIWidgetVisualizationType = {",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15361:if not Enum.UIWidgetVisualizationTypeMeta then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:15362:  Enum.UIWidgetVisualizationTypeMeta = {"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-WidgetEnabledState-037",
+    "statement": "Enum.WidgetEnabledState",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.WidgetEnabledState: Enum.WidgetEnabledState. Current enum publication is a candidate only; exact numeric values, historical member rename/addition and later supersession require explicit assertions. No inventory sweep credit for this extract ID.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/widget.rs:606:    \"WidgetEnabledState\",",
+      "src/lua_api/globals/enum_data/missing_enums.lua:16053:if not Enum.WidgetEnabledState then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:16054:  Enum.WidgetEnabledState = {",
+      "src/lua_api/globals/enum_data/missing_enums.lua:16066:if not Enum.WidgetEnabledStateMeta then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:16067:  Enum.WidgetEnabledStateMeta = {"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-WidgetEnabledState-038",
+    "statement": "+ BrightBlue",
+    "group": "enumerations",
+    "proof": "audit-pending",
+    "decision": "Enum.WidgetEnabledState: + BrightBlue. Current enum publication is a candidate only; exact numeric values, historical member rename/addition and later supersession require explicit assertions. No inventory sweep credit for this extract ID.",
+    "implementation_candidates": [
+      "src/lua_api/globals/enum_data/widget.rs:606:    \"WidgetEnabledState\",",
+      "src/lua_api/globals/enum_data/missing_enums.lua:16053:if not Enum.WidgetEnabledState then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:16054:  Enum.WidgetEnabledState = {",
+      "src/lua_api/globals/enum_data/missing_enums.lua:16066:if not Enum.WidgetEnabledStateMeta then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:16067:  Enum.WidgetEnabledStateMeta = {"
+    ]
+  },
+  {
+    "source_id": "source-context-040",
+    "statement": "=== Structures ===",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial heading; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-AreaPOIInfo-041",
+    "statement": "AreaPOIInfo",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "AreaPOIInfo: AreaPOIInfo. Requires populated producer/consumer DTO proof for this field or rename, including absence/presence and values; generic empty/nil output does not prove the schema.",
+    "implementation_candidates": [
+      "src/c_api/c_area_poi_info.rs:5://! - `C_AreaPoiInfo.GetAreaPOIInfo(uiMapID, areaPoiID)` \u2014 returns the",
+      "src/c_api/c_area_poi_info.rs:6://!   `AreaPOIInfo` structure for the seeded POI, or nothing (retail",
+      "src/c_api/c_area_poi_info.rs:23:/// `SimState.area_pois`. Drives `C_AreaPoiInfo.GetAreaPOIInfo` and",
+      "src/c_api/c_area_poi_info.rs:32:    /// looked up by id (the `uiMapID` arg to `GetAreaPOIInfo` is",
+      "src/c_api/c_area_poi_info.rs:58:        \"GetAreaPOIInfo\",",
+      "src/c_api/c_event_scheduler.rs:131:        local poi = C_AreaPoiInfo.GetAreaPOIInfo(nil, areaPoiID)",
+      "src/c_api/c_event_scheduler.rs:138:        local poi = C_AreaPoiInfo.GetAreaPOIInfo(nil, areaPoiID)",
+      "src/lua_api/globals/stubs/namespace_stubs.rs:25:    // C_AreaPoiInfo GetAreaPOIInfo / GetAreaPOISecondsLeft are"
+    ]
+  },
+  {
+    "source_id": "structures-AreaPOIInfo-042",
+    "statement": "# addPaddingAboveWidgets -> addPaddingAboveTooltipWidgets",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "AreaPOIInfo: # addPaddingAboveWidgets -> addPaddingAboveTooltipWidgets. Requires populated producer/consumer DTO proof for this field or rename, including absence/presence and values; generic empty/nil output does not prove the schema.",
+    "implementation_candidates": [
+      "src/c_api/c_area_poi_info.rs:5://! - `C_AreaPoiInfo.GetAreaPOIInfo(uiMapID, areaPoiID)` \u2014 returns the",
+      "src/c_api/c_area_poi_info.rs:6://!   `AreaPOIInfo` structure for the seeded POI, or nothing (retail",
+      "src/c_api/c_area_poi_info.rs:23:/// `SimState.area_pois`. Drives `C_AreaPoiInfo.GetAreaPOIInfo` and",
+      "src/c_api/c_area_poi_info.rs:32:    /// looked up by id (the `uiMapID` arg to `GetAreaPOIInfo` is",
+      "src/c_api/c_area_poi_info.rs:58:        \"GetAreaPOIInfo\",",
+      "src/c_api/c_event_scheduler.rs:131:        local poi = C_AreaPoiInfo.GetAreaPOIInfo(nil, areaPoiID)",
+      "src/c_api/c_event_scheduler.rs:138:        local poi = C_AreaPoiInfo.GetAreaPOIInfo(nil, areaPoiID)",
+      "src/lua_api/globals/stubs/namespace_stubs.rs:25:    // C_AreaPoiInfo GetAreaPOIInfo / GetAreaPOISecondsLeft are"
+    ]
+  },
+  {
+    "source_id": "structures-AreaPOIInfo-043",
+    "statement": "# widgetSetID -> tooltipWidgetSet",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "AreaPOIInfo: # widgetSetID -> tooltipWidgetSet. Requires populated producer/consumer DTO proof for this field or rename, including absence/presence and values; generic empty/nil output does not prove the schema.",
+    "implementation_candidates": [
+      "src/c_api/c_area_poi_info.rs:5://! - `C_AreaPoiInfo.GetAreaPOIInfo(uiMapID, areaPoiID)` \u2014 returns the",
+      "src/c_api/c_area_poi_info.rs:6://!   `AreaPOIInfo` structure for the seeded POI, or nothing (retail",
+      "src/c_api/c_area_poi_info.rs:23:/// `SimState.area_pois`. Drives `C_AreaPoiInfo.GetAreaPOIInfo` and",
+      "src/c_api/c_area_poi_info.rs:32:    /// looked up by id (the `uiMapID` arg to `GetAreaPOIInfo` is",
+      "src/c_api/c_area_poi_info.rs:58:        \"GetAreaPOIInfo\",",
+      "src/c_api/c_event_scheduler.rs:131:        local poi = C_AreaPoiInfo.GetAreaPOIInfo(nil, areaPoiID)",
+      "src/c_api/c_event_scheduler.rs:138:        local poi = C_AreaPoiInfo.GetAreaPOIInfo(nil, areaPoiID)",
+      "src/lua_api/globals/stubs/namespace_stubs.rs:25:    // C_AreaPoiInfo GetAreaPOIInfo / GetAreaPOISecondsLeft are"
+    ]
+  },
+  {
+    "source_id": "structures-AreaPOIInfo-044",
+    "statement": "+ iconWidgetSet",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "AreaPOIInfo: + iconWidgetSet. Requires populated producer/consumer DTO proof for this field or rename, including absence/presence and values; generic empty/nil output does not prove the schema.",
+    "implementation_candidates": [
+      "src/c_api/c_area_poi_info.rs:5://! - `C_AreaPoiInfo.GetAreaPOIInfo(uiMapID, areaPoiID)` \u2014 returns the",
+      "src/c_api/c_area_poi_info.rs:6://!   `AreaPOIInfo` structure for the seeded POI, or nothing (retail",
+      "src/c_api/c_area_poi_info.rs:23:/// `SimState.area_pois`. Drives `C_AreaPoiInfo.GetAreaPOIInfo` and",
+      "src/c_api/c_area_poi_info.rs:32:    /// looked up by id (the `uiMapID` arg to `GetAreaPOIInfo` is",
+      "src/c_api/c_area_poi_info.rs:58:        \"GetAreaPOIInfo\",",
+      "src/c_api/c_event_scheduler.rs:131:        local poi = C_AreaPoiInfo.GetAreaPOIInfo(nil, areaPoiID)",
+      "src/c_api/c_event_scheduler.rs:138:        local poi = C_AreaPoiInfo.GetAreaPOIInfo(nil, areaPoiID)",
+      "src/lua_api/globals/stubs/namespace_stubs.rs:25:    // C_AreaPoiInfo GetAreaPOIInfo / GetAreaPOISecondsLeft are"
+    ]
+  },
+  {
+    "source_id": "structures-EncounterJournalItemInfo-045",
+    "statement": "EncounterJournalItemInfo",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "EncounterJournalItemInfo: EncounterJournalItemInfo. Requires populated producer/consumer DTO proof for this field or rename, including absence/presence and values; generic empty/nil output does not prove the schema.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-EncounterJournalItemInfo-046",
+    "statement": "+ displaySeasonID",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "EncounterJournalItemInfo: + displaySeasonID. Requires populated producer/consumer DTO proof for this field or rename, including absence/presence and values; generic empty/nil output does not prove the schema.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-HorizontalCurrenciesWidgetVisualizationInfo-047",
+    "statement": "HorizontalCurrenciesWidgetVisualizationInfo",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "HorizontalCurrenciesWidgetVisualizationInfo: HorizontalCurrenciesWidgetVisualizationInfo. Requires populated producer/consumer DTO proof for this field or rename, including absence/presence and values; generic empty/nil output does not prove the schema.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-HorizontalCurrenciesWidgetVisualizationInfo-048",
+    "statement": "+ updateAnimType",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "HorizontalCurrenciesWidgetVisualizationInfo: + updateAnimType. Requires populated producer/consumer DTO proof for this field or rename, including absence/presence and values; generic empty/nil output does not prove the schema.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-PartyPoseInfo-049",
+    "statement": "PartyPoseInfo",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "PartyPoseInfo: PartyPoseInfo. Requires populated producer/consumer DTO proof for this field or rename, including absence/presence and values; generic empty/nil output does not prove the schema.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-PartyPoseInfo-050",
+    "statement": "+ extraButtonText",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "PartyPoseInfo: + extraButtonText. Requires populated producer/consumer DTO proof for this field or rename, including absence/presence and values; generic empty/nil output does not prove the schema.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-TextureAndTextVisualizationInfo-051",
+    "statement": "TextureAndTextVisualizationInfo",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "TextureAndTextVisualizationInfo: TextureAndTextVisualizationInfo. Requires populated producer/consumer DTO proof for this field or rename, including absence/presence and values; generic empty/nil output does not prove the schema.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-TextureAndTextVisualizationInfo-052",
+    "statement": "+ textSizeType",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "TextureAndTextVisualizationInfo: + textSizeType. Requires populated producer/consumer DTO proof for this field or rename, including absence/presence and values; generic empty/nil output does not prove the schema.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-UIWidgetCurrencyInfo-053",
+    "statement": "UIWidgetCurrencyInfo",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "UIWidgetCurrencyInfo: UIWidgetCurrencyInfo. Requires populated producer/consumer DTO proof for this field or rename, including absence/presence and values; generic empty/nil output does not prove the schema.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-UIWidgetCurrencyInfo-054",
+    "statement": "+ textFontType",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "UIWidgetCurrencyInfo: + textFontType. Requires populated producer/consumer DTO proof for this field or rename, including absence/presence and values; generic empty/nil output does not prove the schema.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-UIWidgetCurrencyInfo-055",
+    "statement": "+ textSizeType",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "UIWidgetCurrencyInfo: + textSizeType. Requires populated producer/consumer DTO proof for this field or rename, including absence/presence and values; generic empty/nil output does not prove the schema.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "structures-VignetteInfo-056",
+    "statement": "VignetteInfo",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "VignetteInfo: VignetteInfo. Requires populated producer/consumer DTO proof for this field or rename, including absence/presence and values; generic empty/nil output does not prove the schema.",
+    "implementation_candidates": [
+      "src/lua_api/globals/missing_surface/small_namespaces.rs:14://! - `C_VignetteInfo.*` \u2014 empty vignette set for world-map refreshes",
+      "src/lua_api/globals/missing_surface/small_namespaces.rs:33:    register_flat_namespace(state, \"C_VignetteInfo\", C_VIGNETTE_INFO_METHODS)?;",
+      "src/lua_api/globals/missing_surface/small_namespaces.rs:171:    (\"GetVignetteInfo\", c_vignette_info_get_vignette_info),"
+    ]
+  },
+  {
+    "source_id": "structures-VignetteInfo-057",
+    "statement": "# addPaddingAboveWidgets -> addPaddingAboveTooltipWidgets",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "VignetteInfo: # addPaddingAboveWidgets -> addPaddingAboveTooltipWidgets. Requires populated producer/consumer DTO proof for this field or rename, including absence/presence and values; generic empty/nil output does not prove the schema.",
+    "implementation_candidates": [
+      "src/lua_api/globals/missing_surface/small_namespaces.rs:14://! - `C_VignetteInfo.*` \u2014 empty vignette set for world-map refreshes",
+      "src/lua_api/globals/missing_surface/small_namespaces.rs:33:    register_flat_namespace(state, \"C_VignetteInfo\", C_VIGNETTE_INFO_METHODS)?;",
+      "src/lua_api/globals/missing_surface/small_namespaces.rs:171:    (\"GetVignetteInfo\", c_vignette_info_get_vignette_info),"
+    ]
+  },
+  {
+    "source_id": "structures-VignetteInfo-058",
+    "statement": "# widgetSetID -> tooltipWidgetSet",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "VignetteInfo: # widgetSetID -> tooltipWidgetSet. Requires populated producer/consumer DTO proof for this field or rename, including absence/presence and values; generic empty/nil output does not prove the schema.",
+    "implementation_candidates": [
+      "src/lua_api/globals/missing_surface/small_namespaces.rs:14://! - `C_VignetteInfo.*` \u2014 empty vignette set for world-map refreshes",
+      "src/lua_api/globals/missing_surface/small_namespaces.rs:33:    register_flat_namespace(state, \"C_VignetteInfo\", C_VIGNETTE_INFO_METHODS)?;",
+      "src/lua_api/globals/missing_surface/small_namespaces.rs:171:    (\"GetVignetteInfo\", c_vignette_info_get_vignette_info),"
+    ]
+  },
+  {
+    "source_id": "structures-VignetteInfo-059",
+    "statement": "+ iconWidgetSet",
+    "group": "structures",
+    "proof": "audit-pending",
+    "decision": "VignetteInfo: + iconWidgetSet. Requires populated producer/consumer DTO proof for this field or rename, including absence/presence and values; generic empty/nil output does not prove the schema.",
+    "implementation_candidates": [
+      "src/lua_api/globals/missing_surface/small_namespaces.rs:14://! - `C_VignetteInfo.*` \u2014 empty vignette set for world-map refreshes",
+      "src/lua_api/globals/missing_surface/small_namespaces.rs:33:    register_flat_namespace(state, \"C_VignetteInfo\", C_VIGNETTE_INFO_METHODS)?;",
+      "src/lua_api/globals/missing_surface/small_namespaces.rs:171:    (\"GetVignetteInfo\", c_vignette_info_get_vignette_info),"
+    ]
+  },
+  {
+    "source_id": "source-context-061",
+    "statement": "== Deprecated API ==",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Editorial heading; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-removal-summary-062",
+    "statement": "These are functions that were deprecated and will be removed in the future.",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "These are functions that were deprecated and will be removed in the future. Requires cached deprecation loading and successor contracts; future-removal prose is not authority to delete current Blizzard wrappers.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "source-context-064",
+    "statement": "Deprecated_10_2_6.lua",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Deprecated-source heading/context; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-FrameXML_Debug-065",
+    "statement": ": FrameXML_Debug \u2192 C_Debug.FrameXMLDebug",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "FrameXML_Debug \u2192 C_Debug.FrameXMLDebug: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-GetMawPowerLinkBySpellID-066",
+    "statement": ": GetMawPowerLinkBySpellID \u2192 C_Spell.GetMawPowerLinkBySpellID",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GetMawPowerLinkBySpellID \u2192 C_Spell.GetMawPowerLinkBySpellID: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/c_api/c_spell_maw_powers.rs:44:        \"GetMawPowerLinkBySpellID\",",
+      "src/c_api/c_spell_maw_powers.rs:102:        \"C_Spell.GetMawPowerLinkBySpellID\","
+    ]
+  },
+  {
+    "source_id": "deprecated api-C_AreaPoiInfo-GetAreaPOIInfo-067",
+    "statement": ": C_AreaPoiInfo.GetAreaPOIInfo",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": ": C_AreaPoiInfo.GetAreaPOIInfo Requires cached deprecation loading and successor contracts; future-removal prose is not authority to delete current Blizzard wrappers.",
+    "implementation_candidates": [
+      "src/c_api/c_area_poi_info.rs:5://! - `C_AreaPoiInfo.GetAreaPOIInfo(uiMapID, areaPoiID)` \u2014 returns the",
+      "src/c_api/c_area_poi_info.rs:23:/// `SimState.area_pois`. Drives `C_AreaPoiInfo.GetAreaPOIInfo` and",
+      "src/c_api/c_area_poi_info.rs:32:    /// looked up by id (the `uiMapID` arg to `GetAreaPOIInfo` is",
+      "src/c_api/c_area_poi_info.rs:58:        \"GetAreaPOIInfo\",",
+      "src/c_api/c_event_scheduler.rs:131:        local poi = C_AreaPoiInfo.GetAreaPOIInfo(nil, areaPoiID)",
+      "src/c_api/c_event_scheduler.rs:138:        local poi = C_AreaPoiInfo.GetAreaPOIInfo(nil, areaPoiID)",
+      "src/lua_api/globals/stubs/namespace_stubs.rs:25:    // C_AreaPoiInfo GetAreaPOIInfo / GetAreaPOISecondsLeft are"
+    ]
+  },
+  {
+    "source_id": "deprecated api-removal-summary-068",
+    "statement": ":: .widgetSetID -> .tooltipWidgetSet",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "C_AreaPoiInfo.GetAreaPOIInfo: :: .widgetSetID -> .tooltipWidgetSet. Deprecated DTO-field translation needs populated records passing through the cached wrapper and assertions on both field names; inventory publication cannot prove field remapping.",
+    "implementation_candidates": [
+      "src/c_api/c_area_poi_info.rs:5://! - `C_AreaPoiInfo.GetAreaPOIInfo(uiMapID, areaPoiID)` \u2014 returns the",
+      "src/c_api/c_area_poi_info.rs:23:/// `SimState.area_pois`. Drives `C_AreaPoiInfo.GetAreaPOIInfo` and",
+      "src/c_api/c_area_poi_info.rs:32:    /// looked up by id (the `uiMapID` arg to `GetAreaPOIInfo` is",
+      "src/c_api/c_area_poi_info.rs:58:        \"GetAreaPOIInfo\",",
+      "src/c_api/c_event_scheduler.rs:131:        local poi = C_AreaPoiInfo.GetAreaPOIInfo(nil, areaPoiID)",
+      "src/c_api/c_event_scheduler.rs:138:        local poi = C_AreaPoiInfo.GetAreaPOIInfo(nil, areaPoiID)",
+      "src/lua_api/globals/stubs/namespace_stubs.rs:25:    // C_AreaPoiInfo GetAreaPOIInfo / GetAreaPOISecondsLeft are"
+    ]
+  },
+  {
+    "source_id": "deprecated api-removal-summary-069",
+    "statement": ":: .addPaddingAboveWidgets -> .addPaddingAboveTooltipWidgets",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "C_AreaPoiInfo.GetAreaPOIInfo: :: .addPaddingAboveWidgets -> .addPaddingAboveTooltipWidgets. Deprecated DTO-field translation needs populated records passing through the cached wrapper and assertions on both field names; inventory publication cannot prove field remapping.",
+    "implementation_candidates": [
+      "src/c_api/c_area_poi_info.rs:5://! - `C_AreaPoiInfo.GetAreaPOIInfo(uiMapID, areaPoiID)` \u2014 returns the",
+      "src/c_api/c_area_poi_info.rs:23:/// `SimState.area_pois`. Drives `C_AreaPoiInfo.GetAreaPOIInfo` and",
+      "src/c_api/c_area_poi_info.rs:32:    /// looked up by id (the `uiMapID` arg to `GetAreaPOIInfo` is",
+      "src/c_api/c_area_poi_info.rs:58:        \"GetAreaPOIInfo\",",
+      "src/c_api/c_event_scheduler.rs:131:        local poi = C_AreaPoiInfo.GetAreaPOIInfo(nil, areaPoiID)",
+      "src/c_api/c_event_scheduler.rs:138:        local poi = C_AreaPoiInfo.GetAreaPOIInfo(nil, areaPoiID)",
+      "src/lua_api/globals/stubs/namespace_stubs.rs:25:    // C_AreaPoiInfo GetAreaPOIInfo / GetAreaPOISecondsLeft are"
+    ]
+  },
+  {
+    "source_id": "deprecated api-C_VignetteInfo-GetVignetteInfo-070",
+    "statement": ": C_VignetteInfo.GetVignetteInfo",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": ": C_VignetteInfo.GetVignetteInfo Requires cached deprecation loading and successor contracts; future-removal prose is not authority to delete current Blizzard wrappers.",
+    "implementation_candidates": [
+      "src/lua_api/globals/missing_surface/small_namespaces.rs:171:    (\"GetVignetteInfo\", c_vignette_info_get_vignette_info),"
+    ]
+  },
+  {
+    "source_id": "deprecated api-removal-summary-071",
+    "statement": ":: .widgetSetID -> .tooltipWidgetSet",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "C_VignetteInfo.GetVignetteInfo: :: .widgetSetID -> .tooltipWidgetSet. Deprecated DTO-field translation needs populated records passing through the cached wrapper and assertions on both field names; inventory publication cannot prove field remapping.",
+    "implementation_candidates": [
+      "src/lua_api/globals/missing_surface/small_namespaces.rs:171:    (\"GetVignetteInfo\", c_vignette_info_get_vignette_info),"
+    ]
+  },
+  {
+    "source_id": "deprecated api-removal-summary-072",
+    "statement": ":: .addPaddingAboveWidgets -> .addPaddingAboveTooltipWidgets",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "C_VignetteInfo.GetVignetteInfo: :: .addPaddingAboveWidgets -> .addPaddingAboveTooltipWidgets. Deprecated DTO-field translation needs populated records passing through the cached wrapper and assertions on both field names; inventory publication cannot prove field remapping.",
+    "implementation_candidates": [
+      "src/lua_api/globals/missing_surface/small_namespaces.rs:171:    (\"GetVignetteInfo\", c_vignette_info_get_vignette_info),"
+    ]
+  },
+  {
+    "source_id": "source-context-074",
+    "statement": "Deprecated_CurrencyScript.lua",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Deprecated-source heading/context; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-GetCoinIcon-075",
+    "statement": ": GetCoinIcon \u2192 C_CurrencyInfo.GetCoinIcon",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GetCoinIcon \u2192 C_CurrencyInfo.GetCoinIcon: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/loader/tests/wow_api.rs:518:        \"GetCoinIcon\",",
+      "src/c_api/item_spell/c_currency.rs:20:    (\"GetCoinIcon\", c_currency_get_coin_icon),",
+      "src/c_api/item_spell/c_currency.rs:436:                \"return C_CurrencyInfo.GetCoinIcon(12345), C_CurrencyInfo.GetCoinText(12345, ' / ')\",",
+      "src/c_api/item_spell/c_currency.rs:450:                GetCoinIcon = C_CurrencyInfo.GetCoinIcon",
+      "src/c_api/item_spell/c_currency.rs:452:                return GetCoinIcon == C_CurrencyInfo.GetCoinIcon"
+    ]
+  },
+  {
+    "source_id": "deprecated api-GetCoinText-076",
+    "statement": ": GetCoinText \u2192 C_CurrencyInfo.GetCoinText",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GetCoinText \u2192 C_CurrencyInfo.GetCoinText: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/loader/tests/wow_api.rs:519:        \"GetCoinText\",",
+      "src/loader/tests/wow_api.rs:520:        \"GetCoinTextureString\",",
+      "src/c_api/item_spell/c_currency.rs:21:    (\"GetCoinText\", c_currency_get_coin_text),",
+      "src/c_api/item_spell/c_currency.rs:22:    (\"GetCoinTextureString\", c_currency_get_coin_texture_string),",
+      "src/c_api/item_spell/c_currency.rs:436:                \"return C_CurrencyInfo.GetCoinIcon(12345), C_CurrencyInfo.GetCoinText(12345, ' / ')\",",
+      "src/c_api/item_spell/c_currency.rs:451:                GetCoinText = C_CurrencyInfo.GetCoinText",
+      "src/c_api/item_spell/c_currency.rs:453:                    and GetCoinText == C_CurrencyInfo.GetCoinText"
+    ]
+  },
+  {
+    "source_id": "deprecated api-GetCoinTextureString-077",
+    "statement": ": GetCoinTextureString \u2192 C_CurrencyInfo.GetCoinTextureString",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GetCoinTextureString \u2192 C_CurrencyInfo.GetCoinTextureString: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/loader/tests/wow_api.rs:520:        \"GetCoinTextureString\",",
+      "src/c_api/item_spell/c_currency.rs:22:    (\"GetCoinTextureString\", c_currency_get_coin_texture_string),"
+    ]
+  },
+  {
+    "source_id": "source-context-079",
+    "statement": "Deprecated_GuildScript.lua",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Deprecated-source heading/context; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-GuildInvite-080",
+    "statement": ": GuildInvite \u2192 C_GuildInfo.Invite",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GuildInvite \u2192 C_GuildInfo.Invite: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/lua_api/state_types/character_world.rs:584:    /// `GuildInvite` / `GuildUninvite` / `GuildKick` / `GuildPromote`.",
+      "src/lua_api/globals/guild_verbs.rs:6://! - `GuildInvite(name)` \u2014 appends a GuildMember at the lowest rank.",
+      "src/lua_api/globals/guild_verbs.rs:51:/// `GuildInvite(name)` \u2014 append a GuildMember at the lowest rank.",
+      "src/lua_api/globals/guild_verbs.rs:162:    LuaApiMut::register_function(lua, \"GuildInvite\", guild_invite)?;",
+      "src/lua_api/globals/guild_probes.rs:7://! - `GetAutoDeclineGuildInvites()` -> `SimState.auto_decline_guild_invites`",
+      "src/lua_api/globals/guild_probes.rs:9://! - `CanGuildInvite()`             -> true when the player is in a guild",
+      "src/lua_api/globals/guild_probes.rs:378:        \"GetAutoDeclineGuildInvites\",",
+      "src/lua_api/globals/guild_probes.rs:390:    LuaApiMut::register_function(lua, \"CanGuildInvite\", can_guild_invite)?;",
+      "src/c_api/c_battle_net_invite.rs:30:        \"C_BattleNet.InviteFriend: gameAccountID must be a positive integral i32 number\",",
+      "src/c_api/c_battle_net_friend_search.rs:20:        \"SendTitleFriendInviteByName\",",
+      "src/c_api/c_battle_net.rs:29:use crate::lua_api::state_types::BnetFriendInvite;",
+      "src/c_api/c_battle_net.rs:103:    table_set_rust_fn_static(state, table_ref, \"InviteFriend\", c_bnet_invite_friend)?;",
+      "src/c_api/c_battle_net.rs:183:        \"GetFriendInviteInfo\",",
+      "src/c_api/c_battle_net.rs:189:        \"SendVerifiedBattleNetFriendInvite\",",
+      "src/c_api/c_battle_net.rs:195:        \"BNCheckTitleFriendInviteToUnit\",",
+      "src/c_api/c_battle_net.rs:359:fn is_same_bnet_invite(invite: &BnetFriendInvite, name: &str) -> bool {"
+    ]
+  },
+  {
+    "source_id": "deprecated api-GuildUninvite-081",
+    "statement": ": GuildUninvite \u2192 C_GuildInfo.Uninvite",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GuildUninvite \u2192 C_GuildInfo.Uninvite: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/lua_api/state_types/character_world.rs:584:    /// `GuildInvite` / `GuildUninvite` / `GuildKick` / `GuildPromote`.",
+      "src/lua_api/globals/guild_verbs.rs:8://! - `GuildUninvite(name)`         \u2014 remove by name. Fires `GUILD_ROSTER_UPDATE`.",
+      "src/lua_api/globals/guild_verbs.rs:9://! - `GuildKick(name)`             \u2014 alias of `GuildUninvite`.",
+      "src/lua_api/globals/guild_verbs.rs:70:/// `GuildUninvite(name)` \u2014 remove by name. Silent no-op when missing.",
+      "src/lua_api/globals/guild_verbs.rs:92:/// `GuildKick(name)` \u2014 alias of `GuildUninvite`.",
+      "src/lua_api/globals/guild_verbs.rs:163:    LuaApiMut::register_function(lua, \"GuildUninvite\", guild_uninvite)?;",
+      "src/c_api/c_party_info.rs:5://! `UninviteUnit` mutate the same roster paths as their legacy globals. Static",
+      "src/c_api/c_party_info.rs:77:    table_set_rust_fn_static(state, table_ref, \"UninviteUnit\", c_party_info_uninvite_unit)?;",
+      "src/loader/tests/wow_api_globals/startup_globals.rs:292:            local beforeUninvite = GetNumGroupMembers()",
+      "src/loader/tests/wow_api_globals/startup_globals.rs:293:            C_PartyInfo.UninviteUnit(\"party1\")",
+      "src/loader/tests/wow_api_globals/startup_globals.rs:294:            if GetNumGroupMembers() ~= beforeUninvite - 1 then return \"party-uninvite\" end",
+      "src/loader/tests/wow_api_globals/startup_globals.rs:346:                \"UninviteUnit\",",
+      "src/loader/tests/wow_api_globals/startup_globals.rs:396:        \"BNInviteFriend=nil,C_ClickBindings.GetStringFromModifiers=function,C_ClickBindings.MakeModifiers=function,C_Spell.GetMawPowerBorderAtlasBySpellID=function,ConfirmReadyCheck=nil,DemoteAssistant=nil,DoReadyCheck=nil,GetMerchantCurrencies=nil,IsGUIDInGroup=nil,PromoteToAssistant=nil,PromoteToLeader=nil,SetEveryoneIsAssistant=nil,UninviteUnit=function,GetAutoCompletePresenceID=nil,GetAutoCompleteResults=function,GetAutoCompleteRealms=function,IsRecognizedName=nil\"",
+      "src/loader/tests/wow_api_globals/startup_globals.rs:401:        \"BNInviteFriend=nil,C_ClickBindings.GetStringFromModifiers=nil,C_ClickBindings.MakeModifiers=nil,C_Spell.GetMawPowerBorderAtlasBySpellID=nil,ConfirmReadyCheck=nil,DemoteAssistant=nil,DoReadyCheck=nil,GetMerchantCurrencies=nil,IsGUIDInGroup=nil,PromoteToAssistant=nil,PromoteToLeader=nil,SetEveryoneIsAssistant=nil,UninviteUnit=nil,GetAutoCompletePresenceID=nil,GetAutoCompleteResults=nil,GetAutoCompleteRealms=nil,IsRecognizedName=nil\""
+    ]
+  },
+  {
+    "source_id": "deprecated api-GuildPromote-082",
+    "statement": ": GuildPromote \u2192 C_GuildInfo.Promote",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GuildPromote \u2192 C_GuildInfo.Promote: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/lua_api/state_types/character_world.rs:584:    /// `GuildInvite` / `GuildUninvite` / `GuildKick` / `GuildPromote`.",
+      "src/lua_api/globals/guild_verbs.rs:12://! - `GuildPromote(name)` \u2014 decrement member's rank_index (minimum 1).",
+      "src/lua_api/globals/guild_verbs.rs:113:/// `GuildPromote(name)` \u2014 bump the named member up one rank (minimum 1 =",
+      "src/lua_api/globals/guild_verbs.rs:166:    LuaApiMut::register_function(lua, \"GuildPromote\", guild_promote)?;",
+      "src/lua_api/globals/guild_probes.rs:16://! - `CanGuildPromote()` / `CanGuildDemote()` -> true when the player is the",
+      "src/lua_api/globals/guild_probes.rs:395:    LuaApiMut::register_function(lua, \"CanGuildPromote\", can_guild_promote)?;",
+      "src/c_api/c_party_info.rs:87:        \"PromoteToAssistant\",",
+      "src/c_api/c_party_info.rs:93:        \"PromoteToLeader\",",
+      "src/loader/tests/wow_api_globals/startup_globals.rs:286:            C_PartyInfo.PromoteToAssistant(\"party1\")",
+      "src/loader/tests/wow_api_globals/startup_globals.rs:288:            C_PartyInfo.PromoteToLeader(\"party1\")",
+      "src/loader/tests/wow_api_globals/startup_globals.rs:290:            C_PartyInfo.PromoteToLeader(\"player\")",
+      "src/loader/tests/wow_api_globals/startup_globals.rs:343:                \"PromoteToAssistant\",",
+      "src/loader/tests/wow_api_globals/startup_globals.rs:344:                \"PromoteToLeader\",",
+      "src/loader/tests/wow_api_globals/startup_globals.rs:396:        \"BNInviteFriend=nil,C_ClickBindings.GetStringFromModifiers=function,C_ClickBindings.MakeModifiers=function,C_Spell.GetMawPowerBorderAtlasBySpellID=function,ConfirmReadyCheck=nil,DemoteAssistant=nil,DoReadyCheck=nil,GetMerchantCurrencies=nil,IsGUIDInGroup=nil,PromoteToAssistant=nil,PromoteToLeader=nil,SetEveryoneIsAssistant=nil,UninviteUnit=function,GetAutoCompletePresenceID=nil,GetAutoCompleteResults=function,GetAutoCompleteRealms=function,IsRecognizedName=nil\""
+    ]
+  },
+  {
+    "source_id": "deprecated api-GuildDemote-083",
+    "statement": ": GuildDemote \u2192 C_GuildInfo.Demote",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GuildDemote \u2192 C_GuildInfo.Demote: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/lua_api/globals/guild_probes.rs:16://! - `CanGuildPromote()` / `CanGuildDemote()` -> true when the player is the",
+      "src/lua_api/globals/guild_probes.rs:396:    LuaApiMut::register_function(lua, \"CanGuildDemote\", can_guild_demote)?;",
+      "src/c_api/c_party_info.rs:81:        \"DemoteAssistant\",",
+      "src/lua_api/globals/guild_probes.rs:16://! - `CanGuildPromote()` / `CanGuildDemote()` -> true when the player is the",
+      "src/lua_api/globals/guild_probes.rs:396:    LuaApiMut::register_function(lua, \"CanGuildDemote\", can_guild_demote)?;",
+      "src/lua_api/workarounds/temporary/housing_catalog_state.lua:773:  DemoteToResident = __wow_noop,",
+      "src/loader/tests/wow_api_globals/startup_globals.rs:276:            C_PartyInfo.DemoteAssistant(\"player\")",
+      "src/loader/tests/wow_api_globals/startup_globals.rs:284:            C_PartyInfo.DemoteAssistant(\"player\")",
+      "src/loader/tests/wow_api_globals/startup_globals.rs:339:                \"DemoteAssistant\",",
+      "src/loader/tests/wow_api_globals/startup_globals.rs:396:        \"BNInviteFriend=nil,C_ClickBindings.GetStringFromModifiers=function,C_ClickBindings.MakeModifiers=function,C_Spell.GetMawPowerBorderAtlasBySpellID=function,ConfirmReadyCheck=nil,DemoteAssistant=nil,DoReadyCheck=nil,GetMerchantCurrencies=nil,IsGUIDInGroup=nil,PromoteToAssistant=nil,PromoteToLeader=nil,SetEveryoneIsAssistant=nil,UninviteUnit=function,GetAutoCompletePresenceID=nil,GetAutoCompleteResults=function,GetAutoCompleteRealms=function,IsRecognizedName=nil\""
+    ]
+  },
+  {
+    "source_id": "deprecated api-GuildSetLeader-084",
+    "statement": ": GuildSetLeader \u2192 C_GuildInfo.SetLeader",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GuildSetLeader \u2192 C_GuildInfo.SetLeader: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-GuildSetMOTD-085",
+    "statement": ": GuildSetMOTD \u2192 C_GuildInfo.SetMOTD",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GuildSetMOTD \u2192 C_GuildInfo.SetMOTD: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/lua_api/globals/guild_verbs.rs:14://! - `GuildSetMOTD(text)`          \u2014 write `world.guild_motd`. Fires `GUILD_MOTD`.",
+      "src/lua_api/globals/guild_verbs.rs:136:/// `GuildSetMOTD(text)` \u2014 write `world.guild_motd`. Fires `GUILD_MOTD`",
+      "src/lua_api/globals/guild_verbs.rs:167:    LuaApiMut::register_function(lua, \"GuildSetMOTD\", guild_set_motd)?;",
+      "src/lua_api/globals/guild_info.rs:12://! - `GetMOTD()` / `SetMOTD(text)` \u2014 read/write `world.guild_motd`. `SetMOTD`",
+      "src/lua_api/globals/guild_info.rs:266:    table_set_rust_fn_static(state, table_ref, \"SetMOTD\", set_motd)?;",
+      "src/lua_api/globals/guild_verbs.rs:14://! - `GuildSetMOTD(text)`          \u2014 write `world.guild_motd`. Fires `GUILD_MOTD`.",
+      "src/lua_api/globals/guild_verbs.rs:136:/// `GuildSetMOTD(text)` \u2014 write `world.guild_motd`. Fires `GUILD_MOTD`",
+      "src/lua_api/globals/guild_verbs.rs:167:    LuaApiMut::register_function(lua, \"GuildSetMOTD\", guild_set_motd)?;"
+    ]
+  },
+  {
+    "source_id": "deprecated api-GuildLeave-086",
+    "statement": ": GuildLeave \u2192 C_GuildInfo.Leave",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GuildLeave \u2192 C_GuildInfo.Leave: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/lua_api/globals/guild_verbs.rs:10://! - `GuildLeave()` \u2014 clears guild identity + roster.",
+      "src/lua_api/globals/guild_verbs.rs:97:/// `GuildLeave()` \u2014 clear guild identity + roster, fire roster update.",
+      "src/lua_api/globals/guild_verbs.rs:165:    LuaApiMut::register_function(lua, \"GuildLeave\", guild_leave)?;",
+      "src/xml/types_support.rs:202:    #[serde(rename = \"OnLeave\", default)]",
+      "src/xml/types_support.rs:264:    #[serde(rename = \"OnHyperlinkLeave\", default)]",
+      "src/xml/parse.rs:458:    <OnLeave function=\"GameTooltip_Hide\"/>",
+      "src/xml/parse.rs:463:    <OnLeave function=\"NewLeaveHandler\"/>",
+      "src/xml/parse.rs:470:        // First OnLeave removed, last kept",
+      "src/xml/parse.rs:472:        assert!(result.contains(\"NewLeaveHandler\"));",
+      "src/xml/parse.rs:481:    <OnLeave function=\"Leave\"/>",
+      "src/xml/parse.rs:485:        assert!(result.contains(r#\"<OnLeave function=\"Leave\"/>\"#));"
+    ]
+  },
+  {
+    "source_id": "deprecated api-GuildDisband-087",
+    "statement": ": GuildDisband \u2192 C_GuildInfo.Disband",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GuildDisband \u2192 C_GuildInfo.Disband: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "source-context-089",
+    "statement": "Deprecated_ItemScript.lua",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Deprecated-source heading/context; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-GetItemQualityColor-090",
+    "statement": ": GetItemQualityColor \u2192 C_Item.GetItemQualityColor",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GetItemQualityColor \u2192 C_Item.GetItemQualityColor: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/mists/compat_bootstrap.lua:573:-- C_Item.GetItemQualityColor: mists's UIParent.lua iterates qualities 0..8",
+      "src/mists/compat_bootstrap.lua:594:  function C_Item.GetItemQualityColor(quality)",
+      "src/mists/compat_bootstrap.lua:599:  -- Flat global GetItemQualityColor: simulator's nil-stub returns nothing;",
+      "src/mists/compat_bootstrap.lua:601:  function GetItemQualityColor(quality)",
+      "src/lua_api/globals/stubs/global_stubs.rs:181:    \"GetItemQualityColor\","
+    ]
+  },
+  {
+    "source_id": "deprecated api-GetItemInfoInstant-091",
+    "statement": ": GetItemInfoInstant \u2192 C_Item.GetItemInfoInstant",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GetItemInfoInstant \u2192 C_Item.GetItemInfoInstant: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/c_api/item_spell/c_item.rs:133:            (\"GetItemInfoInstant\", c_item_get_item_info_instant),",
+      "src/loader/tests/wow_api_item.rs:29:        \"GetItemInfoInstant\","
+    ]
+  },
+  {
+    "source_id": "deprecated api-GetItemSetInfo-092",
+    "statement": ": GetItemSetInfo \u2192 C_Item.GetItemSetInfo",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GetItemSetInfo \u2192 C_Item.GetItemSetInfo: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-GetItemChildInfo-093",
+    "statement": ": GetItemChildInfo \u2192 C_Item.GetItemChildInfo",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GetItemChildInfo \u2192 C_Item.GetItemChildInfo: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-DoesItemContainSpec-094",
+    "statement": ": DoesItemContainSpec \u2192 C_Item.DoesItemContainSpec",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "DoesItemContainSpec \u2192 C_Item.DoesItemContainSpec: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-GetItemGem-095",
+    "statement": ": GetItemGem \u2192 C_Item.GetItemGem",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GetItemGem \u2192 C_Item.GetItemGem: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-GetItemCreationContext-096",
+    "statement": ": GetItemCreationContext \u2192 C_Item.GetItemCreationContext",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GetItemCreationContext \u2192 C_Item.GetItemCreationContext: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-GetItemIcon-097",
+    "statement": ": GetItemIcon \u2192 C_Item.GetItemIconByID",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GetItemIcon \u2192 C_Item.GetItemIconByID: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/loader/tests/wow_api_item.rs:27:        \"GetItemIconByID\",",
+      "src/c_api/item_spell/c_item.rs:115:            (\"GetItemIcon\", c_item_get_item_icon),",
+      "src/c_api/item_spell/c_item.rs:117:            (\"GetItemIconByID\", c_item_get_item_icon_by_id),",
+      "src/lua_api/globals/stubs/namespace_stubs.rs:61:    // C_Item GetItemIconByID / GetItemNameByID / GetItemQualityByID",
+      "src/c_api/item_spell/c_item.rs:117:            (\"GetItemIconByID\", c_item_get_item_icon_by_id),",
+      "src/loader/tests/wow_api_item.rs:27:        \"GetItemIconByID\",",
+      "src/lua_api/globals/stubs/namespace_stubs.rs:61:    // C_Item GetItemIconByID / GetItemNameByID / GetItemQualityByID"
+    ]
+  },
+  {
+    "source_id": "deprecated api-GetItemFamily-098",
+    "statement": ": GetItemFamily \u2192 C_Item.GetItemFamily",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GetItemFamily \u2192 C_Item.GetItemFamily: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-GetItemSpell-099",
+    "statement": ": GetItemSpell \u2192 C_Item.GetItemSpell",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GetItemSpell \u2192 C_Item.GetItemSpell: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-IsArtifactPowerItem-100",
+    "statement": ": IsArtifactPowerItem \u2192 C_Item.IsArtifactPowerItem",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "IsArtifactPowerItem \u2192 C_Item.IsArtifactPowerItem: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-IsCurrentItem-101",
+    "statement": ": IsCurrentItem \u2192 C_Item.IsCurrentItem",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "IsCurrentItem \u2192 C_Item.IsCurrentItem: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-IsUsableItem-102",
+    "statement": ": IsUsableItem \u2192 C_Item.IsUsableItem",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "IsUsableItem \u2192 C_Item.IsUsableItem: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-IsHelpfulItem-103",
+    "statement": ": IsHelpfulItem \u2192 C_Item.IsHelpfulItem",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "IsHelpfulItem \u2192 C_Item.IsHelpfulItem: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/lua_api/workarounds/temporary/item_targeting_defaults.rs:16:installItemTargetingDefault(\"IsHelpfulItem\", function()",
+      "src/lua_api/workarounds/temporary/item_targeting_defaults.rs:39:            .eval(\"return C_Item.IsHelpfulItem(6948), C_Item.IsHarmfulItem(6948)\")",
+      "src/lua_api/workarounds/temporary/item_targeting_defaults.rs:50:            function C_Item.IsHelpfulItem()",
+      "src/lua_api/workarounds/temporary/item_targeting_defaults.rs:60:            .eval(\"return C_Item.IsHelpfulItem(6948)\")"
+    ]
+  },
+  {
+    "source_id": "deprecated api-IsHarmfulItem-104",
+    "statement": ": IsHarmfulItem \u2192 C_Item.IsHarmfulItem",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "IsHarmfulItem \u2192 C_Item.IsHarmfulItem: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/lua_api/workarounds/temporary/item_targeting_defaults.rs:20:installItemTargetingDefault(\"IsHarmfulItem\", function()",
+      "src/lua_api/workarounds/temporary/item_targeting_defaults.rs:39:            .eval(\"return C_Item.IsHelpfulItem(6948), C_Item.IsHarmfulItem(6948)\")"
+    ]
+  },
+  {
+    "source_id": "deprecated api-IsConsumableItem-105",
+    "statement": ": IsConsumableItem \u2192 C_Item.IsConsumableItem",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "IsConsumableItem \u2192 C_Item.IsConsumableItem: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/c_api/item_spell/c_item.rs:161:            (\"IsConsumableItem\", c_item_is_consumable_item),",
+      "src/lua_api/globals/inventory_probes.rs:7://! - `IsConsumableItem(itemId)`    \u2014 `consumable_items.contains(id)`.",
+      "src/lua_api/globals/inventory_probes.rs:313:    LuaApiMut::register_function(lua, \"IsConsumableItem\", c_item_is_consumable_item)?;"
+    ]
+  },
+  {
+    "source_id": "deprecated api-IsEquippableItem-106",
+    "statement": ": IsEquippableItem \u2192 C_Item.IsEquippableItem",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "IsEquippableItem \u2192 C_Item.IsEquippableItem: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/c_api/item_spell/c_item.rs:162:            (\"IsEquippableItem\", c_item_is_equippable_item),",
+      "src/lua_api/globals/inventory_probes.rs:6://! - `IsEquippableItem(itemId)`    \u2014 `equippable_items.contains(id)`.",
+      "src/lua_api/globals/inventory_probes.rs:312:    LuaApiMut::register_function(lua, \"IsEquippableItem\", c_item_is_equippable_item)?;"
+    ]
+  },
+  {
+    "source_id": "deprecated api-IsEquippedItem-107",
+    "statement": ": IsEquippedItem \u2192 C_Item.IsEquippedItem",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "IsEquippedItem \u2192 C_Item.IsEquippedItem: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/lua_api/frame/methods/widgets/tooltip.rs:97:    (\"IsEquippedItem\", is_equipped_item),"
+    ]
+  },
+  {
+    "source_id": "deprecated api-IsEquippedItemType-108",
+    "statement": ": IsEquippedItemType \u2192 C_Item.IsEquippedItemType",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "IsEquippedItemType \u2192 C_Item.IsEquippedItemType: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-ItemHasRange-109",
+    "statement": ": ItemHasRange \u2192 C_Item.ItemHasRange",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "ItemHasRange \u2192 C_Item.ItemHasRange: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-IsItemInRange-110",
+    "statement": ": IsItemInRange \u2192 C_Item.IsItemInRange",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "IsItemInRange \u2192 C_Item.IsItemInRange: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/c_api/item_spell/c_item.rs:163:            (\"IsItemInRange\", c_item_is_item_in_range),",
+      "src/lua_api/globals/spell_state_probes.rs:12://! - `IsItemInRange(itemId, unit)`        \u2014 unit in range (sim has no",
+      "src/lua_api/globals/spell_state_probes.rs:187:    LuaApiMut::register_function(lua, \"IsItemInRange\", c_item_is_item_in_range)?;"
+    ]
+  },
+  {
+    "source_id": "deprecated api-GetItemClassInfo-111",
+    "statement": ": GetItemClassInfo \u2192 C_Item.GetItemClassInfo",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GetItemClassInfo \u2192 C_Item.GetItemClassInfo: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/c_api/item_spell/c_item.rs:141:            (\"GetItemClassInfo\", c_item_get_item_class_info),",
+      "src/loader/tests/wow_api_item.rs:125:        .eval(\"return C_Item.GetItemClassInfo(Enum.ItemClass.Tradegoods)\")",
+      "src/loader/tests/wow_api_item.rs:135:        .eval(\"return C_Item.GetItemClassInfo(Enum.ItemClass.Tradegoods)\")",
+      "src/lua_api/globals/missing_surface.rs:110:    LuaApiMut::register_function(lua, \"GetItemClassInfo\", get_item_class_info_global)?;"
+    ]
+  },
+  {
+    "source_id": "deprecated api-GetItemInventorySlotInfo-112",
+    "statement": ": GetItemInventorySlotInfo \u2192 C_Item.GetItemInventorySlotInfo",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GetItemInventorySlotInfo \u2192 C_Item.GetItemInventorySlotInfo: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/c_api/item_spell/c_item.rs:165:                \"GetItemInventorySlotInfo\","
+    ]
+  },
+  {
+    "source_id": "deprecated api-BindEnchant-113",
+    "statement": ": BindEnchant \u2192 C_Item.BindEnchant",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "BindEnchant \u2192 C_Item.BindEnchant: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-ActionBindsItem-114",
+    "statement": ": ActionBindsItem \u2192 C_Item.ActionBindsItem",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "ActionBindsItem \u2192 C_Item.ActionBindsItem: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-ReplaceEnchant-115",
+    "statement": ": ReplaceEnchant \u2192 C_Item.ReplaceEnchant",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "ReplaceEnchant \u2192 C_Item.ReplaceEnchant: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-ReplaceTradeEnchant-116",
+    "statement": ": ReplaceTradeEnchant \u2192 C_Item.ReplaceTradeEnchant",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "ReplaceTradeEnchant \u2192 C_Item.ReplaceTradeEnchant: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-ConfirmBindOnUse-117",
+    "statement": ": ConfirmBindOnUse \u2192 C_Item.ConfirmBindOnUse",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "ConfirmBindOnUse \u2192 C_Item.ConfirmBindOnUse: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-ConfirmOnUse-118",
+    "statement": ": ConfirmOnUse \u2192 C_Item.ConfirmOnUse",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "ConfirmOnUse \u2192 C_Item.ConfirmOnUse: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-ConfirmNoRefundOnUse-119",
+    "statement": ": ConfirmNoRefundOnUse \u2192 C_Item.ConfirmNoRefundOnUse",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "ConfirmNoRefundOnUse \u2192 C_Item.ConfirmNoRefundOnUse: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-DropItemOnUnit-120",
+    "statement": ": DropItemOnUnit \u2192 C_Item.DropItemOnUnit",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "DropItemOnUnit \u2192 C_Item.DropItemOnUnit: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-EndBoundTradeable-121",
+    "statement": ": EndBoundTradeable \u2192 C_Item.EndBoundTradeable",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "EndBoundTradeable \u2192 C_Item.EndBoundTradeable: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-EndRefund-122",
+    "statement": ": EndRefund \u2192 C_Item.EndRefund",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "EndRefund \u2192 C_Item.EndRefund: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-GetItemInfo-123",
+    "statement": ": GetItemInfo \u2192 C_Item.GetItemInfo",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GetItemInfo \u2192 C_Item.GetItemInfo: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/c_api/c_merchant_frame.rs:25:    table_set_rust_fn_static(state, merchant, \"GetItemInfo\", get_item_info)?;",
+      "src/loader/tests/wow_api_item.rs:29:        \"GetItemInfoInstant\",",
+      "src/loader/tests/wow_api_item.rs:30:        \"GetItemInfo\",",
+      "src/loader/tests/wow_api_item.rs:41:    // GetItemInfo returns 17 values. Item 6948 = Hearthstone.",
+      "src/loader/tests/wow_api_item.rs:43:        .eval(\"local n = C_Item.GetItemInfo(6948); return n\")",
+      "src/loader/tests/wow_api_item.rs:48:        .eval(\"local _,_,q = C_Item.GetItemInfo(6948); return q\")",
+      "src/loader/tests/wow_api_item.rs:53:        .eval(\"return select(14, C_Item.GetItemInfo(6948))\")",
+      "src/loader/tests/wow_api_item.rs:67:                local name, link, quality = GetItemInfo(query)"
+    ]
+  },
+  {
+    "source_id": "deprecated api-GetDetailedItemLevelInfo-124",
+    "statement": ": GetDetailedItemLevelInfo \u2192 C_Item.GetDetailedItemLevelInfo",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GetDetailedItemLevelInfo \u2192 C_Item.GetDetailedItemLevelInfo: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/loader/tests/wow_api_item.rs:28:        \"GetDetailedItemLevelInfo\",",
+      "src/c_api/item_spell/c_item.rs:136:                \"GetDetailedItemLevelInfo\","
+    ]
+  },
+  {
+    "source_id": "deprecated api-GetItemSpecInfo-125",
+    "statement": ": GetItemSpecInfo \u2192 C_Item.GetItemSpecInfo",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GetItemSpecInfo \u2192 C_Item.GetItemSpecInfo: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-GetItemUniqueness-126",
+    "statement": ": GetItemUniqueness \u2192 C_Item.GetItemUniqueness",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GetItemUniqueness \u2192 C_Item.GetItemUniqueness: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-GetItemCount-127",
+    "statement": ": GetItemCount \u2192 C_Item.GetItemCount",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GetItemCount \u2192 C_Item.GetItemCount: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/c_api/item_spell/c_item.rs:154:            (\"GetItemCount\", c_item_get_item_count),"
+    ]
+  },
+  {
+    "source_id": "deprecated api-PickupItem-128",
+    "statement": ": PickupItem \u2192 C_Item.PickupItem",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "PickupItem \u2192 C_Item.PickupItem: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-GetItemSubClassInfo-129",
+    "statement": ": GetItemSubClassInfo \u2192 C_Item.GetItemSubClassInfo",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GetItemSubClassInfo \u2192 C_Item.GetItemSubClassInfo: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/loader/tests/wow_api_item.rs:9:        .eval(\"return C_Item.GetItemSubClassInfo(Enum.ItemClass.Tradegoods, 4)\")",
+      "src/loader/tests/wow_api_item.rs:18:        .eval(\"return C_Item.GetItemSubClassInfo(Enum.ItemClass.Tradegoods, 999) == nil\")",
+      "src/loader/tests/wow_api_item.rs:84:            return C_Item.GetItemSubClassInfo(Enum.ItemClass.Tradegoods, 2),",
+      "src/loader/tests/wow_api_item.rs:85:                C_Item.GetItemSubClassInfo(Enum.ItemClass.Tradegoods, 3)",
+      "src/loader/tests/wow_api_item.rs:109:                if C_Item.GetItemSubClassInfo(Enum.ItemClass.Consumable, subclassID) ~= expectedName then",
+      "src/loader/tests/wow_api_item.rs:167:            if C_Item.GetItemSubClassInfo(entry[1], entry[2]):lower() ~= entry[3] then",
+      "src/c_api/item_spell/c_item.rs:140:            (\"GetItemSubClassInfo\", c_item_get_item_sub_class_info),"
+    ]
+  },
+  {
+    "source_id": "deprecated api-UseItemByName-130",
+    "statement": ": UseItemByName \u2192 C_Item.UseItemByName",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "UseItemByName \u2192 C_Item.UseItemByName: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/lua_api/globals/stubs/global_stubs.rs:96:    \"UseItemByName\","
+    ]
+  },
+  {
+    "source_id": "deprecated api-EquipItemByName-131",
+    "statement": ": EquipItemByName \u2192 C_Item.EquipItemByName",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "EquipItemByName \u2192 C_Item.EquipItemByName: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-ReplaceTradeskillEnchant-132",
+    "statement": ": ReplaceTradeskillEnchant \u2192 C_Item.ReplaceTradeskillEnchant",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "ReplaceTradeskillEnchant \u2192 C_Item.ReplaceTradeskillEnchant: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-GetItemCooldown-133",
+    "statement": ": GetItemCooldown \u2192 C_Item.GetItemCooldown",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GetItemCooldown \u2192 C_Item.GetItemCooldown: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/c_api/item_spell/c_item.rs:157:            (\"GetItemCooldown\", c_item_get_item_cooldown),",
+      "src/c_api/item_spell/c_container.rs:79:            (\"GetItemCooldown\", c_container_get_item_cooldown),"
+    ]
+  },
+  {
+    "source_id": "deprecated api-IsCorruptedItem-134",
+    "statement": ": IsCorruptedItem \u2192 C_Item.IsCorruptedItem",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "IsCorruptedItem \u2192 C_Item.IsCorruptedItem: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-IsCosmeticItem-135",
+    "statement": ": IsCosmeticItem \u2192 C_Item.IsCosmeticItem",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "IsCosmeticItem \u2192 C_Item.IsCosmeticItem: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-IsDressableItem-136",
+    "statement": ": IsDressableItem \u2192 C_Item.IsDressableItem",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "IsDressableItem \u2192 C_Item.IsDressableItem: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "source-context-138",
+    "statement": "Deprecated_PvpScript.lua",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Deprecated-source heading/context; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-IsSubZonePVPPOI-139",
+    "statement": ": IsSubZonePVPPOI \u2192 C_PvP.IsSubZonePVPPOI",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "IsSubZonePVPPOI \u2192 C_PvP.IsSubZonePVPPOI: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-GetZonePVPInfo-140",
+    "statement": ": GetZonePVPInfo \u2192 C_PvP.GetZonePVPInfo",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GetZonePVPInfo \u2192 C_PvP.GetZonePVPInfo: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/wrath/compat_bootstrap.lua:194:if GetZonePVPInfo == nil then",
+      "src/wrath/compat_bootstrap.lua:195:  function GetZonePVPInfo()",
+      "src/lua_api/env_init/runtime_surface_bootstrap.lua:30:-- C_PvP.GetZonePVPInfo is registered from Rust",
+      "src/lua_api/globals/zone_text.rs:1://! Zone-text probes + `C_PvP.GetZonePVPInfo`, all backed by `SimState::world`.",
+      "src/lua_api/globals/zone_text.rs:14://! - `C_PvP.GetZonePVPInfo()` \u2014 returns `(pvpType, isSubZonePvP, factionName)`.",
+      "src/lua_api/globals/zone_text.rs:138:    table_set_rust_fn_static(state, c_pvp, \"GetZonePVPInfo\", get_zone_pvp_info)?;",
+      "src/lua_api/globals/admin_zone_economy.rs:278:/// three return values of `C_PvP.GetZonePVPInfo()`. `pvpType` defaults to",
+      "src/lua_api/state_types/character_world.rs:539:    /// Current zone's PvP type, returned by `C_PvP.GetZonePVPInfo()` as its"
+    ]
+  },
+  {
+    "source_id": "deprecated api-TogglePVP-141",
+    "statement": ": TogglePVP \u2192 C_PvP.TogglePVP",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "TogglePVP \u2192 C_PvP.TogglePVP: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-SetPVP-142",
+    "statement": ": SetPVP \u2192 C_PvP.SetPVP",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "SetPVP \u2192 C_PvP.SetPVP: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/lua_api/globals/pvp_probes.rs:523:    LuaApiMut::register_function(lua, \"SetPVPRoles\", set_pvp_roles)?;",
+      "src/loader/tests/wow_api_globals/startup_globals.rs:1300:            SetPVPRoles(true, false, true)"
+    ]
+  },
+  {
+    "source_id": "source-context-144",
+    "statement": "Deprecated_SoundScript.lua",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Deprecated-source heading/context; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-PlayVocalErrorSoundID-145",
+    "statement": ": PlayVocalErrorSoundID \u2192 C_Sound.PlayVocalErrorSound",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "PlayVocalErrorSoundID \u2192 C_Sound.PlayVocalErrorSound: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/lua_api/workarounds/temporary/sound_driver_defaults.rs:49:if rawget(C_Sound, \"PlayVocalErrorSound\") == nil then",
+      "src/lua_api/workarounds/temporary/sound_driver_defaults.rs:50:    function C_Sound.PlayVocalErrorSound() end",
+      "src/lua_api/workarounds/temporary/sound_driver_defaults.rs:127:                C_Sound.PlayVocalErrorSound(1)",
+      "src/lua_api/workarounds/temporary/sound_driver_defaults.rs:173:                if type(C_Sound.PlayVocalErrorSound) ~= \"function\" then return \"missing_vocal_error\" end"
+    ]
+  },
+  {
+    "source_id": "source-context-147",
+    "statement": "Deprecated_SpellScript.lua",
+    "group": "metadata",
+    "proof": "metadata-only",
+    "decision": "Deprecated-source heading/context; no runtime credit.",
+    "implementation_candidates": []
+  },
+  {
+    "source_id": "deprecated api-TargetSpellReplacesBonusTree-148",
+    "statement": ": TargetSpellReplacesBonusTree \u2192 C_Spell.TargetSpellReplacesBonusTree",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "TargetSpellReplacesBonusTree \u2192 C_Spell.TargetSpellReplacesBonusTree: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/lua_api/workarounds/temporary/spell_target_defaults.rs:20:installSpellTargetDefault(\"TargetSpellReplacesBonusTree\")",
+      "src/lua_api/workarounds/temporary/spell_target_defaults.rs:41:                    C_Spell.TargetSpellReplacesBonusTree()"
+    ]
+  },
+  {
+    "source_id": "deprecated api-GetMaxSpellStartRecoveryOffset-149",
+    "statement": ": GetMaxSpellStartRecoveryOffset \u2192 C_Spell.GetSpellQueueWindow",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GetMaxSpellStartRecoveryOffset \u2192 C_Spell.GetSpellQueueWindow: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/c_api/c_spell.rs:88:    (\"GetSpellQueueWindow\", get_spell_queue_window),"
+    ]
+  },
+  {
+    "source_id": "deprecated api-GetSpellQueueWindow-150",
+    "statement": ": GetSpellQueueWindow \u2192 C_Spell.GetSpellQueueWindow",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GetSpellQueueWindow \u2192 C_Spell.GetSpellQueueWindow: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/c_api/c_spell.rs:88:    (\"GetSpellQueueWindow\", get_spell_queue_window),"
+    ]
+  },
+  {
+    "source_id": "deprecated api-GetSchoolString-151",
+    "statement": ": GetSchoolString \u2192 C_Spell.GetSchoolString",
+    "group": "deprecated",
+    "proof": "audit-pending",
+    "decision": "GetSchoolString \u2192 C_Spell.GetSchoolString: migration occurrence is retained, not deleted. Loaded cached wrapper/alias publication is separate from argument forwarding, return values, errors, security and populated successor behavior; no behavioral credit from publication alone.",
+    "implementation_candidates": [
+      "src/c_api/c_spell.rs:11://! - `GetSchoolString(mask)` \u2192 localized school name for a bitmask.",
+      "src/c_api/c_spell.rs:92:    (\"GetSchoolString\", get_school_string),"
+    ]
+  }
+]

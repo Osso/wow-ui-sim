@@ -1,0 +1,21 @@
+{
+  "revision": "1ef2ed7b4",
+  "paths": {
+    "src/c_api/patch_retired_members.rs": "61b012be62dd59ef0d7a2288bffc4443df39c62c1306169b7e86f2670fd03fbb",
+    "src/lua_api/globals/stubs/global_stubs.rs": "bedacfb56a1877d898389e2656c1ff5308a0eb77e52c7e3d166127cf3c6a15af",
+    "tests/patch_10_2_6_publication_sweep.rs": "1ed1288b869c6c672d65f23597a51496bc89a1e7136fa99d8e5beaa5622bd40c",
+    "tests/patch_10_2_6_publication_fixes.rs": "6c4d7552f5c06181947d1fb02c743c4b9d55e588d4e3c1a1e94f171798b33bce",
+    "tests/patch_10_2_6_cached_surfaces.rs": "73b6e058ac832b0f590f6c3bb180ecc010b20fb02792eada961e9b1a0551899a",
+    "tests/data/patch_10_2_6_sweep_known_gaps.json": "07ed9137d74a75742dcd306000f72f404504da174ae88162133e247350f21a69",
+    "tests/common/publication_sweep.rs": "9717fa6b5a7c3cc169992635e588366c3daa5fee668519b5af2d67a4b1a78d34",
+    "tests/common/prefork_full_ui_preload.rs": "2b705069fa59bde48c4ba46e97425e377e0ff6f24b9b72204b70047d68f693ae",
+    "tools/gen_patch_wikitext_register.py": "519c419edcb91c2071aed5b7b7d498345b46eff1eec65900bad7da94c9ab44e9",
+    "tools/extract_patch_non_inventory.py": "c4cc788ad47f17c816e1544e310893c8307061084485cf26ec3e0159aa0a78c1",
+    "tools/test_gen_patch_wikitext_register.py": "1f44b378f0eba1ecfff9bfd6abe152b805fee116f9fb0e4f911315641b95a9d1",
+    "tools/test_extract_patch_non_inventory.py": "5c0a76e7cdf98b7c2b3a2a673353d0428277a04c81f7b70c34ae2bde4d3c8a4a",
+    "Cargo.toml": "98e73c27d7cd21438f61e6839c823c128d1be338ea60e603202a7417f51b0e07",
+    "Cargo.lock": "859f258fa21eb92f7f0c83c77d526ea0ce3e7535b0970df2e39c459023c0b9cf",
+    "build.rs": "df6b286152daa948557c17c4abb8776af2aed573c45f1fcb4901fd2b4a8ccde2",
+    ".cargo/config.toml": "77d5c6fce277bdfc1a97ed3425170f552e5db6143d64e45abf1f6b522b973ead"
+  }
+}

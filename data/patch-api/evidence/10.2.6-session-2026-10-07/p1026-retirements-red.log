@@ -1,0 +1,37 @@
+
+running 1 test
+test patch_10_2_6_publication_fixes::patch_10_2_6_unused_retirements_preserve_successors ... FAILED
+
+failures:
+
+failures:
+    patch_10_2_6_publication_fixes::patch_10_2_6_unused_retirements_preserve_successors
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10818 filtered out; finished in 1.17s
+
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p1026-page)
+    Finished `test` profile [optimized + debuginfo] target(s) in 8m 52s
+     Running tests/integration.rs (target/debug/deps/integration-aef10a2b503e13d5)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.015s] [Startup] SimState::default complete in 14.91ms
+[  0.016s] [Startup] rilua VM created in 690.56µs
+[  0.016s] [Startup] builtin frames initialized in 382.79µs
+[  0.016s] [Startup] template registry cleared in 21.18µs
+[  0.016s] [Startup] intrinsic templates registered in 38.22µs
+[  0.016s] [Startup] initial app_data lua handle installed in 2.11µs
+[  1.127s] [Startup] init_lua_state complete in 1.11s
+[  1.127s] [Startup] final app_data lua handle installed in 1.00µs
+[  1.128s] [Startup] initial screen globals installed in 795.08µs
+[  1.128s] [Startup] WowLuaEnv::new complete
+
+thread 'patch_10_2_6_publication_fixes::patch_10_2_6_unused_retirements_preserve_successors' (2410966) panicked at /home/osso/.worktrees/wow-ui-sim-p1026-page/tests/patch_10_2_6_publication_fixes.rs:28:37:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "C_CameraDefaults.GetCameraFOVDefaults", level: 0, traceback: [] }))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+error: test failed, to rerun pass `--test integration`

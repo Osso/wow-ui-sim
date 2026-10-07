@@ -1,0 +1,28 @@
+[
+  {
+    "pattern": "C_CameraDefaults[.:]GetCameraFOVDefaults",
+    "exit_code": 1,
+    "matches": [],
+    "stderr": ""
+  },
+  {
+    "pattern": "C_TaskQuest[.:]GetUIWidgetSetIDFromQuestID",
+    "exit_code": 1,
+    "matches": [],
+    "stderr": ""
+  },
+  {
+    "pattern": "(^|[^A-Za-z0-9_.:])CanSummonFriend\\s*\\(",
+    "exit_code": 1,
+    "matches": [],
+    "stderr": ""
+  },
+  {
+    "pattern": "profanityFilter",
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Social.lua:69:\t\tlocal setting, initializer = Settings.SetupCVarCheckbox(category, \"profanityFilter\", PROFANITY_FILTER, OPTION_TOOLTIP_PROFANITY_FILTER);"
+    ],
+    "stderr": ""
+  }
+]

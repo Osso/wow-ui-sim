@@ -1,0 +1,10 @@
+{
+  "source_id": "wt-global-api-C_CurrencyInfo.GetCoinIcon-24",
+  "change": "added -> removed",
+  "new_failures": [
+    "wt-global-api-C_CurrencyInfo.GetCoinIcon-24"
+  ],
+  "resolved_failures": [],
+  "before": 20,
+  "after": 21
+}

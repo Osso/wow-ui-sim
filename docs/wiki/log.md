@@ -199,3 +199,7 @@ Updated [[patch-10-2-7-api-audit]]: formatting, Mists tests check with zero non-
 ## 2026-10-07 — Patch 10.2.7 artifact validation
 
 Validated [[patch-10-2-7-api-audit]] at facc0076f: source hashes, all 187 IDs, sixteen exact chronological sweeps, three runtime closures, four interface-probe corrections, 36 gaps and 98 preserved later inputs. Native behavior remains explicitly unclaimed. Corrected validator proof-scope label; runtime checks not rerun.
+
+## 2026-10-07 — Patch 10.2.6 page audit
+
+Created [[patch-10-2-6-api-audit]]: page 582132 revision 6268742 exists; all 358 inventory/extract IDs accounted. Three unused retail retirements close bounded absence gaps; twenty exact publication gaps, one historical CVar default mismatch and 121 substantive extract occurrences remain explicit. Seventeen isolated sweeps, exact 20 → 21 negative control, retirement RED/GREEN, one cached Game prefork, eighteen parser/extractor fixtures, formatting, Mists tests check with zero non-vendor warnings, separate retail build and exit-0 startup `[]` pass at 1ef2ed7b4. All sixteen existing registers regenerate byte-identically; 104 later inputs preserved. No vendor edits, sibling targets, agents/models, full suite, push or merge.

@@ -1,0 +1,568 @@
+[
+  {
+    "source_id": "wt-cvars-profanityFilter-265",
+    "symbol": "profanityFilter",
+    "direction": "removed",
+    "initial_observed": {
+      "default": "1",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "1"
+    },
+    "final_observed": {
+      "default": "1",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "1"
+    },
+    "decision": "retained gap",
+    "reason": "Retained current consumer: Blizzard_SettingsDefinitions_Frame/Social.lua:69 calls Settings.SetupCVarCheckbox(category, \"profanityFilter\", ...). Historical removal is incompatible with current retail consumer; do not retire.",
+    "implementation_candidates": [
+      "src/cvars.yaml:1088:profanityFilter: '1'"
+    ],
+    "search_exit_code": 0,
+    "candidate_match_count": 1
+  },
+  {
+    "source_id": "wt-cvars-testOutput-261",
+    "symbol": "testOutput",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Command record present=false",
+      "kind": "command",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Command record present=false",
+      "kind": "command",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Debug command requires a modeled output-path fanout/diagnostic execution contract; adding command metadata alone would not establish output-path behavior.",
+    "implementation_candidates": [],
+    "search_exit_code": 1,
+    "candidate_match_count": 0
+  },
+  {
+    "source_id": "wt-global-api-C_CameraDefaults.GetCameraFOVDefaults-147",
+    "symbol": "C_CameraDefaults.GetCameraFOVDefaults",
+    "direction": "removed",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "parent raw-absent; raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "closed retirement",
+    "reason": "Retired unused namespace member; repeated raw/ordinary lookup remains nil. Qualified cached search has no consumers. Existing global GetCameraFOVDefaults remains published (temporary defaults, not camera model parity).",
+    "implementation_candidates": [
+      "src/c_api/patch_retired_members.rs:16:    (\"C_CameraDefaults\", &[\"GetCameraFOVDefaults\"]),",
+      "src/lua_api/workarounds/temporary/camera_tutorial_defaults.rs:8:if GetCameraFOVDefaults == nil then",
+      "src/lua_api/workarounds/temporary/camera_tutorial_defaults.rs:9:  function GetCameraFOVDefaults()",
+      "src/lua_api/workarounds/temporary/camera_tutorial_defaults.rs:57:                local currentFov, minFov, maxFov = GetCameraFOVDefaults()"
+    ],
+    "search_exit_code": 0,
+    "candidate_match_count": 4
+  },
+  {
+    "source_id": "wt-global-api-C_Commentator.ZoomIn_Position-22",
+    "symbol": "C_Commentator.ZoomIn_Position",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Commentator camera position, interpolation and zoom limits require spectator camera state; unsupported 3D camera behavior is not established by CameraZoomIn or an inert function.",
+    "implementation_candidates": [],
+    "search_exit_code": 1,
+    "candidate_match_count": 0
+  },
+  {
+    "source_id": "wt-global-api-C_Commentator.ZoomOut_Position-23",
+    "symbol": "C_Commentator.ZoomOut_Position",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Commentator zoom-out position and camera transition require spectator camera state; unsupported 3D camera behavior is not established by CameraZoomOut or an inert function.",
+    "implementation_candidates": [],
+    "search_exit_code": 1,
+    "candidate_match_count": 0
+  },
+  {
+    "source_id": "wt-global-api-C_Debug.FrameXMLDebug-27",
+    "symbol": "C_Debug.FrameXMLDebug",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Requires an explicit debug command/diagnostic producer and observable output contract; a generic namespace autostub neither publishes nor implements FrameXML diagnostics.",
+    "implementation_candidates": [],
+    "search_exit_code": 1,
+    "candidate_match_count": 0
+  },
+  {
+    "source_id": "wt-global-api-C_Item.GetFirstTriggeredSpellForItem-53",
+    "symbol": "C_Item.GetFirstTriggeredSpellForItem",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Requires ordered triggered-spell metadata for an item and missing-item semantics; the existing item use-spell query is not proof of first triggered-spell selection.",
+    "implementation_candidates": [],
+    "search_exit_code": 1,
+    "candidate_match_count": 0
+  },
+  {
+    "source_id": "wt-global-api-C_PlayerInfo.IsSelfFoundActive-89",
+    "symbol": "C_PlayerInfo.IsSelfFoundActive",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Requires explicit self-found restriction state for the player/profile; player identity or a constant false default is not that mode state.",
+    "implementation_candidates": [],
+    "search_exit_code": 1,
+    "candidate_match_count": 0
+  },
+  {
+    "source_id": "wt-global-api-C_RecruitAFriend.IsRecruitAFriendLinked-96",
+    "symbol": "C_RecruitAFriend.IsRecruitAFriendLinked",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Requires account/player RAF linkage records and unit relationship query semantics; disabled-by-default RAF probes do not establish linkage.",
+    "implementation_candidates": [],
+    "search_exit_code": 1,
+    "candidate_match_count": 0
+  },
+  {
+    "source_id": "wt-global-api-C_SeasonInfo.GetCurrentDisplaySeasonExpansion-98",
+    "symbol": "C_SeasonInfo.GetCurrentDisplaySeasonExpansion",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "parent raw-absent; raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "parent raw-absent; raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Requires a host-selected display season and its expansion mapping; active challenge/PvP seasons are not necessarily the display season.",
+    "implementation_candidates": [],
+    "search_exit_code": 1,
+    "candidate_match_count": 0
+  },
+  {
+    "source_id": "wt-global-api-C_SeasonInfo.GetCurrentDisplaySeasonID-99",
+    "symbol": "C_SeasonInfo.GetCurrentDisplaySeasonID",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Requires a host-selected display season identity/lifetime; copying an unrelated challenge or PvP season ID would invent a contract.",
+    "implementation_candidates": [],
+    "search_exit_code": 1,
+    "candidate_match_count": 0
+  },
+  {
+    "source_id": "wt-global-api-C_SpectatingUI.GetSpectateTargetInfo-101",
+    "symbol": "C_SpectatingUI.GetSpectateTargetInfo",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "parent raw-absent; raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "parent raw-absent; raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Requires current spectate-target identity and populated target DTO state; normal player/unit records do not establish a spectator session.",
+    "implementation_candidates": [],
+    "search_exit_code": 1,
+    "candidate_match_count": 0
+  },
+  {
+    "source_id": "wt-global-api-C_SpectatingUI.GetSpectatingPlayerSpellItemQuality-102",
+    "symbol": "C_SpectatingUI.GetSpectatingPlayerSpellItemQuality",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Requires spectator-player spell/item quality metadata; static spell/item records do not establish this session-specific query.",
+    "implementation_candidates": [],
+    "search_exit_code": 1,
+    "candidate_match_count": 0
+  },
+  {
+    "source_id": "wt-global-api-C_SpectatingUI.LeaveSpectateMode-103",
+    "symbol": "C_SpectatingUI.LeaveSpectateMode",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Requires spectating session state and observable leave-mode transition; an inert verb would not implement the contract.",
+    "implementation_candidates": [],
+    "search_exit_code": 1,
+    "candidate_match_count": 0
+  },
+  {
+    "source_id": "wt-global-api-C_SpectatingUI.SpectateChange-104",
+    "symbol": "C_SpectatingUI.SpectateChange",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Requires spectate target cycling/selection and observable session updates; no such transition producer is published.",
+    "implementation_candidates": [],
+    "search_exit_code": 1,
+    "candidate_match_count": 0
+  },
+  {
+    "source_id": "wt-global-api-C_TaskQuest.GetUIWidgetSetIDFromQuestID-148",
+    "symbol": "C_TaskQuest.GetUIWidgetSetIDFromQuestID",
+    "direction": "removed",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "closed retirement",
+    "reason": "Retired unused namespace member; repeated raw/ordinary lookup remains nil. Qualified cached search has no consumers; newer quest widget surfaces are governed by later registers.",
+    "implementation_candidates": [
+      "src/c_api/patch_retired_members.rs:17:    (\"C_TaskQuest\", &[\"GetUIWidgetSetIDFromQuestID\"]),"
+    ],
+    "search_exit_code": 0,
+    "candidate_match_count": 1
+  },
+  {
+    "source_id": "wt-global-api-C_UIWidgetManager.GetMapPinAnimationWidgetVisualizationInfo-111",
+    "symbol": "C_UIWidgetManager.GetMapPinAnimationWidgetVisualizationInfo",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Requires populated map-pin animation widget visualization records and their output schema; generic widget tables/autostubs are insufficient.",
+    "implementation_candidates": [],
+    "search_exit_code": 1,
+    "candidate_match_count": 0
+  },
+  {
+    "source_id": "wt-global-api-C_WorldLootObject.GetWorldLootObjectInfo-113",
+    "symbol": "C_WorldLootObject.GetWorldLootObjectInfo",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Requires world-loot-object identity and populated loot-object DTOs; unit loot slot state does not establish world object metadata.",
+    "implementation_candidates": [],
+    "search_exit_code": 1,
+    "candidate_match_count": 0
+  },
+  {
+    "source_id": "wt-global-api-C_WorldLootObject.IsWorldLootObject-115",
+    "symbol": "C_WorldLootObject.IsWorldLootObject",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Requires world-object classification for supplied unit/identity inputs; no explicit world-loot-object identity model is published.",
+    "implementation_candidates": [],
+    "search_exit_code": 1,
+    "candidate_match_count": 0
+  },
+  {
+    "source_id": "wt-global-api-C_WorldLootObject.IsWorldLootObjectInRange-114",
+    "symbol": "C_WorldLootObject.IsWorldLootObjectInRange",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Requires loot-object location/player range and interaction eligibility; unit loot availability is not measured object interaction range.",
+    "implementation_candidates": [],
+    "search_exit_code": 1,
+    "candidate_match_count": 0
+  },
+  {
+    "source_id": "wt-global-api-C_WorldLootObject.OnWorldLootObjectClick-116",
+    "symbol": "C_WorldLootObject.OnWorldLootObjectClick",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Requires world-object interaction mutation and loot/selection event edges; a no-op click would conceal missing interaction state.",
+    "implementation_candidates": [],
+    "search_exit_code": 1,
+    "candidate_match_count": 0
+  },
+  {
+    "source_id": "wt-global-api-CanSummonFriend-149",
+    "symbol": "CanSummonFriend",
+    "direction": "removed",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "decision": "closed retirement",
+    "reason": "Retail/PTR stop registering unused legacy global; repeated raw/ordinary lookup remains nil. Cached global-call search has no consumers. Classic registration and namespace CanSummonFriend publication remain; RAF behavior is not newly modeled.",
+    "implementation_candidates": [
+      "src/lua_api/globals/stubs/global_stubs.rs:336:    if is_nil_global(state, \"CanSummonFriend\") {",
+      "src/lua_api/globals/stubs/global_stubs.rs:337:        set_global_fn(state, \"CanSummonFriend\", stub_false);",
+      "src/lua_api/globals/missing_surface/recruit_a_friend.rs:27:    table_set_rust_fn_static(state, ns, \"CanSummonFriend\", can_summon_friend)?;",
+      "src/loader/tests/wow_api_globals/startup_globals.rs:876:            local canSummon, summonReason = C_RecruitAFriend.CanSummonFriend(\"player\")"
+    ],
+    "search_exit_code": 0,
+    "candidate_match_count": 4
+  },
+  {
+    "source_id": "wt-global-api-CheckTalentMasterDist-139",
+    "symbol": "CheckTalentMasterDist",
+    "direction": "added",
+    "initial_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "final_observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Requires talent-master interaction target identity, player position and distance eligibility contract; general unit-range probes do not establish this check.",
+    "implementation_candidates": [],
+    "search_exit_code": 1,
+    "candidate_match_count": 0
+  }
+]
