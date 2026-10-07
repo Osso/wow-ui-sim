@@ -1,0 +1,506 @@
+Patch 10.0.0 API changes
+
+== Summary ==
+* The settings interface and its related APIs have undergone significant changes. Refer to the Settings API section for more details.
+* A new set of unit tokens have been added to accommodate automatic soft-targeting.
+* A new set of unit aura APIs have been added and the payload of UNIT_AURA altered to allow more fine-grained tracking and processing of individual aura updates. Refer to the Unit Aura Changes section for more details.
+* The Blizzard_APIDocumentation addon now additionally contains automatically-generated Widget API documentation.
+* LayeredRegion objects such as Textures and FontStrings now all inherit ScriptObject and support a subset of widget scripts such as OnEnter and OnShow.
+* The C_Timer.NewTimer() and C_Timer.NewTicker() APIs are now implemented in native code rather than Lua. This may break addons that were previously inspecting internal fields on timer objects, or those that are passing non-function types as callbacks to these functions.
+* A new |cncolorname:text|r UI escape sequence has been added that will render a text string with a named global color.
+* Widget APIs now strictly validate supplied parameters, erroring if invalid values are supplied.
+** Region creation functions such as Frame:CreateTexture() and Frame:CreateFontString() will error if supplied invalid draw layer names.
+** Functions such as Region:GetPoint() and FontInstance:SetFont() will error in cases where nil values are supplied in-place of expected parameters.
+** Region:SetAlpha() errors if the argument is not between 0.0 and 1.0.
+* The client will generate additional runtime warnings for unrecognized or unexpected XML attributes and elements.
+
+== Resources ==
+* 10.0.0 TOC: 100000
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+* Deprecated API: Blizzard_Deprecated
+* Official patch notes: Dragonflight HUD and UI Revamp
+
+== Settings API ==
+
+The interface options interface and APIs have changed significantly in 10.0. A small subset of the existing API remains as deprecated functions, along with a set of deprecated XML templates for various options controls.
+
+The new settings API permits registering nestable categories that fit one of two layout archetypes;
+
+* A "Canvas" layout wherein a frame has full manual control over the placement and behavior of its child widgets. This concept matches what addon authors are already acquainted with through the existing InterfaceOptions_AddCategory API.
+* A "Vertical" layout wherein controls will be automatically positioned and stacked in vertically in a list. The controls can be configured to automatically read and write their values to a destination table.
+
+=== Canvas Layout ===
+
+
+
+A minimal example of the "Canvas" layout registration API can be found below. This example will register a custom frame that consists of a single full-size texture within the "AddOns" tab of the Settings interface.
+
+```lua
+local frame = CreateFrame("Frame")
+local background = frame:CreateTexture()
+background:SetAllPoints(frame)
+background:SetColorTexture(1, 0, 1, 0.5)
+
+local category = Settings.RegisterCanvasLayoutCategory(frame, "My AddOn")
+Settings.RegisterAddOnCategory(category)
+```
+
+=== Vertical Layout ===
+
+
+
+A minimal example of the "Vertical" layout registration API can be found below. This will create three controls - a checkbox, slider, and dropdown - and configure them to automatically read and write their values to a global table named MyAddOn_SavedVars.
+
+```lua
+MyAddOn_SavedVars = {}
+
+local function OnSettingChanged(_, setting, value)
+	local variable = setting:GetVariable()
+	MyAddOn_SavedVars[variable] = value
+end
+
+local category = Settings.RegisterVerticalLayoutCategory("My AddOn")
+
+do
+    local variable = "MyAddOn_Toggle"
+    local name = "Test Checkbox"
+    local tooltip = "This is a tooltip for the checkbox."
+    local defaultValue = false
+
+    local setting = Settings.RegisterAddOnSetting(category, name, variable, type(defaultValue), defaultValue)
+    Settings.CreateCheckbox(category, setting, tooltip)
+	Settings.SetOnValueChangedCallback(variable, OnSettingChanged)
+end
+
+do
+    local variable = "MyAddOn_Slider"
+    local name = "Test Slider"
+    local tooltip = "This is a tooltip for the slider."
+    local defaultValue = 180
+    local minValue = 90
+    local maxValue = 360
+    local step = 10
+
+    local setting = Settings.RegisterAddOnSetting(category, name, variable, type(defaultValue), defaultValue)
+    local options = Settings.CreateSliderOptions(minValue, maxValue, step)
+    options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right);
+    Settings.CreateSlider(category, setting, options, tooltip)
+	Settings.SetOnValueChangedCallback(variable, OnSettingChanged)
+end
+
+do
+    local variable = "MyAddOn_Selection"
+    local defaultValue = 2  -- Corresponds to "Option 2" below.
+    local name = "Test Dropdown"
+    local tooltip = "This is a tooltip for the dropdown."
+
+    local function GetOptions()
+        local container = Settings.CreateControlTextContainer()
+        container:Add(1, "Option 1")
+        container:Add(2, "Option 2")
+        container:Add(3, "Option 3")
+        return container:GetData()
+    end
+
+    local setting = Settings.RegisterAddOnSetting(category, name, variable, type(defaultValue), defaultValue)
+    Settings.CreateDropdown(category, setting, GetOptions, tooltip)
+	Settings.SetOnValueChangedCallback(variable, OnSettingChanged)
+end
+
+Settings.RegisterAddOnCategory(category)
+```
+
+== Unit Aura Changes ==
+
+The UNIT_AURA event is now capable of delivering information in its payload about which specific auras on a unit have been added, changed, or removed since the last aura update.
+
+Auras now have an "instance ID" (auraInstanceID) which uniquely refers to an instance of an aura for the duration of its lifetime on a unit. The instance ID is expected to remain stable and suitable for use as a table key between successive updates of auras on a unit until a full aura update occurs.
+
+Three new APIs are provided to query information about auras and will return structured tables:
+* C_UnitAuras.GetAuraDataByAuraInstanceID can be used to obtain aura information given a unit token and an aura instance ID.
+* C_UnitAuras.GetAuraDataBySlot can be used as an alternative to UnitAuraBySlot to access aura information by filtered slot indices.
+* C_UnitAuras.GetPlayerAuraBySpellID queries for aura information on the player unit by a given spell ID.
+
+From each of these APIs the returned aura structure is expected to contain the same return values as are obtainable through the existing UnitAura APIs, however note that some field names may not line up with the documented return value names. The returned information will also include the instance ID of the aura.
+
+The below example will demonstrate how the payload from UNIT_AURA can be processed to collect information about the players' auras into a table for both the full-update and incremental-update cases.
+
+```lua
+local PlayerAuras = {}
+
+local function UpdatePlayerAurasFull()
+    PlayerAuras = {}
+
+    local function HandleAura(aura)
+        PlayerAuras[aura.auraInstanceID] = aura
+        -- Perform any setup or update tasks for this aura here.
+    end
+
+    local batchCount = nil
+    local usePackedAura = true
+    AuraUtil.ForEachAura("player", "HELPFUL", batchCount, HandleAura, usePackedAura)
+    AuraUtil.ForEachAura("player", "HARMFUL", batchCount, HandleAura, usePackedAura)
+end
+
+local function UpdatePlayerAurasIncremental(unitAuraUpdateInfo)
+    if unitAuraUpdateInfo.addedAuras ~= nil then
+        for _, aura in ipairs(unitAuraUpdateInfo.addedAuras) do
+            PlayerAuras[aura.auraInstanceID] = aura
+            -- Perform any setup tasks for this aura here.
+        end
+    end
+
+    if unitAuraUpdateInfo.updatedAuraInstanceIDs ~= nil then
+        for _, auraInstanceID in ipairs(unitAuraUpdateInfo.updatedAuraInstanceIDs) do
+            PlayerAuras[auraInstanceID] = C_UnitAuras.GetAuraDataByAuraInstanceID("player", auraInstanceID)
+            -- Perform any update tasks for this aura here.
+        end
+    end
+
+    if unitAuraUpdateInfo.removedAuraInstanceIDs ~= nil then
+        for _, auraInstanceID in ipairs(unitAuraUpdateInfo.removedAuraInstanceIDs) do
+            PlayerAuras[auraInstanceID] = nil
+            -- Perform any cleanup tasks for this aura here.
+        end
+    end
+end
+
+local function OnUnitAurasUpdated(unit, unitAuraUpdateInfo)
+    if unit ~= "player" then
+        return
+    end
+
+    if unitAuraUpdateInfo == nil or unitAuraUpdateInfo.isFullUpdate then
+        UpdatePlayerAurasFull()
+    else
+        UpdatePlayerAurasIncremental(unitAuraUpdateInfo)
+    end
+end
+
+EventRegistry:RegisterFrameEventAndCallback("UNIT_AURA", OnUnitAurasUpdated)
+```
+
+== Interaction Manager ==
+Show and Hide events have been streamlined into PLAYER_INTERACTION_MANAGER_FRAME_SHOW/Hide, for example:
+```lua
+local function OnEvent(self, event, id)
+	if id == Enum.PlayerInteractionType.Banker then
+		print("opened the bank")
+	end
+end
+
+local f = CreateFrame("Frame")
+f:RegisterEvent("PLAYER_INTERACTION_MANAGER_FRAME_SHOW")
+--f:RegisterEvent("BANKFRAME_OPENED")
+f:SetScript("OnEvent", OnEvent)
+```
+
+== Templates ==
+DeprecatedTemplates.xml
+ OptionsBaseCheckButtonTemplate
+ InterfaceOptionsCheckButtonTemplate
+ InterfaceOptionsBaseCheckButtonTemplate
+ OptionsSliderTemplate
+ OptionsFrameTabButtonTemplate
+ OptionsListButtonTemplate
+
+Replacements
+ HorizontalSliderTemplate -> UISliderTemplate
+
+OptionsBoxTemplate was removed without a direct replacement, a Lua fix could be similar to this:
+```lua
+local f = CreateFrame("Frame", "SomeFrame", nil, "TooltipBorderBackdropTemplate")
+f.Title = f:CreateFontString(f:GetName().."Title", "BACKGROUND", "GameFontHighlightSmall")
+f.Title:SetPoint("BOTTOMLEFT", f, "TOPLEFT", 5, 0)
+f:SetBackdropColor(DARKGRAY_COLOR:GetRGBA())
+```
+
+== Enumerations ==
+ Enum.CurrencySource
+   + 53: PlayerTrait
+   + 54: PhBuffer_53
+   + 55: PhBuffer_54
+   + 56: RenownRepGain
+ Enum.EventToastEventType
+   + 22: SpellLearned
+   + 23: TreasureItem
+ Enum.HolidayFlags
+   + 6: DurationUseMinutes
+ Enum.InventoryType
+   + 30: IndexProfessionToolType
+   + 31: IndexProfessionGearType
+   + 32: IndexEquipablespellOffensiveType
+   + 33: IndexEquipablespellUtilityType
+   + 34: IndexEquipablespellDefensiveType
+   + 35: IndexEquipablespellMobilityType
+ Enum.ItemClass
+   + 20: Profession
+ Enum.ItemGemColor
+   + 25: Tinker
+ Enum.ItemSocketType
+   + 25: Tinker
+ Enum.LFGListDisplayType
+   + 6: Comment
+ Enum.MountType
+   + 4: Dragonriding
+ Enum.MountTypeFlag
+   + 3: IsDragonRidingMount
+ Enum.PowerType
+   + 22: Essence
+   + 23: RuneBlood
+   + 24: RuneFrost
+   + 25: RuneUnholy
+ Enum.UIWidgetVisualizationType
+   + 25: FillUpFrames
+ Enum.UnitSex
+   + 5: Neutral
+ Enum.ValidateNameResult
+   + 1: Success
+   + 2: Failure
+   + 3: NoName
+   + 4: TooShort
+   + 5: TooLong
+   + 6: InvalidCharacter
+   + 7: MixedLanguages
+   + 8: Profane
+   + 9: Reserved
+   + 10: InvalidApostrophe
+   + 11: MultipleApostrophes
+   + 12: ThreeConsecutive
+   + 13: InvalidSpace
+   + 14: ConsecutiveSpaces
+   + 15: RussianConsecutiveSilentCharacters
+   + 16: RussianSilentCharacterAtBeginningOrEnd
+   + 17: DeclensionDoesntMatchBaseName
+   + 18: SpacesDisallowed
+   - 1: NameSuccess
+   - 2: NameFailure
+   - 3: NameNoName
+   - 4: NameTooShort
+   - 5: NameTooLong
+   - 6: NameInvalidCharacter
+   - 7: NameMixedLanguages
+   - 8: NameProfane
+   - 9: NameReserved
+   - 10: NameInvalidApostrophe
+   - 11: NameMultipleApostrophes
+   - 12: NameThreeConsecutive
+   - 13: NameInvalidSpace
+   - 14: NameConsecutiveSpaces
+   - 15: NameRussianConsecutiveSilentCharacters
+   - 16: NameRussianSilentCharacterAtBeginningOrEnd
+   - 17: NameDeclensionDoesntMatchBaseName
+   - 18: NameSpacesDisallowed
+
+== Structures ==
+ BarberShopRaceData (C_BarberShop.GetCurrentCharacterData)
+   + 4: createScreenIconAtlas
+ CharCustomizationChoice (C_BarberShop.GetAvailableCustomizations)
+   + 7: showLocked
+   + 8: lockedTooltip
+ CharCustomizationOption (C_BarberShop.GetAvailableCustomizations)
+   # 6: currentChoiceIndex, Nilable: false -> true
+   + 8: isSound
+ CurrencyInfo (C_CurrencyInfo.GetCurrencyInfo, C_CurrencyInfo.GetCurrencyListInfo)
+   + 2: description
+ ExpansionDisplayInfo (GetExpansionDisplayInfo)
+   + 4: highResBackgroundID
+   + 5: lowResBackgroundID
+ GossipOptionUIInfo (C_GossipInfo.GetOptions)
+   + 1: gossipOptionID
+   + 3: icon
+   + 7: flags
+   + 8: overrideIconID
+   + 9: selectOptionWhenOnlyOption
+   + 10: orderIndex
+   - 2: type
+ GroupFinderActivityInfo (C_LFGList.GetActivityInfoTable, C_LFGList.GetPlaystyleString)
+   + 19: useDungeonRoleExpectations
+ LfgSearchResultData (C_LFGList.GetSearchResultInfo)
+   + 9: hasSelf
+ PVPPersonalRatedInfo (C_PvP.GetPVPActiveMatchPersonalRatedInfo)
+   + 12: roundsSeasonPlayed
+   + 13: roundsSeasonWon
+   + 14: roundsWeeklyPlayed
+   + 15: roundsWeeklyWon
+ PvpBrawlInfo (C_PvP.GetActiveBrawlInfo, C_PvP.GetAvailableBrawlInfo, C_PvP.GetSpecialEventBrawlInfo)
+   + 6: minLevel
+   + 7: maxLevel
+   + 8: groupsAllowed
+ TextureAndTextRowVisualizationInfo (C_UIWidgetManager.GetTextureAndTextRowVisualizationInfo)
+   + 4: fixedWidth
+ UIWidgetSpellInfo (C_UIWidgetManager.GetSpellDisplayVisualizationInfo)
+   + 8: borderColor
+   + 12: isLootObject
+ UiMapExplorationInfo (C_MapExplorationInfo.GetExploredMapTextures)
+   + 6: isDrawOnTopLayer
+
+== Deprecated API ==
+APIs deprecated during 9.x were removed with patch 10.0.0[https://github.com/Gethe/wow-ui-source/tree/9.2.7/Interface/AddOns/Blizzard_Deprecated]
+
+```lua
+-- transmogrify
+LE_TRANSMOG_SEARCH_TYPE_ITEMS = Enum.TransmogSearchType.Items;
+LE_TRANSMOG_SEARCH_TYPE_BASE_SETS = Enum.TransmogSearchType.BaseSets;
+LE_TRANSMOG_SEARCH_TYPE_USABLE_SETS = Enum.TransmogSearchType.UsableSets;
+
+-- Item class/subclass enum conversions
+LE_ITEM_CLASS_CONSUMABLE = Enum.ItemClass.Consumable;
+LE_ITEM_CLASS_CONTAINER = Enum.ItemClass.Container;
+LE_ITEM_CLASS_WEAPON = Enum.ItemClass.Weapon;
+LE_ITEM_CLASS_GEM = Enum.ItemClass.Gem;
+LE_ITEM_CLASS_ARMOR = Enum.ItemClass.Armor;
+LE_ITEM_CLASS_REAGENT = Enum.ItemClass.Reagent;
+LE_ITEM_CLASS_PROJECTILE = Enum.ItemClass.Projectile;
+LE_ITEM_CLASS_TRADEGOODS = Enum.ItemClass.Tradegoods;
+LE_ITEM_CLASS_ITEM_ENHANCEMENT = Enum.ItemClass.ItemEnhancement;
+LE_ITEM_CLASS_RECIPE = Enum.ItemClass.Recipe;
+LE_ITEM_CLASS_QUIVER = Enum.ItemClass.Quiver;
+LE_ITEM_CLASS_QUESTITEM = Enum.ItemClass.Questitem;
+LE_ITEM_CLASS_KEY = Enum.ItemClass.Key;
+LE_ITEM_CLASS_MISCELLANEOUS = Enum.ItemClass.Miscellaneous;
+LE_ITEM_CLASS_GLYPH = Enum.ItemClass.Glyph;
+LE_ITEM_CLASS_BATTLEPET = Enum.ItemClass.Battlepet;
+LE_ITEM_CLASS_WOW_TOKEN = Enum.ItemClass.WoWToken;
+
+LE_ITEM_WEAPON_AXE1H = Enum.ItemWeaponSubclass.Axe1H;
+LE_ITEM_WEAPON_AXE2H = Enum.ItemWeaponSubclass.Axe2H;
+LE_ITEM_WEAPON_BOWS = Enum.ItemWeaponSubclass.Bows;
+LE_ITEM_WEAPON_GUNS = Enum.ItemWeaponSubclass.Guns;
+LE_ITEM_WEAPON_MACE1H = Enum.ItemWeaponSubclass.Mace1H;
+LE_ITEM_WEAPON_MACE2H = Enum.ItemWeaponSubclass.Mace2H;
+LE_ITEM_WEAPON_POLEARM = Enum.ItemWeaponSubclass.Polearm;
+LE_ITEM_WEAPON_SWORD1H = Enum.ItemWeaponSubclass.Sword1H;
+LE_ITEM_WEAPON_SWORD2H = Enum.ItemWeaponSubclass.Sword2H;
+LE_ITEM_WEAPON_WARGLAIVE = Enum.ItemWeaponSubclass.Warglaive;
+LE_ITEM_WEAPON_STAFF = Enum.ItemWeaponSubclass.Staff;
+LE_ITEM_WEAPON_BEARCLAW = Enum.ItemWeaponSubclass.Bearclaw;
+LE_ITEM_WEAPON_CATCLAW = Enum.ItemWeaponSubclass.Catclaw;
+LE_ITEM_WEAPON_UNARMED = Enum.ItemWeaponSubclass.Unarmed;
+LE_ITEM_WEAPON_GENERIC = Enum.ItemWeaponSubclass.Generic;
+LE_ITEM_WEAPON_DAGGER = Enum.ItemWeaponSubclass.Dagger;
+LE_ITEM_WEAPON_THROWN = Enum.ItemWeaponSubclass.Thrown;
+LE_ITEM_WEAPON_OBSOLETE3 = Enum.ItemWeaponSubclass.Obsolete3;
+LE_ITEM_WEAPON_CROSSBOW = Enum.ItemWeaponSubclass.Crossbow;
+LE_ITEM_WEAPON_WAND = Enum.ItemWeaponSubclass.Wand;
+LE_ITEM_WEAPON_FISHINGPOLE = Enum.ItemWeaponSubclass.Fishingpole;
+
+LE_ITEM_ARMOR_GENERIC = Enum.ItemArmorSubclass.Generic;
+LE_ITEM_ARMOR_CLOTH = Enum.ItemArmorSubclass.Cloth;
+LE_ITEM_ARMOR_LEATHER = Enum.ItemArmorSubclass.Leather;
+LE_ITEM_ARMOR_MAIL = Enum.ItemArmorSubclass.Mail;
+LE_ITEM_ARMOR_PLATE = Enum.ItemArmorSubclass.Plate;
+LE_ITEM_ARMOR_COSMETIC = Enum.ItemArmorSubclass.Cosmetic;
+LE_ITEM_ARMOR_SHIELD = Enum.ItemArmorSubclass.Shield;
+LE_ITEM_ARMOR_LIBRAM = Enum.ItemArmorSubclass.Libram;
+LE_ITEM_ARMOR_IDOL = Enum.ItemArmorSubclass.Idol;
+LE_ITEM_ARMOR_TOTEM = Enum.ItemArmorSubclass.Totem;
+LE_ITEM_ARMOR_SIGIL = Enum.ItemArmorSubclass.Sigil;
+LE_ITEM_ARMOR_RELIC = Enum.ItemArmorSubclass.Relic;
+
+LE_ITEM_GEM_INTELLECT = Enum.ItemGemSubclass.Intellect;
+LE_ITEM_GEM_AGILITY = Enum.ItemGemSubclass.Agility;
+LE_ITEM_GEM_STRENGTH = Enum.ItemGemSubclass.Strength;
+LE_ITEM_GEM_STAMINA = Enum.ItemGemSubclass.Stamina;
+LE_ITEM_GEM_SPIRIT = Enum.ItemGemSubclass.Spirit;
+LE_ITEM_GEM_CRITICALSTRIKE = Enum.ItemGemSubclass.Criticalstrike;
+LE_ITEM_GEM_MASTERY = Enum.ItemGemSubclass.Mastery;
+LE_ITEM_GEM_HASTE = Enum.ItemGemSubclass.Haste;
+LE_ITEM_GEM_VERSATILITY = Enum.ItemGemSubclass.Versatility;
+LE_ITEM_GEM_MULTIPLESTATS = Enum.ItemGemSubclass.Multiplestats;
+LE_ITEM_GEM_ARTIFACTRELIC = Enum.ItemGemSubclass.Artifactrelic;
+
+LE_ITEM_RECIPE_BOOK = Enum.ItemRecipeSubclass.Book;
+LE_ITEM_RECIPE_LEATHERWORKING = Enum.ItemRecipeSubclass.Leatherworking;
+LE_ITEM_RECIPE_TAILORING = Enum.ItemRecipeSubclass.Tailoring;
+LE_ITEM_RECIPE_ENGINEERING = Enum.ItemRecipeSubclass.Engineering;
+LE_ITEM_RECIPE_BLACKSMITHING = Enum.ItemRecipeSubclass.Blacksmithing;
+LE_ITEM_RECIPE_COOKING = Enum.ItemRecipeSubclass.Cooking;
+LE_ITEM_RECIPE_ALCHEMY = Enum.ItemRecipeSubclass.Alchemy;
+LE_ITEM_RECIPE_FIRST_AID = Enum.ItemRecipeSubclass.FirstAid;
+LE_ITEM_RECIPE_ENCHANTING = Enum.ItemRecipeSubclass.Enchanting;
+LE_ITEM_RECIPE_FISHING = Enum.ItemRecipeSubclass.Fishing;
+LE_ITEM_RECIPE_JEWELCRAFTING = Enum.ItemRecipeSubclass.Jewelcrafting;
+LE_ITEM_RECIPE_INSCRIPTION = Enum.ItemRecipeSubclass.Inscription;
+
+LE_ITEM_MISCELLANEOUS_JUNK = Enum.ItemMiscellaneousSubclass.Junk;
+LE_ITEM_MISCELLANEOUS_REAGENT = Enum.ItemMiscellaneousSubclass.Reagent;
+LE_ITEM_MISCELLANEOUS_COMPANION_PET = Enum.ItemMiscellaneousSubclass.CompanionPet;
+LE_ITEM_MISCELLANEOUS_HOLIDAY = Enum.ItemMiscellaneousSubclass.Holiday;
+LE_ITEM_MISCELLANEOUS_OTHER = Enum.ItemMiscellaneousSubclass.Other;
+LE_ITEM_MISCELLANEOUS_MOUNT = Enum.ItemMiscellaneousSubclass.Mount;
+LE_ITEM_MISCELLANEOUS_MOUNT_EQUIPMENT = Enum.ItemMiscellaneousSubclass.MountEquipment;
+
+-- Pet battle enum conversions
+LE_BATTLE_PET_WEATHER = Enum.BattlePetOwner.Weather;
+LE_BATTLE_PET_ALLY = Enum.BattlePetOwner.Ally;
+LE_BATTLE_PET_ENEMY = Enum.BattlePetOwner.Enemy;
+
+LE_BATTLE_PET_ACTION_NONE = Enum.BattlePetAction.None;
+LE_BATTLE_PET_ACTION_ABILITY = Enum.BattlePetAction.Ability;
+LE_BATTLE_PET_ACTION_SWITCH_PET = Enum.BattlePetAction.SwitchPet;
+LE_BATTLE_PET_ACTION_TRAP = Enum.BattlePetAction.Trap;
+LE_BATTLE_PET_ACTION_SKIP = Enum.BattlePetAction.Skip;
+
+LE_PET_BATTLE_STATE_CREATED = Enum.PetbattleState.Created;
+LE_PET_BATTLE_STATE_WAITING_PRE_BATTLE = Enum.PetbattleState.WaitingPreBattle;
+LE_PET_BATTLE_STATE_ROUND_IN_PROGRESS = Enum.PetbattleState.RoundInProgress;
+LE_PET_BATTLE_STATE_WAITING_FOR_FRONT_PETS = Enum.PetbattleState.WaitingForFrontPets;
+LE_PET_BATTLE_STATE_CREATED_FAILED = Enum.PetbattleState.CreatedFailed;
+LE_PET_BATTLE_STATE_FINAL_ROUND = Enum.PetbattleState.FinalRound;
+LE_PET_BATTLE_STATE_FINISHED = Enum.PetbattleState.Finished;
+```
+```lua
+-- Pet battle enum conversions
+Enum.PetBattleState = Enum.PetbattleState
+
+LE_PET_BATTLE_STATE_CREATED = Enum.PetbattleState.Created;
+LE_PET_BATTLE_STATE_WAITING_PRE_BATTLE = Enum.PetbattleState.WaitingPreBattle;
+LE_PET_BATTLE_STATE_ROUND_IN_PROGRESS = Enum.PetbattleState.RoundInProgress;
+LE_PET_BATTLE_STATE_WAITING_FOR_FRONT_PETS = Enum.PetbattleState.WaitingForFrontPets;
+LE_PET_BATTLE_STATE_CREATED_FAILED = Enum.PetbattleState.CreatedFailed;
+LE_PET_BATTLE_STATE_FINAL_ROUND = Enum.PetbattleState.FinalRound;
+LE_PET_BATTLE_STATE_FINISHED = Enum.PetbattleState.Finished;
+
+-- Unit Sex enum conversions
+Enum.Unitsex = Enum.UnitSex;
+
+-- Calendar constants
+-- Event Types
+CALENDAR_EVENTTYPE_RAID			= Enum.CalendarEventType.Raid;
+CALENDAR_EVENTTYPE_DUNGEON		= Enum.CalendarEventType.Dungeon;
+CALENDAR_EVENTTYPE_PVP			= Enum.CalendarEventType.PvP;
+CALENDAR_EVENTTYPE_MEETING		= Enum.CalendarEventType.Meeting;
+CALENDAR_EVENTTYPE_OTHER		= Enum.CalendarEventType.Other;
+CALENDAR_MAX_EVENTTYPE			= Enum.CalendarEventTypeMeta.MaxValue;
+
+-- Invite Statuses
+CALENDAR_INVITESTATUS_INVITED		= Enum.CalendarStatus.Invited;
+CALENDAR_INVITESTATUS_ACCEPTED		= Enum.CalendarStatus.Available;
+CALENDAR_INVITESTATUS_DECLINED		= Enum.CalendarStatus.Declined;
+CALENDAR_INVITESTATUS_CONFIRMED		= Enum.CalendarStatus.Confirmed;
+CALENDAR_INVITESTATUS_OUT			= Enum.CalendarStatus.Out;
+CALENDAR_INVITESTATUS_STANDBY		= Enum.CalendarStatus.Standby;
+CALENDAR_INVITESTATUS_SIGNEDUP		= Enum.CalendarStatus.Signedup;
+CALENDAR_INVITESTATUS_NOT_SIGNEDUP	= Enum.CalendarStatus.NotSignedup;
+CALENDAR_INVITESTATUS_TENTATIVE		= Enum.CalendarStatus.Tentative;
+CALENDAR_MAX_INVITESTATUS			= Enum.CalendarStatusMeta.MaxValue;
+
+-- Invite Types
+CALENDAR_INVITETYPE_NORMAL		= Enum.CalendarInviteType.Normal;
+CALENDAR_INVITETYPE_SIGNUP		= Enum.CalendarInviteType.Signup;
+CALENDAR_MAX_INVITETYPE			= Enum.CalendarInviteTypeMeta.MaxValue;
+```
+```lua
+-- LFG flags
+LFG_LIST_FILTER_RECOMMENDED = Enum.LFGListFilter.Recommended;
+LFG_LIST_FILTER_NOT_RECOMMENDED = Enum.LFGListFilter.NotRecommended;
+LFG_LIST_FILTER_PVE = Enum.LFGListFilter.PvE;
+LFG_LIST_FILTER_PVP = Enum.LFGListFilter.PvP;
+
+-- LFG renaming cleanup
+Enum.CurrencySource.LfgReward = Enum.CurrencySource.LFGReward;
+Enum.LfgEntryPlaystyle = Enum.LFGEntryPlaystyle;
+Enum.LfgListDisplayType = Enum.LFGListDisplayType;
+Enum.BrawlType.Lfg = Enum.BrawlType.LFG;
+```

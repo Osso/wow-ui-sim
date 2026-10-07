@@ -1,0 +1,1255 @@
+{{apichanges|10.0.0|prev=9.2.7|next=10.0.2}}
+
+==Summary==
+* The settings interface and its related APIs have undergone significant changes. Refer to the [[#Settings API|Settings API]] section for more details.
+* A new set of [[UnitId#Soft_Targeting|unit tokens]] have been added to accommodate automatic soft-targeting.
+* A new set of unit aura APIs have been added and the payload of [[UNIT_AURA]] altered to allow more fine-grained tracking and processing of individual aura updates. Refer to the [[#Unit Aura Changes|Unit Aura Changes]] section for more details.
+* The Blizzard_APIDocumentation addon now additionally contains automatically-generated [[Widget API]] documentation.
+* [[UIOBJECT LayeredRegion|LayeredRegion]] objects such as [[UIOBJECT Texture|Textures]] and [[UIOBJECT FontString|FontStrings]] now all inherit [[UIOBJECT ScriptObject|ScriptObject]] and support a subset of widget scripts such as [[UIHANDLER OnEnter|OnEnter]] and [[UIHANDLER OnShow|OnShow]].
+* The {{api|C_Timer.NewTimer}}() and {{api|C_Timer.NewTicker}}() APIs are now implemented in native code rather than Lua. This may break addons that were previously inspecting internal fields on timer objects, or those that are passing non-function types as callbacks to these functions.
+* A new <code>|cn<font color="#ecbc2a">colorname</font>:<font color="#80ff80">text</font>|r</code> [[UI escape sequences|UI escape sequence]] has been added that will render a text string with a named [https://wow.tools/dbc/?dbc=globalcolor global color].
+* Widget APIs now strictly validate supplied parameters, erroring if invalid values are supplied.
+** Region creation functions such as {{api|t=w|Frame:CreateTexture}}() and {{api|t=w|Frame:CreateFontString}}() will error if supplied invalid draw layer names.
+** Functions such as {{api|t=w|Region:GetPoint}}() and {{api|t=w|FontInstance:SetFont}}() will error in cases where nil values are supplied in-place of expected parameters.
+** {{api|t=w|Region:SetAlpha}}() errors if the argument is not between 0.0 and 1.0.
+* The client will generate additional runtime warnings for unrecognized or unexpected XML attributes and elements.
+
+==Resources==
+* 10.0.0 TOC: <code>100000</code>
+* Diffs: [https://github.com/Gethe/wow-ui-source/compare/9.2.7...10.0.0 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/9.2.7..10.0.0 BlizzardInterfaceResources]
+* Deprecated API: [https://github.com/Gethe/wow-ui-source/tree/9.2.7/Interface/AddOns/Blizzard_Deprecated Blizzard_Deprecated]
+* Official patch notes: [https://worldofwarcraft.com/en-us/news/23841481/world-of-warcraft-dragonflight-hud-and-ui-revamp Dragonflight HUD and UI Revamp]
+
+==Settings API==
+
+The [[Settings API|interface options interface and APIs]] have changed significantly in 10.0. A small subset of the existing API remains as [https://github.com/Gethe/wow-ui-source/blob/beta/Interface/SharedXML/Settings/Blizzard_Deprecated.lua deprecated functions], along with a set of [https://github.com/Gethe/wow-ui-source/blob/beta/Interface/SharedXML/DeprecatedTemplates.xml deprecated XML templates] for various options controls.
+
+The new settings API permits registering nestable categories that fit one of two layout archetypes;
+
+* A "Canvas" layout wherein a frame has full manual control over the placement and behavior of its child widgets. This concept matches what addon authors are already acquainted with through the existing [https://github.com/Gethe/wow-ui-source/blob/6454953db99468d576438ddeb72c812268a0d145/Interface/SharedXML/Settings/Blizzard_Deprecated.lua#L4 InterfaceOptions_AddCategory] API.
+* A "Vertical" layout wherein controls will be automatically positioned and stacked in vertically in a list. The controls can be configured to automatically read and write their values to a destination table.
+{{clrr}}
+===Canvas Layout===
+
+[[File:API_Settings_CanvasLayoutExample.png|thumb|Example settings category using a manual canvas layout.]]
+
+A minimal example of the "Canvas" layout registration API can be found below. This example will register a custom frame that consists of a single full-size texture within the "AddOns" tab of the Settings interface.
+
+<syntaxhighlight lang="lua">
+local frame = CreateFrame("Frame")
+local background = frame:CreateTexture()
+background:SetAllPoints(frame)
+background:SetColorTexture(1, 0, 1, 0.5)
+
+local category = Settings.RegisterCanvasLayoutCategory(frame, "My AddOn")
+Settings.RegisterAddOnCategory(category)
+</syntaxhighlight>
+
+===Vertical Layout===
+
+[[File:API_Settings_VerticalLayoutExample.png|thumb|Example settings category using an automatic vertical layout.]]
+
+A minimal example of the "Vertical" layout registration API can be found below. This will create three controls - a checkbox, slider, and dropdown - and configure them to automatically read and write their values to a global table named <code>MyAddOn_SavedVars</code>.
+
+<syntaxhighlight lang="lua">
+MyAddOn_SavedVars = {}
+
+local function OnSettingChanged(_, setting, value)
+	local variable = setting:GetVariable()
+	MyAddOn_SavedVars[variable] = value
+end
+
+local category = Settings.RegisterVerticalLayoutCategory("My AddOn")
+
+do
+    local variable = "MyAddOn_Toggle"
+    local name = "Test Checkbox"
+    local tooltip = "This is a tooltip for the checkbox."
+    local defaultValue = false
+
+    local setting = Settings.RegisterAddOnSetting(category, name, variable, type(defaultValue), defaultValue)
+    Settings.CreateCheckbox(category, setting, tooltip)
+	Settings.SetOnValueChangedCallback(variable, OnSettingChanged)
+end
+
+do
+    local variable = "MyAddOn_Slider"
+    local name = "Test Slider"
+    local tooltip = "This is a tooltip for the slider."
+    local defaultValue = 180
+    local minValue = 90
+    local maxValue = 360
+    local step = 10
+
+    local setting = Settings.RegisterAddOnSetting(category, name, variable, type(defaultValue), defaultValue)
+    local options = Settings.CreateSliderOptions(minValue, maxValue, step)
+    options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right);
+    Settings.CreateSlider(category, setting, options, tooltip)
+	Settings.SetOnValueChangedCallback(variable, OnSettingChanged)
+end
+
+do
+    local variable = "MyAddOn_Selection"
+    local defaultValue = 2  -- Corresponds to "Option 2" below.
+    local name = "Test Dropdown"
+    local tooltip = "This is a tooltip for the dropdown."
+
+    local function GetOptions()
+        local container = Settings.CreateControlTextContainer()
+        container:Add(1, "Option 1")
+        container:Add(2, "Option 2")
+        container:Add(3, "Option 3")
+        return container:GetData()
+    end
+
+    local setting = Settings.RegisterAddOnSetting(category, name, variable, type(defaultValue), defaultValue)
+    Settings.CreateDropdown(category, setting, GetOptions, tooltip)
+	Settings.SetOnValueChangedCallback(variable, OnSettingChanged)
+end
+
+Settings.RegisterAddOnCategory(category)
+</syntaxhighlight>
+
+==Unit Aura Changes==
+
+The [[UNIT_AURA]] event is now capable of delivering information in its payload about which specific auras on a unit have been added, changed, or removed since the last aura update.
+
+Auras now have an "instance ID" (<code>auraInstanceID</code>) which uniquely refers to an instance of an aura for the duration of its lifetime on a unit. The instance ID is expected to remain stable and suitable for use as a table key between successive updates of auras on a unit until a full aura update occurs.
+
+Three new APIs are provided to query information about auras and will return structured tables:
+* [[API C UnitAuras.GetAuraDataByAuraInstanceID|C_UnitAuras.GetAuraDataByAuraInstanceID]] can be used to obtain aura information given a unit token and an aura instance ID.
+* [[API C UnitAuras.GetAuraDataBySlot|C_UnitAuras.GetAuraDataBySlot]] can be used as an alternative to [[API UnitAuraBySlot|UnitAuraBySlot]] to access aura information by filtered slot indices.
+* [[API C UnitAuras.GetPlayerAuraBySpellID|C_UnitAuras.GetPlayerAuraBySpellID]] queries for aura information on the player unit by a given spell ID.
+
+From each of these APIs the returned aura structure is expected to contain the same return values as are obtainable through the existing [[API UnitAura|UnitAura]] APIs, however note that some field names may not line up with the documented return value names. The returned information will also include the instance ID of the aura.
+
+The below example will demonstrate how the payload from [[UNIT_AURA]] can be processed to collect information about the players' auras into a table for both the full-update and incremental-update cases.
+
+<syntaxhighlight lang="lua">
+local PlayerAuras = {}
+
+local function UpdatePlayerAurasFull()
+    PlayerAuras = {}
+
+    local function HandleAura(aura)
+        PlayerAuras[aura.auraInstanceID] = aura
+        -- Perform any setup or update tasks for this aura here.
+    end
+
+    local batchCount = nil
+    local usePackedAura = true
+    AuraUtil.ForEachAura("player", "HELPFUL", batchCount, HandleAura, usePackedAura)
+    AuraUtil.ForEachAura("player", "HARMFUL", batchCount, HandleAura, usePackedAura)
+end
+
+local function UpdatePlayerAurasIncremental(unitAuraUpdateInfo)
+    if unitAuraUpdateInfo.addedAuras ~= nil then
+        for _, aura in ipairs(unitAuraUpdateInfo.addedAuras) do
+            PlayerAuras[aura.auraInstanceID] = aura
+            -- Perform any setup tasks for this aura here.
+        end
+    end
+
+    if unitAuraUpdateInfo.updatedAuraInstanceIDs ~= nil then
+        for _, auraInstanceID in ipairs(unitAuraUpdateInfo.updatedAuraInstanceIDs) do
+            PlayerAuras[auraInstanceID] = C_UnitAuras.GetAuraDataByAuraInstanceID("player", auraInstanceID)
+            -- Perform any update tasks for this aura here.
+        end
+    end
+
+    if unitAuraUpdateInfo.removedAuraInstanceIDs ~= nil then
+        for _, auraInstanceID in ipairs(unitAuraUpdateInfo.removedAuraInstanceIDs) do
+            PlayerAuras[auraInstanceID] = nil
+            -- Perform any cleanup tasks for this aura here.
+        end
+    end
+end
+
+local function OnUnitAurasUpdated(unit, unitAuraUpdateInfo)
+    if unit ~= "player" then
+        return
+    end
+
+    if unitAuraUpdateInfo == nil or unitAuraUpdateInfo.isFullUpdate then
+        UpdatePlayerAurasFull()
+    else
+        UpdatePlayerAurasIncremental(unitAuraUpdateInfo)
+    end
+end
+
+EventRegistry:RegisterFrameEventAndCallback("UNIT_AURA", OnUnitAurasUpdated)
+</syntaxhighlight>
+
+==Interaction Manager==
+Show and Hide events have been streamlined into {{api|t=e|PLAYER_INTERACTION_MANAGER_FRAME_SHOW}}/Hide, for example:
+<syntaxhighlight lang="lua">
+local function OnEvent(self, event, id)
+	if id == Enum.PlayerInteractionType.Banker then
+		print("opened the bank")
+	end
+end
+
+local f = CreateFrame("Frame")
+f:RegisterEvent("PLAYER_INTERACTION_MANAGER_FRAME_SHOW")
+--f:RegisterEvent("BANKFRAME_OPENED")
+f:SetScript("OnEvent", OnEvent)
+</syntaxhighlight>
+
+==Templates==
+[https://github.com/Gethe/wow-ui-source/blob/live/Interface/SharedXML/DeprecatedTemplates.xml DeprecatedTemplates.xml]
+ OptionsBaseCheckButtonTemplate
+ InterfaceOptionsCheckButtonTemplate
+ InterfaceOptionsBaseCheckButtonTemplate
+ OptionsSliderTemplate
+ OptionsFrameTabButtonTemplate
+ OptionsListButtonTemplate
+
+Replacements
+ [https://github.com/Gethe/wow-ui-source/blob/9.2.7/Interface/SharedXML/SharedUIPanelTemplates.xml#L1224 HorizontalSliderTemplate] -> [https://www.townlong-yak.com/framexml/live/go/UISliderTemplate UISliderTemplate]
+
+[https://github.com/Gethe/wow-ui-source/blob/9.2.7/Interface/SharedXML/OptionsPanelTemplates.xml#L130 OptionsBoxTemplate] was removed without a direct replacement, a Lua fix could be similar to this:
+<syntaxhighlight lang="lua">
+local f = CreateFrame("Frame", "SomeFrame", nil, "TooltipBorderBackdropTemplate")
+f.Title = f:CreateFontString(f:GetName().."Title", "BACKGROUND", "GameFontHighlightSmall")
+f.Title:SetPoint("BOTTOMLEFT", f, "TOPLEFT", 5, 0)
+f:SetBackdropColor(DARKGRAY_COLOR:GetRGBA())
+</syntaxhighlight>
+
+==Global API==
+{| class="wikitable" style="min-width: 600px"
+|+ 9.2.7 (45114) &rarr; 10.0.0 (46366) Oct 27 2022
+|- class="mw-customtoggle-global-c"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(277)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(64)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|C_AchievementInfo.IsGuildAchievement}}
+: {{api|t=a|C_ActionBar.GetItemActionOnEquipSpellID}}
+: {{api|t=a|C_BarberShop.GetViewingChrModel}}
+: {{api|t=a|C_BarberShop.SetViewingChrModel}}
+: {{api|t=a|C_CameraDefaults.GetCameraFOVDefaults}}
+: {{api|t=a|C_CampaignInfo.SortAsNormalQuest}}
+: {{api|t=a|C_ClassTalents.CanChangeTalents}}
+: {{api|t=a|C_ClassTalents.CanCreateNewConfig}}
+: {{api|t=a|C_ClassTalents.CommitConfig}}
+: {{api|t=a|C_ClassTalents.DeleteConfig}}
+: {{api|t=a|C_ClassTalents.GetActiveConfigID}}
+: {{api|t=a|C_ClassTalents.GetConfigIDsBySpecID}}
+: {{api|t=a|C_ClassTalents.GetHasStarterBuild}}
+: {{api|t=a|C_ClassTalents.GetLastSelectedSavedConfigID}}
+: {{api|t=a|C_ClassTalents.GetNextStarterBuildPurchase}}
+: {{api|t=a|C_ClassTalents.GetStarterBuildActive}}
+: {{api|t=a|C_ClassTalents.HasUnspentTalentPoints}}
+: {{api|t=a|C_ClassTalents.ImportLoadout}}
+: {{api|t=a|C_ClassTalents.IsConfigPopulated}}
+: {{api|t=a|C_ClassTalents.LoadConfig}}
+: {{api|t=a|C_ClassTalents.RenameConfig}}
+: {{api|t=a|C_ClassTalents.RequestNewConfig}}
+: {{api|t=a|C_ClassTalents.SaveConfig}}
+: {{api|t=a|C_ClassTalents.SetStarterBuildActive}}
+: {{api|t=a|C_ClassTalents.SetUsesSharedActionBars}}
+: {{api|t=a|C_ClassTalents.UpdateLastSelectedSavedConfigID}}
+: {{api|t=a|C_Container.GetBagSlotFlag}}
+: {{api|t=a|C_Container.SetBagSlotFlag}}
+: {{api|t=a|C_CraftingOrders.CloseCustomerCraftingOrders}}
+: {{api|t=a|C_CraftingOrders.GetCustomerCategories}}
+: {{api|t=a|C_CraftingOrders.GetCustomerOptions}}
+: {{api|t=a|C_CraftingOrders.HasFavoriteCustomerOptions}}
+: {{api|t=a|C_CraftingOrders.IsCustomerOptionFavorited}}
+: {{api|t=a|C_CraftingOrders.ParseCustomerOptions}}
+: {{api|t=a|C_CraftingOrders.SetCustomerOptionFavorited}}
+: {{api|t=a|C_CurrencyInfo.GetCurrencyDescription}}
+: {{api|t=a|C_Debug.PrintToDebugWindow}}
+: {{api|t=a|C_EditMode.ConvertLayoutInfoToString}}
+: {{api|t=a|C_EditMode.ConvertStringToLayoutInfo}}
+: {{api|t=a|C_EditMode.GetAccountSettings}}
+: {{api|t=a|C_EditMode.GetLayouts}}
+: {{api|t=a|C_EditMode.OnEditModeExit}}
+: {{api|t=a|C_EditMode.OnLayoutAdded}}
+: {{api|t=a|C_EditMode.OnLayoutDeleted}}
+: {{api|t=a|C_EditMode.SaveLayouts}}
+: {{api|t=a|C_EditMode.SetAccountSetting}}
+: {{api|t=a|C_EditMode.SetActiveLayout}}
+: {{api|t=a|C_EventUtils.IsEventValid}}
+: {{api|t=a|C_EventUtils.NotifySettingsLoaded}}
+: {{api|t=a|C_FunctionContainers.CreateCallback}}
+: {{api|t=a|C_GossipInfo.GetFriendshipReputationRanks}}
+: {{api|t=a|C_GossipInfo.GetFriendshipReputation}}
+: {{api|t=a|C_Item.GetItemIDByGUID}}
+: {{api|t=a|C_Item.GetItemLocation}}
+: {{api|t=a|C_Item.GetItemMaxStackSizeByID}}
+: {{api|t=a|C_Item.GetItemMaxStackSize}}
+: {{api|t=a|C_Item.IsItemGUIDInInventory}}
+: {{api|t=a|C_KeyBindings.GetBindingIndex}}
+: {{api|t=a|C_MajorFactions.GetCovenantIDForMajorFaction}}
+: {{api|t=a|C_MajorFactions.GetCurrentRenownLevel}}
+: {{api|t=a|C_MajorFactions.GetFeatureAbilities}}
+: {{api|t=a|C_MajorFactions.GetMajorFactionData}}
+: {{api|t=a|C_MajorFactions.GetMajorFactionIDs}}
+: {{api|t=a|C_MajorFactions.GetRenownLevels}}
+: {{api|t=a|C_MajorFactions.GetRenownNPCFactionID}}
+: {{api|t=a|C_MajorFactions.GetRenownRewardsForLevel}}
+: {{api|t=a|C_MajorFactions.HasMaximumRenown}}
+: {{api|t=a|C_MajorFactions.IsMajorFaction}}
+: {{api|t=a|C_MajorFactions.IsPlayerInRenownCatchUpMode}}
+: {{api|t=a|C_MajorFactions.IsWeeklyRenownCapped}}
+: {{api|t=a|C_MajorFactions.RequestCatchUpState}}
+: {{api|t=a|C_Minimap.CanTrackBattlePets}}
+: {{api|t=a|C_Minimap.ClearAllTracking}}
+: {{api|t=a|C_Minimap.GetNumQuestPOIWorldEffects}}
+: {{api|t=a|C_Minimap.GetNumTrackingTypes}}
+: {{api|t=a|C_Minimap.GetObjectIconTextureCoords}}
+: {{api|t=a|C_Minimap.GetPOITextureCoords}}
+: {{api|t=a|C_Minimap.GetTrackingFilter}}
+: {{api|t=a|C_Minimap.GetTrackingInfo}}
+: {{api|t=a|C_Minimap.IsFilteredOut}}
+: {{api|t=a|C_Minimap.IsTrackingBattlePets}}
+: {{api|t=a|C_Minimap.IsTrackingHiddenQuests}}
+: {{api|t=a|C_Minimap.SetTracking}}
+: {{api|t=a|C_MountJournal.GetCollectedDragonridingMounts}}
+: {{api|t=a|C_MountJournal.GetDisplayedMountID}}
+: {{api|t=a|C_MountJournal.GetMountLink}}
+: {{api|t=a|C_MythicPlus.GetCurrentUIDisplaySeason}}
+: {{api|t=a|C_PaperDollInfo.GetInspectRatedSoloShuffleData}}
+: {{api|t=a|C_PetJournal.HasFavoritePets}}
+: {{api|t=a|C_PetJournal.SpellTargetBattlePet}}
+: {{api|t=a|C_PlayerInteractionManager.ClearInteraction}}
+: {{api|t=a|C_PlayerInteractionManager.ConfirmationInteraction}}
+: {{api|t=a|C_PlayerInteractionManager.InteractUnit}}
+: {{api|t=a|C_PlayerInteractionManager.IsInteractingWithNpcOfType}}
+: {{api|t=a|C_PlayerInteractionManager.IsReplacingUnit}}
+: {{api|t=a|C_PlayerInteractionManager.IsValidNPCInteraction}}
+: {{api|t=a|C_PlayerInteractionManager.ReopenInteraction}}
+: {{api|t=a|C_ProfSpecs.CanRefundPath}}
+: {{api|t=a|C_ProfSpecs.CanUnlockTab}}
+: {{api|t=a|C_ProfSpecs.GetChildrenForPath}}
+: {{api|t=a|C_ProfSpecs.GetConfigIDForSkillLine}}
+: {{api|t=a|C_ProfSpecs.GetDefaultSpecSkillLine}}
+: {{api|t=a|C_ProfSpecs.GetDescriptionForPath}}
+: {{api|t=a|C_ProfSpecs.GetDescriptionForPerk}}
+: {{api|t=a|C_ProfSpecs.GetEntryIDForPerk}}
+: {{api|t=a|C_ProfSpecs.GetPerksForPath}}
+: {{api|t=a|C_ProfSpecs.GetRootPathForTab}}
+: {{api|t=a|C_ProfSpecs.GetSourceTextForPath}}
+: {{api|t=a|C_ProfSpecs.GetSpecTabIDsForSkillLine}}
+: {{api|t=a|C_ProfSpecs.GetSpecTabInfo}}
+: {{api|t=a|C_ProfSpecs.GetSpendCurrencyForPath}}
+: {{api|t=a|C_ProfSpecs.GetSpendEntryForPath}}
+: {{api|t=a|C_ProfSpecs.GetStateForPath}}
+: {{api|t=a|C_ProfSpecs.GetStateForPerk}}
+: {{api|t=a|C_ProfSpecs.GetStateForTab}}
+: {{api|t=a|C_ProfSpecs.GetTabInfo}}
+: {{api|t=a|C_ProfSpecs.GetUnlockEntryForPath}}
+: {{api|t=a|C_ProfSpecs.GetUnlockRankForPerk}}
+: {{api|t=a|C_ProfSpecs.GetUnspentPointsForSkillLine}}
+: {{api|t=a|C_ProfSpecs.ShouldShowSpecTab}}
+: {{api|t=a|C_ProfSpecs.SkillLineHasSpecialization}}
+: {{api|t=a|C_PvP.GetPersonalRatedSoloShuffleSpecStats}}
+: {{api|t=a|C_PvP.GetRatedSoloShuffleMinItemLevel}}
+: {{api|t=a|C_PvP.GetRatedSoloShuffleRewards}}
+: {{api|t=a|C_PvP.IsBrawlSoloShuffle}}
+: {{api|t=a|C_PvP.IsRatedSoloShuffle}}
+: {{api|t=a|C_QuestItemUse.CanUseQuestItemOnObject}}
+: {{api|t=a|C_QuestLog.GetQuestLogMajorFactionReputationRewards}}
+: {{api|t=a|C_QuestLog.UnitIsRelatedToActiveQuest}}
+: {{api|t=a|C_QuestOffer.GetHideRequiredItemsOnTurnIn}}
+: {{api|t=a|C_QuestOffer.GetQuestOfferMajorFactionReputationRewards}}
+: {{api|t=a|C_Reputation.IsMajorFaction}}
+: {{api|t=a|C_Reputation.SetWatchedFaction}}
+: {{api|t=a|C_ReturningPlayerUI.AcceptPrompt}}
+: {{api|t=a|C_ReturningPlayerUI.DeclinePrompt}}
+: {{api|t=a|C_Sound.GetSoundScaledVolume}}
+: {{api|t=a|C_Sound.IsPlaying}}
+: {{api|t=a|C_Sound.PlayItemSound}}
+: {{api|t=a|C_SpellBook.GetDeadlyDebuffInfo}}
+: {{api|t=a|C_SpellBook.GetOverrideSpell}}
+: {{api|t=a|C_SpellBook.GetTrackedNameplateCooldownSpells}}
+: {{api|t=a|C_Texture.GetFilenameFromFileDataID}}
+: {{api|t=a|C_Timer.NewTicker}}
+: {{api|t=a|C_Timer.NewTimer}}
+: {{api|t=a|C_TradeSkillUI.CancelCraftingOrder}}
+: {{api|t=a|C_TradeSkillUI.CompleteCraftingOrder}}
+: {{api|t=a|C_TradeSkillUI.ContinueRecast}}
+: {{api|t=a|C_TradeSkillUI.CraftEnchant}}
+: {{api|t=a|C_TradeSkillUI.CraftSalvage}}
+: {{api|t=a|C_TradeSkillUI.DeclineCraftingOrder}}
+: {{api|t=a|C_TradeSkillUI.DoesRecraftingRecipeAcceptItem}}
+: {{api|t=a|C_TradeSkillUI.GetAllFilterableInventorySlotsCount}}
+: {{api|t=a|C_TradeSkillUI.GetBaseProfessionInfo}}
+: {{api|t=a|C_TradeSkillUI.GetChildProfessionInfos}}
+: {{api|t=a|C_TradeSkillUI.GetChildProfessionInfo}}
+: {{api|t=a|C_TradeSkillUI.GetCraftableCount}}
+: {{api|t=a|C_TradeSkillUI.GetCraftingOperationInfo}}
+: {{api|t=a|C_TradeSkillUI.GetCraftingOrders}}
+: {{api|t=a|C_TradeSkillUI.GetCraftingReagentBonusText}}
+: {{api|t=a|C_TradeSkillUI.GetCurrentOrder}}
+: {{api|t=a|C_TradeSkillUI.GetEnchantItems}}
+: {{api|t=a|C_TradeSkillUI.GetFactionSpecificOutputItem}}
+: {{api|t=a|C_TradeSkillUI.GetFilterableInventorySlotName}}
+: {{api|t=a|C_TradeSkillUI.GetGatheringOperationInfo}}
+: {{api|t=a|C_TradeSkillUI.GetHideUnownedFlags}}
+: {{api|t=a|C_TradeSkillUI.GetItemCraftedQualityByItemInfo}}
+: {{api|t=a|C_TradeSkillUI.GetItemReagentQualityByItemInfo}}
+: {{api|t=a|C_TradeSkillUI.GetItemSlotModifications}}
+: {{api|t=a|C_TradeSkillUI.GetOnlyShowFirstCraftRecipes}}
+: {{api|t=a|C_TradeSkillUI.GetOriginalCraftRecipeID}}
+: {{api|t=a|C_TradeSkillUI.GetProfessionChildSkillLineID}}
+: {{api|t=a|C_TradeSkillUI.GetProfessionInfoBySkillLineID}}
+: {{api|t=a|C_TradeSkillUI.GetProfessionSkillLineID}}
+: {{api|t=a|C_TradeSkillUI.GetProfessionSlots}}
+: {{api|t=a|C_TradeSkillUI.GetProfessionSpells}}
+: {{api|t=a|C_TradeSkillUI.GetReagentDifficultyText}}
+: {{api|t=a|C_TradeSkillUI.GetReagentSlotStatus}}
+: {{api|t=a|C_TradeSkillUI.GetRecipeFixedReagentItemLink}}
+: {{api|t=a|C_TradeSkillUI.GetRecipeOutputItemData}}
+: {{api|t=a|C_TradeSkillUI.GetRecipeQualityReagentItemLink}}
+: {{api|t=a|C_TradeSkillUI.GetRecipeSchematic}}
+: {{api|t=a|C_TradeSkillUI.GetRecipesTracked}}
+: {{api|t=a|C_TradeSkillUI.GetRecraftItems}}
+: {{api|t=a|C_TradeSkillUI.GetSalvagableItemIDs}}
+: {{api|t=a|C_TradeSkillUI.GetShowLearned}}
+: {{api|t=a|C_TradeSkillUI.GetShowUnlearned}}
+: {{api|t=a|C_TradeSkillUI.HasCraftingOrderFavorites}}
+: {{api|t=a|C_TradeSkillUI.HasMaxCraftingOrderFavorites}}
+: {{api|t=a|C_TradeSkillUI.HasRecipesTracked}}
+: {{api|t=a|C_TradeSkillUI.IsCraftingOrderFavorite}}
+: {{api|t=a|C_TradeSkillUI.IsOriginalCraftRecipeLearned}}
+: {{api|t=a|C_TradeSkillUI.IsRecipeInSkillLine}}
+: {{api|t=a|C_TradeSkillUI.IsRecipeProfessionLearned}}
+: {{api|t=a|C_TradeSkillUI.IsRecipeTracked}}
+: {{api|t=a|C_TradeSkillUI.IsRuneforging}}
+: {{api|t=a|C_TradeSkillUI.ListCraftingOrder}}
+: {{api|t=a|C_TradeSkillUI.OpenRecipe}}
+: {{api|t=a|C_TradeSkillUI.QueryCraftingOrdersFavorites}}
+: {{api|t=a|C_TradeSkillUI.QueryCraftingOrders}}
+: {{api|t=a|C_TradeSkillUI.RecipeCanBeRecrafted}}
+: {{api|t=a|C_TradeSkillUI.RecraftRecipe}}
+: {{api|t=a|C_TradeSkillUI.SetCraftingOrderFavorite}}
+: {{api|t=a|C_TradeSkillUI.SetOnlyShowFirstCraftRecipes}}
+: {{api|t=a|C_TradeSkillUI.SetProfessionChildSkillLineID}}
+: {{api|t=a|C_TradeSkillUI.SetRecipeTracked}}
+: {{api|t=a|C_TradeSkillUI.SetShowLearned}}
+: {{api|t=a|C_TradeSkillUI.SetShowUnlearned}}
+: {{api|t=a|C_TradeSkillUI.SetTooltipRecipeResultItem}}
+: {{api|t=a|C_TradeSkillUI.StartCraftingOrder}}
+: {{api|t=a|C_Traits.CanPurchaseRank}}
+: {{api|t=a|C_Traits.CanRefundRank}}
+: {{api|t=a|C_Traits.CascadeRepurchaseRanks}}
+: {{api|t=a|C_Traits.ClearCascadeRepurchaseHistory}}
+: {{api|t=a|C_Traits.CloseTraitSystemInteraction}}
+: {{api|t=a|C_Traits.CommitConfig}}
+: {{api|t=a|C_Traits.ConfigHasStagedChanges}}
+: {{api|t=a|C_Traits.GetConditionInfo}}
+: {{api|t=a|C_Traits.GetConfigIDBySystemID}}
+: {{api|t=a|C_Traits.GetConfigIDByTreeID}}
+: {{api|t=a|C_Traits.GetConfigInfo}}
+: {{api|t=a|C_Traits.GetConfigsByType}}
+: {{api|t=a|C_Traits.GetDefinitionInfo}}
+: {{api|t=a|C_Traits.GetEntryInfo}}
+: {{api|t=a|C_Traits.GetNodeCost}}
+: {{api|t=a|C_Traits.GetNodeInfo}}
+: {{api|t=a|C_Traits.GetStagedChangesCost}}
+: {{api|t=a|C_Traits.GetStagedPurchases}}
+: {{api|t=a|C_Traits.GetTraitCurrencyInfo}}
+: {{api|t=a|C_Traits.GetTraitDescription}}
+: {{api|t=a|C_Traits.GetTreeCurrencyInfo}}
+: {{api|t=a|C_Traits.GetTreeHash}}
+: {{api|t=a|C_Traits.GetTreeInfo}}
+: {{api|t=a|C_Traits.GetTreeNodes}}
+: {{api|t=a|C_Traits.HasValidInspectData}}
+: {{api|t=a|C_Traits.PurchaseRank}}
+: {{api|t=a|C_Traits.RefundAllRanks}}
+: {{api|t=a|C_Traits.RefundRank}}
+: {{api|t=a|C_Traits.ResetTree}}
+: {{api|t=a|C_Traits.RollbackConfig}}
+: {{api|t=a|C_Traits.SetSelection}}
+: {{api|t=a|C_Traits.StageConfig}}
+: {{api|t=a|C_Traits.TalentTestUnlearnSpells}}
+: {{api|t=a|C_UIColor.GetColors}}
+: {{api|t=a|C_UIWidgetManager.GetFillUpFramesWidgetVisualizationInfo}}
+: {{api|t=a|C_UnitAuras.GetAuraDataByAuraInstanceID}}
+: {{api|t=a|C_UnitAuras.GetAuraDataBySlot}}
+: {{api|t=a|C_UnitAuras.GetCooldownAuraBySpellID}}
+: {{api|t=a|C_UnitAuras.GetPlayerAuraBySpellID}}
+: {{api|t=a|C_UnitAuras.IsAuraFilteredOutByInstanceID}}
+: {{api|t=a|C_UnitAuras.WantsAlteredForm}}
+: {{api|t=a|C_VideoOptions.GetCurrentGameWindowSize}}
+: {{api|t=a|C_VideoOptions.GetDefaultGameWindowSize}}
+: {{api|t=a|C_VideoOptions.GetGameWindowSizes}}
+: {{api|t=a|C_VideoOptions.SetGameWindowSize}}
+: {{api|t=a|C_VoiceChat.IsVoiceChatConnected}}
+: {{api|t=a|C_WeeklyRewards.IsWeeklyChestRetired}}
+: {{api|t=a|C_XMLUtil.GetTemplateInfo}}
+: {{api|t=a|C_XMLUtil.GetTemplates}}
+: {{api|t=a|CombatLogShowCurrentEntry}}
+: {{api|t=a|GetGraphicsCVarValueForQualityLevel}}
+: {{api|t=a|GetUnitEmpowerHoldAtMaxTime}}
+: {{api|t=a|GetUnitEmpowerMinHoldTime}}
+: {{api|t=a|GetUnitEmpowerStageDuration}}
+: {{api|t=a|IsGraphicsCVarValueSupported}}
+: {{api|t=a|IsGraphicsSettingValueSupported}}
+: {{api|t=a|IsPlayerInGuildFromGUID}}
+: {{api|t=a|IsPressHoldReleaseSpell}}
+: {{api|t=a|IsSpecializationActivateSpell}}
+: {{api|t=a|IsTargetLoose}}
+: {{api|t=a|JoinRatedSoloShuffle}}
+: {{api|t=a|ReleaseAction}}
+: {{api|t=a|SetUnitCursorTexture}}
+: {{api|t=a|TargetToggle}}
+: {{api|t=a|UnitIsBossMob}}
+: {{api|t=a|UnitIsGameObject}}
+: {{api|t=a|UnitIsInteractable}}
+: {{api|t=a|WorldLootObjectExists}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|AcceptXPLoss}}
+: {{api|t=a|C_AlliedRaces.ClearAlliedRaceDetailsGiver}}
+: {{api|t=a|C_AzeriteEmpoweredItem.CloseAzeriteEmpoweredItemRespec}}
+: {{api|t=a|C_GossipInfo.GetNumOptions}}
+: {{api|t=a|C_PlayerInfo.IsPlayerInGuildFromGUID}}
+: {{api|t=a|C_ScrappingMachineUI.SetScrappingMachine}}
+: {{api|t=a|C_TradeSkillUI.GetOnlyShowLearnedRecipes}}
+: {{api|t=a|C_TradeSkillUI.GetOnlyShowUnlearnedRecipes}}
+: {{api|t=a|C_TradeSkillUI.GetOptionalReagentBonusText}}
+: {{api|t=a|C_TradeSkillUI.GetOptionalReagentInfo}}
+: {{api|t=a|C_TradeSkillUI.GetRecipeNumItemsProduced}}
+: {{api|t=a|C_TradeSkillUI.GetRecipeNumReagents}}
+: {{api|t=a|C_TradeSkillUI.GetRecipeReagentInfo}}
+: {{api|t=a|C_TradeSkillUI.GetRecipeReagentItemLink}}
+: {{api|t=a|C_TradeSkillUI.GetTradeSkillLineInfoByID}}
+: {{api|t=a|C_TradeSkillUI.GetTradeSkillLine}}
+: {{api|t=a|C_TradeSkillUI.IsEmptySkillLineCategory}}
+: {{api|t=a|C_TradeSkillUI.SetOnlyShowLearnedRecipes}}
+: {{api|t=a|C_TradeSkillUI.SetOnlyShowUnlearnedRecipes}}
+: {{api|t=a|C_TradeSkillUI.SetRecipeRepeatCount}}
+: {{api|t=a|CanTrackBattlePets}}
+: {{api|t=a|CheckBinderDist}}
+: {{api|t=a|CheckSpiritHealerDist}}
+: {{api|t=a|CheckTalentMasterDist}}
+: {{api|t=a|ClearAllTracking}}
+: {{api|t=a|CloseVoidStorageFrame}}
+: {{api|t=a|ConfirmBinder}}
+: {{api|t=a|GetBagSlotFlag}}
+: {{api|t=a|GetBankBagSlotFlag}}
+: {{api|t=a|GetCurrentResolution}}
+: {{api|t=a|GetCVarSettingValidity}}
+: {{api|t=a|GetDefaultGraphicsQuality}}
+: {{api|t=a|GetDefaultVideoOptions}}
+: {{api|t=a|GetDefaultVideoOption}}
+: {{api|t=a|GetDefaultVideoQualityOption}}
+: {{api|t=a|GetFriendshipReputationRanks}}
+: {{api|t=a|GetFriendshipReputation}}
+: {{api|t=a|GetGraphicsDropdownIndexByMasterIndex}}
+: {{api|t=a|GetNumQuestPOIWorldEffects}}
+: {{api|t=a|GetNumTrackingTypes}}
+: {{api|t=a|GetObjectIconTextureCoords}}
+: {{api|t=a|GetPlayerAuraBySpellID}}
+: {{api|t=a|GetPOITextureCoords}}
+: {{api|t=a|GetScreenResolutions}}
+: {{api|t=a|GetToolTipInfo}}
+: {{api|t=a|GetTrackingInfo}}
+: {{api|t=a|GetVideoOptions}}
+: {{api|t=a|InteractUnit}}
+: {{api|t=a|IsBagSlotFlagEnabledOnOtherBags}}
+: {{api|t=a|IsBagSlotFlagEnabledOnOtherBankBags}}
+: {{api|t=a|IsReplacingUnit}}
+: {{api|t=a|IsTrackingBattlePets}}
+: {{api|t=a|IsTrackingHiddenQuests}}
+: {{api|t=a|ReopenInteraction}}
+: {{api|t=a|SetBagSlotFlag}}
+: {{api|t=a|SetBankBagSlotFlag}}
+: {{api|t=a|SetDefaultVideoOptions}}
+: {{api|t=a|SetInventoryPortraitTexture}}
+: {{api|t=a|SetScreenResolution}}
+: {{api|t=a|SetTracking}}
+: {{api|t=a|ShowInventorySellCursor}}
+: {{api|t=a|VehicleAimGetAngle}}
+: {{api|t=a|VehicleAimGetNormAngle}}
+: {{api|t=a|VehicleAimRequestNormAngle}}
+</div>
+|}
+ {{api|t=a|C_CVar.SetCVar}}
+   - arg 3: <font color="#ff6767">scriptCVar</font>
+ {{api|t=a|C_CVar.SetCVarBitfield}}
+   - arg 4: <font color="#ff6767">scriptCVar</font>
+ {{api|t=a|C_GossipInfo.SelectActiveQuest}}, {{api|t=a|C_GossipInfo.SelectAvailableQuest}}, {{api|t=a|C_GossipInfo.SelectOption}}
+   + arg 1: <font color="#00b400">optionID</font>
+   - arg 1: <font color="#ff6767">index</font>
+ {{api|t=a|C_Item.GetItemGUID}}
+   + ret 1: <font color="#00b400">itemGUID</font>
+   - ret 1: <font color="#ff6767">itemGuid</font>
+ {{api|t=a|C_LegendaryCrafting.GetRuneforgeModifierInfo}}
+   # ret 2: <font color="#ecbc2a">description</font>, Type: string -> table
+ {{api|t=a|C_MountJournal.GetMountInfoByID}}, {{api|t=a|C_MountJournal.GetDisplayedMountInfo}}
+   + ret 13: <font color="#00b400">isForDragonriding</font>
+ {{api|t=a|C_TradeSkillUI.CraftRecipe}}
+   + arg 3: <font color="#00b400">craftingReagents</font>
+   - arg 3: <font color="#ff6767">optionalReagents</font>
+ {{api|t=a|C_VoiceChat.GetCurrentVoiceChatConnectionStatusCode}}
+   # ret 1: <font color="#ecbc2a">statusCode</font>, Nilable: false -> true
+ {{api|t=a|SetPortraitTexture}}
+   + arg 3: <font color="#00b400">disableMasking</font>
+
+==Widgets==
+* <code>Frame:SetMinResize</code> and similar changed to {{api|t=w|Frame:SetResizeBounds}}.
+* <code>Scale:GetFromScale</code> changed to <code>Scale:GetScaleFrom</code>, etc.
+* {{api|t=w|Texture:SetGradientAlpha}} merged into {{api|t=w|TextureBase:SetGradient}}.
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-widgets"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(56)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(29)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-widgets"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|Object:GetParentKey}}
+: {{api|t=w|Object:SetParentKey}}
+: {{api|t=w|ScriptRegionResizing:ClearPoint}}
+: {{api|t=w|ScriptRegion:SetPassThroughButtons}}
+: {{api|t=w|TextureBase:IsBlockingLoadRequested}}
+: {{api|t=w|TextureBase:SetBlockingLoadsRequested}}
+: {{api|t=w|AnimationGroup:GetAnimationSpeedMultiplier}}
+: {{api|t=w|AnimationGroup:IsReverse}}
+: {{api|t=w|AnimationGroup:SetAnimationSpeedMultiplier}}
+: {{api|t=w|Animation:SetTargetName}}
+: {{api|t=w|Animation:SetTargetParent}}
+: {{api|t=w|Scale:GetScaleFrom}}
+: {{api|t=w|Scale:GetScaleTo}}
+: {{api|t=w|Scale:SetScaleFrom}}
+: {{api|t=w|Scale:SetScaleTo}}
+: {{api|t=w|Path:GetCurveType}}
+: {{api|t=w|Path:GetMaxControlPointOrder}}
+: {{api|t=w|Path:SetCurveType}}
+: {{api|t=w|FlipBook:GetFlipBookColumns}}
+: {{api|t=w|FlipBook:GetFlipBookFrameHeight}}
+: {{api|t=w|FlipBook:GetFlipBookFrameWidth}}
+: {{api|t=w|FlipBook:GetFlipBookFrames}}
+: {{api|t=w|FlipBook:GetFlipBookRows}}
+: {{api|t=w|FlipBook:SetFlipBookColumns}}
+: {{api|t=w|FlipBook:SetFlipBookFrameHeight}}
+: {{api|t=w|FlipBook:SetFlipBookFrameWidth}}
+: {{api|t=w|FlipBook:SetFlipBookFrames}}
+: {{api|t=w|FlipBook:SetFlipBookRows}}
+: {{api|t=w|Frame:GetResizeBounds}}
+: {{api|t=w|Frame:SetIsFrameBuffer}}
+: {{api|t=w|Frame:SetResizeBounds}}
+: {{api|t=w|Browser:NavigateTo}}
+: {{api|t=w|Button:ClearDisabledTexture}}
+: {{api|t=w|Button:ClearHighlightTexture}}
+: {{api|t=w|Button:ClearNormalTexture}}
+: {{api|t=w|Button:ClearPushedTexture}}
+: {{api|t=w|Button:SetHighlightLocked}}
+: {{api|t=w|ColorSelect:ClearColorWheelTexture}}
+: {{api|t=w|Cooldown:SetTexCoordRange}}
+: {{api|t=w|EditBox:HasText}}
+: {{api|t=w|GameTooltip:AddTraitEntry}}
+: {{api|t=w|GameTooltip:SetItemByGUID}}
+: {{api|t=w|GameTooltip:SetItemByIDWithQuality}}
+: {{api|t=w|GameTooltip:SetQualityReagentSlotItemByID}}
+: {{api|t=w|GameTooltip:SetUnitBuffByAuraInstanceID}}
+: {{api|t=w|GameTooltip:SetUnitDebuffByAuraInstanceID}}
+: {{api|t=w|MovieFrame:StartMovieByName}}
+: {{api|t=w|OffScreenFrame:TestPrintToFile}}
+: {{api|t=w|StatusBar:GetStatusBarDesaturation}}
+: {{api|t=w|StatusBar:IsStatusBarDesaturated}}
+: {{api|t=w|StatusBar:SetColorFill}}
+: {{api|t=w|StatusBar:SetStatusBarDesaturated}}
+: {{api|t=w|StatusBar:SetStatusBarDesaturation}}
+: {{api|t=w|WorldFrame:OnModelCleared}}
+: {{api|t=w|ModelSceneActor:SetModelByHyperlink}}
+: Widget Scripts
+: [[UIHANDLER_OnModelCleared|ModelSceneActor OnModelCleared]]
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|Region:ClearPointByName}}
+: {{api|t=w|Texture:GetNonBlocking}}
+: {{api|t=w|Texture:GetRotation}}
+: {{api|t=w|Texture:GetVertexColor}}
+: {{api|t=w|Texture:SetGradientAlpha}}
+: {{api|t=w|Texture:SetNonBlocking}}
+: {{api|t=w|Texture:SetRotation}}
+: {{api|t=w|Scale:GetFromScale}}
+: {{api|t=w|Scale:GetToScale}}
+: {{api|t=w|Scale:SetFromScale}}
+: {{api|t=w|Scale:SetToScale}}
+: {{api|t=w|Path:GetCurve}}
+: {{api|t=w|Path:GetMaxOrder}}
+: {{api|t=w|Path:SetCurve}}
+: {{api|t=w|Frame:GetDepth}}
+: {{api|t=w|Frame:GetEffectiveDepth}}
+: {{api|t=w|Frame:GetMaxResize}}
+: {{api|t=w|Frame:GetMinResize}}
+: {{api|t=w|Frame:IgnoreDepth}}
+: {{api|t=w|Frame:IsIgnoringDepth}}
+: {{api|t=w|Frame:SetDepth}}
+: {{api|t=w|Frame:SetFrameBuffer}}
+: {{api|t=w|Frame:SetMaxResize}}
+: {{api|t=w|Frame:SetMinResize}}
+: {{api|t=w|GameTooltip:SetRecipeResultItem}}
+: {{api|t=w|Minimap:SetQuestBlobOutsideSelectedTexture}}
+: {{api|t=w|Minimap:SetTaskBlobOutsideSelectedTexture}}
+: {{api|t=w|StatusBar:GetStatusBarAtlas}}
+: {{api|t=w|StatusBar:SetStatusBarAtlas}}
+</div>
+|}
+
+==Events==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-events"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(63)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(26)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|ACTIVE_COMBAT_CONFIG_CHANGED}}
+: {{api|t=e|ACTIVE_PLAYER_SPECIALIZATION_CHANGED}}
+: {{api|t=e|BAG_CONTAINER_UPDATE}}
+: {{api|t=e|BATTLEFIELD_AUTO_QUEUE_EJECT}}
+: {{api|t=e|BATTLEFIELD_AUTO_QUEUE}}
+: {{api|t=e|CONFIG_COMMIT_FAILED}}
+: {{api|t=e|CRAFTING_DETAILS_UPDATE}}
+: {{api|t=e|CRAFTINGORDERS_CUSTOMER_FAVORITES_CHANGED}}
+: {{api|t=e|CRAFTINGORDERS_CUSTOMER_OPTIONS_PARSED}}
+: {{api|t=e|CRAFTINGORDERS_HIDE_CRAFTER}}
+: {{api|t=e|CRAFTINGORDERS_HIDE_CUSTOMER}}
+: {{api|t=e|CRAFTINGORDERS_SHOW_CRAFTER}}
+: {{api|t=e|CRAFTINGORDERS_SHOW_CUSTOMER}}
+: {{api|t=e|EDIT_MODE_LAYOUTS_UPDATED}}
+: {{api|t=e|EXPAND_BAG_BAR_CHANGED}}
+: {{api|t=e|ITEM_COUNT_CHANGED}}
+: {{api|t=e|MAJOR_FACTION_INTERACTION_ENDED}}
+: {{api|t=e|MAJOR_FACTION_INTERACTION_STARTED}}
+: {{api|t=e|MAJOR_FACTION_RENOWN_CATCH_UP_STATE_UPDATE}}
+: {{api|t=e|MAJOR_FACTION_RENOWN_LEVEL_CHANGED}}
+: {{api|t=e|MAJOR_FACTION_UNLOCKED}}
+: {{api|t=e|OPEN_RECIPE_RESPONSE}}
+: {{api|t=e|PLAYER_INTERACTION_MANAGER_FRAME_HIDE}}
+: {{api|t=e|PLAYER_INTERACTION_MANAGER_FRAME_SHOW}}
+: {{api|t=e|PLAYER_SOFT_ENEMY_CHANGED}}
+: {{api|t=e|PLAYER_SOFT_FRIEND_CHANGED}}
+: {{api|t=e|PLAYER_SOFT_INTERACT_CHANGED}}
+: {{api|t=e|PROFESSION_EQUIPMENT_CHANGED}}
+: {{api|t=e|RETURNING_PLAYER_PROMPT}}
+: {{api|t=e|RUNE_TYPE_UPDATE}}
+: {{api|t=e|SETTINGS_LOADED}}
+: {{api|t=e|SKILL_LINE_SPECS_UNLOCKED}}
+: {{api|t=e|SPECIALIZATION_CHANGE_CAST_FAILED}}
+: {{api|t=e|STARTER_BUILD_ACTIVATION_FAILED}}
+: {{api|t=e|TRACKED_RECIPE_UPDATE}}
+: {{api|t=e|TRADE_SKILL_CRAFT_BEGIN}}
+: {{api|t=e|TRADE_SKILL_CRAFTING_REAGENT_BONUS_TEXT_UPDATED}}
+: {{api|t=e|TRADE_SKILL_CURRENCY_REWARD_RESULT}}
+: {{api|t=e|TRADE_SKILL_ITEM_CRAFTED_RESULT}}
+: {{api|t=e|TRADE_SKILL_ITEM_UPDATE}}
+: {{api|t=e|TRAIT_COND_INFO_CHANGED}}
+: {{api|t=e|TRAIT_CONFIG_CREATED}}
+: {{api|t=e|TRAIT_CONFIG_DELETED}}
+: {{api|t=e|TRAIT_CONFIG_LIST_UPDATED}}
+: {{api|t=e|TRAIT_CONFIG_UPDATED}}
+: {{api|t=e|TRAIT_NODE_CHANGED_PARTIAL}}
+: {{api|t=e|TRAIT_NODE_CHANGED}}
+: {{api|t=e|TRAIT_NODE_ENTRY_UPDATED}}
+: {{api|t=e|TRAIT_SYSTEM_INTERACTION_STARTED}}
+: {{api|t=e|TRAIT_SYSTEM_NPC_CLOSED}}
+: {{api|t=e|TRAIT_TREE_CHANGED}}
+: {{api|t=e|TRAIT_TREE_CURRENCY_INFO_UPDATED}}
+: {{api|t=e|UNIT_FORM_CHANGED}}
+: {{api|t=e|UNIT_SPELLCAST_EMPOWER_START}}
+: {{api|t=e|UNIT_SPELLCAST_EMPOWER_STOP}}
+: {{api|t=e|UNIT_SPELLCAST_EMPOWER_UPDATE}}
+: {{api|t=e|UPDATE_TRADESKILL_CAST_COMPLETE}}
+: {{api|t=e|USE_COMBINED_BAGS_CHANGED}}
+: {{api|t=e|VOICE_CHAT_VAD_SETTINGS_UPDATED}}
+: {{api|t=e|WEAPON_ENCHANT_CHANGED}}
+: {{api|t=e|WEAPON_SLOT_CHANGED}}
+: {{api|t=e|WORLD_PVP_QUEUE}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|CHROMIE_TIME_CLOSE}}
+: {{api|t=e|CHROMIE_TIME_OPEN}}
+: {{api|t=e|CONTRIBUTION_COLLECTOR_CLOSE}}
+: {{api|t=e|CONTRIBUTION_COLLECTOR_OPEN}}
+: {{api|t=e|COVENANT_RENOWN_INTERACTION_ENDED}}
+: {{api|t=e|COVENANT_RENOWN_INTERACTION_STARTED}}
+: {{api|t=e|COVENANT_SANCTUM_INTERACTION_ENDED}}
+: {{api|t=e|COVENANT_SANCTUM_INTERACTION_STARTED}}
+: {{api|t=e|CURSOR_UPDATE}}
+: {{api|t=e|ITEM_INTERACTION_CLOSE}}
+: {{api|t=e|ITEM_INTERACTION_OPEN}}
+: {{api|t=e|ITEM_UPGRADE_MASTER_CLOSED}}
+: {{api|t=e|ITEM_UPGRADE_MASTER_OPENED}}
+: {{api|t=e|OBLITERUM_FORGE_CLOSE}}
+: {{api|t=e|OBLITERUM_FORGE_SHOW}}
+: {{api|t=e|RESPEC_AZERITE_EMPOWERED_ITEM_CLOSED}}
+: {{api|t=e|RESPEC_AZERITE_EMPOWERED_ITEM_OPENED}}
+: {{api|t=e|SCRAPPING_MACHINE_CLOSE}}
+: {{api|t=e|SCRAPPING_MACHINE_SHOW}}
+: {{api|t=e|TRADE_SKILL_OPTIONAL_REAGENT_BONUS_TEXT_UPDATED}}
+: {{api|t=e|VOID_STORAGE_CLOSE}}
+: {{api|t=e|VOID_STORAGE_OPEN}}
+: {{api|t=e|WEEKLY_REWARDS_HIDE}}
+: {{api|t=e|WEEKLY_REWARDS_SHOW}}
+: {{api|t=e|WORLD_MAP_CLOSE}}
+</div>
+|}
+ {{api|t=e|GOSSIP_CONFIRM}}, {{api|t=e|GOSSIP_ENTER_CODE}}
+   + 1: <font color="#00b400">gossipID</font>
+   - 1: <font color="#ff6767">gossipIndex</font>
+ {{api|t=e|PVP_TYPES_ENABLED}}
+   + 4: <font color="#00b400">ratedSoloShuffle</font>
+ {{api|t=e|REPORT_PLAYER_RESULT}}
+   + 2: <font color="#00b400">reportType</font>
+ {{api|t=e|UNIT_AURA}}
+   + 2: <font color="#00b400">updateInfo</font>
+   - 2: <font color="#ff6767">isFullUpdate</font>
+   - 3: <font color="#ff6767">updatedAuras</font>
+
+==CVars==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-cvars"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(93)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(16)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-cvars"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=ActionButtonUseKeyHeldSpell|default=0|scope=Account|cat=4|desc=Activate the press and hold cast option on a keydown}}
+: {{apitooltip|type=cvar|name=AdvFlyingDynamicFOVEnabled|default=1|cat=4|desc=Enables adjustment of camera field of view based on gliding speed}}
+: {{apitooltip|type=cvar|name=calendarShowResets|default=0|scope=Character|cat=4|desc=Whether raid resets should appear in the calendar}}
+: {{apitooltip|type=cvar|name=CMAA2HalfFloat|default=0|cat=1|desc=0: 32-bit Float. 1: 16-bit Float.}}
+: {{apitooltip|type=cvar|name=combinedBags|default=0|scope=Account|cat=4|desc=Use combined bag frame for all bags}}
+: {{apitooltip|type=cvar|name=dragonRidingPitchSensitivity|default=2.5|cat=4|desc=Changes the sensitivity of pitch down/up keys}}
+: {{apitooltip|type=cvar|name=dragonRidingTurnSensitivity|default=5|cat=4|desc=Changes the sensitivity of turn left/right keys}}
+: {{apitooltip|type=cvar|name=DynamicVRSSensitivityThreshold|default=0|cat=1|desc=Enable dynamic sensitivity threshold based on target FPS for VRS}}
+: {{apitooltip|type=cvar|name=EmpowerMinHoldStagePercent|default=1.000000|scope=Account|cat=4|desc=Sets a percentage of the first empower stage [0.0,1.0]. Before this point, the spell will be auto-held. After it, releases will be accepted.}}
+: {{apitooltip|type=cvar|name=EmpowerTapControlsReleaseThreshold|default=300|scope=Account|cat=4|desc=Sets the time in milliseconds after which release/re-hold requests will be registered for press-and-tap empowers. Begins when the cast is sent from the client.}}
+: {{apitooltip|type=cvar|name=empowerTapControls|default=0|scope=Character|cat=4|desc=By default, Empower spells use a press-hold-release control scheme. Set this CVar to use a tap-tap scheme instead.}}
+: {{apitooltip|type=cvar|name=expandBagBar|default=1|scope=Account|cat=4|desc=Expand the main menu bar that shows the bags so you can see all equipped bags instead of just the backpack and reagent bag}}
+: {{apitooltip|type=cvar|name=ForceGenerateSlug|default=0|cat=0|desc=Generate .slug files for all loaded fonts before they are actually used rather than deferred load.}}
+: {{apitooltip|type=cvar|name=fstack_enabled|default=0|cat=0|desc=0: Hide Framestack Tooltip (Default), 1: Show Framestack Tooltip.}}
+: {{apitooltip|type=cvar|name=GameDataVisualizer|default=0}}
+: {{apitooltip|type=cvar|name=GamePadOverlapMouseMs|default=2000|desc=Duration after gamepad+mouse input to switch to just one or the other.}}
+: {{apitooltip|type=cvar|name=GamePadRunThreshold|default=0.5|desc=0-1 Amount of stick movement before character transitions from walk to run}}
+: {{apitooltip|type=cvar|name=GxAllowCachelessShaderMode|default=0|cat=1|desc=CPU memory saving mode, if supported by backend. When enabled, shaders are fetched from disk as needed instead of being kept resident. This mode may slightly increase the time objects take to appear the first time they are encountered. Computers without solid state drives may want to disable this feature}}
+: {{apitooltip|type=cvar|name=interactQuestItems|default=1|scope=Account|cat=4|desc=Enable Quest Item use as an interaction}}
+: {{apitooltip|type=cvar|name=lastRenownForMajorFaction2503|default=0|scope=Character|cat=4|desc=Stores the Maruuk Centaur renown when Renown UI is closed}}
+: {{apitooltip|type=cvar|name=lastRenownForMajorFaction2507|default=0|scope=Character|cat=4|desc=Stores the Dragonscale Expedition renown when Renown UI is closed}}
+: {{apitooltip|type=cvar|name=lastRenownForMajorFaction2510|default=0|scope=Character|cat=4|desc=Stores the Valdrakken Accord renown when Renown UI is closed}}
+: {{apitooltip|type=cvar|name=lastRenownForMajorFaction2511|default=0|scope=Character|cat=4|desc=Stores the Iskaara Tuskarr renown when Renown UI is closed}}
+: {{apitooltip|type=cvar|name=LowLatencyMode|default=0|cat=1|desc=0=None, 1=BuiltIn, 2=Reflex}}
+: {{apitooltip|type=cvar|name=luaErrorExceptions|default=1|cat=4|desc=Enable exceptions for non-tainted lua errors}}
+: {{apitooltip|type=cvar|name=maxLevelSpecsUsed|default=0|scope=Character|cat=4|desc=The specs the player has switched to at max level}}
+: {{apitooltip|type=cvar|name=minimapTrackedInfov3|default=1006319|scope=Character|cat=4|desc=Stores the minimap tracking that was active last session.}}
+: {{apitooltip|type=cvar|name=minimapTrackingClosestOnly|default=1|cat=4|desc=If enabled, show only the closest tracked icon for certain minimap icon types.}}
+: {{apitooltip|type=cvar|name=minimapTrackingShowAll|default=0|cat=4|desc=If enabled, show dropdown for configuring all possible minimap tracking options.}}
+: {{apitooltip|type=cvar|name=nameplateHideHealthAndPower|default=0|scope=Character|cat=4}}
+: {{apitooltip|type=cvar|name=nameplatePlayerLargerScale|default=1.8|scope=Character|cat=1|desc=An additional scale modifier for players.}}
+: {{apitooltip|type=cvar|name=nameplatePlayerMaxDistance|scope=Character|cat=1|desc=The max distance to show player nameplates.}}
+: {{apitooltip|type=cvar|name=nameplateShowFriendlyBuffs|default=0|scope=Character|cat=4}}
+: {{apitooltip|type=cvar|name=nameplateShowPersonalCooldowns|default=0|scope=Character|cat=4}}
+: {{apitooltip|type=cvar|name=outlineSoftInteractFadeDuration|default=0.3|cat=0}}
+: {{apitooltip|type=cvar|name=professionGearSlotsExampleShown|default=0|scope=Character|cat=4|desc=If the profession gear slots example has been shown}}
+: {{apitooltip|type=cvar|name=professionsAllocateBestQualityReagents|default=1|scope=Account|cat=4|desc=Indicates if best quality reagents should be automatically allocated in the crafting UI.}}
+: {{apitooltip|type=cvar|name=professionsFlyoutHideUnowned|default=0|scope=Character|cat=4|desc=Boolean indicating if unowned items are hidden in the profession slot flyouts}}
+: {{apitooltip|type=cvar|name=professionsOrderDurationDropdown|default=2|scope=Account|cat=4|desc=The previously selected duration index in the professions customer order form dropdown}}
+: {{apitooltip|type=cvar|name=professionsOrderRecipientDropdown|default=1|scope=Account|cat=4|desc=The previously selected order recipient index in the professions customer order form dropdown}}
+: {{apitooltip|type=cvar|name=raidFramesDisplayDebuffs|default=1|scope=Character|cat=4|desc=Whether to display debuffs on Raid Frames}}
+: {{apitooltip|type=cvar|name=raidFramesDisplayIncomingHeals|default=1|scope=Character|cat=4|desc=Whether to display incoming heals on Raid Frames}}
+: {{apitooltip|type=cvar|name=reloadUIOnAspectChange|default=0|cat=1|desc=Reload the UI on aspect change}}
+: {{apitooltip|type=cvar|name=SlugOpticalWeight|default=0|cat=0|desc=When rendering, coverage values are remapped to increase the optical weight of the glyphs. This can improve the appearance of small text, but usually looks good only for dark text on a light background.}}
+: {{apitooltip|type=cvar|name=SlugSupersampling|default=1|cat=0|desc=The slug glyph shader performs adaptive supersampling for high-quality rendering at small font sizes}}
+: {{apitooltip|type=cvar|name=SoftTargetEnemyArc|default=2|scope=Character|cat=4|desc=0 = No yaw arc allowance, must be directly in front. 1 = Must be in front yaw arc. 2 = Can be anywhere in targeting area.}}
+: {{apitooltip|type=cvar|name=SoftTargetEnemyRange|default=45|scope=Character|cat=4}}
+: {{apitooltip|type=cvar|name=SoftTargetEnemy|default=1|scope=Character|cat=4|desc=Sets when enemy soft targeting should be enabled. 0=off, 1=gamepad, 2=KBM, 3=always}}
+: {{apitooltip|type=cvar|name=SoftTargetForce|default=1|cat=4|desc=Auto-set target to match soft target. 1 = for enemies, 2 = for friends}}
+: {{apitooltip|type=cvar|name=SoftTargetFriendArc|default=2|scope=Character|cat=4|desc=0 = No yaw arc allowance, must be directly in front. 1 = Must be in front yaw arc. 2 = Can be anywhere in targeting area.}}
+: {{apitooltip|type=cvar|name=SoftTargetFriendRange|default=45|scope=Character|cat=4}}
+: {{apitooltip|type=cvar|name=SoftTargetFriend|default=0|scope=Character|cat=4|desc=Sets when friend soft targeting should be enabled. 0=off, 1=gamepad, 2=KBM, 3=always}}
+: {{apitooltip|type=cvar|name=SoftTargetIconEnemy|default=0|scope=Account|cat=4|desc=Show icon for soft enemy target}}
+: {{apitooltip|type=cvar|name=SoftTargetIconFriend|default=0|scope=Account|cat=4|desc=Show icon for soft friend target}}
+: {{apitooltip|type=cvar|name=SoftTargetIconGameObject|default=0|scope=Account|cat=4|desc=Show icon for sot interact game objects (interactable objects you cannot normally target)}}
+: {{apitooltip|type=cvar|name=SoftTargetIconInteract|default=1|scope=Account|cat=4|desc=Show icon for soft interact target}}
+: {{apitooltip|type=cvar|name=SoftTargetInteractArc|default=0|scope=Account|cat=4|desc=0 = No yaw arc allowance, must be directly in front. 1 = Must be in front yaw arc. 2 = Can be anywhere in targeting area.}}
+: {{apitooltip|type=cvar|name=SoftTargetInteractRangeIsHard|default=0|scope=Account|cat=4|desc=Sets if it should be a hard range cutoff, even for something you can interact with right now.}}
+: {{apitooltip|type=cvar|name=SoftTargetInteractRange|default=10|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=SoftTargetInteract|default=1|scope=Account|cat=4|desc=Sets when soft interact should be enabled. 0=off, 1=gamepad, 2=KBM, 3=always}}
+: {{apitooltip|type=cvar|name=SoftTargetLowPriorityIcons|default=0|scope=Account|cat=4|desc=Show interact icons even when there is other visual indicators, such as quest or loot effects}}
+: {{apitooltip|type=cvar|name=SoftTargetMatchLocked|default=1|cat=4|desc=Match appropriate soft target to locked target. 1 = hard locked target only, 2 = for targets you attack}}
+: {{apitooltip|type=cvar|name=SoftTargetNameplateEnemy|default=1|scope=Account|cat=4|desc=Always show nameplates for soft enemy target}}
+: {{apitooltip|type=cvar|name=SoftTargetNameplateFriend|default=0|scope=Account|cat=4|desc=Always show nameplates for soft friend target}}
+: {{apitooltip|type=cvar|name=SoftTargetNameplateInteract|default=0|scope=Account|cat=4|desc=Always show nameplates for soft interact target}}
+: {{apitooltip|type=cvar|name=SoftTargetNameplateSize|default=19|scope=Account|cat=4|desc=Size of soft target icon on nameplate (0 to disable)}}
+: {{apitooltip|type=cvar|name=softTargettingInteractKeySound|default=0|scope=Account|cat=4|desc=Setting for soft targeting that enables sound cues}}
+: {{apitooltip|type=cvar|name=SoftTargetTooltipDurationMs|default=2000|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=SoftTargetTooltipEnemy|default=0|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=SoftTargetTooltipFriend|default=0|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=SoftTargetTooltipInteract|default=0|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=SoftTargetTooltipLocked|default=0|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=SoftTargetWithLocked|default=1|cat=4|desc=Allows soft target selection while player has a locked target. 2 = always do soft targeting}}
+: {{apitooltip|type=cvar|name=SoftTargetWorldtextFarDist|default=40|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=SoftTargetWorldtextNearDist|default=4|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=SoftTargetWorldtextNearScale|default=1|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=SoftTargetWorldtextSize|default=32|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=TargetAutoEnemy|default=1|scope=Character|cat=4|desc=Auto-Target from your single target helpful spells}}
+: {{apitooltip|type=cvar|name=TargetAutoFriend|default=1|scope=Character|cat=4|desc=Auto-Target from your single target helpful spells}}
+: {{apitooltip|type=cvar|name=TargetEnemyAttacker|default=1|scope=Character|cat=4|desc=Auto-Target Enemy when they attack you}}
+: {{apitooltip|type=cvar|name=textureErrorColors|default=1|cat=1|desc=If enabled, replaceable textures that aren't specified will be purple}}
+: {{apitooltip|type=cvar|name=trackedProfessionRecipes|scope=Character|cat=4|desc=Internal cvar for saving tracked recipes in order}}
+: {{apitooltip|type=cvar|name=uieditor_enabled|default=0|cat=0|desc=0: Hide UI Editor (default), 1: Show UI Editor.}}
+: {{apitooltip|type=cvar|name=UseKeyHeldSpellErrorPollTime|default=500|scope=Account|cat=4|desc=(Internal only) Time between a failed cast and when it should attempt to cast again in ms. (Clamped to 100 and 10000)}}
+: {{apitooltip|type=cvar|name=useMaxFPSBk|default=1|cat=1|desc=Enables or disables background FPS limit}}
+: {{apitooltip|type=cvar|name=useMaxFPS|default=0|cat=1|desc=Enables or disables FPS limit}}
+: {{apitooltip|type=cvar|name=UseSlug|default=1|cat=0|desc=Render with slug text}}
+: {{apitooltip|type=cvar|name=useTargetFPS|default=1|cat=1|desc=Enables or disables background FPS limit}}
+: {{apitooltip|type=cvar|name=validateFrameXML|default=1|desc=Display warning when FrameXML detects unparsed elements}}
+: {{apitooltip|type=cvar|name=WorldTextMinAlpha|default=0.5|scope=Account|cat=4}}
+: {{apitooltip|type=cvar|name=WorldTextMinSize|default=0|scope=Account|cat=4}}
+
+: '''Commands'''
+: LogFps
+: WriteCustomizationOptions
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: bspcache
+: fullSizeFocusFrame
+: GamePadAbbreviatedBindingReverse
+: GamePadEmulateEsc
+: multiBarRightVerticalLayout
+: physDraw
+: physDrawBroadphase
+: physDrawCenterOfMass
+: physDrawContacts
+: physDrawDMStats
+: physDrawFixtures
+: physDrawJoints
+: physDrawStats
+: physDrawTransparent
+: showPartyBackground
+: worldEntityLinkMode
+</div>
+|}
+
+==Enums==
+ Enum.CurrencySource
+   + 53: <font color="#00b400">PlayerTrait</font>
+   + 54: <font color="#00b400">PhBuffer_53</font>
+   + 55: <font color="#00b400">PhBuffer_54</font>
+   + 56: <font color="#00b400">RenownRepGain</font>
+ Enum.EventToastEventType
+   + 22: <font color="#00b400">SpellLearned</font>
+   + 23: <font color="#00b400">TreasureItem</font>
+ Enum.HolidayFlags
+   + 6: <font color="#00b400">DurationUseMinutes</font>
+ Enum.InventoryType
+   + 30: <font color="#00b400">IndexProfessionToolType</font>
+   + 31: <font color="#00b400">IndexProfessionGearType</font>
+   + 32: <font color="#00b400">IndexEquipablespellOffensiveType</font>
+   + 33: <font color="#00b400">IndexEquipablespellUtilityType</font>
+   + 34: <font color="#00b400">IndexEquipablespellDefensiveType</font>
+   + 35: <font color="#00b400">IndexEquipablespellMobilityType</font>
+ Enum.ItemClass
+   + 20: <font color="#00b400">Profession</font>
+ Enum.ItemGemColor
+   + 25: <font color="#00b400">Tinker</font>
+ Enum.ItemSocketType
+   + 25: <font color="#00b400">Tinker</font>
+ Enum.LFGListDisplayType
+   + 6: <font color="#00b400">Comment</font>
+ Enum.MountType
+   + 4: <font color="#00b400">Dragonriding</font>
+ Enum.MountTypeFlag
+   + 3: <font color="#00b400">IsDragonRidingMount</font>
+ Enum.PowerType
+   + 22: <font color="#00b400">Essence</font>
+   + 23: <font color="#00b400">RuneBlood</font>
+   + 24: <font color="#00b400">RuneFrost</font>
+   + 25: <font color="#00b400">RuneUnholy</font>
+ Enum.UIWidgetVisualizationType
+   + 25: <font color="#00b400">FillUpFrames</font>
+ Enum.UnitSex
+   + 5: <font color="#00b400">Neutral</font>
+ Enum.ValidateNameResult
+   + 1: <font color="#00b400">Success</font>
+   + 2: <font color="#00b400">Failure</font>
+   + 3: <font color="#00b400">NoName</font>
+   + 4: <font color="#00b400">TooShort</font>
+   + 5: <font color="#00b400">TooLong</font>
+   + 6: <font color="#00b400">InvalidCharacter</font>
+   + 7: <font color="#00b400">MixedLanguages</font>
+   + 8: <font color="#00b400">Profane</font>
+   + 9: <font color="#00b400">Reserved</font>
+   + 10: <font color="#00b400">InvalidApostrophe</font>
+   + 11: <font color="#00b400">MultipleApostrophes</font>
+   + 12: <font color="#00b400">ThreeConsecutive</font>
+   + 13: <font color="#00b400">InvalidSpace</font>
+   + 14: <font color="#00b400">ConsecutiveSpaces</font>
+   + 15: <font color="#00b400">RussianConsecutiveSilentCharacters</font>
+   + 16: <font color="#00b400">RussianSilentCharacterAtBeginningOrEnd</font>
+   + 17: <font color="#00b400">DeclensionDoesntMatchBaseName</font>
+   + 18: <font color="#00b400">SpacesDisallowed</font>
+   - 1: <font color="#ff6767">NameSuccess</font>
+   - 2: <font color="#ff6767">NameFailure</font>
+   - 3: <font color="#ff6767">NameNoName</font>
+   - 4: <font color="#ff6767">NameTooShort</font>
+   - 5: <font color="#ff6767">NameTooLong</font>
+   - 6: <font color="#ff6767">NameInvalidCharacter</font>
+   - 7: <font color="#ff6767">NameMixedLanguages</font>
+   - 8: <font color="#ff6767">NameProfane</font>
+   - 9: <font color="#ff6767">NameReserved</font>
+   - 10: <font color="#ff6767">NameInvalidApostrophe</font>
+   - 11: <font color="#ff6767">NameMultipleApostrophes</font>
+   - 12: <font color="#ff6767">NameThreeConsecutive</font>
+   - 13: <font color="#ff6767">NameInvalidSpace</font>
+   - 14: <font color="#ff6767">NameConsecutiveSpaces</font>
+   - 15: <font color="#ff6767">NameRussianConsecutiveSilentCharacters</font>
+   - 16: <font color="#ff6767">NameRussianSilentCharacterAtBeginningOrEnd</font>
+   - 17: <font color="#ff6767">NameDeclensionDoesntMatchBaseName</font>
+   - 18: <font color="#ff6767">NameSpacesDisallowed</font>
+
+==Structures==
+ BarberShopRaceData ({{api|C_BarberShop.GetCurrentCharacterData}})
+   + 4: <font color="#00b400">createScreenIconAtlas</font>
+ CharCustomizationChoice ({{api|C_BarberShop.GetAvailableCustomizations}})
+   + 7: <font color="#00b400">showLocked</font>
+   + 8: <font color="#00b400">lockedTooltip</font>
+ CharCustomizationOption ({{api|C_BarberShop.GetAvailableCustomizations}})
+   # 6: <font color="#ecbc2a">currentChoiceIndex</font>, Nilable: false -> true
+   + 8: <font color="#00b400">isSound</font>
+ CurrencyInfo ({{api|C_CurrencyInfo.GetCurrencyInfo}}, {{api|C_CurrencyInfo.GetCurrencyListInfo}})
+   + 2: <font color="#00b400">description</font>
+ ExpansionDisplayInfo ({{api|GetExpansionDisplayInfo}})
+   + 4: <font color="#00b400">highResBackgroundID</font>
+   + 5: <font color="#00b400">lowResBackgroundID</font>
+ GossipOptionUIInfo ({{api|C_GossipInfo.GetOptions}})
+   + 1: <font color="#00b400">gossipOptionID</font>
+   + 3: <font color="#00b400">icon</font>
+   + 7: <font color="#00b400">flags</font>
+   + 8: <font color="#00b400">overrideIconID</font>
+   + 9: <font color="#00b400">selectOptionWhenOnlyOption</font>
+   + 10: <font color="#00b400">orderIndex</font>
+   - 2: <font color="#ff6767">type</font>
+ GroupFinderActivityInfo ({{api|C_LFGList.GetActivityInfoTable}}, {{api|C_LFGList.GetPlaystyleString}})
+   + 19: <font color="#00b400">useDungeonRoleExpectations</font>
+ LfgSearchResultData ({{api|C_LFGList.GetSearchResultInfo}})
+   + 9: <font color="#00b400">hasSelf</font>
+ PVPPersonalRatedInfo ({{api|C_PvP.GetPVPActiveMatchPersonalRatedInfo}})
+   + 12: <font color="#00b400">roundsSeasonPlayed</font>
+   + 13: <font color="#00b400">roundsSeasonWon</font>
+   + 14: <font color="#00b400">roundsWeeklyPlayed</font>
+   + 15: <font color="#00b400">roundsWeeklyWon</font>
+ PvpBrawlInfo ({{api|C_PvP.GetActiveBrawlInfo}}, {{api|C_PvP.GetAvailableBrawlInfo}}, {{api|C_PvP.GetSpecialEventBrawlInfo}})
+   + 6: <font color="#00b400">minLevel</font>
+   + 7: <font color="#00b400">maxLevel</font>
+   + 8: <font color="#00b400">groupsAllowed</font>
+ TextureAndTextRowVisualizationInfo ({{api|C_UIWidgetManager.GetTextureAndTextRowVisualizationInfo}})
+   + 4: <font color="#00b400">fixedWidth</font>
+ UIWidgetSpellInfo ({{api|C_UIWidgetManager.GetSpellDisplayVisualizationInfo}})
+   + 8: <font color="#00b400">borderColor</font>
+   + 12: <font color="#00b400">isLootObject</font>
+ UiMapExplorationInfo ({{api|C_MapExplorationInfo.GetExploredMapTextures}})
+   + 6: <font color="#00b400">isDrawOnTopLayer</font>
+
+==Deprecated API==
+APIs deprecated during 9.x were removed with patch 10.0.0<sup>[https://github.com/Gethe/wow-ui-source/tree/9.2.7/Interface/AddOns/Blizzard_Deprecated]</sup>
+
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-deprecated" style="cursor: pointer" 
+! Deprecated 9.x API
+|- class="mw-collapsible" id="mw-customcollapsible-deprecated"
+|
+===9.0.5===
+: {{api|IsActivePlayerMentor}} -> {{api|IsActivePlayerGuide}}
+: {{api|QueryGuildMembersForRecipe }} -> {{api|C_GuildInfo.QueryGuildMembersForRecipe}}
+: {{api|C_Soulbinds.GetConduitItemLevel}} -> {{api|C_Soulbinds.GetConduitCollectionData}}
+
+===9.1.0===
+: {{api|C_TransmogCollection.GetIllusionSourceInfo }} -> {{api|C_TransmogCollection.GetIllusionInfo}}, {{api|C_TransmogCollection.GetIllusionStrings}}
+: {{api|C_TransmogCollection.GetIllusionFallbackWeaponSource}} -> {{api|C_TransmogCollection.GetFallbackWeaponAppearance}}
+: {{api|C_Transmog.GetCost}} -> {{api|C_Transmog.GetApplyCost}}
+: {{api|C_TransmogSets.GetSetSources}} -> {{api|C_TransmogSets.GetSetPrimaryAppearances}}
+: {{api|GetQuestLogPortraitGiver}} -> {{api|C_QuestLog.GetQuestLogPortraitGiver}}
+: {{api|C_PlayerChoice.GetPlayerChoiceInfo}} -> {{api|C_PlayerChoice.GetCurrentPlayerChoiceInfo}}
+: {{api|C_PlayerChoice.GetPlayerChoiceOptionInfo}} -> {{api|C_PlayerChoice.GetCurrentPlayerChoiceInfo}}
+: {{api|C_PlayerChoice.GetPlayerChoiceRewardInfo}} -> {{api|C_PlayerChoice.GetCurrentPlayerChoiceInfo}}
+: {{api|SendPlayerChoiceResponse}} -> {{api|C_PlayerChoice.SendPlayerChoiceResponse}}
+: {{api|C_LegendaryCrafting.GetRuneforgePowersByClassAndSpec}} -> {{api|C_LegendaryCrafting.GetRuneforgePowersByClassSpecAndCovenant}}
+: {{api|IsDressableItem}} -> {{api|C_Item.IsDressableItemByID}}
+<syntaxhighlight lang="lua">
+-- transmogrify
+LE_TRANSMOG_SEARCH_TYPE_ITEMS = Enum.TransmogSearchType.Items;
+LE_TRANSMOG_SEARCH_TYPE_BASE_SETS = Enum.TransmogSearchType.BaseSets;
+LE_TRANSMOG_SEARCH_TYPE_USABLE_SETS = Enum.TransmogSearchType.UsableSets;
+
+-- Item class/subclass enum conversions
+LE_ITEM_CLASS_CONSUMABLE = Enum.ItemClass.Consumable;
+LE_ITEM_CLASS_CONTAINER = Enum.ItemClass.Container;
+LE_ITEM_CLASS_WEAPON = Enum.ItemClass.Weapon;
+LE_ITEM_CLASS_GEM = Enum.ItemClass.Gem;
+LE_ITEM_CLASS_ARMOR = Enum.ItemClass.Armor;
+LE_ITEM_CLASS_REAGENT = Enum.ItemClass.Reagent;
+LE_ITEM_CLASS_PROJECTILE = Enum.ItemClass.Projectile;
+LE_ITEM_CLASS_TRADEGOODS = Enum.ItemClass.Tradegoods;
+LE_ITEM_CLASS_ITEM_ENHANCEMENT = Enum.ItemClass.ItemEnhancement;
+LE_ITEM_CLASS_RECIPE = Enum.ItemClass.Recipe;
+LE_ITEM_CLASS_QUIVER = Enum.ItemClass.Quiver;
+LE_ITEM_CLASS_QUESTITEM = Enum.ItemClass.Questitem;
+LE_ITEM_CLASS_KEY = Enum.ItemClass.Key;
+LE_ITEM_CLASS_MISCELLANEOUS = Enum.ItemClass.Miscellaneous;
+LE_ITEM_CLASS_GLYPH = Enum.ItemClass.Glyph;
+LE_ITEM_CLASS_BATTLEPET = Enum.ItemClass.Battlepet;
+LE_ITEM_CLASS_WOW_TOKEN = Enum.ItemClass.WoWToken;
+
+LE_ITEM_WEAPON_AXE1H = Enum.ItemWeaponSubclass.Axe1H;
+LE_ITEM_WEAPON_AXE2H = Enum.ItemWeaponSubclass.Axe2H;
+LE_ITEM_WEAPON_BOWS = Enum.ItemWeaponSubclass.Bows;
+LE_ITEM_WEAPON_GUNS = Enum.ItemWeaponSubclass.Guns;
+LE_ITEM_WEAPON_MACE1H = Enum.ItemWeaponSubclass.Mace1H;
+LE_ITEM_WEAPON_MACE2H = Enum.ItemWeaponSubclass.Mace2H;
+LE_ITEM_WEAPON_POLEARM = Enum.ItemWeaponSubclass.Polearm;
+LE_ITEM_WEAPON_SWORD1H = Enum.ItemWeaponSubclass.Sword1H;
+LE_ITEM_WEAPON_SWORD2H = Enum.ItemWeaponSubclass.Sword2H;
+LE_ITEM_WEAPON_WARGLAIVE = Enum.ItemWeaponSubclass.Warglaive;
+LE_ITEM_WEAPON_STAFF = Enum.ItemWeaponSubclass.Staff;
+LE_ITEM_WEAPON_BEARCLAW = Enum.ItemWeaponSubclass.Bearclaw;
+LE_ITEM_WEAPON_CATCLAW = Enum.ItemWeaponSubclass.Catclaw;
+LE_ITEM_WEAPON_UNARMED = Enum.ItemWeaponSubclass.Unarmed;
+LE_ITEM_WEAPON_GENERIC = Enum.ItemWeaponSubclass.Generic;
+LE_ITEM_WEAPON_DAGGER = Enum.ItemWeaponSubclass.Dagger;
+LE_ITEM_WEAPON_THROWN = Enum.ItemWeaponSubclass.Thrown;
+LE_ITEM_WEAPON_OBSOLETE3 = Enum.ItemWeaponSubclass.Obsolete3;
+LE_ITEM_WEAPON_CROSSBOW = Enum.ItemWeaponSubclass.Crossbow;
+LE_ITEM_WEAPON_WAND = Enum.ItemWeaponSubclass.Wand;
+LE_ITEM_WEAPON_FISHINGPOLE = Enum.ItemWeaponSubclass.Fishingpole;
+
+LE_ITEM_ARMOR_GENERIC = Enum.ItemArmorSubclass.Generic;
+LE_ITEM_ARMOR_CLOTH = Enum.ItemArmorSubclass.Cloth;
+LE_ITEM_ARMOR_LEATHER = Enum.ItemArmorSubclass.Leather;
+LE_ITEM_ARMOR_MAIL = Enum.ItemArmorSubclass.Mail;
+LE_ITEM_ARMOR_PLATE = Enum.ItemArmorSubclass.Plate;
+LE_ITEM_ARMOR_COSMETIC = Enum.ItemArmorSubclass.Cosmetic;
+LE_ITEM_ARMOR_SHIELD = Enum.ItemArmorSubclass.Shield;
+LE_ITEM_ARMOR_LIBRAM = Enum.ItemArmorSubclass.Libram;
+LE_ITEM_ARMOR_IDOL = Enum.ItemArmorSubclass.Idol;
+LE_ITEM_ARMOR_TOTEM = Enum.ItemArmorSubclass.Totem;
+LE_ITEM_ARMOR_SIGIL = Enum.ItemArmorSubclass.Sigil;
+LE_ITEM_ARMOR_RELIC = Enum.ItemArmorSubclass.Relic;
+
+LE_ITEM_GEM_INTELLECT = Enum.ItemGemSubclass.Intellect;
+LE_ITEM_GEM_AGILITY = Enum.ItemGemSubclass.Agility;
+LE_ITEM_GEM_STRENGTH = Enum.ItemGemSubclass.Strength;
+LE_ITEM_GEM_STAMINA = Enum.ItemGemSubclass.Stamina;
+LE_ITEM_GEM_SPIRIT = Enum.ItemGemSubclass.Spirit;
+LE_ITEM_GEM_CRITICALSTRIKE = Enum.ItemGemSubclass.Criticalstrike;
+LE_ITEM_GEM_MASTERY = Enum.ItemGemSubclass.Mastery;
+LE_ITEM_GEM_HASTE = Enum.ItemGemSubclass.Haste;
+LE_ITEM_GEM_VERSATILITY = Enum.ItemGemSubclass.Versatility;
+LE_ITEM_GEM_MULTIPLESTATS = Enum.ItemGemSubclass.Multiplestats;
+LE_ITEM_GEM_ARTIFACTRELIC = Enum.ItemGemSubclass.Artifactrelic;
+
+LE_ITEM_RECIPE_BOOK = Enum.ItemRecipeSubclass.Book;
+LE_ITEM_RECIPE_LEATHERWORKING = Enum.ItemRecipeSubclass.Leatherworking;
+LE_ITEM_RECIPE_TAILORING = Enum.ItemRecipeSubclass.Tailoring;
+LE_ITEM_RECIPE_ENGINEERING = Enum.ItemRecipeSubclass.Engineering;
+LE_ITEM_RECIPE_BLACKSMITHING = Enum.ItemRecipeSubclass.Blacksmithing;
+LE_ITEM_RECIPE_COOKING = Enum.ItemRecipeSubclass.Cooking;
+LE_ITEM_RECIPE_ALCHEMY = Enum.ItemRecipeSubclass.Alchemy;
+LE_ITEM_RECIPE_FIRST_AID = Enum.ItemRecipeSubclass.FirstAid;
+LE_ITEM_RECIPE_ENCHANTING = Enum.ItemRecipeSubclass.Enchanting;
+LE_ITEM_RECIPE_FISHING = Enum.ItemRecipeSubclass.Fishing;
+LE_ITEM_RECIPE_JEWELCRAFTING = Enum.ItemRecipeSubclass.Jewelcrafting;
+LE_ITEM_RECIPE_INSCRIPTION = Enum.ItemRecipeSubclass.Inscription;
+
+LE_ITEM_MISCELLANEOUS_JUNK = Enum.ItemMiscellaneousSubclass.Junk;
+LE_ITEM_MISCELLANEOUS_REAGENT = Enum.ItemMiscellaneousSubclass.Reagent;
+LE_ITEM_MISCELLANEOUS_COMPANION_PET = Enum.ItemMiscellaneousSubclass.CompanionPet;
+LE_ITEM_MISCELLANEOUS_HOLIDAY = Enum.ItemMiscellaneousSubclass.Holiday;
+LE_ITEM_MISCELLANEOUS_OTHER = Enum.ItemMiscellaneousSubclass.Other;
+LE_ITEM_MISCELLANEOUS_MOUNT = Enum.ItemMiscellaneousSubclass.Mount;
+LE_ITEM_MISCELLANEOUS_MOUNT_EQUIPMENT = Enum.ItemMiscellaneousSubclass.MountEquipment;
+
+-- Pet battle enum conversions
+LE_BATTLE_PET_WEATHER = Enum.BattlePetOwner.Weather;
+LE_BATTLE_PET_ALLY = Enum.BattlePetOwner.Ally;
+LE_BATTLE_PET_ENEMY = Enum.BattlePetOwner.Enemy;
+
+LE_BATTLE_PET_ACTION_NONE = Enum.BattlePetAction.None;
+LE_BATTLE_PET_ACTION_ABILITY = Enum.BattlePetAction.Ability;
+LE_BATTLE_PET_ACTION_SWITCH_PET = Enum.BattlePetAction.SwitchPet;
+LE_BATTLE_PET_ACTION_TRAP = Enum.BattlePetAction.Trap;
+LE_BATTLE_PET_ACTION_SKIP = Enum.BattlePetAction.Skip;
+
+LE_PET_BATTLE_STATE_CREATED = Enum.PetbattleState.Created;
+LE_PET_BATTLE_STATE_WAITING_PRE_BATTLE = Enum.PetbattleState.WaitingPreBattle;
+LE_PET_BATTLE_STATE_ROUND_IN_PROGRESS = Enum.PetbattleState.RoundInProgress;
+LE_PET_BATTLE_STATE_WAITING_FOR_FRONT_PETS = Enum.PetbattleState.WaitingForFrontPets;
+LE_PET_BATTLE_STATE_CREATED_FAILED = Enum.PetbattleState.CreatedFailed;
+LE_PET_BATTLE_STATE_FINAL_ROUND = Enum.PetbattleState.FinalRound;
+LE_PET_BATTLE_STATE_FINISHED = Enum.PetbattleState.Finished;
+</syntaxhighlight>
+
+===9.1.5===
+: {{api|GetItemUpgradeItemInfo}} -> {{api|C_ItemUpgrade.GetItemUpgradeItemInfo}}
+: {{api|GetItemUpgradeStats}} -> {{api|C_ItemUpgrade.GetItemUpgradeItemInfo}}
+: {{api|SetItemUpgradeFromCursorItem}} -> {{api|C_ItemUpgrade.SetItemUpgradeFromCursorItem}}
+: {{api|ClearItemUpgrade}} -> {{api|C_ItemUpgrade.ClearItemUpgrade}}
+: {{api|UpgradeItem}} -> {{api|C_ItemUpgrade.UpgradeItem}}
+: {{api|CloseItemUpgrade}} -> {{api|C_ItemUpgrade.CloseItemUpgrade}}
+: {{api|GetItemUpdateLevel}} -> {{api|C_ItemUpgrade.GetItemUpgradeCurrentLevel}}
+: {{api|C_ItemUpgrade.GetItemLevelIncrement}} -> {{api|C_ItemUpgrade.GetItemUpgradeItemInfo}}
+: {{api|C_LFGList.GetCategoryInfo}} -> {{api|C_LFGList.GetLfgCategoryInfo}}
+: {{api|C_LFGList.GetActivityInfo}} -> {{api|C_LFGList.GetActivityInfoTable}}
+
+===9.2.0===
+: {{api|GetBattlefieldFlagPosition}} -> {{api|C_PvP.GetBattlefieldFlagPosition}}
+<syntaxhighlight lang="lua">
+-- Pet battle enum conversions
+Enum.PetBattleState = Enum.PetbattleState
+
+LE_PET_BATTLE_STATE_CREATED = Enum.PetbattleState.Created;
+LE_PET_BATTLE_STATE_WAITING_PRE_BATTLE = Enum.PetbattleState.WaitingPreBattle;
+LE_PET_BATTLE_STATE_ROUND_IN_PROGRESS = Enum.PetbattleState.RoundInProgress;
+LE_PET_BATTLE_STATE_WAITING_FOR_FRONT_PETS = Enum.PetbattleState.WaitingForFrontPets;
+LE_PET_BATTLE_STATE_CREATED_FAILED = Enum.PetbattleState.CreatedFailed;
+LE_PET_BATTLE_STATE_FINAL_ROUND = Enum.PetbattleState.FinalRound;
+LE_PET_BATTLE_STATE_FINISHED = Enum.PetbattleState.Finished;
+
+-- Unit Sex enum conversions
+Enum.Unitsex = Enum.UnitSex;
+
+-- Calendar constants
+-- Event Types
+CALENDAR_EVENTTYPE_RAID			= Enum.CalendarEventType.Raid;
+CALENDAR_EVENTTYPE_DUNGEON		= Enum.CalendarEventType.Dungeon;
+CALENDAR_EVENTTYPE_PVP			= Enum.CalendarEventType.PvP;
+CALENDAR_EVENTTYPE_MEETING		= Enum.CalendarEventType.Meeting;
+CALENDAR_EVENTTYPE_OTHER		= Enum.CalendarEventType.Other;
+CALENDAR_MAX_EVENTTYPE			= Enum.CalendarEventTypeMeta.MaxValue;
+
+-- Invite Statuses
+CALENDAR_INVITESTATUS_INVITED		= Enum.CalendarStatus.Invited;
+CALENDAR_INVITESTATUS_ACCEPTED		= Enum.CalendarStatus.Available;
+CALENDAR_INVITESTATUS_DECLINED		= Enum.CalendarStatus.Declined;
+CALENDAR_INVITESTATUS_CONFIRMED		= Enum.CalendarStatus.Confirmed;
+CALENDAR_INVITESTATUS_OUT			= Enum.CalendarStatus.Out;
+CALENDAR_INVITESTATUS_STANDBY		= Enum.CalendarStatus.Standby;
+CALENDAR_INVITESTATUS_SIGNEDUP		= Enum.CalendarStatus.Signedup;
+CALENDAR_INVITESTATUS_NOT_SIGNEDUP	= Enum.CalendarStatus.NotSignedup;
+CALENDAR_INVITESTATUS_TENTATIVE		= Enum.CalendarStatus.Tentative;
+CALENDAR_MAX_INVITESTATUS			= Enum.CalendarStatusMeta.MaxValue;
+
+-- Invite Types
+CALENDAR_INVITETYPE_NORMAL		= Enum.CalendarInviteType.Normal;
+CALENDAR_INVITETYPE_SIGNUP		= Enum.CalendarInviteType.Signup;
+CALENDAR_MAX_INVITETYPE			= Enum.CalendarInviteTypeMeta.MaxValue;
+</syntaxhighlight>
+
+===9.2.7===
+<syntaxhighlight lang="lua">
+-- LFG flags
+LFG_LIST_FILTER_RECOMMENDED = Enum.LFGListFilter.Recommended;
+LFG_LIST_FILTER_NOT_RECOMMENDED = Enum.LFGListFilter.NotRecommended;
+LFG_LIST_FILTER_PVE = Enum.LFGListFilter.PvE;
+LFG_LIST_FILTER_PVP = Enum.LFGListFilter.PvP;
+
+-- LFG renaming cleanup
+Enum.CurrencySource.LfgReward = Enum.CurrencySource.LFGReward;
+Enum.LfgEntryPlaystyle = Enum.LFGEntryPlaystyle;
+Enum.LfgListDisplayType = Enum.LFGListDisplayType;
+Enum.BrawlType.Lfg = Enum.BrawlType.LFG;
+</syntaxhighlight>
+|}
