@@ -1,0 +1,97 @@
+Patch 10.2.7 API changes
+
+== Summary ==
+
+* The client now supports comma-delimited Interface versions, allowing addons to declare a TOC file as being compatible with multiple versions or flavors of the game at once.
+* The C_ChatInfo.SendAddonMessage function now more aggressively throttles all addon traffic on a per-prefix level. See Addon messaging changes for more details.
+* The TextStatusBar FrameXML utility has been converted to a mixin. Global functions are retained for compatibility, but will be removed in Patch 11.0.0.
+* The loading of deprecation scripts is now controlled by a new loadDeprecationFallbacks CVar. This CVar defaults to 1 (enabled), and will reset to the default state upon a client restart.
+* The client now emits a Lua warning for a "Duplicate File Load" if an addon loads the same file multiple times in its TOC or XML files.
+* (May 16 2024) The C_AddOns.DisableAddOn function can no longer be used to disable secure Blizzard addons.
+
+== Resources ==
+* TOC: 100207
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+* Deprecated API: Blizzard_Deprecated
+* Official patch notes: Dragonflight: Dark Heart Content Update Notes
+
+== Breaking changes ==
+* The pet stable has been overhauled. Some previously global API functions have moved to the C_StableInfo namespace, and others have been removed.
+* The FontInstance:SetJustifyH and FontInstance:SetJustifyV functions now more strictly validate inputs and will no longer permit "MIDDLE" to be used for horizontal justification, or "CENTER" for vertical.
+
+== Addon messaging changes ==
+
+The C_ChatInfo.SendAddonMessage API and its logged variant now aggressively throttle traffic on all chat types, including whispers. The details of this restriction appear to match previously implemented changes for party and raid communications.
+
+* Each registered prefix is given an allowance of 10 addon messages that can be sent.
+* Each message sent on a prefix reduces this allowance by 1.
+* If the allowance reaches zero, further attempts to send messages on the same prefix will fail, returning Enum.SendAddonMessageResult.AddonMessageThrottle to the caller.
+* Each prefix regains its allowance at a rate of 1 message per second, up to the original maximum of 10 messages.
+* This restriction does not apply to whispers outside of instanced content.
+
+This restriction does not mean that the global communications throttle is removed. If too much data is being sent simultaneously on separate prefixes, then the client may still be disconnected. For this reason, it is strongly recommended to continue using ChatThrottleLib or AceComm-3.0.
+
+Due to the way that the deprecation wrapper for these APIs has been handled, the C APIs are replaced by Lua functions that shift the enum result to the second return position. A forward-compatible way to reliably access the enum return value is to use a negative select index to grab the last return value.
+
+
+local result = select(-1, C_ChatInfo.SendAddonMessage(...))
+
+
+== Consolidated changes ==
+=== Enumerations ===
+ Enum.AuctionHouseFilter
+   + CurrentExpansionOnly
+ Enum.BattlePetSources
+   + TradingPost
+ Enum.CurrencyDestroyReason
+   + Script
+ Enum.CurrencyFlagsB
+   + CurrencyBScaleMaxQuantityBySeasonWeeks
+ Enum.CurrencyGainFlags
+   + Autotracking
+ Enum.GossipNpcOption
+   + ForgeMaster
+ Enum.ItemGemColor
+   + FutureUse
+ Enum.ItemSocketType
+   + FutureUse
+ Enum.JournalInstanceFlags
+   + DoNotDisplayInstance
+ Enum.LFGListFilter
+   + Timerunning
+   + CurrentExpansion
+   + CurrentSeason
+   + NotCurrentSeason
+ Enum.PlayerInteractionType
+   + ForgeMaster
+ Enum.PowerType
+   + Balance
+ Enum.TooltipDataLineType
+   + GemSocketEnchantment
+ Enum.TransmogSource
+   + TradingPost
+
+=== Structures ===
+ BNetGameAccountInfo
+   + timerunningSeasonID
+ BestDungeonScoreMapInfo
+   + bestRunDurationMs
+   + bestLevelIncrement
+ ClubMemberInfo
+   + timerunningSeasonID
+ DigSiteMapInfo
+   + poiBlobID
+ GroupFinderActivityInfo
+   + isHeroicActivity
+   + isNormalActivity
+ HTMLContentNode
+   #: align, Type: TBFStyleFlags -> JustifyHorizontal
+ LfgSearchResultData
+   + leaderBestDungeonScoreInfo
+ PerksVendorItemInfo
+   + doesNotExpire
+   + mountTypeName
+ QuestInfo
+   + isAbandonOnDisable
+ WhoInfo
+   + timerunningSeasonID
