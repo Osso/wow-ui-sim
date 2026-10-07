@@ -21,6 +21,16 @@ class ExtractTests(unittest.TestCase):
                          '=== Events ===\n ACHIEVEMENT_EARNED\n'
                          '   # arg 1: achievementID, Type: number -> AchievementID\n')
 
+    def test_layout_clear_template_is_editorial_and_keeps_examples(self):
+        raw = ('==Settings API==\n* Canvas and vertical layouts.\n{{clrr}}\n'
+               '<syntaxhighlight lang="lua">\nSettings.RegisterAddOnCategory(category)\n'
+               '</syntaxhighlight>\n==Global API==\n: {{api|IgnoreMe}}\n'
+               '==Enums==\n Enum.X\n')
+        self.assertEqual(extract_text(raw, preserve_examples=True),
+                         '== Settings API ==\n* Canvas and vertical layouts.\n\n'
+                         '```lua\nSettings.RegisterAddOnCategory(category)\n```\n'
+                         '== Enumerations ==\n Enum.X\n')
+
     def test_code_examples_preserve_xml_and_lua_literals_when_requested(self):
         raw = ('==Example==\n<syntaxhighlight lang="lua">\n'
                'Texture:SetTexture([[Interface\\Buttons\\White8x8]])\n'

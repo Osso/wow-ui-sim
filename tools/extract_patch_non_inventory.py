@@ -30,6 +30,7 @@ def render_line(line):
     line = re.sub(r"\{\{(?:apisummary.header|text\|blizz)\|([^{}]+)\}\}",
                   r"=== \1 ===", line)
     line = line.replace('{{apisummary.blizzquote}}', '')
+    line = line.replace('{{clrr}}', '')
     line = line.replace('{{Reflist}}', '[References list; not expanded]')
     line = line.replace('{{:Settings_API}}',
                         '[Transcluded source: Settings_API; not expanded]')

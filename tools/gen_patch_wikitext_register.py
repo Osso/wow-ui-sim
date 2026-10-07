@@ -73,22 +73,29 @@ def parse_section(section, lines):
     """lines: [(line_no, text)] between this heading and the next."""
     entries, headers, columns = [], [], 0
     mode = None
+    inline_commands = False
     for line_no, text in lines:
         if text.startswith("! "):
             headers += [int(n) for n in COUNT.findall(text)]
         elif text.startswith('| <font') and FONT.sub('', text).strip('| ').lower() in ('added', 'removed'):
             mode = FONT.sub('', text).strip('| ').lower()
         elif text.startswith('| valign="top"'):
+            inline_commands = False
             columns += 1
             mode = "added" if columns == 1 else "removed"
         elif text.startswith("</div>"):
             mode = None
         elif text.startswith("|}") or "'''Changed'''" in text:
             mode = "changed"
+        elif section == "cvars" and text.strip() == ": '''Commands'''":
+            inline_commands = True
         elif section == "widgets" and text.strip() == ": Widget Scripts":
             continue  # Category label, not an API occurrence.
         elif mode in ("added", "removed") and text.startswith(":"):
-            entries.append(make_entry(section, mode, line_no, text))
+            entry = make_entry(section, mode, line_no, text)
+            if inline_commands:
+                entry["kind"] = "command"
+            entries.append(entry)
         # Changed entries may carry a documentation-system label (" PlayerScript {{api|...}}").
         elif mode == "changed" and re.match(r"^\s+(\w+ )?(\{\{|\[\[)", text):
             entries.append(make_entry(section, "changed", line_no, text))

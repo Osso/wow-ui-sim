@@ -5,6 +5,28 @@ from gen_patch_wikitext_register import parse_section, split_sections
 
 
 class InventoryTests(unittest.TestCase):
+    def test_inline_plain_commands_do_not_turn_removed_cvars_into_commands(self):
+        entries, counts = parse_section('cvars', [
+            (1, '! Added <small>(3)</small>'),
+            (2, '! Removed <small>(1)</small>'),
+            (3, '| valign="top" | <div>'),
+            (4, ': {{apitooltip|type=cvar|name=validateFrameXML|default=1}}'),
+            (5, ": '''Commands'''"),
+            (6, ': LogFps'),
+            (7, ': WriteCustomizationOptions'),
+            (8, '</div>'),
+            (9, '| valign="top" | <div>'),
+            (10, ': bspcache'),
+        ])
+        self.assertEqual([(e['symbol'], e['direction'], e.get('kind'), e['wikitext_line'])
+                          for e in entries], [
+            ('validateFrameXML', 'added', None, 4),
+            ('LogFps', 'added', 'command', 6),
+            ('WriteCustomizationOptions', 'added', 'command', 7),
+            ('bspcache', 'removed', None, 10),
+        ])
+        self.assertEqual([c['parsed_count'] for c in counts], [3, 1])
+
     def test_type_change_events_do_not_replace_publication_inventory(self):
         raw = ('==Events==\n! Added <small>(1)</small>\n'
                '| valign="top" | <div>\n: {{api|t=e|CAN_PLAYER_SPEAK_LANGUAGE_CHANGED}}\n'
