@@ -52,7 +52,8 @@
     "log": "p1005-retirement-red.log.gz",
     "scope": "bare repeated lookup RED",
     "log_sha256": "eeb198e0b062aebf659673d9373d76d783260091ca8a8c22ce45b288bfc472f6",
-    "compressed_sha256": "9c52ad09c01af6d9ea94836e5edf0604614fcfede260773cf73477cedb47047c"
+    "compressed_sha256": "9c52ad09c01af6d9ea94836e5edf0604614fcfede260773cf73477cedb47047c",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p1005-page/target"
   },
   {
     "revision": "263574c2f359774716895ef2c8c8e38a616ab48f",
