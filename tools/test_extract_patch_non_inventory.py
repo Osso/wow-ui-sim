@@ -8,6 +8,19 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 class ExtractTests(unittest.TestCase):
+    def test_level_two_structures_end_inventory_before_type_changes(self):
+        raw = ('==Global API==\n{| class="wikitable"\n: {{api|IgnoreMe}}\n|}\n'
+               '==Structures==\n Enum.ItemGemColor\n   + Primordial\n'
+               '==Type Changes==\n===Functions===\n {{api|C_AccountInfo.GetIDFromBattleNetAccountGUID}}\n'
+               '   # arg 1: guid, Type: string -> WOWGUID\n'
+               '===Events===\n {{api|t=e|ACHIEVEMENT_EARNED}}\n'
+               '   # arg 1: achievementID, Type: number -> AchievementID\n')
+        self.assertEqual(extract_text(raw), '== Structures ==\n Enum.ItemGemColor\n   + Primordial\n'
+                         '== Type Changes ==\n=== Functions ===\n C_AccountInfo.GetIDFromBattleNetAccountGUID\n'
+                         '   # arg 1: guid, Type: string -> WOWGUID\n'
+                         '=== Events ===\n ACHIEVEMENT_EARNED\n'
+                         '   # arg 1: achievementID, Type: number -> AchievementID\n')
+
     def test_code_examples_preserve_xml_and_lua_literals_when_requested(self):
         raw = ('==Example==\n<syntaxhighlight lang="lua">\n'
                'Texture:SetTexture([[Interface\\Buttons\\White8x8]])\n'

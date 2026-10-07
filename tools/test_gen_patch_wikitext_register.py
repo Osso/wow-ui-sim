@@ -5,6 +5,19 @@ from gen_patch_wikitext_register import parse_section, split_sections
 
 
 class InventoryTests(unittest.TestCase):
+    def test_type_change_events_do_not_replace_publication_inventory(self):
+        raw = ('==Events==\n! Added <small>(1)</small>\n'
+               '| valign="top" | <div>\n: {{api|t=e|CAN_PLAYER_SPEAK_LANGUAGE_CHANGED}}\n'
+               '</div>\n|}\n==Structures==\n RafInfo\n'
+               '==Type Changes==\n===Functions===\n {{api|C_AccountInfo.GetIDFromBattleNetAccountGUID}}\n'
+               '   # arg 1: guid, Type: string -> WOWGUID\n'
+               '===Events===\n {{api|t=e|ACHIEVEMENT_EARNED}}\n'
+               '   # arg 1: achievementID, Type: number -> AchievementID\n')
+        entries, counts = parse_section('events', split_sections(raw)['events'])
+        self.assertEqual([(e['symbol'], e['direction']) for e in entries],
+                         [('CAN_PLAYER_SPEAK_LANGUAGE_CHANGED', 'added')])
+        self.assertEqual(counts[0]['parsed_count'], 1)
+
     def test_level_two_inventory_headings_preserve_source_lines_and_count_drift(self):
         raw = ('==Global API==\n'
                '! Added <small>(19)</small>\n! Removed <small>(0)</small>\n'

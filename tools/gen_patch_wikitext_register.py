@@ -106,6 +106,8 @@ def parse_section(section, lines):
 def split_sections(text):
     current, buckets = None, {}
     for line_no, line in enumerate(text.split("\n"), start=1):
+        if line.strip() == "==Type Changes==":
+            break  # Historical type annotations are extract rows, not publication inventories.
         heading = re.match(r"^(={2,3})([^=]+)\1\s*$", line)
         if heading and heading.group(2).strip() != "Consolidated changes":
             current = SECTIONS.get(heading.group(2).strip())

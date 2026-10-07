@@ -20,6 +20,18 @@
       "parsed_count": 18
     },
     {
+      "section": "events",
+      "direction": "added",
+      "header_count": 6,
+      "parsed_count": 6
+    },
+    {
+      "section": "events",
+      "direction": "removed",
+      "header_count": 4,
+      "parsed_count": 4
+    },
+    {
       "section": "cvars",
       "direction": "added",
       "header_count": 11,
@@ -408,6 +420,86 @@
       "symbol": "C_PlayerInteractionManager.InteractUnit",
       "annotation": "+ arg 3: looseTargeting",
       "wikitext_line": 71
+    },
+    {
+      "id": "wt-events-CAN_LOCAL_WHISPER_TARGET_RESPONSE-84",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CAN_LOCAL_WHISPER_TARGET_RESPONSE",
+      "annotation": "",
+      "wikitext_line": 84
+    },
+    {
+      "id": "wt-events-CAN_PLAYER_SPEAK_LANGUAGE_CHANGED-85",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CAN_PLAYER_SPEAK_LANGUAGE_CHANGED",
+      "annotation": "",
+      "wikitext_line": 85
+    },
+    {
+      "id": "wt-events-CRAFTINGORDERS_DISPLAY_CRAFTER_FULFILLED_MSG-86",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CRAFTINGORDERS_DISPLAY_CRAFTER_FULFILLED_MSG",
+      "annotation": "",
+      "wikitext_line": 86
+    },
+    {
+      "id": "wt-events-RAF_REWARD_CLAIM_FAILED-87",
+      "section": "events",
+      "direction": "added",
+      "symbol": "RAF_REWARD_CLAIM_FAILED",
+      "annotation": "",
+      "wikitext_line": 87
+    },
+    {
+      "id": "wt-events-SELECTED_LOADOUT_CHANGED-88",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SELECTED_LOADOUT_CHANGED",
+      "annotation": "",
+      "wikitext_line": 88
+    },
+    {
+      "id": "wt-events-SKILL_LINE_SPECS_RANKS_CHANGED-89",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SKILL_LINE_SPECS_RANKS_CHANGED",
+      "annotation": "",
+      "wikitext_line": 89
+    },
+    {
+      "id": "wt-events-SOCIAL_ITEM_RECEIVED-92",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "SOCIAL_ITEM_RECEIVED",
+      "annotation": "",
+      "wikitext_line": 92
+    },
+    {
+      "id": "wt-events-TWITTER_LINK_RESULT-93",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "TWITTER_LINK_RESULT",
+      "annotation": "",
+      "wikitext_line": 93
+    },
+    {
+      "id": "wt-events-TWITTER_POST_RESULT-94",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "TWITTER_POST_RESULT",
+      "annotation": "",
+      "wikitext_line": 94
+    },
+    {
+      "id": "wt-events-TWITTER_STATUS_UPDATE-95",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "TWITTER_STATUS_UPDATE",
+      "annotation": "",
+      "wikitext_line": 95
     },
     {
       "id": "wt-cvars-excludedCensorSources-106",
