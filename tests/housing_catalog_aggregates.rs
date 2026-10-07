@@ -27,6 +27,7 @@ fn fixture_env(stored: Option<u32>, placed: Option<u32>) -> WowLuaEnv {
             name: "Aggregate fixture chair".into(),
             is_unique_trophy: false,
             total_num_stored: stored,
+            remaining_redeemable: None,
             total_num_placed: placed,
         },
     );
@@ -90,6 +91,29 @@ fn assert_query_publishes(index: usize) {
         "assertAggregates(aggregateQueries[{index}](), 37, 11); assertVariantCounts(3, 5)"
     ))
     .unwrap();
+}
+
+#[test]
+fn redeemable_count_is_an_independent_host_snapshot() {
+    let env = fixture_env(Some(0), Some(11));
+    let id = entry_id(&env);
+    env.state().borrow_mut().housing.catalog.entries.get_mut(&id).unwrap().remaining_redeemable = Some(13);
+    env.exec(r#"
+        for _, query in ipairs(aggregateQueries) do
+            local info = query()
+            assert(info.totalNumStored == 0 and info.totalNumPlaced == 11)
+            assert(info.remainingRedeemable == 13, 'redeemable count must not be derived from stored variants')
+            info.remainingRedeemable = 999
+            assert(query().remainingRedeemable == 13, 'redeemable snapshot aliases host data')
+        end
+        assertVariantCounts(3, 5)
+    "#).unwrap();
+    env.state().borrow_mut().housing.catalog.entries.get_mut(&id).unwrap().remaining_redeemable = Some(0);
+    env.exec(r#"
+        for _, query in ipairs(aggregateQueries) do
+            assert(query().remainingRedeemable == 0, 'explicit zero must not be omitted')
+        end
+    "#).unwrap();
 }
 
 #[test]

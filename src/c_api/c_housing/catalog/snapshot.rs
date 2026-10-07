@@ -114,6 +114,7 @@ pub(super) fn push_entry(
     }
     for (field, count) in [
         ("totalNumStored", record.total_num_stored),
+        ("remainingRedeemable", record.remaining_redeemable),
         ("totalNumPlaced", record.total_num_placed),
     ] {
         if let Some(count) = count {

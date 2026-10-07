@@ -40,6 +40,7 @@ fn inject_variants(env: &WowLuaEnv) {
                 name: "Fixture entry".into(),
                 is_unique_trophy: false,
                 total_num_stored: None,
+                remaining_redeemable: None,
                 total_num_placed: None,
             },
         );

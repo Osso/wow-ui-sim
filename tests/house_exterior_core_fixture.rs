@@ -79,6 +79,7 @@ fn seed_catalog(housing: &mut HousingState) {
             name: "Lamp".into(),
             is_unique_trophy: false,
             total_num_stored: Some(2),
+            remaining_redeemable: None,
             total_num_placed: Some(3),
         },
     );

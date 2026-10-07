@@ -32,6 +32,7 @@ fn fixture_env() -> WowLuaEnv {
                 name: name.into(),
                 is_unique_trophy: trophy,
                 total_num_stored: None,
+                remaining_redeemable: None,
                 total_num_placed: None,
             },
         );
@@ -46,6 +47,7 @@ fn fixture_env() -> WowLuaEnv {
             name: "Record without item".into(),
             is_unique_trophy: true,
             total_num_stored: None,
+            remaining_redeemable: None,
             total_num_placed: None,
         },
     );

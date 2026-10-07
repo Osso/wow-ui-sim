@@ -2,6 +2,10 @@
 use std::path::PathBuf;
 
 use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, load_addon};
+use wow_ui_sim::c_api::c_housing::catalog::{
+    HousingCatalogCategoryRecord, HousingCatalogEntryID, HousingCatalogEntryRecord,
+    HousingCatalogSubcategoryRecord,
+};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
@@ -107,6 +111,17 @@ fn blizzard_deprecated_housing_catalog_seeds_entry_subtype_enum(env: &WowLuaEnv)
 
 prefork_full_ui_case! {
 fn blizzard_deprecated_housing_catalog_wraps_get_catalog_entry_info_with_legacy_fields(env: &WowLuaEnv) {
+    env.state().borrow_mut().housing.catalog.entries.insert(
+        HousingCatalogEntryID { record_id: 1001, entry_type: 1 },
+        HousingCatalogEntryRecord {
+            item_id: Some(6948),
+            name: "Full UI catalog chair".into(),
+            is_unique_trophy: false,
+            total_num_stored: Some(7),
+            remaining_redeemable: Some(0),
+            total_num_placed: Some(3),
+        },
+    );
 
     let has_legacy_fields: bool = env
         .eval(
@@ -134,11 +149,56 @@ fn blizzard_deprecated_housing_catalog_wraps_get_catalog_entry_info_with_legacy_
          `quantity` (mirroring totalNumStored), `numPlaced` (mirroring totalNumPlaced), \
          `showQuantity` (boolean), `dyeSlots` (empty table)"
     );
+    for (stored, redeemable, show_quantity) in [(7, 0, true), (0, 5, true), (0, 0, false)] {
+        {
+            let mut state = env.state().borrow_mut();
+            let entry = state.housing.catalog.entries.get_mut(&HousingCatalogEntryID {
+                record_id: 1001, entry_type: 1,
+            }).unwrap();
+            entry.total_num_stored = Some(stored);
+            entry.remaining_redeemable = Some(redeemable);
+        }
+        env.exec(&format!(r#"
+            local queries = {{
+                function() return C_HousingCatalog.GetCatalogEntryInfoByRecordID(1, 1001, true) end,
+                function() return C_HousingCatalog.GetCatalogEntryInfoByItem(6948, true) end,
+                function() return C_HousingCatalog.GetCatalogEntryInfo({{recordID=1001, entryType=1}}) end,
+            }}
+            for _, query in ipairs(queries) do
+                local info = query()
+                assert(info.totalNumStored == {stored} and info.quantity == {stored})
+                assert(info.remainingRedeemable == {redeemable})
+                assert(info.totalNumPlaced == 3 and info.numPlaced == 3)
+                assert(info.showQuantity == {show_quantity})
+                info.remainingRedeemable = 999
+                assert(query().remainingRedeemable == {redeemable}, 'wrapper snapshot must be independent')
+            end
+        "#)).expect("cached entry wrappers must consume explicit stored and redeemable counts");
+    }
 }
 }
 
 prefork_full_ui_case! {
 fn blizzard_deprecated_housing_catalog_wraps_category_info_with_legacy_field(env: &WowLuaEnv) {
+    {
+        let mut state = env.state().borrow_mut();
+        state.housing.catalog.categories.insert(101, HousingCatalogCategoryRecord {
+            order_index: 4,
+            name: Some("Full UI category".into()),
+            icon: None,
+            subcategory_ids: vec![1001],
+            any_stored_entries: true,
+            editor_mode_contexts: vec![],
+        });
+        state.housing.catalog.subcategories.insert(1001, HousingCatalogSubcategoryRecord {
+            order_index: 2,
+            parent_category_id: 101,
+            name: Some("Full UI subcategory".into()),
+            icon: None,
+            any_stored_entries: true,
+            editor_mode_contexts: vec![],
+        });
+    }
 
     let any_owned_mirrors: bool = env
         .eval(
@@ -171,6 +231,17 @@ fn blizzard_deprecated_housing_catalog_wraps_category_info_with_legacy_field(env
          GetCatalogSubcategoryInfo` similarly via `AddBackwardCompatSubcategoryInfoFields` \
          (line 106-111)"
     );
+    {
+        let mut state = env.state().borrow_mut();
+        state.housing.catalog.categories.get_mut(&101).unwrap().any_stored_entries = false;
+        state.housing.catalog.subcategories.get_mut(&1001).unwrap().any_stored_entries = false;
+    }
+    env.exec(r#"
+        local category = C_HousingCatalog.GetCatalogCategoryInfo(101)
+        local subcategory = C_HousingCatalog.GetCatalogSubcategoryInfo(1001)
+        assert(category.anyStoredEntries == false and category.anyOwnedEntries == false)
+        assert(subcategory.anyStoredEntries == false and subcategory.anyOwnedEntries == false)
+    "#).expect("cached category wrappers must mirror explicit false, not a seed or default");
 }
 }
 

@@ -14,7 +14,7 @@ Bounded 12.0.5 input/test contract for `HousingCatalogEntryInfo.totalNumStored` 
 
 Inspected cached retail `Blizzard_APIDocumentationGenerated/HousingCatalogUIDocumentation.lua:555-557` declares both fields `Type = "number", Nilable = false`. Stored total covers storage across variants and excludes unredeemed instances; placed total covers the player's houses and plots across variants. Required-number declarations do **not** establish defaults for absent simulator input. Leaving that gap nil is explicit simulator policy, not native behavior evidence.
 
-Cached `Blizzard_Deprecated/Mainline/Deprecated_12_0_5.lua:85-87` aliases `quantity = info.totalNumStored` and `numPlaced = info.totalNumPlaced`, but computes `showQuantity` using `info.remainingRedeemable`. This slice does not model or fabricate `remainingRedeemable`, execute successful-record wrapper tests, or claim wrapper parity. Fixtures assert no fabricated redeemable field. Native probes and complete DTO parity remain unverified.
+Cached `Blizzard_Deprecated/Mainline/Deprecated_12_0_5.lua:85-87` aliases `quantity = info.totalNumStored` and `numPlaced = info.totalNumPlaced`, and computes `showQuantity` using `info.remainingRedeemable`. The [prefork follow-up](../wiki/investigations/prefork-catalog-contract-drift.md) adds independent explicit `remaining_redeemable: Option<u32>` input to the same snapshot path. `Some(0)` publishes zero; `None` remains a host-data gap, not a fabricated default. Never derive redeemable instances from variant storage or the two aggregates. Cached documentation declares this a required number, counting unredeemed instances excluded from `totalNumStored`. Full-UI fixtures supply all three inputs and exercise the actual cached wrappers with stored-only, redeemable-only and empty counts. Native probes and complete DTO parity remain unverified.
 
 ## How it works
 
@@ -23,7 +23,7 @@ Cached `Blizzard_Deprecated/Mainline/Deprecated_12_0_5.lua:85-87` aliases `quant
 
 ## Implementation inventory
 
-- `src/c_api/c_housing/catalog.rs`: two optional explicit aggregate inputs.
+- `src/c_api/c_housing/catalog.rs`: two optional explicit aggregate inputs and independent optional redeemable count.
 - `src/c_api/c_housing/catalog/queries.rs`: unchanged shared lookup path for all three getters.
 - `src/c_api/c_housing/catalog/snapshot.rs`: shared `push_entry` publishes each supplied unsigned count directly as a Lua number; absent inputs remain absent. No variant or unrelated-state reads.
 - `tests/housing_catalog_aggregates.rs`: thirteen grouped behavioral fixtures, gated by `retail-12-0-5`; twelve prior fixtures plus one independently accepted saved raw-output coverage extension.
@@ -64,7 +64,7 @@ Boundary is the raw C API in `WowLuaEnv::new()`, not the cached deprecated wrapp
 ## Known gaps (current cycle)
 
 - [ ] Cached required native numbers remain a missing-data simulator gap when input is `None`; nil is not a native default. Native maximum/default/secrecy unverified.
-- [ ] Automatic synchronization, variant derivation, complete DTO and successful nonempty deprecated-wrapper compatibility remain absent/unproven; `remainingRedeemable` is not modeled here.
+- [ ] Automatic synchronization, variant derivation and complete DTO/native parity remain absent/unproven. Bounded nonempty cached wrapper proof now lives in the [prefork follow-up](../wiki/investigations/prefork-catalog-contract-drift.md), not the historical raw-output checkpoints.
 - [ ] Exact rows 650/651 retain audit-pending with bounded explicit-field proof links, not whole-row closure. Audit **IN PROGRESS**.
 
 ## Out of scope

@@ -39,6 +39,9 @@ pub struct HousingCatalogEntryRecord {
     /// Nonnegative explicit total across variants, excluding unredeemed instances.
     /// None marks a simulator data gap, not a native nil/default contract.
     pub total_num_stored: Option<u32>,
+    /// Explicit unredeemed storage instances, not included in total_num_stored.
+    /// None marks missing host data, not a native nil/default contract.
+    pub remaining_redeemable: Option<u32>,
     /// Nonnegative explicit total across houses, plots and variants; not pending placement.
     /// None marks a simulator data gap, not a native nil/default contract.
     pub total_num_placed: Option<u32>,
