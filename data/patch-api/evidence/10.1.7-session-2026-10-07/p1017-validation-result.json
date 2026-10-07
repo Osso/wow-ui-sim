@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "data/patch-api/evidence/10.1.7-session-2026-10-07/p1017-validate.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1017-page",
+  "revision": "e40f09f250686c72850ca383501aa7d124b336a7",
+  "exit_code": 0,
+  "stdout": "PASS: 103 source IDs, 19 isolated sweeps, 14 exact gaps, one-row negative control, typed template behavior, cached prefork, source-scoped proof and 116 preserved inputs\n",
+  "stderr": "",
+  "validator_sha256": "1143bfa9d19876fa9eef7268aadd8633e2cbad2ffe619bf55ef75569c4927105",
+  "scope": "103 exhaustive source IDs; 19 exact isolated sweeps; 14 gaps; negative control; proof hashes and 116 retained inputs"
+}
