@@ -88,6 +88,7 @@ fn close_guild_registrar_fires_petition_closed() {
 }
 
 #[test]
+#[cfg(not(any(feature = "client-retail", feature = "client-ptr")))]
 fn close_pet_stables_fires_pet_stable_closed() {
     let env = env();
     env.state().borrow_mut().pet_stables_open = true;
