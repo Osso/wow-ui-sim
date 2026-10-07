@@ -310,5 +310,61 @@
   {
     "path": "data/patch-api/sources/12.1.5-register.json",
     "baseline_sha256": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+  },
+  {
+    "path": "tests/data/patch_11_0_2_sweep_known_gaps.json",
+    "baseline_sha256": "2b67f011dada188c6e29edeb2c354ec1b022898de7f09973e29f18a9a9019ccc"
+  },
+  {
+    "path": "tests/data/patch_11_0_5_sweep_known_gaps.json",
+    "baseline_sha256": "ac7849ac53136a8fd0069b1a8cd5b1ed1ec479ebd0dc91f26a61caf6d82de001"
+  },
+  {
+    "path": "tests/data/patch_11_0_7_sweep_known_gaps.json",
+    "baseline_sha256": "862a753dd970643fbb6c6a2e1ff5bd020b852f3ddca5bb0302d2824e2017e505"
+  },
+  {
+    "path": "tests/data/patch_11_1_0_sweep_known_gaps.json",
+    "baseline_sha256": "37060e5e90811b78acf06a9f218fc3e44e7ac8dfe340afd8b4b75f1b8ecb099b"
+  },
+  {
+    "path": "tests/data/patch_11_1_5_sweep_known_gaps.json",
+    "baseline_sha256": "faff51bfc8c5353064e898599684424b20729a10878ce3a499598eb2397b48c3"
+  },
+  {
+    "path": "tests/data/patch_11_1_7_sweep_known_gaps.json",
+    "baseline_sha256": "ca385ab6271755b60fe494629ebaf9ea3f9b27a4c004ca9127aa74403b9641df"
+  },
+  {
+    "path": "tests/data/patch_11_2_0_sweep_known_gaps.json",
+    "baseline_sha256": "790565e283a5d9d4439fbe8906247aad9e4048aced21a7b76e9cd7d322614504"
+  },
+  {
+    "path": "tests/data/patch_11_2_5_sweep_known_gaps.json",
+    "baseline_sha256": "724d83c4a636dbd978da250b22b24ae0868bb08521306df0bf8afe82647fd8e0"
+  },
+  {
+    "path": "tests/data/patch_11_2_7_sweep_known_gaps.json",
+    "baseline_sha256": "c430f3939ffa83b5a6875dbcb8c9f4d77df186e6d43dfffe174af11a4981d904"
+  },
+  {
+    "path": "tests/data/patch_12_0_0_sweep_known_gaps.json",
+    "baseline_sha256": "1631c386c966967440bed0feed597ce6d920ca0ee6ff15384482ea531446d54f"
+  },
+  {
+    "path": "tests/data/patch_12_0_1_sweep_known_gaps.json",
+    "baseline_sha256": "e54f1163d3973d114fad6b278305877871970457724b9e0b8698197bb8e061e8"
+  },
+  {
+    "path": "tests/data/patch_12_0_5_sweep_known_gaps.json",
+    "baseline_sha256": "b7f23ae23eb3a727b315e4b2da0ceb241fe97f4fb7a267d0dfeb160129ed168b"
+  },
+  {
+    "path": "tests/data/patch_12_0_7_sweep_known_gaps.json",
+    "baseline_sha256": "4e8adaddfec027082455f008704102e9a96af42335317a543f0522b58bb078d0"
+  },
+  {
+    "path": "tests/data/patch_12_1_0_sweep_known_gaps.json",
+    "baseline_sha256": "8771981d939bf6072c33d443cb84de299243a0dbbaeeee780b1c87d776226b39"
   }
 ]

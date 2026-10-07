@@ -1,3 +1,7 @@
+## [2026-10-07] evidence | 11.0.0 page audit
+
+[Audit](investigations/patch-11-0-0-api-audit.md) accounts for 495 inventory + 347 extract occurrences, nine bounded retirements and 166 exact publication gaps. Every source ID has an explicit proof boundary; all later inputs preserved.
+
 ## [2026-10-07] evidence | 11.0.2 page audit
 
 [Audit](investigations/patch-11-0-2-api-audit.md) links exhaustive source accounting, bounded retirements/item metadata query, exact gaps and targeted proof.

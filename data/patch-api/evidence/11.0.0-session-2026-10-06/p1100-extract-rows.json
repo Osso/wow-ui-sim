@@ -1,0 +1,2084 @@
+[
+  {
+    "source_id": "source-context-001",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-003",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-005",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-006",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-007",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "source-context-009",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "source-context-010",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-011",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-012",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-013",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-015",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-017",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-018",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-019",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-021",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-022",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-023",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-024",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-025",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-026",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-027",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-028",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "source-context-030",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-032",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-034",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-035",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-036",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-037",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-038",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "source-context-040",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-042",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-045",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-046",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-047",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-048",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-049",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-050",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-051",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-052",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-053",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "source-context-056",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-058",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-061",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-062",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-063",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-064",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-065",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-066",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "source-context-069",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-071",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-073",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-074",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-075",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-076",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-077",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-078",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-080",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-083",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-084",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-085",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-087",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-089",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-090",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-091",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-093",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-094",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-095",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-097",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-098",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-099",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-100",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-101",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-102",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-103",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "source-context-106",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-108",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-110",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-111",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-112",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-114",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-117",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-118",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-119",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-120",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-121",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-123",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-124",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-125",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-126",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-127",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-128",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-129",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-130",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "source-context-133",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-134",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-136",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-137",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "prose-undated-138",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "source-context-140",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "source-context-141",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "enumerations-Enum-AccountData-142",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-AccountData-143",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-AuctionHouseError-144",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-AuctionHouseError-145",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-BagIndex-146",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-BagIndex-147",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-BagIndex-148",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-BagIndex-149",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-BagIndex-150",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-BagIndex-151",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-BagIndex-152",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-BagSlotFlags-153",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-BagSlotFlags-154",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-BagSlotFlags-155",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-BagSlotFlags-156",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-BagSlotFlags-157",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-BagSlotFlags-158",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-BagSlotFlags-159",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-BagSlotFlags-160",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-BagSlotFlags-161",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-BagSlotFlags-162",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-BagSlotFlags-163",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-CalendarInviteBits-164",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-CalendarInviteBits-165",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-ChrCustomizationOptionType-166",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-ChrCustomizationOptionType-167",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-CraftingOrderItemType-168",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-CraftingOrderItemType-169",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-CraftingOrderResult-170",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-CraftingOrderResult-171",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-CraftingOrderResult-172",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-CraftingOrderType-173",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-CraftingOrderType-174",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencyDestroyReason-175",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencyDestroyReason-176",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencyDestroyReason-177",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencyDestroyReason-178",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencyFlagsB-179",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencyFlagsB-180",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencySource-181",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencySource-182",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencySource-183",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-Cursormode-184",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-Cursormode-185",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-Cursormode-186",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-Cursormode-187",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-Cursormode-188",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-Cursormode-189",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-Cursormode-190",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-Cursormode-191",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-Cursormode-192",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-Cursormode-193",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-Cursormode-194",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-Damageclass-195",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-Damageclass-196",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-EditModeObjectiveTrackerSetting-197",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-EditModeObjectiveTrackerSetting-198",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-EventToastDisplayType-199",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-EventToastDisplayType-200",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-EventToastDisplayType-201",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-EventToastEventType-202",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-EventToastEventType-203",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-ExpansionLandingPageType-204",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-ExpansionLandingPageType-205",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-GossipNpcOption-206",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-GossipNpcOption-207",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-GossipNpcOption-208",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-GraphicsValidationResult-209",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-GraphicsValidationResult-210",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-ItemBind-211",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-ItemBind-212",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-ItemBind-213",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-ItemBind-214",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-ItemConsumableSubclass-215",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-ItemConsumableSubclass-216",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-ItemConsumableSubclass-217",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-ItemConsumableSubclass-218",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-ItemConsumableSubclass-219",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-ItemGemColor-220",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-ItemGemColor-221",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-ItemSocketType-222",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-ItemSocketType-223",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-JournalEncounterFlags-224",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-JournalEncounterFlags-225",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-MinimapTrackingFilter-226",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-MinimapTrackingFilter-227",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-MinimapTrackingFilter-228",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-NodeOpFailureReason-229",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-NodeOpFailureReason-230",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-PetJournalError-231",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-PetJournalError-232",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-PlayerInteractionType-233",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-PlayerInteractionType-234",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-PlayerInteractionType-235",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-PointsModifierSourceType-236",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-PointsModifierSourceType-237",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-PowerType-238",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-PowerType-239",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-PowerType-240",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-PowerType-241",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-ProfessionEffect-242",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-ProfessionEffect-243",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-ProfessionEffect-244",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-ProfessionEffect-245",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-ProfessionEffect-246",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-ProfessionEffect-247",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-ProfessionRating-248",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-ProfessionRating-249",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-QuestCompleteSpellType-250",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-QuestCompleteSpellType-251",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-QuestCompleteSpellType-252",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-QuestCompleteSpellType-253",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-QuestFrequency-254",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-QuestFrequency-255",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-QuestTag-256",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-QuestTag-257",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-QuestTagType-258",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-QuestTagType-259",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-QuestTagType-260",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-ReportMinorCategory-261",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-ReportMinorCategory-262",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-SlotRegion-263",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-SlotRegion-264",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-SlotRegion-265",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-SuperTrackingType-266",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-SuperTrackingType-267",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-SuperTrackingType-268",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-TimeEventFlag-269",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-TimeEventFlag-270",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-TimeEventFlag-271",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-TraitNodeType-272",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-TraitNodeType-273",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-TransmogUseErrorType-274",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-TransmogUseErrorType-275",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-TransmogUseErrorType-276",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-TransmogUseErrorType-277",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-TransmogUseErrorType-278",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-UIMapFlag-279",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-UIMapFlag-280",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-ViewArenaSize-281",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "enumerations-Enum-ViewArenaSize-282",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "source-context-284",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "structures-AppearanceSourceInfo-285",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-AppearanceSourceInfo-286",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-AppearanceSourceInfo-287",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-AreaPOIInfo-288",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-AreaPOIInfo-289",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-AreaPOIInfo-290",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-ArtifactInfo-291",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-ArtifactInfo-292",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-CraftingItemResultData-293",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-CraftingItemResultData-294",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-CraftingItemResultData-295",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-CraftingItemResultData-296",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-CraftingItemResultData-297",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-CraftingOperationInfo-298",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-CraftingOperationInfo-299",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-CraftingOperationInfo-300",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-CraftingOperationInfo-301",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-CraftingOrderCustomerOptionInfo-302",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-CraftingOrderCustomerOptionInfo-303",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-CraftingOrderCustomerSearchParams-304",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-CraftingOrderCustomerSearchParams-305",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-CraftingOrderInfo-306",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-CraftingOrderInfo-307",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-CraftingOrderInfo-308",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-CraftingOrderInfo-309",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-CraftingOrderInfo-310",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-CurrencyInfo-311",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-CurrencyInfo-312",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-CurrencyInfo-313",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-CurrencyInfo-314",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-CurrencyInfo-315",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-CurrencyInfo-316",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-CurrencyInfo-317",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-CurrencyInfo-318",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-GossipOptionUIInfo-319",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-GossipOptionUIInfo-320",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-GossipQuestUIInfo-321",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-GossipQuestUIInfo-322",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-ImportLoadoutEntryInfo-323",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-ImportLoadoutEntryInfo-324",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-LfgSearchResultData-325",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-LfgSearchResultData-326",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-MajorFactionRenownRewardInfo-327",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-MajorFactionRenownRewardInfo-328",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-MapTaxiNodeInfo-329",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-MapTaxiNodeInfo-330",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-MinimapScriptTrackingInfo-331",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-MinimapScriptTrackingInfo-332",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-MountInfo-333",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-MountInfo-334",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-PartyPoseInfo-335",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-PartyPoseInfo-336",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-QuestInfo-337",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-QuestInfo-338",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-QuestLineInfo-339",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-QuestLineInfo-340",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-QuestLineInfo-341",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-QuestLineInfo-342",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-QuestLineInfo-343",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-QuestLineInfo-344",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-QuestLineInfo-345",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-RecruitingClubInfo-346",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-RecruitingClubInfo-347",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-SpellInfo-348",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-SpellInfo-349",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-SplashScreenInfo-350",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-SplashScreenInfo-351",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-TaskPOIData-352",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-TaskPOIData-353",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-TextureAndTextRowVisualizationInfo-354",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-TextureAndTextRowVisualizationInfo-355",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-TraitCondInfo-356",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-TraitCondInfo-357",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-TraitEntryInfo-358",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-TraitEntryInfo-359",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-TraitEntryInfo-360",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-TraitNodeInfo-361",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-TraitNodeInfo-362",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-TraitNodeInfo-363",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-TraitNodeInfoPartial-364",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-TraitNodeInfoPartial-365",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-TransmogAppearanceInfoBySourceData-366",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-TransmogAppearanceInfoBySourceData-367",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-TransmogAppearanceInfoBySourceData-368",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-TransmogCategoryAppearanceInfo-369",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-TransmogCategoryAppearanceInfo-370",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-TransmogSetInfo-371",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-TransmogSetInfo-372",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-UIWidgetSpellInfo-373",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-UIWidgetSpellInfo-374",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "structures-UIWidgetSpellInfo-375",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "source-context-377",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "deprecated api-removal-summary-378",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "source-context-379",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Deprecated-source heading/context; no runtime credit."
+  },
+  {
+    "source_id": "deprecated api-GetSpellInfo-380",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "deprecated api-GetNumSpellTabs-381",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "deprecated api-GetSpellTabInfo-382",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "deprecated api-GetSpellCooldown-383",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "deprecated api-GetSpellBookItemName-384",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "deprecated api-GetSpellTexture-385",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "deprecated api-GetSpellCharges-386",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "deprecated api-GetSpellDescription-387",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "deprecated api-GetSpellCount-388",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "deprecated api-IsUsableSpell-389",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  },
+  {
+    "source_id": "deprecated api-removal-summary-390",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Non-inventory statement requires behavioral audit; see p1100-extract-scout.md."
+  }
+]

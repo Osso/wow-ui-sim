@@ -1,0 +1,11 @@
+{
+  "revision": "7e51a4525",
+  "scope": [
+    "src/c_api/patch_retired_members.rs",
+    "tests/patch_11_0_0_publication_sweep.rs",
+    "tests/patch_11_0_0_publication_fixes.rs",
+    "tests/patch_11_0_0_cached_surfaces.rs"
+  ],
+  "method": "Manual changed-line audit: data-only retirement list, shared behavioral assertion script, clear test names, bounded loops, no suppression or new complex runtime function.",
+  "findings": []
+}

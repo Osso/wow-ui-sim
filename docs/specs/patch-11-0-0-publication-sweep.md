@@ -19,3 +19,25 @@ Nine removed members must remain absent through repeated ordinary/raw lookup: th
 - `data/patch-api/sources/11.0.0-api-changes.provenance.json`
 - `data/patch-api/sources/11.0.0-wikitext-register.json`
 - `data/patch-api/evidence/11.0.0-session-2026-10-06/p1100-retirement-consumers.json`
+
+## Local proof
+
+| Patch | Rows | OK | Gaps | Result |
+|---|---:|---:|---:|---|
+| 11.0.0 | 495 | 329 | 166 | PASS |
+| 11.0.2 | 34 | 22 | 12 | PASS |
+| 11.0.5 | 48 | 38 | 10 | PASS |
+| 11.0.7 | 98 | 70 | 28 | PASS |
+| 11.1.0 | 116 | 97 | 19 | PASS |
+| 11.1.5 | 125 | 89 | 36 | PASS |
+| 11.1.7 | 48 | 40 | 8 | PASS |
+| 11.2.0 | 162 | 135 | 27 | PASS |
+| 11.2.5 | 163 | 118 | 45 | PASS |
+| 11.2.7 | 508 | 414 | 94 | PASS |
+| 12.0.0 | 1010 | 989 | 21 | PASS |
+| 12.0.1 | 225 | 222 | 3 | PASS |
+| 12.0.5 | 363 | 352 | 11 | PASS |
+| 12.0.7 | 174 | 171 | 3 | PASS |
+| 12.1.0 | 778 | 773 | 5 | PASS |
+
+Fifteen sweeps run alone at 7e51a4525. Later exact fixtures remain unchanged. Repeated lookup RED/GREEN and new full cached Game prefork pass. One-row control introduces exactly one failure (166 → 167). Final format/profile/startup gates recorded in `p1100-proof.json`; no native acceptance claim.

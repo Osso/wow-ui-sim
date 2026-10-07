@@ -1,0 +1,835 @@
+[
+  {
+    "scope": "discovery",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "patch_11_0_0_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "86896b3aa5c03dc8bbd650e044e7f503636e4aa1",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target",
+      "P1100_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1100-page/data/patch-api/evidence/11.0.0-session-2026-10-06/p1100-initial-result.json"
+    },
+    "exit_code": 101,
+    "summary": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings",
+      "error: no test target named `patch_11_0_0_publication_sweep` in default-run packages"
+    ],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/discovery.log",
+    "invalidated": true,
+    "invalidated_reason": "No runtime proof: invalid target, compile failure or zero selected cases; superseded by scoped passing evidence."
+  },
+  {
+    "scope": "discovery-integration",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_0_0_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "86896b3aa5c03dc8bbd650e044e7f503636e4aa1",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target",
+      "P1100_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1100-page/data/patch-api/evidence/11.0.0-session-2026-10-06/p1100-initial-result.json"
+    },
+    "exit_code": 101,
+    "summary": [
+      "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10813 filtered out; finished in 4.50s",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings",
+      "    Finished `test` profile [optimized + debuginfo] target(s) in 9m 52s",
+      "assertion `left == right` failed: new gaps: [\"wt-cvars-AllowSoftwareRendererDX12-653\", \"wt-cvars-AllowWinRT-655\", \"wt-cvars-vrsValarAlwaysOn-714\", \"wt-cvars-vrsValarLPUseCornerSampling-716\", \"wt-events-SPELL_TEXT_UPDATE-626\", \"wt-global-api-C_AchievementInfo.AreGuildAchievementsEnabled-149\", \"wt-global-api-C_ArtifactUI.GetRespecArtifactInfo-490\", \"wt-global-api-C_Bank.AutoDepositItemsIntoBank-154\", \"wt-global-api-C_Bank.CanDepositMoney-155\", \"wt-global-api-C_Bank.CanPurchaseBankTab-156\", \"wt-global-api-C_Bank.CanUseBank-157\", \"wt-global-api-C_Bank.CanViewBank-158\", \"wt-global-api-C_Bank.CanWithdrawMoney-159\", \"wt-global-api-C_Bank.CloseBankFrame-160\", \"wt-global-api-C_Bank.DepositMoney-161\", \"wt-global-api-C_Bank.FetchPurchasedBankTabData-165\", \"wt-global-api-C_Bank.FetchPurchasedBankTabIDs-166\", \"wt-global-api-C_Bank.HasMaxBankTabs-167\", \"wt-global-api-C_Bank.IsItemAllowedInBankType-168\", \"wt-global-api-C_Bank.PurchaseBankTab-169\", \"wt-global-api-C_Bank.UpdateBankTabSettings-170\", \"wt-global-api-C_Bank.WithdrawMoney-171\", \"wt-global-api-C_CharacterServices.ArePaidCharacterTransfersBetweenBnetAccountsEnabled-172\", \"wt-global-api-C_ChatInfo.IsValidCombatFilterName-173\", \"wt-global-api-C_Container.SortAccountBankBags-177\", \"wt-global-api-C_CurrencyInfo.CanTransferCurrency-178\", \"wt-global-api-C_CurrencyInfo.FetchCurrencyDataFromAccountCharacters-179\", \"wt-global-api-C_CurrencyInfo.FetchCurrencyTransferTransactions-180\", \"wt-global-api-C_CurrencyInfo.GetCostToTransferCurrency-181\", \"wt-global-api-C_CurrencyInfo.GetMaxTransferableAmountFromQuantity-182\", \"wt-global-api-C_CurrencyInfo.IsAccountCharacterCurrencyDataReady-183\", \"wt-global-api-C_CurrencyInfo.IsAccountTransferableCurrency-184\", \"wt-global-api-C_CurrencyInfo.IsAccountWideCurrency-185\", \"wt-global-api-C_CurrencyInfo.IsCurrencyTransferTransactionDataReady-186\", \"wt-global-api-C_CurrencyInfo.PlayerHasMaxQuantity-187\", \"wt-global-api-C_CurrencyInfo.PlayerHasMaxWeeklyQuantity-188\", \"wt-global-api-C_CurrencyInfo.RequestCurrencyDataForAccountCharacters-189\", \"wt-global-api-C_CurrencyInfo.RequestCurrencyFromAccountCharacter-190\", \"wt-global-api-C_Debug.ToggleWindDebugMenu-192\", \"wt-global-api-C_DelvesUI.GetDelvesAffixSpellsForSeason-197\", \"wt-global-api-C_DelvesUI.GetDelvesFactionForSeason-198\", \"wt-global-api-C_DelvesUI.GetModelSceneForCompanion-201\", \"wt-global-api-C_DelvesUI.IsEligibleForActiveDelveRewards-207\", \"wt-global-api-C_GossipInfo.GetOptionUIWidgetSetsAndTypesByOptionID-211\", \"wt-global-api-C_GuildInfo.IsEncounterGuildNewsEnabled-212\", \"wt-global-api-C_GuildInfo.IsGuildReputationEnabled-213\", \"wt-global-api-C_ImmersiveInteraction.HasImmersiveInteraction-214\", \"wt-global-api-C_Item.DoesItemMatchTargetEnchantingSpell-215\", \"wt-global-api-C_Item.IsCurioItem-217\", \"wt-global-api-C_MajorFactions.GetFeatureAbilities-398\", \"wt-global-api-C_MajorFactions.GetMajorFactionRenownInfo-219\", \"wt-global-api-C_MajorFactions.IsPlayerInRenownCatchUpMode-399\", \"wt-global-api-C_MajorFactions.RequestCatchUpState-400\", \"wt-global-api-C_Map.IsCityMap-220\", \"wt-global-api-C_Map.IsMapValidForNavBarDropDown-401\", \"wt-global-api-C_Map.IsMapValidForNavBarDropdown-221\", \"wt-global-api-C_Minimap.GetDefaultTrackingValue-222\", \"wt-global-api-C_Minimap.IsTrackingAccountCompletedQuests-223\", \"wt-global-api-C_PaperDollInfo.GetInspectRatedBGBlitzData-229\", \"wt-global-api-C_PartyInfo.DelveTeleportOut-230\", \"wt-global-api-C_PartyInfo.IsDelveComplete-231\", \"wt-global-api-C_PartyInfo.IsDelveInProgress-232\", \"wt-global-api-C_PlayerInfo.HasAccountInventoryLock-235\", \"wt-global-api-C_PvP.GetBrawlSoloRBGMinItemLevel-236\", \"wt-global-api-C_PvP.GetPersonalRatedBGBlitzSpecStats-237\", \"wt-global-api-C_PvP.GetRatedSoloRBGMinItemLevel-238\", \"wt-global-api-C_PvP.GetRatedSoloRBGRewards-239\", \"wt-global-api-C_PvP.GetSoloRBGMinItemLevel-402\", \"wt-global-api-C_PvP.JoinRatedBGBlitz-241\", \"wt-global-api-C_PvP.StartSoloRBGWarGameByName-242\", \"wt-global-api-C_PvP.StartSpectatorSoloRBGWarGame-243\", \"wt-global-api-C_QuestInfoSystem.GetQuestRewardCurrencies-246\", \"wt-global-api-C_QuestInfoSystem.HasQuestRewardCurrencies-247\", \"wt-global-api-C_QuestLine.GetQuestLineInfo-521\", \"wt-global-api-C_QuestLine.QuestLineIgnoresAccountCompletedFiltering-248\", \"wt-global-api-C_QuestLog.GetHeaderIndexForQuest-249\", \"wt-global-api-C_QuestLog.GetQuestLogMajorFactionReputationRewards-526\", \"wt-global-api-C_QuestLog.GetQuestRewardCurrencyInfo-251\", \"wt-global-api-C_QuestLog.IsQuestFlaggedCompletedOnAccount-253\", \"wt-global-api-C_QuestLog.QuestIgnoresAccountCompletedFiltering-255\", \"wt-global-api-C_QuestOffer.GetQuestOfferMajorFactionReputationRewards-528\", \"wt-global-api-C_QuestOffer.GetQuestRequiredCurrencyInfo-256\", \"wt-global-api-C_QuestOffer.GetQuestRewardCurrencyInfo-257\", \"wt-global-api-C_Reputation.GetGuildRepExpirationTime-266\", \"wt-global-api-C_Reputation.SetWatchedFaction-403\", \"wt-global-api-C_Scenario.GetCriteriaInfo-405\", \"wt-global-api-C_Scenario.GetCriteriaInfoByStep-404\", \"wt-global-api-C_ScenarioInfo.GetCriteriaInfo-281\", \"wt-global-api-C_ScenarioInfo.GetCriteriaInfoByStep-280\", \"wt-global-api-C_Social.GetLastAchievement-530\", \"wt-global-api-C_Social.GetLastItem-532\", \"wt-global-api-C_Social.GetScreenshotInfoByIndex-534\", \"wt-global-api-C_Spell.GetDeadlyDebuffInfo-282\", \"wt-global-api-C_Spell.GetSpellAutoCast-284\", \"wt-global-api-C_Spell.GetSpellLevelLearned-291\", \"wt-global-api-C_Spell.GetSpellSkillLineAbilityRank-296\", \"wt-global-api-C_Spell.GetSpellSubtext-297\", \"wt-global-api-C_Spell.IsAutoRepeatSpell-301\", \"wt-global-api-C_Spell.IsClassTalentSpell-302\", \"wt-global-api-C_Spell.IsPvPTalentSpell-305\", \"wt-global-api-C_Spell.IsSpellDisabled-307\", \"wt-global-api-C_Spell.IsSpellInRange-310\", \"wt-global-api-C_Spell.SetSpellAutoCastEnabled-314\", \"wt-global-api-C_Spell.SpellHasRange-315\", \"wt-global-api-C_Spell.ToggleSpellAutoCast-317\", \"wt-global-api-C_SpellBook.GetDeadlyDebuffInfo-406\", \"wt-global-api-C_SpellBook.GetOverrideSpell-407\", \"wt-global-api-C_SpellBook.GetSpellBookItemDescription-325\", \"wt-global-api-C_SpellBook.GetSpellBookItemLevelLearned-327\", \"wt-global-api-C_SpellBook.GetSpellBookItemLink-328\", \"wt-global-api-C_SpellBook.GetSpellBookItemSkillLineIndex-332\", \"wt-global-api-C_SpellBook.GetSpellBookItemTradeSkillLink-334\", \"wt-global-api-C_SpellBook.GetSpellInfo-408\", \"wt-global-api-C_SpellBook.GetSpellLinkFromSpellID-409\", \"wt-global-api-C_SpellBook.IsAutoAttackSpellBookItem-338\", \"wt-global-api-C_SpellBook.IsClassTalentSpellBookItem-339\", \"wt-global-api-C_SpellBook.IsPvPTalentSpellBookItem-340\", \"wt-global-api-C_SpellBook.IsRangedAutoAttackSpellBookItem-341\", \"wt-global-api-C_SpellBook.IsSpellBookItemHarmful-342\", \"wt-global-api-C_SpellBook.IsSpellBookItemHelpful-343\", \"wt-global-api-C_SpellBook.IsSpellBookItemInRange-344\", \"wt-global-api-C_SpellBook.IsSpellBookItemOffSpec-345\", \"wt-global-api-C_SpellBook.IsSpellBookItemPassive-346\", \"wt-global-api-C_SpellBook.IsSpellBookItemUsable-347\", \"wt-global-api-C_SpellBook.IsSpellDisabled-410\", \"wt-global-api-C_SpellBook.SetSpellBookItemAutoCastEnabled-349\", \"wt-global-api-C_SpellBook.SpellBookItemHasRange-350\", \"wt-global-api-C_SpellBook.ToggleSpellBookItemAutoCast-351\", \"wt-global-api-C_SuperTrack.IsSuperTrackingMapPin-356\", \"wt-global-api-C_SuperTrack.SetSuperTrackedMapPin-357\", \"wt-global-api-C_SuperTrack.SetSuperTrackedVignette-358\", \"wt-global-api-C_TradeSkillUI.CraftEnchant-545\", \"wt-global-api-C_TradeSkillUI.CraftSalvage-549\", \"wt-global-api-C_TradeSkillUI.GetCraftingOperationInfo-552\", \"wt-global-api-C_TradeSkillUI.GetCraftingOperationInfoForOrder-554\", \"wt-global-api-C_TradeSkillUI.RecraftRecipe-556\", \"wt-global-api-C_TradeSkillUI.RecraftRecipeForOrder-558\", \"wt-global-api-C_Traits.GetStagedPurchases-411\", \"wt-global-api-C_Traits.GetSystemIDByTreeID-363\", \"wt-global-api-C_TransmogSets.GetBaseSetsCounts-412\", \"wt-global-api-C_TransmogSets.GetFilteredBaseSetsCounts-374\", \"wt-global-api-C_TransmogSets.GetFullBaseSetsCounts-375\", \"wt-global-api-C_TransmogSets.GetTransmogSetsClassFilter-376\", \"wt-global-api-C_TransmogSets.GetValidBaseSetsCountsForCharacter-377\", \"wt-global-api-C_TransmogSets.SetTransmogSetsClassFilter-378\", \"wt-global-api-CinematicFinished-379\", \"wt-global-api-CinematicStarted-380\", \"wt-global-api-ClearPendingBindConversionItem-382\", \"wt-global-api-CloseBankFrame-413\", \"wt-global-api-ConvertItemToBindToAccount-383\", \"wt-global-api-GetFactionInfoByID-423\", \"wt-global-api-GetGuildFactionInfo-426\", \"wt-global-api-GetMouseFocus-428\", \"wt-global-api-GetSelectedFaction-435\", \"wt-global-api-GetSpellAutocast-436\", \"wt-global-api-GetSpellBookItemInfo-438\", \"wt-global-api-GetSpellBookItemTexture-440\", \"wt-global-api-GetSpellLevelLearned-446\", \"wt-global-api-GetSpellLink-447\", \"wt-global-api-GetWatchedFactionInfo-455\", \"wt-global-api-GuildControlGetRank-388\", \"wt-global-api-HasKey-389\", \"wt-global-api-HasPetSpells-456\", \"wt-global-api-IsCurrentSpell-459\", \"wt-global-api-IsHarmfulSpell-461\", \"wt-global-api-IsHelpfulSpell-462\", \"wt-global-api-IsItemPreferredArmorType-391\", \"wt-global-api-IsMovieReadable-392\", \"wt-global-api-IsPassiveSpell-463\", \"wt-global-api-IsPressHoldReleaseSpell-464\", \"wt-global-api-IsSpellInRange-466\", \"wt-global-api-PickupSpell-470\", \"wt-global-api-SetSelectedFaction-476\", \"wt-global-api-UnitPartialPower-560\", \"wt-widgets-ModelSceneActor:SetPlayerModelFromGlues-585\"]; resolved/stale gaps: []",
+      "  left: {\"wt-cvars-AllowSoftwareRendererDX12-653\", \"wt-cvars-AllowWinRT-655\", \"wt-cvars-vrsValarAlwaysOn-714\", \"wt-cvars-vrsValarLPUseCornerSampling-716\", \"wt-events-SPELL_TEXT_UPDATE-626\", \"wt-global-api-C_AchievementInfo.AreGuildAchievementsEnabled-149\", \"wt-global-api-C_ArtifactUI.GetRespecArtifactInfo-490\", \"wt-global-api-C_Bank.AutoDepositItemsIntoBank-154\", \"wt-global-api-C_Bank.CanDepositMoney-155\", \"wt-global-api-C_Bank.CanPurchaseBankTab-156\", \"wt-global-api-C_Bank.CanUseBank-157\", \"wt-global-api-C_Bank.CanViewBank-158\", \"wt-global-api-C_Bank.CanWithdrawMoney-159\", \"wt-global-api-C_Bank.CloseBankFrame-160\", \"wt-global-api-C_Bank.DepositMoney-161\", \"wt-global-api-C_Bank.FetchPurchasedBankTabData-165\", \"wt-global-api-C_Bank.FetchPurchasedBankTabIDs-166\", \"wt-global-api-C_Bank.HasMaxBankTabs-167\", \"wt-global-api-C_Bank.IsItemAllowedInBankType-168\", \"wt-global-api-C_Bank.PurchaseBankTab-169\", \"wt-global-api-C_Bank.UpdateBankTabSettings-170\", \"wt-global-api-C_Bank.WithdrawMoney-171\", \"wt-global-api-C_CharacterServices.ArePaidCharacterTransfersBetweenBnetAccountsEnabled-172\", \"wt-global-api-C_ChatInfo.IsValidCombatFilterName-173\", \"wt-global-api-C_Container.SortAccountBankBags-177\", \"wt-global-api-C_CurrencyInfo.CanTransferCurrency-178\", \"wt-global-api-C_CurrencyInfo.FetchCurrencyDataFromAccountCharacters-179\", \"wt-global-api-C_CurrencyInfo.FetchCurrencyTransferTransactions-180\", \"wt-global-api-C_CurrencyInfo.GetCostToTransferCurrency-181\", \"wt-global-api-C_CurrencyInfo.GetMaxTransferableAmountFromQuantity-182\", \"wt-global-api-C_CurrencyInfo.IsAccountCharacterCurrencyDataReady-183\", \"wt-global-api-C_CurrencyInfo.IsAccountTransferableCurrency-184\", \"wt-global-api-C_CurrencyInfo.IsAccountWideCurrency-185\", \"wt-global-api-C_CurrencyInfo.IsCurrencyTransferTransactionDataReady-186\", \"wt-global-api-C_CurrencyInfo.PlayerHasMaxQuantity-187\", \"wt-global-api-C_CurrencyInfo.PlayerHasMaxWeeklyQuantity-188\", \"wt-global-api-C_CurrencyInfo.RequestCurrencyDataForAccountCharacters-189\", \"wt-global-api-C_CurrencyInfo.RequestCurrencyFromAccountCharacter-190\", \"wt-global-api-C_Debug.ToggleWindDebugMenu-192\", \"wt-global-api-C_DelvesUI.GetDelvesAffixSpellsForSeason-197\", \"wt-global-api-C_DelvesUI.GetDelvesFactionForSeason-198\", \"wt-global-api-C_DelvesUI.GetModelSceneForCompanion-201\", \"wt-global-api-C_DelvesUI.IsEligibleForActiveDelveRewards-207\", \"wt-global-api-C_GossipInfo.GetOptionUIWidgetSetsAndTypesByOptionID-211\", \"wt-global-api-C_GuildInfo.IsEncounterGuildNewsEnabled-212\", \"wt-global-api-C_GuildInfo.IsGuildReputationEnabled-213\", \"wt-global-api-C_ImmersiveInteraction.HasImmersiveInteraction-214\", \"wt-global-api-C_Item.DoesItemMatchTargetEnchantingSpell-215\", \"wt-global-api-C_Item.IsCurioItem-217\", \"wt-global-api-C_MajorFactions.GetFeatureAbilities-398\", \"wt-global-api-C_MajorFactions.GetMajorFactionRenownInfo-219\", \"wt-global-api-C_MajorFactions.IsPlayerInRenownCatchUpMode-399\", \"wt-global-api-C_MajorFactions.RequestCatchUpState-400\", \"wt-global-api-C_Map.IsCityMap-220\", \"wt-global-api-C_Map.IsMapValidForNavBarDropDown-401\", \"wt-global-api-C_Map.IsMapValidForNavBarDropdown-221\", \"wt-global-api-C_Minimap.GetDefaultTrackingValue-222\", \"wt-global-api-C_Minimap.IsTrackingAccountCompletedQuests-223\", \"wt-global-api-C_PaperDollInfo.GetInspectRatedBGBlitzData-229\", \"wt-global-api-C_PartyInfo.DelveTeleportOut-230\", \"wt-global-api-C_PartyInfo.IsDelveComplete-231\", \"wt-global-api-C_PartyInfo.IsDelveInProgress-232\", \"wt-global-api-C_PlayerInfo.HasAccountInventoryLock-235\", \"wt-global-api-C_PvP.GetBrawlSoloRBGMinItemLevel-236\", \"wt-global-api-C_PvP.GetPersonalRatedBGBlitzSpecStats-237\", \"wt-global-api-C_PvP.GetRatedSoloRBGMinItemLevel-238\", \"wt-global-api-C_PvP.GetRatedSoloRBGRewards-239\", \"wt-global-api-C_PvP.GetSoloRBGMinItemLevel-402\", \"wt-global-api-C_PvP.JoinRatedBGBlitz-241\", \"wt-global-api-C_PvP.StartSoloRBGWarGameByName-242\", \"wt-global-api-C_PvP.StartSpectatorSoloRBGWarGame-243\", \"wt-global-api-C_QuestInfoSystem.GetQuestRewardCurrencies-246\", \"wt-global-api-C_QuestInfoSystem.HasQuestRewardCurrencies-247\", \"wt-global-api-C_QuestLine.GetQuestLineInfo-521\", \"wt-global-api-C_QuestLine.QuestLineIgnoresAccountCompletedFiltering-248\", \"wt-global-api-C_QuestLog.GetHeaderIndexForQuest-249\", \"wt-global-api-C_QuestLog.GetQuestLogMajorFactionReputationRewards-526\", \"wt-global-api-C_QuestLog.GetQuestRewardCurrencyInfo-251\", \"wt-global-api-C_QuestLog.IsQuestFlaggedCompletedOnAccount-253\", \"wt-global-api-C_QuestLog.QuestIgnoresAccountCompletedFiltering-255\", \"wt-global-api-C_QuestOffer.GetQuestOfferMajorFactionReputationRewards-528\", \"wt-global-api-C_QuestOffer.GetQuestRequiredCurrencyInfo-256\", \"wt-global-api-C_QuestOffer.GetQuestRewardCurrencyInfo-257\", \"wt-global-api-C_Reputation.GetGuildRepExpirationTime-266\", \"wt-global-api-C_Reputation.SetWatchedFaction-403\", \"wt-global-api-C_Scenario.GetCriteriaInfo-405\", \"wt-global-api-C_Scenario.GetCriteriaInfoByStep-404\", \"wt-global-api-C_ScenarioInfo.GetCriteriaInfo-281\", \"wt-global-api-C_ScenarioInfo.GetCriteriaInfoByStep-280\", \"wt-global-api-C_Social.GetLastAchievement-530\", \"wt-global-api-C_Social.GetLastItem-532\", \"wt-global-api-C_Social.GetScreenshotInfoByIndex-534\", \"wt-global-api-C_Spell.GetDeadlyDebuffInfo-282\", \"wt-global-api-C_Spell.GetSpellAutoCast-284\", \"wt-global-api-C_Spell.GetSpellLevelLearned-291\", \"wt-global-api-C_Spell.GetSpellSkillLineAbilityRank-296\", \"wt-global-api-C_Spell.GetSpellSubtext-297\", \"wt-global-api-C_Spell.IsAutoRepeatSpell-301\", \"wt-global-api-C_Spell.IsClassTalentSpell-302\", \"wt-global-api-C_Spell.IsPvPTalentSpell-305\", \"wt-global-api-C_Spell.IsSpellDisabled-307\", \"wt-global-api-C_Spell.IsSpellInRange-310\", \"wt-global-api-C_Spell.SetSpellAutoCastEnabled-314\", \"wt-global-api-C_Spell.SpellHasRange-315\", \"wt-global-api-C_Spell.ToggleSpellAutoCast-317\", \"wt-global-api-C_SpellBook.GetDeadlyDebuffInfo-406\", \"wt-global-api-C_SpellBook.GetOverrideSpell-407\", \"wt-global-api-C_SpellBook.GetSpellBookItemDescription-325\", \"wt-global-api-C_SpellBook.GetSpellBookItemLevelLearned-327\", \"wt-global-api-C_SpellBook.GetSpellBookItemLink-328\", \"wt-global-api-C_SpellBook.GetSpellBookItemSkillLineIndex-332\", \"wt-global-api-C_SpellBook.GetSpellBookItemTradeSkillLink-334\", \"wt-global-api-C_SpellBook.GetSpellInfo-408\", \"wt-global-api-C_SpellBook.GetSpellLinkFromSpellID-409\", \"wt-global-api-C_SpellBook.IsAutoAttackSpellBookItem-338\", \"wt-global-api-C_SpellBook.IsClassTalentSpellBookItem-339\", \"wt-global-api-C_SpellBook.IsPvPTalentSpellBookItem-340\", \"wt-global-api-C_SpellBook.IsRangedAutoAttackSpellBookItem-341\", \"wt-global-api-C_SpellBook.IsSpellBookItemHarmful-342\", \"wt-global-api-C_SpellBook.IsSpellBookItemHelpful-343\", \"wt-global-api-C_SpellBook.IsSpellBookItemInRange-344\", \"wt-global-api-C_SpellBook.IsSpellBookItemOffSpec-345\", \"wt-global-api-C_SpellBook.IsSpellBookItemPassive-346\", \"wt-global-api-C_SpellBook.IsSpellBookItemUsable-347\", \"wt-global-api-C_SpellBook.IsSpellDisabled-410\", \"wt-global-api-C_SpellBook.SetSpellBookItemAutoCastEnabled-349\", \"wt-global-api-C_SpellBook.SpellBookItemHasRange-350\", \"wt-global-api-C_SpellBook.ToggleSpellBookItemAutoCast-351\", \"wt-global-api-C_SuperTrack.IsSuperTrackingMapPin-356\", \"wt-global-api-C_SuperTrack.SetSuperTrackedMapPin-357\", \"wt-global-api-C_SuperTrack.SetSuperTrackedVignette-358\", \"wt-global-api-C_TradeSkillUI.CraftEnchant-545\", \"wt-global-api-C_TradeSkillUI.CraftSalvage-549\", \"wt-global-api-C_TradeSkillUI.GetCraftingOperationInfo-552\", \"wt-global-api-C_TradeSkillUI.GetCraftingOperationInfoForOrder-554\", \"wt-global-api-C_TradeSkillUI.RecraftRecipe-556\", \"wt-global-api-C_TradeSkillUI.RecraftRecipeForOrder-558\", \"wt-global-api-C_Traits.GetStagedPurchases-411\", \"wt-global-api-C_Traits.GetSystemIDByTreeID-363\", \"wt-global-api-C_TransmogSets.GetBaseSetsCounts-412\", \"wt-global-api-C_TransmogSets.GetFilteredBaseSetsCounts-374\", \"wt-global-api-C_TransmogSets.GetFullBaseSetsCounts-375\", \"wt-global-api-C_TransmogSets.GetTransmogSetsClassFilter-376\", \"wt-global-api-C_TransmogSets.GetValidBaseSetsCountsForCharacter-377\", \"wt-global-api-C_TransmogSets.SetTransmogSetsClassFilter-378\", \"wt-global-api-CinematicFinished-379\", \"wt-global-api-CinematicStarted-380\", \"wt-global-api-ClearPendingBindConversionItem-382\", \"wt-global-api-CloseBankFrame-413\", \"wt-global-api-ConvertItemToBindToAccount-383\", \"wt-global-api-GetFactionInfoByID-423\", \"wt-global-api-GetGuildFactionInfo-426\", \"wt-global-api-GetMouseFocus-428\", \"wt-global-api-GetSelectedFaction-435\", \"wt-global-api-GetSpellAutocast-436\", \"wt-global-api-GetSpellBookItemInfo-438\", \"wt-global-api-GetSpellBookItemTexture-440\", \"wt-global-api-GetSpellLevelLearned-446\", \"wt-global-api-GetSpellLink-447\", \"wt-global-api-GetWatchedFactionInfo-455\", \"wt-global-api-GuildControlGetRank-388\", \"wt-global-api-HasKey-389\", \"wt-global-api-HasPetSpells-456\", \"wt-global-api-IsCurrentSpell-459\", \"wt-global-api-IsHarmfulSpell-461\", \"wt-global-api-IsHelpfulSpell-462\", \"wt-global-api-IsItemPreferredArmorType-391\", \"wt-global-api-IsMovieReadable-392\", \"wt-global-api-IsPassiveSpell-463\", \"wt-global-api-IsPressHoldReleaseSpell-464\", \"wt-global-api-IsSpellInRange-466\", \"wt-global-api-PickupSpell-470\", \"wt-global-api-SetSelectedFaction-476\", \"wt-global-api-UnitPartialPower-560\", \"wt-widgets-ModelSceneActor:SetPlayerModelFromGlues-585\"}",
+      "error: test failed, to rerun pass `--test integration`"
+    ],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/discovery-integration.log",
+    "invalidated": false
+  },
+  {
+    "scope": "behavior-red",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_0_0_retired_members_do_not_regrow",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "86896b3aa5c03dc8bbd650e044e7f503636e4aa1",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target"
+    },
+    "exit_code": 101,
+    "summary": [
+      "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10814 filtered out; finished in 0.20s",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings",
+      "    Finished `test` profile [optimized + debuginfo] target(s) in 1m 28s",
+      "error: test failed, to rerun pass `--test integration`"
+    ],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/behavior-red.log",
+    "invalidated": false
+  },
+  {
+    "scope": "behavior-green",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_0_0_retired_members_do_not_regrow",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "347f11a70d794130361c22a96fd345bebf88c9ee",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target"
+    },
+    "exit_code": 101,
+    "summary": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings",
+      "error: could not compile `wow-ui-sim` (test \"integration\") due to 1 previous error"
+    ],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/behavior-green.log",
+    "invalidated": true,
+    "invalidated_reason": "No runtime proof: invalid target, compile failure or zero selected cases; superseded by scoped passing evidence."
+  },
+  {
+    "scope": "p1100-sweep",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_0_0_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "347f11a70d794130361c22a96fd345bebf88c9ee",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target",
+      "P1100_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1100-page/data/patch-api/evidence/11.0.0-session-2026-10-06/p1100-sweep-result.json"
+    },
+    "exit_code": 101,
+    "summary": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings",
+      "error: could not compile `wow-ui-sim` (test \"integration\") due to 1 previous error"
+    ],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/p1100-sweep.log",
+    "invalidated": true,
+    "invalidated_reason": "No runtime proof: invalid target, compile failure or zero selected cases; superseded by scoped passing evidence."
+  },
+  {
+    "scope": "behavior-green-fixed",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_0_0_retired_members_do_not_regrow",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "da7197c7a97228a1bdf2377a7f5c23cbe163a931",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target"
+    },
+    "exit_code": 101,
+    "summary": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings",
+      "error: could not compile `wow-ui-sim` (test \"integration\") due to 1 previous error"
+    ],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/behavior-green-fixed.log",
+    "invalidated": true,
+    "invalidated_reason": "No runtime proof: invalid target, compile failure or zero selected cases; superseded by scoped passing evidence."
+  },
+  {
+    "scope": "p1100-sweep-fixed",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_0_0_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "da7197c7a97228a1bdf2377a7f5c23cbe163a931",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target",
+      "P1100_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1100-page/data/patch-api/evidence/11.0.0-session-2026-10-06/p1100-sweep-result.json"
+    },
+    "exit_code": 101,
+    "summary": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings",
+      "error: could not compile `wow-ui-sim` (test \"integration\") due to 1 previous error"
+    ],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/p1100-sweep-fixed.log",
+    "invalidated": true,
+    "invalidated_reason": "No runtime proof: invalid target, compile failure or zero selected cases; superseded by scoped passing evidence."
+  },
+  {
+    "scope": "behavior-green-final",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_0_0_retired_members_do_not_regrow",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "7e51a4525ae0dcda7d56827af3798c073e2c3fb0",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target"
+    },
+    "exit_code": 0,
+    "summary": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10814 filtered out; finished in 0.15s",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings",
+      "    Finished `test` profile [optimized + debuginfo] target(s) in 47.49s"
+    ],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/behavior-green-final.log",
+    "invalidated": false
+  },
+  {
+    "scope": "p1100-sweep-final",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_0_0_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "7e51a4525ae0dcda7d56827af3798c073e2c3fb0",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target",
+      "P1100_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1100-page/data/patch-api/evidence/11.0.0-session-2026-10-06/p1100-sweep-result.json"
+    },
+    "exit_code": 0,
+    "summary": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10814 filtered out; finished in 4.63s",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings",
+      "    Finished `test` profile [optimized + debuginfo] target(s) in 0.38s"
+    ],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/p1100-sweep-final.log",
+    "invalidated": false
+  },
+  {
+    "scope": "patch_11_0_2_publication_sweep",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_0_2_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "7e51a4525ae0dcda7d56827af3798c073e2c3fb0",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target",
+      "P1102_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1100-page/data/patch-api/evidence/11.0.0-session-2026-10-06/p1102-sweep-result.json"
+    },
+    "exit_code": 0,
+    "summary": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10814 filtered out; finished in 4.45s",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings",
+      "    Finished `test` profile [optimized + debuginfo] target(s) in 0.20s"
+    ],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/patch_11_0_2_publication_sweep.log",
+    "invalidated": false
+  },
+  {
+    "scope": "patch_11_0_5_publication_sweep",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_0_5_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "7e51a4525ae0dcda7d56827af3798c073e2c3fb0",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target",
+      "P1105_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1100-page/data/patch-api/evidence/11.0.0-session-2026-10-06/p1105-sweep-result.json"
+    },
+    "exit_code": 0,
+    "summary": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10814 filtered out; finished in 4.19s",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings",
+      "    Finished `test` profile [optimized + debuginfo] target(s) in 0.22s"
+    ],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/patch_11_0_5_publication_sweep.log",
+    "invalidated": false
+  },
+  {
+    "scope": "patch_11_0_7_publication_sweep",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_0_7_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "7e51a4525ae0dcda7d56827af3798c073e2c3fb0",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target",
+      "P1107_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1100-page/data/patch-api/evidence/11.0.0-session-2026-10-06/p1107-sweep-result.json"
+    },
+    "exit_code": 0,
+    "summary": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10814 filtered out; finished in 4.05s",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings",
+      "    Finished `test` profile [optimized + debuginfo] target(s) in 0.20s"
+    ],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/patch_11_0_7_publication_sweep.log",
+    "invalidated": false
+  },
+  {
+    "scope": "patch_11_1_0_publication_sweep",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_1_0_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "7e51a4525ae0dcda7d56827af3798c073e2c3fb0",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target",
+      "P1110_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1100-page/data/patch-api/evidence/11.0.0-session-2026-10-06/p1110-sweep-result.json"
+    },
+    "exit_code": 0,
+    "summary": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10814 filtered out; finished in 4.18s",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings",
+      "    Finished `test` profile [optimized + debuginfo] target(s) in 0.21s"
+    ],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/patch_11_1_0_publication_sweep.log",
+    "invalidated": false
+  },
+  {
+    "scope": "patch_11_1_5_publication_sweep",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_1_5_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "7e51a4525ae0dcda7d56827af3798c073e2c3fb0",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target",
+      "P1115_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1100-page/data/patch-api/evidence/11.0.0-session-2026-10-06/p1115-sweep-result.json"
+    },
+    "exit_code": 0,
+    "summary": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10814 filtered out; finished in 4.20s",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings",
+      "    Finished `test` profile [optimized + debuginfo] target(s) in 0.20s"
+    ],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/patch_11_1_5_publication_sweep.log",
+    "invalidated": false
+  },
+  {
+    "scope": "patch_11_1_7_publication_sweep",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_1_7_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "7e51a4525ae0dcda7d56827af3798c073e2c3fb0",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target",
+      "P1117_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1100-page/data/patch-api/evidence/11.0.0-session-2026-10-06/p1117-sweep-result.json"
+    },
+    "exit_code": 0,
+    "summary": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10814 filtered out; finished in 4.27s",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings",
+      "    Finished `test` profile [optimized + debuginfo] target(s) in 0.22s"
+    ],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/patch_11_1_7_publication_sweep.log",
+    "invalidated": false
+  },
+  {
+    "scope": "patch_11_2_0_publication_sweep",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_2_0_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "7e51a4525ae0dcda7d56827af3798c073e2c3fb0",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target",
+      "P1120_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1100-page/data/patch-api/evidence/11.0.0-session-2026-10-06/p1120-sweep-result.json"
+    },
+    "exit_code": 0,
+    "summary": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10814 filtered out; finished in 4.06s",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings",
+      "    Finished `test` profile [optimized + debuginfo] target(s) in 0.20s"
+    ],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/patch_11_2_0_publication_sweep.log",
+    "invalidated": false
+  },
+  {
+    "scope": "patch_11_2_5_publication_sweep",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_2_5_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "7e51a4525ae0dcda7d56827af3798c073e2c3fb0",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target",
+      "P1125_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1100-page/data/patch-api/evidence/11.0.0-session-2026-10-06/p1125-sweep-result.json"
+    },
+    "exit_code": 0,
+    "summary": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10814 filtered out; finished in 4.19s",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings",
+      "    Finished `test` profile [optimized + debuginfo] target(s) in 0.20s"
+    ],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/patch_11_2_5_publication_sweep.log",
+    "invalidated": false
+  },
+  {
+    "scope": "patch_11_2_7_publication_sweep",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_2_7_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "7e51a4525ae0dcda7d56827af3798c073e2c3fb0",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target",
+      "P1127_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1100-page/data/patch-api/evidence/11.0.0-session-2026-10-06/p1127-sweep-result.json"
+    },
+    "exit_code": 0,
+    "summary": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10814 filtered out; finished in 4.42s",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings",
+      "    Finished `test` profile [optimized + debuginfo] target(s) in 0.20s"
+    ],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/patch_11_2_7_publication_sweep.log",
+    "invalidated": false
+  },
+  {
+    "scope": "patch_12_0_0_publication_sweep",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_12_0_0_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "7e51a4525ae0dcda7d56827af3798c073e2c3fb0",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target",
+      "P1200_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1100-page/data/patch-api/evidence/11.0.0-session-2026-10-06/p1200-sweep-result.json"
+    },
+    "exit_code": 0,
+    "summary": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10814 filtered out; finished in 4.55s",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings",
+      "    Finished `test` profile [optimized + debuginfo] target(s) in 0.22s"
+    ],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/patch_12_0_0_publication_sweep.log",
+    "invalidated": false
+  },
+  {
+    "scope": "patch_12_0_1_publication_sweep",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_12_0_1_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "7e51a4525ae0dcda7d56827af3798c073e2c3fb0",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target",
+      "P1201_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1100-page/data/patch-api/evidence/11.0.0-session-2026-10-06/p1201-sweep-result.json"
+    },
+    "exit_code": 0,
+    "summary": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10814 filtered out; finished in 4.20s",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings",
+      "    Finished `test` profile [optimized + debuginfo] target(s) in 0.20s"
+    ],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/patch_12_0_1_publication_sweep.log",
+    "invalidated": false
+  },
+  {
+    "scope": "patch_12_0_5_publication_sweep",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_12_0_5_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "7e51a4525ae0dcda7d56827af3798c073e2c3fb0",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target",
+      "P1205_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1100-page/data/patch-api/evidence/11.0.0-session-2026-10-06/p1205-sweep-result.json"
+    },
+    "exit_code": 0,
+    "summary": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10814 filtered out; finished in 4.42s",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings",
+      "    Finished `test` profile [optimized + debuginfo] target(s) in 0.21s"
+    ],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/patch_12_0_5_publication_sweep.log",
+    "invalidated": false
+  },
+  {
+    "scope": "patch_12_0_7_publication_sweep",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_12_0_7_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "7e51a4525ae0dcda7d56827af3798c073e2c3fb0",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target",
+      "P1207_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1100-page/data/patch-api/evidence/11.0.0-session-2026-10-06/p1207-sweep-result.json"
+    },
+    "exit_code": 0,
+    "summary": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10814 filtered out; finished in 4.28s",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings",
+      "    Finished `test` profile [optimized + debuginfo] target(s) in 0.25s"
+    ],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/patch_12_0_7_publication_sweep.log",
+    "invalidated": false
+  },
+  {
+    "scope": "patch_12_1_0_publication_sweep",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_12_1_0_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "7e51a4525ae0dcda7d56827af3798c073e2c3fb0",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target",
+      "P1210_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1100-page/data/patch-api/evidence/11.0.0-session-2026-10-06/p1210-sweep-result.json"
+    },
+    "exit_code": 0,
+    "summary": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10814 filtered out; finished in 4.42s",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings",
+      "    Finished `test` profile [optimized + debuginfo] target(s) in 0.25s"
+    ],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/patch_12_1_0_publication_sweep.log",
+    "invalidated": false
+  },
+  {
+    "scope": "negative-control",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_0_0_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "7e51a4525ae0dcda7d56827af3798c073e2c3fb0",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target",
+      "P1100_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p1100-page/data/patch-api/evidence/11.0.0-session-2026-10-06/p1100-negative-register.json",
+      "P1100_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1100-page/data/patch-api/evidence/11.0.0-session-2026-10-06/p1100-negative-result.json"
+    },
+    "exit_code": 101,
+    "summary": [
+      "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10814 filtered out; finished in 4.18s",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings",
+      "    Finished `test` profile [optimized + debuginfo] target(s) in 0.22s",
+      "assertion `left == right` failed: new gaps: [\"wt-global-api-C_AdventureMap.GetAdventureMapTextureKit-150\"]; resolved/stale gaps: []",
+      "  left: {\"wt-cvars-AllowSoftwareRendererDX12-653\", \"wt-cvars-AllowWinRT-655\", \"wt-cvars-vrsValarAlwaysOn-714\", \"wt-cvars-vrsValarLPUseCornerSampling-716\", \"wt-events-SPELL_TEXT_UPDATE-626\", \"wt-global-api-C_AchievementInfo.AreGuildAchievementsEnabled-149\", \"wt-global-api-C_AdventureMap.GetAdventureMapTextureKit-150\", \"wt-global-api-C_ArtifactUI.GetRespecArtifactInfo-490\", \"wt-global-api-C_Bank.AutoDepositItemsIntoBank-154\", \"wt-global-api-C_Bank.CanDepositMoney-155\", \"wt-global-api-C_Bank.CanPurchaseBankTab-156\", \"wt-global-api-C_Bank.CanUseBank-157\", \"wt-global-api-C_Bank.CanViewBank-158\", \"wt-global-api-C_Bank.CanWithdrawMoney-159\", \"wt-global-api-C_Bank.CloseBankFrame-160\", \"wt-global-api-C_Bank.DepositMoney-161\", \"wt-global-api-C_Bank.FetchPurchasedBankTabData-165\", \"wt-global-api-C_Bank.FetchPurchasedBankTabIDs-166\", \"wt-global-api-C_Bank.HasMaxBankTabs-167\", \"wt-global-api-C_Bank.IsItemAllowedInBankType-168\", \"wt-global-api-C_Bank.PurchaseBankTab-169\", \"wt-global-api-C_Bank.UpdateBankTabSettings-170\", \"wt-global-api-C_Bank.WithdrawMoney-171\", \"wt-global-api-C_CharacterServices.ArePaidCharacterTransfersBetweenBnetAccountsEnabled-172\", \"wt-global-api-C_ChatInfo.IsValidCombatFilterName-173\", \"wt-global-api-C_Container.SortAccountBankBags-177\", \"wt-global-api-C_CurrencyInfo.CanTransferCurrency-178\", \"wt-global-api-C_CurrencyInfo.FetchCurrencyDataFromAccountCharacters-179\", \"wt-global-api-C_CurrencyInfo.FetchCurrencyTransferTransactions-180\", \"wt-global-api-C_CurrencyInfo.GetCostToTransferCurrency-181\", \"wt-global-api-C_CurrencyInfo.GetMaxTransferableAmountFromQuantity-182\", \"wt-global-api-C_CurrencyInfo.IsAccountCharacterCurrencyDataReady-183\", \"wt-global-api-C_CurrencyInfo.IsAccountTransferableCurrency-184\", \"wt-global-api-C_CurrencyInfo.IsAccountWideCurrency-185\", \"wt-global-api-C_CurrencyInfo.IsCurrencyTransferTransactionDataReady-186\", \"wt-global-api-C_CurrencyInfo.PlayerHasMaxQuantity-187\", \"wt-global-api-C_CurrencyInfo.PlayerHasMaxWeeklyQuantity-188\", \"wt-global-api-C_CurrencyInfo.RequestCurrencyDataForAccountCharacters-189\", \"wt-global-api-C_CurrencyInfo.RequestCurrencyFromAccountCharacter-190\", \"wt-global-api-C_Debug.ToggleWindDebugMenu-192\", \"wt-global-api-C_DelvesUI.GetDelvesAffixSpellsForSeason-197\", \"wt-global-api-C_DelvesUI.GetDelvesFactionForSeason-198\", \"wt-global-api-C_DelvesUI.GetModelSceneForCompanion-201\", \"wt-global-api-C_DelvesUI.IsEligibleForActiveDelveRewards-207\", \"wt-global-api-C_GossipInfo.GetOptionUIWidgetSetsAndTypesByOptionID-211\", \"wt-global-api-C_GuildInfo.IsEncounterGuildNewsEnabled-212\", \"wt-global-api-C_GuildInfo.IsGuildReputationEnabled-213\", \"wt-global-api-C_ImmersiveInteraction.HasImmersiveInteraction-214\", \"wt-global-api-C_Item.DoesItemMatchTargetEnchantingSpell-215\", \"wt-global-api-C_Item.IsCurioItem-217\", \"wt-global-api-C_MajorFactions.GetMajorFactionRenownInfo-219\", \"wt-global-api-C_Map.IsCityMap-220\", \"wt-global-api-C_Map.IsMapValidForNavBarDropdown-221\", \"wt-global-api-C_Minimap.GetDefaultTrackingValue-222\", \"wt-global-api-C_Minimap.IsTrackingAccountCompletedQuests-223\", \"wt-global-api-C_PaperDollInfo.GetInspectRatedBGBlitzData-229\", \"wt-global-api-C_PartyInfo.DelveTeleportOut-230\", \"wt-global-api-C_PartyInfo.IsDelveComplete-231\", \"wt-global-api-C_PartyInfo.IsDelveInProgress-232\", \"wt-global-api-C_PlayerInfo.HasAccountInventoryLock-235\", \"wt-global-api-C_PvP.GetBrawlSoloRBGMinItemLevel-236\", \"wt-global-api-C_PvP.GetPersonalRatedBGBlitzSpecStats-237\", \"wt-global-api-C_PvP.GetRatedSoloRBGMinItemLevel-238\", \"wt-global-api-C_PvP.GetRatedSoloRBGRewards-239\", \"wt-global-api-C_PvP.JoinRatedBGBlitz-241\", \"wt-global-api-C_PvP.StartSoloRBGWarGameByName-242\", \"wt-global-api-C_PvP.StartSpectatorSoloRBGWarGame-243\", \"wt-global-api-C_QuestInfoSystem.GetQuestRewardCurrencies-246\", \"wt-global-api-C_QuestInfoSystem.HasQuestRewardCurrencies-247\", \"wt-global-api-C_QuestLine.GetQuestLineInfo-521\", \"wt-global-api-C_QuestLine.QuestLineIgnoresAccountCompletedFiltering-248\", \"wt-global-api-C_QuestLog.GetHeaderIndexForQuest-249\", \"wt-global-api-C_QuestLog.GetQuestLogMajorFactionReputationRewards-526\", \"wt-global-api-C_QuestLog.GetQuestRewardCurrencyInfo-251\", \"wt-global-api-C_QuestLog.IsQuestFlaggedCompletedOnAccount-253\", \"wt-global-api-C_QuestLog.QuestIgnoresAccountCompletedFiltering-255\", \"wt-global-api-C_QuestOffer.GetQuestOfferMajorFactionReputationRewards-528\", \"wt-global-api-C_QuestOffer.GetQuestRequiredCurrencyInfo-256\", \"wt-global-api-C_QuestOffer.GetQuestRewardCurrencyInfo-257\", \"wt-global-api-C_Reputation.GetGuildRepExpirationTime-266\", \"wt-global-api-C_Reputation.SetWatchedFaction-403\", \"wt-global-api-C_ScenarioInfo.GetCriteriaInfo-281\", \"wt-global-api-C_ScenarioInfo.GetCriteriaInfoByStep-280\", \"wt-global-api-C_Social.GetLastAchievement-530\", \"wt-global-api-C_Social.GetLastItem-532\", \"wt-global-api-C_Social.GetScreenshotInfoByIndex-534\", \"wt-global-api-C_Spell.GetDeadlyDebuffInfo-282\", \"wt-global-api-C_Spell.GetSpellAutoCast-284\", \"wt-global-api-C_Spell.GetSpellLevelLearned-291\", \"wt-global-api-C_Spell.GetSpellSkillLineAbilityRank-296\", \"wt-global-api-C_Spell.GetSpellSubtext-297\", \"wt-global-api-C_Spell.IsAutoRepeatSpell-301\", \"wt-global-api-C_Spell.IsClassTalentSpell-302\", \"wt-global-api-C_Spell.IsPvPTalentSpell-305\", \"wt-global-api-C_Spell.IsSpellDisabled-307\", \"wt-global-api-C_Spell.IsSpellInRange-310\", \"wt-global-api-C_Spell.SetSpellAutoCastEnabled-314\", \"wt-global-api-C_Spell.SpellHasRange-315\", \"wt-global-api-C_Spell.ToggleSpellAutoCast-317\", \"wt-global-api-C_SpellBook.GetDeadlyDebuffInfo-406\", \"wt-global-api-C_SpellBook.GetOverrideSpell-407\", \"wt-global-api-C_SpellBook.GetSpellBookItemDescription-325\", \"wt-global-api-C_SpellBook.GetSpellBookItemLevelLearned-327\", \"wt-global-api-C_SpellBook.GetSpellBookItemLink-328\", \"wt-global-api-C_SpellBook.GetSpellBookItemSkillLineIndex-332\", \"wt-global-api-C_SpellBook.GetSpellBookItemTradeSkillLink-334\", \"wt-global-api-C_SpellBook.GetSpellInfo-408\", \"wt-global-api-C_SpellBook.GetSpellLinkFromSpellID-409\", \"wt-global-api-C_SpellBook.IsAutoAttackSpellBookItem-338\", \"wt-global-api-C_SpellBook.IsClassTalentSpellBookItem-339\", \"wt-global-api-C_SpellBook.IsPvPTalentSpellBookItem-340\", \"wt-global-api-C_SpellBook.IsRangedAutoAttackSpellBookItem-341\", \"wt-global-api-C_SpellBook.IsSpellBookItemHarmful-342\", \"wt-global-api-C_SpellBook.IsSpellBookItemHelpful-343\", \"wt-global-api-C_SpellBook.IsSpellBookItemInRange-344\", \"wt-global-api-C_SpellBook.IsSpellBookItemOffSpec-345\", \"wt-global-api-C_SpellBook.IsSpellBookItemPassive-346\", \"wt-global-api-C_SpellBook.IsSpellBookItemUsable-347\", \"wt-global-api-C_SpellBook.IsSpellDisabled-410\", \"wt-global-api-C_SpellBook.SetSpellBookItemAutoCastEnabled-349\", \"wt-global-api-C_SpellBook.SpellBookItemHasRange-350\", \"wt-global-api-C_SpellBook.ToggleSpellBookItemAutoCast-351\", \"wt-global-api-C_SuperTrack.IsSuperTrackingMapPin-356\", \"wt-global-api-C_SuperTrack.SetSuperTrackedMapPin-357\", \"wt-global-api-C_SuperTrack.SetSuperTrackedVignette-358\", \"wt-global-api-C_TradeSkillUI.CraftEnchant-545\", \"wt-global-api-C_TradeSkillUI.CraftSalvage-549\", \"wt-global-api-C_TradeSkillUI.GetCraftingOperationInfo-552\", \"wt-global-api-C_TradeSkillUI.GetCraftingOperationInfoForOrder-554\", \"wt-global-api-C_TradeSkillUI.RecraftRecipe-556\", \"wt-global-api-C_TradeSkillUI.RecraftRecipeForOrder-558\", \"wt-global-api-C_Traits.GetSystemIDByTreeID-363\", \"wt-global-api-C_TransmogSets.GetFilteredBaseSetsCounts-374\", \"wt-global-api-C_TransmogSets.GetFullBaseSetsCounts-375\", \"wt-global-api-C_TransmogSets.GetTransmogSetsClassFilter-376\", \"wt-global-api-C_TransmogSets.GetValidBaseSetsCountsForCharacter-377\", \"wt-global-api-C_TransmogSets.SetTransmogSetsClassFilter-378\", \"wt-global-api-CinematicFinished-379\", \"wt-global-api-CinematicStarted-380\", \"wt-global-api-ClearPendingBindConversionItem-382\", \"wt-global-api-CloseBankFrame-413\", \"wt-global-api-ConvertItemToBindToAccount-383\", \"wt-global-api-GetFactionInfoByID-423\", \"wt-global-api-GetGuildFactionInfo-426\", \"wt-global-api-GetMouseFocus-428\", \"wt-global-api-GetSelectedFaction-435\", \"wt-global-api-GetSpellAutocast-436\", \"wt-global-api-GetSpellBookItemInfo-438\", \"wt-global-api-GetSpellBookItemTexture-440\", \"wt-global-api-GetSpellLevelLearned-446\", \"wt-global-api-GetSpellLink-447\", \"wt-global-api-GetWatchedFactionInfo-455\", \"wt-global-api-GuildControlGetRank-388\", \"wt-global-api-HasKey-389\", \"wt-global-api-HasPetSpells-456\", \"wt-global-api-IsCurrentSpell-459\", \"wt-global-api-IsHarmfulSpell-461\", \"wt-global-api-IsHelpfulSpell-462\", \"wt-global-api-IsItemPreferredArmorType-391\", \"wt-global-api-IsMovieReadable-392\", \"wt-global-api-IsPassiveSpell-463\", \"wt-global-api-IsPressHoldReleaseSpell-464\", \"wt-global-api-IsSpellInRange-466\", \"wt-global-api-PickupSpell-470\", \"wt-global-api-SetSelectedFaction-476\", \"wt-global-api-UnitPartialPower-560\", \"wt-widgets-ModelSceneActor:SetPlayerModelFromGlues-585\"}",
+      " right: {\"wt-cvars-AllowSoftwareRendererDX12-653\", \"wt-cvars-AllowWinRT-655\", \"wt-cvars-vrsValarAlwaysOn-714\", \"wt-cvars-vrsValarLPUseCornerSampling-716\", \"wt-events-SPELL_TEXT_UPDATE-626\", \"wt-global-api-C_AchievementInfo.AreGuildAchievementsEnabled-149\", \"wt-global-api-C_ArtifactUI.GetRespecArtifactInfo-490\", \"wt-global-api-C_Bank.AutoDepositItemsIntoBank-154\", \"wt-global-api-C_Bank.CanDepositMoney-155\", \"wt-global-api-C_Bank.CanPurchaseBankTab-156\", \"wt-global-api-C_Bank.CanUseBank-157\", \"wt-global-api-C_Bank.CanViewBank-158\", \"wt-global-api-C_Bank.CanWithdrawMoney-159\", \"wt-global-api-C_Bank.CloseBankFrame-160\", \"wt-global-api-C_Bank.DepositMoney-161\", \"wt-global-api-C_Bank.FetchPurchasedBankTabData-165\", \"wt-global-api-C_Bank.FetchPurchasedBankTabIDs-166\", \"wt-global-api-C_Bank.HasMaxBankTabs-167\", \"wt-global-api-C_Bank.IsItemAllowedInBankType-168\", \"wt-global-api-C_Bank.PurchaseBankTab-169\", \"wt-global-api-C_Bank.UpdateBankTabSettings-170\", \"wt-global-api-C_Bank.WithdrawMoney-171\", \"wt-global-api-C_CharacterServices.ArePaidCharacterTransfersBetweenBnetAccountsEnabled-172\", \"wt-global-api-C_ChatInfo.IsValidCombatFilterName-173\", \"wt-global-api-C_Container.SortAccountBankBags-177\", \"wt-global-api-C_CurrencyInfo.CanTransferCurrency-178\", \"wt-global-api-C_CurrencyInfo.FetchCurrencyDataFromAccountCharacters-179\", \"wt-global-api-C_CurrencyInfo.FetchCurrencyTransferTransactions-180\", \"wt-global-api-C_CurrencyInfo.GetCostToTransferCurrency-181\", \"wt-global-api-C_CurrencyInfo.GetMaxTransferableAmountFromQuantity-182\", \"wt-global-api-C_CurrencyInfo.IsAccountCharacterCurrencyDataReady-183\", \"wt-global-api-C_CurrencyInfo.IsAccountTransferableCurrency-184\", \"wt-global-api-C_CurrencyInfo.IsAccountWideCurrency-185\", \"wt-global-api-C_CurrencyInfo.IsCurrencyTransferTransactionDataReady-186\", \"wt-global-api-C_CurrencyInfo.PlayerHasMaxQuantity-187\", \"wt-global-api-C_CurrencyInfo.PlayerHasMaxWeeklyQuantity-188\", \"wt-global-api-C_CurrencyInfo.RequestCurrencyDataForAccountCharacters-189\", \"wt-global-api-C_CurrencyInfo.RequestCurrencyFromAccountCharacter-190\", \"wt-global-api-C_Debug.ToggleWindDebugMenu-192\", \"wt-global-api-C_DelvesUI.GetDelvesAffixSpellsForSeason-197\", \"wt-global-api-C_DelvesUI.GetDelvesFactionForSeason-198\", \"wt-global-api-C_DelvesUI.GetModelSceneForCompanion-201\", \"wt-global-api-C_DelvesUI.IsEligibleForActiveDelveRewards-207\", \"wt-global-api-C_GossipInfo.GetOptionUIWidgetSetsAndTypesByOptionID-211\", \"wt-global-api-C_GuildInfo.IsEncounterGuildNewsEnabled-212\", \"wt-global-api-C_GuildInfo.IsGuildReputationEnabled-213\", \"wt-global-api-C_ImmersiveInteraction.HasImmersiveInteraction-214\", \"wt-global-api-C_Item.DoesItemMatchTargetEnchantingSpell-215\", \"wt-global-api-C_Item.IsCurioItem-217\", \"wt-global-api-C_MajorFactions.GetMajorFactionRenownInfo-219\", \"wt-global-api-C_Map.IsCityMap-220\", \"wt-global-api-C_Map.IsMapValidForNavBarDropdown-221\", \"wt-global-api-C_Minimap.GetDefaultTrackingValue-222\", \"wt-global-api-C_Minimap.IsTrackingAccountCompletedQuests-223\", \"wt-global-api-C_PaperDollInfo.GetInspectRatedBGBlitzData-229\", \"wt-global-api-C_PartyInfo.DelveTeleportOut-230\", \"wt-global-api-C_PartyInfo.IsDelveComplete-231\", \"wt-global-api-C_PartyInfo.IsDelveInProgress-232\", \"wt-global-api-C_PlayerInfo.HasAccountInventoryLock-235\", \"wt-global-api-C_PvP.GetBrawlSoloRBGMinItemLevel-236\", \"wt-global-api-C_PvP.GetPersonalRatedBGBlitzSpecStats-237\", \"wt-global-api-C_PvP.GetRatedSoloRBGMinItemLevel-238\", \"wt-global-api-C_PvP.GetRatedSoloRBGRewards-239\", \"wt-global-api-C_PvP.JoinRatedBGBlitz-241\", \"wt-global-api-C_PvP.StartSoloRBGWarGameByName-242\", \"wt-global-api-C_PvP.StartSpectatorSoloRBGWarGame-243\", \"wt-global-api-C_QuestInfoSystem.GetQuestRewardCurrencies-246\", \"wt-global-api-C_QuestInfoSystem.HasQuestRewardCurrencies-247\", \"wt-global-api-C_QuestLine.GetQuestLineInfo-521\", \"wt-global-api-C_QuestLine.QuestLineIgnoresAccountCompletedFiltering-248\", \"wt-global-api-C_QuestLog.GetHeaderIndexForQuest-249\", \"wt-global-api-C_QuestLog.GetQuestLogMajorFactionReputationRewards-526\", \"wt-global-api-C_QuestLog.GetQuestRewardCurrencyInfo-251\", \"wt-global-api-C_QuestLog.IsQuestFlaggedCompletedOnAccount-253\", \"wt-global-api-C_QuestLog.QuestIgnoresAccountCompletedFiltering-255\", \"wt-global-api-C_QuestOffer.GetQuestOfferMajorFactionReputationRewards-528\", \"wt-global-api-C_QuestOffer.GetQuestRequiredCurrencyInfo-256\", \"wt-global-api-C_QuestOffer.GetQuestRewardCurrencyInfo-257\", \"wt-global-api-C_Reputation.GetGuildRepExpirationTime-266\", \"wt-global-api-C_Reputation.SetWatchedFaction-403\", \"wt-global-api-C_ScenarioInfo.GetCriteriaInfo-281\", \"wt-global-api-C_ScenarioInfo.GetCriteriaInfoByStep-280\", \"wt-global-api-C_Social.GetLastAchievement-530\", \"wt-global-api-C_Social.GetLastItem-532\", \"wt-global-api-C_Social.GetScreenshotInfoByIndex-534\", \"wt-global-api-C_Spell.GetDeadlyDebuffInfo-282\", \"wt-global-api-C_Spell.GetSpellAutoCast-284\", \"wt-global-api-C_Spell.GetSpellLevelLearned-291\", \"wt-global-api-C_Spell.GetSpellSkillLineAbilityRank-296\", \"wt-global-api-C_Spell.GetSpellSubtext-297\", \"wt-global-api-C_Spell.IsAutoRepeatSpell-301\", \"wt-global-api-C_Spell.IsClassTalentSpell-302\", \"wt-global-api-C_Spell.IsPvPTalentSpell-305\", \"wt-global-api-C_Spell.IsSpellDisabled-307\", \"wt-global-api-C_Spell.IsSpellInRange-310\", \"wt-global-api-C_Spell.SetSpellAutoCastEnabled-314\", \"wt-global-api-C_Spell.SpellHasRange-315\", \"wt-global-api-C_Spell.ToggleSpellAutoCast-317\", \"wt-global-api-C_SpellBook.GetDeadlyDebuffInfo-406\", \"wt-global-api-C_SpellBook.GetOverrideSpell-407\", \"wt-global-api-C_SpellBook.GetSpellBookItemDescription-325\", \"wt-global-api-C_SpellBook.GetSpellBookItemLevelLearned-327\", \"wt-global-api-C_SpellBook.GetSpellBookItemLink-328\", \"wt-global-api-C_SpellBook.GetSpellBookItemSkillLineIndex-332\", \"wt-global-api-C_SpellBook.GetSpellBookItemTradeSkillLink-334\", \"wt-global-api-C_SpellBook.GetSpellInfo-408\", \"wt-global-api-C_SpellBook.GetSpellLinkFromSpellID-409\", \"wt-global-api-C_SpellBook.IsAutoAttackSpellBookItem-338\", \"wt-global-api-C_SpellBook.IsClassTalentSpellBookItem-339\", \"wt-global-api-C_SpellBook.IsPvPTalentSpellBookItem-340\", \"wt-global-api-C_SpellBook.IsRangedAutoAttackSpellBookItem-341\", \"wt-global-api-C_SpellBook.IsSpellBookItemHarmful-342\", \"wt-global-api-C_SpellBook.IsSpellBookItemHelpful-343\", \"wt-global-api-C_SpellBook.IsSpellBookItemInRange-344\", \"wt-global-api-C_SpellBook.IsSpellBookItemOffSpec-345\", \"wt-global-api-C_SpellBook.IsSpellBookItemPassive-346\", \"wt-global-api-C_SpellBook.IsSpellBookItemUsable-347\", \"wt-global-api-C_SpellBook.IsSpellDisabled-410\", \"wt-global-api-C_SpellBook.SetSpellBookItemAutoCastEnabled-349\", \"wt-global-api-C_SpellBook.SpellBookItemHasRange-350\", \"wt-global-api-C_SpellBook.ToggleSpellBookItemAutoCast-351\", \"wt-global-api-C_SuperTrack.IsSuperTrackingMapPin-356\", \"wt-global-api-C_SuperTrack.SetSuperTrackedMapPin-357\", \"wt-global-api-C_SuperTrack.SetSuperTrackedVignette-358\", \"wt-global-api-C_TradeSkillUI.CraftEnchant-545\", \"wt-global-api-C_TradeSkillUI.CraftSalvage-549\", \"wt-global-api-C_TradeSkillUI.GetCraftingOperationInfo-552\", \"wt-global-api-C_TradeSkillUI.GetCraftingOperationInfoForOrder-554\", \"wt-global-api-C_TradeSkillUI.RecraftRecipe-556\", \"wt-global-api-C_TradeSkillUI.RecraftRecipeForOrder-558\", \"wt-global-api-C_Traits.GetSystemIDByTreeID-363\", \"wt-global-api-C_TransmogSets.GetFilteredBaseSetsCounts-374\", \"wt-global-api-C_TransmogSets.GetFullBaseSetsCounts-375\", \"wt-global-api-C_TransmogSets.GetTransmogSetsClassFilter-376\", \"wt-global-api-C_TransmogSets.GetValidBaseSetsCountsForCharacter-377\", \"wt-global-api-C_TransmogSets.SetTransmogSetsClassFilter-378\", \"wt-global-api-CinematicFinished-379\", \"wt-global-api-CinematicStarted-380\", \"wt-global-api-ClearPendingBindConversionItem-382\", \"wt-global-api-CloseBankFrame-413\", \"wt-global-api-ConvertItemToBindToAccount-383\", \"wt-global-api-GetFactionInfoByID-423\", \"wt-global-api-GetGuildFactionInfo-426\", \"wt-global-api-GetMouseFocus-428\", \"wt-global-api-GetSelectedFaction-435\", \"wt-global-api-GetSpellAutocast-436\", \"wt-global-api-GetSpellBookItemInfo-438\", \"wt-global-api-GetSpellBookItemTexture-440\", \"wt-global-api-GetSpellLevelLearned-446\", \"wt-global-api-GetSpellLink-447\", \"wt-global-api-GetWatchedFactionInfo-455\", \"wt-global-api-GuildControlGetRank-388\", \"wt-global-api-HasKey-389\", \"wt-global-api-HasPetSpells-456\", \"wt-global-api-IsCurrentSpell-459\", \"wt-global-api-IsHarmfulSpell-461\", \"wt-global-api-IsHelpfulSpell-462\", \"wt-global-api-IsItemPreferredArmorType-391\", \"wt-global-api-IsMovieReadable-392\", \"wt-global-api-IsPassiveSpell-463\", \"wt-global-api-IsPressHoldReleaseSpell-464\", \"wt-global-api-IsSpellInRange-466\", \"wt-global-api-PickupSpell-470\", \"wt-global-api-SetSelectedFaction-476\", \"wt-global-api-UnitPartialPower-560\", \"wt-widgets-ModelSceneActor:SetPlayerModelFromGlues-585\"}",
+      "error: test failed, to rerun pass `--test integration`"
+    ],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/negative-control.log",
+    "invalidated": false
+  },
+  {
+    "scope": "prefork-new",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "patch_11_0_0_cached_retirements"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "7e51a4525ae0dcda7d56827af3798c073e2c3fb0",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target"
+    },
+    "exit_code": 0,
+    "summary": [
+      "test result: ok. 1 passed; 0 failed; 1 total",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings",
+      "    Finished `test` profile [optimized + debuginfo] target(s) in 26.48s"
+    ],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/prefork-new.log",
+    "invalidated": false
+  },
+  {
+    "scope": "prefork-map",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "world_map_loads_on_demand"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "7e51a4525ae0dcda7d56827af3798c073e2c3fb0",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target"
+    },
+    "exit_code": 0,
+    "summary": [
+      "test result: ok. 0 passed; 0 failed; 0 total",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings",
+      "    Finished `test` profile [optimized + debuginfo] target(s) in 1.43s"
+    ],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/prefork-map.log",
+    "invalidated": true,
+    "invalidated_reason": "No runtime proof: invalid target, compile failure or zero selected cases; superseded by scoped passing evidence."
+  }
+]

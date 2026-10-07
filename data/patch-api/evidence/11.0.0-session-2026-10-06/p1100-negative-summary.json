@@ -1,0 +1,9 @@
+{
+  "changed_id": "wt-global-api-C_AdventureMap.GetAdventureMapTextureKit-150",
+  "baseline_gaps": 166,
+  "negative_gaps": 167,
+  "new_failures": [
+    "wt-global-api-C_AdventureMap.GetAdventureMapTextureKit-150"
+  ],
+  "resolved_failures": []
+}
