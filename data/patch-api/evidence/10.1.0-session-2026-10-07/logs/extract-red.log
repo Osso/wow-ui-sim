@@ -1,0 +1,27 @@
+................F...
+======================================================================
+FAIL: test_level_two_structure_section_ends_inventory (__main__.ExtractTests.test_level_two_structure_section_ends_inventory)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1010-page/tools/test_extract_patch_non_inventory.py", line 140, in test_level_two_structure_section_ends_inventory
+    self.assertEqual(extract_text(raw),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+                     '== Structures ==\n Enum.PowerType\n'
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     '   + AlternateQuest = 23\n'
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     ' AreaPOIInfo\n   + 13: addPaddingAboveWidgets\n')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '\n' != '== Structures ==\n Enum.PowerType\n   + A[63 chars]ts\n'
+- 
++ == Structures ==
++  Enum.PowerType
++    + AlternateQuest = 23
++  AreaPOIInfo
++    + 13: addPaddingAboveWidgets
+
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.003s
+
+FAILED (failures=1)
