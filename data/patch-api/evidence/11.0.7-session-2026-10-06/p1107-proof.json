@@ -866,6 +866,22 @@
       },
       "scope": "Named targeted command; runtime source unchanged after 9b4119c9e",
       "invalidated": false
+    },
+    {
+      "name": "artifact-validation-portable",
+      "command": [
+        "python3",
+        "data/patch-api/evidence/11.0.7-session-2026-10-06/p1107-validate.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1107-page",
+      "revision": "7c6765826dbdcd301e3bebb7089d1a5b5cfb3590",
+      "exit_code": 0,
+      "log_path": "artifact-validation-portable.log",
+      "environment": {
+        "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1107-page/target"
+      },
+      "scope": "Named targeted command; runtime source unchanged after 9b4119c9e",
+      "invalidated": false
     }
   ]
 }
