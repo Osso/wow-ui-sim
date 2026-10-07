@@ -49,7 +49,7 @@ Main accepts an independent GPT-6.1-sol review: **ACCEPT WITH QUALIFICATIONS** (
 ## Known gaps (current cycle)
 
 - [x] State, module and registration wired; the two seeded Lua publishers and their helpers removed.
-- [ ] Storefront and housing panels were not opened. Seeded category/product-ID lists still name products absent from the empty maps; cached catalog code skips missing products by inspection, while `Blizzard_HousingMarketProductDisplay.lua:46` and shared card code dereference without a nil check (those housing IDs were absent from the old getters too).
+- [ ] Complete storefront and housing-panel acceptance remains unproved. [Prefork follow-up](../wiki/investigations/prefork-catalog-contract-drift.md) supplies an explicit product/display and sections to preserve the existing populated-provider test through the cached storefront. This bounded fixture does not restore runtime seeds or cover bundle details/purchases. Seeded category/product-ID lists still name products absent from default empty maps; cached catalog code skips missing products, while `Blizzard_HousingMarketProductDisplay.lua:46` and shared card code dereference without a nil check (those housing IDs were absent from the old getters too).
 
 ## 12.0.1 extract bundle and section DTOs
 

@@ -1,6 +1,9 @@
 use std::path::PathBuf;
 
 use wow_ui_sim::loader::discover_blizzard_addons_for_screen;
+use wow_ui_sim::c_api::c_catalog_shop_products::{
+    CatalogShopProductDisplayInfo, CatalogShopProductInfo, CatalogShopSectionInfo,
+};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
 use wow_ui_sim::startup::fire_startup_events_for_screen;
@@ -36,8 +39,52 @@ fn load_full_game_ui() -> WowLuaEnv {
     env
 }
 
+fn catalog_product_record() -> CatalogShopProductInfo {
+    CatalogShopProductInfo {
+        catalog_shop_product_id: 2003.0,
+        name: "Apprentice Rider Bundle".into(),
+        r#type: Some("Bundle".into()),
+        description: "Explicit full UI storefront fixture".into(),
+        icon_texture: "Interface\\Icons\\Ability_Mount_RidingHorse".into(),
+        price: "10".into(),
+        original_price: "10".into(),
+        background_texture: "shop-bg-map-blue".into(),
+        is_bundle: true,
+        sub_items_loaded: true,
+        ..Default::default()
+    }
+}
+
+fn catalog_display_record() -> CatalogShopProductDisplayInfo {
+    CatalogShopProductDisplayInfo {
+        default_preview_model_scene_id: 1.0,
+        default_card_model_scene_id: 1.0,
+        default_wide_card_model_scene_id: 1.0,
+        product_type: Some("Bundle".into()),
+        ..Default::default()
+    }
+}
+
+fn insert_catalog_product_fixture(env: &WowLuaEnv) {
+    let category_ids: Vec<i32> = env.eval("return C_CatalogShop.GetAvailableCategoryIDs()").unwrap();
+    assert!(!category_ids.is_empty(), "fixture requires catalog navigation categories");
+    let mut state = env.state().borrow_mut();
+    let catalog = &mut state.catalog_shop_products;
+    catalog.products.insert(2003, catalog_product_record());
+    catalog.displays.insert(2003, catalog_display_record());
+    for category_id in category_ids {
+        catalog.sections.insert((category_id, 1), CatalogShopSectionInfo {
+            id: 1.0,
+            display_name: "Full UI fixture products".into(),
+            parent_catalog_shop_category_info_id: Some(f64::from(category_id)),
+            ..Default::default()
+        });
+    }
+}
+
 prefork_full_ui_case! {
 fn catalog_shop_loads_and_populates_navigation_and_products(env: &WowLuaEnv) {
+    insert_catalog_product_fixture(env);
 
     let (loaded, reason): (bool, Option<String>) = env
         .eval("return LoadAddOn('Blizzard_CatalogShop')")

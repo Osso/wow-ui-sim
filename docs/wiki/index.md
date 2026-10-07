@@ -6,6 +6,10 @@
 
 [Housing wrappers and storefront fixtures](investigations/prefork-catalog-contract-drift.md): removed 12.1 wrappers invalidate legacy field assertions; empty-default product maps require explicit full-UI test inputs. Preserve native DTOs and populated-provider assertions.
 
+## [2026-10-06] investigation | Prefork catalog contract drift
+
+[Fixture migrations and missing redeemable count](investigations/prefork-catalog-contract-drift.md): three adjacent-revision bisects identify empty-default host map migrations. Preserve relocated housing wrappers and populated-provider assertions; supply explicit inputs and serialize redeemable counts.
+
 ## [2026-10-06] evidence | 11.2.0 page audit
 
 [Audit](investigations/patch-11-2-0-api-audit.md) links 162 inventory + 82 extract rows, twelve bounded publication fixes, 26 exact gaps and exhaustive five-batch scout. Eight isolated sweeps preserve later observations; negative control, Mists check and exit-0 startup `[]` pass. Existing ledgers and concurrent catalog/11.2.7 work untouched.
