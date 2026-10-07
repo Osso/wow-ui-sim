@@ -1,0 +1,51 @@
+[
+  {
+    "revision": "9229d3050",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "patch_10_0_5_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1005-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p1005-page/target",
+    "exit": 101,
+    "log": "p1005-discovery.log",
+    "scope": "initial inventory discovery, expected RED with empty fixture"
+  },
+  {
+    "revision": "9229d3050",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_10_0_5_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1005-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p1005-page/target",
+    "exit": 101,
+    "log": "p1005-discovery-integration.log",
+    "scope": "initial inventory discovery; expected RED"
+  },
+  {
+    "revision": "e4efd1e489e0ac45b870997309932245ccfa550c",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_10_0_5_unused_members_stay_absent",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1005-page",
+    "exit": 101,
+    "log": "p1005-retirement-red.log",
+    "scope": "bare repeated lookup RED"
+  }
+]

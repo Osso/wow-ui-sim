@@ -1,0 +1,54 @@
+[
+  {
+    "symbol": "BNSendSoR",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  {
+    "symbol": "C_TradeSkillUI.ContinueRecast",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  {
+    "symbol": "C_TradeSkillUI.GetRecipeRepeatCount",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  {
+    "symbol": "C_TradeSkillUI.HasRecipesTracked",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  }
+]

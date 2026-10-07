@@ -1,0 +1,1676 @@
+{
+  "wt-cvars-DisableAdvancedFlyingVelocityVFX-141": {
+    "expected": {
+      "direction": "added",
+      "page_default": "0",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "DisableAdvancedFlyingVelocityVFX"
+    },
+    "observed": {
+      "default": "0",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "0"
+    },
+    "ok": true
+  },
+  "wt-cvars-TargetPriorityValueBank-154": {
+    "expected": {
+      "direction": "removed",
+      "page_default": "1",
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "TargetPriorityValueBank"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-autoOpenLootHistory-152": {
+    "expected": {
+      "direction": "removed",
+      "page_default": "0",
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "autoOpenLootHistory"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-motionSicknessFocalCircle-142": {
+    "expected": {
+      "direction": "added",
+      "page_default": "0",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "motionSicknessFocalCircle"
+    },
+    "observed": {
+      "default": "0",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "0"
+    },
+    "ok": true
+  },
+  "wt-cvars-motionSicknessLandscapeDarkening-143": {
+    "expected": {
+      "direction": "added",
+      "page_default": "0",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "motionSicknessLandscapeDarkening"
+    },
+    "observed": {
+      "default": "0",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "0"
+    },
+    "ok": true
+  },
+  "wt-cvars-nameplateShowOnlyNames-153": {
+    "expected": {
+      "direction": "removed",
+      "page_default": "0",
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "nameplateShowOnlyNames"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-perksActivitiesCurrentMonth-144": {
+    "expected": {
+      "direction": "added",
+      "page_default": "0",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "perksActivitiesCurrentMonth"
+    },
+    "observed": {
+      "default": "0",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "0"
+    },
+    "ok": true
+  },
+  "wt-cvars-perksActivitiesLastPoints-145": {
+    "expected": {
+      "direction": "added",
+      "page_default": "0",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "perksActivitiesLastPoints"
+    },
+    "observed": {
+      "default": "0",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "0"
+    },
+    "ok": true
+  },
+  "wt-cvars-perksActivitiesPendingCompletion-146": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "perksActivitiesPendingCompletion"
+    },
+    "observed": {
+      "default": "",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": ""
+    },
+    "ok": true
+  },
+  "wt-cvars-professionsAllocateBestQualityReagentsCustomer-147": {
+    "expected": {
+      "direction": "added",
+      "page_default": "1",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "professionsAllocateBestQualityReagentsCustomer"
+    },
+    "observed": {
+      "default": "1",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "1"
+    },
+    "ok": true
+  },
+  "wt-cvars-trackedPerksActivities-148": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "trackedPerksActivities"
+    },
+    "observed": {
+      "default": "",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": ""
+    },
+    "ok": true
+  },
+  "wt-cvars-trackedProfessionRecraftRecipes-149": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "trackedProfessionRecraftRecipes"
+    },
+    "observed": {
+      "default": "",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": ""
+    },
+    "ok": true
+  },
+  "wt-events-AZERITE_ITEM_POWER_LEVEL_CHANGED-128": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "AZERITE_ITEM_POWER_LEVEL_CHANGED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-CHEST_REWARDS_UPDATED_FROM_SERVER-106": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "CHEST_REWARDS_UPDATED_FROM_SERVER"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-CRAFTINGORDERS_UNEXPECTED_ERROR-107": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "CRAFTINGORDERS_UNEXPECTED_ERROR"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-CRAFTINGORDERS_UPDATE_PERSONAL_ORDER_COUNTS-108": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "CRAFTINGORDERS_UPDATE_PERSONAL_ORDER_COUNTS"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-EDIT_MODE_LAYOUTS_UPDATED-130": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "EDIT_MODE_LAYOUTS_UPDATED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-PERKS_ACTIVITIES_TRACKED_UPDATED-109": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "PERKS_ACTIVITIES_TRACKED_UPDATED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-PERKS_ACTIVITIES_UPDATED-110": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "PERKS_ACTIVITIES_UPDATED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-PERKS_ACTIVITY_COMPLETED-111": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "PERKS_ACTIVITY_COMPLETED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-PERKS_PROGRAM_CLOSE-112": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "PERKS_PROGRAM_CLOSE"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-PERKS_PROGRAM_CURRENCY_AWARDED-113": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "PERKS_PROGRAM_CURRENCY_AWARDED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-PERKS_PROGRAM_CURRENCY_REFRESH-114": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "PERKS_PROGRAM_CURRENCY_REFRESH"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-PERKS_PROGRAM_DATA_REFRESH-115": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "PERKS_PROGRAM_DATA_REFRESH"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-PERKS_PROGRAM_DATA_SPECIFIC_ITEM_REFRESH-116": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "PERKS_PROGRAM_DATA_SPECIFIC_ITEM_REFRESH"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-PERKS_PROGRAM_DISABLED-117": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "PERKS_PROGRAM_DISABLED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-PERKS_PROGRAM_OPEN-118": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "PERKS_PROGRAM_OPEN"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-PERKS_PROGRAM_PURCHASE_SUCCESS-119": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "PERKS_PROGRAM_PURCHASE_SUCCESS"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-PERKS_PROGRAM_REFUND_SUCCESS-120": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "PERKS_PROGRAM_REFUND_SUCCESS"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-PERKS_PROGRAM_SET_FROZEN_ITEM-121": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "PERKS_PROGRAM_SET_FROZEN_ITEM"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-PLAYER_CAN_GLIDE_CHANGED-122": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "PLAYER_CAN_GLIDE_CHANGED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-WEAR_EQUIPMENT_SET-125": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "WEAR_EQUIPMENT_SET"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"WEAR_EQUIPMENT_SET\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-BNSendSoR-71": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "BNSendSoR"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_BarberShop.GetCurrentCharacterData-77": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_BarberShop.GetCurrentCharacterData"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_ClassTalents.LoadConfig-79": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClassTalents.LoadConfig"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_CraftingOrders.GetNumFavoriteCustomerOptions-20": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_CraftingOrders.GetNumFavoriteCustomerOptions"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_CraftingOrders.GetPersonalOrdersInfo-21": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_CraftingOrders.GetPersonalOrdersInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_EditMode.OnLayoutAdded-82": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_EditMode.OnLayoutAdded"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_Mail.SetOpeningAll-22": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Mail.SetOpeningAll"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_ModelInfo.GetModelSceneInfoByID-85": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ModelInfo.GetModelSceneInfoByID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_MountJournal.GetAllCreatureDisplayIDsForMountID-23": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_MountJournal.GetAllCreatureDisplayIDsForMountID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PerksActivities.AddTrackedPerksActivity-24": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PerksActivities.AddTrackedPerksActivity"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_PerksActivities.ClearPerksActivitiesPendingCompletion-25": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PerksActivities.ClearPerksActivitiesPendingCompletion"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_PerksActivities.GetAllPerksActivityTags-26": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PerksActivities.GetAllPerksActivityTags"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_PerksActivities.GetPerksActivitiesInfo-27": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PerksActivities.GetPerksActivitiesInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_PerksActivities.GetPerksActivitiesPendingCompletion-28": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PerksActivities.GetPerksActivitiesPendingCompletion"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_PerksActivities.GetPerksActivityChatLink-29": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PerksActivities.GetPerksActivityChatLink"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_PerksActivities.GetPerksActivityInfo-30": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PerksActivities.GetPerksActivityInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_PerksActivities.GetTrackedPerksActivities-31": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PerksActivities.GetTrackedPerksActivities"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_PerksActivities.RemoveTrackedPerksActivity-32": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PerksActivities.RemoveTrackedPerksActivity"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_PerksProgram.ClearFrozenPerksVendorItem-33": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PerksProgram.ClearFrozenPerksVendorItem"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PerksProgram.CloseInteraction-34": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PerksProgram.CloseInteraction"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PerksProgram.GetAvailableCategoryIDs-35": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PerksProgram.GetAvailableCategoryIDs"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_PerksProgram.GetAvailableVendorItemIDs-36": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PerksProgram.GetAvailableVendorItemIDs"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_PerksProgram.GetCategoryInfo-37": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PerksProgram.GetCategoryInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_PerksProgram.GetCurrencyAmount-38": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PerksProgram.GetCurrencyAmount"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_PerksProgram.GetDraggedPerksVendorItem-39": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PerksProgram.GetDraggedPerksVendorItem"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PerksProgram.GetFrozenPerksVendorItemInfo-40": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PerksProgram.GetFrozenPerksVendorItemInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PerksProgram.GetPendingChestRewards-41": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PerksProgram.GetPendingChestRewards"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_PerksProgram.GetPerksProgramItemDisplayInfo-42": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PerksProgram.GetPerksProgramItemDisplayInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PerksProgram.GetTimeRemaining-43": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PerksProgram.GetTimeRemaining"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PerksProgram.GetVendorItemInfo-45": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PerksProgram.GetVendorItemInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PerksProgram.GetVendorItemInfoRefundTimeLeft-44": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PerksProgram.GetVendorItemInfoRefundTimeLeft"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PerksProgram.ItemSelectedTelemetry-46": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PerksProgram.ItemSelectedTelemetry"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PerksProgram.PickupPerksVendorItem-47": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PerksProgram.PickupPerksVendorItem"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PerksProgram.RequestPendingChestRewards-48": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PerksProgram.RequestPendingChestRewards"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_PerksProgram.RequestPurchase-49": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PerksProgram.RequestPurchase"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PerksProgram.RequestRefund-50": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PerksProgram.RequestRefund"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PerksProgram.ResetHeldItemDragAndDrop-51": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PerksProgram.ResetHeldItemDragAndDrop"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PerksProgram.SetFrozenPerksVendorItem-52": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PerksProgram.SetFrozenPerksVendorItem"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PlayerInfo.CanUseItem-53": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PlayerInfo.CanUseItem"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PlayerInfo.GetDisplayID-54": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PlayerInfo.GetDisplayID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_PlayerInfo.GetGlidingInfo-55": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PlayerInfo.GetGlidingInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_PlayerInfo.GetPlayerCharacterData-56": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PlayerInfo.GetPlayerCharacterData"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PlayerInfo.IsTradingPostAvailable-57": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PlayerInfo.IsTradingPostAvailable"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_PlayerInfo.IsTravelersLogAvailable-58": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PlayerInfo.IsTravelersLogAvailable"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_PvP.ArePvpTalentsUnlocked-59": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.ArePvpTalentsUnlocked"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PvP.GetPVPActiveRatedMatchDeserterPenalty-60": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.GetPVPActiveRatedMatchDeserterPenalty"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PvP.GetPvpTalentsUnlockedLevel-61": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.GetPvpTalentsUnlockedLevel"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_PvP.IsInRatedMatchWithDeserterPenalty-62": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.IsInRatedMatchWithDeserterPenalty"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.ContinueRecast-72": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.ContinueRecast"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.GetRecipeOutputItemData-87": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetRecipeOutputItemData"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TradeSkillUI.GetRecipeRepeatCount-73": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetRecipeRepeatCount"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.GetRecipesTracked-89": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetRecipesTracked"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TradeSkillUI.GetRemainingRecasts-63": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetRemainingRecasts"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TradeSkillUI.HasRecipesTracked-74": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.HasRecipesTracked"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.IsRecipeFirstCraft-64": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.IsRecipeFirstCraft"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.IsRecipeTracked-91": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.IsRecipeTracked"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TradeSkillUI.SetRecipeTracked-93": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.SetRecipeTracked"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_Traits.GenerateInspectImportString-65": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Traits.GenerateInspectImportString"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_Traits.ResetTreeByCurrency-66": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Traits.ResetTreeByCurrency"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-IsUsingGamepad-67": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "IsUsingGamepad"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-IsUsingMouse-68": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "IsUsingMouse"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": false
+  }
+}
