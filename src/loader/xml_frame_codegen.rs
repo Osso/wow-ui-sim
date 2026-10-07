@@ -362,7 +362,7 @@ fn format_key_value_lua(
 }
 
 /// Append SetAttribute calls for `<Attributes>` XML elements.
-fn append_xml_attributes_code(lua_code: &mut String, frame: &crate::xml::FrameXml) {
+pub(crate) fn append_xml_attributes_code(lua_code: &mut String, frame: &crate::xml::FrameXml) {
     if let Some(attrs) = frame.xml_attributes() {
         for attr in &attrs.entries {
             let value = match attr.attr_type.as_deref() {

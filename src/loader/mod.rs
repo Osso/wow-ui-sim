@@ -55,6 +55,7 @@ pub use startup_addons::{
 };
 pub use xml_frame::create_frame_from_xml;
 pub use xml_frame::{fast_create_frame_profile_body_report, fast_create_frame_profile_report};
+pub(crate) use xml_frame_codegen::append_xml_attributes_code;
 
 #[doc(hidden)]
 pub fn enter_bytecode_cache_parent_bypass_mode() {

@@ -1,6 +1,7 @@
 //! Runtime template chain application: applies XML template inheritance to
 //! frames created via `CreateFrame("Frame", name, parent, "TemplateName")`.
 
+mod attributes;
 mod builders;
 mod fast_types;
 mod parser;
@@ -251,6 +252,7 @@ fn apply_chain_entries(
         let previous_local_source = install_template_local_source(state, entry.local_source);
         apply_block_mixins(state, frame_id, entry.frame.mixins())?;
         apply_template_key_values(state, frame_id, entry.frame.all_key_values());
+        attributes::apply_xml_attributes(state, frame_id, &entry.frame)?;
         restore_template_local_source(state, previous_local_source);
         let entry_is_intrinsic = entry.frame.intrinsic == Some(true);
         if let Some(scripts) = entry.frame.scripts() {

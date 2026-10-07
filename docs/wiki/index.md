@@ -4,6 +4,11 @@
 
 ## [2026-10-07] evidence | 10.2.6 page audit
 
+## [2026-10-07] evidence | 10.1.7 page audit
+
+[Audit](investigations/patch-10-1-7-api-audit.md) accounts for 48 inventory + 55 extract occurrences, stale header counts, fourteen retained publication gaps and omitted runtime XML template attributes. Targeted final proof pending.
+
+
 [Audit](investigations/patch-10-2-6-api-audit.md) accounts for 220 inventory + 138 extract occurrences, three unused retail retirements, twenty exact publication gaps and one historical CVar default mismatch. Seventeen isolated sweeps, negative control, repeated lookup and cached prefork pass; format, Mists check (zero non-vendor warnings), retail build and exit-0 startup `[]` pass. All 104 later inputs preserved; substantive extract behavior remains pending.
 
 ## [2026-10-07] evidence | 10.2.5 page audit
