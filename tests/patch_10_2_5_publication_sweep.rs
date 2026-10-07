@@ -13,7 +13,7 @@ fn patch_10_2_5_publication_sweep() {
         register_env: "P1025_SWEEP_REGISTER",
         out_env: "P1025_SWEEP_OUT",
         later_registers: &[
-            // Add 10.2.6 here after its independent audit merges.
+            include_str!("../data/patch-api/sources/10.2.6-wikitext-register.json"),
             include_str!("../data/patch-api/sources/10.2.7-wikitext-register.json"),
             include_str!("../data/patch-api/sources/11.0.0-wikitext-register.json"),
             include_str!("../data/patch-api/sources/11.0.2-wikitext-register.json"),

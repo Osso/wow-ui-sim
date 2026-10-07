@@ -4,7 +4,7 @@ Page 564286, revision 5993852 (March 24, 2024, 16:20:32 UTC), retrieved October 
 
 ## Source and accounting
 
-59 inventory occurrences: 43 added, 13 removed, three changed. All eight header counts match. Sixteen later registers, 10.2.7 through 12.1.0, supersede chronologically. Independent 10.2.6 is deliberately excluded; its later-register include is a one-line integration change. Read-only retained 10.2.6 register has no matching symbol among the fourteen 10.2.5 gaps, so none is predicted to be superseded by it.
+59 inventory occurrences: 43 added, 13 removed, three changed. All eight header counts match. Seventeen later registers, 10.2.6 through 12.1.0, supersede chronologically. 10.2.6 was added at integration after its audit merged; the sweep still passes with the same fourteen exact gaps, matching the read-only prediction that no 10.2.5 gap symbol appears in the 10.2.6 register.
 
 415 unique source IDs: 59 inventory + 356 extract. Ledger: 35 partial-development-green, ten bounded-coverage, 96 audit-pending and 274 metadata-only. Extract scout assigns all 356 IDs exactly once: 82 substantive contracts pending, 274 editorial/documentary occurrences. The 253-row Blizzard Docs section records documentation backfill, not newly added runtime functions; every identity remains retained with no runtime credit. No inventory publication probe implies populated DTOs, enum values, signatures, security or native behavior.
 

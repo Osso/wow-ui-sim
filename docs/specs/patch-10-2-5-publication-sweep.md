@@ -5,7 +5,7 @@ Account for Warcraft Wiki page 564286, revision 5993852 (2024-03-24T16:20:32Z), 
 ## What it must do
 
 - [x] Probe all 59 inventory occurrences in isolated cached Game UI; failures exactly equal the reviewed gap fixture.
-- [x] Apply sixteen later registers (10.2.7 through 12.1.0) chronologically. Adding independent 10.2.6 requires one include before 10.2.7.
+- [x] Apply seventeen later registers (10.2.6 through 12.1.0) chronologically.
 - [x] Construct VertexColor as a texture animation, not an invented frame kind; missing endpoint methods remain gaps.
 - [x] Retain all 356 extract occurrences, including verbatim Lua/XML examples; account for all 415 source IDs exactly once. Documentary backfill gives no runtime credit.
 - [x] Negative control changes one published, unsuperseded API to removed and produces exactly one additional gap.
