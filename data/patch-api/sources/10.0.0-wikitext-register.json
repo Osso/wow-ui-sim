@@ -3303,7 +3303,8 @@
       "direction": "added",
       "symbol": "ModelSceneActor OnModelCleared",
       "annotation": "",
-      "wikitext_line": 659
+      "wikitext_line": 659,
+      "kind": "widget-script"
     },
     {
       "id": "wt-widgets-Region:ClearPointByName-662",

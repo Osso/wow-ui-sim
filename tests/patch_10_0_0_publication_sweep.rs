@@ -44,3 +44,26 @@ fn patch_10_0_0_publication_sweep(env: &WowLuaEnv) {
     });
 }
 }
+
+prefork_full_ui_case! {
+fn patch_10_0_0_animation_probe_factories(env: &WowLuaEnv) {
+    for symbol in [
+        "Scale:GetScaleFrom",
+        "Path:GetCurveType",
+        "FlipBook:GetFlipBookColumns",
+        "ScriptRegionResizing:ClearPoint",
+    ] {
+        let entry = sweep::Entry {
+            id: symbol.into(),
+            section: "widgets".into(),
+            direction: "added".into(),
+            symbol: symbol.into(),
+            page_default: None,
+            kind: None,
+        };
+        let (kind, detail, _, _, _) = sweep::probe_entry(env, &entry, false, &std::collections::BTreeMap::new());
+        assert_eq!(kind, "object-method", "{symbol}: {detail}");
+        assert!(!detail.contains("factory:"), "{symbol}: {detail}");
+    }
+}
+}

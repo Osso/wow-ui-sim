@@ -132,6 +132,13 @@ local function create_object(owner)
         Frame = function() return frame end,
         FrameScriptObject = function() return frame end,
         ScriptRegion = function() return frame end,
+        ScriptRegionResizing = function() return frame end,
+        WorldFrame = function() return WorldFrame end,
+        Scale = function() return frame:CreateAnimationGroup():CreateAnimation('Scale') end,
+        Path = function() return frame:CreateAnimationGroup():CreateAnimation('Path') end,
+        FlipBook = function()
+            return frame:CreateTexture():CreateAnimationGroup():CreateAnimation('FlipBook')
+        end,
         Region = function() return frame:CreateTexture() end,
         ColorCurveObject = function() return C_CurveUtil.CreateColorCurve() end,
         CurveObject = function() return C_CurveUtil.CreateCurve() end,
@@ -231,10 +238,12 @@ local function probe_command()
 end
 local function classify()
     if entryKind == 'widget-script' then
-        -- MovieFrame owns these scripts; failed construction proves no absence.
-        local movie = CreateFrame('MovieFrame')
-        local supported = movie:HasScript(symbol)
-        return result('widget-script', 'MovieFrame HasScript=' .. tostring(supported), supported ~= removed)
+        -- Older handler links include an owner; unqualified movie handlers retain their owner.
+        local owner, script = string.match(symbol, '^(%S+)%s+(%S+)$')
+        owner, script = owner or 'MovieFrame', script or symbol
+        local object = create_object(owner)
+        local supported = object:HasScript(script)
+        return result('widget-script', owner .. ' HasScript=' .. tostring(supported), supported ~= removed)
     end
     if entryKind == 'command' then return probe_command() end
     if section == 'events' then return probe_event() end
