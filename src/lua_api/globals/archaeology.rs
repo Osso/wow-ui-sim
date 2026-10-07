@@ -408,11 +408,18 @@ pub fn register_all(lua: &mut rilua::Lua) -> crate::Result<()> {
         is_artifact_completion_history_available,
     )?;
     LuaApiMut::register_function(lua, "GetArtifactInfoByRace", get_artifact_info_by_race)?;
-    LuaApiMut::register_function(
-        lua,
-        "RequestArtifactCompletionHistory",
-        request_artifact_completion_history,
-    )?;
+    // Removed in 10.1.5; retain the modeled request for classic clients only.
+    let retail = matches!(
+        crate::client_profile::ACTIVE,
+        crate::client_profile::ClientProfile::Retail | crate::client_profile::ClientProfile::Ptr
+    );
+    if !retail {
+        LuaApiMut::register_function(
+            lua,
+            "RequestArtifactCompletionHistory",
+            request_artifact_completion_history,
+        )?;
+    }
     LuaApiMut::register_function(lua, "CloseResearch", close_research)?;
     Ok(())
 }

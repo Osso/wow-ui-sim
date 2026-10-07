@@ -64,6 +64,7 @@ fn is_artifact_completion_history_available_reflects_seeded_state() {
 }
 
 #[test]
+#[cfg(not(any(feature = "client-retail", feature = "client-ptr")))]
 fn request_artifact_completion_history_flips_availability_to_true() {
     let env = env();
     env.exec("RequestArtifactCompletionHistory()").unwrap();

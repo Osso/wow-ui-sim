@@ -1,0 +1,10 @@
+tests/patch_10_1_5_publication_fixes.rs:9:assert(rawget(_G, 'RequestArtifactCompletionHistory') == nil)
+tests/patch_10_1_5_publication_fixes.rs:10:assert(RequestArtifactCompletionHistory == nil)
+src/lua_api/sim_substates/archaeology.rs:96:    /// `RequestArtifactCompletionHistory` flips it to true so addons that
+tests/archaeology_completion_history.rs:3://! `RequestArtifactCompletionHistory`) consumed by the completed-page
+tests/archaeology_completion_history.rs:67:fn request_artifact_completion_history_flips_availability_to_true() {
+tests/archaeology_completion_history.rs:69:    env.exec("RequestArtifactCompletionHistory()").unwrap();
+src/lua_api/globals/archaeology.rs:40://! - `RequestArtifactCompletionHistory()` — server-driven companion;
+src/lua_api/globals/archaeology.rs:316:fn request_artifact_completion_history(state: &mut LuaState) -> LuaResult<u32> {
+src/lua_api/globals/archaeology.rs:413:        "RequestArtifactCompletionHistory",
+src/lua_api/globals/archaeology.rs:414:        request_artifact_completion_history,

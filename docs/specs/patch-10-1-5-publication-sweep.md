@@ -6,7 +6,7 @@ Account for Warcraft Wiki page 396196, revision 3807695 (2023-08-02T17:30:43Z). 
 
 - [x] Parse all 101 inventory occurrences, including level-two headings; retain source header mismatches rather than dropping rows.
 - [x] Probe publication/absence using nineteen chronological later registers, 10.2.0 through 12.1.0. Insert independently integrated 10.1.7 first when available.
-- [x] Retail/PTR must not fabricate unused C_CampaignInfo.UsesNormalQuestIcons. Classic registrations and cached Blizzard Lua remain unchanged.
+- [x] Retail/PTR must not fabricate unused C_CampaignInfo.UsesNormalQuestIcons or register RequestArtifactCompletionHistory. Classic registrations, archaeology availability/data queries and cached Blizzard Lua remain unchanged.
 - [ ] Require exact reviewed publication gaps and exhaustive patch-page-coverage/v1 source accounting. Publication, event registration and default values do not imply signatures, populated outputs, security or native parity.
 - [ ] Preserve all existing registers byte-identically and extracts reproducibly; prove parser extensions with behavioral fixtures.
 

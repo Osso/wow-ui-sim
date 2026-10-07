@@ -6,6 +6,9 @@ assert(rawget(C_CampaignInfo, 'UsesNormalQuestIcons') == nil)
 assert(C_CampaignInfo.UsesNormalQuestIcons == nil)
 assert(C_CampaignInfo.UsesNormalQuestIcons == nil)
 assert(type(C_CampaignInfo.GetCampaignInfo) == 'function')
+assert(rawget(_G, 'RequestArtifactCompletionHistory') == nil)
+assert(RequestArtifactCompletionHistory == nil)
+assert(type(IsArtifactCompletionHistoryAvailable) == 'function')
 "#;
 
 #[test]
