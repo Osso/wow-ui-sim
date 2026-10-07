@@ -1,0 +1,13 @@
+{
+  "method": "Manual changed-line Rust readability review; no agents/models",
+  "revision": "97101ee9554c94830dd97aa88b57380847025af8",
+  "files": [
+    "src/c_api/item_spell/c_item.rs",
+    "src/c_api/patch_retired_members.rs",
+    "tests/patch_11_0_2_publication_sweep.rs",
+    "tests/patch_11_0_2_publication_fixes.rs",
+    "tests/patch_11_0_2_cached_surfaces.rs"
+  ],
+  "findings": [],
+  "scope": "Single short metadata predicate, declarative retirement list and behavioral fixtures; no new deep nesting, warning suppression, hidden IO or new test target."
+}

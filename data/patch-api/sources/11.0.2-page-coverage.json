@@ -18,7 +18,8 @@
         "tests/common/publication_sweep.rs"
       ],
       "compiled_revision": "aefaa9605",
-      "ledger": "data/patch-api/evidence/11.0.2-session-2026-10-06/p1102-sweep-result.json"
+      "ledger": "data/patch-api/evidence/11.0.2-session-2026-10-06/p1102-sweep-result.json",
+      "proof": "Fourteen isolated sweeps pass exact fixtures; one-row negative 12 -> 13; all source hashes and 78 preserved inputs retained. Runtime revision aefaa9605, final targeted gates 97101ee95 (no subsequent runtime changes)."
     },
     {
       "id": "item-binding-11-0-2",
@@ -32,7 +33,8 @@
         "tests/patch_11_0_2_cached_surfaces.rs"
       ],
       "implementation": "src/c_api/item_spell/c_item.rs",
-      "compiled_revision": "aefaa9605"
+      "compiled_revision": "aefaa9605",
+      "proof": "Two behavior tests RED then GREEN; new full cached Game prefork and existing weekly addon-load prefork pass. Mists check zero non-vendor warnings; bounded exit-0 startup []."
     }
   ],
   "non_inventory_source": {
@@ -1666,5 +1668,11 @@
       "status": "audit-pending",
       "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
     }
-  ]
+  ],
+  "summary": {
+    "partial-development-green": 15,
+    "bounded-coverage": 7,
+    "audit-pending": 213,
+    "metadata-only": 28
+  }
 }

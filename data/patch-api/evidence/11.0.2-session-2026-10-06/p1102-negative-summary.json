@@ -1,0 +1,11 @@
+{
+  "altered_symbol": "C_Item.IsItemBindToAccountUntilEquip",
+  "alteration": "added -> removed; all other input rows unchanged",
+  "baseline_gaps": 12,
+  "negative_gaps": 13,
+  "new_gaps": [
+    "wt-global-api-C_Item.IsItemBindToAccountUntilEquip-43"
+  ],
+  "resolved_gaps": [],
+  "expected_exit_code": 101
+}

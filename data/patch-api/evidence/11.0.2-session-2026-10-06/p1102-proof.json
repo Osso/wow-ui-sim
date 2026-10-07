@@ -14,7 +14,11 @@
     "exit_code": 101,
     "log": "target/p1102-logs/discovery.log",
     "scope": "Initial discovery with empty known-gap fixture",
-    "invalidated": false
+    "invalidated": false,
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1102-page/target",
+      "P1102_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1102-page/data/patch-api/evidence/11.0.2-session-2026-10-06/p1102-initial-result.json"
+    }
   },
   {
     "command": [
@@ -33,7 +37,10 @@
     "scope": "New uncommitted behavioral tests; missing retirement and explicit binding producer RED",
     "exit_code": 101,
     "log": "target/p1102-logs/behavior-red.log",
-    "invalidated": false
+    "invalidated": false,
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1102-page/target"
+    }
   },
   {
     "command": [
@@ -410,6 +417,234 @@
     "summary": [
       "test patch_12_1_0_publication_sweep::patch_12_1_0_publication_sweep ... ok",
       "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10812 filtered out; finished in 4.40s"
+    ]
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_0_2_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1102-page",
+    "revision": "97101ee9554c94830dd97aa88b57380847025af8",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1102-page/target",
+      "P1102_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p1102-page/target/p1102-logs/negative-register.json",
+      "P1102_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p1102-page/data/patch-api/evidence/11.0.2-session-2026-10-06/p1102-negative-result.json"
+    },
+    "exit_code": 101,
+    "expected_exit_code": 101,
+    "scope": "negative-control",
+    "invalidated": false,
+    "log": "target/p1102-logs/negative-control.log",
+    "summary": [
+      "test patch_11_0_2_publication_sweep::patch_11_0_2_publication_sweep ... FAILED",
+      "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10812 filtered out; finished in 4.47s",
+      "assertion `left == right` failed: new gaps: [\"wt-global-api-C_Item.IsItemBindToAccountUntilEquip-43\"]; resolved/stale gaps: []"
+    ]
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "patch_11_0_2_cached_retirements_and_item_binding"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1102-page",
+    "revision": "97101ee9554c94830dd97aa88b57380847025af8",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1102-page/target"
+    },
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "scope": "prefork-new",
+    "invalidated": false,
+    "log": "target/p1102-logs/prefork-new.log",
+    "summary": [
+      "test patch_11_0_2_cached_surfaces::patch_11_0_2_cached_retirements_and_item_binding ... ok",
+      "test result: ok. 1 passed; 0 failed; 1 total"
+    ]
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "blizzard_weekly_rewards_loads::loads_without_addon_specific_lua_errors"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1102-page",
+    "revision": "97101ee9554c94830dd97aa88b57380847025af8",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1102-page/target"
+    },
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "scope": "prefork-weekly",
+    "invalidated": false,
+    "log": "target/p1102-logs/prefork-weekly.log",
+    "summary": [
+      "test blizzard_weekly_rewards_loads::loads_without_addon_specific_lua_errors ... ok",
+      "test result: ok. 1 passed; 0 failed; 1 total"
+    ]
+  },
+  {
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tools",
+      "-p",
+      "test_extract_patch_non_inventory.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1102-page",
+    "revision": "97101ee9554c94830dd97aa88b57380847025af8",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1102-page/target"
+    },
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "scope": "extract-fixtures",
+    "invalidated": false,
+    "log": "target/p1102-logs/extract-fixtures.log",
+    "summary": [
+      "Ran 15 tests in 0.003s",
+      "OK"
+    ]
+  },
+  {
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tools",
+      "-p",
+      "test_gen_patch_wikitext_register.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1102-page",
+    "revision": "97101ee9554c94830dd97aa88b57380847025af8",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1102-page/target"
+    },
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "scope": "register-fixtures",
+    "invalidated": false,
+    "log": "target/p1102-logs/register-fixtures.log",
+    "summary": [
+      "Ran 3 tests in 0.001s",
+      "OK"
+    ]
+  },
+  {
+    "command": [
+      "cargo",
+      "fmt",
+      "--check"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1102-page",
+    "revision": "97101ee9554c94830dd97aa88b57380847025af8",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1102-page/target"
+    },
+    "exit_code": 0,
+    "expected_exit_code": 0,
+    "scope": "fmt-check",
+    "invalidated": false,
+    "log": "target/p1102-logs/fmt-check.log",
+    "summary": []
+  },
+  {
+    "command": [
+      "cargo",
+      "check",
+      "--no-default-features",
+      "--features",
+      "sound,gui,casc,client-mists",
+      "--tests"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1102-page",
+    "revision": "97101ee9554c94830dd97aa88b57380847025af8",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1102-page/target"
+    },
+    "exit_code": 0,
+    "scope": "mists-test-check",
+    "invalidated": false,
+    "log": "target/p1102-logs/mists-check.log",
+    "warning_lines": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings"
+    ],
+    "non_vendor_warnings": [],
+    "summary": [
+      "    Checking pollster v0.4.0",
+      "    Checking unicode-blocks v0.1.10",
+      "    Checking similar v2.7.0",
+      "    Checking insta v1.46.0",
+      "    Finished `dev` profile [optimized + debuginfo] target(s) in 1m 46s"
+    ],
+    "vendor_warning_count": 6
+  },
+  {
+    "command": [
+      "cargo",
+      "build",
+      "--bin",
+      "wow-sim"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1102-page",
+    "revision": "97101ee9554c94830dd97aa88b57380847025af8",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1102-page/target"
+    },
+    "exit_code": 0,
+    "scope": "retail-binary-build",
+    "invalidated": false,
+    "log": "target/p1102-logs/retail-build.log",
+    "summary": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings",
+      "    Finished `dev` profile [optimized + debuginfo] target(s) in 0.26s"
+    ]
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "/home/osso/.worktrees/wow-ui-sim-p1102-page/target/debug/wow-sim",
+      "--no-addons",
+      "--no-saved-vars",
+      "lua-errors"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1102-page",
+    "revision": "97101ee9554c94830dd97aa88b57380847025af8",
+    "exit_code": 0,
+    "scope": "bounded-retail-startup",
+    "invalidated": false,
+    "log": "target/p1102-logs/startup.log",
+    "stdout": "[]\n",
+    "summary": [
+      "Lua errors: 0 unique, 0 occurrence(s)",
+      "Attributed owners: 0",
+      "Unattributed Lua errors: 0 occurrence(s)",
+      "Dropping OutputStream, audio playing through this stream will stop"
     ]
   }
 ]

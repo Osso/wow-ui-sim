@@ -20,7 +20,9 @@ Four closures leave 12 exact publication gaps. [Per-ID review](../../../data/pat
 
 ## Verification
 
-Runtime revision aefaa9605. Two behavioral tests RED before fixes, GREEN afterward. Fourteen isolated publication sweeps pass unchanged later fixtures; [table](../../specs/patch-11-0-2-publication-sweep.md#local-proof). Remaining final targeted proof recorded in [proof ledger](../../../data/patch-api/evidence/11.0.2-session-2026-10-06/p1102-proof.json); no independent/native acceptance claim.
+Runtime revision aefaa9605. Two behavioral tests RED before fixes, GREEN afterward. Fourteen isolated publication sweeps pass unchanged later fixtures; [table](../../specs/patch-11-0-2-publication-sweep.md#local-proof). Negative control changes only the new item query added → removed: exactly one new failure, no resolved failures, 12 → 13 gaps and expected exit 101. Two isolated one-filter prefork runs pass: new retirement/item surfaces and existing weekly-reward addon load. Eighteen extractor/register fixtures pass. Fourteen registers regenerate byte-identically; 78 later source/register/fixture/ledger inputs match branch base unchanged.
+
+Formatting passes. Mists test check passes with zero non-vendor warnings; six existing iced vendor manifest deprecations plus summary remain unsuppressed. Separate retail build and bounded startup exit 0 with JSON `[]`. Changed Rust lines reviewed manually; no readability findings. Commands/revisions/outcomes retained in [proof ledger](../../../data/patch-api/evidence/11.0.2-session-2026-10-06/p1102-proof.json). [Artifact validator](../../../data/patch-api/evidence/11.0.2-session-2026-10-06/p1102-validate.py) checks source hashes, supersession, exact gaps and all source IDs. No independent/native acceptance claim.
 
 Every command uses explicit cwd p1102-page and its own target directory. Worktree creation uses the prescribed canonical Git metadata operation with cwd in the empty destination. No canonical working files, siblings, cache/vendor Lua or Wowless edited; no full suite, agents/models, push or merge.
 
