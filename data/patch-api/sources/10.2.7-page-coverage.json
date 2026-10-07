@@ -20,7 +20,7 @@
       ],
       "compiled_revision": "3b2ae8efc",
       "ledger": "data/patch-api/evidence/10.2.7-session-2026-10-07/p1027-sweep-result.json",
-      "proof": "Sixteen isolated sweeps pass exact fixtures; two behavior tests RED/GREEN, one cached Game prefork and existing PvP successor test pass. One-row negative control adds only stable-close absence failure (36 to 37), expected exit 101. Format/Mists/startup final gates pending."
+      "proof": "Sixteen isolated sweeps pass exact fixtures. Two bounded behavior tests RED/GREEN, one cached Game prefork, seeded PvP successor and eighteen parser/extractor fixtures pass. Negative control adds one exact failure (36 to 37), expected exit 101. Formatting, Mists tests check with zero non-vendor warnings, retail binary build and bounded exit-0 startup [] pass at f837ecf18. No native or independent acceptance claim."
     }
   ],
   "non_inventory_source": {

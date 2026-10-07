@@ -18,7 +18,7 @@ The page ledger must contain every inventory/extract ID once, with explicit proo
 - [x] New stable state/event and repeated-lookup behavior tests; cached prefork migration.
 - [x] One-row negative control adds exactly one failure without resolving existing failures.
 - [x] All fifteen old registers regenerate byte-identically; exhaustive source-ID accounting.
-- [ ] Formatting, Mists tests check with zero non-vendor warnings, separate retail binary build and bounded startup `[]`.
+- [x] Formatting, Mists tests check with zero non-vendor warnings, separate retail binary build and bounded startup `[]`.
 
 ## Local proof
 

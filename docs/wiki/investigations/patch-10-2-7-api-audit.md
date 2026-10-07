@@ -22,7 +22,7 @@ C_StableInfo.ClosePetStables now uses existing stable-open state, clears it and 
 
 Runtime/test revision 3b2ae8efc. Two behavioral tests fail before the runtime fix and pass afterward. Sixteen isolated publication sweeps pass exact fixtures; [table](../../specs/patch-10-2-7-publication-sweep.md#local-proof). Negative control changes only C_StableInfo.ClosePetStables added → removed: exactly one new failure, no resolved failures, 36 → 37 gaps and expected exit 101. New full cached Game prefork migration passes; existing seeded PvP successor test passes. Eighteen parser/extractor fixtures pass, tooling unchanged.
 
-Formatting, Mists tests check, separate retail binary build and bounded startup gates remain pending at this accounting commit. Changed Rust reviewed manually: short existing-state producer, explicit profile gates and interface factory; no readability violations. [Proof ledger](../../../data/patch-api/evidence/10.2.7-session-2026-10-07/p1027-proof.json) retains commands/revisions/results. Failed development attempts are preserved: EventQueue has drain, not clear; cached macro module needs its own WowLuaEnv import. Compiler failures provide no behavior credit. No native or independent acceptance claim.
+At accounting revision f837ecf18, cargo fmt --check and Mists tests check pass with zero non-vendor warnings. Six existing iced vendor manifest deprecations plus their summary remain unsuppressed. Separate retail binary build passes; bounded startup exits 0 with JSON `[]`. Artifact validation remains pending at this commit. Changed Rust reviewed manually: short existing-state producer, explicit profile gates and interface factory; no readability violations. [Proof ledger](../../../data/patch-api/evidence/10.2.7-session-2026-10-07/p1027-proof.json) retains commands/revisions/results. Failed development attempts are preserved: EventQueue has drain, not clear; cached macro module needs its own WowLuaEnv import. Compiler failures provide no behavior credit. No native or independent acceptance claim.
 
 Every command uses explicit cwd p1027-page and its own target. Worktree creation used prescribed canonical Git metadata operation with cwd in empty destination. No canonical working files, siblings, cache/vendor Lua or Wowless edited; no full suite, agents/models, push or merge.
 
@@ -33,6 +33,7 @@ Every command uses explicit cwd p1027-page and its own target. Worktree creation
 - [Publication contract](../../specs/patch-10-2-7-publication-sweep.md)
 - [Retirement searches](../../../data/patch-api/evidence/10.2.7-session-2026-10-07/p1027-retirement-consumers.json)
 - [Register reproduction](../../../data/patch-api/evidence/10.2.7-session-2026-10-07/p1027-register-reproduction.json)
+- [Artifact validator](../../../data/patch-api/evidence/10.2.7-session-2026-10-07/p1027-validate.py) — hashes, all source IDs, exact chronological sweeps/gaps, negative control and portable historical proof scopes.
 
 ## See Also
 

@@ -191,3 +191,7 @@ Retained revision and all inventory/extract source IDs; [audit](investigations/p
 ## 2026-10-07 — Patch 10.2.7 page audit
 
 Created [[patch-10-2-7-api-audit]]: revision 6268738, exhaustive 187-ID accounting, three runtime closures, four corrected FontInstance probes and 36 retained publication gaps. Sixteen isolated sweeps, precise negative control and stable/PvP targeted proofs retained; final Mists/build/startup gates pending. Existing later registers/ledgers/fixtures unchanged.
+
+## 2026-10-07 — Patch 10.2.7 targeted gates
+
+Updated [[patch-10-2-7-api-audit]]: formatting, Mists tests check with zero non-vendor warnings, retail binary build and bounded exit-0 startup `[]` pass at f837ecf18. Added portable artifact validator; retained failures as development-only evidence. No broad suite rerun.

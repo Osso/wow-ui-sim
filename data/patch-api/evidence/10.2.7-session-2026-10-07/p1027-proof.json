@@ -88,7 +88,7 @@
     ],
     "revision": "1117a55a86ee0cff7a8ba43aad0cc2bbf54ce3a7",
     "exit_code": 101,
-    "log": "data/patch-api/evidence/10.2.7-session-2026-10-07/p1027-fixes-green.log",
+    "log": null,
     "scope": "two bounded migration behavior tests",
     "invalidated": true,
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p1027-page",
@@ -96,10 +96,12 @@
       "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1027-page/target"
     },
     "summary": [
-      "running 2 tests",
-      "test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 10816 filtered out; finished in 0.87s"
+      "error[E0425]: cannot find type `WowLuaEnv` in this scope",
+      "tests/common/mod.rs:120:38: generated prefork macro module needs WowLuaEnv import",
+      "error: could not compile `wow-ui-sim` (test \"integration\") due to 1 previous error"
     ],
-    "invalidated_reason": "Development discovery/RED or compile failure; superseded by current behavior/sweep proofs, not final runtime acceptance."
+    "invalidated_reason": "Development discovery/RED or compile failure; superseded by current behavior/sweep proofs, not final runtime acceptance.",
+    "output_preservation": "Compiler diagnostic excerpt retained from original tool output; initial log was overwritten by the passing attempt. No behavior proof."
   },
   {
     "command": [
@@ -646,5 +648,95 @@
       "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1027-page/target"
     },
     "summary": []
+  },
+  {
+    "command": [
+      "cargo",
+      "fmt",
+      "--check"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1027-page",
+    "revision": "f837ecf189fc02f0d245ac2433e8a73d27efad6a",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1027-page/target"
+    },
+    "exit_code": 0,
+    "log": "data/patch-api/evidence/10.2.7-session-2026-10-07/p1027-fmt-check.log",
+    "scope": "fmt-check",
+    "summary": [],
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "check",
+      "--no-default-features",
+      "--features",
+      "sound,gui,casc,client-mists",
+      "--tests"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1027-page",
+    "revision": "f837ecf189fc02f0d245ac2433e8a73d27efad6a",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1027-page/target"
+    },
+    "exit_code": 0,
+    "log": "data/patch-api/evidence/10.2.7-session-2026-10-07/p1027-mists-check.log",
+    "scope": "mists-check",
+    "summary": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings",
+      "    Finished `dev` profile [optimized + debuginfo] target(s) in 11m 09s"
+    ],
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "build",
+      "--bin",
+      "wow-sim"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1027-page",
+    "revision": "f837ecf189fc02f0d245ac2433e8a73d27efad6a",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1027-page/target"
+    },
+    "exit_code": 0,
+    "log": "data/patch-api/evidence/10.2.7-session-2026-10-07/p1027-retail-build.log",
+    "scope": "retail-build",
+    "summary": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings",
+      "    Finished `dev` profile [optimized + debuginfo] target(s) in 4.36s"
+    ],
+    "invalidated": false
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "/home/osso/.worktrees/wow-ui-sim-p1027-page/target/debug/wow-sim",
+      "--no-addons",
+      "--no-saved-vars",
+      "lua-errors"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1027-page",
+    "revision": "f837ecf189fc02f0d245ac2433e8a73d27efad6a",
+    "exit_code": 0,
+    "log": "data/patch-api/evidence/10.2.7-session-2026-10-07/p1027-startup.log",
+    "scope": "startup",
+    "stdout": "[]\n",
+    "invalidated": false
   }
 ]
