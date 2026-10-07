@@ -1,0 +1,15 @@
+{
+  "patch": "11.1.5",
+  "title": "Patch 11.1.5/API changes",
+  "pageid": 621744,
+  "source_url": "https://warcraft.wiki.gg/wiki/Patch_11.1.5/API_changes",
+  "wikitext": {
+    "file": "11.1.5-api-changes.wikitext",
+    "method": "MediaWiki action=query prop=revisions rvprop=ids|timestamp|content rvslots=main; read-only browser fetch (direct HTTP returned 403)",
+    "revid": 6726775,
+    "revision_timestamp": "2026-05-25T20:31:56Z",
+    "retrieved": "2026-10-06",
+    "sha256": "c77d271d67c0080d17f3e1610a7e0d11eb9ec64863cf75545d264f441582707e",
+    "register": "11.1.5-wikitext-register.json"
+  }
+}
