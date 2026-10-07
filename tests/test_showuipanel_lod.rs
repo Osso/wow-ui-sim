@@ -12,6 +12,7 @@
 use crate::common;
 
 use common::panel_fixtures::{blizzard_ui_dir, setup_env};
+use wow_ui_sim::c_api::c_damage_meter::*;
 use wow_ui_sim::loader::load_addon;
 
 #[test]
@@ -273,6 +274,8 @@ fn encounter_timeline_loads_and_populates_track_view_event_frames() {
 fn damage_meter_loads_and_populates_primary_session_window() {
     test_timeout! {
         let env = setup_env();
+        // Runtime defaults intentionally contain no synthetic combat records.
+        env.state().borrow_mut().damage_meter = build_panel_damage_meter_input();
         let result: String = env.eval(r#"
             SetCVar("damageMeterEnabled", "1")
 
@@ -345,6 +348,82 @@ fn damage_meter_loads_and_populates_primary_session_window() {
             return "ok"
         "#).unwrap();
         assert_eq!(result, "ok", "DamageMeter should load and populate the primary session and source windows: {result}");
+    }
+}
+
+fn build_panel_damage_meter_input() -> DamageMeterInput {
+    const SESSION_ID: i64 = 1;
+    const DAMAGE_DONE: i32 = 0;
+    const OVERALL: i32 = 0;
+    const CURRENT: i32 = 1;
+    let source = build_panel_damage_meter_source();
+    let source_key = DamageMeterSourceKey {
+        source_guid: source.source_guid.clone(),
+        source_creature_id: source.source_creature_id,
+    };
+    DamageMeterInput {
+        available: true,
+        failure_reason: String::new(),
+        available_sessions: vec![DamageMeterAvailableCombatSession {
+            session_id: SESSION_ID,
+            name: "Current".into(),
+            duration_seconds: Some(40.0),
+        }],
+        session_ids_by_type: [(OVERALL, SESSION_ID), (CURRENT, SESSION_ID)].into(),
+        sessions: [((SESSION_ID, DAMAGE_DONE), build_panel_damage_meter_session(source))].into(),
+        source_details: [((SESSION_ID, DAMAGE_DONE, source_key), build_panel_damage_meter_details())].into(),
+    }
+}
+
+fn build_panel_damage_meter_source() -> DamageMeterCombatSource {
+    DamageMeterCombatSource {
+        source_guid: Some("Player-1-00000001".into()),
+        source_creature_id: None,
+        name: "Player".into(),
+        class_filename: "PALADIN".into(),
+        spec_icon_id: 0,
+        total_amount: 52000.0,
+        amount_per_second: 1300.0,
+        is_local_player: true,
+        death_recap_id: 0,
+        death_time_seconds: 0.0,
+        classification: "normal".into(),
+        source_display_type: 0,
+        faction_group: Some("Alliance".into()),
+    }
+}
+
+fn build_panel_damage_meter_session(source: DamageMeterCombatSource) -> DamageMeterCombatSession {
+    DamageMeterCombatSession {
+        combat_sources: vec![source],
+        max_amount: 52000.0,
+        total_amount: 52000.0,
+        duration_seconds: Some(40.0),
+    }
+}
+
+fn build_panel_damage_meter_details() -> DamageMeterCombatSessionSource {
+    DamageMeterCombatSessionSource {
+        combat_spells: vec![DamageMeterCombatSpell {
+            spell_id: 19750,
+            total_amount: 52000.0,
+            amount_per_second: 1300.0,
+            creature_name: "Player".into(),
+            overkill_amount: 0.0,
+            is_avoidable: false,
+            is_deadly: false,
+            combat_spell_details: DamageMeterCombatSpellUnitDetails {
+                unit_name: "Player".into(),
+                unit_class_filename: "PALADIN".into(),
+                classification: "normal".into(),
+                is_pet: false,
+                is_mob: false,
+                amount: 52000.0,
+                spec_icon_id: 0,
+            },
+        }],
+        max_amount: 52000.0,
+        total_amount: 52000.0,
     }
 }
 

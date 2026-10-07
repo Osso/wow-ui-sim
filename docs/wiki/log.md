@@ -2,6 +2,10 @@
 
 [Investigation](investigations/prefork-catalog-contract-drift.md) records first-bad category/base-selector/product migrations, retained cached wrappers, explicit full-UI fixtures and independent redeemable-count producer. [Proof](investigations/prefork-catalog-contract-drift.md#verification): all requested filters, formatting and Mists check pass, zero non-vendor warnings. No vendor changes or runtime seed restoration.
 
+## [2026-10-06] investigation | DamageMeter panel fixture
+
+[Bisect](investigations/damage-meter-panel-fixture.md) identifies `1a9fcd1ec`; `d1a2a0250` also fails alone, parent `97f7edd2d` passes. Explicit test input replaces reliance on removed synthetic sessions. Original assertions and runtime empty defaults preserved; temporary bisect worktree removed.
+
 ## [2026-10-06] evidence | 11.2.7 producer follow-up
 
 [Audit](investigations/patch-11-2-7-api-audit.md#publication-gap-follow-up--2026-10-06) links all 121 original gap outcomes: 25 modeled, two permanent 3D workarounds, 94 retained model/source boundaries. [Proof](../../data/patch-api/evidence/11.2.7-session-2026-10-06/p1127-gaps-proof.json) covers behavioral fixtures, unchanged-master subsystem comparisons, six isolated sweeps, Mists warning scope and startup `[]`. Page-coverage/vendor/11.2.5 files unchanged.
