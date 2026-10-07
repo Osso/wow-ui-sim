@@ -1,0 +1,56 @@
+[
+  {
+    "symbol": "C_GameModeManager.GetFeatureSetting",
+    "command": [
+      "rg",
+      "-n",
+      "--glob",
+      "*.lua",
+      "--word-regexp",
+      "GetFeatureSetting",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit_code": 1,
+    "qualified_matches": [],
+    "other_namespaces": [],
+    "decision": "retire: no current qualified or bare applicable consumer; no vendor wrapper edited"
+  },
+  {
+    "symbol": "C_GameModeManager.IsFeatureEnabled",
+    "command": [
+      "rg",
+      "-n",
+      "--glob",
+      "*.lua",
+      "--word-regexp",
+      "IsFeatureEnabled",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit_code": 0,
+    "qualified_matches": [],
+    "other_namespaces": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterTimeline/EncounterTimeline.lua:243:\telseif not C_EncounterTimeline.IsFeatureEnabled() then",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/AdvancedOptions.lua:123:\t\t\treturn CanEnableBossWarningFeatures() and C_EncounterWarnings.IsFeatureEnabled();",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/AdvancedOptions.lua:127:\t\t\treturn CanEnableBossWarningFeatures() and C_EncounterTimeline.IsFeatureEnabled();",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/EncounterWarningsDocumentation.lua:85:\t\t\tName = \"IsFeatureEnabled\",",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/EncounterTimelineDocumentation.lua:393:\t\t\tName = \"IsFeatureEnabled\","
+    ],
+    "decision": "retire: no current qualified or bare applicable consumer; no vendor wrapper edited"
+  },
+  {
+    "symbol": "C_WeeklyRewards.GetWeeklyRewardTextureKit",
+    "command": [
+      "rg",
+      "-n",
+      "--glob",
+      "*.lua",
+      "--word-regexp",
+      "GetWeeklyRewardTextureKit",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit_code": 1,
+    "qualified_matches": [],
+    "other_namespaces": [],
+    "decision": "retire: no current qualified or bare applicable consumer; no vendor wrapper edited"
+  }
+]

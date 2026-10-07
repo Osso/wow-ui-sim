@@ -1,1 +1,14 @@
-[]
+[
+  "wt-global-api-C_EditMode.IsValidLayoutName-36",
+  "wt-global-api-C_GuildInfo.AreGuildEventsEnabled-40",
+  "wt-global-api-C_Item.CanBeRefunded-41",
+  "wt-global-api-C_Item.GetDelvePreviewItemLink-42",
+  "wt-global-api-C_Map.GetMapArtZoneTextPosition-44",
+  "wt-global-api-C_Minimap.ClearMinimapInsetInfo-45",
+  "wt-global-api-C_Minimap.SetMinimapInsetInfo-46",
+  "wt-global-api-C_QuestLog.DoesQuestAwardReputationWithFaction-58",
+  "wt-global-api-C_QuestLog.QuestContainsFirstTimeRepBonusForPlayer-47",
+  "wt-global-api-C_Traits.CanEditConfig-48",
+  "wt-global-api-C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo-49",
+  "wt-global-api-C_VoiceChat.CanAccessSettings-50"
+]

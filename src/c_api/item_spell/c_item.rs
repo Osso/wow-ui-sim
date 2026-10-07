@@ -120,6 +120,11 @@ fn register_c_item_metadata_queries(
             ("GetItemQuality", c_item_get_item_quality),
             #[cfg(feature = "retail-12-0-0")]
             ("IsItemBindToAccount", c_item_is_item_bind_to_account),
+            #[cfg(feature = "client-retail")]
+            (
+                "IsItemBindToAccountUntilEquip",
+                c_item_is_item_bind_to_account_until_equip,
+            ),
             (
                 "GetItemMaxStackSizeByID",
                 c_item_get_item_max_stack_size_by_id,
@@ -288,6 +293,18 @@ fn c_item_is_item_bind_to_account(state: &mut LuaState) -> LuaResult<u32> {
         .and_then(items::get_item)
         .is_some_and(|item| matches!(item.bonding, 7..=9));
     state.push(Val::Bool(account_bound));
+    Ok(1)
+}
+
+/// Intrinsic metadata, not a particular inventory instance's bound state.
+#[cfg(feature = "client-retail")]
+fn c_item_is_item_bind_to_account_until_equip(state: &mut LuaState) -> LuaResult<u32> {
+    const BIND_TO_ACCOUNT_UNTIL_EQUIPPED: u8 = 9;
+    let value = rilua::table_security::unwrap_secret(state, stack_val(state, 1))?;
+    let until_equipped = parse_item_id_from_val(state, value)
+        .and_then(items::get_item)
+        .is_some_and(|item| item.bonding == BIND_TO_ACCOUNT_UNTIL_EQUIPPED);
+    state.push(Val::Bool(until_equipped));
     Ok(1)
 }
 

@@ -1,0 +1,38 @@
+[
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_0_2_publication_sweep",
+      "--",
+      "--nocapture"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1102-page",
+    "revision": "5f3ea524c",
+    "exit_code": 101,
+    "log": "target/p1102-logs/discovery.log",
+    "scope": "Initial discovery with empty known-gap fixture",
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_0_2_",
+      "--",
+      "--nocapture",
+      "--skip",
+      "publication_sweep"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1102-page",
+    "revision": "5f3ea524c52100add9b875d73b4af6dd6abe179e",
+    "scope": "New uncommitted behavioral tests; missing retirement and explicit binding producer RED",
+    "exit_code": 101,
+    "log": "target/p1102-logs/behavior-red.log",
+    "invalidated": false
+  }
+]
