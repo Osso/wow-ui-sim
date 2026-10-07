@@ -60,4 +60,5 @@ fn patch_10_1_7_runtime_template_attributes_before_onload() {
         assert(frame.Child:GetAttribute('label') == 'original', 'child inherits string')
         assert(frame.Child.loadedCount == 7, 'child OnLoad observes attributes')
     "#).unwrap();
+    assert!(env.state().borrow().lua_errors.is_empty(), "constructor emitted Lua errors");
 }
