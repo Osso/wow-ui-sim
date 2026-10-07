@@ -1,11 +1,11 @@
 //! `C_BarberShop` — character-customization surface read by
 //! `Blizzard_BarbershopUI`. Backed by `state.barber_shop`.
 //!
-//! The 27 methods here cover every call site in
-//! `Blizzard_BarbershopUI/Mainline/Blizzard_BarberShopUI.lua`. The
-//! canonical reference is `BarberShopDocumentation.lua`; we omit
-//! `GetCurrentCost` and `HasAlteredForm` because the addon never reads
-//! them.
+//! Covers `Blizzard_BarbershopUI/Mainline/Blizzard_BarberShopUI.lua`
+//! and the altered-form availability query from `BarberShopDocumentation.lua`.
+//! Availability follows the host's current-character alternate-race snapshot;
+//! it is independent of which form is currently being viewed.
+//! `GetCurrentCost` remains unmodeled.
 //!
 //! Event semantics:
 //! - `Cancel()` → fires `BARBER_SHOP_RESULT(false)` so the addon's
@@ -42,6 +42,7 @@ const BARBER_SHOP_METHODS: &[(&str, BarberShopMethod)] = &[
     ("HasCustomizationFeature", has_customization_feature),
     ("GetCurrentCharacterData", get_current_character_data),
     ("IsViewingAlteredForm", is_viewing_altered_form),
+    ("HasAlteredForm", has_altered_form),
     ("GetViewingChrModel", get_viewing_chr_model),
     ("Cancel", cancel),
     ("ResetCustomizationChoices", reset_customization_choices),
@@ -105,6 +106,16 @@ fn get_current_character_data(state: &mut LuaState) -> LuaResult<u32> {
 fn is_viewing_altered_form(state: &mut LuaState) -> LuaResult<u32> {
     let viewing = borrow_state(state)?.barber_shop.viewing_altered_form;
     state.push(Val::Bool(viewing));
+    Ok(1)
+}
+
+fn has_altered_form(state: &mut LuaState) -> LuaResult<u32> {
+    let has_altered_form = borrow_state(state)?
+        .barber_shop
+        .current_character
+        .as_ref()
+        .is_some_and(|character| character.alternate_form_race.is_some());
+    state.push(Val::Bool(has_altered_form));
     Ok(1)
 }
 
