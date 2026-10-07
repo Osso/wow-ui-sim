@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "data/patch-api/evidence/11.0.2-session-2026-10-06/p1102-validate.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1102-page",
+  "revision": "b0cf82ee3bc7c91c4d740ff47fa519693df6c9a1",
+  "exit_code": 0,
+  "stdout": "PASS: 263 unique IDs; 34 inventory + 229 extract; 14 exact isolated sweeps; source hashes, preserved inputs, reproduction, negative control and portable proof\n",
+  "stderr": "",
+  "scope": "Source/ledger/fixture/proof artifact validation; no runtime/native parity",
+  "invalidated": false
+}

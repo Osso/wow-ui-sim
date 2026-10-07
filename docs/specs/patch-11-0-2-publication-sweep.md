@@ -39,4 +39,4 @@ Three unused removed members remain absent after repeated ordinary/raw lookup. N
 | 12.0.7 | 174 | 171 | 3 | PASS |
 | 12.1.0 | 778 | 773 | 5 | PASS |
 
-All sweeps run alone at aefaa9605; later fixtures remain unchanged. Exact commands and revisions: `p1102-proof.json` in the evidence directory.
+All sweeps run alone at aefaa9605; later fixtures remain unchanged. Exact commands and revisions: `p1102-proof.json` in the evidence directory. Two behavioral and two one-filter prefork cases pass; negative control adds exactly one gap (12 → 13). Eighteen extractor/register fixtures, formatting, Mists test check (zero non-vendor warnings), separate retail build and exit-0 startup `[]` pass. Accounting validator passes at b0cf82ee3; source/runtime scopes remain unchanged by later result/documentation edits.
