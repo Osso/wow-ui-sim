@@ -1,1 +1,22 @@
-[]
+[
+  "wt-cvars-profanityFilter-265",
+  "wt-cvars-testOutput-261",
+  "wt-global-api-C_Commentator.ZoomIn_Position-22",
+  "wt-global-api-C_Commentator.ZoomOut_Position-23",
+  "wt-global-api-C_Debug.FrameXMLDebug-27",
+  "wt-global-api-C_Item.GetFirstTriggeredSpellForItem-53",
+  "wt-global-api-C_PlayerInfo.IsSelfFoundActive-89",
+  "wt-global-api-C_RecruitAFriend.IsRecruitAFriendLinked-96",
+  "wt-global-api-C_SeasonInfo.GetCurrentDisplaySeasonExpansion-98",
+  "wt-global-api-C_SeasonInfo.GetCurrentDisplaySeasonID-99",
+  "wt-global-api-C_SpectatingUI.GetSpectateTargetInfo-101",
+  "wt-global-api-C_SpectatingUI.GetSpectatingPlayerSpellItemQuality-102",
+  "wt-global-api-C_SpectatingUI.LeaveSpectateMode-103",
+  "wt-global-api-C_SpectatingUI.SpectateChange-104",
+  "wt-global-api-C_UIWidgetManager.GetMapPinAnimationWidgetVisualizationInfo-111",
+  "wt-global-api-C_WorldLootObject.GetWorldLootObjectInfo-113",
+  "wt-global-api-C_WorldLootObject.IsWorldLootObject-115",
+  "wt-global-api-C_WorldLootObject.IsWorldLootObjectInRange-114",
+  "wt-global-api-C_WorldLootObject.OnWorldLootObjectClick-116",
+  "wt-global-api-CheckTalentMasterDist-139"
+]

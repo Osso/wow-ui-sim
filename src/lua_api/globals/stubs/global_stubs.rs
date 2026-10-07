@@ -104,7 +104,6 @@ static GLOBAL_FALSE_STUBS: &[&str] = &[
     "CanPartyLFGBackfill",
     "CanSendAuctionQuery",
     "CanShowAchievementUI",
-    "CanSummonFriend",
     "CanUseLanguage",
     "DoesCurrentZoneHaveDungeon",
     "GetCVarBool",
@@ -331,6 +330,11 @@ pub(super) fn register_global_stubs(state: &mut LuaState) {
     #[cfg(not(feature = "retail-12-1-0"))]
     if is_nil_global(state, "UIParent_ManageFramePositions") {
         set_global_fn(state, "UIParent_ManageFramePositions", stub_nil);
+    }
+    // 10.2.6 moved this global to C_RecruitAFriend; classic keeps its prior surface.
+    #[cfg(not(any(feature = "client-retail", feature = "client-ptr")))]
+    if is_nil_global(state, "CanSummonFriend") {
+        set_global_fn(state, "CanSummonFriend", stub_false);
     }
     #[cfg(feature = "client-wowforever")]
     if is_nil_global(state, "ClassicExpansionAtMost") {
