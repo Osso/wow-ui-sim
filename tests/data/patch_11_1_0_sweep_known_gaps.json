@@ -7,6 +7,7 @@
   "wt-global-api-C_Commentator.SpellUsesItemCharges-63",
   "wt-global-api-C_Debug.ToggleDebugCharInfo-64",
   "wt-global-api-C_Item.GetDelvePreviewItemQuality-76",
+  "wt-global-api-C_PlayerInfo.GetSex-116",
   "wt-global-api-C_SpecializationInfo.SetPetSpecialization-80",
   "wt-global-api-C_StableInfo.GetAvailablePetSpecInfos-82",
   "wt-global-api-C_TradeSkillUI.CancelProfessionRespec-83",
