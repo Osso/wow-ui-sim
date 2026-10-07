@@ -1,1 +1,14 @@
-[]
+[
+  "wt-cvars-ChromaEffectsEnable-108",
+  "wt-cvars-ChromaEffectsFactionColor-109",
+  "wt-global-api-C_ChatInfo.IsLoggingChat-21",
+  "wt-global-api-C_ChatInfo.IsLoggingCombat-22",
+  "wt-global-api-C_CurrencyInfo.DoesCurrentFilterRequireAccountCurrencyData-23",
+  "wt-global-api-C_CurrencyInfo.GetCurrencyFilter-24",
+  "wt-global-api-C_CurrencyInfo.SetCurrencyBackpackByID-25",
+  "wt-global-api-C_CurrencyInfo.SetCurrencyFilter-26",
+  "wt-global-api-C_SocialRestrictions.CanSendChat-34",
+  "wt-global-api-C_TransmogSets.GetValidClassForSet-37",
+  "wt-global-api-ClassicExpansionAtMost-38",
+  "wt-global-api-IsOnGlueScreen-48"
+]

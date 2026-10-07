@@ -8,6 +8,16 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 class ExtractTests(unittest.TestCase):
+    def test_11_0_5_build_transition_is_editorial_not_a_contract(self):
+        rows = seed_rows('Patch 11.0.5 API changes\n'
+                         ': 11.0.2 (56819) → 11.0.5 (57212) Oct 22 2024\n'
+                         '=== Enumerations ===\n Enum.PowerType\n   + Happiness\n',
+                         patch='11.0.5')
+        self.assertEqual(rows[1]['source_id'], 'source-context-002')
+        self.assertEqual(rows[1]['status'], 'metadata-only')
+        self.assertEqual(rows[3]['status'], 'audit-pending')
+        self.assertEqual(rows[4]['source_id'], 'enumerations-Enum-PowerType-005')
+
     def test_11_0_7_profiler_transclusion_is_retained_without_expansion(self):
         text = extract_text('==Addon Profiling API==\n'
                             '{{:Enum.AddOnProfilerMetric}}\n'
