@@ -975,7 +975,8 @@
       "direction": "removed",
       "symbol": "OnMovieHideSubtitle",
       "annotation": "",
-      "wikitext_line": 202
+      "wikitext_line": 202,
+      "kind": "widget-script"
     },
     {
       "id": "wt-widgets-OnMovieShowSubtitle-203",
@@ -983,7 +984,8 @@
       "direction": "removed",
       "symbol": "OnMovieShowSubtitle",
       "annotation": "",
-      "wikitext_line": 203
+      "wikitext_line": 203,
+      "kind": "widget-script"
     },
     {
       "id": "wt-widgets-Object:SetParentKey-206",

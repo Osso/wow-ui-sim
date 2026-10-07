@@ -55,6 +55,8 @@ def make_entry(section, direction, line_no, text):
         "wikitext_line": line_no,
     }
     # CVar metadata the 12.1.0 register omitted; optional fields stay absent there.
+    if section == "widgets" and "[[UIHANDLER " in text:
+        entry["kind"] = "widget-script"
     if params.get("type") == "command":
         entry["kind"] = "command"
     if section == "cvars" and "default" in params:

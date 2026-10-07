@@ -37,7 +37,8 @@ class InventoryTests(unittest.TestCase):
             (2, ': Widget Scripts'),
             (3, ': [[UIHANDLER OnMovieHideSubtitle|OnMovieHideSubtitle]]'),
         ])
-        self.assertEqual([e['symbol'] for e in entries], ['OnMovieHideSubtitle'])
+        self.assertEqual([(e['symbol'], e.get('kind')) for e in entries],
+                         [('OnMovieHideSubtitle', 'widget-script')])
 
     def test_uncollapsed_added_scriptobjects(self):
         entries, counts = parse_section("scriptobjects", [

@@ -348,6 +348,31 @@ pub(super) fn set_parent_key(state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
 
+pub(super) fn clear_parent_key(state: &mut LuaState) -> LuaResult<u32> {
+    let child_id = frame_id_from_stack(state, 1)?;
+    let parent_id = borrow_state(state)?
+        .widgets
+        .get(child_id)
+        .and_then(|child| child.parent_id);
+    let Some(parent_id) = parent_id else {
+        return Ok(0);
+    };
+    let keys = parent_keys_for_child(&borrow_state(state)?.widgets, parent_id, child_id);
+    {
+        let mut sim = borrow_state_mut(state)?;
+        if let Some(parent) = sim.widgets.get_mut_visual(parent_id) {
+            parent.children_keys.retain(|_, id| *id != child_id);
+        }
+        if let Some(child) = sim.widgets.get_mut(child_id) {
+            child.parent_key = None;
+        }
+    }
+    for key in keys {
+        clear_child_from_rilua_parent_key(state, parent_id, &key, child_id)?;
+    }
+    Ok(0)
+}
+
 fn update_parent_key_state(
     state: &mut LuaState,
     parent_id: u64,

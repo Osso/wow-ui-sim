@@ -132,6 +132,7 @@ end
 local function create_object(owner)
     local frame = CreateFrame('Frame')
     local factories = {
+        Object = function() return frame end,
         Frame = function() return frame end,
         FrameScriptObject = function() return frame end,
         ScriptRegion = function() return frame end,
@@ -233,6 +234,12 @@ local function probe_command()
     return result('command', 'Command record present=' .. tostring(present), present ~= removed)
 end
 local function classify()
+    if entryKind == 'widget-script' then
+        -- MovieFrame owns these scripts; failed construction proves no absence.
+        local movie = CreateFrame('MovieFrame')
+        local supported = movie:HasScript(symbol)
+        return result('widget-script', 'MovieFrame HasScript=' .. tostring(supported), supported ~= removed)
+    end
     if entryKind == 'command' then return probe_command() end
     if section == 'events' then return probe_event() end
     if section == 'cvars' then return probe_cvar() end

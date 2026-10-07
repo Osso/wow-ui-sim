@@ -275,6 +275,7 @@ fn register_hierarchy_regions(state: &mut LuaState, table: GcRef<Table>) -> LuaR
     )?;
     table_set_rust_fn_static(state, table, "GetParentKey", hierarchy::get_parent_key)?;
     table_set_rust_fn_static(state, table, "SetParentKey", hierarchy::set_parent_key)?;
+    table_set_rust_fn_static(state, table, "ClearParentKey", hierarchy::clear_parent_key)?;
     Ok(())
 }
 

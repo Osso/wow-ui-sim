@@ -9,7 +9,6 @@ use rilua::{LuaResult, Val};
 pub fn register(state: &mut LuaState, mt: GcRef<Table>) -> LuaResult<()> {
     table_set_rust_fn_static(state, mt, "CanChangeAttribute", can_change_attribute)?;
     table_set_rust_fn_static(state, mt, "ClearAttribute", clear_attribute)?;
-    table_set_rust_fn_static(state, mt, "ClearParentKey", clear_parent_key)?;
     Ok(())
 }
 
@@ -19,9 +18,5 @@ pub fn can_change_attribute(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 pub fn clear_attribute(_state: &mut LuaState) -> LuaResult<u32> {
-    Ok(0)
-}
-
-pub fn clear_parent_key(_state: &mut LuaState) -> LuaResult<u32> {
     Ok(0)
 }
