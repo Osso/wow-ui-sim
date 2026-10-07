@@ -5,7 +5,14 @@ pub(crate) const RETIREMENT_ASSERTIONS: &str = r#"
 local removed = {
     { C_CharacterServices, 'AssignPFCDistribution' },
     { C_LootHistory, 'CanMasterLoot' },
+    { C_LootHistory, 'GetExpiration' },
+    { C_LootHistory, 'GetItem' },
+    { C_LootHistory, 'GetNumItems' },
+    { C_LootHistory, 'GetPlayerInfo' },
+    { C_LootHistory, 'GiveMasterLoot' },
+    { C_LootHistory, 'SetExpiration' },
     { C_TooltipInfo, 'GetQuestLogRewardSpell' },
+    { C_TooltipInfo, 'GetQuestRewardSpell' },
 }
 for _, entry in ipairs(removed) do
     local namespace, member = entry[1], entry[2]
