@@ -40,4 +40,4 @@ Nine removed members must remain absent through repeated ordinary/raw lookup: th
 | 12.0.7 | 174 | 171 | 3 | PASS |
 | 12.1.0 | 778 | 773 | 5 | PASS |
 
-Fifteen sweeps run alone at 7e51a4525. Later exact fixtures remain unchanged. Repeated lookup RED/GREEN and new full cached Game prefork pass. One-row control introduces exactly one failure (166 → 167). Final format/profile/startup gates recorded in `p1100-proof.json`; no native acceptance claim.
+Fifteen sweeps run alone at 7e51a4525. Later exact fixtures remain unchanged. Repeated lookup RED/GREEN and new full cached Game prefork pass. One-row control introduces exactly one failure (166 → 167). Final format, Mists test check (zero non-vendor warnings), existing major-faction prefork, eighteen parser/extractor fixtures and separate retail build/startup `[]` pass at 2636acc12. Exact revisions/outcomes retained in `p1100-proof.json`; no native acceptance claim.

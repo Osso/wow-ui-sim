@@ -4,7 +4,7 @@ Page 585562, revision 6726780 (May 25, 2026, 20:32:45 UTC), retrieved October 7,
 
 ## Source and accounting
 
-495 inventory occurrences: eight added/removed header counts match exactly. Fourteen later registers, 11.0.2 through 12.1.0, supersede chronologically. Existing parser/extractor handles this page without modification; all fifteen registers regenerate byte-identically. All fourteen existing registers and later source/fixture/coverage inputs remain unchanged.
+495 inventory occurrences: 346 added, 103 removed, 46 changed. Eight added/removed header counts match exactly. Fourteen later registers, 11.0.2 through 12.1.0, supersede chronologically. Existing parser/extractor handles this page without modification; all fifteen registers regenerate byte-identically. All fourteen existing registers and later source/fixture/coverage inputs remain unchanged.
 
 842 unique IDs: 495 inventory + 347 extract. Ledger: 233 partial-development-green, 96 bounded-coverage, 494 audit-pending, 19 metadata-only. Every extract ID is assigned once: ten summary/spell-transition, 66 menu, eight mouse-input, 141 enumeration, 91 structure, twelve deprecation and nineteen metadata rows. Source candidates confer no runtime credit. All 328 substantive extract occurrences remain behavior-pending; 166 publication gaps remain. Changed inventory annotations receive publication-only proof.
 
@@ -22,7 +22,7 @@ GetMouseFocus remains because current cached Blizzard_ActionBar/WoWLabs/ActionBu
 
 Runtime/test revision 7e51a4525. Repeated-lookup test RED before implementation, GREEN afterward. Fifteen isolated publication sweeps pass unchanged exact later fixtures; [table](../../specs/patch-11-0-0-publication-sweep.md#local-proof). Negative control changes only C_AdventureMap.GetAdventureMapTextureKit added → removed: exactly one new failure, no resolved failures, 166 → 167 gaps, expected exit 101. New full cached Game prefork retirement test passes.
 
-Source/accounting artifacts are committed before final format, profile check, relevant existing prefork and startup gates. Final results are recorded in the [proof ledger](../../../data/patch-api/evidence/11.0.0-session-2026-10-06/p1100-proof.json). Failed development commands remain evidence: initial standalone test target was invalid (autotests=false); two cached-test import corrections followed compiler diagnostics. A guessed existing map filter selected zero tests and receives no proof credit. No native or independent acceptance claim.
+At accounting revision 2636acc12, formatting and Mists test check pass with zero non-vendor warnings. Six existing iced vendor manifest deprecations plus summary remain unsuppressed. Existing one-filter major-faction prefork passes (one case); eighteen extractor/register fixtures and deterministic extract pass. Separate retail binary build and bounded startup exit 0 with JSON `[]`. Changed Rust lines reviewed manually; no readability findings. Final results are recorded in the [proof ledger](../../../data/patch-api/evidence/11.0.0-session-2026-10-06/p1100-proof.json). Failed development commands remain evidence: initial standalone test target was invalid (autotests=false); two cached-test import corrections followed compiler diagnostics. A guessed existing map filter selected zero tests and receives no proof credit. No native or independent acceptance claim.
 
 Every command uses explicit cwd p1100-page and its own target. Worktree creation uses the prescribed canonical Git metadata operation with cwd in the empty destination. No canonical working files, siblings, cache/vendor Lua or Wowless edited; no full suite, agents/models, push or merge.
 
@@ -32,6 +32,7 @@ Every command uses explicit cwd p1100-page and its own target. Worktree creation
 - [Coverage ledger](../../../data/patch-api/sources/11.0.0-page-coverage.json)
 - [Publication contract](../../specs/patch-11-0-0-publication-sweep.md)
 - [Retirement searches](../../../data/patch-api/evidence/11.0.0-session-2026-10-06/p1100-retirement-consumers.json)
+- [Artifact validator](../../../data/patch-api/evidence/11.0.0-session-2026-10-06/p1100-validate.py) — source hashes, chronological expectations, every source ID, exact gaps and proof scopes.
 
 ## See Also
 

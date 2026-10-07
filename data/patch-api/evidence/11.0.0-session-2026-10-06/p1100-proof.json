@@ -831,5 +831,196 @@
     "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/prefork-map.log",
     "invalidated": true,
     "invalidated_reason": "No runtime proof: invalid target, compile failure or zero selected cases; superseded by scoped passing evidence."
+  },
+  {
+    "scope": "prefork-major-factions",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "blizzard_major_factions_loads_without_addon_specific_lua_errors"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "2636acc1224916e52748a280fd170aa0ce83dec2",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target"
+    },
+    "exit_code": 0,
+    "summary": [
+      "test result: ok. 1 passed; 0 failed; 1 total",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings",
+      "    Finished `test` profile [optimized + debuginfo] target(s) in 1.25s"
+    ],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/prefork-major-factions.log",
+    "invalidated": false
+  },
+  {
+    "scope": "fmt-check",
+    "command": [
+      "cargo",
+      "fmt",
+      "--check"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "2636acc1224916e52748a280fd170aa0ce83dec2",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target"
+    },
+    "exit_code": 0,
+    "summary": [],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/fmt-check.log",
+    "invalidated": false
+  },
+  {
+    "scope": "mists-test-check",
+    "command": [
+      "cargo",
+      "check",
+      "--no-default-features",
+      "--features",
+      "sound,gui,casc,client-mists",
+      "--tests"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "2636acc1224916e52748a280fd170aa0ce83dec2",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target"
+    },
+    "exit_code": 0,
+    "summary": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings",
+      "    Finished `dev` profile [optimized + debuginfo] target(s) in 6m 09s"
+    ],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/mists-test-check.log",
+    "invalidated": false,
+    "non_vendor_warnings": []
+  },
+  {
+    "scope": "retail-binary-build",
+    "command": [
+      "cargo",
+      "build",
+      "--bin",
+      "wow-sim"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "2636acc1224916e52748a280fd170aa0ce83dec2",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target"
+    },
+    "exit_code": 0,
+    "summary": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings",
+      "    Finished `dev` profile [optimized + debuginfo] target(s) in 1.03s"
+    ],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/retail-binary-build.log",
+    "invalidated": false
+  },
+  {
+    "scope": "bounded-retail-startup",
+    "command": [
+      "timeout",
+      "90",
+      "/home/osso/.worktrees/wow-ui-sim-p1100-page/target/debug/wow-sim",
+      "--no-addons",
+      "--no-saved-vars",
+      "lua-errors"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "2636acc1224916e52748a280fd170aa0ce83dec2",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target"
+    },
+    "exit_code": 0,
+    "summary": [],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/bounded-retail-startup.log",
+    "invalidated": false,
+    "stdout": "[]\n"
+  },
+  {
+    "scope": "register-fixtures",
+    "command": [
+      "python3",
+      "tools/test_gen_patch_wikitext_register.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "2636acc1224916e52748a280fd170aa0ce83dec2",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target"
+    },
+    "exit_code": 0,
+    "summary": [
+      "...",
+      "----------------------------------------------------------------------",
+      "Ran 3 tests in 0.001s",
+      "",
+      "OK"
+    ],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/register-fixtures.log",
+    "invalidated": false,
+    "tests_run": 3
+  },
+  {
+    "scope": "extract-fixtures",
+    "command": [
+      "python3",
+      "tools/test_extract_patch_non_inventory.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "2636acc1224916e52748a280fd170aa0ce83dec2",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target"
+    },
+    "exit_code": 0,
+    "summary": [
+      "...............",
+      "----------------------------------------------------------------------",
+      "Ran 15 tests in 0.009s",
+      "",
+      "OK"
+    ],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/extract-fixtures.log",
+    "invalidated": false,
+    "tests_run": 15
+  },
+  {
+    "scope": "extract-reproduction",
+    "command": [
+      "python3",
+      "tools/extract_patch_non_inventory.py",
+      "--patch",
+      "11.0.0",
+      "--text-only",
+      "--check"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page",
+    "revision": "2636acc1224916e52748a280fd170aa0ce83dec2",
+    "environment": {
+      "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1100-page/target"
+    },
+    "exit_code": 0,
+    "summary": [],
+    "log": "data/patch-api/evidence/11.0.0-session-2026-10-06/extract-reproduction.log",
+    "invalidated": false
   }
 ]

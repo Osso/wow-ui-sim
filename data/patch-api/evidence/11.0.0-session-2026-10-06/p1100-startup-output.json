@@ -1,0 +1,13 @@
+{
+  "exit_code": 0,
+  "stdout": "[]\n",
+  "command": [
+    "timeout",
+    "90",
+    "/home/osso/.worktrees/wow-ui-sim-p1100-page/target/debug/wow-sim",
+    "--no-addons",
+    "--no-saved-vars",
+    "lua-errors"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1100-page"
+}

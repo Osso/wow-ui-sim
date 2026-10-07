@@ -20,7 +20,7 @@
       ],
       "compiled_revision": "7e51a4525",
       "ledger": "data/patch-api/evidence/11.0.0-session-2026-10-06/p1100-sweep-result.json",
-      "proof": "Fifteen isolated sweeps pass exact fixtures. Repeated lookup RED/GREEN and unchanged full cached Game prefork pass. Nine removed members have no qualified cached consumers."
+      "proof": "Fifteen isolated sweeps pass exact fixtures. Repeated lookup RED/GREEN and unchanged full cached Game prefork pass. Nine removed members have no qualified cached consumers. Final format, Mists test check (zero non-vendor warnings), existing one-case major-faction prefork, eighteen parser/extractor fixtures and bounded exit-0 startup [] pass at accounting revision 2636acc12; subsequent changes are accounting/evidence only."
     }
   ],
   "non_inventory_source": {

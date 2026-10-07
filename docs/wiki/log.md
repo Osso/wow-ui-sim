@@ -1,6 +1,6 @@
 ## [2026-10-07] evidence | 11.0.0 page audit
 
-[Audit](investigations/patch-11-0-0-api-audit.md) retains revision 6726780 and all 842 source IDs. Nine namespace retirements close bounded absence gaps; 166 publication gaps and 328 substantive extract occurrences retain exact contract/proof boundaries. Fifteen isolated sweeps, RED/GREEN, full cached Game retirement prefork and 166 → 167 negative control recorded. Final profile/format/startup and artifact gates follow the accounting commit. Later registers/ledgers unchanged; no vendor edits, sibling target reuse, agents/models, full suite, push or merge.
+[Audit](investigations/patch-11-0-0-api-audit.md) retains revision 6726780 and all 842 source IDs. Nine namespace retirements close bounded absence gaps; 166 publication gaps and 328 substantive extract occurrences retain exact contract/proof boundaries. Fifteen isolated sweeps, RED/GREEN, full cached Game retirement prefork and 166 → 167 negative control recorded. Final format/Mists test check (zero non-vendor warnings), existing one-case major-faction prefork, eighteen parser/extractor fixtures and exit-0 startup `[]` pass at accounting revision 2636acc12. Artifact validator retains complete proof/accounting contracts. Later registers/ledgers unchanged; no vendor edits, sibling target reuse, agents/models, full suite, push or merge.
 
 ## [2026-10-07] evidence | 11.0.5 page audit
 
