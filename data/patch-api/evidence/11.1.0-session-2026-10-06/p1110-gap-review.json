@@ -1,0 +1,278 @@
+{
+  "initial_inventory_rows": 115,
+  "initial_gaps": 21,
+  "corrected_inventory_rows": 116,
+  "newly_discovered_gap": "wt-global-api-C_PlayerInfo.GetSex-116",
+  "closed": 3,
+  "remaining": 19,
+  "outcomes": [
+    {
+      "source_id": "wt-global-api-C_AchievementTelemetry.LinkAchievementInClub-51",
+      "symbol": "C_AchievementTelemetry.LinkAchievementInClub",
+      "outcome": "retained-gap",
+      "reason": "No achievement-link telemetry producer or recorded club-link lifecycle; a no-op would not model delivery/telemetry.",
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "parent raw-absent; raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_AchievementTelemetry.LinkAchievementInWhisper-52",
+      "symbol": "C_AchievementTelemetry.LinkAchievementInWhisper",
+      "outcome": "retained-gap",
+      "reason": "No achievement-link telemetry producer or recorded whisper recipient/delivery lifecycle.",
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_AchievementTelemetry.ShowAchievements-53",
+      "symbol": "C_AchievementTelemetry.ShowAchievements",
+      "outcome": "retained-gap",
+      "reason": "No achievement panel telemetry state/producer; opening UI alone would not prove telemetry.",
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_AddOns.DoesAddOnHaveLoadError-58",
+      "symbol": "C_AddOns.DoesAddOnHaveLoadError",
+      "outcome": "retained-gap",
+      "reason": "Needs per-addon loader failure ownership and query contract; aggregate Lua error reporting is not a per-addon load-error model.",
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Commentator.SpellUsesItemCharges-63",
+      "symbol": "C_Commentator.SpellUsesItemCharges",
+      "outcome": "retained-gap",
+      "reason": "Needs commentator spell/item-charge classification; player spell-charge state is not that predicate.",
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Debug.ToggleDebugCharInfo-64",
+      "symbol": "C_Debug.ToggleDebugCharInfo",
+      "outcome": "retained-gap",
+      "reason": "Needs native diagnostic window/visibility contract; simulator has no character-debug view model.",
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_Item.GetDelvePreviewItemQuality-76",
+      "symbol": "C_Item.GetDelvePreviewItemQuality",
+      "outcome": "retained-gap",
+      "reason": "Needs explicit delve-preview item eligibility/quality producer; generic item quality is not preview policy.",
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_SpecializationInfo.SetPetSpecialization-80",
+      "symbol": "C_SpecializationInfo.SetPetSpecialization",
+      "outcome": "retained-gap",
+      "reason": "Needs pet specialization catalog, active pet selection and mutation/event lifecycle; player specialization switch is not pet state.",
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_StableInfo.GetAvailablePetSpecInfos-82",
+      "symbol": "C_StableInfo.GetAvailablePetSpecInfos",
+      "outcome": "retained-gap",
+      "reason": "Needs retail available-pet-specialization DTO producer. Forever pet state does not establish retail semantics.",
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.CancelProfessionRespec-83",
+      "symbol": "C_TradeSkillUI.CancelProfessionRespec",
+      "outcome": "retained-gap",
+      "reason": "Needs profession-respec pending request and cancellation transition, not empty success.",
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.CheckRespecNPC-84",
+      "symbol": "C_TradeSkillUI.CheckRespecNPC",
+      "outcome": "retained-gap",
+      "reason": "Needs NPC eligibility and profession-respec interaction context; no modeled eligibility producer.",
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.ConfirmProfessionRespec-85",
+      "symbol": "C_TradeSkillUI.ConfirmProfessionRespec",
+      "outcome": "retained-gap",
+      "reason": "Needs pending request, eligibility/cost/acceptance and profession reset transitions.",
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      }
+    },
+    {
+      "source_id": "wt-global-api-ConsoleEcho-92",
+      "symbol": "ConsoleEcho",
+      "outcome": "retained-gap",
+      "reason": "Needs inspectable native console echo/output contract; tracing stdout is not established console behavior.",
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      }
+    },
+    {
+      "source_id": "wt-global-api-GetNativeRealmID-94",
+      "symbol": "GetNativeRealmID",
+      "outcome": "retained-gap",
+      "reason": "Needs distinction between native and virtual realm identity; current default GetRealmID does not establish native identity.",
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_BarberShop.GetCustomizationScope-99",
+      "symbol": "C_BarberShop.GetCustomizationScope",
+      "outcome": "bounded-closure",
+      "reason": "Block namespace autostub fabrication; no cached Lua consumers; repeated ordinary/raw lookup regression GREEN.",
+      "test": "tests/patch_11_1_0_publication_fixes.rs"
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.CanAppearanceBeDisplayedOnPlayer-100",
+      "symbol": "C_TransmogCollection.CanAppearanceBeDisplayedOnPlayer",
+      "outcome": "bounded-closure",
+      "reason": "Block namespace autostub fabrication; no cached Lua consumers; repeated ordinary/raw lookup regression GREEN.",
+      "test": "tests/patch_11_1_0_publication_fixes.rs"
+    },
+    {
+      "source_id": "wt-global-api-SetSpecialization-102",
+      "symbol": "SetSpecialization",
+      "outcome": "retained-gap",
+      "reason": "Retained: current cached Blizzard_TalentUI/Mists/Blizzard_TalentUI.lua:70 calls SetSpecialization(self.data.previewSpec, self.data.isPet). Cache consumer rule forbids retirement, even though default mainline uses C_SpecializationInfo.SetSpecialization.",
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=function; lookup=function",
+        "kind": "global",
+        "value": null
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerInfo.GetSex-116",
+      "symbol": "C_PlayerInfo.GetSex",
+      "outcome": "retained-gap",
+      "reason": "PlayerLocation input (wowless data/products/wow/apis.yaml:20489) requires location-to-player resolution and nullable sex output. Returning local player.sex for arbitrary locations would be wrong.",
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      }
+    },
+    {
+      "source_id": "wt-global-api-DeclineName-120",
+      "symbol": "DeclineName",
+      "outcome": "retained-gap",
+      "reason": "Needs locale/gender-dependent name declension data; returning input would fabricate inflection semantics.",
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      }
+    },
+    {
+      "source_id": "wt-global-api-GetNumDeclensionSets-122",
+      "symbol": "GetNumDeclensionSets",
+      "outcome": "retained-gap",
+      "reason": "Needs locale/gender declension-set catalog; zero/default would be a placeholder.",
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      }
+    },
+    {
+      "source_id": "wt-global-api-GetSpecializationNameForSpecID-130",
+      "symbol": "GetSpecializationNameForSpecID",
+      "outcome": "bounded-closure",
+      "reason": "Use existing English specialization catalog; valid IDs and unknown-ID nil output proven. Gender/localized variants unproven.",
+      "test": "tests/patch_11_1_0_publication_fixes.rs"
+    },
+    {
+      "source_id": "wt-cvars-clearSeenDelvesCurios-204",
+      "symbol": "clearSeenDelvesCurios",
+      "outcome": "retained-gap",
+      "reason": "Needs command catalog publication and real clearing of seen-curio state; adding a callable/no-op would not model command execution.",
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Command record present=false",
+        "kind": "command",
+        "value": null
+      }
+    }
+  ]
+}

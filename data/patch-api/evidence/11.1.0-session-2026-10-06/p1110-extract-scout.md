@@ -1,0 +1,114 @@
+# 11.1.0 non-inventory scout
+
+Every nonblank plaintext row assigned once. No behavior/native credit. Parent Enum/DTO rows are targets, not automatically editorial. Symbolic interface remains unexpanded.
+
+- editorial: 13 rows.
+- B01-summary: 3 rows.
+- B02-addon-metadata: 12 rows.
+- B03-enums: 45 rows.
+- B04-structures: 27 rows.
+
+## Per-source allocation
+
+- `source-context-001` — editorial; metadata-only. Patch 11.1.0 API changes
+- `source-context-003` — editorial; metadata-only. == Summary ==
+- `prose-undated-004` — B01-summary; audit-pending. * Added support for grouping and categorizing addons in the addon list.
+- `prose-undated-005` — B01-summary; audit-pending. * Added the display of performance metrics to the addon list and game menu microbutton tooltip.
+- `prose-undated-006` — B01-summary; audit-pending. * Addons that exceed CPU performance thresholds may now trigger an in-game warning dialog suggesting that the user disable the addon.
+- `source-context-008` — editorial; metadata-only. == Resources ==
+- `source-context-009` — editorial; metadata-only. * TOC: 110100
+- `source-context-010` — editorial; metadata-only. * Official patch notes: Undermine(d) Update Notes
+- `source-context-011` — editorial; metadata-only. * Diffs: wow-ui-source, BlizzardInterfaceResources
+- `source-context-013` — editorial; metadata-only. == Addon list changes ==
+- `prose-undated-015` — B02-addon-metadata; audit-pending. The addon list now supports grouping and categorizing addons through the use of the new Category and Group TOC file fields.
+- `prose-undated-017` — B02-addon-metadata; audit-pending. * Categories will be displayed as headers that can be collapsed or expanded.
+- `prose-undated-018` — B02-addon-metadata; audit-pending. * Groups will be displayed as indented sublists that cannot be collapsed.
+- `source-context-020` — editorial; metadata-only. === Addon list categories ===
+- `prose-undated-022` — B02-addon-metadata; audit-pending. Membership of categories is controlled though the new Category TOC directive. The content of this directive must at present be a string that will be displayed verbatim in the addon list, with an empty string being equivalent to not having defined a category. The category name can be localized through the use of the existing locale-suffixes used for the Title and Notes directives.
+- `prose-undated-024` — B02-addon-metadata; audit-pending. It is strongly recommended that you stick to the translated category names found on the Addon Categories page. This will ensure that your addon is consistently located with other addons in the same category across all locales.
+- `prose-undated-026` — B02-addon-metadata; audit-pending. If no Category has been specified or an empty string is used as its value, then the addon will appear at the root of the addon tree list and not be placed under any collapsible headers.
+- `prose-undated-028` — B02-addon-metadata; audit-pending. ## Interface: [API LatestInterface]
+- `prose-undated-029` — B02-addon-metadata; audit-pending. ## Title: My Cool Addon
+- `prose-undated-030` — B02-addon-metadata; audit-pending. ## Category: This is a test
+- `prose-undated-031` — B02-addon-metadata; audit-pending. ## Category-deDE: Dies ist ein Test
+- `source-context-033` — editorial; metadata-only. === Addon list grouping ===
+- `prose-undated-035` — B02-addon-metadata; audit-pending. Membership of groups is controlled through the new Group TOC directive. The content of this directive must the base name of another addon. Unlike Category it is not displayed in the addon list, however for grouping to functionally work at least two separate addons must share the same defined Group name.
+- `prose-undated-037` — B02-addon-metadata; audit-pending. If no Group has been manually specified, the client will attempt to automatically deduce membership of a group. The list of installed addons will be scanned and to locate pairs of addons where the base name of one addon is a complete prefix of another, and where a dependency relation (optional or required) exists between the two in either direction. See the Group section on the TOC Format page for more in-depth details.
+- `source-context-039` — editorial; metadata-only. == Consolidated changes ==
+- `source-context-040` — editorial; metadata-only. : 11.0.7 (58238) → 11.1.0 (59466) Feb 27 2025
+- `source-context-042` — editorial; metadata-only. === Enumerations ===
+- `enumerations-Enum-AccountTransType-043` — B03-enums; audit-pending. Enum.AccountTransType
+- `enumerations-Enum-AccountTransType-044` — B03-enums; audit-pending. + SaveWarbandGroups
+- `enumerations-Enum-BattlepetDbFlags-045` — B03-enums; audit-pending. Enum.BattlepetDbFlags
+- `enumerations-Enum-BattlepetDbFlags-046` — B03-enums; audit-pending. - AccountStore
+- `enumerations-Enum-ChrModelFeatureFlags-047` — B03-enums; audit-pending. Enum.ChrModelFeatureFlags
+- `enumerations-Enum-ChrModelFeatureFlags-048` — B03-enums; audit-pending. + None
+- `enumerations-Enum-ChrModelFeatureFlags-049` — B03-enums; audit-pending. + Players
+- `enumerations-Enum-ChrModelFeatureFlags-050` — B03-enums; audit-pending. # DragonCompanions -> Deprecated0
+- `enumerations-Enum-CompanionRoleType-051` — B03-enums; audit-pending. Enum.CompanionRoleType
+- `enumerations-Enum-CompanionRoleType-052` — B03-enums; audit-pending. + Tank
+- `enumerations-Enum-CurrencyDestroyReason-053` — B03-enums; audit-pending. Enum.CurrencyDestroyReason
+- `enumerations-Enum-CurrencyDestroyReason-054` — B03-enums; audit-pending. + HonorLoss
+- `enumerations-Enum-CurrencyFlagsB-055` — B03-enums; audit-pending. Enum.CurrencyFlagsB
+- `enumerations-Enum-CurrencyFlagsB-056` — B03-enums; audit-pending. + CurrencyBForceMaxQuantityOnConversion
+- `enumerations-Enum-GossipNpcOption-057` — B03-enums; audit-pending. Enum.GossipNpcOption
+- `enumerations-Enum-GossipNpcOption-058` — B03-enums; audit-pending. + ProfessionRespec
+- `enumerations-Enum-GossipNpcOption-059` — B03-enums; audit-pending. + Placeholder_1
+- `enumerations-Enum-GossipNpcOption-060` — B03-enums; audit-pending. + Placeholder_2
+- `enumerations-Enum-GossipNpcOption-061` — B03-enums; audit-pending. + Placeholder_3
+- `enumerations-Enum-GossipNpcOption-062` — B03-enums; audit-pending. + Placeholder_4
+- `enumerations-Enum-GossipOptionRecFlags-063` — B03-enums; audit-pending. Enum.GossipOptionRecFlags
+- `enumerations-Enum-GossipOptionRecFlags-064` — B03-enums; audit-pending. + PlayMovieLabelPrepend
+- `enumerations-Enum-PerksVendorCategoryType-065` — B03-enums; audit-pending. Enum.PerksVendorCategoryType
+- `enumerations-Enum-PerksVendorCategoryType-066` — B03-enums; audit-pending. + WarbandScene
+- `enumerations-Enum-PlayerInteractionType-067` — B03-enums; audit-pending. Enum.PlayerInteractionType
+- `enumerations-Enum-PlayerInteractionType-068` — B03-enums; audit-pending. + ProfessionRespec
+- `enumerations-Enum-PlayerInteractionType-069` — B03-enums; audit-pending. + PlaceholderType71
+- `enumerations-Enum-PlayerInteractionType-070` — B03-enums; audit-pending. + PlaceholderType72
+- `enumerations-Enum-PlayerInteractionType-071` — B03-enums; audit-pending. + PlaceholderType73
+- `enumerations-Enum-PlayerInteractionType-072` — B03-enums; audit-pending. + PlaceholderType74
+- `enumerations-Enum-PlayerInteractionType-073` — B03-enums; audit-pending. + PlaceholderType75
+- `enumerations-Enum-PlayerInteractionType-074` — B03-enums; audit-pending. + PlaceholderType76
+- `enumerations-Enum-PlayerInteractionType-075` — B03-enums; audit-pending. + PlaceholderType77
+- `enumerations-Enum-PointsModifierSourceType-076` — B03-enums; audit-pending. Enum.PointsModifierSourceType
+- `enumerations-Enum-PointsModifierSourceType-077` — B03-enums; audit-pending. + CurrencyMaxWeeklyDelta
+- `enumerations-Enum-SendAddonMessageResult-078` — B03-enums; audit-pending. Enum.SendAddonMessageResult
+- `enumerations-Enum-SendAddonMessageResult-079` — B03-enums; audit-pending. + NotInGuild
+- `enumerations-Enum-SubcontainerType-080` — B03-enums; audit-pending. Enum.SubcontainerType
+- `enumerations-Enum-SubcontainerType-081` — B03-enums; audit-pending. + CurrencyTransfer
+- `enumerations-Enum-WarbandSceneAnimationEvent-082` — B03-enums; audit-pending. Enum.WarbandSceneAnimationEvent
+- `enumerations-Enum-WarbandSceneAnimationEvent-083` — B03-enums; audit-pending. + Ffx
+- `enumerations-Enum-WarbandSceneAnimationStandState-084` — B03-enums; audit-pending. Enum.WarbandSceneAnimationStandState
+- `enumerations-Enum-WarbandSceneAnimationStandState-085` — B03-enums; audit-pending. + SitOnChairLow
+- `enumerations-Enum-WarbandSceneAnimationStandState-086` — B03-enums; audit-pending. + SitOnChairMedium
+- `enumerations-Enum-WarbandSceneAnimationStandState-087` — B03-enums; audit-pending. + SitOnChairHigh
+- `source-context-089` — editorial; metadata-only. === Structures ===
+- `structures-AppearanceSourceInfo-090` — B04-structures; audit-pending. AppearanceSourceInfo
+- `structures-AppearanceSourceInfo-091` — B04-structures; audit-pending. + canDisplayOnPlayer
+- `structures-CovenantData-092` — B04-structures; audit-pending. CovenantData
+- `structures-CovenantData-093` — B04-structures; audit-pending. + factionID
+- `structures-MajorFactionData-094` — B04-structures; audit-pending. MajorFactionData
+- `structures-MajorFactionData-095` — B04-structures; audit-pending. + factionFontColor
+- `structures-MajorFactionData-096` — B04-structures; audit-pending. + renownTrackLevelEffectID
+- `structures-MountInfo-097` — B04-structures; audit-pending. MountInfo
+- `structures-MountInfo-098` — B04-structures; audit-pending. # faction, Type: number -> PvPFaction
+- `structures-PetInfo-099` — B04-structures; audit-pending. PetInfo
+- `structures-PetInfo-100` — B04-structures; audit-pending. # abilities -> petAbilities
+- `structures-PetInfo-101` — B04-structures; audit-pending. + specAbilities
+- `structures-PetInfo-102` — B04-structures; audit-pending. + specID
+- `structures-PlayerChoiceInfo-103` — B04-structures; audit-pending. PlayerChoiceInfo
+- `structures-PlayerChoiceInfo-104` — B04-structures; audit-pending. + showChoicesAsList
+- `structures-PlayerChoiceOptionButtonInfo-105` — B04-structures; audit-pending. PlayerChoiceOptionButtonInfo
+- `structures-PlayerChoiceOptionButtonInfo-106` — B04-structures; audit-pending. + showCheckmark
+- `structures-PlayerChoiceOptionButtonInfo-107` — B04-structures; audit-pending. + hideButtonShowText
+- `structures-PlayerChoiceOptionButtonInfo-108` — B04-structures; audit-pending. + listText
+- `structures-QuestObjectiveInfo-109` — B04-structures; audit-pending. QuestObjectiveInfo
+- `structures-QuestObjectiveInfo-110` — B04-structures; audit-pending. + objectiveType
+- `structures-TotemInfoScript-111` — B04-structures; audit-pending. TotemInfoScript
+- `structures-TotemInfoScript-112` — B04-structures; audit-pending. + modRate
+- `structures-UIWidgetSpellInfo-113` — B04-structures; audit-pending. UIWidgetSpellInfo
+- `structures-UIWidgetSpellInfo-114` — B04-structures; audit-pending. + showAsEarned
+- `structures-UnitPowerBarInfo-115` — B04-structures; audit-pending. UnitPowerBarInfo
+- `structures-UnitPowerBarInfo-116` — B04-structures; audit-pending. + attachTooltipToBar
+
+Per-source evidence and boundaries: [scout JSON](p1110-extract-scout.json). B01 metrics/warnings first; B02 TOC groups/categories next; B03 enums and B04 DTOs require current-schema producer probes. No claim that an existing stub or source substring proves behavior.

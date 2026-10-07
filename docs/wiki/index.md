@@ -1,3 +1,7 @@
+## [2026-10-07] evidence | 11.1.0 page audit
+
+[Audit](investigations/patch-11-1-0-api-audit.md) accounts for 116 inventory + 100 extract rows, parser omission, three bounded closures and 19 exact gaps. Eleven isolated sweeps, negative control, behavior/prefork tests, Mists check and startup [] pass. SetSpecialization retained for cached consumer; later fixtures/ledgers unchanged. Sibling build-cache path violation documented.
+
 ## [2026-10-07] evidence | 11.1.5 page audit
 
 [Audit](investigations/patch-11-1-5-api-audit.md) accounts for 125 inventory + 99 extract rows, eight bounded closures, 36 exact gaps and exhaustive five-batch scout. Ten isolated sweeps, negative control, behavior/prefork regressions, Mists check and exit-0 startup `[]` pass. UpdateUIParentPosition retained with current consumer citations; later fixtures/ledgers unchanged. Temporary canonical cwd violation restored and documented.

@@ -1,0 +1,1024 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "11.1.0",
+  "source": {
+    "path": "data/patch-api/sources/11.1.0-api-changes.wikitext",
+    "revid": 6726776,
+    "sha256": "1a802cad91a6b79b9ad5c8038627ba54c93ef963f0640494da7dfc3fd0eb6c99"
+  },
+  "header_counts": [
+    {
+      "section": "global-api",
+      "direction": "added",
+      "header_count": 45,
+      "parsed_count": 45
+    },
+    {
+      "section": "global-api",
+      "direction": "removed",
+      "header_count": 6,
+      "parsed_count": 6
+    },
+    {
+      "section": "widgets",
+      "direction": "added",
+      "header_count": 5,
+      "parsed_count": 5
+    },
+    {
+      "section": "widgets",
+      "direction": "removed",
+      "header_count": 0,
+      "parsed_count": 0
+    },
+    {
+      "section": "events",
+      "direction": "added",
+      "header_count": 6,
+      "parsed_count": 6
+    },
+    {
+      "section": "events",
+      "direction": "removed",
+      "header_count": 1,
+      "parsed_count": 1
+    },
+    {
+      "section": "cvars",
+      "direction": "added",
+      "header_count": 25,
+      "parsed_count": 25
+    },
+    {
+      "section": "cvars",
+      "direction": "removed",
+      "header_count": 13,
+      "parsed_count": 13
+    }
+  ],
+  "entries": [
+    {
+      "id": "wt-global-api-C_AchievementTelemetry.LinkAchievementInClub-51",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AchievementTelemetry.LinkAchievementInClub",
+      "annotation": "",
+      "wikitext_line": 51
+    },
+    {
+      "id": "wt-global-api-C_AchievementTelemetry.LinkAchievementInWhisper-52",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AchievementTelemetry.LinkAchievementInWhisper",
+      "annotation": "",
+      "wikitext_line": 52
+    },
+    {
+      "id": "wt-global-api-C_AchievementTelemetry.ShowAchievements-53",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AchievementTelemetry.ShowAchievements",
+      "annotation": "",
+      "wikitext_line": 53
+    },
+    {
+      "id": "wt-global-api-C_AddOnProfiler.AddPerformanceMessageShown-54",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AddOnProfiler.AddPerformanceMessageShown",
+      "annotation": "",
+      "wikitext_line": 54
+    },
+    {
+      "id": "wt-global-api-C_AddOnProfiler.CheckForPerformanceMessage-55",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AddOnProfiler.CheckForPerformanceMessage",
+      "annotation": "",
+      "wikitext_line": 55
+    },
+    {
+      "id": "wt-global-api-C_AddOnProfiler.GetApplicationMetric-56",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AddOnProfiler.GetApplicationMetric",
+      "annotation": "",
+      "wikitext_line": 56
+    },
+    {
+      "id": "wt-global-api-C_AddOnProfiler.GetTopKAddOnsForMetric-57",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AddOnProfiler.GetTopKAddOnsForMetric",
+      "annotation": "",
+      "wikitext_line": 57
+    },
+    {
+      "id": "wt-global-api-C_AddOns.DoesAddOnHaveLoadError-58",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AddOns.DoesAddOnHaveLoadError",
+      "annotation": "",
+      "wikitext_line": 58
+    },
+    {
+      "id": "wt-global-api-C_AddOns.IsAddOnDefaultEnabled-59",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AddOns.IsAddOnDefaultEnabled",
+      "annotation": "",
+      "wikitext_line": 59
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.ShouldAutoPopulatePrice-60",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.ShouldAutoPopulatePrice",
+      "annotation": "",
+      "wikitext_line": 60
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.SupportsCopperValues-61",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.SupportsCopperValues",
+      "annotation": "",
+      "wikitext_line": 61
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.HasCustomizationFeature-62",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BarberShop.HasCustomizationFeature",
+      "annotation": "",
+      "wikitext_line": 62
+    },
+    {
+      "id": "wt-global-api-C_Commentator.SpellUsesItemCharges-63",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Commentator.SpellUsesItemCharges",
+      "annotation": "",
+      "wikitext_line": 63
+    },
+    {
+      "id": "wt-global-api-C_Debug.ToggleDebugCharInfo-64",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Debug.ToggleDebugCharInfo",
+      "annotation": "",
+      "wikitext_line": 64
+    },
+    {
+      "id": "wt-global-api-C_DelvesUI.GetCompanionInfoForActivePlayer-65",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_DelvesUI.GetCompanionInfoForActivePlayer",
+      "annotation": "",
+      "wikitext_line": 65
+    },
+    {
+      "id": "wt-global-api-C_EventScheduler.ClearReminder-66",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_EventScheduler.ClearReminder",
+      "annotation": "",
+      "wikitext_line": 66
+    },
+    {
+      "id": "wt-global-api-C_EventScheduler.GetActiveContinentName-67",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_EventScheduler.GetActiveContinentName",
+      "annotation": "",
+      "wikitext_line": 67
+    },
+    {
+      "id": "wt-global-api-C_EventScheduler.GetEventUiMapID-68",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_EventScheduler.GetEventUiMapID",
+      "annotation": "",
+      "wikitext_line": 68
+    },
+    {
+      "id": "wt-global-api-C_EventScheduler.GetEventZoneName-69",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_EventScheduler.GetEventZoneName",
+      "annotation": "",
+      "wikitext_line": 69
+    },
+    {
+      "id": "wt-global-api-C_EventScheduler.GetOngoingEvents-70",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_EventScheduler.GetOngoingEvents",
+      "annotation": "",
+      "wikitext_line": 70
+    },
+    {
+      "id": "wt-global-api-C_EventScheduler.GetScheduledEvents-71",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_EventScheduler.GetScheduledEvents",
+      "annotation": "",
+      "wikitext_line": 71
+    },
+    {
+      "id": "wt-global-api-C_EventScheduler.HasData-72",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_EventScheduler.HasData",
+      "annotation": "",
+      "wikitext_line": 72
+    },
+    {
+      "id": "wt-global-api-C_EventScheduler.HasSavedReminders-73",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_EventScheduler.HasSavedReminders",
+      "annotation": "",
+      "wikitext_line": 73
+    },
+    {
+      "id": "wt-global-api-C_EventScheduler.RequestEvents-74",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_EventScheduler.RequestEvents",
+      "annotation": "",
+      "wikitext_line": 74
+    },
+    {
+      "id": "wt-global-api-C_EventScheduler.SetReminder-75",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_EventScheduler.SetReminder",
+      "annotation": "",
+      "wikitext_line": 75
+    },
+    {
+      "id": "wt-global-api-C_Item.GetDelvePreviewItemQuality-76",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Item.GetDelvePreviewItemQuality",
+      "annotation": "",
+      "wikitext_line": 76
+    },
+    {
+      "id": "wt-global-api-C_Log.LogMessage-77",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Log.LogMessage",
+      "annotation": "",
+      "wikitext_line": 77
+    },
+    {
+      "id": "wt-global-api-C_MajorFactions.IsMajorFactionHiddenFromExpansionPage-78",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MajorFactions.IsMajorFactionHiddenFromExpansionPage",
+      "annotation": "",
+      "wikitext_line": 78
+    },
+    {
+      "id": "wt-global-api-C_PlayerInfo.CanPlayerUseEventScheduler-79",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PlayerInfo.CanPlayerUseEventScheduler",
+      "annotation": "",
+      "wikitext_line": 79
+    },
+    {
+      "id": "wt-global-api-C_SpecializationInfo.SetPetSpecialization-80",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SpecializationInfo.SetPetSpecialization",
+      "annotation": "",
+      "wikitext_line": 80
+    },
+    {
+      "id": "wt-global-api-C_SpecializationInfo.SetSpecialization-81",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SpecializationInfo.SetSpecialization",
+      "annotation": "",
+      "wikitext_line": 81
+    },
+    {
+      "id": "wt-global-api-C_StableInfo.GetAvailablePetSpecInfos-82",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_StableInfo.GetAvailablePetSpecInfos",
+      "annotation": "",
+      "wikitext_line": 82
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.CancelProfessionRespec-83",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.CancelProfessionRespec",
+      "annotation": "",
+      "wikitext_line": 83
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.CheckRespecNPC-84",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.CheckRespecNPC",
+      "annotation": "",
+      "wikitext_line": 84
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.ConfirmProfessionRespec-85",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.ConfirmProfessionRespec",
+      "annotation": "",
+      "wikitext_line": 85
+    },
+    {
+      "id": "wt-global-api-C_WarbandScene.GetRandomEntryID-86",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_WarbandScene.GetRandomEntryID",
+      "annotation": "",
+      "wikitext_line": 86
+    },
+    {
+      "id": "wt-global-api-C_WarbandScene.GetWarbandSceneEntry-87",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_WarbandScene.GetWarbandSceneEntry",
+      "annotation": "",
+      "wikitext_line": 87
+    },
+    {
+      "id": "wt-global-api-C_WarbandScene.HasWarbandScene-88",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_WarbandScene.HasWarbandScene",
+      "annotation": "",
+      "wikitext_line": 88
+    },
+    {
+      "id": "wt-global-api-C_WarbandScene.IsFavorite-89",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_WarbandScene.IsFavorite",
+      "annotation": "",
+      "wikitext_line": 89
+    },
+    {
+      "id": "wt-global-api-C_WarbandScene.SearchWarbandSceneEntries-90",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_WarbandScene.SearchWarbandSceneEntries",
+      "annotation": "",
+      "wikitext_line": 90
+    },
+    {
+      "id": "wt-global-api-C_WarbandScene.SetFavorite-91",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_WarbandScene.SetFavorite",
+      "annotation": "",
+      "wikitext_line": 91
+    },
+    {
+      "id": "wt-global-api-ConsoleEcho-92",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ConsoleEcho",
+      "annotation": "",
+      "wikitext_line": 92
+    },
+    {
+      "id": "wt-global-api-CreateFontFamily-93",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CreateFontFamily",
+      "annotation": "",
+      "wikitext_line": 93
+    },
+    {
+      "id": "wt-global-api-GetNativeRealmID-94",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNativeRealmID",
+      "annotation": "",
+      "wikitext_line": 94
+    },
+    {
+      "id": "wt-global-api-IsDrivableArea-95",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsDrivableArea",
+      "annotation": "",
+      "wikitext_line": 95
+    },
+    {
+      "id": "wt-global-api-AreAccountAchievementsHidden-98",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "AreAccountAchievementsHidden",
+      "annotation": "",
+      "wikitext_line": 98
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.GetCustomizationScope-99",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_BarberShop.GetCustomizationScope",
+      "annotation": "",
+      "wikitext_line": 99
+    },
+    {
+      "id": "wt-global-api-C_TransmogCollection.CanAppearanceBeDisplayedOnPlayer-100",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TransmogCollection.CanAppearanceBeDisplayedOnPlayer",
+      "annotation": "",
+      "wikitext_line": 100
+    },
+    {
+      "id": "wt-global-api-ConsoleAddMessage-101",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ConsoleAddMessage",
+      "annotation": "",
+      "wikitext_line": 101
+    },
+    {
+      "id": "wt-global-api-SetSpecialization-102",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetSpecialization",
+      "annotation": "",
+      "wikitext_line": 102
+    },
+    {
+      "id": "wt-global-api-ShowAccountAchievements-103",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ShowAccountAchievements",
+      "annotation": "",
+      "wikitext_line": 103
+    },
+    {
+      "id": "wt-global-api-C_AreaPoiInfo.GetAreaPOIInfo-106",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_AreaPoiInfo.GetAreaPOIInfo",
+      "annotation": "# arg 1: uiMapID, Nilable: false -> true",
+      "wikitext_line": 106
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.SetSelectedSex-108",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_BarberShop.SetSelectedSex",
+      "annotation": "# arg 1: sex, Type: number -> UnitSex",
+      "wikitext_line": 108
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.SetViewingChrModel-110",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_BarberShop.SetViewingChrModel",
+      "annotation": "+ arg 2: spellShapeshiftFormID",
+      "wikitext_line": 110
+    },
+    {
+      "id": "wt-global-api-C_MountJournal.GetDisplayedMountInfo-112",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_MountJournal.GetDisplayedMountInfo",
+      "annotation": "# ret 9: faction, Type: number -> PvPFaction",
+      "wikitext_line": 112
+    },
+    {
+      "id": "wt-global-api-C_MountJournal.GetMountInfoByID-114",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_MountJournal.GetMountInfoByID",
+      "annotation": "# ret 9: faction, Type: number -> PvPFaction",
+      "wikitext_line": 114
+    },
+    {
+      "id": "wt-global-api-C_PlayerInfo.GetSex-116",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_PlayerInfo.GetSex",
+      "annotation": "# ret 1: sex, Type: number -> UnitSex",
+      "wikitext_line": 116
+    },
+    {
+      "id": "wt-global-api-CreateWindow-118",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "CreateWindow",
+      "annotation": "+ arg 2: topMost",
+      "wikitext_line": 118
+    },
+    {
+      "id": "wt-global-api-DeclineName-120",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "DeclineName",
+      "annotation": "# arg 2: gender, Type: number -> UnitSex",
+      "wikitext_line": 120
+    },
+    {
+      "id": "wt-global-api-GetNumDeclensionSets-122",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetNumDeclensionSets",
+      "annotation": "# arg 2: gender, Type: number -> UnitSex",
+      "wikitext_line": 122
+    },
+    {
+      "id": "wt-global-api-GetPVPLifetimeStats-124",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetPVPLifetimeStats",
+      "annotation": "# ret 2: lifetimeMaxPVPRank, Type: number -> PvPRanks",
+      "wikitext_line": 124
+    },
+    {
+      "id": "wt-global-api-GetSpecializationInfoForClassID-126",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetSpecializationInfoForClassID",
+      "annotation": "# arg 3: gender, Type: number -> UnitSex",
+      "wikitext_line": 126
+    },
+    {
+      "id": "wt-global-api-GetSpecializationInfoForSpecID-128",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetSpecializationInfoForSpecID",
+      "annotation": "# arg 2: gender, Type: number -> UnitSex",
+      "wikitext_line": 128
+    },
+    {
+      "id": "wt-global-api-GetSpecializationNameForSpecID-130",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetSpecializationNameForSpecID",
+      "annotation": "# arg 2: gender, Type: number -> UnitSex",
+      "wikitext_line": 130
+    },
+    {
+      "id": "wt-global-api-GetTotemInfo-132",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetTotemInfo",
+      "annotation": "+ ret 6: modRate",
+      "wikitext_line": 132
+    },
+    {
+      "id": "wt-widgets-ScriptRegion:Intersects-142",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "ScriptRegion:Intersects",
+      "annotation": "",
+      "wikitext_line": 142
+    },
+    {
+      "id": "wt-widgets-Font:GetFontObjectForAlphabet-143",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Font:GetFontObjectForAlphabet",
+      "annotation": "",
+      "wikitext_line": 143
+    },
+    {
+      "id": "wt-widgets-Frame:IsDrawLayerEnabled-144",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Frame:IsDrawLayerEnabled",
+      "annotation": "",
+      "wikitext_line": 144
+    },
+    {
+      "id": "wt-widgets-EditBox:GetNumLines-145",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "EditBox:GetNumLines",
+      "annotation": "",
+      "wikitext_line": 145
+    },
+    {
+      "id": "wt-widgets-EditBox:SetFontStringIgnoreParentAlpha-146",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "EditBox:SetFontStringIgnoreParentAlpha",
+      "annotation": "",
+      "wikitext_line": 146
+    },
+    {
+      "id": "wt-events-EVENT_REALM_QUEUES_UPDATED-159",
+      "section": "events",
+      "direction": "added",
+      "symbol": "EVENT_REALM_QUEUES_UPDATED",
+      "annotation": "",
+      "wikitext_line": 159
+    },
+    {
+      "id": "wt-events-EVENT_SCHEDULER_UPDATE-160",
+      "section": "events",
+      "direction": "added",
+      "symbol": "EVENT_SCHEDULER_UPDATE",
+      "annotation": "",
+      "wikitext_line": 160
+    },
+    {
+      "id": "wt-events-GUILD_REWARDS_LIST_UPDATE-161",
+      "section": "events",
+      "direction": "added",
+      "symbol": "GUILD_REWARDS_LIST_UPDATE",
+      "annotation": "",
+      "wikitext_line": 161
+    },
+    {
+      "id": "wt-events-NEW_WARBAND_SCENE_ADDED-162",
+      "section": "events",
+      "direction": "added",
+      "symbol": "NEW_WARBAND_SCENE_ADDED",
+      "annotation": "",
+      "wikitext_line": 162
+    },
+    {
+      "id": "wt-events-PROFESSION_RESPEC_CONFIRMATION-163",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PROFESSION_RESPEC_CONFIRMATION",
+      "annotation": "",
+      "wikitext_line": 163
+    },
+    {
+      "id": "wt-events-WARBAND_SCENE_FAVORITES_UPDATED-164",
+      "section": "events",
+      "direction": "added",
+      "symbol": "WARBAND_SCENE_FAVORITES_UPDATED",
+      "annotation": "",
+      "wikitext_line": 164
+    },
+    {
+      "id": "wt-events-GLUE_CONSOLE_LOG-167",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "GLUE_CONSOLE_LOG",
+      "annotation": "",
+      "wikitext_line": 167
+    },
+    {
+      "id": "wt-events-GOSSIP_CONFIRM-170",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "GOSSIP_CONFIRM",
+      "annotation": "# 3: cost, Type: number -> WOWMONEY",
+      "wikitext_line": 170
+    },
+    {
+      "id": "wt-cvars-addonPerformanceMsgError-180",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "addonPerformanceMsgError",
+      "annotation": "",
+      "wikitext_line": 180,
+      "page_default": "0.000000"
+    },
+    {
+      "id": "wt-cvars-addonPerformanceMsgOverall-181",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "addonPerformanceMsgOverall",
+      "annotation": "",
+      "wikitext_line": 181,
+      "page_default": "0.000000"
+    },
+    {
+      "id": "wt-cvars-addonPerformanceMsgWarning-182",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "addonPerformanceMsgWarning",
+      "annotation": "",
+      "wikitext_line": 182,
+      "page_default": "0.000000"
+    },
+    {
+      "id": "wt-cvars-allowDevPublicKey-183",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "allowDevPublicKey",
+      "annotation": "",
+      "wikitext_line": 183,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-disableUILoadErrorDialog-184",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "disableUILoadErrorDialog",
+      "annotation": "",
+      "wikitext_line": 184,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-DriveDynamicFOVEnabled-185",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "DriveDynamicFOVEnabled",
+      "annotation": "",
+      "wikitext_line": 185,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-DriveSwapReverseTurnDirection-186",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "DriveSwapReverseTurnDirection",
+      "annotation": "",
+      "wikitext_line": 186,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-eventReminders-187",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "eventReminders",
+      "annotation": "",
+      "wikitext_line": 187
+    },
+    {
+      "id": "wt-cvars-eventSchedulerLastUpdate-188",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "eventSchedulerLastUpdate",
+      "annotation": "",
+      "wikitext_line": 188,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-gxMTLightShafts-189",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "gxMTLightShafts",
+      "annotation": "",
+      "wikitext_line": 189,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-hideRewardedEvents-190",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "hideRewardedEvents",
+      "annotation": "",
+      "wikitext_line": 190,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-highestUnlockedDelvesTier-191",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "highestUnlockedDelvesTier",
+      "annotation": "",
+      "wikitext_line": 191,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-lastRenownForMajorFaction2653-192",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "lastRenownForMajorFaction2653",
+      "annotation": "",
+      "wikitext_line": 192,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-lastRenownForMajorFaction2685-193",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "lastRenownForMajorFaction2685",
+      "annotation": "",
+      "wikitext_line": 193,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-minimapTrackedInfov4-194",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "minimapTrackedInfov4",
+      "annotation": "",
+      "wikitext_line": 194,
+      "page_default": "3103471"
+    },
+    {
+      "id": "wt-cvars-movieSubtitleBackgroundAlpha-195",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "movieSubtitleBackgroundAlpha",
+      "annotation": "",
+      "wikitext_line": 195,
+      "page_default": "70"
+    },
+    {
+      "id": "wt-cvars-movieSubtitleBackground-196",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "movieSubtitleBackground",
+      "annotation": "",
+      "wikitext_line": 196,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-newDelvesSeason-197",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "newDelvesSeason",
+      "annotation": "",
+      "wikitext_line": 197,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-RAIDshadowNumCascades-198",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "RAIDshadowNumCascades",
+      "annotation": "",
+      "wikitext_line": 198,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-seenCharacterSelectAddGroupHelpTip-199",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "seenCharacterSelectAddGroupHelpTip",
+      "annotation": "",
+      "wikitext_line": 199,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-seenCharacterSelectNavBarCampsHelpTip-200",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "seenCharacterSelectNavBarCampsHelpTip",
+      "annotation": "",
+      "wikitext_line": 200,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-shadowNumCascades-201",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "shadowNumCascades",
+      "annotation": "",
+      "wikitext_line": 201,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-SuppressCpuMicrocodeChecks-202",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SuppressCpuMicrocodeChecks",
+      "annotation": "",
+      "wikitext_line": 202,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-useShadowMapping-203",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "useShadowMapping",
+      "annotation": "",
+      "wikitext_line": 203,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-clearSeenDelvesCurios-204",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "clearSeenDelvesCurios",
+      "annotation": "",
+      "wikitext_line": 204,
+      "kind": "command"
+    },
+    {
+      "id": "wt-cvars-friendInvitesCollapsed_WowLabs-207",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "friendInvitesCollapsed_WowLabs",
+      "annotation": "",
+      "wikitext_line": 207,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-minimapTrackedInfov2-208",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "minimapTrackedInfov2",
+      "annotation": "",
+      "wikitext_line": 208
+    },
+    {
+      "id": "wt-cvars-pendingInviteInfoShown_WowLabs-209",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "pendingInviteInfoShown_WowLabs",
+      "annotation": "",
+      "wikitext_line": 209,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-ResolvedSSAOType-210",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "ResolvedSSAOType",
+      "annotation": "",
+      "wikitext_line": 210,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-scriptWarnings-211",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "scriptWarnings",
+      "annotation": "",
+      "wikitext_line": 211,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-shadowCull-212",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "shadowCull",
+      "annotation": "",
+      "wikitext_line": 212,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-shadowScissor-213",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "shadowScissor",
+      "annotation": "",
+      "wikitext_line": 213,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-timingMethod-214",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "timingMethod",
+      "annotation": "",
+      "wikitext_line": 214,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-timingTestError-215",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "timingTestError",
+      "annotation": "",
+      "wikitext_line": 215,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-useCompactPartyFrames-216",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "useCompactPartyFrames",
+      "annotation": "",
+      "wikitext_line": 216
+    },
+    {
+      "id": "wt-cvars-ObjUsage-217",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "ObjUsage",
+      "annotation": "",
+      "wikitext_line": 217,
+      "kind": "command"
+    },
+    {
+      "id": "wt-cvars-ShowObjUsage-218",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "ShowObjUsage",
+      "annotation": "",
+      "wikitext_line": 218,
+      "kind": "command"
+    },
+    {
+      "id": "wt-cvars-timingInfo-219",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "timingInfo",
+      "annotation": "",
+      "wikitext_line": 219,
+      "kind": "command"
+    }
+  ]
+}

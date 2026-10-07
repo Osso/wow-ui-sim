@@ -1,0 +1,802 @@
+[
+  {
+    "source_id": "source-context-001",
+    "statement": "Patch 11.1.0 API changes",
+    "batch": "editorial",
+    "status": "metadata-only",
+    "evidence": "Retained wikitext and deterministic plaintext.",
+    "reason": "Heading/resource/build context; no runtime claim."
+  },
+  {
+    "source_id": "source-context-003",
+    "statement": "== Summary ==",
+    "batch": "editorial",
+    "status": "metadata-only",
+    "evidence": "Retained wikitext and deterministic plaintext.",
+    "reason": "Heading/resource/build context; no runtime claim."
+  },
+  {
+    "source_id": "prose-undated-004",
+    "statement": "* Added support for grouping and categorizing addons in the addon list.",
+    "batch": "B01-summary",
+    "status": "audit-pending",
+    "evidence": "src/c_api/c_addon_profiler.rs; cached Blizzard_AddOnList; src/toc/",
+    "reason": "Grouping, metric display and warning threshold/UI paths need populated-addon cached UI tests; publication of profiler methods is insufficient."
+  },
+  {
+    "source_id": "prose-undated-005",
+    "statement": "* Added the display of performance metrics to the addon list and game menu microbutton tooltip.",
+    "batch": "B01-summary",
+    "status": "audit-pending",
+    "evidence": "src/c_api/c_addon_profiler.rs; cached Blizzard_AddOnList; src/toc/",
+    "reason": "Grouping, metric display and warning threshold/UI paths need populated-addon cached UI tests; publication of profiler methods is insufficient."
+  },
+  {
+    "source_id": "prose-undated-006",
+    "statement": "* Addons that exceed CPU performance thresholds may now trigger an in-game warning dialog suggesting that the user disable the addon.",
+    "batch": "B01-summary",
+    "status": "audit-pending",
+    "evidence": "src/c_api/c_addon_profiler.rs; cached Blizzard_AddOnList; src/toc/",
+    "reason": "Grouping, metric display and warning threshold/UI paths need populated-addon cached UI tests; publication of profiler methods is insufficient."
+  },
+  {
+    "source_id": "source-context-008",
+    "statement": "== Resources ==",
+    "batch": "editorial",
+    "status": "metadata-only",
+    "evidence": "Retained wikitext and deterministic plaintext.",
+    "reason": "Heading/resource/build context; no runtime claim."
+  },
+  {
+    "source_id": "source-context-009",
+    "statement": "* TOC: 110100",
+    "batch": "editorial",
+    "status": "metadata-only",
+    "evidence": "Retained wikitext and deterministic plaintext.",
+    "reason": "Heading/resource/build context; no runtime claim."
+  },
+  {
+    "source_id": "source-context-010",
+    "statement": "* Official patch notes: Undermine(d) Update Notes",
+    "batch": "editorial",
+    "status": "metadata-only",
+    "evidence": "Retained wikitext and deterministic plaintext.",
+    "reason": "Heading/resource/build context; no runtime claim."
+  },
+  {
+    "source_id": "source-context-011",
+    "statement": "* Diffs: wow-ui-source, BlizzardInterfaceResources",
+    "batch": "editorial",
+    "status": "metadata-only",
+    "evidence": "Retained wikitext and deterministic plaintext.",
+    "reason": "Heading/resource/build context; no runtime claim."
+  },
+  {
+    "source_id": "source-context-013",
+    "statement": "== Addon list changes ==",
+    "batch": "editorial",
+    "status": "metadata-only",
+    "evidence": "Retained wikitext and deterministic plaintext.",
+    "reason": "Heading/resource/build context; no runtime claim."
+  },
+  {
+    "source_id": "prose-undated-015",
+    "statement": "The addon list now supports grouping and categorizing addons through the use of the new Category and Group TOC file fields.",
+    "batch": "B02-addon-metadata",
+    "status": "audit-pending",
+    "evidence": "src/toc/; cached Blizzard_AddOnList",
+    "reason": "TOC Category/Group locale, empty-root placement, explicit shared groups and dependency-prefix inference require installed multi-addon fixtures and cached list presentation. Linked category vocabulary is not expanded."
+  },
+  {
+    "source_id": "prose-undated-017",
+    "statement": "* Categories will be displayed as headers that can be collapsed or expanded.",
+    "batch": "B02-addon-metadata",
+    "status": "audit-pending",
+    "evidence": "src/toc/; cached Blizzard_AddOnList",
+    "reason": "TOC Category/Group locale, empty-root placement, explicit shared groups and dependency-prefix inference require installed multi-addon fixtures and cached list presentation. Linked category vocabulary is not expanded."
+  },
+  {
+    "source_id": "prose-undated-018",
+    "statement": "* Groups will be displayed as indented sublists that cannot be collapsed.",
+    "batch": "B02-addon-metadata",
+    "status": "audit-pending",
+    "evidence": "src/toc/; cached Blizzard_AddOnList",
+    "reason": "TOC Category/Group locale, empty-root placement, explicit shared groups and dependency-prefix inference require installed multi-addon fixtures and cached list presentation. Linked category vocabulary is not expanded."
+  },
+  {
+    "source_id": "source-context-020",
+    "statement": "=== Addon list categories ===",
+    "batch": "editorial",
+    "status": "metadata-only",
+    "evidence": "Retained wikitext and deterministic plaintext.",
+    "reason": "Heading/resource/build context; no runtime claim."
+  },
+  {
+    "source_id": "prose-undated-022",
+    "statement": "Membership of categories is controlled though the new Category TOC directive. The content of this directive must at present be a string that will be displayed verbatim in the addon list, with an empty string being equivalent to not having defined a category. The category name can be localized through the use of the existing locale-suffixes used for the Title and Notes directives.",
+    "batch": "B02-addon-metadata",
+    "status": "audit-pending",
+    "evidence": "src/toc/; cached Blizzard_AddOnList",
+    "reason": "TOC Category/Group locale, empty-root placement, explicit shared groups and dependency-prefix inference require installed multi-addon fixtures and cached list presentation. Linked category vocabulary is not expanded."
+  },
+  {
+    "source_id": "prose-undated-024",
+    "statement": "It is strongly recommended that you stick to the translated category names found on the Addon Categories page. This will ensure that your addon is consistently located with other addons in the same category across all locales.",
+    "batch": "B02-addon-metadata",
+    "status": "audit-pending",
+    "evidence": "src/toc/; cached Blizzard_AddOnList",
+    "reason": "TOC Category/Group locale, empty-root placement, explicit shared groups and dependency-prefix inference require installed multi-addon fixtures and cached list presentation. Linked category vocabulary is not expanded."
+  },
+  {
+    "source_id": "prose-undated-026",
+    "statement": "If no Category has been specified or an empty string is used as its value, then the addon will appear at the root of the addon tree list and not be placed under any collapsible headers.",
+    "batch": "B02-addon-metadata",
+    "status": "audit-pending",
+    "evidence": "src/toc/; cached Blizzard_AddOnList",
+    "reason": "TOC Category/Group locale, empty-root placement, explicit shared groups and dependency-prefix inference require installed multi-addon fixtures and cached list presentation. Linked category vocabulary is not expanded."
+  },
+  {
+    "source_id": "prose-undated-028",
+    "statement": "## Interface: [API LatestInterface]",
+    "batch": "B02-addon-metadata",
+    "status": "audit-pending",
+    "evidence": "src/toc/; cached Blizzard_AddOnList",
+    "reason": "TOC Category/Group locale, empty-root placement, explicit shared groups and dependency-prefix inference require installed multi-addon fixtures and cached list presentation. Linked category vocabulary is not expanded."
+  },
+  {
+    "source_id": "prose-undated-029",
+    "statement": "## Title: My Cool Addon",
+    "batch": "B02-addon-metadata",
+    "status": "audit-pending",
+    "evidence": "src/toc/; cached Blizzard_AddOnList",
+    "reason": "TOC Category/Group locale, empty-root placement, explicit shared groups and dependency-prefix inference require installed multi-addon fixtures and cached list presentation. Linked category vocabulary is not expanded."
+  },
+  {
+    "source_id": "prose-undated-030",
+    "statement": "## Category: This is a test",
+    "batch": "B02-addon-metadata",
+    "status": "audit-pending",
+    "evidence": "src/toc/; cached Blizzard_AddOnList",
+    "reason": "TOC Category/Group locale, empty-root placement, explicit shared groups and dependency-prefix inference require installed multi-addon fixtures and cached list presentation. Linked category vocabulary is not expanded."
+  },
+  {
+    "source_id": "prose-undated-031",
+    "statement": "## Category-deDE: Dies ist ein Test",
+    "batch": "B02-addon-metadata",
+    "status": "audit-pending",
+    "evidence": "src/toc/; cached Blizzard_AddOnList",
+    "reason": "TOC Category/Group locale, empty-root placement, explicit shared groups and dependency-prefix inference require installed multi-addon fixtures and cached list presentation. Linked category vocabulary is not expanded."
+  },
+  {
+    "source_id": "source-context-033",
+    "statement": "=== Addon list grouping ===",
+    "batch": "editorial",
+    "status": "metadata-only",
+    "evidence": "Retained wikitext and deterministic plaintext.",
+    "reason": "Heading/resource/build context; no runtime claim."
+  },
+  {
+    "source_id": "prose-undated-035",
+    "statement": "Membership of groups is controlled through the new Group TOC directive. The content of this directive must the base name of another addon. Unlike Category it is not displayed in the addon list, however for grouping to functionally work at least two separate addons must share the same defined Group name.",
+    "batch": "B02-addon-metadata",
+    "status": "audit-pending",
+    "evidence": "src/toc/; cached Blizzard_AddOnList",
+    "reason": "TOC Category/Group locale, empty-root placement, explicit shared groups and dependency-prefix inference require installed multi-addon fixtures and cached list presentation. Linked category vocabulary is not expanded."
+  },
+  {
+    "source_id": "prose-undated-037",
+    "statement": "If no Group has been manually specified, the client will attempt to automatically deduce membership of a group. The list of installed addons will be scanned and to locate pairs of addons where the base name of one addon is a complete prefix of another, and where a dependency relation (optional or required) exists between the two in either direction. See the Group section on the TOC Format page for more in-depth details.",
+    "batch": "B02-addon-metadata",
+    "status": "audit-pending",
+    "evidence": "src/toc/; cached Blizzard_AddOnList",
+    "reason": "TOC Category/Group locale, empty-root placement, explicit shared groups and dependency-prefix inference require installed multi-addon fixtures and cached list presentation. Linked category vocabulary is not expanded."
+  },
+  {
+    "source_id": "source-context-039",
+    "statement": "== Consolidated changes ==",
+    "batch": "editorial",
+    "status": "metadata-only",
+    "evidence": "Retained wikitext and deterministic plaintext.",
+    "reason": "Heading/resource/build context; no runtime claim."
+  },
+  {
+    "source_id": "source-context-040",
+    "statement": ": 11.0.7 (58238) \u2192 11.1.0 (59466) Feb 27 2025",
+    "batch": "editorial",
+    "status": "metadata-only",
+    "evidence": "Retained wikitext and deterministic plaintext.",
+    "reason": "Heading/resource/build context; no runtime claim."
+  },
+  {
+    "source_id": "source-context-042",
+    "statement": "=== Enumerations ===",
+    "batch": "editorial",
+    "status": "metadata-only",
+    "evidence": "Retained wikitext and deterministic plaintext.",
+    "reason": "Heading/resource/build context; no runtime claim."
+  },
+  {
+    "source_id": "enumerations-Enum-AccountTransType-043",
+    "statement": "Enum.AccountTransType",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-AccountTransType-044",
+    "statement": "+ SaveWarbandGroups",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-BattlepetDbFlags-045",
+    "statement": "Enum.BattlepetDbFlags",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-BattlepetDbFlags-046",
+    "statement": "- AccountStore",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-ChrModelFeatureFlags-047",
+    "statement": "Enum.ChrModelFeatureFlags",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-ChrModelFeatureFlags-048",
+    "statement": "+ None",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-ChrModelFeatureFlags-049",
+    "statement": "+ Players",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-ChrModelFeatureFlags-050",
+    "statement": "# DragonCompanions -> Deprecated0",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-CompanionRoleType-051",
+    "statement": "Enum.CompanionRoleType",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-CompanionRoleType-052",
+    "statement": "+ Tank",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencyDestroyReason-053",
+    "statement": "Enum.CurrencyDestroyReason",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencyDestroyReason-054",
+    "statement": "+ HonorLoss",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencyFlagsB-055",
+    "statement": "Enum.CurrencyFlagsB",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencyFlagsB-056",
+    "statement": "+ CurrencyBForceMaxQuantityOnConversion",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-GossipNpcOption-057",
+    "statement": "Enum.GossipNpcOption",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-GossipNpcOption-058",
+    "statement": "+ ProfessionRespec",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-GossipNpcOption-059",
+    "statement": "+ Placeholder_1",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-GossipNpcOption-060",
+    "statement": "+ Placeholder_2",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-GossipNpcOption-061",
+    "statement": "+ Placeholder_3",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-GossipNpcOption-062",
+    "statement": "+ Placeholder_4",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-GossipOptionRecFlags-063",
+    "statement": "Enum.GossipOptionRecFlags",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-GossipOptionRecFlags-064",
+    "statement": "+ PlayMovieLabelPrepend",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-PerksVendorCategoryType-065",
+    "statement": "Enum.PerksVendorCategoryType",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-PerksVendorCategoryType-066",
+    "statement": "+ WarbandScene",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-PlayerInteractionType-067",
+    "statement": "Enum.PlayerInteractionType",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-PlayerInteractionType-068",
+    "statement": "+ ProfessionRespec",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-PlayerInteractionType-069",
+    "statement": "+ PlaceholderType71",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-PlayerInteractionType-070",
+    "statement": "+ PlaceholderType72",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-PlayerInteractionType-071",
+    "statement": "+ PlaceholderType73",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-PlayerInteractionType-072",
+    "statement": "+ PlaceholderType74",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-PlayerInteractionType-073",
+    "statement": "+ PlaceholderType75",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-PlayerInteractionType-074",
+    "statement": "+ PlaceholderType76",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-PlayerInteractionType-075",
+    "statement": "+ PlaceholderType77",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-PointsModifierSourceType-076",
+    "statement": "Enum.PointsModifierSourceType",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-PointsModifierSourceType-077",
+    "statement": "+ CurrencyMaxWeeklyDelta",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-SendAddonMessageResult-078",
+    "statement": "Enum.SendAddonMessageResult",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-SendAddonMessageResult-079",
+    "statement": "+ NotInGuild",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-SubcontainerType-080",
+    "statement": "Enum.SubcontainerType",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-SubcontainerType-081",
+    "statement": "+ CurrencyTransfer",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-WarbandSceneAnimationEvent-082",
+    "statement": "Enum.WarbandSceneAnimationEvent",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-WarbandSceneAnimationEvent-083",
+    "statement": "+ Ffx",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-WarbandSceneAnimationStandState-084",
+    "statement": "Enum.WarbandSceneAnimationStandState",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-WarbandSceneAnimationStandState-085",
+    "statement": "+ SitOnChairLow",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-WarbandSceneAnimationStandState-086",
+    "statement": "+ SitOnChairMedium",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "enumerations-Enum-WarbandSceneAnimationStandState-087",
+    "statement": "+ SitOnChairHigh",
+    "batch": "B03-enums",
+    "status": "audit-pending",
+    "evidence": "src/lua_api/globals/enum_data/missing_enums.lua; tests/enum_diff_coverage.rs",
+    "reason": "Inventory publication sweep does not probe Enum members or numeric values. Current generated enum tables need a runtime value/absence/supersession audit; parent names alone do not prove each change."
+  },
+  {
+    "source_id": "source-context-089",
+    "statement": "=== Structures ===",
+    "batch": "editorial",
+    "status": "metadata-only",
+    "evidence": "Retained wikitext and deterministic plaintext.",
+    "reason": "Heading/resource/build context; no runtime claim."
+  },
+  {
+    "source_id": "structures-AppearanceSourceInfo-090",
+    "statement": "AppearanceSourceInfo",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "evidence": "src/c_api/c_major_factions.rs; src/c_api/c_player_choice.rs; src/c_api/c_stable_info/forever.rs",
+    "reason": "Structure parent/member needs concrete producer roundtrip and later-schema reconciliation; field-name source match is not proof."
+  },
+  {
+    "source_id": "structures-AppearanceSourceInfo-091",
+    "statement": "+ canDisplayOnPlayer",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "evidence": "src/c_api/c_major_factions.rs; src/c_api/c_player_choice.rs; src/c_api/c_stable_info/forever.rs",
+    "reason": "Structure parent/member needs concrete producer roundtrip and later-schema reconciliation; field-name source match is not proof."
+  },
+  {
+    "source_id": "structures-CovenantData-092",
+    "statement": "CovenantData",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "evidence": "src/c_api/c_major_factions.rs; src/c_api/c_player_choice.rs; src/c_api/c_stable_info/forever.rs",
+    "reason": "Structure parent/member needs concrete producer roundtrip and later-schema reconciliation; field-name source match is not proof."
+  },
+  {
+    "source_id": "structures-CovenantData-093",
+    "statement": "+ factionID",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "evidence": "src/c_api/c_major_factions.rs; src/c_api/c_player_choice.rs; src/c_api/c_stable_info/forever.rs",
+    "reason": "Structure parent/member needs concrete producer roundtrip and later-schema reconciliation; field-name source match is not proof."
+  },
+  {
+    "source_id": "structures-MajorFactionData-094",
+    "statement": "MajorFactionData",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "evidence": "src/c_api/c_major_factions.rs; src/c_api/c_player_choice.rs; src/c_api/c_stable_info/forever.rs",
+    "reason": "Structure parent/member needs concrete producer roundtrip and later-schema reconciliation; field-name source match is not proof."
+  },
+  {
+    "source_id": "structures-MajorFactionData-095",
+    "statement": "+ factionFontColor",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "evidence": "src/c_api/c_major_factions.rs; src/c_api/c_player_choice.rs; src/c_api/c_stable_info/forever.rs",
+    "reason": "Structure parent/member needs concrete producer roundtrip and later-schema reconciliation; field-name source match is not proof."
+  },
+  {
+    "source_id": "structures-MajorFactionData-096",
+    "statement": "+ renownTrackLevelEffectID",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "evidence": "src/c_api/c_major_factions.rs; src/c_api/c_player_choice.rs; src/c_api/c_stable_info/forever.rs",
+    "reason": "Structure parent/member needs concrete producer roundtrip and later-schema reconciliation; field-name source match is not proof."
+  },
+  {
+    "source_id": "structures-MountInfo-097",
+    "statement": "MountInfo",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "evidence": "src/c_api/c_major_factions.rs; src/c_api/c_player_choice.rs; src/c_api/c_stable_info/forever.rs",
+    "reason": "Structure parent/member needs concrete producer roundtrip and later-schema reconciliation; field-name source match is not proof."
+  },
+  {
+    "source_id": "structures-MountInfo-098",
+    "statement": "# faction, Type: number -> PvPFaction",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "evidence": "src/c_api/c_major_factions.rs; src/c_api/c_player_choice.rs; src/c_api/c_stable_info/forever.rs",
+    "reason": "Structure parent/member needs concrete producer roundtrip and later-schema reconciliation; field-name source match is not proof."
+  },
+  {
+    "source_id": "structures-PetInfo-099",
+    "statement": "PetInfo",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "evidence": "src/c_api/c_major_factions.rs; src/c_api/c_player_choice.rs; src/c_api/c_stable_info/forever.rs",
+    "reason": "Structure parent/member needs concrete producer roundtrip and later-schema reconciliation; field-name source match is not proof."
+  },
+  {
+    "source_id": "structures-PetInfo-100",
+    "statement": "# abilities -> petAbilities",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "evidence": "src/c_api/c_major_factions.rs; src/c_api/c_player_choice.rs; src/c_api/c_stable_info/forever.rs",
+    "reason": "Structure parent/member needs concrete producer roundtrip and later-schema reconciliation; field-name source match is not proof."
+  },
+  {
+    "source_id": "structures-PetInfo-101",
+    "statement": "+ specAbilities",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "evidence": "src/c_api/c_major_factions.rs; src/c_api/c_player_choice.rs; src/c_api/c_stable_info/forever.rs",
+    "reason": "Structure parent/member needs concrete producer roundtrip and later-schema reconciliation; field-name source match is not proof."
+  },
+  {
+    "source_id": "structures-PetInfo-102",
+    "statement": "+ specID",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "evidence": "src/c_api/c_major_factions.rs; src/c_api/c_player_choice.rs; src/c_api/c_stable_info/forever.rs",
+    "reason": "Structure parent/member needs concrete producer roundtrip and later-schema reconciliation; field-name source match is not proof."
+  },
+  {
+    "source_id": "structures-PlayerChoiceInfo-103",
+    "statement": "PlayerChoiceInfo",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "evidence": "src/c_api/c_major_factions.rs; src/c_api/c_player_choice.rs; src/c_api/c_stable_info/forever.rs",
+    "reason": "Structure parent/member needs concrete producer roundtrip and later-schema reconciliation; field-name source match is not proof."
+  },
+  {
+    "source_id": "structures-PlayerChoiceInfo-104",
+    "statement": "+ showChoicesAsList",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "evidence": "src/c_api/c_major_factions.rs; src/c_api/c_player_choice.rs; src/c_api/c_stable_info/forever.rs",
+    "reason": "Structure parent/member needs concrete producer roundtrip and later-schema reconciliation; field-name source match is not proof."
+  },
+  {
+    "source_id": "structures-PlayerChoiceOptionButtonInfo-105",
+    "statement": "PlayerChoiceOptionButtonInfo",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "evidence": "src/c_api/c_major_factions.rs; src/c_api/c_player_choice.rs; src/c_api/c_stable_info/forever.rs",
+    "reason": "Structure parent/member needs concrete producer roundtrip and later-schema reconciliation; field-name source match is not proof."
+  },
+  {
+    "source_id": "structures-PlayerChoiceOptionButtonInfo-106",
+    "statement": "+ showCheckmark",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "evidence": "src/c_api/c_major_factions.rs; src/c_api/c_player_choice.rs; src/c_api/c_stable_info/forever.rs",
+    "reason": "Structure parent/member needs concrete producer roundtrip and later-schema reconciliation; field-name source match is not proof."
+  },
+  {
+    "source_id": "structures-PlayerChoiceOptionButtonInfo-107",
+    "statement": "+ hideButtonShowText",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "evidence": "src/c_api/c_major_factions.rs; src/c_api/c_player_choice.rs; src/c_api/c_stable_info/forever.rs",
+    "reason": "Structure parent/member needs concrete producer roundtrip and later-schema reconciliation; field-name source match is not proof."
+  },
+  {
+    "source_id": "structures-PlayerChoiceOptionButtonInfo-108",
+    "statement": "+ listText",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "evidence": "src/c_api/c_major_factions.rs; src/c_api/c_player_choice.rs; src/c_api/c_stable_info/forever.rs",
+    "reason": "Structure parent/member needs concrete producer roundtrip and later-schema reconciliation; field-name source match is not proof."
+  },
+  {
+    "source_id": "structures-QuestObjectiveInfo-109",
+    "statement": "QuestObjectiveInfo",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "evidence": "src/c_api/c_major_factions.rs; src/c_api/c_player_choice.rs; src/c_api/c_stable_info/forever.rs",
+    "reason": "Structure parent/member needs concrete producer roundtrip and later-schema reconciliation; field-name source match is not proof."
+  },
+  {
+    "source_id": "structures-QuestObjectiveInfo-110",
+    "statement": "+ objectiveType",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "evidence": "src/c_api/c_major_factions.rs; src/c_api/c_player_choice.rs; src/c_api/c_stable_info/forever.rs",
+    "reason": "Structure parent/member needs concrete producer roundtrip and later-schema reconciliation; field-name source match is not proof."
+  },
+  {
+    "source_id": "structures-TotemInfoScript-111",
+    "statement": "TotemInfoScript",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "evidence": "src/c_api/c_major_factions.rs; src/c_api/c_player_choice.rs; src/c_api/c_stable_info/forever.rs",
+    "reason": "Structure parent/member needs concrete producer roundtrip and later-schema reconciliation; field-name source match is not proof."
+  },
+  {
+    "source_id": "structures-TotemInfoScript-112",
+    "statement": "+ modRate",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "evidence": "src/c_api/c_major_factions.rs; src/c_api/c_player_choice.rs; src/c_api/c_stable_info/forever.rs",
+    "reason": "Structure parent/member needs concrete producer roundtrip and later-schema reconciliation; field-name source match is not proof."
+  },
+  {
+    "source_id": "structures-UIWidgetSpellInfo-113",
+    "statement": "UIWidgetSpellInfo",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "evidence": "src/c_api/c_major_factions.rs; src/c_api/c_player_choice.rs; src/c_api/c_stable_info/forever.rs",
+    "reason": "Structure parent/member needs concrete producer roundtrip and later-schema reconciliation; field-name source match is not proof."
+  },
+  {
+    "source_id": "structures-UIWidgetSpellInfo-114",
+    "statement": "+ showAsEarned",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "evidence": "src/c_api/c_major_factions.rs; src/c_api/c_player_choice.rs; src/c_api/c_stable_info/forever.rs",
+    "reason": "Structure parent/member needs concrete producer roundtrip and later-schema reconciliation; field-name source match is not proof."
+  },
+  {
+    "source_id": "structures-UnitPowerBarInfo-115",
+    "statement": "UnitPowerBarInfo",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "evidence": "src/c_api/c_major_factions.rs; src/c_api/c_player_choice.rs; src/c_api/c_stable_info/forever.rs",
+    "reason": "Structure parent/member needs concrete producer roundtrip and later-schema reconciliation; field-name source match is not proof."
+  },
+  {
+    "source_id": "structures-UnitPowerBarInfo-116",
+    "statement": "+ attachTooltipToBar",
+    "batch": "B04-structures",
+    "status": "audit-pending",
+    "evidence": "src/c_api/c_major_factions.rs; src/c_api/c_player_choice.rs; src/c_api/c_stable_info/forever.rs",
+    "reason": "Structure parent/member needs concrete producer roundtrip and later-schema reconciliation; field-name source match is not proof."
+  }
+]

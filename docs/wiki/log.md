@@ -167,3 +167,7 @@ Updated [audit](investigations/patch-12-0-1-api-audit.md), [spec](../specs/patch
 ## [2026-10-07] evidence | 11.1.5 page audit
 
 [Audit](investigations/patch-11-1-5-api-audit.md) retains revision 6726775, exhaustive 224-row ledger, eight closures and 36 publication gaps. Ten isolated sweeps, exact negative control, behavior/environment/prefork regressions, Mists check and exit-0 startup `[]` pass. [Validator](../../data/patch-api/evidence/11.1.5-session-2026-10-06/p1115-validate.py) checks portable evidence; later fixtures/ledgers unchanged. Current UpdateUIParentPosition consumers preserved. Temporary canonical cwd violation restored and recorded, not concealed.
+
+## 2026-10-07 | ingest | Patch 11.1.0 page audit
+
+[Audit](investigations/patch-11-1-0-api-audit.md) retains revision 6726776, 116 inventory + 100 extract rows and exhaustive 216-ID ledger: 71 partial, 18 bounded, 106 pending, 21 metadata. Parser indentation omission fixed; three bounded publication closures and 19 retained gaps. Eleven isolated sweeps, negative control, two behavior tests, two prefork filters, fifteen extraction/register fixtures, formatting, Mists check and exit-0 startup [] pass. SetSpecialization retained for cached classic consumer; later fixtures/ledgers unchanged. Sibling build-cache artifact path violation recorded; canonical source untouched.

@@ -1,0 +1,346 @@
+[
+  {
+    "source_id": "wt-global-api-AreAccountAchievementsHidden-98",
+    "symbol": "AreAccountAchievementsHidden",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "AreAccountAchievementsHidden",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "-g",
+      "*.lua"
+    ],
+    "exit_code": 1,
+    "matches": [],
+    "publication_ok": true,
+    "note": "Read-only full cached Lua search, including classic subdirectories. Plain substring matches may include successor names; not all matches are direct consumers."
+  },
+  {
+    "source_id": "wt-global-api-C_BarberShop.GetCustomizationScope-99",
+    "symbol": "C_BarberShop.GetCustomizationScope",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "C_BarberShop.GetCustomizationScope",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "-g",
+      "*.lua"
+    ],
+    "exit_code": 1,
+    "matches": [],
+    "publication_ok": true,
+    "note": "Read-only full cached Lua search, including classic subdirectories. Plain substring matches may include successor names; not all matches are direct consumers."
+  },
+  {
+    "source_id": "wt-global-api-C_TransmogCollection.CanAppearanceBeDisplayedOnPlayer-100",
+    "symbol": "C_TransmogCollection.CanAppearanceBeDisplayedOnPlayer",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "C_TransmogCollection.CanAppearanceBeDisplayedOnPlayer",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "-g",
+      "*.lua"
+    ],
+    "exit_code": 1,
+    "matches": [],
+    "publication_ok": true,
+    "note": "Read-only full cached Lua search, including classic subdirectories. Plain substring matches may include successor names; not all matches are direct consumers."
+  },
+  {
+    "source_id": "wt-global-api-ConsoleAddMessage-101",
+    "symbol": "ConsoleAddMessage",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "ConsoleAddMessage",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "-g",
+      "*.lua"
+    ],
+    "exit_code": 1,
+    "matches": [],
+    "publication_ok": true,
+    "note": "Read-only full cached Lua search, including classic subdirectories. Plain substring matches may include successor names; not all matches are direct consumers."
+  },
+  {
+    "source_id": "wt-global-api-SetSpecialization-102",
+    "symbol": "SetSpecialization",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "SetSpecialization",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "-g",
+      "*.lua"
+    ],
+    "exit_code": 0,
+    "matches": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SpecializationInfoDocumentation.lua:368:\t\t\tName = \"SetSpecialization\",",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PlayerSpells/ClassSpecializations/Blizzard_ClassSpecializationsFrame.lua:461:\tif C_SpecializationInfo.SetSpecialization(self.specIndex) then",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_TalentUI/Mists/Blizzard_TalentUI.lua:70:\t\tSetSpecialization(self.data.previewSpec, self.data.isPet);"
+    ],
+    "publication_ok": false,
+    "note": "Read-only full cached Lua search, including classic subdirectories. Plain substring matches may include successor names; not all matches are direct consumers."
+  },
+  {
+    "source_id": "wt-global-api-ShowAccountAchievements-103",
+    "symbol": "ShowAccountAchievements",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "ShowAccountAchievements",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "-g",
+      "*.lua"
+    ],
+    "exit_code": 1,
+    "matches": [],
+    "publication_ok": true,
+    "note": "Read-only full cached Lua search, including classic subdirectories. Plain substring matches may include successor names; not all matches are direct consumers."
+  },
+  {
+    "source_id": "wt-events-GLUE_CONSOLE_LOG-167",
+    "symbol": "GLUE_CONSOLE_LOG",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "GLUE_CONSOLE_LOG",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "-g",
+      "*.lua"
+    ],
+    "exit_code": 1,
+    "matches": [],
+    "publication_ok": true,
+    "note": "Read-only full cached Lua search, including classic subdirectories. Plain substring matches may include successor names; not all matches are direct consumers."
+  },
+  {
+    "source_id": "wt-cvars-friendInvitesCollapsed_WowLabs-207",
+    "symbol": "friendInvitesCollapsed_WowLabs",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "friendInvitesCollapsed_WowLabs",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "-g",
+      "*.lua"
+    ],
+    "exit_code": 1,
+    "matches": [],
+    "publication_ok": true,
+    "note": "Read-only full cached Lua search, including classic subdirectories. Plain substring matches may include successor names; not all matches are direct consumers."
+  },
+  {
+    "source_id": "wt-cvars-minimapTrackedInfov2-208",
+    "symbol": "minimapTrackedInfov2",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "minimapTrackedInfov2",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "-g",
+      "*.lua"
+    ],
+    "exit_code": 1,
+    "matches": [],
+    "publication_ok": true,
+    "note": "Read-only full cached Lua search, including classic subdirectories. Plain substring matches may include successor names; not all matches are direct consumers."
+  },
+  {
+    "source_id": "wt-cvars-pendingInviteInfoShown_WowLabs-209",
+    "symbol": "pendingInviteInfoShown_WowLabs",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "pendingInviteInfoShown_WowLabs",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "-g",
+      "*.lua"
+    ],
+    "exit_code": 1,
+    "matches": [],
+    "publication_ok": true,
+    "note": "Read-only full cached Lua search, including classic subdirectories. Plain substring matches may include successor names; not all matches are direct consumers."
+  },
+  {
+    "source_id": "wt-cvars-ResolvedSSAOType-210",
+    "symbol": "ResolvedSSAOType",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "ResolvedSSAOType",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "-g",
+      "*.lua"
+    ],
+    "exit_code": 1,
+    "matches": [],
+    "publication_ok": true,
+    "note": "Read-only full cached Lua search, including classic subdirectories. Plain substring matches may include successor names; not all matches are direct consumers."
+  },
+  {
+    "source_id": "wt-cvars-scriptWarnings-211",
+    "symbol": "scriptWarnings",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "scriptWarnings",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "-g",
+      "*.lua"
+    ],
+    "exit_code": 1,
+    "matches": [],
+    "publication_ok": true,
+    "note": "Read-only full cached Lua search, including classic subdirectories. Plain substring matches may include successor names; not all matches are direct consumers."
+  },
+  {
+    "source_id": "wt-cvars-shadowCull-212",
+    "symbol": "shadowCull",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "shadowCull",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "-g",
+      "*.lua"
+    ],
+    "exit_code": 1,
+    "matches": [],
+    "publication_ok": true,
+    "note": "Read-only full cached Lua search, including classic subdirectories. Plain substring matches may include successor names; not all matches are direct consumers."
+  },
+  {
+    "source_id": "wt-cvars-shadowScissor-213",
+    "symbol": "shadowScissor",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "shadowScissor",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "-g",
+      "*.lua"
+    ],
+    "exit_code": 1,
+    "matches": [],
+    "publication_ok": true,
+    "note": "Read-only full cached Lua search, including classic subdirectories. Plain substring matches may include successor names; not all matches are direct consumers."
+  },
+  {
+    "source_id": "wt-cvars-timingMethod-214",
+    "symbol": "timingMethod",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "timingMethod",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "-g",
+      "*.lua"
+    ],
+    "exit_code": 1,
+    "matches": [],
+    "publication_ok": true,
+    "note": "Read-only full cached Lua search, including classic subdirectories. Plain substring matches may include successor names; not all matches are direct consumers."
+  },
+  {
+    "source_id": "wt-cvars-timingTestError-215",
+    "symbol": "timingTestError",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "timingTestError",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "-g",
+      "*.lua"
+    ],
+    "exit_code": 1,
+    "matches": [],
+    "publication_ok": true,
+    "note": "Read-only full cached Lua search, including classic subdirectories. Plain substring matches may include successor names; not all matches are direct consumers."
+  },
+  {
+    "source_id": "wt-cvars-useCompactPartyFrames-216",
+    "symbol": "useCompactPartyFrames",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "useCompactPartyFrames",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "-g",
+      "*.lua"
+    ],
+    "exit_code": 1,
+    "matches": [],
+    "publication_ok": true,
+    "note": "Read-only full cached Lua search, including classic subdirectories. Plain substring matches may include successor names; not all matches are direct consumers."
+  },
+  {
+    "source_id": "wt-cvars-ObjUsage-217",
+    "symbol": "ObjUsage",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "ObjUsage",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "-g",
+      "*.lua"
+    ],
+    "exit_code": 1,
+    "matches": [],
+    "publication_ok": true,
+    "note": "Read-only full cached Lua search, including classic subdirectories. Plain substring matches may include successor names; not all matches are direct consumers."
+  },
+  {
+    "source_id": "wt-cvars-ShowObjUsage-218",
+    "symbol": "ShowObjUsage",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "ShowObjUsage",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "-g",
+      "*.lua"
+    ],
+    "exit_code": 1,
+    "matches": [],
+    "publication_ok": true,
+    "note": "Read-only full cached Lua search, including classic subdirectories. Plain substring matches may include successor names; not all matches are direct consumers."
+  },
+  {
+    "source_id": "wt-cvars-timingInfo-219",
+    "symbol": "timingInfo",
+    "command": [
+      "rg",
+      "-n",
+      "-F",
+      "timingInfo",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns",
+      "-g",
+      "*.lua"
+    ],
+    "exit_code": 1,
+    "matches": [],
+    "publication_ok": true,
+    "note": "Read-only full cached Lua search, including classic subdirectories. Plain substring matches may include successor names; not all matches are direct consumers."
+  }
+]
