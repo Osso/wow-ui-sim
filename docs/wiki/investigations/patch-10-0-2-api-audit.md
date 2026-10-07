@@ -38,7 +38,7 @@ Negative control changes only UnitTokenFromGUID added → removed: precisely one
 
 Cargo fmt/fmt --check, default check, Mists check --no-default-features --features sound,gui,casc,client-mists --tests and separate retail build pass. Mists has zero non-vendor warnings; six existing iced manifest deprecations and their summary remain unsuppressed. Retail rebuilt after Mists. Startup exits zero and returns `[]`. Existing extractor/parser fixtures pass 21 + eight. Changed Rust manually audited: flat retirement constant/call, bounded assertions, flat sweep specification and cached/classic tests; no changed-line readability violations.
 
-[Proof ledger](../../../data/patch-api/evidence/10.0.2-session-2026-10-07/p1002-proof.json) records command, cwd, exact revision/scope, exit and log hashes. Output captured once, saved, and searched with rg; no cargo rerun to recover logs. Documentation/data-only follow-ups preserve runtime proof scope. No independent agent/model acceptance was run, as prohibited by the task.
+[Proof ledger](../../../data/patch-api/evidence/10.0.2-session-2026-10-07/p1002-proof.json) records command, cwd, exact revision/scope, exit and log hashes. Output captured once, saved, and searched with rg; no cargo rerun to recover logs. Documentation/data-only follow-ups preserve runtime proof scope. The post-retirement empty-fixture diagnostic log was overwritten by the final passing sweep; its JSON observations remain, but it is excluded from the hashed proof ledger. Initial discovery and retirement RED logs remain intact. No independent agent/model acceptance was run, as prohibited by the task.
 
 | Patch | Rows | OK | Gaps | Isolated exit |
 |---|---:|---:|---:|---:|
@@ -67,6 +67,8 @@ Cargo fmt/fmt --check, default check, Mists check --no-default-features --featur
 | 12.0.5 | 363 | 352 | 11 | 0 |
 | 12.0.7 | 174 | 171 | 3 | 0 |
 | 12.1.0 | 778 | 773 | 5 | 0 |
+
+[Artifact validation](../../../data/patch-api/evidence/10.0.2-session-2026-10-07/p1002-validation-result.json) passes against accounting commit `4c3d0ffa2`: all 583 IDs, literal scout/source hashes, exact gaps and later expectations, negative control, preserved inputs, extract-mode outcomes and hashed proof logs. Reproduce with the retained `validate.py`; no runtime reruns.
 
 All 25 registers regenerate byte-identically. [Preservation](../../../data/patch-api/evidence/10.0.2-session-2026-10-07/p1002-preservation.json) proves 152 prior source/register/ledger/gap inputs unchanged. [Before](../../../data/patch-api/evidence/10.0.2-session-2026-10-07/p1002-extract-before.json) and [after](../../../data/patch-api/evidence/10.0.2-session-2026-10-07/p1002-extract-after.json) preserve all 48 previous extract-mode outcomes; there are 50 after adding this page. Pre-existing mode-specific failures for 10.1.0, 10.1.7, 10.2.0, 10.2.5, 10.2.7, 11.0.0 and 11.0.2 remain unchanged. Both-mode pre-existing failures for 12.0.5/12.0.7/12.1.0 remain untouched.
 
