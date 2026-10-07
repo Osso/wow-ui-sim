@@ -1,0 +1,184 @@
+[
+  {
+    "source_id": "wt-global-api-C_CharacterServices.AssignNameChangeDistribution-71",
+    "symbol": "C_CharacterServices.AssignNameChangeDistribution",
+    "decision": "retained-gap",
+    "reason": "Paid name-change distribution IDs, eligibility, consumption and asynchronous service completion are not modeled; an inert assignment would fabricate a transaction.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_CharacterServices.CapitalizeCharName-72",
+    "symbol": "C_CharacterServices.CapitalizeCharName",
+    "decision": "retained-gap",
+    "reason": "Character-name capitalization requires locale-aware Unicode casing and native name-validation rules. Current cached consumers at Blizzard_GlueXML/Shared/CharacterServicesPaidNameChange.lua:3 and Blizzard_HousingBulletinBoard/Blizzard_HousingBulletinBoard.lua:655 do not establish that contract; ASCII title-case is not parity.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_Club.DoesAnyCommunityHaveUnreadMessages-73",
+    "symbol": "C_Club.DoesAnyCommunityHaveUnreadMessages",
+    "decision": "retained-gap",
+    "reason": "Club membership records exist, but stream message history, read markers and cross-community unread aggregation do not; membership cannot answer unread state.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_InterfaceFileManifest.GetInterfaceArtFiles-74",
+    "symbol": "C_InterfaceFileManifest.GetInterfaceArtFiles",
+    "decision": "retained-gap",
+    "reason": "Profile Lua/XML manifest is not the client interface-art catalog. Art-file enumeration needs authoritative client manifest metadata, not scanning the UI cache.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "parent raw-absent; raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_PartyInfo.GetRestrictRaidPings-76",
+    "symbol": "C_PartyInfo.GetRestrictRaidPings",
+    "decision": "retained-gap",
+    "reason": "Existing party_ping_restriction is a four-valued current GetRestrictPings enum, not evidence of historical raid-only boolean policy or its permissions. Do not alias incompatible contracts; 10.2.0 may supersede this name.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_PartyInfo.SetRestrictRaidPings-77",
+    "symbol": "C_PartyInfo.SetRestrictRaidPings",
+    "decision": "retained-gap",
+    "reason": "Historical raid-only setter needs raid leadership/permission and boolean policy behavior; existing SetRestrictPings enum setter cannot establish that contract. 10.2.0 may supersede this name.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_Ping.TogglePingListener-80",
+    "symbol": "C_Ping.TogglePingListener",
+    "decision": "retained-gap",
+    "reason": "Held-key listener state, enable/disable transitions and contextual interaction dispatch are absent. Stored SetTogglePingListenerCallback alone is not an interaction producer.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_PingSecure.ClearPendingPingInfo-81",
+    "symbol": "C_PingSecure.ClearPendingPingInfo",
+    "decision": "retained-gap",
+    "reason": "No pending ping target/wheel request model exists. Clearing the separate pendingPingOffScreen callback is not clearing pending ping information.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_PingSecure.DisplayError-83",
+    "symbol": "C_PingSecure.DisplayError",
+    "decision": "retained-gap",
+    "reason": "Ping error codes, localization and error-frame dispatch need a ping failure producer and documented mapping; an inert function would hide missing failure behavior.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_PingSecure.GetTargetPingReceiver-84",
+    "symbol": "C_PingSecure.GetTargetPingReceiver",
+    "decision": "retained-gap",
+    "reason": "Receiver selection needs hit testing, top-level pass-through, ancestor traversal and ping eligibility; XML attributes alone do not implement selection.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_PingSecure.GetTargetWorldPing-85",
+    "symbol": "C_PingSecure.GetTargetWorldPing",
+    "decision": "retained-gap",
+    "reason": "World-coordinate ray targeting, GUID/context selection and forbidden ping objects are unmodeled; simulator has no 3D world targeting.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_PingSecure.GetTargetWorldPingAndSend-86",
+    "symbol": "C_PingSecure.GetTargetWorldPingAndSend",
+    "decision": "retained-gap",
+    "reason": "World targeting and protected send dispatch/security are unmodeled; do not fabricate a world target or send success.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_PingSecure.SendPing-87",
+    "symbol": "C_PingSecure.SendPing",
+    "decision": "retained-gap",
+    "reason": "Protected native sending, cooldown/group permissions, pin lifecycle and forbidden dispatch are absent; exposing a permissive no-op would contradict the page security statement.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_UIWidgetManager.GetTugOfWarWidgetVisualizationInfo-98",
+    "symbol": "C_UIWidgetManager.GetTugOfWarWidgetVisualizationInfo",
+    "decision": "retained-gap",
+    "reason": "Existing widget query surface lacks host TugOfWar visualization records, markers and state DTOs. Generic empty info does not model populated widget behavior.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  }
+]

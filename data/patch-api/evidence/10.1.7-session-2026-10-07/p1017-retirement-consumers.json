@@ -1,0 +1,56 @@
+[
+  {
+    "source_id": "wt-events-UPDATE_TRADESKILL_CAST_COMPLETE-134",
+    "symbol": "UPDATE_TRADESKILL_CAST_COMPLETE",
+    "searches": [
+      {
+        "label": "qualified",
+        "term": "UPDATE_TRADESKILL_CAST_COMPLETE",
+        "exit_code": 1,
+        "matches": []
+      },
+      {
+        "label": "bare",
+        "term": "UPDATE_TRADESKILL_CAST_COMPLETE",
+        "exit_code": 1,
+        "matches": []
+      }
+    ]
+  },
+  {
+    "source_id": "wt-events-UPDATE_TRADESKILL_RECAST-135",
+    "symbol": "UPDATE_TRADESKILL_RECAST",
+    "searches": [
+      {
+        "label": "qualified",
+        "term": "UPDATE_TRADESKILL_RECAST",
+        "exit_code": 1,
+        "matches": []
+      },
+      {
+        "label": "bare",
+        "term": "UPDATE_TRADESKILL_RECAST",
+        "exit_code": 1,
+        "matches": []
+      }
+    ]
+  },
+  {
+    "source_id": "wt-cvars-useCompactPartyFrames-156",
+    "symbol": "useCompactPartyFrames",
+    "searches": [
+      {
+        "label": "qualified",
+        "term": "useCompactPartyFrames",
+        "exit_code": 1,
+        "matches": []
+      },
+      {
+        "label": "bare",
+        "term": "useCompactPartyFrames",
+        "exit_code": 1,
+        "matches": []
+      }
+    ]
+  }
+]

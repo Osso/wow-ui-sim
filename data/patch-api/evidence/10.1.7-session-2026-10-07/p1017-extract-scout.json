@@ -1,0 +1,515 @@
+[
+  {
+    "source_id": "source-context-001",
+    "statement": "Patch 10.1.7 API changes",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit.",
+    "candidates": []
+  },
+  {
+    "source_id": "source-context-002",
+    "statement": "== Summary ==",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit.",
+    "candidates": []
+  },
+  {
+    "source_id": "prose-undated-003",
+    "statement": "* Added a new Ping system.",
+    "status": "audit-pending",
+    "reason": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending.",
+    "candidates": [
+      "src/c_api/c_ping_secure.rs",
+      "Blizzard_PingUI/Blizzard_PingManager.lua"
+    ]
+  },
+  {
+    "source_id": "prose-undated-004",
+    "statement": "* Fixed an issue where ScrollingFontTemplate could allow scrolling out-of-bounds or clip its contents if the frame size or font were modifiedWoWUIBugs#450 https://github.com/Stanzilla/WoWUIBugs/issues/450.",
+    "status": "audit-pending",
+    "reason": "Resize/font-change scroll clamping needs a concrete cached ScrollingFontTemplate layout/input regression; no scrolling behavior is credited.",
+    "candidates": [
+      "Blizzard_SharedXML/ScrollingFont.xml"
+    ]
+  },
+  {
+    "source_id": "source-context-006",
+    "statement": "== Resources ==",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit.",
+    "candidates": []
+  },
+  {
+    "source_id": "source-context-007",
+    "statement": "* TOC: 100107",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit.",
+    "candidates": []
+  },
+  {
+    "source_id": "source-context-008",
+    "statement": "* Diffs: wow-ui-source, BlizzardInterfaceResources",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit.",
+    "candidates": []
+  },
+  {
+    "source_id": "source-context-009",
+    "statement": "* Official patch notes: Dragonflight: Fury Incarnate Content Update Notes",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit.",
+    "candidates": []
+  },
+  {
+    "source_id": "source-context-011",
+    "statement": "== Ping system ==",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit.",
+    "candidates": []
+  },
+  {
+    "source_id": "prose-undated-012",
+    "statement": "The ping system can be used to communicate contextual notifications to group members visualized via through a UI frame anchored in the game world.",
+    "status": "audit-pending",
+    "reason": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending.",
+    "candidates": [
+      "src/c_api/c_ping_secure.rs",
+      "Blizzard_PingUI/Blizzard_PingManager.lua"
+    ]
+  },
+  {
+    "source_id": "prose-undated-014",
+    "statement": "This can be activated by pressing and holding the Ping hotkey (default G). Clicking the game world, units, or unit frames will send a contextual ping, where the type of the ping sent will be automatically inferred based upon what was clicked. Dragging the mouse while clicking will open a ping wheel to manually select the type of ping to send.",
+    "status": "audit-pending",
+    "reason": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending.",
+    "candidates": [
+      "src/c_api/c_ping_secure.rs",
+      "Blizzard_PingUI/Blizzard_PingManager.lua"
+    ]
+  },
+  {
+    "source_id": "prose-undated-016",
+    "statement": "The API functions for sending pings are forbidden and may not directly be called by addons. Additionally, the frames used for displaying pings in the game world are forbidden objects and cannot be customized.",
+    "status": "audit-pending",
+    "reason": "Protected send restrictions and forbidden-object enforcement require native security behavior; present inert callbacks do not establish security.",
+    "candidates": [
+      "src/c_api/c_ping_secure.rs"
+    ]
+  },
+  {
+    "source_id": "source-context-018",
+    "statement": "=== Ping receivers ===",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit.",
+    "candidates": []
+  },
+  {
+    "source_id": "prose-undated-019",
+    "statement": "Insecure frames can opt-in to be ping receivers. This permits a ping to be automatically sent when a receiver frame is clicked during a ping interaction, with the target and type of the ping customizable by overriding two methods on the frame itself. Ping receivers can also be used to block ping interactions, preventing pings being sent if the frame is clicked.",
+    "status": "audit-pending",
+    "reason": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending.",
+    "candidates": [
+      "src/c_api/c_ping_secure.rs",
+      "Blizzard_PingUI/Blizzard_PingManager.lua"
+    ]
+  },
+  {
+    "source_id": "prose-undated-021",
+    "statement": "To become a ping receiver a frame must meet either of the following conditions, with further details found in the documentation for  C_PingSecure.GetTargetPingReceiver.",
+    "status": "audit-pending",
+    "reason": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending.",
+    "candidates": [
+      "src/c_api/c_ping_secure.rs",
+      "Blizzard_PingUI/Blizzard_PingManager.lua"
+    ]
+  },
+  {
+    "source_id": "prose-undated-023",
+    "statement": "# The frame must be marked as top level (Frame:SetToplevel) and not have the ping-top-level-pass-through attribute set.",
+    "status": "audit-pending",
+    "reason": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending.",
+    "candidates": [
+      "src/c_api/c_ping_secure.rs",
+      "Blizzard_PingUI/Blizzard_PingManager.lua"
+    ]
+  },
+  {
+    "source_id": "prose-undated-024",
+    "statement": "# The frame must have the ping-receiver attribute set.",
+    "status": "audit-pending",
+    "reason": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending.",
+    "candidates": [
+      "src/c_api/c_ping_secure.rs",
+      "Blizzard_PingUI/Blizzard_PingManager.lua"
+    ]
+  },
+  {
+    "source_id": "prose-undated-026",
+    "statement": "For convenience, two templates are provided in FrameXML to apply these attributes.",
+    "status": "audit-pending",
+    "reason": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending.",
+    "candidates": [
+      "src/c_api/c_ping_secure.rs",
+      "Blizzard_PingUI/Blizzard_PingManager.lua"
+    ]
+  },
+  {
+    "source_id": "prose-undated-028",
+    "statement": "* PingReceiverAttributeTemplate",
+    "status": "audit-pending",
+    "reason": "Cached template attribute loading is separately tested; historical receiver selection, native input and ping delivery remain unproved.",
+    "candidates": [
+      "Blizzard_SharedXML/PingAttributes.xml",
+      "tests/patch_10_1_7_cached_surfaces.rs"
+    ]
+  },
+  {
+    "source_id": "prose-undated-029",
+    "statement": "* PingTopLevelPassThroughAttributeTemplate",
+    "status": "audit-pending",
+    "reason": "Cached template attribute loading is separately tested; historical receiver selection, native input and ping delivery remain unproved.",
+    "candidates": [
+      "Blizzard_SharedXML/PingAttributes.xml",
+      "tests/patch_10_1_7_cached_surfaces.rs"
+    ]
+  },
+  {
+    "source_id": "prose-undated-031",
+    "statement": "The example below will create an icon in the middle of the screen that sends an \"Attack\" ping for your current target when clicked with the ping hotkey held.",
+    "status": "audit-pending",
+    "reason": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending.",
+    "candidates": [
+      "src/c_api/c_ping_secure.rs",
+      "Blizzard_PingUI/Blizzard_PingManager.lua"
+    ]
+  },
+  {
+    "source_id": "prose-undated-033",
+    "statement": "```lua",
+    "status": "audit-pending",
+    "reason": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending.",
+    "candidates": [
+      "src/c_api/c_ping_secure.rs",
+      "Blizzard_PingUI/Blizzard_PingManager.lua"
+    ]
+  },
+  {
+    "source_id": "prose-undated-034",
+    "statement": "local PingReceiver = CreateFrame(\"Frame\", nil, UIParent, \"PingReceiverAttributeTemplate\")",
+    "status": "audit-pending",
+    "reason": "Cached template attribute loading is separately tested; historical receiver selection, native input and ping delivery remain unproved.",
+    "candidates": [
+      "Blizzard_SharedXML/PingAttributes.xml",
+      "tests/patch_10_1_7_cached_surfaces.rs"
+    ]
+  },
+  {
+    "source_id": "prose-undated-035",
+    "statement": "PingReceiver:SetPoint(\"CENTER\")",
+    "status": "audit-pending",
+    "reason": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending.",
+    "candidates": [
+      "src/c_api/c_ping_secure.rs",
+      "Blizzard_PingUI/Blizzard_PingManager.lua"
+    ]
+  },
+  {
+    "source_id": "prose-undated-036",
+    "statement": "PingReceiver:SetSize(64, 64)",
+    "status": "audit-pending",
+    "reason": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending.",
+    "candidates": [
+      "src/c_api/c_ping_secure.rs",
+      "Blizzard_PingUI/Blizzard_PingManager.lua"
+    ]
+  },
+  {
+    "source_id": "prose-undated-038",
+    "statement": "local PingReceiverIcon = PingReceiver:CreateTexture()",
+    "status": "audit-pending",
+    "reason": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending.",
+    "candidates": [
+      "src/c_api/c_ping_secure.rs",
+      "Blizzard_PingUI/Blizzard_PingManager.lua"
+    ]
+  },
+  {
+    "source_id": "prose-undated-039",
+    "statement": "PingReceiverIcon:SetAllPoints(PingReceiver)",
+    "status": "audit-pending",
+    "reason": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending.",
+    "candidates": [
+      "src/c_api/c_ping_secure.rs",
+      "Blizzard_PingUI/Blizzard_PingManager.lua"
+    ]
+  },
+  {
+    "source_id": "prose-undated-040",
+    "statement": "PingReceiverIcon:SetTexture([[interface\\icons\\spell_magic_polymorphrabbit]])",
+    "status": "audit-pending",
+    "reason": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending.",
+    "candidates": [
+      "src/c_api/c_ping_secure.rs",
+      "Blizzard_PingUI/Blizzard_PingManager.lua"
+    ]
+  },
+  {
+    "source_id": "prose-undated-042",
+    "statement": "-- This mixin is required to add an additional required \"IsPingable\" field to the frame.",
+    "status": "audit-pending",
+    "reason": "Current cached mixins use GetIsPingable/GetTargetInfo, not all historical example hooks. Template/target DTO proof is bounded; contextual type, interception and historical mixin semantics remain pending.",
+    "candidates": [
+      "Blizzard_SharedXML/PingableType.lua"
+    ]
+  },
+  {
+    "source_id": "prose-undated-043",
+    "statement": "--",
+    "status": "audit-pending",
+    "reason": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending.",
+    "candidates": [
+      "src/c_api/c_ping_secure.rs",
+      "Blizzard_PingUI/Blizzard_PingManager.lua"
+    ]
+  },
+  {
+    "source_id": "prose-undated-044",
+    "statement": "-- If this field is not present, the frame will intercept and block pings leading to a",
+    "status": "audit-pending",
+    "reason": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending.",
+    "candidates": [
+      "src/c_api/c_ping_secure.rs",
+      "Blizzard_PingUI/Blizzard_PingManager.lua"
+    ]
+  },
+  {
+    "source_id": "prose-undated-045",
+    "statement": "-- \"Can't ping this.\" message being displayed in the UI errors frame.",
+    "status": "audit-pending",
+    "reason": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending.",
+    "candidates": [
+      "src/c_api/c_ping_secure.rs",
+      "Blizzard_PingUI/Blizzard_PingManager.lua"
+    ]
+  },
+  {
+    "source_id": "prose-undated-046",
+    "statement": "Mixin(PingReceiver, PingableTypeMixin)",
+    "status": "audit-pending",
+    "reason": "Current cached mixins use GetIsPingable/GetTargetInfo, not all historical example hooks. Template/target DTO proof is bounded; contextual type, interception and historical mixin semantics remain pending.",
+    "candidates": [
+      "Blizzard_SharedXML/PingableType.lua"
+    ]
+  },
+  {
+    "source_id": "prose-undated-048",
+    "statement": "-- When contextually pinging, the default ping type for the ping we should send.",
+    "status": "audit-pending",
+    "reason": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending.",
+    "candidates": [
+      "src/c_api/c_ping_secure.rs",
+      "Blizzard_PingUI/Blizzard_PingManager.lua"
+    ]
+  },
+  {
+    "source_id": "prose-undated-049",
+    "statement": "-- This will not be called if the user clicks and drags to open the ping wheel.",
+    "status": "audit-pending",
+    "reason": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending.",
+    "candidates": [
+      "src/c_api/c_ping_secure.rs",
+      "Blizzard_PingUI/Blizzard_PingManager.lua"
+    ]
+  },
+  {
+    "source_id": "prose-undated-050",
+    "statement": "function PingReceiver:GetContextualPingType()",
+    "status": "audit-pending",
+    "reason": "Current cached mixins use GetIsPingable/GetTargetInfo, not all historical example hooks. Template/target DTO proof is bounded; contextual type, interception and historical mixin semantics remain pending.",
+    "candidates": [
+      "Blizzard_SharedXML/PingableType.lua"
+    ]
+  },
+  {
+    "source_id": "prose-undated-051",
+    "statement": "return Enum.PingSubjectType.Attack",
+    "status": "audit-pending",
+    "reason": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending.",
+    "candidates": [
+      "src/c_api/c_ping_secure.rs",
+      "Blizzard_PingUI/Blizzard_PingManager.lua"
+    ]
+  },
+  {
+    "source_id": "prose-undated-052",
+    "statement": "end",
+    "status": "audit-pending",
+    "reason": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending.",
+    "candidates": [
+      "src/c_api/c_ping_secure.rs",
+      "Blizzard_PingUI/Blizzard_PingManager.lua"
+    ]
+  },
+  {
+    "source_id": "prose-undated-054",
+    "statement": "-- The target that a UI ping redirects to, if the ping should be located over something (or nothing).",
+    "status": "audit-pending",
+    "reason": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending.",
+    "candidates": [
+      "src/c_api/c_ping_secure.rs",
+      "Blizzard_PingUI/Blizzard_PingManager.lua"
+    ]
+  },
+  {
+    "source_id": "prose-undated-055",
+    "statement": "function PingReceiver:GetTargetPingGUID()",
+    "status": "audit-pending",
+    "reason": "Current cached mixins use GetIsPingable/GetTargetInfo, not all historical example hooks. Template/target DTO proof is bounded; contextual type, interception and historical mixin semantics remain pending.",
+    "candidates": [
+      "Blizzard_SharedXML/PingableType.lua"
+    ]
+  },
+  {
+    "source_id": "prose-undated-056",
+    "statement": "return UnitGUID(\"target\")",
+    "status": "audit-pending",
+    "reason": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending.",
+    "candidates": [
+      "src/c_api/c_ping_secure.rs",
+      "Blizzard_PingUI/Blizzard_PingManager.lua"
+    ]
+  },
+  {
+    "source_id": "prose-undated-057",
+    "statement": "end",
+    "status": "audit-pending",
+    "reason": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending.",
+    "candidates": [
+      "src/c_api/c_ping_secure.rs",
+      "Blizzard_PingUI/Blizzard_PingManager.lua"
+    ]
+  },
+  {
+    "source_id": "prose-undated-058",
+    "statement": "```",
+    "status": "audit-pending",
+    "reason": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending.",
+    "candidates": [
+      "src/c_api/c_ping_secure.rs",
+      "Blizzard_PingUI/Blizzard_PingManager.lua"
+    ]
+  },
+  {
+    "source_id": "prose-undated-060",
+    "statement": "For unit frames, a convenience mixin is also provided (PingableType_UnitFrameMixin) that will provide default implementations of the above functions to automatically ping the unit token stored in the unit field on the frame, and with an appropriate context based upon whether the unit is friendly or hostile.",
+    "status": "audit-pending",
+    "reason": "Current cached mixins use GetIsPingable/GetTargetInfo, not all historical example hooks. Template/target DTO proof is bounded; contextual type, interception and historical mixin semantics remain pending.",
+    "candidates": [
+      "Blizzard_SharedXML/PingableType.lua"
+    ]
+  },
+  {
+    "source_id": "source-context-062",
+    "statement": "== Enumerations ==",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit.",
+    "candidates": []
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencyFlagsB-063",
+    "statement": "Enum.CurrencyFlagsB",
+    "status": "audit-pending",
+    "reason": "Exact historical enum members/values/removals need separate value assertions and later enum supersession; publication sweep does not probe enum data.",
+    "candidates": [
+      "src/c_api/patch_12_1_0_enums.rs",
+      "src/lua_api/globals/enum_data/missing_enums.lua"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencyFlagsB-064",
+    "statement": "+ FutureCurrencyFlag = 0x10",
+    "status": "audit-pending",
+    "reason": "Exact historical enum members/values/removals need separate value assertions and later enum supersession; publication sweep does not probe enum data.",
+    "candidates": [
+      "src/c_api/patch_12_1_0_enums.rs",
+      "src/lua_api/globals/enum_data/missing_enums.lua"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencyFlagsB-065",
+    "statement": "+ CurrencyBDontDisplayIfZero = 0x20",
+    "status": "audit-pending",
+    "reason": "Exact historical enum members/values/removals need separate value assertions and later enum supersession; publication sweep does not probe enum data.",
+    "candidates": [
+      "src/c_api/patch_12_1_0_enums.rs",
+      "src/lua_api/globals/enum_data/missing_enums.lua"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-PingSubjectType-066",
+    "statement": "Enum.PingSubjectType",
+    "status": "audit-pending",
+    "reason": "Exact historical enum members/values/removals need separate value assertions and later enum supersession; publication sweep does not probe enum data.",
+    "candidates": [
+      "src/c_api/patch_12_1_0_enums.rs",
+      "src/lua_api/globals/enum_data/missing_enums.lua"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-PingSubjectType-067",
+    "statement": "+ OnMyWay = 3",
+    "status": "audit-pending",
+    "reason": "Exact historical enum members/values/removals need separate value assertions and later enum supersession; publication sweep does not probe enum data.",
+    "candidates": [
+      "src/c_api/patch_12_1_0_enums.rs",
+      "src/lua_api/globals/enum_data/missing_enums.lua"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-PingSubjectType-068",
+    "statement": "+ AlertThreat = 4",
+    "status": "audit-pending",
+    "reason": "Exact historical enum members/values/removals need separate value assertions and later enum supersession; publication sweep does not probe enum data.",
+    "candidates": [
+      "src/c_api/patch_12_1_0_enums.rs",
+      "src/lua_api/globals/enum_data/missing_enums.lua"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-PingSubjectType-069",
+    "statement": "+ AlertNotThreat = 5",
+    "status": "audit-pending",
+    "reason": "Exact historical enum members/values/removals need separate value assertions and later enum supersession; publication sweep does not probe enum data.",
+    "candidates": [
+      "src/c_api/patch_12_1_0_enums.rs",
+      "src/lua_api/globals/enum_data/missing_enums.lua"
+    ]
+  },
+  {
+    "source_id": "enumerations-Enum-PingSubjectType-070",
+    "statement": "- GroupHere",
+    "status": "audit-pending",
+    "reason": "Exact historical enum members/values/removals need separate value assertions and later enum supersession; publication sweep does not probe enum data.",
+    "candidates": [
+      "src/c_api/patch_12_1_0_enums.rs",
+      "src/lua_api/globals/enum_data/missing_enums.lua"
+    ]
+  },
+  {
+    "source_id": "source-context-072",
+    "statement": "== References ==",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit.",
+    "candidates": []
+  },
+  {
+    "source_id": "prose-undated-073",
+    "statement": "[References: Reflist]",
+    "status": "audit-pending",
+    "reason": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending.",
+    "candidates": [
+      "src/c_api/c_ping_secure.rs",
+      "Blizzard_PingUI/Blizzard_PingManager.lua"
+    ]
+  }
+]

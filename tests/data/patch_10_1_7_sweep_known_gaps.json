@@ -1,1 +1,16 @@
-[]
+[
+  "wt-global-api-C_CharacterServices.AssignNameChangeDistribution-71",
+  "wt-global-api-C_CharacterServices.CapitalizeCharName-72",
+  "wt-global-api-C_Club.DoesAnyCommunityHaveUnreadMessages-73",
+  "wt-global-api-C_InterfaceFileManifest.GetInterfaceArtFiles-74",
+  "wt-global-api-C_PartyInfo.GetRestrictRaidPings-76",
+  "wt-global-api-C_PartyInfo.SetRestrictRaidPings-77",
+  "wt-global-api-C_Ping.TogglePingListener-80",
+  "wt-global-api-C_PingSecure.ClearPendingPingInfo-81",
+  "wt-global-api-C_PingSecure.DisplayError-83",
+  "wt-global-api-C_PingSecure.GetTargetPingReceiver-84",
+  "wt-global-api-C_PingSecure.GetTargetWorldPing-85",
+  "wt-global-api-C_PingSecure.GetTargetWorldPingAndSend-86",
+  "wt-global-api-C_PingSecure.SendPing-87",
+  "wt-global-api-C_UIWidgetManager.GetTugOfWarWidgetVisualizationInfo-98"
+]

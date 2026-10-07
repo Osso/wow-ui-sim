@@ -1,0 +1,715 @@
+{
+  "schema": "patch-page-coverage/v1",
+  "patch": "10.1.7",
+  "source_register": "data/patch-api/sources/10.1.7-wikitext-register.json",
+  "source_sha256": "d0db70aa76a3aa2b01e39227420f3fb5c3874b8c3b2457847ae4fa913299c01c",
+  "audit_status": "in-progress",
+  "proof_policy": "Complete occurrence accounting against current retail 12.1.0 with eighteen later registers. Publication/absence is not native/historical behavior, signatures, populated DTOs or security. Fourteen precise gaps retained; no runtime closure. Header counts are stale and preserved, never used to invent missing rows. Local targeted proof only.",
+  "capabilities": [
+    {
+      "id": "publication-sweep-10-1-7",
+      "scope": "48 inventory occurrences; 34 publication/absence OK, 14 exact gaps; historical behavior unproved",
+      "spec": "docs/specs/patch-10-1-7-publication-sweep.md",
+      "tests": [
+        "tests/patch_10_1_7_publication_sweep.rs"
+      ],
+      "ledger": "data/patch-api/evidence/10.1.7-session-2026-10-07/p1017-sweep-result.json"
+    }
+  ],
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/10.1.7-api-changes.txt",
+    "sha256": "7ce8573288d2c3ab93245b6ee09aefcad79fb55f983dbfa15ee6b00b7c956771",
+    "wikitext_revid": 6473483,
+    "wikitext_sha256": "065658e2e89ae0f2055c03c9e890a42321c1983165f1a33898747d7b0719b76a",
+    "extract_tool": "tools/extract_patch_non_inventory.py",
+    "preserve_examples": true
+  },
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-C_CharacterServices.AssignNameChangeDistribution-71",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Paid name-change distribution IDs, eligibility, consumption and asynchronous service completion are not modeled; an inert assignment would fabricate a transaction."
+    },
+    {
+      "source_id": "wt-global-api-C_CharacterServices.CapitalizeCharName-72",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Character-name capitalization requires locale-aware Unicode casing and native name-validation rules. Current cached consumers at Blizzard_GlueXML/Shared/CharacterServicesPaidNameChange.lua:3 and Blizzard_HousingBulletinBoard/Blizzard_HousingBulletinBoard.lua:655 do not establish that contract; ASCII title-case is not parity."
+    },
+    {
+      "source_id": "wt-global-api-C_Club.DoesAnyCommunityHaveUnreadMessages-73",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Club membership records exist, but stream message history, read markers and cross-community unread aggregation do not; membership cannot answer unread state."
+    },
+    {
+      "source_id": "wt-global-api-C_InterfaceFileManifest.GetInterfaceArtFiles-74",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Profile Lua/XML manifest is not the client interface-art catalog. Art-file enumeration needs authoritative client manifest metadata, not scanning the UI cache."
+    },
+    {
+      "source_id": "wt-global-api-C_Item.GetItemIDForItemInfo-75",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.GetRestrictRaidPings-76",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Existing party_ping_restriction is a four-valued current GetRestrictPings enum, not evidence of historical raid-only boolean policy or its permissions. Do not alias incompatible contracts; 10.2.0 may supersede this name."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.SetRestrictRaidPings-77",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical raid-only setter needs raid leadership/permission and boolean policy behavior; existing SetRestrictPings enum setter cannot establish that contract. 10.2.0 may supersede this name."
+    },
+    {
+      "source_id": "wt-global-api-C_Ping.GetContextualPingTypeForUnit-78",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Ping.SendMacroPing-79",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Ping.TogglePingListener-80",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Held-key listener state, enable/disable transitions and contextual interaction dispatch are absent. Stored SetTogglePingListenerCallback alone is not an interaction producer."
+    },
+    {
+      "source_id": "wt-global-api-C_PingSecure.ClearPendingPingInfo-81",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No pending ping target/wheel request model exists. Clearing the separate pendingPingOffScreen callback is not clearing pending ping information."
+    },
+    {
+      "source_id": "wt-global-api-C_PingSecure.CreateFrame-82",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PingSecure.DisplayError-83",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Ping error codes, localization and error-frame dispatch need a ping failure producer and documented mapping; an inert function would hide missing failure behavior."
+    },
+    {
+      "source_id": "wt-global-api-C_PingSecure.GetTargetPingReceiver-84",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Receiver selection needs hit testing, top-level pass-through, ancestor traversal and ping eligibility; XML attributes alone do not implement selection."
+    },
+    {
+      "source_id": "wt-global-api-C_PingSecure.GetTargetWorldPing-85",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "World-coordinate ray targeting, GUID/context selection and forbidden ping objects are unmodeled; simulator has no 3D world targeting."
+    },
+    {
+      "source_id": "wt-global-api-C_PingSecure.GetTargetWorldPingAndSend-86",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "World targeting and protected send dispatch/security are unmodeled; do not fabricate a world target or send success."
+    },
+    {
+      "source_id": "wt-global-api-C_PingSecure.SendPing-87",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Protected native sending, cooldown/group permissions, pin lifecycle and forbidden dispatch are absent; exposing a permissive no-op would contradict the page security statement."
+    },
+    {
+      "source_id": "wt-global-api-C_PingSecure.SetPendingPingOffScreenCallback-88",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PingSecure.SetPingCooldownStartedCallback-89",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PingSecure.SetPingPinFrameAddedCallback-90",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PingSecure.SetPingPinFrameRemovedCallback-91",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PingSecure.SetPingPinFrameScreenClampStateUpdatedCallback-92",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PingSecure.SetPingRadialWheelCreatedCallback-93",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PingSecure.SetSendMacroPingCallback-94",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PingSecure.SetTogglePingListenerCallback-95",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.CanStoreEnchantInItem-96",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Traits.GenerateImportString-97",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_UIWidgetManager.GetTugOfWarWidgetVisualizationInfo-98",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Existing widget query surface lacks host TugOfWar visualization records, markers and state DTOs. Generic empty info does not model populated widget behavior."
+    },
+    {
+      "source_id": "wt-widgets-ScriptRegion:SetProtected-111",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "wt-widgets-EditBox:IsAlphabeticOnly-112",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "wt-widgets-EditBox:IsNumericFullRange-113",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "wt-widgets-EditBox:ResetInputMode-114",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "wt-widgets-EditBox:SetAlphabeticOnly-115",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "wt-widgets-EditBox:SetNumericFullRange-116",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "wt-events-CHAT_MSG_PING-129",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "wt-events-PING_SYSTEM_ERROR-130",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "wt-events-UPDATE_TRADESKILL_CAST_STOPPED-131",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "wt-events-UPDATE_TRADESKILL_CAST_COMPLETE-134",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "wt-events-UPDATE_TRADESKILL_RECAST-135",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "wt-cvars-CameraFollowTargetCombat-146",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "wt-cvars-enablePings-147",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "wt-cvars-notifiedOfNewMail-148",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "wt-cvars-pingMode-149",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "wt-cvars-showPingsInChat-150",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "wt-cvars-Sound_EnablePingSounds-151",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "wt-cvars-Sound_PingVolume-152",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "wt-cvars-useCommentatorSelectionCircles-153",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "wt-cvars-useCompactPartyFrames-156",
+      "capabilities": [
+        "publication-sweep-10-1-7"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail publication/absence/default/event registration only; no signatures, populated DTO, security, producer or historical parity credit."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-002",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-003",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Resize/font-change scroll clamping needs a concrete cached ScrollingFontTemplate layout/input regression; no scrolling behavior is credited."
+    },
+    {
+      "source_id": "source-context-006",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-007",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-008",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-009",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-011",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-012",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending."
+    },
+    {
+      "source_id": "prose-undated-014",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending."
+    },
+    {
+      "source_id": "prose-undated-016",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Protected send restrictions and forbidden-object enforcement require native security behavior; present inert callbacks do not establish security."
+    },
+    {
+      "source_id": "source-context-018",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-019",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending."
+    },
+    {
+      "source_id": "prose-undated-021",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending."
+    },
+    {
+      "source_id": "prose-undated-023",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending."
+    },
+    {
+      "source_id": "prose-undated-024",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending."
+    },
+    {
+      "source_id": "prose-undated-026",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending."
+    },
+    {
+      "source_id": "prose-undated-028",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached template attribute loading is separately tested; historical receiver selection, native input and ping delivery remain unproved."
+    },
+    {
+      "source_id": "prose-undated-029",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached template attribute loading is separately tested; historical receiver selection, native input and ping delivery remain unproved."
+    },
+    {
+      "source_id": "prose-undated-031",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending."
+    },
+    {
+      "source_id": "prose-undated-033",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending."
+    },
+    {
+      "source_id": "prose-undated-034",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached template attribute loading is separately tested; historical receiver selection, native input and ping delivery remain unproved."
+    },
+    {
+      "source_id": "prose-undated-035",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending."
+    },
+    {
+      "source_id": "prose-undated-036",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending."
+    },
+    {
+      "source_id": "prose-undated-038",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending."
+    },
+    {
+      "source_id": "prose-undated-039",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending."
+    },
+    {
+      "source_id": "prose-undated-040",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending."
+    },
+    {
+      "source_id": "prose-undated-042",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current cached mixins use GetIsPingable/GetTargetInfo, not all historical example hooks. Template/target DTO proof is bounded; contextual type, interception and historical mixin semantics remain pending."
+    },
+    {
+      "source_id": "prose-undated-043",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending."
+    },
+    {
+      "source_id": "prose-undated-044",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending."
+    },
+    {
+      "source_id": "prose-undated-045",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending."
+    },
+    {
+      "source_id": "prose-undated-046",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current cached mixins use GetIsPingable/GetTargetInfo, not all historical example hooks. Template/target DTO proof is bounded; contextual type, interception and historical mixin semantics remain pending."
+    },
+    {
+      "source_id": "prose-undated-048",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending."
+    },
+    {
+      "source_id": "prose-undated-049",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending."
+    },
+    {
+      "source_id": "prose-undated-050",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current cached mixins use GetIsPingable/GetTargetInfo, not all historical example hooks. Template/target DTO proof is bounded; contextual type, interception and historical mixin semantics remain pending."
+    },
+    {
+      "source_id": "prose-undated-051",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending."
+    },
+    {
+      "source_id": "prose-undated-052",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending."
+    },
+    {
+      "source_id": "prose-undated-054",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending."
+    },
+    {
+      "source_id": "prose-undated-055",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current cached mixins use GetIsPingable/GetTargetInfo, not all historical example hooks. Template/target DTO proof is bounded; contextual type, interception and historical mixin semantics remain pending."
+    },
+    {
+      "source_id": "prose-undated-056",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending."
+    },
+    {
+      "source_id": "prose-undated-057",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending."
+    },
+    {
+      "source_id": "prose-undated-058",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending."
+    },
+    {
+      "source_id": "prose-undated-060",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current cached mixins use GetIsPingable/GetTargetInfo, not all historical example hooks. Template/target DTO proof is bounded; contextual type, interception and historical mixin semantics remain pending."
+    },
+    {
+      "source_id": "source-context-062",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "enumerations-Enum-CurrencyFlagsB-063",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact historical enum members/values/removals need separate value assertions and later enum supersession; publication sweep does not probe enum data."
+    },
+    {
+      "source_id": "enumerations-Enum-CurrencyFlagsB-064",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact historical enum members/values/removals need separate value assertions and later enum supersession; publication sweep does not probe enum data."
+    },
+    {
+      "source_id": "enumerations-Enum-CurrencyFlagsB-065",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact historical enum members/values/removals need separate value assertions and later enum supersession; publication sweep does not probe enum data."
+    },
+    {
+      "source_id": "enumerations-Enum-PingSubjectType-066",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact historical enum members/values/removals need separate value assertions and later enum supersession; publication sweep does not probe enum data."
+    },
+    {
+      "source_id": "enumerations-Enum-PingSubjectType-067",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact historical enum members/values/removals need separate value assertions and later enum supersession; publication sweep does not probe enum data."
+    },
+    {
+      "source_id": "enumerations-Enum-PingSubjectType-068",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact historical enum members/values/removals need separate value assertions and later enum supersession; publication sweep does not probe enum data."
+    },
+    {
+      "source_id": "enumerations-Enum-PingSubjectType-069",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact historical enum members/values/removals need separate value assertions and later enum supersession; publication sweep does not probe enum data."
+    },
+    {
+      "source_id": "enumerations-Enum-PingSubjectType-070",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact historical enum members/values/removals need separate value assertions and later enum supersession; publication sweep does not probe enum data."
+    },
+    {
+      "source_id": "source-context-072",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-073",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained ping prose/example occurrence: layout and attribute primitives do not prove hotkey, drag-wheel, contextual targeting, interception, cooldown or network delivery. Historical behavior remains pending."
+    }
+  ]
+}
