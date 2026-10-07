@@ -1,0 +1,556 @@
+Patch 10.0.7 API changes
+
+== Summary ==
+* A new advflyable macro conditional has been added, with a corresponding IsAdvancedFlyableArea() function also made available to the restricted environment.
+* The client now supports loading PNG texture assets through TextureBase:SetTexture().
+
+== Resources ==
+* TOC: 100007
+* Diffs: wow-ui-source, BlizzardInterfaceResources
+* Official patch notes: Dragonflight: 10.0.7 Content Update Notes
+
+=== Structures ===
+ AlliedRaceInfo
+   # 9: crestAtlas, Type: string -> textureAtlas
+   # 10: modelBackgroundAtlas, Type: string -> textureAtlas
+   # 11: bannerColor, Type: table -> colorRGB
+ AlliedRaceRacialAbility
+   # 3: icon, Type: number -> fileID
+ AnchorBinding
+   # 2: relativeTo, Type: table -> ScriptRegion
+   # 4: offsetX, Type: number -> uiUnit
+   # 5: offsetY, Type: number -> uiUnit
+ AnimaDiversionFrameInfo
+   # 1: textureKit, Type: string -> textureKit
+ AnimaDiversionNodeInfo
+   # 7: normalizedPosition, Type: table -> vector2
+ ArdenwealdGardenData
+   # 3: remainingSeconds, Type: number -> time_t
+ AreaPOIInfo
+   # 2: position, Type: table -> vector2
+   # 8: uiTextureKit, Type: string -> textureKit
+ ArtifactAppearanceInfo
+   # 8: swatchColor, Type: table -> colorRGB
+ ArtifactArtInfo
+   # 1: textureKit, Type: string -> textureKit
+   # 3: titleColor, Type: table -> colorRGB
+   # 4: barConnectedColor, Type: table -> colorRGB
+   # 5: barDisconnectedColor, Type: table -> colorRGB
+ ArtifactInfo
+   # 4: icon, Type: number -> fileID
+ ArtifactPowerInfo
+   # 12: position, Type: table -> vector2
+   # 13: offset, Type: table -> vector2
+ ArtifactRelicInfo
+   # 2: icon, Type: number -> fileID
+ AtlasInfo
+   # 9: file, Type: number -> fileID
+ AuctionInfo
+   # 3: minBid, Type: number -> WOWMONEY
+   # 4: bidAmount, Type: number -> WOWMONEY
+   # 5: buyoutAmount, Type: number -> WOWMONEY
+   # 6: bidder, Type: string -> WOWGUID
+ AutoCombatSpellInfo
+   # 8: icon, Type: number -> fileID
+ AutoCombatTroopInfo
+   # 2: followerID, Type: string -> GarrisonFollower
+   # 3: garrFollowerID, Type: string -> GarrisonFollower
+   # 17: classAtlas, Type: string -> textureAtlas
+   # 18: portraitIconID, Type: number -> fileID
+   # 19: textureKit, Type: string -> textureKit
+ AzeriteEssenceInfo
+   # 6: icon, Type: number -> fileID
+ BNetGameAccountInfo
+   # 1: gameAccountID, Nilable: true -> false
+   # 17: playerGuid, Type: string -> WOWGUID
+ BackpackCurrencyInfo
+   # 3: iconFileID, Type: number -> fileID
+ BattlefieldItemReward
+   # 3: texture, Type: number -> fileID
+ BattlefieldVehicleInfo
+   # 5: atlas, Type: string -> textureAtlas
+ BattlemasterListInfo
+   # 5: icon, Type: number -> fileID
+ BidInfo
+   # 5: minBid, Type: number -> BigUInteger
+   # 6: bidAmount, Type: number -> BigUInteger
+   # 7: buyoutAmount, Type: number -> BigUInteger
+   # 8: bidder, Type: string -> WOWGUID
+ BountyInfo
+   # 3: icon, Type: number -> fileID
+ BrowseResultInfo
+   # 4: minPrice, Type: number -> BigUInteger
+ BulletTextListWidgetVisualizationInfo
+   # 5: textureKit, Type: string -> textureKit
+   # 6: frameTextureKit, Type: string -> textureKit
+ CalendarDayEvent
+   # 1: eventID, Type: string -> CalendarEventID
+   # 9: iconTexture, Type: number -> fileID
+   # 20: clubID, Type: string -> ClubId
+ CalendarEventInviteInfo
+   # 11: guid, Type: string -> WOWGUID
+ CalendarEventTextureInfo
+   # 2: iconTexture, Type: number -> fileID
+ CalendarGuildEventInfo
+   # 1: eventID, Type: string -> CalendarEventID
+   # 11: texture, Type: number -> fileID
+   # 13: clubID, Type: string -> ClubId
+ CalendarHolidayInfo
+   # 3: texture, Type: number -> fileID
+ CampaignInfo
+   # 3: uiTextureKit, Type: string -> textureKit
+ CaptureBarWidgetVisualizationInfo
+   # 12: textureKit, Type: string -> textureKit
+   # 13: frameTextureKit, Type: string -> textureKit
+ CaptureZoneVisualizationInfo
+   # 8: textureKit, Type: string -> textureKit
+   # 9: frameTextureKit, Type: string -> textureKit
+ ChallengeModeCompletionMemberInfo
+   # 1: memberGUID, Type: string -> WOWGUID
+ CharCustomizationCategory
+   # 4: icon, Type: string -> textureAtlas
+   # 5: selectedIcon, Type: string -> textureAtlas
+ CharCustomizationChoice
+   # 5: swatchColor1, Type: table -> colorRGB
+   # 6: swatchColor2, Type: table -> colorRGB
+ CharacterAlternateFormData
+   # 4: createScreenIconAtlas, Type: string -> textureAtlas
+ ChromieTimeExpansionInfo
+   # 4: mapAtlas, Type: string -> textureAtlas
+   # 5: previewAtlas, Type: string -> textureAtlas
+ ClubFinderApplicantInfo
+   # 1: clubFinderGUID, Type: string -> WOWGUID
+   # 2: playerGUID, Type: string -> WOWGUID
+   # 12: lastUpdatedTime, Type: number -> BigInteger
+ ClubInfo
+   # 1: clubId, Type: string -> ClubId
+   # 9: favoriteTimeStamp, Type: number -> BigUInteger
+   # 10: joinTime, Type: number -> BigUInteger
+ ClubInvitationInfo
+   # 1: invitationId, Type: string -> ClubInvitationId
+ ClubMemberInfo
+   # 7: guid, Type: string -> WOWGUID
+ ClubMessageIdentifier
+   # 1: epoch, Type: number -> BigUInteger
+   # 2: position, Type: number -> BigUInteger
+ ClubMessageInfo
+   # 2: content, Type: string -> kstringClubMessage
+ ClubSelfInvitationInfo
+   # 1: invitationId, Type: string -> ClubInvitationId
+ ClubStreamInfo
+   # 1: streamId, Type: string -> ClubStreamId
+   # 6: creationTime, Type: number -> BigUInteger
+ ClubStreamNotificationSetting
+   # 1: streamId, Type: string -> ClubStreamId
+ ClubTicketInfo
+   # 4: creationTime, Type: number -> BigUInteger
+   # 5: expirationTime, Type: number -> BigUInteger
+   # 6: defaultStreamId, Type: string -> ClubStreamId
+ CommoditySearchResultInfo
+   # 3: unitPrice, Type: number -> BigUInteger
+ ContainerItemInfo
+   # 1: iconFileID, Type: number -> fileID
+ ContributionAppearance
+   # 2: stateColor, Type: table -> colorRGB
+   # 5: statusBarAtlas, Type: string -> textureAtlas
+   # 6: borderAtlas, Type: string -> textureAtlas
+   # 7: bannerAtlas, Type: string -> textureAtlas
+ ContributionMapInfo
+   # 2: position, Type: table -> vector2
+ CovenantData
+   # 2: textureKit, Type: string -> textureKit
+ CovenantPreviewInfo
+   # 1: textureKit, Type: string -> textureKit
+   # 7: covenantCrest, Type: string -> textureAtlas
+ CovenantSanctumRenownRewardInfo
+   # 10: icon, Type: number -> fileID
+ CovenantSoulbindInfo
+   # 2: uiTextureKit, Type: string -> textureKit
+ CraftingItemResultData
+   # 5: itemGUID, Type: string -> WOWGUID
+ CraftingOrderBucketInfo
+   # 4: tipAmountAvg, Type: number -> WOWMONEY
+   # 5: tipAmountMax, Type: number -> WOWMONEY
+ CraftingOrderCustomerOptionInfo
+   + 8: iLvlMin
+   + 9: iLvlMax
+   - 8: iLvl
+ CraftingOrderInfo
+   # 1: orderID, Type: number -> BigUInteger
+   # 7: expirationTime, Type: number -> time_t
+   # 8: claimEndTime, Type: number -> time_t
+   # 10: tipAmount, Type: number -> WOWMONEY
+   # 11: consortiumCut, Type: number -> WOWMONEY
+   # 15: customerGuid, Type: string -> WOWGUID
+   # 17: crafterGuid, Type: string -> WOWGUID
+   # 22: outputItemGUID, Type: string -> WOWGUID
+ CraftingOrderMailInfo
+   # 3: commissionPaid, Type: number -> WOWMONEY
+   # 5: crafterGUID, Type: string -> WOWGUID
+   # 7: customerGUID, Type: string -> WOWGUID
+ CraftingTargetItem
+   # 2: itemGUID, Type: string -> WOWGUID
+ CurrencyInfo
+   # 9: iconFileID, Type: number -> fileID
+ DBColorExport
+   # 2: color, Type: table -> colorRGBA
+ DigSiteMapInfo
+   # 2: position, Type: table -> vector2
+ DiscreteProgressStepsVisualizationInfo
+   # 9: textureKit, Type: string -> textureKit
+   # 10: frameTextureKit, Type: string -> textureKit
+ DoubleIconAndTextWidgetVisualizationInfo
+   # 9: textureKit, Type: string -> textureKit
+   # 10: frameTextureKit, Type: string -> textureKit
+ DoubleStateIconRowVisualizationInfo
+   # 6: textureKit, Type: string -> textureKit
+   # 7: frameTextureKit, Type: string -> textureKit
+ DoubleStatusBarWidgetVisualizationInfo
+   # 16: textureKit, Type: string -> textureKit
+   # 17: frameTextureKit, Type: string -> textureKit
+ DungeonEntranceMapInfo
+   # 2: position, Type: table -> vector2
+ EncounterJournalItemInfo
+   # 6: icon, Type: number -> fileID
+ EncounterJournalSectionInfo
+   # 5: abilityIcon, Type: number -> fileID
+ EventToastInfo
+   # 5: iconFileID, Type: number -> fileID
+   # 6: subIcon, Type: string -> textureAtlas
+   # 12: uiTextureKit, Type: string -> textureKit
+   # 24: colorTint, Type: table -> colorRGB
+ ExpansionDisplayInfo
+   # 1: logo, Type: number -> fileID
+   # 2: banner, Type: string -> textureAtlas
+   # 4: highResBackgroundID, Type: number -> fileID
+   # 5: lowResBackgroundID, Type: number -> fileID
+ ExpansionDisplayInfoFeature
+   # 1: icon, Type: number -> fileID
+ FillUpFramesWidgetVisualizationInfo
+   # 11: textureKit, Type: string -> textureKit
+   # 12: frameTextureKit, Type: string -> textureKit
+ FogOfWarInfo
+   # 2: backgroundAtlas, Type: string -> textureAtlas
+   # 3: maskAtlas, Type: string -> textureAtlas
+ FollowerAutoCombatStatsInfo
+   # 4: healingTimestamp, Type: number -> time_t
+ FollowerMissionCompleteInfo
+   # 18: classAtlas, Type: string -> textureAtlas
+   # 19: portraitIconID, Type: number -> fileID
+   # 20: textureKit, Type: string -> textureKit
+ FriendInfo
+   # 6: guid, Type: string -> WOWGUID
+ GarrisonAbilityCounterInfo
+   # 2: icon, Type: number -> fileID
+ GarrisonAbilityInfo
+   # 4: icon, Type: number -> fileID
+ GarrisonEnemyEncounterInfo
+   # 2: displayID, Type: number -> fileID
+   # 3: portraitFileDataID, Type: number -> fileID
+   # 4: textureKit, Type: string -> textureKit
+ GarrisonFollowerDeathInfo
+   # 1: followerID, Type: string -> GarrisonFollower
+ Enum.GarrisonFollowerType
+   + 1: FollowerType_6_0_GarrisonFollower
+   + 2: FollowerType_6_0_Boat
+   + 3: FollowerType_7_0_GarrisonFollower
+   + 4: FollowerType_8_0_GarrisonFollower
+   + 5: FollowerType_9_0_GarrisonFollower
+   - 1: FollowerType_6_0
+   - 2: FollowerType_6_2
+   - 3: FollowerType_7_0
+   - 4: FollowerType_8_0
+   - 5: FollowerType_9_0
+ GarrisonMechanicInfo
+   # 2: icon, Type: number -> fileID
+ GarrisonPlotInstanceMapInfo
+   # 2: position, Type: table -> vector2
+   # 4: atlasName, Type: string -> textureAtlas
+ GarrisonTalentInfo
+   # 12: researchDuration, Type: number -> time_t
+   # 13: startTime, Type: number -> time_t
+   # 14: timeRemaining, Type: number -> time_t
+ GarrisonTalentTreeInfo
+   # 3: textureKit, Type: string -> textureKit
+ Enum.GarrisonType
+   + 1: Type_6_0_Garrison
+   + 2: Type_7_0_Garrison
+   + 3: Type_8_0_Garrison
+   + 4: Type_9_0_Garrison
+   - 1: Type_6_0
+   - 2: Type_7_0
+   - 3: Type_8_0
+   - 4: Type_9_0
+ GenericWidgetDisplayFrameInfo
+   # 2: uiTextureKit, Type: string -> textureKit
+ Enum.GossipOptionRecFlags
+   + 2: HideOptionIDFromClient
+ GossipOptionUIInfo
+   # 1: gossipOptionID, Nilable: false -> true
+   # 3: icon, Type: number -> fileID
+   # 8: overrideIconID, Type: number -> fileID
+ GossipPoiInfo
+   # 3: position, Type: table -> vector2
+ GraveyardMapInfo
+   # 2: position, Type: table -> vector2
+ GuildTabardInfo
+   # 1: backgroundColor, Type: table -> colorRGB
+   # 2: borderColor, Type: table -> colorRGB
+   # 3: emblemColor, Type: table -> colorRGB
+ HTMLContentNode
+   # 2: type, Type: string -> HTMLTextType
+   # 3: align, Type: string -> TBFStyleFlags
+ HonorRewardInfo
+   # 2: badgeFileDataID, Type: number -> fileID
+ HorizontalCurrenciesWidgetVisualizationInfo
+   # 5: textureKit, Type: string -> textureKit
+   # 6: frameTextureKit, Type: string -> textureKit
+ IconAndTextWidgetVisualizationInfo
+   # 7: textureKit, Type: string -> textureKit
+   # 8: frameTextureKit, Type: string -> textureKit
+ IconTextAndBackgroundWidgetVisualizationInfo
+   # 4: textureKit, Type: string -> textureKit
+   # 5: frameTextureKit, Type: string -> textureKit
+ IconTextAndCurrenciesWidgetVisualizationInfo
+   # 10: textureKit, Type: string -> textureKit
+   # 11: frameTextureKit, Type: string -> textureKit
+ InvasionMapInfo
+   # 3: position, Type: table -> vector2
+   # 4: atlasName, Type: string -> textureAtlas
+ Enum.ItemGemColor
+   + 26: Primordial
+ ItemInteractionFrameInfo
+   # 1: textureKit, Type: string -> textureKit
+ ItemKeyInfo
+   # 6: quality, Type: number -> ItemQuality
+ ItemPurchaseInfo
+   # 1: money, Type: number -> WOWMONEY
+   # 3: refundSeconds, Type: number -> time_t
+ ItemSearchResultInfo
+   # 11: bidder, Type: string -> WOWGUID
+   # 12: minBid, Type: number -> BigUInteger
+   # 13: bidAmount, Type: number -> BigUInteger
+   # 14: buyoutAmount, Type: number -> BigUInteger
+ Enum.ItemSocketType
+   + 26: Primordial
+ LFGDungeonInfo
+   # 2: iconID, Type: number -> fileID
+ Enum.LanguageFlag
+   + 3: HideLanguageNameInChat
+ LevelUpBattlegroundInfo
+   # 2: icon, Type: number -> fileID
+ LfgApplicantData
+   # 6: comment, Type: string -> kstringLfgListApplicant
+ LfgEntryData
+   # 4: name, Type: string -> kstringLfgListApplicant
+   # 5: comment, Type: string -> kstringLfgListApplicant
+   # 6: voiceChat, Type: string -> kstringLfgListApplicant
+   # 7: duration, Type: number -> time_t
+ LfgSearchResultData
+   # 4: name, Type: string -> kstringLfgListSearch
+   # 5: comment, Type: string -> kstringLfgListSearch
+   # 6: voiceChat, Type: string -> kstringLfgListSearch
+   # 17: age, Type: number -> time_t
+ LootJournalItemInfo
+   # 2: icon, Type: number -> fileID
+ MajorFactionData
+   # 11: textureKit, Type: string -> textureKit
+ MajorFactionRenownRewardInfo
+   # 10: icon, Type: number -> fileID
+ MapBannerInfo
+   # 4: uiTextureKit, Type: string -> textureKit
+ MapLinkInfo
+   # 2: position, Type: table -> vector2
+ MapTaxiNodeInfo
+   # 2: position, Type: table -> vector2
+   # 6: textureKit, Type: string -> textureKit
+ MinimapScriptTrackingInfo
+   # 2: textureFileID, Type: number -> fileID
+ MissionDeploymentInfo
+   # 5: environmentTexture, Type: number -> fileID
+   # 6: locTextureKit, Type: string -> textureKit
+ MissionEncounterIconInfo
+   # 1: portraitFileDataID, Type: number -> fileID
+ ModelLight
+   # 2: point, Type: table -> vector3
+   # 4: ambientColor, Type: table -> colorRGB
+   # 6: diffuseColor, Type: table -> colorRGB
+ ModifiedInstanceInfo
+   # 5: uiTextureKit, Type: string -> textureKit
+ MountInfo
+   # 3: icon, Type: number -> fileID
+ NewCraftingOrderInfo
+   # 4: tipAmount, Type: number -> WOWMONEY
+   # 10: recraftItem, Type: string -> WOWGUID
+ OwnedAuctionInfo
+   # 8: bidAmount, Type: number -> BigUInteger
+   # 9: buyoutAmount, Type: number -> BigUInteger
+ PVPScoreInfo
+   # 2: guid, Type: string -> WOWGUID
+ PerksActivityInfo
+   + 8: criteriaList
+ PerksVendorItemInfo
+   # 4: timeRemaining, Type: number -> time_t
+ PetJournalPetInfo
+   # 8: icon, Type: number -> fileID
+ PetTamerMapInfo
+   # 2: position, Type: table -> vector2
+ PlayerChoiceInfo
+   # 1: objectGUID, Type: string -> WOWGUID
+   # 5: uiTextureKit, Type: string -> textureKit
+ PlayerChoiceOptionInfo
+   # 9: uiTextureKit, Type: string -> textureKit
+   # 15: rarityColor, Type: table -> colorRGBA
+ PlayerInfoCharacterData
+   # 4: createScreenIconAtlas, Type: string -> textureAtlas
+ ProfTabInfo
+   + 4: rootIconID
+   + 5: highlights
+ PvpTierInfo
+   # 7: tierIconID, Type: number -> fileID
+ QuestSessionPlayerDetails
+   # 2: guid, Type: string -> WOWGUID
+ QuestTheme
+   # 1: background, Type: string -> textureAtlas
+   # 2: seal, Type: string -> textureAtlas
+   # 4: poiIcon, Type: string -> textureAtlas
+ RafInfo
+   + 1: versions
+   - 1: lifetimeMonths
+   - 2: spentMonths
+   - 3: availableMonths
+   - 5: rewards
+   - 6: nextReward
+ RafRecruit
+   # 2: wowAccountGUID, Type: string -> WOWGUID
+   # 6: acceptanceID, Type: string -> RecruitAcceptanceID
+   + 7: versionRecruited
+ RafReward
+   + 2: rafVersion
+   + 13: canAfford
+   # 19: iconID, Type: number -> fileID
+ RecruitingClubInfo
+   # 1: clubFinderGUID, Type: string -> WOWGUID
+   # 16: lastPosterGUID, Type: string -> WOWGUID
+   # 17: clubId, Type: string -> ClubId
+   # 18: lastUpdatedTime, Type: number -> BigInteger
+ ReplicateItemInfo
+   # 2: texture, Type: number -> fileID
+   # 8: minBid, Type: number -> BigUInteger
+   # 9: minIncrement, Type: number -> BigUInteger
+   # 10: buyoutPrice, Type: number -> BigUInteger
+   # 11: bidAmount, Type: number -> BigUInteger
+ RuneforgeItemPreviewInfo
+   # 1: itemGUID, Type: string -> WOWGUID
+ RuneforgeLegendaryCraftDescription
+   # 1: baseItem, Type: table -> ItemLocation
+ RuneforgePower
+   # 7: iconFileID, Type: number -> fileID
+ ScenarioHeaderCurrenciesAndBackgroundWidgetVisualizationInfo
+   # 5: textureKit, Type: string -> textureKit
+   # 6: frameTextureKit, Type: string -> textureKit
+ ScenarioHeaderTimerWidgetVisualizationInfo
+   # 8: textureKit, Type: string -> textureKit
+   # 9: frameTextureKit, Type: string -> textureKit
+ ScenarioInformation
+   # 10: uiTextureKit, Type: string -> textureKit
+ ScriptedAnimationEffect
+   # 2: visual, Type: number -> fileID
+ SocialQueueGroupInfo
+   # 8: leaderGUID, Type: string -> WOWGUID
+ SocialQueuePlayerInfo
+   # 1: guid, Type: string -> WOWGUID
+   # 2: clubId, Type: string -> ClubId
+ SoulbindData
+   # 5: textureKit, Type: string -> textureKit
+ SoulbindNode
+   # 4: icon, Type: number -> fileID
+ SpacerVisualizationInfo
+   # 5: textureKit, Type: string -> textureKit
+   # 6: frameTextureKit, Type: string -> textureKit
+ SpellDisplayVisualizationInfo
+   # 6: textureKit, Type: string -> textureKit
+   # 7: frameTextureKit, Type: string -> textureKit
+ SpellInfo
+   # 2: iconID, Type: number -> fileID
+ SplashScreenInfo
+   # 1: textureKit, Type: string -> textureKit
+ StackedResourceTrackerWidgetVisualizationInfo
+   # 5: textureKit, Type: string -> textureKit
+   # 6: frameTextureKit, Type: string -> textureKit
+ StatusBarWidgetVisualizationInfo
+   # 18: textureKit, Type: string -> textureKit
+   # 19: frameTextureKit, Type: string -> textureKit
+ TaxiNodeInfo
+   # 2: position, Type: table -> vector2
+   # 6: textureKit, Type: string -> textureKit
+ TextColumnRowVisualizationInfo
+   # 9: textureKit, Type: string -> textureKit
+   # 10: frameTextureKit, Type: string -> textureKit
+ TextWithStateWidgetVisualizationInfo
+   # 11: textureKit, Type: string -> textureKit
+   # 12: frameTextureKit, Type: string -> textureKit
+ TextWithSubtextWidgetVisualizationInfo
+   # 16: textureKit, Type: string -> textureKit
+   # 17: frameTextureKit, Type: string -> textureKit
+ TextureAndTextRowVisualizationInfo
+   # 7: textureKit, Type: string -> textureKit
+   # 8: frameTextureKit, Type: string -> textureKit
+ TextureAndTextVisualizationInfo
+   # 6: textureKit, Type: string -> textureKit
+   # 7: frameTextureKit, Type: string -> textureKit
+ TextureWithAnimationVisualizationInfo
+   # 5: textureKit, Type: string -> textureKit
+   # 6: frameTextureKit, Type: string -> textureKit
+ TooltipComparisonLine
+   # 2: color, Type: table -> colorRGB
+ TooltipDataArg
+   # 6: colorVal, Type: table -> colorRGB
+   # 7: guidVal, Type: string -> WOWGUID
+ TooltipItemComparisonInfo
+   # 2: item, Type: table -> TooltipComparisonItem
+ Enum.TraitSystemFlag
+   + 2: ShowSpendConfirmation
+ TransmogAppearanceSourceInfoData
+   # 4: icon, Type: number -> fileID
+ TransmogIllusionInfo
+   # 3: icon, Type: number -> fileID
+ TransmogOutfitInfo
+   # 2: icon, Type: number -> fileID
+ TransmogSlotInfo
+   # 8: texture, Type: number -> fileID
+ UIModelSceneActorInfo
+   # 3: position, Type: table -> vector3
+ UIModelSceneCameraInfo
+   # 4: target, Type: table -> vector3
+   # 11: zoomedTargetOffset, Type: table -> vector3
+ UIWidgetCurrencyInfo
+   # 1: iconFileID, Type: number -> fileID
+ UiMapHighlightInfo
+   # 1: fileDataID, Type: number -> fileID
+   # 2: atlasID, Type: string -> textureAtlas
+ UnitAuraUpdateInfo
+ UnitPowerBarWidgetVisualizationInfo
+   # 15: textureKit, Type: string -> textureKit
+   # 16: frameTextureKit, Type: string -> textureKit
+ UnlockedAzeriteEmpoweredItems
+   # 1: unlockedItem, Type: table -> AzeriteEmpoweredItemLocation
+ VignetteInfo
+   # 1: vignetteGUID, Type: string -> WOWGUID
+   # 2: objectGUID, Type: string -> WOWGUID
+   # 10: atlasName, Type: string -> textureAtlas
+ VoiceChatChannel
+   # 4: clubId, Type: string -> ClubId
+   # 5: streamId, Type: string -> ClubStreamId
+ WeeklyRewardActivityRewardInfo
+   # 4: itemDBID, Type: string -> WeeklyRewardItemDBID
+ ZoneAbilityInfo
+   # 4: textureKit, Type: string -> textureKit
+ ZoneControlVisualizationInfo
+   # 8: textureKit, Type: string -> textureKit
+   # 9: frameTextureKit, Type: string -> textureKit
+ uiRect
+   # 1: left, Type: number -> uiUnit
+   # 2: bottom, Type: number -> uiUnit
+   # 3: width, Type: number -> uiUnit
+   # 4: height, Type: number -> uiUnit
