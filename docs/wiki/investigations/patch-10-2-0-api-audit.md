@@ -40,7 +40,7 @@ Cargo fmt --check and Mists tests check pass with zero non-vendor warnings. Six 
 
 Changed Rust manually audited against the readability checklist: short state-clearing function, data-only markers, bounded profile registration and test probes; no changed-line violations found. All commands use explicit cwd `p1020-page` and its own target. No sibling target reuse, canonical working-file edits, other-worktree edits, full suite, agents/models/CLIs, push or merge. Worktree creation used only the prescribed canonical Git metadata operation, with cwd in the empty destination.
 
-Portable artifact validator checks hashes, every source ID, all chronological expectations/fixtures, ten closures, thirty gaps, five numeric-equal default mismatches, exact negative control, eighteen reproduced registers and 102 preserved inputs. Proof remains local targeted development evidence, not native or independent acceptance.
+Portable artifact validator checks hashes, every source ID, all chronological expectations/fixtures, ten closures, thirty gaps, five numeric-equal default mismatches, exact negative control, eighteen reproduced registers and 102 preserved inputs. Artifact validation passes at `18797a33c`: [result](../../../data/patch-api/evidence/10.2.0-session-2026-10-07/p1020-validation-result.json). Subsequent result/documentation-only changes preserve runtime and accounting scopes. Proof remains local targeted development evidence, not native or independent acceptance.
 
 ## Sources
 

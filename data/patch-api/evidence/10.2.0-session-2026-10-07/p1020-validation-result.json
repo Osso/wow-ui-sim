@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "data/patch-api/evidence/10.2.0-session-2026-10-07/p1020-validate.py"
+  ],
+  "revision": "18797a33cdd7e0edd3dd6be241d4195e57ce072d",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1020-page",
+  "exit_code": 0,
+  "stdout": "PASS: 284 source IDs, 18 exact chronological sweeps, 10 closures, 30 gaps, 5 default-format mismatches, negative control and preserved inputs\n",
+  "stderr": ""
+}
