@@ -59,7 +59,10 @@ fn frame_addon_owner(state: &LuaState, frame_id: u64) -> LuaResult<Option<String
         .and_then(|frame| frame.owner_addon)
         .and_then(|index| sim.addons.get(index as usize));
     Ok(addon
-        .filter(|addon| !crate::blizzard_ui_sync::is_builtin_addon_folder(&addon.folder_name))
+        .filter(|addon| {
+            addon.folder_name != "__BuiltIn"
+                && !crate::blizzard_ui_sync::is_builtin_addon_folder(&addon.folder_name)
+        })
         .map(|addon| addon.folder_name.clone()))
 }
 

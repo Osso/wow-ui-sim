@@ -162,11 +162,12 @@ fn budget_env() -> WowLuaEnv {
     let env = WowLuaEnv::new().unwrap();
     {
         let mut sim = env.state().borrow_mut();
+        let index = sim.addons.len() as u16;
         sim.addons.push(AddonInfo {
             folder_name: "BudgetAddon".into(),
             ..Default::default()
         });
-        sim.loading_addon_index = Some(0);
+        sim.loading_addon_index = Some(index);
     }
     env.exec(
         r#"
