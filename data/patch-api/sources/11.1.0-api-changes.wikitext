@@ -1,0 +1,297 @@
+{{apichanges|11.1.0|prev=11.0.7|next=11.1.5}}
+
+==Summary==
+* Added support for grouping and categorizing addons in the addon list.
+* Added the display of performance metrics to the addon list and game menu microbutton tooltip.
+* Addons that exceed CPU performance thresholds may now trigger an in-game warning dialog suggesting that the user disable the addon.
+
+==Resources==
+* TOC: <code>110100</code>
+* Official patch notes: [https://worldofwarcraft.blizzard.com/en-us/news/24179386/undermined-update-notes#item16 Undermine(d) Update Notes]
+* Diffs: [https://github.com/Gethe/wow-ui-source/compare/11.0.7..11.1.0 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/11.0.7..11.1.0 BlizzardInterfaceResources]
+
+==Addon list changes==
+
+The addon list now supports grouping and categorizing addons through the use of the new Category and Group [[TOC format|TOC file]] fields.
+
+* Categories will be displayed as headers that can be collapsed or expanded.
+* Groups will be displayed as indented sublists that '''cannot''' be collapsed.
+
+===Addon list categories===
+
+Membership of categories is controlled though the new <code>Category</code> TOC directive. The content of this directive must at present be a string that will be displayed verbatim in the addon list, with an empty string being equivalent to not having defined a category. The category name can be localized through the use of the existing locale-suffixes used for the Title and Notes directives.
+
+It is '''strongly recommended''' that you stick to the translated category names found on the [[Addon Categories]] page. This will ensure that your addon is consistently located with other addons in the same category across all locales.
+
+If no Category has been specified or an empty string is used as its value, then the addon will appear at the root of the addon tree list and not be placed under any collapsible headers.
+
+{{#tag:syntaxhighlight|
+## Interface: {{API LatestInterface}}
+## Title: My Cool Addon
+## Category: This is a test
+## Category-deDE: Dies ist ein Test
+|lang="wowtoc"}}
+
+===Addon list grouping===
+
+Membership of groups is controlled through the new <code>Group</code> TOC directive. The content of this directive must the base name of another addon. Unlike <code>Category</code> it is '''not''' displayed in the addon list, however for grouping to functionally work at least two separate addons must share the same defined Group name.
+
+If no Group has been manually specified, the client will attempt to automatically deduce membership of a group. The list of installed addons will be scanned and to locate pairs of addons where the base name of one addon is a complete prefix of another, and where a dependency relation (optional or required) exists between the two in either direction. See the [[TOC format#Group|Group section on the TOC Format]] page for more in-depth details.
+
+==Consolidated changes==
+: <font color="pink">11.0.7 (58238)</font> &rarr; <font color="lightgreen">11.1.0 (59466)</font> Feb 27 2025
+
+===Global API===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-global-c"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(45)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(6)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|C_AchievementTelemetry.LinkAchievementInClub}}
+: {{api|t=a|C_AchievementTelemetry.LinkAchievementInWhisper}}
+: {{api|t=a|C_AchievementTelemetry.ShowAchievements}}
+: {{api|t=a|C_AddOnProfiler.AddPerformanceMessageShown}}
+: {{api|t=a|C_AddOnProfiler.CheckForPerformanceMessage}}
+: {{api|t=a|C_AddOnProfiler.GetApplicationMetric}}
+: {{api|t=a|C_AddOnProfiler.GetTopKAddOnsForMetric}}
+: {{api|t=a|C_AddOns.DoesAddOnHaveLoadError}}
+: {{api|t=a|C_AddOns.IsAddOnDefaultEnabled}}
+: {{api|t=a|C_AuctionHouse.ShouldAutoPopulatePrice}}
+: {{api|t=a|C_AuctionHouse.SupportsCopperValues}}
+: {{api|t=a|C_BarberShop.HasCustomizationFeature}}
+: {{api|t=a|C_Commentator.SpellUsesItemCharges}}
+: {{api|t=a|C_Debug.ToggleDebugCharInfo}}
+: {{api|t=a|C_DelvesUI.GetCompanionInfoForActivePlayer}}
+: {{api|t=a|C_EventScheduler.ClearReminder}}
+: {{api|t=a|C_EventScheduler.GetActiveContinentName}}
+: {{api|t=a|C_EventScheduler.GetEventUiMapID}}
+: {{api|t=a|C_EventScheduler.GetEventZoneName}}
+: {{api|t=a|C_EventScheduler.GetOngoingEvents}}
+: {{api|t=a|C_EventScheduler.GetScheduledEvents}}
+: {{api|t=a|C_EventScheduler.HasData}}
+: {{api|t=a|C_EventScheduler.HasSavedReminders}}
+: {{api|t=a|C_EventScheduler.RequestEvents}}
+: {{api|t=a|C_EventScheduler.SetReminder}}
+: {{api|t=a|C_Item.GetDelvePreviewItemQuality}}
+: {{api|t=a|C_Log.LogMessage}}
+: {{api|t=a|C_MajorFactions.IsMajorFactionHiddenFromExpansionPage}}
+: {{api|t=a|C_PlayerInfo.CanPlayerUseEventScheduler}}
+: {{api|t=a|C_SpecializationInfo.SetPetSpecialization}}
+: {{api|t=a|C_SpecializationInfo.SetSpecialization}}
+: {{api|t=a|C_StableInfo.GetAvailablePetSpecInfos}}
+: {{api|t=a|C_TradeSkillUI.CancelProfessionRespec}}
+: {{api|t=a|C_TradeSkillUI.CheckRespecNPC}}
+: {{api|t=a|C_TradeSkillUI.ConfirmProfessionRespec}}
+: {{api|t=a|C_WarbandScene.GetRandomEntryID}}
+: {{api|t=a|C_WarbandScene.GetWarbandSceneEntry}}
+: {{api|t=a|C_WarbandScene.HasWarbandScene}}
+: {{api|t=a|C_WarbandScene.IsFavorite}}
+: {{api|t=a|C_WarbandScene.SearchWarbandSceneEntries}}
+: {{api|t=a|C_WarbandScene.SetFavorite}}
+: {{api|t=a|ConsoleEcho}}
+: {{api|t=a|CreateFontFamily}}
+: {{api|t=a|GetNativeRealmID}}
+: {{api|t=a|IsDrivableArea}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|AreAccountAchievementsHidden}}
+: {{api|t=a|C_BarberShop.GetCustomizationScope}}
+: {{api|t=a|C_TransmogCollection.CanAppearanceBeDisplayedOnPlayer}}
+: {{api|t=a|ConsoleAddMessage}}
+: {{api|t=a|SetSpecialization}}
+: {{api|t=a|ShowAccountAchievements}}
+</div>
+|}
+ {{api|t=a|C_AreaPoiInfo.GetAreaPOIInfo}}
+   # arg 1: <font color="#ecbc2a">uiMapID</font>, Nilable: false -> true
+ {{api|t=a|C_BarberShop.SetSelectedSex}}
+   # arg 1: <font color="#ecbc2a">sex</font>, Type: number -> UnitSex
+ {{api|t=a|C_BarberShop.SetViewingChrModel}}
+   + arg 2: <font color="#00b400">spellShapeshiftFormID</font>
+ {{api|t=a|C_MountJournal.GetDisplayedMountInfo}}
+   # ret 9: <font color="#ecbc2a">faction</font>, Type: number -> PvPFaction
+ {{api|t=a|C_MountJournal.GetMountInfoByID}}
+   # ret 9: <font color="#ecbc2a">faction</font>, Type: number -> PvPFaction
+  {{api|t=a|C_PlayerInfo.GetSex}}
+   # ret 1: <font color="#ecbc2a">sex</font>, Type: number -> UnitSex
+ {{api|t=a|CreateWindow}}
+   + arg 2: <font color="#00b400">topMost</font>
+ {{api|t=a|DeclineName}}
+   # arg 2: <font color="#ecbc2a">gender</font>, Type: number -> UnitSex
+ {{api|t=a|GetNumDeclensionSets}}
+   # arg 2: <font color="#ecbc2a">gender</font>, Type: number -> UnitSex
+ {{api|t=a|GetPVPLifetimeStats}}
+   # ret 2: <font color="#ecbc2a">lifetimeMaxPVPRank</font>, Type: number -> PvPRanks
+ {{api|t=a|GetSpecializationInfoForClassID}}
+   # arg 3: <font color="#ecbc2a">gender</font>, Type: number -> UnitSex
+ {{api|t=a|GetSpecializationInfoForSpecID}}
+   # arg 2: <font color="#ecbc2a">gender</font>, Type: number -> UnitSex
+ {{api|t=a|GetSpecializationNameForSpecID}}
+   # arg 2: <font color="#ecbc2a">gender</font>, Type: number -> UnitSex
+ {{api|t=a|GetTotemInfo}}
+   + ret 6: <font color="#00b400">modRate</font>
+
+===Widgets===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-widgets"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(5)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(0)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-widgets"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|ScriptRegion:Intersects}}
+: {{api|t=w|Font:GetFontObjectForAlphabet}}
+: {{api|t=w|Frame:IsDrawLayerEnabled}}
+: {{api|t=w|EditBox:GetNumLines}}
+: {{api|t=w|EditBox:SetFontStringIgnoreParentAlpha}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+</div>
+|}
+
+===Events===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-events"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(6)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(1)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|EVENT_REALM_QUEUES_UPDATED}}
+: {{api|t=e|EVENT_SCHEDULER_UPDATE}}
+: {{api|t=e|GUILD_REWARDS_LIST_UPDATE}}
+: {{api|t=e|NEW_WARBAND_SCENE_ADDED}}
+: {{api|t=e|PROFESSION_RESPEC_CONFIRMATION}}
+: {{api|t=e|WARBAND_SCENE_FAVORITES_UPDATED}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|GLUE_CONSOLE_LOG}}
+</div>
+|}
+ {{api|t=e|GOSSIP_CONFIRM}}
+   # 3: <font color="#ecbc2a">cost</font>, Type: number -> WOWMONEY
+
+===CVars===
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-cvars"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(25)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(13)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-cvars"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=addonPerformanceMsgError|default=0.000000|cat=4|desc=Threshold for when a performance error is shown for a specific AddOn as a percentage of application performance.}}
+: {{apitooltip|type=cvar|name=addonPerformanceMsgOverall|default=0.000000|cat=4|desc=Threshold for when an performance error is shown for all AddOns overall as a percentage of application performance.}}
+: {{apitooltip|type=cvar|name=addonPerformanceMsgWarning|default=0.000000|cat=4|desc=Threshold for when a performance warning is shown for a specific AddOn as a percentage of application performance.}}
+: {{apitooltip|type=cvar|name=allowDevPublicKey|default=0|cat=6|desc=Enable to allow the use of the Dev key instead of the one sourced from static.}}
+: {{apitooltip|type=cvar|name=disableUILoadErrorDialog|default=0|cat=0|desc=Disables showing an os dialog on critical UI error startup}}
+: {{apitooltip|type=cvar|name=DriveDynamicFOVEnabled|default=1|cat=4|desc=Enables adjustment of camera field of view based on driving speed}}
+: {{apitooltip|type=cvar|name=DriveSwapReverseTurnDirection|default=0|cat=4|desc=Boolean indicating if we should swap turn directions when driving in reverse. By default, Drive uses the opposite turn direction when moving backwards.}}
+: {{apitooltip|type=cvar|name=eventReminders|scope=Character|cat=4|desc=Internal cvar for saving event reminders}}
+: {{apitooltip|type=cvar|name=eventSchedulerLastUpdate|default=0|scope=Character|cat=4|desc=Stores the last time the event scheduler UI was update, for anim purposes}}
+: {{apitooltip|type=cvar|name=gxMTLightShafts|default=1|cat=1|desc=Render light-shaft passes in parallel}}
+: {{apitooltip|type=cvar|name=hideRewardedEvents|default=0|scope=Character|cat=4|desc=Stores whether to hide events whose rewards have been claimed}}
+: {{apitooltip|type=cvar|name=highestUnlockedDelvesTier|default=1|scope=Character|cat=4|desc=Stores the highest unlocked delve difficulty tier. Used to notify the player when they have higher difficulty tiers available.}}
+: {{apitooltip|type=cvar|name=lastRenownForMajorFaction2653|default=0|scope=Account|cat=4|desc=Stores the Cartels of Undermine Rewards renown when Renown UI is closed}}
+: {{apitooltip|type=cvar|name=lastRenownForMajorFaction2685|default=0|scope=Account|cat=4|desc=Stores the Gallagio Loyatly Rewards renown when Renown UI is closed}}
+: {{apitooltip|type=cvar|name=minimapTrackedInfov4|default=3103471|scope=Character|cat=4|desc=Stores the minimap tracking that was active last session.}}
+: {{apitooltip|type=cvar|name=movieSubtitleBackgroundAlpha|default=70|scope=Account|cat=4|desc=Sets the cinematic subtitles background alpha from 0-100. Default is 70%}}
+: {{apitooltip|type=cvar|name=movieSubtitleBackground|default=1|scope=Account|cat=4|desc=Adds a background to cinematic subtitles -> 1: off, 2: dark, 3: light}}
+: {{apitooltip|type=cvar|name=newDelvesSeason|default=1|scope=Character|cat=4|desc=Signals a new delves season for the user, so when they open the companion config UI it shows them a helptip with season info}}
+: {{apitooltip|type=cvar|name=RAIDshadowNumCascades|default=1}}
+: {{apitooltip|type=cvar|name=seenCharacterSelectAddGroupHelpTip|default=0|scope=Account|cat=4|desc=Seen and acknowledged the character select add group help tip}}
+: {{apitooltip|type=cvar|name=seenCharacterSelectNavBarCampsHelpTip|default=0|scope=Account}}
+: {{apitooltip|type=cvar|name=shadowNumCascades|default=1}}
+: {{apitooltip|type=cvar|name=SuppressCpuMicrocodeChecks|default=0|desc=Disables CPU Microcode checks}}
+: {{apitooltip|type=cvar|name=useShadowMapping|default=1|cat=1|desc=Use shadow mapping}}
+: ''{{apitooltip|type=command|name=clearSeenDelvesCurios|cat=4}}''
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{apitooltip|type=cvar|name=friendInvitesCollapsed_WowLabs|default=0|cat=4|desc=The info for pending invites has been shown}}
+: {{apitooltip|type=cvar|name=minimapTrackedInfov2}}
+: {{apitooltip|type=cvar|name=pendingInviteInfoShown_WowLabs|default=0|cat=4|desc=The info for pending invites has been shown}}
+: {{apitooltip|type=cvar|name=ResolvedSSAOType|default=0|cat=1}}
+: {{apitooltip|type=cvar|name=scriptWarnings|default=0|scope=Account|desc=Whether or not the UI shows Lua warnings}}
+: {{apitooltip|type=cvar|name=shadowCull|default=1|desc=enable shadow frustum culling}}
+: {{apitooltip|type=cvar|name=shadowScissor|default=1|desc=enable scissoring when rendering shadowmaps}}
+: {{apitooltip|type=cvar|name=timingMethod|default=0|desc=Desired method for game timing}}
+: {{apitooltip|type=cvar|name=timingTestError|default=0|desc=Error reported by the timing validation system}}
+: {{apitooltip|type=cvar|name=useCompactPartyFrames}}
+: ''{{apitooltip|type=command|name=ObjUsage|cat=4}}''
+: ''{{apitooltip|type=command|name=ShowObjUsage|cat=4}}''
+: ''{{apitooltip|type=command|name=timingInfo|cat=0}}''
+</div>
+|}
+
+===Enums===
+ Enum.AccountTransType
+   + <font color="#00b400">SaveWarbandGroups</font>
+ Enum.BattlepetDbFlags
+   - <font color="#ff6767">AccountStore</font>
+ Enum.ChrModelFeatureFlags
+   + <font color="#00b400">None</font>
+   + <font color="#00b400">Players</font>
+   # <font color="#ff6767">DragonCompanions</font> -> <font color="#00b400">Deprecated0</font>
+ Enum.CompanionRoleType
+   + <font color="#00b400">Tank</font>
+ Enum.CurrencyDestroyReason
+   + <font color="#00b400">HonorLoss</font>
+ Enum.CurrencyFlagsB
+   + <font color="#00b400">CurrencyBForceMaxQuantityOnConversion</font>
+ Enum.GossipNpcOption
+   + <font color="#00b400">ProfessionRespec</font>
+   + <font color="#00b400">Placeholder_1</font>
+   + <font color="#00b400">Placeholder_2</font>
+   + <font color="#00b400">Placeholder_3</font>
+   + <font color="#00b400">Placeholder_4</font>
+ Enum.GossipOptionRecFlags
+   + <font color="#00b400">PlayMovieLabelPrepend</font>
+ Enum.PerksVendorCategoryType
+   + <font color="#00b400">WarbandScene</font>
+ Enum.PlayerInteractionType
+   + <font color="#00b400">ProfessionRespec</font>
+   + <font color="#00b400">PlaceholderType71</font>
+   + <font color="#00b400">PlaceholderType72</font>
+   + <font color="#00b400">PlaceholderType73</font>
+   + <font color="#00b400">PlaceholderType74</font>
+   + <font color="#00b400">PlaceholderType75</font>
+   + <font color="#00b400">PlaceholderType76</font>
+   + <font color="#00b400">PlaceholderType77</font>
+ Enum.PointsModifierSourceType
+   + <font color="#00b400">CurrencyMaxWeeklyDelta</font>
+ Enum.SendAddonMessageResult
+   + <font color="#00b400">NotInGuild</font>
+ Enum.SubcontainerType
+   + <font color="#00b400">CurrencyTransfer</font>
+ Enum.WarbandSceneAnimationEvent
+   + <font color="#00b400">Ffx</font>
+ Enum.WarbandSceneAnimationStandState
+   + <font color="#00b400">SitOnChairLow</font>
+   + <font color="#00b400">SitOnChairMedium</font>
+   + <font color="#00b400">SitOnChairHigh</font>
+
+===Structures===
+ AppearanceSourceInfo
+   + <font color="#00b400">canDisplayOnPlayer</font>
+ CovenantData
+   + <font color="#00b400">factionID</font>
+ MajorFactionData
+   + <font color="#00b400">factionFontColor</font>
+   + <font color="#00b400">renownTrackLevelEffectID</font>
+ MountInfo
+   # <font color="#ecbc2a">faction</font>, Type: number -> PvPFaction
+ PetInfo
+   # <font color="#ff6767">abilities</font> -> <font color="#00b400">petAbilities</font>
+   + <font color="#00b400">specAbilities</font>
+   + <font color="#00b400">specID</font>
+ PlayerChoiceInfo
+   + <font color="#00b400">showChoicesAsList</font>
+ PlayerChoiceOptionButtonInfo
+   + <font color="#00b400">showCheckmark</font>
+   + <font color="#00b400">hideButtonShowText</font>
+   + <font color="#00b400">listText</font>
+ QuestObjectiveInfo
+   + <font color="#00b400">objectiveType</font>
+ TotemInfoScript
+   + <font color="#00b400">modRate</font>
+ UIWidgetSpellInfo
+   + <font color="#00b400">showAsEarned</font>
+ UnitPowerBarInfo
+   + <font color="#00b400">attachTooltipToBar</font>
