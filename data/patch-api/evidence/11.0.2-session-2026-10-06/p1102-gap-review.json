@@ -1,0 +1,350 @@
+[
+  {
+    "source_id": "wt-global-api-C_EditMode.IsValidLayoutName-36",
+    "symbol": "C_EditMode.IsValidLayoutName",
+    "initial": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Missing explicit producer. src/c_api/c_edit_mode.rs only models default layout selection; cached EditModeManagerDocumentation declares a string-to-bool query but no length, character/profanity or naming policy. Do not invent validation policy.",
+    "tests": []
+  },
+  {
+    "source_id": "wt-global-api-C_GuildInfo.AreGuildEventsEnabled-40",
+    "symbol": "C_GuildInfo.AreGuildEventsEnabled",
+    "initial": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Missing explicit query and guild-event access/service gate. Existing guild records do not establish account/client availability; a constant would hide enable/disable and permission semantics.",
+    "tests": []
+  },
+  {
+    "source_id": "wt-global-api-C_Item.CanBeRefunded-41",
+    "symbol": "C_Item.CanBeRefunded",
+    "initial": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Missing explicit query and per-instance purchase/refund eligibility state. Existing item bonding metadata does not encode refund deadlines or transaction restrictions; intrinsic item query cannot substitute for ItemLocation lifecycle.",
+    "tests": []
+  },
+  {
+    "source_id": "wt-global-api-C_Item.GetDelvePreviewItemLink-42",
+    "symbol": "C_Item.GetDelvePreviewItemLink",
+    "initial": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Missing delve-tier/player reward-preview catalog and item selection policy. Existing static items can format a link only after a reward item is selected; no valid selection producer is established.",
+    "tests": []
+  },
+  {
+    "source_id": "wt-global-api-C_Item.IsItemBindToAccountUntilEquip-43",
+    "symbol": "C_Item.IsItemBindToAccountUntilEquip",
+    "initial": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "closed",
+    "reason": "Explicit query now derives ItemBind 9 from existing generated item metadata.",
+    "tests": [
+      "tests/patch_11_0_2_publication_fixes.rs",
+      "tests/patch_11_0_2_cached_surfaces.rs"
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_Map.GetMapArtZoneTextPosition-44",
+    "symbol": "C_Map.GetMapArtZoneTextPosition",
+    "initial": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Missing art-layer-specific zone-label geometry/placement provider. Player/map positions are different data; returning fixed coordinates would misrepresent the native contract.",
+    "tests": []
+  },
+  {
+    "source_id": "wt-global-api-C_Minimap.ClearMinimapInsetInfo-45",
+    "symbol": "C_Minimap.ClearMinimapInsetInfo",
+    "initial": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "No minimap-inset model/render consumer. src/lua_api/workarounds/temporary/minimap_tracking_defaults.rs supplies tracking only; an isolated no-op clear would not model inset behavior.",
+    "tests": []
+  },
+  {
+    "source_id": "wt-global-api-C_Minimap.SetMinimapInsetInfo-46",
+    "symbol": "C_Minimap.SetMinimapInsetInfo",
+    "initial": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "No minimap-inset angle/scalar/radius state and renderer integration. Cached MinimapDocumentation.lua:222\u2013234 declares arguments, not rendering policy; storing disconnected values would not satisfy behavior.",
+    "tests": []
+  },
+  {
+    "source_id": "wt-global-api-C_QuestLog.QuestContainsFirstTimeRepBonusForPlayer-47",
+    "symbol": "C_QuestLog.QuestContainsFirstTimeRepBonusForPlayer",
+    "initial": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Missing quest faction rewards and player-specific first-time bonus eligibility/history. Completed quest IDs alone do not establish native faction/character bonus semantics.",
+    "tests": []
+  },
+  {
+    "source_id": "wt-global-api-C_Traits.CanEditConfig-48",
+    "symbol": "C_Traits.CanEditConfig",
+    "initial": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Talent configuration state exists, but no native edit-access decision covering config type, ownership and restrictions is established. A config-existence check would conflate presence with permission.",
+    "tests": []
+  },
+  {
+    "source_id": "wt-global-api-C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo-49",
+    "symbol": "C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo",
+    "initial": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Missing populated ScenarioHeaderDelves DTO/provider. src/lua_api/globals/missing_surface/ui_widget_manager.rs:1\u201329 implements narrow IconAndText quest pins; empty/nil generic fallback is not this visualization.",
+    "tests": []
+  },
+  {
+    "source_id": "wt-global-api-C_VoiceChat.CanAccessSettings-50",
+    "symbol": "C_VoiceChat.CanAccessSettings",
+    "initial": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Voice chat state has enabled/connecting/muted/deafened probes, not platform/account/parental settings-access policy. src/lua_api/globals/real/voice_chat_probes.rs:1\u201310; enabled alone is not access.",
+    "tests": []
+  },
+  {
+    "source_id": "wt-global-api-C_GameModeManager.GetFeatureSetting-53",
+    "symbol": "C_GameModeManager.GetFeatureSetting",
+    "initial": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "closed",
+    "reason": "Namespace autostub previously fabricated removed member; no current cached applicable consumer.",
+    "tests": [
+      "tests/patch_11_0_2_publication_fixes.rs",
+      "tests/patch_11_0_2_cached_surfaces.rs"
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_GameModeManager.IsFeatureEnabled-54",
+    "symbol": "C_GameModeManager.IsFeatureEnabled",
+    "initial": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "closed",
+    "reason": "Namespace autostub previously fabricated removed member; no current cached applicable consumer.",
+    "tests": [
+      "tests/patch_11_0_2_publication_fixes.rs",
+      "tests/patch_11_0_2_cached_surfaces.rs"
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_WeeklyRewards.GetWeeklyRewardTextureKit-55",
+    "symbol": "C_WeeklyRewards.GetWeeklyRewardTextureKit",
+    "initial": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "closed",
+    "reason": "Namespace autostub previously fabricated removed member; no current cached applicable consumer.",
+    "tests": [
+      "tests/patch_11_0_2_publication_fixes.rs",
+      "tests/patch_11_0_2_cached_surfaces.rs"
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_QuestLog.DoesQuestAwardReputationWithFaction-58",
+    "symbol": "C_QuestLog.DoesQuestAwardReputationWithFaction",
+    "initial": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "final": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "decision": "retained gap",
+    "reason": "Missing quest-to-faction reputation reward mapping. src/lua_api/sim_substates/quest_log.rs:11\u201340 holds item/currency rewards but not faction reward data; argument rename receives no behavioral credit.",
+    "tests": []
+  }
+]

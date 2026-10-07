@@ -8,6 +8,17 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 class ExtractTests(unittest.TestCase):
+    def test_11_0_2_settings_transclusion_and_transition_are_editorial(self):
+        text = extract_text('{{:Settings_API}}\n'
+                            ': 11.0.0 (55818) → 11.0.2 (56819) Sep 27 2024\n'
+                            '* {{api|Settings.RegisterAddOnSetting}} reads variableTbl.\n')
+        self.assertEqual(text.splitlines()[0],
+                         '[Transcluded source: Settings_API; not expanded]')
+        rows = seed_rows('Patch 11.0.2 API changes\n' + text, patch='11.0.2')
+        self.assertEqual([row['status'] for row in rows],
+                         ['metadata-only', 'metadata-only', 'metadata-only', 'audit-pending'])
+        self.assertEqual(rows[-1]['source_id'], 'prose-undated-004')
+
     def test_11_0_5_build_transition_is_editorial_not_a_contract(self):
         rows = seed_rows('Patch 11.0.5 API changes\n'
                          ': 11.0.2 (56819) → 11.0.5 (57212) Oct 22 2024\n'

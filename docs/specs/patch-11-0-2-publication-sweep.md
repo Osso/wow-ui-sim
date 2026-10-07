@@ -19,3 +19,24 @@ Three unused removed members remain absent after repeated ordinary/raw lookup. N
 - `data/patch-api/sources/11.0.2-api-changes.provenance.json`
 - `data/patch-api/evidence/11.0.2-session-2026-10-06/p1102-retirement-consumers.json`
 - Cached `Blizzard_APIDocumentationGenerated/ItemConstantsDocumentation.lua:179–195`: ItemBind 9 is ToBnetAccountUntilEquipped.
+
+## Local proof
+
+| Patch | Rows | OK | Gaps | Result |
+|---|---:|---:|---:|---|
+| 11.0.2 | 34 | 22 | 12 | PASS |
+| 11.0.5 | 48 | 38 | 10 | PASS |
+| 11.0.7 | 98 | 70 | 28 | PASS |
+| 11.1.0 | 116 | 97 | 19 | PASS |
+| 11.1.5 | 125 | 89 | 36 | PASS |
+| 11.1.7 | 48 | 40 | 8 | PASS |
+| 11.2.0 | 162 | 135 | 27 | PASS |
+| 11.2.5 | 163 | 118 | 45 | PASS |
+| 11.2.7 | 508 | 414 | 94 | PASS |
+| 12.0.0 | 1010 | 989 | 21 | PASS |
+| 12.0.1 | 225 | 222 | 3 | PASS |
+| 12.0.5 | 363 | 352 | 11 | PASS |
+| 12.0.7 | 174 | 171 | 3 | PASS |
+| 12.1.0 | 778 | 773 | 5 | PASS |
+
+All sweeps run alone at aefaa9605; later fixtures remain unchanged. Exact commands and revisions: `p1102-proof.json` in the evidence directory.

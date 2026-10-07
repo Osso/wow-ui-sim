@@ -179,3 +179,7 @@ Updated [audit](investigations/patch-12-0-1-api-audit.md), [spec](../specs/patch
 ## 2026-10-07 | ingest | Patch 11.1.0 page audit
 
 [Audit](investigations/patch-11-1-0-api-audit.md) retains revision 6726776, 116 inventory + 100 extract rows and exhaustive 216-ID ledger: 71 partial, 18 bounded, 106 pending, 21 metadata. Parser indentation omission fixed; three bounded publication closures and 19 retained gaps. Eleven isolated sweeps, negative control, two behavior tests, two prefork filters, fifteen extraction/register fixtures, formatting, Mists check and exit-0 startup [] pass. SetSpecialization retained for cached classic consumer; later fixtures/ledgers unchanged. Sibling build-cache artifact path violation recorded; canonical source untouched.
+
+## [2026-10-07] evidence | 11.0.2 page audit
+
+Retained revision and all inventory/extract source IDs; [audit](investigations/patch-11-0-2-api-audit.md) links capability boundaries and proof.

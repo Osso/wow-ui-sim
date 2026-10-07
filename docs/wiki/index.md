@@ -1,3 +1,7 @@
+## [2026-10-07] evidence | 11.0.2 page audit
+
+[Audit](investigations/patch-11-0-2-api-audit.md) links exhaustive source accounting, bounded retirements/item metadata query, exact gaps and targeted proof.
+
 ## [2026-10-07] evidence | 11.0.5 page audit
 
 [Audit](investigations/patch-11-0-5-api-audit.md) accounts for 48 inventory + 34 extract rows, five bounded publication closures and ten exact gaps. Thirteen isolated sweeps, exact negative control, three behavior tests and three prefork cases pass; Mists has zero non-vendor warnings and exit-0 startup returns `[]`. [Ledger](../../data/patch-api/sources/11.0.5-page-coverage.json) distinguishes publication/absence from 24 pending extract contracts. Cached boolean/alias deprecation surfaces and later inputs preserved; own target only.

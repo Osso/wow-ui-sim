@@ -1,0 +1,1670 @@
+{
+  "schema": "patch-page-coverage/v1",
+  "patch": "11.0.2",
+  "source_register": "data/patch-api/sources/11.0.2-wikitext-register.json",
+  "source_sha256": "a5edb6c195e1ccc9722aa1358fc0a392b772563a43bf5c4abf4d45446e6bf9ca",
+  "audit_status": "in-progress",
+  "proof_policy": "Every inventory/extract occurrence accounted for. Default retail 12.1.0, not historical 11.0.2. All thirteen later registers apply chronologically. Publication/absence only; no full signature/output/security/behavior/native parity. Cached/vendor wrappers untouched. Extract candidates remain pending; Settings_API transclusion explicitly retained without expansion. Local targeted development proof only.",
+  "capabilities": [
+    {
+      "id": "publication-sweep-11-0-2",
+      "symbols": [
+        "34 inventory occurrences"
+      ],
+      "scope": "22 OK / 12 exact retained gaps; current retail publication/absence/default/event registerability only",
+      "spec": "docs/specs/patch-11-0-2-publication-sweep.md",
+      "tests": [
+        "tests/patch_11_0_2_publication_sweep.rs",
+        "tests/common/publication_sweep.rs"
+      ],
+      "compiled_revision": "aefaa9605",
+      "ledger": "data/patch-api/evidence/11.0.2-session-2026-10-06/p1102-sweep-result.json"
+    },
+    {
+      "id": "item-binding-11-0-2",
+      "symbols": [
+        "C_Item.IsItemBindToAccountUntilEquip"
+      ],
+      "scope": "Intrinsic generated ItemBind 9; numeric/string/link inputs and unknown item false. Not per-instance binding/refund/security parity.",
+      "spec": "docs/specs/patch-11-0-2-publication-sweep.md",
+      "tests": [
+        "tests/patch_11_0_2_publication_fixes.rs",
+        "tests/patch_11_0_2_cached_surfaces.rs"
+      ],
+      "implementation": "src/c_api/item_spell/c_item.rs",
+      "compiled_revision": "aefaa9605"
+    }
+  ],
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/11.0.2-api-changes.txt",
+    "sha256": "5df4b79162d245df301779c781bd8496143bc4e86fd7a882f0d77f40ed5c3b18",
+    "wikitext_revid": 6862982,
+    "wikitext_sha256": "d37630145361a8be11a668f10d0da5256eb0f8999cff424c4a3e84ea13e50ec4",
+    "extract_tool": "tools/extract_patch_non_inventory.py"
+  },
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-C_ClubFinder.IsValidSearchString-34",
+      "capabilities": [
+        "publication-sweep-11-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/default or event registerability only; no signature/output/security/behavior/native parity. Explicit producers may still be placeholders."
+    },
+    {
+      "source_id": "wt-global-api-C_DelvesUI.RequestPartyEligibilityForDelveTiers-35",
+      "capabilities": [
+        "publication-sweep-11-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/default or event registerability only; no signature/output/security/behavior/native parity. Explicit producers may still be placeholders."
+    },
+    {
+      "source_id": "wt-global-api-C_EditMode.IsValidLayoutName-36",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing explicit producer. src/c_api/c_edit_mode.rs only models default layout selection; cached EditModeManagerDocumentation declares a string-to-bool query but no length, character/profanity or naming policy. Do not invent validation policy."
+    },
+    {
+      "source_id": "wt-global-api-C_GameRules.GetGameRuleAsFloat-37",
+      "capabilities": [
+        "publication-sweep-11-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/default or event registerability only; no signature/output/security/behavior/native parity. Explicit producers may still be placeholders."
+    },
+    {
+      "source_id": "wt-global-api-C_GameRules.IsGameRuleActive-38",
+      "capabilities": [
+        "publication-sweep-11-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/default or event registerability only; no signature/output/security/behavior/native parity. Explicit producers may still be placeholders."
+    },
+    {
+      "source_id": "wt-global-api-C_GuildBank.IsGuildBankEnabled-39",
+      "capabilities": [
+        "publication-sweep-11-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/default or event registerability only; no signature/output/security/behavior/native parity. Explicit producers may still be placeholders."
+    },
+    {
+      "source_id": "wt-global-api-C_GuildInfo.AreGuildEventsEnabled-40",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing explicit query and guild-event access/service gate. Existing guild records do not establish account/client availability; a constant would hide enable/disable and permission semantics."
+    },
+    {
+      "source_id": "wt-global-api-C_Item.CanBeRefunded-41",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing explicit query and per-instance purchase/refund eligibility state. Existing item bonding metadata does not encode refund deadlines or transaction restrictions; intrinsic item query cannot substitute for ItemLocation lifecycle."
+    },
+    {
+      "source_id": "wt-global-api-C_Item.GetDelvePreviewItemLink-42",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing delve-tier/player reward-preview catalog and item selection policy. Existing static items can format a link only after a reward item is selected; no valid selection producer is established."
+    },
+    {
+      "source_id": "wt-global-api-C_Item.IsItemBindToAccountUntilEquip-43",
+      "capabilities": [
+        "publication-sweep-11-0-2",
+        "item-binding-11-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/default or event registerability only; no signature/output/security/behavior/native parity. Explicit producers may still be placeholders. Concrete item ID/string/hyperlink metadata tests cover intrinsic ItemBind 9 only."
+    },
+    {
+      "source_id": "wt-global-api-C_Map.GetMapArtZoneTextPosition-44",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing art-layer-specific zone-label geometry/placement provider. Player/map positions are different data; returning fixed coordinates would misrepresent the native contract."
+    },
+    {
+      "source_id": "wt-global-api-C_Minimap.ClearMinimapInsetInfo-45",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No minimap-inset model/render consumer. src/lua_api/workarounds/temporary/minimap_tracking_defaults.rs supplies tracking only; an isolated no-op clear would not model inset behavior."
+    },
+    {
+      "source_id": "wt-global-api-C_Minimap.SetMinimapInsetInfo-46",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No minimap-inset angle/scalar/radius state and renderer integration. Cached MinimapDocumentation.lua:222–234 declares arguments, not rendering policy; storing disconnected values would not satisfy behavior."
+    },
+    {
+      "source_id": "wt-global-api-C_QuestLog.QuestContainsFirstTimeRepBonusForPlayer-47",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing quest faction rewards and player-specific first-time bonus eligibility/history. Completed quest IDs alone do not establish native faction/character bonus semantics."
+    },
+    {
+      "source_id": "wt-global-api-C_Traits.CanEditConfig-48",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Talent configuration state exists, but no native edit-access decision covering config type, ownership and restrictions is established. A config-existence check would conflate presence with permission."
+    },
+    {
+      "source_id": "wt-global-api-C_UIWidgetManager.GetScenarioHeaderDelvesWidgetVisualizationInfo-49",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing populated ScenarioHeaderDelves DTO/provider. src/lua_api/globals/missing_surface/ui_widget_manager.rs:1–29 implements narrow IconAndText quest pins; empty/nil generic fallback is not this visualization."
+    },
+    {
+      "source_id": "wt-global-api-C_VoiceChat.CanAccessSettings-50",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Voice chat state has enabled/connecting/muted/deafened probes, not platform/account/parental settings-access policy. src/lua_api/globals/real/voice_chat_probes.rs:1–10; enabled alone is not access."
+    },
+    {
+      "source_id": "wt-global-api-C_GameModeManager.GetFeatureSetting-53",
+      "capabilities": [
+        "publication-sweep-11-0-2"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded current-retail absence after chronological supersession. No historical signature/behavior parity."
+    },
+    {
+      "source_id": "wt-global-api-C_GameModeManager.IsFeatureEnabled-54",
+      "capabilities": [
+        "publication-sweep-11-0-2"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded current-retail absence after chronological supersession. No historical signature/behavior parity."
+    },
+    {
+      "source_id": "wt-global-api-C_WeeklyRewards.GetWeeklyRewardTextureKit-55",
+      "capabilities": [
+        "publication-sweep-11-0-2"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded current-retail absence after chronological supersession. No historical signature/behavior parity."
+    },
+    {
+      "source_id": "wt-global-api-C_QuestLog.DoesQuestAwardReputationWithFaction-58",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing quest-to-faction reputation reward mapping. src/lua_api/sim_substates/quest_log.rs:11–40 holds item/currency rewards but not faction reward data; argument rename receives no behavioral credit."
+    },
+    {
+      "source_id": "wt-events-CRAFTINGORDERS_UPDATE_REWARDS-68",
+      "capabilities": [
+        "publication-sweep-11-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/default or event registerability only; no signature/output/security/behavior/native parity. Explicit producers may still be placeholders."
+    },
+    {
+      "source_id": "wt-events-DELVES_ACCOUNT_DATA_ELEMENT_CHANGED-69",
+      "capabilities": [
+        "publication-sweep-11-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/default or event registerability only; no signature/output/security/behavior/native parity. Explicit producers may still be placeholders."
+    },
+    {
+      "source_id": "wt-events-PARTY_ELIGIBILITY_FOR_DELVE_TIERS_CHANGED-70",
+      "capabilities": [
+        "publication-sweep-11-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/default or event registerability only; no signature/output/security/behavior/native parity. Explicit producers may still be placeholders."
+    },
+    {
+      "source_id": "wt-events-REMIX_END_OF_EVENT-71",
+      "capabilities": [
+        "publication-sweep-11-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/default or event registerability only; no signature/output/security/behavior/native parity. Explicit producers may still be placeholders."
+    },
+    {
+      "source_id": "wt-events-SHOW_DELVES_COMPANION_CONFIGURATION_UI-72",
+      "capabilities": [
+        "publication-sweep-11-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/default or event registerability only; no signature/output/security/behavior/native parity. Explicit producers may still be placeholders."
+    },
+    {
+      "source_id": "wt-events-CURRENCY_DISPLAY_UPDATE-77",
+      "capabilities": [
+        "publication-sweep-11-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/default or event registerability only; no signature/output/security/behavior/native parity. Explicit producers may still be placeholders."
+    },
+    {
+      "source_id": "wt-events-START_TIMER-79",
+      "capabilities": [
+        "publication-sweep-11-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/default or event registerability only; no signature/output/security/behavior/native parity. Explicit producers may still be placeholders."
+    },
+    {
+      "source_id": "wt-events-STOP_TIMER_OF_TYPE-81",
+      "capabilities": [
+        "publication-sweep-11-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/default or event registerability only; no signature/output/security/behavior/native parity. Explicit producers may still be placeholders."
+    },
+    {
+      "source_id": "wt-cvars-minimapTrackedInfov2-91",
+      "capabilities": [
+        "publication-sweep-11-0-2"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded current-retail absence after chronological supersession. No historical signature/behavior parity."
+    },
+    {
+      "source_id": "wt-cvars-mouseAcceleration-92",
+      "capabilities": [
+        "publication-sweep-11-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Publication/default or event registerability only; no signature/output/security/behavior/native parity. Explicit producers may still be placeholders."
+    },
+    {
+      "source_id": "wt-cvars-useCompactPartyFrames-93",
+      "capabilities": [
+        "publication-sweep-11-0-2"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded current-retail absence after chronological supersession. No historical signature/behavior parity."
+    },
+    {
+      "source_id": "wt-cvars-UseOldVolumeFog-94",
+      "capabilities": [
+        "publication-sweep-11-0-2"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded current-retail absence after chronological supersession. No historical signature/behavior parity."
+    },
+    {
+      "source_id": "wt-cvars-mouseAccel-97",
+      "capabilities": [
+        "publication-sweep-11-0-2"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded current-retail absence after chronological supersession. No historical signature/behavior parity."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-004",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-005",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-006",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-008",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-009",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Context/summary introduces Settings or macro contracts; detailed rows require actual cached addon/secure-input behavioral tests. No behavioral credit from prose. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-010",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Context/summary introduces Settings or macro contracts; detailed rows require actual cached addon/secure-input behavioral tests. No behavioral credit from prose. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-011",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Macro entry point iterates arbitrary supplied text without a 255-character limit in src/lua_api/globals/spell_macro_verbs.rs:177–188. Attribute execution boundary is distinct; remains unproven, not patched with truncation. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-012",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Bounded slash dispatcher omits /click in src/lua_api/globals/spell_macro_verbs.rs:191–220. Ignoring an unsupported command does not prove native prevention across secure button and macro entry points. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "source-context-014",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-016",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Context/summary introduces Settings or macro contracts; detailed rows require actual cached addon/secure-input behavioral tests. No behavioral credit from prose. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-018",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cached Settings table-storage signature is a candidate; needs addon registration, SetValue/GetValue and saved-table roundtrip under insecure origin. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-019",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs insecure addon-origin registration and getter/setter callback execution proof; cached declaration alone cannot establish taint/access behavior. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-020",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs parent/child navigation and expansion assertions after actual Settings panel load; UI function publication alone is insufficient. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "source-context-022",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-024",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-025",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-027",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "enumerations-Enum-BagFlag-028",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum value contract requires concrete runtime numeric/absence proof and later-epoch comparison; source candidate is not publication proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "enumerations-Enum-BagFlag-029",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum value contract requires concrete runtime numeric/absence proof and later-epoch comparison; source candidate is not publication proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "enumerations-Enum-EventToastDisplayType-030",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum value contract requires concrete runtime numeric/absence proof and later-epoch comparison; source candidate is not publication proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "enumerations-Enum-EventToastDisplayType-031",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum value contract requires concrete runtime numeric/absence proof and later-epoch comparison; source candidate is not publication proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "enumerations-Enum-MountType-032",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum value contract requires concrete runtime numeric/absence proof and later-epoch comparison; source candidate is not publication proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "enumerations-Enum-MountType-033",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum value contract requires concrete runtime numeric/absence proof and later-epoch comparison; source candidate is not publication proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "enumerations-Enum-MountTypeFlag-034",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum value contract requires concrete runtime numeric/absence proof and later-epoch comparison; source candidate is not publication proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "enumerations-Enum-MountTypeFlag-035",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum value contract requires concrete runtime numeric/absence proof and later-epoch comparison; source candidate is not publication proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "enumerations-Enum-QuestClassification-036",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum value contract requires concrete runtime numeric/absence proof and later-epoch comparison; source candidate is not publication proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "enumerations-Enum-QuestClassification-037",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum value contract requires concrete runtime numeric/absence proof and later-epoch comparison; source candidate is not publication proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "enumerations-Enum-QuestClassification-038",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum value contract requires concrete runtime numeric/absence proof and later-epoch comparison; source candidate is not publication proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "enumerations-Enum-QuestClassification-039",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum value contract requires concrete runtime numeric/absence proof and later-epoch comparison; source candidate is not publication proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataItemBinding-040",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum value contract requires concrete runtime numeric/absence proof and later-epoch comparison; source candidate is not publication proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "enumerations-Enum-TooltipDataItemBinding-041",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum value contract requires concrete runtime numeric/absence proof and later-epoch comparison; source candidate is not publication proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "enumerations-Enum-TraitConditionType-042",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum value contract requires concrete runtime numeric/absence proof and later-epoch comparison; source candidate is not publication proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "enumerations-Enum-TraitConditionType-043",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum value contract requires concrete runtime numeric/absence proof and later-epoch comparison; source candidate is not publication proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "enumerations-Enum-UIMapFlag-044",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum value contract requires concrete runtime numeric/absence proof and later-epoch comparison; source candidate is not publication proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "enumerations-Enum-UIMapFlag-045",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum value contract requires concrete runtime numeric/absence proof and later-epoch comparison; source candidate is not publication proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "enumerations-Enum-UIWidgetVisualizationType-046",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum value contract requires concrete runtime numeric/absence proof and later-epoch comparison; source candidate is not publication proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "enumerations-Enum-UIWidgetVisualizationType-047",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Enum value contract requires concrete runtime numeric/absence proof and later-epoch comparison; source candidate is not publication proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "source-context-049",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "structures-CampaignInfo-050",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-CampaignInfo-051",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-CharacterCurrencyData-052",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-CharacterCurrencyData-053",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-CraftingOrderRewardInfo-054",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-CraftingOrderRewardInfo-055",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-CurrencyTransferTransaction-056",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-CurrencyTransferTransaction-057",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-CurrencyTransferTransaction-058",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-GossipOptionRewardInfo-059",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-GossipOptionRewardInfo-060",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-HorizontalCurrenciesWidgetVisualizationInfo-061",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-HorizontalCurrenciesWidgetVisualizationInfo-062",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-PlayerChoiceOptionInfo-063",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-PlayerChoiceOptionInfo-064",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-QuestInfo-065",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-QuestInfo-066",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-QuestInfo-067",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-QuestInfo-068",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-ScenarioCriteriaInfo-069",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-ScenarioCriteriaInfo-070",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-SpellDisplayVisualizationInfo-071",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-SpellDisplayVisualizationInfo-072",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-SpellDisplayVisualizationInfo-073",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-TraitCondInfo-074",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-TraitCondInfo-075",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-TraitCondInfo-076",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-TraitEntryInfo-077",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-TraitEntryInfo-078",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-TraitNodeInfo-079",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-TraitNodeInfo-080",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-UIWidgetCurrencyInfo-081",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-UIWidgetCurrencyInfo-082",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-UIWidgetCurrencyInfo-083",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-UIWidgetCurrencyInfo-084",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-UIWidgetItemInfo-085",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-UIWidgetItemInfo-086",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-UIWidgetItemInfo-087",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-UIWidgetSpellInfo-088",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-UIWidgetSpellInfo-089",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-UIWidgetSpellInfo-090",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "structures-UIWidgetSpellInfo-091",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DTO field contract requires populated producer fixture, serialization/omission and downstream consumer proof; matching field names are not behavior proof. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "source-context-093",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "deprecated api-removal-summary-094",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "source-context-095",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-096",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-097",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "source-context-099",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-101",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-102",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-103",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-104",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-106",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-107",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-108",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-109",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-110",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "source-context-113",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-114",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "source-context-116",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-117",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "source-context-119",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-120",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-121",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-122",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-123",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-124",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-125",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-126",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-127",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-128",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-129",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-130",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-131",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-132",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-133",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-134",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-135",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-136",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-137",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "source-context-139",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-140",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-141",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-142",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-143",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-144",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-145",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-146",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-147",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-148",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "source-context-150",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-151",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-152",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-153",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "source-context-155",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-156",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-157",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-158",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-159",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-160",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-161",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-162",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-163",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-164",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "source-context-166",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-167",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-168",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-169",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-170",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-171",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-172",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-173",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-174",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-175",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-176",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical deprecation/removal statement is outside consolidated inventory. Preserve cached wrappers; needs current-retail alias/absence and successor behavioral probes before closure. No retirement attempted. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-178",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-179",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Deprecated source-file label; editorial context only."
+    },
+    {
+      "source_id": "prose-undated-180",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-181",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-182",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-184",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Deprecated source-file label; editorial context only."
+    },
+    {
+      "source_id": "prose-undated-185",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-186",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-187",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-188",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-189",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-190",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-191",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-192",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-194",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Deprecated source-file label; editorial context only."
+    },
+    {
+      "source_id": "prose-undated-195",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-196",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-197",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-198",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-199",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-200",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-201",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-202",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-203",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-204",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-205",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-206",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-207",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-208",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-209",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-210",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-211",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-212",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-213",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-214",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-215",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-216",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-217",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-218",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-219",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-220",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-221",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-222",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-223",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-224",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-225",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-226",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-227",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-228",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-229",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-230",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-231",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-232",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-233",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-234",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-235",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-236",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-237",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-238",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-239",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-240",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-241",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-243",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Deprecated source-file label; editorial context only."
+    },
+    {
+      "source_id": "prose-undated-244",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-245",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-246",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-247",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-249",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Deprecated source-file label; editorial context only."
+    },
+    {
+      "source_id": "prose-undated-250",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-252",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Deprecated source-file label; editorial context only."
+    },
+    {
+      "source_id": "prose-undated-253",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-254",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-255",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    },
+    {
+      "source_id": "prose-undated-256",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Page explicitly says not removed on 11.0.2 beta; preserve current cached wrapper/consumer behavior. No strict absence or successor parity claim. See p1102-extract-scout.json for bounded candidates and exact statement."
+    }
+  ]
+}
