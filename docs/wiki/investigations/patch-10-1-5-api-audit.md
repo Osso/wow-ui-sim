@@ -60,6 +60,8 @@ Cargo fmt --check and Mists test check pass with zero non-vendor warnings. Six i
 | 12.0.7 | 174 | 171 | 3 | 0 |
 | 12.1.0 | 778 | 773 | 5 | 0 |
 
+Artifact validator passes at `2ecefbd7b`: [result](../../../data/patch-api/evidence/10.1.5-session-2026-10-07/p1015-validation-result.json). It checks all 199 source IDs, source hashes, exact gaps/closures, every chronological expectation, all twenty sweep fixtures, negative control, reproduction/preservation records and proof-log hashes. Subsequent result/documentation-only edits preserve runtime and accounting proof scopes. Local targeted development evidence is not native or independent acceptance.
+
 ## Sources
 
 - [Provenance](../../../data/patch-api/sources/10.1.5-api-changes.provenance.json)
