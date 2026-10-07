@@ -1,0 +1,13 @@
+{
+  "pageid": 237255,
+  "revid": 2301036,
+  "timestamp": "2022-09-03T02:10:47Z",
+  "retrieved": "2026-10-07",
+  "url": "https://warcraft.wiki.gg/wiki/Patch_9.2.5/API_changes",
+  "fetch": "browser-cli API query; direct HTTP blocked (403)",
+  "wikitext_sha256": "f0c554edcdce15afe3cfa3a2dfaf3c723d11864d377613640538d43596cb12e3",
+  "generator_flags": [
+    "--expand-shared-changes",
+    "--separate-inline-structures"
+  ]
+}
