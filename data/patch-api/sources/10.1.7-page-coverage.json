@@ -35,7 +35,7 @@
   ],
   "non_inventory_source": {
     "path": "data/patch-api/sources/10.1.7-api-changes.txt",
-    "sha256": "7ce8573288d2c3ab93245b6ee09aefcad79fb55f983dbfa15ee6b00b7c956771",
+    "sha256": "e2d9c557e865b7b9e9e2133064ddc229587001edf91ea08a3deaba65059bfc2a",
     "wikitext_revid": 6473483,
     "wikitext_sha256": "065658e2e89ae0f2055c03c9e890a42321c1983165f1a33898747d7b0719b76a",
     "extract_tool": "tools/extract_patch_non_inventory.py",

@@ -70,4 +70,4 @@ For unit frames, a convenience mixin is also provided (PingableType_UnitFrameMix
    - GroupHere
 
 == References ==
-[References: Reflist]
+[References list; not expanded]

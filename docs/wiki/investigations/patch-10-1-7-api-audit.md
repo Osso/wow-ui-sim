@@ -8,7 +8,7 @@ Page 442982, revision 6473483 (September 15, 2025, 16:55:36 UTC), retrieved Octo
 
 103 unique source IDs: 48 inventory + 55 extract. Ledger distinguishes 31 partial-development-green, five bounded-coverage, 56 audit-pending and eleven metadata-only. Two extract template rows have partial current-cache attribute proof; 42 other substantive extract occurrences remain pending. Publication/absence/event registration/default presence is not signatures, populated DTOs, security or historical/native parity. All 55 extract statements are assigned exactly once, including every Lua example line and all enum occurrences.
 
-Eighteen later registers (10.2.5 through 12.1.0) supersede chronologically. C_Ping.GetContextualPingTypeForUnit and ScriptRegion:SetProtected are expected absent due to later removals. The one-line insertion point for the concurrent 10.2.0 register is explicit. Read-only sibling comparison found no matching gap symbol; no predicted gap supersessions at the retained 10.2.0 register fingerprint.
+Nineteen later registers (10.2.0 through 12.1.0) supersede chronologically; 10.2.0 was added at integration with the fourteen exact gaps unchanged. The `{{Reflist}}` rendering was unified with 10.2.0's extractor output at integration (extract hash and proof-scope hashes recomputed; validator passes). C_Ping.GetContextualPingTypeForUnit and ScriptRegion:SetProtected are expected absent due to later removals. The one-line insertion point for the concurrent 10.2.0 register is explicit. Read-only sibling comparison found no matching gap symbol; no predicted gap supersessions at the retained 10.2.0 register fingerprint.
 
 ## Gaps and bounded fix
 
