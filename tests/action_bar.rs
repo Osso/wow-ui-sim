@@ -553,8 +553,8 @@ fn test_bag_bar_layout_locked() {
                 if UIParentLoadAddOn then
                     pcall(UIParentLoadAddOn, "Blizzard_MainMenuBarBagButtons")
                 end
-                if not BagsBar and LoadAddOn then
-                    pcall(LoadAddOn, "Blizzard_MainMenuBarBagButtons")
+                if not BagsBar and C_AddOns and C_AddOns.LoadAddOn then
+                    pcall(C_AddOns.LoadAddOn, "Blizzard_MainMenuBarBagButtons")
                 end
             end
 

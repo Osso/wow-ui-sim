@@ -87,7 +87,7 @@ fn catalog_shop_loads_and_populates_navigation_and_products(env: &WowLuaEnv) {
     insert_catalog_product_fixture(env);
 
     let (loaded, reason): (bool, Option<String>) = env
-        .eval("return LoadAddOn('Blizzard_CatalogShop')")
+        .eval("return C_AddOns.LoadAddOn('Blizzard_CatalogShop')")
         .expect("LoadAddOn('Blizzard_CatalogShop') should return");
     assert!(
         loaded,
@@ -175,7 +175,7 @@ prefork_full_ui_case! {
 fn catalog_shop_bundle_card_uses_default_model_scene_id(env: &WowLuaEnv) {
 
     let (loaded, reason): (bool, Option<String>) = env
-        .eval("return LoadAddOn('Blizzard_CatalogShop')")
+        .eval("return C_AddOns.LoadAddOn('Blizzard_CatalogShop')")
         .expect("LoadAddOn('Blizzard_CatalogShop') should return");
     assert!(
         loaded,
@@ -265,7 +265,7 @@ fn catalog_shop_load_does_not_request_nil_model_scene_ids(env: &WowLuaEnv) {
     .expect("should install model scene probe");
 
     let (loaded, reason): (bool, Option<String>) = env
-        .eval("return LoadAddOn('Blizzard_CatalogShop')")
+        .eval("return C_AddOns.LoadAddOn('Blizzard_CatalogShop')")
         .expect("LoadAddOn('Blizzard_CatalogShop') should return");
     assert!(
         loaded,

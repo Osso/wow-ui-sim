@@ -424,7 +424,7 @@ fn test_submodule_apis_registered() {
     // Spot-check a few functions/namespaces from sub-modules
     for name in &[
         "GetLocale",    // locale_api
-        "GetNumAddOns", // addon_api
+        "GetAddOnMetadata", // addon_api
         "UnitName",     // unit_api
         "Mixin",        // mixin_api
         "strsplit",     // utility_api

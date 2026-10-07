@@ -323,7 +323,7 @@ fn keybind_l_opens_group_finder() {
         let env = setup_env();
         env.exec(
             r#"
-            assert(LoadAddOn("Blizzard_GroupFinder"))
+            assert(C_AddOns.LoadAddOn("Blizzard_GroupFinder"))
             _G.__group_finder_triggered = false
             local original_toggle_group_finder = PVEFrame_ToggleFrame
             PVEFrame_ToggleFrame = function(...)
@@ -362,7 +362,7 @@ fn raid_finder_group_button_path_handles_empty_rf_dungeon_list() {
         let env = setup_env();
         env.exec(
             r#"
-            assert(LoadAddOn("Blizzard_GroupFinder"))
+            assert(C_AddOns.LoadAddOn("Blizzard_GroupFinder"))
             GroupFinderFrame_ShowGroupFrame(RaidFinderFrame)
             assert(RaidFinderFrame:IsShown(), "RaidFinderFrame should be shown")
             "#
@@ -376,7 +376,7 @@ fn premade_group_category_buttons_can_be_clicked() {
         let env = setup_env();
         env.exec(
             r#"
-            assert(LoadAddOn("Blizzard_GroupFinder"))
+            assert(C_AddOns.LoadAddOn("Blizzard_GroupFinder"))
             LFGListPVEStub_OnShow(LFGListPVEStub)
             LFGListFrame_SetActivePanel(LFGListFrame, LFGListFrame.CategorySelection)
             assert(LFGListFrame.CategorySelection:IsShown(), "category selection should be shown")
@@ -405,7 +405,7 @@ fn premade_group_categories_can_start_search() {
         let env = setup_env();
         env.exec(
             r#"
-            assert(LoadAddOn("Blizzard_GroupFinder"))
+            assert(C_AddOns.LoadAddOn("Blizzard_GroupFinder"))
             LFGListPVEStub_OnShow(LFGListPVEStub)
             LFGListFrame_SetActivePanel(LFGListFrame, LFGListFrame.CategorySelection)
 
@@ -430,7 +430,7 @@ fn premade_group_search_result_tooltips_do_not_error() {
         let env = setup_env();
         env.exec(
             r#"
-            assert(LoadAddOn("Blizzard_GroupFinder"))
+            assert(C_AddOns.LoadAddOn("Blizzard_GroupFinder"))
             local _, results = C_LFGList.GetSearchResults()
             assert(#results > 0, "expected seeded premade search results")
 
@@ -462,7 +462,7 @@ fn keybind_o_dispatches_toggle_friends_frame() {
         let env = setup_env();
         env.exec(
             r#"
-            assert(LoadAddOn("Blizzard_FriendsFrame"))
+            assert(C_AddOns.LoadAddOn("Blizzard_FriendsFrame"))
             _G.__friends_keybind_triggered = false
             local original_toggle_friends_frame = ToggleFriendsFrame
             ToggleFriendsFrame = function(...)

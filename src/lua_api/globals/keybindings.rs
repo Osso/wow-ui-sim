@@ -136,7 +136,7 @@ pub const BINDING_ACTIONS: &[BindingAction] = &[
     },
     BindingAction {
         action: "TOGGLEGROUPFINDER",
-        lua_code: "if not PVEFrame_ToggleFrame then LoadAddOn('Blizzard_GroupFinder') end if PVEFrame_ToggleFrame then PVEFrame_ToggleFrame() end",
+        lua_code: "if not PVEFrame_ToggleFrame then C_AddOns.LoadAddOn('Blizzard_GroupFinder') end if PVEFrame_ToggleFrame then PVEFrame_ToggleFrame() end",
     },
     BindingAction {
         action: "TOGGLECOLLECTIONS",
@@ -152,7 +152,7 @@ pub const BINDING_ACTIONS: &[BindingAction] = &[
     },
     BindingAction {
         action: "TOGGLESOCIAL",
-        lua_code: "if not FriendsFrame then LoadAddOn('Blizzard_FriendsFrame') end if ToggleFriendsFrame then ToggleFriendsFrame() end",
+        lua_code: "if not FriendsFrame then C_AddOns.LoadAddOn('Blizzard_FriendsFrame') end if ToggleFriendsFrame then ToggleFriendsFrame() end",
     },
     BindingAction {
         action: "TOGGLEGUILDTAB",

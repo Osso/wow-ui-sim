@@ -3,7 +3,7 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 pub(crate) fn load_token_ui(env: &WowLuaEnv) {
     env.exec(
         r#"
-        local loaded, reason = LoadAddOn("Blizzard_TokenUI")
+        local loaded, reason = C_AddOns.LoadAddOn("Blizzard_TokenUI")
         assert(loaded, "LoadAddOn(Blizzard_TokenUI) failed: " .. tostring(reason))
         if ContainerFrameSettingsManager and not ContainerFrameSettingsManager.TokenTracker then
             ContainerFrameSettingsManager:OnAddonLoaded("Blizzard_TokenUI")
