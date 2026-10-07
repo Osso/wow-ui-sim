@@ -62,4 +62,3 @@ Targeted proof at `92cbdbfc1`; factory GREEN at unchanged relevant scope `bc8346
 | 12.0.5 | 363 | 352 | 11 | 0 |
 | 12.0.7 | 174 | 171 | 3 | 0 |
 | 12.1.0 | 778 | 773 | 5 | 0 |
-
