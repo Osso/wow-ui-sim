@@ -1,5 +1,6 @@
 //! Full cached Game UI checks for the bounded 10.2.7 stable migration.
 #![cfg(feature = "client-retail")]
+use wow_ui_sim::lua_api::WowLuaEnv;
 
 prefork_full_ui_case! {
     fn patch_10_2_7_cached_stable_migration(env: &WowLuaEnv) {
