@@ -151,3 +151,7 @@ Updated [audit](investigations/patch-12-0-1-api-audit.md), [spec](../specs/patch
 ## [2026-10-07] evidence | Rilua capability rows
 
 [Helper audit](investigations/patch-12-0-0-api-audit.md#rilua-secret-helper-follow-up--2026-10-07) and [string/budget audit](investigations/patch-12-0-5-api-audit.md#rilua-capability-follow-up--2026-10-07) link bounded secret closures and retained shutdown-wide throttle gaps. [Proof](../../data/patch-api/evidence/rilua-rows-2026-10-07/proof.md) retains revisions, targeted results, bytecode-cache precondition and vendor warning limits.
+## 2026-10-07 | ingest | Patch 11.1.7 page audit
+
+[Audit](investigations/patch-11-1-7-api-audit.md) retains revision 6726774, 48 inventory + 27 extract rows, four bounded closures and eight exact producer/policy gaps. New 75-ID ledger: 28 partial, five bounded, 24 pending, 18 metadata. Nine isolated sweeps, negative control, two behavior tests, extraction fixtures, formatting, Mists test check and exit-0 startup `[]` pass. Existing later fixtures/ledgers unchanged; older 11.2.7 observations differ only by 27 closures already on starting master.
+

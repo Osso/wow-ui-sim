@@ -1,3 +1,7 @@
+## [2026-10-07] evidence | 11.1.7 page audit
+
+[Audit](investigations/patch-11-1-7-api-audit.md) accounts for 48 inventory + 27 extract rows, four bounded closures, eight exact gaps and exhaustive three-batch scout. Nine isolated sweeps, one-row negative control, Mists test check and exit-0 startup `[]` pass. Existing later fixtures/ledgers unchanged; 27 prior 11.2.7 closures explain older observation drift.
+
 ## [2026-10-06] evidence | 11.2.0 page audit
 
 [Audit](investigations/patch-11-2-0-api-audit.md) links 162 inventory + 82 extract rows, twelve bounded publication fixes, 26 exact gaps and exhaustive five-batch scout. Eight isolated sweeps preserve later observations; negative control, Mists check and exit-0 startup `[]` pass. Existing ledgers and concurrent catalog/11.2.7 work untouched.
