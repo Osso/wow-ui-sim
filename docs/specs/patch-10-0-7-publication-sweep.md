@@ -5,7 +5,7 @@ Account for Warcraft Wiki page 108565, revision 1063344 (2023-05-09T20:31:43Z), 
 ## What it must do
 
 - [x] Retain 70 inventory occurrences and all 2,214 non-inventory occurrences, including the complete Structures and Type Changes tail. Later type-event headings must not overwrite publication inventories.
-- [x] Apply twenty-one chronological later registers from master, 10.1.5 through 12.1.0; reserve 10.1.0 at the list start without depending on its unmerged branch.
+- [x] Apply twenty-two chronological later registers, 10.1.0 through 12.1.0 (10.1.0 added at integration; the 26 exact gaps are unchanged).
 - [x] Require exactly 26 reviewed publication gaps. Publication, absence and event registration do not establish signatures, populated outputs, security, event payloads or native/historical parity.
 - [x] Prevent repeated ordinary lookup from fabricating eighteen removed, unused retail namespace members; preserve C_Social.GetFriends/GetFriendInfo and unmodified Blizzard deprecation wrappers.
 - [x] Preserve classic legacy lookup independently of retail retirement; existing module gate excludes classic profiles and Mists behavior assertions pass.
@@ -36,7 +36,7 @@ Account for Warcraft Wiki page 108565, revision 1063344 (2023-05-09T20:31:43Z), 
 
 - [ ] Twenty-six publication gaps require concrete producers or supported current graphics-CVar state; [per-ID review](../../data/patch-api/evidence/10.0.7-session-2026-10-07/p1007-gap-review.json) owns reasons.
 - [ ] 2,203 substantive extract occurrences need occurrence-specific behavioral proof; [scout](../../data/patch-api/evidence/10.0.7-session-2026-10-07/p1007-extract-scout.json) retains literal statements and boundaries.
-- [ ] Integration adds 10.1.0 and recomputes fixtures. Read-only comparison finds no intersection with the 26 retained gap IDs.
+- [x] Integration added 10.1.0; fixtures unchanged (26 gaps), matching the read-only no-intersection prediction.
 
 ## Out of scope
 

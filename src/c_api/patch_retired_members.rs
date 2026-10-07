@@ -1,4 +1,4 @@
-//! Namespace members (and whole namespaces) the Patch 10.2.0 / 10.2.6 / 11.0.0 / 11.0.2 / 11.0.5 / 11.0.7 / 11.1.0 / 11.1.5 / 11.1.7 / 11.2.0 / 11.2.7 / 12.0.0 / 12.0.1 / 12.0.5 / 12.0.7
+//! Namespace members (and whole namespaces) the Patch 10.0.7 / 10.1.0 / 10.1.5 / 10.2.0 / 10.2.6 / 11.0.0 / 11.0.2 / 11.0.5 / 11.0.7 / 11.1.0 / 11.1.5 / 11.1.7 / 11.2.0 / 11.2.7 / 12.0.0 / 12.0.1 / 12.0.5 / 12.0.7
 //! consolidated API tables list as removed that no other module retires.
 //! Marking keeps the namespace `__index` autostub from fabricating them on
 //! ordinary lookup.
