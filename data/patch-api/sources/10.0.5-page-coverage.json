@@ -59,7 +59,7 @@
       "source_id": "wt-global-api-C_MountJournal.GetAllCreatureDisplayIDsForMountID-23",
       "capabilities": [],
       "status": "audit-pending",
-      "note": "Requires the complete mountID-to-display-ID catalog. Existing GetMountInfoExtraByID returns a single display, not proof of every variant; cannot wrap it as a singleton without source evidence."
+      "note": "Requires the complete mountID-to-display-ID catalog. Existing GetMountInfoExtraByID pushes placeholder zero in the display slot (font_strings_collection/mount_journal.rs:164); no actual variant catalog exists to enumerate."
     },
     {
       "source_id": "wt-global-api-C_PerksActivities.AddTrackedPerksActivity-24",

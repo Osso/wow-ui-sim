@@ -1,0 +1,11 @@
+{
+  "result": "PASS",
+  "source_ids": 160,
+  "inventory_rows": 93,
+  "extract_rows": 67,
+  "publication_ok": 66,
+  "publication_gaps": 27,
+  "isolated_sweeps": 24,
+  "preserved_inputs": 146,
+  "hashed_logs": 43
+}

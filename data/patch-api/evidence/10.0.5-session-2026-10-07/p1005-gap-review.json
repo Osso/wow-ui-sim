@@ -97,7 +97,7 @@
     "source_id": "wt-global-api-C_MountJournal.GetAllCreatureDisplayIDsForMountID-23",
     "symbol": "C_MountJournal.GetAllCreatureDisplayIDsForMountID",
     "disposition": "retained-gap",
-    "reason": "Requires the complete mountID-to-display-ID catalog. Existing GetMountInfoExtraByID returns a single display, not proof of every variant; cannot wrap it as a singleton without source evidence.",
+    "reason": "Requires the complete mountID-to-display-ID catalog. Existing GetMountInfoExtraByID pushes placeholder zero in the display slot (font_strings_collection/mount_journal.rs:164); no actual variant catalog exists to enumerate.",
     "discovery": {
       "expected": {
         "direction": "added",

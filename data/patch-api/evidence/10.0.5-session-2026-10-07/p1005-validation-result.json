@@ -1,0 +1,14 @@
+{
+  "result": "PASS",
+  "validated_revision": "95dbd6db4",
+  "command": [
+    "python3",
+    "data/patch-api/evidence/10.0.5-session-2026-10-07/validate.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1005-page",
+  "exit": 0,
+  "stdout": "p1005-validation.stdout.json",
+  "stderr": "p1005-validation.stderr.txt",
+  "scope": "160 IDs, source/scout hashes, exact publication fixtures and later expectations, negative control, 146 preserved inputs, both extract modes, 24 register reproductions, 43 hashed logs, warning and consumer boundaries",
+  "later_changes": "Mount gap reason corrected from inspected source; ID/status/runtime/proof scope unchanged. Documentation/result-only follow-ups do not invalidate compiled proof."
+}

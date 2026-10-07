@@ -63,6 +63,8 @@ Cargo fmt/fmt --check, default check, Mists check --no-default-features --featur
 | 12.0.7 | 174 | 171 | 3 | 0 |
 | 12.1.0 | 778 | 773 | 5 | 0 |
 
+[Artifact validation](../../../data/patch-api/evidence/10.0.5-session-2026-10-07/p1005-validation-result.json) passes at `95dbd6db4`: all 160 IDs/source/scout hashes, exact fixtures/later expectations, negative control, 146 preserved inputs, both extract modes, 24 register reproductions and 43 hashed logs. Reproduce with the retained evidence-directory `validate.py`; later reason/documentation-only changes preserve these proof scopes.
+
 All 24 registers regenerate byte-identically. [Preservation](../../../data/patch-api/evidence/10.0.5-session-2026-10-07/p1005-preservation.json) proves all 146 pre-existing source/register/ledger/gap inputs unchanged. [Before](../../../data/patch-api/evidence/10.0.5-session-2026-10-07/p1005-extract-before.json) and [after](../../../data/patch-api/evidence/10.0.5-session-2026-10-07/p1005-extract-after.json) checks preserve every prior extract success/failure under both example modes. Pre-existing 12.0.5/12.0.7/12.1.0 capture failures remain untouched, not labeled reproducible. Own extract reproduces under both modes.
 
 No full suite, agents/model CLIs, push, merge, sibling target reuse or canonical working-file/vendor/cache changes. Every command uses explicit cwd `p1005-page` and its own target; only prescribed worktree-creation Git metadata was changed through the canonical path while cwd was the empty destination. The untracked PLAN.md task queue stays local.
