@@ -1,0 +1,1 @@
+Error: formatted stdout is 56827 bytes, exceeding configured max_stdout_bytes 20480. Use -o to write full output to files or disable unused metrics/checks in .rust-code-analysis-cli.toml.
