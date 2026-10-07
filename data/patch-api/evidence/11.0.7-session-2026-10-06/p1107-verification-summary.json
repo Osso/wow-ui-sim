@@ -1,0 +1,690 @@
+[
+  {
+    "name": "fixes-green",
+    "revision": "9b4119c9e1a7419402f5765212aabff896e2d9e8",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_0_7_publication_fixes",
+      "--",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "exit_code": 0,
+    "log_sha256": "f6c4f16e557e844fb54a9337dd17619caa8657bfece04205748ad58067abaec9",
+    "test_summary": [
+      "test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 10804 filtered out; finished in 0.23s"
+    ],
+    "warning_lines": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings"
+    ],
+    "non_vendor_warning_count": 0,
+    "stdout": null,
+    "proof_kind": "Retained command-output summary; full local log is ignored, no native acceptance."
+  },
+  {
+    "name": "p1107-sweep",
+    "revision": "c80a4b7a234d7c5e9a3b7f47b6313b03be0cc413",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_0_7_publication_sweep",
+      "--",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "exit_code": 0,
+    "log_sha256": "d2ba9c0691adba0ab5991442d41702152e66f6cc91d1e16b93a27819fc472f34",
+    "test_summary": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10805 filtered out; finished in 4.44s"
+    ],
+    "warning_lines": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings"
+    ],
+    "non_vendor_warning_count": 0,
+    "stdout": null,
+    "proof_kind": "Retained command-output summary; full local log is ignored, no native acceptance."
+  },
+  {
+    "name": "p1110-sweep",
+    "revision": "c80a4b7a234d7c5e9a3b7f47b6313b03be0cc413",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_1_0_publication_sweep",
+      "--",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "exit_code": 0,
+    "log_sha256": "0ddb1c9ef380de82c915d54a72c165e562f1de27fb0e2bd5102f743ba2d0a208",
+    "test_summary": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10805 filtered out; finished in 4.12s"
+    ],
+    "warning_lines": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings"
+    ],
+    "non_vendor_warning_count": 0,
+    "stdout": null,
+    "proof_kind": "Retained command-output summary; full local log is ignored, no native acceptance."
+  },
+  {
+    "name": "p1115-sweep",
+    "revision": "c80a4b7a234d7c5e9a3b7f47b6313b03be0cc413",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_1_5_publication_sweep",
+      "--",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "exit_code": 0,
+    "log_sha256": "b7c98d763ae789ba11c26129fb943716dc29a911771255fbc1c8e7721681ab32",
+    "test_summary": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10805 filtered out; finished in 4.33s"
+    ],
+    "warning_lines": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings"
+    ],
+    "non_vendor_warning_count": 0,
+    "stdout": null,
+    "proof_kind": "Retained command-output summary; full local log is ignored, no native acceptance."
+  },
+  {
+    "name": "p1117-sweep",
+    "revision": "c80a4b7a234d7c5e9a3b7f47b6313b03be0cc413",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_1_7_publication_sweep",
+      "--",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "exit_code": 0,
+    "log_sha256": "0bb9b45c1df9e67e3e721827320097ed49d6087c87c14dc9c4b25eed62d846df",
+    "test_summary": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10805 filtered out; finished in 4.17s"
+    ],
+    "warning_lines": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings"
+    ],
+    "non_vendor_warning_count": 0,
+    "stdout": null,
+    "proof_kind": "Retained command-output summary; full local log is ignored, no native acceptance."
+  },
+  {
+    "name": "p1120-sweep",
+    "revision": "c80a4b7a234d7c5e9a3b7f47b6313b03be0cc413",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_2_0_publication_sweep",
+      "--",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "exit_code": 0,
+    "log_sha256": "be2d9165c7f31cba5bc86e8e02c99b4d02f462cfa61b989dcf271352d13aaf13",
+    "test_summary": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10805 filtered out; finished in 4.39s"
+    ],
+    "warning_lines": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings"
+    ],
+    "non_vendor_warning_count": 0,
+    "stdout": null,
+    "proof_kind": "Retained command-output summary; full local log is ignored, no native acceptance."
+  },
+  {
+    "name": "p1125-sweep",
+    "revision": "c80a4b7a234d7c5e9a3b7f47b6313b03be0cc413",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_2_5_publication_sweep",
+      "--",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "exit_code": 0,
+    "log_sha256": "8a8c83c19f017c43ace3abd65ed7baca92307d25f897195d4a0cf71d2c006760",
+    "test_summary": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10805 filtered out; finished in 4.20s"
+    ],
+    "warning_lines": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings"
+    ],
+    "non_vendor_warning_count": 0,
+    "stdout": null,
+    "proof_kind": "Retained command-output summary; full local log is ignored, no native acceptance."
+  },
+  {
+    "name": "p1127-sweep",
+    "revision": "c80a4b7a234d7c5e9a3b7f47b6313b03be0cc413",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_2_7_publication_sweep",
+      "--",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "exit_code": 0,
+    "log_sha256": "436ba4fd6face58a49e3ade5341756cf2e876c814da283cfa0cd95db2833218d",
+    "test_summary": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10805 filtered out; finished in 4.20s"
+    ],
+    "warning_lines": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings"
+    ],
+    "non_vendor_warning_count": 0,
+    "stdout": null,
+    "proof_kind": "Retained command-output summary; full local log is ignored, no native acceptance."
+  },
+  {
+    "name": "p1200-sweep",
+    "revision": "c80a4b7a234d7c5e9a3b7f47b6313b03be0cc413",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_12_0_0_publication_sweep",
+      "--",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "exit_code": 0,
+    "log_sha256": "473e8b0a87f2067ca65e1eff6c2a8e7b7b6b3764da42a6d216e326d2d6f9d0da",
+    "test_summary": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10805 filtered out; finished in 4.71s"
+    ],
+    "warning_lines": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings"
+    ],
+    "non_vendor_warning_count": 0,
+    "stdout": null,
+    "proof_kind": "Retained command-output summary; full local log is ignored, no native acceptance."
+  },
+  {
+    "name": "p1201-sweep",
+    "revision": "c80a4b7a234d7c5e9a3b7f47b6313b03be0cc413",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_12_0_1_publication_sweep",
+      "--",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "exit_code": 0,
+    "log_sha256": "a0919217753467ecd81c460c9501263d8b524209595a3a75b05eccb80d59f4a5",
+    "test_summary": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10805 filtered out; finished in 4.19s"
+    ],
+    "warning_lines": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings"
+    ],
+    "non_vendor_warning_count": 0,
+    "stdout": null,
+    "proof_kind": "Retained command-output summary; full local log is ignored, no native acceptance."
+  },
+  {
+    "name": "p1205-sweep",
+    "revision": "c80a4b7a234d7c5e9a3b7f47b6313b03be0cc413",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_12_0_5_publication_sweep",
+      "--",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "exit_code": 0,
+    "log_sha256": "938eeaab9e0417e71460a14d4e87b9e4c2e2c13562a20c92df56a7a8771975aa",
+    "test_summary": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10805 filtered out; finished in 4.40s"
+    ],
+    "warning_lines": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings"
+    ],
+    "non_vendor_warning_count": 0,
+    "stdout": null,
+    "proof_kind": "Retained command-output summary; full local log is ignored, no native acceptance."
+  },
+  {
+    "name": "p1207-sweep",
+    "revision": "c80a4b7a234d7c5e9a3b7f47b6313b03be0cc413",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_12_0_7_publication_sweep",
+      "--",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "exit_code": 0,
+    "log_sha256": "9d72f6b3fe8a5c04b80dabe63f74f2ca7886a1b81f060d3b22f350207bb0b007",
+    "test_summary": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10805 filtered out; finished in 4.22s"
+    ],
+    "warning_lines": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings"
+    ],
+    "non_vendor_warning_count": 0,
+    "stdout": null,
+    "proof_kind": "Retained command-output summary; full local log is ignored, no native acceptance."
+  },
+  {
+    "name": "p1210-sweep",
+    "revision": "c80a4b7a234d7c5e9a3b7f47b6313b03be0cc413",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_12_1_0_publication_sweep",
+      "--",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "exit_code": 0,
+    "log_sha256": "e5f731274b7578b2f84468288145f0a5207f817749314894ec2ef4947c46ca54",
+    "test_summary": [
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10805 filtered out; finished in 4.40s"
+    ],
+    "warning_lines": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings"
+    ],
+    "non_vendor_warning_count": 0,
+    "stdout": null,
+    "proof_kind": "Retained command-output summary; full local log is ignored, no native acceptance."
+  },
+  {
+    "name": "negative-control",
+    "revision": "e29e8b98f587f643fbdcce61a40877b4f144217d",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_11_0_7_publication_sweep",
+      "--",
+      "--nocapture",
+      "--test-threads=1"
+    ],
+    "exit_code": 101,
+    "log_sha256": "c7d2493c1ce71272d7dfdee825c503da7fcb0dbd2b6dc4ca829e159ca6d9d14e",
+    "test_summary": [
+      "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10805 filtered out; finished in 4.09s"
+    ],
+    "warning_lines": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings"
+    ],
+    "non_vendor_warning_count": 0,
+    "stdout": null,
+    "proof_kind": "Retained command-output summary; full local log is ignored, no native acceptance."
+  },
+  {
+    "name": "prefork-cached-raid-targets-green",
+    "revision": "e29e8b98f587f643fbdcce61a40877b4f144217d",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "patch_11_0_7_cached_clear_all_raid_targets"
+    ],
+    "exit_code": 0,
+    "log_sha256": "ba1e9f76117c1ef44da30fa17d0bbfd9003a3a1d93d772e4ab007ad955101d0d",
+    "test_summary": [
+      "test result: ok. 1 passed; 0 failed; 1 total"
+    ],
+    "warning_lines": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings"
+    ],
+    "non_vendor_warning_count": 0,
+    "stdout": null,
+    "proof_kind": "Retained command-output summary; full local log is ignored, no native acceptance."
+  },
+  {
+    "name": "prefork-deprecated-lfg-alias",
+    "revision": "5b1b8462b6cf15bbd914cc7f1c1803943a07920c",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "blizzard_deprecated_lfg_installs_is_premade_group_enabled_on_c_lfg_info"
+    ],
+    "exit_code": 0,
+    "log_sha256": "4b65a7b97e1a50f6e24e0802932d32e100746f8216babbdfbf5c1a5fc2fed393",
+    "test_summary": [
+      "test result: ok. 1 passed; 0 failed; 1 total"
+    ],
+    "warning_lines": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings"
+    ],
+    "non_vendor_warning_count": 0,
+    "stdout": null,
+    "proof_kind": "Retained command-output summary; full local log is ignored, no native acceptance."
+  },
+  {
+    "name": "prefork-deprecated-lfg-wrapper",
+    "revision": "5b1b8462b6cf15bbd914cc7f1c1803943a07920c",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "blizzard_deprecated_lfg_installs_get_search_result_member_info_wrapper_on_c_lfg_list"
+    ],
+    "exit_code": 0,
+    "log_sha256": "02d5a74cbb0249271dc9450a48e7d1bb2a7d7e68772ec330b0f5cd4895b90329",
+    "test_summary": [
+      "test result: ok. 1 passed; 0 failed; 1 total"
+    ],
+    "warning_lines": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings"
+    ],
+    "non_vendor_warning_count": 0,
+    "stdout": null,
+    "proof_kind": "Retained command-output summary; full local log is ignored, no native acceptance."
+  },
+  {
+    "name": "mists-check",
+    "revision": "e29e8b98f587f643fbdcce61a40877b4f144217d",
+    "command": [
+      "cargo",
+      "check",
+      "--no-default-features",
+      "--features",
+      "sound,gui,casc,client-mists",
+      "--tests"
+    ],
+    "exit_code": 0,
+    "log_sha256": "2e89d00b1c33ef75218333863156e81a7880334dda1f1a8b3fc41bc886445bb4",
+    "test_summary": [],
+    "warning_lines": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings"
+    ],
+    "non_vendor_warning_count": 0,
+    "stdout": null,
+    "proof_kind": "Retained command-output summary; full local log is ignored, no native acceptance."
+  },
+  {
+    "name": "retail-build",
+    "revision": "e29e8b98f587f643fbdcce61a40877b4f144217d",
+    "command": [
+      "cargo",
+      "build",
+      "--bin",
+      "wow-sim"
+    ],
+    "exit_code": 0,
+    "log_sha256": "90652f36e38b41622fe432e1f6f07d871793dc27a49b520b2c936d45761d556e",
+    "test_summary": [],
+    "warning_lines": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings"
+    ],
+    "non_vendor_warning_count": 0,
+    "stdout": null,
+    "proof_kind": "Retained command-output summary; full local log is ignored, no native acceptance."
+  },
+  {
+    "name": "startup",
+    "revision": "e29e8b98f587f643fbdcce61a40877b4f144217d",
+    "command": [
+      "timeout",
+      "90",
+      "./target/debug/wow-sim",
+      "--no-addons",
+      "--no-saved-vars",
+      "lua-errors"
+    ],
+    "exit_code": 0,
+    "log_sha256": "f9dec4176c1ea80b0c1b22752a58a97d85e7538634961247a74323f31e69e31a",
+    "test_summary": [],
+    "warning_lines": [],
+    "non_vendor_warning_count": 0,
+    "stdout": "[]",
+    "proof_kind": "Retained command-output summary; full local log is ignored, no native acceptance."
+  },
+  {
+    "name": "extract-green",
+    "revision": "c80a4b7a234d7c5e9a3b7f47b6313b03be0cc413",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tools",
+      "-p",
+      "test_extract_patch_non_inventory.py"
+    ],
+    "exit_code": 0,
+    "log_sha256": "a3b812110425d516a023156e953ded5abe7da24fdb071ec71b1040484a6a85c4",
+    "test_summary": [
+      "Ran 13 tests in 0.002s"
+    ],
+    "warning_lines": [],
+    "non_vendor_warning_count": 0,
+    "stdout": null,
+    "proof_kind": "Retained command-output summary; full local log is ignored, no native acceptance."
+  },
+  {
+    "name": "register-fixtures",
+    "revision": "45e5d932a1972824017e16ab0cb859e90ea04fbc",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tools",
+      "-p",
+      "test_gen_patch_wikitext_register.py"
+    ],
+    "exit_code": 0,
+    "log_sha256": "8b4f63629a034a2e6e27098d4a75a4879f75a6f380560b79acbe8b94cf2722f8",
+    "test_summary": [
+      "Ran 3 tests in 0.000s"
+    ],
+    "warning_lines": [],
+    "non_vendor_warning_count": 0,
+    "stdout": null,
+    "proof_kind": "Retained command-output summary; full local log is ignored, no native acceptance."
+  },
+  {
+    "name": "extract-reproduction",
+    "revision": "45e5d932a1972824017e16ab0cb859e90ea04fbc",
+    "command": [
+      "python3",
+      "tools/extract_patch_non_inventory.py",
+      "--patch",
+      "11.0.7",
+      "--text-only",
+      "--check"
+    ],
+    "exit_code": 0,
+    "log_sha256": "e2600194e7c566dd1cc2041b747a3d611ff659c03c6b11ca41304929fd965127",
+    "test_summary": [],
+    "warning_lines": [],
+    "non_vendor_warning_count": 0,
+    "stdout": null,
+    "proof_kind": "Retained command-output summary; full local log is ignored, no native acceptance."
+  },
+  {
+    "name": "artifact-validation",
+    "revision": "45e5d932a1972824017e16ab0cb859e90ea04fbc",
+    "command": [
+      "python3",
+      "data/patch-api/evidence/11.0.7-session-2026-10-06/p1107-validate.py"
+    ],
+    "exit_code": 0,
+    "log_sha256": "6c031f5fc14c2eb7efb7f19a172971a61b4530e2b8d372a83d86b7fa4ee4f083",
+    "test_summary": [],
+    "warning_lines": [],
+    "non_vendor_warning_count": 0,
+    "stdout": null,
+    "proof_kind": "Retained command-output summary; full local log is ignored, no native acceptance."
+  },
+  {
+    "name": "fmt-check",
+    "revision": "e29e8b98f587f643fbdcce61a40877b4f144217d",
+    "command": [
+      "cargo",
+      "fmt",
+      "--check"
+    ],
+    "exit_code": 0,
+    "log_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "test_summary": [],
+    "warning_lines": [],
+    "non_vendor_warning_count": 0,
+    "stdout": null,
+    "proof_kind": "Retained command-output summary; full local log is ignored, no native acceptance."
+  }
+]

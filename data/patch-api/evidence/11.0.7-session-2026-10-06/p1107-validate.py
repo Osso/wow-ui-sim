@@ -149,7 +149,22 @@ def validate_results(results):
     for row in proof['results']:
         assert row['cwd'] == str(ROOT)
         assert row['environment']['CARGO_TARGET_DIR'] == str(ROOT / 'target')
-    warnings = [line for line in (SESSION / 'mists-check.log').read_text().splitlines() if line.startswith('warning:')]
+    summaries = {row['name']: row for row in load(SESSION / 'p1107-verification-summary.json')}
+    for name in required:
+        assert summaries[name]['revision'] == records[name]['revision']
+        assert summaries[name]['command'] == records[name]['command']
+        assert summaries[name]['exit_code'] == records[name]['exit_code']
+    for patch in PATCHES:
+        name = 'p' + patch.replace('.', '') + '-sweep'
+        assert len(summaries[name]['test_summary']) == 1
+        assert '1 passed; 0 failed' in summaries[name]['test_summary'][0]
+    assert '2 passed; 0 failed' in summaries['fixes-green']['test_summary'][0]
+    for name in ('prefork-cached-raid-targets-green', 'prefork-deprecated-lfg-alias',
+                 'prefork-deprecated-lfg-wrapper'):
+        assert '1 passed; 0 failed; 1 total' in summaries[name]['test_summary'][0]
+    assert summaries['startup']['stdout'] == '[]'
+    warnings = summaries['mists-check']['warning_lines']
+    assert summaries['mists-check']['non_vendor_warning_count'] == 0
     assert len(warnings) == 7
     assert all('iced-wgpu-patched/Cargo.toml:' in line or '`iced_wgpu` (manifest)' in line for line in warnings)
 

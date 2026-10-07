@@ -567,6 +567,305 @@
       "scope": "Named command; later source changes are evidence/docs or independent test additions, not changed runtime/register scope.",
       "invalidated": false,
       "stdout": "[]"
+    },
+    {
+      "name": "register-fixtures",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools",
+        "-p",
+        "test_gen_patch_wikitext_register.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1107-page",
+      "revision": "45e5d932a1972824017e16ab0cb859e90ea04fbc",
+      "exit_code": 0,
+      "log_path": "register-fixtures.log",
+      "environment": {
+        "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1107-page/target"
+      },
+      "scope": "Named targeted command; runtime source unchanged after 9b4119c9e",
+      "invalidated": false
+    },
+    {
+      "name": "extract-reproduction",
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "11.0.7",
+        "--text-only",
+        "--check"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1107-page",
+      "revision": "45e5d932a1972824017e16ab0cb859e90ea04fbc",
+      "exit_code": 0,
+      "log_path": "extract-reproduction.log",
+      "environment": {
+        "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1107-page/target"
+      },
+      "scope": "Named targeted command; runtime source unchanged after 9b4119c9e",
+      "invalidated": false
+    },
+    {
+      "name": "register-reproduction-p1107",
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "11.0.7",
+        "data/patch-api/sources/11.0.7-api-changes.wikitext",
+        "6726777",
+        "/home/osso/.worktrees/wow-ui-sim-p1107-page/target/patch-audit/11.0.7-register.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1107-page",
+      "revision": "45e5d932a1972824017e16ab0cb859e90ea04fbc",
+      "exit_code": 0,
+      "log_path": "register-reproduction-p1107.log",
+      "environment": {
+        "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1107-page/target"
+      },
+      "scope": "Named targeted command; runtime source unchanged after 9b4119c9e",
+      "invalidated": false
+    },
+    {
+      "name": "register-reproduction-p1110",
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "11.1.0",
+        "data/patch-api/sources/11.1.0-api-changes.wikitext",
+        "6726776",
+        "/home/osso/.worktrees/wow-ui-sim-p1107-page/target/patch-audit/11.1.0-register.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1107-page",
+      "revision": "45e5d932a1972824017e16ab0cb859e90ea04fbc",
+      "exit_code": 0,
+      "log_path": "register-reproduction-p1110.log",
+      "environment": {
+        "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1107-page/target"
+      },
+      "scope": "Named targeted command; runtime source unchanged after 9b4119c9e",
+      "invalidated": false
+    },
+    {
+      "name": "register-reproduction-p1115",
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "11.1.5",
+        "data/patch-api/sources/11.1.5-api-changes.wikitext",
+        "6726775",
+        "/home/osso/.worktrees/wow-ui-sim-p1107-page/target/patch-audit/11.1.5-register.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1107-page",
+      "revision": "45e5d932a1972824017e16ab0cb859e90ea04fbc",
+      "exit_code": 0,
+      "log_path": "register-reproduction-p1115.log",
+      "environment": {
+        "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1107-page/target"
+      },
+      "scope": "Named targeted command; runtime source unchanged after 9b4119c9e",
+      "invalidated": false
+    },
+    {
+      "name": "register-reproduction-p1117",
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "11.1.7",
+        "data/patch-api/sources/11.1.7-api-changes.wikitext",
+        "6726774",
+        "/home/osso/.worktrees/wow-ui-sim-p1107-page/target/patch-audit/11.1.7-register.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1107-page",
+      "revision": "45e5d932a1972824017e16ab0cb859e90ea04fbc",
+      "exit_code": 0,
+      "log_path": "register-reproduction-p1117.log",
+      "environment": {
+        "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1107-page/target"
+      },
+      "scope": "Named targeted command; runtime source unchanged after 9b4119c9e",
+      "invalidated": false
+    },
+    {
+      "name": "register-reproduction-p1120",
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "11.2.0",
+        "data/patch-api/sources/11.2.0-api-changes.wikitext",
+        "6726773",
+        "/home/osso/.worktrees/wow-ui-sim-p1107-page/target/patch-audit/11.2.0-register.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1107-page",
+      "revision": "45e5d932a1972824017e16ab0cb859e90ea04fbc",
+      "exit_code": 0,
+      "log_path": "register-reproduction-p1120.log",
+      "environment": {
+        "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1107-page/target"
+      },
+      "scope": "Named targeted command; runtime source unchanged after 9b4119c9e",
+      "invalidated": false
+    },
+    {
+      "name": "register-reproduction-p1125",
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "11.2.5",
+        "data/patch-api/sources/11.2.5-api-changes.wikitext",
+        "6726772",
+        "/home/osso/.worktrees/wow-ui-sim-p1107-page/target/patch-audit/11.2.5-register.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1107-page",
+      "revision": "45e5d932a1972824017e16ab0cb859e90ea04fbc",
+      "exit_code": 0,
+      "log_path": "register-reproduction-p1125.log",
+      "environment": {
+        "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1107-page/target"
+      },
+      "scope": "Named targeted command; runtime source unchanged after 9b4119c9e",
+      "invalidated": false
+    },
+    {
+      "name": "register-reproduction-p1127",
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "11.2.7",
+        "data/patch-api/sources/11.2.7-api-changes.wikitext",
+        "6726771",
+        "/home/osso/.worktrees/wow-ui-sim-p1107-page/target/patch-audit/11.2.7-register.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1107-page",
+      "revision": "45e5d932a1972824017e16ab0cb859e90ea04fbc",
+      "exit_code": 0,
+      "log_path": "register-reproduction-p1127.log",
+      "environment": {
+        "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1107-page/target"
+      },
+      "scope": "Named targeted command; runtime source unchanged after 9b4119c9e",
+      "invalidated": false
+    },
+    {
+      "name": "register-reproduction-p1200",
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "12.0.0",
+        "data/patch-api/sources/12.0.0-api-changes.wikitext",
+        "6747189",
+        "/home/osso/.worktrees/wow-ui-sim-p1107-page/target/patch-audit/12.0.0-register.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1107-page",
+      "revision": "45e5d932a1972824017e16ab0cb859e90ea04fbc",
+      "exit_code": 0,
+      "log_path": "register-reproduction-p1200.log",
+      "environment": {
+        "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1107-page/target"
+      },
+      "scope": "Named targeted command; runtime source unchanged after 9b4119c9e",
+      "invalidated": false
+    },
+    {
+      "name": "register-reproduction-p1201",
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "12.0.1",
+        "data/patch-api/sources/12.0.1-api-changes.wikitext",
+        "6747895",
+        "/home/osso/.worktrees/wow-ui-sim-p1107-page/target/patch-audit/12.0.1-register.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1107-page",
+      "revision": "45e5d932a1972824017e16ab0cb859e90ea04fbc",
+      "exit_code": 0,
+      "log_path": "register-reproduction-p1201.log",
+      "environment": {
+        "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1107-page/target"
+      },
+      "scope": "Named targeted command; runtime source unchanged after 9b4119c9e",
+      "invalidated": false
+    },
+    {
+      "name": "register-reproduction-p1205",
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "12.0.5",
+        "data/patch-api/sources/12.0.5-api-changes.wikitext",
+        "6747894",
+        "/home/osso/.worktrees/wow-ui-sim-p1107-page/target/patch-audit/12.0.5-register.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1107-page",
+      "revision": "45e5d932a1972824017e16ab0cb859e90ea04fbc",
+      "exit_code": 0,
+      "log_path": "register-reproduction-p1205.log",
+      "environment": {
+        "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1107-page/target"
+      },
+      "scope": "Named targeted command; runtime source unchanged after 9b4119c9e",
+      "invalidated": false
+    },
+    {
+      "name": "register-reproduction-p1207",
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "12.0.7",
+        "data/patch-api/sources/12.0.7-api-changes.wikitext",
+        "6794100",
+        "/home/osso/.worktrees/wow-ui-sim-p1107-page/target/patch-audit/12.0.7-register.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1107-page",
+      "revision": "45e5d932a1972824017e16ab0cb859e90ea04fbc",
+      "exit_code": 0,
+      "log_path": "register-reproduction-p1207.log",
+      "environment": {
+        "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1107-page/target"
+      },
+      "scope": "Named targeted command; runtime source unchanged after 9b4119c9e",
+      "invalidated": false
+    },
+    {
+      "name": "register-reproduction-p1210",
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "12.1.0",
+        "data/patch-api/sources/12.1.0-api-changes.wikitext",
+        "6886719",
+        "/home/osso/.worktrees/wow-ui-sim-p1107-page/target/patch-audit/12.1.0-register.json",
+        "--inventory-only"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1107-page",
+      "revision": "45e5d932a1972824017e16ab0cb859e90ea04fbc",
+      "exit_code": 0,
+      "log_path": "register-reproduction-p1210.log",
+      "environment": {
+        "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1107-page/target"
+      },
+      "scope": "Named targeted command; runtime source unchanged after 9b4119c9e",
+      "invalidated": false
+    },
+    {
+      "name": "artifact-validation",
+      "command": [
+        "python3",
+        "data/patch-api/evidence/11.0.7-session-2026-10-06/p1107-validate.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1107-page",
+      "revision": "45e5d932a1972824017e16ab0cb859e90ea04fbc",
+      "exit_code": 0,
+      "log_path": "artifact-validation.log",
+      "environment": {
+        "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p1107-page/target"
+      },
+      "scope": "Named targeted command; runtime source unchanged after 9b4119c9e",
+      "invalidated": false
     }
   ]
 }

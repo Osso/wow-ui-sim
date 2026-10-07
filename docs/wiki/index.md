@@ -1,6 +1,6 @@
 ## [2026-10-07] evidence | 11.0.7 page audit
 
-[Audit](investigations/patch-11-0-7-api-audit.md) accounts for 98 inventory + 83 extract rows, five bounded publication closures and 28 exact retained gaps. Twelve isolated sweeps, negative control, cached secure clear-all and two deprecated-LFG prefork cases pass; Mists check has zero non-vendor warnings and startup returns `[]`. [Ledger](../../data/patch-api/sources/11.0.7-page-coverage.json) distinguishes publication/absence from pending behavior; artifact reproduction validation pending at this checkpoint.
+[Audit](investigations/patch-11-0-7-api-audit.md) accounts for 98 inventory + 83 extract rows, five bounded publication closures and 28 exact retained gaps. Twelve isolated sweeps, negative control, cached secure clear-all and two deprecated-LFG prefork cases pass; Mists check has zero non-vendor warnings and startup returns `[]`. [Ledger](../../data/patch-api/sources/11.0.7-page-coverage.json) distinguishes publication/absence from pending behavior; artifact/reproduction validation passes, later inputs unchanged.
 
 ## [2026-10-07] evidence | 11.1.0 page audit
 

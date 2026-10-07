@@ -1,6 +1,6 @@
 ## [2026-10-07] evidence | 11.0.7 page audit
 
-[Audit](investigations/patch-11-0-7-api-audit.md) retains revision 6726777, exhaustive 181-row accounting and per-ID review/scout. Four autostub retirements and modeled GUID clear-all close five publication gaps; 28 remain. Twelve isolated sweeps, exact negative control, two behavioral tests, three prefork cases, formatting, Mists warning boundary and exit-0 startup `[]` proven. Later inputs/vendor files unchanged; artifact validation/reproduction pending at this checkpoint.
+[Audit](investigations/patch-11-0-7-api-audit.md) retains revision 6726777, exhaustive 181-row accounting and per-ID review/scout. Four autostub retirements and modeled GUID clear-all close five publication gaps; 28 remain. Twelve isolated sweeps, exact negative control, two behavioral tests, three prefork cases, formatting, Mists warning boundary and exit-0 startup `[]` proven. Sixteen extractor/register fixtures, extract reproduction, twelve byte-identical regenerated registers and artifact validation pass at `45e5d932a`. Later inputs/vendor files unchanged; no sibling target reuse, agents/models, full suite, push or merge.
 
 ## [2026-10-06] investigation | Prefork catalog contract drift
 

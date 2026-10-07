@@ -1,0 +1,21 @@
+{
+  "method": "Manual changed-line review following rust-readability; not automated/native acceptance",
+  "source_scope": "Runtime 9b4119c9e; final cached-consumer test e29e8b98f; later edits evidence/docs only",
+  "files": [
+    "src/c_api/patch_retired_members.rs",
+    "src/lua_api/globals/real/mod.rs",
+    "src/lua_api/globals/real/raid_targets.rs",
+    "src/lua_api/globals/register.rs",
+    "tests/patch_11_0_7_publication_sweep.rs",
+    "tests/patch_11_0_7_publication_fixes.rs",
+    "tests/patch_11_0_7_cached_raid_targets.rs"
+  ],
+  "checks": [
+    "Cognitive complexity/nesting/function length",
+    "Visible state mutation and borrow release before event dispatch",
+    "Naming/literal meaning and error propagation",
+    "No new warning suppressions or speculative abstractions",
+    "Test fixtures remain bounded and observable"
+  ],
+  "findings": []
+}
