@@ -13,6 +13,8 @@ use rilua::vm::state::LuaState;
 // SpellBook transition aliases are deliberately not retired here.
 // Qualified current cached retail searches find no consumers of these 10.2.6 removals.
 // Bare-name matches are current global Console* successors, not these members.
+// No qualified retail consumer; CampaignMixin:UsesNormalQuestIcons is unrelated.
+const RETIRED_10_1_5_MEMBERS: &[(&str, &[&str])] = &[("C_CampaignInfo", &["UsesNormalQuestIcons"])];
 const RETIRED_10_2_0_MEMBERS: &[(&str, &[&str])] = &[(
     "C_Console",
     &["GetFontHeight", "PrintAllMatchingCommands", "SetFontHeight"],
@@ -239,6 +241,7 @@ const RETIRED_12_0_7_MEMBERS: &[(&str, &[&str])] = &[
 ];
 
 pub(crate) fn mark_retired_members(state: &mut LuaState) -> LuaResult<()> {
+    mark_members(state, RETIRED_10_1_5_MEMBERS)?;
     mark_members(state, RETIRED_10_2_0_MEMBERS)?;
     mark_members(state, RETIRED_10_2_6_MEMBERS)?;
     mark_members(state, RETIRED_11_0_0_MEMBERS)?;

@@ -1,0 +1,37 @@
+
+running 1 test
+test patch_10_1_5_publication_fixes::patch_10_1_5_unused_campaign_member_is_absent ... FAILED
+
+failures:
+
+failures:
+    patch_10_1_5_publication_fixes::patch_10_1_5_unused_campaign_member_is_absent
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10823 filtered out; finished in 0.23s
+
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p1015-page)
+    Finished `test` profile [optimized + debuginfo] target(s) in 2m 03s
+     Running tests/integration.rs (target/debug/deps/integration-aef10a2b503e13d5)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.018s] [Startup] SimState::default complete in 18.34ms
+[  0.019s] [Startup] rilua VM created in 134.41µs
+[  0.019s] [Startup] builtin frames initialized in 93.19µs
+[  0.019s] [Startup] template registry cleared in 8.77µs
+[  0.019s] [Startup] intrinsic templates registered in 14.27µs
+[  0.019s] [Startup] initial app_data lua handle installed in 711.00ns
+[  0.219s] [Startup] init_lua_state complete in 199.97ms
+[  0.219s] [Startup] final app_data lua handle installed in 381.00ns
+[  0.219s] [Startup] initial screen globals installed in 135.23µs
+[  0.219s] [Startup] WowLuaEnv::new complete
+
+thread 'patch_10_1_5_publication_fixes::patch_10_1_5_unused_campaign_member_is_absent' (2938737) panicked at /home/osso/.worktrees/wow-ui-sim-p1015-page/tests/patch_10_1_5_publication_fixes.rs:14:37:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+error: test failed, to rerun pass `--test integration`

@@ -1,0 +1,22 @@
+{
+  "C_CampaignInfo.UsesNormalQuestIcons-qualified": {
+    "exit": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  "C_CampaignInfo.UsesNormalQuestIcons-bare": {
+    "exit": 0,
+    "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectAPI/Mainline/Campaign.lua:53:function CampaignMixin:UsesNormalQuestIcons()\n",
+    "stderr": ""
+  },
+  "RequestArtifactCompletionHistory-qualified": {
+    "exit": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  "RequestArtifactCompletionHistory-bare": {
+    "exit": 1,
+    "stdout": "",
+    "stderr": ""
+  }
+}
