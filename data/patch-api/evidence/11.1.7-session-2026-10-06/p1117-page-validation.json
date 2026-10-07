@@ -1,0 +1,85 @@
+{
+  "result": "PASS",
+  "source_rows": 75,
+  "inventory": {
+    "published": 28,
+    "strict_removals": 5,
+    "superseded_ok": 7
+  },
+  "statuses": {
+    "audit-pending": 24,
+    "partial-development-green": 28,
+    "bounded-coverage": 5,
+    "metadata-only": 18
+  },
+  "extract_batches": {
+    "B01-summary": 3,
+    "B02-enums": 7,
+    "B03-structures": 6
+  },
+  "sweeps": [
+    {
+      "name": "p1117-sweep",
+      "rows": 48,
+      "ok": 40,
+      "gaps": 8,
+      "exit_code": 0
+    },
+    {
+      "name": "p1120-sweep",
+      "rows": 162,
+      "ok": 136,
+      "gaps": 26,
+      "exit_code": 0
+    },
+    {
+      "name": "p1125-sweep",
+      "rows": 163,
+      "ok": 118,
+      "gaps": 45,
+      "exit_code": 0
+    },
+    {
+      "name": "p1127-sweep",
+      "rows": 508,
+      "ok": 414,
+      "gaps": 94,
+      "exit_code": 0
+    },
+    {
+      "name": "p1200-sweep",
+      "rows": 1010,
+      "ok": 987,
+      "gaps": 23,
+      "exit_code": 0
+    },
+    {
+      "name": "p1201-sweep",
+      "rows": 225,
+      "ok": 222,
+      "gaps": 3,
+      "exit_code": 0
+    },
+    {
+      "name": "p1205-sweep",
+      "rows": 363,
+      "ok": 352,
+      "gaps": 11,
+      "exit_code": 0
+    },
+    {
+      "name": "p1207-sweep",
+      "rows": 174,
+      "ok": 171,
+      "gaps": 3,
+      "exit_code": 0
+    },
+    {
+      "name": "p1210-sweep",
+      "rows": 778,
+      "ok": 773,
+      "gaps": 5,
+      "exit_code": 0
+    }
+  ]
+}

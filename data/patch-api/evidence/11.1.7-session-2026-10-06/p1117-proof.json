@@ -420,6 +420,18 @@
       "stderr_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1117-startup.stderr",
       "json": [],
       "invalidated_by": null
+    },
+    {
+      "name": "artifact-validation",
+      "command": [
+        "python3",
+        "data/patch-api/evidence/11.1.7-session-2026-10-06/p1117-validate.py"
+      ],
+      "revision": "7040c949d4526c691388b45fce39bcbf0f479a88",
+      "exit_code": 0,
+      "scope": "source/ledger/evidence/doc revision; runtime scope unchanged from 210e4e23c",
+      "result_path": "data/patch-api/evidence/11.1.7-session-2026-10-06/p1117-page-validation.json",
+      "invalidated_by": null
     }
   ],
   "notes": [
