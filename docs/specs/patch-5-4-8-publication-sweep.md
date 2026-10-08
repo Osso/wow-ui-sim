@@ -4,10 +4,10 @@ Audit the pinned [2014 retail source](../../data/patch-api/sources/5.4.8-api-cha
 
 ## What it must do
 
-- [ ] Probe every registered identity in the prefork cached retail runtime, applying later retail registers only; distinguish publication from behavior.
-- [ ] Retain precise absent/retired-CVar and native-policy limits rather than adding compatibility shims.
-- [ ] Block insecure combat writes to the page's currently readable CVars before value, scale, persistence or event mutation; allow secure writes and out-of-combat addon writes.
-- [ ] Block insecure `SetUIVisibility(false)` in combat, allow `true`, and preserve secure/out-of-combat transitions.
+- [x] Probe every registered identity in the prefork cached retail runtime, applying later retail registers only; distinguish publication from behavior.
+- [x] Retain precise absent/retired-CVar and native-policy limits rather than adding compatibility shims.
+- [x] Block insecure combat writes to the page's currently readable CVars before value, scale, persistence or event mutation; allow secure writes and out-of-combat addon writes.
+- [x] Block insecure `SetUIVisibility(false)` in combat, allow `true`, and preserve secure/out-of-combat transitions.
 - [ ] Keep extraction and register generation opt-in/reproducible; validate historical scope at pinned Git revisions in clean/later-audit checkouts.
 
 ## How it works
@@ -34,7 +34,9 @@ Audit the pinned [2014 retail source](../../data/patch-api/sources/5.4.8-api-cha
 
 ## Known gaps (current cycle)
 
-- [ ] Record discovered publication gaps and native historical-policy limits.
+- [ ] Seven publication gaps: `bloatTest`, `bloatnameplates`, `bloatthreat`, `consolidateBuffs`, `maxAlgoplates`, `repositionfrequency`, `targetOfTargetMode`; no current default/model supplied by this page.
+- [ ] Historical combat transitions for 14 currently unreadable settings; exact native error/notification/default parity remains unproved.
+- [ ] Replace ordered 6.0.1/6.0.2 placeholders after their retail registers integrate; no intersecting own identity at recorded queued revisions.
 
 ## Out of scope
 

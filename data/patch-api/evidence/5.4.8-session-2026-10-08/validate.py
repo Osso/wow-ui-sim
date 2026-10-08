@@ -151,7 +151,8 @@ def model_observations(context):
             assert all(row[key] for key in ['global_blocked', 'namespace_blocked', 'uppercase_blocked',
                                             'bitfield_blocked', 'scale_unchanged', 'secure_combat_write',
                                             'insecure_out_of_combat_write'])
-    return len(active) + 1
+    globals_modeled = [row for row in register['entries'] if row['section'] == 'global-api']
+    return len(active) + len(globals_modeled)
 
 
 def queued_registers(context):

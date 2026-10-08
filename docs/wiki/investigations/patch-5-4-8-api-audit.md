@@ -16,8 +16,8 @@ No removals on this page and no runtime retirements. All 29 changed/writer ident
 
 | Capability | Exact scope | Proof level |
 |---|---|---|
-| CVar combat write protection | `nameplateOverlapH/V`, `nameplateShowEnemies`, `nameplateShowEnemyGuardians/Pets/Totems`, `nameplateShowFriends`, `showArenaEnemyFrames/Pets`, `showPartyPets`, `showTargetOfTarget`, `uiScale`, `useUiScale` (13 identities) | Backed by CVar storage, player combat state and active Lua caller taint; bare/cached final gates pending |
-| UI visibility combat protection | `SetUIVisibility(false)` blocked for insecure combat; `true` allowed; secure/out-of-combat transitions retained | Existing UIParent visibility model; cached development proof passed |
+| CVar combat write protection | `nameplateOverlapH/V`, `nameplateShowEnemies`, `nameplateShowEnemyGuardians/Pets/Totems`, `nameplateShowFriends`, `showArenaEnemyFrames/Pets`, `showPartyPets`, `showTargetOfTarget`, `uiScale`, `useUiScale` (13 identities) | Backed by CVar storage, player combat state and active Lua caller taint; Bare/cached targeted behavior passes |
+| UI visibility combat protection | `SetUIVisibility(false)` blocked for insecure combat; `true` allowed; secure/out-of-combat transitions retained | Existing UIParent visibility model; Bare/cached targeted behavior passes |
 | Publication gap | `bloatTest`, `bloatnameplates`, `bloatthreat`, `consolidateBuffs`, `maxAlgoplates`, `repositionfrequency`, `targetOfTargetMode` | Seven precise nil value/default gaps; no later merged or queued retail inventory accounts for them |
 | Historical inactive behavior | Above seven plus `alwaysShowActionBars`, `fullSizeFocusFrame`, `nameplateMotion`, `nameplateShowFriendlyGuardians/Pets/Totems`, `useCompactPartyFrames` (14 identities) | No currently readable backing state; no default invented or setting republished |
 | Native historical protection policy | Exact error/notification text, historical defaults, linked forum discussion | Unproved; no native/historical parity credit |
@@ -28,7 +28,11 @@ All 60 occurrences accounted: 28 inventory plus 32 supplemental; 36 bounded, 21 
 
 ## Proof status
 
-Initial RED reproduced insecure combat writes; the first fixture was incorrectly a map rather than a sequence, then corrected. Discovery found the seven gaps above; cached modeled behavior passed. Final targeted acceptance and portability gate are pending. Preliminary discovery receipts are not final acceptance, especially where later test/fixture changes supersede their scope.
+Initial RED reproduced insecure combat writes; the first fixture was incorrectly a map rather than a sequence, then corrected. Discovery found the seven gaps above; cached modeled behavior passed. Targeted acceptance passes: 54/54 publication/factory cases, all 9,083 observations retained, and all 52 other pages match pinned master exactly. Cached combat plus CVar/world-map/keybinding filters pass (1/26/26/13); bare combat and existing CVar/bitfield/display/UI-visibility integration scopes pass (1/18/2/9/3). All four Python fixture scripts pass (4/36/34/8), format passes, and Mists `cargo check --no-default-features --features sound,gui,casc,client-mists --tests` passes with zero non-vendor warnings. Addons-enabled branch and master startup outputs both equal `[]`.
+
+All 53 registers reproduce byte-identically; 50 extracts reproduce, with the unchanged inherited 12.0.5/12.0.7/12.1.0 failures retained. Every earlier source byte and extractor mode is preserved. Negative control adds exactly one gap (seven → eight). No full integration suite was run.
+
+Portability gate and own-log tamper proof remain pending. Preliminary discovery receipts are not final acceptance, especially where later test/fixture changes supersede their scope.
 
 ## Sources
 

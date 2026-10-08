@@ -9,6 +9,7 @@
       "-n",
       "-w",
       "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
       "-e",
       "SetCVar",
       "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
@@ -17,7 +18,7 @@
     "output": "p548-SetCVar-cached-grep.txt",
     "lines": 367,
     "sha256": "528d8fea3a545a061655c816c4a4589f7ea2cd4137c0016f627ec47a13d1702c",
-    "note": "Whole-word, untruncated; bare-name scan includes direct calls, pcall(Name, ...) and and Name then; cached excludes Documentation directories."
+    "note": "Whole-word, untruncated; excludes both Documentation filenames and directories. Bare-name scan includes direct calls, pcall(Name, ...) and and Name then."
   },
   {
     "symbol": "SetCVar",
@@ -49,6 +50,7 @@
       "-n",
       "-w",
       "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
       "-e",
       "SetUIVisibility",
       "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
@@ -57,7 +59,7 @@
     "output": "p548-SetUIVisibility-cached-grep.txt",
     "lines": 11,
     "sha256": "ea1abab6b322e03daaeff52689efc4e5ec6b6322e66bdd1d9e24bf4b2866a412",
-    "note": "Whole-word, untruncated; bare-name scan includes direct calls, pcall(Name, ...) and and Name then; cached excludes Documentation directories."
+    "note": "Whole-word, untruncated; excludes both Documentation filenames and directories. Bare-name scan includes direct calls, pcall(Name, ...) and and Name then."
   },
   {
     "symbol": "SetUIVisibility",
@@ -89,6 +91,7 @@
       "-n",
       "-w",
       "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
       "-e",
       "alwaysShowActionBars",
       "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
@@ -97,7 +100,7 @@
     "output": "p548-alwaysShowActionBars-cached-grep.txt",
     "lines": 0,
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "note": "Whole-word, untruncated; bare-name scan includes direct calls, pcall(Name, ...) and and Name then; cached excludes Documentation directories."
+    "note": "Whole-word, untruncated; excludes both Documentation filenames and directories. Bare-name scan includes direct calls, pcall(Name, ...) and and Name then."
   },
   {
     "symbol": "alwaysShowActionBars",
@@ -129,6 +132,7 @@
       "-n",
       "-w",
       "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
       "-e",
       "bloatnameplates",
       "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
@@ -137,7 +141,7 @@
     "output": "p548-bloatnameplates-cached-grep.txt",
     "lines": 0,
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "note": "Whole-word, untruncated; bare-name scan includes direct calls, pcall(Name, ...) and and Name then; cached excludes Documentation directories."
+    "note": "Whole-word, untruncated; excludes both Documentation filenames and directories. Bare-name scan includes direct calls, pcall(Name, ...) and and Name then."
   },
   {
     "symbol": "bloatnameplates",
@@ -169,6 +173,7 @@
       "-n",
       "-w",
       "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
       "-e",
       "bloatTest",
       "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
@@ -177,7 +182,7 @@
     "output": "p548-bloatTest-cached-grep.txt",
     "lines": 0,
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "note": "Whole-word, untruncated; bare-name scan includes direct calls, pcall(Name, ...) and and Name then; cached excludes Documentation directories."
+    "note": "Whole-word, untruncated; excludes both Documentation filenames and directories. Bare-name scan includes direct calls, pcall(Name, ...) and and Name then."
   },
   {
     "symbol": "bloatTest",
@@ -209,6 +214,7 @@
       "-n",
       "-w",
       "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
       "-e",
       "bloatthreat",
       "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
@@ -217,7 +223,7 @@
     "output": "p548-bloatthreat-cached-grep.txt",
     "lines": 0,
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "note": "Whole-word, untruncated; bare-name scan includes direct calls, pcall(Name, ...) and and Name then; cached excludes Documentation directories."
+    "note": "Whole-word, untruncated; excludes both Documentation filenames and directories. Bare-name scan includes direct calls, pcall(Name, ...) and and Name then."
   },
   {
     "symbol": "bloatthreat",
@@ -249,6 +255,7 @@
       "-n",
       "-w",
       "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
       "-e",
       "consolidateBuffs",
       "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
@@ -257,7 +264,7 @@
     "output": "p548-consolidateBuffs-cached-grep.txt",
     "lines": 5,
     "sha256": "b8b3370dbc0743645556dda06f196b39078194b2eff448ac6b47ceb95d947e76",
-    "note": "Whole-word, untruncated; bare-name scan includes direct calls, pcall(Name, ...) and and Name then; cached excludes Documentation directories."
+    "note": "Whole-word, untruncated; excludes both Documentation filenames and directories. Bare-name scan includes direct calls, pcall(Name, ...) and and Name then."
   },
   {
     "symbol": "consolidateBuffs",
@@ -289,6 +296,7 @@
       "-n",
       "-w",
       "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
       "-e",
       "fullSizeFocusFrame",
       "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
@@ -297,7 +305,7 @@
     "output": "p548-fullSizeFocusFrame-cached-grep.txt",
     "lines": 0,
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "note": "Whole-word, untruncated; bare-name scan includes direct calls, pcall(Name, ...) and and Name then; cached excludes Documentation directories."
+    "note": "Whole-word, untruncated; excludes both Documentation filenames and directories. Bare-name scan includes direct calls, pcall(Name, ...) and and Name then."
   },
   {
     "symbol": "fullSizeFocusFrame",
@@ -329,6 +337,7 @@
       "-n",
       "-w",
       "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
       "-e",
       "maxAlgoplates",
       "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
@@ -337,7 +346,7 @@
     "output": "p548-maxAlgoplates-cached-grep.txt",
     "lines": 0,
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "note": "Whole-word, untruncated; bare-name scan includes direct calls, pcall(Name, ...) and and Name then; cached excludes Documentation directories."
+    "note": "Whole-word, untruncated; excludes both Documentation filenames and directories. Bare-name scan includes direct calls, pcall(Name, ...) and and Name then."
   },
   {
     "symbol": "maxAlgoplates",
@@ -369,6 +378,7 @@
       "-n",
       "-w",
       "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
       "-e",
       "nameplateMotion",
       "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
@@ -377,7 +387,7 @@
     "output": "p548-nameplateMotion-cached-grep.txt",
     "lines": 0,
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "note": "Whole-word, untruncated; bare-name scan includes direct calls, pcall(Name, ...) and and Name then; cached excludes Documentation directories."
+    "note": "Whole-word, untruncated; excludes both Documentation filenames and directories. Bare-name scan includes direct calls, pcall(Name, ...) and and Name then."
   },
   {
     "symbol": "nameplateMotion",
@@ -409,6 +419,7 @@
       "-n",
       "-w",
       "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
       "-e",
       "nameplateOverlapH",
       "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
@@ -417,7 +428,7 @@
     "output": "p548-nameplateOverlapH-cached-grep.txt",
     "lines": 0,
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "note": "Whole-word, untruncated; bare-name scan includes direct calls, pcall(Name, ...) and and Name then; cached excludes Documentation directories."
+    "note": "Whole-word, untruncated; excludes both Documentation filenames and directories. Bare-name scan includes direct calls, pcall(Name, ...) and and Name then."
   },
   {
     "symbol": "nameplateOverlapH",
@@ -449,6 +460,7 @@
       "-n",
       "-w",
       "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
       "-e",
       "nameplateOverlapV",
       "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
@@ -457,7 +469,7 @@
     "output": "p548-nameplateOverlapV-cached-grep.txt",
     "lines": 0,
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "note": "Whole-word, untruncated; bare-name scan includes direct calls, pcall(Name, ...) and and Name then; cached excludes Documentation directories."
+    "note": "Whole-word, untruncated; excludes both Documentation filenames and directories. Bare-name scan includes direct calls, pcall(Name, ...) and and Name then."
   },
   {
     "symbol": "nameplateOverlapV",
@@ -489,6 +501,7 @@
       "-n",
       "-w",
       "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
       "-e",
       "nameplateShowEnemies",
       "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
@@ -497,7 +510,7 @@
     "output": "p548-nameplateShowEnemies-cached-grep.txt",
     "lines": 23,
     "sha256": "24b32d683981b49c1f9364b8526c927902fc80c8476a6dc478aece6491b502d7",
-    "note": "Whole-word, untruncated; bare-name scan includes direct calls, pcall(Name, ...) and and Name then; cached excludes Documentation directories."
+    "note": "Whole-word, untruncated; excludes both Documentation filenames and directories. Bare-name scan includes direct calls, pcall(Name, ...) and and Name then."
   },
   {
     "symbol": "nameplateShowEnemies",
@@ -529,6 +542,7 @@
       "-n",
       "-w",
       "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
       "-e",
       "nameplateShowEnemyGuardians",
       "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
@@ -537,7 +551,7 @@
     "output": "p548-nameplateShowEnemyGuardians-cached-grep.txt",
     "lines": 2,
     "sha256": "bece97f6d5ce2eef6613f413a631b70ac71f079de71078aca00b6dd990413ba9",
-    "note": "Whole-word, untruncated; bare-name scan includes direct calls, pcall(Name, ...) and and Name then; cached excludes Documentation directories."
+    "note": "Whole-word, untruncated; excludes both Documentation filenames and directories. Bare-name scan includes direct calls, pcall(Name, ...) and and Name then."
   },
   {
     "symbol": "nameplateShowEnemyGuardians",
@@ -569,6 +583,7 @@
       "-n",
       "-w",
       "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
       "-e",
       "nameplateShowEnemyPets",
       "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
@@ -577,7 +592,7 @@
     "output": "p548-nameplateShowEnemyPets-cached-grep.txt",
     "lines": 2,
     "sha256": "19c19961e1bd56626c22ed10f569a0631669b902943a837b04c6013c2bb9767d",
-    "note": "Whole-word, untruncated; bare-name scan includes direct calls, pcall(Name, ...) and and Name then; cached excludes Documentation directories."
+    "note": "Whole-word, untruncated; excludes both Documentation filenames and directories. Bare-name scan includes direct calls, pcall(Name, ...) and and Name then."
   },
   {
     "symbol": "nameplateShowEnemyPets",
@@ -609,6 +624,7 @@
       "-n",
       "-w",
       "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
       "-e",
       "nameplateShowEnemyTotems",
       "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
@@ -617,7 +633,7 @@
     "output": "p548-nameplateShowEnemyTotems-cached-grep.txt",
     "lines": 2,
     "sha256": "b1c9f55b4cdf628d7253581ed225f2654a98f46ce103498e5f8d530a7c72a39d",
-    "note": "Whole-word, untruncated; bare-name scan includes direct calls, pcall(Name, ...) and and Name then; cached excludes Documentation directories."
+    "note": "Whole-word, untruncated; excludes both Documentation filenames and directories. Bare-name scan includes direct calls, pcall(Name, ...) and and Name then."
   },
   {
     "symbol": "nameplateShowEnemyTotems",
@@ -649,6 +665,7 @@
       "-n",
       "-w",
       "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
       "-e",
       "nameplateShowFriendlyGuardians",
       "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
@@ -657,7 +674,7 @@
     "output": "p548-nameplateShowFriendlyGuardians-cached-grep.txt",
     "lines": 0,
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "note": "Whole-word, untruncated; bare-name scan includes direct calls, pcall(Name, ...) and and Name then; cached excludes Documentation directories."
+    "note": "Whole-word, untruncated; excludes both Documentation filenames and directories. Bare-name scan includes direct calls, pcall(Name, ...) and and Name then."
   },
   {
     "symbol": "nameplateShowFriendlyGuardians",
@@ -689,6 +706,7 @@
       "-n",
       "-w",
       "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
       "-e",
       "nameplateShowFriendlyPets",
       "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
@@ -697,7 +715,7 @@
     "output": "p548-nameplateShowFriendlyPets-cached-grep.txt",
     "lines": 0,
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "note": "Whole-word, untruncated; bare-name scan includes direct calls, pcall(Name, ...) and and Name then; cached excludes Documentation directories."
+    "note": "Whole-word, untruncated; excludes both Documentation filenames and directories. Bare-name scan includes direct calls, pcall(Name, ...) and and Name then."
   },
   {
     "symbol": "nameplateShowFriendlyPets",
@@ -729,6 +747,7 @@
       "-n",
       "-w",
       "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
       "-e",
       "nameplateShowFriendlyTotems",
       "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
@@ -737,7 +756,7 @@
     "output": "p548-nameplateShowFriendlyTotems-cached-grep.txt",
     "lines": 0,
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "note": "Whole-word, untruncated; bare-name scan includes direct calls, pcall(Name, ...) and and Name then; cached excludes Documentation directories."
+    "note": "Whole-word, untruncated; excludes both Documentation filenames and directories. Bare-name scan includes direct calls, pcall(Name, ...) and and Name then."
   },
   {
     "symbol": "nameplateShowFriendlyTotems",
@@ -769,6 +788,7 @@
       "-n",
       "-w",
       "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
       "-e",
       "nameplateShowFriends",
       "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
@@ -777,7 +797,7 @@
     "output": "p548-nameplateShowFriends-cached-grep.txt",
     "lines": 0,
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "note": "Whole-word, untruncated; bare-name scan includes direct calls, pcall(Name, ...) and and Name then; cached excludes Documentation directories."
+    "note": "Whole-word, untruncated; excludes both Documentation filenames and directories. Bare-name scan includes direct calls, pcall(Name, ...) and and Name then."
   },
   {
     "symbol": "nameplateShowFriends",
@@ -809,6 +829,7 @@
       "-n",
       "-w",
       "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
       "-e",
       "repositionfrequency",
       "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
@@ -817,7 +838,7 @@
     "output": "p548-repositionfrequency-cached-grep.txt",
     "lines": 0,
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "note": "Whole-word, untruncated; bare-name scan includes direct calls, pcall(Name, ...) and and Name then; cached excludes Documentation directories."
+    "note": "Whole-word, untruncated; excludes both Documentation filenames and directories. Bare-name scan includes direct calls, pcall(Name, ...) and and Name then."
   },
   {
     "symbol": "repositionfrequency",
@@ -849,6 +870,7 @@
       "-n",
       "-w",
       "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
       "-e",
       "showArenaEnemyFrames",
       "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
@@ -857,7 +879,7 @@
     "output": "p548-showArenaEnemyFrames-cached-grep.txt",
     "lines": 2,
     "sha256": "e39f0fca7fe09cb1ad21fc078a54c8d3951e0b8ec8d61a1c1c4228bb3d5e54e4",
-    "note": "Whole-word, untruncated; bare-name scan includes direct calls, pcall(Name, ...) and and Name then; cached excludes Documentation directories."
+    "note": "Whole-word, untruncated; excludes both Documentation filenames and directories. Bare-name scan includes direct calls, pcall(Name, ...) and and Name then."
   },
   {
     "symbol": "showArenaEnemyFrames",
@@ -889,6 +911,7 @@
       "-n",
       "-w",
       "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
       "-e",
       "showArenaEnemyPets",
       "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
@@ -897,7 +920,7 @@
     "output": "p548-showArenaEnemyPets-cached-grep.txt",
     "lines": 2,
     "sha256": "47d4b7ab707dafe77e7bb9601f4b8265afc7b13bcf3f3487481b5917313808c3",
-    "note": "Whole-word, untruncated; bare-name scan includes direct calls, pcall(Name, ...) and and Name then; cached excludes Documentation directories."
+    "note": "Whole-word, untruncated; excludes both Documentation filenames and directories. Bare-name scan includes direct calls, pcall(Name, ...) and and Name then."
   },
   {
     "symbol": "showArenaEnemyPets",
@@ -929,6 +952,7 @@
       "-n",
       "-w",
       "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
       "-e",
       "showPartyPets",
       "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
@@ -937,7 +961,7 @@
     "output": "p548-showPartyPets-cached-grep.txt",
     "lines": 7,
     "sha256": "71d255f35e80cff6481ec25b13b1fddb0b68cecd0fa6909313a2f796c15272c6",
-    "note": "Whole-word, untruncated; bare-name scan includes direct calls, pcall(Name, ...) and and Name then; cached excludes Documentation directories."
+    "note": "Whole-word, untruncated; excludes both Documentation filenames and directories. Bare-name scan includes direct calls, pcall(Name, ...) and and Name then."
   },
   {
     "symbol": "showPartyPets",
@@ -969,6 +993,7 @@
       "-n",
       "-w",
       "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
       "-e",
       "showTargetOfTarget",
       "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
@@ -977,7 +1002,7 @@
     "output": "p548-showTargetOfTarget-cached-grep.txt",
     "lines": 6,
     "sha256": "93bb237e96b9e20a9a9113340ad4aaec671147fe60d07d64987e66fe441f5aaa",
-    "note": "Whole-word, untruncated; bare-name scan includes direct calls, pcall(Name, ...) and and Name then; cached excludes Documentation directories."
+    "note": "Whole-word, untruncated; excludes both Documentation filenames and directories. Bare-name scan includes direct calls, pcall(Name, ...) and and Name then."
   },
   {
     "symbol": "showTargetOfTarget",
@@ -1009,6 +1034,7 @@
       "-n",
       "-w",
       "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
       "-e",
       "targetOfTargetMode",
       "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
@@ -1017,7 +1043,7 @@
     "output": "p548-targetOfTargetMode-cached-grep.txt",
     "lines": 0,
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "note": "Whole-word, untruncated; bare-name scan includes direct calls, pcall(Name, ...) and and Name then; cached excludes Documentation directories."
+    "note": "Whole-word, untruncated; excludes both Documentation filenames and directories. Bare-name scan includes direct calls, pcall(Name, ...) and and Name then."
   },
   {
     "symbol": "targetOfTargetMode",
@@ -1049,6 +1075,7 @@
       "-n",
       "-w",
       "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
       "-e",
       "uiScale",
       "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
@@ -1057,7 +1084,7 @@
     "output": "p548-uiScale-cached-grep.txt",
     "lines": 36,
     "sha256": "e525971a7d6ff152ef9b54e79821f845aa8bcf22b5daa822ea5683a0e411d488",
-    "note": "Whole-word, untruncated; bare-name scan includes direct calls, pcall(Name, ...) and and Name then; cached excludes Documentation directories."
+    "note": "Whole-word, untruncated; excludes both Documentation filenames and directories. Bare-name scan includes direct calls, pcall(Name, ...) and and Name then."
   },
   {
     "symbol": "uiScale",
@@ -1089,6 +1116,7 @@
       "-n",
       "-w",
       "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
       "-e",
       "useCompactPartyFrames",
       "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
@@ -1097,7 +1125,7 @@
     "output": "p548-useCompactPartyFrames-cached-grep.txt",
     "lines": 0,
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "note": "Whole-word, untruncated; bare-name scan includes direct calls, pcall(Name, ...) and and Name then; cached excludes Documentation directories."
+    "note": "Whole-word, untruncated; excludes both Documentation filenames and directories. Bare-name scan includes direct calls, pcall(Name, ...) and and Name then."
   },
   {
     "symbol": "useCompactPartyFrames",
@@ -1129,6 +1157,7 @@
       "-n",
       "-w",
       "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
       "-e",
       "useUiScale",
       "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
@@ -1137,7 +1166,7 @@
     "output": "p548-useUiScale-cached-grep.txt",
     "lines": 1,
     "sha256": "fd3535db4442b9deb25fc04088cf19c09510c3fa7e792200a08af653d48769e3",
-    "note": "Whole-word, untruncated; bare-name scan includes direct calls, pcall(Name, ...) and and Name then; cached excludes Documentation directories."
+    "note": "Whole-word, untruncated; excludes both Documentation filenames and directories. Bare-name scan includes direct calls, pcall(Name, ...) and and Name then."
   },
   {
     "symbol": "useUiScale",

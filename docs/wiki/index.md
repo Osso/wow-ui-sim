@@ -4,7 +4,7 @@
 
 ## [2026-10-08] investigation | Patch 5.4.8 API audit
 
-[Audit](investigations/patch-5-4-8-api-audit.md): page 177816 revision 1736772; linked parent TOC 50400 confirms 2014 retail Mists. 28 changed identities, no removals; combat discovery and portable proof in progress.
+[Audit](investigations/patch-5-4-8-api-audit.md): page 177816 revision 1736772; linked parent TOC 50400 confirms 2014 retail Mists. 28 inventory/32 supplemental occurrences; 13 current CVar models plus UI visibility, seven publication gaps and 14 inactive behavioral limits, no retirements. All 54 publication/factory cases and targeted checks pass; portable gate pending.
 
 ## [2026-10-08] integration | Patch 6.1.0 API audit
 
