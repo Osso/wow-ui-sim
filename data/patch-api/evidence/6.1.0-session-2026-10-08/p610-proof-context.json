@@ -1,0 +1,148 @@
+{
+  "base_revision": "15b417367b68b9c16df9e72fb141c177a2a220de",
+  "source_revision": "882d8eb6c810fb88795b25724899f5965ab1c56c",
+  "accounting_revision": "c7aeb5dbc",
+  "sweep_revision": "c7aeb5dbc3e2ad78e9f7772f9908d31a6ff2be9e",
+  "documentation_revision": "dcdeab6436872d9a715e8355a6a6fb7262f1d097",
+  "receipts": {
+    "p610-discovery": {
+      "sha256": "abbdfda0b59a023a74439defd315a78c8737588e12b6243d30dbf3b08def5560",
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_6_1_0"
+      ],
+      "revision": "c7aeb5dbc3e2ad78e9f7772f9908d31a6ff2be9e",
+      "exit": 0
+    },
+    "p610-all-sweeps": {
+      "sha256": "8d1ac843a504e8910dd991fb753bb9d9f4fcf042dabfce01ce6839ef0c07c0e6",
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "publication_sweep"
+      ],
+      "revision": "c7aeb5dbc3e2ad78e9f7772f9908d31a6ff2be9e",
+      "exit": 0
+    },
+    "p610-recap-prefork": {
+      "sha256": "69cb0ed2baec66648b632f3b85120b0f8199601be266075ddfac8612d178f5c0",
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "death_recap"
+      ],
+      "revision": "c7aeb5dbc3e2ad78e9f7772f9908d31a6ff2be9e",
+      "exit": 0
+    },
+    "p610-recap-model": {
+      "sha256": "7ff7c818b58251dfdae1773475c467b7ba78c3799c104a87dcfc96d65c95f0c8",
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "c_death_recap_probes"
+      ],
+      "revision": "c7aeb5dbc3e2ad78e9f7772f9908d31a6ff2be9e",
+      "exit": 0
+    },
+    "p610-legacy-absence": {
+      "sha256": "8a5c9b91a394c098901894eb6c2680fa6eb9e73cdb7139a7faae6a9e865160bc",
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "p1200_removed_plain_globals"
+      ],
+      "revision": "c7aeb5dbc3e2ad78e9f7772f9908d31a6ff2be9e",
+      "exit": 0
+    },
+    "p610-format": {
+      "sha256": "bc08ccb398e4c331e070b92ba10089e20f128d355789ca3be2a6954356d15e8f",
+      "command": [
+        "cargo",
+        "fmt",
+        "--check"
+      ],
+      "revision": "c7aeb5dbc3e2ad78e9f7772f9908d31a6ff2be9e",
+      "exit": 0
+    },
+    "p610-mists-check": {
+      "sha256": "07e8f85033d574bf4561ee2b1ee9b7e099078c8aead3f5e112ac7978a4a460d8",
+      "command": [
+        "cargo",
+        "check",
+        "--no-default-features",
+        "--features",
+        "sound,gui,casc,client-mists",
+        "--tests"
+      ],
+      "revision": "c7aeb5dbc3e2ad78e9f7772f9908d31a6ff2be9e",
+      "exit": 0
+    },
+    "p610-source-reproduction": {
+      "sha256": "d4d592de6510c011df7b39ef4977c1e8876e38b8b118472331412bed662f0d52",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p610-page/data/patch-api/evidence/6.1.0-session-2026-10-08/reproduce_sources.py"
+      ],
+      "revision": "882d8eb6c810fb88795b25724899f5965ab1c56c",
+      "exit": 0
+    },
+    "p610-generator-fixtures": {
+      "sha256": "7ab69ed20c7a47d83af30c3082d7e526e0f509356a53425a570b469ccd8bea16",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p610-page/tools/test_gen_patch_wikitext_register.py"
+      ],
+      "revision": "882d8eb6c810fb88795b25724899f5965ab1c56c",
+      "exit": 0
+    },
+    "p610-extractor-fixtures": {
+      "sha256": "16db8dd5ecaa6694ff5d92cff30a2b3e352e85dc4348a13677c1a5d1f42b5d22",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p610-page/tools/test_extract_patch_non_inventory.py"
+      ],
+      "revision": "c7aeb5dbc3e2ad78e9f7772f9908d31a6ff2be9e",
+      "exit": 0
+    },
+    "p610-validator-fixtures": {
+      "sha256": "10c775487f5a9e2a0f6aa642ace1fd2ba7c581fe5055fc624f4feb806e565861",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p610-page/tools/test_patch_audit_validation.py"
+      ],
+      "revision": "882d8eb6c810fb88795b25724899f5965ab1c56c",
+      "exit": 0
+    },
+    "p610-negative": {
+      "sha256": "16724fddc23be676e2d3e0eacc7952f6ece8724f4d2db9d9b6cfc6285c55148b",
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_6_1_0"
+      ],
+      "revision": "c7aeb5dbc3e2ad78e9f7772f9908d31a6ff2be9e",
+      "exit": 1
+    }
+  }
+}
