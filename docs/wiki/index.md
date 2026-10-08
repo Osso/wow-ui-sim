@@ -8,7 +8,7 @@
 
 ## [2026-10-08] investigation | Patch 6.2.0 API audit
 
-[Audit](investigations/patch-6-2-0-api-audit.md): pinned narrative page, eleven extract occurrences, zero inventory rows; spell-link cost mismatch reproduced. Targeted verification pending.
+[Audit](investigations/patch-6-2-0-api-audit.md): revision 1460518; zero inventory/eleven extract rows, modeled retail spell-link cost omission, two item-link contracts pending. 50 publication cases, scoped tooltip tests, fixtures 36/31/8, format/Mists and matching addons-enabled startup [] pass. 49 registers/46 extracts reproduce with three inherited failures; 30 prior validators plus portable own gate pass. No retirements.
 
 ## [2026-10-08] integration | Patch 7.0.3 API audit
 

@@ -36,3 +36,7 @@ Runtime src/tests pinned at `da30fc360`; source-reproduction set at `114659452`.
 - Imported 6.2.4 extractor fixture used an unnormalized heading; failure retained and marked invalidated. Exact c79de9881 fixture correction passes 36/36.
 - Initial generator/extract reproduction omitted legacy verified flags; corrected receipts use historical flags, with all registers and all but the three inherited extracts matching.
 - The pre-repair validator matrix records the live src/c_api/mod.rs hash failure. Master repair is the accepted final code; all existing validator logs remain preserved.
+
+## Portability acceptance
+
+Independent clone of c4cded5a2 passes. Adding an older-page register and a deliberately failing future validator does not expand historical scope or change counts. Own extract whitespace tampering produces exit 1; exact restoration returns exit 0. No runtime or broad check rerun was needed for documentation milestones.

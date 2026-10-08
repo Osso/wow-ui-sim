@@ -1,0 +1,42 @@
+{
+  "revision": "c4cded5a2f761feed61a5a3bca6135e11cca127e",
+  "clone_command": [
+    "git",
+    "clone",
+    "--shared",
+    "--no-hardlinks",
+    "--branch",
+    "p620-page",
+    "/home/osso/.worktrees/wow-ui-sim-p620-page",
+    "/home/osso/.cache/wow-ui-sim-targets/p620-page/validator-clone"
+  ],
+  "rows": [
+    {
+      "label": "p620-portable-clone",
+      "exit": 0,
+      "log": "p620-portable-clone.txt",
+      "log_sha256": "9dea94ca5bb8ea7cef8a3fe70d2dec794b2e828ae23b498110b3c27867c01499"
+    },
+    {
+      "label": "p620-portable-expanded-scope",
+      "exit": 0,
+      "log": "p620-portable-expanded-scope.txt",
+      "log_sha256": "9dea94ca5bb8ea7cef8a3fe70d2dec794b2e828ae23b498110b3c27867c01499"
+    },
+    {
+      "label": "p620-portable-tamper",
+      "exit": 1,
+      "log": "p620-portable-tamper.txt",
+      "log_sha256": "e77fbfa76027268a7b7d86e65e8694a1486e1d6b0b178467e064b67e3ac743ba"
+    },
+    {
+      "label": "p620-portable-restored",
+      "exit": 0,
+      "log": "p620-portable-restored.txt",
+      "log_sha256": "9dea94ca5bb8ea7cef8a3fe70d2dec794b2e828ae23b498110b3c27867c01499"
+    }
+  ],
+  "expanded_counts_unchanged": true,
+  "tamper_rejected": true,
+  "restored_exact": true
+}

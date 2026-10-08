@@ -4,7 +4,7 @@
 
 ## [2026-10-08] investigation | Patch 6.2.0 API audit
 
-Pinned parent page and accounted narrative statements; modeled retail spell-link cost omission. Targeted verification pending; no retirements.
+Pinned parent page 149103/1460518: zero inventory, eleven accounted extract rows. Retail spell-link cost omission modeled; two item-link contracts recorded pending. All targeted tests, fixtures, format/Mists and matching addons-enabled startup [] pass; 49 registers/46 extracts reproduce, three inherited failures. Thirty prior validators plus own portable gate pass; no retirements. Wiki files preserved without shrinkage.
 
 ## [2026-10-08] investigation | Patch 7.0.1 redirect audit
 
