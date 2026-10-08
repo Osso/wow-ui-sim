@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "data/patch-api/evidence/8.2.0-session-2026-10-08/validate.py"
+  ],
+  "revision": "7ec652c9c9ec0d8c25f577a8ddfee20c673ffbf4",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p820-page",
+  "exit": 0,
+  "stdout_sha256": "5cb386c30eb0a5df6f721921fed1d63183e9475ab493278ed276c6290232ea57",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "scope": "Final committed source/code/ledger/proof/wiki artifacts; runtime proof remains valid because final commits change only evidence/docs."
+}
