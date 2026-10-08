@@ -37,7 +37,7 @@ ReportPosting also closes `wt-global-api-C_ClubFinder.ReportPosting-117` in the 
 
 Retained removals:
 
-- **C_SpellBook.IsSpellDisabled:** `Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:130` installs a live transition alias to C_Spell.IsSpellDisabled. Preserve vendor alias and exact absence gap.
+- **C_SpellBook.IsSpellDisabled:** `Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:130` contains a transition-alias assignment to C_Spell.IsSpellDisabled. Preserve vendor code and exact absence gap; the scan does not establish a raw runtime producer.
 - **LeaveParty:** cached Classic LFGUtil calls the global; other bare matches are C_PartyInfo/C_WoWLabsMatchmaking members. Existing simulator group implementation and callers remain. Any cached consumer prohibits retirement; active-mainline global use is not inferred.
 - **BNGetFriendInfo:** zero cached consumers, but cross-profile inert-global registration and calls in inert_global_defaults/system_api_seeded remain. A profile-safe registration/test migration is not unused-member cleanup.
 
