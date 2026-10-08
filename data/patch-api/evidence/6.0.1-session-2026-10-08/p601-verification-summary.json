@@ -1,0 +1,89 @@
+{
+  "p601-discovery": {
+    "revision": "4b6c582c7eb749564fafe3e514310d85a91401c1",
+    "exit": 0,
+    "test_counts": [
+      [
+        "1",
+        ""
+      ]
+    ]
+  },
+  "p601-all-sweeps": {
+    "revision": "4b6c582c7eb749564fafe3e514310d85a91401c1",
+    "exit": 0,
+    "test_counts": [
+      [
+        "52",
+        ""
+      ]
+    ]
+  },
+  "p601-mists-check": {
+    "revision": "4b6c582c7eb749564fafe3e514310d85a91401c1",
+    "exit": 0,
+    "test_counts": []
+  },
+  "p601-format-check": {
+    "revision": "e78b6376a14e616bca0e5cd0565aee1f7406995e",
+    "exit": 0,
+    "test_counts": []
+  },
+  "p601-reproduction": {
+    "revision": "e78b6376a14e616bca0e5cd0565aee1f7406995e",
+    "exit": 0,
+    "test_counts": []
+  },
+  "p601-test_check_patch_validators": {
+    "revision": "e78b6376a14e616bca0e5cd0565aee1f7406995e",
+    "exit": 0,
+    "test_counts": [
+      [
+        "",
+        "4"
+      ]
+    ]
+  },
+  "p601-test_extract_patch_non_inventory": {
+    "revision": "e78b6376a14e616bca0e5cd0565aee1f7406995e",
+    "exit": 0,
+    "test_counts": [
+      [
+        "",
+        "36"
+      ]
+    ]
+  },
+  "p601-test_gen_patch_wikitext_register": {
+    "revision": "e78b6376a14e616bca0e5cd0565aee1f7406995e",
+    "exit": 0,
+    "test_counts": [
+      [
+        "",
+        "32"
+      ]
+    ]
+  },
+  "p601-test_patch_audit_validation": {
+    "revision": "e78b6376a14e616bca0e5cd0565aee1f7406995e",
+    "exit": 0,
+    "test_counts": [
+      [
+        "",
+        "8"
+      ]
+    ]
+  },
+  "source_reproduction": {
+    "registers": 51,
+    "registers_reproduced": 51,
+    "extracts": 51,
+    "extracts_reproduced": 48,
+    "inherited_extract_failures": [
+      "12.0.5",
+      "12.0.7",
+      "12.1.0"
+    ]
+  },
+  "mists_non_vendor_warnings": 0
+}

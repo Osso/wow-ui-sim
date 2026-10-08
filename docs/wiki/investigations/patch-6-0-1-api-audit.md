@@ -22,7 +22,9 @@ The prefork sweep has the three required one-line placeholders first: 6.0.2, 6.1
 
 ## Verification
 
-Requested bounded checks run asynchronously with complete logs and revision/scope receipts in [evidence](../../../data/patch-api/evidence/6.0.1-session-2026-10-08/). Final results are recorded after execution. No full suite, startup parity or separate area regression is claimed: no runtime areas changed.
+Discovery passes **1/1** with zero observations. All publication sweeps plus factory pass **52/52**. All four `tools/test_*.py` programs pass **4/36/32/8** tests. **51/51 registers** and **48/51 extracts** reproduce; three inherited outcomes remain unchanged: 12.0.5 and 12.0.7 byte mismatches, 12.1.0 unsupported-template error. Rust formatting and Mists `cargo check --no-default-features --features sound,gui,casc,client-mists --tests` pass; **zero non-vendor warnings**, with six existing iced manifest warnings and their summary left unsuppressed. Complete logs and revision/scope receipts are in [evidence](../../../data/patch-api/evidence/6.0.1-session-2026-10-08/).
+
+Initial discovery/all-sweep failures (JSON map supplied instead of the required expected-gap list) are retained under `initial-failure/`. Corrected fixture `[]` passes both filters and the Mists recheck. Python/reproduction/format proof remains valid because its scoped inputs did not change. [Command ledger](../../../data/patch-api/evidence/6.0.1-session-2026-10-08/p601-command-ledger.md) records revisions, invalidation and results. The fresh-checkout/later-audit gate is still pending. No full suite, startup parity or separate area regression is claimed: no runtime areas changed.
 
 ## Validator contract
 

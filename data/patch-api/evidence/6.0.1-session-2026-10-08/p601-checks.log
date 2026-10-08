@@ -1,0 +1,10 @@
+{"label": "p601-discovery", "exit": 1}
+{"label": "p601-all-sweeps", "exit": 1}
+{"label": "p601-mists-check", "exit": 0}
+{"label": "p601-format-check", "exit": 0}
+{"label": "p601-reproduction", "exit": 0}
+{"label": "p601-test_check_patch_validators", "exit": 0}
+{"label": "p601-test_extract_patch_non_inventory", "exit": 0}
+{"label": "p601-test_gen_patch_wikitext_register", "exit": 0}
+{"label": "p601-test_patch_audit_validation", "exit": 0}
+Completed requested checks; failures: ['discovery', 'all-sweeps']
