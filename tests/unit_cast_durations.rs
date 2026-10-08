@@ -50,9 +50,9 @@ fn unit_cast_durations_resolve_self_interrupt_identity() {
     .unwrap();
 }
 
-#[test]
-fn unit_cast_durations_native_interrupt_text_resolves_player_class() {
-    let env = super::spell_casting::env_with_full_blizzard_ui();
+prefork_full_ui_case! {
+fn unit_cast_durations_native_interrupt_text_resolves_player_class(env: &WowLuaEnv) {
+
     {
         let state = env.state();
         let mut state = state.borrow_mut();
@@ -69,6 +69,15 @@ fn unit_cast_durations_native_interrupt_text_resolves_player_class() {
         "#,
     )
     .unwrap();
+
+}
+}
+
+#[cfg(not(feature = "client-retail"))]
+#[test]
+fn unit_cast_durations_native_interrupt_text_resolves_player_class() {
+    let env = super::spell_casting::env_with_full_blizzard_ui();
+    unit_cast_durations_native_interrupt_text_resolves_player_class::run(&env);
 }
 
 #[test]
