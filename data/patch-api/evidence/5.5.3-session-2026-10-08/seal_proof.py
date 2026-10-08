@@ -45,7 +45,7 @@ def main():
         policy = {'command': receipt['command'], 'exit': receipt['expected_exit']}
         if label in ['all-sweeps', 'client-lines', 'mists-pages-final']:
             text = (HERE / receipt['log']).read_text()
-            policy['passed_cases'] = sorted(re.findall(r'^test (\S+) (?:- should panic )?\.\.\. ok$', text, re.M))
+            policy['passed_cases'] = sorted(set(re.findall(r'^test (\S+) (?:- should panic )?\.\.\. ok$', text, re.M)))
         proofs[label] = policy
     shared_paths = git('ls-tree', '-r', '--name-only', revision, 'data/patch-api/sources').decode().splitlines()
     shared_paths.extend(['tests/patch_5_5_3_publication_sweep.rs', 'tests/patch_5_5_4_publication_sweep.rs',

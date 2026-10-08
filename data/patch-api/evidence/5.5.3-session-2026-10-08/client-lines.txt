@@ -1,0 +1,66 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p553-page)
+    Finished `test` profile [optimized + debuginfo] target(s) in 2m 07s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p553-page/debug/deps/integration-1db16289b0998b2a)
+
+running 3 tests
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.004s] [Startup] SimState::default complete in 4.12ms
+[  0.004s] [Startup] SimState::default complete in 4.12ms
+[  0.004s] [Startup] SimState::default complete in 3.95ms
+[  0.004s] [Startup] rilua VM created in 216.04µs
+[  0.004s] [Startup] rilua VM created in 199.40µs
+[  0.005s] [Startup] rilua VM created in 169.67µs
+[  0.005s] [Startup] builtin frames initialized in 166.28µs
+[  0.005s] [Startup] builtin frames initialized in 185.13µs
+[  0.005s] [Startup] template registry cleared in 9.01µs
+[  0.005s] [Startup] template registry cleared in 17.25µs
+[  0.005s] [Startup] intrinsic templates registered in 10.39µs
+[  0.005s] [Startup] builtin frames initialized in 204.14µs
+[  0.005s] [Startup] intrinsic templates registered in 13.18µs
+[  0.005s] [Startup] initial app_data lua handle installed in 241.00ns
+[  0.005s] [Startup] initial app_data lua handle installed in 1.66µs
+[  0.005s] [Startup] template registry cleared in 13.04µs
+[  0.005s] [Startup] intrinsic templates registered in 15.47µs
+[  0.005s] [Startup] initial app_data lua handle installed in 881.00ns
+[  0.455s] [Startup] init_lua_state complete in 449.72ms
+[  0.455s] [Startup] final app_data lua handle installed in 661.00ns
+[  0.455s] [Startup] initial screen globals installed in 327.84µs
+[  0.455s] [Startup] WowLuaEnv::new complete
+
+thread 'publication_sweep_client_lines::publication_sweep_client_lines_reject_wrong_profile' (1456819) panicked at /home/osso/.worktrees/wow-ui-sim-p553-page/tests/common/publication_sweep.rs:514:5:
+register client line does not match active profile
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+[  0.455s] [Startup] init_lua_state complete in 450.40ms
+[  0.455s] [Startup] final app_data lua handle installed in 802.00ns
+[  0.455s] [Startup] initial screen globals installed in 298.65µs
+[  0.455s] [Startup] WowLuaEnv::new complete
+[  0.465s] [Startup] init_lua_state complete in 459.92ms
+[  0.465s] [Startup] final app_data lua handle installed in 672.00ns
+[  0.465s] [Startup] initial screen globals installed in 449.24µs
+[  0.465s] [Startup] WowLuaEnv::new complete
+test publication_sweep_client_lines::publication_sweep_client_lines_reject_wrong_profile - should panic ... ok
+[  0.486s] [Startup] WowLuaEnv::new begin
+[  0.489s] [Startup] SimState::default complete in 2.91ms
+[  0.489s] [Startup] rilua VM created in 154.15µs
+[  0.489s] [Startup] builtin frames initialized in 94.77µs
+[  0.489s] [Startup] template registry cleared in 13.77µs
+[  0.489s] [Startup] intrinsic templates registered in 11.59µs
+[  0.490s] [Startup] initial app_data lua handle installed in 1.51µs
+test publication_sweep_client_lines::publication_sweep_client_lines_ignore_classic_removals_for_retail ... ok
+[  0.766s] [Startup] init_lua_state complete in 276.21ms
+[  0.766s] [Startup] final app_data lua handle installed in 420.00ns
+[  0.766s] [Startup] initial screen globals installed in 489.96µs
+[  0.766s] [Startup] WowLuaEnv::new complete
+test publication_sweep_client_lines::publication_sweep_client_lines_keep_same_line_ordering ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 10678 filtered out; finished in 0.82s
+
