@@ -6,10 +6,6 @@ use std::collections::{BTreeMap, BTreeSet};
 use serde::Deserialize;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
-// Reuse the real cached Game preload: post-load bootstrap and strict removals included.
-#[path = "common/prefork_full_ui_preload.rs"]
-mod full_ui;
-
 // Frozen from the cached retail Blizzard_APIDocumentationGenerated declarations.
 const DATA: &str = include_str!("data/patch_12_1_0_enums.json");
 const KNOWN_GAPS: &str = include_str!("data/patch_12_1_0_enum_known_gaps.json");
@@ -150,17 +146,16 @@ fn read_data() -> Data {
     data
 }
 
-#[test]
-fn patch_12_1_0_enum_publication() {
+prefork_full_ui_case! {
+fn patch_12_1_0_enum_publication(env: &WowLuaEnv) {
     let data = read_data();
     let known: BTreeSet<String> = serde_json::from_str(KNOWN_GAPS).expect("parse known gaps");
-    let results = crate::common::with_exclusive_workload(|| {
-        let env = full_ui::preload_full_game_ui().expect("load the full cached Game UI");
+    let results = {
         data.rows
             .iter()
             .map(|row| (row.source_id.clone(), check_row(&env, &data, row)))
             .collect::<BTreeMap<_, _>>()
-    });
+    };
     let mut non_ok = BTreeSet::new();
     for (id, (ok, detail)) in &results {
         if !ok {
@@ -174,4 +169,5 @@ fn patch_12_1_0_enum_publication() {
         non_ok, known,
         "new gaps: {new_gaps:?}; resolved/stale gaps: {resolved_gaps:?}"
     );
+}
 }
