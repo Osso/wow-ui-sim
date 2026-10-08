@@ -1,0 +1,12 @@
+{
+  "pageid": 66933,
+  "title": "Patch 9.0.2/API changes",
+  "revid": 659986,
+  "timestamp": "2021-05-06T09:01:47Z",
+  "retrieved": "2026-10-08",
+  "method": "MediaWiki revisions API; pinned response in evidence/9.0.2-session-2026-10-08/p902-fetch.json",
+  "wikitext_sha256": "9a75f475bb5db0d455aaa03260717a480af2f32008c9947e2ae59b3aeb62262e",
+  "generator_flags": [],
+  "register_generator": "tools/gen_patch_wikitext_register.py",
+  "extract_generator": "tools/extract_patch_non_inventory.py --patch 9.0.2 --text-only --preserve-examples"
+}
