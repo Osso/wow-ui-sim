@@ -1,0 +1,10 @@
+{"label": "p720-all-sweeps", "exit": 0}
+{"label": "p720-texture-regression", "exit": 0}
+{"label": "p720-mask-regression", "exit": 0}
+{"label": "p720-equipment-regression", "exit": 0}
+{"label": "p720-equipment-lib", "exit": 0}
+{"label": "p720-mists-check", "exit": 0}
+{"label": "p720-format-check", "exit": 0}
+{"label": "p720-retail-build", "exit": 0}
+{"label": "p720-startup", "exit": 0}
+Targeted queue finished
