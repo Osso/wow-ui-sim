@@ -1,0 +1,10 @@
+{
+  "url": "https://warcraft.wiki.gg/api.php?action=query&pageids=686956&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&format=json",
+  "retrieved": "2026-10-08T23:37:17.658621+00:00",
+  "pageid": 686956,
+  "title": "Patch 5.5.2/API changes",
+  "revid": 6778080,
+  "timestamp": "2026-07-22T05:39:42Z",
+  "sha256": "43926be3b23df17f53e8e6c241a994ee9e2842fc9f80453bb904de8b8148328d",
+  "wikitext_sha256": "715c614109b44ceef34559b2bdd01df19a33afafb25b9c432d700b34702da4f4"
+}

@@ -1,0 +1,38 @@
+{
+  "patch": "5.5.2",
+  "client_line": "mists-classic",
+  "profile": "client-mists",
+  "source_sha256": "eb233b6273050fb2ffe659accc22f9926d07863faa14db5049e4923319dd262f",
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/5.5.2-api-changes.txt",
+    "sha256": "1d611f3526d38eaabf1a847ae3732ad47dbbfb997e7efb804e2ff30f4fa89417",
+    "wikitext_revid": 6778080
+  },
+  "source_rows": [
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-004",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-005",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    }
+  ],
+  "proof_policy": "Resources-only stub. All rows metadata-only, no API publication or behavioral credit. Linked diffs unexpanded."
+}
