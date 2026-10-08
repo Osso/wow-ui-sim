@@ -2,6 +2,10 @@
 
 [Audit](investigations/patch-6-2-4-api-audit.md): merged 7.0.1/7.0.3 registers integrated on master 846a30663; own zero gaps and seven pending historical contracts unchanged. All 50 sweep/factory cases pass; all 48 other pages match exact master observations. 49 registers / 46 extracts reproduce, three inherited failures retained. Negative 0 → 1, identity/BN regressions, 32/36/8 fixtures and format/Mists checks pass; 32 historical/integrated validators pass. Historical artifacts preserved. Rebase onto 15b417367 supersedes the four-file 7.0.3 allowlist; durable ten-commit mapping and 30 pinned-master validators pass. Fresh sweeps 50/50 and 1/1, fixtures 32/36/8 and format pass.
 
+## [2026-10-08] investigation | Patch 6.2.0 API audit
+
+Pinned parent page and accounted narrative statements; modeled retail spell-link cost omission. Targeted verification pending; no retirements.
+
 ## [2026-10-08] investigation | Patch 7.0.1 redirect audit
 
 [Audit](investigations/patch-7-0-1-api-audit.md): pageid 336026 revision 3241525 redirects to 7.0.3; zero API entries, one metadata-only ID, no retirements or runtime changes. 48/48 sweep/factory cases, fixtures 30/34/8, format/Mists and 28 validators pass; 47 registers/44 extracts reproduce with three inherited failures. Independent-clone expanded-scope/tamper portability proof passes.

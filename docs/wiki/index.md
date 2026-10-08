@@ -6,6 +6,10 @@
 
 [Audit](investigations/patch-6-2-2-api-audit.md): revision 6209268, navigation-only stub (not redirect), zero inventory/one metadata ID. Own sweep 1/1, all sweeps/factory 49/49, fixtures 31/35/8, 48 registers/45 extracts with three inherited failures, warning-clean non-vendor Mists and format pass. All 25 prior gates plus own historical validator and relocated/future-file/tamper proof pass. No runtime changes or retirements; 6.2.4 then 7.0.1 placeholders remain.
 
+## [2026-10-08] investigation | Patch 6.2.0 API audit
+
+[Audit](investigations/patch-6-2-0-api-audit.md): pinned narrative page, eleven extract occurrences, zero inventory rows; spell-link cost mismatch reproduced. Targeted verification pending.
+
 ## [2026-10-08] integration | Patch 7.0.3 API audit
 
 [Audit](investigations/patch-7-0-3-api-audit.md): merged 7.1.0 register, explicit seven-commit rebase mapping and 243 preserved historical artifacts. Own 52 gaps unchanged; 48 sweep/factory cases pass and every other page is unchanged versus exact master. 47 registers / 44 extracts reproduce with three inherited failures. Requested professions/crafting/mount regressions, Mists, 31/35/8 fixtures, format and both addons-enabled startups `[]` pass; 29 historical/integrated gates validated.

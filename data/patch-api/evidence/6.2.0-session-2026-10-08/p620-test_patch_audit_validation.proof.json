@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "tools/test_patch_audit_validation.py"
+  ],
+  "revision": "114659452afcb21e6ef926317b72e1a3f1b8decf",
+  "exit": 0,
+  "log": "p620-test_patch_audit_validation.txt",
+  "log_sha256": "97d7b9900e89e8010fa2c94f8978194d2596f2ae820e0e4824c01599053ebd00",
+  "invalidated": false
+}

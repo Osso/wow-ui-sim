@@ -15,13 +15,6 @@ use rilua::vm::state::LuaState;
 
 const SPELL_TOOLTIP_WORD_WRAP_MIN_WIDTH: f64 = 240.0;
 
-fn spell_cost_line(spell_id: u32) -> Option<&'static str> {
-    match spell_id {
-        19750 => Some("10% of Base MANA"),
-        _ => None,
-    }
-}
-
 fn spell_cooldown_line(spell_id: u32) -> Option<&'static str> {
     match spell_id {
         642 | 86659 => Some("5 min cooldown"),
@@ -46,8 +39,14 @@ fn push_spell_name_line(state: &mut LuaState, lines: Val, index: i64, spell_name
 
 /// Returns true when a cost line was written, so the caller can advance
 /// the running index.
-fn push_spell_cost_line(state: &mut LuaState, lines: Val, index: i64, spell_id: u32) -> bool {
-    let Some(cost) = spell_cost_line(spell_id) else {
+fn push_spell_cost_line(
+    state: &mut LuaState,
+    lines: Val,
+    index: i64,
+    spell_id: u32,
+    hyperlink: bool,
+) -> bool {
+    let Some(cost) = crate::c_api::spell_tooltip_cost::spell_cost_line(spell_id, hyperlink) else {
         return false;
     };
     push_highlight_spell_line(state, lines, index, cost);
@@ -185,11 +184,17 @@ fn resolved_spell_description(state: &LuaState, spell_id: u32) -> String {
     }
 }
 
-fn push_spell_tooltip_lines(state: &mut LuaState, lines: Val, spell_id: u32, spell_name: &str) {
+fn push_spell_tooltip_lines(
+    state: &mut LuaState,
+    lines: Val,
+    spell_id: u32,
+    spell_name: &str,
+    hyperlink: bool,
+) {
     let mut index = 1;
     push_spell_name_line(state, lines, index, spell_name);
     index += 1;
-    if push_spell_cost_line(state, lines, index, spell_id) {
+    if push_spell_cost_line(state, lines, index, spell_id, hyperlink) {
         index += 1;
     }
     push_spell_cast_line(state, lines, index, spell_id);
@@ -201,6 +206,14 @@ fn push_spell_tooltip_lines(state: &mut LuaState, lines: Val, spell_id: u32, spe
 }
 
 pub(super) fn tooltip_for_spell_id(state: &mut LuaState, spell_id: u32) -> Val {
+    tooltip_for_spell_source(state, spell_id, false)
+}
+
+pub(super) fn tooltip_for_spell_hyperlink(state: &mut LuaState, spell_id: u32) -> Val {
+    tooltip_for_spell_source(state, spell_id, true)
+}
+
+fn tooltip_for_spell_source(state: &mut LuaState, spell_id: u32, hyperlink: bool) -> Val {
     let tooltip = create_identified_tooltip(state, TOOLTIP_TYPE_SPELL, spell_id);
     let Some(spell) = spells::get_spell(spell_id) else {
         return tooltip;
@@ -208,7 +221,7 @@ pub(super) fn tooltip_for_spell_id(state: &mut LuaState, spell_id: u32) -> Val {
     let saved_top = state.top;
     state.push(tooltip);
     let lines = table_get(state, tooltip, "lines");
-    push_spell_tooltip_lines(state, lines, spell_id, spell.name);
+    push_spell_tooltip_lines(state, lines, spell_id, spell.name, hyperlink);
     set_spell_tooltip_width_hint(state, tooltip);
     state.top = saved_top;
     tooltip

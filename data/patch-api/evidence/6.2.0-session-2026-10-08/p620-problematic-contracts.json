@@ -1,0 +1,34 @@
+[
+  {
+    "source_id": "prose-undated-005",
+    "capabilities": [
+      "patch_6_2_0_behavior::patch_6_2_0_difficulty_identifiers"
+    ],
+    "status": "bounded-coverage",
+    "note": "Existing DifficultyUtil.ID.DungeonMythic is 23; cached prefork asserts that identifier only. Five-player/native difficulty metadata is not modeled: GetDifficultyInfo remains temporary defaults, not a Difficulty.db2-backed system.",
+    "literal": ":* Mythic 5-player: difficultyID 23"
+  },
+  {
+    "source_id": "prose-undated-006",
+    "capabilities": [
+      "patch_6_2_0_behavior::patch_6_2_0_difficulty_identifiers"
+    ],
+    "status": "bounded-coverage",
+    "note": "Existing DifficultyUtil.ID.DungeonTimewalker is 24; cached prefork asserts that identifier only. Five-player/native difficulty metadata is not modeled: GetDifficultyInfo remains temporary defaults, not a Difficulty.db2-backed system.",
+    "literal": ":* Timewalker 5-player: difficultyID 24"
+  },
+  {
+    "source_id": "prose-undated-009",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Item hyperlink readers currently parse the item ID, not the specializationID/upgradeType/variable bonus-ID suffix and moved upgradeId. Exact link-modified item views need a structured historical link model and bonus/upgrade catalog; do not guess modifier effects from the static item catalog.",
+    "literal": "* New item string pieces added (in bold) and upgradeId moved: itemID:enchant:gem1:gem2:gem3:gem4:suffixID:uniqueID:level:specializationID:upgradeType:instanceDifficultyID:numBonusIDs:bonusID1:bonusID2...:upgradeId"
+  },
+  {
+    "source_id": "prose-undated-010",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "No modeled linked-player specialization/set-bonus or cross-level timewalking upgrade scaling. Existing item catalog and context clones do not provide historical bonus/upgrade relationships or per-link scaled stat fixtures. The upgradeType=0 omission and end-of-bonus-ID placement remain unimplemented, not credited from ID-only parsing.",
+    "literal": "The old upgradeId piece is now placed at the end of all bonusID's. If the upgradeType is 0 then the upgradeId is left off. The specializationID allows other players to view linked gear with the linking player's primary stat and set bonuses. The new upgradeType and upgradeId setup allows timewalking gear to display appropriately when linked between different level players."
+  }
+]

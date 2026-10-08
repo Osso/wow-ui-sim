@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "tools/test_extract_patch_non_inventory.py"
+  ],
+  "revision": "114659452afcb21e6ef926317b72e1a3f1b8decf",
+  "exit": 1,
+  "log": "p620-test_extract_patch_non_inventory.txt",
+  "log_sha256": "a6cf6525a1733e60306055e6d93376c33cf3048107c2ab780ce6c0ef3a081a17",
+  "invalidated": false
+}

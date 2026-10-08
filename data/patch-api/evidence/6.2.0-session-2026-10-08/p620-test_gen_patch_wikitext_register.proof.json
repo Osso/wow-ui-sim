@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "tools/test_gen_patch_wikitext_register.py"
+  ],
+  "revision": "114659452afcb21e6ef926317b72e1a3f1b8decf",
+  "exit": 0,
+  "log": "p620-test_gen_patch_wikitext_register.txt",
+  "log_sha256": "aa9de8e6336c91276985e8b7edfd74ee4053e151c065e21365799c14cea15e97",
+  "invalidated": false
+}

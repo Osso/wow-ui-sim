@@ -211,6 +211,7 @@ pub mod map_world_coordinates;
 #[cfg(feature = "retail-12-0-7")]
 pub(crate) mod patch_12_0_7_inputs;
 mod spell_cooldown_output;
+pub(crate) mod spell_tooltip_cost;
 pub(crate) mod talent_spell;
 pub(crate) mod unit_aura_access;
 #[cfg(feature = "retail-12-0-5")]

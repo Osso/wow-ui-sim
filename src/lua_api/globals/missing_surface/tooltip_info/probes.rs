@@ -13,8 +13,9 @@ use super::sources::{
 #[cfg(not(feature = "retail-12-0-5"))]
 use super::spell::lookup_player_aura_by_instance_id;
 use super::spell::{
-    append_action_binding_line, lookup_player_aura, spell_id_for_talent_id, tooltip_for_spell_id,
-    tooltip_for_toy_item_id, tooltip_for_unit_aura,
+    append_action_binding_line, lookup_player_aura, spell_id_for_talent_id,
+    tooltip_for_spell_hyperlink, tooltip_for_spell_id, tooltip_for_toy_item_id,
+    tooltip_for_unit_aura,
 };
 use super::unit::{tooltip_for_unit, tooltip_for_unit_guid, tooltip_for_world_loot};
 use crate::lua_api::globals::currency_data;
@@ -449,7 +450,7 @@ pub(super) fn c_tooltip_get_hyperlink(state: &mut LuaState) -> LuaResult<u32> {
     let tooltip = if let Some(item_id) = parse_prefixed_id(&link, "item") {
         tooltip_for_item_id(state, item_id)
     } else if let Some(spell_id) = parse_prefixed_id(&link, "spell") {
-        tooltip_for_spell_id(state, spell_id)
+        tooltip_for_spell_hyperlink(state, spell_id)
     } else if let Some(guid) = link.strip_prefix("unit:") {
         tooltip_for_unit_guid(state, guid).unwrap_or(Val::Nil)
     } else {

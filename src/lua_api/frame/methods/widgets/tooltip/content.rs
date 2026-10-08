@@ -457,11 +457,12 @@ pub(super) fn set_hyperlink(state: &mut LuaState) -> LuaResult<u32> {
         return Ok(0);
     }
     if let Some(spell_id) = parse_link_id(&link, "spell") {
+        let link_val = create_string(state, &link);
         let has_lines = populate_tooltip_from_method(
             state,
             tooltip_id,
-            "GetSpellByID",
-            &[Val::Num(spell_id as f64)],
+            "GetHyperlink",
+            &[link_val],
             Some(spell_id),
         )?;
         if has_lines {

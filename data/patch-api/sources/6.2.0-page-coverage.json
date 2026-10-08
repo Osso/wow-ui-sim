@@ -1,0 +1,96 @@
+{
+  "schema": "patch-api-page-coverage/v1",
+  "patch": "6.2.0",
+  "source_path": "data/patch-api/sources/6.2.0-wikitext-register.json",
+  "source_sha256": "b4662f1f6b4abbed24dee47d8fe8f50de184788f93e6798c8e853c011a91e76c",
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/6.2.0-api-changes.txt",
+    "sha256": "36eae48608a4b7ac67fb3d1ac38ae85a378731113622a623236b5ca9821ee154"
+  },
+  "source_rows": [
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit.",
+      "literal": "Patch 6.2.0 API changes"
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit.",
+      "literal": "== New =="
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Difficulty-section summary; the two concrete IDs are separately accounted.",
+      "literal": "* New difficulties"
+    },
+    {
+      "source_id": "prose-undated-005",
+      "capabilities": [
+        "patch_6_2_0_behavior::patch_6_2_0_difficulty_identifiers"
+      ],
+      "status": "bounded-coverage",
+      "note": "Existing DifficultyUtil.ID.DungeonMythic is 23; cached prefork asserts that identifier only. Five-player/native difficulty metadata is not modeled: GetDifficultyInfo remains temporary defaults, not a Difficulty.db2-backed system.",
+      "literal": ":* Mythic 5-player: difficultyID 23"
+    },
+    {
+      "source_id": "prose-undated-006",
+      "capabilities": [
+        "patch_6_2_0_behavior::patch_6_2_0_difficulty_identifiers"
+      ],
+      "status": "bounded-coverage",
+      "note": "Existing DifficultyUtil.ID.DungeonTimewalker is 24; cached prefork asserts that identifier only. Five-player/native difficulty metadata is not modeled: GetDifficultyInfo remains temporary defaults, not a Difficulty.db2-backed system.",
+      "literal": ":* Timewalker 5-player: difficultyID 24"
+    },
+    {
+      "source_id": "source-context-008",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit.",
+      "literal": "== Changes =="
+    },
+    {
+      "source_id": "prose-undated-009",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Item hyperlink readers currently parse the item ID, not the specializationID/upgradeType/variable bonus-ID suffix and moved upgradeId. Exact link-modified item views need a structured historical link model and bonus/upgrade catalog; do not guess modifier effects from the static item catalog.",
+      "literal": "* New item string pieces added (in bold) and upgradeId moved: itemID:enchant:gem1:gem2:gem3:gem4:suffixID:uniqueID:level:specializationID:upgradeType:instanceDifficultyID:numBonusIDs:bonusID1:bonusID2...:upgradeId"
+    },
+    {
+      "source_id": "prose-undated-010",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No modeled linked-player specialization/set-bonus or cross-level timewalking upgrade scaling. Existing item catalog and context clones do not provide historical bonus/upgrade relationships or per-link scaled stat fixtures. The upgradeType=0 omission and end-of-bonus-ID placement remain unimplemented, not credited from ID-only parsing.",
+      "literal": "The old upgradeId piece is now placed at the end of all bonusID's. If the upgradeType is 0 then the upgradeId is left off. The specializationID allows other players to view linked gear with the linking player's primary stat and set bonuses. The new upgradeType and upgradeId setup allows timewalking gear to display appropriately when linked between different level players."
+    },
+    {
+      "source_id": "prose-undated-012",
+      "capabilities": [
+        "patch_6_2_0_behavior::patch_6_2_0_spell_link_excludes_cost",
+        "patch_6_2_0_behavior::patch_6_2_0_spell_link_excludes_cost_bare"
+      ],
+      "status": "bounded-coverage",
+      "note": "C API backing cost policy omits resource costs for retail spell hyperlinks; GameTooltip:SetHyperlink dispatches the hyperlink producer and preserves spell identity. Direct SetSpellByID retains the existing cost fixture. Test compares all non-cost lines and both short/full links; only Flash of Light has a resource-cost fixture, no complete spell catalog/native parity claim.",
+      "literal": "* The resulting tooltip from calling GameTooltip:SetHyperlink(link) no longer contains the cost of a spell if the hyperlink is a spell tooltip. GameTooltip:SetSpellByID(id) still contains the cost, though."
+    },
+    {
+      "source_id": "source-context-014",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit.",
+      "literal": "== Automated diff =="
+    },
+    {
+      "source_id": "prose-undated-015",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "External automated-diff transclusion retained literally but not expanded. This pinned parent page does not enumerate those APIs; diff-page contents need a separately pinned audit and receive no publication or behavior credit here.",
+      "literal": "[Transcluded source: Patch 6.2.0/API changes/diff; not expanded]"
+    }
+  ]
+}
