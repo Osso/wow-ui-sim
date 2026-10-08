@@ -1,0 +1,28 @@
+[
+  {
+    "symbol": "PrepVoidStorageForTransmogrify",
+    "action": "already absent; no new runtime retirement",
+    "cache_consumers": 0,
+    "src_test_callers_before_new_tests": 0,
+    "later_readditions": 0,
+    "scan_tool": "GNU /usr/bin/grep whole-word -w, qualified and bare names; full logs retained",
+    "queued_pins": [
+      "a016e9393943de703ae070d8ce33b5497113c3fc",
+      "0d05b55b2591ef9413d6ffe374d8b8200d9d5cb5",
+      "9698f09862b6cd91b4f87e840295a3fce304940a"
+    ]
+  },
+  {
+    "symbol": "UNIT_DYNAMIC_FLAGS",
+    "action": "already absent; no new runtime retirement",
+    "cache_consumers": 0,
+    "src_test_callers_before_new_tests": 0,
+    "later_readditions": 0,
+    "scan_tool": "GNU /usr/bin/grep whole-word -w, qualified and bare names; full logs retained",
+    "queued_pins": [
+      "a016e9393943de703ae070d8ce33b5497113c3fc",
+      "0d05b55b2591ef9413d6ffe374d8b8200d9d5cb5",
+      "9698f09862b6cd91b4f87e840295a3fce304940a"
+    ]
+  }
+]

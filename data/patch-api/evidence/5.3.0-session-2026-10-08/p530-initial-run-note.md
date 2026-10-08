@@ -1,0 +1,1 @@
+Initial cold-build discovery launched before the new test source was committed and without a result-output environment variable. It is diagnostic only, not acceptance proof. Retain its log and receipt; committed-input discovery with results is required. No broad suite was run.

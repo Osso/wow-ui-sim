@@ -1,0 +1,32 @@
+[
+  {
+    "path": "p530-fetch.json",
+    "pageid": 423274,
+    "title": "Patch 5.3.0/API changes",
+    "revision": 4065122,
+    "timestamp": "2021-07-13T19:26:28Z",
+    "sha256": "06ef9ba95d42ed7a30766a76d6021ae66a55323a1d93520db35ffb732d5b4d53",
+    "retrieved_date": "2026-10-08",
+    "method": "MediaWiki action=query rvprop=ids|timestamp|content rvslots=main; User-Agent wow-ui-sim patch audit/1.0"
+  },
+  {
+    "path": "p530-diff-fetch.json",
+    "pageid": 330804,
+    "title": "Patch 5.3.0/API changes/diff",
+    "revision": 3188422,
+    "timestamp": "2017-04-07T07:59:40Z",
+    "sha256": "d97752e44165d733120a39f40391d55db4c1bee74bd6ee0b4c2d14543d531d88",
+    "retrieved_date": "2026-10-08",
+    "method": "MediaWiki action=query rvprop=ids|timestamp|content rvslots=main; User-Agent wow-ui-sim patch audit/1.0"
+  },
+  {
+    "path": "p530-parent-fetch.json",
+    "pageid": 38992,
+    "title": "Patch 5.3.0",
+    "revision": 6611399,
+    "timestamp": "2026-01-23T11:06:36Z",
+    "sha256": "04580712a63e513ff102f20f84df14dfad0eaa1bd9ee9139a91c6ec3af5dac14",
+    "retrieved_date": "2026-10-08",
+    "method": "MediaWiki action=query rvprop=ids|timestamp|content rvslots=main; User-Agent wow-ui-sim patch audit/1.0"
+  }
+]

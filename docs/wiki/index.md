@@ -10,6 +10,10 @@
 
 [Audit](investigations/patch-5-5-2-api-audit.md): pinned revision 6778080, ancestor TOC 50502 in the 505xx Mists Classic line. Zero inventory/four metadata rows; no positive API credit, gaps or retirements. Only 5.5.3/5.5.4 in the Classic chain. Branch/master sweeps pass 57/57; all 9,749 observations on 56 retail pages identical. Mists cases 4/4, retail controls 3/3, warning-clean non-vendor Mists check, injected-row negative 1 → 0, format and Python 87/87 pass. All 59 registers/56 extracts reproduce; three inherited failures unchanged. Own validator seals 151 inputs; sealed-log tampering rejected/restored. Branch gate PASS at 0a030682a: 44/44 clean and 45/45 later, exact pinned prior set preserved. SharedXML-only/empty-inventory limits remain explicit; no runtime/vendor changes, push, merge or delegation.
 
+## [2026-10-08] investigation | Retail Patch 5.3.0 API audit
+
+[Audit](investigations/patch-5-3-0-api-audit.md): pinned revision 4065122 plus transcluded diff 3188422; retail TOC 50300 (2013), 44 inventory occurrences including Browser handlers. Whole-word retirement scans and fixed queued-register checks retained. Targeted verification in progress; no runtime changes.
+
 ## [2026-10-08] investigation | Patch 5.5.3 Mists Classic API audit
 
 [Audit](investigations/patch-5-5-3-api-audit.md): ancestor TOC 50503 resolved against current 50504 profile; blocker history retained. Zero inventory, four metadata rows, no positive API credit. Retail 56/56 and both control groups 3/3 pass; all 9,740 observations across 55 retail pages equal pinned master. Mists warning check, 87 Python fixtures, format and 1 → 0 negative control pass. All 57 registers/54 extracts reproduce, with three exact inherited failures. Portable gate passes 41/41 clean and 42/42 later; own-log tampering is rejected and restored.

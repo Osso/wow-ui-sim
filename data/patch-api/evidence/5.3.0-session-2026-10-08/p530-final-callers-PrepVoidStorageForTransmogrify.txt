@@ -1,0 +1,2 @@
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/patch_5_3_0_behavior.rs:22:            assert(rawget(_G, 'PrepVoidStorageForTransmogrify') == nil)
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/patch_5_3_0_behavior.rs:23:            assert(_G.PrepVoidStorageForTransmogrify == nil)

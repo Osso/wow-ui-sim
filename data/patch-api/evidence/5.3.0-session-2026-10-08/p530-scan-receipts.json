@@ -138,5 +138,41 @@
     "exit": 1,
     "log": "p530-retirement-UNIT_DYNAMIC_FLAGS-callers-bare.txt",
     "matches": 0
+  },
+  {
+    "symbol": "PrepVoidStorageForTransmogrify",
+    "scope": "final-callers",
+    "pattern": "PrepVoidStorageForTransmogrify",
+    "tool": "/usr/bin/grep whole-word -w; bare scan includes pcall and conditional references",
+    "command": [
+      "/usr/bin/grep",
+      "-RInwF",
+      "--",
+      "PrepVoidStorageForTransmogrify",
+      "/home/osso/.worktrees/wow-ui-sim-p530-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p530-page/tests"
+    ],
+    "exit": 0,
+    "log": "p530-final-callers-PrepVoidStorageForTransmogrify.txt",
+    "matches": 2,
+    "classification": "Only new own explicit absence assertions; no runtime consumers and no new retirement changes."
+  },
+  {
+    "symbol": "UNIT_DYNAMIC_FLAGS",
+    "scope": "final-callers",
+    "pattern": "UNIT_DYNAMIC_FLAGS",
+    "tool": "/usr/bin/grep whole-word -w; bare scan includes pcall and conditional references",
+    "command": [
+      "/usr/bin/grep",
+      "-RInwF",
+      "--",
+      "UNIT_DYNAMIC_FLAGS",
+      "/home/osso/.worktrees/wow-ui-sim-p530-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p530-page/tests"
+    ],
+    "exit": 0,
+    "log": "p530-final-callers-UNIT_DYNAMIC_FLAGS.txt",
+    "matches": 2,
+    "classification": "Only new own explicit absence assertions; no runtime consumers and no new retirement changes."
   }
 ]

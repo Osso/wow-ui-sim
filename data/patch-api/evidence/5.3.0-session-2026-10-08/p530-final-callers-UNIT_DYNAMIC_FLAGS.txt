@@ -1,0 +1,2 @@
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/patch_5_3_0_behavior.rs:25:            local ok, err = pcall(frame.RegisterEvent, frame, 'UNIT_DYNAMIC_FLAGS')
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/patch_5_3_0_behavior.rs:27:            assert(not frame:IsEventRegistered('UNIT_DYNAMIC_FLAGS'))

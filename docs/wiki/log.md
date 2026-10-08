@@ -530,3 +530,7 @@ Pinned API revision 2150406 and parent 6428967: 2013 retail, not Classic. [Audit
 Retail page and transcluded diff pinned; all 159 IDs accounted. [Audit](investigations/patch-5-4-0-api-audit.md) records 22 gaps, 27 pending contracts, bounded existing instance/forbidden behavior, complete grep removal scans and no runtime retirement. Targeted proof passes: 57 publication/factory, 2 prefork/2 standalone, 24 caller/6 source-unit cases, format and warning-clean non-vendor Mists; portable acceptance PASS 39/39 clean and 40/40 after a synthetic later audit; own-log tampering rejected and exact bytes restored.
 
 [2026-10-08] 5.4.0 integrated: exact 5.4.2 securerandom removal replaces one gap (22 → 21); 62 other retail/Classic pages equal master 3c60ac0ea. No runtime/vendor changes. Portable gate PASS at 4e006fb15493e10c9a02081d7921e08af5ec5ea1: clean 51/51, synthetic later audit 52/52; zero failures. Historical/integrated own-log tampering rejected and all bytes restored. Relocated replay passes without all 17 original pre-rebase objects.
+
+## [2026-10-08] investigation | Retail Patch 5.3.0 API audit
+
+Pinned retail 2013 page and diff; 44 source occurrences, opt-in parser reuse, bounded existing PvP role backing tests and consumer-free prior absence scans. [Audit](investigations/patch-5-3-0-api-audit.md). Verification still running.
