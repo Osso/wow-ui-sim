@@ -1,4 +1,6 @@
 """Observable plaintext and source-ID contracts for retained patch pages."""
+import subprocess
+import sys
 import unittest
 from pathlib import Path
 
@@ -8,6 +10,14 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 class ExtractTests(unittest.TestCase):
+    def test_cli_self_test_runs_without_argument_conflict(self):
+        result = subprocess.run(
+            [sys.executable, str(ROOT / 'tools/extract_patch_non_inventory.py'), '--self-test'],
+            cwd=ROOT, capture_output=True, text=True,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stdout, 'PASS: extraction and row-ID behavioral fixtures\n')
+
     def test_reference_note_preserves_publication_prose_and_citation(self):
         raw = ('* The [[Auction House]] was revamped <ref>{{ref web|'
                'url=https://example.test/source|author=[[Kaivax]]|date=2019-10-07|'

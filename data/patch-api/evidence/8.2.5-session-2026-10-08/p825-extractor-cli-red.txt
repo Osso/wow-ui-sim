@@ -1,0 +1,40 @@
+F
+======================================================================
+FAIL: test_cli_self_test_runs_without_argument_conflict (__main__.ExtractTests.test_cli_self_test_runs_without_argument_conflict)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p825-page/tools/test_extract_patch_non_inventory.py", line 18, in test_cli_self_test_runs_without_argument_conflict
+    self.assertEqual(result.returncode, 0, result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p825-page/tools/extract_patch_non_inventory.py", line 310, in <module>
+    main()
+    ~~~~^^
+  File "/home/osso/.worktrees/wow-ui-sim-p825-page/tools/extract_patch_non_inventory.py", line 251, in main
+    parser.add_argument('--retain-reference-notes', action='store_true',
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        help='Retain inline ref web citation fields alongside publication prose')
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/argparse.py", line 1563, in add_argument
+    return self._add_action(action)
+           ~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/usr/lib/python3.14/argparse.py", line 1988, in _add_action
+    self._optionals._add_action(action)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/usr/lib/python3.14/argparse.py", line 1786, in _add_action
+    action = super(_ArgumentGroup, self)._add_action(action)
+  File "/usr/lib/python3.14/argparse.py", line 1577, in _add_action
+    self._check_conflict(action)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/usr/lib/python3.14/argparse.py", line 1719, in _check_conflict
+    conflict_handler(action, confl_optionals)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/argparse.py", line 1728, in _handle_conflict_error
+    raise ArgumentError(action, message % conflict_string)
+argparse.ArgumentError: argument --retain-reference-notes: conflicting option string: --retain-reference-notes
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.029s
+
+FAILED (failures=1)
