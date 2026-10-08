@@ -111,6 +111,12 @@ const VIRTUAL_TEMPLATES_NOT_IN_GLOBALS: &[&str] = &[
     "PlayerChoiceTorghastOptionTemplate",
 ];
 
+fn load_player_choice_after_fork(env: &WowLuaEnv) {
+    load_addon(&env.loader_env(), &player_choice_toc())
+        .expect("explicit load_addon for Blizzard_PlayerChoice succeeds");
+
+}
+
 fn load_full_game_ui_with_player_choice() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
@@ -321,9 +327,10 @@ fn blizzard_player_choice_appears_in_full_addon_inventory() {
     );
 }
 
-#[test]
-fn blizzard_player_choice_loads_without_addon_specific_lua_errors() {
-    let env = load_full_game_ui_with_player_choice();
+prefork_full_ui_case! {
+fn blizzard_player_choice_loads_without_addon_specific_lua_errors(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    load_player_choice_after_fork(env);
 
     let load_errors: Vec<String> = env
         .state()
@@ -356,10 +363,19 @@ fn blizzard_player_choice_loads_without_addon_specific_lua_errors() {
         load_errors.join("\n  ")
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn blizzard_player_choice_is_addon_loaded_after_explicit_load() {
+fn blizzard_player_choice_loads_without_addon_specific_lua_errors() {
     let env = load_full_game_ui_with_player_choice();
+    blizzard_player_choice_loads_without_addon_specific_lua_errors::run(&env);
+}
+
+prefork_full_ui_case! {
+fn blizzard_player_choice_is_addon_loaded_after_explicit_load(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    load_player_choice_after_fork(env);
 
     let loaded: bool = env
         .eval("return C_AddOns.IsAddOnLoaded('Blizzard_PlayerChoice')")
@@ -371,10 +387,19 @@ fn blizzard_player_choice_is_addon_loaded_after_explicit_load() {
          makes IsAddOnLoaded report true"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn blizzard_player_choice_publishes_twenty_six_mixin_tables() {
+fn blizzard_player_choice_is_addon_loaded_after_explicit_load() {
     let env = load_full_game_ui_with_player_choice();
+    blizzard_player_choice_is_addon_loaded_after_explicit_load::run(&env);
+}
+
+prefork_full_ui_case! {
+fn blizzard_player_choice_publishes_twenty_six_mixin_tables(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    load_player_choice_after_fork(env);
 
     for mixin in PUBLIC_MIXINS {
         let kind: String = env
@@ -397,10 +422,19 @@ fn blizzard_player_choice_publishes_twenty_six_mixin_tables() {
          add or remove a mixin surface here as a deliberate test update"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn blizzard_player_choice_creates_named_non_virtual_frames() {
+fn blizzard_player_choice_publishes_twenty_six_mixin_tables() {
     let env = load_full_game_ui_with_player_choice();
+    blizzard_player_choice_publishes_twenty_six_mixin_tables::run(&env);
+}
+
+prefork_full_ui_case! {
+fn blizzard_player_choice_creates_named_non_virtual_frames(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    load_player_choice_after_fork(env);
 
     for frame in PUBLIC_NAMED_FRAMES {
         let kind: String = env
@@ -434,10 +468,19 @@ fn blizzard_player_choice_creates_named_non_virtual_frames() {
         );
     }
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn blizzard_player_choice_does_not_leak_virtual_templates_to_globals() {
+fn blizzard_player_choice_creates_named_non_virtual_frames() {
     let env = load_full_game_ui_with_player_choice();
+    blizzard_player_choice_creates_named_non_virtual_frames::run(&env);
+}
+
+prefork_full_ui_case! {
+fn blizzard_player_choice_does_not_leak_virtual_templates_to_globals(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    load_player_choice_after_fork(env);
 
     for template in VIRTUAL_TEMPLATES_NOT_IN_GLOBALS {
         let kind: String = env
@@ -472,10 +515,19 @@ fn blizzard_player_choice_does_not_leak_virtual_templates_to_globals() {
          PlayerChoiceTextFont (a Font, not a Frame) is intentionally excluded"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn blizzard_player_choice_frame_renders_as_hidden_after_load() {
+fn blizzard_player_choice_does_not_leak_virtual_templates_to_globals() {
     let env = load_full_game_ui_with_player_choice();
+    blizzard_player_choice_does_not_leak_virtual_templates_to_globals::run(&env);
+}
+
+prefork_full_ui_case! {
+fn blizzard_player_choice_frame_renders_as_hidden_after_load(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    load_player_choice_after_fork(env);
 
     let visible: bool = env
         .eval("return PlayerChoiceFrame:IsShown()")
@@ -499,10 +551,19 @@ fn blizzard_player_choice_frame_renders_as_hidden_after_load() {
          tooltips, which means a tooltip can render over a PlayerChoice option button"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn blizzard_player_choice_uiwidgets_dep_loaded_via_eager_discovery() {
+fn blizzard_player_choice_frame_renders_as_hidden_after_load() {
     let env = load_full_game_ui_with_player_choice();
+    blizzard_player_choice_frame_renders_as_hidden_after_load::run(&env);
+}
+
+prefork_full_ui_case! {
+fn blizzard_player_choice_uiwidgets_dep_loaded_via_eager_discovery(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    load_player_choice_after_fork(env);
 
     let widgets_loaded: bool = env
         .eval("return C_AddOns.IsAddOnLoaded('Blizzard_UIWidgets')")
@@ -533,4 +594,12 @@ fn blizzard_player_choice_uiwidgets_dep_loaded_via_eager_discovery() {
          (Blizzard_PlayerChoice.xml:38) at parse time, so Colors must be loaded BEFORE \
          PlayerChoice or the color name resolution would fail"
     );
+}
+}
+
+#[cfg(not(feature = "client-retail"))]
+#[test]
+fn blizzard_player_choice_uiwidgets_dep_loaded_via_eager_discovery() {
+    let env = load_full_game_ui_with_player_choice();
+    blizzard_player_choice_uiwidgets_dep_loaded_via_eager_discovery::run(&env);
 }
