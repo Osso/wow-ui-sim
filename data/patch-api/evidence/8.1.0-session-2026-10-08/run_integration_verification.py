@@ -41,7 +41,7 @@ def run_remaining_checks():
                                              'patch_8_1_0'])
     require('p810-integration-calendar', ['cargo', 'test', '--test', 'prefork_full_ui', '--',
                                          'blizzard_calendar_loads'])
-    require('p810-integration-bare', ['cargo', 'test', '--test', 'integration', '--',
+    require('p810-integration-bare-final', ['cargo', 'test', '--test', 'integration', '--',
                                      'patch_8_1_0', 'c_calendar', 'c_map_probes', 'date_and_time'])
     run_provider_checks()
 

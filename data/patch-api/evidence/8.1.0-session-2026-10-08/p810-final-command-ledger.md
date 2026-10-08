@@ -45,3 +45,5 @@ Historical rows above remain historical. Current Rust scopes are pinned in `p810
 - Portability: `python3 -B data/patch-api/evidence/8.1.0-session-2026-10-08/test_validator_portability.py` passes relocation/new-page scope and rejects protected-input whitespace drift and missing historical receipt rows.
 - Original combined cached command exits 1 because the harness accepts one positional filter; both requested filters subsequently pass separately.
 - First combined integration command exits 101 on obsolete source-name assertion; replacement composition test passes in the identical 37-case selection.
+
+Final validator matrix: all 17 `data/patch-api/evidence/*/validate.py` commands exit 0 at `6c6d8e23f`; complete commands/results in `p810-integration-validator-matrix.json`. Validators leave retained JSON unchanged. Wiki integrity: index 2,638 lines (only audit-summary replacement), log 329 lines (previous 325-line history retained verbatim); no `__pycache__` anywhere in the worktree.
