@@ -1,0 +1,6 @@
+{
+  "runtime_revision": "8a5dd0c7b",
+  "harness": "p725-garrison-red-test.rs.txt",
+  "harness_sha256": "41ff8fe8dcbc39b618610acb74a6c563232eef1ddfe6fcfb82f3805f14600c6c",
+  "note": "RED ran with this uncommitted added harness against unchanged pre-model runtime; receipt revision pins runtime, not the added harness."
+}

@@ -1,0 +1,61 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p725-page)
+    Finished `test` profile [optimized + debuginfo] target(s) in 2m 34s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p725-page/debug/deps/integration-1db16289b0998b2a)
+
+running 42 tests
+test blizzard_ui_blizzard_animadiversionui::behavior_onevent_currency_update_refreshes::currency_display_update_refreshes_bolster_and_currency_text ... ok
+test blizzard_ui_blizzard_animadiversionui::behavior_has_available_node_walks_node_list::has_available_node_returns_true_only_for_available_nodes ... ok
+test blizzard_ui_blizzard_animadiversionui::behavior_data_provider_refresh_skips_when_origin_or_nodes_missing::refresh_all_data_skips_when_origin_or_nodes_are_missing ... ok
+test blizzard_ui_blizzard_animadiversionui::behavior_onload_seeds_data_providers_and_pin_levels::onload_seeds_data_providers_pin_levels_and_interaction_options ... ok
+test blizzard_ui_blizzard_animadiversionui::behavior_can_reinforce_gates_on_progress::can_reinforce_gates_on_progress_and_reinforceable_nodes ... ok
+test blizzard_ui_blizzard_animadiversionui::behavior_onevent_anima_close_hides_panel::anima_close_event_hides_panel_once ... ok
+test blizzard_ui_blizzard_animadiversionui::behavior_data_provider_clear_effect_on_all_pins_skips_exempt::clear_effect_on_all_pins_skips_exempt_and_preserves_permanent_effects ... ok
+test blizzard_ui_blizzard_animadiversionui::behavior_data_provider_connects_active_pins_to_origin::refresh_all_data_connects_active_pins_to_origin ... ok
+test blizzard_ui_blizzard_animadiversionui::behavior_connection_setup_anchors_origin_and_rotates::connection_setup_anchors_origin_rotates_textures_and_sets_visual_state ... ok
+test blizzard_ui_blizzard_animadiversionui::behavior_onhide_unregisters_events_and_plays_close_sound::onhide_unregisters_events_stops_gems_and_plays_close_sound ... ok
+test blizzard_ui_blizzard_animadiversionui::behavior_confirm_reinforce_popup_calls_select_anima_node_permanent::confirm_reinforce_popup_accept_selects_permanent_node ... ok
+test blizzard_ui_blizzard_animadiversionui::behavior_confirm_channel_popup_plays_covenant_sound::confirm_channel_popup_accept_plays_covenant_sound_and_selects_node ... ok
+test blizzard_ui_blizzard_animadiversionui::behavior_onload_styles_close_button::onload_styles_close_button_border_atlas ... ok
+test blizzard_ui_blizzard_animadiversionui::behavior_pin_have_enough_anima_compares_currency::have_enough_anima_compares_matching_currency_cost ... ok
+test blizzard_ui_blizzard_animadiversionui::behavior_onshow_registers_events_and_plays_open_sound::onshow_registers_events_and_plays_expected_sounds ... ok
+test blizzard_ui_blizzard_animadiversionui::behavior_pin_click_routes_by_reinforce_state::pin_click_routes_by_reinforce_state_and_ignores_noops ... ok
+test blizzard_ui_blizzard_animadiversionui::behavior_pin_refresh_tooltip_branches_on_state_and_currency::pin_refresh_tooltip_branches_on_state_currency_and_quest_rewards ... ok
+test blizzard_ui_blizzard_animadiversionui::behavior_set_exclusive_selection_node_dims_other_pins::exclusive_selection_dims_available_pins_and_clears_selection_lock ... ok
+test blizzard_ui_blizzard_animadiversionui::behavior_pin_setup_node_marks_reinforce_state::setup_node_marks_reinforce_state_for_reinforceable_pins ... ok
+test blizzard_ui_blizzard_animadiversionui::behavior_reinforce_button_click_shows_static_popup::reinforce_button_click_shows_reinforce_popup_for_selected_node ... ok
+test blizzard_ui_blizzard_animadiversionui::behavior_setup_bolster_progress_caps_at_max_and_records_new_gems::setup_bolster_progress_caps_progress_and_marks_new_gems ... ok
+test blizzard_ui_blizzard_animadiversionui::behavior_reinforce_info_select_node_updates_title_and_button::reinforce_info_select_node_updates_title_button_and_selection ... ok
+test blizzard_ui_blizzard_animadiversionui::behavior_pin_set_visual_state_dims_unavailable_only::set_visual_state_dims_only_unavailable_pins ... ok
+test blizzard_ui_blizzard_animadiversionui::behavior_setup_bolster_progress_releases_pool_and_inits_info_frame::setup_bolster_progress_resets_pool_effects_and_initializes_info_frame ... ok
+test blizzard_ui_blizzard_animadiversionui::behavior_setup_currency_frame_formats_quantity_with_icon::setup_currency_frame_formats_quantity_with_icon ... ok
+test blizzard_ui_blizzard_animadiversionui::behavior_try_show_seeds_state_and_opens_panel::try_show_seeds_state_runs_setup_and_opens_panel ... ok
+test blizzard_ui_blizzard_animadiversionui::load::anima_diversion_ui_loads_with_dependency_closure_and_no_lua_errors ... ok
+test blizzard_ui_blizzard_animadiversionui::behavior_world_quest_data_provider_returns_subclassed_pin_template::world_quest_provider_uses_subclassed_pin_template_and_onload_limits ... ok
+test blizzard_ui_blizzard_animadiversionui::behavior_update_tutorial_tips_branches_on_reinforce_state::update_tutorial_tips_branches_on_reinforce_state ... ok
+test blizzard_ui_blizzard_animadiversionui::surface_frames::reinforce_info_frame_exposes_expected_children_and_ready_title ... ok
+test blizzard_ui_blizzard_animadiversionui::load::anima_diversion_ui_publishes_expected_mixin_tables ... ok
+test blizzard_ui_blizzard_animadiversionui::surface_events::anima_diversion_frame_registers_show_events_only_while_shown ... ok
+test blizzard_ui_blizzard_animadiversionui::surface_events::anima_diversion_data_provider_registers_events_only_while_map_is_shown ... ok
+test blizzard_ui_blizzard_animadiversionui::surface_frames::anima_diversion_frame_exposes_expected_children ... ok
+test blizzard_ui_blizzard_animadiversionui::surface_globals::anima_diversion_node_state_enum_exposes_published_values ... ok
+test blizzard_ui_blizzard_animadiversionui::surface_frames::anima_diversion_frame_loads_as_hidden_map_canvas_panel ... ok
+test blizzard_ui_blizzard_animadiversionui::surface_globals::anima_diversion_ui_registers_static_popup_globals ... ok
+test blizzard_ui_blizzard_animadiversionui::surface_globals::anima_diversion_util_predicates_match_node_state_semantics ... ok
+test blizzard_ui_blizzard_animadiversionui::surface_mixins::anima_diversion_data_provider_mixin_exposes_expected_methods ... ok
+test blizzard_ui_blizzard_animadiversionui::surface_mixins::anima_diversion_frame_mixin_exposes_expected_methods ... ok
+test blizzard_ui_blizzard_animadiversionui::surface_mixins::anima_diversion_pin_and_connection_mixins_expose_expected_methods ... ok
+test blizzard_ui_blizzard_animadiversionui::surface_mixins::anima_diversion_xml_script_mixins_expose_expected_methods ... ok
+
+test result: ok. 42 passed; 0 failed; 0 ignored; 0 measured; 10627 filtered out; finished in 14.39s
+

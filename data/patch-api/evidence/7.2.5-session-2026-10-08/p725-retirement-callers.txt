@@ -1,0 +1,5 @@
+src/iced_app/update.rs:62:            Message::ReloadUI => self.handle_reload_ui(),
+src/iced_app/mod.rs:136:    ReloadUI,
+src/iced_app/view.rs:79:        return Some(Message::ReloadUI);
+src/lua_api/globals/state_backed_queries.rs:25:    LuaApiMut::register_function(lua, "ReloadUI", reload_ui)?;
+src/loader/tests/wow_api_globals/global_functions.rs:316:        "ReloadUI",

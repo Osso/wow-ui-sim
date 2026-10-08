@@ -1,0 +1,19 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "blizzard_ui_blizzard_animadiversionui"
+  ],
+  "revision": "43dd7ed8e15ae6a00a04818e28ad1754f4540dd6",
+  "scope": "p725-anima-callers",
+  "cwd": ".",
+  "target": "dedicated p725-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p725-anima-callers.txt",
+  "log_sha256": "9b12db957e5b692f3236f30acbfadbbe7dfe0c66491ebedda2cfafa0952d2baa",
+  "seconds": 169.02823689599973,
+  "invalidated": false
+}

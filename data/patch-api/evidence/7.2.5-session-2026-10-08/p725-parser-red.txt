@@ -1,0 +1,14 @@
+....................E.....
+======================================================================
+ERROR: test_top_level_bullets_keep_canonical_names_and_rename_directions (tools.test_gen_patch_wikitext_register.InventoryTests.test_top_level_bullets_keep_canonical_names_and_rename_directions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p725-page/tools/test_gen_patch_wikitext_register.py", line 16, in test_top_level_bullets_keep_canonical_names_and_rename_directions
+    rows = generator.parse_top_level_api_bullets(raw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'gen_patch_wikitext_register' has no attribute 'parse_top_level_api_bullets'. Did you mean: 'parse_legacy_api_bullets'?
+
+----------------------------------------------------------------------
+Ran 26 tests in 0.002s
+
+FAILED (errors=1)

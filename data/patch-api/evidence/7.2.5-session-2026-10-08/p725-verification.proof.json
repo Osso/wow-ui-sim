@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p725-page/data/patch-api/evidence/7.2.5-session-2026-10-08/run_verification.py"
+  ],
+  "revision": "43dd7ed8e15ae6a00a04818e28ad1754f4540dd6",
+  "scope": "p725-verification",
+  "cwd": ".",
+  "target": "dedicated p725-page target (external to repository)",
+  "environment": {},
+  "exit": 1,
+  "log": "p725-verification.txt",
+  "log_sha256": "9f8c96c907cee614abaf57ccd38161e74060e47093754fa04463c228afa17a85",
+  "seconds": 125.69498813699829,
+  "invalidated": false
+}

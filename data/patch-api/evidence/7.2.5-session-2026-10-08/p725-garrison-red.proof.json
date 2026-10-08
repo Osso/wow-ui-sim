@@ -1,0 +1,20 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_7_2_5_garrison"
+  ],
+  "revision": "8a5dd0c7bb4a25cd335f4ea19127ba22d7c3786d",
+  "scope": "p725-garrison-red",
+  "cwd": ".",
+  "target": "dedicated p725-page target (external to repository)",
+  "environment": {},
+  "exit": 1,
+  "log": "p725-garrison-red.txt",
+  "log_sha256": "6d4d5e88a797e05931ec025c655c188b9c7cace42a8b8c0b35a0bea631ce5769",
+  "seconds": 203.6843293819984,
+  "invalidated": false
+}

@@ -1,0 +1,81 @@
+src/c_api/patch_retired_members.rs:76:        "C_Commentator",
+src/c_api/patch_retired_members.rs:110:    ("C_Commentator", &["GetTeamHighlightColor"]),
+src/c_api/patch_retired_members.rs:154:        "C_Commentator",
+src/lua_api/hot_literals.rs:125:    b"C_Commentator",
+src/lua_api/workarounds/temporary/inert_global_defaults.rs:67:C_Commentator = C_Commentator or __wow_namespace()
+src/lua_api/workarounds/temporary/inert_global_defaults.rs:68:if rawget(C_Commentator, "IsSpectating") == nil then
+src/lua_api/workarounds/temporary/inert_global_defaults.rs:69:    function C_Commentator.IsSpectating() return false end
+src/lua_api/workarounds/temporary/inert_global_defaults.rs:71:if rawget(C_Commentator, "SendAddonMessage") == nil then
+src/lua_api/workarounds/temporary/inert_global_defaults.rs:72:    function C_Commentator.SendAddonMessage(_prefix, _message, _channel)
+src/lua_api/workarounds/temporary/inert_global_defaults.rs:84:        and rawget(C_Commentator, "SendAddonMessageLogged") == nil then
+src/lua_api/workarounds/temporary/inert_global_defaults.rs:85:    function C_Commentator.SendAddonMessageLogged(_prefix, _message, _chatType, _target)
+src/lua_api/workarounds/temporary/inert_global_defaults.rs:86:        return C_Commentator.SendAddonMessage(_prefix, _message, _chatType)
+src/lua_api/workarounds/temporary/inert_global_defaults.rs:300:                if C_Commentator.IsSpectating() ~= false then return "spectating" end
+src/lua_api/workarounds/temporary/inert_global_defaults.rs:301:                if C_Commentator.SendAddonMessage("A", "B", "WHISPER") ~= Enum.SendAddonMessageResult.Success then return "send" end
+src/lua_api/workarounds/temporary/inert_global_defaults.rs:353:            C_Commentator.ExistingMember = 7
+src/lua_api/workarounds/temporary/inert_global_defaults.rs:384:                if C_Commentator.ExistingMember ~= 7 then return "lost_member" end
+src/lua_api/workarounds/temporary/inert_global_defaults.rs:385:                if type(C_Commentator.SendAddonMessage) ~= "function" then return "missing_default" end
+src/lua_api/globals/enum_data/game_system.rs:152:        "GarrTalent",
+src/lua_api/globals/enum_data/missing_enums.lua:10895:    GarrTalent = 35,
+tests/blizzard_spectate_frame_loads.rs:94:         (C_SpectatingUI / C_Commentator), no client-side persistence"
+tests/patch_9_1_5_classic_surfaces.rs:9:    {'C_Commentator', 'SetBlacklistedAuras'},
+tests/patch_9_1_5_classic_surfaces.rs:10:    {'C_Commentator', 'SetBlacklistedCooldowns'},
+tests/patch_8_2_5_publication_fixes.rs:8:    "C_Commentator.GetElapsedMs",
+tests/patch_8_2_5_publication_fixes.rs:9:    "C_Commentator.GetTrackedDefensiveCooldowns",
+tests/patch_8_2_5_publication_fixes.rs:10:    "C_Commentator.GetTrackedOffensiveCooldowns",
+tests/patch_8_2_5_publication_fixes.rs:11:    "C_Commentator.IsTrackedDefensiveCooldown",
+tests/patch_8_2_5_publication_fixes.rs:12:    "C_Commentator.IsTrackedOffensiveCooldown",
+tests/patch_9_1_5_publication_fixes.rs:6:    {'C_Commentator', 'SetBlacklistedAuras'},
+tests/patch_9_1_5_publication_fixes.rs:7:    {'C_Commentator', 'SetBlacklistedCooldowns'},
+tests/commentator_api.rs:13:            local explicit = C_Commentator.SendAddonMessage("COOLDOWNBROADCASTER", "1,2,3", "RAID")
+tests/commentator_api.rs:18:            local implicit = C_Commentator.SendAddonMessage("COOLDOWNBROADCASTER", "1,2,3")
+tests/commentator_api.rs:30:        "C_Commentator.SendAddonMessage should return SendAddonMessageResult.Success"
+tests/patch_9_0_1_classic_surfaces.rs:10:assert(type(C_Commentator.GetTeamHighlightColor) == "function", "C_Commentator.GetTeamHighlightColor")
+tests/patch_12_0_5_sweep_globals.rs:169:            local result = C_Commentator.SendAddonMessageLogged('Prefix', 'message', 'PARTY')
+tests/patch_9_0_1_publication_fixes.rs:11:assert(rawget(C_Commentator, "GetTeamHighlightColor") == nil, "C_Commentator.GetTeamHighlightColor raw")
+tests/patch_9_0_1_publication_fixes.rs:12:assert(C_Commentator.GetTeamHighlightColor == nil, "C_Commentator.GetTeamHighlightColor lookup")
+tests/patch_9_0_1_publication_fixes.rs:13:assert(C_Commentator.GetTeamHighlightColor == nil, "C_Commentator.GetTeamHighlightColor repeat")
+tests/data/patch_11_1_0_sweep_known_gaps.json:7:  "wt-global-api-C_Commentator.SpellUsesItemCharges-63",
+tests/data/patch_10_2_6_sweep_known_gaps.json:4:  "wt-global-api-C_Commentator.ZoomIn_Position-22",
+tests/data/patch_10_2_6_sweep_known_gaps.json:5:  "wt-global-api-C_Commentator.ZoomOut_Position-23",
+tests/data/patch_9_1_5_sweep_known_gaps.json:9:  "wt-global-api-C_Commentator.SetBlocklistedAuras-38",
+tests/data/patch_9_1_5_sweep_known_gaps.json:10:  "wt-global-api-C_Commentator.SetBlocklistedCooldowns-39",
+tests/data/patch_9_0_1_sweep_known_gaps.json:19:  "wt-global-api-C_Commentator.AssignPlayerToTeam-213",
+tests/data/patch_9_0_1_sweep_known_gaps.json:20:  "wt-global-api-C_Commentator.AssignPlayersToTeam-214",
+tests/data/patch_9_0_1_sweep_known_gaps.json:21:  "wt-global-api-C_Commentator.AssignPlayersToTeamInCurrentInstance-215",
+tests/data/patch_9_0_1_sweep_known_gaps.json:22:  "wt-global-api-C_Commentator.FindSpectatedUnit-216",
+tests/data/patch_9_0_1_sweep_known_gaps.json:23:  "wt-global-api-C_Commentator.FindTeamNameInCurrentInstance-217",
+tests/data/patch_9_0_1_sweep_known_gaps.json:24:  "wt-global-api-C_Commentator.FindTeamNameInDirectory-218",
+tests/data/patch_9_0_1_sweep_known_gaps.json:25:  "wt-global-api-C_Commentator.FlushCommentatorHistory-219",
+tests/data/patch_9_0_1_sweep_known_gaps.json:26:  "wt-global-api-C_Commentator.GetCommentatorHistory-220",
+tests/data/patch_9_0_1_sweep_known_gaps.json:27:  "wt-global-api-C_Commentator.GetOrCreateSeries-221",
+tests/data/patch_9_0_1_sweep_known_gaps.json:28:  "wt-global-api-C_Commentator.GetPlayerAuraInfoByUnit-222",
+tests/data/patch_9_0_1_sweep_known_gaps.json:29:  "wt-global-api-C_Commentator.GetPlayerCooldownInfoByUnit-223",
+tests/data/patch_9_0_1_sweep_known_gaps.json:30:  "wt-global-api-C_Commentator.GetPlayerData-224",
+tests/data/patch_9_0_1_sweep_known_gaps.json:31:  "wt-global-api-C_Commentator.GetPlayerFlagInfoByUnit-225",
+tests/data/patch_9_0_1_sweep_known_gaps.json:32:  "wt-global-api-C_Commentator.GetPlayerInfo-576",
+tests/data/patch_9_0_1_sweep_known_gaps.json:33:  "wt-global-api-C_Commentator.GetPlayerSpellChargesByUnit-226",
+tests/data/patch_9_0_1_sweep_known_gaps.json:34:  "wt-global-api-C_Commentator.GetTeamColor-227",
+tests/data/patch_9_0_1_sweep_known_gaps.json:35:  "wt-global-api-C_Commentator.GetTeamColorByUnit-228",
+tests/data/patch_9_0_1_sweep_known_gaps.json:36:  "wt-global-api-C_Commentator.GetTrackedSpellsByUnit-229",
+tests/data/patch_9_0_1_sweep_known_gaps.json:37:  "wt-global-api-C_Commentator.GetUnitData-230",
+tests/data/patch_9_0_1_sweep_known_gaps.json:38:  "wt-global-api-C_Commentator.IsTrackedSpellByUnit-231",
+tests/data/patch_9_0_1_sweep_known_gaps.json:39:  "wt-global-api-C_Commentator.ResetSeriesScores-232",
+tests/data/patch_9_0_1_sweep_known_gaps.json:40:  "wt-global-api-C_Commentator.ResetSettings-233",
+tests/data/patch_9_0_1_sweep_known_gaps.json:41:  "wt-global-api-C_Commentator.SetCommentatorHistory-234",
+tests/data/patch_9_0_1_sweep_known_gaps.json:42:  "wt-global-api-C_Commentator.SetSeriesScore-235",
+tests/data/patch_9_0_1_sweep_known_gaps.json:43:  "wt-global-api-C_Commentator.SetSeriesScores-236",
+tests/data/patch_9_0_1_sweep_known_gaps.json:81:  "wt-global-api-C_Garrison.GetTalentTreeInfo-296",
+tests/data/patch_12_0_0_enums.json:192:        "GarrTalent": 35,
+tests/data/patch_12_0_0_sweep_known_gaps.json:11:  "wt-global-api-C_Commentator.GetCombatEventInfo-141",
+tests/data/patch_8_2_5_sweep_known_gaps.json:12:  "wt-global-api-C_Commentator.GetIndirectSpellID-57",
+tests/data/patch_8_2_5_sweep_known_gaps.json:13:  "wt-global-api-C_Commentator.GetMatchDuration-58",
+tests/data/patch_8_2_5_sweep_known_gaps.json:14:  "wt-global-api-C_Commentator.GetPlayerAuraInfo-59",
+tests/data/patch_8_2_5_sweep_known_gaps.json:15:  "wt-global-api-C_Commentator.GetTrackedSpellID-60",
+tests/data/patch_8_2_5_sweep_known_gaps.json:16:  "wt-global-api-C_Commentator.GetTrackedSpells-61",
+tests/data/patch_8_2_5_sweep_known_gaps.json:17:  "wt-global-api-C_Commentator.IsTrackedSpell-62",
+tests/data/patch_8_2_5_sweep_known_gaps.json:18:  "wt-global-api-C_Commentator.SetRequestedDebuffCooldowns-63",
+tests/data/patch_10_1_5_sweep_known_gaps.json:2:  "wt-global-api-C_Commentator.GetPlayerItemCooldownInfo-26",
+tests/data/patch_10_1_5_sweep_known_gaps.json:3:  "wt-global-api-C_Commentator.GetPlayerItemCooldownInfoByUnit-25",
+tests/data/patch_10_1_5_sweep_known_gaps.json:4:  "wt-global-api-C_Commentator.SetBlocklistedItemCooldowns-27",
+tests/data/patch_10_1_5_sweep_known_gaps.json:5:  "wt-global-api-C_Commentator.SetRequestedItemCooldowns-28",

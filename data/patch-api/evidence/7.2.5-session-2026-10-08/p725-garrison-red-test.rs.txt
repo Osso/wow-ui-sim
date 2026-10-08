@@ -1,0 +1,17 @@
+//! Bounded current-retail tree context; no reconstructed Legion catalog claim.
+#![cfg(feature = "client-retail")]
+
+use wow_ui_sim::lua_api::WowLuaEnv;
+
+prefork_full_ui_case! {
+fn patch_7_2_5_garrison_empty_context(env: &WowLuaEnv) {
+    let (tree, faction, lists): (bool, bool, i32) = env.eval(r#"
+        return C_Garrison.GetCurrentGarrTalentTreeID() == nil,
+               C_Garrison.GetCurrentGarrTalentTreeFriendshipFactionID() == nil,
+               select('#', C_Garrison.GetTalentTreeIDsByClassID(3, 2))
+    "#).expect("empty tree context queries");
+    assert!(tree);
+    assert!(faction);
+    assert_eq!(lists, 0);
+}
+}

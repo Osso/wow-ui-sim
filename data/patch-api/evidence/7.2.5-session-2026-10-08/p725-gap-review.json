@@ -1,0 +1,102 @@
+{
+  "publication_gaps": [
+    {
+      "source_id": "wt-global-api-C_Unit-12",
+      "symbol": "C_Unit",
+      "reason": "Raw-absent namespace. Source links the unqualified UnitIsOwnerOrControllerOfUnit, already modeled/published, but names no C_Unit member. No native namespace capture; do not invent an empty table or qualified alias.",
+      "observation": {
+        "expected": {
+          "direction": "changed",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_Unit"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=table",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-ReloadUI-14",
+      "symbol": "ReloadUI",
+      "reason": "Historical rename suggests removal, but thirteen current retail consumer lines prohibit retirement. Existing notification behavior retained; no later master/p730 register re-addition, no historical absence claim.",
+      "observation": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "ReloadUI"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "global",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_UI.Reload-14",
+      "symbol": "C_UI.Reload",
+      "reason": "Raw-absent. Existing ReloadUI and GUI reload only dispatch notifications; no VM teardown/recreation or SavedVariables reload model. Event-only alias would disguise missing lifecycle; no shim added.",
+      "observation": {
+        "expected": {
+          "direction": "added",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_UI.Reload"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    }
+  ],
+  "unmodeled_source_contracts": [
+    {
+      "source_id": "prose-undated-005",
+      "literal": "* C_Commentator added with various functions.",
+      "reason": "Namespace publication is separately bounded, but page enumerates no member names/signatures or behavior. Do not invent commentator or transmog additions from an unexpanded linked page."
+    },
+    {
+      "source_id": "prose-undated-012",
+      "literal": "* C_Unit now includes UnitIsOwnerOrControllerOfUnit()",
+      "reason": "Raw-absent namespace. Source links the unqualified UnitIsOwnerOrControllerOfUnit, already modeled/published, but names no C_Unit member. No native namespace capture; do not invent an empty table or qualified alias."
+    },
+    {
+      "source_id": "prose-undated-013",
+      "literal": "* C_TransmogSets now includes several added functions.",
+      "reason": "Namespace publication is separately bounded, but page enumerates no member names/signatures or behavior. Do not invent commentator or transmog additions from an unexpanded linked page."
+    },
+    {
+      "source_id": "prose-undated-014",
+      "literal": "* ReloadUI() renamed to C_UI.Reload()",
+      "reason": "Raw-absent. Existing ReloadUI and GUI reload only dispatch notifications; no VM teardown/recreation or SavedVariables reload model. Event-only alias would disguise missing lifecycle; no shim added. Historical rename suggests removal, but thirteen current retail consumer lines prohibit retirement. Existing notification behavior retained; no later master/p730 register re-addition, no historical absence claim."
+    }
+  ],
+  "remaining_native_boundaries": [
+    "Tree catalog order and Legion/server contents not captured; injected fixtures are not native data.",
+    "Garrison secret-argument, numeric coercion and protected-context policy not verified.",
+    "Existing chat-bubble metadata tables are not native Frames or forbidden-filter behavior.",
+    "Unnamed commentator/transmog members and event documentation cannot be reconstructed from this page.",
+    "Reload lifecycle and ambiguous C_Unit namespace retained, no aliases/shims or vendor changes."
+  ]
+}

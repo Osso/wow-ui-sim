@@ -4,7 +4,7 @@
 
 ## [2026-10-08] investigation | 7.2.5 API page audit
 
-[Audit](investigations/patch-7-2-5-api-audit.md): revision 4311256, sixteen API identities; six discovery gaps. Real retail garrison tree catalog/context model closes three targeted missing members; full reload lifecycle and ambiguous C_Unit remain problematic. ReloadUI retained after complete retail/caller/later-register scans. Targeted acceptance pending.
+[Audit](investigations/patch-7-2-5-api-audit.md): revision 4311256, 16 inventory / 12 extract IDs accounted. Real retail garrison tree catalog/context closes three gaps; three exact publication gaps and four prose contracts retained. All 43 sweeps plus factory, own bare/cached tests, garrison/anima integration callers, 26/34/8 Python fixtures, warning-clean non-vendor Mists check and startup pass. Cached garrison 37/38; exact remaining failure reproduced on base. 43 registers / 40 extracts reproduce; inherited three extract failures unchanged. Nineteen prior validators pass; own portability gate pending. 7.3.0 integration placeholder retained.
 
 ## [2026-10-08] investigation | Patch 8.0.1 API audit
 

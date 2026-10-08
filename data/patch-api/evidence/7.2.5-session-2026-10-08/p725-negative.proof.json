@@ -1,0 +1,23 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_7_2_5_publication_sweep"
+  ],
+  "revision": "43dd7ed8e15ae6a00a04818e28ad1754f4540dd6",
+  "scope": "p725-negative",
+  "cwd": ".",
+  "target": "dedicated p725-page target (external to repository)",
+  "environment": {
+    "P725_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p725-page/data/patch-api/evidence/7.2.5-session-2026-10-08/p725-negative-register.json",
+    "P725_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p725-page/data/patch-api/evidence/7.2.5-session-2026-10-08/p725-negative-results.json"
+  },
+  "exit": 1,
+  "log": "p725-negative.txt",
+  "log_sha256": "f2b4efdd5c9eebacd817e50d68d14adf129bad0fa6e178f8ccf1b1f6278fbadb",
+  "seconds": 181.91246610700182,
+  "invalidated": false
+}

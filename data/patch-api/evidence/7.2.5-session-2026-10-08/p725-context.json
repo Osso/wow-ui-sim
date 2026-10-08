@@ -1,0 +1,246 @@
+{
+  "runtime_revision": "43dd7ed8e15ae6a00a04818e28ad1754f4540dd6",
+  "runtime_files": {
+    "data/patch-api/evidence/7.2.5-session-2026-10-08/run_proof.py": "ee6da6c2183c2151d780bc10bf5654570e0a191803299e5e226e7265f8245846",
+    "src/c_api/c_garrison_trees.rs": "a988bd2f43733ffebb400378c0eb0ab07942a478e23b7565097e5935dfce4cd7",
+    "src/c_api/mod.rs": "18fd8176b8228bfcdbc055da74c9cbda5ab31a7ea2a79cf9042d8fd59626d53c",
+    "src/lua_api/state.rs": "83573e680834d209cf67e0f1fd777769916a9034e0b8189aefb28a6944b785f7",
+    "src/lua_api/state/sim_state.rs": "37d8fb2d609e2bd159fe994370d9f733b8fe4c45f99315332cd93a9c1f1d3a39",
+    "tests/data/patch_7_2_5_sweep_known_gaps.json": "3f7f956a60864b0bd3a98eaee19656b545282581264089c704bdbc483c21889c",
+    "tests/patch_7_2_5_garrison_trees.rs": "d10af0acb627fa3354259246af2a15a3c7fa827fcc90f3a365d73731ec6125ee",
+    "tests/patch_7_2_5_publication_sweep.rs": "495e3458ccda4168e3a0661ec43e2f3711bef3c8e350df75d0522cf59f272d78",
+    "tools/gen_patch_wikitext_register.py": "0ec66225a4488d57adef4731c63706663d0035d4c3cda063dae294fa65a869ac",
+    "tools/test_gen_patch_wikitext_register.py": "ecc715d7dbe74508b02867a6f5bbdbdbd55295aa94758bf4877ebddc78d5cddf"
+  },
+  "receipts": {
+    "p725-bare-trees": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_7_2_5"
+      ],
+      "revision": "43dd7ed8e15ae6a00a04818e28ad1754f4540dd6",
+      "exit": 0
+    },
+    "p725-mists-check": {
+      "command": [
+        "cargo",
+        "check",
+        "--no-default-features",
+        "--features",
+        "sound,gui,casc,client-mists",
+        "--tests"
+      ],
+      "revision": "43dd7ed8e15ae6a00a04818e28ad1754f4540dd6",
+      "exit": 0
+    },
+    "p725-garrison-callers": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "garrison"
+      ],
+      "revision": "43dd7ed8e15ae6a00a04818e28ad1754f4540dd6",
+      "exit": 0
+    },
+    "p725-extractor-fixtures": {
+      "command": [
+        "python3",
+        "-B",
+        "tools/test_extract_patch_non_inventory.py"
+      ],
+      "revision": "43dd7ed8e15ae6a00a04818e28ad1754f4540dd6",
+      "exit": 0
+    },
+    "p725-own-green": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_7_2_5"
+      ],
+      "revision": "43dd7ed8e15ae6a00a04818e28ad1754f4540dd6",
+      "exit": 0
+    },
+    "p725-garrison-red": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_7_2_5_garrison"
+      ],
+      "revision": "8a5dd0c7bb4a25cd335f4ea19127ba22d7c3786d",
+      "exit": 1
+    },
+    "p725-all-sweeps": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "publication_sweep"
+      ],
+      "revision": "43dd7ed8e15ae6a00a04818e28ad1754f4540dd6",
+      "exit": 0
+    },
+    "p725-negative": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_7_2_5_publication_sweep"
+      ],
+      "revision": "43dd7ed8e15ae6a00a04818e28ad1754f4540dd6",
+      "exit": 1
+    },
+    "p725-discovery": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_7_2_5"
+      ],
+      "revision": "8a5dd0c7bb4a25cd335f4ea19127ba22d7c3786d",
+      "exit": 1
+    },
+    "p725-startup": {
+      "command": [
+        "timeout",
+        "90",
+        "/home/osso/.cache/wow-ui-sim-targets/p725-page/debug/wow-sim",
+        "--no-addons",
+        "--no-saved-vars",
+        "lua-errors"
+      ],
+      "revision": "43dd7ed8e15ae6a00a04818e28ad1754f4540dd6",
+      "exit": 0
+    },
+    "p725-validator-fixtures": {
+      "command": [
+        "python3",
+        "-B",
+        "tools/test_patch_audit_validation.py"
+      ],
+      "revision": "43dd7ed8e15ae6a00a04818e28ad1754f4540dd6",
+      "exit": 0
+    },
+    "p725-base-garrison-case": {
+      "command": [
+        "cargo",
+        "test",
+        "--manifest-path",
+        "/tmp/p725-base-85c2acb2d/Cargo.toml",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors"
+      ],
+      "revision": "43dd7ed8e15ae6a00a04818e28ad1754f4540dd6",
+      "exit": 1
+    },
+    "p725-source-reproduction": {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p725-page/data/patch-api/evidence/7.2.5-session-2026-10-08/reproduce_sources.py"
+      ],
+      "revision": "43dd7ed8e15ae6a00a04818e28ad1754f4540dd6",
+      "exit": 0
+    },
+    "p725-generator-fixtures": {
+      "command": [
+        "python3",
+        "-B",
+        "tools/test_gen_patch_wikitext_register.py"
+      ],
+      "revision": "43dd7ed8e15ae6a00a04818e28ad1754f4540dd6",
+      "exit": 0
+    },
+    "p725-format": {
+      "command": [
+        "cargo",
+        "fmt",
+        "--check"
+      ],
+      "revision": "43dd7ed8e15ae6a00a04818e28ad1754f4540dd6",
+      "exit": 0
+    },
+    "p725-verification": {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p725-page/data/patch-api/evidence/7.2.5-session-2026-10-08/run_verification.py"
+      ],
+      "revision": "43dd7ed8e15ae6a00a04818e28ad1754f4540dd6",
+      "exit": 1
+    },
+    "p725-cached-garrison": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "garrison"
+      ],
+      "revision": "43dd7ed8e15ae6a00a04818e28ad1754f4540dd6",
+      "exit": 1
+    },
+    "p725-anima-callers": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "blizzard_ui_blizzard_animadiversionui"
+      ],
+      "revision": "43dd7ed8e15ae6a00a04818e28ad1754f4540dd6",
+      "exit": 0
+    },
+    "p725-other-validators": {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p725-page/data/patch-api/evidence/7.2.5-session-2026-10-08/check_other_validators.py"
+      ],
+      "revision": "43dd7ed8e15ae6a00a04818e28ad1754f4540dd6",
+      "exit": 0
+    },
+    "p725-cached-anima": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "animadiversion"
+      ],
+      "revision": "43dd7ed8e15ae6a00a04818e28ad1754f4540dd6",
+      "exit": 0
+    },
+    "p725-retail-build": {
+      "command": [
+        "cargo",
+        "build",
+        "--bin",
+        "wow-sim"
+      ],
+      "revision": "43dd7ed8e15ae6a00a04818e28ad1754f4540dd6",
+      "exit": 0
+    }
+  },
+  "failure_boundary": "Only cached-garrison broad selection fails; exact single failure reproduced on 85c2acb2d Git archive snapshot. No test weakened or baseline API shim added."
+}

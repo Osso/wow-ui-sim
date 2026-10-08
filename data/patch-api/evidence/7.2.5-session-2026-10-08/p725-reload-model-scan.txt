@@ -1,0 +1,4 @@
+src/iced_app/update.rs:62:            Message::ReloadUI => self.handle_reload_ui(),
+src/iced_app/update.rs:375:    fn handle_reload_ui(&mut self) {
+src/lua_api/globals/state_backed_queries.rs:25:    LuaApiMut::register_function(lua, "ReloadUI", reload_ui)?;
+src/lua_api/globals/state_backed_queries.rs:110:fn reload_ui(state: &mut LuaState) -> LuaResult<u32> {

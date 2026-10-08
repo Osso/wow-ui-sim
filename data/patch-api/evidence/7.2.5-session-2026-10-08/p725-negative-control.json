@@ -1,0 +1,6 @@
+{
+  "mutated_id": "wt-global-api-C_ChatBubbles.GetAllChatBubbles-4",
+  "change": "direction added -> removed only",
+  "before": 3,
+  "after": 4
+}

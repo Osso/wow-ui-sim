@@ -1,0 +1,110 @@
+[
+  {
+    "source_id": "source-context-001",
+    "extract_line": 1,
+    "literal": "Patch 7.2.5 API changes",
+    "wikitext_line": 1,
+    "raw_literal": "{{apichanges|7.2.5|prev=7.2.0|next=7.3.0}}",
+    "status": "metadata-only",
+    "reason": "Source title/heading only; no runtime credit."
+  },
+  {
+    "source_id": "source-context-003",
+    "extract_line": 3,
+    "literal": "== New ==",
+    "wikitext_line": 3,
+    "raw_literal": "== New ==",
+    "status": "metadata-only",
+    "reason": "Source title/heading only; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-004",
+    "extract_line": 4,
+    "literal": "* C_ChatBubbles added with C_ChatBubbles.GetAllChatBubbles()",
+    "wikitext_line": 4,
+    "raw_literal": "* {{api|t=n|C_ChatBubbles}} added with {{api|C_ChatBubbles.GetAllChatBubbles|GetAllChatBubbles}}()",
+    "status": "bounded-coverage",
+    "reason": "Named namespace/member publication is separately observed; summary supplies no additional behavior contract. Existing modeled chat/action/LFG surfaces remain bounded, not native parity."
+  },
+  {
+    "source_id": "prose-undated-005",
+    "extract_line": 5,
+    "literal": "* C_Commentator added with various functions.",
+    "wikitext_line": 5,
+    "raw_literal": "* {{api|t=n|C_Commentator}} added with various functions.",
+    "status": "audit-pending",
+    "reason": "Namespace publication is separately bounded, but page enumerates no member names/signatures or behavior. Do not invent commentator or transmog additions from an unexpanded linked page."
+  },
+  {
+    "source_id": "prose-undated-006",
+    "extract_line": 6,
+    "literal": "* Events added to API documentation",
+    "wikitext_line": 6,
+    "raw_literal": "* Events added to [[APILink|API documentation]]",
+    "status": "metadata-only",
+    "reason": "Documentation editorial statement; no event name/payload list is supplied and linked documentation is not expanded."
+  },
+  {
+    "source_id": "source-context-008",
+    "extract_line": 8,
+    "literal": "== Changes ==",
+    "wikitext_line": 8,
+    "raw_literal": "== Changes ==",
+    "status": "metadata-only",
+    "reason": "Source title/heading only; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-009",
+    "extract_line": 9,
+    "literal": "* C_ActionBar now includes C_ActionBar.IsOnBarOrSpecialBar()",
+    "wikitext_line": 9,
+    "raw_literal": "* {{api|t=n|C_ActionBar}} now includes {{api|C_ActionBar.IsOnBarOrSpecialBar}}()",
+    "status": "bounded-coverage",
+    "reason": "Named namespace/member publication is separately observed; summary supplies no additional behavior contract. Existing modeled chat/action/LFG surfaces remain bounded, not native parity."
+  },
+  {
+    "source_id": "prose-undated-010",
+    "extract_line": 10,
+    "literal": "* C_Garrison  now includes C_Garrison.GetCurrentGarrTalentTreeFriendshipFactionID(), C_Garrison.GetCurrentGarrTalentTreeID() and C_Garrison.GetTalentTreeIDsByClassID()",
+    "wikitext_line": 10,
+    "raw_literal": "* {{api|t=n|C_Garrison}}  now includes {{api|C_Garrison.GetCurrentGarrTalentTreeFriendshipFactionID|GetCurrentGarrTalentTreeFriendshipFactionID}}(), {{api|C_Garrison.GetCurrentGarrTalentTreeID|GetCurrentGarrTalentTreeID}}() and {{api|C_Garrison.GetTalentTreeIDsByClassID|GetTalentTreeIDsByClassID}}()",
+    "status": "bounded-coverage",
+    "reason": "Three named queries modeled with real catalog/context inputs; no native progression, secret-policy, catalog-order or historical Legion capture claim."
+  },
+  {
+    "source_id": "prose-undated-011",
+    "extract_line": 11,
+    "literal": "* C_LFGList now includes C_LFGList.Search()",
+    "wikitext_line": 11,
+    "raw_literal": "* {{api|t=n|C_LFGList}} now includes {{api|C_LFGList.Search|Search}}()",
+    "status": "bounded-coverage",
+    "reason": "Named namespace/member publication is separately observed; summary supplies no additional behavior contract. Existing modeled chat/action/LFG surfaces remain bounded, not native parity."
+  },
+  {
+    "source_id": "prose-undated-012",
+    "extract_line": 12,
+    "literal": "* C_Unit now includes UnitIsOwnerOrControllerOfUnit()",
+    "wikitext_line": 12,
+    "raw_literal": "* {{api|t=n|C_Unit}} now includes {{api|UnitIsOwnerOrControllerOfUnit}}()",
+    "status": "audit-pending",
+    "reason": "Raw-absent namespace. Source links the unqualified UnitIsOwnerOrControllerOfUnit, already modeled/published, but names no C_Unit member. No native namespace capture; do not invent an empty table or qualified alias."
+  },
+  {
+    "source_id": "prose-undated-013",
+    "extract_line": 13,
+    "literal": "* C_TransmogSets now includes several added functions.",
+    "wikitext_line": 13,
+    "raw_literal": "* {{api|t=n|C_TransmogSets}} now includes several added functions.",
+    "status": "audit-pending",
+    "reason": "Namespace publication is separately bounded, but page enumerates no member names/signatures or behavior. Do not invent commentator or transmog additions from an unexpanded linked page."
+  },
+  {
+    "source_id": "prose-undated-014",
+    "extract_line": 14,
+    "literal": "* ReloadUI() renamed to C_UI.Reload()",
+    "wikitext_line": 14,
+    "raw_literal": "* {{api|ReloadUI}}() renamed to {{api|C_UI.Reload}}()",
+    "status": "audit-pending",
+    "reason": "Raw-absent. Existing ReloadUI and GUI reload only dispatch notifications; no VM teardown/recreation or SavedVariables reload model. Event-only alias would disguise missing lifecycle; no shim added. Historical rename suggests removal, but thirteen current retail consumer lines prohibit retirement. Existing notification behavior retained; no later master/p730 register re-addition, no historical absence claim."
+  }
+]

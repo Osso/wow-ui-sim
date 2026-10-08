@@ -1,0 +1,22 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_7_2_5"
+  ],
+  "revision": "8a5dd0c7bb4a25cd335f4ea19127ba22d7c3786d",
+  "scope": "p725-discovery",
+  "cwd": ".",
+  "target": "dedicated p725-page target (external to repository)",
+  "environment": {
+    "P725_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p725-page/data/patch-api/evidence/7.2.5-session-2026-10-08/p725-discovery-results.json"
+  },
+  "exit": 1,
+  "log": "p725-discovery.txt",
+  "log_sha256": "2838bc630c692d4e300cf9b73aefc30845411c15eaf56146287256132db96ab8",
+  "seconds": 376.13677984899914,
+  "invalidated": false
+}

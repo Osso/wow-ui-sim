@@ -1,0 +1,12 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonLandingPage.lua:406:	local talentTreeIDs = C_Garrison.GetTalentTreeIDsByClassID(garrisonType, select(3, UnitClass("player")));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_OrderHallUI/Blizzard_OrderHallTalents.lua:325:	local garrTalentTreeID = C_Garrison.GetCurrentGarrTalentTreeID();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_OrderHallUI/Blizzard_OrderHallTalents.lua:491:	local garrTalentTreeID = C_Garrison.GetCurrentGarrTalentTreeID();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_OrderHallUI/Blizzard_OrderHallTalents.lua:584:	local garrTalentTreeID = C_Garrison.GetCurrentGarrTalentTreeID();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_OrderHallUI/Blizzard_OrderHallTalents.lua:668:	local garrTalentTreeID = C_Garrison.GetCurrentGarrTalentTreeID();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_OrderHallUI/Blizzard_OrderHallTalents.lua:671:		local treeIDs = C_Garrison.GetTalentTreeIDsByClassID(self.garrisonType, playerClass);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_OrderHallUI/Blizzard_OrderHallTalents.lua:740:	local friendshipFactionID = C_Garrison.GetCurrentGarrTalentTreeFriendshipFactionID();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_OrderHallUI/Blizzard_OrderHallTalents.lua:1106:	local garrTalentTreeID	= C_Garrison.GetCurrentGarrTalentTreeID();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/GarrisonInfoDocumentation.lua:140:			Name = "GetCurrentGarrTalentTreeFriendshipFactionID",
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/GarrisonInfoDocumentation.lua:149:			Name = "GetCurrentGarrTalentTreeID",
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/GarrisonInfoDocumentation.lua:344:			Name = "GetTalentTreeIDsByClassID",
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/InterfaceUtil.lua:2:	C_UI.Reload();

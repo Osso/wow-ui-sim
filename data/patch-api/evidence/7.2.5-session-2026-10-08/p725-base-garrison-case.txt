@@ -1,0 +1,404 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/tmp/p725-base-85c2acb2d)
+    Finished `test` profile [optimized + debuginfo] target(s) in 1m 35s
+     Running tests/prefork_full_ui.rs (/home/osso/.cache/wow-ui-sim-targets/p725-page/debug/deps/prefork_full_ui-21dd5c807fe7a7b6)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 1.86ms
+[  0.002s] [Startup] rilua VM created in 81.09µs
+[  0.002s] [Startup] builtin frames initialized in 59.84µs
+[  0.002s] [Startup] template registry cleared in 5.75µs
+[  0.002s] [Startup] intrinsic templates registered in 4.37µs
+[  0.002s] [Startup] initial app_data lua handle installed in 381.00ns
+[  0.094s] [Startup] init_lua_state complete in 92.09ms
+[  0.094s] [Startup] final app_data lua handle installed in 250.00ns
+[  0.094s] [Startup] initial screen globals installed in 54.46µs
+[  0.094s] [Startup] WowLuaEnv::new complete
+[  1.964s] [Startup] apply_post_load_workarounds: begin
+[  1.964s] [Workarounds] starting patch_edit_mode_manager
+[  1.964s] [Workarounds] finished patch_edit_mode_manager in 254.47µs
+[  1.964s] [Workarounds] starting init_edit_mode_layout
+[  1.964s] [EditMode] starting setup_layout_info
+[  1.967s] [EditMode] finished setup_layout_info in 2.72ms
+[  1.967s] [EditMode] starting apply_system_anchors
+[  2.074s] [EditMode] finished apply_system_anchors in 107.10ms
+[  2.074s] [EditMode] starting finalize_action_bar_positions
+[  2.075s] [EditMode] finished finalize_action_bar_positions in 1.42ms
+[  2.075s] [EditMode] starting invoke_anchor_changed_hooks
+[  2.076s] [EditMode] finished invoke_anchor_changed_hooks in 327.05µs
+[  2.076s] [EditMode] starting fix_action_bar_nan_size
+[  2.076s] [EditMode] finished fix_action_bar_nan_size in 33.02µs
+[  2.076s] [EditMode] starting fix_action_bar_scale
+[  2.076s] [EditMode] finished fix_action_bar_scale in 4.08µs
+[  2.076s] [Workarounds] finished init_edit_mode_layout in 111.65ms
+[  2.076s] [Workarounds] starting patch_ui_parent_panel_toggles
+[  2.076s] [Workarounds] finished patch_ui_parent_panel_toggles in 191.95µs
+[  2.076s] [Workarounds] starting patch_uiparent_onupdate_worklists
+[  2.076s] [Workarounds] finished patch_uiparent_onupdate_worklists in 78.96µs
+[  2.076s] [Workarounds] starting init_chat_type_colors
+[  2.076s] [Workarounds] finished init_chat_type_colors in 94.48µs
+[  2.076s] [Workarounds] starting patch_chat_voice_button_surface
+[  2.076s] [Workarounds] finished patch_chat_voice_button_surface in 90.83µs
+[  2.076s] [Workarounds] starting patch_item_socketing_tooltips
+[  2.076s] [Workarounds] finished patch_item_socketing_tooltips in 48.57µs
+[  2.076s] [Workarounds] starting patch_character_select_selected_name
+[  2.076s] [Workarounds] finished patch_character_select_selected_name in 25.82µs
+[  2.076s] [Workarounds] starting patch_character_create_defaults
+[  2.076s] [Workarounds] finished patch_character_create_defaults in 178.79µs
+[  2.076s] [Workarounds] starting patch_character_frame_title_refresh
+[  2.081s] [Workarounds] finished patch_character_frame_title_refresh in 4.83ms
+[  2.081s] [Workarounds] starting patch_vignette_pin_template
+[  2.081s] [Workarounds] finished patch_vignette_pin_template in 89.04µs
+[  2.081s] [Workarounds] starting patch_fog_of_war_pin_mixin
+[  2.082s] [Workarounds] finished patch_fog_of_war_pin_mixin in 270.76µs
+[  2.082s] [Workarounds] starting patch_map_exploration_pin_mixin
+[  2.086s] [Workarounds] finished patch_map_exploration_pin_mixin in 4.31ms
+[  2.086s] [Workarounds] starting patch_map_canvas_data_provider_attachment
+[  2.086s] [Workarounds] finished patch_map_canvas_data_provider_attachment in 49.51µs
+[  2.086s] [Workarounds] starting ensure_adventure_map_frame_surface
+[  2.086s] [Workarounds] finished ensure_adventure_map_frame_surface in 357.42µs
+[  2.086s] [Workarounds] starting patch_action_bar_button_event_fanout
+[  2.086s] [Workarounds] finished patch_action_bar_button_event_fanout in 79.39µs
+[  2.086s] [Workarounds] starting patch_paging_controls_page_text
+[  2.086s] [Workarounds] finished patch_paging_controls_page_text in 30.69µs
+[  2.086s] [Workarounds] starting patch_talent_edge_frame_level_sync
+[  2.087s] [Workarounds] finished patch_talent_edge_frame_level_sync in 24.41µs
+[  2.087s] [Workarounds] starting patch_catalog_shop_product_card_defaults
+[  2.087s] [Workarounds] finished patch_catalog_shop_product_card_defaults in 49.74µs
+[  2.087s] [Workarounds] starting patch_game_time_defaults
+[  2.087s] [Workarounds] finished patch_game_time_defaults in 5.95µs
+[  2.087s] [Workarounds] starting patch_tooltip_nineslice_surface
+[  2.087s] [Workarounds] finished patch_tooltip_nineslice_surface in 34.66µs
+[  2.087s] [Workarounds] starting patch_container_frame_token_tracker
+[  2.087s] [Workarounds] finished patch_container_frame_token_tracker in 31.27µs
+[  2.087s] [Workarounds] starting patch_achievement_display_set_achievements
+[  2.087s] [Workarounds] finished patch_achievement_display_set_achievements in 6.37µs
+[  2.087s] [Workarounds] starting patch_housing_dashboard_preload
+[  2.087s] [Workarounds] finished patch_housing_dashboard_preload in 134.17µs
+[  2.087s] [Workarounds] starting patch_lfg_lock_list
+[  2.087s] [Workarounds] finished patch_lfg_lock_list in 28.53µs
+[  2.087s] [Workarounds] starting patch_auction_house_browse_results_event
+[  2.087s] [Workarounds] finished patch_auction_house_browse_results_event in 51.75µs
+[  2.087s] [Workarounds] starting patch_auction_house_search_context_aliases
+[  2.087s] [Workarounds] finished patch_auction_house_search_context_aliases in 23.77µs
+[  2.087s] [Workarounds] starting patch_auth_challenge_frame_parent
+[  2.087s] [Workarounds] finished patch_auth_challenge_frame_parent in 53.58µs
+[  2.087s] [Workarounds] starting patch_settings_surface_defaults
+[  2.087s] [Workarounds] finished patch_settings_surface_defaults in 267.56µs
+[  2.087s] [Workarounds] starting patch_settings_canvas_layout_visibility
+[  2.087s] [Workarounds] finished patch_settings_canvas_layout_visibility in 86.73µs
+[  2.087s] [Startup] apply_post_load_workarounds: workarounds complete
+[  2.144s] [Startup] apply_post_load_workarounds: globals restored
+[  2.145s] [Startup] apply_post_load_workarounds: patch 12.1 compatibility restored
+[  2.145s] [Startup] apply_post_load_workarounds: seterrorhandler restored
+[  2.276s] [Startup] begin login sequence
+[  2.276s] [Startup] Firing ADDON_LOADED
+[  2.276s] [Startup] Firing VARIABLES_LOADED
+[  2.358s] [Startup] Firing DISPLAY_SIZE_CHANGED
+[  2.399s] [Startup] Firing UI_SCALE_CHANGED
+[  2.400s] [Startup] Firing PLAYER_LOGIN
+[  2.400s] [Startup] end login sequence in 124.20ms
+[  2.400s] [Startup] begin world enter sequence
+[  2.400s] [Startup] Skipping EDIT_MODE_LAYOUTS_UPDATED
+[  2.400s] [Startup] Firing TIME_PLAYED_MSG via RequestTimePlayed
+[  2.400s] [Startup] Firing PLAYER_ENTERING_WORLD
+[  2.591s] [EditMode] starting setup_layout_info
+[  2.595s] [EditMode] finished setup_layout_info in 3.14ms
+[  2.595s] [EditMode] starting apply_system_anchors
+[  2.710s] [EditMode] finished apply_system_anchors in 115.55ms
+[  2.710s] [EditMode] starting finalize_action_bar_positions
+[  2.713s] [EditMode] finished finalize_action_bar_positions in 2.83ms
+[  2.713s] [EditMode] starting invoke_anchor_changed_hooks
+[  2.719s] [EditMode] finished invoke_anchor_changed_hooks in 5.63ms
+[  2.719s] [EditMode] starting fix_action_bar_nan_size
+[  2.719s] [EditMode] finished fix_action_bar_nan_size in 71.90µs
+[  2.719s] [EditMode] starting fix_action_bar_scale
+[  2.719s] [EditMode] finished fix_action_bar_scale in 4.19µs
+[  2.719s] [EditMode] starting reapply_player_frame_anchor
+[  2.720s] [EditMode] finished reapply_player_frame_anchor in 1.46ms
+[  2.729s] [Startup] end world enter sequence in 328.73ms
+[  2.729s] [Startup] begin post-login events
+[  2.730s] [Startup] Firing UNIT_AURA
+[  2.730s] [Startup] Firing PET_UI_UPDATE
+[  2.732s] [Startup] Firing BAG_UPDATE_DELAYED
+[  2.733s] [Startup] Firing QUEST_LOG_UPDATE
+[  2.734s] [Startup] Firing GROUP_ROSTER_UPDATE
+[  2.810s] [Startup] Firing ACTIONBAR_UPDATE_STATE
+[  2.810s] [Startup] Firing ACTIONBAR_UPDATE_COOLDOWN
+[  2.812s] [Startup] Firing UPDATE_BONUS_ACTIONBAR
+[  2.822s] [Startup] Firing PLAYER_CAN_GLIDE_CHANGED
+[  2.822s] [Startup] Firing PLAYER_IS_GLIDING_CHANGED
+[  2.822s] [Startup] Firing UPDATE_BINDINGS
+[  2.825s] [Startup] Firing UPDATE_CHAT_WINDOWS
+[  2.828s] [Startup] Firing LFG_UPDATE_RANDOM_INFO
+[  2.828s] [Startup] end post-login events in 99.64ms
+[  2.828s] [Startup] begin close startup special windows
+[  2.829s] [Startup] end close startup special windows in 231.45µs
+[  2.829s] [Startup] begin FIRST_FRAME_RENDERED
+[  2.829s] [Startup] Firing FIRST_FRAME_RENDERED
+[  2.829s] [Startup] end FIRST_FRAME_RENDERED in 147.43µs
+[  2.829s] [Startup] begin unblock hidden splash alerts
+[  2.829s] [Startup] end unblock hidden splash alerts in 19.46µs
+[  2.829s] [Startup] begin post-event workarounds
+[  2.829s] [Startup] end post-event workarounds in 1.25µs
+running 1 tests
+test blizzard_garrison_ui_loads::blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors ... FAILED (panic: Blizzard_GarrisonUI emitted non-3D-model Lua errors during explicit load:
+  Failed to create frame __Blizzard_GarrisonUI_45563: bad argument #1 to 'ipairs' (table expected, got nil) at ...ard_GarrisonUI/Mainline/Blizzard_AdventuresCombatLog.lua:90
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	[C]: in function '(for generator)'
+	...ard_GarrisonUI/Mainline/Blizzard_AdventuresCombatLog.lua:90: in function <...ard_GarrisonUI/Mainline/Blizzard_AdventuresCombatLog.lua:80>
+	(tail call): ?
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+  Lua Error: Failed to create frame __Blizzard_GarrisonUI_45563: bad argument #1 to 'ipairs' (table expected, got nil) at ...ard_GarrisonUI/Mainline/Blizzard_AdventuresCombatLog.lua:90
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	[C]: in function '(for generator)'
+	...ard_GarrisonUI/Mainline/Blizzard_AdventuresCombatLog.lua:90: in function <...ard_GarrisonUI/Mainline/Blizzard_AdventuresCombatLog.lua:80>
+	(tail call): ?
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+)
+---- blizzard_garrison_ui_loads::blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors stderr ----
+Lua error: generated/template-scripts-no-global-slots/be9c71c97a5c25f7:8: attempt to call method 'SetTargetDistance' (a nil value)
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__wow_original_securecall'
+	(string):13: in function 'securecall'
+	generated/template-scripts-no-global-slots/be9c71c97a5c25f7:18: in function <generated/template-scripts-no-global-slots/be9c71c97a5c25f7:15>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+Lua error: Lua Error: generated/template-scripts-no-global-slots/be9c71c97a5c25f7:8: attempt to call method 'SetTargetDistance' (a nil value)
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__wow_original_securecall'
+	(string):13: in function 'securecall'
+	generated/template-scripts-no-global-slots/be9c71c97a5c25f7:18: in function <generated/template-scripts-no-global-slots/be9c71c97a5c25f7:15>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function '__wow_original_securecall'
+=(string):13: in function 'securecall'
+[generated/template-scripts-no-global-slots/be9c71c97a5c25f7]:18: in function <[generated/template-scripts-no-global-slots/be9c71c97a5c25f7]:15>
+=(tail call): ?
+=(tail call): ?
+=[C]:: in function 'native_xpcall'
+=(string):8: in function <=(string):5>
+=(tail call): ?
+
+Lua error: Lua Error: generated/template-scripts-no-global-slots/be9c71c97a5c25f7:8: attempt to call method 'SetTargetDistance' (a nil value)
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__wow_original_securecall'
+	(string):13: in function 'securecall'
+	generated/template-scripts-no-global-slots/be9c71c97a5c25f7:18: in function <generated/template-scripts-no-global-slots/be9c71c97a5c25f7:15>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function '__wow_original_securecall'
+=(string):13: in function 'securecall'
+[generated/template-scripts-no-global-slots/be9c71c97a5c25f7]:18: in function <[generated/template-scripts-no-global-slots/be9c71c97a5c25f7]:15>
+=(tail call): ?
+=(tail call): ?
+=[C]:: in function 'native_xpcall'
+=(string):8: in function <=(string):5>
+=(tail call): ?
+
+Lua error: [OnLoad] GarrisonShipyardFrame: ..._GarrisonTemplates/Blizzard_GarrisonMissionTemplates.lua:2947: attempt to call method 'SetFacingLeft' (a nil value)
+=(string):19: in main chunk
+
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__report'
+	(string):20: in main chunk
+Lua error: Lua Error: [OnLoad] GarrisonShipyardFrame: ..._GarrisonTemplates/Blizzard_GarrisonMissionTemplates.lua:2947: attempt to call method 'SetFacingLeft' (a nil value)
+=(string):19: in main chunk
+
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__report'
+	(string):20: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function '__report'
+=(string):20: in main chunk
+
+Lua error: Lua Error: generated/template-scripts-no-global-slots/be9c71c97a5c25f7:8: attempt to call method 'SetTargetDistance' (a nil value)
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__wow_original_securecall'
+	(string):13: in function 'securecall'
+	generated/template-scripts-no-global-slots/be9c71c97a5c25f7:18: in function <generated/template-scripts-no-global-slots/be9c71c97a5c25f7:15>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function '__wow_original_securecall'
+=(string):13: in function 'securecall'
+[generated/template-scripts-no-global-slots/be9c71c97a5c25f7]:18: in function <[generated/template-scripts-no-global-slots/be9c71c97a5c25f7]:15>
+=(tail call): ?
+=(tail call): ?
+=[C]:: in function 'native_xpcall'
+=(string):8: in function <=(string):5>
+=(tail call): ?
+
+Lua error: [OnLoad] OrderHallMissionFrame: expected number, got nil at argument 1
+=(string):19: in main chunk
+
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__report'
+	(string):20: in main chunk
+Lua error: Lua Error: [OnLoad] OrderHallMissionFrame: expected number, got nil at argument 1
+=(string):19: in main chunk
+
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__report'
+	(string):20: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function '__report'
+=(string):20: in main chunk
+
+Lua error: Lua Error: generated/template-scripts-no-global-slots/be9c71c97a5c25f7:8: attempt to call method 'SetTargetDistance' (a nil value)
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__wow_original_securecall'
+	(string):13: in function 'securecall'
+	generated/template-scripts-no-global-slots/be9c71c97a5c25f7:18: in function <generated/template-scripts-no-global-slots/be9c71c97a5c25f7:15>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function '__wow_original_securecall'
+=(string):13: in function 'securecall'
+[generated/template-scripts-no-global-slots/be9c71c97a5c25f7]:18: in function <[generated/template-scripts-no-global-slots/be9c71c97a5c25f7]:15>
+=(tail call): ?
+=(tail call): ?
+=[C]:: in function 'native_xpcall'
+=(string):8: in function <=(string):5>
+=(tail call): ?
+
+Lua error: [OnLoad] BFAMissionFrame: expected number, got nil at argument 1
+=(string):19: in main chunk
+
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__report'
+	(string):20: in main chunk
+Lua error: Lua Error: [OnLoad] BFAMissionFrame: expected number, got nil at argument 1
+=(string):19: in main chunk
+
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__report'
+	(string):20: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function '__report'
+=(string):20: in main chunk
+
+Lua error: Failed to create frame __Blizzard_GarrisonUI_45563: bad argument #1 to 'ipairs' (table expected, got nil) at ...ard_GarrisonUI/Mainline/Blizzard_AdventuresCombatLog.lua:90
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	[C]: in function '(for generator)'
+	...ard_GarrisonUI/Mainline/Blizzard_AdventuresCombatLog.lua:90: in function <...ard_GarrisonUI/Mainline/Blizzard_AdventuresCombatLog.lua:80>
+	(tail call): ?
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+Lua error: Lua Error: Failed to create frame __Blizzard_GarrisonUI_45563: bad argument #1 to 'ipairs' (table expected, got nil) at ...ard_GarrisonUI/Mainline/Blizzard_AdventuresCombatLog.lua:90
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	[C]: in function '(for generator)'
+	...ard_GarrisonUI/Mainline/Blizzard_AdventuresCombatLog.lua:90: in function <...ard_GarrisonUI/Mainline/Blizzard_AdventuresCombatLog.lua:80>
+	(tail call): ?
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+
+thread 'main' (854882) panicked at /tmp/p725-base-85c2acb2d/tests/blizzard_garrison_ui_loads.rs:286:5:
+Blizzard_GarrisonUI emitted non-3D-model Lua errors during explicit load:
+  Failed to create frame __Blizzard_GarrisonUI_45563: bad argument #1 to 'ipairs' (table expected, got nil) at ...ard_GarrisonUI/Mainline/Blizzard_AdventuresCombatLog.lua:90
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	[C]: in function '(for generator)'
+	...ard_GarrisonUI/Mainline/Blizzard_AdventuresCombatLog.lua:90: in function <...ard_GarrisonUI/Mainline/Blizzard_AdventuresCombatLog.lua:80>
+	(tail call): ?
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+  Lua Error: Failed to create frame __Blizzard_GarrisonUI_45563: bad argument #1 to 'ipairs' (table expected, got nil) at ...ard_GarrisonUI/Mainline/Blizzard_AdventuresCombatLog.lua:90
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	[C]: in function '(for generator)'
+	...ard_GarrisonUI/Mainline/Blizzard_AdventuresCombatLog.lua:90: in function <...ard_GarrisonUI/Mainline/Blizzard_AdventuresCombatLog.lua:80>
+	(tail call): ?
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+test result: FAILED. 0 passed; 1 failed; 1 total
+error: test failed, to rerun pass `--test prefork_full_ui`
+
+Caused by:
+  process didn't exit successfully: `/home/osso/.cache/wow-ui-sim-targets/p725-page/debug/deps/prefork_full_ui-21dd5c807fe7a7b6 blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors` (exit status: 1)

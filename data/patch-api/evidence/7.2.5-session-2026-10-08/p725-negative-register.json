@@ -1,0 +1,140 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "7.2.5",
+  "source": {
+    "path": "data/patch-api/sources/7.2.5-api-changes.wikitext",
+    "revid": 4311256,
+    "sha256": "93081583da31739e03d087b525787d5e7aafdaeac23ea9ec8480be624c03803e"
+  },
+  "header_counts": [],
+  "entries": [
+    {
+      "id": "wt-global-api-C_ChatBubbles-4",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChatBubbles",
+      "annotation": "* {{api|t=n|C_ChatBubbles}} added with {{api|C_ChatBubbles.GetAllChatBubbles|GetAllChatBubbles}}()",
+      "wikitext_line": 4
+    },
+    {
+      "id": "wt-global-api-C_ChatBubbles.GetAllChatBubbles-4",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_ChatBubbles.GetAllChatBubbles",
+      "annotation": "* {{api|t=n|C_ChatBubbles}} added with {{api|C_ChatBubbles.GetAllChatBubbles|GetAllChatBubbles}}()",
+      "wikitext_line": 4
+    },
+    {
+      "id": "wt-global-api-C_Commentator-5",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Commentator",
+      "annotation": "* {{api|t=n|C_Commentator}} added with various functions.",
+      "wikitext_line": 5
+    },
+    {
+      "id": "wt-global-api-C_ActionBar-9",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_ActionBar",
+      "annotation": "* {{api|t=n|C_ActionBar}} now includes {{api|C_ActionBar.IsOnBarOrSpecialBar}}()",
+      "wikitext_line": 9
+    },
+    {
+      "id": "wt-global-api-C_ActionBar.IsOnBarOrSpecialBar-9",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ActionBar.IsOnBarOrSpecialBar",
+      "annotation": "* {{api|t=n|C_ActionBar}} now includes {{api|C_ActionBar.IsOnBarOrSpecialBar}}()",
+      "wikitext_line": 9
+    },
+    {
+      "id": "wt-global-api-C_Garrison-10",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_Garrison",
+      "annotation": "* {{api|t=n|C_Garrison}}  now includes {{api|C_Garrison.GetCurrentGarrTalentTreeFriendshipFactionID|GetCurrentGarrTalentTreeFriendshipFactionID}}(), {{api|C_Garrison.GetCurrentGarrTalentTreeID|GetCurrentGarrTalentTreeID}}() and {{api|C_Garrison.GetTalentTreeIDsByClassID|GetTalentTreeIDsByClassID}}()",
+      "wikitext_line": 10
+    },
+    {
+      "id": "wt-global-api-C_Garrison.GetCurrentGarrTalentTreeFriendshipFactionID-10",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Garrison.GetCurrentGarrTalentTreeFriendshipFactionID",
+      "annotation": "* {{api|t=n|C_Garrison}}  now includes {{api|C_Garrison.GetCurrentGarrTalentTreeFriendshipFactionID|GetCurrentGarrTalentTreeFriendshipFactionID}}(), {{api|C_Garrison.GetCurrentGarrTalentTreeID|GetCurrentGarrTalentTreeID}}() and {{api|C_Garrison.GetTalentTreeIDsByClassID|GetTalentTreeIDsByClassID}}()",
+      "wikitext_line": 10
+    },
+    {
+      "id": "wt-global-api-C_Garrison.GetCurrentGarrTalentTreeID-10",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Garrison.GetCurrentGarrTalentTreeID",
+      "annotation": "* {{api|t=n|C_Garrison}}  now includes {{api|C_Garrison.GetCurrentGarrTalentTreeFriendshipFactionID|GetCurrentGarrTalentTreeFriendshipFactionID}}(), {{api|C_Garrison.GetCurrentGarrTalentTreeID|GetCurrentGarrTalentTreeID}}() and {{api|C_Garrison.GetTalentTreeIDsByClassID|GetTalentTreeIDsByClassID}}()",
+      "wikitext_line": 10
+    },
+    {
+      "id": "wt-global-api-C_Garrison.GetTalentTreeIDsByClassID-10",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Garrison.GetTalentTreeIDsByClassID",
+      "annotation": "* {{api|t=n|C_Garrison}}  now includes {{api|C_Garrison.GetCurrentGarrTalentTreeFriendshipFactionID|GetCurrentGarrTalentTreeFriendshipFactionID}}(), {{api|C_Garrison.GetCurrentGarrTalentTreeID|GetCurrentGarrTalentTreeID}}() and {{api|C_Garrison.GetTalentTreeIDsByClassID|GetTalentTreeIDsByClassID}}()",
+      "wikitext_line": 10
+    },
+    {
+      "id": "wt-global-api-C_LFGList-11",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_LFGList",
+      "annotation": "* {{api|t=n|C_LFGList}} now includes {{api|C_LFGList.Search|Search}}()",
+      "wikitext_line": 11
+    },
+    {
+      "id": "wt-global-api-C_LFGList.Search-11",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_LFGList.Search",
+      "annotation": "* {{api|t=n|C_LFGList}} now includes {{api|C_LFGList.Search|Search}}()",
+      "wikitext_line": 11
+    },
+    {
+      "id": "wt-global-api-C_Unit-12",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_Unit",
+      "annotation": "* {{api|t=n|C_Unit}} now includes {{api|UnitIsOwnerOrControllerOfUnit}}()",
+      "wikitext_line": 12
+    },
+    {
+      "id": "wt-global-api-UnitIsOwnerOrControllerOfUnit-12",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitIsOwnerOrControllerOfUnit",
+      "annotation": "* {{api|t=n|C_Unit}} now includes {{api|UnitIsOwnerOrControllerOfUnit}}()",
+      "wikitext_line": 12
+    },
+    {
+      "id": "wt-global-api-C_TransmogSets-13",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_TransmogSets",
+      "annotation": "* {{api|t=n|C_TransmogSets}} now includes several added functions.",
+      "wikitext_line": 13
+    },
+    {
+      "id": "wt-global-api-ReloadUI-14",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ReloadUI",
+      "annotation": "* {{api|ReloadUI}}() renamed to {{api|C_UI.Reload}}()",
+      "wikitext_line": 14
+    },
+    {
+      "id": "wt-global-api-C_UI.Reload-14",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_UI.Reload",
+      "annotation": "* {{api|ReloadUI}}() renamed to {{api|C_UI.Reload}}()",
+      "wikitext_line": 14
+    }
+  ]
+}

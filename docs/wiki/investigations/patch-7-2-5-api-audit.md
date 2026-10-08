@@ -6,8 +6,8 @@ Warcraft Wiki page 448509, refetched 2026-10-08 and pinned to revision 4311256 (
 
 | Statement / surface | Scope | Proof |
 |---|---|---|
-| All sixteen API identities | Raw publication/absence plus lookup after cached retail startup | Discovery: six exact gaps |
-| Three C_Garrison tree queries | Real server-input catalog, selected tree context, optional friendship faction, garrison type + class filtering | RED: old synthesized function returns one nil rather than no values for missing pair; bounded model added, GREEN pending |
+| All sixteen API identities | Raw publication/absence plus lookup after cached retail startup | Discovery: six exact gaps; final thirteen published / three exact gaps |
+| Three C_Garrison tree queries | Real server-input catalog, selected tree context, optional friendship faction, garrison type + class filtering | RED: old synthesized function returns one nil rather than no values for missing pair; four cached and two bare state/argument cases pass |
 | Chat bubbles, action membership, LFG search, owner/controller global | Existing publication retained | No new native parity claim |
 | C_Commentator / C_TransmogSets additions | Namespace publication only | Page does not enumerate functions |
 | Event documentation additions | Editorial statement retained | No event identities or payloads given |
@@ -28,11 +28,26 @@ Current cached `GarrisonInfoDocumentation.lua` documents nullable current-tree/f
 
 `C_UI.Reload` has a cached consumer in InterfaceUtil.lua, but existing ReloadUI/GUI reload only dispatch notifications; neither reconstructs the Lua VM or reloads SavedVariables. Adding an event-only alias would disguise the missing lifecycle, so no alias/shim was added. The page's historical absence is retained as a precise current-retail gap rather than breaking callers.
 
-## Verification
+## Occurrence accounting
 
-Implementation committed before acceptance. Required targeted proof: all publication sweeps, own cached/bare tree tests, existing garrison/anima callers, the three parser/validator fixture scripts, saved artifact reproduction, Mists tests check and format. No full integration suite, WoW texture tests, vendor edits, agents, push or merge. Long Cargo commands retain complete asynchronous logs with command/revision/hash receipts.
+All **28 identities** are accounted: sixteen inventory and twelve extract rows; seventeen bounded, seven pending and four metadata-only. The three publication gaps are C_UI.Reload, C_Unit and ReloadUI historical absence. Four substantive prose rows remain pending: unnamed commentator functions, unnamed transmog functions, ambiguous C_Unit namespace and full reload/rename semantics. Headings/title and event-documentation editorial context receive no runtime credit. Namespace presence never credits unnamed member behavior.
 
-Final counts and proof receipts are added after verification. The 7.3.0 placeholder remains first in `later_registers`; integration must replace it with the merged register and refresh own proof.
+## Targeted proof
+
+Runtime scope `43dd7ed8e` contains the full model and 43-register/sweep set. [Command receipts](../../../data/patch-api/evidence/7.2.5-session-2026-10-08/p725-context.json) and complete logs retain commands, code revisions, exits and hashes. RED's added uncommitted harness is separately retained and hashed; its receipt revision pins the pre-model runtime, not that harness. No full integration suite, WoW texture tests, vendor edits, agents, push or merge.
+
+- All **43 publication sweeps plus factory pass (44/44)**, across **8,866 observations**. Negative control changes only ChatBubbles.GetAllChatBubbles added → removed: exact **3 → 4** gaps, expected exit 1. Earlier sweep gap sets are unchanged.
+- Own four cached behavior cases plus publication pass; two bare tree tests pass. Existing garrison integration selection **28/28** and AnimaDiversion integration selection **42/42** pass. Cached garrison selection **37/38**; the one failure is retained below. The initial prefork AnimaDiversion filter selected zero cases and earns no coverage; the real integration selection supplies proof.
+- Parser/extractor/shared-validator fixtures **26/34/8** pass. All **43 registers** and **40/43 extracts** reproduce with recorded/inherited flags. The same 12.0.5/12.0.7 mismatches and 12.1.0 unsupported-template failure are retained, not reported green. All **219 original inputs and 92 old extraction-mode outcomes** remain unchanged.
+- Format and requested Mists tests check pass with **zero non-vendor warnings**. Six inherited iced manifest deprecations remain unsuppressed. Retail build and bounded startup pass; startup reports zero Lua errors and prints `[]`.
+
+The read-only own validator scopes registers/sweeps through historical_registers/historical_sweep_tests at the recorded revision and derives counts from files. All nineteen prior validators pass; own validator acceptance/checkout-portability proof follows the evidence commit. Wiki index/log grow without losing existing content. No __pycache__ is retained.
+
+## Inherited scoped failure
+
+`blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors` fails in both this branch and an exact Git archive of base `85c2acb2d`, with the same `ipairs` nil error at Blizzard_AdventuresCombatLog.lua:90. OnLoad calls **GetAutoCombatDamageClassValues**, not one of the three tree queries. [Baseline receipt/context](../../../data/patch-api/evidence/7.2.5-session-2026-10-08/p725-garrison-baseline-context.json) records base source revision, matching unchanged caller/implementation hashes and complete log. Both the existing assertion and vendor code remain intact; no unrelated damage-class shim/model was added. The overall verification runner exits 1 because it faithfully retains that failure; other targeted commands pass. This is not an all-green garrison suite claim.
+
+The **7.3.0 placeholder remains first** in later_registers; integration must replace it with the merged register and refresh own proof. No native historical catalog, reload lifecycle or unspecified member/event reconstruction is claimed.
 
 ## Sources
 

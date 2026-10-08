@@ -1,0 +1,297 @@
+{
+  "schema": "patch-page-coverage/v1",
+  "patch": "7.2.5",
+  "source_sha256": "753351c0b4616c5259fd9ec2ef3980248c83f0e3de88ae5c40a88b4ad8399bdd",
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/7.2.5-api-changes.txt",
+    "sha256": "083f32ee619a4537ed1751345cc801a981d69dbd5b65e859d066f13cc53790cf"
+  },
+  "proof_policy": "Current retail publication plus bounded server-input garrison tree queries, not historical/native parity.",
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-C_ChatBubbles-4",
+      "source": "C_ChatBubbles",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_7_2_5_publication_sweep.rs"
+        }
+      ],
+      "note": "Raw publication and lookup after unmodified cached retail startup only; not native signatures/outputs/security/historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatBubbles.GetAllChatBubbles-4",
+      "source": "C_ChatBubbles.GetAllChatBubbles",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_7_2_5_publication_sweep.rs"
+        }
+      ],
+      "note": "Raw publication and lookup after unmodified cached retail startup only; not native signatures/outputs/security/historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_Commentator-5",
+      "source": "C_Commentator",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_7_2_5_publication_sweep.rs"
+        }
+      ],
+      "note": "Raw publication and lookup after unmodified cached retail startup only; not native signatures/outputs/security/historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_ActionBar-9",
+      "source": "C_ActionBar",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_7_2_5_publication_sweep.rs"
+        }
+      ],
+      "note": "Raw publication and lookup after unmodified cached retail startup only; not native signatures/outputs/security/historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_ActionBar.IsOnBarOrSpecialBar-9",
+      "source": "C_ActionBar.IsOnBarOrSpecialBar",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_7_2_5_publication_sweep.rs"
+        }
+      ],
+      "note": "Raw publication and lookup after unmodified cached retail startup only; not native signatures/outputs/security/historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_Garrison-10",
+      "source": "C_Garrison",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_7_2_5_publication_sweep.rs"
+        }
+      ],
+      "note": "Raw publication and lookup after unmodified cached retail startup only; not native signatures/outputs/security/historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_Garrison.GetCurrentGarrTalentTreeFriendshipFactionID-10",
+      "source": "C_Garrison.GetCurrentGarrTalentTreeFriendshipFactionID",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_7_2_5_publication_sweep.rs"
+        },
+        {
+          "kind": "garrison-tree-context-and-catalog",
+          "proof": "tests/patch_7_2_5_garrison_trees.rs"
+        }
+      ],
+      "note": "Real retail selected-tree context and type/class catalog query, detached output, nullable friendship faction and no-result missing pair; bounded bare/cached tests. Native catalog order, Legion data and secret policy remain unverified."
+    },
+    {
+      "source_id": "wt-global-api-C_Garrison.GetCurrentGarrTalentTreeID-10",
+      "source": "C_Garrison.GetCurrentGarrTalentTreeID",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_7_2_5_publication_sweep.rs"
+        },
+        {
+          "kind": "garrison-tree-context-and-catalog",
+          "proof": "tests/patch_7_2_5_garrison_trees.rs"
+        }
+      ],
+      "note": "Real retail selected-tree context and type/class catalog query, detached output, nullable friendship faction and no-result missing pair; bounded bare/cached tests. Native catalog order, Legion data and secret policy remain unverified."
+    },
+    {
+      "source_id": "wt-global-api-C_Garrison.GetTalentTreeIDsByClassID-10",
+      "source": "C_Garrison.GetTalentTreeIDsByClassID",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_7_2_5_publication_sweep.rs"
+        },
+        {
+          "kind": "garrison-tree-context-and-catalog",
+          "proof": "tests/patch_7_2_5_garrison_trees.rs"
+        }
+      ],
+      "note": "Real retail selected-tree context and type/class catalog query, detached output, nullable friendship faction and no-result missing pair; bounded bare/cached tests. Native catalog order, Legion data and secret policy remain unverified."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList-11",
+      "source": "C_LFGList",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_7_2_5_publication_sweep.rs"
+        }
+      ],
+      "note": "Raw publication and lookup after unmodified cached retail startup only; not native signatures/outputs/security/historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.Search-11",
+      "source": "C_LFGList.Search",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_7_2_5_publication_sweep.rs"
+        }
+      ],
+      "note": "Raw publication and lookup after unmodified cached retail startup only; not native signatures/outputs/security/historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_Unit-12",
+      "source": "C_Unit",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Raw-absent namespace. Source links the unqualified UnitIsOwnerOrControllerOfUnit, already modeled/published, but names no C_Unit member. No native namespace capture; do not invent an empty table or qualified alias."
+    },
+    {
+      "source_id": "wt-global-api-UnitIsOwnerOrControllerOfUnit-12",
+      "source": "UnitIsOwnerOrControllerOfUnit",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_7_2_5_publication_sweep.rs"
+        }
+      ],
+      "note": "Raw publication and lookup after unmodified cached retail startup only; not native signatures/outputs/security/historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogSets-13",
+      "source": "C_TransmogSets",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_7_2_5_publication_sweep.rs"
+        }
+      ],
+      "note": "Raw publication and lookup after unmodified cached retail startup only; not native signatures/outputs/security/historical parity."
+    },
+    {
+      "source_id": "wt-global-api-ReloadUI-14",
+      "source": "ReloadUI",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical rename suggests removal, but thirteen current retail consumer lines prohibit retirement. Existing notification behavior retained; no later master/p730 register re-addition, no historical absence claim."
+    },
+    {
+      "source_id": "wt-global-api-C_UI.Reload-14",
+      "source": "C_UI.Reload",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Raw-absent. Existing ReloadUI and GUI reload only dispatch notifications; no VM teardown/recreation or SavedVariables reload model. Event-only alias would disguise missing lifecycle; no shim added."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source title/heading only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source title/heading only; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_7_2_5_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named namespace/member publication is separately observed; summary supplies no additional behavior contract. Existing modeled chat/action/LFG surfaces remain bounded, not native parity."
+    },
+    {
+      "source_id": "prose-undated-005",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Namespace publication is separately bounded, but page enumerates no member names/signatures or behavior. Do not invent commentator or transmog additions from an unexpanded linked page."
+    },
+    {
+      "source_id": "prose-undated-006",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Documentation editorial statement; no event name/payload list is supplied and linked documentation is not expanded."
+    },
+    {
+      "source_id": "source-context-008",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source title/heading only; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-009",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_7_2_5_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named namespace/member publication is separately observed; summary supplies no additional behavior contract. Existing modeled chat/action/LFG surfaces remain bounded, not native parity."
+    },
+    {
+      "source_id": "prose-undated-010",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_7_2_5_publication_sweep.rs"
+        },
+        {
+          "kind": "garrison-tree-context-and-catalog",
+          "proof": "tests/patch_7_2_5_garrison_trees.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Three named queries modeled with real catalog/context inputs; no native progression, secret-policy, catalog-order or historical Legion capture claim."
+    },
+    {
+      "source_id": "prose-undated-011",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_7_2_5_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named namespace/member publication is separately observed; summary supplies no additional behavior contract. Existing modeled chat/action/LFG surfaces remain bounded, not native parity."
+    },
+    {
+      "source_id": "prose-undated-012",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Raw-absent namespace. Source links the unqualified UnitIsOwnerOrControllerOfUnit, already modeled/published, but names no C_Unit member. No native namespace capture; do not invent an empty table or qualified alias."
+    },
+    {
+      "source_id": "prose-undated-013",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Namespace publication is separately bounded, but page enumerates no member names/signatures or behavior. Do not invent commentator or transmog additions from an unexpanded linked page."
+    },
+    {
+      "source_id": "prose-undated-014",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Raw-absent. Existing ReloadUI and GUI reload only dispatch notifications; no VM teardown/recreation or SavedVariables reload model. Event-only alias would disguise missing lifecycle; no shim added. Historical rename suggests removal, but thirteen current retail consumer lines prohibit retirement. Existing notification behavior retained; no later master/p730 register re-addition, no historical absence claim."
+    }
+  ]
+}

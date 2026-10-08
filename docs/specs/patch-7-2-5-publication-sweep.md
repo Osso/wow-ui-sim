@@ -5,11 +5,11 @@ Audit [pinned Warcraft Wiki source](../../data/patch-api/sources/7.2.5-api-chang
 ## What it must do
 
 - [ ] Account for every linked API identity and retained extract row.
-- [ ] Probe real raw publication and lookup after unmodified cached retail startup; compare the exact gap set.
-- [ ] Preserve complete historical inputs and reproduce saved registers/extracts with recorded flags.
-- [ ] Query selected garrison tree ID and its optional friendship faction from simulator state.
-- [ ] Enumerate matching tree IDs for both garrison type and class, without leaking a mutable catalog to Lua; unknown pairs return no values.
-- [ ] Preserve existing profiles and all prior publication sweep results.
+- [x] Probe real raw publication and lookup after unmodified cached retail startup; compare the exact gap set.
+- [x] Preserve complete historical inputs; reproduce saved registers and retain the exact inherited non-reproducible extract outcomes with recorded flags.
+- [x] Query selected garrison tree ID and its optional friendship faction from simulator state.
+- [x] Enumerate matching tree IDs for both garrison type and class, without leaking a mutable catalog to Lua; unknown pairs return no values.
+- [x] Keep Mists tests compiling without new non-vendor warnings; preserve all prior publication sweep results.
 
 ## How it works
 

@@ -1,0 +1,12 @@
+tests/recent_runtime_bootstrap_boundaries.rs:4:        ("function ReloadUI", "Rust event API"),
+tests/blizzard_script_errors_frame_loads.rs:322:         children (especially the `Reload` button which calls `ReloadUI` and the \
+tests/blizzard_script_errors_frame_loads.rs:508:             multi-line text), Reload (UIPanelButton calling ReloadUI), \
+tests/blizzard_ui/blizzard_addonperformance/behavior_specific_error_popup_disable_path.rs:13:                local originalReloadUI = ReloadUI
+tests/blizzard_ui/blizzard_addonperformance/behavior_specific_error_popup_disable_path.rs:20:                ReloadUI = function()
+tests/blizzard_ui/blizzard_addonperformance/behavior_specific_error_popup_disable_path.rs:33:                ReloadUI = originalReloadUI
+tests/blizzard_ui/blizzard_addonperformance/behavior_specific_error_popup_disable_path.rs:67:        "popup accept must call `ReloadUI` after disabling the addon"
+tests/blizzard_ui/blizzard_addonlist/behavior_okay_button_saves_when_pending_changes.rs:40:                ReloadUI = function()
+tests/blizzard_ui/blizzard_addonlist/behavior_okay_button_saves_when_pending_changes.rs:74:            "`AddonList.OkayButton:Click()` must route through `AddonList_OnOkay` and call `ReloadUI`"
+tests/system_api.rs:297:// FireEvent / ReloadUI
+tests/system_api.rs:309:    let is_func: bool = env.eval("return type(ReloadUI) == 'function'").unwrap();
+tests/system_api.rs:330:            ReloadUI()

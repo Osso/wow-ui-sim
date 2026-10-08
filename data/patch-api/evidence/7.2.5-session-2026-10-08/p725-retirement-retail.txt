@@ -1,0 +1,13 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AddOnList/AddonList.lua:604:			ReloadUI();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/SlashCommands.lua:1246:	ReloadUI();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/SlashCommands.lua:1251:	ReloadUI();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/SlashCommands.lua:1391:	ReloadUI();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Bindings_Mists.xml:1430:		ReloadUI();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Bindings_WoWLabs.xml:487:    ReloadUI();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Bindings_Standard.xml:1444:    ReloadUI();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Bindings_WoWHack.xml:492:    ReloadUI();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AddOnPerformance/AddOnPerformance.lua:8:		ReloadUI();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/GameDialogDefs.lua:618:		ReloadUI();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/GameDialogDefs.lua:704:		ReloadUI();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ScriptErrorsFrame/Blizzard_ScriptErrorsFrame.xml:52:						<OnClick function="ReloadUI"/>
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/InterfaceUtil.lua:1:function ReloadUI()

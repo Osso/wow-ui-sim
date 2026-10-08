@@ -1,0 +1,22 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--manifest-path",
+    "/tmp/p725-base-85c2acb2d/Cargo.toml",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors"
+  ],
+  "revision": "43dd7ed8e15ae6a00a04818e28ad1754f4540dd6",
+  "scope": "p725-base-garrison-case",
+  "cwd": ".",
+  "target": "dedicated p725-page target (external to repository)",
+  "environment": {},
+  "exit": 1,
+  "log": "p725-base-garrison-case.txt",
+  "log_sha256": "c72f85aaff691313c7794340d8d1c42dbec4b6bdf63dd0ef7e54549bcfce98d9",
+  "seconds": 100.39027075400008,
+  "invalidated": false
+}

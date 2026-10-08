@@ -1,0 +1,10 @@
+src/lua_api/state.rs:58:            garrison_talents: GarrisonTalentState::default(),
+src/lua_api/globals/missing_surface/garrison.rs:59:        .garrison_talents
+src/lua_api/globals/missing_surface/garrison.rs:75:        .garrison_talents
+src/lua_api/state/sim_state.rs:46:    pub garrison_talents: GarrisonTalentState,
+src/lua_api/state/support_types/adventure_map.rs:336:pub struct GarrisonTalentState {
+tests/c_garrison_talents.rs:21:    sim.garrison_talents
+tests/c_garrison_talents.rs:24:    sim.garrison_talents
+tests/c_garrison_talents.rs:27:    sim.garrison_talents.unlock_world_quests.insert(202, 67890);
+tests/blizzard_ui/blizzard_animadiversionui/behavior_pin_refresh_tooltip_branches_on_state_and_currency.rs:166:    state.garrison_talents.talents.insert(
+tests/blizzard_ui/blizzard_animadiversionui/behavior_pin_refresh_tooltip_branches_on_state_and_currency.rs:180:        .garrison_talents

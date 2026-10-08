@@ -1,6 +1,6 @@
 ## [2026-10-08] investigation | Patch 7.2.5
 
-Pinned page 448509 revision 4311256; opt-in canonical summary-bullet register. Added real retail garrison tree catalog/context; retained ReloadUI after whole-word grep consumer/caller scans. [Audit](investigations/patch-7-2-5-api-audit.md); acceptance pending.
+[Audit](investigations/patch-7-2-5-api-audit.md): page 448509 revision 4311256; all 28 IDs accounted. Three real garrison queries; three exact gaps, no retirements. 43 sweeps plus factory, own bare/cached and garrison/anima callers, Python fixtures, format/Mists check and startup pass; cached explicit-load failure reproduced on base and retained. Reproduction preserves 219 inputs/92 modes; three inherited extract failures. Nineteen prior validators pass; own portability gate pending. Index/log preserved.
 
 ## [2026-10-08] integration | Patch 8.1.0 API audit
 
