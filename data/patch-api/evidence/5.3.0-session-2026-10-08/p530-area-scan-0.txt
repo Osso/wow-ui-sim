@@ -1,0 +1,3 @@
+/home/osso/.worktrees/wow-ui-sim-p530-page/src/lua_api/workarounds/temporary/inert_global_defaults.rs:158:if GetLootSpecialization == nil then
+/home/osso/.worktrees/wow-ui-sim-p530-page/src/lua_api/workarounds/temporary/inert_global_defaults.rs:159:    function GetLootSpecialization()
+/home/osso/.worktrees/wow-ui-sim-p530-page/src/lua_api/workarounds/temporary/inert_global_defaults.rs:320:                if GetLootSpecialization() ~= 0 then return "loot_spec" end

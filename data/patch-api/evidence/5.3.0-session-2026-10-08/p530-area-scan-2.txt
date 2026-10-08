@@ -1,0 +1,20 @@
+/home/osso/.worktrees/wow-ui-sim-p530-page/src/lua_api/workarounds/temporary/client_info_defaults.rs:225:if GetWebTicket == nil then
+/home/osso/.worktrees/wow-ui-sim-p530-page/src/lua_api/workarounds/temporary/client_info_defaults.rs:226:  function GetWebTicket()
+/home/osso/.worktrees/wow-ui-sim-p530-page/src/lua_api/workarounds/temporary/client_info_defaults.rs:287:                if GetWebTicket() ~= nil then return "web_ticket" end
+/home/osso/.worktrees/wow-ui-sim-p530-page/src/lua_api/globals/pvp_probes.rs:522:    LuaApiMut::register_function(lua, "GetPVPRoles", get_pvp_roles)?;
+/home/osso/.worktrees/wow-ui-sim-p530-page/src/lua_api/globals/pvp_probes.rs:523:    LuaApiMut::register_function(lua, "SetPVPRoles", set_pvp_roles)?;
+/home/osso/.worktrees/wow-ui-sim-p530-page/src/loader/tests/wow_api_globals/startup_globals.rs:1300:            SetPVPRoles(true, false, true)
+/home/osso/.worktrees/wow-ui-sim-p530-page/src/loader/tests/wow_api_globals/startup_globals.rs:1301:            local tank, healer, dps = GetPVPRoles()
+/home/osso/.worktrees/wow-ui-sim-p530-page/src/loader/tests/wow_api_globals/startup_globals.rs:1374:                type(GetWebTicket),
+/home/osso/.worktrees/wow-ui-sim-p530-page/src/loader/tests/wow_api_globals/startup_globals.rs:1375:                type(GetWebTicket()),
+/home/osso/.worktrees/wow-ui-sim-p530-page/src/mists/compat_bootstrap.lua:707:if rawget(_G, "GetPVPRoles") == nil then
+/home/osso/.worktrees/wow-ui-sim-p530-page/src/mists/compat_bootstrap.lua:708:  function GetPVPRoles() return false, false, false end
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/admin_pvp_guild_api.rs:106:    let is_nil: bool = env.eval("return GetWebTicket() == nil").unwrap();
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/recent_runtime_bootstrap_boundaries.rs:545:        ("function GetWebTicket", "temporary client-info workaround"),
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/blizzard_help_frame_loads.rs:96:         survey acknowledgement are server-authoritative (queried via GetWebTicket / \
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/blizzard_help_frame_loads.rs:97:         AcknowledgeSurvey), no per-installation persistence is needed"
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/blizzard_help_frame_loads.rs:258:         the polling interval to call GetWebTicket()"
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/blizzard_help_frame_loads.rs:331:             survey / response tooltip, OnUpdate polls GetWebTicket every \
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/data/patch_9_1_0_sweep_known_gaps.json:17:  "wt-global-api-C_ItemUpgrade.GetItemUpgradeEffect-43",
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/data/patch_9_1_0_sweep_known_gaps.json:18:  "wt-global-api-C_ItemUpgrade.GetNumItemUpgradeEffects-44",
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/data/patch_10_0_0_sweep_known_gaps.json:41:  "wt-global-api-C_Minimap.CanTrackBattlePets-297",

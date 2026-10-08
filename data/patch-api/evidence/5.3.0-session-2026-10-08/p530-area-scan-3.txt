@@ -1,0 +1,28 @@
+/home/osso/.worktrees/wow-ui-sim-p530-page/src/xml/types_elements.rs:372:    Browser(FrameXml),
+/home/osso/.worktrees/wow-ui-sim-p530-page/src/xml/types_elements.rs:413:        "Browser" => Some("Browser"),
+/home/osso/.worktrees/wow-ui-sim-p530-page/src/xml/types_frame_data.rs:55:                    Browser,
+/home/osso/.worktrees/wow-ui-sim-p530-page/src/xml/types.rs:74:    Browser(FrameXml),
+/home/osso/.worktrees/wow-ui-sim-p530-page/src/wrath/frame_methods.rs:80:/// Classic Browser frame method. The simulator has no embedded browser
+/home/osso/.worktrees/wow-ui-sim-p530-page/src/lua_api/frame/methods/widgets/browser.rs:1://! Browser widget navigation methods.
+/home/osso/.worktrees/wow-ui-sim-p530-page/src/lua_api/workarounds/temporary/inert_global_defaults.rs:320:                if GetLootSpecialization() ~= 0 then return "loot_spec" end
+/home/osso/.worktrees/wow-ui-sim-p530-page/src/loader/xml_frame/tests.rs:45:        FrameElement::Browser(f) => Some((f, "Browser")),
+/home/osso/.worktrees/wow-ui-sim-p530-page/src/loader/xml_frame/tests.rs:230:        FrameElement::Browser(f.clone()),
+/home/osso/.worktrees/wow-ui-sim-p530-page/src/loader/xml_file_tests.rs:155:        XmlElement::Browser(f.clone()),
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/patch_11_2_0_publication_fixes.rs:65:        local browser = CreateFrame('Browser')
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/blizzard_shared_xml_game_loads.rs:167:        "Mainline/LootSpecialization.lua",
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/blizzard_shared_xml_game_loads.rs:207:         including Mainline/LootSpecialization.lua. Got {lua_count}"
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/blizzard_shared_xml_game_loads.rs:246:        .position(|p| p == "Mainline/LootSpecialization.lua")
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/blizzard_shared_xml_game_loads.rs:247:        .expect("LootSpecialization.lua present");
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/blizzard_shared_xml_game_loads.rs:250:        "DressUpModelFrameMixin.lua must load before Mainline/LootSpecialization.lua in the \
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/blizzard_photo_sharing_loads.rs:388:             PhotoSharingBrowser (the Browser child INSIDE PhotoSharingBrowserFrame, \
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/blizzard_photo_sharing_loads.rs:390:             PhotoSharingBrowserPopup (resolves to the inner Browser child due to a \
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/blizzard_photo_sharing_loads.rs:392:             child Browser overwrites the earlier top-level Frame in `_G` — verified \
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/blizzard_photo_sharing_loads.rs:402:    // The XML declares both a top-level Frame and its nested Browser child with
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/blizzard_photo_sharing_loads.rs:407:        .expect("popup Browser ownership probe succeeds");
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/blizzard_photo_sharing_loads.rs:410:        "The nested Browser must own `_G.PhotoSharingBrowserPopup`; its parent is the \
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/blizzard_photo_sharing_loads.rs:424:        .expect("Browser navigation methods should be callable");
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/blizzard_photo_sharing_loads.rs:428:        "Browser:NavigateTo and Browser:NavigateHome must be callable no-result methods. \
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/blizzard_photo_sharing_loads.rs:444:            "_G.{tmpl} must NOT exist as a global. The 2 Browser virtual templates \
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/blizzard_photo_sharing_loads.rs:449:             concrete Browser children. Leaking them into `_G` would be a regression \
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/data/patch_11_2_0_sweep_known_gaps.json:28:  "wt-widgets-Browser:NavigateTo-173"
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/data/patch_10_0_0_sweep_known_gaps.json:157:  "wt-widgets-Browser:NavigateTo-634",

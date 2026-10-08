@@ -1,0 +1,6 @@
+/home/osso/.worktrees/wow-ui-sim-p530-page/src/c_api/patch_retired_members.rs:33:    ("C_Scenario", &["GetBonusCriteriaInfo", "GetBonusStepInfo"]),
+/home/osso/.worktrees/wow-ui-sim-p530-page/src/lua_api/workarounds/temporary/pet_battle_runtime_state.rs:287:C_PetBattles.CanAcceptQueuedPVPMatch = function()
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/patch_6_0_2_behavior.rs:77:            {C_Scenario, 'GetBonusCriteriaInfo'},
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/patch_6_0_2_behavior.rs:78:            {C_Scenario, 'GetBonusStepInfo'},
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/pet_battles.rs:219:            if not C_PetBattles.CanAcceptQueuedPVPMatch() then
+/home/osso/.worktrees/wow-ui-sim-p530-page/tests/pet_battles.rs:227:            if C_PetBattles.CanAcceptQueuedPVPMatch() then
