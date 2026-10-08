@@ -715,18 +715,21 @@ fn campaign_covenant_placeholder_defaults_are_not_c_api_temporary_shims() {
 }
 
 #[test]
-fn date_and_time_deterministic_defaults_are_not_c_api_temporary_shims() {
-    let temporary_shims = c_api_temporary_shims_source();
-    let c_api = include_str!("../src/c_api/mod.rs");
-
-    assert!(
-        !temporary_shims.contains("c_date_and_time"),
-        "unmodeled C_DateAndTime deterministic calendar defaults belong in lua_api::workarounds::temporary"
-    );
-    assert!(
-        !c_api.contains("c_date_and_time"),
-        "C_DateAndTime deterministic defaults should not be wired through c_api registration"
-    );
+fn date_and_time_defaults_compose_with_modeled_calendar_comparison() {
+    let env = wow_ui_sim::lua_api::WowLuaEnv::new().expect("initialize date/time providers");
+    env.exec(
+        r#"
+        local current = C_DateAndTime.GetCurrentCalendarTime()
+        local tomorrow = C_DateAndTime.AdjustTimeByDays(current, 1)
+        local previous = C_DateAndTime.AdjustTimeByMinutes(current, -13 * 60)
+        assert(C_DateAndTime.CompareCalendarTime(current, tomorrow) == 1)
+        assert(C_DateAndTime.CompareCalendarTime(current, previous) == -1)
+        local unchanged = C_DateAndTime.GetCurrentCalendarTime()
+        assert(C_DateAndTime.CompareCalendarTime(current, unchanged) == 0)
+        assert(current.monthDay == 14 and current.hour == 12 and current.minute == 0)
+        "#,
+    )
+    .expect("temporary calendar providers must compose with the supplied-time model");
 }
 
 #[test]

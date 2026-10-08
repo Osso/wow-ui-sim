@@ -43,6 +43,10 @@ def run_remaining_checks():
                                          'blizzard_calendar_loads'])
     require('p810-integration-bare', ['cargo', 'test', '--test', 'integration', '--',
                                      'patch_8_1_0', 'c_calendar', 'c_map_probes', 'date_and_time'])
+    run_provider_checks()
+
+
+def run_provider_checks():
     require('p810-integration-lib', ['cargo', 'test', '--lib', '--',
                                     'date_and_time_defaults', 'configuration_warnings_defaults'])
     os.environ['P810_SWEEP_REGISTER'] = str(EVIDENCE / 'p810-negative-register.json')
