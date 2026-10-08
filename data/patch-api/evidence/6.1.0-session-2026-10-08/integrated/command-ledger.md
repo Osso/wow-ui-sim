@@ -22,3 +22,5 @@ Verified: 2026-10-08. Runtime/source scope: `59ccbbc6a480f9e85d16e1007df760a8902
 | `python3 -B integrated/check_tamper.py` | altered own historical log rejected; original bytes restored | `tamper-proof.json` |
 
 Commands using `integrated/` resolve under this session directory. Logs are retained in full beside receipts. No runtime source changed; no full integration suite or startup comparison required. Historical receipts and their source scopes are preserved separately, not overwritten by this ledger.
+
+Pinned-master archive sweep: 52/52 cases pass (`master-all-sweeps.proof.json`). All 51 other page observations exactly match master; all 52 pages account for 9,055 observations (`gap-comparison.json`). Own four observations equal historical evidence.

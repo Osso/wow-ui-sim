@@ -154,7 +154,8 @@ def check_commands(context):
     required = {'own-sweep', 'all-sweeps', 'prefork-patch', 'prefork-recap', 'integration-recap',
                 'integration-absence', 'format', 'mists-check', 'negative', 'master-all-sweeps'}
     required |= {Path(path).stem for path in names(context['runtime_revision'], 'tools')
-                 if Path(path).name.startswith('test_') and path.endswith('.py')}
+                 if Path(path).parent == Path('tools')
+                 and Path(path).name.startswith('test_') and path.endswith('.py')}
     assert required <= set(context['receipts'])
     for label, expected in context['receipts'].items():
         receipt = read(HERE / (label + '.proof.json'))

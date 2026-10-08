@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p610-page/data/patch-api/evidence/6.1.0-session-2026-10-08/integrated/run_checks.py"
+  ],
+  "revision": "59ccbbc6a480f9e85d16e1007df760a8902c9fe0",
+  "scope": "launcher",
+  "cwd": ".",
+  "target": "dedicated p610-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "launcher.txt",
+  "log_sha256": "6b580e699465a8a80f41675f74678a404234aa137e44f5aa17d10d4463e88b19",
+  "seconds": 553.5679305619997,
+  "invalidated": false
+}
