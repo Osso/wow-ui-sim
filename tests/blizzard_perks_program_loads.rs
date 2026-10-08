@@ -6,7 +6,6 @@ use wow_ui_sim::loader::{find_toc_file, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::paths::default_blizzard_ui_addons_path;
 use wow_ui_sim::screen::ScreenKind;
-use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
@@ -104,32 +103,9 @@ const VIRTUAL_TEMPLATES_NOT_IN_GLOBALS: &[&str] = &[
     "PerksModelSceneControlButtonTemplate",
 ];
 
-fn load_full_game_ui_with_perks_program() -> WowLuaEnv {
-    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
-    env.set_screen_size(1024.0, 768.0);
-    env.set_screen_mode(ScreenKind::Game);
-
-    {
-        let mut state = env.state().borrow_mut();
-        state.addon_base_paths = vec![blizzard_ui_dir()];
-    }
-
-    wow_ui_sim::xml::register_intrinsic_templates();
-
-    let ui = blizzard_ui_dir();
-    let addons = discover_blizzard_addons_for_screen(&ui, ScreenKind::Game);
-    for (name, toc_path) in &addons {
-        load_addon(&env.loader_env(), toc_path)
-            .unwrap_or_else(|err| panic!("[load {name}] FAILED: {err}"));
-    }
-
+fn load_perks_program_after_fork(env: &WowLuaEnv) {
     load_addon(&env.loader_env(), &perks_program_toc())
         .expect("explicit load_addon for Blizzard_PerksProgram succeeds");
-
-    env.apply_post_load_workarounds();
-    fire_startup_events_for_screen(&env, ScreenKind::Game);
-
-    env
 }
 
 #[test]
@@ -321,9 +297,9 @@ fn blizzard_perks_program_appears_in_full_addon_inventory() {
     );
 }
 
-#[test]
-fn blizzard_perks_program_loads_without_addon_specific_lua_errors() {
-    let env = load_full_game_ui_with_perks_program();
+prefork_full_ui_case! {
+    fn blizzard_perks_program_loads_without_addon_specific_lua_errors(env: &WowLuaEnv) {
+    load_perks_program_after_fork(env);
 
     let load_errors: Vec<String> = env
         .state()
@@ -364,10 +340,11 @@ fn blizzard_perks_program_loads_without_addon_specific_lua_errors() {
         load_errors.join("\n  ")
     );
 }
+}
 
-#[test]
-fn blizzard_perks_program_is_addon_loaded_after_explicit_load() {
-    let env = load_full_game_ui_with_perks_program();
+prefork_full_ui_case! {
+    fn blizzard_perks_program_is_addon_loaded_after_explicit_load(env: &WowLuaEnv) {
+    load_perks_program_after_fork(env);
 
     let loaded: bool = env
         .eval("return C_AddOns.IsAddOnLoaded('Blizzard_PerksProgram')")
@@ -379,10 +356,11 @@ fn blizzard_perks_program_is_addon_loaded_after_explicit_load() {
          makes IsAddOnLoaded report true"
     );
 }
+}
 
-#[test]
-fn blizzard_perks_program_publishes_forty_mixin_tables() {
-    let env = load_full_game_ui_with_perks_program();
+prefork_full_ui_case! {
+    fn blizzard_perks_program_publishes_forty_mixin_tables(env: &WowLuaEnv) {
+    load_perks_program_after_fork(env);
 
     for mixin in PUBLIC_MIXINS {
         let kind: String = env
@@ -409,10 +387,11 @@ fn blizzard_perks_program_publishes_forty_mixin_tables() {
          pin so adding/removing mixins via vendor TAG bumps surfaces here"
     );
 }
+}
 
-#[test]
-fn blizzard_perks_program_publishes_perks_program_util_namespace() {
-    let env = load_full_game_ui_with_perks_program();
+prefork_full_ui_case! {
+    fn blizzard_perks_program_publishes_perks_program_util_namespace(env: &WowLuaEnv) {
+    load_perks_program_after_fork(env);
 
     for namespace in PUBLIC_NAMESPACE_TABLES {
         let kind: String = env
@@ -440,10 +419,11 @@ fn blizzard_perks_program_publishes_perks_program_util_namespace() {
          the only public method on the namespace"
     );
 }
+}
 
-#[test]
-fn blizzard_perks_program_creates_named_frames() {
-    let env = load_full_game_ui_with_perks_program();
+prefork_full_ui_case! {
+    fn blizzard_perks_program_creates_named_frames(env: &WowLuaEnv) {
+    load_perks_program_after_fork(env);
 
     for frame in PUBLIC_NAMED_FRAMES {
         let kind: String = env
@@ -463,10 +443,11 @@ fn blizzard_perks_program_creates_named_frames() {
         );
     }
 }
+}
 
-#[test]
-fn blizzard_perks_program_does_not_leak_virtual_templates_to_globals() {
-    let env = load_full_game_ui_with_perks_program();
+prefork_full_ui_case! {
+    fn blizzard_perks_program_does_not_leak_virtual_templates_to_globals(env: &WowLuaEnv) {
+    load_perks_program_after_fork(env);
 
     for template in VIRTUAL_TEMPLATES_NOT_IN_GLOBALS {
         let kind: String = env
@@ -495,4 +476,5 @@ fn blizzard_perks_program_does_not_leak_virtual_templates_to_globals() {
          is asserted as a pin so adding/removing templates via vendor TAG bumps \
          surfaces here"
     );
+}
 }
