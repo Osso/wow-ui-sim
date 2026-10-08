@@ -1,0 +1,2414 @@
+{
+  "wt-cvars-floatingCombatTextComboPoints-122": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "floatingCombatTextComboPoints"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-NAME_PLATE_CREATED-89": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "NAME_PLATE_CREATED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-NAME_PLATE_UNIT_ADDED-89": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "NAME_PLATE_UNIT_ADDED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-NAME_PLATE_UNIT_REMOVED-89": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "NAME_PLATE_UNIT_REMOVED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-UNIT_COMBO_POINTS-121": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "UNIT_COMBO_POINTS"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"UNIT_COMBO_POINTS\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_AdventureMap-8": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "P703_NONEXISTENT_NAMESPACE"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_ArtifactUI-9": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ArtifactUI"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=table; lookup=table",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_MountJournal.GetMountInfo-110": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_MountJournal.GetMountInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_MountJournal.GetMountInfoByID-110": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_MountJournal.GetMountInfoByID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_MountJournal.GetMountInfoExtra-111": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_MountJournal.GetMountInfoExtra"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_MountJournal.GetMountInfoExtraByID-111": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_MountJournal.GetMountInfoExtraByID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_MountJournal.Summon-112": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_MountJournal.Summon"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_MountJournal.SummonByID-112": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_MountJournal.SummonByID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_NamePlate.GetNamePlateForUnit-91": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_NamePlate.GetNamePlateForUnit"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_NamePlate.GetNamePlateSizes-92": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_NamePlate.GetNamePlateSizes"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_NamePlate.GetNamePlates-93": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_NamePlate.GetNamePlates"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_NamePlate.GetNumNamePlateMotionTypes-94": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_NamePlate.GetNumNamePlateMotionTypes-500",
+      "symbol": "C_NamePlate.GetNumNamePlateMotionTypes"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_NamePlate.SetNamePlateSizes-95": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_NamePlate.SetNamePlateSizes"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI-12": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=table; lookup=table",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TradeSkillUI.AnyRecipeCategoriesFiltered-33": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.AnyRecipeCategoriesFiltered"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.AreAnyInventorySlotsFiltered-44": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.AreAnyInventorySlotsFiltered"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TradeSkillUI.CanObliterateCursorItem-36": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.CanObliterateCursorItem"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.CanTradeSkillListLink-57": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.CanTradeSkillListLink"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TradeSkillUI.ClearInventorySlotFilter-74": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.ClearInventorySlotFilter"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TradeSkillUI.ClearPendingObliterateItem-37": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.ClearPendingObliterateItem"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.ClearRecipeCategoryFilter-13": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.ClearRecipeCategoryFilter"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.ClearRecipeSourceTypeFilter-59": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.ClearRecipeSourceTypeFilter"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.CloseObliterumForge-43": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.CloseObliterumForge"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.CloseTradeSkill-70": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.CloseTradeSkill"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TradeSkillUI.CraftRecipe-52": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.CraftRecipe"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TradeSkillUI.DropPendingObliterateItemFromCursor-16": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.DropPendingObliterateItemFromCursor"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.GetAllFilterableInventorySlots-64": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetAllFilterableInventorySlots"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TradeSkillUI.GetAllRecipeIDs-30": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetAllRecipeIDs"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TradeSkillUI.GetCategories-38": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetCategories"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TradeSkillUI.GetCategoryInfo-21": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetCategoryInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TradeSkillUI.GetFilterableInventorySlots-60": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetFilterableInventorySlots"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TradeSkillUI.GetFilteredRecipeIDs-68": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetFilteredRecipeIDs"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TradeSkillUI.GetObliterateSpellID-39": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetObliterateSpellID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.GetOnlyShowLearnedRecipes-42": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_TradeSkillUI.GetOnlyShowLearnedRecipes-511",
+      "symbol": "C_TradeSkillUI.GetOnlyShowLearnedRecipes"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.GetOnlyShowMakeableRecipes-47": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetOnlyShowMakeableRecipes"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.GetOnlyShowSkillUpRecipes-29": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetOnlyShowSkillUpRecipes"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.GetOnlyShowUnlearnedRecipes-26": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_TradeSkillUI.GetOnlyShowUnlearnedRecipes-512",
+      "symbol": "C_TradeSkillUI.GetOnlyShowUnlearnedRecipes"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.GetPendingObliterateItemID-22": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetPendingObliterateItemID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.GetPendingObliterateItemLink-69": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetPendingObliterateItemLink"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.GetRecipeCooldown-77": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetRecipeCooldown"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.GetRecipeDescription-79": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetRecipeDescription"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TradeSkillUI.GetRecipeInfo-18": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetRecipeInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TradeSkillUI.GetRecipeItemLevelFilter-62": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetRecipeItemLevelFilter"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.GetRecipeItemLink-80": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetRecipeItemLink"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TradeSkillUI.GetRecipeItemNameFilter-20": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetRecipeItemNameFilter"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TradeSkillUI.GetRecipeLink-73": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetRecipeLink"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.GetRecipeNumItemsProduced-76": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_TradeSkillUI.GetRecipeNumItemsProduced-515",
+      "symbol": "C_TradeSkillUI.GetRecipeNumItemsProduced"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.GetRecipeNumReagents-53": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_TradeSkillUI.GetRecipeNumReagents-516",
+      "symbol": "C_TradeSkillUI.GetRecipeNumReagents"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.GetRecipeReagentInfo-71": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_TradeSkillUI.GetRecipeReagentInfo-517",
+      "symbol": "C_TradeSkillUI.GetRecipeReagentInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.GetRecipeReagentItemLink-65": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_TradeSkillUI.GetRecipeReagentItemLink-518",
+      "symbol": "C_TradeSkillUI.GetRecipeReagentItemLink"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.GetRecipeRepeatCount-15": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_TradeSkillUI.GetRecipeRepeatCount-73",
+      "symbol": "C_TradeSkillUI.GetRecipeRepeatCount"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TradeSkillUI.GetRecipeSourceText-58": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetRecipeSourceText"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.GetRecipeTools-40": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_TradeSkillUI.GetRecipeTools-332",
+      "symbol": "C_TradeSkillUI.GetRecipeTools"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TradeSkillUI.GetSubCategories-51": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetSubCategories"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.GetTradeSkillLine-54": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_TradeSkillUI.GetTradeSkillLine-520",
+      "symbol": "C_TradeSkillUI.GetTradeSkillLine"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.GetTradeSkillLineForRecipe-63": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetTradeSkillLineForRecipe"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.GetTradeSkillListLink-48": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetTradeSkillListLink"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TradeSkillUI.GetTradeSkillTexture-45": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetTradeSkillTexture"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TradeSkillUI.IsAnyRecipeFromSource-81": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.IsAnyRecipeFromSource"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.IsDataSourceChanging-72": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.IsDataSourceChanging"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TradeSkillUI.IsInventorySlotFiltered-35": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.IsInventorySlotFiltered"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TradeSkillUI.IsNPCCrafting-28": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.IsNPCCrafting"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TradeSkillUI.IsRecipeCategoryFiltered-82": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.IsRecipeCategoryFiltered"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.IsRecipeFavorite-56": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.IsRecipeFavorite"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.IsRecipeRepeating-61": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.IsRecipeRepeating"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.IsRecipeSearchInProgress-49": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.IsRecipeSearchInProgress"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.IsRecipeSourceTypeFiltered-14": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.IsRecipeSourceTypeFiltered"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.IsTradeSkillGuild-25": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.IsTradeSkillGuild"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TradeSkillUI.IsTradeSkillLinked-41": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.IsTradeSkillLinked"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TradeSkillUI.IsTradeSkillReady-19": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.IsTradeSkillReady"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TradeSkillUI.ObliterateItem-17": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.ObliterateItem"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.OpenTradeSkill-66": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.OpenTradeSkill"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TradeSkillUI.SetInventorySlotFilter-24": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.SetInventorySlotFilter"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TradeSkillUI.SetOnlyShowLearnedRecipes-34": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_TradeSkillUI.SetOnlyShowLearnedRecipes-522",
+      "symbol": "C_TradeSkillUI.SetOnlyShowLearnedRecipes"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.SetOnlyShowMakeableRecipes-55": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.SetOnlyShowMakeableRecipes"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.SetOnlyShowSkillUpRecipes-31": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.SetOnlyShowSkillUpRecipes"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.SetOnlyShowUnlearnedRecipes-78": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_TradeSkillUI.SetOnlyShowUnlearnedRecipes-523",
+      "symbol": "C_TradeSkillUI.SetOnlyShowUnlearnedRecipes"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.SetRecipeCategoryFilter-75": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.SetRecipeCategoryFilter"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.SetRecipeFavorite-46": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.SetRecipeFavorite"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.SetRecipeItemLevelFilter-50": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.SetRecipeItemLevelFilter"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.SetRecipeItemNameFilter-23": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.SetRecipeItemNameFilter"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TradeSkillUI.SetRecipeRepeatCount-27": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_TradeSkillUI.SetRecipeRepeatCount-524",
+      "symbol": "C_TradeSkillUI.SetRecipeRepeatCount"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.SetRecipeSourceTypeFilter-67": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.SetRecipeSourceTypeFilter"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_TradeSkillUI.StopRecipeRepeat-32": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.StopRecipeRepeat"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_Transmog-10": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Transmog"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=table; lookup=table",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TransmogCollection-10": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TransmogCollection"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=table; lookup=table",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-CastGlyph-115": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "CastGlyph"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-CreateFrame-105": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "CreateFrame"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-GetContainerItemGems-116": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetContainerItemGems"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-GetGlyphInfo-115": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetGlyphInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-GetInboxItem-101": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetInboxItem"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-GetInventoryItemGems-116": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetInventoryItemGems"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-GetMapLandmarkInfo-104": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetMapLandmarkInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-GetNameplateFrames-90": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetNameplateFrames"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-GetNumDungeonMapLevels-103": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetNumDungeonMapLevels"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-GetNumNamePlateMotionTypes-90": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetNumNamePlateMotionTypes"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-GetNumQuestLogRewardSpells-83": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-GetNumQuestLogRewardSpells-316",
+      "symbol": "GetNumQuestLogRewardSpells"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-GetQuestLogRewardSpell-107": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-GetQuestLogRewardSpell-318",
+      "symbol": "GetQuestLogRewardSpell"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-GetQuestLogRewardTalents-117": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetQuestLogRewardTalents"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-GetSendMailItem-102": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetSendMailItem"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-GetSpellInfo-99": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-GetSpellInfo-445",
+      "symbol": "GetSpellInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-SetGlyph-115": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "SetGlyph"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-ShowCloak-118": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-ShowCloak-433",
+      "symbol": "ShowCloak"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-ShowHelm-118": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-ShowHelm-434",
+      "symbol": "ShowHelm"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-ShowingCloak-118": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-ShowingCloak-435",
+      "symbol": "ShowingCloak"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-ShowingHelm-118": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-ShowingHelm-436",
+      "symbol": "ShowingHelm"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-Alpha:SetChange-100": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Alpha:SetChange"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Alpha; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-widgets-Alpha:SetFromAlpha-100": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Alpha:SetFromAlpha"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Alpha; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-Alpha:SetToAlpha-100": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Alpha:SetToAlpha"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Alpha; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-Frame:AllowAttributeChanges-120": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Frame:AllowAttributeChanges"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Frame; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-Frame:CreateLine-6": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Frame:CreateLine"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Frame; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-Frame:GetFlattensRenderLayers-6": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Frame:GetFlattensRenderLayers"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Frame; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-Frame:SetFlattensRenderLayers-6": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Frame:SetFlattensRenderLayers"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Frame; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-GameTooltip:SetRecipeReagentItem-106": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": "wt-widgets-GameTooltip:SetRecipeReagentItem-494",
+      "symbol": "GameTooltip:SetRecipeReagentItem"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "GameTooltip; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-GameTooltip:SetTradeSkillItem-106": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "GameTooltip:SetTradeSkillItem"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "GameTooltip; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-widgets-Line-4": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Line"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "factory=true; type=table",
+      "kind": "object-kind",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-Model:GetModel-123": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:GetModel"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-widgets-Model:GetModelFileID-123": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:GetModelFileID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-Region:GetDebugName-5": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Region:GetDebugName"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Region; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-Texture:SetColorTexture-7": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Texture:SetColorTexture"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Texture; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-Texture:SetColorTexture-96": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Texture:SetColorTexture"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Texture; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-Texture:SetHorizTile-97": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Texture:SetHorizTile"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Texture; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-Texture:SetTexCoord-97": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Texture:SetTexCoord"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Texture; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-Texture:SetTexture-96": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Texture:SetTexture"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Texture; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-Texture:SetTexture-97": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Texture:SetTexture"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Texture; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-Texture:SetTexture-98": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Texture:SetTexture"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Texture; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-Texture:SetToFileData-98": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Texture:SetToFileData"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Texture; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-Texture:SetVertTile-97": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Texture:SetVertTile"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Texture; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-UiCamera-4": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "UiCamera"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "factory=true; type=table",
+      "kind": "object-kind",
+      "value": null
+    },
+    "ok": true
+  }
+}

@@ -392,3 +392,7 @@ Second temporary clone: all nineteen validators pass from the original cwd. Futu
 ## [2026-10-08] ingest | Patch 7.0.3 API audit
 
 Pinned Legion revision 5295335; all 178 IDs accounted. Modeled recipe search and two scoped mount retirements; 52 exact publication gaps/34 prose contracts retained. [Audit](investigations/patch-7-0-3-api-audit.md) records 47 passing sweeps, targeted caller/Mists/fixture proof, startup [] equality and portable historical validation; integration placeholder remains.
+
+## [2026-10-08] integration | Patch 7.0.3 API audit
+
+[Audit](investigations/patch-7-0-3-api-audit.md): merged 7.1.0 register after rebase to 25fbde058. Fresh proof: 48/48 sweep/factory cases, own 52 gaps unchanged, all 46 existing pages unchanged; exact 52→53 negative control. 47 registers/44 extracts reproduce with three inherited failures. Professions/crafting/trade/mount integration and prefork coverage, Mists regressions/check, 31/35/8 fixtures and format pass; separately built addons-enabled startups both []. Original 243 artifacts and recorded Git history retained with seven explicit patch-ID mappings; 28 existing validators plus the new integrated gate pass.

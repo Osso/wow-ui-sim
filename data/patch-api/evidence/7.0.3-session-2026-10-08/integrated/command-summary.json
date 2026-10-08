@@ -1,0 +1,569 @@
+[
+  {
+    "label": "own-sweep",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "patch_7_0_3_publication_sweep"
+    ],
+    "exit": 0,
+    "test_result_counts": [
+      1
+    ],
+    "fixture_count": null,
+    "receipt": "own-sweep.proof.json",
+    "proof_scope": "771a7d7cc5d4494e9a9a2fe9909054ec573f06ed",
+    "later_runtime_changes": false
+  },
+  {
+    "label": "all-sweeps",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "publication_sweep"
+    ],
+    "exit": 0,
+    "test_result_counts": [
+      48
+    ],
+    "fixture_count": null,
+    "receipt": "all-sweeps.proof.json",
+    "proof_scope": "771a7d7cc5d4494e9a9a2fe9909054ec573f06ed",
+    "later_runtime_changes": false
+  },
+  {
+    "label": "integration-patch-7-0-3",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "--",
+      "patch_7_0_3",
+      "--nocapture"
+    ],
+    "exit": 0,
+    "test_result_counts": [
+      3
+    ],
+    "fixture_count": null,
+    "receipt": "integration-patch-7-0-3.proof.json",
+    "proof_scope": "771a7d7cc5d4494e9a9a2fe9909054ec573f06ed",
+    "later_runtime_changes": false
+  },
+  {
+    "label": "integration-professions-api",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "--",
+      "professions_api::",
+      "--nocapture"
+    ],
+    "exit": 0,
+    "test_result_counts": [
+      1,
+      35
+    ],
+    "fixture_count": null,
+    "receipt": "integration-professions-api.proof.json",
+    "proof_scope": "771a7d7cc5d4494e9a9a2fe9909054ec573f06ed",
+    "later_runtime_changes": false
+  },
+  {
+    "label": "integration-test-crafting",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "--",
+      "test_crafting::",
+      "--nocapture"
+    ],
+    "exit": 0,
+    "test_result_counts": [
+      23
+    ],
+    "fixture_count": null,
+    "receipt": "integration-test-crafting.proof.json",
+    "proof_scope": "771a7d7cc5d4494e9a9a2fe9909054ec573f06ed",
+    "later_runtime_changes": false
+  },
+  {
+    "label": "integration-trade-info",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "--",
+      "trade_info::",
+      "--nocapture"
+    ],
+    "exit": 0,
+    "test_result_counts": [
+      1
+    ],
+    "fixture_count": null,
+    "receipt": "integration-trade-info.proof.json",
+    "proof_scope": "771a7d7cc5d4494e9a9a2fe9909054ec573f06ed",
+    "later_runtime_changes": false
+  },
+  {
+    "label": "integration-c-collection-api",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "--",
+      "c_collection_api::",
+      "--nocapture"
+    ],
+    "exit": 0,
+    "test_result_counts": [
+      37
+    ],
+    "fixture_count": null,
+    "receipt": "integration-c-collection-api.proof.json",
+    "proof_scope": "771a7d7cc5d4494e9a9a2fe9909054ec573f06ed",
+    "later_runtime_changes": false
+  },
+  {
+    "label": "integration-c-function-diff-coverage",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "--",
+      "c_function_diff_coverage::",
+      "--nocapture"
+    ],
+    "exit": 0,
+    "test_result_counts": [
+      4
+    ],
+    "fixture_count": null,
+    "receipt": "integration-c-function-diff-coverage.proof.json",
+    "proof_scope": "771a7d7cc5d4494e9a9a2fe9909054ec573f06ed",
+    "later_runtime_changes": false
+  },
+  {
+    "label": "integration-test-showuipanel-professions-crafting",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "--",
+      "test_showuipanel_professions_crafting::",
+      "--nocapture"
+    ],
+    "exit": 0,
+    "test_result_counts": [
+      1,
+      1
+    ],
+    "fixture_count": null,
+    "receipt": "integration-test-showuipanel-professions-crafting.proof.json",
+    "proof_scope": "771a7d7cc5d4494e9a9a2fe9909054ec573f06ed",
+    "later_runtime_changes": false
+  },
+  {
+    "label": "prefork_full_ui-patch-7-0-3",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "patch_7_0_3",
+      "--nocapture"
+    ],
+    "exit": 0,
+    "test_result_counts": [
+      3
+    ],
+    "fixture_count": null,
+    "receipt": "prefork_full_ui-patch-7-0-3.proof.json",
+    "proof_scope": "771a7d7cc5d4494e9a9a2fe9909054ec573f06ed",
+    "later_runtime_changes": false
+  },
+  {
+    "label": "prefork_full_ui-professions",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "professions",
+      "--nocapture"
+    ],
+    "exit": 0,
+    "test_result_counts": [
+      21
+    ],
+    "fixture_count": null,
+    "receipt": "prefork_full_ui-professions.proof.json",
+    "proof_scope": "771a7d7cc5d4494e9a9a2fe9909054ec573f06ed",
+    "later_runtime_changes": false
+  },
+  {
+    "label": "prefork_full_ui-crafting",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "crafting",
+      "--nocapture"
+    ],
+    "exit": 0,
+    "test_result_counts": [
+      0
+    ],
+    "fixture_count": null,
+    "receipt": "prefork_full_ui-crafting.proof.json",
+    "proof_scope": "771a7d7cc5d4494e9a9a2fe9909054ec573f06ed",
+    "later_runtime_changes": false
+  },
+  {
+    "label": "prefork_full_ui-trade-skill",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "trade_skill",
+      "--nocapture"
+    ],
+    "exit": 0,
+    "test_result_counts": [
+      0
+    ],
+    "fixture_count": null,
+    "receipt": "prefork_full_ui-trade-skill.proof.json",
+    "proof_scope": "771a7d7cc5d4494e9a9a2fe9909054ec573f06ed",
+    "later_runtime_changes": false
+  },
+  {
+    "label": "prefork_full_ui-mount",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "mount",
+      "--nocapture"
+    ],
+    "exit": 0,
+    "test_result_counts": [
+      1
+    ],
+    "fixture_count": null,
+    "receipt": "prefork_full_ui-mount.proof.json",
+    "proof_scope": "771a7d7cc5d4494e9a9a2fe9909054ec573f06ed",
+    "later_runtime_changes": false
+  },
+  {
+    "label": "negative",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "patch_7_0_3_publication_sweep"
+    ],
+    "exit": 1,
+    "test_result_counts": [],
+    "fixture_count": null,
+    "receipt": "negative.proof.json",
+    "proof_scope": "771a7d7cc5d4494e9a9a2fe9909054ec573f06ed",
+    "later_runtime_changes": false
+  },
+  {
+    "label": "build",
+    "command": [
+      "cargo",
+      "build",
+      "--bin",
+      "wow-sim"
+    ],
+    "exit": 0,
+    "test_result_counts": [],
+    "fixture_count": null,
+    "receipt": "build.proof.json",
+    "proof_scope": "771a7d7cc5d4494e9a9a2fe9909054ec573f06ed",
+    "later_runtime_changes": false
+  },
+  {
+    "label": "startup",
+    "command": [
+      "timeout",
+      "90",
+      "/home/osso/.cache/wow-ui-sim-targets/p703-page/debug/wow-sim",
+      "--no-saved-vars",
+      "lua-errors"
+    ],
+    "exit": 0,
+    "test_result_counts": [],
+    "fixture_count": null,
+    "receipt": "startup.proof.json",
+    "proof_scope": "771a7d7cc5d4494e9a9a2fe9909054ec573f06ed",
+    "later_runtime_changes": false
+  },
+  {
+    "label": "gen_patch_wikitext_register-fixtures",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p703-page/tools/test_gen_patch_wikitext_register.py"
+    ],
+    "exit": 0,
+    "test_result_counts": [],
+    "fixture_count": 31,
+    "receipt": "gen_patch_wikitext_register-fixtures.proof.json",
+    "proof_scope": "771a7d7cc5d4494e9a9a2fe9909054ec573f06ed",
+    "later_runtime_changes": false
+  },
+  {
+    "label": "extract_patch_non_inventory-fixtures",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p703-page/tools/test_extract_patch_non_inventory.py"
+    ],
+    "exit": 0,
+    "test_result_counts": [],
+    "fixture_count": 35,
+    "receipt": "extract_patch_non_inventory-fixtures.proof.json",
+    "proof_scope": "771a7d7cc5d4494e9a9a2fe9909054ec573f06ed",
+    "later_runtime_changes": false
+  },
+  {
+    "label": "patch_audit_validation-fixtures",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p703-page/tools/test_patch_audit_validation.py"
+    ],
+    "exit": 0,
+    "test_result_counts": [],
+    "fixture_count": 8,
+    "receipt": "patch_audit_validation-fixtures.proof.json",
+    "proof_scope": "771a7d7cc5d4494e9a9a2fe9909054ec573f06ed",
+    "later_runtime_changes": false
+  },
+  {
+    "label": "format",
+    "command": [
+      "cargo",
+      "fmt",
+      "--check"
+    ],
+    "exit": 0,
+    "test_result_counts": [],
+    "fixture_count": null,
+    "receipt": "format.proof.json",
+    "proof_scope": "771a7d7cc5d4494e9a9a2fe9909054ec573f06ed",
+    "later_runtime_changes": false
+  },
+  {
+    "label": "extend-receipts",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p703-page/tools/extend_patch_audit_receipts.py",
+      "/home/osso/.worktrees/wow-ui-sim-p703-page",
+      "/home/osso/.worktrees/wow-ui-sim-p703-page/data/patch-api/evidence/7.0.3-session-2026-10-08/integrated/extension",
+      "p703",
+      "merged 7.1.0; recorded provenance flags",
+      "7.0.3"
+    ],
+    "exit": 0,
+    "test_result_counts": [],
+    "fixture_count": null,
+    "receipt": "extend-receipts.proof.json",
+    "proof_scope": "771a7d7cc5d4494e9a9a2fe9909054ec573f06ed",
+    "later_runtime_changes": false
+  },
+  {
+    "label": "master-all-sweeps",
+    "command": [
+      "cargo",
+      "test",
+      "--manifest-path",
+      "/home/osso/.cache/wow-ui-sim-targets/p703-page/master-25fbde058/Cargo.toml",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "publication_sweep"
+    ],
+    "exit": 0,
+    "test_result_counts": [
+      47
+    ],
+    "fixture_count": null,
+    "receipt": "master-all-sweeps.proof.json",
+    "proof_scope": "25fbde058",
+    "later_runtime_changes": false
+  },
+  {
+    "label": "master-build",
+    "command": [
+      "cargo",
+      "build",
+      "--manifest-path",
+      "/home/osso/.cache/wow-ui-sim-targets/p703-page/master-25fbde058/Cargo.toml",
+      "--bin",
+      "wow-sim"
+    ],
+    "exit": 0,
+    "test_result_counts": [],
+    "fixture_count": null,
+    "receipt": "master-build.proof.json",
+    "proof_scope": "25fbde058",
+    "later_runtime_changes": false
+  },
+  {
+    "label": "master-startup",
+    "command": [
+      "timeout",
+      "90",
+      "/home/osso/.cache/wow-ui-sim-targets/p703-page/debug/wow-sim",
+      "--no-saved-vars",
+      "lua-errors"
+    ],
+    "exit": 0,
+    "test_result_counts": [],
+    "fixture_count": null,
+    "receipt": "master-startup.proof.json",
+    "proof_scope": "25fbde058",
+    "later_runtime_changes": false
+  },
+  {
+    "label": "mists-check",
+    "command": [
+      "cargo",
+      "check",
+      "--no-default-features",
+      "--features",
+      "sound,gui,casc,client-mists",
+      "--tests"
+    ],
+    "exit": 0,
+    "test_result_counts": [],
+    "fixture_count": null,
+    "receipt": "mists-check.proof.json",
+    "proof_scope": "771a7d7cc5d4494e9a9a2fe9909054ec573f06ed",
+    "later_runtime_changes": false
+  },
+  {
+    "label": "mists-patch-7-0-3-recipe-name-filter-changes-catalog-results",
+    "command": [
+      "cargo",
+      "test",
+      "--no-default-features",
+      "--features",
+      "sound,gui,casc,client-mists",
+      "--test",
+      "integration",
+      "--",
+      "patch_7_0_3_recipe_name_filter_changes_catalog_results",
+      "--nocapture"
+    ],
+    "exit": 0,
+    "test_result_counts": [
+      1
+    ],
+    "fixture_count": null,
+    "receipt": "mists-patch-7-0-3-recipe-name-filter-changes-catalog-results.proof.json",
+    "proof_scope": "771a7d7cc5d4494e9a9a2fe9909054ec573f06ed",
+    "later_runtime_changes": false
+  },
+  {
+    "label": "mists-mists-trade-skill-api",
+    "command": [
+      "cargo",
+      "test",
+      "--no-default-features",
+      "--features",
+      "sound,gui,casc,client-mists",
+      "--test",
+      "integration",
+      "--",
+      "mists_trade_skill_api::",
+      "--nocapture"
+    ],
+    "exit": 0,
+    "test_result_counts": [
+      1
+    ],
+    "fixture_count": null,
+    "receipt": "mists-mists-trade-skill-api.proof.json",
+    "proof_scope": "771a7d7cc5d4494e9a9a2fe9909054ec573f06ed",
+    "later_runtime_changes": false
+  },
+  {
+    "label": "mists-professions-api",
+    "command": [
+      "cargo",
+      "test",
+      "--no-default-features",
+      "--features",
+      "sound,gui,casc,client-mists",
+      "--test",
+      "integration",
+      "--",
+      "professions_api::",
+      "--nocapture"
+    ],
+    "exit": 0,
+    "test_result_counts": [
+      1,
+      35
+    ],
+    "fixture_count": null,
+    "receipt": "mists-professions-api.proof.json",
+    "proof_scope": "771a7d7cc5d4494e9a9a2fe9909054ec573f06ed",
+    "later_runtime_changes": false
+  },
+  {
+    "label": "mists-c-collection-api::test-mount-journal",
+    "command": [
+      "cargo",
+      "test",
+      "--no-default-features",
+      "--features",
+      "sound,gui,casc,client-mists",
+      "--test",
+      "integration",
+      "--",
+      "c_collection_api::test_mount_journal",
+      "--nocapture"
+    ],
+    "exit": 0,
+    "test_result_counts": [
+      12
+    ],
+    "fixture_count": null,
+    "receipt": "mists-c-collection-api::test-mount-journal.proof.json",
+    "proof_scope": "771a7d7cc5d4494e9a9a2fe9909054ec573f06ed",
+    "later_runtime_changes": false
+  }
+]

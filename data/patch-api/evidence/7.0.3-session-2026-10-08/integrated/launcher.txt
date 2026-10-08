@@ -1,0 +1,9 @@
+extend-receipts 0
+master-all-sweeps 0
+master-build 0
+master-startup 0
+mists-check 0
+mists-patch-7-0-3-recipe-name-filter-changes-catalog-results 0
+mists-mists-trade-skill-api 0
+mists-professions-api 0
+mists-c-collection-api::test-mount-journal 0

@@ -66,6 +66,7 @@ def check_history():
             patch = git('show', '--format=', '--binary', revision)
             assert git('patch-id', '--stable', data=patch).decode().split()[0] == expected
         assert row['patch_identical'] == (row['recorded_patch_id'] == row['rebased_patch_id'])
+        assert git('diff', '--name-only', old, new, '--', 'src') == b'', 'rebased runtime changed: ' + old
         mapped[old] = new
     context = read(HISTORICAL / 'p703-context.json')
     for name in ('retail_proof_revision', 'final_runtime_revision', 'accounting_revision'):
@@ -98,7 +99,7 @@ def check_sources(context):
         assert row['exit'] == 0 and row['byte_identical'] and row['sha256'] == digest(path)
         assert row['verified_flags'] == flags
     added = next(row for row in extension if row['patch'] == '7.1.0')
-    assert added['verified_flags'] == ['--legacy-widget-cvar-bullets', '--prose-api-links']
+    assert added['verified_flags'] == ['--top-level-api-bullets', '--legacy-widget-cvar-bullets']
     for row in extracts:
         path = ROOT / 'data/patch-api/sources' / (row['patch'] + '-api-changes.txt')
         provenance = read(path.with_name(row['patch'] + '-api-changes.provenance.json'))
@@ -215,6 +216,9 @@ def main():
     matrix = read(HERE / 'prior-validator-matrix.json')
     expected = {p.relative_to(ROOT).as_posix() for p in (ROOT / 'data/patch-api/evidence').rglob('validate*.py') if p != Path(__file__).resolve()}
     assert set(matrix) == expected and all(row['exit'] == 0 for row in matrix.values())
+    for path, row in matrix.items():
+        assert digest(ROOT / path) == row['validator_sha256'], 'validator proof invalidated: ' + path
+        assert digest(HERE / row['log']) == row['log_sha256'], 'validator log changed: ' + path
     print(json.dumps({'status': 'PASS', 'registers': registers, 'extracts': extracts, 'pages': len(read(HERE / 'gap-comparison.json')['pages']), 'cases': read(HERE / 'gap-comparison.json')['branch_cases'], 'gaps': 52, 'negative_gaps': 53, 'commands': commands, 'prior_validators': len(matrix)}, sort_keys=True))
 
 

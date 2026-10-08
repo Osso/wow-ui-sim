@@ -47,7 +47,24 @@ Master baseline is an immutable Git-archive snapshot inside the owned target, no
 
 [Validator](../../../data/patch-api/evidence/7.0.3-session-2026-10-08/validate.py) passes read-only, with register/sweep scope from `historical_registers`/`historical_sweep_tests` at the fixed proof revision. Counts derive from retained files, not moving HEAD or receipt-derived subsets. Source/accounting, complete receipt/log hashes, input preservation, scans, negative control and prior-validator matrix remain checked. No current-checkout absolute cwd/target equality. All 25 prior historical/integrated validators pass; own validator supplies the additional gate. [Relocation proof](../../../data/patch-api/evidence/7.0.3-session-2026-10-08/p703-validator-portability.json) exercises another checkout, added audit/register files, whitespace tamper rejection and exact restoration. Full Git history is required; no missing-history bypass.
 
-Branch remains based on `aa57dd8f8`; 7.1.0's first-position integration placeholder remains by agreement with main. Read-only review of the merged 7.1.0 register at `25fbde058` finds **no intersection** with any 7.0.3 inventory symbol, including either retirement. Integration must replace the placeholder and refresh that sweep's evidence. No p701-page or other worktree was read or modified.
+Historical proof remains pinned to the original `aa57dd8f8` base and recorded revisions. The branch was subsequently rebased onto `25fbde058`; `cf44ebf10` replaced the first-position 7.1.0 placeholder with the merged register. Its symbols have **no intersection** with 7.0.3, including either retirement. No other worktree was read or modified.
+
+## Integrated refresh — 2026-10-08
+
+[Fresh command ledger](../../../data/patch-api/evidence/7.0.3-session-2026-10-08/integrated/p703-final-command-ledger.md) retains all 30 commands, complete logs, source revisions and scope hashes. Runtime proof at `771a7d7cc` covers the unchanged final src/tests/tools/source bytes. Exact master `25fbde058` was built and tested from an immutable Git archive under the owned target, with every command's cwd still the p703-page worktree.
+
+| Boundary | Integrated result |
+|---|---|
+| All publication sweeps | Branch 48/48 sweep/factory cases; master 47/47. All 46 other pages have identical ID sets and ok/gap statuses; 47 pages / 9,016 observations total. [Complete per-page comparison](../../../data/patch-api/evidence/7.0.3-session-2026-10-08/integrated/gap-comparison.json). |
+| Own sweep / negative control | 52 gaps unchanged; exact one-row nonexistent-namespace control gives 53, exit 1, no resolved/stale IDs. No supersession or `LATER_AUDIT_REPLACEMENTS` change needed. |
+| Sources / refreshed receipts | 47/47 registers reproduce with recorded flags; 44/47 extracts reproduce. The exact three inherited failures match integrated 7.1.0 evidence. `extend_patch_audit_receipts.py` adds the merged 7.1.0 register/sweep rows and refreshes own rows. |
+| Retail integration | Own 3/3; professions 35/35; crafting 23/23; trade info 1/1; collections 37/37; function-diff coverage 4/4; crafting panel 1/1. Harness setup results are recorded separately, not counted as feature cases. |
+| Retail prefork | Own 3/3; professions 21/21; mount retirement 1/1. `crafting` and `trade_skill` select zero cases; no coverage credited. |
+| Mists | `cargo check --no-default-features --features sound,gui,casc,client-mists --tests` exits 0, zero non-vendor warnings. Recipe filter 1/1; legacy trade skill 1/1; professions 35/35; mount journal 12/12. |
+| Fixtures / formatting / startup | Generator/extractor/validator fixtures 31/35/8; format exits 0. Separately built branch and master, addons enabled, `timeout 90 … --no-saved-vars lua-errors`: both exit 0, exact arrays `[]`. |
+| Validators / preservation | All 28 existing historical/integrated validators pass; new [integrated gate](../../../data/patch-api/evidence/7.0.3-session-2026-10-08/integrated/validate.py) adds the 29th. All 243 historical artifacts remain byte-identical. |
+
+[Rebase mapping](../../../data/patch-api/evidence/7.0.3-session-2026-10-08/integrated/rebase-mapping.json) records seven original/rebased commit pairs and stable patch IDs. Five IDs match; two differ in the additive 7.1.0 rebase context. Every pair retains identical `src` bytes. Original receipt revisions and Git history remain mandatory: the integrated validator runs the untouched historical validator rather than substituting rebased input or dropping history checks. The runner resumes missing stages without repeating valid proofs. Six inherited vendor iced manifest deprecations remain unsuppressed; no non-vendor warning, source shim, runtime change or vendor edit was needed for integration.
 
 ## Sources
 
