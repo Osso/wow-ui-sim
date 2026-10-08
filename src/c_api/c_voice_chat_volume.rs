@@ -3,10 +3,10 @@
 //! preserves the model invariant; native out-of-range behavior is not claimed.
 
 use crate::c_api::ensure_namespace;
-use crate::lua_api::methods::{borrow_state_mut, runtime_error, stack_val};
-use crate::lua_bridge::table_set_rust_fn_static;
+use crate::lua_api::methods::borrow_state_mut;
+use crate::lua_bridge::{stack_val, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
-use rilua::{LuaResult, Val};
+use rilua::{LuaResult, Val, runtime_error};
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let namespace = ensure_namespace(state, "C_VoiceChat")?;
