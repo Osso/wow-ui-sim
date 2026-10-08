@@ -1,6 +1,6 @@
 ## [2026-10-08] investigation | Patch 7.3.0 API audit
 
-[Audit](investigations/patch-7-3-0-api-audit.md): revision 5335723; three table publications, eleven total IDs, modeled C_Sound/PlaySound alias correction, real inspector lifecycle, zero publication gaps and one pending slash/consent row. All 43 sweeps and targeted proof pass; portable historical validator, 42 register reproductions, inherited three extract failures retained.
+[Audit](investigations/patch-7-3-0-api-audit.md): revision 5335723; three table publications, eleven total IDs, modeled C_Sound/PlaySound alias correction, real inspector lifecycle, zero publication gaps and one pending slash/consent row. All 43 sweeps and targeted proof pass; 19 validators pass across a second checkout; later-file/tamper/read-only proof, 42 register reproductions, inherited three extract failures retained.
 
 ## [2026-10-08] investigation | Patch 8.0.1 API audit
 

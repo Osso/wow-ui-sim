@@ -352,3 +352,7 @@ Pinned page 553643 revision 5335723; additive opt-in table-summary parser, three
 ## 2026-10-08 — Patch 7.3.0 audit proof
 
 [Audit](investigations/patch-7-3-0-api-audit.md): modeled C_Sound request path fixes cached PlaySound aliasing without vendor edits; real inspector lifecycle and all three table publications pass. Eleven IDs, zero inventory gaps, slash/consent pending. Forty-three sweeps, scoped regressions, 33/25/8 Python fixtures, warning-clean non-vendor Mists check, format and startup `[]` pass. Forty-two registers reproduce; three inherited extract failures unchanged. Read-only historical validator and eighteen prior validators pass; 7.3.2 integration placeholder retained.
+
+## 2026-10-08 — Patch 7.3.0 validator portability acceptance
+
+Second temporary clone: all nineteen validators pass from the original cwd. Future register/sweep additions leave historical counts unchanged; source tampering is rejected; evidence remains read-only. [Receipt](../../data/patch-api/evidence/7.3.0-session-2026-10-08/p730-validator-portability.json). Temporary clone removed; existing other worktrees untouched.

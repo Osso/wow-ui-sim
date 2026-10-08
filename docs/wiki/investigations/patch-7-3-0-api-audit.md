@@ -54,7 +54,7 @@ Owned target: `/home/osso/.cache/wow-ui-sim-targets/p730-page`. Every command us
 | `cargo fmt --check` | Exit 0 |
 | Built wow-sim; `timeout 90 ... --no-addons --no-saved-vars lua-errors` | Exit 0; startup `[]` |
 | Negative table substitution | Expected exit 1; exactly one failure, 0 → 1; no resolved IDs |
-| Eighteen prior validators | 18/18 pass |
+| Every validator in a second checkout | 19/19 pass, including this page |
 
 [Proof ledger](../../../data/patch-api/evidence/7.3.0-session-2026-10-08/p730-proof-ledger.md) pins commands, revisions, source scopes, exits and log hashes. Initial unsupported `u32` eval conversion, real sound-model RED, empty options-filter selection and pre-fix Mists/format receipts are explicitly non-acceptance evidence. Corrected nonempty options filter passes. Vendor iced manifest deprecations remain unsuppressed. No non-vendor warnings remain. Rust changes were manually audited for readability; short named registration/model paths, unchanged options behavior, no suppressions.
 
@@ -72,3 +72,5 @@ Owned target: `/home/osso/.cache/wow-ui-sim-targets/p730-page`. Every command us
 
 - [[patch-8-0-1-api-audit]] — prior-page template and reproduction recipes.
 - [[patch-audit-validator-portability]] — fixed historical scope and input-drift policy.
+
+[Portability receipt](../../../data/patch-api/evidence/7.3.0-session-2026-10-08/p730-validator-portability.json) proves a separate temporary clone passes while invoked from the original cwd; adding future audit register/sweep files does not enlarge the historical scope. Source-byte tampering fails before restoration. All nineteen cloned validators pass, retained evidence is unchanged, and the temporary clone is removed. No existing other worktree was touched.
