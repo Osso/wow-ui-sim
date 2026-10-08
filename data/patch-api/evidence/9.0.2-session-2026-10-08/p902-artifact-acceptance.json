@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "/home/osso/.worktrees/wow-ui-sim-p902-page/data/patch-api/evidence/9.0.2-session-2026-10-08/validate.py"
+  ],
+  "revision": "d3c4ee528708cb96a8d6b01100f9503ed61b3659",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p902-page",
+  "target": "/home/osso/.worktrees/wow-ui-sim-p902-page/target",
+  "exit": 0,
+  "stdout": "{\n  \"result\": \"pass\",\n  \"inventory\": 77,\n  \"ledger_statuses\": {\n    \"partial-development-green\": 27,\n    \"audit-pending\": 29,\n    \"bounded-coverage\": 24,\n    \"metadata-only\": 12\n  },\n  \"gaps\": 26,\n  \"closed\": 9,\n  \"preserved_inputs\": 163,\n  \"preserved_mode_outcomes\": 62,\n  \"reproduced_registers\": 32,\n  \"publication_sweeps\": 32\n}\n",
+  "stderr": ""
+}

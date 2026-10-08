@@ -1,0 +1,16 @@
+{
+  "command": [
+    "git",
+    "diff",
+    "--check",
+    "master...HEAD",
+    "--",
+    ".",
+    ":(exclude)data/patch-api/sources/9.0.2-api-changes.wikitext"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p902-page",
+  "exit": 0,
+  "stdout": "",
+  "stderr": "",
+  "excluded_source_reason": "Pinned wikitext has four upstream trailing spaces at lines 18,83,98,120; preserved byte-for-byte, not reformatted."
+}
