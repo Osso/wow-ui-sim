@@ -198,6 +198,10 @@ def main():
     context = read(HERE / 'p725-context.json')
     result = {**source_and_accounting(), **preservation_and_reproduction(context), **proof(context)}
     scans()
+    spec = importlib.util.spec_from_file_location('integrated', HERE / 'validate_integrated.py')
+    integrated = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(integrated)
+    integrated.main()
     print(json.dumps({'status': 'pass', **result}, sort_keys=True))
 
 
