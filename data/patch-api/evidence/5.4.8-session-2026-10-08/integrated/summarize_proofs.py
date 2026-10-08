@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import re
 from run_checks import SELECTORS
+from run_lib import LIB_SELECTORS
 
 HERE = Path(__file__).resolve().parent
 
@@ -82,6 +83,17 @@ if __name__ == '__main__':
                 checks.append({'selector': selector, 'branch': branch, 'master': master})
             rows.append({'profile': 'mists', 'target': target, 'selectors': matched, 'supported': False,
                          'reason': 'Cargo target requires client-retail; no Mists prefork tests exist', 'checks': checks})
+    for profile in ['retail', 'mists']:
+        branch_cases = cases('lib-' + profile + '-list')
+        master_cases = cases('master-lib-' + profile + '-list')
+        counts = [{'selector': selector, 'branch_count': sum(selector in case for case in branch_cases),
+                   'master_count': sum(selector in case for case in master_cases)} for selector in LIB_SELECTORS]
+        branch = result('lib-' + profile + '-regressions')
+        master = result('master-lib-' + profile + '-regressions')
+        assert branch['failures'] == master['failures'] and branch['panics'] == master['panics']
+        rows.append({'target': 'lib', 'profile': profile, 'selectors': counts, 'branch': branch, 'master': master,
+                     'branch_unique_selected': sum(any(s in case for s in LIB_SELECTORS) for case in branch_cases),
+                     'master_unique_selected': sum(any(s in case for s in LIB_SELECTORS) for case in master_cases)})
     dump('regression-comparison.json', rows)
     startup = {}
     for label in ['branch-startup', 'master-startup']:

@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[5]
 HERE = Path(__file__).resolve().parent
 
 if __name__ == '__main__':
-    for label in ['branch-checks', 'master-checks', 'prefork-checks', 'master-prefork-checks', 'prior-validators']:
+    for label in ['branch-checks', 'master-checks', 'prefork-checks', 'master-prefork-checks', 'prior-validators', 'lib-checks', 'master-missing-checks']:
         assert (HERE / (label + '.proof.json')).exists(), 'active driver: ' + label
     # Correct the copied runner's old descriptive target field. The command driver
     # and actual Running/binary paths establish the master-ref allocation.
@@ -41,12 +41,37 @@ if __name__ == '__main__':
     assert required <= receipts.keys(), required - receipts.keys()
     expected = {'negative': 1, 'integration-regressions': 101, 'master-integration-regressions': 101,
                 'mists-integration-regressions': 101, 'master-mists-integration-regressions': 101}
+    for prefix in ['', 'master-']:
+        for profile in ['retail', 'mists']:
+            required.update([prefix + 'lib-' + profile + '-list', prefix + 'lib-' + profile + '-regressions'])
+    for row in json.loads((HERE / 'regression-comparison.json').read_text()):
+        if row['target'] == 'lib':
+            for side in ['branch', 'master']:
+                label = row[side]['receipt'].removesuffix('.proof.json')
+                if row[side]['failures']:
+                    expected[label] = 101
     for label in required:
         assert receipts[label]['exit'] == expected.get(label, 0), label
     runtime = subprocess.check_output(['git', 'rev-parse', 'b77d0b5db'], cwd=ROOT, text=True).strip()
     master = subprocess.check_output(['git', 'rev-parse', 'a9d7c9566'], cwd=ROOT, text=True).strip()
     context = {'runtime_revision': runtime, 'master_revision': master, 'required_receipts': sorted(required),
+               'wrapper_sha256': hashlib.sha256((HERE.parent / 'validate.py').read_bytes()).hexdigest(),
                'expected_failures': expected, 'seals': {}}
+    ledger = ['# Integrated 5.4.8 command/proof ledger', '',
+              'Runtime `' + runtime + '`; master `' + master + '`.',
+              'All commands run from the owned p548-page worktree; master uses immutable Git archives.',
+              'Targets: p548-page for branch, master-ref for master. No later source/test/tool changes invalidate these receipts.',
+              'Rejected multi-filter prefork invocations have no coverage; single-filter receipts supersede them.',
+              'Mists prefork is unavailable (requires client-retail); its rejection logs are not passing behavior evidence.', '',
+              '| Receipt | Command | Exit | Result |', '|---|---|---:|---|']
+    import re
+    for label, receipt in sorted(receipts.items()):
+        text = (HERE / receipt['log']).read_text()
+        counts = re.findall(r'^test result: .*$', text, re.M)
+        python = re.findall(r'Ran \d+ tests? in [^\n]+', text)
+        result = (counts[-1] if counts else '; '.join(python)) or ('[]' if text.rstrip().endswith('[]') else 'see sealed log')
+        ledger.append('| ' + label + ' | `' + ' '.join(receipt['command']) + '` | ' + str(receipt['exit']) + ' | ' + result + ' |')
+    (HERE / 'command-ledger.md').write_text('\n'.join(ledger) + '\n')
     excluded = {'context.json', 'check_tamper.py', 'tamper-check.txt', 'tamper-check.proof.json',
                 'validator-gate.txt', 'validator-gate.proof.json', 'validator-gate-report.json'}
     for path in sorted(HERE.rglob('*')):

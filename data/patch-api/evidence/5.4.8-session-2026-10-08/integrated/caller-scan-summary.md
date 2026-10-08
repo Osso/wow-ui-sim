@@ -1,6 +1,6 @@
 # Caller and combat-fixture review
 
-Scans retain full `/usr/bin/grep -R -nE` output, including direct calls, aliases, `pcall` and registrations: 162 src/tests lines, 469 retail-cache lines and 465 Mists-cache lines. `caller-scans.json` records argv, exit, count and digest; `cached-caller-inputs.json` records 338 referenced cache-file digests. No validator reads the live caches. Protected-name scans supplement the writer scan because Settings forwards a variable name through CVar accessors.
+Authoritative extension-unrestricted `/usr/bin/grep -R -I -nE` scans retain every text match: 164 src/tests lines, 469 retail-cache lines and 465 Mists-cache lines. The two lines beyond the initial 162-line Lua/XML/Rust scan are JSON known-gap IDs, not additional writers. Direct calls, aliases, `pcall` and registrations remain untruncated. `caller-scans.json` records argv, exit, count and digest; `cached-caller-inputs.json` records 338 referenced cache-file digests. No validator reads the live caches. Protected-name scans supplement the writer scan because Settings forwards a variable name through CVar accessors.
 
 | Protected readable CVar | Cached retail writers / consumers | src/tests writes and combat fixture |
 |---|---|---|
