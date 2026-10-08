@@ -11,8 +11,10 @@
 //! Lua-only `__cvars` table — so `SimState.cvars` defaults like the
 //! display sliders were invisible to addon code. Now they're not.
 
+use crate::c_api::cvar_combat_policy::is_combat_protected_cvar;
 use crate::lua_api::globals::state_backed_queries::dispatch_event_now;
 use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string};
+use crate::lua_api::taint::is_active_stack_tainted;
 use crate::lua_bridge::{FromStack, stack_val};
 use rilua::vm::closure::RustFn;
 use rilua::vm::gc::arena::GcRef;
@@ -78,6 +80,7 @@ fn set_cvar(state: &mut LuaState) -> LuaResult<u32> {
         state.push(Val::Bool(false));
         return Ok(1);
     };
+    require_cvar_write_access(state, &name)?;
     let value = value_to_string(state, 2);
 
     if is_ui_scale_cvar(&name) {
@@ -130,6 +133,17 @@ fn gamepad_override_change(
     let old = parse(&old)?;
     let new = parse(new)?;
     Ok((old != new).then_some((event, old, new)))
+}
+
+fn require_cvar_write_access(state: &LuaState, name: &str) -> LuaResult<()> {
+    let protected = is_combat_protected_cvar(name);
+    let insecure = is_active_stack_tainted(state);
+    if protected && insecure && borrow_state(state)?.player.in_combat {
+        return Err(rilua::runtime_error(format!(
+            "SetCVar({name}) is protected from insecure code in combat"
+        )));
+    }
+    Ok(())
 }
 
 fn is_ui_scale_cvar(name: &str) -> bool {
@@ -257,6 +271,7 @@ fn set_cvar_bitfield(state: &mut LuaState) -> LuaResult<u32> {
         state.push(Val::Bool(false));
         return Ok(1);
     };
+    require_cvar_write_access(state, &name)?;
     let enabled = Option::<bool>::from_stack(state, 3)?.unwrap_or(false);
     let current = borrow_state(state)?.cvars.get(&name).unwrap_or_default();
     let updated = set_packed_cvar_bit(&current, index, enabled);

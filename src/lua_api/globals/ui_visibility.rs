@@ -7,7 +7,8 @@
 //! `SetInWorldUIVisibility` is currently a compatibility no-op: the simulator
 //! does not model a separate in-world UI layer yet.
 
-use crate::lua_api::methods::borrow_state_mut;
+use crate::lua_api::methods::{borrow_state, borrow_state_mut};
+use crate::lua_api::taint::is_active_stack_tainted;
 use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
 use rilua::{LuaApiMut, LuaResult};
@@ -24,6 +25,13 @@ fn set_ui_parent_visibility(state: &mut LuaState, visible: bool) -> LuaResult<()
 /// `SetUIVisibility(visible)` — toggles UIParent visibility.
 fn set_ui_visibility(state: &mut LuaState) -> LuaResult<u32> {
     let visible = Option::<bool>::from_stack(state, 1)?.unwrap_or(false);
+    let insecure_hide =
+        cfg!(feature = "client-retail") && !visible && is_active_stack_tainted(state);
+    if insecure_hide && borrow_state(state)?.player.in_combat {
+        return Err(rilua::runtime_error(
+            "SetUIVisibility(false) is protected from insecure code in combat",
+        ));
+    }
     set_ui_parent_visibility(state, visible)?;
     Ok(0)
 }

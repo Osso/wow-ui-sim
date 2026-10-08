@@ -42,6 +42,13 @@ pub fn clear_frame_taint(state: &mut LuaState) {
     }
 }
 
+/// Include every active caller: a tainted addon cannot hide behind an untainted callee.
+pub(crate) fn is_active_stack_tainted(state: &LuaState) -> bool {
+    state.call_stack[..=state.ci]
+        .iter()
+        .any(|frame| frame.taint.is_some())
+}
+
 pub fn clear_active_stack_taint(state: &mut LuaState) -> Vec<Option<String>> {
     let active_depth = state.ci.saturating_add(1);
     let mut saved_taints = Vec::with_capacity(active_depth);

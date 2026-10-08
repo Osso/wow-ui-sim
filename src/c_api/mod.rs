@@ -207,6 +207,7 @@ pub(crate) mod crafting_input;
 pub(crate) mod crafting_plan;
 pub mod crafting_reagents;
 pub(crate) mod crafting_tables;
+pub(crate) mod cvar_combat_policy;
 #[cfg(feature = "retail-12-0-5")]
 pub mod equipment_set_command;
 pub mod map_world_coordinates;
