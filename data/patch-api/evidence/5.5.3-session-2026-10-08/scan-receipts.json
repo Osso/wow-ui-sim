@@ -1,0 +1,39 @@
+[
+  {
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-RInw",
+      "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
+      "-E",
+      "50503|RETIRED_5_5_3_MEMBERS",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/mists/AddOns"
+    ],
+    "exit": 1,
+    "log": "mists-consumer-context.txt",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "line_count": 0,
+    "untruncated": true,
+    "revision": "d650107bfb728611315da0f06c29ce22736d59a9",
+    "scope": "Page-context only: no source-listed removed identities; no guessed retirement candidates."
+  },
+  {
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-RInw",
+      "-E",
+      "50503|50504|RETIRED_5_5_3_MEMBERS|client-mists",
+      "/home/osso/.worktrees/wow-ui-sim-p553-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p553-page/tests"
+    ],
+    "exit": 0,
+    "log": "src-tests-context.txt",
+    "log_sha256": "a9b1382f5bc76e967b20f3c5e4aacfa476d5a51c1b48c66a7bcda3e13a8cd9cf",
+    "line_count": 225,
+    "untruncated": true,
+    "revision": "d650107bfb728611315da0f06c29ce22736d59a9",
+    "scope": "Page-context only: no source-listed removed identities; no guessed retirement candidates."
+  }
+]

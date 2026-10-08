@@ -1,0 +1,1262 @@
+{
+  "wt-cvars-DynamicVRSSensitivityThreshold-120": {
+    "expected": {
+      "direction": "removed",
+      "page_default": "0",
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "DynamicVRSSensitivityThreshold"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-GxFrameEndMode-107": {
+    "expected": {
+      "direction": "added",
+      "page_default": "0",
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": "wt-cvars-GxFrameEndMode-242",
+      "symbol": "GxFrameEndMode"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-displayFreeBagSlots-119": {
+    "expected": {
+      "direction": "removed",
+      "page_default": "0",
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "displayFreeBagSlots"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-excludedCensorSources-106": {
+    "expected": {
+      "direction": "added",
+      "page_default": "1",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "excludedCensorSources"
+    },
+    "observed": {
+      "default": "1",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "1"
+    },
+    "ok": true
+  },
+  "wt-cvars-nameplateShowOnlyNames-108": {
+    "expected": {
+      "direction": "added",
+      "page_default": "0",
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": "wt-cvars-nameplateShowOnlyNames-1103",
+      "symbol": "nameplateShowOnlyNames"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-vrsValar-116": {
+    "expected": {
+      "direction": "added",
+      "page_default": "0",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "vrsValar"
+    },
+    "observed": {
+      "default": "0",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "0"
+    },
+    "ok": true
+  },
+  "wt-cvars-vrsValarEnvLuma-109": {
+    "expected": {
+      "direction": "added",
+      "page_default": "0.05",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "vrsValarEnvLuma"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": true,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-cvars-vrsValarK-110": {
+    "expected": {
+      "direction": "added",
+      "page_default": "2.13",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "vrsValarK"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": true,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-cvars-vrsValarSensitivityThreshold-111": {
+    "expected": {
+      "direction": "added",
+      "page_default": "0.31",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "vrsValarSensitivityThreshold"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": true,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-cvars-vrsValarUseAsyncCompute-112": {
+    "expected": {
+      "direction": "added",
+      "page_default": "0",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "vrsValarUseAsyncCompute"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": true,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-cvars-vrsValarUseMotionVectors-113": {
+    "expected": {
+      "direction": "added",
+      "page_default": "0",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "vrsValarUseMotionVectors"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": true,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-cvars-vrsValarUseWeberFechner-114": {
+    "expected": {
+      "direction": "added",
+      "page_default": "0",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "vrsValarUseWeberFechner"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": true,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-cvars-vrsValarWeberFechnerConstant-115": {
+    "expected": {
+      "direction": "added",
+      "page_default": "1.0",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "vrsValarWeberFechnerConstant"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": true,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-events-CAN_LOCAL_WHISPER_TARGET_RESPONSE-84": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "CAN_LOCAL_WHISPER_TARGET_RESPONSE"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-CAN_PLAYER_SPEAK_LANGUAGE_CHANGED-85": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "CAN_PLAYER_SPEAK_LANGUAGE_CHANGED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-CRAFTINGORDERS_DISPLAY_CRAFTER_FULFILLED_MSG-86": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "CRAFTINGORDERS_DISPLAY_CRAFTER_FULFILLED_MSG"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-RAF_REWARD_CLAIM_FAILED-87": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "RAF_REWARD_CLAIM_FAILED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-SELECTED_LOADOUT_CHANGED-88": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "SELECTED_LOADOUT_CHANGED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-SKILL_LINE_SPECS_RANKS_CHANGED-89": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "SKILL_LINE_SPECS_RANKS_CHANGED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-SOCIAL_ITEM_RECEIVED-92": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "SOCIAL_ITEM_RECEIVED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"SOCIAL_ITEM_RECEIVED\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-TWITTER_LINK_RESULT-93": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "TWITTER_LINK_RESULT"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"TWITTER_LINK_RESULT\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-TWITTER_POST_RESULT-94": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "TWITTER_POST_RESULT"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"TWITTER_POST_RESULT\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-TWITTER_STATUS_UPDATE-95": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "TWITTER_STATUS_UPDATE"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"TWITTER_STATUS_UPDATE\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_AccountServices.IsAccountLockedPostSave-20": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_AccountServices.IsAccountLockedPostSave"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_AccountServices.IsAccountSaveEnabled-21": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_AccountServices.IsAccountSaveEnabled"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_AccountServices.IsAccountSaveInProgress-22": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_AccountServices.IsAccountSaveInProgress"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_AccountServices.SaveAccountData-23": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_AccountServices.SaveAccountData"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_ChatInfo.CanPlayerSpeakLanguage-24": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ChatInfo.CanPlayerSpeakLanguage"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_ChatInfo.GetChatLineSenderGUID-25": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ChatInfo.GetChatLineSenderGUID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_ChatInfo.GetChatLineSenderName-26": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ChatInfo.GetChatLineSenderName"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_ChatInfo.GetChatLineText-27": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ChatInfo.GetChatLineText"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_ChatInfo.IsChatLineCensored-28": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ChatInfo.IsChatLineCensored"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_ChatInfo.RequestCanLocalWhisperTarget-29": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ChatInfo.RequestCanLocalWhisperTarget"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_ChatInfo.UncensorChatLine-30": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ChatInfo.UncensorChatLine"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_ConsoleScriptCollection.GetCollectionDataByID-31": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ConsoleScriptCollection.GetCollectionDataByID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "parent raw-absent; raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_ConsoleScriptCollection.GetCollectionDataByTag-32": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ConsoleScriptCollection.GetCollectionDataByTag"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_ConsoleScriptCollection.GetElements-33": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ConsoleScriptCollection.GetElements"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_ConsoleScriptCollection.GetScriptData-34": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ConsoleScriptCollection.GetScriptData"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_GossipInfo.SelectOptionByIndex-35": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_GossipInfo.SelectOptionByIndex"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PetJournal.GetNumPetsInJournal-36": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PetJournal.GetNumPetsInJournal"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PlayerInteractionManager.InteractUnit-71": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PlayerInteractionManager.InteractUnit"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_ProfSpecs.GetNewSpecReminderProfName-37": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ProfSpecs.GetNewSpecReminderProfName"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_PvP.GetAssignedSpecForBattlefieldQueue-38": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.GetAssignedSpecForBattlefieldQueue"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_QuestOffer.GetHideRequiredItems-39": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestOffer.GetHideRequiredItems"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_QuestOffer.GetHideRequiredItemsOnTurnIn-50": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestOffer.GetHideRequiredItemsOnTurnIn"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_Social.GetLastAchievement-51": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Social.GetLastAchievement"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_Social.GetLastItem-52": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Social.GetLastItem"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_Social.GetLastScreenshotIndex-53": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Social.GetLastScreenshotIndex"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_Social.GetMaxTweetLength-54": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Social.GetMaxTweetLength"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_Social.GetScreenshotInfoByIndex-55": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Social.GetScreenshotInfoByIndex"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_Social.GetTweetLength-56": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Social.GetTweetLength"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_Social.IsSocialEnabled-57": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Social.IsSocialEnabled"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_Social.RegisterSocialBrowser-58": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Social.RegisterSocialBrowser"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_Social.SetTextureToScreenshot-59": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Social.SetTextureToScreenshot"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_Social.TwitterCheckStatus-60": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Social.TwitterCheckStatus"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_Social.TwitterConnect-61": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Social.TwitterConnect"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_Social.TwitterDisconnect-62": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Social.TwitterDisconnect"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_Social.TwitterGetMSTillCanPost-63": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Social.TwitterGetMSTillCanPost"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_Social.TwitterPostAchievement-64": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Social.TwitterPostAchievement"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_Social.TwitterPostItem-65": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Social.TwitterPostItem"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_Social.TwitterPostMessage-66": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Social.TwitterPostMessage"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_Social.TwitterPostScreenshot-67": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Social.TwitterPostScreenshot"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_Texture.ClearTitleIconTexture-40": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Texture.ClearTitleIconTexture"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_Texture.GetTitleIconTexture-41": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Texture.GetTitleIconTexture"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_Texture.IsTitleIconTextureReady-42": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Texture.IsTitleIconTextureReady"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_Texture.SetTitleIconTexture-43": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Texture.SetTitleIconTexture"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_Traits.GetTraitSystemFlags-44": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Traits.GetTraitSystemFlags"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_Traits.IsReadyForCommit-45": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Traits.IsReadyForCommit"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-GetCurrentGraphicsAPI-46": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetCurrentGraphicsAPI"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-IsAdvancedFlyableArea-47": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "IsAdvancedFlyableArea"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  }
+}

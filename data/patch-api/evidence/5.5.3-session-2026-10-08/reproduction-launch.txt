@@ -1,0 +1,10 @@
+{
+  "registers": 57,
+  "register_failures": [],
+  "extracts": 57,
+  "extract_failures": [
+    "12.0.5",
+    "12.0.7",
+    "12.1.0"
+  ]
+}
