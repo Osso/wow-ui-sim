@@ -1,0 +1,18 @@
+{
+  "schema": "patch-page-coverage/v1",
+  "patch": "7.0.1",
+  "source_sha256": "0e3321174be76f59454f4257cd2a69b2c878d58409c4a003ee63d004371bcc16",
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/7.0.1-api-changes.txt",
+    "sha256": "6027fa42fda80cb6af0a6dfe9f0448ada64381830374d09444e71a88679c42e1"
+  },
+  "proof_policy": "Redirect-only audit; zero publication rows is not API/behavior coverage of the target page.",
+  "source_rows": [
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Redirect identity only; target Patch 7.0.3/API changes audited separately on p703-page. No API or behavior statements in this pinned source."
+    }
+  ]
+}
