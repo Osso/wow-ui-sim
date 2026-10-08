@@ -1,0 +1,14 @@
+{
+  "revision": "1882e7c99b56c77f7af38c610e68e5c2333c39bd",
+  "status": "PASS",
+  "summary": {
+    "clean": {
+      "failed": 0,
+      "passed": 41
+    },
+    "later_audit": {
+      "failed": 0,
+      "passed": 42
+    }
+  }
+}
