@@ -154,6 +154,8 @@ pub mod c_recent_allies;
 pub mod c_report_system;
 pub mod c_reputation;
 pub(crate) mod c_roleset;
+#[cfg(feature = "client-retail")]
+pub(crate) mod c_scenario_bonus;
 pub mod c_scenario_info;
 pub mod c_secrets;
 pub mod c_settings_util;

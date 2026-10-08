@@ -71,6 +71,33 @@ fn assert_bonus_step_queries(env: &WowLuaEnv) {
     assert!(result);
 }
 
+fn assert_retired_member_absence(env: &WowLuaEnv) {
+    let result: bool = env.eval(r#"
+        for _, row in ipairs({
+            {C_Scenario, 'GetBonusCriteriaInfo'},
+            {C_Scenario, 'GetBonusStepInfo'},
+            {C_Vignettes, 'GetVignetteInstanceID'},
+        }) do
+            assert(rawget(row[1], row[2]) == nil)
+            assert(row[1][row[2]] == nil)
+        end
+        return true
+    "#).expect("consumer-free retirements stay absent on raw and normal lookup");
+    assert!(result);
+}
+
+#[test]
+fn patch_6_0_2_bare_retired_member_absence() {
+    let env = WowLuaEnv::new().expect("bare environment");
+    assert_retired_member_absence(&env);
+}
+
+prefork_full_ui_case! {
+fn patch_6_0_2_cached_retired_member_absence(env: &WowLuaEnv) {
+    assert_retired_member_absence(env);
+}
+}
+
 #[test]
 fn patch_6_0_2_bare_bonus_step_queries() {
     let env = WowLuaEnv::new().expect("bare environment");

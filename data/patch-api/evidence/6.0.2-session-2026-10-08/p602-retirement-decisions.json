@@ -1,0 +1,647 @@
+{
+  "revisions": {
+    "master": "8dd11c1b90fb1f5ca925de62054a671179652f15",
+    "p610-page": "0d3f537910a1a912971e549097ddd48101da3856",
+    "p620-page": "73c8261c268af2e477e2e9ee46bbee591de00d4f"
+  },
+  "members": [
+    {
+      "symbol": "ARENA_TEAM_INVITE_REQUEST",
+      "cached_consumers": [
+        "grep-ARENA_TEAM_INVITE_REQUEST-cached-qualified.txt",
+        "grep-ARENA_TEAM_INVITE_REQUEST-cached-bare.txt"
+      ],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "retain",
+      "reason": "Current consumers/later additions forbid retirement. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "ARENA_TEAM_ROSTER_UPDATE",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "ARENA_TEAM_UPDATE",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "Animation:GetProgressWithDelay",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "AnimationGroup:GetInitialOffset",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "AnimationGroup:SetInitialOffset",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "BNGetFriendInviteInfoByAddon",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "BreakUpLargeNumbers",
+      "cached_consumers": [
+        "grep-BreakUpLargeNumbers-cached-qualified.txt",
+        "grep-BreakUpLargeNumbers-cached-bare.txt"
+      ],
+      "caller_scans": [
+        "grep-BreakUpLargeNumbers-callers-qualified.txt",
+        "grep-BreakUpLargeNumbers-callers-bare.txt"
+      ],
+      "later_additions": [],
+      "action": "retain",
+      "reason": "Current consumers/later additions forbid retirement. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "CHARACTER_UPGRADE_COMPLETE",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "C_Scenario.GetBonusCriteriaInfo",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "new-retirement",
+      "reason": "No cached consumers, src/tests callers or later additions; suppress namespace fabrication."
+    },
+    {
+      "symbol": "C_Scenario.GetBonusStepInfo",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "new-retirement",
+      "reason": "No cached consumers, src/tests callers or later additions; suppress namespace fabrication."
+    },
+    {
+      "symbol": "C_Vignettes.GetVignetteInstanceID",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "new-retirement",
+      "reason": "No cached consumers, src/tests callers or later additions; suppress namespace fabrication."
+    },
+    {
+      "symbol": "CloseReforge",
+      "cached_consumers": [
+        "grep-CloseReforge-cached-qualified.txt",
+        "grep-CloseReforge-cached-bare.txt"
+      ],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "retain",
+      "reason": "Current consumers/later additions forbid retirement. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "CommentatorSetBattlemaster",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "Cooldown:SetBlingDuration",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "Cooldown:SetLossOfControlCooldown",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "CreateArenaTeam",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "DevTest1",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "DownloadSettings",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "FORGE_MASTER_CLOSED",
+      "cached_consumers": [
+        "grep-FORGE_MASTER_CLOSED-cached-qualified.txt",
+        "grep-FORGE_MASTER_CLOSED-cached-bare.txt"
+      ],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "retain",
+      "reason": "Current consumers/later additions forbid retirement. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "FORGE_MASTER_ITEM_CHANGED",
+      "cached_consumers": [
+        "grep-FORGE_MASTER_ITEM_CHANGED-cached-qualified.txt",
+        "grep-FORGE_MASTER_ITEM_CHANGED-cached-bare.txt"
+      ],
+      "caller_scans": [
+        "grep-FORGE_MASTER_ITEM_CHANGED-callers-qualified.txt",
+        "grep-FORGE_MASTER_ITEM_CHANGED-callers-bare.txt"
+      ],
+      "later_additions": [],
+      "action": "retain",
+      "reason": "Current consumers/later additions forbid retirement. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "FORGE_MASTER_OPENED",
+      "cached_consumers": [
+        "grep-FORGE_MASTER_OPENED-cached-qualified.txt",
+        "grep-FORGE_MASTER_OPENED-cached-bare.txt"
+      ],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "retain",
+      "reason": "Current consumers/later additions forbid retirement. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "FORGE_MASTER_SET_ITEM",
+      "cached_consumers": [
+        "grep-FORGE_MASTER_SET_ITEM-cached-qualified.txt",
+        "grep-FORGE_MASTER_SET_ITEM-cached-bare.txt"
+      ],
+      "caller_scans": [
+        "grep-FORGE_MASTER_SET_ITEM-callers-qualified.txt",
+        "grep-FORGE_MASTER_SET_ITEM-callers-bare.txt"
+      ],
+      "later_additions": [],
+      "action": "retain",
+      "reason": "Current consumers/later additions forbid retirement. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "GameTooltip:SetHyperlinkCompareItem",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "GameTooltip:SetReforgeItem",
+      "cached_consumers": [
+        "grep-GameTooltip_SetReforgeItem-cached-qualified.txt",
+        "grep-GameTooltip_SetReforgeItem-cached-bare.txt"
+      ],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "retain",
+      "reason": "Current consumers/later additions forbid retirement. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "GetApplicableMultisampleSetting",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "GetBindingText",
+      "cached_consumers": [
+        "grep-GetBindingText-cached-qualified.txt",
+        "grep-GetBindingText-cached-bare.txt"
+      ],
+      "caller_scans": [
+        "grep-GetBindingText-callers-qualified.txt",
+        "grep-GetBindingText-callers-bare.txt"
+      ],
+      "later_additions": [],
+      "action": "retain",
+      "reason": "Current consumers/later additions forbid retirement. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "GetCurrentGuildPerkIndex",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "GetCurrentMultisampleFormat",
+      "cached_consumers": [],
+      "caller_scans": [
+        "grep-GetCurrentMultisampleFormat-callers-qualified.txt",
+        "grep-GetCurrentMultisampleFormat-callers-bare.txt"
+      ],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "GetDestinationReforgeStats",
+      "cached_consumers": [
+        "grep-GetDestinationReforgeStats-cached-qualified.txt",
+        "grep-GetDestinationReforgeStats-cached-bare.txt"
+      ],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "retain",
+      "reason": "Current consumers/later additions forbid retirement. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "GetExistingLocales",
+      "cached_consumers": [],
+      "caller_scans": [
+        "grep-GetExistingLocales-callers-qualified.txt",
+        "grep-GetExistingLocales-callers-bare.txt"
+      ],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "GetGuildLevel",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "GetGuildRosterContribution",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "GetGuildRosterLargestContribution",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "GetKeyRingSize",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "GetMaxMultisampleFormatOnCvar",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "GetMeleeMissChance",
+      "cached_consumers": [],
+      "caller_scans": [
+        "grep-GetMeleeMissChance-callers-qualified.txt",
+        "grep-GetMeleeMissChance-callers-bare.txt"
+      ],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "GetMultisampleFormats",
+      "cached_consumers": [],
+      "caller_scans": [
+        "grep-GetMultisampleFormats-callers-qualified.txt",
+        "grep-GetMultisampleFormats-callers-bare.txt"
+      ],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "GetNextGuildPerkIndex",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "GetNumReforgeOptions",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "GetNumTalents",
+      "cached_consumers": [
+        "grep-GetNumTalents-cached-qualified.txt",
+        "grep-GetNumTalents-cached-bare.txt"
+      ],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "retain",
+      "reason": "Current consumers/later additions forbid retirement. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "GetRangedMissChance",
+      "cached_consumers": [],
+      "caller_scans": [
+        "grep-GetRangedMissChance-callers-qualified.txt",
+        "grep-GetRangedMissChance-callers-bare.txt"
+      ],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "GetReforgeItemInfo",
+      "cached_consumers": [
+        "grep-GetReforgeItemInfo-cached-qualified.txt",
+        "grep-GetReforgeItemInfo-cached-bare.txt"
+      ],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "retain",
+      "reason": "Current consumers/later additions forbid retirement. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "GetReforgeItemStats",
+      "cached_consumers": [
+        "grep-GetReforgeItemStats-cached-qualified.txt",
+        "grep-GetReforgeItemStats-cached-bare.txt"
+      ],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "retain",
+      "reason": "Current consumers/later additions forbid retirement. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "GetReforgeOptionInfo",
+      "cached_consumers": [
+        "grep-GetReforgeOptionInfo-cached-qualified.txt",
+        "grep-GetReforgeOptionInfo-cached-bare.txt"
+      ],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "retain",
+      "reason": "Current consumers/later additions forbid retirement. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "GetSourceReforgeStats",
+      "cached_consumers": [
+        "grep-GetSourceReforgeStats-cached-qualified.txt",
+        "grep-GetSourceReforgeStats-cached-bare.txt"
+      ],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "retain",
+      "reason": "Current consumers/later additions forbid retirement. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "GetSpecializationNameForClassID",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "GetSpellMissChance",
+      "cached_consumers": [],
+      "caller_scans": [
+        "grep-GetSpellMissChance-callers-qualified.txt",
+        "grep-GetSpellMissChance-callers-bare.txt"
+      ],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "GetTimerTextColor",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "IsInProvingGround",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "LE_PET_JOURNAL_FLAG_FAVORITES",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "LE_RAID_BUFF_PHYSICAL_HASTE",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "LE_RAID_BUFF_SPELL_HASTE",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "PLAYER_AVG_ITEM_LEVEL_READY",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "PutKeyInKeyRing",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "QueryGuildXP",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "ReforgeItem",
+      "cached_consumers": [
+        "grep-ReforgeItem-cached-qualified.txt",
+        "grep-ReforgeItem-cached-bare.txt"
+      ],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "retain",
+      "reason": "Current consumers/later additions forbid retirement. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "ReverseQuestObjective",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "SetMultisampleFormat",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "SetReforgeFromCursorItem",
+      "cached_consumers": [
+        "grep-SetReforgeFromCursorItem-cached-qualified.txt",
+        "grep-SetReforgeFromCursorItem-cached-bare.txt"
+      ],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "retain",
+      "reason": "Current consumers/later additions forbid retirement. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "ShiftQuestWatches",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "ShowStatInCategory",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "ToggleKeyRing",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "TogglePerformanceDisplay",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "UnitGetGuildLevel",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "UnitGetGuildXP",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "UploadSettings",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "debughook",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    },
+    {
+      "symbol": "isRaidFinderDungeonDisplayable",
+      "cached_consumers": [],
+      "caller_scans": [],
+      "later_additions": [],
+      "action": "review-absence",
+      "reason": "Consumer-free; inspect current runtime before changing. No runtime change; current caller/consumer behavior preserved."
+    }
+  ],
+  "new_retirements": [
+    "C_Scenario.GetBonusCriteriaInfo",
+    "C_Scenario.GetBonusStepInfo",
+    "C_Vignettes.GetVignetteInstanceID"
+  ]
+}

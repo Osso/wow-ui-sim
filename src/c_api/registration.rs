@@ -91,6 +91,8 @@ pub(crate) fn register_interaction_tables(state: &mut LuaState) -> LuaResult<()>
     super::c_recent_allies::register(state)?;
     #[cfg(feature = "retail-12-0-5")]
     super::c_scenario_info::register(state)?;
+    #[cfg(feature = "client-retail")]
+    super::c_scenario_bonus::register(state)?;
     #[cfg(feature = "retail-12-0-0")]
     super::c_transmog_sets::register(state)?;
     #[cfg(feature = "retail-12-0-0")]

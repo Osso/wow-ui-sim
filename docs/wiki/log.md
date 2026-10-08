@@ -433,3 +433,7 @@ Final integration proof: spell-line modules 190/190, prefork tooltip cases 34/34
 
 - 2026-10-08 integration: [[patch-6-1-0-api-audit]] — merged 6.2.x registers, six-commit rebase mapping, historical receipt preservation, unchanged own gap and fresh targeted/publication proof.
 - 2026-10-08 verification: [[patch-6-1-0-api-audit]] — all 51 other pages match pinned master; committed two-phase validator gate PASS, clean 33/33 and later audit 34/34.
+
+## [2026-10-08] investigation | Patch 6.0.2 API audit
+
+[Audit](investigations/patch-6-0-2-api-audit.md): pinned main and transcluded diff, 657 API occurrences and 79 enum statements. Scenario bonus state queries and consumer-free retirements; final targeted proof pending.

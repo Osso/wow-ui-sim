@@ -2705,3 +2705,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-08] investigation | Patch 7.2.0 API audit
 
 [Audit](investigations/patch-7-2-0-api-audit.md): real merged 7.2.5 register integrated on exact master 8b6131f36. Branch 46/46 sweep/factory cases; all 44 existing pages retain identical known gaps and per-row status. Own gaps zero; four prose limits unchanged. Prefork 4/4, scoped integration 25/10/6, library 7/7, fixtures 29/34/8 and format/Mists checks pass; requested bare own filter selects zero cases, no coverage credited. 45 registers / 42 extracts reproduce with three inherited failures. All 22 historical validators plus the integrated gate pass (23/23); original 155 sealed artifacts unchanged and new integrated scope separately pinned.
+
+## [2026-10-08] investigation | Patch 6.0.2 API audit
+
+[Audit](investigations/patch-6-0-2-api-audit.md): pinned main and transcluded diff, 657 API occurrences and 79 enum statements. Scenario bonus state queries and consumer-free retirements; final targeted proof pending.
