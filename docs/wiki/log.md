@@ -292,3 +292,7 @@ Pinned page 109654 revision 6471393; 220 inventory rows, command-column identity
 ## [2026-10-08] evidence | 8.3.0 complete publication accounting
 
 [Audit](investigations/patch-8-3-0-api-audit.md): 244 IDs (224 inventory, sixteen extract, four captions), six retail-only closures, 41 exact gaps and one pending revamp summary. All 37 publication tests, 46 parser fixtures, negative control, five affected Mists cases, checks and startup [] pass. Broader Mists selection retains unrelated HonorFrame diagnostic assertion failure. Dynamic validator, 183 preserved inputs, 70 preserved extraction outcomes and 36 byte-identical registers verified.
+
+## [2026-10-08] investigation | Slow integration prefork classification
+
+[Test-suite performance](investigations/test-suite-performance.md): complete >=1s fixture classification, original source traces, class/module time totals and disjoint module priorities. Eligibility is source-level; migration execution proof follows.

@@ -2,6 +2,10 @@
 
 [Audit](investigations/patch-8-3-0-api-audit.md): revision 6471393, 224 inventory / sixteen extract / four caption IDs; six bounded retail retirements and 41 exact publication gaps. All 36 sweeps plus animation regression, negative control, five affected Mists cases, warning-clean non-vendor checks and startup `[]` pass. Unrelated unchanged HonorFrame diagnostic assertion fails in broader Mists selection; retained and reported. All 183 prior inputs, 70 extraction outcomes and 36 register reproductions preserved.
 
+## [2026-10-08] investigation | Slow integration prefork migration
+
+[Test-suite performance](investigations/test-suite-performance.md): complete slow-case fixture classification and module priorities; partial, Glue, clean startup and timing boundaries retained.
+
 ## [2026-10-08] evidence | 9.0.1 page audit
 
 [Audit](investigations/patch-9-0-1-api-audit.md): revision 6471353, 755 inventory / 135 extract / four caption occurrences; eleven bounded retail retirements, 273 exact publication gaps and 113 substantive extract targets pending. All 33 sweeps plus factory, exact negative control, bare/cached/Mists behavior, non-vendor warning boundary and startup `[]` pass. All 168 earlier inputs / 64 extraction-mode outcomes preserved; 33 registers reproduce. Eleven possible 9.0.2 gap supersessions reserved for integration.

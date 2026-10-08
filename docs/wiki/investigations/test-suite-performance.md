@@ -59,3 +59,13 @@ Exact partition estimates (raw, off-repo) model 142.1–173.3s per four-worker s
 Workflow actionlint passes; changed Rust files have no introduced readability violations. Final artifact gate (raw, off-repo) checks stable coverage, row-level equivalence, exact one-gap negative control, complete partition union, protected tracked paths, and source links. No external verifier/agent/model invocation was used.
 
 Nextest explicitly rejects the custom prefork listing (`--format terse` is unsupported); retained failure (raw, off-repo) proves the separate cargo job is necessary. Running integration alone omits migrated sweeps. Commit sequence and merge risks are in the [report](../../../data/test-perf/2026-10-07-report.md).
+
+## Slow integration fixture classification (2026-10-08)
+
+[Migration plan](../../../data/test-perf/prefork-migration-plan.json) classifies every measured integration case taking >=1s, with original source/function/line references, reasons, per-class and per-module totals, and disjoint source-file priorities. Snapshot eligibility is source-reviewed, pending migrated-case proof; historical process durations include workload queueing and are not matched serial timings. Twenty-two publication cases in the timing input are already prefork and must not be counted as new migration savings.
+
+- MIGRATE: 93 tests, 1101.078s.
+- ADAPT: 93 tests, 629.149s.
+- KEEP: 1496 tests, 6728.398s.
+
+Most slow fixtures are bare environments, selected addon closures, Glue, explicit clean-LoD coverage, custom preload, screenshot/font startup or timing/process tests. Those stay integration; widening their addon/state boundary merely to hit a numeric migration target would change coverage. The classified source revision lists 10,814 integration tests (10,816 output lines) and 2,077 prefork cases, rather than the older 2,053 baseline.
