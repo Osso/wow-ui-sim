@@ -6,13 +6,15 @@
 //! - CastSpellByID / CastSpellByName work (used by SECURE_ACTIONS["spell"])
 //! - Action bar UseAction click chain casts spells
 
-#[path = "click_targeting/full_ui.rs"]
-mod click_targeting_full_ui;
 #[path = "click_targeting/forever_regressions.rs"]
 mod click_targeting_forever_regressions;
+#[path = "click_targeting/full_ui.rs"]
+mod click_targeting_full_ui;
 use crate::common;
 
-use click_targeting_full_ui::{drain_test_errors, env_with_full_ui, install_test_error_handler};
+#[cfg(not(feature = "client-retail"))]
+use click_targeting_full_ui::env_with_full_ui;
+use click_targeting_full_ui::{drain_test_errors, install_test_error_handler};
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 /// Lightweight env — no Blizzard addons, just the Lua API.
@@ -368,7 +370,10 @@ fn unchanged_blizzard_secure_unit_handler_targets_player_and_party() {
         let ui = wow_ui_sim::blizzard_ui_sync::default_cache_addons_path().unwrap();
         let env = common::blizzard_addon_harness::new_blizzard_addon_env(&ui);
         common::blizzard_addon_harness::load_blizzard_addon_closure_into_env(
-            &env, &ui, &["Blizzard_AuraContainer", "Blizzard_UnitFrame"], &[],
+            &env,
+            &ui,
+            &["Blizzard_AuraContainer", "Blizzard_UnitFrame"],
+            &[],
         );
         env.exec(r#"
             assert(type(SecureUnitButton_OnClick) == 'function')
@@ -656,10 +661,9 @@ fn assert_no_action_button_click_errors(env: &WowLuaEnv) {
     );
 }
 
-#[test]
-fn blizzard_secure_action_button_macrotext_targets_unit() {
-    test_timeout! {
-        let env = env_with_full_ui();
+prefork_full_ui_case! {
+fn blizzard_secure_action_button_macrotext_targets_unit(env: &WowLuaEnv) {
+
         install_test_error_handler(&env);
         env.exec("ClearTarget()").expect("clear target");
 
@@ -685,13 +689,20 @@ fn blizzard_secure_action_button_macrotext_targets_unit() {
 
         let target_name: String = env.eval("return UnitName('target') or ''").unwrap();
         assert_eq!(target_name, "Kazzara", "macrotext should target party2");
-    }
+
+}
 }
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn blizzard_secure_unit_button_focus_action_sets_focus_unit() {
-    test_timeout! {
-        let env = env_with_full_ui();
+fn blizzard_secure_action_button_macrotext_targets_unit() {
+    let env = env_with_full_ui();
+    blizzard_secure_action_button_macrotext_targets_unit::run(&env);
+}
+
+prefork_full_ui_case! {
+fn blizzard_secure_unit_button_focus_action_sets_focus_unit(env: &WowLuaEnv) {
+
         install_test_error_handler(&env);
         env.exec("ClearFocus()").expect("clear focus");
         env.state().borrow_mut().party_group_active = true;
@@ -718,13 +729,20 @@ fn blizzard_secure_unit_button_focus_action_sets_focus_unit() {
 
         let focus_name: String = env.eval("return UnitName('focus') or ''").unwrap();
         assert_eq!(focus_name, "Kazzara", "focus action should focus party2");
-    }
+
+}
 }
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn blizzard_secure_unit_button_assist_action_targets_assisted_unit_target() {
-    test_timeout! {
-        let env = env_with_full_ui();
+fn blizzard_secure_unit_button_focus_action_sets_focus_unit() {
+    let env = env_with_full_ui();
+    blizzard_secure_unit_button_focus_action_sets_focus_unit::run(&env);
+}
+
+prefork_full_ui_case! {
+fn blizzard_secure_unit_button_assist_action_targets_assisted_unit_target(env: &WowLuaEnv) {
+
         install_test_error_handler(&env);
         env.exec("ClearTarget()").expect("clear target");
         env.state().borrow_mut().party_group_active = true;
@@ -751,20 +769,33 @@ fn blizzard_secure_unit_button_assist_action_targets_assisted_unit_target() {
 
         let target_name: String = env.eval("return UnitName('target') or ''").unwrap();
         assert_eq!(target_name, "Hogger", "assist action should target party1's simulated target");
-    }
+
+}
 }
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn blizzard_full_ui_click_chain_targets_and_casts() {
-    common::with_perf_lock(|| {
-        test_timeout! {
-            let env = env_with_full_ui();
+fn blizzard_secure_unit_button_assist_action_targets_assisted_unit_target() {
+    let env = env_with_full_ui();
+    blizzard_secure_unit_button_assist_action_targets_assisted_unit_target::run(&env);
+}
+
+prefork_full_ui_case! {
+fn blizzard_full_ui_click_chain_targets_and_casts(env: &WowLuaEnv) {
+
             install_test_error_handler(&env);
             assert_blizzard_secure_unit_button_click_targets_party(&env);
             assert_blizzard_player_frame_click_targets_player(&env);
             assert_blizzard_party_member_frame_click_targets_party1(&env);
             assert_blizzard_secure_action_button_click_casts_spell(&env);
             assert_blizzard_action_button_click_casts_via_use_action(&env);
-        }
-    });
+
+}
+}
+
+#[cfg(not(feature = "client-retail"))]
+#[test]
+fn blizzard_full_ui_click_chain_targets_and_casts() {
+    let env = env_with_full_ui();
+    blizzard_full_ui_click_chain_targets_and_casts::run(&env);
 }
