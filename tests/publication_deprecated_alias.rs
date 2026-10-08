@@ -1,16 +1,15 @@
 #![cfg(feature = "client-retail")]
 
-#[path = "common/prefork_full_ui_preload.rs"]
-mod full_ui;
+use wow_ui_sim::lua_api::WowLuaEnv;
+
 #[path = "common/publication_sweep.rs"]
 mod sweep;
 
-#[test]
-fn deprecated_alias_attribution_requires_loaded_publisher_and_exact_identity() {
+prefork_full_ui_case! {
+fn deprecated_alias_attribution_requires_loaded_publisher_and_exact_identity(env: &WowLuaEnv) {
     let empty = wow_ui_sim::lua_api::WowLuaEnv::new().unwrap();
     assert!(sweep::read_deprecated_aliases(&empty).is_empty());
-    crate::common::with_exclusive_workload(|| {
-        let env = full_ui::preload_full_game_ui().unwrap();
+    {
         let aliases = sweep::read_deprecated_aliases(&env);
         let removed = |symbol: &str| sweep::Entry {
             id: symbol.into(),
@@ -42,5 +41,6 @@ fn deprecated_alias_attribution_requires_loaded_publisher_and_exact_identity() {
         env.exec("CombatLogAddFilter = function() return 'unrelated' end")
             .unwrap();
         assert!(!sweep::probe_entry(&env, &removed("CombatLogAddFilter"), true, &aliases).2);
-    });
+    };
+}
 }
