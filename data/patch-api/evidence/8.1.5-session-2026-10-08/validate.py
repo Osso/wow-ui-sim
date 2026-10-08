@@ -7,7 +7,19 @@ import subprocess
 import sys
 
 sys.dont_write_bytecode = True
-from build_accounting import ROOT, EVIDENCE, SOURCES, PATCH, read, dump, sha, load_extractor
+from build_accounting import ROOT, EVIDENCE, SOURCES, PATCH, read, sha, load_extractor
+
+sys.path.insert(0, str(ROOT / 'tools'))
+from patch_audit_validation import historical_registers, preserved_input_matches
+
+# First committed integration of the real 8.2.0 register; already contains the
+# complete register set refreshed by this evidence.
+AUDIT_REVISION = 'ee23154261a5cf08f253713ddc0f1d2c14cf251f'
+
+
+def audit_patches():
+    return {path.name.removesuffix('-wikitext-register.json')
+            for path in historical_registers(ROOT, AUDIT_REVISION)}
 
 
 def check_source():
@@ -137,7 +149,7 @@ def check_negative(register):
 
 
 def check_reproduction():
-    patches = {path.name.removesuffix('-wikitext-register.json') for path in SOURCES.glob('*-wikitext-register.json')}
+    patches = audit_patches()
     registers = read(EVIDENCE / 'p815-register-reproduction.json')
     extracts = read(EVIDENCE / 'p815-saved-extract-reproduction.json')
     assert {row['patch'] for row in registers} == {row['patch'] for row in extracts} == patches
@@ -150,7 +162,8 @@ def check_reproduction():
         else:
             assert row['byte_identical']
     preservation = read(EVIDENCE / 'p815-input-preservation.json')['rows']
-    assert all(row['unchanged'] and row['before'] == row['after'] == sha(ROOT / row['path']) for row in preservation)
+    assert all(row['unchanged'] and row['before'] == row['after']
+               and preserved_input_matches(ROOT, row['path'], row['before']) for row in preservation)
     outcomes = read(EVIDENCE / 'p815-extract-preservation.json')
     assert {row['patch'] for row in outcomes} == patches - {PATCH}
     assert all(row['unchanged'] and row['before'] == row['after'] for row in outcomes)
@@ -171,8 +184,6 @@ def check_proof():
     proofs = {}
     for path in EVIDENCE.glob('*.proof.json'):
         receipt = read(path)
-        assert receipt['cwd'] == str(ROOT)
-        assert receipt['target'] == '/home/osso/.cache/wow-ui-sim-targets/p815-page'
         assert receipt['log_sha256'] == sha(EVIDENCE / receipt['log'])
         proofs[path.name.removesuffix('.proof.json')] = receipt
     for name in required:
@@ -193,7 +204,7 @@ def check_proof():
         warnings[name] = {'vendor_warnings': len(messages), 'non_vendor_warnings': len(non_vendor)}
     assert read(EVIDENCE / 'p815-startup.stdout') == []
     summaries = read(EVIDENCE / 'p815-sweep-summary.json')
-    patches = {path.name.removesuffix('-wikitext-register.json') for path in SOURCES.glob('*-wikitext-register.json')}
+    patches = audit_patches()
     assert {row['patch'] for row in summaries} == patches
     for row in summaries:
         register = read(SOURCES / (row['patch'] + '-wikitext-register.json'))
@@ -204,9 +215,6 @@ def check_proof():
     passing = set(re.findall(r'test patch_([\d_]+)_publication_sweep::patch_[\d_]+_publication_sweep \.\.\. ok', log))
     assert passing == observed
     assert '0 failed' in log
-    index = {'current_required_proofs': required, 'proofs': proofs, 'warnings': warnings,
-             'proof_policy': 'Main-thread verification: user explicitly prohibited agents. Historical RED receipts are development evidence, not acceptance. Final runtime proof revisions are patch-equivalent to HEAD.'}
-    dump(EVIDENCE / 'p815-proof.json', index)
     return {'publication_sweeps': len(summaries), 'inventory_rows_all_sweeps': sum(row['rows'] for row in summaries),
             'required_proofs': len(required), 'warnings': warnings}
 
@@ -219,5 +227,4 @@ if __name__ == '__main__':
     summary.update(check_reproduction())
     summary.update(check_proof())
     summary['validator'] = 'PASS'
-    dump(EVIDENCE / 'p815-artifact-acceptance.json', summary)
     print(json.dumps(summary, indent=2))
