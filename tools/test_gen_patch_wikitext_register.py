@@ -20,6 +20,33 @@ class InventoryTests(unittest.TestCase):
             ('global-api', 'SetUIVisibility', 'changed', 6)])
         self.assertTrue(all(r['annotation'] for r in rows))
 
+    def test_client_line_is_opt_in_and_does_not_invent_resources_inventory(self):
+        import json
+        from pathlib import Path
+        import subprocess
+        import sys
+        import tempfile
+        tool = Path(__file__).with_name('gen_patch_wikitext_register.py')
+        with tempfile.TemporaryDirectory() as directory:
+            source = Path(directory) / 'page.wikitext'
+            source.write_text('{{apichanges|prev=5.5.3|5.5.4}}\n'
+                              '==Resources==\n* TOC: <code>50504</code>\n')
+            output = Path(directory) / 'register.json'
+            command = [sys.executable, '-B', str(tool), '5.5.4', str(source),
+                       '6778083', str(output)]
+            result = subprocess.run(command, capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            original = json.loads(output.read_text())
+            self.assertNotIn('client_line', original)
+            for line in ['mists-classic', 'classic-era', 'retail']:
+                result = subprocess.run(command + ['--client-line', line],
+                                        capture_output=True, text=True)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                register = json.loads(output.read_text())
+                self.assertEqual(register.pop('client_line'), line)
+                self.assertEqual(register, original)
+                self.assertEqual(register['entries'], [])
+
     def test_indented_api_lists_keep_renames_and_cvar_removal(self):
         import gen_patch_wikitext_register as generator
         raw = ('==New==\n {{api|BNGetGameAccountInfo}}\n'

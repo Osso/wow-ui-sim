@@ -29,6 +29,11 @@ FONT = re.compile(r"</?font[^>]*>")
 COUNT = re.compile(r"<small>\((\d+)\)</small>")
 
 
+def with_client_line(register, client_line):
+    """Keep legacy bytes by default; explicitly label separate client histories."""
+    return register if client_line is None else dict(register, client_line=client_line)
+
+
 def parse_symbol(text):
     """Return (symbol, params) for the inventory reference on one line."""
     match = TEMPLATE.search(text)
@@ -693,6 +698,8 @@ def main():
     parser.add_argument('--warlords-diff', help='Separately pinned Warlords transcluded inventory; opt-in')
     parser.add_argument('--combat-restriction-bullets', action='store_true',
                         help='Retain changed CVar/API identities in Breaking changes; opt-in')
+    parser.add_argument('--client-line', choices=('retail', 'mists-classic', 'classic-era'),
+                        help='Label the client history for isolated supersession; opt-in')
     args = parser.parse_args()
     patch, path, revid, out = args.patch, args.path, args.revid, args.out
     raw = Path(path).read_bytes()
@@ -763,6 +770,7 @@ def main():
         "header_counts": counts,
         "entries": entries,
     }
+    register = with_client_line(register, args.client_line)
     with open(out, "w") as handle:
         json.dump(register, handle, indent=2, ensure_ascii=False)
         handle.write("\n")

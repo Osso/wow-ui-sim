@@ -100,11 +100,23 @@ def render_patch_diff_reference(raw):
                   r'[Transcluded source: Patch \1/API changes/diff; not expanded]', raw)
 
 
+def canonicalize_patch_navigation(raw):
+    """Render the positional patch, even when named navigation parameters precede it."""
+    def replace(match):
+        patches = [part.strip() for part in match[1].split('|') if '=' not in part]
+        if len(patches) != 1 or not re.fullmatch(r'\d+(?:\.\d+)+', patches[0]):
+            raise ValueError('expected one positional patch in apichanges navigation')
+        return f'Patch {patches[0]} API changes'
+    return re.sub(r'\{\{apichanges\|([^{}]+)\}\}', replace, raw)
+
+
 def extract_text(raw, *, preserve_examples=False, normalize_inventory_headings=False,
                  retain_reference_notes=False, legacy_api_tables=False,
                  legacy_api_bullets=False, legacy_cvar_tables=False,
                  bfa_prepatch=False, legion_prepatch=False,
-                 retain_patch_diff_reference=False):
+                 retain_patch_diff_reference=False, canonical_patch_navigation=False):
+    if canonical_patch_navigation:
+        raw = canonicalize_patch_navigation(raw)
     if retain_patch_diff_reference:
         raw = render_patch_diff_reference(raw)
     if legion_prepatch:
@@ -330,6 +342,8 @@ def main():
                         help='Strip pure nested Legion inventories, retaining summaries and renames; opt-in')
     parser.add_argument('--retain-patch-diff-reference', action='store_true',
                         help='Retain transcluded patch diffs as unexpanded source references; opt-in')
+    parser.add_argument('--canonical-patch-navigation', action='store_true',
+                        help='Render positional apichanges patch after named parameters; opt-in')
     args = parser.parse_args()
     if args.self_test:
         check_examples()
@@ -347,7 +361,8 @@ def main():
                         legacy_cvar_tables=args.legacy_cvar_tables,
                         bfa_prepatch=args.bfa_prepatch,
                         legion_prepatch=args.legion_prepatch,
-                        retain_patch_diff_reference=args.retain_patch_diff_reference)
+                        retain_patch_diff_reference=args.retain_patch_diff_reference,
+                        canonical_patch_navigation=args.canonical_patch_navigation)
     rows = seed_rows(text, args.patch)
     if args.text_only:
         if args.check:

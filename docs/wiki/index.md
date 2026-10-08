@@ -10,6 +10,10 @@
 
 [Audit](investigations/patch-6-1-0-api-audit.md): rebased on master 787b47591 with real 6.2.0/6.2.2/6.2.4 registers. Existing SendChatMessage gap and eight extract limits unchanged. 53/53 publication cases; every observation on all 51 other pages equals pinned master. Targeted recap/legacy checks, four Python fixture scripts, format and warning-clean non-vendor Mists pass. All 52 registers/49 extracts reproduce with three unchanged inherited failures; six-commit rebase mapping and historical receipts preserved. Portability gate PASS: clean 33/33, unrelated later audit 34/34.
 
+## [2026-10-08] investigation | Patch 5.5.4 Mists Classic API audit
+
+[Audit](investigations/patch-5-5-4-api-audit.md): revision 6778083, resources-only stub: zero inventory/four metadata IDs. Mists Classic TOC 50504, separate from the retail chain; prefork requires retail, so Mists uses profile-aware integration loading. No modeled gaps or retirements; targeted proof pending.
+
 ## [2026-10-08] integration | Patch 6.2.0 API audit
 
 [Audit](investigations/patch-6-2-0-api-audit.md): integrated on master 8dd11c1b9 with real 6.2.2/6.2.4 registers. Own zero gaps and two pending item-link contracts unchanged. Branch 52/52 sweep cases; every observation on all 50 other pages equals pinned master. 51 registers/48 extracts reproduce with three inherited failures; explicit rebase mapping and historical records preserved. Spell-line integration 190/190 and prefork tooltip 34/34 pass; extended layout failure matches master. Portability gate PASS: clean 31/31, unrelated later audit 32/32.

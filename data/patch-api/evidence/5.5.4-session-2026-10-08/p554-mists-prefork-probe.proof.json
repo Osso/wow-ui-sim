@@ -1,0 +1,20 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--no-default-features",
+    "--features",
+    "sound,gui,casc,client-mists",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "publication_sweep"
+  ],
+  "revision": "44ebca873e7e187b429301c96234df7b2b3a4f51",
+  "profile": "mists",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p554-page-mists",
+  "exit": 101,
+  "log": "p554-mists-prefork-probe.log",
+  "log_sha256": "bdfb377d63611ee0cd8db586033075a54d334e4e3377735acc0d336bde380bdb",
+  "invalidated": false
+}

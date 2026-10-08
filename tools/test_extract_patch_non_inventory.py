@@ -10,6 +10,16 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 class ExtractTests(unittest.TestCase):
+    def test_canonical_navigation_ignores_named_parameters_opt_in(self):
+        raw = '{{apichanges|prev=5.5.3|5.5.4}}\n==Resources==\n* TOC: <code>50504</code>\n'
+        self.assertEqual(extract_text(raw, canonical_patch_navigation=True),
+                         'Patch 5.5.4 API changes\n== Resources ==\n* TOC: 50504\n')
+        self.assertEqual(extract_text(raw),
+                         'Patch prev=5.5.3 API changes\n== Resources ==\n* TOC: 50504\n')
+        self.assertEqual(extract_text('{{apichanges|5.5.4|prev=5.5.3}}\n',
+                                      canonical_patch_navigation=True),
+                         'Patch 5.5.4 API changes\n')
+
     def test_patch_diff_transclusion_is_retained_not_expanded(self):
         raw = '==Automated diff==\n{{:Patch 6.2.4/API changes/diff}}\n'
         with self.assertRaises(ValueError):
