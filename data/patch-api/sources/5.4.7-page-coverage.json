@@ -1,0 +1,140 @@
+{
+  "patch": "5.4.7",
+  "source_revid": 5298169,
+  "proof_policy": "Publication/absence is distinct from bounded existing backing behavior and pending 2014 contracts.",
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-BNGetFriendInviteInfoByAddon-16",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Exact current publication/absence after retail later-register supersession only; no historical signature/output/security/domain parity."
+    },
+    {
+      "source_id": "wt-global-api-BNSendGameData-17",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Exact current publication/absence after retail later-register supersession only; no historical signature/output/security/domain parity."
+    },
+    {
+      "source_id": "wt-global-api-GetSpecializationNameForSpecID-18",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Exact current publication/absence after retail later-register supersession only; no historical signature/output/security/domain parity."
+    },
+    {
+      "source_id": "wt-events-AUTH_CHALLENGE_FINISHED-29",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Exact current publication/absence after retail later-register supersession only; no historical signature/output/security/domain parity."
+    },
+    {
+      "source_id": "wt-events-BN_CHAT_MSG_ADDON-30",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Exact current publication/absence after retail later-register supersession only; no historical signature/output/security/domain parity."
+    },
+    {
+      "source_id": "wt-events-CHARACTER_UPGRADE_ABORTED-31",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Current strict retail event catalog rejects CHARACTER_UPGRADE_ABORTED; source-era character-boost start/abort lifecycle and its service producer are unmodeled. Do not make a historical name registerable without modeling the relevant lifecycle, or reuse the unrelated modern boost/store completion callback."
+    },
+    {
+      "source_id": "wt-events-CHARACTER_UPGRADE_COMPLETE-32",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Exact current publication/absence after retail later-register supersession only; no historical signature/output/security/domain parity."
+    },
+    {
+      "source_id": "wt-events-CHARACTER_UPGRADE_STARTED-33",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Current strict retail event catalog rejects CHARACTER_UPGRADE_STARTED; source-era character-boost start/abort lifecycle and its service producer are unmodeled. Do not make a historical name registerable without modeling the relevant lifecycle, or reuse the unrelated modern boost/store completion callback."
+    },
+    {
+      "source_id": "wt-events-PRODUCT_DISTRIBUTIONS_UPDATED-34",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Exact current publication/absence after retail later-register supersession only; no historical signature/output/security/domain parity."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "CHAT_MSG_ADDON arg4 must identify the inbound sender with realm. Existing legacy synthetic echo in message_verbs.rs instead copies the outbound recipient into arg4; namespace outbound intent is not inbound delivery. No inbound sender/realm producer is modeled. Retained as a concrete payload mismatch, not patched with fabricated event injection."
+    },
+    {
+      "source_id": "prose-undated-005",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "CHAT_MSG_WHISPER arg2 requires an incoming author-name/realm producer. send_chat_message logs outbound messages without inbound events; GM Chat consumer tests inject fixtures rather than modeling remote delivery. Registration does not establish author normalization."
+    },
+    {
+      "source_id": "prose-undated-006",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source explicitly says other CHAT_MSG_* events were not checked. No concrete event list or universal realm-normalization contract can be inferred; uncertainty retained literally."
+    },
+    {
+      "source_id": "source-context-008",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-009",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-011",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-caption-011",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Diff build context, not runtime credit: Global API (5.4.2.17688 &rarr; 5.4.7.17956)",
+      "wikitext_line": 11
+    },
+    {
+      "source_id": "source-caption-024",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Diff build context, not runtime credit: Events (5.4.2.17688 &rarr; 5.4.7.17956)",
+      "wikitext_line": 24
+    }
+  ],
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/5.4.7-api-changes.txt"
+  }
+}

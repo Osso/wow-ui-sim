@@ -1,0 +1,30 @@
+/home/osso/.worktrees/wow-ui-sim-p547-page/data/patch-api/sources/6.0.2-page-coverage.json:2753:      "source_id": "diff-wt-global-api-BNGetFriendInviteInfoByAddon-386",
+/home/osso/.worktrees/wow-ui-sim-p547-page/data/patch-api/sources/12.0.0-api-changes.wikitext:482:: {{api|t=a|BNSendGameData}}
+/home/osso/.worktrees/wow-ui-sim-p547-page/data/patch-api/sources/10.0.7-api-changes.txt:1293: CHAT_MSG_WHISPER
+/home/osso/.worktrees/wow-ui-sim-p547-page/data/patch-api/sources/5.4.7-api-changes.txt:4:*CHAT_MSG_ADDON arg4's value for sender now returns player name - realm name instead of just the player name (e.g. "Arthas-Silvermoon")
+/home/osso/.worktrees/wow-ui-sim-p547-page/data/patch-api/sources/5.4.7-api-changes.txt:5:*CHAT_MSG_WHISPER arg2's value for author now returns player name - realm name instead of just the player name (e.g. "Arthas-Silvermoon")
+/home/osso/.worktrees/wow-ui-sim-p547-page/data/patch-api/sources/11.1.0-wikitext-register.json:565:      "id": "wt-global-api-GetSpecializationNameForSpecID-130",
+/home/osso/.worktrees/wow-ui-sim-p547-page/data/patch-api/sources/11.1.0-wikitext-register.json:568:      "symbol": "GetSpecializationNameForSpecID",
+/home/osso/.worktrees/wow-ui-sim-p547-page/data/patch-api/sources/10.0.7-api-changes.wikitext:1405: {{api|t=e|CHAT_MSG_WHISPER}}
+/home/osso/.worktrees/wow-ui-sim-p547-page/data/patch-api/sources/12.0.0-register.json:45587:      "symbol": "BNSendGameData",
+/home/osso/.worktrees/wow-ui-sim-p547-page/data/patch-api/sources/12.0.0-wikitext-register.json:3565:      "id": "wt-global-api-BNSendGameData-482",
+/home/osso/.worktrees/wow-ui-sim-p547-page/data/patch-api/sources/12.0.0-wikitext-register.json:3568:      "symbol": "BNSendGameData",
+/home/osso/.worktrees/wow-ui-sim-p547-page/data/patch-api/sources/5.4.7-wikitext-register.json:25:      "id": "wt-global-api-BNGetFriendInviteInfoByAddon-16",
+/home/osso/.worktrees/wow-ui-sim-p547-page/data/patch-api/sources/5.4.7-wikitext-register.json:28:      "symbol": "BNGetFriendInviteInfoByAddon",
+/home/osso/.worktrees/wow-ui-sim-p547-page/data/patch-api/sources/5.4.7-wikitext-register.json:33:      "id": "wt-global-api-BNSendGameData-17",
+/home/osso/.worktrees/wow-ui-sim-p547-page/data/patch-api/sources/5.4.7-wikitext-register.json:36:      "symbol": "BNSendGameData",
+/home/osso/.worktrees/wow-ui-sim-p547-page/data/patch-api/sources/5.4.7-wikitext-register.json:41:      "id": "wt-global-api-GetSpecializationNameForSpecID-18",
+/home/osso/.worktrees/wow-ui-sim-p547-page/data/patch-api/sources/5.4.7-wikitext-register.json:44:      "symbol": "GetSpecializationNameForSpecID",
+/home/osso/.worktrees/wow-ui-sim-p547-page/data/patch-api/sources/11.1.0-api-changes.wikitext:130: {{api|t=a|GetSpecializationNameForSpecID}}
+/home/osso/.worktrees/wow-ui-sim-p547-page/data/patch-api/sources/11.1.0-page-coverage.json:502:      "source_id": "wt-global-api-GetSpecializationNameForSpecID-130",
+/home/osso/.worktrees/wow-ui-sim-p547-page/data/patch-api/sources/6.0.2-api-changes.diff.wikitext:386:: BNGetFriendInviteInfoByAddon
+/home/osso/.worktrees/wow-ui-sim-p547-page/data/patch-api/sources/10.0.7-page-coverage.json:8262:      "note": "CHAT_MSG_WHISPER: historical type-label/input-output contract requires a populated source-specific producer or argument validation test; publication does not prove typed value representation, nilability, precision or native acceptance."
+/home/osso/.worktrees/wow-ui-sim-p547-page/data/patch-api/sources/10.0.7-page-coverage.json:8268:      "note": "CHAT_MSG_WHISPER: historical type-label/input-output contract requires a populated source-specific producer or argument validation test; publication does not prove typed value representation, nilability, precision or native acceptance."
+/home/osso/.worktrees/wow-ui-sim-p547-page/data/patch-api/sources/5.4.7-api-changes.wikitext:4:*{{api|t=e|CHAT_MSG_ADDON}} arg4's value for sender now returns player name - realm name instead of just the player name (e.g. "Arthas-Silvermoon")
+/home/osso/.worktrees/wow-ui-sim-p547-page/data/patch-api/sources/5.4.7-api-changes.wikitext:5:*{{api|t=e|CHAT_MSG_WHISPER}} arg2's value for author now returns player name - realm name instead of just the player name (e.g. "Arthas-Silvermoon")
+/home/osso/.worktrees/wow-ui-sim-p547-page/data/patch-api/sources/5.4.7-api-changes.wikitext:16:: {{api|BNGetFriendInviteInfoByAddon}}
+/home/osso/.worktrees/wow-ui-sim-p547-page/data/patch-api/sources/5.4.7-api-changes.wikitext:17:: {{api|BNSendGameData}}
+/home/osso/.worktrees/wow-ui-sim-p547-page/data/patch-api/sources/5.4.7-api-changes.wikitext:18:: {{api|GetSpecializationNameForSpecID}}
+/home/osso/.worktrees/wow-ui-sim-p547-page/data/patch-api/sources/6.0.2-wikitext-register.json:3683:      "id": "diff-wt-global-api-BNGetFriendInviteInfoByAddon-386",
+/home/osso/.worktrees/wow-ui-sim-p547-page/data/patch-api/sources/6.0.2-wikitext-register.json:3686:      "symbol": "BNGetFriendInviteInfoByAddon",
+/home/osso/.worktrees/wow-ui-sim-p547-page/data/patch-api/sources/12.0.0-page-coverage.json:3250:      "source_id": "wt-global-api-BNSendGameData-482",

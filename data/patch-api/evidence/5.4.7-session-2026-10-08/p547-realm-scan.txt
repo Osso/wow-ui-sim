@@ -1,0 +1,2 @@
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/real/player_identity.rs:10:const SIM_REALM: &str = "SimRealm";
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/unit_misc.rs:14:const SIM_REALM: &str = "SimRealm";

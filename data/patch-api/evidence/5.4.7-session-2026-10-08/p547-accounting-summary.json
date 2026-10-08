@@ -1,0 +1,15 @@
+{
+  "inventory": 9,
+  "total_ids": 19,
+  "publication_gaps": 2,
+  "statuses": {
+    "audit-pending": 5,
+    "bounded-coverage": 7,
+    "metadata-only": 7
+  },
+  "pending_prose": [
+    "prose-undated-004",
+    "prose-undated-005",
+    "prose-undated-006"
+  ]
+}

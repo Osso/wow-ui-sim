@@ -1,0 +1,76 @@
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/c_api/addon_messages.rs:40:    table_set_rust_fn_static(state, table, "SendAddonMessage", send_addon_message)?;
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/event/mod.rs:29:    pub const CHAT_MSG_WHISPER: &str = "CHAT_MSG_WHISPER";
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/event/valid_events_a.rs:311:    "CHAT_MSG_ADDON",
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/event/valid_events_a.rs:375:    "CHAT_MSG_WHISPER",
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/chat_init.rs:125:            SendChatMessage = __wow_send_chat_message
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/chat_init.rs:127:                C_ChatInfo.SendChatMessage = __wow_send_chat_message
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/workarounds/temporary/inert_global_defaults.rs:71:if rawget(C_Commentator, "SendAddonMessage") == nil then
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/workarounds/temporary/inert_global_defaults.rs:72:    function C_Commentator.SendAddonMessage(_prefix, _message, _channel)
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/workarounds/temporary/inert_global_defaults.rs:82:-- 12.0.5 logged variant; mirrors SendAddonMessage until commentator comms are modeled.
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/workarounds/temporary/inert_global_defaults.rs:86:        return C_Commentator.SendAddonMessage(_prefix, _message, _chatType)
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/workarounds/temporary/inert_global_defaults.rs:301:                if C_Commentator.SendAddonMessage("A", "B", "WHISPER") ~= Enum.SendAddonMessageResult.Success then return "send" end
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/workarounds/temporary/inert_global_defaults.rs:385:                if type(C_Commentator.SendAddonMessage) ~= "function" then return "missing_default" end
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/message_verbs.rs:1://! Auction / message verbs: `CancelAuction`, `SendAddonMessage`,
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/message_verbs.rs:2://! `SendChatMessage`.
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/message_verbs.rs:8://! - `SendAddonMessage(prefix, message, channel, target)` — append to
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/message_verbs.rs:9://!                             `message_log`, fire `CHAT_MSG_ADDON`.
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/message_verbs.rs:10://! - `SendChatMessage(message, chatType, language, target)` — append to
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/message_verbs.rs:112:/// `SendAddonMessage(prefix, message, channel, target)` — log + fire
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/message_verbs.rs:113:/// `CHAT_MSG_ADDON` with four arg values (prefix/message/channel/target).
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/message_verbs.rs:133:    push_event_with_args(state, "CHAT_MSG_ADDON", args)?;
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/message_verbs.rs:137:/// `SendChatMessage(message, chatType, language, target)` — log only.
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/message_verbs.rs:159:    LuaApiMut::register_function(lua, "SendAddonMessage", send_addon_message)?;
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/message_verbs.rs:160:    LuaApiMut::register_function(lua, "SendChatMessage", send_chat_message)?;
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/message_verbs.rs:173:            table_set_rust_fn_static(state, chat_info_ref, "SendChatMessage", send_chat_message)?;
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/sim_substates/mod.rs:291:/// `kind` is `"chat"` for `SendChatMessage` or `"addon"` for
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/sim_substates/mod.rs:292:/// `SendAddonMessage`.
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:20:        assert(type(C_ChatInfo.SendAddonMessage) == 'function', 'missing SendAddonMessage')
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:107:        assert(C_ChatInfo.SendAddonMessage('ACE', 'one') == 0)
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:109:        assert(C_ChatInfo.SendAddonMessage('ACE', 'three', 'WHISPER', 'Bob-Realm') == 0)
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:146:    env.exec("assert(C_ChatInfo.SendAddonMessage('ACE', 'kept', 'WHISPER', 'Bob') == 0)")
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:152:        for _, send in ipairs({C_ChatInfo.SendAddonMessage, C_ChatInfo.SendAddonMessageLogged}) do
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:178:        for _, send in ipairs({C_ChatInfo.SendAddonMessage, C_ChatInfo.SendAddonMessageLogged}) do
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:188:    env.exec("assert(C_ChatInfo.SendAddonMessage('ACE', 'party') == 0); assert(C_ChatInfo.SendAddonMessage('ACE', 'raid', 'RAID') == 5)")
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:192:    env.exec("assert(C_ChatInfo.SendAddonMessage('ACE', 'raid', 'RAID') == 0); assert(C_ChatInfo.SendAddonMessageLogged('ACE', 'guild', 'GUILD') == 0)")
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:202:    env.exec("assert(C_ChatInfo.SendAddonMessage('ACE', 'stale roster') == 5)")
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:213:        for _, send in ipairs({C_ChatInfo.SendAddonMessage, C_ChatInfo.SendAddonMessageLogged}) do
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:236:        for _, send in ipairs({C_ChatInfo.SendAddonMessage, C_ChatInfo.SendAddonMessageLogged}) do
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:261:        for _, send in ipairs({C_ChatInfo.SendAddonMessage, C_ChatInfo.SendAddonMessageLogged}) do
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:338:        assert(C_ChatInfo.SendAddonMessage('ACE', '', 'WHISPER', 'Bob') == 0)
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:447:    first.exec("assert(C_ChatInfo.SendAddonMessage('ACE', 'first') == 0); assert(C_BattleNet.SendGameData(200001, 'ACE', 'first bnet') == 0)")
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:449:    second.exec("assert(C_ChatInfo.SendAddonMessage('ACE', 'second') == 5); assert(C_BattleNet.SendGameData(200001, 'ACE', 'second bnet') == 12)")
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:464:        .eval("return select('#', SendAddonMessage('LEGACY', 'payload', 'WHISPER', 'Bob'))")
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:472:        .find(|event| event.name == "CHAT_MSG_ADDON")
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:483:    env.exec("assert(SendAddonMessage(nil, nil, nil, nil) == nil)")
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/blizzard_deprecated_chat_info_loads.rs:50:        "Blizzard_DeprecatedChatInfo declares `## LoadOnDemand: 0` — the SendChatMessage / \
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/blizzard_deprecated_chat_info_loads.rs:132:            "return type(SendChatMessage) == 'function' \
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/blizzard_deprecated_chat_info_loads.rs:140:         SendChatMessage(message, chatType, languageID, target) → \
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/blizzard_deprecated_chat_info_loads.rs:141:         C_ChatInfo.SendChatMessage; DoEmote(emoteName, targetName, suppressMoveError) — \
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/blizzard_gm_chat_ui_loads.rs:54:         the first time a Game Master whispers the player (the client receives a CHAT_MSG_WHISPER \
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/blizzard_gm_chat_ui_loads.rs:294:         CHAT_MSG_WHISPER with arg6 == 'GM' is received"
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/commentator_api.rs:13:            local explicit = C_Commentator.SendAddonMessage("COOLDOWNBROADCASTER", "1,2,3", "RAID")
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/commentator_api.rs:18:            local implicit = C_Commentator.SendAddonMessage("COOLDOWNBROADCASTER", "1,2,3")
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/commentator_api.rs:30:        "C_Commentator.SendAddonMessage should return SendAddonMessageResult.Success"
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/chat_frame.rs:7://! C_ChatInfo.SendChatMessage.
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/chat_frame.rs:277:/// Hook C_ChatInfo.SendChatMessage to capture submitted messages.
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/chat_frame.rs:282:        local orig = C_ChatInfo.SendChatMessage
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/chat_frame.rs:283:        C_ChatInfo.SendChatMessage = function(msg, chatType, language, target)
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/chat_frame.rs:294:    .expect("Failed to hook SendChatMessage");
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/chat_frame.rs:405:        // Send a chat message — C_ChatInfo.SendChatMessage adds it to ChatFrame1
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/chat_frame.rs:406:        env.exec(r#"C_ChatInfo.SendChatMessage("Test timestamp", "SAY")"#)
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/message_verbs.rs:41:// ── SendAddonMessage ──────────────────────────────────────────────────────────
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/message_verbs.rs:46:    env.exec(r#"SendAddonMessage("MYADDON", "hello", "PARTY", "")"#)
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/message_verbs.rs:62:        .find(|e| e.name == "CHAT_MSG_ADDON")
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/message_verbs.rs:63:        .expect("CHAT_MSG_ADDON must fire");
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/message_verbs.rs:74:    env.exec(r#"SendAddonMessage("MYADDON", "ping", "WHISPER", "Bob")"#)
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/message_verbs.rs:81:// ── SendChatMessage ───────────────────────────────────────────────────────────
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/message_verbs.rs:87:    env.exec(r#"SendChatMessage("hi there", "SAY", nil, "")"#)
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/message_verbs.rs:93:        "SendChatMessage must not queue an inbound event"
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/message_verbs.rs:104:    env.exec(r#"SendChatMessage("secret", "WHISPER", nil, "Bob")"#)
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/message_verbs.rs:117:        r#"SendChatMessage("one", "SAY")
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/message_verbs.rs:118:           SendChatMessage("two", "SAY")
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/message_verbs.rs:119:           SendAddonMessage("X", "three", "PARTY")"#,
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/data/patch_6_1_0_sweep_known_gaps.json:2:  "wt-global-api-SendChatMessage-14"
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/data/patch_10_2_7_sweep_known_gaps.json:5:  "wt-global-api-C_ChatInfo.SendAddonMessage-110",
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/data/patch_8_0_1_sweep_known_gaps.json:13:  "wt-global-api-C_ChatInfo.SendAddonMessage-16",
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/data/patch_11_2_0_sweep_known_gaps.json:27:  "wt-global-api-SendChatMessage-136",

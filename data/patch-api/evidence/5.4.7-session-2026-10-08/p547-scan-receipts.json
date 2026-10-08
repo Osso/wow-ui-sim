@@ -1,0 +1,82 @@
+{
+  "note": "Untruncated whole-word /usr/bin/grep scans. Bare symbols capture calls, callback references such as pcall(Name, ...), and guards such as and Name then. Retirement set empty; these are backing/caller discovery scans, not clearance to retire any member.",
+  "rows": [
+    {
+      "file": "p547-chat-scan.txt",
+      "tool": "/usr/bin/grep",
+      "flags": [
+        "-RnwE"
+      ],
+      "whole_word": true,
+      "untruncated": true,
+      "sha256": "0d7c6b51fec0e41c1e749b95e0a2726805255c3e60ae737f7d9d899ba8b3ab96",
+      "line_count": 76
+    },
+    {
+      "file": "p547-bnet-scan.txt",
+      "tool": "/usr/bin/grep",
+      "flags": [
+        "-RnwE"
+      ],
+      "whole_word": true,
+      "untruncated": true,
+      "sha256": "ab03f0cc8830e642f4bd6959fbcf30ade3c30f8d17b6cef8d86b7db162d32ac7",
+      "line_count": 28
+    },
+    {
+      "file": "p547-cache-scan.txt",
+      "tool": "/usr/bin/grep",
+      "flags": [
+        "-RnwE"
+      ],
+      "whole_word": true,
+      "untruncated": true,
+      "sha256": "6a8ed44c1336bfe33bdec16d0a3386996e9cd842e603095d1c8bc7d4286565b1",
+      "line_count": 3
+    },
+    {
+      "file": "p547-identity-scan.txt",
+      "tool": "/usr/bin/grep",
+      "flags": [
+        "-RnwE"
+      ],
+      "whole_word": true,
+      "untruncated": true,
+      "sha256": "adebf23755bee6395bd5a0448fb76cff9d14aeb4441d5596608418b1f6725034",
+      "line_count": 40
+    },
+    {
+      "file": "p547-cached-send-scan.txt",
+      "tool": "/usr/bin/grep",
+      "flags": [
+        "-RnwE"
+      ],
+      "whole_word": true,
+      "untruncated": true,
+      "sha256": "4c1561b98132b0b2a42b91acf0c897347e4b0adebb892bdb80c4d0803379d8d2",
+      "line_count": 2
+    },
+    {
+      "file": "p547-realm-scan.txt",
+      "tool": "/usr/bin/grep",
+      "flags": [
+        "-RnwE"
+      ],
+      "whole_word": true,
+      "untruncated": true,
+      "sha256": "2f2099d7eeee3f1fed6a0ff5ddf9b0711925fe126b12a612b22c2c1d9bca6952",
+      "line_count": 2
+    },
+    {
+      "file": "p547-register-reference-scan.txt",
+      "tool": "/usr/bin/grep",
+      "flags": [
+        "-RnwE"
+      ],
+      "whole_word": true,
+      "untruncated": true,
+      "sha256": "8f839f5c0f9d135ad7212837b2afb6aa7b43d9f8da8d56d3c9f4534df4f5df98",
+      "line_count": 30
+    }
+  ]
+}

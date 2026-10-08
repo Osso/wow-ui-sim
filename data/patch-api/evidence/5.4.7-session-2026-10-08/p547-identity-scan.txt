@@ -1,0 +1,40 @@
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/state_types/social.rs:5:/// showing a random current-player name that is not present in the account's
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/state_types/social.rs:81:    pub realm_name: String,
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/state_types/social.rs:82:    /// Realm display name (may differ from `realm_name` in cross-realm contexts).
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/state_types/character_world.rs:230:pub struct PlayerState {
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/state.rs:956:        self.player.name = SEEDED_LOCAL_CHARACTER_NAME.to_string();
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/workarounds/temporary/character_create_defaults.rs:638:        let (result, created, player_name, selected_faction): (String, bool, String, String) = env
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/workarounds/temporary/character_create_defaults.rs:652:        assert_eq!(player_name, "Calia");
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/missing_surface/auction_house/purchases.rs:168:    let bidder_name = sim.player.name.clone();
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/missing_surface/auction_house/posting.rs:111:    let owner_name = borrow_state(state)?.player.name.clone();
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/missing_surface/tooltip_info/mod.rs:319:            sim.player.name = "Tester".to_string();
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/missing_surface/tooltip_info/unit.rs:66:        name: player.name.clone(),
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/missing_surface/character_select.rs:262:    set_string_field(state, table, "realmName", &account.realm_name);
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/targeting_verbs.rs:76:        name: st.player.name.clone(),
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/group_verbs.rs:138:/// player name. Silent no-op when input is missing or unknown.
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/auction_verbs.rs:332:    let bidder_name = borrow_state(state)?.player.name.clone();
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/auction_verbs.rs:462:    let owner = sim.player.name.clone();
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/wowlabs.rs:122:fn local_member(player_name: &str, is_party_leader: bool) -> WowLabsPartyMember {
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/wowlabs.rs:124:        player_name: player_name.to_string(),
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/wowlabs.rs:171:        let player_name = create_string(state, &member.player_name);
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/wowlabs.rs:173:        table_set(state, member_table, "playerName", player_name);
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/wowlabs.rs:230:    let local_name = sim.player.name.clone();
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/wowlabs.rs:239:                member.player_name = local_name.clone();
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/wowlabs.rs:262:        member.player_name = borrow_state(state)?.player.name.clone();
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/wowlabs.rs:370:        let local_name = sim.player.name.clone();
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/wowlabs.rs:380:                    player_name: invite.inviter_name,
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/wowlabs.rs:536:        let local_name = sim.player.name.clone();
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/wowlabs.rs:550:        let local_name = sim.player.name.clone();
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/real/player_identity.rs:30:            sim.player.name.clone(),
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/real/player_identity.rs:57:    let name = borrow_state(state)?.player.name.clone();
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/group_queries.rs:333:        name: st.player.name.clone(),
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/group_queries.rs:569:            "player" | "pet" | "vehicle" => st.player.name.clone(),
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/unit_misc.rs:22:        "player" | "pet" | "vehicle" => sim.player.name.clone(),
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/battlefield_lfg_probes/queue.rs:429:    let name = if index == 1 && !sim.player.name.is_empty() {
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/battlefield_lfg_probes/queue.rs:430:        sim.player.name.clone()
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/globals/admin.rs:456:    borrow_state_mut(state)?.player.name = name;
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/sim_substates/wow_labs.rs:10:    pub player_name: String,
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/sim_substates/wow_labs.rs:92:                    player_name: "Player".into(),
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/sim_substates/wow_labs.rs:99:                    player_name: "DuoBuddy".into(),
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/state/defaults/friends.rs:41:        realm_name: "Stormwind".into(),
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/lua_api/state/defaults/friends.rs:70:        realm_name: "Stormwind".into(),

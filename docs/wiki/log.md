@@ -6,6 +6,10 @@
 
 [Audit](investigations/patch-5-5-4-api-audit.md): revision 6778083, resources-only stub: zero inventory/four metadata IDs. Mists Classic TOC 50504, separate from the retail chain; prefork requires retail, so Mists uses profile-aware integration loading. No modeled gaps or retirements. 52 retail sweep/factory cases, 2 Mists cases, 3 line controls, 82 Python fixtures and non-vendor warning-clean Mists/format checks pass; 9,051 retail observations unchanged. Full-Game preload self-anchor failure retained; SharedXML scope explicit. Portable gates pass 32/32 clean and 33/33 with synthetic later audit; own tamper rejected.
 
+## [2026-10-08] investigation | Retail Patch 5.4.7 API audit
+
+[Audit](investigations/patch-5-4-7-api-audit.md): pageid 549368 revision 5298169, retail TOC 50400 from linked patch page; 19 IDs accounted, two upgrade-event publication gaps, three chat-prose limits, no retirements or runtime/tool changes. Existing backing behavior tested without vendor edits. Five Python scripts and 54 register/51 extract reproductions pass; final targeted/gate acceptance pending. Wiki preserved without shrinkage.
+
 ## [2026-10-08] integration | Patch 6.2.4 API audit
 
 [Audit](investigations/patch-6-2-4-api-audit.md): merged 7.0.1/7.0.3 registers integrated on master 846a30663; own zero gaps and seven pending historical contracts unchanged. All 50 sweep/factory cases pass; all 48 other pages match exact master observations. 49 registers / 46 extracts reproduce, three inherited failures retained. Negative 0 → 1, identity/BN regressions, 32/36/8 fixtures and format/Mists checks pass; 32 historical/integrated validators pass. Historical artifacts preserved. Rebase onto 15b417367 supersedes the four-file 7.0.3 allowlist; durable ten-commit mapping and 30 pinned-master validators pass. Fresh sweeps 50/50 and 1/1, fixtures 32/36/8 and format pass.

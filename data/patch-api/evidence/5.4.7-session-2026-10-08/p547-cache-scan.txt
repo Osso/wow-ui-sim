@@ -1,0 +1,3 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mainline/CharacterServices.lua:672:	return GetSpecializationNameForSpecID(self.selected);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mainline/CharacterServices.lua:683:	return string.format(BOOST_NOT_RECOMMEND_SPEC_WARNING, GetSpecializationNameForSpecID(self.selected));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedBattleNet/Deprecated_BattleNet.lua:8:BNSendGameData = function(gameAccountID, prefix, data)

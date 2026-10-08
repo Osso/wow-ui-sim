@@ -1,0 +1,48 @@
+[
+  {
+    "source_id": "wt-events-CHARACTER_UPGRADE_ABORTED-31",
+    "symbol": "CHARACTER_UPGRADE_ABORTED",
+    "reason": "Current strict retail event catalog rejects CHARACTER_UPGRADE_ABORTED; source-era character-boost start/abort lifecycle and its service producer are unmodeled. Do not make a historical name registerable without modeling the relevant lifecycle, or reuse the unrelated modern boost/store completion callback.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "CHARACTER_UPGRADE_ABORTED"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"CHARACTER_UPGRADE_ABORTED\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-CHARACTER_UPGRADE_STARTED-33",
+    "symbol": "CHARACTER_UPGRADE_STARTED",
+    "reason": "Current strict retail event catalog rejects CHARACTER_UPGRADE_STARTED; source-era character-boost start/abort lifecycle and its service producer are unmodeled. Do not make a historical name registerable without modeling the relevant lifecycle, or reuse the unrelated modern boost/store completion callback.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "CHARACTER_UPGRADE_STARTED"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"CHARACTER_UPGRADE_STARTED\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  }
+]

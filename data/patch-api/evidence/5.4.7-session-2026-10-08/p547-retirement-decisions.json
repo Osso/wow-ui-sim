@@ -1,0 +1,5 @@
+{
+  "members": [],
+  "runtime_retirements": [],
+  "note": "Page adds three functions and six events; it requests no removals. No candidate retirement, thus no retirement consumer/caller scans or re-addition exemptions. Additional discovery scans use untruncated /usr/bin/grep -RnwE; bare names also cover pcall callbacks and and Name then guards. Later master/p548/p601 register inventories pinned by git ls-tree in p547-later-register-scan.json."
+}

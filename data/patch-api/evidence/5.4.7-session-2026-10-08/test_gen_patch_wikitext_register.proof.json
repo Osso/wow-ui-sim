@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p547-page/tools/test_gen_patch_wikitext_register.py"
+  ],
+  "revision": "13f6e9f8f26087a7c79c7cf13ae749474536e0ba",
+  "scope": "test_gen_patch_wikitext_register",
+  "cwd": ".",
+  "target": "dedicated p547-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "test_gen_patch_wikitext_register.txt",
+  "log_sha256": "194f2656e769feb67d886b67dcd929625f6edb877d26bcae66c64ed55fa245f1",
+  "seconds": 0.08012483399943449,
+  "invalidated": false
+}

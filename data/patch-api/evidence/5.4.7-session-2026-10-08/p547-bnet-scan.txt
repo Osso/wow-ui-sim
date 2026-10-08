@@ -1,0 +1,28 @@
+/home/osso/.worktrees/wow-ui-sim-p547-page/src/c_api/c_battle_net.rs:68:        "SendGameData",
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/p1200_rest.rs:18:        assert(C_BattleNet.SendGameData({game}, 'SIM', 'payload') == 0)
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/p1200_rest.rs:19:        assert(C_BattleNet.SendGameData(-1, 'SIM', 'payload') == 9)
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:22:        assert(type(C_BattleNet.SendGameData) == 'function', 'missing SendGameData')
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:278:    env.exec("assert(C_BattleNet.SendGameData(200001, 'ACE', 'bnet payload') == 0)")
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:291:    env.exec("assert(C_BattleNet.SendGameData(100001, 'ACE', 'friend id is not game id') == 12)")
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:300:    env.exec("assert(C_BattleNet.SendGameData(200001, 'ACE', 'kept') == 0)")
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:306:        assert(C_BattleNet.SendGameData(-1, 'ACE', 'data') == 9)
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:307:        assert(C_BattleNet.SendGameData(999999, 'ACE', 'data') == 12)
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:308:        assert(C_BattleNet.SendGameData(200002, 'ACE', 'data') == 12)
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:309:        assert(C_BattleNet.SendGameData(200001, '', 'data') == 1)
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:310:        assert(C_BattleNet.SendGameData(200001, string.rep('p', 17), 'data') == 1)
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:311:        assert(C_BattleNet.SendGameData(200001, 'ACE', string.rep('x', 4079)) == 2)
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:316:    env.exec("assert(C_BattleNet.SendGameData(200001, 'ACE', 'now offline') == 12)")
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:322:        "assert(C_BattleNet.SendGameData(200002, string.rep('p', 16), string.rep('x', 4078)) == 0)",
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:340:        assert(C_BattleNet.SendGameData(200001, 'ACE', '') == 0)
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:341:        assert(C_BattleNet.SendGameData(200001, 'ACE', string.rep('é', 2039)) == 0)
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:342:        assert(C_BattleNet.SendGameData(200001, 'ACE', string.rep('é', 2040)) == 2)
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:358:        local send = C_BattleNet.SendGameData
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:385:        assert(C_BattleNet.SendGameData(200001, SecretPrefix, SecretData) == 0)
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:388:            assert(not pcall(C_BattleNet.SendGameData, 200001, SecretPrefix, 'plain'))
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:389:            assert(not pcall(C_BattleNet.SendGameData, 200001, 'ACE', SecretData))
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:391:            assert(C_BattleNet.SendGameData(200001, 'ACE', 'ordinary addon payload') == 0)
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:421:        assert(C_BattleNet.SendGameData(SecretGameAccount, 'ACE', 'secure target') == 0)
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:424:            assert(not pcall(C_BattleNet.SendGameData, SecretGameAccount, 'ACE', 'blocked'))
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:447:    first.exec("assert(C_ChatInfo.SendAddonMessage('ACE', 'first') == 0); assert(C_BattleNet.SendGameData(200001, 'ACE', 'first bnet') == 0)")
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/addon_messages.rs:449:    second.exec("assert(C_ChatInfo.SendAddonMessage('ACE', 'second') == 5); assert(C_BattleNet.SendGameData(200001, 'ACE', 'second bnet') == 12)")
+/home/osso/.worktrees/wow-ui-sim-p547-page/tests/blizzard_deprecated_battle_net_loads.rs:137:         BNSendGameData(gameAccountID, prefix, data) → C_BattleNet.SendGameData (drops the \

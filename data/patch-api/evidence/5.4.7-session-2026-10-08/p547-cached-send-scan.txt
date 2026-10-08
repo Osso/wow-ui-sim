@@ -1,0 +1,2 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedBattleNet/Deprecated_BattleNet.lua:9:	-- New API additionally returns a result code similar to SendAddonMessage.
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedBattleNet/Deprecated_BattleNet.lua:10:	C_BattleNet.SendGameData(gameAccountID, prefix, data);
