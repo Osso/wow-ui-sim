@@ -5,6 +5,24 @@ from gen_patch_wikitext_register import parse_section, split_sections
 
 
 class InventoryTests(unittest.TestCase):
+    def test_indented_api_lists_keep_renames_and_cvar_removal(self):
+        import gen_patch_wikitext_register as generator
+        raw = ('==New==\n {{api|BNGetGameAccountInfo}}\n'
+               '==Changes==\n  {{api|BNGetToonInfo}} -> {{api|BNGetGameAccountInfo}}\n'
+               '  id = select(17, BNGetGameAccountInfo(id));\n'
+               '==Removals==\n* The “realmName” [[CVar]] no longer exists. '
+               'Use {{api|GetRealmName}}().\n  BNGetToonInfo\n'
+               '==Automated diff==\n  IgnoreMe\n')
+        rows = generator.parse_indented_api_lists(raw)
+        self.assertEqual([(r['section'], r['symbol'], r['direction'], r['wikitext_line'])
+                          for r in rows], [
+            ('global-api', 'BNGetGameAccountInfo', 'added', 2),
+            ('global-api', 'BNGetToonInfo', 'removed', 4),
+            ('global-api', 'BNGetGameAccountInfo', 'added', 4),
+            ('cvars', 'realmName', 'removed', 7),
+            ('global-api', 'BNGetToonInfo', 'removed', 8)])
+        self.assertEqual(len(rows), len({r['id'] for r in rows}))
+
     def test_legion_prepatch_keeps_nested_methods_renames_and_bare_removals(self):
         import gen_patch_wikitext_register as generator
         raw = ('==New==\n* New Widget types: [[UIOBJECT Line|Line]] - derived from Texture\n'

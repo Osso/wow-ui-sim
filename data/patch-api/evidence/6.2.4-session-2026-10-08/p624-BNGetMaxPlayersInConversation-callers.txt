@@ -1,0 +1,2 @@
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/wrath/compat_bootstrap.lua:25:if BNGetMaxPlayersInConversation == nil then
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/wrath/compat_bootstrap.lua:26:  function BNGetMaxPlayersInConversation()

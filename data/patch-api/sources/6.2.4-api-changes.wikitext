@@ -1,0 +1,54 @@
+{{apichanges|6.2.4|prev=6.2.2|next=7.0.3}}
+
+==New==
+ {{api|BNGetFriendGameAccountInfo}}
+ {{api|BNGetGameAccountInfo}}
+ {{api|BNGetNumFriendGameAccounts}}
+
+==Changes==
+*Presence IDs have been replaced with '''bnetIDAccount''' and '''bnetIDGameAccount'''. With this change, we’ve made all functions strict about whether they accept Account IDs or Game Account IDs. In order to make this easier, all Lua variables have been updated to specify which type of ID they are.
+
+You can translate from a '''bnetIDGameAccount''' to a '''bnetIDAccount''' as follows:
+  bnetIDAccount = select(17, BNGetGameAccountInfo(bnetIDGameAccount));
+
+You can find a player’s active '''bnetIDGameAccount''' from a '''bnetIDAccount''' as follows:
+  bnetIDGameAccount = select(6, BNGetFriendInfoByID(bnetIDAccount));
+
+
+*The new Battle.net architecture doesn’t have the concept of “Toons”. Instead, we refer to “GameAccounts”. As a result, many functions with “Toon” in the name now refer to “GameAccount”
+Examples:
+  {{api|BNGetToonInfo}} -> {{api|BNGetGameAccountInfo}}
+  {{api|BNGetFriendToonInfo}} -> {{api|BNGetFriendGameAccountInfo}}
+  {{api|BNGetNumFriendToons}} -> {{api|BNGetNumFriendGameAccounts}}
+
+==Removals==
+* Support for conversations has been removed. This includes all C-functions ({{api|BNCreateConversation}}, {{api|BNGetConversationInfo}}, etc.) as well as all Lua/XML references to conversations.  
+* The “realmName” [[CVar]] no longer exists. You can get the name of the current realm using {{api|GetRealmName}}().
+  BNCreateConversation
+  BNGetBlockedToonInfo
+  BNGetConversationInfo
+  BNGetConversationMemberInfo
+  BNGetCustomMessageTable
+  BNGetFriendToonInfo
+  BNGetMatureLanguageFilter
+  BNGetMaxNumConversations
+  BNGetMaxPlayersInConversation
+  BNGetNumBlockedToons
+  BNGetNumConversationMembers
+  BNGetNumFriendToons
+  BNGetSelectedToonBlock
+  BNGetToonInfo
+  BNInviteToConversation
+  BNIsFriendConversationValid
+  BNIsToonBlocked
+  BNLeaveConversation
+  BNListConversation
+  BNReportFriendInvite
+  BNSendConversationMessage
+  BNSetFocus
+  BNSetMatureLanguageFilter
+  BNSetSelectedToonBlock
+  BNSetToonBlocked
+
+==Automated diff==
+{{:Patch 6.2.4/API changes/diff}}

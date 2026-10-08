@@ -523,6 +523,33 @@ def parse_legion_prepatch(text):
     return entries
 
 
+def parse_indented_api_lists(text):
+    """Retain standalone legacy lists, explicit rename pairs and named CVar removals."""
+    entries = []
+    section = None
+    for number, line in enumerate(text.splitlines(), 1):
+        heading = re.fullmatch(r'==\s*([^=]+?)\s*==', line)
+        if heading:
+            section = heading[1]
+            continue
+        if section == 'New' and re.fullmatch(r'\s+\{\{api\|[^{}]+\}\}', line):
+            entries.append(make_entry('global-api', 'added', number, line))
+        elif section == 'Changes' and re.fullmatch(
+                r'\s+\{\{api\|[^{}]+\}\}\s*->\s*\{\{api\|[^{}]+\}\}', line):
+            entries.extend(make_entry('global-api', direction, number, match[0])
+                           for direction, match in zip(('removed', 'added'), TEMPLATE.finditer(line)))
+        elif section == 'Removals':
+            name = re.fullmatch(r'\s+([A-Za-z_][A-Za-z0-9_]*)', line)
+            cvar = re.search(r'“([A-Za-z_][A-Za-z0-9_]*)” \[\[CVar\]\] no longer exists', line)
+            if name or cvar:
+                category = 'cvars' if cvar else 'global-api'
+                symbol = (cvar or name)[1]
+                entry = make_entry(category, 'removed', number, '{{api|' + symbol + '}}')
+                entry['annotation'] = line
+                entries.append(entry)
+    return entries
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("patch", "path", "revid", "out"):
@@ -568,6 +595,8 @@ def main():
                         help='Retain frame-method/CVar summaries and underscore API links; opt-in')
     parser.add_argument('--legion-prepatch', action='store_true',
                         help='Parse Legion nested inventories, canonical widget owners and explicit removals; opt-in')
+    parser.add_argument('--indented-api-lists', action='store_true',
+                        help='Retain standalone legacy API lists, rename pairs and CVar removals; opt-in')
     args = parser.parse_args()
     patch, path, revid, out = args.patch, args.path, args.revid, args.out
     raw = Path(path).read_bytes()
@@ -614,6 +643,8 @@ def main():
         entries.extend(parse_legacy_widget_cvar_bullets(raw.decode('utf-8')))
     if args.legion_prepatch:
         entries, counts = parse_legion_prepatch(raw.decode('utf-8')), []
+    if args.indented_api_lists:
+        entries.extend(parse_indented_api_lists(raw.decode('utf-8')))
     if args.inventory_only:
         for entry in entries:
             for key in ("kind", "page_default", "test_inline"):

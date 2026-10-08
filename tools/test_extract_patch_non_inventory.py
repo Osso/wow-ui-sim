@@ -10,6 +10,14 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 class ExtractTests(unittest.TestCase):
+    def test_patch_diff_transclusion_is_retained_not_expanded(self):
+        raw = '==Automated diff==\n{{:Patch 6.2.4/API changes/diff}}\n'
+        with self.assertRaises(ValueError):
+            extract_text(raw)
+        self.assertEqual(extract_text(raw, retain_patch_diff_reference=True),
+                         '==Automated diff==\n'
+                         '[Transcluded source: Patch 6.2.4/API changes/diff; not expanded]\n')
+
     def test_legion_prepatch_strips_only_pure_nested_inventory(self):
         raw = ('==New==\n* New C_TradeSkillUI table.\n**{{api|C_TradeSkillUI.GetRecipeInfo}},\n'
                '==Changes==\n***{{api|C_NamePlate.GetNamePlates}},\n'

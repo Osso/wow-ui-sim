@@ -1,0 +1,834 @@
+[
+  {
+    "member": "BNCreateConversation",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "--exclude=*Documentation*",
+      "\\bBNCreateConversation\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "file": "p624-BNCreateConversation-retail.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNCreateConversation",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "\\bBNCreateConversation\\b",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/tests"
+    ],
+    "exit": 1,
+    "file": "p624-BNCreateConversation-callers.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNGetBlockedToonInfo",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "--exclude=*Documentation*",
+      "\\bBNGetBlockedToonInfo\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "file": "p624-BNGetBlockedToonInfo-retail.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNGetBlockedToonInfo",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "\\bBNGetBlockedToonInfo\\b",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/tests"
+    ],
+    "exit": 1,
+    "file": "p624-BNGetBlockedToonInfo-callers.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNGetConversationInfo",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "--exclude=*Documentation*",
+      "\\bBNGetConversationInfo\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "file": "p624-BNGetConversationInfo-retail.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNGetConversationInfo",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "\\bBNGetConversationInfo\\b",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/tests"
+    ],
+    "exit": 1,
+    "file": "p624-BNGetConversationInfo-callers.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNGetConversationMemberInfo",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "--exclude=*Documentation*",
+      "\\bBNGetConversationMemberInfo\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "file": "p624-BNGetConversationMemberInfo-retail.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNGetConversationMemberInfo",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "\\bBNGetConversationMemberInfo\\b",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/tests"
+    ],
+    "exit": 1,
+    "file": "p624-BNGetConversationMemberInfo-callers.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNGetCustomMessageTable",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "--exclude=*Documentation*",
+      "\\bBNGetCustomMessageTable\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "file": "p624-BNGetCustomMessageTable-retail.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNGetCustomMessageTable",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "\\bBNGetCustomMessageTable\\b",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/tests"
+    ],
+    "exit": 1,
+    "file": "p624-BNGetCustomMessageTable-callers.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNGetFriendToonInfo",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "--exclude=*Documentation*",
+      "\\bBNGetFriendToonInfo\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "file": "p624-BNGetFriendToonInfo-retail.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNGetFriendToonInfo",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "\\bBNGetFriendToonInfo\\b",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/tests"
+    ],
+    "exit": 1,
+    "file": "p624-BNGetFriendToonInfo-callers.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNGetMatureLanguageFilter",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "--exclude=*Documentation*",
+      "\\bBNGetMatureLanguageFilter\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "file": "p624-BNGetMatureLanguageFilter-retail.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNGetMatureLanguageFilter",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "\\bBNGetMatureLanguageFilter\\b",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/tests"
+    ],
+    "exit": 1,
+    "file": "p624-BNGetMatureLanguageFilter-callers.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNGetMaxNumConversations",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "--exclude=*Documentation*",
+      "\\bBNGetMaxNumConversations\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "file": "p624-BNGetMaxNumConversations-retail.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNGetMaxNumConversations",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "\\bBNGetMaxNumConversations\\b",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/tests"
+    ],
+    "exit": 1,
+    "file": "p624-BNGetMaxNumConversations-callers.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNGetMaxPlayersInConversation",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "--exclude=*Documentation*",
+      "\\bBNGetMaxPlayersInConversation\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "file": "p624-BNGetMaxPlayersInConversation-retail.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNGetMaxPlayersInConversation",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "\\bBNGetMaxPlayersInConversation\\b",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/tests"
+    ],
+    "exit": 0,
+    "file": "p624-BNGetMaxPlayersInConversation-callers.txt",
+    "matches": 2,
+    "sha256": "bcd93525f5b319b96897c5d31a139330b4a8acaa06b65f07da79f50fab51911a"
+  },
+  {
+    "member": "BNGetNumBlockedToons",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "--exclude=*Documentation*",
+      "\\bBNGetNumBlockedToons\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "file": "p624-BNGetNumBlockedToons-retail.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNGetNumBlockedToons",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "\\bBNGetNumBlockedToons\\b",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/tests"
+    ],
+    "exit": 1,
+    "file": "p624-BNGetNumBlockedToons-callers.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNGetNumConversationMembers",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "--exclude=*Documentation*",
+      "\\bBNGetNumConversationMembers\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "file": "p624-BNGetNumConversationMembers-retail.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNGetNumConversationMembers",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "\\bBNGetNumConversationMembers\\b",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/tests"
+    ],
+    "exit": 1,
+    "file": "p624-BNGetNumConversationMembers-callers.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNGetNumFriendToons",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "--exclude=*Documentation*",
+      "\\bBNGetNumFriendToons\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "file": "p624-BNGetNumFriendToons-retail.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNGetNumFriendToons",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "\\bBNGetNumFriendToons\\b",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/tests"
+    ],
+    "exit": 1,
+    "file": "p624-BNGetNumFriendToons-callers.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNGetSelectedToonBlock",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "--exclude=*Documentation*",
+      "\\bBNGetSelectedToonBlock\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "file": "p624-BNGetSelectedToonBlock-retail.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNGetSelectedToonBlock",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "\\bBNGetSelectedToonBlock\\b",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/tests"
+    ],
+    "exit": 1,
+    "file": "p624-BNGetSelectedToonBlock-callers.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNGetToonInfo",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "--exclude=*Documentation*",
+      "\\bBNGetToonInfo\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "file": "p624-BNGetToonInfo-retail.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNGetToonInfo",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "\\bBNGetToonInfo\\b",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/tests"
+    ],
+    "exit": 1,
+    "file": "p624-BNGetToonInfo-callers.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNInviteToConversation",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "--exclude=*Documentation*",
+      "\\bBNInviteToConversation\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "file": "p624-BNInviteToConversation-retail.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNInviteToConversation",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "\\bBNInviteToConversation\\b",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/tests"
+    ],
+    "exit": 1,
+    "file": "p624-BNInviteToConversation-callers.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNIsFriendConversationValid",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "--exclude=*Documentation*",
+      "\\bBNIsFriendConversationValid\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "file": "p624-BNIsFriendConversationValid-retail.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNIsFriendConversationValid",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "\\bBNIsFriendConversationValid\\b",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/tests"
+    ],
+    "exit": 1,
+    "file": "p624-BNIsFriendConversationValid-callers.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNIsToonBlocked",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "--exclude=*Documentation*",
+      "\\bBNIsToonBlocked\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "file": "p624-BNIsToonBlocked-retail.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNIsToonBlocked",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "\\bBNIsToonBlocked\\b",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/tests"
+    ],
+    "exit": 1,
+    "file": "p624-BNIsToonBlocked-callers.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNLeaveConversation",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "--exclude=*Documentation*",
+      "\\bBNLeaveConversation\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "file": "p624-BNLeaveConversation-retail.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNLeaveConversation",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "\\bBNLeaveConversation\\b",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/tests"
+    ],
+    "exit": 1,
+    "file": "p624-BNLeaveConversation-callers.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNListConversation",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "--exclude=*Documentation*",
+      "\\bBNListConversation\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "file": "p624-BNListConversation-retail.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNListConversation",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "\\bBNListConversation\\b",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/tests"
+    ],
+    "exit": 1,
+    "file": "p624-BNListConversation-callers.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNReportFriendInvite",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "--exclude=*Documentation*",
+      "\\bBNReportFriendInvite\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "file": "p624-BNReportFriendInvite-retail.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNReportFriendInvite",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "\\bBNReportFriendInvite\\b",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/tests"
+    ],
+    "exit": 1,
+    "file": "p624-BNReportFriendInvite-callers.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNSendConversationMessage",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "--exclude=*Documentation*",
+      "\\bBNSendConversationMessage\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "file": "p624-BNSendConversationMessage-retail.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNSendConversationMessage",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "\\bBNSendConversationMessage\\b",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/tests"
+    ],
+    "exit": 1,
+    "file": "p624-BNSendConversationMessage-callers.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNSetFocus",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "--exclude=*Documentation*",
+      "\\bBNSetFocus\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "file": "p624-BNSetFocus-retail.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNSetFocus",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "\\bBNSetFocus\\b",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/tests"
+    ],
+    "exit": 1,
+    "file": "p624-BNSetFocus-callers.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNSetMatureLanguageFilter",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "--exclude=*Documentation*",
+      "\\bBNSetMatureLanguageFilter\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "file": "p624-BNSetMatureLanguageFilter-retail.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNSetMatureLanguageFilter",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "\\bBNSetMatureLanguageFilter\\b",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/tests"
+    ],
+    "exit": 1,
+    "file": "p624-BNSetMatureLanguageFilter-callers.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNSetSelectedToonBlock",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "--exclude=*Documentation*",
+      "\\bBNSetSelectedToonBlock\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "file": "p624-BNSetSelectedToonBlock-retail.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNSetSelectedToonBlock",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "\\bBNSetSelectedToonBlock\\b",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/tests"
+    ],
+    "exit": 1,
+    "file": "p624-BNSetSelectedToonBlock-callers.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNSetToonBlocked",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "--exclude=*Documentation*",
+      "\\bBNSetToonBlocked\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "file": "p624-BNSetToonBlocked-retail.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "BNSetToonBlocked",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "\\bBNSetToonBlocked\\b",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/tests"
+    ],
+    "exit": 1,
+    "file": "p624-BNSetToonBlocked-callers.txt",
+    "matches": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "member": "realmName",
+    "scope": "retail",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "--exclude=*Documentation*",
+      "\\brealmName\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 0,
+    "file": "p624-realmName-retail.txt",
+    "matches": 61,
+    "sha256": "11f4e3fac346d19d2d766d3e1015b8ff1ad673a4c4a2cef38776af1ef950b0d6"
+  },
+  {
+    "member": "realmName",
+    "scope": "callers",
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "\\brealmName\\b",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/tests"
+    ],
+    "exit": 0,
+    "file": "p624-realmName-callers.txt",
+    "matches": 23,
+    "sha256": "0e4ae72d8d42ae30ce94d3c6daf6f138888a9f1f062141a788aab89e699f0a6e"
+  }
+]

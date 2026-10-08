@@ -1,0 +1,23 @@
+F
+======================================================================
+FAIL: test_patch_diff_transclusion_is_retained_not_expanded (__main__.ExtractTests.test_patch_diff_transclusion_is_retained_not_expanded)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p624-page/tools/test_extract_patch_non_inventory.py", line 17, in test_patch_diff_transclusion_is_retained_not_expanded
+    self.assertEqual(extract_text(raw, retain_patch_diff_reference=True),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     '==Automated diff==\n'
+                     ^^^^^^^^^^^^^^^^^^^^^^
+                     '[Transcluded source: Patch 6.2.4/API changes/diff; not expanded]\n')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '== Automated diff ==\n[Transcluded source: [41 chars]d]\n' != '==Automated diff==\n[Transcluded source: Pa[39 chars]d]\n'
+- == Automated diff ==
+?   -              -
++ ==Automated diff==
+  [Transcluded source: Patch 6.2.4/API changes/diff; not expanded]
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

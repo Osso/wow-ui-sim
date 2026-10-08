@@ -94,10 +94,19 @@ def strip_legion_inventories(raw):
                      if not re.fullmatch(r'\*{2,3}\s*\{\{api\|[^{}]+\}\},?', line)) + '\n'
 
 
+def render_patch_diff_reference(raw):
+    """Keep transcluded historical diffs as explicit boundaries, not expanded evidence."""
+    return re.sub(r'\{\{:Patch ([0-9.]+)/API changes/diff\}\}',
+                  r'[Transcluded source: Patch \1/API changes/diff; not expanded]', raw)
+
+
 def extract_text(raw, *, preserve_examples=False, normalize_inventory_headings=False,
                  retain_reference_notes=False, legacy_api_tables=False,
                  legacy_api_bullets=False, legacy_cvar_tables=False,
-                 bfa_prepatch=False, legion_prepatch=False):
+                 bfa_prepatch=False, legion_prepatch=False,
+                 retain_patch_diff_reference=False):
+    if retain_patch_diff_reference:
+        raw = render_patch_diff_reference(raw)
     if legion_prepatch:
         raw = strip_legion_inventories(raw)
     if bfa_prepatch:
@@ -319,6 +328,8 @@ def main():
                         help='Strip 8.0.1 nested additions/events, retaining prose and reference fields; opt-in')
     parser.add_argument('--legion-prepatch', action='store_true',
                         help='Strip pure nested Legion inventories, retaining summaries and renames; opt-in')
+    parser.add_argument('--retain-patch-diff-reference', action='store_true',
+                        help='Retain transcluded patch diffs as unexpanded source references; opt-in')
     args = parser.parse_args()
     if args.self_test:
         check_examples()
@@ -335,7 +346,8 @@ def main():
                         legacy_api_bullets=args.legacy_api_bullets,
                         legacy_cvar_tables=args.legacy_cvar_tables,
                         bfa_prepatch=args.bfa_prepatch,
-                        legion_prepatch=args.legion_prepatch)
+                        legion_prepatch=args.legion_prepatch,
+                        retain_patch_diff_reference=args.retain_patch_diff_reference)
     rows = seed_rows(text, args.patch)
     if args.text_only:
         if args.check:

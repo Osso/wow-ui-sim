@@ -1,0 +1,50 @@
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/c_api/c_battle_net_friend_search.rs:8:use crate::lua_api::state_types::BnetFriend;
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/c_api/c_battle_net_friend_search.rs:66:    fn matches(&self, friend: &BnetFriend) -> bool {
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/c_api/c_battle_net_friend_search.rs:70:    fn matches_text(&self, friend: &BnetFriend) -> bool {
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/c_api/c_battle_net_friend_search.rs:89:    fn matches_status(&self, friend: &BnetFriend) -> bool {
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/c_api/c_battle_net_friend_search.rs:110:    fn matches_tags(&self, friend: &BnetFriend) -> bool {
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/c_api/club_members.rs:317:            "C_Club.CreateClub: expected BattleNet or Character club",
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/c_api/c_battle_net.rs:30:use crate::lua_api::state_types::{BnetFriend, BnetGameAccount};
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/c_api/c_battle_net.rs:320:fn friend_mut_by_index(friends: &mut [BnetFriend], friend_index: i32) -> Option<&mut BnetFriend> {
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/c_api/c_battle_net.rs:462:fn is_same_bnet_friend(friend: &BnetFriend, name: &str) -> bool {
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/c_api/c_battle_net.rs:467:fn next_bnet_account_id(friends: &[BnetFriend]) -> i32 {
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/c_api/c_battle_net.rs:477:fn invited_bnet_friend(name: &str, friend_index: i32, account_id: i32) -> BnetFriend {
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/c_api/c_battle_net.rs:478:    BnetFriend {
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/c_api/c_battle_net.rs:609:    friend: &BnetFriend,
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/c_api/c_battle_net.rs:692:fn write_account_identity_fields(state: &mut LuaState, t: Val, friend: &BnetFriend) {
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/c_api/c_battle_net.rs:709:fn write_account_status_fields(state: &mut LuaState, t: Val, friend: &BnetFriend) {
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/c_api/c_battle_net.rs:716:fn write_patch_12_1_account_fields(state: &mut LuaState, t: Val, friend: &BnetFriend) {
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/c_api/c_battle_net.rs:728:fn write_patch_12_1_account_fields(_state: &mut LuaState, _t: Val, _friend: &BnetFriend) {}
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/c_api/c_battle_net.rs:747:fn write_custom_message_fields(state: &mut LuaState, t: Val, friend: &BnetFriend) {
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/c_api/c_battle_net.rs:761:fn write_friend_relationship_flags(state: &mut LuaState, t: Val, friend: &BnetFriend) {
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/c_api/c_battle_net.rs:774:fn write_presence_and_link_fields(state: &mut LuaState, t: Val, friend: &BnetFriend) {
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/c_api/c_auto_complete.rs:12:use crate::lua_api::state_types::{BnetFriend, SEEDED_LOCAL_CHARACTER_NAME, SocialFriend};
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/c_api/c_auto_complete.rs:85:fn bnet_friend_has_name(friend: &BnetFriend, name: &str) -> bool {
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/c_api/c_auto_complete.rs:172:fn bnet_candidate(friend: &BnetFriend) -> AutoCompleteCandidate {
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/lua_api/state_types/social.rs:1://! BattleNet / social friend list + summon-request state.
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/lua_api/state_types/social.rs:10:/// One BattleNet friend entry. Drives `C_BattleNet.GetAccountInfoByGUID`,
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/lua_api/state_types/social.rs:16:pub struct BnetFriend {
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/lua_api/state_types/social.rs:71:/// to a `BnetFriend`. Drives `C_BattleNet.GetGameAccountInfoByGUID`.
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/lua_api/state.rs:645:    BarberShopState, BidAuction, BnetFriend, BnetFriendInvite, BnetGameAccount, BrowseQuery,
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/lua_api/globals/enum_data/addon_system.rs:9:pub const CLUB_TYPE: SeqEnumDef = ("ClubType", &["BattleNet", "Character", "Guild", "Other"]);
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/lua_api/state/sim_state.rs:588:    pub bnet_friends: Vec<BnetFriend>,
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/lua_api/state/defaults/friends.rs:7:pub(in crate::lua_api::state) fn default_bnet_friends() -> Vec<BnetFriend> {
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/lua_api/state/defaults/friends.rs:11:fn uther_online_friend() -> BnetFriend {
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/lua_api/state/defaults/friends.rs:12:    BnetFriend {
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/lua_api/state/defaults/friends.rs:94:fn thrall_offline_friend() -> BnetFriend {
+/home/osso/.worktrees/wow-ui-sim-p624-page/src/lua_api/state/defaults/friends.rs:95:    BnetFriend {
+/home/osso/.worktrees/wow-ui-sim-p624-page/tests/blizzard_friends_frame_loads.rs:80:         The latter now owns the BattleNet invite UI extracted from FriendsFrame. Got: \
+/home/osso/.worktrees/wow-ui-sim-p624-page/tests/blizzard_friends_frame_loads.rs:97:         list is reachable from glue screens (Login/CharacterSelect) too via the BattleNet \
+/home/osso/.worktrees/wow-ui-sim-p624-page/tests/blizzard_friends_frame_loads.rs:123:        "`## AllowLoad: both` must allow the Login screen — BattleNet friend list is \
+/home/osso/.worktrees/wow-ui-sim-p624-page/tests/blizzard_friends_frame_loads.rs:204:         (the mutual-friends popup). BattleNet invite UI now belongs to Blizzard_AddFriend, \
+/home/osso/.worktrees/wow-ui-sim-p624-page/tests/blizzard_friends_frame_loads.rs:298:         (line 2981 — the BattleNet icon swap container), \
+/home/osso/.worktrees/wow-ui-sim-p624-page/tests/blizzard_friends_frame_loads.rs:319:         (line 1992 — the BattleNet broadcast-status edit popup)"
+/home/osso/.worktrees/wow-ui-sim-p624-page/tests/blizzard_friends_frame_loads.rs:432:         BNET=2 BattleNet account, WOW=3 in-game character, INVITE=4 friend invite, \
+/home/osso/.worktrees/wow-ui-sim-p624-page/tests/blizzard_friends_frame_loads.rs:505:         BattleNet status message set. These are file paths, not atlas keys — resolved \
+/home/osso/.worktrees/wow-ui-sim-p624-page/tests/blizzard_friends_frame_loads.rs:597:         FriendsFrame_ShowBNDropdown (line 207 — BattleNet account row menu adds \
+/home/osso/.worktrees/wow-ui-sim-p624-page/tests/blizzard_recruit_a_friend_loads.rs:401:             strata, RecruitAFriendRecruitmentFrameMixin — the BattleNet recruit-link \
+/home/osso/.worktrees/wow-ui-sim-p624-page/tests/blizzard_recruit_a_friend_loads.rs:563:             BattleNet status changes, triggers UpdateRecruitList), and 1 startup \
+/home/osso/.worktrees/wow-ui-sim-p624-page/tests/blizzard_recent_allies_loads.rs:118:         technically reachable from glue screens too via the BattleNet friend list path, \
+/home/osso/.worktrees/wow-ui-sim-p624-page/tests/blizzard_recent_allies_loads.rs:177:         registry is technically reachable from BattleNet friend list overlays in glue UI"
+/home/osso/.worktrees/wow-ui-sim-p624-page/tests/c_battle_net_probes.rs:4:use wow_ui_sim::lua_api::state::{BnetFriend, BnetGameAccount};
+/home/osso/.worktrees/wow-ui-sim-p624-page/tests/c_battle_net_probes.rs:143:        state.bnet_friends.push(BnetFriend {

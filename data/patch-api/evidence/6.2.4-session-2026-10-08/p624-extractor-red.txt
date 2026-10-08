@@ -1,0 +1,14 @@
+E
+======================================================================
+ERROR: test_patch_diff_transclusion_is_retained_not_expanded (__main__.ExtractTests.test_patch_diff_transclusion_is_retained_not_expanded)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p624-page/tools/test_extract_patch_non_inventory.py", line 17, in test_patch_diff_transclusion_is_retained_not_expanded
+    self.assertEqual(extract_text(raw, retain_patch_diff_reference=True),
+                     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: extract_text() got an unexpected keyword argument 'retain_patch_diff_reference'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
