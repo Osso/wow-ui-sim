@@ -1,0 +1,9 @@
+{
+  "master-all-sweeps": 0,
+  "master-integration-list": 0,
+  "master-integration-regressions": 101,
+  "master-prefork_full_ui-list": 0,
+  "master-prefork_full_ui-regressions": 1,
+  "master-retail-build": 0,
+  "master-startup": 0
+}

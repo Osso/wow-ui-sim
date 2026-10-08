@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p548-page/data/patch-api/evidence/5.4.8-session-2026-10-08/integrated/run_master.py"
+  ],
+  "revision": "b77d0b5db0f186b75cee854b285d82e896a8a765",
+  "scope": "master-checks",
+  "cwd": ".",
+  "target": "dedicated p548-page target (external to repository)",
+  "environment": {},
+  "exit": 1,
+  "log": "master-checks.txt",
+  "log_sha256": "c31719317841c85d8508d266d3b500f9fb4d13d147c5c0ec1d8b32fa835184d9",
+  "seconds": 1355.7109887539991,
+  "invalidated": false
+}

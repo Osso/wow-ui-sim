@@ -15,9 +15,10 @@
   "revision": "a9d7c9566fcb33b272a193a7aae6f51d4db4973f",
   "scope": "master-mists-prefork-cvar",
   "cwd": ".",
-  "target": "dedicated p548-page target (external to repository)",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/master-ref",
   "environment": {
-    "PATCH_PROOF_REVISION": "a9d7c9566"
+    "PATCH_PROOF_REVISION": "a9d7c9566",
+    "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/master-ref"
   },
   "exit": 101,
   "log": "master-mists-prefork-cvar.txt",

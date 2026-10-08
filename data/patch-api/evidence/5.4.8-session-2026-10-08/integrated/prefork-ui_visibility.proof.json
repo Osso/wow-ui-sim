@@ -10,8 +10,10 @@
   "revision": "2caa653ace4e52ae3b918bba8ad322bb80b06671",
   "scope": "prefork-ui_visibility",
   "cwd": ".",
-  "target": "dedicated p548-page target (external to repository)",
-  "environment": {},
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+  "environment": {
+    "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p548-page"
+  },
   "exit": 0,
   "log": "prefork-ui_visibility.txt",
   "log_sha256": "a1c0233221249a6703c00ad52a35b20fcbf2b9c8cb6f117cf44d22d054d9c790",

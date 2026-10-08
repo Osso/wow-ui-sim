@@ -1,0 +1,26 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--lib",
+    "--",
+    "cvar",
+    "set_cvar",
+    "ui_visibility",
+    "taint",
+    "secure",
+    "settings"
+  ],
+  "revision": "5b1a5419402e0a8db9aea69ef0019f01aa6b6b40",
+  "scope": "lib-retail-regressions",
+  "cwd": ".",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+  "environment": {
+    "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p548-page"
+  },
+  "exit": 0,
+  "log": "lib-retail-regressions.txt",
+  "log_sha256": "c9376bca838bc0b6edf3c9e70058dc8e2fed92c4339c9b2857e2f0cd541235e5",
+  "seconds": 3.8905812649973086,
+  "invalidated": false
+}

@@ -1,0 +1,344 @@
+[
+  {
+    "receipt": "all-sweeps.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "branch-build.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "format.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "integration-list.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "integration-patch_5_4_8.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "integration-regressions.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "master-all-sweeps.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/master-ref",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "master-integration-list.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/master-ref",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "master-integration-regressions.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/master-ref",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "master-mists-prefork-cvar.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/master-ref",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "master-mists-prefork-taint.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/master-ref",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "master-prefork-action_bar.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/master-ref",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "master-prefork-chat.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/master-ref",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "master-prefork-combat.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/master-ref",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "master-prefork-cvar.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/master-ref",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "master-prefork-edit_mode.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/master-ref",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "master-prefork-hide_ui.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/master-ref",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "master-prefork-hide_user_interface.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/master-ref",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "master-prefork-keybind.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/master-ref",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "master-prefork-nameplate.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/master-ref",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "master-prefork-patch_5_4_8.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/master-ref",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "master-prefork-screenshot.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/master-ref",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "master-prefork-secure.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/master-ref",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "master-prefork-settings.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/master-ref",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "master-prefork-taint.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/master-ref",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "master-prefork-ui_visibility.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/master-ref",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "master-prefork_full_ui-list.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/master-ref",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "master-prefork_full_ui-regressions.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/master-ref",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "master-retail-build.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/master-ref",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "mists-check.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "mists-integration-list.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "mists-integration-regressions.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "mists-prefork-cvar.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "mists-prefork-taint.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "mists-prefork_full_ui-list.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "mists-prefork_full_ui-regressions.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "negative.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "own-sweep.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "prefork-action_bar.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "prefork-chat.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "prefork-combat.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "prefork-cvar.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "prefork-edit_mode.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "prefork-hide_ui.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "prefork-hide_user_interface.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "prefork-keybind.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "prefork-nameplate.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "prefork-patch_5_4_8.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "prefork-screenshot.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "prefork-secure.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "prefork-settings.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "prefork-taint.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "prefork-ui_visibility.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "prefork_full_ui-list.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "prefork_full_ui-patch_5_4_8.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "prefork_full_ui-regressions.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  },
+  {
+    "receipt": "retail-build.proof.json",
+    "before": "dedicated p548-page target (external to repository)",
+    "after": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+    "basis": "committed run_master/run_prefork driver target assignment and recorded executable paths"
+  }
+]

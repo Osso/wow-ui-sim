@@ -1,0 +1,12 @@
+{
+  "branch-startup": {
+    "errors": [],
+    "addons_enabled": true,
+    "receipt": "branch-startup.proof.json"
+  },
+  "master-startup": {
+    "errors": [],
+    "addons_enabled": true,
+    "receipt": "master-startup.proof.json"
+  }
+}

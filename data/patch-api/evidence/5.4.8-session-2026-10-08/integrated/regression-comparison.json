@@ -1,0 +1,984 @@
+[
+  {
+    "target": "integration",
+    "selectors": [
+      {
+        "selector": "settings",
+        "branch_count": 80,
+        "master_count": 80,
+        "branch_only": [],
+        "master_only": []
+      },
+      {
+        "selector": "cvar",
+        "branch_count": 58,
+        "master_count": 58,
+        "branch_only": [],
+        "master_only": []
+      },
+      {
+        "selector": "edit_mode",
+        "branch_count": 49,
+        "master_count": 49,
+        "branch_only": [],
+        "master_only": []
+      },
+      {
+        "selector": "keybind",
+        "branch_count": 86,
+        "master_count": 86,
+        "branch_only": [],
+        "master_only": []
+      },
+      {
+        "selector": "nameplate",
+        "branch_count": 23,
+        "master_count": 23,
+        "branch_only": [],
+        "master_only": []
+      },
+      {
+        "selector": "action_bar",
+        "branch_count": 123,
+        "master_count": 123,
+        "branch_only": [],
+        "master_only": []
+      },
+      {
+        "selector": "chat",
+        "branch_count": 158,
+        "master_count": 158,
+        "branch_only": [],
+        "master_only": []
+      },
+      {
+        "selector": "combat",
+        "branch_count": 124,
+        "master_count": 123,
+        "branch_only": [
+          "patch_5_4_8_combat_restrictions::patch_5_4_8_bare_combat_restrictions"
+        ],
+        "master_only": []
+      },
+      {
+        "selector": "taint",
+        "branch_count": 183,
+        "master_count": 183,
+        "branch_only": [],
+        "master_only": []
+      },
+      {
+        "selector": "secure",
+        "branch_count": 269,
+        "master_count": 269,
+        "branch_only": [],
+        "master_only": []
+      },
+      {
+        "selector": "ui_visibility",
+        "branch_count": 3,
+        "master_count": 3,
+        "branch_only": [],
+        "master_only": []
+      },
+      {
+        "selector": "screenshot",
+        "branch_count": 7,
+        "master_count": 7,
+        "branch_only": [],
+        "master_only": []
+      },
+      {
+        "selector": "hide_ui",
+        "branch_count": 1,
+        "master_count": 1,
+        "branch_only": [],
+        "master_only": []
+      },
+      {
+        "selector": "hide_user_interface",
+        "branch_count": 0,
+        "master_count": 0,
+        "branch_only": [],
+        "master_only": []
+      },
+      {
+        "selector": "patch_5_4_8",
+        "branch_count": 1,
+        "master_count": 0,
+        "branch_only": [
+          "patch_5_4_8_combat_restrictions::patch_5_4_8_bare_combat_restrictions"
+        ],
+        "master_only": []
+      }
+    ],
+    "branch": {
+      "receipt": "integration-regressions.proof.json",
+      "exit": 101,
+      "summaries": [
+        "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10677 filtered out; finished in 2.22s",
+        "test result: FAILED. 1076 passed; 3 failed; 3 ignored; 0 measured; 9596 filtered out; finished in 121.79s"
+      ],
+      "failures": [
+        "c_api_surface::chat_info_no_state_defaults_are_not_c_api_temporary_shims",
+        "edit_mode_api::enums::unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size",
+        "test_keybindings_targeting::target_frame_portrait_corners_match_background_when_replaced_with_class_icon"
+      ],
+      "panics": [
+        {
+          "case": "c_api_surface::chat_info_no_state_defaults_are_not_c_api_temporary_shims",
+          "location": "tests/c_api_surface.rs:602:5",
+          "message": "C_ChatInfo no-state defaults should not be wired through c_api registration"
+        },
+        {
+          "case": "edit_mode_api::enums::unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size",
+          "location": "tests/edit_mode_api/enums.rs:44:5",
+          "message": "assertion `left == right` failed\n  left: 22\n right: 21"
+        },
+        {
+          "case": "test_keybindings_targeting::target_frame_portrait_corners_match_background_when_replaced_with_class_icon",
+          "location": "tests/common/timeout_reexec.rs:181:9",
+          "message": "timeout child for `test_keybindings_targeting::target_frame_portrait_corners_match_background_when_replaced_with_class_icon` failed (exit code 101)"
+        },
+        {
+          "case": "test_keybindings_targeting::target_frame_portrait_corners_match_background_when_replaced_with_class_icon",
+          "location": "tests/test_keybindings_targeting.rs:308:9",
+          "message": "hiding the portrait should materially change the portrait center: visible=[63, 63, 80, 255] hidden=[63, 63, 80, 255]"
+        }
+      ]
+    },
+    "master": {
+      "receipt": "master-integration-regressions.proof.json",
+      "exit": 101,
+      "summaries": [
+        "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10676 filtered out; finished in 2.29s",
+        "test result: FAILED. 1075 passed; 3 failed; 3 ignored; 0 measured; 9596 filtered out; finished in 325.44s"
+      ],
+      "failures": [
+        "c_api_surface::chat_info_no_state_defaults_are_not_c_api_temporary_shims",
+        "edit_mode_api::enums::unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size",
+        "test_keybindings_targeting::target_frame_portrait_corners_match_background_when_replaced_with_class_icon"
+      ],
+      "panics": [
+        {
+          "case": "c_api_surface::chat_info_no_state_defaults_are_not_c_api_temporary_shims",
+          "location": "tests/c_api_surface.rs:602:5",
+          "message": "C_ChatInfo no-state defaults should not be wired through c_api registration"
+        },
+        {
+          "case": "edit_mode_api::enums::unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size",
+          "location": "tests/edit_mode_api/enums.rs:44:5",
+          "message": "assertion `left == right` failed\n  left: 22\n right: 21"
+        },
+        {
+          "case": "test_keybindings_targeting::target_frame_portrait_corners_match_background_when_replaced_with_class_icon",
+          "location": "tests/common/timeout_reexec.rs:181:9",
+          "message": "timeout child for `test_keybindings_targeting::target_frame_portrait_corners_match_background_when_replaced_with_class_icon` failed (exit code 101)"
+        },
+        {
+          "case": "test_keybindings_targeting::target_frame_portrait_corners_match_background_when_replaced_with_class_icon",
+          "location": "tests/test_keybindings_targeting.rs:308:9",
+          "message": "hiding the portrait should materially change the portrait center: visible=[63, 63, 80, 255] hidden=[63, 63, 80, 255]"
+        }
+      ]
+    }
+  },
+  {
+    "target": "prefork_full_ui",
+    "selectors": [
+      {
+        "selector": "settings",
+        "branch_count": 44,
+        "master_count": 44,
+        "branch_only": [],
+        "master_only": []
+      },
+      {
+        "selector": "cvar",
+        "branch_count": 26,
+        "master_count": 26,
+        "branch_only": [],
+        "master_only": []
+      },
+      {
+        "selector": "edit_mode",
+        "branch_count": 10,
+        "master_count": 10,
+        "branch_only": [],
+        "master_only": []
+      },
+      {
+        "selector": "keybind",
+        "branch_count": 17,
+        "master_count": 17,
+        "branch_only": [],
+        "master_only": []
+      },
+      {
+        "selector": "nameplate",
+        "branch_count": 7,
+        "master_count": 7,
+        "branch_only": [],
+        "master_only": []
+      },
+      {
+        "selector": "action_bar",
+        "branch_count": 13,
+        "master_count": 13,
+        "branch_only": [],
+        "master_only": []
+      },
+      {
+        "selector": "chat",
+        "branch_count": 31,
+        "master_count": 31,
+        "branch_only": [],
+        "master_only": []
+      },
+      {
+        "selector": "combat",
+        "branch_count": 45,
+        "master_count": 44,
+        "branch_only": [
+          "patch_5_4_8_combat_restrictions::patch_5_4_8_cached_combat_restrictions"
+        ],
+        "master_only": []
+      },
+      {
+        "selector": "taint",
+        "branch_count": 4,
+        "master_count": 4,
+        "branch_only": [],
+        "master_only": []
+      },
+      {
+        "selector": "secure",
+        "branch_count": 60,
+        "master_count": 60,
+        "branch_only": [],
+        "master_only": []
+      },
+      {
+        "selector": "ui_visibility",
+        "branch_count": 0,
+        "master_count": 0,
+        "branch_only": [],
+        "master_only": []
+      },
+      {
+        "selector": "screenshot",
+        "branch_count": 2,
+        "master_count": 2,
+        "branch_only": [],
+        "master_only": []
+      },
+      {
+        "selector": "hide_ui",
+        "branch_count": 1,
+        "master_count": 1,
+        "branch_only": [],
+        "master_only": []
+      },
+      {
+        "selector": "hide_user_interface",
+        "branch_count": 0,
+        "master_count": 0,
+        "branch_only": [],
+        "master_only": []
+      },
+      {
+        "selector": "patch_5_4_8",
+        "branch_count": 2,
+        "master_count": 0,
+        "branch_only": [
+          "patch_5_4_8_combat_restrictions::patch_5_4_8_cached_combat_restrictions",
+          "patch_5_4_8_publication_sweep::patch_5_4_8_publication_sweep"
+        ],
+        "master_only": []
+      }
+    ],
+    "checks": [
+      {
+        "selector": "settings",
+        "branch": {
+          "receipt": "prefork-settings.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 44 passed; 0 failed; 44 total"
+          ],
+          "failures": [],
+          "panics": []
+        },
+        "master": {
+          "receipt": "master-prefork-settings.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 44 passed; 0 failed; 44 total"
+          ],
+          "failures": [],
+          "panics": []
+        }
+      },
+      {
+        "selector": "cvar",
+        "branch": {
+          "receipt": "prefork-cvar.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 26 passed; 0 failed; 26 total"
+          ],
+          "failures": [],
+          "panics": []
+        },
+        "master": {
+          "receipt": "master-prefork-cvar.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 26 passed; 0 failed; 26 total"
+          ],
+          "failures": [],
+          "panics": []
+        }
+      },
+      {
+        "selector": "edit_mode",
+        "branch": {
+          "receipt": "prefork-edit_mode.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 10 passed; 0 failed; 10 total"
+          ],
+          "failures": [],
+          "panics": []
+        },
+        "master": {
+          "receipt": "master-prefork-edit_mode.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 10 passed; 0 failed; 10 total"
+          ],
+          "failures": [],
+          "panics": []
+        }
+      },
+      {
+        "selector": "keybind",
+        "branch": {
+          "receipt": "prefork-keybind.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 17 passed; 0 failed; 17 total"
+          ],
+          "failures": [],
+          "panics": []
+        },
+        "master": {
+          "receipt": "master-prefork-keybind.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 17 passed; 0 failed; 17 total"
+          ],
+          "failures": [],
+          "panics": []
+        }
+      },
+      {
+        "selector": "nameplate",
+        "branch": {
+          "receipt": "prefork-nameplate.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 7 passed; 0 failed; 7 total"
+          ],
+          "failures": [],
+          "panics": []
+        },
+        "master": {
+          "receipt": "master-prefork-nameplate.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 7 passed; 0 failed; 7 total"
+          ],
+          "failures": [],
+          "panics": []
+        }
+      },
+      {
+        "selector": "action_bar",
+        "branch": {
+          "receipt": "prefork-action_bar.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 13 passed; 0 failed; 13 total"
+          ],
+          "failures": [],
+          "panics": []
+        },
+        "master": {
+          "receipt": "master-prefork-action_bar.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 13 passed; 0 failed; 13 total"
+          ],
+          "failures": [],
+          "panics": []
+        }
+      },
+      {
+        "selector": "chat",
+        "branch": {
+          "receipt": "prefork-chat.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 31 passed; 0 failed; 31 total"
+          ],
+          "failures": [],
+          "panics": []
+        },
+        "master": {
+          "receipt": "master-prefork-chat.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 31 passed; 0 failed; 31 total"
+          ],
+          "failures": [],
+          "panics": []
+        }
+      },
+      {
+        "selector": "combat",
+        "branch": {
+          "receipt": "prefork-combat.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 45 passed; 0 failed; 45 total"
+          ],
+          "failures": [],
+          "panics": []
+        },
+        "master": {
+          "receipt": "master-prefork-combat.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 44 passed; 0 failed; 44 total"
+          ],
+          "failures": [],
+          "panics": []
+        }
+      },
+      {
+        "selector": "taint",
+        "branch": {
+          "receipt": "prefork-taint.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 4 passed; 0 failed; 4 total"
+          ],
+          "failures": [],
+          "panics": []
+        },
+        "master": {
+          "receipt": "master-prefork-taint.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 4 passed; 0 failed; 4 total"
+          ],
+          "failures": [],
+          "panics": []
+        }
+      },
+      {
+        "selector": "secure",
+        "branch": {
+          "receipt": "prefork-secure.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 60 passed; 0 failed; 60 total"
+          ],
+          "failures": [],
+          "panics": []
+        },
+        "master": {
+          "receipt": "master-prefork-secure.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 60 passed; 0 failed; 60 total"
+          ],
+          "failures": [],
+          "panics": []
+        }
+      },
+      {
+        "selector": "ui_visibility",
+        "branch": {
+          "receipt": "prefork-ui_visibility.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 0 passed; 0 failed; 0 total"
+          ],
+          "failures": [],
+          "panics": []
+        },
+        "master": {
+          "receipt": "master-prefork-ui_visibility.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 0 passed; 0 failed; 0 total"
+          ],
+          "failures": [],
+          "panics": []
+        }
+      },
+      {
+        "selector": "screenshot",
+        "branch": {
+          "receipt": "prefork-screenshot.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 2 passed; 0 failed; 2 total"
+          ],
+          "failures": [],
+          "panics": []
+        },
+        "master": {
+          "receipt": "master-prefork-screenshot.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 2 passed; 0 failed; 2 total"
+          ],
+          "failures": [],
+          "panics": []
+        }
+      },
+      {
+        "selector": "hide_ui",
+        "branch": {
+          "receipt": "prefork-hide_ui.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 1 passed; 0 failed; 1 total"
+          ],
+          "failures": [],
+          "panics": []
+        },
+        "master": {
+          "receipt": "master-prefork-hide_ui.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 1 passed; 0 failed; 1 total"
+          ],
+          "failures": [],
+          "panics": []
+        }
+      },
+      {
+        "selector": "hide_user_interface",
+        "branch": {
+          "receipt": "prefork-hide_user_interface.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 0 passed; 0 failed; 0 total"
+          ],
+          "failures": [],
+          "panics": []
+        },
+        "master": {
+          "receipt": "master-prefork-hide_user_interface.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 0 passed; 0 failed; 0 total"
+          ],
+          "failures": [],
+          "panics": []
+        }
+      },
+      {
+        "selector": "patch_5_4_8",
+        "branch": {
+          "receipt": "prefork-patch_5_4_8.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 2 passed; 0 failed; 2 total"
+          ],
+          "failures": [],
+          "panics": []
+        },
+        "master": {
+          "receipt": "master-prefork-patch_5_4_8.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 0 passed; 0 failed; 0 total"
+          ],
+          "failures": [],
+          "panics": []
+        }
+      }
+    ]
+  },
+  {
+    "profile": "mists",
+    "target": "integration",
+    "selectors": {
+      "cvar": [
+        "battle_net_api::battle_net_high_res_texture_state_tracks_cvar_and_install_action",
+        "blizzard_ui_blizzard_accessibilitytemplates::behavior_text_size_manager::init_registers_user_font_scale_cvar_callback",
+        "blizzard_ui_blizzard_arrow_callout_frame::behavior_acknowledged_callouts_persist_across_load::acknowledged_callouts_persist_through_cvar_across_fresh_load",
+        "c_arrow_callout_manager::acknowledge_callout_marks_id_clears_active_and_writes_cvar",
+        "c_arrow_callout_manager::acknowledged_cvar_is_comma_separated_in_ascending_order",
+        "c_system_api::test_c_console_get_all_commands_live_cvars",
+        "console_commands::console_catalog_lists_supported_cvars_with_bounded_metadata",
+        "cvar_bitfields::c_cvar_bitfields_share_the_same_storage",
+        "cvar_bitfields::cvar_bitfields_can_be_set_and_cleared",
+        "mists_compat_bootstrap::mists_bootstrap_registers_startup_cvar_defaults",
+        "runtime_bootstrap_boundaries::c_cvar_surface_is_not_runtime_bootstrap_fallback",
+        "set_cvar_global::c_cvar_get_reads_back_the_value_set_via_global",
+        "set_cvar_global::c_cvar_register_cvar_sets_default_without_overwriting_existing_value",
+        "set_cvar_global::clamp_exists_during_bootstrap",
+        "set_cvar_global::empty_cvar_registration_preserves_classic_castbar_scale_default",
+        "set_cvar_global::legacy_cvar_compat_globals_exist_before_framexml_loads",
+        "set_cvar_global::patch_12_0_7_named_defaults_are_absent_before_publication",
+        "set_cvar_global::register_cvar_accepts_finite_numeric_defaults_from_both_surfaces",
+        "set_cvar_global::register_cvar_exposes_runtime_default_through_global_and_namespace",
+        "set_cvar_global::register_cvar_makes_unknown_cvar_visible_with_zero_default",
+        "set_cvar_global::register_cvar_nil_default_retains_zero_policy",
+        "set_cvar_global::register_cvar_numeric_default_preserves_existing_override_and_first_default",
+        "set_cvar_global::register_cvar_preserves_explicit_empty_default_lifecycle",
+        "set_cvar_global::register_cvar_rejects_nonfinite_and_unsupported_defaults",
+        "set_cvar_global::set_cvar_accepts_boolean_as_one_zero",
+        "set_cvar_global::set_cvar_accepts_fractional_numeric_value",
+        "set_cvar_global::set_cvar_accepts_numeric_value",
+        "set_cvar_global::set_cvar_empty_name_returns_false",
+        "set_cvar_global::set_cvar_fires_cvar_update_after_storing_value",
+        "set_cvar_global::set_cvar_stores_string_value",
+        "startup_warnings::late::test_blizzard_framexml_load_registers_boss_banner_cvar_without_warning",
+        "startup_warnings::late::test_housing_tutorials_load_without_cvar_bitfield_warning",
+        "test_cvar_display_settings::brightness_default_visible_via_get_cvar",
+        "test_cvar_display_settings::brightness_set_then_get_round_trips_through_simstate",
+        "test_cvar_display_settings::c_cvar_namespace_mirrors_global_get_set",
+        "test_cvar_display_settings::contrast_default_visible_via_get_cvar",
+        "test_cvar_display_settings::contrast_set_then_get_round_trips_through_simstate",
+        "test_cvar_display_settings::cvar_lookup_is_case_insensitive_on_read",
+        "test_cvar_display_settings::gamma_default_visible_via_get_cvar",
+        "test_cvar_display_settings::get_cvar_default_returns_yaml_value_after_override",
+        "test_cvar_display_settings::unknown_cvar_returns_nil_not_empty_string",
+        "widget_slider::set_value_updates_castbar_style_scale_and_cvar_consumer",
+        "wowforever_gamepad_constants::forever_gamepad_cvar_defaults_are_profile_scoped"
+      ],
+      "taint": [
+        "blizzard_auth_challenge_ui_lockdown::auth_challenge_ui_full_lockdown_marks_tainted_mutation_attempts",
+        "classic_secret_policy::classic_secret_policy_loadstring_remains_tainted_not_secret",
+        "classic_secret_policy::classic_secret_policy_tainted_protected_action_still_denied",
+        "hook_script::hook_script_preserves_original_and_addon_hook_taint",
+        "private_aura_anchors::ordinary_public_add_and_remove_preserve_addon_taint",
+        "private_aura_anchors::secret_outer_nested_and_scalar_inputs_reject_without_clearing_taint",
+        "secret_string_formatting::inferred_tainted_direct_formatting_preserves_secrecy_and_stack_taint",
+        "secret_string_formatting::inferred_tainted_positional_formatting_preserves_secrecy_and_stack_taint",
+        "secret_value_security::addon_tainted_function_is_not_secret",
+        "secure_attribute_delegate::forbidden_attribute_delegate_dispatches_securely_from_tainted_stack",
+        "secure_handler_fallback::execute_callmethod_propagates_tainted_args_to_insecure_method",
+        "security_api::addon_tainted_global_helper_taints_blizzard_call_path",
+        "security_api::addon_tainted_table_slot_does_not_make_table_secret",
+        "security_api::test_canaccessallvalues_one_tainted",
+        "security_api::test_canaccessvalue_tainted",
+        "security_api::test_canaccessvalue_untainted",
+        "security_api::test_issecretvalue_tainted",
+        "security_api::test_issecretvalue_untainted",
+        "security_api::test_issecurevariable_detects_taint",
+        "security_api::test_loadstring_taints",
+        "security_api::test_securecall_clears_taint_for_nested_closures",
+        "security_api::test_securecall_restores_taint",
+        "security_state_drivers::test_create_secure_delegate_runs_with_secure_taint",
+        "xml_templates::registry::addon_method_override_stays_tainted_under_trusted_template_script",
+        "xml_templates::registry::addon_template_scripts_stay_tainted_when_clean_code_constructs_frame"
+      ]
+    },
+    "branch": {
+      "receipt": "mists-integration-regressions.proof.json",
+      "exit": 101,
+      "summaries": [
+        "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8175 filtered out; finished in 1.30s",
+        "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8175 filtered out; finished in 2.32s",
+        "test result: FAILED. 61 passed; 7 failed; 0 ignored; 0 measured; 8108 filtered out; finished in 5.61s"
+      ],
+      "failures": [
+        "blizzard_auth_challenge_ui_lockdown::auth_challenge_ui_full_lockdown_marks_tainted_mutation_attempts",
+        "blizzard_ui_blizzard_accessibilitytemplates::behavior_text_size_manager::init_registers_user_font_scale_cvar_callback",
+        "blizzard_ui_blizzard_arrow_callout_frame::behavior_acknowledged_callouts_persist_across_load::acknowledged_callouts_persist_through_cvar_across_fresh_load",
+        "secret_string_formatting::inferred_tainted_direct_formatting_preserves_secrecy_and_stack_taint",
+        "secret_string_formatting::inferred_tainted_positional_formatting_preserves_secrecy_and_stack_taint",
+        "secure_handler_fallback::execute_callmethod_propagates_tainted_args_to_insecure_method",
+        "startup_warnings::late::test_blizzard_framexml_load_registers_boss_banner_cvar_without_warning"
+      ],
+      "panics": [
+        {
+          "case": "blizzard_auth_challenge_ui_lockdown::auth_challenge_ui_full_lockdown_marks_tainted_mutation_attempts",
+          "location": "tests/common/panel_fixtures.rs:114:9",
+          "message": "required panel addon `Blizzard_Colors` has no eligible Game TOC under /home/osso/.cache/wow-ui-sim/blizzard-ui/mists/AddOns"
+        },
+        {
+          "case": "blizzard_auth_challenge_ui_lockdown::auth_challenge_ui_full_lockdown_marks_tainted_mutation_attempts",
+          "location": "tests/common/timeout_reexec.rs:181:9",
+          "message": "timeout child for `blizzard_auth_challenge_ui_lockdown::auth_challenge_ui_full_lockdown_marks_tainted_mutation_attempts` failed (exit code 101)"
+        },
+        {
+          "case": "blizzard_ui_blizzard_accessibilitytemplates::behavior_text_size_manager::init_registers_user_font_scale_cvar_callback",
+          "location": "tests/common/panel_fixtures.rs:114:9",
+          "message": "required panel addon `Blizzard_Colors` has no eligible Game TOC under /home/osso/.cache/wow-ui-sim/blizzard-ui/mists/AddOns"
+        },
+        {
+          "case": "blizzard_ui_blizzard_arrow_callout_frame::behavior_acknowledged_callouts_persist_across_load::acknowledged_callouts_persist_through_cvar_across_fresh_load",
+          "location": "tests/common/panel_fixtures.rs:114:9",
+          "message": "required panel addon `Blizzard_Colors` has no eligible Game TOC under /home/osso/.cache/wow-ui-sim/blizzard-ui/mists/AddOns"
+        },
+        {
+          "case": "secret_string_formatting::inferred_tainted_direct_formatting_preserves_secrecy_and_stack_taint",
+          "location": "tests/secret_string_formatting.rs:134:10",
+          "message": "inferred addon opaque formatting succeeds without public payload access: Lua(Runtime(RuntimeError { message: \"addon cannot read input\", level: 0, traceback: [] }))"
+        },
+        {
+          "case": "secret_string_formatting::inferred_tainted_positional_formatting_preserves_secrecy_and_stack_taint",
+          "location": "tests/secret_string_formatting.rs:134:10",
+          "message": "inferred addon opaque formatting succeeds without public payload access: Lua(Runtime(RuntimeError { message: \"addon cannot read input\", level: 0, traceback: [] }))"
+        },
+        {
+          "case": "secure_handler_fallback::execute_callmethod_propagates_tainted_args_to_insecure_method",
+          "location": "tests/secure_handler_fallback.rs:198:5",
+          "message": "assertion failed: returned_is_secret"
+        },
+        {
+          "case": "startup_warnings::late::test_blizzard_framexml_load_registers_boss_banner_cvar_without_warning",
+          "location": "tests/common/timeout_reexec.rs:181:9",
+          "message": "timeout child for `startup_warnings::late::test_blizzard_framexml_load_registers_boss_banner_cvar_without_warning` failed (exit code 101)"
+        },
+        {
+          "case": "startup_warnings::late::test_blizzard_framexml_load_registers_boss_banner_cvar_without_warning",
+          "location": "tests/startup_warnings/late.rs:232:14",
+          "message": "BossBanner cvar should be readable after Blizzard_FrameXML load: Other(\"expected string result, got nil\")"
+        }
+      ]
+    },
+    "master": {
+      "receipt": "master-mists-integration-regressions.proof.json",
+      "exit": 101,
+      "summaries": [
+        "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8175 filtered out; finished in 0.31s",
+        "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8175 filtered out; finished in 0.80s",
+        "test result: FAILED. 61 passed; 7 failed; 0 ignored; 0 measured; 8108 filtered out; finished in 1.75s"
+      ],
+      "failures": [
+        "blizzard_auth_challenge_ui_lockdown::auth_challenge_ui_full_lockdown_marks_tainted_mutation_attempts",
+        "blizzard_ui_blizzard_accessibilitytemplates::behavior_text_size_manager::init_registers_user_font_scale_cvar_callback",
+        "blizzard_ui_blizzard_arrow_callout_frame::behavior_acknowledged_callouts_persist_across_load::acknowledged_callouts_persist_through_cvar_across_fresh_load",
+        "secret_string_formatting::inferred_tainted_direct_formatting_preserves_secrecy_and_stack_taint",
+        "secret_string_formatting::inferred_tainted_positional_formatting_preserves_secrecy_and_stack_taint",
+        "secure_handler_fallback::execute_callmethod_propagates_tainted_args_to_insecure_method",
+        "startup_warnings::late::test_blizzard_framexml_load_registers_boss_banner_cvar_without_warning"
+      ],
+      "panics": [
+        {
+          "case": "blizzard_auth_challenge_ui_lockdown::auth_challenge_ui_full_lockdown_marks_tainted_mutation_attempts",
+          "location": "tests/common/panel_fixtures.rs:114:9",
+          "message": "required panel addon `Blizzard_Colors` has no eligible Game TOC under /home/osso/.cache/wow-ui-sim/blizzard-ui/mists/AddOns"
+        },
+        {
+          "case": "blizzard_auth_challenge_ui_lockdown::auth_challenge_ui_full_lockdown_marks_tainted_mutation_attempts",
+          "location": "tests/common/timeout_reexec.rs:181:9",
+          "message": "timeout child for `blizzard_auth_challenge_ui_lockdown::auth_challenge_ui_full_lockdown_marks_tainted_mutation_attempts` failed (exit code 101)"
+        },
+        {
+          "case": "blizzard_ui_blizzard_accessibilitytemplates::behavior_text_size_manager::init_registers_user_font_scale_cvar_callback",
+          "location": "tests/common/panel_fixtures.rs:114:9",
+          "message": "required panel addon `Blizzard_Colors` has no eligible Game TOC under /home/osso/.cache/wow-ui-sim/blizzard-ui/mists/AddOns"
+        },
+        {
+          "case": "blizzard_ui_blizzard_arrow_callout_frame::behavior_acknowledged_callouts_persist_across_load::acknowledged_callouts_persist_through_cvar_across_fresh_load",
+          "location": "tests/common/panel_fixtures.rs:114:9",
+          "message": "required panel addon `Blizzard_Colors` has no eligible Game TOC under /home/osso/.cache/wow-ui-sim/blizzard-ui/mists/AddOns"
+        },
+        {
+          "case": "secret_string_formatting::inferred_tainted_direct_formatting_preserves_secrecy_and_stack_taint",
+          "location": "tests/secret_string_formatting.rs:134:10",
+          "message": "inferred addon opaque formatting succeeds without public payload access: Lua(Runtime(RuntimeError { message: \"addon cannot read input\", level: 0, traceback: [] }))"
+        },
+        {
+          "case": "secret_string_formatting::inferred_tainted_positional_formatting_preserves_secrecy_and_stack_taint",
+          "location": "tests/secret_string_formatting.rs:134:10",
+          "message": "inferred addon opaque formatting succeeds without public payload access: Lua(Runtime(RuntimeError { message: \"addon cannot read input\", level: 0, traceback: [] }))"
+        },
+        {
+          "case": "secure_handler_fallback::execute_callmethod_propagates_tainted_args_to_insecure_method",
+          "location": "tests/secure_handler_fallback.rs:198:5",
+          "message": "assertion failed: returned_is_secret"
+        },
+        {
+          "case": "startup_warnings::late::test_blizzard_framexml_load_registers_boss_banner_cvar_without_warning",
+          "location": "tests/common/timeout_reexec.rs:181:9",
+          "message": "timeout child for `startup_warnings::late::test_blizzard_framexml_load_registers_boss_banner_cvar_without_warning` failed (exit code 101)"
+        },
+        {
+          "case": "startup_warnings::late::test_blizzard_framexml_load_registers_boss_banner_cvar_without_warning",
+          "location": "tests/startup_warnings/late.rs:232:14",
+          "message": "BossBanner cvar should be readable after Blizzard_FrameXML load: Other(\"expected string result, got nil\")"
+        }
+      ]
+    }
+  },
+  {
+    "profile": "mists",
+    "target": "prefork_full_ui",
+    "selectors": {
+      "cvar": [],
+      "taint": []
+    },
+    "supported": false,
+    "reason": "Cargo target requires client-retail; no Mists prefork tests exist",
+    "checks": [
+      {
+        "selector": "cvar",
+        "branch": {
+          "receipt": "mists-prefork-cvar.proof.json",
+          "exit": 101,
+          "summaries": [],
+          "failures": [],
+          "panics": []
+        },
+        "master": {
+          "receipt": "master-mists-prefork-cvar.proof.json",
+          "exit": 101,
+          "summaries": [],
+          "failures": [],
+          "panics": []
+        }
+      },
+      {
+        "selector": "taint",
+        "branch": {
+          "receipt": "mists-prefork-taint.proof.json",
+          "exit": 101,
+          "summaries": [],
+          "failures": [],
+          "panics": []
+        },
+        "master": {
+          "receipt": "master-mists-prefork-taint.proof.json",
+          "exit": 101,
+          "summaries": [],
+          "failures": [],
+          "panics": []
+        }
+      }
+    ]
+  },
+  {
+    "target": "lib",
+    "profile": "retail",
+    "selectors": [
+      {
+        "selector": "cvar",
+        "branch_count": 12,
+        "master_count": 12
+      },
+      {
+        "selector": "set_cvar",
+        "branch_count": 1,
+        "master_count": 1
+      },
+      {
+        "selector": "ui_visibility",
+        "branch_count": 0,
+        "master_count": 0
+      },
+      {
+        "selector": "taint",
+        "branch_count": 7,
+        "master_count": 7
+      },
+      {
+        "selector": "secure",
+        "branch_count": 24,
+        "master_count": 24
+      },
+      {
+        "selector": "settings",
+        "branch_count": 27,
+        "master_count": 27
+      }
+    ],
+    "branch": {
+      "receipt": "lib-retail-regressions.proof.json",
+      "exit": 0,
+      "summaries": [
+        "test result: ok. 68 passed; 0 failed; 0 ignored; 0 measured; 1911 filtered out; finished in 3.17s"
+      ],
+      "failures": [],
+      "panics": []
+    },
+    "master": {
+      "receipt": "master-lib-retail-regressions.proof.json",
+      "exit": 0,
+      "summaries": [
+        "test result: ok. 68 passed; 0 failed; 0 ignored; 0 measured; 1911 filtered out; finished in 1.22s"
+      ],
+      "failures": [],
+      "panics": []
+    },
+    "branch_unique_selected": 68,
+    "master_unique_selected": 68
+  },
+  {
+    "target": "lib",
+    "profile": "mists",
+    "selectors": [
+      {
+        "selector": "cvar",
+        "branch_count": 8,
+        "master_count": 8
+      },
+      {
+        "selector": "set_cvar",
+        "branch_count": 1,
+        "master_count": 1
+      },
+      {
+        "selector": "ui_visibility",
+        "branch_count": 0,
+        "master_count": 0
+      },
+      {
+        "selector": "taint",
+        "branch_count": 7,
+        "master_count": 7
+      },
+      {
+        "selector": "secure",
+        "branch_count": 22,
+        "master_count": 22
+      },
+      {
+        "selector": "settings",
+        "branch_count": 29,
+        "master_count": 29
+      }
+    ],
+    "branch": {
+      "receipt": "lib-mists-regressions.proof.json",
+      "exit": 0,
+      "summaries": [
+        "test result: ok. 64 passed; 0 failed; 0 ignored; 0 measured; 1766 filtered out; finished in 2.82s"
+      ],
+      "failures": [],
+      "panics": []
+    },
+    "master": {
+      "receipt": "master-lib-mists-regressions.proof.json",
+      "exit": 0,
+      "summaries": [
+        "test result: ok. 64 passed; 0 failed; 0 ignored; 0 measured; 1766 filtered out; finished in 0.96s"
+      ],
+      "failures": [],
+      "panics": []
+    },
+    "branch_unique_selected": 64,
+    "master_unique_selected": 64
+  }
+]

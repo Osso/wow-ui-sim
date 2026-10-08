@@ -10,8 +10,10 @@
   "revision": "2caa653ace4e52ae3b918bba8ad322bb80b06671",
   "scope": "prefork-hide_ui",
   "cwd": ".",
-  "target": "dedicated p548-page target (external to repository)",
-  "environment": {},
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+  "environment": {
+    "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p548-page"
+  },
   "exit": 0,
   "log": "prefork-hide_ui.txt",
   "log_sha256": "f8ddb631df96d76c4285084acc9ecdde2f147a8d57909320eacbfb183234f934",

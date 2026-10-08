@@ -24,7 +24,7 @@
   "revision": "efdeefaf726e172372a649bb7e109f109749be63",
   "scope": "integration-regressions",
   "cwd": ".",
-  "target": "dedicated p548-page target (external to repository)",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
   "environment": {
     "P1000_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p548-page/data/patch-api/evidence/5.4.8-session-2026-10-08/integrated/patch_10_0_0_publication_sweep-results.json",
     "P1002_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p548-page/data/patch-api/evidence/5.4.8-session-2026-10-08/integrated/patch_10_0_2_publication_sweep-results.json",
@@ -80,7 +80,8 @@
     "P915_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p548-page/data/patch-api/evidence/5.4.8-session-2026-10-08/integrated/patch_9_1_5_publication_sweep-results.json",
     "P920_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p548-page/data/patch-api/evidence/5.4.8-session-2026-10-08/integrated/patch_9_2_0_publication_sweep-results.json",
     "P925_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p548-page/data/patch-api/evidence/5.4.8-session-2026-10-08/integrated/patch_9_2_5_publication_sweep-results.json",
-    "P927_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p548-page/data/patch-api/evidence/5.4.8-session-2026-10-08/integrated/patch_9_2_7_publication_sweep-results.json"
+    "P927_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p548-page/data/patch-api/evidence/5.4.8-session-2026-10-08/integrated/patch_9_2_7_publication_sweep-results.json",
+    "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p548-page"
   },
   "exit": 101,
   "log": "integration-regressions.txt",

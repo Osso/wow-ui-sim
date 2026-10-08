@@ -1,0 +1,24 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--no-default-features",
+    "--features",
+    "sound,gui,casc,client-mists",
+    "--lib",
+    "--",
+    "--list"
+  ],
+  "revision": "5b1a5419402e0a8db9aea69ef0019f01aa6b6b40",
+  "scope": "lib-mists-list",
+  "cwd": ".",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+  "environment": {
+    "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p548-page"
+  },
+  "exit": 0,
+  "log": "lib-mists-list.txt",
+  "log_sha256": "7e869e4fafefcad5f22d4c7d67daaf2c2c82bbe33d9bd1284845548aacfae3aa",
+  "seconds": 146.72427580699878,
+  "invalidated": false
+}

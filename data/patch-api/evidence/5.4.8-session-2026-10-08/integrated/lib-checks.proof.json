@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p548-page/data/patch-api/evidence/5.4.8-session-2026-10-08/integrated/run_lib.py"
+  ],
+  "revision": "5b1a5419402e0a8db9aea69ef0019f01aa6b6b40",
+  "scope": "lib-checks",
+  "cwd": ".",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+  "environment": {},
+  "exit": 0,
+  "log": "lib-checks.txt",
+  "log_sha256": "07bd62767f0c9029052c3f76b2043778c3c48aa46e6089a007aaf64b94e9d9c9",
+  "seconds": 332.4710748639991,
+  "invalidated": false
+}

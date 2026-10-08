@@ -1,0 +1,21 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--lib",
+    "--",
+    "--list"
+  ],
+  "revision": "5b1a5419402e0a8db9aea69ef0019f01aa6b6b40",
+  "scope": "lib-retail-list",
+  "cwd": ".",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+  "environment": {
+    "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p548-page"
+  },
+  "exit": 0,
+  "log": "lib-retail-list.txt",
+  "log_sha256": "0de044da63193c054a866efc2c47e5c31afe6cfd9af2ecaecb4243230be45a9a",
+  "seconds": 177.4899076139991,
+  "invalidated": false
+}

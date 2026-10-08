@@ -1,0 +1,78 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 1.36s
+     Running unittests src/lib.rs (/home/osso/.cache/wow-ui-sim-targets/p548-page/debug/deps/wow_ui_sim-bb2ccf0de31d2550)
+
+running 64 tests
+test cvars::tests::test_parse_yaml ... ok
+test cvars::tests::test_persistence_no_file ... ok
+test cvars::tests::test_persistence_corrupt_file ... ok
+test cvars::tests::test_get_set ... ok
+test cvars::tests::test_persistence_roundtrip ... ok
+test cvars::tests::test_register_exposes_runtime_default_without_override ... ok
+test iced_app::app_icon::tests::linux_settings_use_freedesktop_app_id ... ok
+test iced_app::app_icon::tests::settings_include_runtime_icon ... ok
+test loader::tests::inline_script::scoped_modifier_scripts_use_secure_env_fallback_for_secure_addons ... ok
+test loader::addon::tests::blizzard_talent_ui_context_is_not_tainted ... ok
+test c_api::c_ping_secure::tests::registers_ping_secure_api ... ok
+test loader::addon::tests::path_alone_does_not_make_addon_untainted ... ok
+test loader::addon::tests::secure_environment_context_is_not_tainted ... ok
+test loader::addon::tests::cached_blizzard_ui_context_is_not_tainted ... ok
+test loader::addon::tests::third_party_addon_context_is_tainted ... ok
+test loader::addon::tests::blizzard_folder_context_is_not_tainted_without_allow_load ... ok
+test iced_app::update::resize_event_tests::ui_scale_cvar_change_fires_pair_before_cvar_update ... ok
+test loader::tests::lua_loading::blizzard_frame_xml_util_replays_aura_comparators_into_secure_environment ... ok
+test loader::tests::inline_script::secure_env_xml_animation_groups_attach_to_named_frames ... ok
+test loader::tests::lua_loading::blizzard_async_request_lua_replays_into_secure_environment ... ok
+test loader::tests::lua_loading::blizzard_game_tooltip_lua_replays_into_secure_environment ... ok
+test loader::tests::lua_loading::blizzard_shared_xml_lua_replays_into_secure_environment ... ok
+test lua_api::globals::utility_system_spell::tests::secure_taint_call_does_not_retry_matching_lua_error_text ... ok
+test loader::tests::lua_loading::secretunwrap_remains_callable_in_secure_environment_after_global_cleanup ... ok
+test loader::tests::lua_loading::secure_xml_named_frames_bind_into_secure_environment ... ok
+test loader::tests::lua_loading::blizzard_lua_files_replay_into_secure_environment ... ok
+test loader::tests::lua_loading::secure_addon_load_into_environment_global_overrides_default_secure_environment ... ok
+test loader::tests::wow_api_globals::global_functions::test_hooksecurefunc_multiple_hooks_share_stable_wrapper ... ok
+test loader::tests::wow_api::test_c_cvar_set_cvar_exists ... ok
+test loader::tests::wow_api_globals::global_functions::test_hooksecurefunc ... ok
+test lua_api::workarounds::temporary::secure_transfer_state::tests::installs_state_queries_actions_and_namespace_fallback ... ok
+test loader::tests::wow_api_globals::global_functions::test_issecurevariable_on_frame_userdata ... ok
+test lua_api::workarounds::temporary::auth_challenge_frame_parent::tests::restores_missing_auth_challenge_functions_from_secureenv ... ok
+test lua_api::workarounds::temporary::container_frame_token_tracker::tests::creates_backpack_token_frame_without_settings_manager ... ok
+test lua_api::globals::security::secure_env::tests::secure_environment_includes_soundkit_table ... ok
+test loader::tests::wow_api_globals::global_functions::test_hooksecurefunc_on_frame_userdata ... ok
+test lua_api::env_init::tests::settings_canvas_category_frames_show_only_when_opened ... ok
+test lua_api::workarounds::temporary::secure_reference_defaults::tests::stores_secure_reference_by_name ... ok
+test lua_api::workarounds::temporary::secure_types_defaults::tests::installs_secure_type_defaults ... ok
+test lua_api::workarounds::temporary::settings_surface_defaults::tests::installs_canvas_category_helpers_when_settings_panel_exists ... ok
+test lua_api::workarounds::temporary::settings_canvas_visibility::tests::registration_hides_frame_until_displayed ... ok
+test lua_api::workarounds::temporary::settings_surface_defaults::tests::global_settings_assignment_installs_ping_sounds_initializer_placeholder ... ok
+test lua_api::workarounds::temporary::settings_surface_defaults::tests::installs_minimal_settings_categories_and_group_factory ... ok
+test lua_api::workarounds::temporary::settings_surface_defaults::tests::installs_settings_value_changed_callback_noop ... ok
+test lua_api::workarounds::temporary::settings_surface_defaults::tests::installs_edit_mode_account_settings_mixin_table ... ok
+test lua_api::workarounds::temporary::settings_surface_defaults::tests::preserves_existing_settings_get_category ... ok
+test lua_api::workarounds::temporary::settings_surface_defaults::tests::settings_registrar_assignment_restores_missing_ping_sounds_initializer ... ok
+test lua_api::workarounds::tests::settings_canvas_registration_hides_frame_until_displayed ... ok
+test lua_api::workarounds::temporary::tts_settings_defaults::tests::preserves_existing_tts_settings_provider ... ok
+test lua_api::workarounds::temporary::settings_surface_defaults::tests::preserves_existing_settings_category_id_and_open_function ... ok
+test lua_api::workarounds_editmode::tests::apply_system_anchors::singletons::apply_system_anchors_replays_active_widescreen_singleton_settings ... ok
+test lua_api::workarounds::temporary::tts_settings_defaults::tests::installs_tts_settings_defaults ... ok
+test lua_api::workarounds_editmode::tests::apply_system_anchors::cast_and_player::apply_system_anchors_seeds_unit_frame_settings_without_full_startup_update ... ok
+test lua_api::workarounds_editmode::tests::setup_layout_info::basic::setup_layout_info_preserves_distinct_saved_action_bar_profile_settings ... ok
+test lua_api::workarounds_editmode::tests::apply_system_anchors::singletons::apply_system_anchors_replays_remaining_active_widescreen_system_settings ... ok
+test lua_api::workarounds_editmode::tests::apply_system_anchors::auras_and_cooldowns::apply_system_anchors_replays_active_widescreen_aura_frame_settings ... ok
+test lua_api::workarounds_editmode::tests::setup_layout_info::defaults_and_cache::setup_layout_info_merges_default_action_bar_settings_into_saved_layout ... ok
+test lua_api::workarounds_editmode::tests::setup_layout_info::defaults_and_cache::setup_layout_info_initializes_account_settings_from_saved_cache ... ok
+test lua_api::workarounds::temporary::settings_surface_defaults::tests::reconciles_replacement_settings_panel_idempotently ... ok
+test lua_api::workarounds_editmode::tests::apply_system_anchors::unit_frames::apply_system_anchors_replays_active_widescreen_unit_frame_settings ... ok
+test mists::post_load::tests::post_load_hides_registered_settings_canvas_layouts ... ok
+test mists::post_load::tests::post_load_remembers_settings_categories_by_id_for_addons ... ok
+test lua_api::workarounds_editmode::tests::setup_layout_info::basic::setup_layout_info_preserves_saved_cast_bar_lock_settings ... ok
+test mists::post_load::tests::settings_category_lookup_survives_runtime_surface_restore ... ok
+
+test result: ok. 64 passed; 0 failed; 0 ignored; 0 measured; 1766 filtered out; finished in 2.82s
+

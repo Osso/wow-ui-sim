@@ -1,0 +1,27 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--manifest-path",
+    "/tmp/p548-master-mists-mj527w7y/Cargo.toml",
+    "--no-default-features",
+    "--features",
+    "sound,gui,casc,client-mists",
+    "--lib",
+    "--",
+    "--list"
+  ],
+  "revision": "a9d7c9566fcb33b272a193a7aae6f51d4db4973f",
+  "scope": "master-lib-mists-list",
+  "cwd": ".",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/master-ref",
+  "environment": {
+    "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/master-ref",
+    "PATCH_PROOF_REVISION": "a9d7c9566"
+  },
+  "exit": 0,
+  "log": "master-lib-mists-list.txt",
+  "log_sha256": "3ab560c73768dcecee7085f3e3a4bd9e7952bb60b8c5071bea00be5fb4b9368b",
+  "seconds": 105.1141910389997,
+  "invalidated": false
+}

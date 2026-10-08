@@ -10,8 +10,10 @@
   "revision": "e79e7c55d7bfd8b755c9ac4e90eb66ad897a9bef",
   "scope": "prefork-settings",
   "cwd": ".",
-  "target": "dedicated p548-page target (external to repository)",
-  "environment": {},
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+  "environment": {
+    "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p548-page"
+  },
   "exit": 0,
   "log": "prefork-settings.txt",
   "log_sha256": "41520cd478453fcbf00beeeebc6aa69efcf3ab7d347528e7971c2fcf8a3c4260",

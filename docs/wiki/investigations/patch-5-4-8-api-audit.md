@@ -32,9 +32,25 @@ Real 6.0.1/6.0.2 supersession registers leave all 28 own observations and seven 
 
 Nine original/rebased audit commits and one external queued-register revision have explicit patch IDs, trees and blob mappings. All 226 historical artifacts remain preserved, including the original validator; its complete original invariants replay successfully through the pinned mapping. Source-directory comparisons use preserved original blob identities, not rebased trees that include unrelated 6.0.x runtime changes.
 
-Untruncated caller and protected-name scans, cache input digests, and concrete combat-fixture review are retained in [integrated caller review](../../../data/patch-api/evidence/5.4.8-session-2026-10-08/integrated/caller-scan-summary.md). Retail integration selectors run 1,076 passing cases on branch versus 1,075 on master (the extra bare combat contract). Three failures are identical on both, including exact normalized panic locations, assertion values and messages: existing C_ChatInfo placement, EditMode defensive-icon enum (22 versus 21), and TargetFrame portrait pixel (unchanged `[63, 63, 80, 255]`). These remain out of scope. Format, all 85 Python fixtures, warning-clean non-vendor Mists check, and all 36 pinned prior validators pass. Remaining profile/prefork/startup and portability results are recorded below when complete.
+Untruncated caller and protected-name scans, cache input digests, and concrete combat-fixture review are retained in [integrated caller review](../../../data/patch-api/evidence/5.4.8-session-2026-10-08/integrated/caller-scan-summary.md). Retail integration selectors run 1,076 passing cases on branch versus 1,075 on master (the extra bare combat contract). Three failures are identical on both, including exact normalized panic locations, assertion values and messages: existing C_ChatInfo placement, EditMode defensive-icon enum (22 versus 21), and TargetFrame portrait pixel (unchanged `[63, 63, 80, 255]`). These remain out of scope. Format, all 85 Python fixtures, warning-clean non-vendor Mists check, and all 36 pinned prior validators pass. Retail prefork selectors pass all 250 unique branch cases versus 248 on master; both additional cases belong to 5.4.8. Mists cvar/taint integration passes 61 cases with seven identical master failures (exact normalized assertion messages retained). Addons-enabled branch and master `timeout 90 ... --no-saved-vars lua-errors` both print `[]`. No new runtime failures were found. Clean/later-audit portability is the final remaining gate.
 
 Prefork supports only one positional filter; rejected batched invocations have no behavior coverage and are superseded by individual selector receipts. Its Cargo target requires `client-retail`, so no Mists prefork cases exist; Mists uses the integration target rather than adding a compatibility path.
+
+Source-unit (`cargo test --lib`) selectors run as a union and pass 68/68 retail and 64/64 Mists on both branch and pinned master. Exact per-selector counts (overlap allowed):
+
+| Lib selector | Retail branch/master | Mists branch/master |
+|---|---:|---:|
+| `cvar` | 12 / 12 | 8 / 8 |
+| `set_cvar` | 1 / 1 | 1 / 1 |
+| `ui_visibility` | 0 / 0 | 0 / 0 |
+| `taint` | 7 / 7 | 7 / 7 |
+| `secure` | 24 / 24 | 22 / 22 |
+| `settings` | 27 / 27 | 29 / 29 |
+
+No source-unit case matches `ui_visibility`; its behavior is covered by the three retail integration cases plus bare/cached 5.4.8 combat cases, not claimed as lib coverage. [Regression comparison](../../../data/patch-api/evidence/5.4.8-session-2026-10-08/integrated/regression-comparison.json) records every integration/prefork selector, count, panic and master comparison. [Command ledger](../../../data/patch-api/evidence/5.4.8-session-2026-10-08/integrated/command-ledger.md) records exact argv, revisions, results and source scopes.
+
+Proof-runner corrections did not change simulator/vendor behavior: split unsupported prefork multi-filters, serialize master commands against one immutable snapshot per replay, define the omitted Mists feature list, and finish only the missing Mists/lib scopes. Earlier incomplete/rejected command logs are retained but are not acceptance evidence. Negative control still changes exactly one observation and increases seven gaps to eight. All 226 original historical artifacts remain preserved.
+
 
 ## Historical proof status
 

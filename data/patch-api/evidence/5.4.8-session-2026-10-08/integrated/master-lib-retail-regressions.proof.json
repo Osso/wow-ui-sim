@@ -1,0 +1,29 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--manifest-path",
+    "/tmp/p548-master-mists-mj527w7y/Cargo.toml",
+    "--lib",
+    "--",
+    "cvar",
+    "set_cvar",
+    "ui_visibility",
+    "taint",
+    "secure",
+    "settings"
+  ],
+  "revision": "a9d7c9566fcb33b272a193a7aae6f51d4db4973f",
+  "scope": "master-lib-retail-regressions",
+  "cwd": ".",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/master-ref",
+  "environment": {
+    "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/master-ref",
+    "PATCH_PROOF_REVISION": "a9d7c9566"
+  },
+  "exit": 0,
+  "log": "master-lib-retail-regressions.txt",
+  "log_sha256": "5ba14be67f03bd451cc7db3cffc6822bfecf7ac31459b6347efcaf5c9af401af",
+  "seconds": 1.599924417998409,
+  "invalidated": false
+}
