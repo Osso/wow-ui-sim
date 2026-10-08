@@ -52,6 +52,21 @@ fn assert_directory_omits_symbols(directory: &std::path::Path, symbols: &[&str])
     }
 }
 
+// Keep the original owned fixture for non-retail profiles. Retail cases start
+// from the full Game snapshot, then explicitly load these LoD dependencies.
+fn load_garrison_dependencies_after_fork(env: &WowLuaEnv) {
+    for folder in [
+        "Blizzard_MapCanvas",
+        "Blizzard_SharedMapDataProviders",
+        "Blizzard_GarrisonTemplates",
+        "Blizzard_AdventureMap",
+    ] {
+        let toc = lod_addon_toc(folder);
+        load_addon(&env.loader_env(), &toc)
+            .unwrap_or_else(|err| panic!("[load {folder}] FAILED: {err}"));
+    }
+}
+
 fn load_full_game_ui_with_lod_deps() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
@@ -240,9 +255,10 @@ fn is_three_d_model_gap(message: &str) -> bool {
         || message.contains("expected number, got nil at argument 1")
 }
 
-#[test]
-fn blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors() {
-    let env = load_full_game_ui_with_lod_deps();
+prefork_full_ui_case! {
+fn blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    load_garrison_dependencies_after_fork(env);
 
     {
         let mut state = env.state().borrow_mut();
@@ -273,10 +289,19 @@ fn blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors() {
         garrison_ui_errors.join("\n  ")
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn blizzard_garrison_ui_is_addon_loaded_returns_true_after_explicit_load() {
+fn blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors() {
     let env = load_full_game_ui_with_lod_deps();
+    blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors::run(&env);
+}
+
+prefork_full_ui_case! {
+fn blizzard_garrison_ui_is_addon_loaded_returns_true_after_explicit_load(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    load_garrison_dependencies_after_fork(env);
 
     let before: bool = env
         .eval("return C_AddOns and C_AddOns.IsAddOnLoaded('Blizzard_GarrisonUI') or false")
@@ -300,6 +325,14 @@ fn blizzard_garrison_ui_is_addon_loaded_returns_true_after_explicit_load() {
          table that backs IsAddOnLoaded)"
     );
 }
+}
+
+#[cfg(not(feature = "client-retail"))]
+#[test]
+fn blizzard_garrison_ui_is_addon_loaded_returns_true_after_explicit_load() {
+    let env = load_full_game_ui_with_lod_deps();
+    blizzard_garrison_ui_is_addon_loaded_returns_true_after_explicit_load::run(&env);
+}
 
 #[cfg(feature = "client-ptr")]
 #[test]
@@ -316,9 +349,10 @@ fn ptr_garrison_ui_does_not_publish_snapshot_only_hide_wrappers() {
     assert_eq!(wrappers_are_absent, (true, true));
 }
 
-#[test]
-fn blizzard_garrison_ui_publishes_mission_frame_globals() {
-    let env = load_full_game_ui_with_lod_deps();
+prefork_full_ui_case! {
+fn blizzard_garrison_ui_publishes_mission_frame_globals(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    load_garrison_dependencies_after_fork(env);
     load_addon(&env.loader_env(), &garrison_ui_toc()).expect("Blizzard_GarrisonUI should load");
 
     let mission_frames: (String, String, String, String, String) = env
@@ -346,10 +380,19 @@ fn blizzard_garrison_ui_publishes_mission_frame_globals() {
          GarrisonShipyardFrame (WoD 6.2 Shipyard mission UI)"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn blizzard_garrison_ui_publishes_landing_page_and_support_frames() {
+fn blizzard_garrison_ui_publishes_mission_frame_globals() {
     let env = load_full_game_ui_with_lod_deps();
+    blizzard_garrison_ui_publishes_mission_frame_globals::run(&env);
+}
+
+prefork_full_ui_case! {
+fn blizzard_garrison_ui_publishes_landing_page_and_support_frames(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    load_garrison_dependencies_after_fork(env);
     load_addon(&env.loader_env(), &garrison_ui_toc()).expect("Blizzard_GarrisonUI should load");
 
     let frames: (String, String, String, String, String) = env
@@ -377,10 +420,19 @@ fn blizzard_garrison_ui_publishes_landing_page_and_support_frames() {
          GarrisonRecruiterFrame (WoD follower-recruit selection popup)"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn blizzard_garrison_ui_publishes_mission_mixins() {
+fn blizzard_garrison_ui_publishes_landing_page_and_support_frames() {
     let env = load_full_game_ui_with_lod_deps();
+    blizzard_garrison_ui_publishes_landing_page_and_support_frames::run(&env);
+}
+
+prefork_full_ui_case! {
+fn blizzard_garrison_ui_publishes_mission_mixins(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    load_garrison_dependencies_after_fork(env);
     load_addon(&env.loader_env(), &garrison_ui_toc()).expect("Blizzard_GarrisonUI should load");
 
     let mixins: (String, String, String, String, String) = env
@@ -411,10 +463,19 @@ fn blizzard_garrison_ui_publishes_mission_mixins() {
          mixin attached to GarrisonLandingPage via mixin=... XML attribute)"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn blizzard_garrison_ui_publishes_adventures_board_mixins() {
+fn blizzard_garrison_ui_publishes_mission_mixins() {
     let env = load_full_game_ui_with_lod_deps();
+    blizzard_garrison_ui_publishes_mission_mixins::run(&env);
+}
+
+prefork_full_ui_case! {
+fn blizzard_garrison_ui_publishes_adventures_board_mixins(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    load_garrison_dependencies_after_fork(env);
     load_addon(&env.loader_env(), &garrison_ui_toc()).expect("Blizzard_GarrisonUI should load");
 
     let board_mixins: (String, String, String, String, String) = env
@@ -443,10 +504,19 @@ fn blizzard_garrison_ui_publishes_adventures_board_mixins() {
          AdventuresBoardAuraContainerMixin (the aura-icon row container)"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn blizzard_garrison_ui_publishes_landing_page_helpers() {
+fn blizzard_garrison_ui_publishes_adventures_board_mixins() {
     let env = load_full_game_ui_with_lod_deps();
+    blizzard_garrison_ui_publishes_adventures_board_mixins::run(&env);
+}
+
+prefork_full_ui_case! {
+fn blizzard_garrison_ui_publishes_landing_page_helpers(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    load_garrison_dependencies_after_fork(env);
     load_addon(&env.loader_env(), &garrison_ui_toc()).expect("Blizzard_GarrisonUI should load");
 
     let helpers: (bool, bool, bool, bool, bool) = env
@@ -469,10 +539,19 @@ fn blizzard_garrison_ui_publishes_landing_page_helpers() {
          entry point)"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn blizzard_garrison_ui_publishes_building_and_recruiter_helpers() {
+fn blizzard_garrison_ui_publishes_landing_page_helpers() {
     let env = load_full_game_ui_with_lod_deps();
+    blizzard_garrison_ui_publishes_landing_page_helpers::run(&env);
+}
+
+prefork_full_ui_case! {
+fn blizzard_garrison_ui_publishes_building_and_recruiter_helpers(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    load_garrison_dependencies_after_fork(env);
     load_addon(&env.loader_env(), &garrison_ui_toc()).expect("Blizzard_GarrisonUI should load");
 
     let helpers: (bool, bool, bool, bool) = env
@@ -494,10 +573,19 @@ fn blizzard_garrison_ui_publishes_building_and_recruiter_helpers() {
          C_Garrison.RecruitFollower)"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn blizzard_garrison_ui_landing_page_parents_uiparent_and_is_hidden_by_default() {
+fn blizzard_garrison_ui_publishes_building_and_recruiter_helpers() {
     let env = load_full_game_ui_with_lod_deps();
+    blizzard_garrison_ui_publishes_building_and_recruiter_helpers::run(&env);
+}
+
+prefork_full_ui_case! {
+fn blizzard_garrison_ui_landing_page_parents_uiparent_and_is_hidden_by_default(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    load_garrison_dependencies_after_fork(env);
     load_addon(&env.loader_env(), &garrison_ui_toc()).expect("Blizzard_GarrisonUI should load");
 
     let landing: (String, bool) = env
@@ -515,10 +603,19 @@ fn blizzard_garrison_ui_landing_page_parents_uiparent_and_is_hidden_by_default()
          hidden until the player clicks the Garrison MicroMenu button"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn blizzard_garrison_ui_monument_frame_uses_high_strata_on_uiparent() {
+fn blizzard_garrison_ui_landing_page_parents_uiparent_and_is_hidden_by_default() {
     let env = load_full_game_ui_with_lod_deps();
+    blizzard_garrison_ui_landing_page_parents_uiparent_and_is_hidden_by_default::run(&env);
+}
+
+prefork_full_ui_case! {
+fn blizzard_garrison_ui_monument_frame_uses_high_strata_on_uiparent(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    load_garrison_dependencies_after_fork(env);
     load_addon(&env.loader_env(), &garrison_ui_toc()).expect("Blizzard_GarrisonUI should load");
 
     let monument: (String, String) = env
@@ -534,4 +631,12 @@ fn blizzard_garrison_ui_monument_frame_uses_high_strata_on_uiparent() {
          Blizzard_GarrisonMonumentUI.xml — the trophy-display popup rides above the \
          standard mission-UI strata so it overlays the open garrison interior"
     );
+}
+}
+
+#[cfg(not(feature = "client-retail"))]
+#[test]
+fn blizzard_garrison_ui_monument_frame_uses_high_strata_on_uiparent() {
+    let env = load_full_game_ui_with_lod_deps();
+    blizzard_garrison_ui_monument_frame_uses_high_strata_on_uiparent::run(&env);
 }
