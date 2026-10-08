@@ -1,0 +1,1508 @@
+[  0.000s] [startup] wow-sim process started pid=4063791
+[  0.000s] Resource limits: 2 CPU core(s)
+[  0.015s] [Startup] WowLuaEnv::new begin
+[  0.066s] [Startup] SimState::default complete in 51.20ms
+[  0.068s] [Startup] rilua VM created in 2.10ms
+[  0.069s] [Startup] builtin frames initialized in 435.47µs
+[  0.069s] [Startup] template registry cleared in 50.10µs
+[  0.076s] [Startup] intrinsic templates registered in 7.15ms
+[  0.076s] [Startup] initial app_data lua handle installed in 2.01µs
+[  0.810s] [Startup] init_lua_state complete in 734.40ms
+[  0.811s] [Startup] final app_data lua handle installed in 802.00ns
+[  0.811s] [Startup] initial screen globals installed in 505.56µs
+[  0.811s] [Startup] WowLuaEnv::new complete
+[  0.811s] [Startup] screen size set to 1600x1200 in 277.51µs
+[  0.811s] [Startup] WowFontSystem::new begin casc=false
+[  3.702s] [Startup] font system fallback loaded in 2.89s
+[  3.702s] [Startup] cosmic font system built in 78.10µs
+[  3.702s] [Startup] swash cache created in 15.91µs
+[  3.702s] [Startup] WowFontSystem::new complete in 2.89s
+[  3.702s] [Startup] font system created in 2.89s
+[  3.868s] Sound initialized
+[  3.975s] [Startup] begin stop GC
+[  3.975s] [Startup] end stop GC in 591.00ns
+[  3.975s] [Startup] begin configure saved variables
+[  3.975s] SavedVariables loading disabled
+[  3.975s] [Startup] end configure saved variables in 8.46µs
+[  3.975s] [Startup] begin load keybindings
+[  3.975s] [Startup] end load keybindings in 531.00ns
+[  3.975s] [Startup] begin configure edit mode cache
+[  3.977s] EditMode cache source (read-only): 50868465#2 @ Bloodsail Buccaneers/Haky
+[  3.977s] [Startup] end configure edit mode cache in 1.80ms
+[  3.977s] [Startup] begin read ServerSnapshot edit mode layout
+[  3.977s] [Startup] end read ServerSnapshot edit mode layout in 240.00ns
+[  3.977s] [Startup] begin load edit mode cache
+[  3.977s] [Startup] end load edit mode cache in 281.52µs
+[  3.978s] [Startup] begin load ServerSnapshot character state
+[  3.978s] [Startup] end load ServerSnapshot character state in 91.00ns
+[  3.978s] [Startup] begin load Blizzard addons
+[  4.058s] Loading 137 Blizzard addons...
+Lua error: Failed to create frame __Blizzard_UIPanels_Game_20250: Lua error: layer children on __Blizzard_UIPanels_Game_20250: Action[SetPoint] failed because[Cannot anchor to itself]: attempted from: Frame:SetPoint.
+stack traceback:
+	(string):1: in main chunk
+Lua error: Lua Error: Failed to create frame __Blizzard_UIPanels_Game_20250: Lua error: layer children on __Blizzard_UIPanels_Game_20250: Action[SetPoint] failed because[Cannot anchor to itself]: attempted from: Frame:SetPoint.
+stack traceback:
+	(string):1: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: [OnLoad] AchievementFrameAchievements: generated/template-scripts-no-global-slots/937f2e658386b74d:5: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementShield_OnLoad'
+	generated/template-scripts-no-global-slots/937f2e658386b74d:5: in function <generated/template-scripts-no-global-slots/937f2e658386b74d:3>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function '__wow_original_CreateFrame'
+	(string):85: in function 'originalCreateFrame'
+	(string):55: in function '(for index)'
+	Interface/AddOns/Blizzard_SharedXML/HybridScrollFrame.lua:244: in function 'HybridScrollFrame_CreateButtons'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:522: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:500>
+	[C]: in function 'pcall'
+	(string):16: in main chunk
+=(string):19: in main chunk
+
+Lua error: Lua Error: [OnLoad] AchievementFrameAchievements: generated/template-scripts-no-global-slots/937f2e658386b74d:5: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementShield_OnLoad'
+	generated/template-scripts-no-global-slots/937f2e658386b74d:5: in function <generated/template-scripts-no-global-slots/937f2e658386b74d:3>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function '__wow_original_CreateFrame'
+	(string):85: in function 'originalCreateFrame'
+	(string):55: in function '(for index)'
+	Interface/AddOns/Blizzard_SharedXML/HybridScrollFrame.lua:244: in function 'HybridScrollFrame_CreateButtons'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:522: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:500>
+	[C]: in function 'pcall'
+	(string):16: in main chunk
+=(string):19: in main chunk
+
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function '__report'
+=(string):20: in main chunk
+
+Lua error: [OnLoad] AchievementFrameStats: attempt to call global 'AchievementFrameStats_OnLoad' (a nil value)
+=(string):19: in main chunk
+
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__report'
+	(string):20: in main chunk
+Lua error: Lua Error: [OnLoad] AchievementFrameStats: attempt to call global 'AchievementFrameStats_OnLoad' (a nil value)
+=(string):19: in main chunk
+
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__report'
+	(string):20: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function '__report'
+=(string):20: in main chunk
+
+Lua error: [OnLoad] AchievementFrameComparison: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:2022: attempt to call a nil value
+=(string):19: in main chunk
+
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__report'
+	(string):20: in main chunk
+Lua error: Lua Error: [OnLoad] AchievementFrameComparison: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:2022: attempt to call a nil value
+=(string):19: in main chunk
+
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__report'
+	(string):20: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function '__report'
+=(string):20: in main chunk
+
+Lua error: bad argument #1 to 'next' (table expected)
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__wow_original_securecall'
+	(string):13: in function 'securecall'
+	generated/loader-exec-no-global-slots/1f6a08f0276c3958:15: in function <generated/loader-exec-no-global-slots/1f6a08f0276c3958:12>
+	[C]: in function 'pcall'
+	(string):16: in main chunk
+Lua error: Lua Error: bad argument #1 to 'next' (table expected)
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__wow_original_securecall'
+	(string):13: in function 'securecall'
+	generated/loader-exec-no-global-slots/1f6a08f0276c3958:15: in function <generated/loader-exec-no-global-slots/1f6a08f0276c3958:12>
+	[C]: in function 'pcall'
+	(string):16: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function '__wow_original_securecall'
+=(string):13: in function 'securecall'
+[generated/loader-exec-no-global-slots/1f6a08f0276c3958]:15: in function <[generated/loader-exec-no-global-slots/1f6a08f0276c3958]:12>
+=[C]:: in function 'pcall'
+=(string):16: in main chunk
+
+Lua error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: @Interface/AddOns/Blizzard_CombatLogBase/Wrath/CombatLogColors.lua: table index is nil
+stack traceback:
+	(string):1: in main chunk
+Lua error: Lua Error: @Interface/AddOns/Blizzard_CombatLogBase/Wrath/CombatLogColors.lua: table index is nil
+stack traceback:
+	(string):1: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'
+	...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+[ 15.675s] Blizzard addons loaded in 11.69s (io=386.28ms xml=534.81ms xmlproc=8.39s frames⊂xmlproc=8.30s lua=1.54s [compile=1.29s call=247.21ms] gc=deferred, bytecode cache: 201/1016 hits (20%, lookup_miss=815 replay_fail=0 stored=815 store_fail=0))
+  frame breakdown: setup=5.23s finalize=9.14s (1939 frames)
+  setup: code_build=39.02ms exec_lua=5.19s props=39.70ms
+  finalize: layers=299.49ms (908 tex, 569 fs) anim=46.11ms button=206.75ms lifecycle=2.38s (1275 fires)
+[ 15.675s] [Startup] end load Blizzard addons in 11.70s
+[ 15.675s] [Startup] begin prepare chat frame for third-party addons
+[ 15.677s] [Startup] end prepare chat frame for third-party addons in 2.08ms
+[ 15.677s] [Startup] begin apply post-Blizzard load workarounds
+[ 15.677s] [Startup] applying post-load workarounds
+[ 15.657s] [Startup] apply_post_load_workarounds: begin
+[ 15.657s] [Workarounds] starting patch_edit_mode_manager
+[ 15.658s] [Workarounds] finished patch_edit_mode_manager in 1.06ms
+[ 15.658s] [Workarounds] starting init_edit_mode_layout
+[ 15.658s] [EditMode] starting setup_layout_info
+[ 15.673s] [EditMode] finished setup_layout_info in 14.72ms
+[ 15.673s] [EditMode] starting apply_system_anchors
+[ 15.780s] [EditMode] finished apply_system_anchors in 107.78ms
+[ 15.780s] [EditMode] starting finalize_action_bar_positions
+[ 15.784s] [EditMode] finished finalize_action_bar_positions in 3.35ms
+[ 15.784s] [EditMode] starting invoke_anchor_changed_hooks
+[ 15.786s] [EditMode] finished invoke_anchor_changed_hooks in 2.25ms
+[ 15.786s] [EditMode] starting fix_action_bar_nan_size
+[ 15.786s] [EditMode] finished fix_action_bar_nan_size in 365.04µs
+[ 15.787s] [EditMode] starting fix_action_bar_scale
+[ 15.787s] [EditMode] finished fix_action_bar_scale in 39.86µs
+[ 15.787s] [Workarounds] finished init_edit_mode_layout in 128.69ms
+[ 15.787s] [Workarounds] starting patch_ui_parent_panel_toggles
+[ 15.788s] [Workarounds] finished patch_ui_parent_panel_toggles in 1.23ms
+[ 15.788s] [Workarounds] starting patch_uiparent_onupdate_worklists
+[ 15.788s] [Workarounds] finished patch_uiparent_onupdate_worklists in 234.25µs
+[ 15.788s] [Workarounds] starting init_chat_type_colors
+[ 15.788s] [Workarounds] finished init_chat_type_colors in 392.30µs
+[ 15.788s] [Workarounds] starting patch_chat_voice_button_surface
+[ 15.789s] [Workarounds] finished patch_chat_voice_button_surface in 542.43µs
+[ 15.789s] [Workarounds] starting patch_item_socketing_tooltips
+[ 15.789s] [Workarounds] finished patch_item_socketing_tooltips in 363.49µs
+[ 15.789s] [Workarounds] starting patch_character_select_selected_name
+[ 15.790s] [Workarounds] finished patch_character_select_selected_name in 129.85µs
+[ 15.790s] [Workarounds] starting patch_character_create_defaults
+[ 15.790s] [Workarounds] finished patch_character_create_defaults in 774.22µs
+[ 15.790s] [Workarounds] starting patch_character_frame_title_refresh
+[ 15.792s] [Workarounds] finished patch_character_frame_title_refresh in 1.88ms
+[ 15.792s] [Workarounds] starting patch_vignette_pin_template
+[ 15.793s] [Workarounds] finished patch_vignette_pin_template in 359.08µs
+[ 15.793s] [Workarounds] starting patch_fog_of_war_pin_mixin
+[ 15.793s] [Workarounds] finished patch_fog_of_war_pin_mixin in 843.24µs
+[ 15.794s] [Workarounds] starting patch_map_exploration_pin_mixin
+[ 15.795s] [Workarounds] finished patch_map_exploration_pin_mixin in 1.24ms
+[ 15.795s] [Workarounds] starting patch_map_canvas_data_provider_attachment
+[ 15.795s] [Workarounds] finished patch_map_canvas_data_provider_attachment in 314.32µs
+[ 15.795s] [Workarounds] starting ensure_adventure_map_frame_surface
+[ 15.797s] [Workarounds] finished ensure_adventure_map_frame_surface in 1.80ms
+[ 15.797s] [Workarounds] starting patch_action_bar_button_event_fanout
+[ 15.797s] [Workarounds] finished patch_action_bar_button_event_fanout in 500.50µs
+[ 15.797s] [Workarounds] starting patch_paging_controls_page_text
+[ 15.798s] [Workarounds] finished patch_paging_controls_page_text in 155.38µs
+[ 15.798s] [Workarounds] starting patch_talent_edge_frame_level_sync
+[ 15.798s] [Workarounds] finished patch_talent_edge_frame_level_sync in 89.48µs
+[ 15.798s] [Workarounds] starting patch_catalog_shop_product_card_defaults
+[ 15.798s] [Workarounds] finished patch_catalog_shop_product_card_defaults in 287.87µs
+[ 15.798s] [Workarounds] starting patch_game_time_defaults
+[ 15.798s] [Workarounds] finished patch_game_time_defaults in 80.70µs
+[ 15.798s] [Workarounds] starting patch_tooltip_nineslice_surface
+[ 15.798s] [Workarounds] finished patch_tooltip_nineslice_surface in 128.24µs
+[ 15.798s] [Workarounds] starting patch_container_frame_token_tracker
+[ 15.798s] [Workarounds] finished patch_container_frame_token_tracker in 197.75µs
+[ 15.798s] [Workarounds] starting patch_achievement_display_set_achievements
+[ 15.798s] [Workarounds] finished patch_achievement_display_set_achievements in 26.47µs
+[ 15.798s] [Workarounds] starting patch_housing_dashboard_preload
+[ 15.799s] [Workarounds] finished patch_housing_dashboard_preload in 1.01ms
+[ 15.799s] [Workarounds] starting patch_lfg_lock_list
+[ 15.800s] [Workarounds] finished patch_lfg_lock_list in 132.29µs
+[ 15.800s] [Workarounds] starting patch_auction_house_browse_results_event
+[ 15.800s] [Workarounds] finished patch_auction_house_browse_results_event in 279.11µs
+[ 15.800s] [Workarounds] starting patch_auction_house_search_context_aliases
+[ 15.800s] [Workarounds] finished patch_auction_house_search_context_aliases in 93.56µs
+[ 15.800s] [Workarounds] starting patch_auth_challenge_frame_parent
+[ 15.800s] [Workarounds] finished patch_auth_challenge_frame_parent in 236.32µs
+[ 15.800s] [Workarounds] starting patch_settings_surface_defaults
+[ 15.802s] [Workarounds] finished patch_settings_surface_defaults in 1.51ms
+[ 15.802s] [Workarounds] starting patch_settings_canvas_layout_visibility
+[ 15.802s] [Workarounds] finished patch_settings_canvas_layout_visibility in 514.01µs
+[ 15.802s] [Workarounds] starting mists::post_load
+[ 15.807s] [Workarounds] finished mists::post_load in 4.84ms
+[ 15.807s] [Startup] apply_post_load_workarounds: workarounds complete
+[ 15.995s] [Startup] apply_post_load_workarounds: globals restored
+[ 15.995s] [Startup] apply_post_load_workarounds: seterrorhandler restored
+[ 16.015s] [Startup] post-load workarounds complete in 338.17ms
+[ 16.015s] [Startup] end apply post-Blizzard load workarounds in 338.19ms
+[ 16.015s] [Startup] begin load third-party addons
+[ 16.016s] Addon loading disabled
+[ 16.016s] [Startup] end load third-party addons in 3.17µs
+[ 16.016s] [Startup] begin sync addon names to Lua
+[ 16.016s] [Startup] end sync addon names to Lua in 443.93µs
+[ 16.016s] [Startup] applying post-load workarounds
+[ 15.995s] [Startup] apply_post_load_workarounds: begin
+[ 15.995s] [Workarounds] starting patch_edit_mode_manager
+[ 15.996s] [Workarounds] finished patch_edit_mode_manager in 605.02µs
+[ 15.996s] [Workarounds] starting init_edit_mode_layout
+[ 15.996s] [EditMode] starting setup_layout_info
+[ 16.007s] [EditMode] finished setup_layout_info in 10.45ms
+[ 16.007s] [EditMode] starting apply_system_anchors
+[ 16.037s] [EditMode] finished apply_system_anchors in 30.24ms
+[ 16.037s] [EditMode] starting finalize_action_bar_positions
+[ 16.040s] [EditMode] finished finalize_action_bar_positions in 3.04ms
+[ 16.040s] [EditMode] starting invoke_anchor_changed_hooks
+[ 16.046s] [EditMode] finished invoke_anchor_changed_hooks in 6.44ms
+[ 16.046s] [EditMode] starting fix_action_bar_nan_size
+[ 16.047s] [EditMode] finished fix_action_bar_nan_size in 696.08µs
+[ 16.047s] [EditMode] starting fix_action_bar_scale
+[ 16.047s] [EditMode] finished fix_action_bar_scale in 24.48µs
+[ 16.047s] [Workarounds] finished init_edit_mode_layout in 51.03ms
+[ 16.047s] [Workarounds] starting patch_ui_parent_panel_toggles
+[ 16.048s] [Workarounds] finished patch_ui_parent_panel_toggles in 1.06ms
+[ 16.048s] [Workarounds] starting patch_uiparent_onupdate_worklists
+[ 16.048s] [Workarounds] finished patch_uiparent_onupdate_worklists in 219.50µs
+[ 16.048s] [Workarounds] starting init_chat_type_colors
+[ 16.049s] [Workarounds] finished init_chat_type_colors in 690.50µs
+[ 16.049s] [Workarounds] starting patch_chat_voice_button_surface
+[ 16.050s] [Workarounds] finished patch_chat_voice_button_surface in 787.66µs
+[ 16.050s] [Workarounds] starting patch_item_socketing_tooltips
+[ 16.050s] [Workarounds] finished patch_item_socketing_tooltips in 164.81µs
+[ 16.050s] [Workarounds] starting patch_character_select_selected_name
+[ 16.050s] [Workarounds] finished patch_character_select_selected_name in 68.85µs
+[ 16.050s] [Workarounds] starting patch_character_create_defaults
+[ 16.051s] [Workarounds] finished patch_character_create_defaults in 660.71µs
+[ 16.051s] [Workarounds] starting patch_character_frame_title_refresh
+[ 16.052s] [Workarounds] finished patch_character_frame_title_refresh in 1.27ms
+[ 16.052s] [Workarounds] starting patch_vignette_pin_template
+[ 16.052s] [Workarounds] finished patch_vignette_pin_template in 197.29µs
+[ 16.052s] [Workarounds] starting patch_fog_of_war_pin_mixin
+[ 16.053s] [Workarounds] finished patch_fog_of_war_pin_mixin in 473.84µs
+[ 16.053s] [Workarounds] starting patch_map_exploration_pin_mixin
+[ 16.054s] [Workarounds] finished patch_map_exploration_pin_mixin in 811.41µs
+[ 16.054s] [Workarounds] starting patch_map_canvas_data_provider_attachment
+[ 16.054s] [Workarounds] finished patch_map_canvas_data_provider_attachment in 139.46µs
+[ 16.054s] [Workarounds] starting ensure_adventure_map_frame_surface
+[ 16.054s] [Workarounds] finished ensure_adventure_map_frame_surface in 382.22µs
+[ 16.054s] [Workarounds] starting patch_action_bar_button_event_fanout
+[ 16.054s] [Workarounds] finished patch_action_bar_button_event_fanout in 258.12µs
+[ 16.054s] [Workarounds] starting patch_paging_controls_page_text
+[ 16.054s] [Workarounds] finished patch_paging_controls_page_text in 92.99µs
+[ 16.054s] [Workarounds] starting patch_talent_edge_frame_level_sync
+[ 16.055s] [Workarounds] finished patch_talent_edge_frame_level_sync in 62.67µs
+[ 16.055s] [Workarounds] starting patch_catalog_shop_product_card_defaults
+[ 16.055s] [Workarounds] finished patch_catalog_shop_product_card_defaults in 198.82µs
+[ 16.055s] [Workarounds] starting patch_game_time_defaults
+[ 16.055s] [Workarounds] finished patch_game_time_defaults in 59.28µs
+[ 16.055s] [Workarounds] starting patch_tooltip_nineslice_surface
+[ 16.055s] [Workarounds] finished patch_tooltip_nineslice_surface in 91.40µs
+[ 16.055s] [Workarounds] starting patch_container_frame_token_tracker
+[ 16.055s] [Workarounds] finished patch_container_frame_token_tracker in 128.81µs
+[ 16.055s] [Workarounds] starting patch_achievement_display_set_achievements
+[ 16.055s] [Workarounds] finished patch_achievement_display_set_achievements in 24.71µs
+[ 16.055s] [Workarounds] starting patch_housing_dashboard_preload
+[ 16.055s] [Workarounds] finished patch_housing_dashboard_preload in 204.73µs
+[ 16.055s] [Workarounds] starting patch_lfg_lock_list
+[ 16.055s] [Workarounds] finished patch_lfg_lock_list in 32.36µs
+[ 16.055s] [Workarounds] starting patch_auction_house_browse_results_event
+[ 16.055s] [Workarounds] finished patch_auction_house_browse_results_event in 161.45µs
+[ 16.055s] [Workarounds] starting patch_auction_house_search_context_aliases
+[ 16.056s] [Workarounds] finished patch_auction_house_search_context_aliases in 66.40µs
+[ 16.056s] [Workarounds] starting patch_auth_challenge_frame_parent
+[ 16.056s] [Workarounds] finished patch_auth_challenge_frame_parent in 109.82µs
+[ 16.056s] [Workarounds] starting patch_settings_surface_defaults
+[ 16.056s] [Workarounds] finished patch_settings_surface_defaults in 833.56µs
+[ 16.056s] [Workarounds] starting patch_settings_canvas_layout_visibility
+[ 16.057s] [Workarounds] finished patch_settings_canvas_layout_visibility in 354.73µs
+[ 16.057s] [Workarounds] starting mists::post_load
+[ 16.060s] [Workarounds] finished mists::post_load in 2.78ms
+[ 16.060s] [Startup] apply_post_load_workarounds: workarounds complete
+[ 16.239s] [Startup] apply_post_load_workarounds: globals restored
+[ 16.239s] [Startup] apply_post_load_workarounds: seterrorhandler restored
+[ 16.260s] [Startup] post-load workarounds complete in 243.68ms
+[ 16.260s] [Startup] restarting GC after bootstrap
+[ 16.555s] [Startup] GC restart complete in 295.36ms
+=== Final observed Lua error summary ===
+Status: FAILED
+Lua errors: 16 unique, 180 occurrence(s)
+Attributed owners: 4
+  Blizzard_AchievementUI: 174 occurrence(s)
+  Blizzard_CombatLogBase: 2 occurrence(s)
+  Blizzard_SharedXMLBase: 2 occurrence(s)
+  Blizzard_UIPanels_Game: 2 occurrence(s)
+Unattributed Lua errors: 0 occurrence(s)

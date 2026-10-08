@@ -1,0 +1,3 @@
+tests/patch_9_2_0_classic_surfaces.rs:9:for _, name in ipairs({'GetSpecialEventDetails', 'GetSpecialEventInfo'}) do
+tests/patch_9_2_0_retirements.rs:7:for _, name in ipairs({'GetSpecialEventDetails', 'GetSpecialEventInfo'}) do
+src/c_api/patch_retired_members.rs:22:    &[("C_PvP", &["GetSpecialEventDetails", "GetSpecialEventInfo"])];

@@ -1,0 +1,156 @@
+[
+  {
+    "source_id": "source-context-001",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial/source/build context or external resource link; no runtime credit.",
+    "extract_line": 1,
+    "literal": "Patch 9.2.0 API changes",
+    "wikitext_lines": [
+      1
+    ]
+  },
+  {
+    "source_id": "source-context-003",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial heading; no runtime credit.",
+    "extract_line": 3,
+    "literal": "== Summary ==",
+    "wikitext_lines": [
+      3
+    ]
+  },
+  {
+    "source_id": "prose-undated-004",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Click-binding publication exists, but unit-frame click to selected spell cast at the native input boundary is not proven by this sweep. Full interaction semantics remain pending.",
+    "extract_line": 4,
+    "literal": "* New Feature: Click Casting - allows you to cast spells by simply clicking on a unit frame.",
+    "wikitext_lines": [
+      4
+    ]
+  },
+  {
+    "source_id": "prose-undated-005",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Mouseover setting publication is not cast target routing proof. Needs input modifier/hover-to-unit resolution and casting without target mutation.",
+    "extract_line": 5,
+    "literal": "* New Setting: Unit Frame Mouseover Casting - allows you to mouse over a unit frame and cast a spell on that character without targeting them.",
+    "wikitext_lines": [
+      5
+    ]
+  },
+  {
+    "source_id": "prose-undated-006",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Gamepad LED getters/setters are retained gaps; device/default color transitions and hardware state are not modeled here.",
+    "extract_line": 6,
+    "literal": "* Supports setting the Gamepad LED color.",
+    "wikitext_lines": [
+      6
+    ]
+  },
+  {
+    "source_id": "prose-undated-007",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Left no-notch accessor is a permanent hardware shim; right accessor is a gap. No runtime proof for notch-aware layout/display mode transitions.",
+    "extract_line": 7,
+    "literal": "* Supports \"Notch Aware\" UI for MacBook Pro systems.",
+    "wikitext_lines": [
+      7
+    ]
+  },
+  {
+    "source_id": "prose-undated-008",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Cosmic combat-log school requires numeric identity/bitmask and emitted combat-log payload proof. Page only names the school; no occurrence-specific behavior test credited.",
+    "extract_line": 8,
+    "literal": "* Added Cosmic spell school.",
+    "wikitext_lines": [
+      8
+    ]
+  },
+  {
+    "source_id": "prose-undated-009",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Raid target icon 9-18 removal requires marker input/render/query rejection at exact bounds. Existing arbitrary marker state or enum declaration alone is not credited as behavior proof.",
+    "extract_line": 9,
+    "literal": "* Removed raid target icons 9-18.",
+    "wikitext_lines": [
+      9
+    ]
+  },
+  {
+    "source_id": "source-context-011",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial heading; no runtime credit.",
+    "extract_line": 11,
+    "literal": "== Resources ==",
+    "wikitext_lines": [
+      11
+    ]
+  },
+  {
+    "source_id": "source-context-012",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial/source/build context or external resource link; no runtime credit.",
+    "extract_line": 12,
+    "literal": "* TOC: 90200",
+    "wikitext_lines": [
+      12
+    ]
+  },
+  {
+    "source_id": "source-context-013",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial/source/build context or external resource link; no runtime credit.",
+    "extract_line": 13,
+    "literal": "* Diffs: wow-ui-source, BlizzardInterfaceResources",
+    "wikitext_lines": [
+      13
+    ]
+  },
+  {
+    "source_id": "source-context-014",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial/source/build context or external resource link; no runtime credit.",
+    "extract_line": 14,
+    "literal": "* Deprecated API: Deprecated_9_2_0.lua",
+    "wikitext_lines": [
+      14
+    ]
+  },
+  {
+    "source_id": "source-context-015",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial/source/build context or external resource link; no runtime credit.",
+    "extract_line": 15,
+    "literal": "* Official patch notes: User Interface and Accessibility",
+    "wikitext_lines": [
+      15
+    ]
+  },
+  {
+    "source_id": "prose-undated-016",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "External community patch-notes link; not expanded and no runtime credit.",
+    "extract_line": 16,
+    "literal": "* Community patch notes: 9.2.0 Consolidated UI Changes",
+    "wikitext_lines": [
+      16
+    ]
+  }
+]

@@ -4,7 +4,7 @@
 
 ## [2026-10-07] investigation | 9.2.0 page audit
 
-[Audit](investigations/patch-9-2-0-api-audit.md): revision 4788278, 80 inventory occurrences, HTML CVar/command parser boundary and two unused retail PvP retirements; final proof pending.
+[Audit](investigations/patch-9-2-0-api-audit.md): revision 4788278, 80 inventory / fourteen extract / one caption IDs; two retail PvP retirements, 26 exact gaps, 28 sweeps, negative control, Mists and exit-0 startup `[]` pass. Six summary contracts remain pending; prior inputs/outcomes preserved.
 
 ## [2026-10-07] evidence | 9.2.7 page audit
 

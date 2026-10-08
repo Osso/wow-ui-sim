@@ -1,0 +1,678 @@
+[
+  {
+    "source_id": "wt-global-api-C_CharacterServices.GetCharacterServiceDisplayDataByVASType-29",
+    "symbol": "C_CharacterServices.GetCharacterServiceDisplayDataByVASType",
+    "literal": ": {{api|t=a|C_CharacterServices.GetCharacterServiceDisplayDataByVASType}}",
+    "wikitext_line": 29,
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_CharacterServices.GetCharacterServiceDisplayDataByVASType"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "disposition": "retained",
+    "reason": "Needs VAS-type keyed character-service display catalog and entitlement inputs; lazy lookup is not a registered producer."
+  },
+  {
+    "source_id": "wt-global-api-C_GamePad.ClearLedColor-43",
+    "symbol": "C_GamePad.ClearLedColor",
+    "literal": ": {{api|t=a|C_GamePad.ClearLedColor}}",
+    "wikitext_line": 43,
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_GamePad.ClearLedColor"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "parent raw-absent; raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "disposition": "retained",
+    "reason": "Requires per-device LED color/default state and hardware operation policy; gamepad pet-action storage is not LED state. No new hardware placeholder added."
+  },
+  {
+    "source_id": "wt-global-api-C_GamePad.GetLedColor-44",
+    "symbol": "C_GamePad.GetLedColor",
+    "literal": ": {{api|t=a|C_GamePad.GetLedColor}}",
+    "wikitext_line": 44,
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_GamePad.GetLedColor"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "disposition": "retained",
+    "reason": "Requires per-device populated LED color query and absent-device contract; no explicit LED producer."
+  },
+  {
+    "source_id": "wt-global-api-C_GamePad.SetLedColor-45",
+    "symbol": "C_GamePad.SetLedColor",
+    "literal": ": {{api|t=a|C_GamePad.SetLedColor}}",
+    "wikitext_line": 45,
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_GamePad.SetLedColor"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "disposition": "retained",
+    "reason": "Requires per-device color mutation, validation and hardware operation policy; not satisfied by a no-op."
+  },
+  {
+    "source_id": "wt-global-api-C_Garrison.GetCurrentCypherEquipmentLevel-46",
+    "symbol": "C_Garrison.GetCurrentCypherEquipmentLevel",
+    "literal": ": {{api|t=a|C_Garrison.GetCurrentCypherEquipmentLevel}}",
+    "wikitext_line": 46,
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_Garrison.GetCurrentCypherEquipmentLevel"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "disposition": "retained",
+    "reason": "Requires current Cypher progression/equipment state; no explicit query producer."
+  },
+  {
+    "source_id": "wt-global-api-C_Garrison.GetCyphersToNextEquipmentLevel-47",
+    "symbol": "C_Garrison.GetCyphersToNextEquipmentLevel",
+    "literal": ": {{api|t=a|C_Garrison.GetCyphersToNextEquipmentLevel}}",
+    "wikitext_line": 47,
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_Garrison.GetCyphersToNextEquipmentLevel"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "disposition": "retained",
+    "reason": "Requires level thresholds and earned Cypher progression; no explicit query producer."
+  },
+  {
+    "source_id": "wt-global-api-C_Garrison.GetMaxCypherEquipmentLevel-48",
+    "symbol": "C_Garrison.GetMaxCypherEquipmentLevel",
+    "literal": ": {{api|t=a|C_Garrison.GetMaxCypherEquipmentLevel}}",
+    "wikitext_line": 48,
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_Garrison.GetMaxCypherEquipmentLevel"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "disposition": "retained",
+    "reason": "Requires supported Cypher equipment progression cap; no sourced cap/model is registered."
+  },
+  {
+    "source_id": "wt-global-api-C_GossipInfo.GetCompletedOptionDescriptionString-49",
+    "symbol": "C_GossipInfo.GetCompletedOptionDescriptionString",
+    "literal": ": {{api|t=a|C_GossipInfo.GetCompletedOptionDescriptionString}}",
+    "wikitext_line": 49,
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_GossipInfo.GetCompletedOptionDescriptionString"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "disposition": "retained",
+    "reason": "Requires completed-option description data and formatting contract; no explicit producer. Existing option selection does not establish this output."
+  },
+  {
+    "source_id": "wt-global-api-C_Item.GetItemConversionOutputIcon-50",
+    "symbol": "C_Item.GetItemConversionOutputIcon",
+    "literal": ": {{api|t=a|C_Item.GetItemConversionOutputIcon}}",
+    "wikitext_line": 50,
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_Item.GetItemConversionOutputIcon"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "disposition": "retained",
+    "reason": "Requires conversion input-to-output item mapping and output icon resolution; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_Item.GetItemUniquenessByID-51",
+    "symbol": "C_Item.GetItemUniquenessByID",
+    "literal": ": {{api|t=a|C_Item.GetItemUniquenessByID}}",
+    "wikitext_line": 51,
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_Item.GetItemUniquenessByID"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "disposition": "retained",
+    "reason": "Requires uniqueness/category limits in item data and exact output contract; inventory counts do not establish uniqueness restrictions."
+  },
+  {
+    "source_id": "wt-global-api-C_Item.IsItemConvertibleAndValidForPlayer-52",
+    "symbol": "C_Item.IsItemConvertibleAndValidForPlayer",
+    "literal": ": {{api|t=a|C_Item.IsItemConvertibleAndValidForPlayer}}",
+    "wikitext_line": 52,
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_Item.IsItemConvertibleAndValidForPlayer"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "disposition": "retained",
+    "reason": "Requires conversion mapping plus player eligibility; not satisfied by unconditional false."
+  },
+  {
+    "source_id": "wt-global-api-C_Item.IsItemSpecificToPlayerClass-53",
+    "symbol": "C_Item.IsItemSpecificToPlayerClass",
+    "literal": ": {{api|t=a|C_Item.IsItemSpecificToPlayerClass}}",
+    "wikitext_line": 53,
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_Item.IsItemSpecificToPlayerClass"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "disposition": "retained",
+    "reason": "Requires item class-specific metadata/player relation; no explicit predicate registered."
+  },
+  {
+    "source_id": "wt-global-api-C_ItemInteraction.GetChargeInfo-54",
+    "symbol": "C_ItemInteraction.GetChargeInfo",
+    "literal": ": {{api|t=a|C_ItemInteraction.GetChargeInfo}}",
+    "wikitext_line": 54,
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_ItemInteraction.GetChargeInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "disposition": "retained",
+    "reason": "Current src/c_api/c_item_interaction.rs models the interaction-info DTO, not charge count/recharge timing. Needs charge state and transitions."
+  },
+  {
+    "source_id": "wt-global-api-C_ItemInteraction.GetItemConversionCurrencyCost-55",
+    "symbol": "C_ItemInteraction.GetItemConversionCurrencyCost",
+    "literal": ": {{api|t=a|C_ItemInteraction.GetItemConversionCurrencyCost}}",
+    "wikitext_line": 55,
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_ItemInteraction.GetItemConversionCurrencyCost"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "disposition": "retained",
+    "reason": "Current src/c_api/c_item_interaction.rs DTO cost is not item-to-output conversion currency data. Needs conversion cost lookup."
+  },
+  {
+    "source_id": "wt-global-api-C_LFGList.DoesEntryTitleMatchPrebuiltTitle-57",
+    "symbol": "C_LFGList.DoesEntryTitleMatchPrebuiltTitle",
+    "literal": ": {{api|t=a|C_LFGList.DoesEntryTitleMatchPrebuiltTitle}}",
+    "wikitext_line": 57,
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_LFGList.DoesEntryTitleMatchPrebuiltTitle"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "disposition": "retained",
+    "reason": "Needs activity/playstyle title construction, locale and exact match policy. Existing listing/search state does not register this predicate. 9.2.5 changes playstyle enum spelling only, not publication direction."
+  },
+  {
+    "source_id": "wt-global-api-C_MythicPlus.GetSeasonBestMythicRatingFromThisExpansion-60",
+    "symbol": "C_MythicPlus.GetSeasonBestMythicRatingFromThisExpansion",
+    "literal": ": {{api|t=a|C_MythicPlus.GetSeasonBestMythicRatingFromThisExpansion}}",
+    "wikitext_line": 60,
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_MythicPlus.GetSeasonBestMythicRatingFromThisExpansion"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "disposition": "retained",
+    "reason": "Requires expansion-to-season selection and historical best-rating records; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetBattlefieldFlagPosition-65",
+    "symbol": "C_PvP.GetBattlefieldFlagPosition",
+    "literal": ": {{api|t=a|C_PvP.GetBattlefieldFlagPosition}}",
+    "wikitext_line": 65,
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PvP.GetBattlefieldFlagPosition"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "disposition": "retained",
+    "reason": "Current cached BattlefieldFlagDataProvider.lua:43 consumes this successor. Needs indexed map-specific flag position/texture state; global predecessor absence does not prove successor behavior."
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetPVPSeasonRewardAchievementID-67",
+    "symbol": "C_PvP.GetPVPSeasonRewardAchievementID",
+    "literal": ": {{api|t=a|C_PvP.GetPVPSeasonRewardAchievementID}}",
+    "wikitext_line": 67,
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PvP.GetPVPSeasonRewardAchievementID"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "disposition": "retained",
+    "reason": "Requires season reward-to-achievement catalog; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetSpecialEventBrawlInfo-68",
+    "symbol": "C_PvP.GetSpecialEventBrawlInfo",
+    "literal": ": {{api|t=a|C_PvP.GetSpecialEventBrawlInfo}}",
+    "wikitext_line": 68,
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PvP.GetSpecialEventBrawlInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "disposition": "retained",
+    "reason": "Requires populated special-event brawl schedule/info and missing-event contract; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_TTSSettings.ShouldOverrideMessage-70",
+    "symbol": "C_TTSSettings.ShouldOverrideMessage",
+    "literal": ": {{api|t=a|C_TTSSettings.ShouldOverrideMessage}}",
+    "wikitext_line": 70,
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_TTSSettings.ShouldOverrideMessage"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "disposition": "retained",
+    "reason": "Requires TTS override setting/message policy; no explicit producer. Placeholder boolean would hide missing policy."
+  },
+  {
+    "source_id": "wt-global-api-C_UI.GetTopRightNotchSafeRegion-73",
+    "symbol": "C_UI.GetTopRightNotchSafeRegion",
+    "literal": ": {{api|t=a|C_UI.GetTopRightNotchSafeRegion}}",
+    "wikitext_line": 73,
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_UI.GetTopRightNotchSafeRegion"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "disposition": "retained",
+    "reason": "Current permanent no-notch shim registers only the left accessor; right accessor has lazy lookup only. Hardware safe-area state is intentionally unsupported; adding a constant shim would not be a modeled closure."
+  },
+  {
+    "source_id": "wt-global-api-C_UIWidgetManager.GetUnitPowerBarWidgetVisualizationInfo-75",
+    "symbol": "C_UIWidgetManager.GetUnitPowerBarWidgetVisualizationInfo",
+    "literal": ": {{api|t=a|C_UIWidgetManager.GetUnitPowerBarWidgetVisualizationInfo}}",
+    "wikitext_line": 75,
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_UIWidgetManager.GetUnitPowerBarWidgetVisualizationInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "disposition": "retained",
+    "reason": "Requires unit-power widget visualization DTO and widget-provider data; no explicit registered producer."
+  },
+  {
+    "source_id": "wt-global-api-StartSoloShuffleWarGameByName-76",
+    "symbol": "StartSoloShuffleWarGameByName",
+    "literal": ": {{api|t=a|StartSoloShuffleWarGameByName}}",
+    "wikitext_line": 76,
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "StartSoloShuffleWarGameByName"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    },
+    "disposition": "retained",
+    "reason": "Global is absent; needs named-target solo-shuffle request, eligibility and match lifecycle, not a no-op."
+  },
+  {
+    "source_id": "wt-global-api-StartSpectatorSoloShuffleWarGame-77",
+    "symbol": "StartSpectatorSoloShuffleWarGame",
+    "literal": ": {{api|t=a|StartSpectatorSoloShuffleWarGame}}",
+    "wikitext_line": 77,
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "StartSpectatorSoloShuffleWarGame"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    },
+    "disposition": "retained",
+    "reason": "Global is absent; needs spectator solo-shuffle request and match lifecycle, not a no-op."
+  },
+  {
+    "source_id": "wt-global-api-C_CharacterServices.GetCharacterServiceDisplayOrder-80",
+    "symbol": "C_CharacterServices.GetCharacterServiceDisplayOrder",
+    "literal": ": {{api|t=a|C_CharacterServices.GetCharacterServiceDisplayOrder}}",
+    "wikitext_line": 80,
+    "observation": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_CharacterServices.GetCharacterServiceDisplayOrder"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "disposition": "retained",
+    "reason": "Removed member still fabricated by namespace lookup. No qualified consumer; bare-name local definition/call at Blizzard_GlueXML/Mainline/CharacterSelect.lua:1493/1542 retained conservatively under the task consumer rule. No identity equivalence is claimed."
+  },
+  {
+    "source_id": "wt-cvars-spectate-144",
+    "symbol": "spectate",
+    "literal": ": <span class=\"tttemplatelink\">[[CVar spectate|spectate]]</span><span style=\"display:none\"><small>Spectate <CharName-Realm> - Begin commentator view of specified player's instance party. Exclude name to exit spectator mode</small></span>",
+    "wikitext_line": 144,
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "cvars",
+        "superseded_by": null,
+        "symbol": "spectate"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Command record present=false",
+        "kind": "command",
+        "value": null
+      },
+      "ok": false
+    },
+    "disposition": "retained",
+    "reason": "Console command is not registered; needs target/rejoin spectator view transition and identity resolution, not a CVar with arbitrary value."
+  }
+]

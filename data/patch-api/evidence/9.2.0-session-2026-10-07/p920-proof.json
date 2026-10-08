@@ -45,5 +45,278 @@
     "exit": 101,
     "output": "p920-retirement-red-behavior.txt",
     "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_9_2_0_",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "3d2de0d1b53b045b771e4d3c60bac005f93e57b2",
+    "scope": "retirement-green",
+    "env": {},
+    "exit": 0,
+    "output": "p920-retirement-green.txt",
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "publication_sweep"
+    ],
+    "revision": "3d2de0d1b53b045b771e4d3c60bac005f93e57b2",
+    "scope": "all-sweeps",
+    "env": {
+      "P1000_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p920-page/data/patch-api/evidence/9.2.0-session-2026-10-07/p1000_sweep_out-results.json",
+      "P1002_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p920-page/data/patch-api/evidence/9.2.0-session-2026-10-07/p1002_sweep_out-results.json",
+      "P1005_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p920-page/data/patch-api/evidence/9.2.0-session-2026-10-07/p1005_sweep_out-results.json",
+      "P1007_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p920-page/data/patch-api/evidence/9.2.0-session-2026-10-07/p1007_sweep_out-results.json",
+      "P1010_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p920-page/data/patch-api/evidence/9.2.0-session-2026-10-07/p1010_sweep_out-results.json",
+      "P1015_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p920-page/data/patch-api/evidence/9.2.0-session-2026-10-07/p1015_sweep_out-results.json",
+      "P1017_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p920-page/data/patch-api/evidence/9.2.0-session-2026-10-07/p1017_sweep_out-results.json",
+      "P1020_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p920-page/data/patch-api/evidence/9.2.0-session-2026-10-07/p1020_sweep_out-results.json",
+      "P1025_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p920-page/data/patch-api/evidence/9.2.0-session-2026-10-07/p1025_sweep_out-results.json",
+      "P1026_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p920-page/data/patch-api/evidence/9.2.0-session-2026-10-07/p1026_sweep_out-results.json",
+      "P1027_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p920-page/data/patch-api/evidence/9.2.0-session-2026-10-07/p1027_sweep_out-results.json",
+      "P1100_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p920-page/data/patch-api/evidence/9.2.0-session-2026-10-07/p1100_sweep_out-results.json",
+      "P1102_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p920-page/data/patch-api/evidence/9.2.0-session-2026-10-07/p1102_sweep_out-results.json",
+      "P1105_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p920-page/data/patch-api/evidence/9.2.0-session-2026-10-07/p1105_sweep_out-results.json",
+      "P1107_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p920-page/data/patch-api/evidence/9.2.0-session-2026-10-07/p1107_sweep_out-results.json",
+      "P1110_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p920-page/data/patch-api/evidence/9.2.0-session-2026-10-07/p1110_sweep_out-results.json",
+      "P1115_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p920-page/data/patch-api/evidence/9.2.0-session-2026-10-07/p1115_sweep_out-results.json",
+      "P1117_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p920-page/data/patch-api/evidence/9.2.0-session-2026-10-07/p1117_sweep_out-results.json",
+      "P1120_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p920-page/data/patch-api/evidence/9.2.0-session-2026-10-07/p1120_sweep_out-results.json",
+      "P1125_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p920-page/data/patch-api/evidence/9.2.0-session-2026-10-07/p1125_sweep_out-results.json",
+      "P1127_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p920-page/data/patch-api/evidence/9.2.0-session-2026-10-07/p1127_sweep_out-results.json",
+      "P1200_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p920-page/data/patch-api/evidence/9.2.0-session-2026-10-07/p1200_sweep_out-results.json",
+      "P1201_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p920-page/data/patch-api/evidence/9.2.0-session-2026-10-07/p1201_sweep_out-results.json",
+      "P1205_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p920-page/data/patch-api/evidence/9.2.0-session-2026-10-07/p1205_sweep_out-results.json",
+      "P1207_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p920-page/data/patch-api/evidence/9.2.0-session-2026-10-07/p1207_sweep_out-results.json",
+      "P1210_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p920-page/data/patch-api/evidence/9.2.0-session-2026-10-07/p1210_sweep_out-results.json",
+      "P927_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p920-page/data/patch-api/evidence/9.2.0-session-2026-10-07/p927_sweep_out-results.json",
+      "P920_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p920-page/data/patch-api/evidence/9.2.0-session-2026-10-07/p920_sweep_out-results.json"
+    },
+    "exit": 0,
+    "output": "p920-all-sweeps.txt",
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "patch_9_2_0_cached_pvp_retirements"
+    ],
+    "revision": "3d2de0d1b53b045b771e4d3c60bac005f93e57b2",
+    "scope": "cached-retirements",
+    "env": {},
+    "exit": 0,
+    "output": "p920-cached-retirements.txt",
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "patch_9_2_0_publication_sweep"
+    ],
+    "revision": "3d2de0d1b",
+    "scope": "Exact single-event negative control",
+    "exit": 1,
+    "output": "p920-negative.txt",
+    "invalidated": false,
+    "env": {
+      "P920_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p920-page/data/patch-api/evidence/9.2.0-session-2026-10-07/p920-negative-register.json",
+      "P920_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p920-page/data/patch-api/evidence/9.2.0-session-2026-10-07/p920-negative-sweep.json"
+    }
+  },
+  {
+    "command": [
+      "cargo",
+      "fmt",
+      "--check"
+    ],
+    "revision": "3d2de0d1b",
+    "scope": "format-check",
+    "exit": 0,
+    "output": "p920-format-check.txt",
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "check"
+    ],
+    "revision": "3d2de0d1b",
+    "scope": "default-check",
+    "exit": 0,
+    "output": "p920-default-check.txt",
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "build",
+      "--bin",
+      "wow-sim"
+    ],
+    "revision": "3d2de0d1b",
+    "scope": "retail-build",
+    "exit": 0,
+    "output": "p920-retail-build.txt",
+    "invalidated": true,
+    "invalidation_reason": "Subsequent Mists cargo test rebuilt target/debug/wow-sim."
+  },
+  {
+    "command": [
+      "cargo",
+      "check",
+      "--no-default-features",
+      "--features",
+      "sound,gui,casc,client-mists",
+      "--tests"
+    ],
+    "revision": "3d2de0d1b",
+    "scope": "mists-check",
+    "exit": 0,
+    "output": "p920-mists-check.txt",
+    "invalidated": false
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--no-default-features",
+      "--features",
+      "sound,gui,casc,client-mists",
+      "--test",
+      "integration",
+      "patch_9_2_0_mists_preserves_legacy_pvp_lookup",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "3d2de0d1b",
+    "scope": "mists-regression",
+    "exit": 0,
+    "output": "p920-mists-regression.txt",
+    "invalidated": false
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "target/debug/wow-sim",
+      "--no-addons",
+      "--no-saved-vars",
+      "lua-errors"
+    ],
+    "revision": "3d2de0d1b",
+    "scope": "Invalid retail proof: Mists test rebuilt shared target/debug/wow-sim with classic features",
+    "exit": 0,
+    "output": "p920-startup-mists.stdout",
+    "invalidated": true
+  },
+  {
+    "command": [
+      "cargo",
+      "build",
+      "--bin",
+      "wow-sim"
+    ],
+    "revision": "3d2de0d1b",
+    "scope": "Restore retail binary after Mists test feature change",
+    "exit": 0,
+    "output": "p920-retail-rebuild.txt",
+    "invalidated": false
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "target/debug/wow-sim",
+      "--no-addons",
+      "--no-saved-vars",
+      "lua-errors"
+    ],
+    "revision": "3d2de0d1b",
+    "scope": "Bounded separately rebuilt retail startup",
+    "exit": 0,
+    "output": "p920-startup.stdout",
+    "stderr": "p920-startup.stderr",
+    "invalidated": false
+  },
+  {
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tools",
+      "-p",
+      "test_gen_patch_wikitext_register.py"
+    ],
+    "revision": "b6d183045",
+    "scope": "12 register fixtures GREEN after parser fix",
+    "exit": 0,
+    "output": "p920-generator-green.txt",
+    "invalidated": false
+  },
+  {
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tools",
+      "-p",
+      "test_extract_patch_non_inventory.py"
+    ],
+    "revision": "b6d183045",
+    "scope": "23 unchanged extractor fixtures",
+    "exit": 0,
+    "output": "p920-extract-fixtures.txt",
+    "invalidated": false
+  },
+  {
+    "command": [
+      "python3",
+      "tools/extract_patch_non_inventory.py",
+      "--patch",
+      "each saved patch",
+      "--check",
+      "--text-only",
+      "[--preserve-examples]"
+    ],
+    "revision": "3d2de0d1b",
+    "scope": "56 after checks; all 54 prior mode outcomes unchanged, own both modes pass",
+    "exit": 0,
+    "output": "p920-extraction-after.json",
+    "invalidated": false
+  },
+  {
+    "command": [
+      "sha256",
+      "all 143 paths in p920-preserved-inputs.json"
+    ],
+    "revision": "3d2de0d1b",
+    "scope": "All pre-existing source/register/ledger bytes preserved",
+    "exit": 0,
+    "output": "p920-preserved-inputs.json",
+    "invalidated": false
   }
 ]

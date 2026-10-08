@@ -1,0 +1,14 @@
+{
+  "default-check": {
+    "vendor_manifest_warnings": 7,
+    "non_vendor_warnings": []
+  },
+  "mists-check": {
+    "vendor_manifest_warnings": 7,
+    "non_vendor_warnings": []
+  },
+  "mists-regression": {
+    "vendor_manifest_warnings": 7,
+    "non_vendor_warnings": []
+  }
+}

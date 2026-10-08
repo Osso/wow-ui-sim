@@ -1,0 +1,15 @@
+[
+  {
+    "gap_id": "wt-global-api-C_LFGList.DoesEntryTitleMatchPrebuiltTitle-57",
+    "matches": [
+      {
+        "id": "wt-global-api-C_LFGList.DoesEntryTitleMatchPrebuiltTitle-145",
+        "section": "global-api",
+        "direction": "changed",
+        "symbol": "C_LFGList.DoesEntryTitleMatchPrebuiltTitle",
+        "annotation": "# arg playstyle, Type: Enum.LfgEntryPlaystyle -> Enum.LFGEntryPlaystyle",
+        "wikitext_line": 145
+      }
+    ]
+  }
+]

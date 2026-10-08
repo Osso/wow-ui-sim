@@ -1,0 +1,394 @@
+[
+  {
+    "patch": "10.0.0",
+    "preserve_examples": false,
+    "exit": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p920-page/tools/extract_patch_non_inventory.py\", line 275, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p920-page/tools/extract_patch_non_inventory.py\", line 233, in main\n    assert text_path.read_text() == text, 'extract differs'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: extract differs\n"
+  },
+  {
+    "patch": "10.0.0",
+    "preserve_examples": true,
+    "exit": 0,
+    "stdout": "{\"patch\": \"10.0.0\", \"rows\": 439, \"statuses\": {\"metadata-only\": 15, \"audit-pending\": 424}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "10.0.2",
+    "preserve_examples": false,
+    "exit": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p920-page/tools/extract_patch_non_inventory.py\", line 275, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p920-page/tools/extract_patch_non_inventory.py\", line 233, in main\n    assert text_path.read_text() == text, 'extract differs'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: extract differs\n"
+  },
+  {
+    "patch": "10.0.2",
+    "preserve_examples": true,
+    "exit": 0,
+    "stdout": "{\"patch\": \"10.0.2\", \"rows\": 167, \"statuses\": {\"metadata-only\": 11, \"audit-pending\": 156}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "10.0.5",
+    "preserve_examples": false,
+    "exit": 0,
+    "stdout": "{\"patch\": \"10.0.5\", \"rows\": 67, \"statuses\": {\"metadata-only\": 7, \"audit-pending\": 60}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "10.0.5",
+    "preserve_examples": true,
+    "exit": 0,
+    "stdout": "{\"patch\": \"10.0.5\", \"rows\": 67, \"statuses\": {\"metadata-only\": 7, \"audit-pending\": 60}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "10.0.7",
+    "preserve_examples": false,
+    "exit": 0,
+    "stdout": "{\"patch\": \"10.0.7\", \"rows\": 2214, \"statuses\": {\"metadata-only\": 11, \"audit-pending\": 2203}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "10.0.7",
+    "preserve_examples": true,
+    "exit": 0,
+    "stdout": "{\"patch\": \"10.0.7\", \"rows\": 2214, \"statuses\": {\"metadata-only\": 11, \"audit-pending\": 2203}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "10.1.0",
+    "preserve_examples": false,
+    "exit": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p920-page/tools/extract_patch_non_inventory.py\", line 275, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p920-page/tools/extract_patch_non_inventory.py\", line 233, in main\n    assert text_path.read_text() == text, 'extract differs'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: extract differs\n"
+  },
+  {
+    "patch": "10.1.0",
+    "preserve_examples": true,
+    "exit": 0,
+    "stdout": "{\"patch\": \"10.1.0\", \"rows\": 287, \"statuses\": {\"metadata-only\": 12, \"audit-pending\": 275}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "10.1.5",
+    "preserve_examples": false,
+    "exit": 0,
+    "stdout": "{\"patch\": \"10.1.5\", \"rows\": 98, \"statuses\": {\"metadata-only\": 9, \"audit-pending\": 89}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "10.1.5",
+    "preserve_examples": true,
+    "exit": 0,
+    "stdout": "{\"patch\": \"10.1.5\", \"rows\": 98, \"statuses\": {\"metadata-only\": 9, \"audit-pending\": 89}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "10.1.7",
+    "preserve_examples": false,
+    "exit": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p920-page/tools/extract_patch_non_inventory.py\", line 275, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p920-page/tools/extract_patch_non_inventory.py\", line 233, in main\n    assert text_path.read_text() == text, 'extract differs'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: extract differs\n"
+  },
+  {
+    "patch": "10.1.7",
+    "preserve_examples": true,
+    "exit": 0,
+    "stdout": "{\"patch\": \"10.1.7\", \"rows\": 55, \"statuses\": {\"metadata-only\": 10, \"audit-pending\": 45}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "10.2.0",
+    "preserve_examples": false,
+    "exit": 0,
+    "stdout": "{\"patch\": \"10.2.0\", \"rows\": 134, \"statuses\": {\"metadata-only\": 15, \"audit-pending\": 119}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "10.2.0",
+    "preserve_examples": true,
+    "exit": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p920-page/tools/extract_patch_non_inventory.py\", line 275, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p920-page/tools/extract_patch_non_inventory.py\", line 233, in main\n    assert text_path.read_text() == text, 'extract differs'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: extract differs\n"
+  },
+  {
+    "patch": "10.2.5",
+    "preserve_examples": false,
+    "exit": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p920-page/tools/extract_patch_non_inventory.py\", line 275, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p920-page/tools/extract_patch_non_inventory.py\", line 233, in main\n    assert text_path.read_text() == text, 'extract differs'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: extract differs\n"
+  },
+  {
+    "patch": "10.2.5",
+    "preserve_examples": true,
+    "exit": 0,
+    "stdout": "{\"patch\": \"10.2.5\", \"rows\": 356, \"statuses\": {\"metadata-only\": 17, \"audit-pending\": 339}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "10.2.6",
+    "preserve_examples": false,
+    "exit": 0,
+    "stdout": "{\"patch\": \"10.2.6\", \"rows\": 138, \"statuses\": {\"metadata-only\": 17, \"audit-pending\": 121}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "10.2.6",
+    "preserve_examples": true,
+    "exit": 0,
+    "stdout": "{\"patch\": \"10.2.6\", \"rows\": 138, \"statuses\": {\"metadata-only\": 17, \"audit-pending\": 121}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "10.2.7",
+    "preserve_examples": false,
+    "exit": 0,
+    "stdout": "{\"patch\": \"10.2.7\", \"rows\": 83, \"statuses\": {\"metadata-only\": 12, \"audit-pending\": 71}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "10.2.7",
+    "preserve_examples": true,
+    "exit": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p920-page/tools/extract_patch_non_inventory.py\", line 275, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p920-page/tools/extract_patch_non_inventory.py\", line 233, in main\n    assert text_path.read_text() == text, 'extract differs'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: extract differs\n"
+  },
+  {
+    "patch": "11.0.0",
+    "preserve_examples": false,
+    "exit": 0,
+    "stdout": "{\"patch\": \"11.0.0\", \"rows\": 347, \"statuses\": {\"metadata-only\": 19, \"audit-pending\": 328}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "11.0.0",
+    "preserve_examples": true,
+    "exit": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p920-page/tools/extract_patch_non_inventory.py\", line 275, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p920-page/tools/extract_patch_non_inventory.py\", line 233, in main\n    assert text_path.read_text() == text, 'extract differs'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: extract differs\n"
+  },
+  {
+    "patch": "11.0.2",
+    "preserve_examples": false,
+    "exit": 0,
+    "stdout": "{\"patch\": \"11.0.2\", \"rows\": 229, \"statuses\": {\"metadata-only\": 22, \"audit-pending\": 207}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "11.0.2",
+    "preserve_examples": true,
+    "exit": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p920-page/tools/extract_patch_non_inventory.py\", line 275, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p920-page/tools/extract_patch_non_inventory.py\", line 233, in main\n    assert text_path.read_text() == text, 'extract differs'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: extract differs\n"
+  },
+  {
+    "patch": "11.0.5",
+    "preserve_examples": false,
+    "exit": 0,
+    "stdout": "{\"patch\": \"11.0.5\", \"rows\": 34, \"statuses\": {\"metadata-only\": 10, \"audit-pending\": 24}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "11.0.5",
+    "preserve_examples": true,
+    "exit": 0,
+    "stdout": "{\"patch\": \"11.0.5\", \"rows\": 34, \"statuses\": {\"metadata-only\": 10, \"audit-pending\": 24}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "11.0.7",
+    "preserve_examples": false,
+    "exit": 0,
+    "stdout": "{\"patch\": \"11.0.7\", \"rows\": 83, \"statuses\": {\"metadata-only\": 14, \"audit-pending\": 69}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "11.0.7",
+    "preserve_examples": true,
+    "exit": 0,
+    "stdout": "{\"patch\": \"11.0.7\", \"rows\": 83, \"statuses\": {\"metadata-only\": 14, \"audit-pending\": 69}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "11.1.0",
+    "preserve_examples": false,
+    "exit": 0,
+    "stdout": "{\"patch\": \"11.1.0\", \"rows\": 100, \"statuses\": {\"metadata-only\": 13, \"audit-pending\": 87}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "11.1.0",
+    "preserve_examples": true,
+    "exit": 0,
+    "stdout": "{\"patch\": \"11.1.0\", \"rows\": 100, \"statuses\": {\"metadata-only\": 13, \"audit-pending\": 87}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "11.1.5",
+    "preserve_examples": false,
+    "exit": 0,
+    "stdout": "{\"patch\": \"11.1.5\", \"rows\": 99, \"statuses\": {\"metadata-only\": 14, \"audit-pending\": 85}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "11.1.5",
+    "preserve_examples": true,
+    "exit": 0,
+    "stdout": "{\"patch\": \"11.1.5\", \"rows\": 99, \"statuses\": {\"metadata-only\": 14, \"audit-pending\": 85}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "11.1.7",
+    "preserve_examples": false,
+    "exit": 0,
+    "stdout": "{\"patch\": \"11.1.7\", \"rows\": 27, \"statuses\": {\"metadata-only\": 11, \"audit-pending\": 16}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "11.1.7",
+    "preserve_examples": true,
+    "exit": 0,
+    "stdout": "{\"patch\": \"11.1.7\", \"rows\": 27, \"statuses\": {\"metadata-only\": 11, \"audit-pending\": 16}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "11.2.0",
+    "preserve_examples": false,
+    "exit": 0,
+    "stdout": "{\"patch\": \"11.2.0\", \"rows\": 82, \"statuses\": {\"metadata-only\": 17, \"audit-pending\": 65}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "11.2.0",
+    "preserve_examples": true,
+    "exit": 0,
+    "stdout": "{\"patch\": \"11.2.0\", \"rows\": 82, \"statuses\": {\"metadata-only\": 17, \"audit-pending\": 65}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "11.2.5",
+    "preserve_examples": false,
+    "exit": 0,
+    "stdout": "{\"patch\": \"11.2.5\", \"rows\": 73, \"statuses\": {\"metadata-only\": 15, \"audit-pending\": 58}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "11.2.5",
+    "preserve_examples": true,
+    "exit": 0,
+    "stdout": "{\"patch\": \"11.2.5\", \"rows\": 73, \"statuses\": {\"metadata-only\": 15, \"audit-pending\": 58}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "11.2.7",
+    "preserve_examples": false,
+    "exit": 0,
+    "stdout": "{\"patch\": \"11.2.7\", \"rows\": 19, \"statuses\": {\"metadata-only\": 9, \"audit-pending\": 10}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "11.2.7",
+    "preserve_examples": true,
+    "exit": 0,
+    "stdout": "{\"patch\": \"11.2.7\", \"rows\": 19, \"statuses\": {\"metadata-only\": 9, \"audit-pending\": 10}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "12.0.0",
+    "preserve_examples": false,
+    "exit": 0,
+    "stdout": "{\"patch\": \"12.0.0\", \"rows\": 143, \"statuses\": {\"metadata-only\": 31, \"audit-pending\": 112}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "12.0.0",
+    "preserve_examples": true,
+    "exit": 0,
+    "stdout": "{\"patch\": \"12.0.0\", \"rows\": 143, \"statuses\": {\"metadata-only\": 31, \"audit-pending\": 112}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "12.0.1",
+    "preserve_examples": false,
+    "exit": 0,
+    "stdout": "{\"patch\": \"12.0.1\", \"rows\": 252, \"statuses\": {\"metadata-only\": 51, \"audit-pending\": 201}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "12.0.1",
+    "preserve_examples": true,
+    "exit": 0,
+    "stdout": "{\"patch\": \"12.0.1\", \"rows\": 252, \"statuses\": {\"metadata-only\": 51, \"audit-pending\": 201}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "12.0.5",
+    "preserve_examples": false,
+    "exit": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p920-page/tools/extract_patch_non_inventory.py\", line 275, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p920-page/tools/extract_patch_non_inventory.py\", line 233, in main\n    assert text_path.read_text() == text, 'extract differs'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: extract differs\n"
+  },
+  {
+    "patch": "12.0.5",
+    "preserve_examples": true,
+    "exit": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p920-page/tools/extract_patch_non_inventory.py\", line 275, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p920-page/tools/extract_patch_non_inventory.py\", line 233, in main\n    assert text_path.read_text() == text, 'extract differs'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: extract differs\n"
+  },
+  {
+    "patch": "12.0.7",
+    "preserve_examples": false,
+    "exit": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p920-page/tools/extract_patch_non_inventory.py\", line 275, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p920-page/tools/extract_patch_non_inventory.py\", line 233, in main\n    assert text_path.read_text() == text, 'extract differs'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: extract differs\n"
+  },
+  {
+    "patch": "12.0.7",
+    "preserve_examples": true,
+    "exit": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p920-page/tools/extract_patch_non_inventory.py\", line 275, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p920-page/tools/extract_patch_non_inventory.py\", line 233, in main\n    assert text_path.read_text() == text, 'extract differs'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: extract differs\n"
+  },
+  {
+    "patch": "12.1.0",
+    "preserve_examples": false,
+    "exit": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p920-page/tools/extract_patch_non_inventory.py\", line 275, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p920-page/tools/extract_patch_non_inventory.py\", line 229, in main\n    text = extract_text(raw_path.read_text(), preserve_examples=args.preserve_examples)\n  File \"/home/osso/.worktrees/wow-ui-sim-p920-page/tools/extract_patch_non_inventory.py\", line 106, in extract_text\n    raise ValueError(f\"unhandled template: {line}\")\nValueError: unhandled template: {{#description2:Midnight 12.1.0 (Curse of Ula\u2019tek)}}\n"
+  },
+  {
+    "patch": "12.1.0",
+    "preserve_examples": true,
+    "exit": 1,
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p920-page/tools/extract_patch_non_inventory.py\", line 275, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p920-page/tools/extract_patch_non_inventory.py\", line 229, in main\n    text = extract_text(raw_path.read_text(), preserve_examples=args.preserve_examples)\n  File \"/home/osso/.worktrees/wow-ui-sim-p920-page/tools/extract_patch_non_inventory.py\", line 106, in extract_text\n    raise ValueError(f\"unhandled template: {line}\")\nValueError: unhandled template: {{#description2:Midnight 12.1.0 (Curse of Ula\u2019tek)}}\n"
+  },
+  {
+    "patch": "9.2.0",
+    "preserve_examples": false,
+    "exit": 0,
+    "stdout": "{\"patch\": \"9.2.0\", \"rows\": 14, \"statuses\": {\"metadata-only\": 7, \"audit-pending\": 7}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "9.2.0",
+    "preserve_examples": true,
+    "exit": 0,
+    "stdout": "{\"patch\": \"9.2.0\", \"rows\": 14, \"statuses\": {\"metadata-only\": 7, \"audit-pending\": 7}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "9.2.7",
+    "preserve_examples": false,
+    "exit": 0,
+    "stdout": "{\"patch\": \"9.2.7\", \"rows\": 23, \"statuses\": {\"metadata-only\": 8, \"audit-pending\": 15}}\n",
+    "stderr": ""
+  },
+  {
+    "patch": "9.2.7",
+    "preserve_examples": true,
+    "exit": 0,
+    "stdout": "{\"patch\": \"9.2.7\", \"rows\": 23, \"statuses\": {\"metadata-only\": 8, \"audit-pending\": 15}}\n",
+    "stderr": ""
+  }
+]

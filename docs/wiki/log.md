@@ -259,4 +259,4 @@ Pinned revision 1063344; [audit](investigations/patch-10-0-7-api-audit.md) links
 
 ## [2026-10-07] investigation | 9.2.0 page audit
 
-Retained revision 4788278 and 80-row register; corrected unbolded Commands/HTML defaults, retired two unused retail PvP lazy lookups. See [[patch-9-2-0-api-audit]]; verification pending.
+Retained revision 4788278 and 80-row register; corrected unbolded Commands/HTML defaults, retired two unused retail PvP lazy lookups. See [[patch-9-2-0-api-audit]]: all 95 IDs accounted, 28 exact sweeps plus factory case, negative control, Mists isolation/check and retail startup `[]` pass; 26 publication gaps/six summary contracts retained.

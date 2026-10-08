@@ -1,0 +1,66 @@
+[
+  {
+    "message": "Failed to create frame __Blizzard_UIPanels_Game_20250: Lua error: layer children on __Blizzard_UIPanels_Game_20250: Action[SetPoint] failed because[Cannot anchor to itself]: attempted from: Frame:SetPoint.\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: Failed to create frame __Blizzard_UIPanels_Game_20250: Lua error: layer children on __Blizzard_UIPanels_Game_20250: Action[SetPoint] failed because[Cannot anchor to itself]: attempted from: Frame:SetPoint.\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] AchievementFrameAchievements: generated/template-scripts-no-global-slots/937f2e658386b74d:5: attempt to call a nil value\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function 'AchievementShield_OnLoad'\n\tgenerated/template-scripts-no-global-slots/937f2e658386b74d:5: in function <generated/template-scripts-no-global-slots/937f2e658386b74d:3>\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?\n\t[C]: in function '__wow_original_CreateFrame'\n\t(string):85: in function 'originalCreateFrame'\n\t(string):55: in function '(for index)'\n\tInterface/AddOns/Blizzard_SharedXML/HybridScrollFrame.lua:244: in function 'HybridScrollFrame_CreateButtons'\n\t...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:522: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:500>\n\t[C]: in function 'pcall'\n\t(string):16: in main chunk\n=(string):19: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] AchievementFrameAchievements: generated/template-scripts-no-global-slots/937f2e658386b74d:5: attempt to call a nil value\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function 'AchievementShield_OnLoad'\n\tgenerated/template-scripts-no-global-slots/937f2e658386b74d:5: in function <generated/template-scripts-no-global-slots/937f2e658386b74d:3>\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?\n\t[C]: in function '__wow_original_CreateFrame'\n\t(string):85: in function 'originalCreateFrame'\n\t(string):55: in function '(for index)'\n\tInterface/AddOns/Blizzard_SharedXML/HybridScrollFrame.lua:244: in function 'HybridScrollFrame_CreateButtons'\n\t...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:522: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:500>\n\t[C]: in function 'pcall'\n\t(string):16: in main chunk\n=(string):19: in main chunk\n\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] AchievementFrameStats: attempt to call global 'AchievementFrameStats_OnLoad' (a nil value)\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] AchievementFrameStats: attempt to call global 'AchievementFrameStats_OnLoad' (a nil value)\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnLoad] AchievementFrameComparison: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:2022: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: [OnLoad] AchievementFrameComparison: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:2022: attempt to call a nil value\n=(string):19: in main chunk\n\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__report'\n\t(string):20: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__report'\n=(string):20: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "bad argument #1 to 'next' (table expected)\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__wow_original_securecall'\n\t(string):13: in function 'securecall'\n\tgenerated/loader-exec-no-global-slots/1f6a08f0276c3958:15: in function <generated/loader-exec-no-global-slots/1f6a08f0276c3958:12>\n\t[C]: in function 'pcall'\n\t(string):16: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: bad argument #1 to 'next' (table expected)\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__wow_original_securecall'\n\t(string):13: in function 'securecall'\n\tgenerated/loader-exec-no-global-slots/1f6a08f0276c3958:15: in function <generated/loader-exec-no-global-slots/1f6a08f0276c3958:12>\n\t[C]: in function 'pcall'\n\t(string):16: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n=[C]:: in function '__wow_original_securecall'\n=(string):13: in function 'securecall'\n[generated/loader-exec-no-global-slots/1f6a08f0276c3958]:15: in function <[generated/loader-exec-no-global-slots/1f6a08f0276c3958]:12>\n=[C]:: in function 'pcall'\n=(string):16: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "[OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'\n\t...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?",
+    "count": 83
+  },
+  {
+    "message": "Lua Error: [OnEvent] frame=AchievementFrameAchievements addon=Blizzard_AchievementUI source=@Interface/AddOns/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525: ...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: attempt to call a nil value\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function 'AchievementFrame_UpdateTrackedAchievements'\n\t...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:532: in function <...s/Blizzard_AchievementUI/Cata/Blizzard_AchievementUI.lua:525>\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 83
+  },
+  {
+    "message": "@Interface/AddOns/Blizzard_CombatLogBase/Wrath/CombatLogColors.lua: table index is nil\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: @Interface/AddOns/Blizzard_CombatLogBase/Wrath/CombatLogColors.lua: table index is nil\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  },
+  {
+    "message": "...tiveTracker/Blizzard_InitiativeTasksObjectiveTracker.lua:52: attempt to index a nil value\nstack traceback:\n\t(string):1: in main chunk",
+    "count": 1
+  },
+  {
+    "message": "Lua Error: ...tiveTracker/Blizzard_InitiativeTasksObjectiveTracker.lua:52: attempt to index a nil value\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>",
+    "count": 1
+  }
+]

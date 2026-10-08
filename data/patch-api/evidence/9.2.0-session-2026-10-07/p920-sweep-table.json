@@ -1,0 +1,226 @@
+[
+  {
+    "patch": "9.2.0",
+    "rows": 80,
+    "ok": 54,
+    "gaps": 26,
+    "result": "pass",
+    "output": "p920_sweep_out-results.json"
+  },
+  {
+    "patch": "9.2.7",
+    "rows": 3,
+    "ok": 3,
+    "gaps": 0,
+    "result": "pass",
+    "output": "p927_sweep_out-results.json"
+  },
+  {
+    "patch": "10.0.0",
+    "rows": 639,
+    "ok": 466,
+    "gaps": 173,
+    "result": "pass",
+    "output": "p1000_sweep_out-results.json"
+  },
+  {
+    "patch": "10.0.2",
+    "rows": 416,
+    "ok": 267,
+    "gaps": 149,
+    "result": "pass",
+    "output": "p1002_sweep_out-results.json"
+  },
+  {
+    "patch": "10.0.5",
+    "rows": 93,
+    "ok": 66,
+    "gaps": 27,
+    "result": "pass",
+    "output": "p1005_sweep_out-results.json"
+  },
+  {
+    "patch": "10.0.7",
+    "rows": 70,
+    "ok": 44,
+    "gaps": 26,
+    "result": "pass",
+    "output": "p1007_sweep_out-results.json"
+  },
+  {
+    "patch": "10.1.0",
+    "rows": 129,
+    "ok": 93,
+    "gaps": 36,
+    "result": "pass",
+    "output": "p1010_sweep_out-results.json"
+  },
+  {
+    "patch": "10.1.5",
+    "rows": 101,
+    "ok": 69,
+    "gaps": 32,
+    "result": "pass",
+    "output": "p1015_sweep_out-results.json"
+  },
+  {
+    "patch": "10.1.7",
+    "rows": 48,
+    "ok": 34,
+    "gaps": 14,
+    "result": "pass",
+    "output": "p1017_sweep_out-results.json"
+  },
+  {
+    "patch": "10.2.0",
+    "rows": 150,
+    "ok": 120,
+    "gaps": 30,
+    "result": "pass",
+    "output": "p1020_sweep_out-results.json"
+  },
+  {
+    "patch": "10.2.5",
+    "rows": 59,
+    "ok": 45,
+    "gaps": 14,
+    "result": "pass",
+    "output": "p1025_sweep_out-results.json"
+  },
+  {
+    "patch": "10.2.6",
+    "rows": 220,
+    "ok": 200,
+    "gaps": 20,
+    "result": "pass",
+    "output": "p1026_sweep_out-results.json"
+  },
+  {
+    "patch": "10.2.7",
+    "rows": 104,
+    "ok": 68,
+    "gaps": 36,
+    "result": "pass",
+    "output": "p1027_sweep_out-results.json"
+  },
+  {
+    "patch": "11.0.0",
+    "rows": 495,
+    "ok": 329,
+    "gaps": 166,
+    "result": "pass",
+    "output": "p1100_sweep_out-results.json"
+  },
+  {
+    "patch": "11.0.2",
+    "rows": 34,
+    "ok": 22,
+    "gaps": 12,
+    "result": "pass",
+    "output": "p1102_sweep_out-results.json"
+  },
+  {
+    "patch": "11.0.5",
+    "rows": 48,
+    "ok": 38,
+    "gaps": 10,
+    "result": "pass",
+    "output": "p1105_sweep_out-results.json"
+  },
+  {
+    "patch": "11.0.7",
+    "rows": 98,
+    "ok": 70,
+    "gaps": 28,
+    "result": "pass",
+    "output": "p1107_sweep_out-results.json"
+  },
+  {
+    "patch": "11.1.0",
+    "rows": 116,
+    "ok": 97,
+    "gaps": 19,
+    "result": "pass",
+    "output": "p1110_sweep_out-results.json"
+  },
+  {
+    "patch": "11.1.5",
+    "rows": 125,
+    "ok": 89,
+    "gaps": 36,
+    "result": "pass",
+    "output": "p1115_sweep_out-results.json"
+  },
+  {
+    "patch": "11.1.7",
+    "rows": 48,
+    "ok": 40,
+    "gaps": 8,
+    "result": "pass",
+    "output": "p1117_sweep_out-results.json"
+  },
+  {
+    "patch": "11.2.0",
+    "rows": 162,
+    "ok": 135,
+    "gaps": 27,
+    "result": "pass",
+    "output": "p1120_sweep_out-results.json"
+  },
+  {
+    "patch": "11.2.5",
+    "rows": 163,
+    "ok": 118,
+    "gaps": 45,
+    "result": "pass",
+    "output": "p1125_sweep_out-results.json"
+  },
+  {
+    "patch": "11.2.7",
+    "rows": 508,
+    "ok": 414,
+    "gaps": 94,
+    "result": "pass",
+    "output": "p1127_sweep_out-results.json"
+  },
+  {
+    "patch": "12.0.0",
+    "rows": 1010,
+    "ok": 989,
+    "gaps": 21,
+    "result": "pass",
+    "output": "p1200_sweep_out-results.json"
+  },
+  {
+    "patch": "12.0.1",
+    "rows": 225,
+    "ok": 222,
+    "gaps": 3,
+    "result": "pass",
+    "output": "p1201_sweep_out-results.json"
+  },
+  {
+    "patch": "12.0.5",
+    "rows": 363,
+    "ok": 352,
+    "gaps": 11,
+    "result": "pass",
+    "output": "p1205_sweep_out-results.json"
+  },
+  {
+    "patch": "12.0.7",
+    "rows": 174,
+    "ok": 171,
+    "gaps": 3,
+    "result": "pass",
+    "output": "p1207_sweep_out-results.json"
+  },
+  {
+    "patch": "12.1.0",
+    "rows": 778,
+    "ok": 773,
+    "gaps": 5,
+    "result": "pass",
+    "output": "p1210_sweep_out-results.json"
+  }
+]
