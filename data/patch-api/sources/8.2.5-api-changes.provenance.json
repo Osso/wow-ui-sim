@@ -1,0 +1,18 @@
+{
+  "pageid": 83383,
+  "title": "Patch 8.2.5/API changes",
+  "revid": 6471405,
+  "timestamp": "2025-09-13T10:05:08Z",
+  "retrieved": "2026-10-08",
+  "method": "MediaWiki revisions API via browser-cli; exact response in p825-fetch.json",
+  "wikitext_sha256": "f8d21b89e4551b6b1478247f2ce5e6859a0a0ac8ea3b8a25b35b48da160059a8",
+  "generator_flags": [
+    "--legacy-inventory-labels"
+  ],
+  "extractor_flags": [
+    "--preserve-examples",
+    "--retain-reference-notes"
+  ],
+  "register_generator": "tools/gen_patch_wikitext_register.py",
+  "extract_generator": "tools/extract_patch_non_inventory.py"
+}
