@@ -1,0 +1,7 @@
+{
+  "url": "https://warcraft.wiki.gg/api.php?action=query&pageids=230850&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&format=json",
+  "fetched_at": "2026-10-08T14:54:55.826685+00:00",
+  "sha256": "b90ba826ba46ef78322b8bc34095b397de85c2fa9099b5f4bd7cfc486d342b9f",
+  "pageid": 230850,
+  "revid": 6200179
+}

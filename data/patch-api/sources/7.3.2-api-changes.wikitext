@@ -1,0 +1,7 @@
+{{apichanges|7.3.2|prev=7.3.0|next=8.0.1}}
+
+==Changes==
+*[[API Logout|Logout]] and [[API Quit|Quit]] lua functions are now protected.<ref>{{Ref web|url=http://www.reddit.com/r/wow/comments/78o0gl/732_undocumented_changes/dovgdvo/|title=IntenseIntentInTents on Reddit|accessdate=2017-10-26|date=2017-10-25|publisher=Reddit}}</ref>
+
+==References==
+{{Reflist}}
