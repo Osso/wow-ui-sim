@@ -79,7 +79,6 @@ pub mod real;
 pub mod register;
 pub mod reputation_data;
 pub mod security;
-pub mod session_exit;
 pub mod set_cvar_verb;
 pub mod social_probes;
 pub mod spell_api;

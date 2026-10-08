@@ -4,6 +4,11 @@
 
 ## [2026-10-08] investigation | Historical audit validator portability
 
+## [2026-10-08] investigation | 7.3.2 API audit
+
+[Audit](investigations/patch-7-3-2-api-audit.md): pinned revision 6200179; two changed API-link identities, one protection statement, no removals. Bare/cached RED proves insecure session-state mutation; retail taint guard implemented, targeted GREEN proof pending.
+
+
 [Portability](investigations/patch-audit-validator-portability.md): fixed historical register/sweep scope, exact merged 9.2.5 input replacements, checkout-independent receipts and read-only validation. Original proof artifacts remain unchanged.
 ## [2026-10-08] evidence | 8.1.5 API page audit
 

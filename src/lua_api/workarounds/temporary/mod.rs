@@ -1,5 +1,7 @@
 //! Temporary Lua workarounds with explicit retirement paths.
 
+pub(crate) mod session_exit_defaults;
+
 pub(crate) mod account_store_set_storefront;
 pub(crate) mod achievement_search_preview;
 pub(crate) mod achievement_ui_access_defaults;

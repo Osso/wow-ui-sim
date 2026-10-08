@@ -1,5 +1,10 @@
 ## [2026-10-08] integration | Patch 8.1.0 API audit
 
+## 2026-10-08 — Patch 7.3.2 API audit
+
+Pinned page 230850/revision 6200179. [Audit](investigations/patch-7-3-2-api-audit.md) records two real session actions missing protection, retail-only taint gate and precise native-policy/countdown boundaries. No retirements; full grep scans retained; GREEN acceptance pending.
+
+
 [Audit](investigations/patch-8-1-0-api-audit.md): real 8.1.5/8.2.0 registers, ReportPlayer/gxMTOpaque supersessions close two own gaps (60 → 58); later pages unchanged. Forty registers reproduce, three inherited extract failures unchanged. Forty sweeps plus factory, 58 → 59 negative control, requested provider/calendar/map regressions, Python fixtures, format and warning-clean non-vendor Mists check pass. All seventeen validators pass with pinned historical scopes and exact replacement checks; relocated validation rejects protected-input drift. Cached filter rejection split without reducing coverage; obsolete source-name ban replaced by provider-composition behavior.
 
 ## [2026-10-08] ingest | Patch 8.0.1 API audit

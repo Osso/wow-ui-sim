@@ -1,23 +1,42 @@
 # Patch 7.3.2 publication and session protection
 
-## Source and scope
+Audit Warcraft Wiki page 230850, revision 6200179, refetched 2026-10-08. Current retail is the target, not a reconstructed Legion client. [Pinned source](../../data/patch-api/sources/7.3.2-api-changes.wikitext) has one Changes statement: Logout and Quit became protected. [Audit](../wiki/investigations/patch-7-3-2-api-audit.md) describes implementation and proof.
 
-Audit Warcraft Wiki page 230850, revision 6200179, refetched 2026-10-08. Current retail is the target, not a reconstructed Legion client. Source: `data/patch-api/sources/7.3.2-api-changes.wikitext` and its provenance.
+## What it must do
 
-The page has one Changes statement: Logout and Quit became protected. Retain both changed API-link occurrences in the register with their complete literal annotation, plus every retained extract identity in the coverage ledger. No source additions or removals exist. Publication alone does not prove protection.
+- [ ] Retain both changed API-link occurrences with their literal annotation, plus every extract identity. No source additions/removals are invented.
+- [ ] Both globals remain published after unmodified cached full-UI startup. Publication alone does not prove protection.
+- [ ] Addon-tainted Logout/Quit fail before changing login/exit state, in bare and cached UI environments.
+- [ ] Secure calls, including calls after a blocked insecure call, retain existing transitions: Logout clears login state; Quit requests GUI-owned exit, never exits the test process.
+- [ ] Mists simulator behavior remains unchanged; no historical native parity claim.
+- [ ] Evidence pins source, logs, command revisions, exact gaps, negative control, prior preservation and reproduction. Historical register scope is revision-pinned; counts derive from files; no absolute-path equality gates.
 
-## Required behavior
+## How it works
 
-- Both globals remain published after unmodified full-UI startup.
-- Insecure addon-tainted calls to Logout and Quit fail before changing login/exit state.
-- Secure calls retain existing simulator transitions: Logout clears login state; Quit requests GUI-owned exit.
-- Bare and cached full-UI probes distinguish publication from protection. Neither should exit the test process.
-- Older-profile behavior remains unchanged. No Blizzard Lua patch, vendor mutation, namespace shim, or fabricated output may close a gap.
+- [Audit and model boundary](../wiki/investigations/patch-7-3-2-api-audit.md).
+- [Validator portability](../wiki/investigations/patch-audit-validator-portability.md).
 
-## Evidence
+## Implementation inventory
 
-Pin raw fetch, revision, hashes and opt-in extraction/generation flags. Preserve and reproduce prior audit artifacts; pin historical register scope to a Git revision so future earlier-page audits do not expand this audit's proof. Retain command revisions, complete logs, exit codes, negative control and per-identity accounting. Counts derive from artifacts; receipt cwd/target locations are descriptive, never path-equality gates.
+- `src/lua_api/globals/real/session_exit.rs` — existing session state transitions, retail stack-taint gate.
+- `src/lua_api/globals/register.rs`, `real/mod.rs`, `globals/mod.rs`, `admin.rs` — registration and Admin query wiring.
+- `src/lua_api/workarounds/temporary/session_exit_defaults.rs`, `temporary/mod.rs` — relocate existing CancelLogout no-op without changing behavior; not protection coverage.
+- `tools/gen_patch_wikitext_register.py` — opt-in Changes prose API-link occurrence capture.
+- `tools/extract_patch_non_inventory.py` — existing opt-in reference retention accepts template case.
+- `data/patch-api/evidence/7.3.2-session-2026-10-08/` — immutable proof receipts, reproduction, accounting, portable read-only validator.
 
-## Boundaries
+## Tests asserting this spec
 
-No logout countdown, cancellation lifecycle, native error text, notification event parity, hardware-event policy, or historical 7.3.2 signature/security parity claim. ForceLogout/ForceQuit/QuitGame are not named by this page. Reference list and Reddit citation are retained without expanding linked discussion. No full-suite/CASC texture acceptance is required.
+- `tests/patch_7_3_2_publication_sweep.rs` — register-driven cached publication/absence with later-register precedence.
+- `tests/patch_7_3_2_session_protection.rs` — tainted-call rejection and state nonmutation; secure transition/error recovery; cached UI probe.
+- `tests/patch_7_3_2_classic_session.rs` — Mists simulator preservation.
+- `tools/test_gen_patch_wikitext_register.py`, `tools/test_extract_patch_non_inventory.py` — opt-in parser contracts.
+- Evidence `validate.py` and `test_validator_portability.py` — occurrence accounting, receipts, preservation and scope/tamper proof.
+
+## Known gaps (current cycle)
+
+- [ ] Targeted verification and evidence acceptance pending.
+
+## Out of scope
+
+Native notification/error wording, hardware-event policy and logout countdown/cancellation lack source contracts or native captures. No historical 7.3.2 signature/security parity claim. ForceLogout/ForceQuit/QuitGame are not named by this page and remain unchanged. Reference list/Reddit citation remain unexpanded. No full-suite/CASC texture acceptance, vendor mutation, Blizzard Lua patch or shim-based protection closure.

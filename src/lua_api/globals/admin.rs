@@ -215,7 +215,7 @@ fn register_modifier_keys(b: TableBuilder) -> LuaResult<TableBuilder> {
         .set_function("SetMetaKeyDown", set_meta_key_down)?
         .set_function(
             "IsSimulatorExitRequested",
-            super::session_exit::is_simulator_exit_requested,
+            super::real::session_exit::is_simulator_exit_requested,
         )
 }
 

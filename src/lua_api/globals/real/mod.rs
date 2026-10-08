@@ -64,6 +64,7 @@ pub(crate) mod publication_unit_12_0_0;
 pub(crate) mod raid_targets;
 #[cfg(any(feature = "retail-12-0-0", feature = "client-wowforever"))]
 pub mod recent_allies_location;
+pub mod session_exit;
 pub mod shapeshift;
 #[cfg(feature = "retail-12-0-7")]
 pub mod simulate_mouse;

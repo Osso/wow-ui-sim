@@ -55,7 +55,7 @@ fn patch_7_3_2_bare_insecure_session_actions_are_blocked() {
 fn patch_7_3_2_secure_session_actions_preserve_existing_transitions() {
     for symbol in ["Logout", "Quit"] {
         let env = WowLuaEnv::new().expect("create environment");
-        env.state().borrow_mut().is_logged_in = true;
+        assert_insecure_session_actions_blocked(&env);
         env.exec(&format!("assert(issecure()); {symbol}()"))
             .expect("secure session action");
         let state = env.state().borrow();
