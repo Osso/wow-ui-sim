@@ -352,9 +352,8 @@ fn appears_in_eager_discovery_on_all_four_screens() {
     }
 }
 
-#[test]
-fn full_game_load_emits_no_addon_specific_lua_errors() {
-    let env = load_full_ui_for(ScreenKind::Game);
+prefork_full_ui_case! {
+fn full_game_load_emits_no_addon_specific_lua_errors(env: &WowLuaEnv) {
 
     let errors = env.state().borrow().lua_errors.clone();
     let needles = [
@@ -381,10 +380,17 @@ fn full_game_load_emits_no_addon_specific_lua_errors() {
         matched
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn is_addon_loaded_reports_true_after_eager_sweep() {
+fn full_game_load_emits_no_addon_specific_lua_errors() {
     let env = load_full_ui_for(ScreenKind::Game);
+    full_game_load_emits_no_addon_specific_lua_errors::run(&env);
+}
+
+prefork_full_ui_case! {
+fn is_addon_loaded_reports_true_after_eager_sweep(env: &WowLuaEnv) {
 
     let loaded: bool = env
         .eval("return C_AddOns.IsAddOnLoaded('Blizzard_StaticPopup')")
@@ -398,10 +404,17 @@ fn is_addon_loaded_reports_true_after_eager_sweep() {
          of the auto-loaded set"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn publishes_two_mixin_tables_at_global_scope() {
+fn is_addon_loaded_reports_true_after_eager_sweep() {
     let env = load_full_ui_for(ScreenKind::Game);
+    is_addon_loaded_reports_true_after_eager_sweep::run(&env);
+}
+
+prefork_full_ui_case! {
+fn publishes_two_mixin_tables_at_global_scope(env: &WowLuaEnv) {
 
     for mixin in PUBLISHED_MIXINS {
         let kind: String = env
@@ -417,10 +430,17 @@ fn publishes_two_mixin_tables_at_global_scope() {
         );
     }
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn element_mixin_carries_four_owning_dialog_accessors() {
+fn publishes_two_mixin_tables_at_global_scope() {
     let env = load_full_ui_for(ScreenKind::Game);
+    publishes_two_mixin_tables_at_global_scope::run(&env);
+}
+
+prefork_full_ui_case! {
+fn element_mixin_carries_four_owning_dialog_accessors(env: &WowLuaEnv) {
 
     for method in ELEMENT_MIXIN_METHODS {
         let kind: String = env
@@ -441,10 +461,17 @@ fn element_mixin_carries_four_owning_dialog_accessors() {
         );
     }
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn editbox_mixin_inherits_from_element_mixin_via_create_from_mixins() {
+fn element_mixin_carries_four_owning_dialog_accessors() {
     let env = load_full_ui_for(ScreenKind::Game);
+    element_mixin_carries_four_owning_dialog_accessors::run(&env);
+}
+
+prefork_full_ui_case! {
+fn editbox_mixin_inherits_from_element_mixin_via_create_from_mixins(env: &WowLuaEnv) {
 
     for method in ELEMENT_MIXIN_METHODS {
         let kind: String = env
@@ -463,10 +490,17 @@ fn editbox_mixin_inherits_from_element_mixin_via_create_from_mixins() {
         );
     }
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn editbox_mixin_carries_five_editbox_specific_methods() {
+fn editbox_mixin_inherits_from_element_mixin_via_create_from_mixins() {
     let env = load_full_ui_for(ScreenKind::Game);
+    editbox_mixin_inherits_from_element_mixin_via_create_from_mixins::run(&env);
+}
+
+prefork_full_ui_case! {
+fn editbox_mixin_carries_five_editbox_specific_methods(env: &WowLuaEnv) {
 
     for method in EDITBOX_MIXIN_METHODS {
         let kind: String = env
@@ -490,10 +524,17 @@ fn editbox_mixin_carries_five_editbox_specific_methods() {
         );
     }
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn static_popup_dialogs_dispatcher_table_is_published() {
+fn editbox_mixin_carries_five_editbox_specific_methods() {
     let env = load_full_ui_for(ScreenKind::Game);
+    editbox_mixin_carries_five_editbox_specific_methods::run(&env);
+}
+
+prefork_full_ui_case! {
+fn static_popup_dialogs_dispatcher_table_is_published(env: &WowLuaEnv) {
 
     let kind: String = env
         .eval("return type(StaticPopupDialogs)")
@@ -507,10 +548,17 @@ fn static_popup_dialogs_dispatcher_table_is_published() {
          find the dialog definition"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn static_popup_timeout_sec_default_is_sixty_seconds() {
+fn static_popup_dialogs_dispatcher_table_is_published() {
     let env = load_full_ui_for(ScreenKind::Game);
+    static_popup_dialogs_dispatcher_table_is_published::run(&env);
+}
+
+prefork_full_ui_case! {
+fn static_popup_timeout_sec_default_is_sixty_seconds(env: &WowLuaEnv) {
 
     let secs: f64 = env
         .eval("return StaticPopupTimeoutSec")
@@ -524,10 +572,17 @@ fn static_popup_timeout_sec_default_is_sixty_seconds() {
          so this global is informational rather than load-bearing"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn generic_confirmation_dialog_is_seeded_with_handlers() {
+fn static_popup_timeout_sec_default_is_sixty_seconds() {
     let env = load_full_ui_for(ScreenKind::Game);
+    static_popup_timeout_sec_default_is_sixty_seconds::run(&env);
+}
+
+prefork_full_ui_case! {
+fn generic_confirmation_dialog_is_seeded_with_handlers(env: &WowLuaEnv) {
 
     let report: String = env
         .eval(
@@ -556,10 +611,17 @@ fn generic_confirmation_dialog_is_seeded_with_handlers() {
          specific dialog has been declared yet. Report: {report}"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn show_hide_globals_are_functions() {
+fn generic_confirmation_dialog_is_seeded_with_handlers() {
     let env = load_full_ui_for(ScreenKind::Game);
+    generic_confirmation_dialog_is_seeded_with_handlers::run(&env);
+}
+
+prefork_full_ui_case! {
+fn show_hide_globals_are_functions(env: &WowLuaEnv) {
 
     for name in SHOW_HIDE_GLOBALS {
         let kind: String = env
@@ -573,10 +635,17 @@ fn show_hide_globals_are_functions() {
         );
     }
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn queue_management_globals_are_functions() {
+fn show_hide_globals_are_functions() {
     let env = load_full_ui_for(ScreenKind::Game);
+    show_hide_globals_are_functions::run(&env);
+}
+
+prefork_full_ui_case! {
+fn queue_management_globals_are_functions(env: &WowLuaEnv) {
 
     for name in QUEUE_GLOBALS {
         let kind: String = env
@@ -591,10 +660,17 @@ fn queue_management_globals_are_functions() {
         );
     }
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn script_handler_globals_are_functions() {
+fn queue_management_globals_are_functions() {
     let env = load_full_ui_for(ScreenKind::Game);
+    queue_management_globals_are_functions::run(&env);
+}
+
+prefork_full_ui_case! {
+fn script_handler_globals_are_functions(env: &WowLuaEnv) {
 
     for name in HANDLER_GLOBALS {
         let kind: String = env
@@ -609,10 +685,17 @@ fn script_handler_globals_are_functions() {
         );
     }
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn layout_and_position_globals_are_functions() {
+fn script_handler_globals_are_functions() {
     let env = load_full_ui_for(ScreenKind::Game);
+    script_handler_globals_are_functions::run(&env);
+}
+
+prefork_full_ui_case! {
+fn layout_and_position_globals_are_functions(env: &WowLuaEnv) {
 
     for name in LAYOUT_GLOBALS {
         let kind: String = env
@@ -628,10 +711,17 @@ fn layout_and_position_globals_are_functions() {
         );
     }
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn special_dialog_globals_are_functions() {
+fn layout_and_position_globals_are_functions() {
     let env = load_full_ui_for(ScreenKind::Game);
+    layout_and_position_globals_are_functions::run(&env);
+}
+
+prefork_full_ui_case! {
+fn special_dialog_globals_are_functions(env: &WowLuaEnv) {
 
     for name in SPECIAL_GLOBALS {
         let kind: String = env
@@ -647,10 +737,17 @@ fn special_dialog_globals_are_functions() {
         );
     }
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn show_helper_globals_are_functions() {
+fn special_dialog_globals_are_functions() {
     let env = load_full_ui_for(ScreenKind::Game);
+    special_dialog_globals_are_functions::run(&env);
+}
+
+prefork_full_ui_case! {
+fn show_helper_globals_are_functions(env: &WowLuaEnv) {
 
     for name in SHOW_HELPER_GLOBALS {
         let kind: String = env
@@ -669,4 +766,12 @@ fn show_helper_globals_are_functions() {
              callbacks to gate the accept button on input validity"
         );
     }
+}
+}
+
+#[cfg(not(feature = "client-retail"))]
+#[test]
+fn show_helper_globals_are_functions() {
+    let env = load_full_ui_for(ScreenKind::Game);
+    show_helper_globals_are_functions::run(&env);
 }
