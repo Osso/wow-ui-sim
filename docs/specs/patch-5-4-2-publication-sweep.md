@@ -4,11 +4,11 @@ Audit the 2013 retail Warcraft Wiki [pinned page](../../data/patch-api/sources/5
 
 ## What it must do
 
-- [ ] Retain every explicit inventory occurrence and all prose/enum rows. Caption counts must match parsed counts; new tool behavior is opt-in and old sources still reproduce.
-- [ ] Probe raw/ordinary API publication, concrete widget construction and event registration; apply later retail registers in chronological order. Keep 5.4.7 then 5.4.8 placeholders before 6.0.1, 6.0.2 and later registers. No Classic registers.
-- [ ] Record the five historical values (1–5) against current documented/deprecation-alias values (0–4); do not override the current target.
-- [ ] Assert existing guild roster backing preserves explicitly qualified names, tracks state changes and returns nil after removal. Record that unqualified input remains unqualified; this is not automatic realm qualification.
-- [ ] Preserve absence of the already-missing StartUnratedArena and securerandom globals. No new retirement without complete whole-word cached/source/test scans and pinned later-register checks.
+- [x] Retain every explicit inventory occurrence and all prose/enum rows. Caption counts must match parsed counts; new tool behavior is opt-in and old sources still reproduce.
+- [x] Probe raw/ordinary API publication, concrete widget construction and event registration; apply later retail registers in chronological order. Keep 5.4.7 then 5.4.8 placeholders before 6.0.1, 6.0.2 and later registers. No Classic registers.
+- [x] Record the five historical values (1–5) against current documented/deprecation-alias values (0–4); do not override the current target.
+- [x] Assert existing guild roster backing preserves explicitly qualified names, tracks state changes and returns nil after removal. Record that unqualified input remains unqualified; this is not automatic realm qualification.
+- [x] Preserve absence of the already-missing StartUnratedArena and securerandom globals. No new retirement without complete whole-word cached/source/test scans and pinned later-register checks.
 - [ ] Complete targeted sweeps, affected-area tests, Python fixtures, saved-source reproduction, warning-clean non-vendor Mists tests check, format and historical-validator portability gates.
 
 ## How it works

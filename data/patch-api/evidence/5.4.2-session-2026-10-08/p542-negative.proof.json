@@ -1,0 +1,31 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_5_4_2_publication_sweep"
+  ],
+  "revision": "e7781aac1fd1f9a21a94ffdf1fef464b39ab7d33",
+  "exit": 1,
+  "log": "p542-negative.log",
+  "log_sha256": "0d0b1578eaf29cedb2d6c78aee9830d21fd797c52dd8ee1a88c45decb72aa33f",
+  "env": {
+    "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p542-page",
+    "P542_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p542-page/data/patch-api/evidence/5.4.2-session-2026-10-08/p542-negative-register.json",
+    "P542_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p542-page/data/patch-api/evidence/5.4.2-session-2026-10-08/p542-negative-results.json"
+  },
+  "scope": [
+    "tests/patch_5_4_2_publication_sweep.rs",
+    "tests/common",
+    "tests/data/patch_5_4_2_sweep_known_gaps.json",
+    "src",
+    "Cargo.toml",
+    "Cargo.lock",
+    "build.rs",
+    "build",
+    "data/patch-api/sources",
+    "data/patch-api/evidence/5.4.2-session-2026-10-08/p542-negative-register.json"
+  ]
+}

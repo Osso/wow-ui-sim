@@ -27,7 +27,7 @@ Queued 5.4.7 then 5.4.8 placeholders start later_registers, followed by 6.0.1, 6
 
 ## Verification
 
-Discovery initially fails on the exact 39 unaccounted gaps. Targeted positive, negative-control, reproduction, fixtures, format/Mists and portability results are retained in the session evidence and summarized after final gates. No full integration suite. Runtime/src files are unchanged, so a shared-runtime startup-regression comparison is not required for this audit.
+Discovery initially fails on the exact 39 unaccounted gaps. All publication sweeps pass 56/56; own cached cases 3/3, guild queries 22/22 and sliders 15/15 pass. All six Python fixture scripts pass (86 fixtures). All 55 registers and 52 extracts reproduce; three inherited extract failures (12.0.5, 12.0.7, 12.1.0) are unchanged, not repaired or hidden. Format and Mists tests check pass with zero non-vendor warnings; six inherited iced manifest warnings remain. Negative control adds exactly one gap (39 → 40) and fails as expected. Portability acceptance remains the final gate. No full integration suite. Runtime/src files are unchanged, so a shared-runtime startup-regression comparison is not required for this audit.
 
 ## Sources
 
