@@ -188,6 +188,13 @@ def main():
     reproduction = verify_reproduction(context['runtime_revision'], context['master_revision'])
     retail = verify_retail(context['runtime_revision'], context['master_revision'])
     verify_receipts(context)
+    for label, sources in [('mists-pages-final', ['patch_5_5_3_publication_sweep', 'patch_5_5_4_publication_sweep']),
+                           ('client-lines', ['publication_sweep_client_lines'])]:
+        expected_cases = []
+        for stem in sources:
+            source = blob(context['runtime_revision'], f'tests/{stem}.rs').decode()
+            expected_cases.extend(stem + '::' + name for name in re.findall(r'^fn (\w+)\(\)', source, re.M))
+        assert sorted(context['proofs'][label]['passed_cases']) == sorted(expected_cases), label
     print(json.dumps({'status': 'PASS', 'accounting': accounting, 'reproduction': reproduction, 'retail': retail}, sort_keys=True))
 
 
