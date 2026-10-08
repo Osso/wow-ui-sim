@@ -140,6 +140,8 @@ local function create_object(owner)
             return frame:CreateTexture():CreateAnimationGroup():CreateAnimation('FlipBook')
         end,
         Region = function() return frame:CreateTexture() end,
+        Line = function() return frame:CreateLine() end,
+        Alpha = function() return frame:CreateAnimationGroup():CreateAnimation('Alpha') end,
         ColorCurveObject = function() return C_CurveUtil.CreateColorCurve() end,
         CurveObject = function() return C_CurveUtil.CreateCurve() end,
         -- CurveObjectBase is the interface implemented by the scalar curve.
