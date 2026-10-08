@@ -1,0 +1,422 @@
+[
+  {
+    "symbol": "C_CovenantSanctumUI.GetRenownMilestones",
+    "source_id": "wt-global-api-C_CovenantSanctumUI.GetRenownMilestones-67",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "",
+      "command": [
+        "rg",
+        "-n",
+        "--glob",
+        "*.lua",
+        "\\bC_CovenantSanctumUI\\.GetRenownMilestones\\b",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ]
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "",
+      "command": [
+        "rg",
+        "-n",
+        "--glob",
+        "*.lua",
+        "\\bGetRenownMilestones\\b",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ]
+    },
+    "callers": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "",
+      "command": [
+        "rg",
+        "-n",
+        "\\bGetRenownMilestones\\b",
+        "/home/osso/.worktrees/wow-ui-sim-p902-page/src",
+        "/home/osso/.worktrees/wow-ui-sim-p902-page/tests"
+      ]
+    }
+  },
+  {
+    "symbol": "C_Soulbinds.AddPendingConduit",
+    "source_id": "wt-global-api-C_Soulbinds.AddPendingConduit-68",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "",
+      "command": [
+        "rg",
+        "-n",
+        "--glob",
+        "*.lua",
+        "\\bC_Soulbinds\\.AddPendingConduit\\b",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ]
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "",
+      "command": [
+        "rg",
+        "-n",
+        "--glob",
+        "*.lua",
+        "\\bAddPendingConduit\\b",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ]
+    },
+    "callers": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "",
+      "command": [
+        "rg",
+        "-n",
+        "\\bAddPendingConduit\\b",
+        "/home/osso/.worktrees/wow-ui-sim-p902-page/src",
+        "/home/osso/.worktrees/wow-ui-sim-p902-page/tests"
+      ]
+    }
+  },
+  {
+    "symbol": "C_Soulbinds.GetPendingConduitID",
+    "source_id": "wt-global-api-C_Soulbinds.GetPendingConduitID-69",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "",
+      "command": [
+        "rg",
+        "-n",
+        "--glob",
+        "*.lua",
+        "\\bC_Soulbinds\\.GetPendingConduitID\\b",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ]
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "",
+      "command": [
+        "rg",
+        "-n",
+        "--glob",
+        "*.lua",
+        "\\bGetPendingConduitID\\b",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ]
+    },
+    "callers": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "",
+      "command": [
+        "rg",
+        "-n",
+        "\\bGetPendingConduitID\\b",
+        "/home/osso/.worktrees/wow-ui-sim-p902-page/src",
+        "/home/osso/.worktrees/wow-ui-sim-p902-page/tests"
+      ]
+    }
+  },
+  {
+    "symbol": "C_Soulbinds.GetPendingNodeIDInSoulbind",
+    "source_id": "wt-global-api-C_Soulbinds.GetPendingNodeIDInSoulbind-70",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "",
+      "command": [
+        "rg",
+        "-n",
+        "--glob",
+        "*.lua",
+        "\\bC_Soulbinds\\.GetPendingNodeIDInSoulbind\\b",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ]
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "",
+      "command": [
+        "rg",
+        "-n",
+        "--glob",
+        "*.lua",
+        "\\bGetPendingNodeIDInSoulbind\\b",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ]
+    },
+    "callers": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "",
+      "command": [
+        "rg",
+        "-n",
+        "\\bGetPendingNodeIDInSoulbind\\b",
+        "/home/osso/.worktrees/wow-ui-sim-p902-page/src",
+        "/home/osso/.worktrees/wow-ui-sim-p902-page/tests"
+      ]
+    }
+  },
+  {
+    "symbol": "C_Soulbinds.HasPendingConduitInSoulbind",
+    "source_id": "wt-global-api-C_Soulbinds.HasPendingConduitInSoulbind-71",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "",
+      "command": [
+        "rg",
+        "-n",
+        "--glob",
+        "*.lua",
+        "\\bC_Soulbinds\\.HasPendingConduitInSoulbind\\b",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ]
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "",
+      "command": [
+        "rg",
+        "-n",
+        "--glob",
+        "*.lua",
+        "\\bHasPendingConduitInSoulbind\\b",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ]
+    },
+    "callers": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "",
+      "command": [
+        "rg",
+        "-n",
+        "\\bHasPendingConduitInSoulbind\\b",
+        "/home/osso/.worktrees/wow-ui-sim-p902-page/src",
+        "/home/osso/.worktrees/wow-ui-sim-p902-page/tests"
+      ]
+    }
+  },
+  {
+    "symbol": "C_Soulbinds.MatchesCurrentSpecSet",
+    "source_id": "wt-global-api-C_Soulbinds.MatchesCurrentSpecSet-72",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "",
+      "command": [
+        "rg",
+        "-n",
+        "--glob",
+        "*.lua",
+        "\\bC_Soulbinds\\.MatchesCurrentSpecSet\\b",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ]
+    },
+    "bare": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SpecializationInfoDocumentation.lua:331:\t\t\tName = \"MatchesCurrentSpecSet\",\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Soulbinds/Blizzard_SoulbindsConduitList.lua:135:\t\tlocal isCurrentSpec = C_SpecializationInfo.MatchesCurrentSpecSet(conduitData.conduitSpecSetID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Soulbinds/Blizzard_SoulbindsConduitList.lua:396:\t\t\tmatchesSpecSet[specSetID] = C_SpecializationInfo.MatchesCurrentSpecSet(specSetID);\n",
+      "stderr": "",
+      "command": [
+        "rg",
+        "-n",
+        "--glob",
+        "*.lua",
+        "\\bMatchesCurrentSpecSet\\b",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ]
+    },
+    "callers": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "",
+      "command": [
+        "rg",
+        "-n",
+        "\\bMatchesCurrentSpecSet\\b",
+        "/home/osso/.worktrees/wow-ui-sim-p902-page/src",
+        "/home/osso/.worktrees/wow-ui-sim-p902-page/tests"
+      ]
+    }
+  },
+  {
+    "symbol": "C_Soulbinds.RemovePendingConduit",
+    "source_id": "wt-global-api-C_Soulbinds.RemovePendingConduit-73",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "",
+      "command": [
+        "rg",
+        "-n",
+        "--glob",
+        "*.lua",
+        "\\bC_Soulbinds\\.RemovePendingConduit\\b",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ]
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "",
+      "command": [
+        "rg",
+        "-n",
+        "--glob",
+        "*.lua",
+        "\\bRemovePendingConduit\\b",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ]
+    },
+    "callers": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "",
+      "command": [
+        "rg",
+        "-n",
+        "\\bRemovePendingConduit\\b",
+        "/home/osso/.worktrees/wow-ui-sim-p902-page/src",
+        "/home/osso/.worktrees/wow-ui-sim-p902-page/tests"
+      ]
+    }
+  },
+  {
+    "symbol": "C_Soulbinds.ResetSoulbindConduits",
+    "source_id": "wt-global-api-C_Soulbinds.ResetSoulbindConduits-74",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "",
+      "command": [
+        "rg",
+        "-n",
+        "--glob",
+        "*.lua",
+        "\\bC_Soulbinds\\.ResetSoulbindConduits\\b",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ]
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "",
+      "command": [
+        "rg",
+        "-n",
+        "--glob",
+        "*.lua",
+        "\\bResetSoulbindConduits\\b",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ]
+    },
+    "callers": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "",
+      "command": [
+        "rg",
+        "-n",
+        "\\bResetSoulbindConduits\\b",
+        "/home/osso/.worktrees/wow-ui-sim-p902-page/src",
+        "/home/osso/.worktrees/wow-ui-sim-p902-page/tests"
+      ]
+    }
+  },
+  {
+    "symbol": "C_Spell.GetMawPowerRarityStringAndBorderAtlasBySpellID",
+    "source_id": "wt-global-api-C_Spell.GetMawPowerRarityStringAndBorderAtlasBySpellID-75",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "",
+      "command": [
+        "rg",
+        "-n",
+        "--glob",
+        "*.lua",
+        "\\bC_Spell\\.GetMawPowerRarityStringAndBorderAtlasBySpellID\\b",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ]
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "",
+      "command": [
+        "rg",
+        "-n",
+        "--glob",
+        "*.lua",
+        "\\bGetMawPowerRarityStringAndBorderAtlasBySpellID\\b",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ]
+    },
+    "callers": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "",
+      "command": [
+        "rg",
+        "-n",
+        "\\bGetMawPowerRarityStringAndBorderAtlasBySpellID\\b",
+        "/home/osso/.worktrees/wow-ui-sim-p902-page/src",
+        "/home/osso/.worktrees/wow-ui-sim-p902-page/tests"
+      ]
+    }
+  },
+  {
+    "symbol": "C_UIWidgetManager.GetWidgetLayoutDirectionFromWidgetSetID",
+    "source_id": "wt-global-api-C_UIWidgetManager.GetWidgetLayoutDirectionFromWidgetSetID-76",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "",
+      "command": [
+        "rg",
+        "-n",
+        "--glob",
+        "*.lua",
+        "\\bC_UIWidgetManager\\.GetWidgetLayoutDirectionFromWidgetSetID\\b",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ]
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "",
+      "command": [
+        "rg",
+        "-n",
+        "--glob",
+        "*.lua",
+        "\\bGetWidgetLayoutDirectionFromWidgetSetID\\b",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ]
+    },
+    "callers": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "",
+      "command": [
+        "rg",
+        "-n",
+        "\\bGetWidgetLayoutDirectionFromWidgetSetID\\b",
+        "/home/osso/.worktrees/wow-ui-sim-p902-page/src",
+        "/home/osso/.worktrees/wow-ui-sim-p902-page/tests"
+      ]
+    }
+  }
+]

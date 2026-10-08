@@ -1,0 +1,24 @@
+[
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "patch_9_0_2_publication_sweep"
+    ],
+    "revision": "08a4e5783919669fc202f6a0ec7543dc269f7091",
+    "scope": "Initial 9.0.2 discovery with empty known-gap fixture",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p902-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p902-page/target",
+    "exit": 1,
+    "expected_exit": 1,
+    "invalidated": true,
+    "reason": "Discovery RED, replaced by reviewed exact fixture",
+    "seconds": 2454.3966933389893,
+    "output_sha256": {
+      "p902-initial-sweep.log": "6e634cfdf82e42df7ceb7602dbe4f65e11108a220e9360d344cbcb9686e4a5a2"
+    }
+  }
+]
