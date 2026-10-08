@@ -2653,3 +2653,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-07] evidence | 10.0.5 page audit
 
 [Audit](investigations/patch-10-0-5-api-audit.md) accounts for revision 742761, 93 inventory + 67 extract IDs, three unused retail retirements and 27 exact publication gaps. All 24 isolated sweeps, negative control, bare/cached/classic behavior, nine successor regressions, Mists warning boundary and exit-0 startup `[]` pass; 146 prior inputs preserved.
+
+## [2026-10-08] investigation | Patch 7.2.0 API audit
+
+[Audit](investigations/patch-7-2-0-api-audit.md): pinned revision 6767100; three explicit identities, source domain removals retained without invented retirements. Discovery reproduces a MaskTexture probe-factory defect; region-factory correction and cached backing-state behavior cases added. Targeted acceptance/evidence sealing pending.

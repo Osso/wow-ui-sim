@@ -370,3 +370,7 @@ Second temporary clone: all nineteen validators pass from the original cwd. Futu
 ## [2026-10-08] integration | Patch 7.2.5 API audit
 
 [Audit](investigations/patch-7-2-5-api-audit.md): real merged 7.3.0 register; own and later gap sets unchanged. 45 sweep/factory cases, own/garrison/order hall/diversion integration gates, fixtures 27/34/8 and format/Mists checks pass; garrison cached failure matches exact master, zero cached diversion cases credited. 44 registers / 41 extracts reproduce; inherited three failures retained. Branch/master addons startup both []; all 21 validators pass, original evidence retained and integrated receipts separately sealed.
+
+## [2026-10-08] investigation | Patch 7.2.0 API audit
+
+[Audit](investigations/patch-7-2-0-api-audit.md): pinned revision 6767100; three explicit identities, source domain removals retained without invented retirements. Discovery reproduces a MaskTexture probe-factory defect; region-factory correction and cached backing-state behavior cases added. Targeted acceptance/evidence sealing pending.

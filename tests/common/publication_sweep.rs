@@ -149,6 +149,8 @@ local function create_object(owner)
         -- FontInstance is an interface shared by fonts and text regions, not a frame type.
         FontInstance = function() return frame:CreateFontString() end,
         TextureBase = function() return frame:CreateTexture() end,
+        Texture = function() return frame:CreateTexture() end,
+        MaskTexture = function() return frame:CreateMaskTexture() end,
         VectorGraphics = function() return frame:CreateVectorGraphics() end,
         AnimationGroup = function() return frame:CreateAnimationGroup() end,
         Animation = function() return frame:CreateAnimationGroup():CreateAnimation() end,
