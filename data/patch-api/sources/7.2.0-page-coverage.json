@@ -1,0 +1,117 @@
+{
+  "schema": "patch-api-page-coverage/v1",
+  "patch": "7.2.0",
+  "source": "data/patch-api/sources/7.2.0-wikitext-register.json",
+  "source_sha256": "2b0589b9d07639b02e420dce174f8e373758bb6d86475c5305de745499a32973",
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/7.2.0-api-changes.txt",
+    "sha256": "6f7dbe3ba11d533de7738fa02bd708bd48274a7c5310b7cc0f513523382777e6"
+  },
+  "proof_policy": "Account every occurrence; source prose duplicates retain their separate substantive contract. Bounded current behavior is not historical/native parity. No member retirements. 7.2.5 integration placeholder remains.",
+  "source_rows": [
+    {
+      "source_id": "wt-widgets-MaskTexture-5",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication only, constructed through the appropriate region factory where applicable. Behavioral limits are accounted separately in the prose rows."
+    },
+    {
+      "source_id": "wt-widgets-Texture:SetVertexOffset-6",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication only, constructed through the appropriate region factory where applicable. Behavioral limits are accounted separately in the prose rows."
+    },
+    {
+      "source_id": "wt-global-api-C_EquipmentSet-10",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication only, constructed through the appropriate region factory where applicable. Behavioral limits are accounted separately in the prose rows."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [
+        "cached-addon-loading"
+      ],
+      "status": "bounded-coverage",
+      "note": "All three named current-retail addons load through C_AddOns; no historical 2017 addon implementation or complete documentation/contribution/deprecation parity claimed."
+    },
+    {
+      "source_id": "prose-undated-005",
+      "capabilities": [
+        "mask-attachment-lifecycle"
+      ],
+      "status": "bounded-coverage",
+      "note": "CreateMaskTexture returns MaskTexture; duplicate attachment stays one, retrieval returns the same object, removal clears attachment. GPU masking/native 2017 visual parity not claimed."
+    },
+    {
+      "source_id": "prose-undated-006",
+      "capabilities": [
+        "independent-vertex-offset-storage"
+      ],
+      "status": "audit-pending",
+      "note": "SetVertexOffset stores independent concrete corner offsets with readback; complete grep finds only setters/getters/default storage, no renderer consumer. Visual quad deformation remains unimplemented; no shim or vendor override added."
+    },
+    {
+      "source_id": "source-context-009",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-010",
+      "capabilities": [
+        "equipment-set-lifecycle"
+      ],
+      "status": "audit-pending",
+      "note": "Existing C_EquipmentSet backing state supports create, rename, specialization assignment and delete in cached UI. Page gives no old-member catalog or exact deprecated-wrapper contract; historical Lua migration compatibility cannot be exhaustively established from this source. Current namespace presence is not full migration parity."
+    },
+    {
+      "source_id": "source-context-013",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-014",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Voice chat is a domain-level removal summary without any named API member, signature or scope. Current voice systems also appear in later registers; no unspecified member retirement inferred or current consumer disabled."
+    },
+    {
+      "source_id": "prose-undated-015",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Mac movie recording is a domain-level removal summary without any named API member or platform contract. No macOS recording backing system/native probe is available; no guessed member retirement or fake implementation added."
+    },
+    {
+      "source_id": "source-context-017",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-018",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Unexpanded reference-list marker; page supplies no inline citations or additional runtime contract."
+    }
+  ]
+}

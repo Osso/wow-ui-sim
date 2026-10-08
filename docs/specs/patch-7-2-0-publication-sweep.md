@@ -4,12 +4,12 @@ Audit the pinned [source](../../data/patch-api/sources/7.2.0-api-changes.provena
 
 ## What it must do
 
-- [ ] Probe all three named identities: MaskTexture, Texture:SetVertexOffset and C_EquipmentSet; distinguish publication from behavior parity.
-- [ ] Construct texture regions through frame region factories, not CreateFrame with a region name.
-- [ ] Prove cached mask attachment, duplicate suppression, retrieval and removal; independent vertex-offset state updates.
-- [ ] Prove cached equipment-set creation, rename, specialization assignment and deletion.
-- [ ] Prove all three named current-retail addons load, without claiming historical implementations.
-- [ ] Preserve every source occurrence and exact problematic-contract reason; do not infer member retirements from domain removal summaries.
+- [x] Probe all three named identities: MaskTexture, Texture:SetVertexOffset and C_EquipmentSet; distinguish publication from behavior parity.
+- [x] Construct texture regions through frame region factories, not CreateFrame with a region name.
+- [x] Prove cached mask attachment, duplicate suppression, retrieval and removal; independent vertex-offset state updates.
+- [x] Prove cached equipment-set creation, rename, specialization assignment and deletion.
+- [x] Prove all three named current-retail addons load, without claiming historical implementations.
+- [x] Preserve every source occurrence and exact problematic-contract reason; do not infer member retirements from domain removal summaries.
 - [ ] Validate complete historical register scope, source reproduction and receipt hashes without absolute checkout-path equality.
 
 ## How it works
