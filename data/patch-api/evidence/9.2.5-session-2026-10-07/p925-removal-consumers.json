@@ -1,0 +1,160 @@
+[
+  {
+    "source_id": "wt-global-api-C_AuctionHouse.RequestFavorites-70",
+    "symbol": "C_AuctionHouse.RequestFavorites",
+    "qualified": [],
+    "bare": []
+  },
+  {
+    "source_id": "wt-global-api-C_CharacterServices.AssignPFCDistribution-71",
+    "symbol": "C_CharacterServices.AssignPFCDistribution",
+    "qualified": [],
+    "bare": []
+  },
+  {
+    "source_id": "wt-global-api-C_PlayerInfo.IsPlayerInGuildFromGUID-92",
+    "symbol": "C_PlayerInfo.IsPlayerInGuildFromGUID",
+    "qualified": [],
+    "bare": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ReportFrame/ReportFrame.lua:14:\t\t\treturn IsPlayerInGuildFromGUID(reportedPlayer);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/UnitDocumentation.lua:435:\t\t\tName = \"IsPlayerInGuildFromGUID\","
+    ]
+  },
+  {
+    "source_id": "wt-global-api-BattlefieldSetPendingReportTarget-115",
+    "symbol": "BattlefieldSetPendingReportTarget",
+    "qualified": [],
+    "bare": []
+  },
+  {
+    "source_id": "wt-global-api-C_Calendar.ContextMenuEventComplain-116",
+    "symbol": "C_Calendar.ContextMenuEventComplain",
+    "qualified": [],
+    "bare": []
+  },
+  {
+    "source_id": "wt-global-api-C_ClubFinder.ReportPosting-117",
+    "symbol": "C_ClubFinder.ReportPosting",
+    "qualified": [],
+    "bare": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/ClubFinder.lua:1067:function ClubFinderReportPosting(clubFinderGUID, clubName, playerGUID)",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/ClubFinder.lua:1138:\t\t\t\tClubFinderReportPosting(clubGUID, self.cardInfo.name, self.cardInfo.lastPosterGUID);"
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_Cursor.DropCursorCommunitiesStream-118",
+    "symbol": "C_Cursor.DropCursorCommunitiesStream",
+    "qualified": [],
+    "bare": []
+  },
+  {
+    "source_id": "wt-global-api-C_Cursor.GetCursorCommunitiesStream-119",
+    "symbol": "C_Cursor.GetCursorCommunitiesStream",
+    "qualified": [],
+    "bare": []
+  },
+  {
+    "source_id": "wt-global-api-C_Cursor.SetCursorCommunitiesStream-120",
+    "symbol": "C_Cursor.SetCursorCommunitiesStream",
+    "qualified": [],
+    "bare": []
+  },
+  {
+    "source_id": "wt-global-api-C_Heirloom.IsHeirloomSourceValid-121",
+    "symbol": "C_Heirloom.IsHeirloomSourceValid",
+    "qualified": [],
+    "bare": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Collections/Mainline/Blizzard_HeirloomCollection.lua:157:\t\t\tif C_HeirloomInfo.IsHeirloomSourceValid(filterIndex) then",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/HeirloomInfoDocumentation.lua:29:\t\t\tName = \"IsHeirloomSourceValid\","
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_LFGList.ReportApplicant-122",
+    "symbol": "C_LFGList.ReportApplicant",
+    "qualified": [],
+    "bare": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GroupFinder/Mainline/LFGList.lua:2184:\t\t\tLFGList_ReportApplicant(applicantID, name or \"\");",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GroupFinder/Mainline/LFGList.lua:4245:function LFGList_ReportApplicant(applicantID, applicantName)"
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_LFGList.ReportSearchResult-123",
+    "symbol": "C_LFGList.ReportSearchResult",
+    "qualified": [],
+    "bare": []
+  },
+  {
+    "source_id": "wt-global-api-C_ReportSystem.InitiateReportPlayer-124",
+    "symbol": "C_ReportSystem.InitiateReportPlayer",
+    "qualified": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_HelpFrame/HelpFrame.lua:146:\tframe.reportToken = C_ReportSystem.InitiateReportPlayer(PLAYER_REPORT_TYPE_CHEATING, playerLocation);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/Mainline/GameDialogDefs.lua:123:\t\tdialog.reportToken = C_ReportSystem.InitiateReportPlayer(PLAYER_REPORT_TYPE_BAD_BATTLEPET_NAME);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/Mainline/GameDialogDefs.lua:139:\t\tdialog.reportToken = C_ReportSystem.InitiateReportPlayer(PLAYER_REPORT_TYPE_BAD_PET_NAME);"
+    ],
+    "bare": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_HelpFrame/HelpFrame.lua:146:\tframe.reportToken = C_ReportSystem.InitiateReportPlayer(PLAYER_REPORT_TYPE_CHEATING, playerLocation);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/Mainline/GameDialogDefs.lua:123:\t\tdialog.reportToken = C_ReportSystem.InitiateReportPlayer(PLAYER_REPORT_TYPE_BAD_BATTLEPET_NAME);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/Mainline/GameDialogDefs.lua:139:\t\tdialog.reportToken = C_ReportSystem.InitiateReportPlayer(PLAYER_REPORT_TYPE_BAD_PET_NAME);"
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_ReportSystem.OpenReportPlayerDialog-125",
+    "symbol": "C_ReportSystem.OpenReportPlayerDialog",
+    "qualified": [],
+    "bare": []
+  },
+  {
+    "source_id": "wt-global-api-C_ReportSystem.SendReportPlayer-126",
+    "symbol": "C_ReportSystem.SendReportPlayer",
+    "qualified": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/Mainline/GameDialogDefs.lua:126:\t\tC_ReportSystem.SendReportPlayer(dialog.reportToken);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/Mainline/GameDialogDefs.lua:142:\t\tC_ReportSystem.SendReportPlayer(dialog.reportToken);"
+    ],
+    "bare": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/Mainline/GameDialogDefs.lua:126:\t\tC_ReportSystem.SendReportPlayer(dialog.reportToken);",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/Mainline/GameDialogDefs.lua:142:\t\tC_ReportSystem.SendReportPlayer(dialog.reportToken);"
+    ]
+  },
+  {
+    "source_id": "wt-global-api-C_ReportSystem.SetPendingReportPetTarget-127",
+    "symbol": "C_ReportSystem.SetPendingReportPetTarget",
+    "qualified": [],
+    "bare": []
+  },
+  {
+    "source_id": "wt-global-api-C_ReportSystem.SetPendingReportTargetByGuid-128",
+    "symbol": "C_ReportSystem.SetPendingReportTargetByGuid",
+    "qualified": [],
+    "bare": []
+  },
+  {
+    "source_id": "wt-global-api-C_ReportSystem.SetPendingReportTarget-129",
+    "symbol": "C_ReportSystem.SetPendingReportTarget",
+    "qualified": [],
+    "bare": []
+  },
+  {
+    "source_id": "wt-global-api-ComplainInboxItem-130",
+    "symbol": "ComplainInboxItem",
+    "qualified": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MailFrame/MailFrame.lua:520:\tif ( CanComplainInboxItem(InboxFrame.openMailID) ) then",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/GameDialogDefs.lua:1009:\t\tComplainInboxItem(index);"
+    ],
+    "bare": [
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MailFrame/MailFrame.lua:520:\tif ( CanComplainInboxItem(InboxFrame.openMailID) ) then",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/GameDialogDefs.lua:1009:\t\tComplainInboxItem(index);"
+    ]
+  },
+  {
+    "source_id": "wt-events-COMMUNITIES_STREAM_CURSOR_CLEAR-230",
+    "symbol": "COMMUNITIES_STREAM_CURSOR_CLEAR",
+    "qualified": [],
+    "bare": []
+  },
+  {
+    "source_id": "wt-events-OPEN_REPORT_PLAYER-231",
+    "symbol": "OPEN_REPORT_PLAYER",
+    "qualified": [],
+    "bare": []
+  }
+]

@@ -1,0 +1,976 @@
+[
+  {
+    "source_id": "wt-global-api-C_AuctionHouse.GetBids-68",
+    "symbol": "C_AuctionHouse.GetBids",
+    "wikitext_line": 68,
+    "annotation": "",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_AuctionHouse.GetBids"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "Missing published bid-list query; requires populated bidder/item DTOs, ordering and auction lifecycle semantics. Existing auction verbs are not this endpoint.",
+    "cached_matches": null,
+    "source_scan": "p925-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_AuctionHouse.GetOwnedAuctions-69",
+    "symbol": "C_AuctionHouse.GetOwnedAuctions",
+    "wikitext_line": 69,
+    "annotation": "",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_AuctionHouse.GetOwnedAuctions"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "Missing owned-auction list query; requires native-shaped populated own-auction DTOs and owner/lifecycle state rather than a fabricated empty list.",
+    "cached_matches": null,
+    "source_scan": "p925-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_Club.DoesCommunityHaveMembersOfTheOppositeFaction-72",
+    "symbol": "C_Club.DoesCommunityHaveMembersOfTheOppositeFaction",
+    "wikitext_line": 72,
+    "annotation": "",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_Club.DoesCommunityHaveMembersOfTheOppositeFaction"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "Club membership exists, but this faction predicate is not registered and requires exact faction identity/unknown-member rules.",
+    "cached_matches": null,
+    "source_scan": "p925-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_FriendList.IsOnIgnoredList-74",
+    "symbol": "C_FriendList.IsOnIgnoredList",
+    "wikitext_line": 74,
+    "annotation": "",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_FriendList.IsOnIgnoredList"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "Ignored-list identity predicate absent; needs name/GUID normalization and synchronized ignore roster semantics, not a constant false.",
+    "cached_matches": null,
+    "source_scan": "p925-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_GamePad.AddSDLMapping-75",
+    "symbol": "C_GamePad.AddSDLMapping",
+    "wikitext_line": 75,
+    "annotation": "",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_GamePad.AddSDLMapping"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "parent raw-absent; raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "SDL mapping ingestion and device remapping are unmodeled; accepting a string without changing mapping state would be a placeholder.",
+    "cached_matches": null,
+    "source_scan": "p925-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_GamePad.GetPowerLevel-76",
+    "symbol": "C_GamePad.GetPowerLevel",
+    "wikitext_line": 76,
+    "annotation": "",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_GamePad.GetPowerLevel"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "Gamepad power telemetry absent; C_AzeriteItem.GetPowerLevel is unrelated. Requires host device state and exact power enum handling.",
+    "cached_matches": null,
+    "source_scan": "p925-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_HeirloomInfo.AreAllCollectionFiltersChecked-77",
+    "symbol": "C_HeirloomInfo.AreAllCollectionFiltersChecked",
+    "wikitext_line": 77,
+    "annotation": "",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_HeirloomInfo.AreAllCollectionFiltersChecked"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "Collection-filter aggregate absent; requires all collection categories and native aggregate semantics, not current default-filter workaround attribution.",
+    "cached_matches": null,
+    "source_scan": "p925-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_HeirloomInfo.AreAllSourceFiltersChecked-78",
+    "symbol": "C_HeirloomInfo.AreAllSourceFiltersChecked",
+    "wikitext_line": 78,
+    "annotation": "",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_HeirloomInfo.AreAllSourceFiltersChecked"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "Source-filter aggregate absent; requires complete source-domain enumeration and aggregate semantics.",
+    "cached_matches": null,
+    "source_scan": "p925-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_HeirloomInfo.SetAllCollectionFilters-81",
+    "symbol": "C_HeirloomInfo.SetAllCollectionFilters",
+    "wikitext_line": 81,
+    "annotation": "",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_HeirloomInfo.SetAllCollectionFilters"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "Collection-filter bulk mutation absent; must alter the same per-category state used by collection queries.",
+    "cached_matches": null,
+    "source_scan": "p925-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_Item.GetLimitedCurrencyItemInfo-84",
+    "symbol": "C_Item.GetLimitedCurrencyItemInfo",
+    "wikitext_line": 84,
+    "annotation": "",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_Item.GetLimitedCurrencyItemInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "Limited-currency item DTO absent; requires item/currency metadata and current cap/count policy, not fabricated numbers.",
+    "cached_matches": null,
+    "source_scan": "p925-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_ModifiedInstance.GetModifiedInstanceInfoFromMapID-85",
+    "symbol": "C_ModifiedInstance.GetModifiedInstanceInfoFromMapID",
+    "wikitext_line": 85,
+    "annotation": "",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_ModifiedInstance.GetModifiedInstanceInfoFromMapID"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "parent raw-absent; raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "Namespace raw-absent; requires map-to-modified-instance metadata and modifiers. Dynamic lookup function is not publication.",
+    "cached_matches": null,
+    "source_scan": "p925-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PartyInfo.CanFormCrossFactionParties-88",
+    "symbol": "C_PartyInfo.CanFormCrossFactionParties",
+    "wikitext_line": 88,
+    "annotation": "",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_PartyInfo.CanFormCrossFactionParties"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "Cross-faction eligibility policy absent; requires realm/account/faction/instance restrictions rather than always true or group membership alone.",
+    "cached_matches": null,
+    "source_scan": "p925-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PlayerInfo.IsPlayerInGuildFromGUID-92",
+    "symbol": "C_PlayerInfo.IsPlayerInGuildFromGUID",
+    "wikitext_line": 92,
+    "annotation": "",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": "wt-global-api-C_PlayerInfo.IsPlayerInGuildFromGUID-509",
+        "symbol": "C_PlayerInfo.IsPlayerInGuildFromGUID"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "Later 10.0.0 removal expects absence, but dynamic lookup remains. Bare cached global successor/deprecation references retained; do not delete Blizzard aliases.",
+    "cached_matches": {
+      "source_id": "wt-global-api-C_PlayerInfo.IsPlayerInGuildFromGUID-92",
+      "symbol": "C_PlayerInfo.IsPlayerInGuildFromGUID",
+      "qualified": [],
+      "bare": [
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ReportFrame/ReportFrame.lua:14:\t\t\treturn IsPlayerInGuildFromGUID(reportedPlayer);",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/UnitDocumentation.lua:435:\t\t\tName = \"IsPlayerInGuildFromGUID\","
+      ]
+    },
+    "source_scan": "p925-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_ReportSystem.GetMajorCategoriesForReportType-93",
+    "symbol": "C_ReportSystem.GetMajorCategoriesForReportType",
+    "wikitext_line": 93,
+    "annotation": "",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_ReportSystem.GetMajorCategoriesForReportType"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "Report-type major-category catalog missing; requires valid category sets per report type and enum identities.",
+    "cached_matches": null,
+    "source_scan": "p925-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_ReportSystem.GetMajorCategoryString-94",
+    "symbol": "C_ReportSystem.GetMajorCategoryString",
+    "wikitext_line": 94,
+    "annotation": "",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_ReportSystem.GetMajorCategoryString"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "Major-category localization missing; cannot fabricate labels or translate unknown enum IDs.",
+    "cached_matches": null,
+    "source_scan": "p925-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_ReportSystem.GetMinorCategoriesForReportTypeAndMajorCategory-95",
+    "symbol": "C_ReportSystem.GetMinorCategoriesForReportTypeAndMajorCategory",
+    "wikitext_line": 95,
+    "annotation": "",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_ReportSystem.GetMinorCategoriesForReportTypeAndMajorCategory"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "Dependent report minor-category catalog missing; requires type/major selection and allowed category state.",
+    "cached_matches": null,
+    "source_scan": "p925-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_ReportSystem.GetMinorCategoryString-96",
+    "symbol": "C_ReportSystem.GetMinorCategoryString",
+    "wikitext_line": 96,
+    "annotation": "",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_ReportSystem.GetMinorCategoryString"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "Minor-category localization missing; exact IDs, labels and invalid-input semantics are unmodeled.",
+    "cached_matches": null,
+    "source_scan": "p925-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_ReportSystem.SendReport-97",
+    "symbol": "C_ReportSystem.SendReport",
+    "wikitext_line": 97,
+    "annotation": "",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_ReportSystem.SendReport"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "New reporting contract missing; old token-based SendReportPlayer is not an equivalent category/target submission contract. Requires report DTO and backend/result semantics.",
+    "cached_matches": null,
+    "source_scan": "p925-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_TransmogCollection.AreAllCollectionTypeFiltersChecked-101",
+    "symbol": "C_TransmogCollection.AreAllCollectionTypeFiltersChecked",
+    "wikitext_line": 101,
+    "annotation": "",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_TransmogCollection.AreAllCollectionTypeFiltersChecked"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "Transmog collection-type aggregate missing; complete type-domain and aggregate behavior required.",
+    "cached_matches": null,
+    "source_scan": "p925-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_TransmogCollection.AreAllSourceTypeFiltersChecked-102",
+    "symbol": "C_TransmogCollection.AreAllSourceTypeFiltersChecked",
+    "wikitext_line": 102,
+    "annotation": "",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_TransmogCollection.AreAllSourceTypeFiltersChecked"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "Transmog source-type aggregate missing; complete source-domain and aggregate behavior required.",
+    "cached_matches": null,
+    "source_scan": "p925-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_TransmogCollection.GetCategoryForItem-103",
+    "symbol": "C_TransmogCollection.GetCategoryForItem",
+    "wikitext_line": 103,
+    "annotation": "",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_TransmogCollection.GetCategoryForItem"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "Item-to-transmog-category resolver missing; requires concrete item metadata/category topology and invalid item rules.",
+    "cached_matches": null,
+    "source_scan": "p925-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_TransmogCollection.SetAllCollectionTypeFilters-105",
+    "symbol": "C_TransmogCollection.SetAllCollectionTypeFilters",
+    "wikitext_line": 105,
+    "annotation": "",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_TransmogCollection.SetAllCollectionTypeFilters"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "Transmog bulk type-filter mutation missing; must share collection query/filter state rather than no-op.",
+    "cached_matches": null,
+    "source_scan": "p925-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_TransmogSets.IsUsingDefaultBaseSetsFilters-107",
+    "symbol": "C_TransmogSets.IsUsingDefaultBaseSetsFilters",
+    "wikitext_line": 107,
+    "annotation": "",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_TransmogSets.IsUsingDefaultBaseSetsFilters"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "Base-set filter-default query missing; requires shared native default policy across base-set sources/expansions.",
+    "cached_matches": null,
+    "source_scan": "p925-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_TransmogSets.SetDefaultBaseSetsFilters-108",
+    "symbol": "C_TransmogSets.SetDefaultBaseSetsFilters",
+    "wikitext_line": 108,
+    "annotation": "",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_TransmogSets.SetDefaultBaseSetsFilters"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "Base-set filter reset missing; requires complete base-set filter state and query-visible effects.",
+    "cached_matches": null,
+    "source_scan": "p925-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_WeeklyRewards.OnUIInteract-109",
+    "symbol": "C_WeeklyRewards.OnUIInteract",
+    "wikitext_line": 109,
+    "annotation": "",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_WeeklyRewards.OnUIInteract"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "Weekly reward interaction hook missing; needs an interaction lifecycle/refresh policy and actual state/event effects, not a no-op registration.",
+    "cached_matches": null,
+    "source_scan": "p925-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_ClubFinder.ReportPosting-117",
+    "symbol": "C_ClubFinder.ReportPosting",
+    "wikitext_line": 117,
+    "annotation": "",
+    "observation": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_ClubFinder.ReportPosting"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "Removed member remains dynamically fabricated. Bare cached ReportPosting references retained; namespace successor exists, no wrapper or classic behavior deleted in this audit.",
+    "cached_matches": {
+      "source_id": "wt-global-api-C_ClubFinder.ReportPosting-117",
+      "symbol": "C_ClubFinder.ReportPosting",
+      "qualified": [],
+      "bare": [
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/ClubFinder.lua:1067:function ClubFinderReportPosting(clubFinderGUID, clubName, playerGUID)",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/ClubFinder.lua:1138:\t\t\t\tClubFinderReportPosting(clubGUID, self.cardInfo.name, self.cardInfo.lastPosterGUID);"
+      ]
+    },
+    "source_scan": "p925-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_Heirloom.IsHeirloomSourceValid-121",
+    "symbol": "C_Heirloom.IsHeirloomSourceValid",
+    "wikitext_line": 121,
+    "annotation": "",
+    "observation": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_Heirloom.IsHeirloomSourceValid"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "Old namespace member remains dynamically fabricated. Bare cached successor/deprecation references retained; C_HeirloomInfo.IsHeirloomSourceValid is a different identity.",
+    "cached_matches": {
+      "source_id": "wt-global-api-C_Heirloom.IsHeirloomSourceValid-121",
+      "symbol": "C_Heirloom.IsHeirloomSourceValid",
+      "qualified": [],
+      "bare": [
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Collections/Mainline/Blizzard_HeirloomCollection.lua:157:\t\t\tif C_HeirloomInfo.IsHeirloomSourceValid(filterIndex) then",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/HeirloomInfoDocumentation.lua:29:\t\t\tName = \"IsHeirloomSourceValid\","
+      ]
+    },
+    "source_scan": "p925-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_LFGList.ReportApplicant-122",
+    "symbol": "C_LFGList.ReportApplicant",
+    "wikitext_line": 122,
+    "annotation": "",
+    "observation": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_LFGList.ReportApplicant"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "Removed member remains dynamically fabricated. Bare cached ReportApplicant references retained; report successor/deprecation behavior not deleted.",
+    "cached_matches": {
+      "source_id": "wt-global-api-C_LFGList.ReportApplicant-122",
+      "symbol": "C_LFGList.ReportApplicant",
+      "qualified": [],
+      "bare": [
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GroupFinder/Mainline/LFGList.lua:2184:\t\t\tLFGList_ReportApplicant(applicantID, name or \"\");",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GroupFinder/Mainline/LFGList.lua:4245:function LFGList_ReportApplicant(applicantID, applicantName)"
+      ]
+    },
+    "source_scan": "p925-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_ReportSystem.InitiateReportPlayer-124",
+    "symbol": "C_ReportSystem.InitiateReportPlayer",
+    "wikitext_line": 124,
+    "annotation": "",
+    "observation": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_ReportSystem.InitiateReportPlayer"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=function; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "Retained live cached consumer: Blizzard_HelpFrame/HelpFrame.lua:146 and Blizzard_StaticPopup_Game/Mainline/GameDialogDefs.lua:123,139. Existing token model preserved.",
+    "cached_matches": {
+      "source_id": "wt-global-api-C_ReportSystem.InitiateReportPlayer-124",
+      "symbol": "C_ReportSystem.InitiateReportPlayer",
+      "qualified": [
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_HelpFrame/HelpFrame.lua:146:\tframe.reportToken = C_ReportSystem.InitiateReportPlayer(PLAYER_REPORT_TYPE_CHEATING, playerLocation);",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/Mainline/GameDialogDefs.lua:123:\t\tdialog.reportToken = C_ReportSystem.InitiateReportPlayer(PLAYER_REPORT_TYPE_BAD_BATTLEPET_NAME);",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/Mainline/GameDialogDefs.lua:139:\t\tdialog.reportToken = C_ReportSystem.InitiateReportPlayer(PLAYER_REPORT_TYPE_BAD_PET_NAME);"
+      ],
+      "bare": [
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_HelpFrame/HelpFrame.lua:146:\tframe.reportToken = C_ReportSystem.InitiateReportPlayer(PLAYER_REPORT_TYPE_CHEATING, playerLocation);",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/Mainline/GameDialogDefs.lua:123:\t\tdialog.reportToken = C_ReportSystem.InitiateReportPlayer(PLAYER_REPORT_TYPE_BAD_BATTLEPET_NAME);",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/Mainline/GameDialogDefs.lua:139:\t\tdialog.reportToken = C_ReportSystem.InitiateReportPlayer(PLAYER_REPORT_TYPE_BAD_PET_NAME);"
+      ]
+    },
+    "source_scan": "p925-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_ReportSystem.SendReportPlayer-126",
+    "symbol": "C_ReportSystem.SendReportPlayer",
+    "wikitext_line": 126,
+    "annotation": "",
+    "observation": {
+      "expected": {
+        "direction": "removed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_ReportSystem.SendReportPlayer"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=function; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "Retained live cached consumer: Blizzard_StaticPopup_Game/Mainline/GameDialogDefs.lua:126,142. Existing pending-token/result-event model preserved.",
+    "cached_matches": {
+      "source_id": "wt-global-api-C_ReportSystem.SendReportPlayer-126",
+      "symbol": "C_ReportSystem.SendReportPlayer",
+      "qualified": [
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/Mainline/GameDialogDefs.lua:126:\t\tC_ReportSystem.SendReportPlayer(dialog.reportToken);",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/Mainline/GameDialogDefs.lua:142:\t\tC_ReportSystem.SendReportPlayer(dialog.reportToken);"
+      ],
+      "bare": [
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/Mainline/GameDialogDefs.lua:126:\t\tC_ReportSystem.SendReportPlayer(dialog.reportToken);",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/Mainline/GameDialogDefs.lua:142:\t\tC_ReportSystem.SendReportPlayer(dialog.reportToken);"
+      ]
+    },
+    "source_scan": "p925-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_Club.CreateTicket-139",
+    "symbol": "C_Club.CreateTicket",
+    "wikitext_line": 139,
+    "annotation": "+ arg isCrossFaction",
+    "observation": {
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_Club.CreateTicket"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "Club ticket creation missing; canCreateTicket metadata is not invitation ticket lifecycle/token production or cross-faction policy.",
+    "cached_matches": null,
+    "source_scan": "p925-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_Club.EditClub-141",
+    "symbol": "C_Club.EditClub",
+    "wikitext_line": 141,
+    "annotation": "+ arg crossFaction",
+    "observation": {
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_Club.EditClub"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "Club metadata/settings mutation missing; requires permissions and cross-faction member constraints, not patching cached mixins.",
+    "cached_matches": null,
+    "source_scan": "p925-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_LFGList.DoesEntryTitleMatchPrebuiltTitle-145",
+    "symbol": "C_LFGList.DoesEntryTitleMatchPrebuiltTitle",
+    "wikitext_line": 145,
+    "annotation": "# arg playstyle, Type: Enum.LfgEntryPlaystyle -> Enum.LFGEntryPlaystyle",
+    "observation": {
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_LFGList.DoesEntryTitleMatchPrebuiltTitle"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "Prebuilt title matching missing; requires activity/playstyle/localized title policy. Also retained by 12.0.0 exact fixture.",
+    "cached_matches": null,
+    "source_scan": "p925-gap-source-scans.json"
+  },
+  {
+    "source_id": "wt-global-api-C_LFGList.SetEntryTitle-151",
+    "symbol": "C_LFGList.SetEntryTitle",
+    "wikitext_line": 151,
+    "annotation": "# arg playstyle, Type: Enum.LfgEntryPlaystyle -> Enum.LFGEntryPlaystyle",
+    "observation": {
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_LFGList.SetEntryTitle"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=function",
+        "kind": "member",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "Entry title setter missing; requires shared listing state and playstyle/title policy. Also retained by 12.0.0 exact fixture.",
+    "cached_matches": null,
+    "source_scan": "p925-gap-source-scans.json"
+  }
+]

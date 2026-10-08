@@ -1,0 +1,37 @@
+
+running 1 test
+test patch_9_2_5_publication_fixes::patch_9_2_5_unused_members_stay_absent ... FAILED
+
+failures:
+
+failures:
+    patch_9_2_5_publication_fixes::patch_9_2_5_unused_members_stay_absent
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10808 filtered out; finished in 0.21s
+
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p925-page)
+    Finished `test` profile [optimized + debuginfo] target(s) in 1m 56s
+     Running tests/integration.rs (target/debug/deps/integration-aef10a2b503e13d5)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.003s] [Startup] SimState::default complete in 3.07ms
+[  0.003s] [Startup] rilua VM created in 127.72µs
+[  0.003s] [Startup] builtin frames initialized in 91.18µs
+[  0.003s] [Startup] template registry cleared in 6.23µs
+[  0.003s] [Startup] intrinsic templates registered in 10.02µs
+[  0.003s] [Startup] initial app_data lua handle installed in 651.00ns
+[  0.202s] [Startup] init_lua_state complete in 198.31ms
+[  0.202s] [Startup] final app_data lua handle installed in 371.00ns
+[  0.202s] [Startup] initial screen globals installed in 154.02µs
+[  0.202s] [Startup] WowLuaEnv::new complete
+
+thread 'patch_9_2_5_publication_fixes::patch_9_2_5_unused_members_stay_absent' (4025626) panicked at /home/osso/.worktrees/wow-ui-sim-p925-page/tests/patch_9_2_5_publication_fixes.rs:28:37:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "C_Calendar.ContextMenuEventComplain", level: 0, traceback: [] }))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+error: test failed, to rerun pass `--test integration`

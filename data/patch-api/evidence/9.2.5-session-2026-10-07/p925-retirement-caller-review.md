@@ -1,0 +1,1 @@
+Whole-tree bare substring scan has two matches: src/lua_api/workarounds/temporary/pet_battle_runtime_state.rs:333 and tests/pet_battles.rs:265. Both name C_PetBattles.SetPendingReportTargetFromUnit, not C_ReportSystem.SetPendingReportTarget; neither changes. No pre-existing caller of any nine retired member identities exists.

@@ -1,3 +1,7 @@
+## [2026-10-07] evidence | 9.2.5 page audit
+
+[Audit](investigations/patch-9-2-5-api-audit.md) accounts for revision 2301036: 84 inventory, 135 extract and one context ID. Nine retail-only retirements, 34 exact publication gaps, 120 substantive extract targets pending. All 28 sweeps, exact negative control, behavior/cached/Mists/report regressions, 38 fixtures, format/default/Mists checks and startup `[]` pass. All 143 prior inputs and 54 extraction-mode outcomes preserved; restored temporary canonical artifact-write violation documented.
+
 ## [2026-10-07] evidence | 9.2.7 page audit
 
 [Audit](investigations/patch-9-2-7-api-audit.md) accounts for revision 5227425: three event inventory, 23 extract and one context row. Event-only extraction loss fixed; all 27 sweeps, exact negative control, 34 fixtures, format/default/Mists checks and startup `[]` pass. Zero publication gaps; fourteen substantive extract targets and payload parity remain pending. All 138 prior inputs and 52 extraction-mode outcomes preserved; no runtime/classic/vendor changes.

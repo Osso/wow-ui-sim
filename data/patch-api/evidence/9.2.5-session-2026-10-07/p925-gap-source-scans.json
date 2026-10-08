@@ -1,0 +1,292 @@
+{
+  "wt-global-api-C_AuctionHouse.GetBids-68": {
+    "name": "GetBids",
+    "matches": [
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:2:  \"wt-global-api-C_AuctionHouse.GetBids-68\","
+    ],
+    "exit": 0
+  },
+  "wt-global-api-C_AuctionHouse.GetOwnedAuctions-69": {
+    "name": "GetOwnedAuctions",
+    "matches": [
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:3:  \"wt-global-api-C_AuctionHouse.GetOwnedAuctions-69\","
+    ],
+    "exit": 0
+  },
+  "wt-global-api-C_Club.DoesCommunityHaveMembersOfTheOppositeFaction-72": {
+    "name": "DoesCommunityHaveMembersOfTheOppositeFaction",
+    "matches": [
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:5:  \"wt-global-api-C_Club.DoesCommunityHaveMembersOfTheOppositeFaction-72\","
+    ],
+    "exit": 0
+  },
+  "wt-global-api-C_FriendList.IsOnIgnoredList-74": {
+    "name": "IsOnIgnoredList",
+    "matches": [
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:8:  \"wt-global-api-C_FriendList.IsOnIgnoredList-74\","
+    ],
+    "exit": 0
+  },
+  "wt-global-api-C_GamePad.AddSDLMapping-75": {
+    "name": "AddSDLMapping",
+    "matches": [
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:9:  \"wt-global-api-C_GamePad.AddSDLMapping-75\","
+    ],
+    "exit": 0
+  },
+  "wt-global-api-C_GamePad.GetPowerLevel-76": {
+    "name": "GetPowerLevel",
+    "matches": [
+      "src/c_api/c_azerite_item.rs:30:    table_set_rust_fn_static(state, ns, \"GetPowerLevel\", get_power_level)?;",
+      "tests/c_azerite_item_globals.rs:106:    let level: f64 = env.eval(\"return C_AzeriteItem.GetPowerLevel(nil)\").unwrap();",
+      "tests/c_azerite_item_globals.rs:114:    let level: f64 = env.eval(\"return C_AzeriteItem.GetPowerLevel(nil)\").unwrap();",
+      "tests/blizzard_ui/blizzard_actionbar/behavior_azerite_bar.rs:7://! `GetPowerLevel`, populate `bar.level` / `bar.xpToNextLevel`, and",
+      "tests/blizzard_ui/blizzard_actionbar/behavior_azerite_bar.rs:35://! is true, else `GetPowerLevel`. The test seeds",
+      "tests/blizzard_ui/blizzard_actionbar/behavior_azerite_bar.rs:36://! `unlimited_unlocked = false` to pin the `GetPowerLevel` arm.",
+      "tests/blizzard_ui/blizzard_actionbar/behavior_azerite_bar.rs:106://!    - `bar.level == 25` (`GetPowerLevel` arm \u2014 `unlimited_unlocked = false`).",
+      "tests/blizzard_ui/blizzard_actionbar/behavior_azerite_bar.rs:259:         `GetPowerLevel`); reading {SEEDED_UNLIMITED_LEVEL} means \\",
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:10:  \"wt-global-api-C_GamePad.GetPowerLevel-76\","
+    ],
+    "exit": 0
+  },
+  "wt-global-api-C_HeirloomInfo.AreAllCollectionFiltersChecked-77": {
+    "name": "AreAllCollectionFiltersChecked",
+    "matches": [
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:12:  \"wt-global-api-C_HeirloomInfo.AreAllCollectionFiltersChecked-77\","
+    ],
+    "exit": 0
+  },
+  "wt-global-api-C_HeirloomInfo.AreAllSourceFiltersChecked-78": {
+    "name": "AreAllSourceFiltersChecked",
+    "matches": [
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:13:  \"wt-global-api-C_HeirloomInfo.AreAllSourceFiltersChecked-78\","
+    ],
+    "exit": 0
+  },
+  "wt-global-api-C_HeirloomInfo.SetAllCollectionFilters-81": {
+    "name": "SetAllCollectionFilters",
+    "matches": [
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:14:  \"wt-global-api-C_HeirloomInfo.SetAllCollectionFilters-81\","
+    ],
+    "exit": 0
+  },
+  "wt-global-api-C_Item.GetLimitedCurrencyItemInfo-84": {
+    "name": "GetLimitedCurrencyItemInfo",
+    "matches": [
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:15:  \"wt-global-api-C_Item.GetLimitedCurrencyItemInfo-84\","
+    ],
+    "exit": 0
+  },
+  "wt-global-api-C_ModifiedInstance.GetModifiedInstanceInfoFromMapID-85": {
+    "name": "GetModifiedInstanceInfoFromMapID",
+    "matches": [
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:19:  \"wt-global-api-C_ModifiedInstance.GetModifiedInstanceInfoFromMapID-85\","
+    ],
+    "exit": 0
+  },
+  "wt-global-api-C_PartyInfo.CanFormCrossFactionParties-88": {
+    "name": "CanFormCrossFactionParties",
+    "matches": [
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:20:  \"wt-global-api-C_PartyInfo.CanFormCrossFactionParties-88\","
+    ],
+    "exit": 0
+  },
+  "wt-global-api-C_PlayerInfo.IsPlayerInGuildFromGUID-92": {
+    "name": "IsPlayerInGuildFromGUID",
+    "matches": [
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:21:  \"wt-global-api-C_PlayerInfo.IsPlayerInGuildFromGUID-92\",",
+      "tests/data/patch_10_0_0_sweep_known_gaps.json:50:  \"wt-global-api-C_PlayerInfo.IsPlayerInGuildFromGUID-509\",",
+      "tests/data/patch_10_0_0_sweep_known_gaps.json:149:  \"wt-global-api-IsPlayerInGuildFromGUID-491\","
+    ],
+    "exit": 0
+  },
+  "wt-global-api-C_ReportSystem.GetMajorCategoriesForReportType-93": {
+    "name": "GetMajorCategoriesForReportType",
+    "matches": [
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:22:  \"wt-global-api-C_ReportSystem.GetMajorCategoriesForReportType-93\","
+    ],
+    "exit": 0
+  },
+  "wt-global-api-C_ReportSystem.GetMajorCategoryString-94": {
+    "name": "GetMajorCategoryString",
+    "matches": [
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:23:  \"wt-global-api-C_ReportSystem.GetMajorCategoryString-94\","
+    ],
+    "exit": 0
+  },
+  "wt-global-api-C_ReportSystem.GetMinorCategoriesForReportTypeAndMajorCategory-95": {
+    "name": "GetMinorCategoriesForReportTypeAndMajorCategory",
+    "matches": [
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:24:  \"wt-global-api-C_ReportSystem.GetMinorCategoriesForReportTypeAndMajorCategory-95\","
+    ],
+    "exit": 0
+  },
+  "wt-global-api-C_ReportSystem.GetMinorCategoryString-96": {
+    "name": "GetMinorCategoryString",
+    "matches": [
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:25:  \"wt-global-api-C_ReportSystem.GetMinorCategoryString-96\","
+    ],
+    "exit": 0
+  },
+  "wt-global-api-C_ReportSystem.SendReport-97": {
+    "name": "SendReport",
+    "matches": [
+      "src/c_api/c_report_system.rs:22:    table_set_rust_fn_static(state, table_ref, \"SendReportPlayer\", send_report_player)?;",
+      "tests/patch_9_2_5_publication_fixes.rs:22:assert(type(C_ReportSystem.SendReportPlayer) == \"function\")",
+      "tests/xml_templates/inline_advanced/advanced_bindings.rs:281:        function C_ReportSystem.SendReportPlayer(token, comment)",
+      "tests/xml_templates/inline_advanced/advanced_bindings.rs:296:            <Scripts><OnClick>C_ReportSystem.SendReportPlayer(self:GetParent().reportToken, self:GetParent().CommentFrame.EditBox:GetText()); StaticPopupSpecial_Hide(self:GetParent())</OnClick></Scripts>",
+      "src/lua_api/globals/enum_data/missing_enums.lua:12493:if not Enum.SendReportResultMeta then",
+      "src/lua_api/globals/enum_data/missing_enums.lua:12494:  Enum.SendReportResultMeta = {",
+      "src/lua_api/globals/enum_data/game_system.rs:298:    \"SendReportResult\",",
+      "tests/blizzard_report_frame_glue_loads.rs:40:    \"SendReport\",",
+      "tests/blizzard_report_frame_shared_loads.rs:45:    \"SendReport\",",
+      "tests/blizzard_report_frame_shared_loads.rs:163:         straight to C_ReportSystem.SendReport, never persisted client-side\"",
+      "tests/blizzard_report_frame_shared_loads.rs:334:             C_ReportSystem.SendReport)\"",
+      "tests/blizzard_report_frame_shared_loads.rs:402:             exposes 15 Set*-style setters plus Clear. SendReport at line 218 reads three of \\",
+      "tests/blizzard_report_frame_shared_loads.rs:404:             before calling C_ReportSystem.SendReport. SetMailIndex(mailIndex) decrements by 1 \\",
+      "tests/blizzard_report_frame_loads.rs:42:    \"SendReport\",",
+      "tests/blizzard_report_frame_loads.rs:124:         C_ReportSystem.SendReport, never persisted client-side\"",
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:27:  \"wt-global-api-C_ReportSystem.SendReport-97\",",
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:28:  \"wt-global-api-C_ReportSystem.SendReportPlayer-126\",",
+      "tests/report_system.rs:17:            if type(C_ReportSystem.SendReportPlayer) ~= \"function\" then",
+      "tests/report_system.rs:42:            C_ReportSystem.SendReportPlayer(firstToken, \"cheating comment\")",
+      "tests/report_system.rs:43:            C_ReportSystem.SendReportPlayer(secondToken)",
+      "tests/report_system.rs:52:        \"C_ReportSystem should create report tokens and accept SendReportPlayer\""
+    ],
+    "exit": 0
+  },
+  "wt-global-api-C_TransmogCollection.AreAllCollectionTypeFiltersChecked-101": {
+    "name": "AreAllCollectionTypeFiltersChecked",
+    "matches": [
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:29:  \"wt-global-api-C_TransmogCollection.AreAllCollectionTypeFiltersChecked-101\","
+    ],
+    "exit": 0
+  },
+  "wt-global-api-C_TransmogCollection.AreAllSourceTypeFiltersChecked-102": {
+    "name": "AreAllSourceTypeFiltersChecked",
+    "matches": [
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:30:  \"wt-global-api-C_TransmogCollection.AreAllSourceTypeFiltersChecked-102\","
+    ],
+    "exit": 0
+  },
+  "wt-global-api-C_TransmogCollection.GetCategoryForItem-103": {
+    "name": "GetCategoryForItem",
+    "matches": [
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:31:  \"wt-global-api-C_TransmogCollection.GetCategoryForItem-103\","
+    ],
+    "exit": 0
+  },
+  "wt-global-api-C_TransmogCollection.SetAllCollectionTypeFilters-105": {
+    "name": "SetAllCollectionTypeFilters",
+    "matches": [
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:32:  \"wt-global-api-C_TransmogCollection.SetAllCollectionTypeFilters-105\","
+    ],
+    "exit": 0
+  },
+  "wt-global-api-C_TransmogSets.IsUsingDefaultBaseSetsFilters-107": {
+    "name": "IsUsingDefaultBaseSetsFilters",
+    "matches": [
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:33:  \"wt-global-api-C_TransmogSets.IsUsingDefaultBaseSetsFilters-107\","
+    ],
+    "exit": 0
+  },
+  "wt-global-api-C_TransmogSets.SetDefaultBaseSetsFilters-108": {
+    "name": "SetDefaultBaseSetsFilters",
+    "matches": [
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:34:  \"wt-global-api-C_TransmogSets.SetDefaultBaseSetsFilters-108\","
+    ],
+    "exit": 0
+  },
+  "wt-global-api-C_WeeklyRewards.OnUIInteract-109": {
+    "name": "OnUIInteract",
+    "matches": [
+      "tests/blizzard_weekly_rewards_loads.rs:349:         calls C_WeeklyRewards.OnUIInteract; OnHide unregisters and calls \\",
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:35:  \"wt-global-api-C_WeeklyRewards.OnUIInteract-109\""
+    ],
+    "exit": 0
+  },
+  "wt-global-api-C_ClubFinder.ReportPosting-117": {
+    "name": "ReportPosting",
+    "matches": [
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:7:  \"wt-global-api-C_ClubFinder.ReportPosting-117\","
+    ],
+    "exit": 0
+  },
+  "wt-global-api-C_Heirloom.IsHeirloomSourceValid-121": {
+    "name": "IsHeirloomSourceValid",
+    "matches": [
+      "tests/c_transmog_heirloom_api/heirloom.rs:178:            if C_HeirloomInfo.IsHeirloomSourceValid(1) then return \"source valid\" end",
+      "src/lua_api/globals/missing_surface/heirloom.rs:211:        \"IsHeirloomSourceValid\",",
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:11:  \"wt-global-api-C_Heirloom.IsHeirloomSourceValid-121\","
+    ],
+    "exit": 0
+  },
+  "wt-global-api-C_LFGList.ReportApplicant-122": {
+    "name": "ReportApplicant",
+    "matches": [
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:17:  \"wt-global-api-C_LFGList.ReportApplicant-122\","
+    ],
+    "exit": 0
+  },
+  "wt-global-api-C_ReportSystem.InitiateReportPlayer-124": {
+    "name": "InitiateReportPlayer",
+    "matches": [
+      "src/c_api/c_report_system.rs:19:        \"InitiateReportPlayer\",",
+      "tests/patch_9_2_5_publication_fixes.rs:21:assert(type(C_ReportSystem.InitiateReportPlayer) == \"function\")",
+      "tests/blizzard_help_frame_loads.rs:382:             with C_ReportSystem.InitiateReportPlayer and pops it via StaticPopupSpecial_Show \\",
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:26:  \"wt-global-api-C_ReportSystem.InitiateReportPlayer-124\",",
+      "tests/lua_api_boundary.rs:96:        .eval(\"return C_ReportSystem.InitiateReportPlayer('cheating')\")",
+      "tests/report_system.rs:14:            if type(C_ReportSystem.InitiateReportPlayer) ~= \"function\" then",
+      "tests/report_system.rs:33:            local firstToken = C_ReportSystem.InitiateReportPlayer(\"cheater\", location)",
+      "tests/report_system.rs:34:            local secondToken = C_ReportSystem.InitiateReportPlayer(\"badpetname\")"
+    ],
+    "exit": 0
+  },
+  "wt-global-api-C_ReportSystem.SendReportPlayer-126": {
+    "name": "SendReportPlayer",
+    "matches": [
+      "src/c_api/c_report_system.rs:22:    table_set_rust_fn_static(state, table_ref, \"SendReportPlayer\", send_report_player)?;",
+      "tests/patch_9_2_5_publication_fixes.rs:22:assert(type(C_ReportSystem.SendReportPlayer) == \"function\")",
+      "tests/xml_templates/inline_advanced/advanced_bindings.rs:281:        function C_ReportSystem.SendReportPlayer(token, comment)",
+      "tests/xml_templates/inline_advanced/advanced_bindings.rs:296:            <Scripts><OnClick>C_ReportSystem.SendReportPlayer(self:GetParent().reportToken, self:GetParent().CommentFrame.EditBox:GetText()); StaticPopupSpecial_Hide(self:GetParent())</OnClick></Scripts>",
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:28:  \"wt-global-api-C_ReportSystem.SendReportPlayer-126\",",
+      "tests/report_system.rs:17:            if type(C_ReportSystem.SendReportPlayer) ~= \"function\" then",
+      "tests/report_system.rs:42:            C_ReportSystem.SendReportPlayer(firstToken, \"cheating comment\")",
+      "tests/report_system.rs:43:            C_ReportSystem.SendReportPlayer(secondToken)",
+      "tests/report_system.rs:52:        \"C_ReportSystem should create report tokens and accept SendReportPlayer\""
+    ],
+    "exit": 0
+  },
+  "wt-global-api-C_Club.CreateTicket-139": {
+    "name": "CreateTicket",
+    "matches": [
+      "src/c_api/club_members.rs:229:    \"canCreateTicket\",",
+      "src/lua_api/globals/enum_data/addon_system.rs:51:        \"ErrorClubActionCreateTicket\",",
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:4:  \"wt-global-api-C_Club.CreateTicket-139\","
+    ],
+    "exit": 0
+  },
+  "wt-global-api-C_Club.EditClub-141": {
+    "name": "EditClub",
+    "matches": [
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:6:  \"wt-global-api-C_Club.EditClub-141\","
+    ],
+    "exit": 0
+  },
+  "wt-global-api-C_LFGList.DoesEntryTitleMatchPrebuiltTitle-145": {
+    "name": "DoesEntryTitleMatchPrebuiltTitle",
+    "matches": [
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:16:  \"wt-global-api-C_LFGList.DoesEntryTitleMatchPrebuiltTitle-145\",",
+      "tests/data/patch_12_0_0_sweep_known_gaps.json:15:  \"wt-global-api-C_LFGList.DoesEntryTitleMatchPrebuiltTitle-627\","
+    ],
+    "exit": 0
+  },
+  "wt-global-api-C_LFGList.SetEntryTitle-151": {
+    "name": "SetEntryTitle",
+    "matches": [
+      "tests/data/patch_9_2_5_sweep_known_gaps.json:18:  \"wt-global-api-C_LFGList.SetEntryTitle-151\",",
+      "tests/data/patch_12_0_0_sweep_known_gaps.json:16:  \"wt-global-api-C_LFGList.SetEntryTitle-631\","
+    ],
+    "exit": 0
+  }
+}

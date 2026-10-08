@@ -1,0 +1,254 @@
+[
+  {
+    "command": "cargo test --test prefork_full_ui -- patch_9_2_5_publication_sweep",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p925-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p925-page/target",
+    "revision": "d3ddde40c5b5e38ef865dfcc8e54b93b87647186",
+    "exit": 1,
+    "scope": "Initial RED observation with empty known-gap fixture",
+    "output": "p925-sweep-initial.log",
+    "duration_seconds": 820.73,
+    "invalidated": false,
+    "output_sha256": {
+      "p925-sweep-initial.log": "cdec693594fbe0effaa78b667a71d405a7e6aa17bf808d1f8b1b5fe441e672fd"
+    },
+    "expected_exit": 1
+  },
+  {
+    "command": "cargo test --test prefork_full_ui -- publication_sweep",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p925-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p925-page/target",
+    "revision": "ad7419b54038a5b55c2ef86dbc6f2351f45b2c0c",
+    "exit": 0,
+    "scope": "All 28 publication sweeps and existing factory regression",
+    "output": "p925-publication-sweeps.log",
+    "duration_seconds": 42.6,
+    "invalidated": false,
+    "output_sha256": {
+      "p925-publication-sweeps.log": "076dc795c6536eb8f4b2ecea7a3d479c2a8dceb1ec8dd9031dd50f559a757c0d"
+    }
+  },
+  {
+    "command": "cargo test --test prefork_full_ui -- patch_9_2_5_cached_retirements",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p925-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p925-page/target",
+    "revision": "ad7419b54038a5b55c2ef86dbc6f2351f45b2c0c",
+    "exit": 0,
+    "scope": "Nine retired identities remain raw/repeated-lookup absent after cached full UI; live report methods survive",
+    "output": "p925-cached-retirements.log",
+    "duration_seconds": 8.08,
+    "invalidated": false,
+    "output_sha256": {
+      "p925-cached-retirements.log": "eefbda4329505dad71018162ad17c55e03c036dec1b5110cafc63c0ec4ec044c"
+    }
+  },
+  {
+    "command": "cargo test --test prefork_full_ui -- patch_9_2_5_publication_sweep (P925_SWEEP_REGISTER=negative)",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p925-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p925-page/target",
+    "revision": "ad7419b54038a5b55c2ef86dbc6f2351f45b2c0c",
+    "exit": 1,
+    "expected_exit": 1,
+    "scope": "One GAME_PAD_POWER_CHANGED direction mutation, exactly 34 -> 35 gaps",
+    "output": "p925-negative.log",
+    "duration_seconds": 8.34,
+    "invalidated": false,
+    "output_sha256": {
+      "p925-negative.log": "dbfd70089557441abe1c98b448e3d7e13d4914a9e95cfdc47a8465a54cfc8c02"
+    }
+  },
+  {
+    "command": "cargo fmt --check",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p925-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p925-page/target",
+    "revision": "ad7419b54038a5b55c2ef86dbc6f2351f45b2c0c",
+    "exit": 0,
+    "scope": "Formatted changed Rust",
+    "output": "p925-fmt-check.log",
+    "duration_seconds": 16.07,
+    "invalidated": false,
+    "output_sha256": {
+      "p925-fmt-check.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  {
+    "command": "cargo check",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p925-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p925-page/target",
+    "revision": "ad7419b54038a5b55c2ef86dbc6f2351f45b2c0c",
+    "exit": 0,
+    "scope": "Default retail compile",
+    "output": "p925-default-check.log",
+    "duration_seconds": 174.38,
+    "invalidated": false,
+    "output_sha256": {
+      "p925-default-check.log": "5bfb4a979946eef6622b9e31c74917ec19a491e45ec0e600348b51834024e4a7"
+    }
+  },
+  {
+    "command": "cargo build --bin wow-sim",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p925-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p925-page/target",
+    "revision": "ad7419b54038a5b55c2ef86dbc6f2351f45b2c0c",
+    "exit": 0,
+    "scope": "Build separate retail executable",
+    "output": "p925-retail-build.log",
+    "duration_seconds": 0.45,
+    "invalidated": false,
+    "output_sha256": {
+      "p925-retail-build.log": "dbd76533a092af95d571249fe0f0c55be2c13ca6e6cefecf176c9d1eddcbf3d3"
+    }
+  },
+  {
+    "command": "timeout 90 target/debug/wow-sim --no-addons --no-saved-vars lua-errors",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p925-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p925-page/target",
+    "revision": "ad7419b54038a5b55c2ef86dbc6f2351f45b2c0c",
+    "exit": 0,
+    "scope": "Retail startup JSON errors and process exit",
+    "output": "p925-startup.stdout",
+    "stderr": "p925-startup.stderr",
+    "duration_seconds": 9.39,
+    "invalidated": false,
+    "output_sha256": {
+      "p925-startup.stdout": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "p925-startup.stderr": "57030413fccf97e89af4e1ff51fd465e42caed5c8f055d9cdeca6586e3fa5aa3"
+    }
+  },
+  {
+    "command": "cargo check --no-default-features --features sound,gui,casc,client-mists --tests",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p925-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p925-page/target",
+    "revision": "ad7419b54038a5b55c2ef86dbc6f2351f45b2c0c",
+    "exit": 0,
+    "scope": "Mists profile compile including all tests; warning boundary",
+    "output": "p925-mists-check.log",
+    "duration_seconds": 168.23,
+    "invalidated": false,
+    "output_sha256": {
+      "p925-mists-check.log": "c5ba15b402c0ece8e65d13faf9392914286ff490c6f0b0cd958e40957a35a733"
+    }
+  },
+  {
+    "command": "cargo test --no-default-features --features sound,gui,casc,client-mists --test integration patch_9_2_5_mists_preserves_legacy_lookup -- --nocapture",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p925-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p925-page/target",
+    "revision": "ad7419b54038a5b55c2ef86dbc6f2351f45b2c0c",
+    "exit": 0,
+    "scope": "Mists ordinary namespace lookup preserves all nine old member identities",
+    "output": "p925-mists-legacy.log",
+    "duration_seconds": 571.62,
+    "invalidated": false,
+    "output_sha256": {
+      "p925-mists-legacy.log": "c4b74669a0e16edba9d4ddb9b062247ec2f271272baa99dfd8e05ebf9c347036"
+    }
+  },
+  {
+    "command": "python3 -m unittest discover -s tools -p test_*patch*.py",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p925-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p925-page/target",
+    "revision": "572a77d84 + three new fixtures",
+    "exit": 1,
+    "scope": "RED: multiline warning exception, inline structures loss and generator unsupported opt-in",
+    "output": "p925-fixtures-red.log",
+    "invalidated": false,
+    "output_sha256": {
+      "p925-fixtures-red.log": "4348f50918d8ab55caef807f8e826526fc366d7a26f0544656e9d631a33a9dce"
+    },
+    "expected_exit": 1
+  },
+  {
+    "command": "python3 -m unittest discover -s tools -p test_*patch*.py",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p925-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p925-page/target",
+    "revision": "ba2b5942a",
+    "exit": 0,
+    "scope": "GREEN: all 37 parser/extractor fixtures",
+    "output": "p925-fixtures-green.log",
+    "invalidated": false,
+    "output_sha256": {
+      "p925-fixtures-green.log": "d096bfde3882d5b43b010e285076dc1b657ea96235ecde193e6003cd7a505aad"
+    }
+  },
+  {
+    "command": "cargo test --test integration patch_9_2_5_unused_members_stay_absent -- --nocapture",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p925-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p925-page/target",
+    "revision": "d3ddde40c + new retirement test files",
+    "exit": 101,
+    "scope": "RED: first removed member still fabricated on lookup",
+    "output": "p925-retirements-red.log",
+    "invalidated": false,
+    "output_sha256": {
+      "p925-retirements-red.log": "88e6740f07793824e759ff29a98a4bab7658be0508d5a653f35b80d124451eaa"
+    },
+    "expected_exit": 101
+  },
+  {
+    "command": "cargo test --test integration patch_9_2_5_unused_members_stay_absent -- --nocapture",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p925-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p925-page/target",
+    "revision": "06b338813",
+    "exit": 0,
+    "scope": "GREEN: repeated lookup of all nine retired members; later Python/register-only changes do not invalidate this runtime proof",
+    "output": "p925-retirements-green.log",
+    "invalidated": false,
+    "output_sha256": {
+      "p925-retirements-green.log": "8b5b0ea9b9c71783821fb84b127ed1d7012451ea86afa6dc464afb5855079913"
+    }
+  },
+  {
+    "command": "python3 -m unittest discover -s tools -p test_gen_patch_wikitext_register.py",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p925-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p925-page/target",
+    "revision": "06b338813 + CVar fixture",
+    "exit": 1,
+    "scope": "RED: hidden-span default opt-in unsupported",
+    "output": "p925-span-defaults-red.log",
+    "invalidated": false,
+    "output_sha256": {
+      "p925-span-defaults-red.log": "c9d2ccdd5e0597139df60f97c20264314223ae96974a50bc4b193a52843b31ec"
+    },
+    "expected_exit": 1
+  },
+  {
+    "command": "python3 -m unittest discover -s tools -p test_*patch*.py",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p925-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p925-page/target",
+    "revision": "ad7419b54",
+    "exit": 0,
+    "scope": "GREEN: all 38 parser/extractor fixtures",
+    "output": "p925-fixtures-final.log",
+    "invalidated": false,
+    "output_sha256": {
+      "p925-fixtures-final.log": "121c0bfd7f543e4d4562d6f5ed4fa0babce03938bd969a6a5e1daf02d5435dcc"
+    }
+  },
+  {
+    "command": "python3 tools/extract_patch_non_inventory.py --patch <each> --check --text-only [--preserve-examples]",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p925-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p925-page/target",
+    "revision": "572a77d84 / ad7419b54",
+    "exit": 0,
+    "scope": "All 54 prior mode exits/stdout unchanged; 15 existing failures remain. Own preserved-example mode passes; plain mode differs by design. Traceback line numbers changed with source edits.",
+    "output": "p925-extract-after.json",
+    "invalidated": false,
+    "output_sha256": {
+      "p925-extract-after.json": "7633a9168c89e1c465ed3b185d81aa37480a862a7b0b3c8685dd40110cc85d45"
+    }
+  },
+  {
+    "command": "cargo test --test integration report_system -- --nocapture",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p925-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p925-page/target",
+    "revision": "ad7419b54038a5b55c2ef86dbc6f2351f45b2c0c",
+    "exit": 0,
+    "scope": "Two existing retained report entry-point token/event tests",
+    "output": "p925-report-regressions.log",
+    "duration_seconds": 26.58,
+    "invalidated": false,
+    "output_sha256": {
+      "p925-report-regressions.log": "4e4fb9ee9e5cd5659aa99b1e6e9eff00df4abf5530ae534ca6100422eb0c0b38"
+    }
+  }
+]

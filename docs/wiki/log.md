@@ -1,3 +1,7 @@
+## [2026-10-07] evidence | 9.2.5 API audit
+
+[Audit](investigations/patch-9-2-5-api-audit.md): revision 2301036, all 220 IDs accounted, warning/inline-structure/CVar-default boundaries recovered, nine retail retirements and 34 exact retained publication gaps. All 28 sweeps plus factory, exact 34 → 35 negative control, behavioral/cached/Mists/report regressions, 38 fixtures, format/default/Mists checks and exit-0 startup `[]` pass. Existing 143 inputs and 54 mode outcomes unchanged; all substantive extract contracts remain pending. Initial relative artifact writes briefly reached canonical cwd, immediately restored and documented; tracked canonical/vendor/cache files unchanged. No agents, push or merge.
+
 ## [2026-10-07] evidence | 9.2.7 API audit
 
 [Audit](investigations/patch-9-2-7-api-audit.md): revision 5227425, 27 accounted IDs, event-only extraction fix, three publication OK / zero gaps. All 27 sweeps plus factory, exact negative control, 34 fixtures, format/default/Mists checks and startup `[]` pass. Fourteen extract contracts and payload semantics remain unproved; 138 prior inputs / 52 mode outcomes preserved. No runtime API retirement, classic/vendor/cache edit, agents, push or merge.

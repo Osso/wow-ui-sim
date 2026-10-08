@@ -1,0 +1,41 @@
+...............F.....E......E........
+======================================================================
+ERROR: test_multiline_ambox_preserves_security_warning (test_extract_patch_non_inventory.ExtractTests.test_multiline_ambox_preserves_security_warning)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p925-page/tools/test_extract_patch_non_inventory.py", line 16, in test_multiline_ambox_preserves_security_warning
+    self.assertEqual(extract_text(raw), '== UnitPopup Changes ==\n'
+                     ~~~~~~~~~~~~^^^^^
+  File "/home/osso/.worktrees/wow-ui-sim-p925-page/tools/extract_patch_non_inventory.py", line 106, in extract_text
+    raise ValueError(f"unhandled template: {line}")
+ValueError: unhandled template: {{Ambox
+
+======================================================================
+ERROR: test_inline_structures_do_not_attach_fields_to_last_changed_api (test_gen_patch_wikitext_register.InventoryTests.test_inline_structures_do_not_attach_fields_to_last_changed_api)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p925-page/tools/test_gen_patch_wikitext_register.py", line 12, in test_inline_structures_do_not_attach_fields_to_last_changed_api
+    buckets = split_sections(raw, separate_inline_structures=True)
+TypeError: split_sections() got an unexpected keyword argument 'separate_inline_structures'
+
+======================================================================
+FAIL: test_inline_structures_are_retained_without_widget_inventory (test_extract_patch_non_inventory.ExtractTests.test_inline_structures_are_retained_without_widget_inventory)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p925-page/tools/test_extract_patch_non_inventory.py", line 25, in test_inline_structures_are_retained_without_widget_inventory
+    self.assertEqual(extract_text(raw), '== Structures ==\n ClubInfo\n'
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     '   + crossFaction\n== Enumerations ==\n + Enum.ReportType\n')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '== Enumerations ==\n + Enum.ReportType\n' != '== Structures ==\n ClubInfo\n   + crossFacti[40 chars]pe\n'
++ == Structures ==
++  ClubInfo
++    + crossFaction
+  == Enumerations ==
+   + Enum.ReportType
+
+
+----------------------------------------------------------------------
+Ran 37 tests in 0.009s
+
+FAILED (failures=1, errors=2)

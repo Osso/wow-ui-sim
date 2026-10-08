@@ -1,0 +1,85 @@
+src/cvars.yaml:175:cameraFov: '90.000000'
+src/cvars.yaml:631:enableSourceLocationLookup: '1'
+src/cvars.yaml:747:GamePadEmulateTapWindowMs: '350'
+src/event/valid_events_a.rs:101:    "AUCTION_HOUSE_AUCTIONS_EXPIRED",
+src/event/valid_events_a.rs:112:    "AUCTION_HOUSE_POST_ERROR",
+src/event/valid_events_a.rs:113:    "AUCTION_HOUSE_POST_WARNING",
+src/event/valid_events_a.rs:392:    "CLIENT_SCENE_CLOSED",
+src/event/valid_events_a.rs:393:    "CLIENT_SCENE_OPENED",
+src/event/valid_events_a.rs:404:    "CLUB_FINDER_CAN_WHISPER_APPLICANT",
+src/event/valid_events_a.rs:638:    "GAME_PAD_POWER_CHANGED",
+tests/xml_templates/inline_advanced/advanced_bindings.rs:281:        function C_ReportSystem.SendReportPlayer(token, comment)
+tests/xml_templates/inline_advanced/advanced_bindings.rs:296:            <Scripts><OnClick>C_ReportSystem.SendReportPlayer(self:GetParent().reportToken, self:GetParent().CommentFrame.EditBox:GetText()); StaticPopupSpecial_Hide(self:GetParent())</OnClick></Scripts>
+tests/transmog_outfit_world_sources.rs:8:        local source = C_TransmogCollection.GetAppearanceSources(1)[1]
+tests/test_premade_groups.rs:70:            C_LFGList.Search(2)
+tests/test_premade_groups.rs:245:                local text = C_LFGList.GetPlaystyleString(
+src/c_api/club_members.rs:317:            "C_Club.CreateClub: expected BattleNet or Character club",
+tests/blizzard_auction_house_static_popups.rs:23:    "AUCTION_HOUSE_POST_WARNING",
+tests/blizzard_auction_house_static_popups.rs:24:    "AUCTION_HOUSE_POST_ERROR",
+tests/blizzard_auction_house_event_registrations.rs:23:    "AUCTION_HOUSE_POST_WARNING",
+tests/blizzard_auction_house_event_registrations.rs:24:    "AUCTION_HOUSE_POST_ERROR",
+tests/report_system.rs:14:            if type(C_ReportSystem.InitiateReportPlayer) ~= "function" then
+tests/report_system.rs:17:            if type(C_ReportSystem.SendReportPlayer) ~= "function" then
+tests/report_system.rs:33:            local firstToken = C_ReportSystem.InitiateReportPlayer("cheater", location)
+tests/report_system.rs:34:            local secondToken = C_ReportSystem.InitiateReportPlayer("badpetname")
+tests/report_system.rs:42:            C_ReportSystem.SendReportPlayer(firstToken, "cheating comment")
+tests/report_system.rs:43:            C_ReportSystem.SendReportPlayer(secondToken)
+tests/blizzard_help_frame_loads.rs:382:             with C_ReportSystem.InitiateReportPlayer and pops it via StaticPopupSpecial_Show \
+tests/blizzard_report_frame_loads.rs:124:         C_ReportSystem.SendReport, never persisted client-side"
+tests/blizzard_report_frame_shared_loads.rs:163:         straight to C_ReportSystem.SendReport, never persisted client-side"
+tests/blizzard_report_frame_shared_loads.rs:334:             C_ReportSystem.SendReport)"
+tests/blizzard_report_frame_shared_loads.rs:404:             before calling C_ReportSystem.SendReport. SetMailIndex(mailIndex) decrements by 1 \
+tests/patch_11_0_5_cached_surfaces.rs:23:            assert(C_AuctionHouse.RequestFavorites == nil)
+tests/blizzard_weekly_rewards_loads.rs:349:         calls C_WeeklyRewards.OnUIInteract; OnHide unregisters and calls \
+tests/c_collections_filter_defaults_probes.rs:13:            if C_ToyBoxInfo.IsUsingDefaultFilters() ~= true then return "toybox" end
+tests/c_collections_filter_defaults_probes.rs:14:            if C_HeirloomInfo.IsUsingDefaultFilters() ~= true then return "heirloom" end
+tests/c_collections_filter_defaults_probes.rs:15:            if C_TransmogCollection.IsUsingDefaultFilters() ~= true then return "transmog" end
+tests/c_collection_api.rs:247:                and C_ToyBoxInfo.IsUsingDefaultFilters() == true
+tests/c_collection_api.rs:248:                and C_ToyBoxInfo.IsToySourceValid(1) == true
+tests/c_auction_house_sell_cancel.rs:170:        local ok = C_AuctionHouse.ConfirmPostItem({location}, 1, 1, 100, 200)
+tests/c_auction_house_bid_purchase.rs:243:        local ok = C_AuctionHouse.RequestOwnedAuctionBidderInfo(99)
+tests/club_membership.rs:38:        assert(select('#', C_Club.CreateClub('Raid Team', 'Raid', 'Friday raids', 1, 0)) == 0)
+tests/club_membership.rs:56:        C_Club.CreateClub('Friday Raiders', 'Raid', 'Progression', 1, 42)
+tests/club_membership.rs:239:            C_Club.CreateClub('Denied', nil, '', 1, 0)
+tests/c_transmog_heirloom_api.rs:24:            local sources = C_TransmogCollection.GetAppearanceSources(1)
+tests/c_transmog_heirloom_api.rs:42:        .eval("return #C_TransmogCollection.GetAppearanceSources(99999)")
+tests/c_transmog_heirloom_api.rs:137:            local before = #C_TransmogCollection.GetCategoryAppearances(1, nil)
+tests/c_transmog_heirloom_api.rs:139:            local after = #C_TransmogCollection.GetCategoryAppearances(1, nil)
+tests/c_transmog_heirloom_api.rs:212:            local shirtRows = C_TransmogCollection.GetCategoryAppearances(Enum.TransmogCollectionType.Shirt, nil)
+tests/c_transmog_heirloom_api.rs:215:            local tabardRows = C_TransmogCollection.GetCategoryAppearances(Enum.TransmogCollectionType.Tabard, nil)
+tests/c_transmog_heirloom_api.rs:231:            if #C_TransmogCollection.GetCategoryAppearances(1, nil) ~= 5 then return "initial" end
+tests/c_transmog_heirloom_api.rs:233:            if C_TransmogCollection.IsUsingDefaultFilters() then return "still_default" end
+tests/c_transmog_heirloom_api.rs:235:            local filtered = C_TransmogCollection.GetCategoryAppearances(1, nil)
+tests/c_transmog_heirloom_api.rs:240:            C_TransmogCollection.SetDefaultFilters()
+tests/c_transmog_heirloom_api.rs:241:            if not C_TransmogCollection.IsUsingDefaultFilters() then return "not_default" end
+tests/c_transmog_heirloom_api.rs:242:            if #C_TransmogCollection.GetCategoryAppearances(1, nil) ~= 5 then return "restored" end
+tests/c_transmog_heirloom_api.rs:259:            if #C_TransmogCollection.GetCategoryAppearances(1, nil) ~= 4 then return "collected_rows" end
+tests/c_transmog_heirloom_api.rs:264:            local rows = C_TransmogCollection.GetCategoryAppearances(1, nil)
+tests/c_transmog_heirloom_api.rs:286:            local rows = C_TransmogCollection.GetCategoryAppearances(1, nil)
+tests/c_transmog_heirloom_api.rs:290:            if #C_TransmogCollection.GetCategoryAppearances(1, nil) ~= 5 then return "cleared" end
+tests/c_transmog_heirloom_api.rs:331:            local appearances = C_TransmogCollection.GetCategoryAppearances(1, nil)
+tests/c_transmog_heirloom_api.rs:348:        .eval("return #C_TransmogCollection.GetCategoryAppearances(99, nil)")
+tests/c_transmog_heirloom_api/heirloom.rs:178:            if C_HeirloomInfo.IsHeirloomSourceValid(1) then return "source valid" end
+tests/c_transmog_heirloom_api/heirloom.rs:181:            C_HeirloomInfo.SetAllSourceFilters(true)
+tests/c_transmog_heirloom_api/heirloom.rs:182:            C_HeirloomInfo.SetDefaultFilters()
+tests/data/patch_10_0_0_sweep_known_gaps.json:50:  "wt-global-api-C_PlayerInfo.IsPlayerInGuildFromGUID-509",
+tests/data/patch_12_0_0_sweep_known_gaps.json:15:  "wt-global-api-C_LFGList.DoesEntryTitleMatchPrebuiltTitle-627",
+tests/data/patch_12_0_0_sweep_known_gaps.json:16:  "wt-global-api-C_LFGList.SetEntryTitle-631",
+tests/lua_api_boundary.rs:96:        .eval("return C_ReportSystem.InitiateReportPlayer('cheating')")
+src/lua_api/globals/mail_verbs.rs:404:    LuaApiMut::register_function(lua, "CanComplainInboxItem", can_complain_inbox_item)?;
+src/lua_api/workarounds/temporary/collections_journal_namespace.rs:32:        function C_MountJournal.IsUsingDefaultFilters()
+src/lua_api/workarounds/temporary/collections_journal_namespace.rs:53:        function C_PetJournal.IsUsingDefaultFilters()
+src/lua_api/workarounds/temporary/collections_journal_namespace.rs:99:                if C_ToyBoxInfo.IsUsingDefaultFilters() ~= true then return "toybox" end
+src/lua_api/workarounds/temporary/collections_journal_namespace.rs:100:                if C_HeirloomInfo.IsUsingDefaultFilters() ~= true then return "heirloom" end
+src/lua_api/workarounds/temporary/collections_journal_namespace.rs:101:                if C_TransmogCollection.IsUsingDefaultFilters() ~= true then return "transmog" end
+src/lua_api/workarounds/temporary/collections_journal_namespace.rs:115:            C_ToyBoxInfo.IsUsingDefaultFilters = function()
+src/lua_api/workarounds/temporary/collections_journal_namespace.rs:118:            C_HeirloomInfo.IsUsingDefaultFilters = function()
+src/lua_api/workarounds/temporary/collections_journal_namespace.rs:121:            C_TransmogCollection.IsUsingDefaultFilters = function()
+src/lua_api/workarounds/temporary/collections_journal_namespace.rs:133:                if C_ToyBoxInfo.IsUsingDefaultFilters() ~= false then return "toybox" end
+src/lua_api/workarounds/temporary/collections_journal_namespace.rs:134:                if C_HeirloomInfo.IsUsingDefaultFilters() ~= false then return "heirloom" end
+src/lua_api/workarounds/temporary/collections_journal_namespace.rs:135:                if C_TransmogCollection.IsUsingDefaultFilters() ~= false then return "transmog" end
+src/lua_api/workarounds/temporary/collections_journal_namespace.rs:163:                return C_MountJournal.IsUsingDefaultFilters(),
+src/lua_api/workarounds/temporary/collections_journal_namespace.rs:167:                    C_PetJournal.IsUsingDefaultFilters(),
+src/lua_api/workarounds/temporary/collections_journal_namespace.rs:225:                return C_MountJournal.IsUsingDefaultFilters(),
+src/lua_api/workarounds/temporary/collections_journal_namespace.rs:229:                    C_PetJournal.IsUsingDefaultFilters(),
+src/lua_api/globals/lfg_list.rs:285:        "C_LFGList.SearchResultsReady",

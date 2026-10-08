@@ -1,0 +1,2 @@
+src/lua_api/workarounds/temporary/pet_battle_runtime_state.rs:333:C_PetBattles.SetPendingReportTargetFromUnit = function(unitToken)
+tests/pet_battles.rs:265:            C_PetBattles.SetPendingReportTargetFromUnit("mouseover")

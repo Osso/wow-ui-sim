@@ -1,0 +1,11 @@
+{
+  "mutated_id": "wt-events-GAME_PAD_POWER_CHANGED-224",
+  "before_gaps": 34,
+  "after_gaps": 35,
+  "new_gaps": [
+    "wt-events-GAME_PAD_POWER_CHANGED-224"
+  ],
+  "resolved_gaps": [],
+  "unchanged_ids": true,
+  "exit": 1
+}

@@ -1,0 +1,1454 @@
+{
+  "schema": "patch-page-coverage/v1",
+  "patch": "9.2.5",
+  "source_register": "data/patch-api/sources/9.2.5-wikitext-register.json",
+  "source_sha256": "de6a6208e1989a5a811e6706c6a8d42e5c2f730e96be75293b48c43741e1a0b0",
+  "audit_status": "in-progress",
+  "proof_policy": "Complete publication accounting, not complete compatibility. Current retail 12.1.0 with all 27 later registers. Exact 34 publication gaps retained; all substantive extract/annotation/native/historical parity stays pending. No unrelated tests or static metadata receive behavior credit.",
+  "capabilities": [
+    {
+      "id": "publication-sweep-9-2-5",
+      "scope": "84 current cached inventory publication/absence probes; nine retail-only removals proven by repeated lookup and full UI preload.",
+      "spec": "docs/specs/patch-9-2-5-publication-sweep.md",
+      "tests": [
+        "tests/patch_9_2_5_publication_sweep.rs",
+        "tests/patch_9_2_5_publication_fixes.rs",
+        "tests/patch_9_2_5_cached_surfaces.rs",
+        "tests/patch_9_2_5_classic_surfaces.rs"
+      ],
+      "compiled_revision": "ad7419b54",
+      "ledger": "data/patch-api/evidence/9.2.5-session-2026-10-07/p925-proof.json"
+    }
+  ],
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/9.2.5-api-changes.txt",
+    "sha256": "e1b3b6e79876aa416513d622bc823e5a1f372096d7c0f9c7054c4c4a0c1a9518",
+    "wikitext_revid": 2301036,
+    "wikitext_sha256": "f0c554edcdce15afe3cfa3a2dfaf3c723d11864d377613640538d43596cb12e3",
+    "extract_tool": "tools/extract_patch_non_inventory.py",
+    "preserve_examples": true
+  },
+  "inventory_context_source": "data/patch-api/evidence/9.2.5-session-2026-10-07/p925-inventory-context.json",
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetBids-68",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing published bid-list query; requires populated bidder/item DTOs, ordering and auction lifecycle semantics. Existing auction verbs are not this endpoint."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetOwnedAuctions-69",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing owned-auction list query; requires native-shaped populated own-auction DTOs and owner/lifecycle state rather than a fabricated empty list."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.RequestFavorites-70",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-C_CharacterServices.AssignPFCDistribution-71",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-C_Club.DoesCommunityHaveMembersOfTheOppositeFaction-72",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Club membership exists, but this faction predicate is not registered and requires exact faction identity/unknown-member rules."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.SendChatWhisper-73",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_FriendList.IsOnIgnoredList-74",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Ignored-list identity predicate absent; needs name/GUID normalization and synchronized ignore roster semantics, not a constant false."
+    },
+    {
+      "source_id": "wt-global-api-C_GamePad.AddSDLMapping-75",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "SDL mapping ingestion and device remapping are unmodeled; accepting a string without changing mapping state would be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_GamePad.GetPowerLevel-76",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Gamepad power telemetry absent; C_AzeriteItem.GetPowerLevel is unrelated. Requires host device state and exact power enum handling."
+    },
+    {
+      "source_id": "wt-global-api-C_HeirloomInfo.AreAllCollectionFiltersChecked-77",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Collection-filter aggregate absent; requires all collection categories and native aggregate semantics, not current default-filter workaround attribution."
+    },
+    {
+      "source_id": "wt-global-api-C_HeirloomInfo.AreAllSourceFiltersChecked-78",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source-filter aggregate absent; requires complete source-domain enumeration and aggregate semantics."
+    },
+    {
+      "source_id": "wt-global-api-C_HeirloomInfo.IsHeirloomSourceValid-79",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_HeirloomInfo.IsUsingDefaultFilters-80",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_HeirloomInfo.SetAllCollectionFilters-81",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Collection-filter bulk mutation absent; must alter the same per-category state used by collection queries."
+    },
+    {
+      "source_id": "wt-global-api-C_HeirloomInfo.SetAllSourceFilters-82",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_HeirloomInfo.SetDefaultFilters-83",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_Item.GetLimitedCurrencyItemInfo-84",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Limited-currency item DTO absent; requires item/currency metadata and current cap/count policy, not fabricated numbers."
+    },
+    {
+      "source_id": "wt-global-api-C_ModifiedInstance.GetModifiedInstanceInfoFromMapID-85",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Namespace raw-absent; requires map-to-modified-instance metadata and modifiers. Dynamic lookup function is not publication."
+    },
+    {
+      "source_id": "wt-global-api-C_MountJournal.IsUsingDefaultFilters-86",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_MountJournal.SetDefaultFilters-87",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.CanFormCrossFactionParties-88",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cross-faction eligibility policy absent; requires realm/account/faction/instance restrictions rather than always true or group membership alone."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.IsCrossFactionParty-89",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_PetJournal.IsUsingDefaultFilters-90",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_PetJournal.SetDefaultFilters-91",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerInfo.IsPlayerInGuildFromGUID-92",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Later 10.0.0 removal expects absence, but dynamic lookup remains. Bare cached global successor/deprecation references retained; do not delete Blizzard aliases."
+    },
+    {
+      "source_id": "wt-global-api-C_ReportSystem.GetMajorCategoriesForReportType-93",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Report-type major-category catalog missing; requires valid category sets per report type and enum identities."
+    },
+    {
+      "source_id": "wt-global-api-C_ReportSystem.GetMajorCategoryString-94",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Major-category localization missing; cannot fabricate labels or translate unknown enum IDs."
+    },
+    {
+      "source_id": "wt-global-api-C_ReportSystem.GetMinorCategoriesForReportTypeAndMajorCategory-95",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Dependent report minor-category catalog missing; requires type/major selection and allowed category state."
+    },
+    {
+      "source_id": "wt-global-api-C_ReportSystem.GetMinorCategoryString-96",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Minor-category localization missing; exact IDs, labels and invalid-input semantics are unmodeled."
+    },
+    {
+      "source_id": "wt-global-api-C_ReportSystem.SendReport-97",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "New reporting contract missing; old token-based SendReportPlayer is not an equivalent category/target submission contract. Requires report DTO and backend/result semantics."
+    },
+    {
+      "source_id": "wt-global-api-C_ToyBoxInfo.IsToySourceValid-98",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_ToyBoxInfo.IsUsingDefaultFilters-99",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_ToyBoxInfo.SetDefaultFilters-100",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.AreAllCollectionTypeFiltersChecked-101",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Transmog collection-type aggregate missing; complete type-domain and aggregate behavior required."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.AreAllSourceTypeFiltersChecked-102",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Transmog source-type aggregate missing; complete source-domain and aggregate behavior required."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.GetCategoryForItem-103",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Item-to-transmog-category resolver missing; requires concrete item metadata/category topology and invalid item rules."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.IsUsingDefaultFilters-104",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.SetAllCollectionTypeFilters-105",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Transmog bulk type-filter mutation missing; must share collection query/filter state rather than no-op."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.SetDefaultFilters-106",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogSets.IsUsingDefaultBaseSetsFilters-107",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Base-set filter-default query missing; requires shared native default policy across base-set sources/expansions."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogSets.SetDefaultBaseSetsFilters-108",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Base-set filter reset missing; requires complete base-set filter state and query-visible effects."
+    },
+    {
+      "source_id": "wt-global-api-C_WeeklyRewards.OnUIInteract-109",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Weekly reward interaction hook missing; needs an interaction lifecycle/refresh policy and actual state/event effects, not a no-op registration."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.ConfirmPostCommodity-111",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.ConfirmPostItem-112",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-BattlefieldSetPendingReportTarget-115",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-C_Calendar.ContextMenuEventComplain-116",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.ReportPosting-117",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Removed member remains dynamically fabricated. Bare cached ReportPosting references retained; namespace successor exists, no wrapper or classic behavior deleted in this audit."
+    },
+    {
+      "source_id": "wt-global-api-C_Cursor.DropCursorCommunitiesStream-118",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-C_Cursor.GetCursorCommunitiesStream-119",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-C_Cursor.SetCursorCommunitiesStream-120",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-C_Heirloom.IsHeirloomSourceValid-121",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Old namespace member remains dynamically fabricated. Bare cached successor/deprecation references retained; C_HeirloomInfo.IsHeirloomSourceValid is a different identity."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.ReportApplicant-122",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Removed member remains dynamically fabricated. Bare cached ReportApplicant references retained; report successor/deprecation behavior not deleted."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.ReportSearchResult-123",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-C_ReportSystem.InitiateReportPlayer-124",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained live cached consumer: Blizzard_HelpFrame/HelpFrame.lua:146 and Blizzard_StaticPopup_Game/Mainline/GameDialogDefs.lua:123,139. Existing token model preserved."
+    },
+    {
+      "source_id": "wt-global-api-C_ReportSystem.OpenReportPlayerDialog-125",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-C_ReportSystem.SendReportPlayer-126",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained live cached consumer: Blizzard_StaticPopup_Game/Mainline/GameDialogDefs.lua:126,142. Existing pending-token/result-event model preserved."
+    },
+    {
+      "source_id": "wt-global-api-C_ReportSystem.SetPendingReportPetTarget-127",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-C_ReportSystem.SetPendingReportTargetByGuid-128",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-C_ReportSystem.SetPendingReportTarget-129",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-ComplainInboxItem-130",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.RequestOwnedAuctionBidderInfo-135",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Source annotation remains pending: # ret bidderName, Nilable: true -> false Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_Club.CreateClub-137",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Source annotation remains pending: + arg isCrossFaction Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_Club.CreateTicket-139",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Club ticket creation missing; canCreateTicket metadata is not invitation ticket lifecycle/token production or cross-faction policy."
+    },
+    {
+      "source_id": "wt-global-api-C_Club.EditClub-141",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Club metadata/settings mutation missing; requires permissions and cross-faction member constraints, not patching cached mixins."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.PostClub-143",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Source annotation remains pending: + arg crossFaction Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.DoesEntryTitleMatchPrebuiltTitle-145",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Prebuilt title matching missing; requires activity/playstyle/localized title policy. Also retained by 12.0.0 exact fixture."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.GetPlaystyleString-147",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Source annotation remains pending: # arg playstyle, Type: Enum.LfgEntryPlaystyle -> Enum.LFGEntryPlaystyle Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.Search-149",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Source annotation remains pending: + arg searchCrossFactionListings Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.SetEntryTitle-151",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Entry title setter missing; requires shared listing state and playstyle/title policy. Also retained by 12.0.0 exact fixture."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.GetAppearanceSources-153",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Source annotation remains pending: + arg transmogLocation Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.GetCategoryAppearances-155",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Source annotation remains pending: + arg transmogLocation Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-widgets-Region:GetSourceLocation-207",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. src/lua_api/frame/methods/core_state/region.rs:101-133 returns owner-addon folder, not the exact creating script and line. Existing folder tests do not prove the page contract. Observed: Region; lookup=function"
+    },
+    {
+      "source_id": "wt-events-AUCTION_HOUSE_AUCTIONS_EXPIRED-220",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Registration does not prove producer lifecycle or payload fields. Observed: pcall=true; return=true; registered=true"
+    },
+    {
+      "source_id": "wt-events-CLIENT_SCENE_CLOSED-221",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Registration does not prove producer lifecycle or payload fields. Observed: pcall=true; return=true; registered=true"
+    },
+    {
+      "source_id": "wt-events-CLIENT_SCENE_OPENED-222",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Registration does not prove producer lifecycle or payload fields. Observed: pcall=true; return=true; registered=true"
+    },
+    {
+      "source_id": "wt-events-CLUB_FINDER_CAN_WHISPER_APPLICANT-223",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Registration does not prove producer lifecycle or payload fields. Observed: pcall=true; return=true; registered=true"
+    },
+    {
+      "source_id": "wt-events-GAME_PAD_POWER_CHANGED-224",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Registration does not prove producer lifecycle or payload fields. Observed: pcall=true; return=true; registered=true"
+    },
+    {
+      "source_id": "wt-events-AUCTION_HOUSE_POST_ERROR-226",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Registration does not prove producer lifecycle or payload fields. Observed: pcall=true; return=true; registered=true"
+    },
+    {
+      "source_id": "wt-events-AUCTION_HOUSE_POST_WARNING-227",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Registration does not prove producer lifecycle or payload fields. Observed: pcall=true; return=true; registered=true"
+    },
+    {
+      "source_id": "wt-events-COMMUNITIES_STREAM_CURSOR_CLEAR-230",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Observed: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"COMMUNITIES_STREAM_CURSOR_CLEAR\"; registered=false"
+    },
+    {
+      "source_id": "wt-events-OPEN_REPORT_PLAYER-231",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Observed: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"OPEN_REPORT_PLAYER\"; registered=false"
+    },
+    {
+      "source_id": "wt-cvars-cameraFov-242",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Historical default mismatch retained: 90 -> 90.000000; no historical rewrite. Observed: value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-enableSourceLocationLookup-243",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Historical default mismatch retained: 0 -> 1; no historical rewrite. Observed: value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-GamePadEmulateTapWindowMs-244",
+      "capabilities": [
+        "publication-sweep-9-2-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only, after chronological later add/remove supersession; no signature, populated output, historical or native behavior credit. Observed: value/default queried"
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+    },
+    {
+      "source_id": "prose-undated-005",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cross-faction co-operation is a broad policy statement; invitation, membership and party restrictions need concrete modeled behavior."
+    },
+    {
+      "source_id": "prose-undated-006",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact creating script and line not modeled; region.rs:101-133 returns owner addon folder. Existing folder tests do not satisfy this source contract."
+    },
+    {
+      "source_id": "prose-undated-007",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reusable list-filter dropdown lifecycle and query-visible filter mutations require current/historical owner-specific behavioral proof."
+    },
+    {
+      "source_id": "prose-undated-008",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Recent-player autocomplete flag and matching/selection policy require concrete roster/recent-player inputs and output proof."
+    },
+    {
+      "source_id": "prose-undated-009",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Hidden-aura exclusion requires a populated visible/hidden aura counterexample for this query; publication of the function is insufficient."
+    },
+    {
+      "source_id": "prose-undated-010",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical 9.2.0 annotation retained: full/incremental payload fields and native producer behavior require exact event-path proof, not arbitrary event injection."
+    },
+    {
+      "source_id": "prose-undated-011",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Example fence/editorial label; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-012",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Legacy enum/constant naming and deprecation alias migration require exact identities/values and loaded-wrapper behavior, not inferred naming parity."
+    },
+    {
+      "source_id": "prose-undated-013",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Legacy enum/constant naming and deprecation alias migration require exact identities/values and loaded-wrapper behavior, not inferred naming parity."
+    },
+    {
+      "source_id": "prose-undated-014",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Legacy enum/constant naming and deprecation alias migration require exact identities/values and loaded-wrapper behavior, not inferred naming parity."
+    },
+    {
+      "source_id": "source-context-016",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-017",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-018",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-019",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-020",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-022",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-023",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+    },
+    {
+      "source_id": "prose-undated-024",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+    },
+    {
+      "source_id": "prose-undated-026",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+    },
+    {
+      "source_id": "prose-undated-028",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+    },
+    {
+      "source_id": "prose-undated-030",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Example fence/editorial label; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-031",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+    },
+    {
+      "source_id": "prose-undated-033",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+    },
+    {
+      "source_id": "prose-undated-034",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+    },
+    {
+      "source_id": "prose-undated-035",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Example fence/editorial label; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-037",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+    },
+    {
+      "source_id": "prose-undated-039",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Example fence/editorial label; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-040",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+    },
+    {
+      "source_id": "prose-undated-041",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+    },
+    {
+      "source_id": "prose-undated-043",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+    },
+    {
+      "source_id": "prose-undated-045",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+    },
+    {
+      "source_id": "prose-undated-046",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+    },
+    {
+      "source_id": "prose-undated-047",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+    },
+    {
+      "source_id": "prose-undated-048",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+    },
+    {
+      "source_id": "prose-undated-049",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+    },
+    {
+      "source_id": "prose-undated-050",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Example fence/editorial label; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-052",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+    },
+    {
+      "source_id": "source-context-054",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "structures-AuctionHouseItemClassFilter (C_AuctionHouse-SendBrowseQuery)-055",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: AuctionHouseItemClassFilter (C_AuctionHouse.SendBrowseQuery). Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-AuctionHouseItemClassFilter (C_AuctionHouse-SendBrowseQuery)-056",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: # inventoryType, Type: number -> Enum.InventoryType. Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-CalendarDayEvent-057",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: CalendarDayEvent. Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-CalendarDayEvent-058",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: # inviteStatus, Type: number -> Enum.CalendarStatus. Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-CalendarDayEvent-059",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: # inviteType, Type: number -> Enum.CalendarInviteType. Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-CalendarEventInfo (C_Calendar-GetEventInfo)-060",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: CalendarEventInfo (C_Calendar.GetEventInfo). Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-CalendarEventInfo (C_Calendar-GetEventInfo)-061",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: # repeatOption, Type: number -> Enum.CalendarEventRepeatOptions. Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-CalendarEventInfo (C_Calendar-GetEventInfo)-062",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: # inviteStatus, Type: number -> Enum.CalendarStatus. Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-CalendarEventInfo (C_Calendar-GetEventInfo)-063",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: # inviteType, Type: number -> Enum.CalendarInviteType. Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-CalendarEventInviteInfo (C_Calendar-EventGetInvite)-064",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: CalendarEventInviteInfo (C_Calendar.EventGetInvite). Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-CalendarEventInviteInfo (C_Calendar-EventGetInvite)-065",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: # inviteStatus, Type: number -> Enum.CalendarStatus. Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-CalendarEventInviteInfo (C_Calendar-EventGetInvite)-066",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: # type, Type: number -> Enum.CalendarInviteType. Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-CalendarGuildEventInfo (C_Calendar-GetGuildEventInfo)-067",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: CalendarGuildEventInfo (C_Calendar.GetGuildEventInfo). Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-CalendarGuildEventInfo (C_Calendar-GetGuildEventInfo)-068",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: # inviteStatus, Type: number -> Enum.CalendarStatus. Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-ClubFinderApplicantInfo-069",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: ClubFinderApplicantInfo. Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-ClubFinderApplicantInfo-070",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: + faction. Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-ClubInfo-071",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: ClubInfo. Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-ClubInfo-072",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: + crossFaction. Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-ClubMemberInfo-073",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: ClubMemberInfo. Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-ClubMemberInfo-074",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: + faction. Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-ClubSettingsInfo-075",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: ClubSettingsInfo. Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-ClubSettingsInfo-076",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: + crossFaction. Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-GroupFinderActivityInfo (C_LFGList-GetActivityInfoTable, C_LFGList-GetPlaystyleString)-077",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: GroupFinderActivityInfo (C_LFGList.GetActivityInfoTable, C_LFGList.GetPlaystyleString). Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-GroupFinderActivityInfo (C_LFGList-GetActivityInfoTable, C_LFGList-GetPlaystyleString)-078",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: # displayType, Type: Enum.LfgListDisplayType -> Enum.LFGListDisplayType. Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-GroupFinderActivityInfo (C_LFGList-GetActivityInfoTable, C_LFGList-GetPlaystyleString)-079",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: + allowCrossFaction. Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-LfgCategoryData (C_LFGList-GetLfgCategoryInfo)-080",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: LfgCategoryData (C_LFGList.GetLfgCategoryInfo). Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-LfgCategoryData (C_LFGList-GetLfgCategoryInfo)-081",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: + allowCrossFaction. Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-LfgEntryData (C_LFGList-GetActiveEntryInfo)-082",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: LfgEntryData (C_LFGList.GetActiveEntryInfo). Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-LfgEntryData (C_LFGList-GetActiveEntryInfo)-083",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: # playstyle, Type: Enum.LfgEntryPlaystyle -> Enum.LFGEntryPlaystyle. Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-LfgEntryData (C_LFGList-GetActiveEntryInfo)-084",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: + isCrossFactionListing. Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-LfgSearchResultData (C_LFGList-GetSearchResultInfo)-085",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: LfgSearchResultData (C_LFGList.GetSearchResultInfo). Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-LfgSearchResultData (C_LFGList-GetSearchResultInfo)-086",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: # playstyle, Type: Enum.LfgEntryPlaystyle -> Enum.LFGEntryPlaystyle. Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-LfgSearchResultData (C_LFGList-GetSearchResultInfo)-087",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: + crossFactionListing. Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-LfgSearchResultData (C_LFGList-GetSearchResultInfo)-088",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: + leaderFactionGroup. Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-RecruitingClubInfo-089",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: RecruitingClubInfo. Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-RecruitingClubInfo-090",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: + isCrossFaction. Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-UIWidgetSpellInfo (C_UIWidgetManager-GetSpellDisplayVisualizationInfo)-091",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: UIWidgetSpellInfo (C_UIWidgetManager.GetSpellDisplayVisualizationInfo). Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-UIWidgetSpellInfo (C_UIWidgetManager-GetSpellDisplayVisualizationInfo)-092",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: + textFontType. Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-UIWidgetSpellInfo (C_UIWidgetManager-GetSpellDisplayVisualizationInfo)-093",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: + textSizeType. Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "structures-UIWidgetSpellInfo (C_UIWidgetManager-GetSpellDisplayVisualizationInfo)-094",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact populated DTO field/type contract remains unproved: + hAlignType. Empty default tables and enum declarations are not field/value parity."
+    },
+    {
+      "source_id": "source-context-096",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "enumerations--097",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: + Enum.CalendarTexturesType. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations--098",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: + Enum.ClientPlatformType. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations--099",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: + Enum.ClientSceneType. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations--100",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: + Enum.ItemCreationContext. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations--101",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: + Enum.ItemModification. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations--102",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: + Enum.LFGListFilter. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations--103",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: + Enum.PetBattleQueueStatus. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations--104",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: + Enum.PvPFaction. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations--105",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: + Enum.ReportMajorCategory. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations--106",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: + Enum.ReportMinorCategory. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations--107",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: + Enum.ReportType. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations--108",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: - Enum.LfgEntryPlaystyle. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations--109",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: + Enum.LFGEntryPlaystyle. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations--110",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: - Enum.LfgListDisplayType. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations--111",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: + Enum.LFGListDisplayType. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-AuctionHouseFilter-113",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: Enum.AuctionHouseFilter. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-AuctionHouseFilter-114",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: + None. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-BattlePetNpcTeamFlag-115",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: Enum.BattlePetNpcTeamFlag. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-BattlePetNpcTeamFlag-116",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: + NoPlayerXP. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-BattlePetNpcTeamFlag-117",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: - NoPlayerXp. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-BrawlType-118",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: Enum.BrawlType. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-BrawlType-119",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: + LFG. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-BrawlType-120",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: - Lfg. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-BrawlType-121",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: + SoloShuffle. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-CalendarCommandType-122",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: Enum.CalendarCommandType. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-CalendarCommandType-123",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: # CalendarCommandCreate -> Create, etc. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-CalendarErrorType-124",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: Enum.CalendarErrorType. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-CalendarErrorType-125",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: # CalendarErrorSuccess -> Success, etc. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-CalendarEventBits-126",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: Enum.CalendarEventBits. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-CalendarEventBits-127",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: # CalendarEventBitPlayer -> Player, etc. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-CalendarEventRepeatOptions-128",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: Enum.CalendarEventRepeatOptions. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-CalendarEventRepeatOptions-129",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: # CalendarRepeatNever -> Never, etc. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-CalendarGetEventType-130",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: Enum.CalendarGetEventType. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-CalendarGetEventType-131",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: - DefaultCalendarGetEventType. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-CalendarInviteBits-132",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: Enum.CalendarInviteBits. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-CalendarInviteBits-133",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: # CalendarInviteBitPendingInvite -> PendingInvite, etc. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-CalendarInviteSortType-134",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: Enum.CalendarInviteSortType. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-CalendarInviteSortType-135",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: # CalendarInviteSortName -> Name, etc. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-CalendarModeratorStatus-136",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: Enum.CalendarModeratorStatus. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-CalendarModeratorStatus-137",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: # CalendarModeratorNone -> None, etc. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-ClubErrorType-138",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: Enum.ClubErrorType. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-ClubErrorType-139",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: + ErrorClubDoesntAllowCrossFaction. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-ClubErrorType-140",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: + ErrorClubEditHasCrossFactionMembers. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-CurrencyFlagsB-141",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: Enum.CurrencyFlagsB. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-CurrencyFlagsB-142",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: + CurrencyBShowQuestXPGainInTooltip. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-CurrencyFlagsB-143",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: - CurrencyBShowQuestXpGainInTooltip. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-CurrencySource-144",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: Enum.CurrencySource. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-CurrencySource-145",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: + LFGReward. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-CurrencySource-146",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: - LfgReward. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-QuestSessionResult-147",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: Enum.QuestSessionResult. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-QuestSessionResult-148",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: + RestrictedCrossFaction. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-UICursorType-149",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: Enum.UICursorType. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "enumerations-Enum-UICursorType-150",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Exact enum identity/value/alias/deprecation contract remains unproved: - CommunitiesStream. Static declarations do not establish behavioral or historical parity."
+    },
+    {
+      "source_id": "wt-source-context-build-62",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Historical build transition caption; no runtime credit."
+    }
+  ]
+}

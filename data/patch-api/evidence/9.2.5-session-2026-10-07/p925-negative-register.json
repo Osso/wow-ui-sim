@@ -1,0 +1,736 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "9.2.5",
+  "source": {
+    "path": "data/patch-api/sources/9.2.5-api-changes.wikitext",
+    "revid": 2301036,
+    "sha256": "f0c554edcdce15afe3cfa3a2dfaf3c723d11864d377613640538d43596cb12e3"
+  },
+  "header_counts": [
+    {
+      "section": "global-api",
+      "direction": "added",
+      "header_count": 44,
+      "parsed_count": 44
+    },
+    {
+      "section": "global-api",
+      "direction": "removed",
+      "header_count": 16,
+      "parsed_count": 16
+    },
+    {
+      "section": "widgets",
+      "direction": "added",
+      "header_count": 1,
+      "parsed_count": 1
+    },
+    {
+      "section": "widgets",
+      "direction": "removed",
+      "header_count": 0,
+      "parsed_count": 0
+    },
+    {
+      "section": "events",
+      "direction": "added",
+      "header_count": 7,
+      "parsed_count": 7
+    },
+    {
+      "section": "events",
+      "direction": "removed",
+      "header_count": 2,
+      "parsed_count": 2
+    },
+    {
+      "section": "cvars",
+      "direction": "added",
+      "header_count": 3,
+      "parsed_count": 3
+    },
+    {
+      "section": "cvars",
+      "direction": "removed",
+      "header_count": 0,
+      "parsed_count": 0
+    }
+  ],
+  "entries": [
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetBids-68",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetBids",
+      "annotation": "",
+      "wikitext_line": 68
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetOwnedAuctions-69",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetOwnedAuctions",
+      "annotation": "",
+      "wikitext_line": 69
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.RequestFavorites-70",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.RequestFavorites",
+      "annotation": "",
+      "wikitext_line": 70
+    },
+    {
+      "id": "wt-global-api-C_CharacterServices.AssignPFCDistribution-71",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CharacterServices.AssignPFCDistribution",
+      "annotation": "",
+      "wikitext_line": 71
+    },
+    {
+      "id": "wt-global-api-C_Club.DoesCommunityHaveMembersOfTheOppositeFaction-72",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Club.DoesCommunityHaveMembersOfTheOppositeFaction",
+      "annotation": "",
+      "wikitext_line": 72
+    },
+    {
+      "id": "wt-global-api-C_ClubFinder.SendChatWhisper-73",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClubFinder.SendChatWhisper",
+      "annotation": "",
+      "wikitext_line": 73
+    },
+    {
+      "id": "wt-global-api-C_FriendList.IsOnIgnoredList-74",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_FriendList.IsOnIgnoredList",
+      "annotation": "",
+      "wikitext_line": 74
+    },
+    {
+      "id": "wt-global-api-C_GamePad.AddSDLMapping-75",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_GamePad.AddSDLMapping",
+      "annotation": "",
+      "wikitext_line": 75
+    },
+    {
+      "id": "wt-global-api-C_GamePad.GetPowerLevel-76",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_GamePad.GetPowerLevel",
+      "annotation": "",
+      "wikitext_line": 76
+    },
+    {
+      "id": "wt-global-api-C_HeirloomInfo.AreAllCollectionFiltersChecked-77",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HeirloomInfo.AreAllCollectionFiltersChecked",
+      "annotation": "",
+      "wikitext_line": 77
+    },
+    {
+      "id": "wt-global-api-C_HeirloomInfo.AreAllSourceFiltersChecked-78",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HeirloomInfo.AreAllSourceFiltersChecked",
+      "annotation": "",
+      "wikitext_line": 78
+    },
+    {
+      "id": "wt-global-api-C_HeirloomInfo.IsHeirloomSourceValid-79",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HeirloomInfo.IsHeirloomSourceValid",
+      "annotation": "",
+      "wikitext_line": 79
+    },
+    {
+      "id": "wt-global-api-C_HeirloomInfo.IsUsingDefaultFilters-80",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HeirloomInfo.IsUsingDefaultFilters",
+      "annotation": "",
+      "wikitext_line": 80
+    },
+    {
+      "id": "wt-global-api-C_HeirloomInfo.SetAllCollectionFilters-81",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HeirloomInfo.SetAllCollectionFilters",
+      "annotation": "",
+      "wikitext_line": 81
+    },
+    {
+      "id": "wt-global-api-C_HeirloomInfo.SetAllSourceFilters-82",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HeirloomInfo.SetAllSourceFilters",
+      "annotation": "",
+      "wikitext_line": 82
+    },
+    {
+      "id": "wt-global-api-C_HeirloomInfo.SetDefaultFilters-83",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_HeirloomInfo.SetDefaultFilters",
+      "annotation": "",
+      "wikitext_line": 83
+    },
+    {
+      "id": "wt-global-api-C_Item.GetLimitedCurrencyItemInfo-84",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Item.GetLimitedCurrencyItemInfo",
+      "annotation": "",
+      "wikitext_line": 84
+    },
+    {
+      "id": "wt-global-api-C_ModifiedInstance.GetModifiedInstanceInfoFromMapID-85",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ModifiedInstance.GetModifiedInstanceInfoFromMapID",
+      "annotation": "",
+      "wikitext_line": 85
+    },
+    {
+      "id": "wt-global-api-C_MountJournal.IsUsingDefaultFilters-86",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MountJournal.IsUsingDefaultFilters",
+      "annotation": "",
+      "wikitext_line": 86
+    },
+    {
+      "id": "wt-global-api-C_MountJournal.SetDefaultFilters-87",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MountJournal.SetDefaultFilters",
+      "annotation": "",
+      "wikitext_line": 87
+    },
+    {
+      "id": "wt-global-api-C_PartyInfo.CanFormCrossFactionParties-88",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PartyInfo.CanFormCrossFactionParties",
+      "annotation": "",
+      "wikitext_line": 88
+    },
+    {
+      "id": "wt-global-api-C_PartyInfo.IsCrossFactionParty-89",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PartyInfo.IsCrossFactionParty",
+      "annotation": "",
+      "wikitext_line": 89
+    },
+    {
+      "id": "wt-global-api-C_PetJournal.IsUsingDefaultFilters-90",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PetJournal.IsUsingDefaultFilters",
+      "annotation": "",
+      "wikitext_line": 90
+    },
+    {
+      "id": "wt-global-api-C_PetJournal.SetDefaultFilters-91",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PetJournal.SetDefaultFilters",
+      "annotation": "",
+      "wikitext_line": 91
+    },
+    {
+      "id": "wt-global-api-C_PlayerInfo.IsPlayerInGuildFromGUID-92",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PlayerInfo.IsPlayerInGuildFromGUID",
+      "annotation": "",
+      "wikitext_line": 92
+    },
+    {
+      "id": "wt-global-api-C_ReportSystem.GetMajorCategoriesForReportType-93",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ReportSystem.GetMajorCategoriesForReportType",
+      "annotation": "",
+      "wikitext_line": 93
+    },
+    {
+      "id": "wt-global-api-C_ReportSystem.GetMajorCategoryString-94",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ReportSystem.GetMajorCategoryString",
+      "annotation": "",
+      "wikitext_line": 94
+    },
+    {
+      "id": "wt-global-api-C_ReportSystem.GetMinorCategoriesForReportTypeAndMajorCategory-95",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ReportSystem.GetMinorCategoriesForReportTypeAndMajorCategory",
+      "annotation": "",
+      "wikitext_line": 95
+    },
+    {
+      "id": "wt-global-api-C_ReportSystem.GetMinorCategoryString-96",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ReportSystem.GetMinorCategoryString",
+      "annotation": "",
+      "wikitext_line": 96
+    },
+    {
+      "id": "wt-global-api-C_ReportSystem.SendReport-97",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ReportSystem.SendReport",
+      "annotation": "",
+      "wikitext_line": 97
+    },
+    {
+      "id": "wt-global-api-C_ToyBoxInfo.IsToySourceValid-98",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ToyBoxInfo.IsToySourceValid",
+      "annotation": "",
+      "wikitext_line": 98
+    },
+    {
+      "id": "wt-global-api-C_ToyBoxInfo.IsUsingDefaultFilters-99",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ToyBoxInfo.IsUsingDefaultFilters",
+      "annotation": "",
+      "wikitext_line": 99
+    },
+    {
+      "id": "wt-global-api-C_ToyBoxInfo.SetDefaultFilters-100",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ToyBoxInfo.SetDefaultFilters",
+      "annotation": "",
+      "wikitext_line": 100
+    },
+    {
+      "id": "wt-global-api-C_TransmogCollection.AreAllCollectionTypeFiltersChecked-101",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TransmogCollection.AreAllCollectionTypeFiltersChecked",
+      "annotation": "",
+      "wikitext_line": 101
+    },
+    {
+      "id": "wt-global-api-C_TransmogCollection.AreAllSourceTypeFiltersChecked-102",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TransmogCollection.AreAllSourceTypeFiltersChecked",
+      "annotation": "",
+      "wikitext_line": 102
+    },
+    {
+      "id": "wt-global-api-C_TransmogCollection.GetCategoryForItem-103",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TransmogCollection.GetCategoryForItem",
+      "annotation": "",
+      "wikitext_line": 103
+    },
+    {
+      "id": "wt-global-api-C_TransmogCollection.IsUsingDefaultFilters-104",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TransmogCollection.IsUsingDefaultFilters",
+      "annotation": "",
+      "wikitext_line": 104
+    },
+    {
+      "id": "wt-global-api-C_TransmogCollection.SetAllCollectionTypeFilters-105",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TransmogCollection.SetAllCollectionTypeFilters",
+      "annotation": "",
+      "wikitext_line": 105
+    },
+    {
+      "id": "wt-global-api-C_TransmogCollection.SetDefaultFilters-106",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TransmogCollection.SetDefaultFilters",
+      "annotation": "",
+      "wikitext_line": 106
+    },
+    {
+      "id": "wt-global-api-C_TransmogSets.IsUsingDefaultBaseSetsFilters-107",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TransmogSets.IsUsingDefaultBaseSetsFilters",
+      "annotation": "",
+      "wikitext_line": 107
+    },
+    {
+      "id": "wt-global-api-C_TransmogSets.SetDefaultBaseSetsFilters-108",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TransmogSets.SetDefaultBaseSetsFilters",
+      "annotation": "",
+      "wikitext_line": 108
+    },
+    {
+      "id": "wt-global-api-C_WeeklyRewards.OnUIInteract-109",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_WeeklyRewards.OnUIInteract",
+      "annotation": "",
+      "wikitext_line": 109
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.ConfirmPostCommodity-111",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.ConfirmPostCommodity",
+      "annotation": "",
+      "wikitext_line": 111
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.ConfirmPostItem-112",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.ConfirmPostItem",
+      "annotation": "",
+      "wikitext_line": 112
+    },
+    {
+      "id": "wt-global-api-BattlefieldSetPendingReportTarget-115",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BattlefieldSetPendingReportTarget",
+      "annotation": "",
+      "wikitext_line": 115
+    },
+    {
+      "id": "wt-global-api-C_Calendar.ContextMenuEventComplain-116",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Calendar.ContextMenuEventComplain",
+      "annotation": "",
+      "wikitext_line": 116
+    },
+    {
+      "id": "wt-global-api-C_ClubFinder.ReportPosting-117",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_ClubFinder.ReportPosting",
+      "annotation": "",
+      "wikitext_line": 117
+    },
+    {
+      "id": "wt-global-api-C_Cursor.DropCursorCommunitiesStream-118",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Cursor.DropCursorCommunitiesStream",
+      "annotation": "",
+      "wikitext_line": 118
+    },
+    {
+      "id": "wt-global-api-C_Cursor.GetCursorCommunitiesStream-119",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Cursor.GetCursorCommunitiesStream",
+      "annotation": "",
+      "wikitext_line": 119
+    },
+    {
+      "id": "wt-global-api-C_Cursor.SetCursorCommunitiesStream-120",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Cursor.SetCursorCommunitiesStream",
+      "annotation": "",
+      "wikitext_line": 120
+    },
+    {
+      "id": "wt-global-api-C_Heirloom.IsHeirloomSourceValid-121",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Heirloom.IsHeirloomSourceValid",
+      "annotation": "",
+      "wikitext_line": 121
+    },
+    {
+      "id": "wt-global-api-C_LFGList.ReportApplicant-122",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_LFGList.ReportApplicant",
+      "annotation": "",
+      "wikitext_line": 122
+    },
+    {
+      "id": "wt-global-api-C_LFGList.ReportSearchResult-123",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_LFGList.ReportSearchResult",
+      "annotation": "",
+      "wikitext_line": 123
+    },
+    {
+      "id": "wt-global-api-C_ReportSystem.InitiateReportPlayer-124",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_ReportSystem.InitiateReportPlayer",
+      "annotation": "",
+      "wikitext_line": 124
+    },
+    {
+      "id": "wt-global-api-C_ReportSystem.OpenReportPlayerDialog-125",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_ReportSystem.OpenReportPlayerDialog",
+      "annotation": "",
+      "wikitext_line": 125
+    },
+    {
+      "id": "wt-global-api-C_ReportSystem.SendReportPlayer-126",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_ReportSystem.SendReportPlayer",
+      "annotation": "",
+      "wikitext_line": 126
+    },
+    {
+      "id": "wt-global-api-C_ReportSystem.SetPendingReportPetTarget-127",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_ReportSystem.SetPendingReportPetTarget",
+      "annotation": "",
+      "wikitext_line": 127
+    },
+    {
+      "id": "wt-global-api-C_ReportSystem.SetPendingReportTargetByGuid-128",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_ReportSystem.SetPendingReportTargetByGuid",
+      "annotation": "",
+      "wikitext_line": 128
+    },
+    {
+      "id": "wt-global-api-C_ReportSystem.SetPendingReportTarget-129",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_ReportSystem.SetPendingReportTarget",
+      "annotation": "",
+      "wikitext_line": 129
+    },
+    {
+      "id": "wt-global-api-ComplainInboxItem-130",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ComplainInboxItem",
+      "annotation": "",
+      "wikitext_line": 130
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.RequestOwnedAuctionBidderInfo-135",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_AuctionHouse.RequestOwnedAuctionBidderInfo",
+      "annotation": "# ret bidderName, Nilable: true -> false",
+      "wikitext_line": 135
+    },
+    {
+      "id": "wt-global-api-C_Club.CreateClub-137",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_Club.CreateClub",
+      "annotation": "+ arg isCrossFaction",
+      "wikitext_line": 137
+    },
+    {
+      "id": "wt-global-api-C_Club.CreateTicket-139",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_Club.CreateTicket",
+      "annotation": "+ arg isCrossFaction",
+      "wikitext_line": 139
+    },
+    {
+      "id": "wt-global-api-C_Club.EditClub-141",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_Club.EditClub",
+      "annotation": "+ arg crossFaction",
+      "wikitext_line": 141
+    },
+    {
+      "id": "wt-global-api-C_ClubFinder.PostClub-143",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_ClubFinder.PostClub",
+      "annotation": "+ arg crossFaction",
+      "wikitext_line": 143
+    },
+    {
+      "id": "wt-global-api-C_LFGList.DoesEntryTitleMatchPrebuiltTitle-145",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_LFGList.DoesEntryTitleMatchPrebuiltTitle",
+      "annotation": "# arg playstyle, Type: Enum.LfgEntryPlaystyle -> Enum.LFGEntryPlaystyle",
+      "wikitext_line": 145
+    },
+    {
+      "id": "wt-global-api-C_LFGList.GetPlaystyleString-147",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_LFGList.GetPlaystyleString",
+      "annotation": "# arg playstyle, Type: Enum.LfgEntryPlaystyle -> Enum.LFGEntryPlaystyle",
+      "wikitext_line": 147
+    },
+    {
+      "id": "wt-global-api-C_LFGList.Search-149",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_LFGList.Search",
+      "annotation": "+ arg searchCrossFactionListings",
+      "wikitext_line": 149
+    },
+    {
+      "id": "wt-global-api-C_LFGList.SetEntryTitle-151",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_LFGList.SetEntryTitle",
+      "annotation": "# arg playstyle, Type: Enum.LfgEntryPlaystyle -> Enum.LFGEntryPlaystyle",
+      "wikitext_line": 151
+    },
+    {
+      "id": "wt-global-api-C_TransmogCollection.GetAppearanceSources-153",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_TransmogCollection.GetAppearanceSources",
+      "annotation": "+ arg transmogLocation",
+      "wikitext_line": 153
+    },
+    {
+      "id": "wt-global-api-C_TransmogCollection.GetCategoryAppearances-155",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_TransmogCollection.GetCategoryAppearances",
+      "annotation": "+ arg transmogLocation",
+      "wikitext_line": 155
+    },
+    {
+      "id": "wt-widgets-Region:GetSourceLocation-207",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Region:GetSourceLocation",
+      "annotation": "",
+      "wikitext_line": 207
+    },
+    {
+      "id": "wt-events-AUCTION_HOUSE_AUCTIONS_EXPIRED-220",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AUCTION_HOUSE_AUCTIONS_EXPIRED",
+      "annotation": "",
+      "wikitext_line": 220
+    },
+    {
+      "id": "wt-events-CLIENT_SCENE_CLOSED-221",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLIENT_SCENE_CLOSED",
+      "annotation": "",
+      "wikitext_line": 221
+    },
+    {
+      "id": "wt-events-CLIENT_SCENE_OPENED-222",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLIENT_SCENE_OPENED",
+      "annotation": "",
+      "wikitext_line": 222
+    },
+    {
+      "id": "wt-events-CLUB_FINDER_CAN_WHISPER_APPLICANT-223",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLUB_FINDER_CAN_WHISPER_APPLICANT",
+      "annotation": "",
+      "wikitext_line": 223
+    },
+    {
+      "id": "wt-events-GAME_PAD_POWER_CHANGED-224",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "GAME_PAD_POWER_CHANGED",
+      "annotation": "",
+      "wikitext_line": 224
+    },
+    {
+      "id": "wt-events-AUCTION_HOUSE_POST_ERROR-226",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AUCTION_HOUSE_POST_ERROR",
+      "annotation": "",
+      "wikitext_line": 226
+    },
+    {
+      "id": "wt-events-AUCTION_HOUSE_POST_WARNING-227",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AUCTION_HOUSE_POST_WARNING",
+      "annotation": "",
+      "wikitext_line": 227
+    },
+    {
+      "id": "wt-events-COMMUNITIES_STREAM_CURSOR_CLEAR-230",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "COMMUNITIES_STREAM_CURSOR_CLEAR",
+      "annotation": "",
+      "wikitext_line": 230
+    },
+    {
+      "id": "wt-events-OPEN_REPORT_PLAYER-231",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "OPEN_REPORT_PLAYER",
+      "annotation": "",
+      "wikitext_line": 231
+    },
+    {
+      "id": "wt-cvars-cameraFov-242",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "cameraFov",
+      "annotation": "",
+      "wikitext_line": 242,
+      "page_default": "90"
+    },
+    {
+      "id": "wt-cvars-enableSourceLocationLookup-243",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "enableSourceLocationLookup",
+      "annotation": "",
+      "wikitext_line": 243,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-GamePadEmulateTapWindowMs-244",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "GamePadEmulateTapWindowMs",
+      "annotation": "",
+      "wikitext_line": 244,
+      "page_default": "350"
+    }
+  ]
+}

@@ -1,0 +1,1217 @@
+[
+  {
+    "source_id": "source-context-001",
+    "extract_line": 1,
+    "wikitext_line": 1,
+    "literal": "Patch 9.2.5 API changes",
+    "raw_literal": "{{apichanges|9.2.5|prev=9.2.0|next=9.2.7}}",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-003",
+    "extract_line": 3,
+    "wikitext_line": 3,
+    "literal": "== Summary ==",
+    "raw_literal": "==Summary==",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-004",
+    "extract_line": 4,
+    "wikitext_line": 4,
+    "literal": "* Significant modifications were made to the UnitPopup menu system. See UnitPopup Changes for more information.",
+    "raw_literal": "* Significant modifications were made to the UnitPopup menu system. See [[#UnitPopup_Changes|UnitPopup Changes]] for more information.",
+    "status": "audit-pending",
+    "reason": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+  },
+  {
+    "source_id": "prose-undated-005",
+    "extract_line": 5,
+    "wikitext_line": 5,
+    "literal": "* Added various APIs relating to cross-faction player co-operation.",
+    "raw_literal": "* Added various APIs relating to cross-faction player co-operation.",
+    "status": "audit-pending",
+    "reason": "Cross-faction co-operation is a broad policy statement; invitation, membership and party restrictions need concrete modeled behavior."
+  },
+  {
+    "source_id": "prose-undated-006",
+    "extract_line": 6,
+    "wikitext_line": 6,
+    "literal": "* Added Region:GetSourceLocation() which returns the script name and line where a Region was created.",
+    "raw_literal": "* Added [[API Region GetSourceLocation|Region:GetSourceLocation()]] which returns the script name and line where a Region was created.",
+    "status": "audit-pending",
+    "reason": "Exact creating script and line not modeled; region.rs:101-133 returns owner addon folder. Existing folder tests do not satisfy this source contract."
+  },
+  {
+    "source_id": "prose-undated-007",
+    "extract_line": 7,
+    "wikitext_line": 7,
+    "literal": "* Added a new reusable system for dropdowns that configure list filters.",
+    "raw_literal": "* Added a new reusable system for dropdowns that configure list filters.",
+    "status": "audit-pending",
+    "reason": "Reusable list-filter dropdown lifecycle and query-visible filter mutations require current/historical owner-specific behavioral proof."
+  },
+  {
+    "source_id": "prose-undated-008",
+    "extract_line": 8,
+    "wikitext_line": 8,
+    "literal": "* Added a new player name autocompletion flag - AUTO_COMPLETE_RECENT_PLAYER.",
+    "raw_literal": "* Added a new player name autocompletion flag - <code>AUTO_COMPLETE_RECENT_PLAYER</code>.",
+    "status": "audit-pending",
+    "reason": "Recent-player autocomplete flag and matching/selection policy require concrete roster/recent-player inputs and output proof."
+  },
+  {
+    "source_id": "prose-undated-009",
+    "extract_line": 9,
+    "wikitext_line": 9,
+    "literal": "* The GetPlayerAuraBySpellID() API no longer returns information about hidden auras.",
+    "raw_literal": "* The {{api|GetPlayerAuraBySpellID}}() API no longer returns information about hidden auras.",
+    "status": "audit-pending",
+    "reason": "Hidden-aura exclusion requires a populated visible/hidden aura counterexample for this query; publication of the function is insufficient."
+  },
+  {
+    "source_id": "prose-undated-010",
+    "extract_line": 10,
+    "wikitext_line": 10,
+    "literal": "* (9.2.0) Added isFullUpdate and updatedAuras parameters to UNIT_AURA.[https://www.bluetracker.gg/wow/topic/us-en/1205007-new-unit_aura-processing-optimizations/]",
+    "raw_literal": "* <span style=\"color:gray\">(9.2.0)</span> Added <code>isFullUpdate</code> and <code>updatedAuras</code> parameters to [[UNIT_AURA]].<sup>[https://www.bluetracker.gg/wow/topic/us-en/1205007-new-unit_aura-processing-optimizations/]</sup>",
+    "status": "audit-pending",
+    "reason": "Historical 9.2.0 annotation retained: full/incremental payload fields and native producer behavior require exact event-path proof, not arbitrary event injection."
+  },
+  {
+    "source_id": "prose-undated-011",
+    "extract_line": 11,
+    "wikitext_line": 11,
+    "literal": "Enums",
+    "raw_literal": "'''[[#Enums|Enums]]'''",
+    "status": "metadata-only",
+    "reason": "Example fence/editorial label; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-012",
+    "extract_line": 12,
+    "wikitext_line": 12,
+    "literal": "* Changed the casing of various LFG enumerations; usages of \"Lfg\" have been renamed to the fully-uppercase \"LFG\". The old names are deprecated.",
+    "raw_literal": "* Changed the casing of various LFG enumerations; usages of \"Lfg\" have been renamed to the fully-uppercase \"LFG\". The old names are deprecated.",
+    "status": "audit-pending",
+    "reason": "Legacy enum/constant naming and deprecation alias migration require exact identities/values and loaded-wrapper behavior, not inferred naming parity."
+  },
+  {
+    "source_id": "prose-undated-013",
+    "extract_line": 13,
+    "wikitext_line": 13,
+    "literal": "* Added new enums for calendar events and invites. The old global constants have been deprecated.",
+    "raw_literal": "* Added new enums for calendar events and invites. The old global constants have been deprecated.",
+    "status": "audit-pending",
+    "reason": "Legacy enum/constant naming and deprecation alias migration require exact identities/values and loaded-wrapper behavior, not inferred naming parity."
+  },
+  {
+    "source_id": "prose-undated-014",
+    "extract_line": 14,
+    "wikitext_line": 14,
+    "literal": "* Added a new enum for LFG filter flags. The old global constants are deprecated.",
+    "raw_literal": "* Added a new enum for LFG filter flags. The old global constants are deprecated.",
+    "status": "audit-pending",
+    "reason": "Legacy enum/constant naming and deprecation alias migration require exact identities/values and loaded-wrapper behavior, not inferred naming parity."
+  },
+  {
+    "source_id": "source-context-016",
+    "extract_line": 16,
+    "wikitext_line": 16,
+    "literal": "== Resources ==",
+    "raw_literal": "==Resources==",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "source-context-017",
+    "extract_line": 17,
+    "wikitext_line": 17,
+    "literal": "* TOC: 90205",
+    "raw_literal": "* TOC: <code>90205</code>",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-018",
+    "extract_line": 18,
+    "wikitext_line": 18,
+    "literal": "* Diffs: wow-ui-source, BlizzardInterfaceResources",
+    "raw_literal": "* Diffs: [https://github.com/Gethe/wow-ui-source/compare/9.2.0..9.2.5 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/9.2.0..9.2.5 BlizzardInterfaceResources]",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-019",
+    "extract_line": 19,
+    "wikitext_line": 19,
+    "literal": "* Deprecated API: Deprecated_9_2_5.lua",
+    "raw_literal": "* Deprecated API: [https://github.com/Gethe/wow-ui-source/blob/9.2.5/Interface/AddOns/Blizzard_Deprecated/Deprecated_9_2_5.lua Deprecated_9_2_5.lua]",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-020",
+    "extract_line": 20,
+    "wikitext_line": 20,
+    "literal": "* Official patch notes: User Interface and Accessibility",
+    "raw_literal": "* Official patch notes: [https://worldofwarcraft.com/en-us/news/23789456/updated-may-31-shadowlands-925-content-update-notes#item11 User Interface and Accessibility]",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-022",
+    "extract_line": 22,
+    "wikitext_line": 22,
+    "literal": "== UnitPopup Changes ==",
+    "raw_literal": "==UnitPopup Changes==",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-023",
+    "extract_line": 23,
+    "wikitext_line": 26,
+    "literal": "[Warning: Secure Execution and Tainting]",
+    "raw_literal": "| type = Secure Execution and Tainting",
+    "status": "audit-pending",
+    "reason": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+  },
+  {
+    "source_id": "prose-undated-024",
+    "extract_line": 24,
+    "wikitext_line": 28,
+    "literal": "* Modifying UnitPopup menus as described below will taint and break other secure actions in the same menu.",
+    "raw_literal": "* Modifying UnitPopup menus as described below will [[Secure Execution and Tainting|taint]] and break other secure actions in the same menu.",
+    "status": "audit-pending",
+    "reason": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+  },
+  {
+    "source_id": "prose-undated-026",
+    "extract_line": 26,
+    "wikitext_line": 31,
+    "literal": "The UnitPopup system has been reworked to cut down on the differences between the Retail and Classic clients. This is a breaking change and may require alterations to addons that were previously modifying global tables to add, remove, or modify buttons on right-click menus for units.",
+    "raw_literal": "The UnitPopup system has been reworked to cut down on the differences between the Retail and Classic clients. This is a breaking change and may require alterations to addons that were previously modifying global tables to add, remove, or modify buttons on right-click menus for units.",
+    "status": "audit-pending",
+    "reason": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+  },
+  {
+    "source_id": "prose-undated-028",
+    "extract_line": 28,
+    "wikitext_line": 33,
+    "literal": "To create a new button to be displayed on unit menus create a mixin that derives from UnitPopupButtonBaseMixin.",
+    "raw_literal": "To create a new button to be displayed on unit menus create a mixin that derives from [https://github.com/Gethe/wow-ui-source/blob/live/Interface/FrameXML/UnitPopupSharedButtonMixins.lua#L1 UnitPopupButtonBaseMixin].",
+    "status": "audit-pending",
+    "reason": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+  },
+  {
+    "source_id": "prose-undated-030",
+    "extract_line": 30,
+    "wikitext_line": 35,
+    "literal": "```lua",
+    "raw_literal": "<syntaxhighlight lang=\"lua\">",
+    "status": "metadata-only",
+    "reason": "Example fence/editorial label; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-031",
+    "extract_line": 31,
+    "wikitext_line": 36,
+    "literal": "local CustomMenuButtonMixin = CreateFromMixins(UnitPopupButtonBaseMixin)",
+    "raw_literal": "local CustomMenuButtonMixin = CreateFromMixins(UnitPopupButtonBaseMixin)",
+    "status": "audit-pending",
+    "reason": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+  },
+  {
+    "source_id": "prose-undated-033",
+    "extract_line": 33,
+    "wikitext_line": 38,
+    "literal": "function CustomMenuButtonMixin:GetText() return \"My Button\" end",
+    "raw_literal": "function CustomMenuButtonMixin:GetText() return \"My Button\" end",
+    "status": "audit-pending",
+    "reason": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+  },
+  {
+    "source_id": "prose-undated-034",
+    "extract_line": 34,
+    "wikitext_line": 39,
+    "literal": "function CustomMenuButtonMixin:OnClick() print(\"Clicked!\") end",
+    "raw_literal": "function CustomMenuButtonMixin:OnClick() print(\"Clicked!\") end",
+    "status": "audit-pending",
+    "reason": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+  },
+  {
+    "source_id": "prose-undated-035",
+    "extract_line": 35,
+    "wikitext_line": 40,
+    "literal": "```",
+    "raw_literal": "</syntaxhighlight>",
+    "status": "metadata-only",
+    "reason": "Example fence/editorial label; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-037",
+    "extract_line": 37,
+    "wikitext_line": 42,
+    "literal": "To then add this button to a menu pre-hook the appropriate GetMenuButtons() method on each menu table that you want to modify. This can also be used to remove or re-order existing buttons within the same menu.",
+    "raw_literal": "To then add this button to a menu pre-hook the appropriate <code>GetMenuButtons()</code> method on each menu table that you want to modify. This can also be used to remove or re-order existing buttons within the same menu.",
+    "status": "audit-pending",
+    "reason": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+  },
+  {
+    "source_id": "prose-undated-039",
+    "extract_line": 39,
+    "wikitext_line": 44,
+    "literal": "```lua",
+    "raw_literal": "<syntaxhighlight lang=\"lua\">",
+    "status": "metadata-only",
+    "reason": "Example fence/editorial label; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-040",
+    "extract_line": 40,
+    "wikitext_line": 45,
+    "literal": "-- This example will modify the \"Target\" unit menu and add the custom button",
+    "raw_literal": "-- This example will modify the \"Target\" unit menu and add the custom button",
+    "status": "audit-pending",
+    "reason": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+  },
+  {
+    "source_id": "prose-undated-041",
+    "extract_line": 41,
+    "wikitext_line": 46,
+    "literal": "-- from the example above as the first button in its list.",
+    "raw_literal": "-- from the example above as the first button in its list.",
+    "status": "audit-pending",
+    "reason": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+  },
+  {
+    "source_id": "prose-undated-043",
+    "extract_line": 43,
+    "wikitext_line": 48,
+    "literal": "local GetTargetMenuButtons = UnitPopupMenuTarget.GetMenuButtons",
+    "raw_literal": "local GetTargetMenuButtons = UnitPopupMenuTarget.GetMenuButtons",
+    "status": "audit-pending",
+    "reason": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+  },
+  {
+    "source_id": "prose-undated-045",
+    "extract_line": 45,
+    "wikitext_line": 50,
+    "literal": "function UnitPopupMenuTarget:GetMenuButtons()",
+    "raw_literal": "function UnitPopupMenuTarget:GetMenuButtons()",
+    "status": "audit-pending",
+    "reason": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+  },
+  {
+    "source_id": "prose-undated-046",
+    "extract_line": 46,
+    "wikitext_line": 51,
+    "literal": "    local buttons = GetTargetMenuButtons(self)",
+    "raw_literal": "    local buttons = GetTargetMenuButtons(self)",
+    "status": "audit-pending",
+    "reason": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+  },
+  {
+    "source_id": "prose-undated-047",
+    "extract_line": 47,
+    "wikitext_line": 52,
+    "literal": "    table.insert(buttons, 1, CustomMenuButtonMixin)",
+    "raw_literal": "    table.insert(buttons, 1, CustomMenuButtonMixin)",
+    "status": "audit-pending",
+    "reason": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+  },
+  {
+    "source_id": "prose-undated-048",
+    "extract_line": 48,
+    "wikitext_line": 53,
+    "literal": "    return buttons",
+    "raw_literal": "    return buttons",
+    "status": "audit-pending",
+    "reason": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+  },
+  {
+    "source_id": "prose-undated-049",
+    "extract_line": 49,
+    "wikitext_line": 54,
+    "literal": "end",
+    "raw_literal": "end",
+    "status": "audit-pending",
+    "reason": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+  },
+  {
+    "source_id": "prose-undated-050",
+    "extract_line": 50,
+    "wikitext_line": 55,
+    "literal": "```",
+    "raw_literal": "</syntaxhighlight>",
+    "status": "metadata-only",
+    "reason": "Example fence/editorial label; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-052",
+    "extract_line": 52,
+    "wikitext_line": 57,
+    "literal": "The list of all unit menu tables can be found split across two files; UnitPopupSharedMenus.lua for menus shared between all client flavors, and UnitPopupMenus.lua for per-client customizations.",
+    "raw_literal": "The list of all unit menu tables can be found split across two files; [https://github.com/Gethe/wow-ui-source/blob/live/Interface/FrameXML/UnitPopupSharedMenus.lua UnitPopupSharedMenus.lua] for menus shared between all client flavors, and [https://github.com/Gethe/wow-ui-source/blob/live/Interface/FrameXML/UnitPopupMenus.lua UnitPopupMenus.lua] for per-client customizations.",
+    "status": "audit-pending",
+    "reason": "UnitPopup menu construction/hooking/ordering/taint contract requires exact cached owner and secure execution proof; preserved literal example is not executed or monkey-patched into vendor code."
+  },
+  {
+    "source_id": "source-context-054",
+    "extract_line": 54,
+    "wikitext_line": 158,
+    "literal": "== Structures ==",
+    "raw_literal": "Structures",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "structures-AuctionHouseItemClassFilter (C_AuctionHouse-SendBrowseQuery)-055",
+    "extract_line": 55,
+    "wikitext_line": 159,
+    "literal": " AuctionHouseItemClassFilter (C_AuctionHouse.SendBrowseQuery)",
+    "raw_literal": " AuctionHouseItemClassFilter ({{api|C_AuctionHouse.SendBrowseQuery}})",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: AuctionHouseItemClassFilter (C_AuctionHouse.SendBrowseQuery). Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-AuctionHouseItemClassFilter (C_AuctionHouse-SendBrowseQuery)-056",
+    "extract_line": 56,
+    "wikitext_line": 160,
+    "literal": "   # inventoryType, Type: number -> Enum.InventoryType",
+    "raw_literal": "   # <font color=\"#ecbc2a\">inventoryType</font>, Type: number -> Enum.InventoryType",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: # inventoryType, Type: number -> Enum.InventoryType. Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-CalendarDayEvent-057",
+    "extract_line": 57,
+    "wikitext_line": 161,
+    "literal": " CalendarDayEvent",
+    "raw_literal": " CalendarDayEvent",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: CalendarDayEvent. Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-CalendarDayEvent-058",
+    "extract_line": 58,
+    "wikitext_line": 162,
+    "literal": "   # inviteStatus, Type: number -> Enum.CalendarStatus",
+    "raw_literal": "   # <font color=\"#ecbc2a\">inviteStatus</font>, Type: number -> Enum.CalendarStatus",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: # inviteStatus, Type: number -> Enum.CalendarStatus. Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-CalendarDayEvent-059",
+    "extract_line": 59,
+    "wikitext_line": 163,
+    "literal": "   # inviteType, Type: number -> Enum.CalendarInviteType",
+    "raw_literal": "   # <font color=\"#ecbc2a\">inviteType</font>, Type: number -> Enum.CalendarInviteType",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: # inviteType, Type: number -> Enum.CalendarInviteType. Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-CalendarEventInfo (C_Calendar-GetEventInfo)-060",
+    "extract_line": 60,
+    "wikitext_line": 164,
+    "literal": " CalendarEventInfo (C_Calendar.GetEventInfo)",
+    "raw_literal": " CalendarEventInfo ({{api|C_Calendar.GetEventInfo}})",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: CalendarEventInfo (C_Calendar.GetEventInfo). Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-CalendarEventInfo (C_Calendar-GetEventInfo)-061",
+    "extract_line": 61,
+    "wikitext_line": 165,
+    "literal": "   # repeatOption, Type: number -> Enum.CalendarEventRepeatOptions",
+    "raw_literal": "   # <font color=\"#ecbc2a\">repeatOption</font>, Type: number -> Enum.CalendarEventRepeatOptions",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: # repeatOption, Type: number -> Enum.CalendarEventRepeatOptions. Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-CalendarEventInfo (C_Calendar-GetEventInfo)-062",
+    "extract_line": 62,
+    "wikitext_line": 166,
+    "literal": "   # inviteStatus, Type: number -> Enum.CalendarStatus",
+    "raw_literal": "   # <font color=\"#ecbc2a\">inviteStatus</font>, Type: number -> Enum.CalendarStatus",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: # inviteStatus, Type: number -> Enum.CalendarStatus. Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-CalendarEventInfo (C_Calendar-GetEventInfo)-063",
+    "extract_line": 63,
+    "wikitext_line": 167,
+    "literal": "   # inviteType, Type: number -> Enum.CalendarInviteType",
+    "raw_literal": "   # <font color=\"#ecbc2a\">inviteType</font>, Type: number -> Enum.CalendarInviteType",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: # inviteType, Type: number -> Enum.CalendarInviteType. Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-CalendarEventInviteInfo (C_Calendar-EventGetInvite)-064",
+    "extract_line": 64,
+    "wikitext_line": 168,
+    "literal": " CalendarEventInviteInfo (C_Calendar.EventGetInvite)",
+    "raw_literal": " CalendarEventInviteInfo ({{api|C_Calendar.EventGetInvite}})",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: CalendarEventInviteInfo (C_Calendar.EventGetInvite). Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-CalendarEventInviteInfo (C_Calendar-EventGetInvite)-065",
+    "extract_line": 65,
+    "wikitext_line": 169,
+    "literal": "   # inviteStatus, Type: number -> Enum.CalendarStatus",
+    "raw_literal": "   # <font color=\"#ecbc2a\">inviteStatus</font>, Type: number -> Enum.CalendarStatus",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: # inviteStatus, Type: number -> Enum.CalendarStatus. Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-CalendarEventInviteInfo (C_Calendar-EventGetInvite)-066",
+    "extract_line": 66,
+    "wikitext_line": 170,
+    "literal": "   # type, Type: number -> Enum.CalendarInviteType",
+    "raw_literal": "   # <font color=\"#ecbc2a\">type</font>, Type: number -> Enum.CalendarInviteType",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: # type, Type: number -> Enum.CalendarInviteType. Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-CalendarGuildEventInfo (C_Calendar-GetGuildEventInfo)-067",
+    "extract_line": 67,
+    "wikitext_line": 171,
+    "literal": " CalendarGuildEventInfo (C_Calendar.GetGuildEventInfo)",
+    "raw_literal": " CalendarGuildEventInfo ({{api|C_Calendar.GetGuildEventInfo}})",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: CalendarGuildEventInfo (C_Calendar.GetGuildEventInfo). Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-CalendarGuildEventInfo (C_Calendar-GetGuildEventInfo)-068",
+    "extract_line": 68,
+    "wikitext_line": 172,
+    "literal": "   # inviteStatus, Type: number -> Enum.CalendarStatus",
+    "raw_literal": "   # <font color=\"#ecbc2a\">inviteStatus</font>, Type: number -> Enum.CalendarStatus",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: # inviteStatus, Type: number -> Enum.CalendarStatus. Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-ClubFinderApplicantInfo-069",
+    "extract_line": 69,
+    "wikitext_line": 173,
+    "literal": " ClubFinderApplicantInfo",
+    "raw_literal": " ClubFinderApplicantInfo",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: ClubFinderApplicantInfo. Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-ClubFinderApplicantInfo-070",
+    "extract_line": 70,
+    "wikitext_line": 174,
+    "literal": "   + faction",
+    "raw_literal": "   + <font color=\"#00b400\">faction</font>",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: + faction. Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-ClubInfo-071",
+    "extract_line": 71,
+    "wikitext_line": 175,
+    "literal": " ClubInfo",
+    "raw_literal": " ClubInfo",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: ClubInfo. Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-ClubInfo-072",
+    "extract_line": 72,
+    "wikitext_line": 176,
+    "literal": "   + crossFaction",
+    "raw_literal": "   + <font color=\"#00b400\">crossFaction</font>",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: + crossFaction. Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-ClubMemberInfo-073",
+    "extract_line": 73,
+    "wikitext_line": 177,
+    "literal": " ClubMemberInfo",
+    "raw_literal": " ClubMemberInfo",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: ClubMemberInfo. Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-ClubMemberInfo-074",
+    "extract_line": 74,
+    "wikitext_line": 178,
+    "literal": "   + faction",
+    "raw_literal": "   + <font color=\"#00b400\">faction</font>",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: + faction. Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-ClubSettingsInfo-075",
+    "extract_line": 75,
+    "wikitext_line": 179,
+    "literal": " ClubSettingsInfo",
+    "raw_literal": " ClubSettingsInfo",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: ClubSettingsInfo. Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-ClubSettingsInfo-076",
+    "extract_line": 76,
+    "wikitext_line": 180,
+    "literal": "   + crossFaction",
+    "raw_literal": "   + <font color=\"#00b400\">crossFaction</font>",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: + crossFaction. Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-GroupFinderActivityInfo (C_LFGList-GetActivityInfoTable, C_LFGList-GetPlaystyleString)-077",
+    "extract_line": 77,
+    "wikitext_line": 181,
+    "literal": " GroupFinderActivityInfo (C_LFGList.GetActivityInfoTable, C_LFGList.GetPlaystyleString)",
+    "raw_literal": " GroupFinderActivityInfo ({{api|C_LFGList.GetActivityInfoTable}}, {{api|C_LFGList.GetPlaystyleString}})",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: GroupFinderActivityInfo (C_LFGList.GetActivityInfoTable, C_LFGList.GetPlaystyleString). Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-GroupFinderActivityInfo (C_LFGList-GetActivityInfoTable, C_LFGList-GetPlaystyleString)-078",
+    "extract_line": 78,
+    "wikitext_line": 182,
+    "literal": "   # displayType, Type: Enum.LfgListDisplayType -> Enum.LFGListDisplayType",
+    "raw_literal": "   # <font color=\"#ecbc2a\">displayType</font>, Type: Enum.LfgListDisplayType -> Enum.LFGListDisplayType",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: # displayType, Type: Enum.LfgListDisplayType -> Enum.LFGListDisplayType. Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-GroupFinderActivityInfo (C_LFGList-GetActivityInfoTable, C_LFGList-GetPlaystyleString)-079",
+    "extract_line": 79,
+    "wikitext_line": 183,
+    "literal": "   + allowCrossFaction",
+    "raw_literal": "   + <font color=\"#00b400\">allowCrossFaction</font>",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: + allowCrossFaction. Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-LfgCategoryData (C_LFGList-GetLfgCategoryInfo)-080",
+    "extract_line": 80,
+    "wikitext_line": 184,
+    "literal": " LfgCategoryData (C_LFGList.GetLfgCategoryInfo)",
+    "raw_literal": " LfgCategoryData ({{api|C_LFGList.GetLfgCategoryInfo}})",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: LfgCategoryData (C_LFGList.GetLfgCategoryInfo). Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-LfgCategoryData (C_LFGList-GetLfgCategoryInfo)-081",
+    "extract_line": 81,
+    "wikitext_line": 185,
+    "literal": "   + allowCrossFaction",
+    "raw_literal": "   + <font color=\"#00b400\">allowCrossFaction</font>",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: + allowCrossFaction. Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-LfgEntryData (C_LFGList-GetActiveEntryInfo)-082",
+    "extract_line": 82,
+    "wikitext_line": 186,
+    "literal": " LfgEntryData (C_LFGList.GetActiveEntryInfo)",
+    "raw_literal": " LfgEntryData ({{api|C_LFGList.GetActiveEntryInfo}})",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: LfgEntryData (C_LFGList.GetActiveEntryInfo). Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-LfgEntryData (C_LFGList-GetActiveEntryInfo)-083",
+    "extract_line": 83,
+    "wikitext_line": 187,
+    "literal": "   # playstyle, Type: Enum.LfgEntryPlaystyle -> Enum.LFGEntryPlaystyle",
+    "raw_literal": "   # <font color=\"#ecbc2a\">playstyle</font>, Type: Enum.LfgEntryPlaystyle -> Enum.LFGEntryPlaystyle",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: # playstyle, Type: Enum.LfgEntryPlaystyle -> Enum.LFGEntryPlaystyle. Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-LfgEntryData (C_LFGList-GetActiveEntryInfo)-084",
+    "extract_line": 84,
+    "wikitext_line": 188,
+    "literal": "   + isCrossFactionListing",
+    "raw_literal": "   + <font color=\"#00b400\">isCrossFactionListing</font>",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: + isCrossFactionListing. Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-LfgSearchResultData (C_LFGList-GetSearchResultInfo)-085",
+    "extract_line": 85,
+    "wikitext_line": 189,
+    "literal": " LfgSearchResultData (C_LFGList.GetSearchResultInfo)",
+    "raw_literal": " LfgSearchResultData ({{api|C_LFGList.GetSearchResultInfo}})",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: LfgSearchResultData (C_LFGList.GetSearchResultInfo). Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-LfgSearchResultData (C_LFGList-GetSearchResultInfo)-086",
+    "extract_line": 86,
+    "wikitext_line": 190,
+    "literal": "   # playstyle, Type: Enum.LfgEntryPlaystyle -> Enum.LFGEntryPlaystyle",
+    "raw_literal": "   # <font color=\"#ecbc2a\">playstyle</font>, Type: Enum.LfgEntryPlaystyle -> Enum.LFGEntryPlaystyle",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: # playstyle, Type: Enum.LfgEntryPlaystyle -> Enum.LFGEntryPlaystyle. Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-LfgSearchResultData (C_LFGList-GetSearchResultInfo)-087",
+    "extract_line": 87,
+    "wikitext_line": 191,
+    "literal": "   + crossFactionListing",
+    "raw_literal": "   + <font color=\"#00b400\">crossFactionListing</font>",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: + crossFactionListing. Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-LfgSearchResultData (C_LFGList-GetSearchResultInfo)-088",
+    "extract_line": 88,
+    "wikitext_line": 192,
+    "literal": "   + leaderFactionGroup",
+    "raw_literal": "   + <font color=\"#00b400\">leaderFactionGroup</font>",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: + leaderFactionGroup. Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-RecruitingClubInfo-089",
+    "extract_line": 89,
+    "wikitext_line": 193,
+    "literal": " RecruitingClubInfo",
+    "raw_literal": " RecruitingClubInfo",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: RecruitingClubInfo. Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-RecruitingClubInfo-090",
+    "extract_line": 90,
+    "wikitext_line": 194,
+    "literal": "   + isCrossFaction",
+    "raw_literal": "   + <font color=\"#00b400\">isCrossFaction</font>",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: + isCrossFaction. Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-UIWidgetSpellInfo (C_UIWidgetManager-GetSpellDisplayVisualizationInfo)-091",
+    "extract_line": 91,
+    "wikitext_line": 195,
+    "literal": " UIWidgetSpellInfo (C_UIWidgetManager.GetSpellDisplayVisualizationInfo)",
+    "raw_literal": " UIWidgetSpellInfo ({{api|C_UIWidgetManager.GetSpellDisplayVisualizationInfo}})",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: UIWidgetSpellInfo (C_UIWidgetManager.GetSpellDisplayVisualizationInfo). Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-UIWidgetSpellInfo (C_UIWidgetManager-GetSpellDisplayVisualizationInfo)-092",
+    "extract_line": 92,
+    "wikitext_line": 196,
+    "literal": "   + textFontType",
+    "raw_literal": "   + <font color=\"#00b400\">textFontType</font>",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: + textFontType. Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-UIWidgetSpellInfo (C_UIWidgetManager-GetSpellDisplayVisualizationInfo)-093",
+    "extract_line": 93,
+    "wikitext_line": 197,
+    "literal": "   + textSizeType",
+    "raw_literal": "   + <font color=\"#00b400\">textSizeType</font>",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: + textSizeType. Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "structures-UIWidgetSpellInfo (C_UIWidgetManager-GetSpellDisplayVisualizationInfo)-094",
+    "extract_line": 94,
+    "wikitext_line": 198,
+    "literal": "   + hAlignType",
+    "raw_literal": "   + <font color=\"#00b400\">hAlignType</font>",
+    "status": "audit-pending",
+    "reason": "Exact populated DTO field/type contract remains unproved: + hAlignType. Empty default tables and enum declarations are not field/value parity."
+  },
+  {
+    "source_id": "source-context-096",
+    "extract_line": 96,
+    "wikitext_line": 250,
+    "literal": "== Enumerations ==",
+    "raw_literal": "==Enums==",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "enumerations--097",
+    "extract_line": 97,
+    "wikitext_line": 251,
+    "literal": " + Enum.CalendarTexturesType",
+    "raw_literal": " + <font color=\"#00b400\">Enum.CalendarTexturesType</font>",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: + Enum.CalendarTexturesType. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations--098",
+    "extract_line": 98,
+    "wikitext_line": 252,
+    "literal": " + Enum.ClientPlatformType",
+    "raw_literal": " + <font color=\"#00b400\">Enum.ClientPlatformType</font>",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: + Enum.ClientPlatformType. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations--099",
+    "extract_line": 99,
+    "wikitext_line": 253,
+    "literal": " + Enum.ClientSceneType",
+    "raw_literal": " + <font color=\"#00b400\">Enum.ClientSceneType</font>",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: + Enum.ClientSceneType. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations--100",
+    "extract_line": 100,
+    "wikitext_line": 254,
+    "literal": " + Enum.ItemCreationContext",
+    "raw_literal": " + <font color=\"#00b400\">Enum.ItemCreationContext</font>",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: + Enum.ItemCreationContext. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations--101",
+    "extract_line": 101,
+    "wikitext_line": 255,
+    "literal": " + Enum.ItemModification",
+    "raw_literal": " + <font color=\"#00b400\">Enum.ItemModification</font>",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: + Enum.ItemModification. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations--102",
+    "extract_line": 102,
+    "wikitext_line": 256,
+    "literal": " + Enum.LFGListFilter",
+    "raw_literal": " + <font color=\"#00b400\">Enum.LFGListFilter</font>",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: + Enum.LFGListFilter. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations--103",
+    "extract_line": 103,
+    "wikitext_line": 257,
+    "literal": " + Enum.PetBattleQueueStatus",
+    "raw_literal": " + <font color=\"#00b400\">Enum.PetBattleQueueStatus</font>",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: + Enum.PetBattleQueueStatus. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations--104",
+    "extract_line": 104,
+    "wikitext_line": 258,
+    "literal": " + Enum.PvPFaction",
+    "raw_literal": " + <font color=\"#00b400\">Enum.PvPFaction</font>",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: + Enum.PvPFaction. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations--105",
+    "extract_line": 105,
+    "wikitext_line": 259,
+    "literal": " + Enum.ReportMajorCategory",
+    "raw_literal": " + <font color=\"#00b400\">Enum.ReportMajorCategory</font>",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: + Enum.ReportMajorCategory. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations--106",
+    "extract_line": 106,
+    "wikitext_line": 260,
+    "literal": " + Enum.ReportMinorCategory",
+    "raw_literal": " + <font color=\"#00b400\">Enum.ReportMinorCategory</font>",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: + Enum.ReportMinorCategory. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations--107",
+    "extract_line": 107,
+    "wikitext_line": 261,
+    "literal": " + Enum.ReportType",
+    "raw_literal": " + <font color=\"#00b400\">Enum.ReportType</font>",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: + Enum.ReportType. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations--108",
+    "extract_line": 108,
+    "wikitext_line": 262,
+    "literal": " - Enum.LfgEntryPlaystyle",
+    "raw_literal": " - <font color=\"#ff6767\">Enum.LfgEntryPlaystyle</font>",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: - Enum.LfgEntryPlaystyle. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations--109",
+    "extract_line": 109,
+    "wikitext_line": 263,
+    "literal": " + Enum.LFGEntryPlaystyle",
+    "raw_literal": " + <font color=\"#00b400\">Enum.LFGEntryPlaystyle</font>",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: + Enum.LFGEntryPlaystyle. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations--110",
+    "extract_line": 110,
+    "wikitext_line": 264,
+    "literal": " - Enum.LfgListDisplayType",
+    "raw_literal": " - <font color=\"#ff6767\">Enum.LfgListDisplayType</font>",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: - Enum.LfgListDisplayType. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations--111",
+    "extract_line": 111,
+    "wikitext_line": 265,
+    "literal": " + Enum.LFGListDisplayType",
+    "raw_literal": " + <font color=\"#00b400\">Enum.LFGListDisplayType</font>",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: + Enum.LFGListDisplayType. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-AuctionHouseFilter-113",
+    "extract_line": 113,
+    "wikitext_line": 267,
+    "literal": " Enum.AuctionHouseFilter",
+    "raw_literal": " Enum.AuctionHouseFilter",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: Enum.AuctionHouseFilter. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-AuctionHouseFilter-114",
+    "extract_line": 114,
+    "wikitext_line": 268,
+    "literal": "   + None",
+    "raw_literal": "   + <font color=\"#00b400\">None</font>",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: + None. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-BattlePetNpcTeamFlag-115",
+    "extract_line": 115,
+    "wikitext_line": 269,
+    "literal": " Enum.BattlePetNpcTeamFlag",
+    "raw_literal": " Enum.BattlePetNpcTeamFlag",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: Enum.BattlePetNpcTeamFlag. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-BattlePetNpcTeamFlag-116",
+    "extract_line": 116,
+    "wikitext_line": 270,
+    "literal": "   + NoPlayerXP",
+    "raw_literal": "   + <font color=\"#00b400\">NoPlayerXP</font>",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: + NoPlayerXP. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-BattlePetNpcTeamFlag-117",
+    "extract_line": 117,
+    "wikitext_line": 271,
+    "literal": "   - NoPlayerXp",
+    "raw_literal": "   - <font color=\"#ff6767\">NoPlayerXp</font>",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: - NoPlayerXp. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-BrawlType-118",
+    "extract_line": 118,
+    "wikitext_line": 272,
+    "literal": " Enum.BrawlType",
+    "raw_literal": " Enum.BrawlType",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: Enum.BrawlType. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-BrawlType-119",
+    "extract_line": 119,
+    "wikitext_line": 273,
+    "literal": "   + LFG",
+    "raw_literal": "   + <font color=\"#00b400\">LFG</font>",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: + LFG. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-BrawlType-120",
+    "extract_line": 120,
+    "wikitext_line": 274,
+    "literal": "   - Lfg",
+    "raw_literal": "   - <font color=\"#ff6767\">Lfg</font>",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: - Lfg. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-BrawlType-121",
+    "extract_line": 121,
+    "wikitext_line": 275,
+    "literal": "   + SoloShuffle",
+    "raw_literal": "   + <font color=\"#00b400\">SoloShuffle</font>",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: + SoloShuffle. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-CalendarCommandType-122",
+    "extract_line": 122,
+    "wikitext_line": 276,
+    "literal": " Enum.CalendarCommandType",
+    "raw_literal": " Enum.CalendarCommandType",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: Enum.CalendarCommandType. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-CalendarCommandType-123",
+    "extract_line": 123,
+    "wikitext_line": 277,
+    "literal": "   # CalendarCommandCreate -> Create, etc",
+    "raw_literal": "   # <font color=\"#ff6767\">CalendarCommandCreate</font> -> <font color=\"#00b400\">Create</font>, etc",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: # CalendarCommandCreate -> Create, etc. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-CalendarErrorType-124",
+    "extract_line": 124,
+    "wikitext_line": 278,
+    "literal": " Enum.CalendarErrorType",
+    "raw_literal": " Enum.CalendarErrorType",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: Enum.CalendarErrorType. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-CalendarErrorType-125",
+    "extract_line": 125,
+    "wikitext_line": 279,
+    "literal": "   # CalendarErrorSuccess -> Success, etc",
+    "raw_literal": "   # <font color=\"#ff6767\">CalendarErrorSuccess</font> -> <font color=\"#00b400\">Success</font>, etc",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: # CalendarErrorSuccess -> Success, etc. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-CalendarEventBits-126",
+    "extract_line": 126,
+    "wikitext_line": 280,
+    "literal": " Enum.CalendarEventBits",
+    "raw_literal": " Enum.CalendarEventBits",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: Enum.CalendarEventBits. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-CalendarEventBits-127",
+    "extract_line": 127,
+    "wikitext_line": 281,
+    "literal": "   # CalendarEventBitPlayer -> Player, etc",
+    "raw_literal": "   # <font color=\"#ff6767\">CalendarEventBitPlayer</font> -> <font color=\"#00b400\">Player</font>, etc",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: # CalendarEventBitPlayer -> Player, etc. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-CalendarEventRepeatOptions-128",
+    "extract_line": 128,
+    "wikitext_line": 282,
+    "literal": " Enum.CalendarEventRepeatOptions",
+    "raw_literal": " Enum.CalendarEventRepeatOptions",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: Enum.CalendarEventRepeatOptions. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-CalendarEventRepeatOptions-129",
+    "extract_line": 129,
+    "wikitext_line": 283,
+    "literal": "   # CalendarRepeatNever -> Never, etc",
+    "raw_literal": "   # <font color=\"#ff6767\">CalendarRepeatNever</font> -> <font color=\"#00b400\">Never</font>, etc",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: # CalendarRepeatNever -> Never, etc. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-CalendarGetEventType-130",
+    "extract_line": 130,
+    "wikitext_line": 284,
+    "literal": " Enum.CalendarGetEventType",
+    "raw_literal": " Enum.CalendarGetEventType",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: Enum.CalendarGetEventType. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-CalendarGetEventType-131",
+    "extract_line": 131,
+    "wikitext_line": 285,
+    "literal": "   - DefaultCalendarGetEventType",
+    "raw_literal": "   - <font color=\"#ff6767\">DefaultCalendarGetEventType</font>",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: - DefaultCalendarGetEventType. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-CalendarInviteBits-132",
+    "extract_line": 132,
+    "wikitext_line": 286,
+    "literal": " Enum.CalendarInviteBits",
+    "raw_literal": " Enum.CalendarInviteBits",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: Enum.CalendarInviteBits. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-CalendarInviteBits-133",
+    "extract_line": 133,
+    "wikitext_line": 287,
+    "literal": "   # CalendarInviteBitPendingInvite -> PendingInvite, etc",
+    "raw_literal": "   # <font color=\"#ff6767\">CalendarInviteBitPendingInvite</font> -> <font color=\"#00b400\">PendingInvite</font>, etc",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: # CalendarInviteBitPendingInvite -> PendingInvite, etc. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-CalendarInviteSortType-134",
+    "extract_line": 134,
+    "wikitext_line": 288,
+    "literal": " Enum.CalendarInviteSortType",
+    "raw_literal": " Enum.CalendarInviteSortType",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: Enum.CalendarInviteSortType. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-CalendarInviteSortType-135",
+    "extract_line": 135,
+    "wikitext_line": 289,
+    "literal": "   # CalendarInviteSortName -> Name, etc",
+    "raw_literal": "   # <font color=\"#ff6767\">CalendarInviteSortName</font> -> <font color=\"#00b400\">Name</font>, etc",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: # CalendarInviteSortName -> Name, etc. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-CalendarModeratorStatus-136",
+    "extract_line": 136,
+    "wikitext_line": 290,
+    "literal": " Enum.CalendarModeratorStatus",
+    "raw_literal": " Enum.CalendarModeratorStatus",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: Enum.CalendarModeratorStatus. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-CalendarModeratorStatus-137",
+    "extract_line": 137,
+    "wikitext_line": 291,
+    "literal": "   # CalendarModeratorNone -> None, etc",
+    "raw_literal": "   # <font color=\"#ff6767\">CalendarModeratorNone</font> -> <font color=\"#00b400\">None</font>, etc",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: # CalendarModeratorNone -> None, etc. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-ClubErrorType-138",
+    "extract_line": 138,
+    "wikitext_line": 292,
+    "literal": " Enum.ClubErrorType",
+    "raw_literal": " Enum.ClubErrorType",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: Enum.ClubErrorType. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-ClubErrorType-139",
+    "extract_line": 139,
+    "wikitext_line": 293,
+    "literal": "   + ErrorClubDoesntAllowCrossFaction",
+    "raw_literal": "   + <font color=\"#00b400\">ErrorClubDoesntAllowCrossFaction</font>",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: + ErrorClubDoesntAllowCrossFaction. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-ClubErrorType-140",
+    "extract_line": 140,
+    "wikitext_line": 294,
+    "literal": "   + ErrorClubEditHasCrossFactionMembers",
+    "raw_literal": "   + <font color=\"#00b400\">ErrorClubEditHasCrossFactionMembers</font>",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: + ErrorClubEditHasCrossFactionMembers. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencyFlagsB-141",
+    "extract_line": 141,
+    "wikitext_line": 295,
+    "literal": " Enum.CurrencyFlagsB",
+    "raw_literal": " Enum.CurrencyFlagsB",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: Enum.CurrencyFlagsB. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencyFlagsB-142",
+    "extract_line": 142,
+    "wikitext_line": 296,
+    "literal": "   + CurrencyBShowQuestXPGainInTooltip",
+    "raw_literal": "   + <font color=\"#00b400\">CurrencyBShowQuestXPGainInTooltip</font>",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: + CurrencyBShowQuestXPGainInTooltip. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencyFlagsB-143",
+    "extract_line": 143,
+    "wikitext_line": 297,
+    "literal": "   - CurrencyBShowQuestXpGainInTooltip",
+    "raw_literal": "   - <font color=\"#ff6767\">CurrencyBShowQuestXpGainInTooltip</font>",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: - CurrencyBShowQuestXpGainInTooltip. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencySource-144",
+    "extract_line": 144,
+    "wikitext_line": 298,
+    "literal": " Enum.CurrencySource",
+    "raw_literal": " Enum.CurrencySource",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: Enum.CurrencySource. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencySource-145",
+    "extract_line": 145,
+    "wikitext_line": 299,
+    "literal": "   + LFGReward",
+    "raw_literal": "   + <font color=\"#00b400\">LFGReward</font>",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: + LFGReward. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-CurrencySource-146",
+    "extract_line": 146,
+    "wikitext_line": 300,
+    "literal": "   - LfgReward",
+    "raw_literal": "   - <font color=\"#ff6767\">LfgReward</font>",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: - LfgReward. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-QuestSessionResult-147",
+    "extract_line": 147,
+    "wikitext_line": 301,
+    "literal": " Enum.QuestSessionResult",
+    "raw_literal": " Enum.QuestSessionResult",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: Enum.QuestSessionResult. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-QuestSessionResult-148",
+    "extract_line": 148,
+    "wikitext_line": 302,
+    "literal": "   + RestrictedCrossFaction",
+    "raw_literal": "   + <font color=\"#00b400\">RestrictedCrossFaction</font>",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: + RestrictedCrossFaction. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-UICursorType-149",
+    "extract_line": 149,
+    "wikitext_line": 303,
+    "literal": " Enum.UICursorType",
+    "raw_literal": " Enum.UICursorType",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: Enum.UICursorType. Static declarations do not establish behavioral or historical parity."
+  },
+  {
+    "source_id": "enumerations-Enum-UICursorType-150",
+    "extract_line": 150,
+    "wikitext_line": 304,
+    "literal": "   - CommunitiesStream",
+    "raw_literal": "   - <font color=\"#ff6767\">CommunitiesStream</font>",
+    "status": "audit-pending",
+    "reason": "Exact enum identity/value/alias/deprecation contract remains unproved: - CommunitiesStream. Static declarations do not establish behavioral or historical parity."
+  }
+]
