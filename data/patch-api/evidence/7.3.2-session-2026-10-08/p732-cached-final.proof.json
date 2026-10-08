@@ -1,0 +1,25 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_7_3_2"
+  ],
+  "revision": "de193c97fe9b109876acfe45981f4de114ae11a7",
+  "scope": "p732-cached-final",
+  "cwd": ".",
+  "target": "dedicated p732-page target (external to repository)",
+  "environment": {
+    "P732_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p732-page/data/patch-api/evidence/7.3.2-session-2026-10-08/patch_7_3_2_publication_sweep-results.json",
+    "P732_PROTECTION_OUT": "/home/osso/.worktrees/wow-ui-sim-p732-page/data/patch-api/evidence/7.3.2-session-2026-10-08/p732-protection-green.json"
+  },
+  "exit": 1,
+  "log": "p732-cached-final.txt",
+  "log_sha256": "500abb5cbdf504f52c74264ff0f8b89f6a641fb0128863031c814078fc274081",
+  "seconds": 47.76096576599957,
+  "invalidated": true,
+  "invalidated_by": "25934cc4e",
+  "purpose": "Superseded failed development attempt; full failure log remains historical evidence."
+}

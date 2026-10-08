@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "tools/test_patch_audit_validation.py"
+  ],
+  "revision": "56167088a1a12031c9677a3cd7ce8cc02f53294e",
+  "scope": "p732-validation-fixtures",
+  "cwd": ".",
+  "target": "dedicated p732-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p732-validation-fixtures.txt",
+  "log_sha256": "125b7546c17c6ccad2ba1dfaaf61103010547fa89eee46038d05f9471e6bdb00",
+  "seconds": 0.41904598900146084,
+  "invalidated": false
+}

@@ -1,0 +1,14 @@
+{
+  "Logout": {
+    "call_succeeded": true,
+    "ok": false,
+    "state_unchanged": false,
+    "taint": "Patch732Addon"
+  },
+  "Quit": {
+    "call_succeeded": true,
+    "ok": false,
+    "state_unchanged": false,
+    "taint": "Patch732Addon"
+  }
+}

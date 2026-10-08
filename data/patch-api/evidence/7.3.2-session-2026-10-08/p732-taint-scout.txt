@@ -1,0 +1,10 @@
+src/loader/stack_taint.rs:1:use crate::lua_api::taint::{clear_active_stack_taint, restore_active_stack_taint};
+src/loader/stack_taint.rs:7:    clear_active_stack_taint(state)
+src/loader/stack_taint.rs:10:pub(crate) fn restore(state: &mut LuaState, saved_taints: StackTaints) {
+src/loader/stack_taint.rs:11:    restore_active_stack_taint(state, saved_taints);
+src/loader/stack_taint.rs:18:    let saved_taints = clear(state);
+src/loader/stack_taint.rs:20:    restore(state, saved_taints);
+
+STDERR:
+/usr/bin/grep: src/lua_api/globals/security.rs: No such file or directory
+/usr/bin/grep: src/lua_api/frame/methods/attributes.rs: No such file or directory

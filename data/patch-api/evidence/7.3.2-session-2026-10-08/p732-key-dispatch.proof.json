@@ -1,0 +1,21 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "key_dispatch"
+  ],
+  "revision": "25934cc4ea714a08b5e5a323d747840b661d6da3",
+  "scope": "p732-key-dispatch",
+  "cwd": ".",
+  "target": "dedicated p732-page target (external to repository)",
+  "environment": {
+    "P732_PROTECTION_OUT": "/home/osso/.worktrees/wow-ui-sim-p732-page/data/patch-api/evidence/7.3.2-session-2026-10-08/p732-protection-bare-green.json"
+  },
+  "exit": 0,
+  "log": "p732-key-dispatch.txt",
+  "log_sha256": "eac3d334e07e87e2666bab1340dacc81eb225a49e40fc380779d538795d23f89",
+  "seconds": 0.5208995300017705,
+  "invalidated": false
+}

@@ -1,0 +1,1 @@
+{"inventory": 2, "extract": 5, "ledger": 7}

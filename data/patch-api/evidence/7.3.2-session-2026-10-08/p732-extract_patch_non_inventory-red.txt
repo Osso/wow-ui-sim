@@ -1,0 +1,16 @@
+.............................E...
+======================================================================
+ERROR: test_reference_note_accepts_capitalized_template_without_default_change (__main__.ExtractTests.test_reference_note_accepts_capitalized_template_without_default_change)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p732-page/tools/test_extract_patch_non_inventory.py", line 18, in test_reference_note_accepts_capitalized_template_without_default_change
+    self.assertEqual(extract_text(raw, retain_reference_notes=True),
+                     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/osso/.worktrees/wow-ui-sim-p732-page/tools/extract_patch_non_inventory.py", line 166, in extract_text
+    raise ValueError(f"unhandled template: {line}")
+ValueError: unhandled template: *[[API Logout|Logout]] and [[API Quit|Quit]] are protected.<ref>{{Ref web|url=https://example.test|date=2017-10-25}}</ref>
+
+----------------------------------------------------------------------
+Ran 33 tests in 0.088s
+
+FAILED (errors=1)

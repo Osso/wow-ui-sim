@@ -1,0 +1,9 @@
+p732-bare-final 0
+p732-key-dispatch 0
+p732-menu-bare 0
+p732-menu-cached 0
+p732-all-sweeps 0
+p732-negative 1
+p732-mists-check 0
+p732-mists-session 0
+p732-format 0

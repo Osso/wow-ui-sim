@@ -2,7 +2,7 @@
 
 ## 2026-10-08 — Patch 7.3.2 API audit
 
-Pinned page 230850/revision 6200179. [Audit](investigations/patch-7-3-2-api-audit.md) records two real session actions missing protection, retail-only taint gate and precise native-policy/countdown boundaries. No retirements; full grep scans retained; GREEN acceptance pending.
+Pinned page 230850/revision 6200179. [Audit](investigations/patch-7-3-2-api-audit.md) accounts for seven identities and closes two insecure session-action gaps with a retail active-stack taint gate. No retirements; complete grep scans retained. All 41 sweeps plus factory, scoped regressions, Mists check, format and 18 validators pass; relocation/tamper proof passes. Native-policy/countdown and inherited extract boundaries remain explicit.
 
 
 [Audit](investigations/patch-8-1-0-api-audit.md): real 8.1.5/8.2.0 registers, ReportPlayer/gxMTOpaque supersessions close two own gaps (60 → 58); later pages unchanged. Forty registers reproduce, three inherited extract failures unchanged. Forty sweeps plus factory, 58 → 59 negative control, requested provider/calendar/map regressions, Python fixtures, format and warning-clean non-vendor Mists check pass. All seventeen validators pass with pinned historical scopes and exact replacement checks; relocated validation rejects protected-input drift. Cached filter rejection split without reducing coverage; obsolete source-name ban replaced by provider-composition behavior.

@@ -1,0 +1,23 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_7_3_2"
+  ],
+  "revision": "c5f05d05d04e378ba006108696bdec714b1241ee",
+  "scope": "p732-discovery",
+  "cwd": ".",
+  "target": "dedicated p732-page target (external to repository)",
+  "environment": {
+    "P732_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p732-page/data/patch-api/evidence/7.3.2-session-2026-10-08/p732-discovery-results.json",
+    "P732_PROTECTION_OUT": "/home/osso/.worktrees/wow-ui-sim-p732-page/data/patch-api/evidence/7.3.2-session-2026-10-08/p732-protection-red.json"
+  },
+  "exit": 1,
+  "log": "p732-discovery.txt",
+  "log_sha256": "f7db4cc59d4d028a3838e17927a2bdac9ca051c8f6babcbc8c9e32d85841225b",
+  "seconds": 256.51431757200044,
+  "invalidated": false
+}

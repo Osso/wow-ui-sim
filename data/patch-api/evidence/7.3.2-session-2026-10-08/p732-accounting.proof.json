@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p732-page/data/patch-api/evidence/7.3.2-session-2026-10-08/build_accounting.py"
+  ],
+  "revision": "ac94f5a4a7e1e3298b1bb7d08958245751a51f54",
+  "scope": "p732-accounting",
+  "cwd": ".",
+  "target": "dedicated p732-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p732-accounting.txt",
+  "log_sha256": "e4d909c956f73193267942d401dc41cbd47412717e7bfe82f23b473b20b58f1b",
+  "seconds": 0.03266122499917401,
+  "invalidated": false
+}

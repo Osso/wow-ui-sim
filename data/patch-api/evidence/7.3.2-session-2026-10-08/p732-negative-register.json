@@ -1,0 +1,28 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "7.3.2",
+  "source": {
+    "path": "data/patch-api/sources/7.3.2-api-changes.wikitext",
+    "revid": 6200179,
+    "sha256": "a510a7538a0925f0059bdb95a9ac696c9f4215444e3e65032784e78a3e6fb6d1"
+  },
+  "header_counts": [],
+  "entries": [
+    {
+      "id": "wt-global-api-Logout-4",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "Logout",
+      "annotation": "*[[API Logout|Logout]] and [[API Quit|Quit]] lua functions are now protected.<ref>{{Ref web|url=http://www.reddit.com/r/wow/comments/78o0gl/732_undocumented_changes/dovgdvo/|title=IntenseIntentInTents on Reddit|accessdate=2017-10-26|date=2017-10-25|publisher=Reddit}}</ref>",
+      "wikitext_line": 4
+    },
+    {
+      "id": "wt-global-api-Quit-4",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "Quit",
+      "annotation": "*[[API Logout|Logout]] and [[API Quit|Quit]] lua functions are now protected.<ref>{{Ref web|url=http://www.reddit.com/r/wow/comments/78o0gl/732_undocumented_changes/dovgdvo/|title=IntenseIntentInTents on Reddit|accessdate=2017-10-26|date=2017-10-25|publisher=Reddit}}</ref>",
+      "wikitext_line": 4
+    }
+  ]
+}

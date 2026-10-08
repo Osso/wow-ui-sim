@@ -1,0 +1,21 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "patch_7_3_2_bare"
+  ],
+  "revision": "56167088a1a12031c9677a3cd7ce8cc02f53294e",
+  "scope": "p732-bare-red",
+  "cwd": ".",
+  "target": "dedicated p732-page target (external to repository)",
+  "environment": {
+    "P732_PROTECTION_OUT": "/home/osso/.worktrees/wow-ui-sim-p732-page/data/patch-api/evidence/7.3.2-session-2026-10-08/p732-protection-red.json"
+  },
+  "exit": 101,
+  "log": "p732-bare-red.txt",
+  "log_sha256": "3e5d4e2431ff8e29789eb36f9bfcb3f9f21fb9beeac7d7ede635f7e768b55200",
+  "seconds": 94.08620185499967,
+  "invalidated": false
+}

@@ -1,0 +1,15 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "tools/test_extract_patch_non_inventory.py"
+  ],
+  "revision": "cca5a744e",
+  "scope": "tool fixtures",
+  "cwd": ".",
+  "exit": 0,
+  "log": "p732-extract_patch_non_inventory-green.txt",
+  "log_sha256": "5f6fdaba63406aa78ab9d0bcce437e6666e33934398badf18629e67f53c55795",
+  "invalidated": false,
+  "note": "Receipt recorded after captured execution; full output retained."
+}

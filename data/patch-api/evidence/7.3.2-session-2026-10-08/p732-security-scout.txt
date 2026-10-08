@@ -1,0 +1,5 @@
+src/c_api/class_talent_commands.rs:6:use crate::loader::stack_taint::with_secure_stack;
+src/loader/mod.rs:20:pub(crate) mod stack_taint;
+src/loader/lua_file.rs:208:        crate::loader::stack_taint::with_secure_stack(state, |state| {
+
+STDERR:

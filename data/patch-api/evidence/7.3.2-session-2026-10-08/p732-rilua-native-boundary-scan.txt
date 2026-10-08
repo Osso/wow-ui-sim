@@ -1,0 +1,15 @@
+/home/osso/.cargo/git/checkouts/rilua-fd5a0715e46b5888/842e4d3/src/stdlib/taint.rs:81:    set_fn(state, debug_table, "getstacktaint", getstacktaint)?;
+/home/osso/.cargo/git/checkouts/rilua-fd5a0715e46b5888/842e4d3/src/stdlib/taint.rs:168:    taint: Option<&str>,
+/home/osso/.cargo/git/checkouts/rilua-fd5a0715e46b5888/842e4d3/src/stdlib/taint.rs:253:// debug.getstacktaint()
+/home/osso/.cargo/git/checkouts/rilua-fd5a0715e46b5888/842e4d3/src/stdlib/taint.rs:256:fn getstacktaint(state: &mut LuaState) -> LuaResult<u32> {
+/home/osso/.cargo/git/checkouts/rilua-fd5a0715e46b5888/842e4d3/src/stdlib/taint.rs:542:    saved_taint: Option<String>,
+/home/osso/.cargo/git/checkouts/rilua-fd5a0715e46b5888/842e4d3/src/stdlib/taint.rs:697:        assert_table_has_function(&mut state, debug_table_ref, "getstacktaint");
+/home/osso/.cargo/git/checkouts/rilua-fd5a0715e46b5888/842e4d3/src/stdlib/taint.rs:713:        assert_eq!(getstacktaint(&mut state).expect("getstacktaint failed"), 1);
+/home/osso/.cargo/git/checkouts/rilua-fd5a0715e46b5888/842e4d3/src/stdlib/taint.rs:729:        assert_eq!(getstacktaint(&mut state).expect("getstacktaint failed"), 0);
+/home/osso/.cargo/git/checkouts/rilua-fd5a0715e46b5888/842e4d3/src/stdlib/taint.rs:810:                _calleeTaint = debug.getstacktaint()
+/home/osso/.cargo/git/checkouts/rilua-fd5a0715e46b5888/842e4d3/src/stdlib/taint.rs:826:        let callee_taint: String = lua.global("_calleeTaint").expect("callee taint");
+/home/osso/.cargo/git/checkouts/rilua-fd5a0715e46b5888/842e4d3/src/stdlib/mod.rs:136:        taint::register_taint_api(state)?;
+
+STDERR:
+/usr/bin/grep: /home/osso/.cargo/git/checkouts/rilua-fd5a0715e46b5888/842e4d3/src/lua_api: No such file or directory
+/usr/bin/grep: /home/osso/.cargo/git/checkouts/rilua-fd5a0715e46b5888/842e4d3/src/vm/call.rs: No such file or directory

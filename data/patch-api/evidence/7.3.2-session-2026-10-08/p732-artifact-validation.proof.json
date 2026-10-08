@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p732-page/data/patch-api/evidence/7.3.2-session-2026-10-08/validate.py"
+  ],
+  "revision": "ac94f5a4a7e1e3298b1bb7d08958245751a51f54",
+  "scope": "p732-artifact-validation",
+  "cwd": ".",
+  "target": "dedicated p732-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p732-artifact-validation.txt",
+  "log_sha256": "620704eb85f852ca15a085f7ed3d4bc913ee58db1b94350b523ff28a0a080dac",
+  "seconds": 0.7042828689991438,
+  "invalidated": false
+}

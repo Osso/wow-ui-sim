@@ -4,12 +4,12 @@ Audit Warcraft Wiki page 230850, revision 6200179, refetched 2026-10-08. Current
 
 ## What it must do
 
-- [ ] Retain both changed API-link occurrences with their literal annotation, plus every extract identity. No source additions/removals are invented.
-- [ ] Both globals remain published after unmodified cached full-UI startup. Publication alone does not prove protection.
-- [ ] Addon-tainted Logout/Quit fail before changing login/exit state, in bare and cached UI environments.
-- [ ] Secure calls, including calls after a blocked insecure call, retain existing transitions: Logout clears login state; Quit requests GUI-owned exit, never exits the test process.
-- [ ] Mists simulator behavior remains unchanged; no historical native parity claim.
-- [ ] Evidence pins source, logs, command revisions, exact gaps, negative control, prior preservation and reproduction. Historical register scope is revision-pinned; counts derive from files; no absolute-path equality gates.
+- [x] Retain both changed API-link occurrences with their literal annotation, plus every extract identity. No source additions/removals are invented.
+- [x] Both globals remain published after unmodified cached full-UI startup. Publication alone does not prove protection.
+- [x] Addon-tainted Logout/Quit fail before changing login/exit state, in bare and cached UI environments.
+- [x] Secure calls, including calls after a blocked insecure call, retain existing transitions: Logout clears login state; Quit requests GUI-owned exit, never exits the test process.
+- [x] Mists simulator behavior remains unchanged; no historical native parity claim.
+- [x] Evidence pins source, logs, command revisions, exact gaps, negative control, prior preservation and reproduction. Historical register scope is revision-pinned; counts derive from files; no absolute-path equality gates.
 
 ## How it works
 
@@ -35,7 +35,7 @@ Audit Warcraft Wiki page 230850, revision 6200179, refetched 2026-10-08. Current
 
 ## Known gaps (current cycle)
 
-- [ ] Targeted verification and evidence acceptance pending.
+No unmodeled publication contract remains. Native policy/lifecycle boundaries are explicitly recorded below; 8.0.1 placeholder replacement and refreshed integrated receipts belong to main-thread integration.
 
 ## Out of scope
 

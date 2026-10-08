@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p732-page/data/patch-api/evidence/7.3.2-session-2026-10-08/reproduce_sources.py"
+  ],
+  "revision": "c5f05d05d04e378ba006108696bdec714b1241ee",
+  "scope": "p732-source-reproduction",
+  "cwd": ".",
+  "target": "dedicated p732-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p732-source-reproduction.txt",
+  "log_sha256": "2dcf72d2bfd78b1dfbccb7b7a52228a34a98b98c1b7827202053e2b432676967",
+  "seconds": 5.5233309360010026,
+  "invalidated": false
+}

@@ -1,0 +1,12 @@
+/home/osso/.cargo/git/checkouts/rilua-fd5a0715e46b5888/842e4d3/src/vm/execute.rs:645:        let closure_taint = crate::stdlib::taint::closure_taint(self, closure_ref);
+/home/osso/.cargo/git/checkouts/rilua-fd5a0715e46b5888/842e4d3/src/vm/execute.rs:687:                ci.taint = closure_taint;
+/home/osso/.cargo/git/checkouts/rilua-fd5a0715e46b5888/842e4d3/src/vm/execute.rs:710:                ci.taint = closure_taint;
+/home/osso/.cargo/git/checkouts/rilua-fd5a0715e46b5888/842e4d3/src/vm/execute.rs:1912:                            state.call_stack[prev_ci].taint = state.call_stack[state.ci]
+/home/osso/.cargo/git/checkouts/rilua-fd5a0715e46b5888/842e4d3/src/vm/execute.rs:2062:                    let active_taint = state.call_stack[..=state.ci]
+/home/osso/.cargo/git/checkouts/rilua-fd5a0715e46b5888/842e4d3/src/vm/execute/runtime_ops.rs:382:/// frames (taint = `None`) do not clear existing taint — that is handled
+/home/osso/.cargo/git/checkouts/rilua-fd5a0715e46b5888/842e4d3/src/vm/execute/runtime_ops.rs:392:    let taint = match state.call_stack[state.ci].taint.as_deref() {
+/home/osso/.cargo/git/checkouts/rilua-fd5a0715e46b5888/842e4d3/src/vm/execute/runtime_ops.rs:440:    let taint = match resolved {
+/home/osso/.cargo/git/checkouts/rilua-fd5a0715e46b5888/842e4d3/src/vm/execute/runtime_ops.rs:446:        state.call_stack[state.ci].taint = Some(taint.to_string());
+
+STDERR:
+/usr/bin/grep: /home/osso/.cargo/git/checkouts/rilua-fd5a0715e46b5888/842e4d3/src/stdlib/taint: No such file or directory

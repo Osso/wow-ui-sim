@@ -1,0 +1,37 @@
+{
+  "tool": "/usr/bin/grep; complete whole-word caller scan, including indirect references",
+  "master_revision": "af7a101e20824f92798885f41b47b147418a5f48",
+  "merged_8_0_1_additions_to_changed_members": [],
+  "rows": [
+    {
+      "symbol": "Logout",
+      "command": [
+        "/usr/bin/grep",
+        "-rnE",
+        "--exclude=*Documentation*",
+        "--exclude-dir=*Documentation*",
+        "\\bLogout\\b",
+        "src",
+        "tests"
+      ],
+      "exit": 0,
+      "stdout": "src/lua_api/workarounds/temporary/misc_global_frame_defaults.rs:53:    ensure_button_text(LOGOUT or \"Logout\")\nsrc/lua_api/globals/real/session_exit.rs:1://! Session exit globals (`Quit`, `Logout`, `ForceQuit`, `ForceLogout`).\nsrc/lua_api/globals/real/session_exit.rs:40:    require_secure_session_call(state, \"Logout\")?;\nsrc/lua_api/globals/real/session_exit.rs:54:    LuaApiMut::register_function(lua, \"Logout\", logout)?;\nsrc/lua_api/globals/enum_data/game_system.rs:64:        \"Logout\",\ntests/patch_7_3_2_classic_session.rs:8:    for symbol in [\"Logout\", \"Quit\"] {\ntests/patch_7_3_2_classic_session.rs:20:        assert_eq!(state.is_logged_in, symbol != \"Logout\");\ntests/blizzard_game_menu_loads.rs:80:         in the standard taint environment (Logout / Quit are protected by separate \\\ntests/blizzard_game_menu_loads.rs:395:         CanEnterEditMode flags, then adds Logout + Exit + AddCloseButton at the bottom), \\\ntests/patch_7_3_2_session_protection.rs:1://! Source contract: insecure Logout/Quit must not mutate existing session state.\ntests/patch_7_3_2_session_protection.rs:9:    for symbol in [\"Logout\", \"Quit\"] {\ntests/patch_7_3_2_session_protection.rs:56:    for symbol in [\"Logout\", \"Quit\"] {\ntests/patch_7_3_2_session_protection.rs:62:        assert_eq!(state.is_logged_in, symbol != \"Logout\");\n",
+      "stderr": ""
+    },
+    {
+      "symbol": "Quit",
+      "command": [
+        "/usr/bin/grep",
+        "-rnE",
+        "--exclude=*Documentation*",
+        "--exclude-dir=*Documentation*",
+        "\\bQuit\\b",
+        "src",
+        "tests"
+      ],
+      "exit": 0,
+      "stdout": "src/lua_api/globals/real/session_exit.rs:1://! Session exit globals (`Quit`, `Logout`, `ForceQuit`, `ForceLogout`).\nsrc/lua_api/globals/real/session_exit.rs:35:    require_secure_session_call(state, \"Quit\")?;\nsrc/lua_api/globals/real/session_exit.rs:51:    LuaApiMut::register_function(lua, \"Quit\", quit)?;\nsrc/lua_api/globals/enum_data/missing_enums.lua:10347:    Quit = 0,\nsrc/lua_api/globals/keybindings.rs:248:        lua_code: \"Quit()\",\ntests/key_dispatch.rs:199:    assert!(requested, \"CTRL-Q should dispatch the default Quit binding\");\ntests/patch_7_3_2_classic_session.rs:8:    for symbol in [\"Logout\", \"Quit\"] {\ntests/patch_7_3_2_classic_session.rs:21:        assert_eq!(state.simulator_exit_requested, symbol == \"Quit\");\ntests/blizzard_game_menu_loads.rs:80:         in the standard taint environment (Logout / Quit are protected by separate \\\ntests/patch_7_3_2_session_protection.rs:1://! Source contract: insecure Logout/Quit must not mutate existing session state.\ntests/patch_7_3_2_session_protection.rs:9:    for symbol in [\"Logout\", \"Quit\"] {\ntests/patch_7_3_2_session_protection.rs:56:    for symbol in [\"Logout\", \"Quit\"] {\ntests/patch_7_3_2_session_protection.rs:63:        assert_eq!(state.simulator_exit_requested, symbol == \"Quit\");\n",
+      "stderr": ""
+    }
+  ]
+}

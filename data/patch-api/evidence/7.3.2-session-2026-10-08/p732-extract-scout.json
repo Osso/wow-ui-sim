@@ -1,0 +1,47 @@
+[
+  {
+    "source_id": "source-context-001",
+    "extract_line": 1,
+    "literal": "Patch 7.3.2 API changes",
+    "wikitext_line": 1,
+    "raw_literal": "{{apichanges|7.3.2|prev=7.3.0|next=8.0.1}}",
+    "status": "metadata-only",
+    "reason": "Source/heading/unexpanded reference context only; no runtime credit."
+  },
+  {
+    "source_id": "source-context-003",
+    "extract_line": 3,
+    "literal": "== Changes ==",
+    "wikitext_line": 3,
+    "raw_literal": "==Changes==",
+    "status": "metadata-only",
+    "reason": "Source/heading/unexpanded reference context only; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-004",
+    "extract_line": 4,
+    "literal": "*Logout and Quit lua functions are now protected.[Reference: url=http://www.reddit.com/r/wow/comments/78o0gl/732_undocumented_changes/dovgdvo/|title=IntenseIntentInTents on Reddit|accessdate=2017-10-26|date=2017-10-25|publisher=Reddit]",
+    "wikitext_line": 4,
+    "raw_literal": "*[[API Logout|Logout]] and [[API Quit|Quit]] lua functions are now protected.<ref>{{Ref web|url=http://www.reddit.com/r/wow/comments/78o0gl/732_undocumented_changes/dovgdvo/|title=IntenseIntentInTents on Reddit|accessdate=2017-10-26|date=2017-10-25|publisher=Reddit}}</ref>",
+    "status": "bounded-coverage",
+    "reason": "Addon-tainted calls fail before mutating login/exit state; secure calls retain existing state transitions. Bare and unmodified cached UI proof. Native notification/error wording, hardware-event policy and logout countdown/cancellation remain unverified; no historical parity claim."
+  },
+  {
+    "source_id": "source-context-006",
+    "extract_line": 6,
+    "literal": "== References ==",
+    "wikitext_line": 6,
+    "raw_literal": "==References==",
+    "status": "metadata-only",
+    "reason": "Source/heading/unexpanded reference context only; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-007",
+    "extract_line": 7,
+    "literal": "[References list; not expanded]",
+    "wikitext_line": 7,
+    "raw_literal": "{{Reflist}}",
+    "status": "metadata-only",
+    "reason": "Source/heading/unexpanded reference context only; no runtime credit."
+  }
+]

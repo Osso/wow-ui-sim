@@ -1,0 +1,21 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "blizzard_game_menu"
+  ],
+  "revision": "25934cc4ea714a08b5e5a323d747840b661d6da3",
+  "scope": "p732-menu-bare",
+  "cwd": ".",
+  "target": "dedicated p732-page target (external to repository)",
+  "environment": {
+    "P732_PROTECTION_OUT": "/home/osso/.worktrees/wow-ui-sim-p732-page/data/patch-api/evidence/7.3.2-session-2026-10-08/p732-protection-bare-green.json"
+  },
+  "exit": 0,
+  "log": "p732-menu-bare.txt",
+  "log_sha256": "986a2317fddbb767889cabd44d336a9e74511b33bb48a741dcca71600b16f301",
+  "seconds": 0.19589003800138016,
+  "invalidated": false
+}

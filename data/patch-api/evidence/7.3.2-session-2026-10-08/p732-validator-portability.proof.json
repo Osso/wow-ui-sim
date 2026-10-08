@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p732-page/data/patch-api/evidence/7.3.2-session-2026-10-08/test_validator_portability.py"
+  ],
+  "revision": "ac94f5a4a7e1e3298b1bb7d08958245751a51f54",
+  "scope": "p732-validator-portability",
+  "cwd": ".",
+  "target": "dedicated p732-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p732-validator-portability.txt",
+  "log_sha256": "54f74ab743c02ecf4de065981c82ff56d5c3fd4b9dd04bfd2f9967784945fe47",
+  "seconds": 7.097539367998252,
+  "invalidated": false
+}

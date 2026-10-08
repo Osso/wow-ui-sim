@@ -1,0 +1,1 @@
+PASS: relocated checkout, later-register scope, exact input preservation, complete reproduction set

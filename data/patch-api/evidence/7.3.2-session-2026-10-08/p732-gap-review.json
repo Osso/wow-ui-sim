@@ -1,0 +1,22 @@
+{
+  "publication_gaps": [],
+  "unmodeled_source_contracts": [],
+  "remaining_native_boundaries": [
+    {
+      "contract": "Native block notification and error text",
+      "reason": "Pinned page says protected but specifies neither ADDON_ACTION_BLOCKED/ADDON_ACTION_FORBIDDEN payload nor error text; no native capture. Explicit simulator error is not native notification parity."
+    },
+    {
+      "contract": "Hardware-event policy",
+      "reason": "No native hardware-event entitlement/gating capture. Stack taint establishes insecure-call rejection, not exact native input-event policy."
+    },
+    {
+      "contract": "Logout countdown and cancellation",
+      "reason": "Existing is_logged_in transition has no pending deadline/rest-area policy. CancelLogout remains an existing temporary no-op; protection does not claim a countdown model."
+    },
+    {
+      "contract": "Historical/secret/restricted execution parity",
+      "reason": "Current retail is the audit target. No 7.3.2 client or native secret/restricted-context capture; a bounded retail taint guard is not those contracts."
+    }
+  ]
+}

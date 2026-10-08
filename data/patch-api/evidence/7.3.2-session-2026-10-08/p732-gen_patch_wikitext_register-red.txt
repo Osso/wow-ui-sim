@@ -1,0 +1,14 @@
+................E.......
+======================================================================
+ERROR: test_prose_api_links_retain_each_changed_identity_and_literal (__main__.InventoryTests.test_prose_api_links_retain_each_changed_identity_and_literal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p732-page/tools/test_gen_patch_wikitext_register.py", line 13, in test_prose_api_links_retain_each_changed_identity_and_literal
+    rows = generator.parse_prose_api_links(raw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'gen_patch_wikitext_register' has no attribute 'parse_prose_api_links'
+
+----------------------------------------------------------------------
+Ran 24 tests in 0.003s
+
+FAILED (errors=1)

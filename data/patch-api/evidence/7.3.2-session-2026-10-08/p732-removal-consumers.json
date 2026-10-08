@@ -1,0 +1,105 @@
+{
+  "tool": "/usr/bin/grep; untruncated whole-word outputs; callers include pcall(Name, ...) and and Name then",
+  "cache_exists": true,
+  "candidates": [],
+  "retired": [],
+  "master_revision": "b4ff281a5d8a480b018a39620df62a372ab6c8a9",
+  "p801_revision": "474a7b6615f3ec848213852adf70dc68a354c75f",
+  "p801_register_sha256": "df597a39c9802be51ad66720abb7dfb1b58e5c155b7735a0d9ce99a784a7ae83",
+  "rows": [
+    {
+      "symbol": "Logout",
+      "decision": "retain: changed protection contract, not a removal",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bLogout\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/SlashCommands.lua:756:\tLogout();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GameMenu/Shared/GameMenuFrame.lua:215:\tself:AddButton(GameMenuFrameMixin:GetLogoutText(), GenerateMenuCallback(Logout, SOUNDKIT.IG_MAINMENU_LOGOUT), exitDisabled);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ClassTrial/Blizzard_ClassTrial.lua:42:\t\tLogout();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:4271:\t\tStoreOutbound.Logout();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUIOutbound.lua:20:function StoreOutbound.Logout()\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUIOutbound.lua:21:\tsecurecall(\"Logout\");\n",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bLogout\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/SlashCommands.lua:756:\tLogout();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GameMenu/Shared/GameMenuFrame.lua:215:\tself:AddButton(GameMenuFrameMixin:GetLogoutText(), GenerateMenuCallback(Logout, SOUNDKIT.IG_MAINMENU_LOGOUT), exitDisabled);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ClassTrial/Blizzard_ClassTrial.lua:42:\t\tLogout();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:4271:\t\tStoreOutbound.Logout();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUIOutbound.lua:20:function StoreOutbound.Logout()\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUIOutbound.lua:21:\tsecurecall(\"Logout\");\n",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bLogout\\b",
+            "src",
+            "tests"
+          ],
+          "exit": 0,
+          "stdout": "src/lua_api/workarounds/temporary/misc_global_frame_defaults.rs:53:    ensure_button_text(LOGOUT or \"Logout\")\nsrc/lua_api/globals/session_exit.rs:1://! Session exit globals (`Quit`, `Logout`, `ForceQuit`, `ForceLogout`).\nsrc/lua_api/globals/session_exit.rs:31:    LuaApiMut::register_function(lua, \"Logout\", logout)?;\nsrc/lua_api/globals/enum_data/game_system.rs:64:        \"Logout\",\ntests/blizzard_game_menu_loads.rs:80:         in the standard taint environment (Logout / Quit are protected by separate \\\ntests/blizzard_game_menu_loads.rs:395:         CanEnterEditMode flags, then adds Logout + Exit + AddCloseButton at the bottom), \\\ntests/patch_7_3_2_session_protection.rs:1://! Source contract: insecure Logout/Quit must not mutate existing session state.\ntests/patch_7_3_2_session_protection.rs:9:    for symbol in [\"Logout\", \"Quit\"] {\ntests/patch_7_3_2_session_protection.rs:52:    for symbol in [\"Logout\", \"Quit\"] {\ntests/patch_7_3_2_session_protection.rs:58:        assert_eq!(state.is_logged_in, symbol != \"Logout\");\n",
+          "stderr": ""
+        }
+      },
+      "later_additions": []
+    },
+    {
+      "symbol": "Quit",
+      "decision": "retain: changed protection contract, not a removal",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bQuit\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/SlashCommands.lua:763:\tQuit();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GameMenu/WoWLabs/GameMenuFrame.xml:86:\t\t\t\t\t\tQuit();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GameMenu/Shared/GameMenuFrame.lua:216:\tself:AddButton(EXIT_GAME, GenerateMenuCallback(Quit, SOUNDKIT.IG_MAINMENU_QUIT), exitDisabled);\n",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bQuit\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/SlashCommands.lua:763:\tQuit();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GameMenu/WoWLabs/GameMenuFrame.xml:86:\t\t\t\t\t\tQuit();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GameMenu/Shared/GameMenuFrame.lua:216:\tself:AddButton(EXIT_GAME, GenerateMenuCallback(Quit, SOUNDKIT.IG_MAINMENU_QUIT), exitDisabled);\n",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bQuit\\b",
+            "src",
+            "tests"
+          ],
+          "exit": 0,
+          "stdout": "src/lua_api/globals/session_exit.rs:1://! Session exit globals (`Quit`, `Logout`, `ForceQuit`, `ForceLogout`).\nsrc/lua_api/globals/session_exit.rs:28:    LuaApiMut::register_function(lua, \"Quit\", request_simulator_exit)?;\nsrc/lua_api/globals/enum_data/missing_enums.lua:10347:    Quit = 0,\nsrc/lua_api/globals/keybindings.rs:248:        lua_code: \"Quit()\",\ntests/key_dispatch.rs:199:    assert!(requested, \"CTRL-Q should dispatch the default Quit binding\");\ntests/blizzard_game_menu_loads.rs:80:         in the standard taint environment (Logout / Quit are protected by separate \\\ntests/patch_7_3_2_session_protection.rs:1://! Source contract: insecure Logout/Quit must not mutate existing session state.\ntests/patch_7_3_2_session_protection.rs:9:    for symbol in [\"Logout\", \"Quit\"] {\ntests/patch_7_3_2_session_protection.rs:52:    for symbol in [\"Logout\", \"Quit\"] {\ntests/patch_7_3_2_session_protection.rs:59:        assert_eq!(state.simulator_exit_requested, symbol == \"Quit\");\n",
+          "stderr": ""
+        }
+      },
+      "later_additions": []
+    }
+  ]
+}

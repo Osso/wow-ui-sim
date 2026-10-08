@@ -1,0 +1,23 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_7_3_2"
+  ],
+  "revision": "25934cc4ea714a08b5e5a323d747840b661d6da3",
+  "scope": "p732-cached-active-stack",
+  "cwd": ".",
+  "target": "dedicated p732-page target (external to repository)",
+  "environment": {
+    "P732_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p732-page/data/patch-api/evidence/7.3.2-session-2026-10-08/patch_7_3_2_publication_sweep-results.json",
+    "P732_PROTECTION_OUT": "/home/osso/.worktrees/wow-ui-sim-p732-page/data/patch-api/evidence/7.3.2-session-2026-10-08/p732-protection-green.json"
+  },
+  "exit": 0,
+  "log": "p732-cached-active-stack.txt",
+  "log_sha256": "5f78bd953fade7f7e5fb3a033a0d38949c0af7f9c26ac7e52f3b1b843d61ea2c",
+  "seconds": 43.621461932001694,
+  "invalidated": false
+}

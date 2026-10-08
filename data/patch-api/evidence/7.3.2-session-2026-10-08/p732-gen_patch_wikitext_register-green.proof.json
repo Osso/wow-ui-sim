@@ -1,0 +1,15 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "tools/test_gen_patch_wikitext_register.py"
+  ],
+  "revision": "cca5a744e",
+  "scope": "tool fixtures",
+  "cwd": ".",
+  "exit": 0,
+  "log": "p732-gen_patch_wikitext_register-green.txt",
+  "log_sha256": "b83727e4d931e3c56dcc5227e11bdffb9126d443423a6099353a7b5662ca78e1",
+  "invalidated": false,
+  "note": "Receipt recorded after captured execution; full output retained."
+}

@@ -1,0 +1,83 @@
+{
+  "schema": "patch-page-coverage/v1",
+  "patch": "7.3.2",
+  "source_sha256": "32b35ec0157db219051eeddc58d5e8d0ab34afe0f7d99690c1c3e112bfac1a35",
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/7.3.2-api-changes.txt",
+    "sha256": "7522a20ff388b43514565be6b56e858cd10362f7e72d7f03ec09e853d55b187e"
+  },
+  "proof_policy": "Current retail publication plus bounded taint-driven session state protection; not native/historical parity.",
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-Logout-4",
+      "source": "Logout",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_7_3_2_publication_sweep.rs"
+        },
+        {
+          "kind": "insecure-session-action-block",
+          "proof": "tests/patch_7_3_2_session_protection.rs"
+        }
+      ],
+      "note": "Addon-tainted calls fail before mutating login/exit state; secure calls retain existing state transitions. Bare and unmodified cached UI proof. Native notification/error wording, hardware-event policy and logout countdown/cancellation remain unverified; no historical parity claim."
+    },
+    {
+      "source_id": "wt-global-api-Quit-4",
+      "source": "Quit",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_7_3_2_publication_sweep.rs"
+        },
+        {
+          "kind": "insecure-session-action-block",
+          "proof": "tests/patch_7_3_2_session_protection.rs"
+        }
+      ],
+      "note": "Addon-tainted calls fail before mutating login/exit state; secure calls retain existing state transitions. Bare and unmodified cached UI proof. Native notification/error wording, hardware-event policy and logout countdown/cancellation remain unverified; no historical parity claim."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source/heading/unexpanded reference context only; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source/heading/unexpanded reference context only; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_7_3_2_publication_sweep.rs"
+        },
+        {
+          "kind": "insecure-session-action-block",
+          "proof": "tests/patch_7_3_2_session_protection.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Addon-tainted calls fail before mutating login/exit state; secure calls retain existing state transitions. Bare and unmodified cached UI proof. Native notification/error wording, hardware-event policy and logout countdown/cancellation remain unverified; no historical parity claim."
+    },
+    {
+      "source_id": "source-context-006",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source/heading/unexpanded reference context only; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-007",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source/heading/unexpanded reference context only; no runtime credit."
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+src/lua_api/frame/methods/widgets/slider.rs:417:    if let Err(error_msg) = protected_lua_pcall_state(state, function, &call_args) {
+src/lua_api/workarounds/temporary/misc_global_frame_defaults.rs:53:    ensure_button_text(LOGOUT or "Logout")
+src/lua_api/globals/missing_surface/professions.rs:163:    let _ = protected_lua_pcall_state(state, function, args);
+src/lua_api/globals/session_exit.rs:1://! Session exit globals (`Quit`, `Logout`, `ForceQuit`, `ForceLogout`).
+src/lua_api/globals/session_exit.rs:28:    LuaApiMut::register_function(lua, "Quit", request_simulator_exit)?;
+src/lua_api/globals/session_exit.rs:31:    LuaApiMut::register_function(lua, "Logout", logout)?;
+src/lua_api/globals/session_exit.rs:35:    table_set_rust_fn_static(lua.state_mut(), globals, "CancelLogout", |_| Ok(0))?;
+src/lua_api/globals/enum_data/game_system.rs:64:        "Logout",
+src/lua_api/globals/enum_data/missing_enums.lua:10347:    Quit = 0,
+src/lua_api/globals/keybindings.rs:248:        lua_code: "Quit()",
+tests/key_dispatch.rs:199:    assert!(requested, "CTRL-Q should dispatch the default Quit binding");
+tests/blizzard_game_menu_loads.rs:80:         in the standard taint environment (Logout / Quit are protected by separate \
+tests/blizzard_game_menu_loads.rs:395:         CanEnterEditMode flags, then adds Logout + Exit + AddCloseButton at the bottom), \
+
+STDERR:
+/usr/bin/grep: /home/osso/Repos/rilua/src: No such file or directory
