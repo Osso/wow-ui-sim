@@ -1,0 +1,20 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "action_bar"
+  ],
+  "revision": "2caa653ace4e52ae3b918bba8ad322bb80b06671",
+  "scope": "prefork-action_bar",
+  "cwd": ".",
+  "target": "dedicated p548-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "prefork-action_bar.txt",
+  "log_sha256": "705409653a31765a944f90819f2e40bd0ba7c38d6c74d6127521df21a1496a20",
+  "seconds": 6.468560660003277,
+  "invalidated": false
+}

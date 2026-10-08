@@ -1,0 +1,24 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--manifest-path",
+    "/tmp/p548-master-prefork-b5qw3d92/Cargo.toml",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "action_bar"
+  ],
+  "revision": "a9d7c9566fcb33b272a193a7aae6f51d4db4973f",
+  "scope": "master-prefork-action_bar",
+  "cwd": ".",
+  "target": "dedicated p548-page target (external to repository)",
+  "environment": {
+    "PATCH_PROOF_REVISION": "a9d7c9566"
+  },
+  "exit": 0,
+  "log": "master-prefork-action_bar.txt",
+  "log_sha256": "e08120c3c81fa1bdbc152c3a33ab80b55dec245efc8e1052a0bfdd40ffb4365e",
+  "seconds": 5.061350638003205,
+  "invalidated": false
+}

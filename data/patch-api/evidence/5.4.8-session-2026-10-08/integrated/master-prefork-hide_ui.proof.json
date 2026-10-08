@@ -1,0 +1,24 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--manifest-path",
+    "/tmp/p548-master-prefork-b5qw3d92/Cargo.toml",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "hide_ui"
+  ],
+  "revision": "a9d7c9566fcb33b272a193a7aae6f51d4db4973f",
+  "scope": "master-prefork-hide_ui",
+  "cwd": ".",
+  "target": "dedicated p548-page target (external to repository)",
+  "environment": {
+    "PATCH_PROOF_REVISION": "a9d7c9566"
+  },
+  "exit": 0,
+  "log": "master-prefork-hide_ui.txt",
+  "log_sha256": "d6d9f0968c8404a564f6e376535ce1032c2516fe1a960413d143f4e2337c959b",
+  "seconds": 5.835009542002808,
+  "invalidated": false
+}

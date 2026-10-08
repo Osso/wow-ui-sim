@@ -1,0 +1,20 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "nameplate"
+  ],
+  "revision": "2caa653ace4e52ae3b918bba8ad322bb80b06671",
+  "scope": "prefork-nameplate",
+  "cwd": ".",
+  "target": "dedicated p548-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "prefork-nameplate.txt",
+  "log_sha256": "26bf28ac8f65c7dabcc5981aac3842d5c48bb683efb8fed82b8b04a46f25648f",
+  "seconds": 6.055211482998857,
+  "invalidated": false
+}

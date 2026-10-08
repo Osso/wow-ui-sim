@@ -1,0 +1,24 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--manifest-path",
+    "/tmp/p548-master-prefork-b5qw3d92/Cargo.toml",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "chat"
+  ],
+  "revision": "a9d7c9566fcb33b272a193a7aae6f51d4db4973f",
+  "scope": "master-prefork-chat",
+  "cwd": ".",
+  "target": "dedicated p548-page target (external to repository)",
+  "environment": {
+    "PATCH_PROOF_REVISION": "a9d7c9566"
+  },
+  "exit": 0,
+  "log": "master-prefork-chat.txt",
+  "log_sha256": "5e045d7aecc3034a8f6d64fa86e9a7cc205c1cf615b264a10f7c48b2212cbec5",
+  "seconds": 5.272251934999076,
+  "invalidated": false
+}

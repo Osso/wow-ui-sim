@@ -1,0 +1,23 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--no-default-features",
+    "--features",
+    "sound,gui,casc,client-mists",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "cvar"
+  ],
+  "revision": "2caa653ace4e52ae3b918bba8ad322bb80b06671",
+  "scope": "mists-prefork-cvar",
+  "cwd": ".",
+  "target": "dedicated p548-page target (external to repository)",
+  "environment": {},
+  "exit": 101,
+  "log": "mists-prefork-cvar.txt",
+  "log_sha256": "bdfb377d63611ee0cd8db586033075a54d334e4e3377735acc0d336bde380bdb",
+  "seconds": 0.15466798200213816,
+  "invalidated": false
+}

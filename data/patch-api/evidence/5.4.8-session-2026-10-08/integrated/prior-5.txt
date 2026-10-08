@@ -1,0 +1,1 @@
+{"enum_members": 79, "grep_scans": 276, "historical_prior_validators": 28, "inherited_extract_failures": ["12.0.5", "12.0.7", "12.1.0"], "inventory_gaps": 275, "inventory_ok": 382, "inventory_rows": 657, "ledger_rows": 854, "prose_rows": 100, "registers": 50, "status": "PASS", "statuses": {"audit-pending": 449, "bounded-coverage": 382, "metadata-only": 23}, "sweep_cases": 51}

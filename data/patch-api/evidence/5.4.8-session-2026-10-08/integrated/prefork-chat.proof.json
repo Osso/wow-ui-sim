@@ -1,0 +1,20 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "chat"
+  ],
+  "revision": "2caa653ace4e52ae3b918bba8ad322bb80b06671",
+  "scope": "prefork-chat",
+  "cwd": ".",
+  "target": "dedicated p548-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "prefork-chat.txt",
+  "log_sha256": "92c0f584bf0e292ecae72771e5c657cd4b0887037576e02616c0b173675379ce",
+  "seconds": 9.747193645998777,
+  "invalidated": false
+}

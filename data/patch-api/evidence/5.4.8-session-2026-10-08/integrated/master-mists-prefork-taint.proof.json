@@ -1,0 +1,27 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--manifest-path",
+    "/tmp/p548-master-prefork-b5qw3d92/Cargo.toml",
+    "--no-default-features",
+    "--features",
+    "sound,gui,casc,client-mists",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "taint"
+  ],
+  "revision": "a9d7c9566fcb33b272a193a7aae6f51d4db4973f",
+  "scope": "master-mists-prefork-taint",
+  "cwd": ".",
+  "target": "dedicated p548-page target (external to repository)",
+  "environment": {
+    "PATCH_PROOF_REVISION": "a9d7c9566"
+  },
+  "exit": 101,
+  "log": "master-mists-prefork-taint.txt",
+  "log_sha256": "bdfb377d63611ee0cd8db586033075a54d334e4e3377735acc0d336bde380bdb",
+  "seconds": 0.16577765999682015,
+  "invalidated": false
+}

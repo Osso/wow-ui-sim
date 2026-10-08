@@ -1,0 +1,996 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Blocking waiting for file lock on build directory
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.30s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p548-page/debug/deps/integration-f15e4c1da9a8b8f4)
+
+running 68 tests
+test classic_secret_policy::classic_secret_policy_tainted_protected_action_still_denied ... ok
+test c_arrow_callout_manager::acknowledge_callout_marks_id_clears_active_and_writes_cvar ... ok
+test c_arrow_callout_manager::acknowledged_cvar_is_comma_separated_in_ascending_order ... ok
+test cvar_bitfields::c_cvar_bitfields_share_the_same_storage ... ok
+test cvar_bitfields::cvar_bitfields_can_be_set_and_cleared ... ok
+test runtime_bootstrap_boundaries::c_cvar_surface_is_not_runtime_bootstrap_fallback ... ok
+test battle_net_api::battle_net_high_res_texture_state_tracks_cvar_and_install_action ... ok
+test classic_secret_policy::classic_secret_policy_loadstring_remains_tainted_not_secret ... ok
+test c_system_api::test_c_console_get_all_commands_live_cvars ... ok
+test console_commands::console_catalog_lists_supported_cvars_with_bounded_metadata ... ok
+test blizzard_ui_blizzard_accessibilitytemplates::behavior_text_size_manager::init_registers_user_font_scale_cvar_callback ... FAILED
+test blizzard_ui_blizzard_arrow_callout_frame::behavior_acknowledged_callouts_persist_across_load::acknowledged_callouts_persist_through_cvar_across_fresh_load ... FAILED
+test blizzard_auth_challenge_ui_lockdown::auth_challenge_ui_full_lockdown_marks_tainted_mutation_attempts ... FAILED
+test mists_compat_bootstrap::mists_bootstrap_registers_startup_cvar_defaults ... ok
+test hook_script::hook_script_preserves_original_and_addon_hook_taint ... ok
+test private_aura_anchors::ordinary_public_add_and_remove_preserve_addon_taint ... ok
+test secret_value_security::addon_tainted_function_is_not_secret ... ok
+test private_aura_anchors::secret_outer_nested_and_scalar_inputs_reject_without_clearing_taint ... ok
+test secure_attribute_delegate::forbidden_attribute_delegate_dispatches_securely_from_tainted_stack ... ok
+test secret_string_formatting::inferred_tainted_positional_formatting_preserves_secrecy_and_stack_taint ... FAILED
+test security_api::addon_tainted_table_slot_does_not_make_table_secret ... ok
+test secure_handler_fallback::execute_callmethod_propagates_tainted_args_to_insecure_method ... FAILED
+test secret_string_formatting::inferred_tainted_direct_formatting_preserves_secrecy_and_stack_taint ... FAILED
+test security_api::test_canaccessallvalues_one_tainted ... ok
+test security_api::addon_tainted_global_helper_taints_blizzard_call_path ... ok
+test security_api::test_canaccessvalue_untainted ... ok
+test security_api::test_canaccessvalue_tainted ... ok
+test security_api::test_issecretvalue_tainted ... ok
+test security_api::test_issecretvalue_untainted ... ok
+test security_api::test_securecall_clears_taint_for_nested_closures ... ok
+test security_api::test_issecurevariable_detects_taint ... ok
+test security_api::test_loadstring_taints ... ok
+test security_state_drivers::test_create_secure_delegate_runs_with_secure_taint ... ok
+test security_api::test_securecall_restores_taint ... ok
+test set_cvar_global::clamp_exists_during_bootstrap ... ok
+test set_cvar_global::c_cvar_register_cvar_sets_default_without_overwriting_existing_value ... ok
+test set_cvar_global::c_cvar_get_reads_back_the_value_set_via_global ... ok
+test set_cvar_global::empty_cvar_registration_preserves_classic_castbar_scale_default ... ok
+test set_cvar_global::register_cvar_accepts_finite_numeric_defaults_from_both_surfaces ... ok
+test set_cvar_global::legacy_cvar_compat_globals_exist_before_framexml_loads ... ok
+test set_cvar_global::register_cvar_exposes_runtime_default_through_global_and_namespace ... ok
+test set_cvar_global::patch_12_0_7_named_defaults_are_absent_before_publication ... ok
+test set_cvar_global::register_cvar_nil_default_retains_zero_policy ... ok
+test set_cvar_global::register_cvar_makes_unknown_cvar_visible_with_zero_default ... ok
+test set_cvar_global::register_cvar_numeric_default_preserves_existing_override_and_first_default ... ok
+test set_cvar_global::register_cvar_preserves_explicit_empty_default_lifecycle ... ok
+test set_cvar_global::register_cvar_rejects_nonfinite_and_unsupported_defaults ... ok
+test set_cvar_global::set_cvar_accepts_boolean_as_one_zero ... ok
+test set_cvar_global::set_cvar_accepts_fractional_numeric_value ... ok
+test set_cvar_global::set_cvar_accepts_numeric_value ... ok
+test set_cvar_global::set_cvar_empty_name_returns_false ... ok
+test set_cvar_global::set_cvar_fires_cvar_update_after_storing_value ... ok
+test set_cvar_global::set_cvar_stores_string_value ... ok
+test test_cvar_display_settings::brightness_set_then_get_round_trips_through_simstate ... ok
+test test_cvar_display_settings::contrast_default_visible_via_get_cvar ... ok
+test test_cvar_display_settings::c_cvar_namespace_mirrors_global_get_set ... ok
+test test_cvar_display_settings::brightness_default_visible_via_get_cvar ... ok
+test test_cvar_display_settings::cvar_lookup_is_case_insensitive_on_read ... ok
+test test_cvar_display_settings::contrast_set_then_get_round_trips_through_simstate ... ok
+test test_cvar_display_settings::gamma_default_visible_via_get_cvar ... ok
+test test_cvar_display_settings::get_cvar_default_returns_yaml_value_after_override ... ok
+test test_cvar_display_settings::unknown_cvar_returns_nil_not_empty_string ... ok
+test widget_slider::set_value_updates_castbar_style_scale_and_cvar_consumer ... ok
+test wowforever_gamepad_constants::forever_gamepad_cvar_defaults_are_profile_scoped ... ok
+test xml_templates::registry::addon_method_override_stays_tainted_under_trusted_template_script ... ok
+test xml_templates::registry::addon_template_scripts_stay_tainted_when_clean_code_constructs_frame ... ok
+test startup_warnings::late::test_housing_tutorials_load_without_cvar_bitfield_warning ... ok
+test startup_warnings::late::test_blizzard_framexml_load_registers_boss_banner_cvar_without_warning ... FAILED
+
+failures:
+
+---- blizzard_ui_blizzard_accessibilitytemplates::behavior_text_size_manager::init_registers_user_font_scale_cvar_callback stdout ----
+[  0.073s] [Startup] WowLuaEnv::new begin
+[  0.076s] [Startup] SimState::default complete in 2.93ms
+[  0.076s] [Startup] rilua VM created in 166.61µs
+[  0.076s] [Startup] builtin frames initialized in 166.43µs
+[  0.076s] [Startup] template registry cleared in 17.90µs
+[  0.077s] [Startup] intrinsic templates registered in 229.65µs
+[  0.077s] [Startup] initial app_data lua handle installed in 1.15µs
+[  1.062s] [Startup] init_lua_state complete in 985.35ms
+[  1.062s] [Startup] final app_data lua handle installed in 722.00ns
+[  1.062s] [Startup] initial screen globals installed in 395.47µs
+[  1.062s] [Startup] WowLuaEnv::new complete
+
+thread 'blizzard_ui_blizzard_accessibilitytemplates::behavior_text_size_manager::init_registers_user_font_scale_cvar_callback' (112859) panicked at /home/osso/.worktrees/wow-ui-sim-p548-page/tests/common/panel_fixtures.rs:114:9:
+required panel addon `Blizzard_Colors` has no eligible Game TOC under /home/osso/.cache/wow-ui-sim/blizzard-ui/mists/AddOns
+
+---- blizzard_ui_blizzard_arrow_callout_frame::behavior_acknowledged_callouts_persist_across_load::acknowledged_callouts_persist_through_cvar_across_fresh_load stdout ----
+[  0.073s] [Startup] WowLuaEnv::new begin
+[  0.076s] [Startup] SimState::default complete in 3.01ms
+[  0.076s] [Startup] rilua VM created in 129.99µs
+[  0.076s] [Startup] builtin frames initialized in 169.28µs
+[  0.076s] [Startup] template registry cleared in 16.88µs
+[  0.077s] [Startup] intrinsic templates registered in 229.89µs
+[  0.077s] [Startup] initial app_data lua handle installed in 992.00ns
+[  1.059s] [Startup] init_lua_state complete in 982.10ms
+[  1.059s] [Startup] final app_data lua handle installed in 491.00ns
+[  1.059s] [Startup] initial screen globals installed in 456.03µs
+[  1.059s] [Startup] WowLuaEnv::new complete
+
+thread 'blizzard_ui_blizzard_arrow_callout_frame::behavior_acknowledged_callouts_persist_across_load::acknowledged_callouts_persist_through_cvar_across_fresh_load' (112860) panicked at /home/osso/.worktrees/wow-ui-sim-p548-page/tests/common/panel_fixtures.rs:114:9:
+required panel addon `Blizzard_Colors` has no eligible Game TOC under /home/osso/.cache/wow-ui-sim/blizzard-ui/mists/AddOns
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- blizzard_auth_challenge_ui_lockdown::auth_challenge_ui_full_lockdown_marks_tainted_mutation_attempts stdout ----
+
+running 1 test
+test blizzard_auth_challenge_ui_lockdown::auth_challenge_ui_full_lockdown_marks_tainted_mutation_attempts ... FAILED
+
+failures:
+
+---- blizzard_auth_challenge_ui_lockdown::auth_challenge_ui_full_lockdown_marks_tainted_mutation_attempts stdout ----
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.003s] [Startup] SimState::default complete in 3.42ms
+[  0.004s] [Startup] rilua VM created in 126.41µs
+[  0.004s] [Startup] builtin frames initialized in 130.50µs
+[  0.004s] [Startup] template registry cleared in 14.36µs
+[  0.006s] [Startup] intrinsic templates registered in 1.88ms
+[  0.006s] [Startup] initial app_data lua handle installed in 662.00ns
+[  1.009s] [Startup] init_lua_state complete in 1.00s
+[  1.009s] [Startup] final app_data lua handle installed in 1.02µs
+[  1.010s] [Startup] initial screen globals installed in 310.79µs
+[  1.010s] [Startup] WowLuaEnv::new complete
+
+thread 'blizzard_auth_challenge_ui_lockdown::auth_challenge_ui_full_lockdown_marks_tainted_mutation_attempts' (112875) panicked at /home/osso/.worktrees/wow-ui-sim-p548-page/tests/common/panel_fixtures.rs:114:9:
+required panel addon `Blizzard_Colors` has no eligible Game TOC under /home/osso/.cache/wow-ui-sim/blizzard-ui/mists/AddOns
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    blizzard_auth_challenge_ui_lockdown::auth_challenge_ui_full_lockdown_marks_tainted_mutation_attempts
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8175 filtered out; finished in 1.30s
+
+
+thread 'blizzard_auth_challenge_ui_lockdown::auth_challenge_ui_full_lockdown_marks_tainted_mutation_attempts' (112858) panicked at /home/osso/.worktrees/wow-ui-sim-p548-page/tests/common/timeout_reexec.rs:181:9:
+timeout child for `blizzard_auth_challenge_ui_lockdown::auth_challenge_ui_full_lockdown_marks_tainted_mutation_attempts` failed (exit code 101)
+
+---- secret_string_formatting::inferred_tainted_positional_formatting_preserves_secrecy_and_stack_taint stdout ----
+[  1.169s] [Startup] WowLuaEnv::new begin
+[  1.174s] [Startup] SimState::default complete in 4.15ms
+[  1.174s] [Startup] rilua VM created in 160.30µs
+[  1.174s] [Startup] builtin frames initialized in 163.11µs
+[  1.174s] [Startup] template registry cleared in 10.91µs
+[  1.174s] [Startup] intrinsic templates registered in 285.45µs
+[  1.174s] [Startup] initial app_data lua handle installed in 651.00ns
+[  1.694s] [Startup] init_lua_state complete in 519.28ms
+[  1.694s] [Startup] final app_data lua handle installed in 1.42µs
+[  1.694s] [Startup] initial screen globals installed in 163.00µs
+[  1.694s] [Startup] WowLuaEnv::new complete
+
+thread 'secret_string_formatting::inferred_tainted_positional_formatting_preserves_secrecy_and_stack_taint' (112946) panicked at /home/osso/.worktrees/wow-ui-sim-p548-page/tests/secret_string_formatting.rs:134:10:
+inferred addon opaque formatting succeeds without public payload access: Lua(Runtime(RuntimeError { message: "addon cannot read input", level: 0, traceback: [] }))
+
+---- secure_handler_fallback::execute_callmethod_propagates_tainted_args_to_insecure_method stdout ----
+[  1.277s] [Startup] WowLuaEnv::new begin
+[  1.284s] [Startup] SimState::default complete in 7.57ms
+[  1.285s] [Startup] rilua VM created in 257.64µs
+[  1.285s] [Startup] builtin frames initialized in 316.55µs
+[  1.285s] [Startup] template registry cleared in 30.60µs
+[  1.285s] [Startup] intrinsic templates registered in 342.27µs
+[  1.285s] [Startup] initial app_data lua handle installed in 812.00ns
+[  1.954s] [Startup] init_lua_state complete in 668.64ms
+[  1.954s] [Startup] final app_data lua handle installed in 902.00ns
+[  1.954s] [Startup] initial screen globals installed in 425.64µs
+[  1.954s] [Startup] WowLuaEnv::new complete
+
+thread 'secure_handler_fallback::execute_callmethod_propagates_tainted_args_to_insecure_method' (112955) panicked at /home/osso/.worktrees/wow-ui-sim-p548-page/tests/secure_handler_fallback.rs:198:5:
+assertion failed: returned_is_secret
+
+---- secret_string_formatting::inferred_tainted_direct_formatting_preserves_secrecy_and_stack_taint stdout ----
+[  1.153s] [Startup] WowLuaEnv::new begin
+[  1.157s] [Startup] SimState::default complete in 3.80ms
+[  1.157s] [Startup] rilua VM created in 169.64µs
+[  1.157s] [Startup] builtin frames initialized in 131.96µs
+[  1.157s] [Startup] template registry cleared in 15.01µs
+[  1.158s] [Startup] intrinsic templates registered in 309.74µs
+[  1.158s] [Startup] initial app_data lua handle installed in 1.30µs
+[  1.864s] [Startup] init_lua_state complete in 706.07ms
+[  1.864s] [Startup] final app_data lua handle installed in 771.00ns
+[  1.864s] [Startup] initial screen globals installed in 359.17µs
+[  1.864s] [Startup] WowLuaEnv::new complete
+
+thread 'secret_string_formatting::inferred_tainted_direct_formatting_preserves_secrecy_and_stack_taint' (112944) panicked at /home/osso/.worktrees/wow-ui-sim-p548-page/tests/secret_string_formatting.rs:134:10:
+inferred addon opaque formatting succeeds without public payload access: Lua(Runtime(RuntimeError { message: "addon cannot read input", level: 0, traceback: [] }))
+
+---- startup_warnings::late::test_blizzard_framexml_load_registers_boss_banner_cvar_without_warning stdout ----
+
+running 1 test
+test startup_warnings::late::test_blizzard_framexml_load_registers_boss_banner_cvar_without_warning ... FAILED
+
+failures:
+
+---- startup_warnings::late::test_blizzard_framexml_load_registers_boss_banner_cvar_without_warning stdout ----
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.005s] [Startup] SimState::default complete in 4.52ms
+[  0.005s] [Startup] rilua VM created in 155.19µs
+[  0.005s] [Startup] builtin frames initialized in 667.27µs
+[  0.005s] [Startup] template registry cleared in 23.38µs
+[  0.007s] [Startup] intrinsic templates registered in 1.70ms
+[  0.007s] [Startup] initial app_data lua handle installed in 2.14µs
+[  1.594s] [Startup] init_lua_state complete in 1.59s
+[  1.594s] [Startup] final app_data lua handle installed in 501.00ns
+[  1.594s] [Startup] initial screen globals installed in 209.44µs
+[  1.594s] [Startup] WowLuaEnv::new complete
+Lua error: @Interface/AddOns/Blizzard_FrameXMLUtil/ArenaUtil.lua: Interface/AddOns/Blizzard_FrameXMLUtil/ArenaUtil.lua:22: attempt to call method 'RegisterFrameEvent' (a nil value)
+stack traceback:
+	(string):1: in main chunk
+Lua error: @Interface/AddOns/Blizzard_FrameXMLUtil/AuraUtil.lua: Interface/AddOns/Blizzard_FrameXMLUtil/AuraUtil.lua:253: attempt to call method 'RegisterFrameEvent' (a nil value)
+stack traceback:
+	(string):1: in main chunk
+Lua error: @Interface/AddOns/Blizzard_SharedXML/Shared/Scroll/ScrollUtil.lua: ...e/AddOns/Blizzard_SharedXML/Shared/Scroll/ScrollUtil.lua:358: attempt to index global 'FlagsUtil' (a nil value)
+stack traceback:
+	(string):1: in main chunk
+Lua error: @Interface/AddOns/Blizzard_SharedXML/Shared/Scroll/ScrollBox.lua: ...ce/AddOns/Blizzard_SharedXML/Shared/Scroll/ScrollBox.lua:13: attempt to index global 'MathUtil' (a nil value)
+stack traceback:
+	(string):1: in main chunk
+Lua error: @Interface/AddOns/Blizzard_SharedXML/DebugBarManager.lua: Interface/AddOns/Blizzard_SharedXML/DebugBarManager.lua:107: attempt to call method 'RegisterFrameEvent' (a nil value)
+stack traceback:
+	(string):1: in main chunk
+Lua error: Failed to create frame __Blizzard_Settings_Shared_461: ...ns/Blizzard_SharedXML/Shared/Scroll/MinimalScrollBar.lua:33: attempt to call method 'DesaturateIfDisabled' (a nil value)
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'DesaturateIfDisabled'
+	...ns/Blizzard_SharedXML/Shared/Scroll/MinimalScrollBar.lua:33: in function <...ns/Blizzard_SharedXML/Shared/Scroll/MinimalScrollBar.lua:30>
+	(tail call): ?
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+Lua error: Lua Error: Failed to create frame __Blizzard_Settings_Shared_461: ...ns/Blizzard_SharedXML/Shared/Scroll/MinimalScrollBar.lua:33: attempt to call method 'DesaturateIfDisabled' (a nil value)
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'DesaturateIfDisabled'
+	...ns/Blizzard_SharedXML/Shared/Scroll/MinimalScrollBar.lua:33: in function <...ns/Blizzard_SharedXML/Shared/Scroll/MinimalScrollBar.lua:30>
+	(tail call): ?
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: @Interface/AddOns/Blizzard_SettingsDefinitions_Shared/Groups.lua: ...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:780: attempt to index a nil value
+stack traceback:
+	(string):1: in main chunk
+Lua error: Lua Error: @Interface/AddOns/Blizzard_SettingsDefinitions_Shared/Groups.lua: ...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:780: attempt to index a nil value
+stack traceback:
+	(string):1: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: ...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: attempt to index field 'categoryLayouts' (a nil value)
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: in function 'AssignLayoutToCategory'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:179: in function 'handler'
+	(string):3: in main chunk
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function 'SetAttribute'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:85: in function <...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:84>
+	(tail call): ?
+	.../AddOns/Blizzard_SettingsDefinitions_Shared/Graphics.lua:503: in function <.../AddOns/Blizzard_SettingsDefinitions_Shared/Graphics.lua:495>
+	[C]: in function 'securecallfunction'
+	.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:28: in function <.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:26>
+	(tail call): ?
+	.../AddOns/Blizzard_SettingsDefinitions_Shared/Graphics.lua:1399: in main chunk
+Lua error: Lua Error: ...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: attempt to index field 'categoryLayouts' (a nil value)
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: in function 'AssignLayoutToCategory'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:179: in function 'handler'
+	(string):3: in main chunk
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function 'SetAttribute'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:85: in function <...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:84>
+	(tail call): ?
+	.../AddOns/Blizzard_SettingsDefinitions_Shared/Graphics.lua:503: in function <.../AddOns/Blizzard_SettingsDefinitions_Shared/Graphics.lua:495>
+	[C]: in function 'securecallfunction'
+	.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:28: in function <.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:26>
+	(tail call): ?
+	.../AddOns/Blizzard_SettingsDefinitions_Shared/Graphics.lua:1399: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function 'SetAttribute'
+[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua]:85: in function <[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua]:84>
+=(tail call): ?
+[Interface/AddOns/Blizzard_SettingsDefinitions_Shared/Graphics.lua]:503: in function <[Interface/AddOns/Blizzard_SettingsDefinitions_Shared/Graphics.lua]:495>
+=[C]:: in function 'securecallfunction'
+[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua]:28: in function <[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua]:26>
+=(tail call): ?
+[Interface/AddOns/Blizzard_SettingsDefinitions_Shared/Graphics.lua]:1399: in main chunk
+
+Lua error: @Interface/AddOns/Blizzard_SettingsDefinitions_Shared/Graphics.lua: bad argument #1 to 'unpack' (table expected)
+stack traceback:
+	(string):1: in main chunk
+Lua error: Lua Error: @Interface/AddOns/Blizzard_SettingsDefinitions_Shared/Graphics.lua: bad argument #1 to 'unpack' (table expected)
+stack traceback:
+	(string):1: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: ...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: attempt to index field 'categoryLayouts' (a nil value)
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: in function 'AssignLayoutToCategory'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:179: in function 'handler'
+	(string):3: in main chunk
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function 'SetAttribute'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:85: in function <...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:84>
+	(tail call): ?
+	...ace/AddOns/Blizzard_SettingsDefinitions_Shared/Audio.lua:384: in function <...ace/AddOns/Blizzard_SettingsDefinitions_Shared/Audio.lua:383>
+	[C]: in function 'securecallfunction'
+	.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:28: in function <.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:26>
+	(tail call): ?
+	...ace/AddOns/Blizzard_SettingsDefinitions_Shared/Audio.lua:567: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function 'SetAttribute'
+[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua]:85: in function <[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua]:84>
+=(tail call): ?
+[Interface/AddOns/Blizzard_SettingsDefinitions_Shared/Audio.lua]:384: in function <[Interface/AddOns/Blizzard_SettingsDefinitions_Shared/Audio.lua]:383>
+=[C]:: in function 'securecallfunction'
+[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua]:28: in function <[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua]:26>
+=(tail call): ?
+[Interface/AddOns/Blizzard_SettingsDefinitions_Shared/Audio.lua]:567: in main chunk
+
+Lua error: @Interface/AddOns/Blizzard_SettingsDefinitions_Shared/Audio.lua: bad argument #1 to 'unpack' (table expected)
+stack traceback:
+	(string):1: in main chunk
+Lua error: Lua Error: @Interface/AddOns/Blizzard_SettingsDefinitions_Shared/Audio.lua: bad argument #1 to 'unpack' (table expected)
+stack traceback:
+	(string):1: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: ...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: attempt to index field 'categoryLayouts' (a nil value)
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: in function 'AssignLayoutToCategory'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:179: in function 'handler'
+	(string):3: in main chunk
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function 'SetAttribute'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:85: in function <...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:84>
+	(tail call): ?
+	...AddOns/Blizzard_SettingsDefinitions_Shared/Languages.lua:132: in function <...AddOns/Blizzard_SettingsDefinitions_Shared/Languages.lua:127>
+	[C]: in function 'securecallfunction'
+	.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:28: in function <.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:26>
+	(tail call): ?
+	...AddOns/Blizzard_SettingsDefinitions_Shared/Languages.lua:163: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function 'SetAttribute'
+[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua]:85: in function <[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua]:84>
+=(tail call): ?
+[Interface/AddOns/Blizzard_SettingsDefinitions_Shared/Languages.lua]:132: in function <[Interface/AddOns/Blizzard_SettingsDefinitions_Shared/Languages.lua]:127>
+=[C]:: in function 'securecallfunction'
+[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua]:28: in function <[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua]:26>
+=(tail call): ?
+[Interface/AddOns/Blizzard_SettingsDefinitions_Shared/Languages.lua]:163: in main chunk
+
+Lua error: @Interface/AddOns/Blizzard_SettingsDefinitions_Shared/Languages.lua: bad argument #1 to 'unpack' (table expected)
+stack traceback:
+	(string):1: in main chunk
+Lua error: Lua Error: @Interface/AddOns/Blizzard_SettingsDefinitions_Shared/Languages.lua: bad argument #1 to 'unpack' (table expected)
+stack traceback:
+	(string):1: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: ...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: attempt to index field 'categoryLayouts' (a nil value)
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: in function 'AssignLayoutToCategory'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:179: in function 'handler'
+	(string):3: in main chunk
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function 'SetAttribute'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:85: in function <...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:84>
+	(tail call): ?
+	...e/AddOns/Blizzard_SettingsDefinitions_Shared/Network.lua:6: in function <...e/AddOns/Blizzard_SettingsDefinitions_Shared/Network.lua:1>
+	[C]: in function 'securecallfunction'
+	.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:28: in function <.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:26>
+	(tail call): ?
+	...e/AddOns/Blizzard_SettingsDefinitions_Shared/Network.lua:23: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function 'SetAttribute'
+[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua]:85: in function <[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua]:84>
+=(tail call): ?
+[Interface/AddOns/Blizzard_SettingsDefinitions_Shared/Network.lua]:6: in function <[Interface/AddOns/Blizzard_SettingsDefinitions_Shared/Network.lua]:1>
+=[C]:: in function 'securecallfunction'
+[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua]:28: in function <[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua]:26>
+=(tail call): ?
+[Interface/AddOns/Blizzard_SettingsDefinitions_Shared/Network.lua]:23: in main chunk
+
+Lua error: @Interface/AddOns/Blizzard_SettingsDefinitions_Shared/Network.lua: bad argument #1 to 'unpack' (table expected)
+stack traceback:
+	(string):1: in main chunk
+Lua error: Lua Error: @Interface/AddOns/Blizzard_SettingsDefinitions_Shared/Network.lua: bad argument #1 to 'unpack' (table expected)
+stack traceback:
+	(string):1: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: ...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: attempt to index field 'categoryLayouts' (a nil value)
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: in function 'AssignLayoutToCategory'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:179: in function 'handler'
+	(string):3: in main chunk
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function 'SetAttribute'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:85: in function <...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:84>
+	(tail call): ?
+	...e/AddOns/Blizzard_SettingsDefinitions_Frame/Controls.lua:36: in function <...e/AddOns/Blizzard_SettingsDefinitions_Frame/Controls.lua:35>
+	[C]: in function 'securecallfunction'
+	.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:28: in function <.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:26>
+	(tail call): ?
+	...e/AddOns/Blizzard_SettingsDefinitions_Frame/Controls.lua:220: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function 'SetAttribute'
+[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua]:85: in function <[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua]:84>
+=(tail call): ?
+[Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Controls.lua]:36: in function <[Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Controls.lua]:35>
+=[C]:: in function 'securecallfunction'
+[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua]:28: in function <[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua]:26>
+=(tail call): ?
+[Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Controls.lua]:220: in main chunk
+
+Lua error: @Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Controls.lua: bad argument #1 to 'unpack' (table expected)
+stack traceback:
+	(string):1: in main chunk
+Lua error: Lua Error: @Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Controls.lua: bad argument #1 to 'unpack' (table expected)
+stack traceback:
+	(string):1: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: ...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: attempt to index field 'categoryLayouts' (a nil value)
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: in function 'AssignLayoutToCategory'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:179: in function 'handler'
+	(string):3: in main chunk
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function 'SetAttribute'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:85: in function <...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:84>
+	(tail call): ?
+	.../AddOns/Blizzard_SettingsDefinitions_Frame/Interface.lua:9: in function <.../AddOns/Blizzard_SettingsDefinitions_Frame/Interface.lua:8>
+	[C]: in function 'securecallfunction'
+	.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:28: in function <.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:26>
+	(tail call): ?
+	.../AddOns/Blizzard_SettingsDefinitions_Frame/Interface.lua:160: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function 'SetAttribute'
+[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua]:85: in function <[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua]:84>
+=(tail call): ?
+[Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Interface.lua]:9: in function <[Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Interface.lua]:8>
+=[C]:: in function 'securecallfunction'
+[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua]:28: in function <[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua]:26>
+=(tail call): ?
+[Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Interface.lua]:160: in main chunk
+
+Lua error: @Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Interface.lua: bad argument #1 to 'unpack' (table expected)
+stack traceback:
+	(string):1: in main chunk
+Lua error: Lua Error: @Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Interface.lua: bad argument #1 to 'unpack' (table expected)
+stack traceback:
+	(string):1: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: ...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: attempt to index field 'categoryLayouts' (a nil value)
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: in function 'AssignLayoutToCategory'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:179: in function 'handler'
+	(string):3: in main chunk
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function 'SetAttribute'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:85: in function <...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:84>
+	(tail call): ?
+	...ace/AddOns/Blizzard_SettingsDefinitions_Frame/Combat.lua:9: in function <...ace/AddOns/Blizzard_SettingsDefinitions_Frame/Combat.lua:8>
+	[C]: in function 'securecallfunction'
+	.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:28: in function <.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:26>
+	(tail call): ?
+	...ace/AddOns/Blizzard_SettingsDefinitions_Frame/Combat.lua:203: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function 'SetAttribute'
+[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua]:85: in function <[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua]:84>
+=(tail call): ?
+[Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Combat.lua]:9: in function <[Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Combat.lua]:8>
+=[C]:: in function 'securecallfunction'
+[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua]:28: in function <[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua]:26>
+=(tail call): ?
+[Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Combat.lua]:203: in main chunk
+
+Lua error: @Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Combat.lua: bad argument #1 to 'unpack' (table expected)
+stack traceback:
+	(string):1: in main chunk
+Lua error: Lua Error: @Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Combat.lua: bad argument #1 to 'unpack' (table expected)
+stack traceback:
+	(string):1: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: ...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: attempt to index field 'categoryLayouts' (a nil value)
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: in function 'AssignLayoutToCategory'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:179: in function 'handler'
+	(string):3: in main chunk
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function 'SetAttribute'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:85: in function <...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:84>
+	(tail call): ?
+	...AddOns/Blizzard_SettingsDefinitions_Frame/ActionBars.lua:81: in function <...AddOns/Blizzard_SettingsDefinitions_Frame/ActionBars.lua:80>
+	[C]: in function 'securecallfunction'
+	.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:28: in function <.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:26>
+	(tail call): ?
+	...AddOns/Blizzard_SettingsDefinitions_Frame/ActionBars.lua:119: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function 'SetAttribute'
+[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua]:85: in function <[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua]:84>
+=(tail call): ?
+[Interface/AddOns/Blizzard_SettingsDefinitions_Frame/ActionBars.lua]:81: in function <[Interface/AddOns/Blizzard_SettingsDefinitions_Frame/ActionBars.lua]:80>
+=[C]:: in function 'securecallfunction'
+[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua]:28: in function <[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua]:26>
+=(tail call): ?
+[Interface/AddOns/Blizzard_SettingsDefinitions_Frame/ActionBars.lua]:119: in main chunk
+
+Lua error: @Interface/AddOns/Blizzard_SettingsDefinitions_Frame/ActionBars.lua: bad argument #1 to 'unpack' (table expected)
+stack traceback:
+	(string):1: in main chunk
+Lua error: Lua Error: @Interface/AddOns/Blizzard_SettingsDefinitions_Frame/ActionBars.lua: bad argument #1 to 'unpack' (table expected)
+stack traceback:
+	(string):1: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: ...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: attempt to index field 'categoryLayouts' (a nil value)
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: in function 'AssignLayoutToCategory'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:179: in function 'handler'
+	(string):3: in main chunk
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function 'SetAttribute'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:85: in function <...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:84>
+	(tail call): ?
+	...ace/AddOns/Blizzard_SettingsDefinitions_Frame/Social.lua:2: in function <...ace/AddOns/Blizzard_SettingsDefinitions_Frame/Social.lua:1>
+	[C]: in function 'securecallfunction'
+	.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:28: in function <.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:26>
+	(tail call): ?
+	...ace/AddOns/Blizzard_SettingsDefinitions_Frame/Social.lua:277: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function 'SetAttribute'
+[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua]:85: in function <[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua]:84>
+=(tail call): ?
+[Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Social.lua]:2: in function <[Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Social.lua]:1>
+=[C]:: in function 'securecallfunction'
+[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua]:28: in function <[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua]:26>
+=(tail call): ?
+[Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Social.lua]:277: in main chunk
+
+Lua error: @Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Social.lua: bad argument #1 to 'unpack' (table expected)
+stack traceback:
+	(string):1: in main chunk
+Lua error: Lua Error: @Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Social.lua: bad argument #1 to 'unpack' (table expected)
+stack traceback:
+	(string):1: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: ...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: attempt to index field 'categoryLayouts' (a nil value)
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: in function 'AssignLayoutToCategory'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:179: in function 'handler'
+	(string):3: in main chunk
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function 'SetAttribute'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:85: in function <...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:84>
+	(tail call): ?
+	...ddOns/Blizzard_SettingsDefinitions_Frame/Keybindings.lua:247: in function <...ddOns/Blizzard_SettingsDefinitions_Frame/Keybindings.lua:246>
+	[C]: in function 'securecallfunction'
+	.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:28: in function <.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:26>
+	(tail call): ?
+	...ddOns/Blizzard_SettingsDefinitions_Frame/Keybindings.lua:297: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function 'SetAttribute'
+[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua]:85: in function <[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua]:84>
+=(tail call): ?
+[Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Keybindings.lua]:247: in function <[Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Keybindings.lua]:246>
+=[C]:: in function 'securecallfunction'
+[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua]:28: in function <[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua]:26>
+=(tail call): ?
+[Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Keybindings.lua]:297: in main chunk
+
+Lua error: @Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Keybindings.lua: bad argument #1 to 'unpack' (table expected)
+stack traceback:
+	(string):1: in main chunk
+Lua error: Lua Error: @Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Keybindings.lua: bad argument #1 to 'unpack' (table expected)
+stack traceback:
+	(string):1: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: ...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: attempt to index field 'categoryLayouts' (a nil value)
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: in function 'AssignLayoutToCategory'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:179: in function 'handler'
+	(string):3: in main chunk
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function 'SetAttribute'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:85: in function <...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:84>
+	(tail call): ?
+	...Ons/Blizzard_SettingsDefinitions_Frame/Accessibility.lua:41: in function <...Ons/Blizzard_SettingsDefinitions_Frame/Accessibility.lua:40>
+	[C]: in function 'securecallfunction'
+	.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:28: in function <.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:26>
+	(tail call): ?
+	...Ons/Blizzard_SettingsDefinitions_Frame/Accessibility.lua:232: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function 'SetAttribute'
+[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua]:85: in function <[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua]:84>
+=(tail call): ?
+[Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Accessibility.lua]:41: in function <[Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Accessibility.lua]:40>
+=[C]:: in function 'securecallfunction'
+[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua]:28: in function <[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua]:26>
+=(tail call): ?
+[Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Accessibility.lua]:232: in main chunk
+
+Lua error: @Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Accessibility.lua: bad argument #1 to 'unpack' (table expected)
+stack traceback:
+	(string):1: in main chunk
+Lua error: Lua Error: @Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Accessibility.lua: bad argument #1 to 'unpack' (table expected)
+stack traceback:
+	(string):1: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: ...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: attempt to index field 'categoryLayouts' (a nil value)
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: in function 'AssignLayoutToCategory'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:179: in function 'handler'
+	(string):3: in main chunk
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function 'SetAttribute'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:85: in function <...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:84>
+	(tail call): ?
+	...AddOns/Blizzard_SettingsDefinitions_Frame/Colorblind.lua:4: in function <...AddOns/Blizzard_SettingsDefinitions_Frame/Colorblind.lua:3>
+	[C]: in function 'securecallfunction'
+	.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:28: in function <.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:26>
+	(tail call): ?
+	...AddOns/Blizzard_SettingsDefinitions_Frame/Colorblind.lua:45: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function 'SetAttribute'
+[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua]:85: in function <[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua]:84>
+=(tail call): ?
+[Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Colorblind.lua]:4: in function <[Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Colorblind.lua]:3>
+=[C]:: in function 'securecallfunction'
+[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua]:28: in function <[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua]:26>
+=(tail call): ?
+[Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Colorblind.lua]:45: in main chunk
+
+Lua error: @Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Colorblind.lua: bad argument #1 to 'unpack' (table expected)
+stack traceback:
+	(string):1: in main chunk
+Lua error: Lua Error: @Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Colorblind.lua: bad argument #1 to 'unpack' (table expected)
+stack traceback:
+	(string):1: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: ...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: attempt to index field 'categoryLayouts' (a nil value)
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: in function 'AssignLayoutToCategory'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:179: in function 'handler'
+	(string):3: in main chunk
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function 'SetAttribute'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:85: in function <...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:84>
+	(tail call): ?
+	...ddOns/Blizzard_SettingsDefinitions_Frame/AudioAssist.lua:50: in function <...ddOns/Blizzard_SettingsDefinitions_Frame/AudioAssist.lua:49>
+	[C]: in function 'securecallfunction'
+	.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:28: in function <.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:26>
+	(tail call): ?
+	...ddOns/Blizzard_SettingsDefinitions_Frame/AudioAssist.lua:1127: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function 'SetAttribute'
+[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua]:85: in function <[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua]:84>
+=(tail call): ?
+[Interface/AddOns/Blizzard_SettingsDefinitions_Frame/AudioAssist.lua]:50: in function <[Interface/AddOns/Blizzard_SettingsDefinitions_Frame/AudioAssist.lua]:49>
+=[C]:: in function 'securecallfunction'
+[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua]:28: in function <[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua]:26>
+=(tail call): ?
+[Interface/AddOns/Blizzard_SettingsDefinitions_Frame/AudioAssist.lua]:1127: in main chunk
+
+Lua error: @Interface/AddOns/Blizzard_SettingsDefinitions_Frame/AudioAssist.lua: bad argument #1 to 'unpack' (table expected)
+stack traceback:
+	(string):1: in main chunk
+Lua error: Lua Error: @Interface/AddOns/Blizzard_SettingsDefinitions_Frame/AudioAssist.lua: bad argument #1 to 'unpack' (table expected)
+stack traceback:
+	(string):1: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: ...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: attempt to index field 'categoryLayouts' (a nil value)
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: in function 'AssignLayoutToCategory'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:179: in function 'handler'
+	(string):3: in main chunk
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function 'SetAttribute'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:85: in function <...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:84>
+	(tail call): ?
+	.../AddOns/Blizzard_SettingsDefinitions_Frame/Subtitles.lua:82: in function <.../AddOns/Blizzard_SettingsDefinitions_Frame/Subtitles.lua:81>
+	[C]: in function 'securecallfunction'
+	.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:28: in function <.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:26>
+	(tail call): ?
+	.../AddOns/Blizzard_SettingsDefinitions_Frame/Subtitles.lua:179: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function 'SetAttribute'
+[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua]:85: in function <[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua]:84>
+=(tail call): ?
+[Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Subtitles.lua]:82: in function <[Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Subtitles.lua]:81>
+=[C]:: in function 'securecallfunction'
+[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua]:28: in function <[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua]:26>
+=(tail call): ?
+[Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Subtitles.lua]:179: in main chunk
+
+Lua error: @Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Subtitles.lua: bad argument #1 to 'unpack' (table expected)
+stack traceback:
+	(string):1: in main chunk
+Lua error: Lua Error: @Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Subtitles.lua: bad argument #1 to 'unpack' (table expected)
+stack traceback:
+	(string):1: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: Lua Error: ...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: attempt to index field 'categoryLayouts' (a nil value)
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: in function 'AssignLayoutToCategory'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:179: in function 'handler'
+	(string):3: in main chunk
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function 'SetAttribute'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:85: in function <...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:84>
+	(tail call): ?
+	...AddOns/Blizzard_SettingsDefinitions_Frame/Nameplates.lua:320: in function <...AddOns/Blizzard_SettingsDefinitions_Frame/Nameplates.lua:319>
+	[C]: in function 'securecallfunction'
+	.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:28: in function <.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:26>
+	(tail call): ?
+	...AddOns/Blizzard_SettingsDefinitions_Frame/Nameplates.lua:796: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function 'SetAttribute'
+[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua]:85: in function <[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua]:84>
+=(tail call): ?
+[Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Nameplates.lua]:320: in function <[Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Nameplates.lua]:319>
+=[C]:: in function 'securecallfunction'
+[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua]:28: in function <[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua]:26>
+=(tail call): ?
+[Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Nameplates.lua]:796: in main chunk
+
+Lua error: @Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Nameplates.lua: bad argument #1 to 'unpack' (table expected)
+stack traceback:
+	(string):1: in main chunk
+Lua error: Lua Error: @Interface/AddOns/Blizzard_SettingsDefinitions_Frame/Nameplates.lua: bad argument #1 to 'unpack' (table expected)
+stack traceback:
+	(string):1: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+
+thread 'startup_warnings::late::test_blizzard_framexml_load_registers_boss_banner_cvar_without_warning' (113180) panicked at /home/osso/.worktrees/wow-ui-sim-p548-page/tests/startup_warnings/late.rs:232:14:
+BossBanner cvar should be readable after Blizzard_FrameXML load: Other("expected string result, got nil")
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+Lua error suppressed 1 additional times: @Interface/AddOns/Blizzard_FrameXMLUtil/ArenaUtil.lua: Interface/AddOns/Blizzard_FrameXMLUtil/ArenaUtil.lua:22: attempt to call method 'RegisterFrameEvent' (a nil value)
+stack traceback:
+	(string):1: in main chunk
+Lua error suppressed 1 additional times: @Interface/AddOns/Blizzard_FrameXMLUtil/AuraUtil.lua: Interface/AddOns/Blizzard_FrameXMLUtil/AuraUtil.lua:253: attempt to call method 'RegisterFrameEvent' (a nil value)
+stack traceback:
+	(string):1: in main chunk
+Lua error suppressed 1 additional times: @Interface/AddOns/Blizzard_SharedXML/Shared/Scroll/ScrollUtil.lua: ...e/AddOns/Blizzard_SharedXML/Shared/Scroll/ScrollUtil.lua:358: attempt to index global 'FlagsUtil' (a nil value)
+stack traceback:
+	(string):1: in main chunk
+Lua error suppressed 1 additional times: @Interface/AddOns/Blizzard_SharedXML/Shared/Scroll/ScrollBox.lua: ...ce/AddOns/Blizzard_SharedXML/Shared/Scroll/ScrollBox.lua:13: attempt to index global 'MathUtil' (a nil value)
+stack traceback:
+	(string):1: in main chunk
+Lua error suppressed 14 additional times: ...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: attempt to index field 'categoryLayouts' (a nil value)
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: in function 'AssignLayoutToCategory'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:179: in function 'handler'
+	(string):3: in main chunk
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function 'SetAttribute'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:85: in function <...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:84>
+	(tail call): ?
+	.../AddOns/Blizzard_SettingsDefinitions_Shared/Graphics.lua:503: in function <.../AddOns/Blizzard_SettingsDefinitions_Shared/Graphics.lua:495>
+	[C]: in function 'securecallfunction'
+	.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:28: in function <.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:26>
+	(tail call): ?
+	.../AddOns/Blizzard_SettingsDefinitions_Shared/Graphics.lua:1399: in main chunk
+Lua error suppressed 14 additional times: Lua Error: ...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: attempt to index field 'categoryLayouts' (a nil value)
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	...dOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:725: in function 'AssignLayoutToCategory'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:179: in function 'handler'
+	(string):3: in main chunk
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function 'SetAttribute'
+	...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:85: in function <...ns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua:84>
+	(tail call): ?
+	.../AddOns/Blizzard_SettingsDefinitions_Shared/Graphics.lua:503: in function <.../AddOns/Blizzard_SettingsDefinitions_Shared/Graphics.lua:495>
+	[C]: in function 'securecallfunction'
+	.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:28: in function <.../Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:26>
+	(tail call): ?
+	.../AddOns/Blizzard_SettingsDefinitions_Shared/Graphics.lua:1399: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function 'SetAttribute'
+[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua]:85: in function <[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsInbound.lua]:84>
+=(tail call): ?
+[Interface/AddOns/Blizzard_SettingsDefinitions_Shared/Graphics.lua]:503: in function <[Interface/AddOns/Blizzard_SettingsDefinitions_Shared/Graphics.lua]:495>
+=[C]:: in function 'securecallfunction'
+[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua]:28: in function <[Interface/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua]:26>
+=(tail call): ?
+[Interface/AddOns/Blizzard_SettingsDefinitions_Shared/Graphics.lua]:1399: in main chunk
+
+
+failures:
+    startup_warnings::late::test_blizzard_framexml_load_registers_boss_banner_cvar_without_warning
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8175 filtered out; finished in 2.32s
+
+
+thread 'startup_warnings::late::test_blizzard_framexml_load_registers_boss_banner_cvar_without_warning' (113173) panicked at /home/osso/.worktrees/wow-ui-sim-p548-page/tests/common/timeout_reexec.rs:181:9:
+timeout child for `startup_warnings::late::test_blizzard_framexml_load_registers_boss_banner_cvar_without_warning` failed (exit code 101)
+
+
+failures:
+    blizzard_auth_challenge_ui_lockdown::auth_challenge_ui_full_lockdown_marks_tainted_mutation_attempts
+    blizzard_ui_blizzard_accessibilitytemplates::behavior_text_size_manager::init_registers_user_font_scale_cvar_callback
+    blizzard_ui_blizzard_arrow_callout_frame::behavior_acknowledged_callouts_persist_across_load::acknowledged_callouts_persist_through_cvar_across_fresh_load
+    secret_string_formatting::inferred_tainted_direct_formatting_preserves_secrecy_and_stack_taint
+    secret_string_formatting::inferred_tainted_positional_formatting_preserves_secrecy_and_stack_taint
+    secure_handler_fallback::execute_callmethod_propagates_tainted_args_to_insecure_method
+    startup_warnings::late::test_blizzard_framexml_load_registers_boss_banner_cvar_without_warning
+
+test result: FAILED. 61 passed; 7 failed; 0 ignored; 0 measured; 8108 filtered out; finished in 5.61s
+
+error: test failed, to rerun pass `--test integration`

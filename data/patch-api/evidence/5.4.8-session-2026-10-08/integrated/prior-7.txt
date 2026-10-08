@@ -1,0 +1,27 @@
+{
+  "source": {
+    "inventory": 4,
+    "extract": 14,
+    "statuses": {
+      "audit-pending": 9,
+      "bounded-coverage": 3,
+      "metadata-only": 6
+    },
+    "publication_gaps": 1
+  },
+  "preservation": {
+    "preserved_inputs": 249,
+    "modes": 105,
+    "registers": 49,
+    "reproduced_extracts": 46,
+    "inherited_extract_failures": [
+      "12.0.5",
+      "12.0.7",
+      "12.1.0"
+    ]
+  },
+  "verification": {
+    "sweeps": 49,
+    "prior_validators": 30
+  }
+}

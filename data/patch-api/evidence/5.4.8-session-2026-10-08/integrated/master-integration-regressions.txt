@@ -1,0 +1,1547 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.39s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/master-ref/debug/deps/integration-1db16289b0998b2a)
+
+running 1081 tests
+test action_bar_drag::action_button_1_texture_path_resolves_to_icon_fdid ... ok
+test action_bar_drag::action_button_drag_round_trip_keeps_spell_visible ... ok
+test action_bar_drag::pickup_action_accepts_ignore_removal_arg_and_place_restores_slot ... ok
+test action_bar::test_status_tracking_xp_and_reputation_bars_layout_locked ... ok
+test action_bar::test_main_action_bar_visible_after_startup ... ok
+test action_bar::test_enter_exit_edit_mode_core_steps ... ok
+test action_bar::test_main_action_bar_end_caps_visible_after_startup ... ok
+test action_bar::test_right_action_bars_hidden_by_default ... ok
+test action_bar::test_bag_bar_layout_locked ... ok
+test action_bar::test_main_action_bar_size ... ok
+test action_bar::test_action_buttons_visible_after_startup ... ok
+test action_bar::test_action_buttons_have_showgrid_attribute ... ok
+test action_bar::test_action_button_size ... ok
+test action_bar_membership::duplicate_membership_survives_one_removal_then_disappears_after_last ... ok
+test action_bar_membership::effective_direct_spell_assignment_matches ... ok
+test action_bar_membership::full_link_is_only_an_explicit_registry_alias_not_embedded_id_grammar ... ok
+test action_bar_membership::membership_queries_leave_existing_inputs_unchanged ... ok
+test action_bar_membership::registered_numeric_key_overrides_identity_and_string_requires_registry ... ok
+test action_bar_membership::name_registry_replace_and_remove_are_live ... ok
+test action_bar_membership::registered_lowercase_name_resolves_case_normalized_public_input ... ok
+test action_bar_membership::macro_and_outfit_overrides_exclude_direct_spell_until_removed ... ok
+test action_bar_membership::slot_zero_alone_does_not_create_effective_membership ... ok
+test action_bar_membership::unassigned_spell_and_empty_bar_miss ... ok
+test action_bar_membership::membership_and_alias_mutations_are_environment_local ... ok
+test action_cooldown_output_restriction::secure_and_tainted_public_callers_preserve_context_and_field_observation ... ok
+test action_cooldown_output_restriction::tainted_arithmetic_denial_keeps_roots_context_and_secure_recovery ... ok
+test action_cooldown_output_restriction::explicit_flag_not_combat_or_stat_policy_controls_output ... ok
+test action_count_outputs::all_six_secret_kinds_deny_tainted_slot_before_known_or_missing_lookup ... ok
+test action_cooldown_output_restriction::tainted_table_copy_preserves_actual_wrapper_identity ... ok
+test action_count_outputs::restricted_tainted_public_callers_observe_metadata_not_payloads ... ok
+test action_count_outputs::public_tainted_calls_preserve_exact_scalars_and_trust ... ok
+test action_count_outputs::secure_secret_numeric_slot_threshold_and_string_replacement_are_accepted ... ok
+test action_count_outputs::secure_authenticated_wrong_types_report_argument_positions ... ok
+test action_count_outputs::tainted_math_concatenation_and_scalar_observation_deny_without_private_leaks ... ok
+test action_loss_control_cooldown_info::explicit_cooldown_flag_not_combat_or_stat_policy_controls_secrecy ... ok
+test action_loss_control_cooldown_info::secure_authentic_secret_slots_select_both_concrete_records ... ok
+test action_loss_control_cooldown_info::tainted_copy_arithmetic_denial_and_recovery_preserve_real_wrapper_identity ... ok
+test action_loss_control_cooldown_info::secure_wrong_slot_types_have_contextual_errors_and_leave_state_readable ... ok
+test action_loss_control_cooldown_info::secure_secret_numeric_domain_is_validated_after_authentication ... ok
+test action_loss_control_cooldown_info::tainted_secret_slots_are_denied_before_known_unknown_or_missing_lookup ... ok
+test addon_nil_symbol_report::secure_publication_resolves_only_secure_same_addon_accesses ... ok
+test action_spell_slot_identifiers::ordinary_public_calls_preserve_secure_and_tainted_contexts ... ok
+test admin_actionbar_api::test_clear_action_bars_empties_all_slots ... ok
+test admin_combat_api::test_set_casting_icon_path_in_third_return ... ok
+test admin_combat_api::test_set_casting_shows_spell_name ... ok
+test action_loss_control_cooldown_info::tainted_public_slot_is_allowed_and_preserves_context_and_public_flags ... ok
+test admin_combat_api::test_set_casting_spell_id_in_ninth_return ... ok
+test admin_combat_api::test_set_casting_times_in_milliseconds ... ok
+test admin_combat_api::test_set_gcd_shows_on_spell_cooldown ... ok
+test admin_combat_api::test_set_gcd_is_enabled ... ok
+test admin_combat_api::test_set_in_combat_false_clears_unit_affecting_combat ... ok
+test admin_combat_api::test_set_in_combat_false ... ok
+test admin_combat_api::test_set_in_combat_true ... ok
+test admin_combat_api::test_set_in_combat_unit_affecting_combat ... ok
+test admin_combat_api::test_set_resting_true ... ok
+test admin_combat_api::test_set_resting_false ... ok
+test admin_combat_api::test_set_spell_cooldown_different_spells_independent ... ok
+test admin_combat_api::test_set_spell_cooldown_duration ... ok
+test admin_combat_api::test_set_spell_cooldown_mod_rate_is_one ... ok
+test admin_pvp_guild_api::test_store_secure_reference_does_not_error ... ok
+test admin_combat_api::test_stop_casting_without_cast_is_noop ... ok
+test admin_combat_api::test_stop_casting_clears_info ... ok
+test ambiguate_context::addon_public_none_retains_fullname_without_changing_caller_taint ... ok
+test ambiguate_context::addon_public_short_transforms_without_changing_caller_taint ... ok
+test ambiguate_context::secure_num_context_rejects_before_nil_fullname ... ok
+test ambiguate_context::secure_bool_context_rejects_before_nil_fullname ... ok
+test ambiguate_context::secure_bool_context_rejects_before_table_fullname ... ok
+test ambiguate_context::secure_bool_context_rejects_with_valid_fullname ... ok
+test ambiguate_context::secure_num_context_rejects_before_table_fullname ... ok
+test ambiguate_context::secure_num_context_rejects_with_valid_fullname ... ok
+test aura_application_display_count::neversecret_thresholds_reject_each_and_mixed_even_for_secure_unknown_queries ... ok
+test ambiguate_context::secure_str_context_rejects_before_nil_fullname ... ok
+test ambiguate_context::secure_str_context_rejects_before_table_fullname ... ok
+test ambiguate_context::secure_str_context_rejects_with_valid_fullname ... ok
+test aura_application_display_count::rooted_secret_gc_identity_survives_secure_tainted_public_secure_sequence ... ok
+test aura_application_display_count::tainted_caller_denies_each_secret_before_lookup_and_preserves_public_recovery ... ok
+test aura_application_display_count::untainted_caller_accepts_authentic_secret_unit_and_id_each_and_mixed ... ok
+test action_bar::test_action_bar_env_can_bootstrap_twice_in_same_process ... ok
+test aura_container_util::aura_option_defaults_are_available_in_public_and_secure_environments ... ok
+test aura_duration_object::tainted_query_denies_each_secret_before_validation_or_lookup ... ok
+test aura_duration_object::untainted_query_accepts_each_authentic_secret_argument_and_combination ... ok
+test aura_expiration_time::tainted_query_denies_each_secret_even_before_unknown_unit_lookup ... ok
+test aura_expiration_time::untainted_query_accepts_each_authentic_secret_argument_and_combination ... ok
+test aura_instance_ids::aura_instance_ids_sound_trigger_enum_exists_before_secure_copy ... ok
+test aura_instance_ids::aura_instance_ids_public_and_secure_queries_follow_admin_aura_lifecycle ... ok
+test aura_dispel_color_arguments::secure_caller_accepts_each_and_mixed_authentic_secret_arguments ... ok
+test aura_refresh_duration::actual_secret_arguments_are_rejected_without_declassification_or_taint_changes ... ok
+test aura_spell_classification_identifiers::actual_secret_values_reject_after_gc_with_identity_taint_and_public_recovery ... ok
+test aura_spell_classification_identifiers::public_queries_allow_tainted_callers_without_changing_taint ... ok
+test action_bar_drag::pickup_action_updates_action_button_icon_immediately ... ok
+test blizzard_combat_audio_alerts_loads::blizzard_combat_audio_alerts_appears_in_game_discovery ... ok
+test blizzard_combat_log_base_loads::blizzard_combat_log_base_toc_is_load_on_demand ... ok
+test blizzard_combat_log_loads::blizzard_combat_log_is_load_on_demand_startup_publisher ... ok
+test blizzard_combat_log_base_loads::blizzard_combat_log_base_appears_in_game_discovery_via_dependency_pull ... ok
+test blizzard_combat_log_processor_loads::blizzard_combat_log_processor_toc_declares_secure_environment ... ok
+test blizzard_combat_log_processor_loads::blizzard_combat_log_processor_appears_in_game_discovery ... ok
+test blizzard_combat_text_loads::blizzard_combat_text_toc_is_load_on_demand ... ok
+test blizzard_combat_text_loads::blizzard_combat_text_is_not_in_game_auto_discovery ... ok
+test blizzard_communities_secure_loads::blizzard_communities_secure_toc_declares_secure_environment_and_required_deps ... ok
+test blizzard_damage_meter_loads::blizzard_damage_meter_toc_declares_edit_mode_dependency ... ok
+test blizzard_communities_secure_loads::blizzard_communities_secure_appears_in_game_discovery ... ok
+test blizzard_deprecated_action_bar_loads::blizzard_deprecated_action_bar_has_no_xml_or_other_assets ... ok
+test blizzard_deprecated_action_bar_loads::blizzard_deprecated_action_bar_toc_is_minimal_with_no_flags_or_deps ... ok
+test aura_spell_identifier::actual_secret_identifier_rejection_survives_gc_and_preserves_caller_taint ... ok
+test blizzard_deprecated_chat_info_loads::blizzard_deprecated_chat_info_has_no_xml_only_two_lua_files ... ok
+test blizzard_deprecated_chat_info_loads::blizzard_deprecated_chat_info_toc_is_minimal_with_no_flags_or_deps ... ok
+test blizzard_deprecated_action_bar_loads::blizzard_deprecated_action_bar_appears_in_game_discovery_only ... ok
+test blizzard_deprecated_combat_log_loads::blizzard_deprecated_combat_log_has_no_xml_or_other_assets ... ok
+test blizzard_deprecated_combat_log_loads::blizzard_deprecated_combat_log_toc_has_combat_log_base_dependency ... ok
+test blizzard_deprecated_chat_info_loads::blizzard_deprecated_chat_info_appears_in_game_discovery_only ... ok
+test blizzard_edit_mode_loads::blizzard_edit_mode_directory_ships_six_subdirs_for_game_variants ... ok
+test blizzard_deprecated_combat_log_loads::blizzard_deprecated_combat_log_appears_in_game_discovery_only ... ok
+test blizzard_edit_mode_loads::blizzard_edit_mode_toc_declares_five_dependencies ... ok
+test battle_net_api::battle_net_high_res_texture_state_tracks_cvar_and_install_action ... ok
+test blizzard_encounter_timeline_loads::blizzard_encounter_timeline_toc_declares_standard_game_type_with_edit_mode_dep ... ok
+test blizzard_edit_mode_loads::blizzard_edit_mode_loads_after_five_declared_dependencies ... ok
+test blizzard_encounter_warnings_loads::blizzard_encounter_warnings_toc_declares_standard_game_type_with_edit_mode_dep ... ok
+test blizzard_edit_mode_loads::blizzard_edit_mode_appears_in_game_discovery_only ... ok
+test blizzard_framerate_frame_loads::blizzard_framerate_frame_toc_is_eager_with_action_bar_dep_and_allow_load_game_only ... ok
+test blizzard_encounter_warnings_loads::blizzard_encounter_warnings_loads_after_edit_mode_dependency ... ok
+test blizzard_encounter_timeline_loads::blizzard_encounter_timeline_loads_after_edit_mode_dependency ... ok
+test blizzard_gm_chat_ui_loads::blizzard_gm_chat_ui_directory_ships_four_files_plus_toc ... ok
+test blizzard_gm_chat_ui_loads::blizzard_gm_chat_ui_find_toc_resolves_bare_variant ... ok
+test blizzard_gm_chat_ui_loads::blizzard_gm_chat_ui_toc_declares_lod_with_single_status_ui_dep ... ok
+test blizzard_gm_chat_ui_loads::blizzard_gm_chat_ui_toc_declares_no_allow_load_directive ... ok
+test blizzard_gm_chat_ui_loads::blizzard_gm_chat_ui_toc_lists_bootstrap_lua_xml_and_localization ... ok
+test blizzard_housing_house_settings_loads::blizzard_housing_house_settings_directory_holds_four_entries ... ok
+test aura_dispel_color_arguments::tainted_caller_denies_each_and_mixed_secret_arguments_before_missing_lookup ... ok
+test blizzard_housing_house_settings_loads::blizzard_housing_house_settings_find_toc_resolves_bare_variant ... ok
+test blizzard_housing_house_settings_loads::blizzard_housing_house_settings_toc_declares_lod_with_one_dependency ... ok
+test blizzard_housing_house_settings_loads::blizzard_housing_house_settings_toc_is_retail_only_and_omits_allow_load ... ok
+test blizzard_housing_house_settings_loads::blizzard_housing_house_settings_toc_lists_three_files_in_order ... ok
+test blizzard_gm_chat_ui_loads::blizzard_gm_chat_ui_excluded_from_all_screen_auto_discovery_due_to_lod ... ok
+test blizzard_map_canvas_secure_util_loads::blizzard_map_canvas_secure_util_directory_holds_two_entries ... ok
+test blizzard_map_canvas_secure_util_loads::blizzard_map_canvas_secure_util_find_toc_resolves_bare_variant ... ok
+test blizzard_map_canvas_secure_util_loads::blizzard_map_canvas_secure_util_toc_declares_load_first_with_no_deps ... ok
+test blizzard_map_canvas_secure_util_loads::blizzard_map_canvas_secure_util_toc_lists_single_lua_file ... ok
+test blizzard_map_canvas_secure_util_loads::blizzard_map_canvas_secure_util_toc_routes_to_game_screen_only ... ok
+test blizzard_housing_house_settings_loads::blizzard_housing_house_settings_excluded_from_all_screen_auto_discovery ... ok
+test blizzard_map_lane::map_canvas_secure_util_uses_load_first_so_it_runs_before_mapcanvas_mixin_code ... ok
+test blizzard_map_lane::map_canvas_secure_util_emerges_before_other_lane_addons_in_eager_order ... ok
+test blizzard_map_lane::world_map_dependency_closure_pulls_in_canvas_secure_util_and_data_providers ... ok
+test blizzard_mirror_timer_loads::blizzard_mirror_timer_toc_declares_default_state_with_edit_mode_dep ... ok
+test blizzard_map_canvas_secure_util_loads::blizzard_map_canvas_secure_util_auto_discovered_on_game_only ... ok
+test blizzard_mirror_timer_loads::blizzard_mirror_timer_edit_mode_dep_appears_in_game_discovery ... ok
+test blizzard_nameplates_loads::blizzard_nameplates_appears_in_discover_all_blizzard_addons ... ok
+test blizzard_nameplates_loads::blizzard_nameplates_find_toc_resolves_bare_variant ... ok
+test blizzard_nameplates_loads::blizzard_nameplates_toc_filters_wowhack_files_during_retail_parse ... ok
+test blizzard_nameplates_loads::blizzard_nameplates_toc_declares_eager_load_with_two_required_deps ... ok
+test blizzard_nameplates_loads::blizzard_nameplates_toc_omits_load_on_demand_in_raw_bytes ... ok
+test blizzard_override_action_bar_loads::blizzard_override_action_bar_find_toc_resolves_bare_variant ... ok
+test blizzard_override_action_bar_loads::blizzard_override_action_bar_toc_declares_eager_game_only_with_four_dependencies ... ok
+test blizzard_override_action_bar_loads::blizzard_override_action_bar_toc_declares_metadata_in_raw_bytes ... ok
+test blizzard_override_action_bar_loads::blizzard_override_action_bar_toc_lists_two_files_lua_first_xml_after ... ok
+test blizzard_personal_resource_display_loads::blizzard_personal_resource_display_toc_declares_eager_mainline_with_edit_mode_dep ... ok
+test blizzard_ping_ui_loads::blizzard_ping_ui_toc_declares_eager_secure_mainline_only_with_sharedxml_dep ... ok
+test blizzard_nameplates_loads::blizzard_nameplates_auto_discovers_on_game_only ... ok
+test blizzard_private_auras_ui_loads::blizzard_private_auras_ui_toc_declares_secure_game_only_addon ... ok
+test blizzard_queue_status_frame_loads::blizzard_queue_status_frame_toc_declares_action_bar_and_lfg_util_dependencies ... ok
+test blizzard_override_action_bar_loads::blizzard_override_action_bar_appears_in_game_screen_eager_discovery_only ... ok
+test blizzard_quick_keybind_loads::blizzard_quick_keybind_appears_in_full_addon_inventory ... ok
+test blizzard_quick_keybind_loads::blizzard_quick_keybind_find_toc_resolves_bare_variant ... ok
+test blizzard_quick_keybind_loads::blizzard_quick_keybind_toc_declares_metadata_in_raw_bytes ... ok
+test blizzard_quick_keybind_loads::blizzard_quick_keybind_toc_declares_one_dependency ... ok
+test blizzard_quick_keybind_loads::blizzard_quick_keybind_toc_lists_one_xml_file_with_companion_lua_pulled_in ... ok
+test blizzard_quick_keybind_loads::blizzard_quick_keybind_toc_pins_eager_cross_flavor_with_default_state_enabled ... ok
+test blizzard_reforging_ui_loads::toc_declares_load_on_demand_secure_classic_only_and_no_deps ... ok
+test blizzard_restricted_addon_environment_loads::restricted_environment_lua_carries_secure_env_per_file_override ... ok
+test blizzard_script_errors_frame_loads::xml_wraps_frame_in_scoped_modifier_with_secure_env_addition ... ok
+test blizzard_quick_keybind_loads::blizzard_quick_keybind_appears_in_eager_game_discovery ... ok
+test blizzard_secure_transfer_ui_loads::find_toc_file_resolves_bare_toc ... ok
+test blizzard_secure_transfer_ui_loads::root_directory_holds_two_lua_one_xml_one_toc ... ok
+test blizzard_secure_transfer_ui_loads::toc_declares_eager_both_with_secure_env_and_required_dep_singular ... ok
+test blizzard_secure_transfer_ui_loads::toc_declares_metadata_in_raw_bytes_with_underscored_title_form ... ok
+test blizzard_secure_transfer_ui_loads::toc_lists_only_xml_with_two_lua_files_loaded_via_script_directives ... ok
+test blizzard_secure_transfer_ui_loads::xml_wraps_frames_in_scoped_modifier_with_forbidden_attribute ... ok
+test blizzard_secure_transfer_ui_loads::appears_on_every_screen_eager_discovery ... ok
+test blizzard_settings_definitions_frame_loads::find_toc_file_resolves_bare_variant ... ok
+test blizzard_settings_definitions_frame_loads::appears_only_on_game_screen_eager_discovery ... ok
+test blizzard_settings_definitions_frame_loads::root_directory_holds_nine_mainline_overrides_in_subdir ... ok
+test blizzard_settings_definitions_frame_loads::toc_body_lists_nine_mainline_overrides_then_current_main_files ... ok
+test blizzard_settings_definitions_frame_loads::toc_declares_eager_game_only_with_three_hard_deps ... ok
+test blizzard_settings_definitions_frame_loads::toc_raw_bytes_pin_metadata_with_default_state_enabled ... ok
+test blizzard_settings_definitions_shared_loads::appears_on_every_screen_eager_discovery ... ok
+test action_bar_tree::action_button1_has_icon_hotkey_and_normal_texture ... ok
+test blizzard_settings_definitions_shared_loads::family_placeholder_in_toc_body_resolves_to_mainline_subdir ... ok
+test blizzard_settings_definitions_shared_loads::root_directory_holds_eight_top_level_lua_xml_files_plus_mainline_subdir ... ok
+test blizzard_settings_definitions_shared_loads::find_toc_file_resolves_bare_toc ... ok
+test blizzard_settings_definitions_shared_loads::toc_body_first_seven_entries_are_cross_flavor_files_in_declared_order ... ok
+test blizzard_settings_definitions_shared_loads::toc_declares_eager_both_with_four_hard_deps_and_per_character_saved_vars ... ok
+test blizzard_settings_definitions_shared_loads::toc_raw_bytes_pin_load_saved_variables_first_for_pre_lua_sv_loading ... ok
+test blizzard_settings_loads::find_toc_file_resolves_bare_toc ... ok
+test blizzard_environment_cleanup_loads::blizzard_environment_cleanup_nils_out_secure_only_enum_namespaces ... ok
+test blizzard_settings_loads::lod_addon_excluded_from_eager_discovery_on_every_screen ... ok
+test blizzard_settings_loads::lua_body_is_a_single_global_flag_assignment ... ok
+test blizzard_settings_loads::root_directory_holds_only_the_toc_and_one_lua_file ... ok
+test blizzard_settings_loads::settings_addon_loaded_consumer_lives_in_settings_shared_addon ... ok
+test blizzard_settings_definitions_frame_loads::retail_12_1_housing_settings_global_strings_match_pinned_export ... ok
+test blizzard_settings_loads::toc_declares_load_on_demand_with_blizzard_author_no_deps ... ok
+test blizzard_settings_loads::toc_lacks_allow_load_so_falls_through_to_game_only ... ok
+test blizzard_settings_loads::toc_raw_bytes_pin_three_metadata_lines_with_single_lua_body ... ok
+test blizzard_settings_shared_loads::appears_on_every_screen_eager_discovery ... ok
+test blizzard_settings_shared_loads::family_placeholder_resolves_to_mainline_subdir_in_three_entries ... ok
+test blizzard_settings_shared_loads::find_toc_file_resolves_bare_variant ... ok
+test blizzard_settings_loads::explicit_load_emits_no_lua_errors_and_publishes_global_flag ... ok
+test blizzard_settings_shared_loads::toc_allows_load_on_every_screen_via_allow_load_both ... ok
+test blizzard_settings_shared_loads::toc_body_load_order_runs_definitions_framework_before_namespace_seed ... ok
+test blizzard_settings_shared_loads::toc_declares_eager_both_with_four_dep_entries ... ok
+test blizzard_settings_shared_loads::toc_entry_count_breakdown_matches_filesystem_layout ... ok
+test blizzard_settings_shared_loads::toc_raw_bytes_pin_current_dep_entries_and_allow_load_both ... ok
+test blizzard_settings_shared_loads::toc_uses_dep_entries_without_optional_dependencies ... ok
+test blizzard_simple_checkout_loads::outbound_loads_before_main_lua_so_secure_env_table_is_published_first ... ok
+test blizzard_simple_checkout_loads::toc_is_secure_environment_eager_on_both_screens ... ok
+test blizzard_social_toast_loads::toc_is_eager_with_no_secure_env_or_saved_vars ... ok
+test blizzard_spell_diminish_ui_loads::toc_is_eager_with_no_secure_env_or_saved_vars ... ok
+test blizzard_static_popup_game_loads::toc_is_eager_with_no_secure_env_or_saved_vars ... ok
+test blizzard_static_popup_glue_loads::toc_is_eager_with_no_secure_env_or_saved_vars ... ok
+test blizzard_static_popup_loads::toc_is_eager_with_no_secure_env_or_saved_vars ... ok
+test blizzard_store_ui_loads::store_ui_inbound_outbound_secure_bridge_files_exist ... ok
+test blizzard_store_ui_loads::toc_uses_secure_environment ... ok
+test blizzard_subscription_interstitial_ui_loads::toc_has_no_allow_load_or_game_type_restriction_or_secure_env ... ok
+test blizzard_settings_loads::is_addon_loaded_transitions_false_to_true_after_explicit_load ... ok
+test blizzard_settings_loads::settings_addon_loaded_global_is_nil_before_explicit_load ... ok
+test blizzard_settings_shared_loads::post_cleanup_restore_preserves_blizzard_settings_get_category ... ok
+test blizzard_glue_stubs_loads::blizzard_glue_stubs_registers_edit_mode_chat_frame_system_template_in_template_registry ... ok
+test action_bar_tree::action_button1_hotkey_shows_slot_one ... ok
+test blizzard_auth_challenge_ui_lockdown::auth_challenge_ui_full_lockdown_marks_tainted_mutation_attempts ... ok
+test blizzard_ui_blizzard_accessibilitytemplates::surface_globals::quest_text_contrast_get_background_atlas_maps_settings_to_atlases ... ok
+test blizzard_ui_blizzard_accessibilitytemplates::behavior_text_size_manager::init_registers_user_font_scale_cvar_callback ... ok
+test action_bar_tree::action_button1_normal_texture_uses_iconframe_atlas ... ok
+test blizzard_token_ui_loads::token_frame_load_ui_is_absent_and_wow_token_ui_owns_secure_token_flow ... ok
+test blizzard_ui_blizzard_actionbar::behavior_extra_action_bar::extra_action_button_show_and_icon_round_trip_through_update_events ... ok
+test blizzard_ui_blizzard_actionbar::behavior_main_bar_buttons::main_bar_button_1_reflects_action_bars_slot_one_after_actionbar_slot_changed ... ok
+test blizzard_ui_blizzard_actionbar::behavior_page_change::action_bar_page_up_advances_state_action_bar_page_and_fires_actionbar_page_changed ... ok
+test blizzard_player_spells_loads::mainline_spellbook_keybind_opens_and_closes_without_runtime_errors ... ok
+test blizzard_ui_blizzard_actionbar::behavior_quick_keybind_mode::quick_keybind_mode_shows_button_highlights_until_closed ... ok
+test blizzard_ui_blizzard_actionbar::behavior_assisted_combat_highlight::assisted_combat_next_cast_shows_matching_button_highlight ... ok
+test blizzard_ui_blizzard_actionbar::load::action_bar_every_declared_toc_dependency_is_loaded_after_harness_runs ... ok
+test action_bar_tree::main_action_bar_layout_is_locked ... ok
+test blizzard_ui_blizzard_actionbar::load::action_bar_load_emits_no_lane_specific_lua_errors ... ok
+test blizzard_ui_blizzard_actionbar::load::action_bar_load_executes_file_scope_mixin_declarations ... ok
+test blizzard_ui_blizzard_actionbar::surface_events::action_bar_action_events_frame_registers_thirty_four_spell_action_events_after_onload ... ok
+test blizzard_ui_blizzard_actionbar::behavior_attach_detach::main_action_bar_attach_and_detach_restore_parent_and_points ... ok
+test blizzard_ui_blizzard_actionbar::surface_events::action_bar_button_events_frame_registers_plan_and_source_additional_events_after_onload ... ok
+test blizzard_ui_blizzard_actionbar::surface_events::main_action_bar_registers_action_bar_page_changed_and_neutral_faction_select_result_after_onload ... ok
+test blizzard_ui_blizzard_actionbar::behavior_show_grid::multi_action_bar_show_all_grids_fans_showgrid_attribute_to_every_multibar_button ... ok
+test blizzard_ui_blizzard_actionbar::surface_events::pet_action_bar_registers_plan_and_source_additional_events_after_onload ... ok
+test blizzard_ui_blizzard_actionbar::behavior_keybind_dispatch::action_button_down_routes_through_try_use_action_button_and_populates_state_casting ... ok
+test blizzard_ui_blizzard_actionbar::surface_frames::main_action_bar_does_not_publish_plan_named_button_globals ... ok
+test blizzard_ui_blizzard_actionbar::surface_frames::main_action_bar_publishes_action_button_globals_and_button_containers ... ok
+test blizzard_azerite_essence_ui_can_activate_in_combat::blizzard_azerite_essence_ui_can_activate_essence_respects_combat_lockout ... ok
+test blizzard_ui_blizzard_actionbar::surface_globals::action_bar_plan_named_bar_helper_globals_are_functions ... ok
+test blizzard_ui_blizzard_actionbar::surface_frames::main_action_bar_publishes_expected_panel_identity ... ok
+test blizzard_ui_blizzard_actionbar::surface_globals::action_bar_plan_named_extra_bar_globals_are_functions ... ok
+test blizzard_auth_challenge_ui_secure_env::auth_challenge_ui_submit_stays_in_secure_environment ... ok
+test blizzard_ui_blizzard_actionbar::surface_globals::action_bar_plan_named_highlight_tracking_globals_are_functions ... ok
+test blizzard_ui_blizzard_actionbar::surface_globals::action_bar_plan_named_input_globals_are_functions ... ok
+test blizzard_ui_blizzard_actionbar::surface_globals::action_bar_plan_named_multibar_globals_are_functions ... ok
+test blizzard_ui_blizzard_actionbar::surface_mixins::action_bar_button_and_base_action_button_mixins_pin_plan_named_and_source_additional_methods ... ok
+test blizzard_ui_blizzard_actionbarcontroller::behavior_action_bar_busy_during_slide::action_bar_busy_during_override_slide_blocks_validation ... ok
+test blizzard_ui_blizzard_actionbar::surface_mixins::action_bar_mixin_publishes_plan_named_and_source_additional_methods ... ok
+test blizzard_ui_blizzard_actionbar::surface_mixins::assisted_combat_manager_publishes_plan_named_methods ... ok
+test blizzard_ui_blizzard_actionbar::surface_mixins::edit_mode_action_bar_seeds_callable_base_method_aliases ... ok
+test blizzard_ui_blizzard_actionbar::surface_mixins::extra_action_bar_frame_publishes_no_mixin_only_a_script_handler ... ok
+test blizzard_ui_blizzard_actionbarcontroller::behavior_initial_state::startup_defaults_to_main_action_bar_state_with_main_bar_shown ... ok
+test blizzard_ui_blizzard_actionstatus::behavior_glue_branch_registers_glue_events::glue_branch_registers_glue_screenshot_events_only ... ok
+test blizzard_ui_blizzard_actionbarcontroller::load::action_bar_controller_loads_with_dependency_closure_and_no_lua_errors ... ok
+test blizzard_ui_blizzard_actionbarcontroller::behavior_update_all_spell_highlights::update_all_spell_highlights_updates_each_action_bar_button_event_frame ... ok
+test blizzard_ui_blizzard_actionbarcontroller::surface_events::action_bar_controller_registers_all_onload_events ... ok
+test blizzard_ui_blizzard_actionbarcontroller::surface_frames::action_bar_controller_frame_is_parented_to_uiparent_and_wires_scripts ... ok
+test blizzard_ui_blizzard_actionbarcontroller::surface_globals::action_bar_controller_onload_initializes_current_state_to_main ... ok
+test blizzard_ui_blizzard_actionbarcontroller::behavior_show_bottomleft_after_settings_loaded::show_bottomleft_defers_until_settings_loaded_then_sets_immediately ... ok
+test blizzard_ui_blizzard_actionbarcontroller::surface_globals::action_bar_controller_surface_globals_are_functions ... ok
+test blizzard_ui_blizzard_actionstatus::behavior_screenshot_failed_shows_failure_text::screenshot_failed_shows_failure_text ... ok
+test blizzard_ui_blizzard_actionbarcontroller::behavior_status_tracking_bar_animation_hook::onload_installs_action_bar_busy_as_status_bar_animation_gate ... ok
+test blizzard_ui_blizzard_actionbarcontroller::behavior_update_pet_battle_uses_action_bar_page::update_pet_battle_uses_current_action_bar_page ... ok
+test blizzard_ui_blizzard_actionstatus::behavior_screenshot_started_hides_frame::screenshot_started_hides_visible_action_status ... ok
+test blizzard_ui_blizzard_actionstatus::behavior_screenshot_succeeded_shows_success_text::screenshot_succeeded_shows_success_text_and_resets_fade_state ... ok
+test blizzard_wow_token_ui_loads::toc_declares_secure_environment_with_two_required_deps ... ok
+test break_up_large_numbers::authentic_secret_false_natural_rejects_even_in_secure_context ... ok
+test break_up_large_numbers::authentic_secret_true_natural_rejects_even_in_secure_context ... ok
+test break_up_large_numbers::secure_and_stamped_tainted_calls_keep_taint_across_rejection_and_recovery ... ok
+test blizzard_ui_blizzard_actionstatus::surface_events::action_status_registers_game_screenshot_events_outside_glue ... ok
+test c_achievement_info_probes::get_achievement_link_returns_full_chat_link_for_seeded_id ... ok
+test c_action_bar_input_probes::action_button_down_no_op_when_slot_empty ... ok
+test c_action_bar_input_probes::action_button_down_pushes_state_and_fires_cast ... ok
+test blizzard_ui_blizzard_addonperformance::behavior_combat_lockdown_short_circuits_check::combat_lockdown_short_circuits_performance_message_check ... ok
+test c_action_bar_input_probes::action_button_down_with_unknown_button_is_silent_noop ... ok
+test c_action_bar_input_probes::action_button_up_only_acts_when_currently_pushed ... ok
+test c_action_bar_input_probes::extra_action_button_key_down_fires_cast ... ok
+test c_action_bar_input_probes::action_button_up_releases_pushed_state ... ok
+test c_action_bar_input_probes::extra_action_button_key_up_releases_pushed_state ... ok
+test blizzard_ui_blizzard_addonperformance::behavior_display_specific_chat_warning::display_specific_chat_warning_formats_and_forwards_system_message ... ok
+test c_action_bar_input_probes::multi_action_button_down_dispatches_via_action_buttons_table ... ok
+test c_action_bar_input_probes::multi_action_button_up_releases_pushed_state ... ok
+test c_action_bar_input_probes::try_use_action_button_fires_cast_when_checking_from_down ... ok
+test c_action_bar_input_probes::try_use_action_button_skips_cast_when_not_from_down ... ok
+test c_action_bar_slot_mutation::force_update_action_fires_event_for_slot ... ok
+test c_action_bar_slot_mutation::force_update_action_invalid_input_is_noop ... ok
+test c_action_bar_slot_mutation::profession_quality_info_defaults_nil ... ok
+test c_action_bar_slot_mutation::profession_quality_info_invalid_input_returns_nil ... ok
+test c_action_bar_slot_mutation::profession_quality_info_returns_state_table ... ok
+test c_action_bar_slot_mutation::put_action_in_slot_empty_source_returns_false ... ok
+test c_action_bar_slot_mutation::put_action_in_slot_fires_actionbar_slot_changed_for_both ... ok
+test c_action_bar_slot_mutation::put_action_in_slot_invalid_input_returns_false ... ok
+test c_action_bar_slot_mutation::update_profession_quality_branches_on_state_presence ... ok
+test c_action_bar_slot_mutation::put_action_in_slot_moves_spell_and_returns_true ... ok
+test c_action_bar_state_globals::action_bar_busy_defaults_to_false ... ok
+test c_action_bar_state_globals::action_bar_busy_reflects_state_flag ... ok
+test c_action_bar_state_globals::bonus_bar_index_reads_state ... ok
+test c_action_bar_state_globals::current_action_bar_state_defaults_to_main ... ok
+test c_action_bar_state_globals::current_action_bar_state_reports_override ... ok
+test c_action_bar_state_globals::current_action_bar_state_reports_skinned_vehicle_override ... ok
+test c_action_bar_state_globals::le_actionbar_state_constants_are_seeded ... ok
+test blizzard_ui_blizzard_actionbarcontroller::behavior_update_all_iterates_button_events_frame::update_all_forces_each_action_bar_button_event_frame ... ok
+test c_api_surface::chat_info_no_state_defaults_are_not_c_api_temporary_shims ... FAILED
+test c_action_bar_state_globals::override_bar_index_is_visible_when_override_state_is_active ... ok
+test c_action_bar_state_globals::special_bar_indexes_build_paging_conditions_independently_of_availability ... ok
+test c_action_bar_state_globals::temp_shapeshift_bar_index_reads_state ... ok
+test c_action_bar_state_globals::vehicle_bar_index_reads_state ... ok
+test c_arrow_callout_manager::acknowledge_callout_marks_id_clears_active_and_writes_cvar ... ok
+test c_arrow_callout_manager::acknowledged_cvar_is_comma_separated_in_ascending_order ... ok
+test c_azerite_essence::can_activate_essence_blocks_in_combat ... ok
+test c_chat_bubbles_probes::get_all_chat_bubbles_includes_frame_id_when_set ... ok
+test c_chat_bubbles_probes::get_all_chat_bubbles_mutation_reflects_in_subsequent_calls ... ok
+test c_chat_bubbles_probes::get_all_chat_bubbles_reflects_seeded_bubbles ... ok
+test c_chat_bubbles_probes::get_all_chat_bubbles_returns_chat_type_field ... ok
+test c_chat_bubbles_probes::get_all_chat_bubbles_returns_empty_array_by_default ... ok
+test c_chat_info_probes::chat_info_state_backed_channel_methods_still_win ... ok
+test c_chat_info_probes::chat_info_temporary_defaults_are_available ... ok
+test c_nameplate_probes::get_nameplate_for_unit_target_is_nil ... ok
+test c_nameplate_probes::get_nameplate_for_unit_player_is_nil ... ok
+test c_nameplate_probes::get_nameplates_returns_empty_array ... ok
+test blizzard_ui_blizzard_apidocumentation::behavior_handle_api_link_opendump_seeds_chat_edit::opendump_link_records_chat_edit_dump_command ... ok
+test c_nameplate_probes::get_nameplates_returns_table_not_nil ... ok
+test c_namespace_noop_replacements::combat_log_namespaces_iterate_seeded_entries_and_messages ... ok
+test c_namespace_noop_replacements::combat_text_active_unit_tests::combat_text_active_unit_explicit_and_repeated_writes ... ok
+test c_namespace_noop_replacements::combat_text_active_unit_tests::combat_text_active_unit_return_types_and_arity ... ok
+test c_namespace_noop_replacements::combatlog_message_limit_tests::combatlog_message_limit_independent_of_filter_and_retention ... ok
+test blizzard_ui_blizzard_apidocumentation::behavior_handle_slash_command_help_writes_usage::help_slash_commands_write_usage_to_default_chat_frame ... ok
+test c_namespace_noop_replacements::combatlog_message_limit_tests::combatlog_message_limit_roundtrip_and_arity ... ok
+test c_namespace_noop_replacements::combatlog_settings_tests::combatlog_settings_are_independent ... ok
+test c_namespace_noop_replacements::combat_text_active_unit_tests::combat_text_active_unit_isolates_environments_bidirectionally ... ok
+test c_namespace_noop_replacements::combatlog_settings_tests::combatlog_settings_filtered_events_roundtrip ... ok
+test c_namespace_noop_replacements::combatlog_message_limit_tests::combatlog_message_limit_isolates_lua_environments ... ok
+test c_namespace_noop_replacements::combatlog_settings_tests::combatlog_settings_retention_roundtrip ... ok
+test c_namespace_noop_replacements::combatlog_settings_tests::combatlog_settings_return_arity ... ok
+test c_pet_bar_globals::pet_has_action_bar_reports_false_for_default_state ... ok
+test c_spell_probes::test_get_spell_description_resolves_main_action_bar_durations ... ok
+test c_pet_bar_globals::pet_has_action_bar_reports_true_when_any_slot_bound ... ok
+test c_namespace_noop_replacements::combatlog_settings_tests::combatlog_settings_isolate_lua_environments ... ok
+test c_system_api::test_c_console_get_all_commands_live_cvars ... ok
+test c_system_api::test_c_tts_settings_get_speech_rate ... ok
+test c_system_api::test_c_tts_settings_get_voice_option_id ... ok
+test c_system_api::test_c_tts_settings_set_speech_rate_noop ... ok
+test c_system_api::test_c_tts_settings_get_speech_volume ... ok
+test c_system_api::test_c_tts_settings_set_speech_volume_noop ... ok
+test c_system_api::test_c_tts_settings_set_voice_option_noop ... ok
+test blizzard_ui_blizzard_actionbarcontroller::behavior_settings_loaded_registers_callbacks::settings_loaded_registers_action_bar_callbacks_and_update_event ... ok
+test c_system_api::test_c_voice_chat_get_tts_voices_empty ... ok
+test c_system_api::test_c_voice_chat_speak_text_noop ... ok
+test c_system_api::test_c_voice_chat_stop_speaking_text_noop ... ok
+test c_vehicle_possession_globals::unit_vehicle_skin_treats_action_bar_controller_branch ... ok
+test c_voice_chat_probes::get_active_channel_id_returns_nil_when_none ... ok
+test c_system_api::test_c_voice_chat_is_speaking_text_false ... ok
+test c_voice_chat_probes::get_active_channel_type_returns_one_nil_for_stale_active_channel ... ok
+test c_voice_chat_probes::get_active_channel_id_returns_seeded_id ... ok
+test c_voice_chat_probes::get_active_channel_type_returns_one_nil_without_active_channel ... ok
+test c_voice_chat_probes::get_active_channel_type_returns_seeded_channel_type ... ok
+test c_voice_chat_probes::get_active_channel_type_tracks_active_channel_changes ... ok
+test c_voice_chat_probes::get_channel_returns_channel_for_valid_id ... ok
+test c_voice_chat_probes::get_channels_reflects_mutation ... ok
+test c_voice_chat_probes::get_channel_returns_nothing_for_invalid_id ... ok
+test c_voice_chat_probes::get_channels_returns_seeded_channel ... ok
+test c_voice_chat_probes::get_connection_status_reflects_mutation ... ok
+test c_voice_chat_probes::get_master_volume_scale_returns_one_by_default ... ok
+test c_voice_chat_probes::get_connection_status_returns_seeded_code ... ok
+test c_voice_chat_probes::get_microphone_volume_returns_seeded_value ... ok
+test c_voice_chat_probes::get_num_active_channels_returns_one_by_default ... ok
+test c_voice_chat_probes::get_num_members_returns_two_for_seeded_channel ... ok
+test c_voice_chat_probes::get_num_members_returns_zero_for_unknown_channel ... ok
+test c_voice_chat_probes::get_output_volume_returns_seeded_value ... ok
+test c_voice_chat_probes::is_deafened_false_by_default ... ok
+test c_voice_chat_probes::is_muted_false_by_default ... ok
+test c_voice_chat_probes::is_enabled_true_by_default ... ok
+test c_voice_chat_probes::is_muted_toggle ... ok
+test c_voice_chat_probes::is_parental_disabled_false_by_default ... ok
+test c_voice_chat_probes::transcription_and_tts_voices_default_to_unavailable ... ok
+test c_voice_chat_probes::is_talking_false_by_default ... ok
+test channel_verbs::chat_info_channel_identifier_matches_joined_channel ... ok
+test channel_verbs::swap_chat_channel_links_swaps_positions ... ok
+test channel_verbs::swap_chat_channel_links_out_of_range_is_noop ... ok
+test character_stats::explicit_inputs::restricted_tainted_callers_receive_opaque_configured_outputs ... ok
+test character_stats::combat_rating_value_converts_with_crit_divisor ... ok
+test character_stats::missing_apis::missing_stats_tainted_callers_receive_opaque_host_outputs ... ok
+test blizzard_ui_blizzard_apidocumentation::behavior_write_line_uses_system_chat_color::write_line_uses_system_chat_color_and_write_all_lines_preserves_order ... ok
+test character_stats::missing_apis::secret_selection_inputs_are_allowed_when_untainted ... ok
+test character_stats::stat_restriction::stat_restriction_tainted_callers_receive_opaque_host_results ... ok
+test cast_events_identity::model_identity::model_unit_binding_denial_preserves_real_addon_taint_and_env_isolation ... ok
+test character_stats::test_combat_rating_bonus_is_percentage ... ok
+test character_stats::test_combat_rating_crit_positive ... ok
+test character_stats::test_combat_rating_mastery_positive ... ok
+test character_stats::test_combat_rating_haste_positive ... ok
+test character_stats::test_combat_rating_versatility_positive ... ok
+test character_stats::test_paper_doll_combat_stat_helpers_return_safe_numbers ... ok
+test chat_frame_util::add_system_message_does_not_clobber_other_chat_frame_util_entries ... ok
+test chat_frame_util::add_system_message_falls_back_to_chat_frame1 ... ok
+test chat_frame_util::add_system_message_handles_empty_string ... ok
+test chat_frame_util::add_system_message_no_chat_frame_still_logs ... ok
+test chat_frame_util::add_system_message_preserves_order ... ok
+test chat_frame_util::add_system_message_pushes_to_system_chat_log ... ok
+test chat_frame_util::add_system_message_registered_on_chat_frame_util ... ok
+test chat_frame_util_open_chat::open_chat_is_a_no_op_on_edit_box_when_globals_missing ... ok
+test chat_frame_util::add_system_message_routes_to_default_chat_frame ... ok
+test chat_frame_util::chat_type_group_registered_on_chat_frame_surface ... ok
+test chat_frame_util::add_system_message_with_no_args_records_empty_string ... ok
+test chat_frame_util_open_chat::open_chat_overwrites_previous_state ... ok
+test blizzard_ui_blizzard_apidocumentation::load::api_documentation_loads_cleanly_and_expands_default_chat_history ... ok
+test chat_frame_util_open_chat::open_chat_records_chat_type_string_when_provided ... ok
+test chat_frame_util_open_chat::open_chat_records_text_and_cursor_with_nil_chat_type ... ok
+test chat_frame_util_open_chat::open_chat_shows_and_sets_text_on_default_edit_box_when_present ... ok
+test chat_init::fake_chat_pick_cycles_messages ... ok
+test chat_init::init_chat_type_colors_fills_missing_entries ... ok
+test chat_init::init_chat_type_colors_ignores_inherited_rgb_defaults ... ok
+test chat_frame_startup::chat_frame_is_ready_before_third_party_addons_load ... ok
+test chat_init::init_chat_type_colors_preserves_existing_rgb ... ok
+test chat_init::init_chat_type_colors_replaces_placeholder_guild_white ... ok
+test chat_init::init_chat_type_colors_no_op_when_table_absent ... ok
+test chat_init::init_chat_type_colors_unknown_key_falls_back_to_white ... ok
+test chat_init::show_chat_frame_no_op_when_chat_frame1_absent ... ok
+test chat_init::init_chat_type_colors_updates_proxy_entries ... ok
+test chat_init::show_chat_frame_sets_default_chat_frame_and_fake_chat ... ok
+test chat_messaging_lockdown::all_combat_and_lockdown_combinations_remain_independent ... ok
+test chat_messaging_lockdown::explicit_true_false_true_transitions_return_single_boolean ... ok
+test chat_lockdown_ready_checks::public_start_blocks_fresh_state_on_both_combat_axes ... ok
+test chat_messaging_lockdown::fresh_state_returns_exactly_one_false ... ok
+test chat_messaging_lockdown::ordinary_addon_caller_preserves_stack_taint ... ok
+test chat_window_verbs::add_and_remove_chat_window_messages_mutates_unique_groups ... ok
+test blizzard_ui_blizzard_apidocumentation_generated::behavior_handle_api_link_opendump_seeds_real_chat_edit::opendump_link_seeds_generated_get_time_in_real_chat_editbox ... ok
+test chat_messaging_lockdown::lockdown_input_is_isolated_between_environments ... ok
+test chat_lockdown_ready_checks::unlocked_public_lifecycle_ignores_combat_for_both_responses ... ok
+test chat_lockdown_ready_checks::public_confirm_preserves_active_response_then_recovers_after_unlock ... ok
+test chat_window_verbs::add_chat_window_channel_appends_unique_channels ... ok
+test chat_lockdown_ready_checks::public_start_preserves_active_response_then_recovers_after_unlock ... ok
+test chat_lockdown_ready_checks::public_confirm_blocks_inactive_state_for_both_responses_and_combat_axes ... ok
+test chat_window_verbs::change_chat_color_stores_uppercase_channel_key ... ok
+test chat_window_verbs::get_chat_window_channels_empty_for_unknown_window ... ok
+test chat_window_verbs::get_chat_window_channels_returns_flat_list ... ok
+test chat_window_verbs::get_chat_window_messages_returns_subscribed_types ... ok
+test chat_window_verbs::set_chat_window_alpha_clamps_out_of_range_values ... ok
+test chat_window_verbs::set_chat_window_color_stores_rgb_triple ... ok
+test chat_window_verbs::set_chat_window_locked_true_and_false ... ok
+test chat_window_verbs::set_chat_window_alpha_creates_window_and_stores_value ... ok
+test chat_window_verbs::set_chat_window_locked_default_is_true_when_arg_omitted ... ok
+test chat_window_verbs::set_chat_window_size_stores_font_size ... ok
+test chat_window_verbs::set_chat_window_uninteractable_round_trips ... ok
+test click_binding_spell_identifier::public_tainted_calls_preserve_taint_and_boolean_contract ... ok
+test chat_lockdown_ready_checks::legacy_ready_check_cannot_bypass_lockdown_and_recovers_after_unlock ... ok
+test click_binding_spell_identifier::authentic_secret_identifiers_reject_after_gc_in_secure_and_tainted_calls ... ok
+test combat_probes::all_probes_false_by_default ... ok
+test combat_probes::in_combat_lockdown_reads_player_in_combat ... ok
+test combat_probes::in_combat_lockdown_tracks_combat_exit ... ok
+test combat_probes::is_battlefield_arena_reads_world_flag ... ok
+test combat_probes::instance_encounter_progress_reads_the_legacy_encounter_state ... ok
+test combat_probes::is_encounter_in_progress_reads_world_flag ... ok
+test combat_probes::is_flyable_area_reads_world_flag ... ok
+test combat_probes::is_in_instance_returns_instance_kind_when_active ... ok
+test combat_probes::is_in_instance_defaults_to_false_none ... ok
+test combat_probes::is_resting_reads_player_is_resting ... ok
+test combat_verbs::cast_spell_by_id_no_arg_is_silent_noop ... ok
+test combat_verbs::cast_spell_by_id_populates_unit_casting_info ... ok
+test combat_verbs::attack_target_starts_auto_attack_marker ... ok
+test combat_verbs::cast_spell_by_name_populates_unit_casting_info ... ok
+test combat_verbs::cast_spell_by_name_empty_string_is_noop ... ok
+test combat_verbs::cast_spell_forwards_to_cast_spell_by_id ... ok
+test combat_verbs::click_special_ability_1_is_auto_attack ... ok
+test combat_verbs::click_special_ability_2_is_extra_attack ... ok
+test combat_verbs::click_special_ability_unknown_index_is_noop ... ok
+test combat_verbs::spell_is_targeting_defaults_false ... ok
+test combat_verbs::spell_item_targeting_helpers_default_false ... ok
+test combat_verbs::spell_stop_casting_clears_active_cast_and_reports_result ... ok
+test combat_verbs::stop_attack_clears_auto_attack_only ... ok
+test combat_verbs::spell_target_unit_preserves_pending_cast ... ok
+test combat_verbs::spell_target_unit_is_noop_without_pending_cast ... ok
+test combat_verbs::successive_casts_advance_cast_id ... ok
+test cooldown_aura_spell_identifiers::actual_vm_secrets_and_wrapped_wrong_object_reject_secure_and_tainted_after_gc ... ok
+test cooldown_countdown_formatter::tainted_countdown_formatter_setter_rejects_secrets_atomically_but_accepts_plain_values ... ok
+test cooldown_aura_spell_identifiers::public_numeric_name_link_queries_work_in_tainted_context_without_clearing_taint ... ok
+test console_commands::console_catalog_lists_supported_cvars_with_bounded_metadata ... ok
+test cooldown_countdown_formatter::untainted_countdown_formatter_setter_accepts_typed_secret_object_and_nil ... ok
+test cooldown_restriction::tainted_public_selectors_receive_opaque_fields_without_clearing_taint ... ok
+test cooldown_restriction::secret_action_and_book_selectors_require_untainted_callers_separately_from_output ... ok
+test cvar_bitfields::c_cvar_bitfields_share_the_same_storage ... ok
+test cvar_bitfields::cvar_bitfields_can_be_set_and_cleared ... ok
+test delve_instance_state::delve_query_ignores_extra_arguments_and_preserves_secret_wrappers_and_taint ... ok
+test duration_numeric_formatters::seconds_curve_receives_opaque_time_and_retains_closure_taint ... ok
+test duration_text_binding_copy::duration_binding_survives_secure_option_copy_without_losing_handle_identity ... ok
+test delves_api_inputs::curio_rarity_is_never_secret_even_after_gc_and_for_tainted_callers ... ok
+test edit_mode_api::cache::edit_mode_account_cache_preserves_all_legacy_values_and_fills_new_defaults ... ok
+test blizzard_ui_blizzard_arrow_callout_frame::behavior_acknowledged_callouts_persist_across_load::acknowledged_callouts_persist_through_cvar_across_fresh_load ... ok
+test edit_mode_api::cache::edit_mode_layout_api_persists_active_layout_and_saved_layouts ... ok
+test edit_mode_api::cache::edit_mode_cache_decodes_repeated_setting_chunks_as_large_value ... ok
+test edit_mode_api::cache::edit_mode_env_override_beats_snapshot_layout ... ok
+test edit_mode_api::cache::edit_mode_layout_api_loads_wtf_cache_files ... ok
+test edit_mode_api::cache::edit_mode_snapshot_layout_selects_active_layout_by_name ... ok
+test edit_mode_api::enums::compact_raid_group_type_enum_matches_edit_mode_unit_frame_indices ... ok
+test edit_mode_api::cache::edit_mode_wtf_cache_can_override_active_layout_by_name ... ok
+test edit_mode_api::enums::cooldown_viewer_edit_mode_setting_ids_match_blizzard_order ... ok
+test edit_mode_api::enums::edit_mode_account_setting_ids_include_raid_warning_and_loss_of_control ... ok
+test edit_mode_api::cache::edit_mode_wtf_cache_decodes_frame_point_numbers_like_wow ... ok
+test edit_mode_api::enums::edit_mode_profile_option_enums_match_blizzard_docs ... ok
+test edit_mode_bootstrap_boundaries::edit_mode_cache_defaults_are_not_runtime_bootstrap_fallbacks ... ok
+test click_targeting::unchanged_blizzard_secure_unit_handler_targets_player_and_party ... ok
+test edit_mode_api::enums::encounter_events_icon_direction_matches_blizzard_docs ... ok
+test edit_mode_api::enums::status_tracking_bar_edit_mode_setting_ids_match_live_docs ... ok
+test edit_mode_api::enums::unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size ... FAILED
+test edit_mode_api::cache::edit_mode_wtf_cache_marks_hidden_status_tracking_bar_systems ... ok
+test encounter_event_sound_no_error::addon_sound_lookup_does_not_error_or_change_stack_taint ... ok
+test enum_diff_coverage::edit_mode_chat_frame_display_only_setting_is_available_with_expected_values ... ok
+test follower_nameplate_display::follower_display_classification_follows_guid_not_target_slot ... ok
+test edit_mode_api::cache::edit_mode_wtf_cache_normalizes_indexed_system_rows ... ok
+test follower_nameplate_display::follower_display_authenticates_host_secret_token_and_restores_addon_context ... ok
+test follower_nameplate_display::follower_display_classification_preserves_npc_identity_and_can_be_removed ... ok
+test encounter_timeline_view::encounter_tracks_real_edit_mode_timer_refreshes_owned_slots ... ok
+test follower_nameplate_display::follower_display_query_does_not_fabricate_pet_vehicle_or_missing_units ... ok
+test follower_nameplate_display::follower_display_flag_does_not_imply_friendliness ... ok
+test follower_nameplate_display::follower_display_query_preserves_secure_and_addon_stack_taint ... ok
+test follower_nameplate_display::follower_display_classification_is_environment_local ... ok
+test font_api::test_message_frame_set_font_object_uses_chat_font_height ... ok
+test fontstring_smooth_scaling::smooth_scaling_secret_boolean_requires_untainted_caller ... ok
+test forbidden_aspect_creation::event_registration_aspect_rejects_addon_callers_and_permits_secure_callers ... ok
+test forbidden_aspect_enforcement::scripted_input_and_query_focus_allow_secure_callers_only ... ok
+test forbidden_aspect_enforcement::untrusted_script_execution_runs_only_secure_handlers_on_restricted_hierarchy ... ok
+test frame_edit_mode_methods::edit_mode_position_methods_are_native_frame_methods ... ok
+test frame_edit_mode_methods::edit_mode_setting_default_reads_system_settings ... ok
+test frame_edit_mode_methods::unit_level_non_attackable_color_is_available ... ok
+test global_frames::test_chat_frame1_exists ... ok
+test global_frames::test_chat_frame_util_get_window_name ... ok
+test global_frames::test_chat_frame_util_process_message ... ok
+test global_frames::test_chat_type_group_all_keys ... ok
+test global_frames::test_chat_type_group_structure ... ok
+test global_frames::test_default_chat_frame_exists ... ok
+test global_frames::test_edit_mode_default_position_follows_system_info_without_override ... ok
+test global_frames::test_edit_mode_manager_initialized_follows_layout_info_without_override ... ok
+test global_frames::test_settings_panel_container_structure ... ok
+test hook_script::hook_script_preserves_original_and_addon_hook_taint ... ok
+test hook_script::secure_function_hook_preserves_original_origin_and_results ... ok
+test house_exterior_attached_decor::modern::fixture_public_addon_call_preserves_taint ... ok
+test house_exterior_attached_decor::modern::fixture_secure_actual_secret_numbers_are_accepted ... ok
+test house_exterior_attached_decor::modern::size_public_addon_call_preserves_taint ... ok
+test house_exterior_attached_decor::modern::size_secure_actual_secret_numbers_are_accepted ... ok
+test house_exterior_attached_decor::modern::remove_public_addon_actions_retain_taint ... ok
+test house_exterior_attached_decor::modern::type_public_addon_call_preserves_taint ... ok
+test house_exterior_attached_decor::modern::type_secure_actual_secret_numbers_are_accepted ... ok
+test house_exterior_attached_decor::modern::remove_secure_actual_secret_store_and_detach_are_accepted ... ok
+test chat_frame::test_chat_editbox_click_type_and_submit ... ok
+test housing_catalog_base_lookups::ordinary_public_selectors_preserve_addon_taint ... ok
+test housing_catalog_base_lookups::secret_scalar_selectors_reject_without_unwrapping_or_taint_changes ... ok
+test housing_catalog_categories::public_numeric_selectors_preserve_caller_taint ... ok
+test housing_catalog_categories::secret_numeric_selectors_reject_without_unwrapping_or_taint_changes ... ok
+test housing_catalog_variants::destroyable_count::public_selector_preserves_addon_taint ... ok
+test housing_catalog_variants::housing_variant_public_selectors_allow_tainted_callers ... ok
+test housing_catalog_variants::housing_variant_secured_selector_preserves_access_guard ... ok
+test chat_frame::test_chat_editbox_text_color_after_activation ... ok
+test housing_category_search::public_addon_queries_preserve_caller_taint ... ok
+test housing_destroy_entry::public_addon_call_preserves_taint ... ok
+test housing_category_search::secret_table_and_fields_reject_without_unwrapping_or_clearing_taint ... ok
+test housing_pending_decor::guarded_selector_rejects_tainted_access_without_replacing_pending ... ok
+test housing_pending_decor::public_addon_requests_and_cancel_preserve_taint ... ok
+test click_targeting::use_action_casts_from_action_bar ... ok
+test housing_pending_decor::secret_numeric_top_selector_authenticates_before_secure_type_error ... ok
+test housing_pending_decor::addon_secret_numeric_fields_deny_atomically_without_clearing_taint ... ok
+test housing_storage_entry_updated::public_addon_input_preserves_caller_taint ... ok
+test housing_storage_entry_updated::secret_selectors_and_counts_reject_secure_and_tainted_callers ... ok
+test click_targeting::secure_action_target_calls_target_unit ... ok
+test housing_pending_decor::secure_secret_numeric_fields_accept_actual_full_variant_request ... ok
+test illusion_category_queries::authentic_secret_nil_selects_all_secure_but_is_denied_tainted ... ok
+test illusion_category_queries::authentic_secret_number_selects_in_secure_caller ... ok
+test illusion_category_queries::authentic_wrong_payloads_fail_secure_without_private_payload_errors ... ok
+test housing_destroy_entry::secure_secret_table_selector_accepts_exact_key_and_one_event ... ok
+test housing_pending_decor::secure_secret_table_selector_accepts_and_copies_full_identity_across_gc ... ok
+test illusion_category_queries::ordinary_public_categories_work_without_clearing_caller_taint ... ok
+test illusion_category_queries::tainted_secrets_are_denied_before_payload_validation_and_recover_publicly ... ok
+test click_targeting::secure_action_spell_calls_cast_spell_by_id ... ok
+test insecure_propagator_templates::insecure_propagator_templates_inherit_keyboard_input_flag ... ok
+test insecure_propagator_templates::insecure_propagator_templates_inherit_hyperlink_parent_flag ... ok
+test insecure_propagator_templates::insecure_propagator_templates_ordinary_xml_preserves_explicit_false ... ok
+test insecure_propagator_templates::insecure_propagator_templates_runtime_chains_preserve_explicit_false ... ok
+test insecure_propagator_templates::insecure_propagator_templates_inherit_separate_mouse_masks ... ok
+test instanced_identity::instanced_identity_tainted_caller_observes_context_without_losing_taint ... ok
+test key_dispatch::default_keybindings_dispatch_on_init ... ok
+test glue_character_select::character_select_hides_chat_frames ... ok
+test inventory_slot_info::deprecated_paper_doll_startup_addon_publishes_secure_global_alias ... ok
+test inventory_verbs::place_action_writes_spell_id_to_action_bar_slot ... ok
+test keybindings::c_keybindings_index_resolves_registry_rows ... ok
+test keybindings::default_store_reports_empty_lookups ... ok
+test keybindings::explicit_unbind_blocks_default_key_dispatch ... ok
+test keybindings::clear_overrides_restores_base_bindings ... ok
+test keybindings::get_num_bindings_counts_user_set_entries ... ok
+test keybindings::get_binding_key_for_action_returns_first_match ... ok
+test keybindings::modified_clicks_round_trip_through_runtime_surface ... ok
+test keybindings::get_binding_returns_1_indexed_pair ... ok
+test keybindings::override_appears_in_get_binding_key ... ok
+test keybindings::override_shadows_base_for_get_binding_action ... ok
+test keybindings::save_load_bindings_are_noops_but_do_not_error ... ok
+test keybindings::profession_book_binding_dispatches_registered_toggle ... ok
+test keybindings::set_binding_click_encodes_click_action ... ok
+test keybindings::set_binding_returns_false_on_empty_key ... ok
+test keybindings::set_binding_round_trips_key_and_action ... ok
+test keybindings::set_binding_spell_encodes_spell_action ... ok
+test keybindings::set_binding_same_key_replaces_action ... ok
+test keybindings::third_key_for_same_action_evicts_oldest ... ok
+test keybindings::social_binding_dispatches_friends_panel_toggle ... ok
+test keybindings::two_keys_per_action_both_returned ... ok
+test keybindings::set_binding_with_empty_action_unbinds_key ... ok
+test major_faction_renown_rewards::major_faction_renown_rewards_secret_selectors_require_secure_callers ... ok
+test major_faction_renown_rewards::major_faction_renown_rewards_public_selectors_allow_tainted_callers ... ok
+test lua_api_boundary::modeled_c_chat_bubbles_returns_empty_default_collection ... ok
+test missing_apis::test_settings_api ... ignored, Settings API not implemented
+test message_frame::test_builtin_chat_frame_accepts_messages ... ok
+test message_frame::test_builtin_default_chat_frame_exists ... ok
+test message_verbs::send_addon_message_logs_entry_and_fires_chat_msg_addon ... ok
+test message_verbs::send_chat_message_logs_entry_without_firing_event ... ok
+test message_verbs::send_chat_message_whisper_preserves_target ... ok
+test nameplate_hit_test_insets::nameplate_hit_test_insets_errors_preserve_configuration ... ok
+test mount_spell_identifier::actual_vm_secrets_reject_as_unmodeled_policy_in_secure_and_tainted_calls ... ok
+test mouse_tm_commands::tm_condition_uses_current_combat_state_and_dispatches_marker_events ... ok
+test missing_apis::test_hooksecurefunc ... ok
+test nameplate_hit_test_insets::nameplate_hit_test_insets_secret_and_restricted_callers ... ok
+test nameplate_hit_test_insets::nameplate_hit_test_insets_round_trip_isolation_and_replacement ... ok
+test next125aura::secure_caller_accepts_real_secret_each_argument_and_combined_on_both_stores ... ok
+test next125aura::gc_rooted_secrets_keep_identity_security_and_secure_tainted_secure_roundtrip ... ok
+test outfit_action_command::unchanged_vendor_secure_outfit_handler_changes_toggles_and_clears ... ok
+test next125aura::tainted_denial_each_argument_and_combined_precedes_unknown_lookup_and_recovers ... ok
+test p1200_mixed::p1200_mixed_cvar_publication ... ok
+test p1200_rest_spell_plate::p1200_rest_nameplate_size_roundtrip ... ok
+test p1200_plain_globals::p1200_secret_helpers_use_vm_wrappers_and_calling_taint ... ok
+test p1207_dragonriding_races::secure_secrets_are_accepted_and_all_tainted_secrets_precede_validation ... ok
+test p1200_mixed::p1200_mixed_combat_audio_settings ... ok
+test p1207_b15_encounter_end::tainted_encounter_listener_observes_public_detached_multi_boss_snapshot ... ok
+test p1207_gap_closures::simulated_mouse_input_queues_only_for_secure_callers ... ok
+test p1207_gap_closures::patch_12_0_7_cvars_publish_page_defaults ... ok
+test p1207_pending_callbacks::namespace_unwraps_authentic_function_for_secure_caller ... ok
+test p1207_pending_callbacks::storage_operations_preserve_secure_and_tainted_caller_context ... ok
+test housing_destroy_entry::secure_secret_boolean_true_and_false_select_all_or_one ... ok
+test p1207_pending_callbacks::retrieved_callback_keeps_its_taint_when_event_consumer_invokes_it ... ok
+test p1207_ready_check_auth::tainted_secret_arguments_are_rejected_without_state_change ... ok
+test p1207_ready_check_auth::untainted_caller_confirms_with_secret_boolean ... ok
+test party_1207_audit::p1207_secure_callers_authenticate_declared_inputs_and_extras_without_unwrapping_roots ... ok
+test party_1207_audit::p1207_tainted_callers_reject_secrets_in_every_argument_and_extra_before_validation ... ok
+test glue_login::login_boot_keeps_settings_preview_panels_wired_to_settings_panel ... ok
+test party_1207_audit::p1207_conditional_tm_and_cached_secure_action_observe_live_marker_state ... ok
+test party_loot_method::actual_secret_enum_and_master_reject_for_secure_and_tainted_callers ... ok
+test party_countdown::secret_start_and_cancel_reject_in_secure_and_tainted_callers_without_corruption ... ok
+test party_loot_method::lockdown_blocks_before_effects_while_combat_alone_allows_changes_and_reads ... ok
+test party_ping_restrictions::lockdown_blocks_mutation_but_not_reads_independently_of_combat ... ok
+test party_ping_restrictions::secret_enum_rejection_preserves_input_and_caller_taint ... ok
+test patch_11_0_5_publication_fixes::patch_11_0_5_chroma_cvars_have_mutable_values_and_immutable_defaults ... ok
+test patch_11_1_5_publication_fixes::patch_11_1_5_global_environment_tracks_secure_swap_and_custom_environment ... ok
+test party_countdown::lockdown_blocks_fresh_start_and_idle_cancel_independently_of_combat ... ok
+test patch_11_1_7_publication_fixes::patch_11_1_7_graphics_commands_are_catalog_records_not_cvars ... ok
+test patch_12_0_1_secure_delegate::patch_12_0_1_tainted_secret_duration_object ... ignored, pending opaque consumption of secret-bearing duration timing; see prose-2026-03-21-174
+test patch_11_2_0_publication_fixes::patch_11_2_0_fog_cvars_publish_documented_defaults ... ok
+test patch_1207_b39_b44::b39_independent_source_secret_survives_exemption_and_addon_taint ... ok
+test patch_12_0_1_models::patch_12_0_1_warning_visibility_and_sound_settings_roundtrip ... ok
+test patch_12_0_0_crafting_shapes::crafting_order_secret_arguments_obey_caller_taint ... ok
+test patch_12_0_1_models::patch_12_0_1_audio_category_settings_are_independent ... ok
+test patch_12_0_0_prose::prose_combat_log_registration_errors_without_delivery ... ok
+test patch_12_0_5_enum_additions::addon_restrictions_publish_chat ... ok
+test patch_12_0_5_enum_additions::edit_mode_account_settings_publish_totem_action_bar ... ok
+test patch_11_2_0_publication_fixes::patch_11_2_0_player_combat_reads_live_state ... ok
+test patch_12_0_5_enum_additions::edit_mode_status_tracking_settings_publish_size ... ok
+test patch_1207_b39_b44::b39_all_nine_chat_rows_deliver_public_exact_payload_in_both_lockdown_states ... ok
+test patch_12_0_5_enum_additions::edit_mode_systems_publish_totem_action_bar ... ok
+test patch_12_0_5_navigation_aura_entry::navigation_addon_denial_preserves_host_selection_and_caller_taint ... ok
+test party_countdown::lockdown_combat_matrix_preserves_active_request_and_guards_before_validation ... ok
+test patch_12_0_5_enum_additions::edit_mode_unit_frame_settings_publish_big_defensive_icon_size ... ok
+test patch_12_0_5_pending_party::leadership_addon_combat_denial_preserves_roles_leader_events_and_caller ... ok
+test patch_12_0_7_b01_b04::b01_tainted_secret_extras_are_denied_before_invalid_first_argument ... ok
+test patch_12_0_7_b01_b04::b02_tainted_denial_precedes_validation_and_has_no_invitation_side_effect ... ok
+test patch_12_0_7_b01_b04::b01_untainted_secrets_work_and_remain_rooted_across_gc ... ok
+test patch_12_0_7_b23_b28::b24_cached_legacy_forwarding_keeps_out_of_combat_permission_and_removal ... ok
+test patch_12_0_7_b01_b04::b02_untainted_secrets_and_every_extra_are_authenticated ... ok
+test patch_12_0_7_b23_b28::b24_out_of_combat_permission_does_not_declassify_secret_sound_or_extras ... ok
+test patch_12_0_7_b23_b28::b28_secure_secrets_preserve_values_arity_and_public_results ... ok
+test housing_destroy_entry::secure_secret_numeric_fields_accept_each_and_all_full_key_components ... ok
+test patch_12_0_7_b23_b28::b28_tainted_secret_extras_authenticate_before_any_public_type_validation ... ok
+test patch_12_0_5_pending_party::leadership_secure_combat_and_addon_out_of_combat_calls_mutate_live_state ... ok
+test patch_12_0_7_cvars::assisted_combat_reduce_highlights_round_trip ... ok
+test patch_12_0_7_cvars::developer_log_filter_debug_round_trip ... ok
+test patch_12_0_7_cvars::developer_log_filter_error_round_trip ... ok
+test patch_12_0_7_cvars::developer_log_filter_normal_round_trip ... ok
+test patch_12_0_7_cvars::developer_log_filter_fatal_round_trip ... ok
+test patch_12_0_7_cvars::named_cvars_coerce_boolean_numeric_and_string_values ... ok
+test patch_12_0_7_b23_b28::b24_live_combat_transition_recovery_and_environment_isolation ... ok
+test patch_12_0_7_cvars::developer_log_filter_spam_round_trip ... ok
+test patch_12_0_7_cvars::named_cvar_writes_do_not_change_sibling_cvars ... ok
+test patch_12_0_7_cvars::unknown_cvar_is_not_a_builtin_default ... ok
+test patch_12_0_7_duration_text_binding::p1207_binding_allowed_when_untainted_authenticates_every_input_and_extra_first ... ok
+test patch_12_0_7_duration_clocks::manual_clock_allowed_when_untainted_authenticates_inputs_before_receiver_validation ... ok
+test patch_12_0_7_duration_clocks::allowed_when_untainted_authenticates_ignored_extras_before_any_validation ... ok
+test patch_12_0_7_widget_secret_aspects::widget_and_font_authentication_denies_tainted_inputs_before_mutation ... ok
+test patch_12_0_7_duration_text_binding::p1207_binding_secret_timing_and_text_stay_opaque_to_tainted_callers ... ok
+test patch_12_0_7_cvars::named_cvars_do_not_share_overrides_or_defaults_between_environments ... ok
+test patch_12_0_7_widget_secret_aspects::widget_secret_outputs_are_returned_but_opaque_to_tainted_callers ... ok
+test patch_12_1_0_surface_closures::added_display_cvars_default_off_and_round_trip ... ok
+test patch_12_1_0_surface_closures::removed_auction_cvars_have_no_value_or_default ... ok
+test patch_7_3_2_session_protection::patch_7_3_2_bare_insecure_session_actions_are_blocked ... ok
+test pet_stats::get_pet_time_in_combat_reads_pet_state ... ok
+test pending_transmog_cost::pending_transmog_cost_secure_and_tainted_public_reads_preserve_context ... ok
+test pet_stats::get_pet_time_in_combat_defaults_zero ... ok
+test pixel_rounding_probe::pixel_rounding_probe_skips_combat_without_changing_frames ... ok
+test patch_12_1_0_surface_closures::context_access_denies_tainted_callers_on_restricted_objects_while_auras_are_secret ... ok
+test private_aura_anchors::ordinary_public_add_and_remove_preserve_addon_taint ... ok
+test patch_7_3_2_session_protection::patch_7_3_2_secure_session_actions_preserve_existing_transitions ... ok
+test private_aura_anchors::secret_outer_nested_and_scalar_inputs_reject_without_clearing_taint ... ok
+test private_aura_sound_add_context::ordinary_tainted_combat_add_copies_real_payload_and_removes_it ... ok
+test private_aura_anchors::secured_outer_and_nested_tables_respect_vm_access_guards ... ok
+test private_aura_sound_add_context::real_secret_table_and_field_authenticate_securely_but_deny_addon ... ok
+test private_aura_sound_removal::public_tainted_closure_removes_live_id_without_caller_or_combat_gate ... ok
+test private_warning_text_anchor::public_binding_after_private_registration_accepts_tainted_caller_in_combat ... ok
+test private_aura_sound_removal::real_rooted_vm_secrets_reject_secure_without_mutation_or_declassification ... ok
+test private_aura_sound_removal::real_rooted_vm_secrets_reject_tainted_without_mutation_or_declassification ... ok
+test protected_attribute_enforcement::insecure_caller_can_set_attribute_on_protected_frame_out_of_combat ... ok
+test private_warning_text_anchor::tainted_access_to_secured_binding_is_rejected_before_placement_or_retention ... ok
+test private_warning_text_anchor::secret_public_inputs_preserve_binding_and_caller_taint_atomically ... ok
+test private_aura_sound_add_context::secure_caller_registers_in_all_contexts_and_environments_are_isolated ... ok
+test protected_attribute_enforcement::insecure_caller_cannot_set_attribute_no_handler_on_protected_frame ... ok
+test protected_attribute_enforcement::secure_caller_can_set_attribute_on_protected_frame ... ok
+test protected_attribute_enforcement::insecure_caller_can_set_attribute_on_unprotected_frame ... ok
+test protected_attribute_enforcement::insecure_caller_cannot_set_attribute_on_protected_frame ... ok
+test patch_12_1_0_aura_creation::patch_12_1_0_aura_creation_in_combat_preserves_parent_and_frame_state ... ok
+test protected_frame_enforcement::test_insecure_addon_created_normal_frame_set_forbidden_is_noop ... ok
+test protected_frame_enforcement::test_insecure_combat_blocks_protected_anchor_offset_mutations ... ok
+test protected_frame_enforcement::test_insecure_combat_blocks_protected_anchor_mutations ... ok
+test patch_12_1_0_managed_aura_tooltips::hide_in_combat_suppresses_tooltips_only_while_in_combat ... ok
+test patch_12_1_0_aura_access_restrictions::aura_buttons_are_forbidden_to_tainted_callers_only_while_auras_are_secret ... ok
+test protected_frame_enforcement::test_insecure_combat_blocks_protected_parent_and_anchored_frame_mutations ... ok
+test protected_frame_enforcement::test_insecure_combat_blocks_protected_strata_level_and_toplevel_mutations ... ok
+test protected_frame_enforcement::test_insecure_out_of_combat_can_mutate_protected_frame ... ok
+test protected_frame_enforcement::test_insecure_combat_blocks_protected_visibility_and_scale_mutations ... ok
+test protected_frame_enforcement::test_secure_set_forbidden_marks_frame_forbidden ... ok
+test protected_frame_enforcement::test_secure_caller_can_mutate_protected_frame_during_combat ... ok
+test pvp_probes::is_in_active_world_pvp_true_for_combat_pvp_type ... ok
+test runtime_bootstrap_boundaries::assisted_combat_manager_defaults_are_not_runtime_bootstrap_fallbacks ... ok
+test runtime_bootstrap_boundaries::c_cvar_surface_is_not_runtime_bootstrap_fallback ... ok
+test runtime_bootstrap_boundaries::combat_log_and_chat_onupdate_defaults_are_not_runtime_bootstrap_fallbacks ... ok
+test quest_reward_favor::favor_tainted_secret_rejection_precedes_validation_and_lookup ... ok
+test quest_reward_favor::favor_untainted_secrets_are_authenticated_without_declassifying_inputs ... ok
+test retail_12_0_5_partial_104_114::ignore_gcd_secure_secret_flags_select_action_and_book_intervals ... ok
+test rilua_rows::rilua_rows_chat_expressions_replace_icons_and_reject_secret_flags ... ok
+test retail_12_0_5_partial_104_114::ignore_gcd_tainted_secret_flags_are_denied_without_losing_taint ... ok
+test sandbox_dangerous_globals::loadfile_nil_on_g_retained_on_secureenv ... ok
+test rilua_rows::rilua_rows_ambiguate_transforms_secret_names_without_revealing_or_changing_taint ... ok
+test rilua_rows::rilua_rows_drop_access_denies_descendants_without_taint_and_recovers ... ok
+test sandbox_dangerous_globals::dofile_nil_on_g_retained_on_secureenv ... ok
+test sandbox_dangerous_globals::math_randomseed_nil_on_g_retained_on_secureenv ... ok
+test sandbox_dangerous_globals::require_nil_on_g_retained_on_secureenv ... ok
+test seconds_formatter_format::seconds_formatter_format_applies_promotion_lowercase_and_zero_settings ... ok
+test sandbox_dangerous_globals::string_dump_nil_on_g_retained_on_secureenv ... ok
+test rilua_rows::rilua_rows_chat_host_vocabulary_flags_live_updates_and_isolation ... ok
+test seconds_formatter_native::seconds_formatter_native_handle_survives_securecopy_and_aura_validation ... ok
+test secret_value_security::custom_aura_button_update_mode_is_published_before_secure_environment_copy ... ok
+test secret_value_security::addon_tainted_function_is_not_secret ... ok
+test secret_string_formatting::inferred_tainted_positional_formatting_preserves_secrecy_and_stack_taint ... ok
+test secret_value_security::secure_loadstring_function_is_not_secret ... ok
+test secret_string_formatting::inferred_tainted_direct_formatting_preserves_secrecy_and_stack_taint ... ok
+test secrets_publication_queries::secrets_publication_selector_authentication_preserves_caller_taint ... ok
+test secure_attribute_delegate::forbidden_attribute_delegate_dispatches_securely_from_tainted_stack ... ok
+test edit_mode_cli::no_saved_vars_still_loads_edit_mode_cache ... ok
+test secure_handler_fallback::execute_callmethod_does_not_poison_table_args_or_results ... ok
+test secure_handler_fallback::execute_callmethod_propagates_tainted_args_to_insecure_method ... ok
+test secure_handler_fallback::execute_passes_varargs_to_body ... ok
+OK:5
+test secure_handler_fallback::execute_restricted_environment_allows_math_string_and_print ... ok
+test secure_handler_fallback::execute_restricted_environment_allows_table_maxn_for_click_cast_loops ... ok
+test secure_handler_fallback::execute_runs_body_with_self_bound_to_frame ... ok
+test secure_handler_fallback::execute_swallows_compile_and_runtime_errors ... ok
+test secure_handler_fallback::execute_uses_restricted_environment_without_global_table_access ... ok
+test secure_handler_fallback::set_frame_ref_is_noop_with_nil_args ... ok
+test secure_handler_fallback::set_frame_ref_overwrites_same_label ... ok
+test secure_handler_fallback::set_frame_ref_round_trips_via_get_frame_ref ... ok
+test secure_handler_fallback::set_frame_ref_scopes_per_frame ... ok
+test secure_handler_fallback::wrap_script_installs_pre_and_post_around_existing_handler ... ok
+test secure_handler_fallback::wrap_script_isolates_bad_snippets_from_original ... ok
+test secure_handler_fallback::wrap_script_post_body_is_optional ... ok
+test secure_handler_fallback::wrap_script_runs_even_without_existing_handler ... ok
+test secure_transfer::secure_transfer_actions_update_state ... ok
+test secure_transfer::secure_transfer_namespace_has_expected_shape ... ok
+test secure_transfer::secure_transfer_queries_use_state ... ok
+test secureenv_isolation::exec_maybe_secure_false_matches_exec ... ok
+test secureenv_isolation::exec_maybe_secure_true_matches_exec_rilua_secure ... ok
+test secureenv_isolation::global_copied_at_creation_is_frozen_against_later_g_rebind ... ok
+test secureenv_isolation::insecure_chunk_still_lands_in_global_env ... ok
+test secureenv_isolation::late_global_is_not_visible_to_secure_without_explicit_export ... ok
+test secureenv_isolation::late_global_rebind_stays_invisible_to_secure ... ok
+test secureenv_isolation::secure_primitive_write_stays_inside_secureenv ... ok
+test secureenv_isolation::secure_string_write_is_not_visible_in_global_env ... ok
+test secureenv_isolation::secure_write_severs_the_link_to_global_env ... ok
+test secureenv_isolation::secureenv_does_not_read_late_table_from_global_env ... ok
+test secureenv_isolation::shared_table_mutation_propagates_both_ways ... ok
+test secureenv_isolation::toc_multiannotations_load_files_in_order_with_secure_environment ... ok
+test secureenv_isolation::two_secure_chunks_share_one_secureenv ... ok
+test secure_group_headers::secure_group_pet_header_spawns_pet_child ... ok
+test security_api::addon_tainted_global_helper_taints_blizzard_call_path ... ok
+test security_api::addon_tainted_table_slot_does_not_make_table_secret ... ok
+test secure_group_headers::secure_raid_group_header_spawns_raid_unit_children ... ok
+test security_api::test_canaccessallvalues_one_tainted ... ok
+test security_api::test_can_change_protected_state_allows_secure_and_out_of_combat_calls ... ok
+test security_api::test_canaccessvalue_tainted ... ok
+test security_api::test_canaccessvalue_untainted ... ok
+test security_api::test_forceinsecure ... ok
+test security_api::test_hooksecurefunc_global ... ok
+test security_api::test_hooksecurefunc_table ... ok
+test security_api::test_issecretvalue_tainted ... ok
+test security_api::test_issecretvalue_untainted ... ok
+test security_api::test_issecure_returns_true ... ok
+test security_api::test_issecurevariable_detects_taint ... ok
+test security_api::test_issecurevariable_returns_true ... ok
+test security_api::test_loadstring_taints ... ok
+test security_api::test_secure_handler_stubs_exist ... ok
+test security_api::test_secure_handler_unwrap_script_restores_original_handler ... ok
+test security_api::test_secure_handlers_store_frame_refs_and_execute_snippets ... ok
+test security_api::test_secure_map_rejects_secret_keys_and_values ... ok
+test security_api::test_securecall ... ok
+test security_api::test_securecall_clears_taint_for_nested_closures ... ok
+test security_api::test_securecall_accepts_global_function_name ... ok
+test security_api::test_securecall_restores_taint ... ok
+test security_api::test_securecallfunction ... ok
+test security_api::test_securecallfunction_passes_table_self_to_unbound_method ... ok
+test security_api::test_securecmdoptionparse_matches_modifier_and_comma_conditions ... ok
+test security_api::test_securecmdoptionparse_returns_nil_when_no_clause_matches ... ok
+test security_api::test_securecmdoptionparse_single_option ... ok
+test security_api::test_securecmdoptionparse_supports_harm_and_unit_override ... ok
+test security_api::test_securecmdoptionparse_uses_fallback_when_condition_is_false ... ok
+test security_api::test_securecmdoptionparse_uses_first_matching_combat_clause ... ok
+test security_api::test_secureexecuterange ... ok
+test security_state_drivers::test_create_secure_delegate_runs_with_secure_taint ... ok
+test security_state_drivers::test_securecallmethod_missing_method ... ok
+test security_state_drivers::test_securecallmethod_returns_values ... ok
+test security_state_drivers::test_create_secure_delegate_survives_nil ... ok
+test security_state_drivers::test_securecallmethod_swallows_errors ... ok
+test server_snapshot_import::server_snapshot_action_bars_seed_get_action_info ... ok
+test server_snapshot_import::server_snapshot_addon_loads_edit_mode_before_capturing_layout_name ... ok
+test set_cvar_global::c_cvar_get_reads_back_the_value_set_via_global ... ok
+test set_cvar_global::c_cvar_register_cvar_sets_default_without_overwriting_existing_value ... ok
+test set_cvar_global::clamp_exists_during_bootstrap ... ok
+test set_cvar_global::empty_cvar_registration_preserves_classic_castbar_scale_default ... ok
+test set_cvar_global::legacy_cvar_compat_globals_exist_before_framexml_loads ... ok
+test set_cvar_global::register_cvar_accepts_finite_numeric_defaults_from_both_surfaces ... ok
+test set_cvar_global::register_cvar_exposes_runtime_default_through_global_and_namespace ... ok
+test set_cvar_global::register_cvar_makes_unknown_cvar_visible_with_zero_default ... ok
+test set_cvar_global::register_cvar_nil_default_retains_zero_policy ... ok
+test set_cvar_global::register_cvar_numeric_default_preserves_existing_override_and_first_default ... ok
+test set_cvar_global::register_cvar_preserves_explicit_empty_default_lifecycle ... ok
+test set_cvar_global::register_cvar_rejects_nonfinite_and_unsupported_defaults ... ok
+test server_snapshot_import::server_snapshot_addon_derives_active_edit_mode_layout_name_from_c_api ... ok
+test set_cvar_global::set_cvar_accepts_fractional_numeric_value ... ok
+test set_cvar_global::set_cvar_accepts_boolean_as_one_zero ... ok
+test set_cvar_global::set_cvar_accepts_numeric_value ... ok
+test settings_bootstrap_boundaries::settings_initializer_hook_is_temporary_workaround_not_runtime_bootstrap ... ok
+test set_cvar_global::set_cvar_empty_name_returns_false ... ok
+test set_cvar_global::set_cvar_fires_cvar_update_after_storing_value ... ok
+test set_cvar_global::set_cvar_stores_string_value ... ok
+test spell_api::test_assisted_combat_is_available_shape ... ok
+test spell_api::test_assisted_combat_rotation_spells_returns_table ... ok
+test spell_base_retail_security::authentic_secret_bools_arg2_reject_without_tainted_bool_comparison ... ok
+test spell_bonus_stat_security::public_tainted_school_follows_explicit_output_flag_and_retains_caller_taint ... ok
+test spell_bonus_stat_security::secure_original_secret_school_returns_existing_intellect_and_preserves_trust ... ok
+test spell_bonus_stat_security::tainted_original_secret_school_is_denied_even_for_zero_or_restricted_output ... ok
+test spell_bonus_stat_security::tainted_secret_nil_bool_table_and_actual_frame_authenticate_before_unused_payload ... ok
+test spell_book_cast_count::tainted_callers_are_denied_secret_selectors_before_resolution ... ok
+test spell_book_cast_count::untainted_callers_may_pass_secret_selectors ... ok
+test spell_book_cooldown_outputs::current::book_tainted_secret_selectors_deny_before_unknown_identity ... ok
+test spell_book_cooldown_outputs::current::restriction_flag_is_independent_of_combat_and_stat_policy ... ok
+test spell_book_cooldown_outputs::current::tainted_arithmetic_denial_preserves_roots_and_recovery ... ok
+test spell_book_cooldown_outputs::current::book_secure_actual_secret_numeric_selectors_resolve_real_identity ... ok
+test spell_book_cooldown_outputs::current::tainted_public_selectors_preserve_caller_and_public_booleans ... ok
+test spell_book_loss_of_control_outputs::current::book_secure_authenticated_invalid_numeric_selectors_are_inferred_nil ... ok
+test spell_book_loss_of_control_outputs::current::addon_public_selectors_are_allowed_without_changing_taint_or_flags ... ok
+test spell_book_cooldown_outputs::current::tainted_copy_and_gc_keep_actual_wrapper_metadata_and_payloads ... ok
+test spell_book_loss_of_control_outputs::current::spell_secret_userdata_stays_unmodeled_nil_for_secure_and_addon_callers ... ok
+test spell_book_loss_of_control_outputs::current::book_secure_genuine_numeric_slot_and_bank_resolve_before_type_checks ... ok
+test spell_count_outputs::secure_display_authenticates_secret_numeric_string_identifier_and_defaults ... ok
+test spell_count_outputs::public_tainted_callers_are_not_blanket_denied_and_recover_trust ... ok
+test spell_count_outputs::secure_display_wrong_authenticated_types_report_positions_without_payload ... ok
+test spell_count_outputs::strict_public_identifier_utf8_u32_domain_in_secure_and_tainted_frames ... ok
+test spell_count_outputs::tainted_restricted_outputs_deny_math_concat_len_and_opaque_payload_leaks ... ok
+test spell_maw_powers::public_queries_work_secure_and_tainted_without_changing_caller_taint ... ok
+test spell_max_cumulative_aura_applications::tainted_callers_keep_their_taint_and_cannot_open_restricted_results ... ok
+test spell_state_probes::c_action_bar_is_current_action_follows_cast_lifecycle ... ok
+test spell_state_probes::c_action_bar_is_current_action_reflects_slot_changes_during_cast ... ok
+test spell_state_probes::is_current_action_matches_action_bar_to_cast ... ok
+test startup_api_stubs::nameplate_size_helper_exists_as_safe_noop ... ok
+test startup_api_stubs::startup_party_chat_and_targeting_globals_are_callable ... ok
+test startup_targeted_regressions::damage_meter::damage_meter_combat_publication_is_explicitly_blocked ... ok
+test startup_targeted_regressions::late::c_action_bar_reads_configured_default_bar_indices ... ok
+test render_order_world_map::chat_frame_voice_button_overlaps_world_map_but_renders_below_panel_border ... ok
+test render_order_world_map::voice_chat_prompt_renders_below_world_map_panel_in_combined_stack ... ok
+test spell_casting::cast_bar_respects_edit_mode_lock_setting_after_startup_fix ... ok
+test secure_aura_header_helpers::cached_secure_aura_header_reorders_and_hides_stale_children ... ok
+test startup_warnings::test_secure_env_toc_annotations_are_exhaustive ... ok
+test secure_aura_header_helpers::cached_helper_completion_updates_talent_state_before_specialization_notification ... ok
+test secure_aura_header_helpers::cached_secure_aura_header_sorts_finite_before_permanent ... ok
+test store_api::store_secure_vas_queries_and_stateful_actions_use_seeded_data ... ok
+test secure_aura_header_helpers::cached_helper_delegate_restores_caller_after_addon_callback_error ... ok
+test tertiary_stat_inputs::stamped_public_callers_keep_taint_and_receive_plain_nonzero_outputs ... ok
+test test_cvar_display_settings::brightness_set_then_get_round_trips_through_simstate ... ok
+test test_cvar_display_settings::brightness_default_visible_via_get_cvar ... ok
+test test_cvar_display_settings::contrast_default_visible_via_get_cvar ... ok
+test startup_targeted_regressions::late::startup_chat_config_channel_checkbox_creation_keeps_checkbutton_children ... ok
+test test_cvar_display_settings::c_cvar_namespace_mirrors_global_get_set ... ok
+test test_cvar_display_settings::contrast_set_then_get_round_trips_through_simstate ... ok
+test test_cvar_display_settings::cvar_lookup_is_case_insensitive_on_read ... ok
+test test_cvar_display_settings::gamma_default_visible_via_get_cvar ... ok
+test test_cvar_display_settings::unknown_cvar_returns_nil_not_empty_string ... ok
+test test_cvar_display_settings::get_cvar_default_returns_yaml_value_after_override ... ok
+test startup_warnings::late::test_secure_action_button_template_is_protected_tuple_after_blizzard_framexml_load ... ok
+test test_keybindings::keybind_b_opens_bags ... ok
+test startup_warnings::test_secure_env_annotated_files_load_cleanly ... ok
+test test_keybindings::keybind_c_opens_character ... ok
+test secure_aura_header_helpers::cached_class_talent_spec_helpers_keep_real_ui_and_castbar_fields_clean ... ok
+test secure_aura_header_helpers::cached_class_talent_loadout_helpers_keep_real_talent_fields_clean ... ok
+test test_keybindings::keybind_backspace_opens_backpack ... ok
+test startup_warnings::test_edit_mode_layout_update_ignores_preset_layouts_during_startup ... ok
+test test_keybindings::keybind_c_populates_character_panel_surface ... ok
+test test_keybindings::keybind_f8_opens_bag4 ... ok
+test startup_warnings::late::test_housing_tutorials_load_without_cvar_bitfield_warning ... ok
+test test_guild_panel::communities_stream_dropdown_shows_guild_officer_and_notification_settings ... ok
+test test_keybindings::keybind_f10_opens_bag2 ... ok
+test test_keybindings::keybind_f11_opens_bag1 ... ok
+test test_keybindings_panels::hidden_talent_dialogs_do_not_emit_quads_after_opening_talents ... ok
+test startup_warnings::late::test_blizzard_framexml_load_registers_boss_banner_cvar_without_warning has been running for over 60 seconds
+test test_keybindings_panels::keybind_j_opens_guild ... ok
+test test_keybindings::game_screen_runtime_loadaddon_rejects_glueparent ... ok
+test test_keybindings::keybind_c_toggles_character_without_errors ... ok
+test test_keybindings_panels::keybind_n_opens_talents ... ok
+test test_keybindings_panels::keybind_o_opens_social ... ok
+test test_guild_panel::guild_control_rank_settings_dropdown_shows_rank_rows has been running for over 60 seconds
+test test_keybindings::backpack_button_click_opens_backpack has been running for over 60 seconds
+test test_keybindings::character_panel_inventory_tooltip_has_lines_and_closes_without_errors has been running for over 60 seconds
+test test_keybindings::keybind_u_opens_reputation ... ok
+test test_keybindings_panels::keybind_s_opens_spellbook ... ok
+test test_keybindings_panels::keybind_s_renders_spellbook_item_icon_quads_on_first_open ... ok
+test test_keybindings_panels::premade_group_categories_can_start_search ... ok
+test test_keybindings_panels::premade_group_category_buttons_can_be_clicked ... ok
+test test_keybindings::keybind_f9_opens_bag3 has been running for over 60 seconds
+test test_keybindings_panels::premade_group_search_result_tooltips_do_not_error ... ok
+test test_keybindings::reputation_surface_exists_for_keybind_setup has been running for over 60 seconds
+test test_keybindings_panels::raid_finder_group_button_path_handles_empty_rf_dungeon_list ... ok
+test startup_warnings::late::test_blizzard_framexml_load_registers_boss_banner_cvar_without_warning ... ok
+test test_keybindings_panels::keybind_a_opens_achievements has been running for over 60 seconds
+test test_keybindings_spellbook_talents::keybind_s_is_a_single_thin_dispatch_to_toggle_spellbook_frame ... ok
+test test_keybindings_panels::keybind_o_dispatches_toggle_friends_frame ... ok
+test test_keybindings_panels::keybind_l_opens_group_finder has been running for over 60 seconds
+test test_keybindings_spellbook_talents::keybind_s_opens_spellbook_tab_on_first_press ... ok
+test test_keybindings_spellbook_talents::keybind_s_toggles_spellbook_closed_on_second_press ... ok
+test test_keybindings_panels::keybind_a_opens_achievements ... ok
+test test_keybindings_panels::keybind_s_keeps_spellbook_backgrounds_below_icons_after_initial_bucket_build has been running for over 60 seconds
+test test_keybindings_spellbook_talents::spellbook_first_visible_item_icon_matches_spellbook_texture ... ok
+test test_keybindings_spellbook_talents::specialization_escape_after_direct_open_closes_panel ... ok
+test test_keybindings_spellbook_talents::spellbook_paging_label_is_formatted_on_first_open ... ok
+test test_keybindings_spellbook_talents::keybind_s_opens_spellbook_no_errors ... ok
+test test_keybindings::backpack_button_click_opens_backpack ... ok
+test test_keybindings_spellbook_talents::talent_panel_hero_spec_button_uses_protection_hero_icon_atlases ... ok
+test test_keybindings_spellbook_talents::talent_panel_switches_spec_tabs_and_closes_without_errors ... ok
+test test_keybindings_targeting::keybind_f2_targets_party1 ... ok
+test test_keybindings_targeting::keybind_f3_targets_party2 ... ok
+test test_keybindings_targeting::keybind_f4_targets_party3 ... ok
+test test_keybindings::character_panel_inventory_tooltip_has_lines_and_closes_without_errors ... ok
+test test_keybindings_targeting::render_order_support::tests::world_quest_pin_pairs_collect_matching_circle_and_icon ... ok
+test test_keybindings_spellbook_talents::talent_panel_has_at_least_one_visible_talent_node_frame ... ok
+test test_keybindings_targeting::target_frame_portrait_corners_match_background_when_replaced_with_class_icon ... FAILED
+test test_keybindings_targeting::target_frame_shown_after_targeting ... ok
+test test_keybindings_targeting::target_frame_shown_for_enemy ... ok
+test test_keybindings_targeting::unit_frame_onleave_fades_out_game_tooltip ... ok
+test test_keybindings_panels::keybind_s_keeps_spellbook_backgrounds_below_icons_after_initial_bucket_build ... ok
+test test_showuipanel_lod::audio_settings_register_seeded_output_device_dropdown_options ... ok
+test test_showuipanel_lod::settings_open_to_interface_category_opens_settings_panel ... ok
+test test_showuipanel_lod_player_spells::keybind_n_loads_blizzard_player_spells_and_shows_talents ... ok
+test test_keybindings_spellbook_talents::specialization_escape_after_micro_button_and_tab_click_closes_panel ... ok
+test test_showuipanel_lod_player_spells_diagnostics::debug_keybind_n_nil_width_callsite ... ignored, diagnostic
+test tooltip_aura_instance_security::aura::secure_authentic_numeric_instance_ids_select_concrete_rows ... ok
+test tooltip_aura_instance_security::aura::secure_authentic_optional_string_and_nil_remain_ignored ... ok
+test tooltip_aura_instance_security::aura::secure_authentic_unit_string_returns_meaningful_payload ... ok
+test tooltip_aura_instance_security::aura::secure_wrong_type_bool_table_frame_reject_with_context_and_recovery ... ok
+test tooltip_aura_instance_security::aura::tainted_secret_gate_precedes_lookup_and_public_type_errors ... ok
+test tooltip_aura_instance_security::buff::secure_authentic_numeric_instance_ids_select_concrete_rows ... ok
+test tooltip_aura_instance_security::buff::secure_authentic_optional_string_and_nil_remain_ignored ... ok
+test tooltip_aura_instance_security::buff::secure_authentic_unit_string_returns_meaningful_payload ... ok
+test tooltip_aura_instance_security::buff::secure_wrong_type_bool_table_frame_reject_with_context_and_recovery ... ok
+test test_keybindings_panels::keybind_l_opens_group_finder ... ok
+test tooltip_aura_instance_security::buff::tainted_secret_gate_precedes_lookup_and_public_type_errors ... ok
+test tooltip_aura_instance_security::debuff::secure_authentic_numeric_instance_ids_select_concrete_rows ... ok
+test tooltip_aura_instance_security::debuff::secure_authentic_optional_string_and_nil_remain_ignored ... ok
+test tooltip_aura_instance_security::debuff::secure_authentic_unit_string_returns_meaningful_payload ... ok
+test tooltip_aura_instance_security::debuff::secure_wrong_type_bool_table_frame_reject_with_context_and_recovery ... ok
+test tooltip_aura_instance_security::debuff::tainted_secret_gate_precedes_lookup_and_public_type_errors ... ok
+test tooltip_item_context::public_tainted_queries_retain_meaningful_context_and_caller_trust ... ok
+test tooltip_item_context::secure_authentic_secret_nil_optionals_follow_nil_default_and_exact_keys ... ok
+test test_keybindings_spellbook_talents::keybind_s_dispatches_directly_to_playerspellsutil_toggle_spellbook_frame ... ok
+test tooltip_item_context::secure_authentic_secret_numbers_select_meaningful_item_context_and_treasure ... ok
+test tooltip_item_context::secure_secret_quality_is_authenticated_but_ignored_regardless_of_payload ... ok
+test tooltip_item_context::secure_secret_wrong_type_contexts_reach_validation_without_private_leaks ... ok
+test tooltip_item_context::tainted_secrets_all_four_positions_gate_before_public_invalid_types_and_lookup ... ok
+test tooltip_spell_mount_identifiers::ordinary_tainted_public_calls_preserve_stack_taint_and_payload ... ok
+test tooltip_unit_buff_security::public_tainted_calls_keep_content_filters_and_caller_taint ... ok
+test tooltip_unit_buff_security::secure_combined_secret_selectors_return_meaningful_content_and_true_miss ... ok
+test tooltip_unit_buff_security::secure_secret_filter_and_nil_apply_filter_and_default ... ok
+test tooltip_unit_buff_security::secure_secret_index_selects_concrete_filtered_row ... ok
+test tooltip_unit_buff_security::secure_secret_unit_selects_actual_party_not_player ... ok
+test tooltip_unit_buff_security::secure_wrong_types_and_public_wrong_types_reject_with_recovery ... ok
+test tooltip_unit_buff_security::tainted_malformed_secret_payload_denied_before_type_or_state_short_circuit ... ok
+test tooltip_unit_buff_security::tainted_secret_each_position_denied_before_lookup_or_public_parse ... ok
+test tooltip_unit_debuff_security::public_tainted_calls_preserve_content_source_selection_and_caller_taint ... ok
+test tooltip_unit_debuff_security::secure_and_public_invalid_types_are_ordinary_errors_without_payload_leaks ... ok
+test tooltip_unit_debuff_security::tainted_malformed_secret_payloads_are_denied_before_type_or_miss ... ok
+test tooltip_unit_debuff_security::secure_original_secret_unit_index_filter_and_nil_drive_real_selection ... ok
+test tooltip_unit_debuff_security::tainted_secret_each_position_authenticates_before_earlier_malformed_parse ... ok
+test ui_visibility_globals::open_world_map_maximized_does_not_error_on_set_ui_visibility ... ok
+test ui_visibility_globals::set_ui_visibility_toggles_ui_parent_visibility ... ok
+test ui_visibility_globals::ui_visibility_globals_are_registered ... ok
+test test_guild_panel::guild_control_rank_settings_dropdown_shows_rank_rows ... ok
+test unit_attack_speed::restriction_toggle_and_tainted_callers_keep_values_private ... ok
+test unit_aura_altered_form::tainted_caller_rejects_host_secret_string_and_recovers_with_public_input ... ok
+test unit_aura_altered_form::untainted_caller_accepts_actual_host_secret_unit_string ... ok
+test unit_aura_filter_query::tainted_query_denies_each_secret_even_before_unknown_unit_lookup ... ok
+test unit_aura_filter_query::untainted_query_accepts_each_authentic_secret_argument_and_combination ... ok
+test unit_aura_slot_enumeration_arguments::rooted_secret_identity_and_caller_taint_survive_forced_gc_roundtrips ... ok
+test test_keybindings::reputation_surface_exists_for_keybind_setup ... ok
+test unit_aura_slot_enumeration_arguments::secure_authentic_secret_units_enumerate_actual_store_and_unknown_before_absence ... ok
+test unit_aura_slot_enumeration_arguments::secure_optional_secret_filter_max_token_and_mixed_arguments_keep_payloads ... ok
+test unit_aura_slot_secret_arguments::never_secret_unit_rejects_authentic_secret_strings_even_when_secure ... ok
+test unit_aura_slot_enumeration_arguments::tainted_each_argument_and_mixed_secrets_deny_with_public_recovery_in_same_closure ... ok
+test unit_aura_slot_secret_arguments::gc_rooted_secret_identity_survives_secure_tainted_public_secure_roundtrip ... ok
+test unit_aura_slot_secret_arguments::secure_authentic_secret_slot_numbers_use_actual_stored_ids ... ok
+test unit_comparison_permissions::comparison_permissions_typed_secrets_require_untainted_callers ... ok
+test unit_aura_slot_secret_arguments::tainted_secret_denials_precede_lookup_and_public_recovery_preserves_taint ... ok
+test unit_frame_layer_probe::unit_layer_controls_cleanup_on_screenshot_failure_and_cancel ... ok
+test unit_frame_layer_probe::unit_layer_controls_timeout_and_screenshot_call_error_cleanup ... ok
+test unit_name_secret_tokens::unit_name_secret_tokens_rejected_from_secure_top_level ... ok
+test test_keybindings_targeting::keybind_f6_targets_enemy ... ok
+test unit_name_secret_tokens::unit_name_secret_tokens_rejected_from_tainted_caller_with_public_control ... ok
+test unit_spell_target_name::tainted_public_unit_gets_opaque_name_without_changing_taint ... ok
+test unit_spell_target_name::untainted_secret_unit_resolves_actual_cast_target ... ok
+test unit_spell_target_name::tainted_secret_unit_is_rejected_without_changing_taint ... ok
+test unit_token_identity_secrecy::identity_lookup_suppression_preserves_secure_and_addon_callers ... ok
+test userdata_proxy::curve_objects_keep_native_identity_through_securecopy ... ok
+test userdata_proxy::forbidden_partition_nonsecure_xml_delegate_keeps_public_arguments ... ok
+test userdata_proxy::forbidden_partition_secure_xml_delegate_preserves_argument_shape_and_isolation ... ok
+test viewed_outfit_selection::viewed_outfit_authenticates_secrets_before_mutation_and_preserves_caller_taint ... ok
+test voice_chat_probes::is_using_voice_chat_reads_state_field ... ok
+test voice_chat_probes::other_probes_default_false ... ok
+test voice_chat_probes::is_voice_enabled_reads_state_field ... ok
+test voice_chat_probes::voice_chat_is_connecting_reads_state_field ... ok
+test voice_chat_probes::voice_chat_probe_globals_live_under_real_globals_boundary ... ok
+test voice_chat_probes::voice_chat_is_deafened_reads_state_field ... ok
+test voice_chat_probes::voice_chat_is_muted_reads_state_field ... ok
+test voice_chat_probes::voice_enabled_defaults_true ... ok
+test voice_chat_probes::voice_chat_is_talking_reads_state_field ... ok
+test voice_chat_speak_text::malformed_public_arguments_reject_atomically_and_public_calls_recover ... ok
+test voice_chat_speak_text::ordinary_request_records_all_declared_fields_and_returns_zero_values ... ok
+test voice_chat_speak_text::multiple_requests_keep_order_and_default_overlap_false ... ok
+test voice_chat_speak_text::environments_keep_separate_request_queues ... ok
+test voice_chat_speak_text::rooted_secret_inputs_survive_gc_and_denial_without_declassification ... ok
+test voice_chat_speak_text::secret_text_is_conservatively_rejected_secure_and_tainted ... ok
+test voice_chat_speak_text::secure_caller_rejects_every_never_secret_position_without_state_change ... ok
+test voice_chat_speak_text::tainted_caller_rejects_every_never_secret_position_without_state_change ... ok
+test voice_chat_verbs::get_microphone_volume_reads_current_value ... ok
+test voice_chat_verbs::headset_mode_check_flags_state_and_fires_event ... ok
+test tooltip_world_cursor::test_world_cursor_nameplate_anchor_positions_tooltip_relative_to_owner ... ok
+test voice_chat_verbs::set_microphone_volume_clamps_out_of_range ... ok
+test voice_chat_verbs::set_microphone_volume_stores_and_fires_event ... ok
+test voice_chat_verbs::set_output_volume_stores_and_fires_event ... ok
+test voice_chat_verbs::voice_chat_defaults_are_full_volume_unmuted_no_headset ... ok
+test widget_slider::set_value_updates_castbar_style_scale_and_cvar_consumer ... ok
+test wowforever_gamepad_constants::forever_gamepad_cvar_defaults_are_profile_scoped ... ok
+test wowtoken_secure::wowtoken_secure_methods_track_redemption_and_token_state ... ok
+test xml_animation_group_onload::inherited_chat_glow_keeps_animation_on_its_texture ... ok
+test xml_secure_delegates::secure_xml_delegate_preserves_callback_and_caller_taint ... ok
+test xml_secure_delegates::secure_xml_delegate_restores_caller_after_error ... ok
+test xml_templates::registry::addon_method_override_stays_tainted_under_trusted_template_script ... ok
+test xml_templates::registry::addon_template_scripts_stay_tainted_when_clean_code_constructs_frame ... ok
+test test_keybindings_targeting::keybind_f5_targets_party4 ... ok
+test test_keybindings_spellbook_talents::spellbook_panel_spell_tooltip_has_lines_after_tab_switch_and_closes_without_errors ... ok
+test test_showuipanel_lod_fixtures::action_button_util_fixture_drives_all_action_bar_statuses ... ok
+test world_map_voice_button_order::chat_frame_voice_button_renders_below_overlapping_world_map_widgets ... ok
+test unit_player_controlled_or_group_member::player_controlled_or_group_member_supports_secure_aura_identity_filtering ... ok
+test test_keybindings::keybind_f9_opens_bag3 ... ok
+test test_showuipanel::show_and_hide_ui_panel_toggle_registered_frame_visibility ... ok
+test test_showuipanel_lod_player_spells::keybind_s_loads_blizzard_player_spells_and_shows_spellbook ... ok
+
+failures:
+
+---- c_api_surface::chat_info_no_state_defaults_are_not_c_api_temporary_shims stdout ----
+
+thread 'c_api_surface::chat_info_no_state_defaults_are_not_c_api_temporary_shims' (52635) panicked at /tmp/p548-master-06uf2fon/tests/c_api_surface.rs:602:5:
+C_ChatInfo no-state defaults should not be wired through c_api registration
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- edit_mode_api::enums::unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size stdout ----
+[108.921s] [Startup] WowLuaEnv::new begin
+[108.923s] [Startup] SimState::default complete in 2.64ms
+[108.924s] [Startup] rilua VM created in 120.66µs
+[108.924s] [Startup] builtin frames initialized in 77.96µs
+[108.924s] [Startup] template registry cleared in 3.67µs
+[108.924s] [Startup] intrinsic templates registered in 8.07µs
+[108.924s] [Startup] initial app_data lua handle installed in 281.00ns
+[109.388s] [Startup] init_lua_state complete in 464.57ms
+[109.388s] [Startup] final app_data lua handle installed in 991.00ns
+[109.389s] [Startup] initial screen globals installed in 359.59µs
+[109.389s] [Startup] WowLuaEnv::new complete
+
+thread 'edit_mode_api::enums::unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size' (53788) panicked at /tmp/p548-master-06uf2fon/tests/edit_mode_api/enums.rs:44:5:
+assertion `left == right` failed
+  left: 22
+ right: 21
+
+---- test_keybindings_targeting::target_frame_portrait_corners_match_background_when_replaced_with_class_icon stdout ----
+
+running 1 test
+test test_keybindings_targeting::target_frame_portrait_corners_match_background_when_replaced_with_class_icon ... FAILED
+
+failures:
+
+---- test_keybindings_targeting::target_frame_portrait_corners_match_background_when_replaced_with_class_icon stdout ----
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 2.41ms
+[  0.003s] [Startup] rilua VM created in 114.38µs
+[  0.003s] [Startup] builtin frames initialized in 87.33µs
+[  0.003s] [Startup] template registry cleared in 10.65µs
+[  0.003s] [Startup] intrinsic templates registered in 7.23µs
+[  0.003s] [Startup] initial app_data lua handle installed in 210.00ns
+[  0.179s] [Startup] init_lua_state complete in 176.40ms
+[  0.179s] [Startup] final app_data lua handle installed in 441.00ns
+[  0.179s] [Startup] initial screen globals installed in 111.95µs
+[  0.179s] [Startup] WowLuaEnv::new complete
+Lua error: @Interface/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUIToggle.lua: ...ddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUIToggle.lua:84: attempt to index global 'GameMenuEscPriority' (a nil value)
+stack traceback:
+	(string):1: in main chunk
+Lua error: [OnLoad] GuildMicroButton: .../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1086: attempt to call a nil value
+=(string):19: in main chunk
+
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__report'
+	(string):20: in main chunk
+Lua error: [OnLoad] ?: ...ddOns/Blizzard_SharedXML/Shared/Slider/MinimalSlider.lua:237: attempt to call method 'SetNarrationValueFormatter' (a nil value)
+=(string):19: in main chunk
+
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__report'
+	(string):20: in main chunk
+Lua error: Failed to create frame __Blizzard_FrameXML_4198: generated/loader-exec-no-global-slots/74237a22cbfb97ed:7: attempt to index global 'RaidWarningUtil' (a nil value)
+stack traceback:
+	(string):1: in main chunk
+Lua error: [OnShow] PlayerCastingBarFrame: ...AddOns/Blizzard_UIPanels_Game/Shared/CastingBarFrame.lua:1376: attempt to index global 'ManagedFrameMixin' (a nil value)
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__report'
+	(string):12: in main chunk
+Lua error: [OnLoad] DressUpFrameCustomSetDropdown: (string):174: attempt to index global 'DropdownButtonMixin' (a nil value)
+=(string):19: in main chunk
+
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__report'
+	(string):20: in main chunk
+Lua error: [OnShow] MainActionBar: .../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1181: attempt to call a nil value
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__report'
+	(string):12: in main chunk
+Lua error: ...rface/AddOns/Blizzard_UnitFrame/Mainline/PlayerFrame.lua:79: attempt to index global 'StatusTrayManager' (a nil value)
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__wow_original_securecall'
+	(string):13: in function 'securecall'
+	generated/loader-exec-no-global-slots/49e7e01a1ce7dc6d:17: in function <generated/loader-exec-no-global-slots/49e7e01a1ce7dc6d:15>
+	[C]: in function 'pcall'
+	(string):16: in main chunk
+Lua error: ...rface/AddOns/Blizzard_UnitFrame/Mainline/TargetFrame.lua:88: attempt to call method 'SetGUIDMatch' (a nil value)
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__wow_original_securecall'
+	(string):13: in function 'securecall'
+	generated/loader-exec-no-global-slots/3432fb4cf412e1b5:21: in function <generated/loader-exec-no-global-slots/3432fb4cf412e1b5:19>
+	[C]: in function 'pcall'
+	(string):16: in main chunk
+Lua error: [OnShow] BossTargetFrameContainer: ...rface/AddOns/Blizzard_UnitFrame/Mainline/TargetFrame.lua:1092: attempt to index global 'ManagedFrameMixin' (a nil value)
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__report'
+	(string):12: in main chunk
+Lua error: [OnLoad] Boss1TargetFrame: ...rface/AddOns/Blizzard_UnitFrame/Mainline/TargetFrame.lua:88: attempt to call method 'SetGUIDMatch' (a nil value)
+=(string):19: in main chunk
+
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__report'
+	(string):20: in main chunk
+Lua error: ...ard_UIParentPanelManager/Shared/UIParentPanelManager.lua:765: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'GetBottomManagedFrameContainer'
+	...ard_UIParentPanelManager/Shared/UIParentPanelManager.lua:765: in function 'ManageBottomFrameContainer'
+	...tPanelManager/Mainline/UIParentPanelManagerOverrides.lua:22: in function 'ManageFramePositions'
+	...ard_UIParentPanelManager/Shared/UIParentPanelManager.lua:137: in function 'handler'
+	(string):3: in main chunk
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function 'SetAttribute'
+	...ard_UIParentPanelManager/Shared/UIParentPanelManager.lua:792: in function 'ManageFramePositions'
+	...rface/AddOns/Blizzard_UnitFrame/Mainline/TargetFrame.lua:1087: in function 'UpdateSize'
+	...rface/AddOns/Blizzard_UnitFrame/Mainline/TargetFrame.lua:1016: in function <...rface/AddOns/Blizzard_UnitFrame/Mainline/TargetFrame.lua:1015>
+	(tail call): ?
+	[C]: in function 'pcall'
+	(string):9: in main chunk
+Lua error: [OnLoad] Boss2TargetFrame: ...rface/AddOns/Blizzard_UnitFrame/Mainline/TargetFrame.lua:88: attempt to call method 'SetGUIDMatch' (a nil value)
+=(string):19: in main chunk
+
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__report'
+	(string):20: in main chunk
+Lua error: [OnLoad] Boss3TargetFrame: ...rface/AddOns/Blizzard_UnitFrame/Mainline/TargetFrame.lua:88: attempt to call method 'SetGUIDMatch' (a nil value)
+=(string):19: in main chunk
+
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__report'
+	(string):20: in main chunk
+Lua error: [OnLoad] Boss4TargetFrame: ...rface/AddOns/Blizzard_UnitFrame/Mainline/TargetFrame.lua:88: attempt to call method 'SetGUIDMatch' (a nil value)
+=(string):19: in main chunk
+
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__report'
+	(string):20: in main chunk
+Lua error: [OnLoad] Boss5TargetFrame: ...rface/AddOns/Blizzard_UnitFrame/Mainline/TargetFrame.lua:88: attempt to call method 'SetGUIDMatch' (a nil value)
+=(string):19: in main chunk
+
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__report'
+	(string):20: in main chunk
+Lua error: Interface/AddOns/Blizzard_UnitFrame/Mainline/PetFrame.lua:131: attempt to index global 'ManagedFrameMixin' (a nil value)
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	Interface/AddOns/Blizzard_UnitFrame/Mainline/PetFrame.lua:131: in function <Interface/AddOns/Blizzard_UnitFrame/Mainline/PetFrame.lua:129>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function 'HideBase'
+	...Ons/Blizzard_EditMode/Shared/EditModeSystemTemplates.lua:163: in function <...Ons/Blizzard_EditMode/Shared/EditModeSystemTemplates.lua:158>
+	(tail call): ?
+	Interface/AddOns/Blizzard_UnitFrame/Mainline/PetFrame.lua:169: in function 'UpdateShownState'
+	Interface/AddOns/Blizzard_UnitFrame/Mainline/PetFrame.lua:73: in function 'Update'
+	Interface/AddOns/Blizzard_UnitFrame/Mainline/PetFrame.lua:41: in function <Interface/AddOns/Blizzard_UnitFrame/Mainline/PetFrame.lua:7>
+	[C]: in function '__wow_original_securecall'
+	(string):13: in function 'securecall'
+	generated/loader-exec-no-global-slots/1bac939df82bb761:22: in function <generated/loader-exec-no-global-slots/1bac939df82bb761:19>
+	[C]: in function 'pcall'
+	(string):16: in main chunk
+[  1.132s] [Startup] apply_post_load_workarounds: begin
+[  1.132s] [Workarounds] starting patch_edit_mode_manager
+[  1.132s] [Workarounds] finished patch_edit_mode_manager in 312.32µs
+[  1.132s] [Workarounds] starting init_edit_mode_layout
+[  1.132s] [EditMode] starting setup_layout_info
+[  1.137s] [EditMode] finished setup_layout_info in 4.39ms
+[  1.137s] [EditMode] starting apply_system_anchors
+[  1.181s] [EditMode] finished apply_system_anchors in 44.15ms
+[  1.181s] [EditMode] starting finalize_action_bar_positions
+[  1.194s] [EditMode] finished finalize_action_bar_positions in 12.84ms
+[  1.194s] [EditMode] starting invoke_anchor_changed_hooks
+[  1.194s] [EditMode] finished invoke_anchor_changed_hooks in 104.22µs
+[  1.194s] [EditMode] starting fix_action_bar_nan_size
+[  1.194s] [EditMode] finished fix_action_bar_nan_size in 53.89µs
+[  1.194s] [EditMode] starting fix_action_bar_scale
+[  1.194s] [EditMode] finished fix_action_bar_scale in 5.07µs
+[  1.194s] [Workarounds] finished init_edit_mode_layout in 61.59ms
+[  1.194s] [Workarounds] starting patch_ui_parent_panel_toggles
+[  1.194s] [Workarounds] finished patch_ui_parent_panel_toggles in 264.81µs
+[  1.194s] [Workarounds] starting patch_uiparent_onupdate_worklists
+[  1.194s] [Workarounds] finished patch_uiparent_onupdate_worklists in 90.19µs
+[  1.194s] [Workarounds] starting init_chat_type_colors
+[  1.194s] [Workarounds] finished init_chat_type_colors in 78.56µs
+[  1.194s] [Workarounds] starting patch_chat_voice_button_surface
+[  1.194s] [Workarounds] finished patch_chat_voice_button_surface in 90.24µs
+[  1.194s] [Workarounds] starting patch_item_socketing_tooltips
+[  1.194s] [Workarounds] finished patch_item_socketing_tooltips in 55.20µs
+[  1.194s] [Workarounds] starting patch_character_select_selected_name
+[  1.194s] [Workarounds] finished patch_character_select_selected_name in 21.75µs
+[  1.194s] [Workarounds] starting patch_character_create_defaults
+[  1.195s] [Workarounds] finished patch_character_create_defaults in 169.27µs
+[  1.195s] [Workarounds] starting patch_character_frame_title_refresh
+[  1.198s] [Workarounds] finished patch_character_frame_title_refresh in 3.81ms
+[  1.198s] [Workarounds] starting patch_vignette_pin_template
+[  1.198s] [Workarounds] finished patch_vignette_pin_template in 100.86µs
+[  1.198s] [Workarounds] starting patch_fog_of_war_pin_mixin
+[  1.199s] [Workarounds] finished patch_fog_of_war_pin_mixin in 169.87µs
+[  1.199s] [Workarounds] starting patch_map_exploration_pin_mixin
+[  1.199s] [Workarounds] finished patch_map_exploration_pin_mixin in 243.18µs
+[  1.199s] [Workarounds] starting patch_map_canvas_data_provider_attachment
+[  1.199s] [Workarounds] finished patch_map_canvas_data_provider_attachment in 50.28µs
+[  1.199s] [Workarounds] starting ensure_adventure_map_frame_surface
+[  1.199s] [Workarounds] finished ensure_adventure_map_frame_surface in 161.26µs
+[  1.199s] [Workarounds] starting patch_action_bar_button_event_fanout
+[  1.199s] [Workarounds] finished patch_action_bar_button_event_fanout in 101.98µs
+[  1.199s] [Workarounds] starting patch_paging_controls_page_text
+[  1.199s] [Workarounds] finished patch_paging_controls_page_text in 44.51µs
+[  1.199s] [Workarounds] starting patch_talent_edge_frame_level_sync
+[  1.199s] [Workarounds] finished patch_talent_edge_frame_level_sync in 35.15µs
+[  1.199s] [Workarounds] starting patch_catalog_shop_product_card_defaults
+[  1.199s] [Workarounds] finished patch_catalog_shop_product_card_defaults in 69.24µs
+[  1.199s] [Workarounds] starting patch_game_time_defaults
+[  1.199s] [Workarounds] finished patch_game_time_defaults in 13.12µs
+[  1.199s] [Workarounds] starting patch_tooltip_nineslice_surface
+[  1.199s] [Workarounds] finished patch_tooltip_nineslice_surface in 33.43µs
+[  1.199s] [Workarounds] starting patch_container_frame_token_tracker
+[  1.199s] [Workarounds] finished patch_container_frame_token_tracker in 39.27µs
+[  1.199s] [Workarounds] starting patch_achievement_display_set_achievements
+[  1.199s] [Workarounds] finished patch_achievement_display_set_achievements in 8.32µs
+[  1.199s] [Workarounds] starting patch_housing_dashboard_preload
+[  1.200s] [Workarounds] finished patch_housing_dashboard_preload in 90.72µs
+[  1.200s] [Workarounds] starting patch_lfg_lock_list
+[  1.200s] [Workarounds] finished patch_lfg_lock_list in 15.60µs
+[  1.200s] [Workarounds] starting patch_auction_house_browse_results_event
+[  1.200s] [Workarounds] finished patch_auction_house_browse_results_event in 56.34µs
+[  1.200s] [Workarounds] starting patch_auction_house_search_context_aliases
+[  1.200s] [Workarounds] finished patch_auction_house_search_context_aliases in 23.71µs
+[  1.200s] [Workarounds] starting patch_auth_challenge_frame_parent
+[  1.200s] [Workarounds] finished patch_auth_challenge_frame_parent in 51.41µs
+[  1.200s] [Workarounds] starting patch_settings_surface_defaults
+[  1.200s] [Workarounds] finished patch_settings_surface_defaults in 376.42µs
+[  1.200s] [Workarounds] starting patch_settings_canvas_layout_visibility
+[  1.200s] [Workarounds] finished patch_settings_canvas_layout_visibility in 114.67µs
+[  1.200s] [Startup] apply_post_load_workarounds: workarounds complete
+[  1.263s] [Startup] apply_post_load_workarounds: globals restored
+[  1.263s] [Startup] apply_post_load_workarounds: patch 12.1 compatibility restored
+[  1.263s] [Startup] apply_post_load_workarounds: seterrorhandler restored
+Lua error: [OnEvent] frame=__Blizzard_UnitFrame_18040 addon=Blizzard_UnitFrame source=@Interface/AddOns/Blizzard_UnitFrame/Shared/PartyFrame.lua:265: Interface/AddOns/Blizzard_UnitFrame/Shared/PartyFrame.lua:268: attempt to index global 'OpacityFrameSlider' (a nil value)
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	Interface/AddOns/Blizzard_UnitFrame/Shared/PartyFrame.lua:268: in function <Interface/AddOns/Blizzard_UnitFrame/Shared/PartyFrame.lua:265>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+Lua error: [OnEvent] frame=PlayerFrame addon=Blizzard_UnitFrame source=@Interface/AddOns/Blizzard_UnitFrame/Mainline/UnitFrame.lua:989: ...rface/AddOns/Blizzard_UnitFrame/Mainline/PlayerFrame.lua:755: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'GetPlayerBottomManagedFrameContainer'
+	...rface/AddOns/Blizzard_UnitFrame/Mainline/PlayerFrame.lua:755: in function 'PlayerFrame_ToPlayerArt'
+	...rface/AddOns/Blizzard_UnitFrame/Mainline/PlayerFrame.lua:448: in function 'PlayerFrame_UpdateArt'
+	...rface/AddOns/Blizzard_UnitFrame/Mainline/PlayerFrame.lua:122: in function 'OnEvent'
+	Interface/AddOns/Blizzard_UnitFrame/Mainline/UnitFrame.lua:991: in function <Interface/AddOns/Blizzard_UnitFrame/Mainline/UnitFrame.lua:989>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+Lua error: [OnEvent] frame=BossTargetFrameContainer addon=Blizzard_UnitFrame source=@Interface/AddOns/Blizzard_UnitFrame/Mainline/TargetFrame.lua:1056: ...rface/AddOns/Blizzard_UnitFrame/Mainline/TargetFrame.lua:1029: attempt to index field 'spellbar' (a nil value)
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	...rface/AddOns/Blizzard_UnitFrame/Mainline/TargetFrame.lua:1029: in function 'UpdateShownState'
+	...Ons/Blizzard_EditMode/Shared/EditModeSystemTemplates.lua:1648: in function 'UpdateShownState'
+	...rface/AddOns/Blizzard_UnitFrame/Mainline/TargetFrame.lua:1057: in function <...rface/AddOns/Blizzard_UnitFrame/Mainline/TargetFrame.lua:1056>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[  1.328s] [EditMode] starting setup_layout_info
+[  1.331s] [EditMode] finished setup_layout_info in 2.82ms
+[  1.331s] [EditMode] starting apply_system_anchors
+[  1.347s] [EditMode] finished apply_system_anchors in 16.30ms
+[  1.347s] [EditMode] starting finalize_action_bar_positions
+[  1.348s] [EditMode] finished finalize_action_bar_positions in 1.16ms
+[  1.348s] [EditMode] starting invoke_anchor_changed_hooks
+[  1.352s] [EditMode] finished invoke_anchor_changed_hooks in 3.74ms
+[  1.352s] [EditMode] starting fix_action_bar_nan_size
+[  1.352s] [EditMode] finished fix_action_bar_nan_size in 48.92µs
+[  1.352s] [EditMode] starting fix_action_bar_scale
+[  1.352s] [EditMode] finished fix_action_bar_scale in 7.96µs
+[  1.352s] [EditMode] starting reapply_player_frame_anchor
+[  1.354s] [EditMode] finished reapply_player_frame_anchor in 1.51ms
+Lua error: [OnEvent] frame=EditModeManagerFrame addon=Blizzard_EditMode source=@Interface/AddOns/Blizzard_EditMode/Shared/EditModeManager.lua:187: ...face/AddOns/Blizzard_EditMode/Shared/EditModeManager.lua:678: attempt to index global 'StatusTrayManager' (a nil value)
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function <(string):10>
+	...face/AddOns/Blizzard_EditMode/Shared/EditModeManager.lua:678: in function 'UpdateTopFramePositions'
+	...face/AddOns/Blizzard_EditMode/Shared/EditModeManager.lua:191: in function <...face/AddOns/Blizzard_EditMode/Shared/EditModeManager.lua:187>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+Lua error: [OnEvent] frame=LFDMicroButton addon=Blizzard_MicroMenu source=@Interface/AddOns/Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1308: .../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1181: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'IsCommunitiesUIDisabledByTrialAccount'
+	.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1181: in function 'UpdateMicroButton'
+	.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:195: in function 'UpdateMicroButtons'
+	.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1315: in function <.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1308>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+Lua error: [OnEvent] frame=EJMicroButton addon=Blizzard_MicroMenu source=@Interface/AddOns/Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1539: .../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1181: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'IsCommunitiesUIDisabledByTrialAccount'
+	.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1181: in function 'UpdateMicroButton'
+	.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:195: in function 'UpdateMicroButtons'
+	.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1543: in function <.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1539>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+Lua error: [OnEvent] frame=StoreMicroButton addon=Blizzard_MicroMenu source=@Interface/AddOns/Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1677: .../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1181: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'IsCommunitiesUIDisabledByTrialAccount'
+	.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1181: in function 'UpdateMicroButton'
+	.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:195: in function 'UpdateMicroButtons'
+	.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1684: in function <.../Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua:1677>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+[  1.376s] [keybind] F2 → TARGETPARTYMEMBER1 → TargetUnit('party1')
+[  1.377s] [keybind] F2 executed in 816.8µs
+[  1.377s] [Startup] WowFontSystem::new begin casc=true
+[  1.377s] [Startup] font FRIZQT__.TTF loaded in 452.80µs
+[  1.377s] [Startup] font ARIALN.TTF loaded in 70.00ns
+[  1.377s] [Startup] font FRIZQT___CYR.TTF loaded in 40.00ns
+[  1.497s] [Startup] font system fallback loaded in 119.76ms
+[  1.497s] [Startup] cosmic font system built in 17.67µs
+[  1.497s] [Startup] swash cache created in 5.66µs
+[  1.497s] [Startup] WowFontSystem::new complete in 120.26ms
+[  1.555s] [TexMgr] Not found: framegeneral/ui-background-marble
+[  1.555s] [TexMgr] Not found: Interface\ICONS\INV_Misc_QuestionMark
+[  1.555s] [TexMgr] Not found: Interface\ICONS\Spell_Nature_GroundingTotem
+[  1.555s] [TexMgr] Not found: Interface\Buttons\UI-Debuff-Overlays
+[  1.555s] [TexMgr] Not found: Interface\ICONS\Ability_BackStab
+[  1.555s] [TexMgr] Not found: Interface\masks\circlemask
+[  1.555s] [TexMgr] Not found: Interface\hud\uiunitframetargethealthmask
+[  1.971s] [Startup] WowFontSystem::new begin casc=true
+[  1.971s] [Startup] font FRIZQT__.TTF loaded in 762.00ns
+[  1.971s] [Startup] font ARIALN.TTF loaded in 30.00ns
+[  1.971s] [Startup] font FRIZQT___CYR.TTF loaded in 20.00ns
+[  1.978s] [Startup] font system fallback loaded in 7.47ms
+[  1.978s] [Startup] cosmic font system built in 7.57µs
+[  1.978s] [Startup] swash cache created in 1.46µs
+[  1.978s] [Startup] WowFontSystem::new complete in 7.50ms
+[  2.003s] [TexMgr] Not found: framegeneral/ui-background-marble
+[  2.003s] [TexMgr] Not found: Interface\ICONS\Spell_Nature_GroundingTotem
+[  2.003s] [TexMgr] Not found: Interface\Buttons\UI-Debuff-Overlays
+[  2.003s] [TexMgr] Not found: Interface\ICONS\Ability_BackStab
+[  2.003s] [TexMgr] Not found: Interface\hud\uiunitframetargethealthmask
+
+thread 'test_keybindings_targeting::target_frame_portrait_corners_match_background_when_replaced_with_class_icon' (93713) panicked at /tmp/p548-master-06uf2fon/tests/test_keybindings_targeting.rs:308:9:
+hiding the portrait should materially change the portrait center: visible=[63, 63, 80, 255] hidden=[63, 63, 80, 255]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+Lua error suppressed 1 additional times: ...rface/AddOns/Blizzard_UnitFrame/Mainline/TargetFrame.lua:88: attempt to call method 'SetGUIDMatch' (a nil value)
+stack traceback:
+	(string):1: in main chunk
+	[C]: in function '__wow_original_securecall'
+	(string):13: in function 'securecall'
+	generated/loader-exec-no-global-slots/3432fb4cf412e1b5:21: in function <generated/loader-exec-no-global-slots/3432fb4cf412e1b5:19>
+	[C]: in function 'pcall'
+	(string):16: in main chunk
+Lua error suppressed 26 additional times: ...ard_UIParentPanelManager/Shared/UIParentPanelManager.lua:765: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'GetBottomManagedFrameContainer'
+	...ard_UIParentPanelManager/Shared/UIParentPanelManager.lua:765: in function 'ManageBottomFrameContainer'
+	...tPanelManager/Mainline/UIParentPanelManagerOverrides.lua:22: in function 'ManageFramePositions'
+	...ard_UIParentPanelManager/Shared/UIParentPanelManager.lua:137: in function 'handler'
+	(string):3: in main chunk
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function 'SetAttribute'
+	...ard_UIParentPanelManager/Shared/UIParentPanelManager.lua:792: in function 'ManageFramePositions'
+	...rface/AddOns/Blizzard_UnitFrame/Mainline/TargetFrame.lua:1087: in function 'UpdateSize'
+	...rface/AddOns/Blizzard_UnitFrame/Mainline/TargetFrame.lua:1016: in function <...rface/AddOns/Blizzard_UnitFrame/Mainline/TargetFrame.lua:1015>
+	(tail call): ?
+	[C]: in function 'pcall'
+	(string):9: in main chunk
+
+
+failures:
+    test_keybindings_targeting::target_frame_portrait_corners_match_background_when_replaced_with_class_icon
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10676 filtered out; finished in 2.29s
+
+
+thread 'test_keybindings_targeting::target_frame_portrait_corners_match_background_when_replaced_with_class_icon' (93625) panicked at /tmp/p548-master-06uf2fon/tests/common/timeout_reexec.rs:181:9:
+timeout child for `test_keybindings_targeting::target_frame_portrait_corners_match_background_when_replaced_with_class_icon` failed (exit code 101)
+
+
+failures:
+    c_api_surface::chat_info_no_state_defaults_are_not_c_api_temporary_shims
+    edit_mode_api::enums::unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size
+    test_keybindings_targeting::target_frame_portrait_corners_match_background_when_replaced_with_class_icon
+
+test result: FAILED. 1075 passed; 3 failed; 3 ignored; 0 measured; 9596 filtered out; finished in 325.44s
+
+error: test failed, to rerun pass `--test integration`

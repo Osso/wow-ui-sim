@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/usr/bin/python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p548-page/data/patch-api/evidence/6.1.0-session-2026-10-08/integrated/validate.py"
+  ],
+  "revision": "e79e7c55d7bfd8b755c9ac4e90eb66ad897a9bef",
+  "scope": "prior-6",
+  "cwd": ".",
+  "target": "dedicated p548-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "prior-6.txt",
+  "log_sha256": "d389dfda72230b6ddd1da46e2e4504aa60549a6606f485982ea21f30a476818e",
+  "seconds": 38.97383455900126,
+  "invalidated": false
+}

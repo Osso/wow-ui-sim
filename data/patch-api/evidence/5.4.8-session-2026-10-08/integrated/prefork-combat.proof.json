@@ -1,0 +1,20 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "combat"
+  ],
+  "revision": "2caa653ace4e52ae3b918bba8ad322bb80b06671",
+  "scope": "prefork-combat",
+  "cwd": ".",
+  "target": "dedicated p548-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "prefork-combat.txt",
+  "log_sha256": "06b90889533e2b5b195b57651d11b4d9aeea6ce06886258c8c0361ee562156ef",
+  "seconds": 10.023119240999222,
+  "invalidated": false
+}

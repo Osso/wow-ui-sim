@@ -1,0 +1,56 @@
+{
+  "wt-events-AUCTION_HOUSE_PURCHASE_COMPLETED-19": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "AUCTION_HOUSE_PURCHASE_COMPLETED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-AUCTION_HOUSE_PURCHASE_DELIVERY_DELAY_UPDATE-20": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": "wt-events-AUCTION_HOUSE_PURCHASE_DELIVERY_DELAY_UPDATE-134",
+      "symbol": "AUCTION_HOUSE_PURCHASE_DELIVERY_DELAY_UPDATE"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"AUCTION_HOUSE_PURCHASE_DELIVERY_DELAY_UPDATE\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-AUCTION_HOUSE_SHOW_FORMATTED_NOTIFICATION-25": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "AUCTION_HOUSE_SHOW_FORMATTED_NOTIFICATION"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  }
+}

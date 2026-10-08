@@ -1,0 +1,20 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "keybind"
+  ],
+  "revision": "2caa653ace4e52ae3b918bba8ad322bb80b06671",
+  "scope": "prefork-keybind",
+  "cwd": ".",
+  "target": "dedicated p548-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "prefork-keybind.txt",
+  "log_sha256": "280650d39d0404758483bd95c23b220960e77de96f9580e8f5d1db12113dae39",
+  "seconds": 7.888957376999315,
+  "invalidated": false
+}

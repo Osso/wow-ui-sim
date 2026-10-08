@@ -1,0 +1,182 @@
+[
+  {
+    "validator": "data/patch-api/evidence/10.0.0-session-2026-10-07/validate.py",
+    "exit": 0,
+    "receipt": "prior-0.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/10.0.2-session-2026-10-07/validate.py",
+    "exit": 0,
+    "receipt": "prior-1.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/10.0.5-session-2026-10-07/validate.py",
+    "exit": 0,
+    "receipt": "prior-2.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/6.0.1-session-2026-10-08/validate.py",
+    "exit": 0,
+    "receipt": "prior-3.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/6.0.2-session-2026-10-08/integrated/validate.py",
+    "exit": 0,
+    "receipt": "prior-4.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/6.0.2-session-2026-10-08/validate.py",
+    "exit": 0,
+    "receipt": "prior-5.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/6.1.0-session-2026-10-08/integrated/validate.py",
+    "exit": 0,
+    "receipt": "prior-6.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/6.1.0-session-2026-10-08/validate.py",
+    "exit": 0,
+    "receipt": "prior-7.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/6.2.0-session-2026-10-08/integrated/validate.py",
+    "exit": 0,
+    "receipt": "prior-8.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/6.2.0-session-2026-10-08/validate.py",
+    "exit": 0,
+    "receipt": "prior-9.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/6.2.2-session-2026-10-08/validate.py",
+    "exit": 0,
+    "receipt": "prior-10.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/6.2.4-session-2026-10-08/integrated/validate.py",
+    "exit": 0,
+    "receipt": "prior-11.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/6.2.4-session-2026-10-08/validate.py",
+    "exit": 0,
+    "receipt": "prior-12.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/7.0.1-session-2026-10-08/validate.py",
+    "exit": 0,
+    "receipt": "prior-13.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/7.0.3-session-2026-10-08/integrated/validate.py",
+    "exit": 0,
+    "receipt": "prior-14.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/7.0.3-session-2026-10-08/validate.py",
+    "exit": 0,
+    "receipt": "prior-15.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/7.1.0-session-2026-10-08/validate.py",
+    "exit": 0,
+    "receipt": "prior-16.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/7.2.0-session-2026-10-08/validate.py",
+    "exit": 0,
+    "receipt": "prior-17.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/7.2.5-session-2026-10-08/validate.py",
+    "exit": 0,
+    "receipt": "prior-18.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/7.3.0-session-2026-10-08/validate.py",
+    "exit": 0,
+    "receipt": "prior-19.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/7.3.2-session-2026-10-08/validate.py",
+    "exit": 0,
+    "receipt": "prior-20.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/8.0.1-session-2026-10-08/validate.py",
+    "exit": 0,
+    "receipt": "prior-21.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/8.1.0-session-2026-10-08/validate.py",
+    "exit": 0,
+    "receipt": "prior-22.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/8.1.5-session-2026-10-08/validate.py",
+    "exit": 0,
+    "receipt": "prior-23.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/8.2.0-session-2026-10-08/validate.py",
+    "exit": 0,
+    "receipt": "prior-24.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/8.2.5-session-2026-10-08/validate.py",
+    "exit": 0,
+    "receipt": "prior-25.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/8.3.0-session-2026-10-08/validate.py",
+    "exit": 0,
+    "receipt": "prior-26.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/8.3.7-session-2026-10-08/validate.py",
+    "exit": 0,
+    "receipt": "prior-27.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/9.0.1-session-2026-10-08/validate.py",
+    "exit": 0,
+    "receipt": "prior-28.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/9.0.2-session-2026-10-08/validate.py",
+    "exit": 0,
+    "receipt": "prior-29.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/9.0.5-session-2026-10-08/validate.py",
+    "exit": 0,
+    "receipt": "prior-30.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/9.1.0-session-2026-10-07/validate.py",
+    "exit": 0,
+    "receipt": "prior-31.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/9.1.5-session-2026-10-07/validate.py",
+    "exit": 0,
+    "receipt": "prior-32.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/9.2.0-session-2026-10-07/validate.py",
+    "exit": 0,
+    "receipt": "prior-33.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/9.2.5-session-2026-10-07/validate.py",
+    "exit": 0,
+    "receipt": "prior-34.proof.json"
+  },
+  {
+    "validator": "data/patch-api/evidence/9.2.7-session-2026-10-07/validate.py",
+    "exit": 0,
+    "receipt": "prior-35.proof.json"
+  }
+]

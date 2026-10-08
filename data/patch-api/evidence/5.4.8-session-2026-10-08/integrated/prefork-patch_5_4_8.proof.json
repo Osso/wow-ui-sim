@@ -1,0 +1,20 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_5_4_8"
+  ],
+  "revision": "2caa653ace4e52ae3b918bba8ad322bb80b06671",
+  "scope": "prefork-patch_5_4_8",
+  "cwd": ".",
+  "target": "dedicated p548-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "prefork-patch_5_4_8.txt",
+  "log_sha256": "18d6d27f772d208f96f4c7521a054c80ee5dff8e7a2b8ee8080a18d1403212b5",
+  "seconds": 6.389804609003477,
+  "invalidated": false
+}

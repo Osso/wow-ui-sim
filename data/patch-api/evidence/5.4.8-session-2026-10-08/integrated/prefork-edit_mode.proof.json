@@ -1,0 +1,20 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "edit_mode"
+  ],
+  "revision": "2caa653ace4e52ae3b918bba8ad322bb80b06671",
+  "scope": "prefork-edit_mode",
+  "cwd": ".",
+  "target": "dedicated p548-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "prefork-edit_mode.txt",
+  "log_sha256": "bb797fa154830cef69751ec4d3f7aaea593506bcfc2ff1d097e58ed5ec305f11",
+  "seconds": 5.825793492003868,
+  "invalidated": false
+}

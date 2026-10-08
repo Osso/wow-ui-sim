@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p548-page/data/patch-api/evidence/5.4.8-session-2026-10-08/integrated/run_prefork.py"
+  ],
+  "revision": "e79e7c55d7bfd8b755c9ac4e90eb66ad897a9bef",
+  "scope": "prefork-checks",
+  "cwd": ".",
+  "target": "dedicated p548-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "prefork-checks.txt",
+  "log_sha256": "dfd484df780248248f165f84a142be42f19de46b8b83ba29f02eee2ee2c92f23",
+  "seconds": 427.0391601719966,
+  "invalidated": false
+}

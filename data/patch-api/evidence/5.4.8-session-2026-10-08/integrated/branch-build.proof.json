@@ -1,0 +1,21 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "--test",
+    "prefork_full_ui",
+    "--no-run"
+  ],
+  "revision": "b77d0b5db0f186b75cee854b285d82e896a8a765",
+  "scope": "branch-build",
+  "cwd": ".",
+  "target": "dedicated p548-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "branch-build.txt",
+  "log_sha256": "c7a7c41e6e1601340cced8918ac342f20279d8320ba9e9114c485a307ccec3f3",
+  "seconds": 91.41167141799815,
+  "invalidated": false
+}

@@ -1,0 +1,20 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "secure"
+  ],
+  "revision": "2caa653ace4e52ae3b918bba8ad322bb80b06671",
+  "scope": "prefork-secure",
+  "cwd": ".",
+  "target": "dedicated p548-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "prefork-secure.txt",
+  "log_sha256": "94c40397372949c3f40959838087b24791cd7f124a244b026f11e0088688d875",
+  "seconds": 5.523994415001653,
+  "invalidated": false
+}

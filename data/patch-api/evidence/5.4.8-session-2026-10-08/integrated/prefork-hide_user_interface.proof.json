@@ -1,0 +1,20 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "hide_user_interface"
+  ],
+  "revision": "2caa653ace4e52ae3b918bba8ad322bb80b06671",
+  "scope": "prefork-hide_user_interface",
+  "cwd": ".",
+  "target": "dedicated p548-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "prefork-hide_user_interface.txt",
+  "log_sha256": "51f0449f42563ba8da3d5fa1e0ef6b73a597f0906c0ce06e8458f4e2f5e983cb",
+  "seconds": 0.3315536680020159,
+  "invalidated": false
+}

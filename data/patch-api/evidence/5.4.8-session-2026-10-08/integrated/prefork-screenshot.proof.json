@@ -1,0 +1,20 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "screenshot"
+  ],
+  "revision": "2caa653ace4e52ae3b918bba8ad322bb80b06671",
+  "scope": "prefork-screenshot",
+  "cwd": ".",
+  "target": "dedicated p548-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "prefork-screenshot.txt",
+  "log_sha256": "52179e2f31eebd59dff319724403b7319fd78c5443d1e5ad4a264ad897bf57d0",
+  "seconds": 5.74423114900128,
+  "invalidated": false
+}
