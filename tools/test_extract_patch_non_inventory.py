@@ -30,7 +30,7 @@ class ExtractTests(unittest.TestCase):
                          'Patch 8.2.0 API changes\n'
                          '* [Reference: url=https://example.test|author=Kaivax|title=UI Changes]\n'
                          '== API ==\n==== Changes ====\n* GetFileIDFromPath changed.\n'
-                         '== References ==\n')
+                         '== Widgets ==\n== References ==\n')
 
     def test_reference_note_preserves_publication_prose_and_citation(self):
         raw = ('* The [[Auction House]] was revamped <ref>{{ref web|'
