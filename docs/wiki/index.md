@@ -1,6 +1,6 @@
 ## [2026-10-08] investigation | Patch 7.3.0 API audit
 
-[Audit](investigations/patch-7-3-0-api-audit.md): revision 5335723; merged 7.3.2 register, three table publications, eleven IDs, zero publication gaps and one pending slash/consent row. Integrated 44 sweeps, sound/menu/popup/panel tests, fixtures and Mists/format checks pass. Branch/master startup both []; 43 registers / 40 extracts reproduce with three inherited failures. Historical and integrated validator scopes remain fixed; original artifacts unchanged.
+[Audit](investigations/patch-7-3-0-api-audit.md): revision 5335723; merged 7.3.2 register, three table publications, eleven IDs, zero publication gaps and one pending slash/consent row. Integrated 44 sweeps, sound/menu/popup/panel tests, fixtures and Mists/format checks pass. Branch/master startup both []; 43 registers / 40 extracts reproduce with three inherited failures. All 20 validators pass; historical/integrated scopes fixed, original artifacts unchanged.
 
 ## [2026-10-08] investigation | Patch 8.0.1 API audit
 

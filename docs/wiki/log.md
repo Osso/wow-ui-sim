@@ -360,3 +360,5 @@ Second temporary clone: all nineteen validators pass from the original cwd. Futu
 - 2026-10-08: 7.3.0 integration refresh pins the merged 7.3.2 register, retains sealed historical evidence and adds independently scoped fresh validator receipts.
 
 - 2026-10-08: 7.3.0 integrated proof passes 44 sweeps with unchanged gaps, sound/menu/popup/panel regressions, 26/34/8 fixtures, format and warning-clean non-vendor Mists check; branch/master startup error lists both [].
+
+- 2026-10-08: Final 7.3.0 integrated gate: all 20 evidence validators pass at 69306a0f0; original historical artifacts and exact later-replacement policy unchanged.

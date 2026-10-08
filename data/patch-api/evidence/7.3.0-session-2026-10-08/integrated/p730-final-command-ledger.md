@@ -40,3 +40,28 @@ See sound-caller-review.md and complete scan receipts. No simulator production c
 ## Validator matrix
 
 The final post-commit matrix is recorded separately in validator-matrix.json. Every data/patch-api/evidence/*/validate.py must pass. The 7.3.0 validator checks both immutable original evidence and separately sealed integrated receipts, with fixed historical register/sweep scope rather than current globs.
+
+All **20/20 validators pass** at `69306a0f047f3bbcfb2016d5c15c78b0dafc0688`. Final matrix changes only evidence/wiki narration, not the verified code or sealed receipts.
+
+| Evidence directory | Exit | Result |
+|---|---|---|
+| `10.0.0-session-2026-10-07` | 0 | PASS |
+| `10.0.2-session-2026-10-07` | 0 | PASS |
+| `10.0.5-session-2026-10-07` | 0 | PASS |
+| `7.3.0-session-2026-10-08` | 0 | PASS |
+| `7.3.2-session-2026-10-08` | 0 | PASS |
+| `8.0.1-session-2026-10-08` | 0 | PASS |
+| `8.1.0-session-2026-10-08` | 0 | PASS |
+| `8.1.5-session-2026-10-08` | 0 | PASS |
+| `8.2.0-session-2026-10-08` | 0 | PASS |
+| `8.2.5-session-2026-10-08` | 0 | PASS |
+| `8.3.0-session-2026-10-08` | 0 | PASS |
+| `8.3.7-session-2026-10-08` | 0 | PASS |
+| `9.0.1-session-2026-10-08` | 0 | PASS |
+| `9.0.2-session-2026-10-08` | 0 | PASS |
+| `9.0.5-session-2026-10-08` | 0 | PASS |
+| `9.1.0-session-2026-10-07` | 0 | PASS |
+| `9.1.5-session-2026-10-07` | 0 | PASS |
+| `9.2.0-session-2026-10-07` | 0 | PASS |
+| `9.2.5-session-2026-10-07` | 0 | PASS |
+| `9.2.7-session-2026-10-07` | 0 | PASS |
