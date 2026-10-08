@@ -312,6 +312,26 @@ def parse_bfa_prepatch(text):
     return entries
 
 
+def parse_legacy_summary_tables(text):
+    """Retain bare table names in legacy New summaries, not their prose claims."""
+    entries = []
+    in_new = False
+    for number, line in enumerate(text.splitlines(), 1):
+        heading = re.fullmatch(r'==\s*([^=]+?)\s*==', line)
+        if heading:
+            in_new = heading[1] == 'New'
+        elif in_new:
+            match = re.fullmatch(r'\* New (?:global table|API tables): (.*)', line)
+            if not match:
+                continue
+            names = match[1].split(' - ', 1)[0].split(', ')
+            if not all(re.fullmatch(r'[A-Za-z_][A-Za-z0-9_]*', name) for name in names):
+                raise ValueError(f'invalid table summary: {line}')
+            entries.extend(make_entry('global-api', 'added', number, '{{api|' + name + '}}')
+                           for name in names)
+    return entries
+
+
 def parse_diff_api_additions(text):
     """Retain each explicit late-build addition outside consolidated inventories."""
     entries = []
@@ -377,6 +397,8 @@ def main():
                         help='Parse 8.0.1 nested namespaces, prose removals and event lists; opt-in')
     parser.add_argument('--prose-api-links', action='store_true',
                         help='Retain API-linked identities in Changes prose; opt-in')
+    parser.add_argument('--legacy-summary-tables', action='store_true',
+                        help='Retain bare New global/API table summary names; opt-in')
     args = parser.parse_args()
     patch, path, revid, out = args.patch, args.path, args.revid, args.out
     raw = Path(path).read_bytes()
@@ -411,6 +433,8 @@ def main():
         entries.extend(parse_diff_api_additions(raw.decode('utf-8')))
     if args.prose_api_links:
         entries.extend(parse_prose_api_links(raw.decode('utf-8')))
+    if args.legacy_summary_tables:
+        entries.extend(parse_legacy_summary_tables(raw.decode('utf-8')))
     if args.inventory_only:
         for entry in entries:
             for key in ("kind", "page_default", "test_inline"):

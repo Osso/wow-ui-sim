@@ -1,0 +1,18 @@
+22:def render_api_reference(match):
+28:def render_line(line):
+58:def strip_legacy_cvar_tables(raw):
+77:def strip_bfa_inventories(raw):
+91:def extract_text(raw, *, preserve_examples=False, normalize_inventory_headings=False,
+93:                 legacy_api_bullets=False, legacy_cvar_tables=False,
+94:                 bfa_prepatch=False):
+95:    if bfa_prepatch:
+104:    if legacy_cvar_tables:
+105:        raw = strip_legacy_cvar_tables(raw)
+123:        if legacy_api_bullets:
+191:def is_source_context(value, number, patch):
+224:def seed_rows(text, patch='12.0.0'):
+272:def check_examples():
+291:def main():
+325:                        legacy_api_bullets=args.legacy_api_bullets,
+326:                        legacy_cvar_tables=args.legacy_cvar_tables,
+327:                        bfa_prepatch=args.bfa_prepatch)

@@ -1,0 +1,14 @@
+{
+  "pageid": 553643,
+  "title": "Patch 7.3.0/API changes",
+  "revid": 5335723,
+  "parentid": 5335722,
+  "timestamp": "2017-10-26T17:46:34Z",
+  "fetched_at": "2026-10-08T15:20:01.627103+00:00",
+  "url": "https://warcraft.wiki.gg/api.php?action=query&pageids=553643&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&format=json",
+  "sha256": "4fa82825b87c700d8fb0ab6d4d7c51061ed045675b644682a36f0eb495a1a082",
+  "generator_flags": [
+    "--legacy-summary-tables"
+  ],
+  "extractor_flags": []
+}

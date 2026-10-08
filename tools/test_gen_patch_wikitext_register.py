@@ -5,6 +5,20 @@ from gen_patch_wikitext_register import parse_section, split_sections
 
 
 class InventoryTests(unittest.TestCase):
+    def test_legacy_summary_tables_keep_names_not_prose_or_addons(self):
+        import gen_patch_wikitext_register as generator
+        raw = ('==New==\n* New AddOns: Blizzard_Console\n'
+               '* New global table: SOUNDKIT - Keys hold soundkit IDs\n'
+               '* New API tables: C_ArtifactRelicForgeUI, C_Console\n'
+               '* New debug tool: Table Inspector - /tinspect\n'
+               '==Changes==\n* New API tables: NotAnAddition\n')
+        rows = generator.parse_legacy_summary_tables(raw)
+        self.assertEqual([(r['symbol'], r['direction'], r['wikitext_line']) for r in rows],
+                         [('SOUNDKIT', 'added', 3),
+                          ('C_ArtifactRelicForgeUI', 'added', 4),
+                          ('C_Console', 'added', 4)])
+        self.assertEqual(len({r['id'] for r in rows}), 3)
+
     def test_bfa_prepatch_nested_namespaces_events_and_removal_successors(self):
         import gen_patch_wikitext_register as generator
         raw = ('==New==\n* New {{api|C_Map}} table.\n**{{api|C_Map.GetMapInfo}}\n'

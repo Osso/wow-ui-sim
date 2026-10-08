@@ -1,0 +1,364 @@
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/c_api/patch_retired_members.rs:326:    "C_Console",
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/c_api/c_artifact_relic_forge_ui.rs:1://! `C_ArtifactRelicForgeUI` namespace — currently exposes only
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/c_api/c_artifact_relic_forge_ui.rs:18:    let ns = ensure_namespace(state, "C_ArtifactRelicForgeUI")?;
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/c_api/c_sound.rs:95:    // MayReturnNothing: like the PlaySound global, nothing is returned when
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/hot_literals.rs:126:    b"C_Console",
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/global_placeholder_tables.rs:10:SOUNDKIT = SOUNDKIT or {}
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/global_placeholder_tables.rs:34:                       type(SOUNDKIT),
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/main_menu_microbutton_click.rs:38:        if type(PlaySound) == "function" and SOUNDKIT and SOUNDKIT.IG_MAINMENU_QUIT then
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/main_menu_microbutton_click.rs:39:            PlaySound(SOUNDKIT.IG_MAINMENU_QUIT)
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/main_menu_microbutton_click.rs:52:        if type(PlaySound) == "function" and SOUNDKIT and SOUNDKIT.IG_MAINMENU_OPEN then
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/main_menu_microbutton_click.rs:53:            PlaySound(SOUNDKIT.IG_MAINMENU_OPEN)
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/main_menu_microbutton_click.rs:102:        if type(PlaySound) == "function" and SOUNDKIT and SOUNDKIT.IG_MAINMENU_QUIT then
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/main_menu_microbutton_click.rs:103:            PlaySound(SOUNDKIT.IG_MAINMENU_QUIT)
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/main_menu_microbutton_click.rs:116:        if type(PlaySound) == "function" and SOUNDKIT and SOUNDKIT.IG_MAINMENU_OPEN then
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/main_menu_microbutton_click.rs:117:            PlaySound(SOUNDKIT.IG_MAINMENU_OPEN)
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/main_menu_microbutton_click.rs:218:            SOUNDKIT = {
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/main_menu_microbutton_click.rs:265:            function PlaySound(sound)
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/sound_driver_defaults.rs:43:if rawget(C_Sound, "PlaySound") == nil then
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/sound_driver_defaults.rs:44:    function C_Sound.PlaySound() end
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/sound_driver_defaults.rs:125:                C_Sound.PlaySound(1)
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/catalog_shop_product_card_defaults.rs:9:SOUNDKIT = SOUNDKIT or {}
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/catalog_shop_product_card_defaults.rs:10:if SOUNDKIT.CATALOG_SHOP_SELECT_NAV_MENU == nil then
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/catalog_shop_product_card_defaults.rs:11:    SOUNDKIT.CATALOG_SHOP_SELECT_NAV_MENU = 303824
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/catalog_shop_product_card_defaults.rs:13:if SOUNDKIT.CATALOG_SHOP_SELECT_GENERIC_UI_BUTTON == nil then
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/catalog_shop_product_card_defaults.rs:14:    SOUNDKIT.CATALOG_SHOP_SELECT_GENERIC_UI_BUTTON = 303826
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/catalog_shop_product_card_defaults.rs:16:if SOUNDKIT.CATALOG_SHOP_OPEN_LOADING_SCREEN == nil then
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/catalog_shop_product_card_defaults.rs:17:    SOUNDKIT.CATALOG_SHOP_OPEN_LOADING_SCREEN = 303820
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/catalog_shop_product_card_defaults.rs:19:if SOUNDKIT.CATALOG_SHOP_LOADING_SCREEN_LOOP == nil then
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/catalog_shop_product_card_defaults.rs:20:    SOUNDKIT.CATALOG_SHOP_LOADING_SCREEN_LOOP = 303821
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/catalog_shop_product_card_defaults.rs:22:if SOUNDKIT.CATALOG_SHOP_OPEN_SHOP_AFTER_LOAD == nil then
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/catalog_shop_product_card_defaults.rs:23:    SOUNDKIT.CATALOG_SHOP_OPEN_SHOP_AFTER_LOAD = 303822
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/catalog_shop_product_card_defaults.rs:25:if SOUNDKIT.CATALOG_SHOP_GOLD_SHIMMER_START == nil then
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/catalog_shop_product_card_defaults.rs:26:    SOUNDKIT.CATALOG_SHOP_GOLD_SHIMMER_START = 306261
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/catalog_shop_product_card_defaults.rs:28:if SOUNDKIT.CATALOG_SHOP_GOLD_SHIMMER_LOOP == nil then
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/catalog_shop_product_card_defaults.rs:29:    SOUNDKIT.CATALOG_SHOP_GOLD_SHIMMER_LOOP = 303827
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/catalog_shop_product_card_defaults.rs:31:if SOUNDKIT.CATALOG_SHOP_GOLD_SHIMMER_END == nil then
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/catalog_shop_product_card_defaults.rs:32:    SOUNDKIT.CATALOG_SHOP_GOLD_SHIMMER_END = 306262
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/catalog_shop_product_card_defaults.rs:257:                return SOUNDKIT.CATALOG_SHOP_SELECT_NAV_MENU,
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/catalog_shop_product_card_defaults.rs:258:                    SOUNDKIT.CATALOG_SHOP_SELECT_GENERIC_UI_BUTTON,
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/catalog_shop_product_card_defaults.rs:259:                    SOUNDKIT.CATALOG_SHOP_OPEN_LOADING_SCREEN,
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/catalog_shop_product_card_defaults.rs:260:                    SOUNDKIT.CATALOG_SHOP_LOADING_SCREEN_LOOP,
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/catalog_shop_product_card_defaults.rs:261:                    SOUNDKIT.CATALOG_SHOP_OPEN_SHOP_AFTER_LOAD,
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/catalog_shop_product_card_defaults.rs:262:                    SOUNDKIT.CATALOG_SHOP_GOLD_SHIMMER_START,
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/catalog_shop_product_card_defaults.rs:263:                    SOUNDKIT.CATALOG_SHOP_GOLD_SHIMMER_LOOP,
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/catalog_shop_product_card_defaults.rs:264:                    SOUNDKIT.CATALOG_SHOP_GOLD_SHIMMER_END,
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/missing_surface/encounter_warnings.rs:19:    table_set_rust_fn_static(state, ns, "PlaySound", play_sound)?;
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/missing_surface/small_namespaces.rs:34:    register_flat_namespace(state, "C_Console", C_CONSOLE_METHODS)?;
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/create_frame/template_chain/parser_function_family.rs:633:            "local checked = self:GetChecked() if (checked) then SettingsPanel.Enabled = true; else SettingsPanel.Enabled = false; end RefreshSettings(); PlaySound(checked)",
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/create_frame/template_chain/parser_function_family.rs:638:            Some(("SettingsPanel", "Enabled", "RefreshSettings", "PlaySound"))
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/create_frame/template_chain/parser_function_family.rs:645:            "local checked = self:GetChecked() if (checked) then SettingsPanel.Enabled = true; else OtherPanel.Enabled = false; end RefreshSettings(); PlaySound(checked)",
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/create_frame/template_chain/parser_function_family.rs:654:            "local checked = self:GetChecked() if (checked) then A.Enabled = true; B.Enabled = true; C.Enabled = true; else A.Enabled = false; B.Enabled = false; C.Enabled = false; end RefreshSettings(); PlaySound(checked)",
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/create_frame/template_chain/parser_function_family.rs:667:                "PlaySound",
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/create_frame/template_chain/parser_function_family.rs:675:            "local checked = self:GetChecked() if (checked) then A.Enabled = true; B.Enabled = true; C.Enabled = true; else A.Enabled = false; Other.Enabled = false; C.Enabled = false; end RefreshSettings(); PlaySound(checked)",
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/create_frame/template_chain/parser_function_arg_shapes.rs:332:            "local checked = self:GetChecked(); SettingsPanel.Volume = 0.75; RefreshSettings(); PlaySound(checked)",
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/create_frame/template_chain/parser_function_arg_shapes.rs:350:        assert_eq!(on_sound_function, "PlaySound");
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/create_frame/template_chain.rs:817:                        PlaySound(SOUNDKIT.GS_TITLE_OPTION_OK);
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/missing_surface.rs:97:    LuaApiMut::register_function(lua, "PlaySound", play_sound)?;
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/global_stubs.rs:43:    "PlaySound",
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/security/secure_env.rs:152:            .eval(r#"return type(rawget(__secureenv, "SOUNDKIT"))"#)
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/security/secure_env.rs:153:            .expect("secureenv SOUNDKIT type");
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/sim_substates/viewed_artifact.rs:3://! probes `C_ArtifactRelicForgeUI.IsAtForge` and
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/env_init/shared_bootstrap.lua:273:SOUNDKIT = SOUNDKIT or {}
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/env_init/shared_bootstrap.lua:274:if SOUNDKIT.CATALOG_SHOP_SELECT_NAV_MENU == nil then
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/env_init/shared_bootstrap.lua:275:  SOUNDKIT.CATALOG_SHOP_SELECT_NAV_MENU = 303824
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/env_init/shared_bootstrap.lua:277:if SOUNDKIT.CATALOG_SHOP_SELECT_GENERIC_UI_BUTTON == nil then
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/env_init/shared_bootstrap.lua:278:  SOUNDKIT.CATALOG_SHOP_SELECT_GENERIC_UI_BUTTON = 303826
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/env_init/shared_bootstrap.lua:280:if SOUNDKIT.CATALOG_SHOP_OPEN_LOADING_SCREEN == nil then
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/env_init/shared_bootstrap.lua:281:  SOUNDKIT.CATALOG_SHOP_OPEN_LOADING_SCREEN = 303820
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/env_init/shared_bootstrap.lua:283:if SOUNDKIT.CATALOG_SHOP_LOADING_SCREEN_LOOP == nil then
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/env_init/shared_bootstrap.lua:284:  SOUNDKIT.CATALOG_SHOP_LOADING_SCREEN_LOOP = 303821
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/env_init/shared_bootstrap.lua:286:if SOUNDKIT.CATALOG_SHOP_OPEN_SHOP_AFTER_LOAD == nil then
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/env_init/shared_bootstrap.lua:287:  SOUNDKIT.CATALOG_SHOP_OPEN_SHOP_AFTER_LOAD = 303822
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/env_init/shared_bootstrap.lua:289:if SOUNDKIT.CATALOG_SHOP_GOLD_SHIMMER_START == nil then
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/env_init/shared_bootstrap.lua:290:  SOUNDKIT.CATALOG_SHOP_GOLD_SHIMMER_START = 306261
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/env_init/shared_bootstrap.lua:292:if SOUNDKIT.CATALOG_SHOP_GOLD_SHIMMER_LOOP == nil then
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/env_init/shared_bootstrap.lua:293:  SOUNDKIT.CATALOG_SHOP_GOLD_SHIMMER_LOOP = 303827
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/env_init/shared_bootstrap.lua:295:if SOUNDKIT.CATALOG_SHOP_GOLD_SHIMMER_END == nil then
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/env_init/shared_bootstrap.lua:296:  SOUNDKIT.CATALOG_SHOP_GOLD_SHIMMER_END = 306262
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/env_init/shared_bootstrap.lua:301:if SOUNDKIT.IG_INVENTORY_ROTATE_CHARACTER == nil then
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/env_init/shared_bootstrap.lua:302:  SOUNDKIT.IG_INVENTORY_ROTATE_CHARACTER = 861
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/loader/tests/wow_api_globals/runtime_subsystems.rs:385:// SOUNDKIT: from Blizzard_SharedXML/SoundKitConstants.lua
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/loader/tests/wow_api_globals/global_functions.rs:315:        "PlaySound",
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/publication_sweep.rs:231:    for _, record in ipairs(C_Console.GetAllCommands()) do
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_azerite_respec_ui_help_tip_shows_first_open.rs:25:                    mixinEnv.PlaySound = function() end
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/soundkit_ig_inventory_rotate_character.rs:1://! Integration test for the `SOUNDKIT.IG_INVENTORY_ROTATE_CHARACTER`
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/soundkit_ig_inventory_rotate_character.rs:7://! engine sound id `861` and `PlaySound` cues the audio. The
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/soundkit_ig_inventory_rotate_character.rs:8://! simulator stubs `PlaySound` for any numeric id, so the only
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/soundkit_ig_inventory_rotate_character.rs:19:        .eval("return SOUNDKIT.IG_INVENTORY_ROTATE_CHARACTER")
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/soundkit_ig_inventory_rotate_character.rs:30:    // `PlaySound(SOUNDKIT.IG_INVENTORY_ROTATE_CHARACTER)`. The
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/soundkit_ig_inventory_rotate_character.rs:31:    // simulator's PlaySound is a no-op for audio, but the call must
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/soundkit_ig_inventory_rotate_character.rs:34:    env.exec("PlaySound(SOUNDKIT.IG_INVENTORY_ROTATE_CHARACTER)")
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/soundkit_ig_inventory_rotate_character.rs:35:        .expect("PlaySound must accept the resolved soundkit id");
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_azerite_respec_ui_help_tip_dismisses_on_drop.rs:12:mixinEnv.PlaySound = function() end
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_housing_bulletin_board_loads.rs:341:             ResidentsTab, plays SOUNDKIT.HOUSING_BULLETIN_BOARD_OPEN; OnHide calls \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_help_plate_loads.rs:85:         GetAppropriateTopLevelParent, Kiosk.IsEnabled, PlaySound, SetClampedTextureRotation, \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_help_plate_loads.rs:86:         SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON, MAIN_HELP_BUTTON_TOOLTIP locale string) and \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_help_plate_loads.rs:333:             feedback and play SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON on release, OnHide \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_black_market_ui_loads.rs:149:            local originalPlaySound = PlaySound
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_black_market_ui_loads.rs:150:            PlaySound = function(soundKitID)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_black_market_ui_loads.rs:154:            PlaySound = originalPlaySound
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_black_market_ui_loads.rs:158:                playedSound == SOUNDKIT.AUCTION_WINDOW_CLOSE
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/patch_11_1_7_publication_fixes.rs:31:            for _, record in ipairs(C_Console.GetAllCommands()) do
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/patch_10_2_0_publication_fixes.rs:29:    assert(rawget(C_Console, name) == nil)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/patch_10_2_0_publication_fixes.rs:30:    assert(C_Console[name] == nil)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/patch_10_2_0_publication_fixes.rs:31:    assert(C_Console[name] == nil)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_customization_ui_loads.rs:246:         soundKit, IsPlaying, PlayAudioInternal calling PlaySound, PlayAudio handling \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_new_player_experience_guide_loads.rs:97:         is either foundational FrameXML (UIPanelWindows, PlaySound, SOUNDKIT) or a built-in \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_glue_xml_base_loads.rs:472:         declares the race -> SOUNDKIT.AMB_GLUESCREEN_<race> mapping consumed by the glue-screen \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_voice_toggle_button_loads.rs:349:             SOUNDKIT.UI_VOICECHAT_MUTEON or MUTEOFF based on the \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_azerite_respec_ui_on_show_plays_sound.rs:23:                        return SOUNDKIT.UI_80_AZERITEARMOR_REFORGE_ETHEREALWINDOW_OPEN,
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_azerite_respec_ui_on_show_plays_sound.rs:24:                            SOUNDKIT.UI_80_AZERITEARMOR_REFORGE_ETHEREALWINDOW_CLOSE
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_azerite_respec_ui_on_show_plays_sound.rs:27:                    .expect("Azerite respec SOUNDKIT constants should resolve");
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_azerite_respec_ui_on_show_plays_sound.rs:42:                    mixinEnv.PlaySound = function(soundKitID)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_azerite_respec_ui_on_show_plays_sound.rs:47:                .expect("PlaySound tracker should install into AzeriteRespecMixin environment");
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_azerite_respec_ui_on_show_plays_sound.rs:80:    .expect("recorded PlaySound entry should be readable")
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/xml_templates/inline_flow/interaction_sequences.rs:350:        SOUNDKIT = { IG_MAINMENU_OPTION_CHECKBOX_ON = 42 }
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/xml_templates/inline_flow/interaction_sequences.rs:362:        function PlaySound(sound)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/xml_templates/inline_flow/interaction_sequences.rs:375:                    PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON);
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/xml_templates/inline_flow/conditionals_checked.rs:10:        SOUNDKIT = { IG_MAINMENU_OPTION = 5 }
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/xml_templates/inline_flow/conditionals_checked.rs:15:        function PlaySound(sound_id)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/xml_templates/inline_flow/conditionals_checked.rs:25:        <Scripts><OnClick>Settings.OpenToCategory(Settings.INTERFACE_CATEGORY_ID, RAID_FRAMES_LABEL); PlaySound(SOUNDKIT.IG_MAINMENU_OPTION)</OnClick></Scripts>
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/xml_templates/inline_flow/conditionals_checked.rs:147:        SOUNDKIT = {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/xml_templates/inline_flow/conditionals_checked.rs:153:        function PlaySound(sound_id)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/xml_templates/inline_flow/conditionals_checked.rs:168:                <Scripts><OnClick>if ( self:GetChecked() ) then PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON); else PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_OFF); end LFGListUtil_SetAutoAccept(self:GetChecked())</OnClick></Scripts>
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/xml_templates/inline_methods/dispatch_and_assignments.rs:139:        SOUNDKIT = { XML_INLINE_SOUND = 77 }
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/xml_templates/inline_methods/dispatch_and_assignments.rs:151:        <Scripts><OnLoad>XmlInlineGlobalArgFunction(SOUNDKIT.XML_INLINE_SOUND)</OnLoad></Scripts>
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/xml_templates/inline_advanced/advanced_bindings.rs:185:        _G.SOUNDKIT = { IG_CHARACTER_INFO_TAB = 7 }
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/xml_templates/inline_advanced/advanced_bindings.rs:188:        function PlaySound(sound_id)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/xml_templates/inline_advanced/advanced_bindings.rs:204:        <Scripts><OnClick>PlaySound(SOUNDKIT.IG_CHARACTER_INFO_TAB); LFGDebug("ready dialog close"); StaticPopupSpecial_Hide(LFGDungeonReadyPopup)</OnClick></Scripts>
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/xml_templates/inline_advanced/advanced_bindings.rs:232:        _G.SOUNDKIT = { IG_MAINMENU_OPTION_CHECKBOX_ON = 9 }
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/xml_templates/inline_advanced/advanced_bindings.rs:234:        function PlaySound(sound_id)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/xml_templates/inline_advanced/advanced_bindings.rs:250:        <Scripts><OnClick>PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON); BNSendVerifiedBattleTagInvite(); -- unit should have been set with BNCheckBattleTagInviteToUnit or BNCheckBattleTagInviteToGuildMember
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/xml_templates/inline_advanced/advanced_branching.rs:75:        SOUNDKIT = { GS_TITLE_OPTION_OK = "ok" }
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/xml_templates/inline_advanced/advanced_branching.rs:76:        function PlaySound(sound)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/xml_templates/inline_advanced/advanced_branching.rs:93:                PlaySound(SOUNDKIT.GS_TITLE_OPTION_OK);
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/mists_store_commercial_panel.rs:87:        if type(SOUNDKIT[soundKitKey]) ~= "number" then
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/mists_store_commercial_panel.rs:88:            fail("CatalogShop SOUNDKIT missing " .. soundKitKey)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/mists_store_commercial_panel.rs:90:        PlaySound(SOUNDKIT[soundKitKey])
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/missing_surface_boundaries.rs:12:                   type(SOUNDKIT),
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/c_namespace_diff_coverage.rs:56:        "C_Console",
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/c_namespace_diff_coverage.rs:122:                { "C_Console", "GetAllCommands" },
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_paged_content_loads.rs:147:         (CallbackRegistryMixin, HorizontalLayoutFrame, GenerateClosure, Clamp, PlaySound, \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/patch_11_2_7_retirement.rs:20:            for _, record in ipairs(C_Console.GetAllCommands()) do
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_report_frame_shared_loads.rs:429:         OnMouseUp on LeftButton plays SOUNDKIT.REPORT_SCREENSHOT_CAMERA, runs \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/c_artifact_relic_forge_ui.rs:1://! Integration tests for the `C_ArtifactRelicForgeUI` namespace
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/c_artifact_relic_forge_ui.rs:12:    let kind: String = env.eval("return type(C_ArtifactRelicForgeUI)").unwrap();
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/c_artifact_relic_forge_ui.rs:14:        .eval("return type(C_ArtifactRelicForgeUI.IsAtForge)")
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/c_artifact_relic_forge_ui.rs:24:        .eval("return C_ArtifactRelicForgeUI.IsAtForge()")
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/c_artifact_relic_forge_ui.rs:34:        .eval("return C_ArtifactRelicForgeUI.IsAtForge()")
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/c_system_api.rs:3://! Covers: C_XMLUtil, C_Console, C_VoiceChat, C_TTSSettings, C_Reputation,
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/c_system_api.rs:42:// C_Console
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/c_system_api.rs:49:        .eval("return type(C_Console.GetAllCommands()) == 'table'")
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/c_system_api.rs:60:            local before = C_Console.GetAllCommands()
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/c_system_api.rs:64:            for _, record in ipairs(C_Console.GetAllCommands()) do
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/c_system_api.rs:93:            for _, record in ipairs(C_Console.GetAllCommands()) do
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/c_system_api.rs:120:            local c = C_Console.GetColorFromType(0)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/c_system_api.rs:757:        "C_Console",
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/startup_targeted_regressions.rs:297:                return type(SOUNDKIT.CATALOG_SHOP_SELECT_NAV_MENU) == "number"
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_housing_charter_loads.rs:71:         OnSignCharterClicked) plus the SOUNDKIT.HOUSING_CHARTER_* constants needed by the \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_setup_bolster_progress_releases_pool_and_inits_info_frame.rs:44:local originalPlaySound = PlaySound
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_setup_bolster_progress_releases_pool_and_inits_info_frame.rs:81:PlaySound = function()
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_setup_bolster_progress_releases_pool_and_inits_info_frame.rs:100:PlaySound = originalPlaySound
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_reinforce_button_click_shows_static_popup.rs:13:local originalPlaySound = PlaySound
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_reinforce_button_click_shows_static_popup.rs:19:PlaySound = function(soundKit)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_reinforce_button_click_shows_static_popup.rs:55:PlaySound = originalPlaySound
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_reinforce_button_click_shows_static_popup.rs:60:       playedSounds[1] == SOUNDKIT.UI_COVENANT_ANIMA_DIVERSION_CLICK_REINFORCE_BUTTON,
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_confirm_reinforce_popup_calls_select_anima_node_permanent.rs:13:local originalPlaySound = PlaySound
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_confirm_reinforce_popup_calls_select_anima_node_permanent.rs:20:PlaySound = function(soundKit)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_confirm_reinforce_popup_calls_select_anima_node_permanent.rs:39:local soundMatches = playedSounds[1] == SOUNDKIT.UI_COVENANT_ANIMA_DIVERSION_CONFIRM_REINFORCE
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_confirm_reinforce_popup_calls_select_anima_node_permanent.rs:44:PlaySound = originalPlaySound
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_onhide_unregisters_events_and_plays_close_sound.rs:17:    "PlaySound",
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_onhide_unregisters_events_and_plays_close_sound.rs:32:local closeSoundKit = SOUNDKIT.UI_COVENANT_ANIMA_DIVERSION_CLOSE
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_onhide_unregisters_events_and_plays_close_sound.rs:38:local originalPlaySound = PlaySound
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_onhide_unregisters_events_and_plays_close_sound.rs:58:PlaySound = function(soundKit)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_onhide_unregisters_events_and_plays_close_sound.rs:59:    table.insert(calls, "PlaySound")
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_onhide_unregisters_events_and_plays_close_sound.rs:71:PlaySound = originalPlaySound
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_onhide_unregisters_events_and_plays_close_sound.rs:137:        "`OnHide` must play `SOUNDKIT.UI_COVENANT_ANIMA_DIVERSION_CLOSE`"
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_confirm_channel_popup_plays_covenant_sound.rs:13:local originalPlaySound = PlaySound
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_confirm_channel_popup_plays_covenant_sound.rs:22:    Kyrian = SOUNDKIT.UI_9_0_ANIMA_DIVERSION_BASTION_CONFIRM_CHANNEL,
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_confirm_channel_popup_plays_covenant_sound.rs:23:    Venthyr = SOUNDKIT.UI_9_0_ANIMA_DIVERSION_REVENDRETH_CONFIRM_CHANNEL,
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_confirm_channel_popup_plays_covenant_sound.rs:24:    NightFae = SOUNDKIT.UI_9_0_ANIMA_DIVERSION_ARDENWEALD_CONFIRM_CHANNEL,
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_confirm_channel_popup_plays_covenant_sound.rs:25:    Necrolord = SOUNDKIT.UI_9_0_ANIMA_DIVERSION_MALDRAXXUS_CONFIRM_CHANNEL,
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_confirm_channel_popup_plays_covenant_sound.rs:29:PlaySound = function(soundKit)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_confirm_channel_popup_plays_covenant_sound.rs:74:PlaySound = originalPlaySound
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_onshow_registers_events_and_plays_open_sound.rs:30:local openSoundKit = SOUNDKIT.UI_COVENANT_ANIMA_DIVERSION_OPEN
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_onshow_registers_events_and_plays_open_sound.rs:37:local originalPlaySound = PlaySound
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_onshow_registers_events_and_plays_open_sound.rs:59:PlaySound = function(soundKit)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_onshow_registers_events_and_plays_open_sound.rs:82:PlaySound = originalPlaySound
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_onshow_registers_events_and_plays_open_sound.rs:180:        "`OnShow` must play `SOUNDKIT.UI_COVENANT_ANIMA_DIVERSION_OPEN`"
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_reinforce_info_select_node_updates_title_and_button.rs:13:local originalPlaySound = PlaySound
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_reinforce_info_select_node_updates_title_and_button.rs:20:PlaySound = function(soundKit)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_reinforce_info_select_node_updates_title_and_button.rs:95:PlaySound = originalPlaySound
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_setup_bolster_progress_caps_at_max_and_records_new_gems.rs:33:local originalPlaySound = PlaySound
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_setup_bolster_progress_caps_at_max_and_records_new_gems.rs:53:PlaySound = function(soundKit)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_setup_bolster_progress_caps_at_max_and_records_new_gems.rs:81:PlaySound = originalPlaySound
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_selected.rs:141:            _G.__behavior_category_selected_original_play_sound = PlaySound
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_selected.rs:142:            PlaySound = function() end
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_selected.rs:148:            "replacing EventRegistry.TriggerEvent + PlaySound with Lua trackers and seeding \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_selected.rs:161:             PlaySound(SOUNDKIT.ACCOUNT_STORE_CATEGORY_SELECT) and EventRegistry:TriggerEvent. \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_selected.rs:183:             is `PlaySound(SOUNDKIT.ACCOUNT_STORE_CATEGORY_SELECT)` which the test stubs to a \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_selected.rs:213:            PlaySound = _G.__behavior_category_selected_original_play_sound
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:12://!     PlaySound(SOUNDKIT.ACCOUNT_STORE_OPEN);
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:19://!    saved-variables entry — the body passes the hardcoded SOUNDKIT
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:20://!    constant `SOUNDKIT.ACCOUNT_STORE_OPEN` directly to `PlaySound`.
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:24://!    runtime SOUNDKIT table (`grep -rn ACCOUNT_STORE_OPEN
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:26://!    side seed the value passed to `PlaySound` is whatever
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:27://!    `SOUNDKIT.ACCOUNT_STORE_OPEN` resolves to at the time of the
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:49://!   pre-seeds `SOUNDKIT.ACCOUNT_STORE_OPEN` with a sentinel value,
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:50://!   replaces `PlaySound` with a Lua tracker, directly invokes
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:53://!   name (not a different SOUNDKIT alias) and the lack of a
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:54://!   "configured" lookup layer between OnShow and PlaySound.
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:82:            SOUNDKIT = SOUNDKIT or {{}}
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:83:            SOUNDKIT.ACCOUNT_STORE_OPEN = {SENTINEL_SOUND_ID}
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:86:            _G.__behavior_on_show_sound_original_play_sound = PlaySound
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:87:            PlaySound = function(sound_kit_id)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:96:            "seeding SOUNDKIT.ACCOUNT_STORE_OPEN sentinel and replacing PlaySound with a Lua \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:104:                 `PlaySound(SOUNDKIT.ACCOUNT_STORE_OPEN)` (now routed to the test's tracker) and \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:120:            "Expected the test's PlaySound tracker to have been invoked exactly once after \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:122:             `Blizzard_AccountStore.lua:27` calls `PlaySound(SOUNDKIT.ACCOUNT_STORE_OPEN)` \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:124:             saved-variables check. A zero count means either (a) the original PlaySound was \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:126:             (b) OnShow errored before reaching the PlaySound line (likely a regression in the \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:128:             AFTER PlaySound), or (c) Blizzard added a config gate around the PlaySound call \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:137:            "Expected the test's PlaySound tracker to have received the sentinel value \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:139:             `SOUNDKIT.ACCOUNT_STORE_OPEN`. The body at `Blizzard_AccountStore.lua:27` reads \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:140:             `SOUNDKIT.ACCOUNT_STORE_OPEN` BY NAME at the call site — pinning the sentinel \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:142:             `SOUNDKIT.ACCOUNT_STORE_OPEN` (not e.g. `SOUNDKIT.ACCOUNT_STORE_OPEN_SOUND` or \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:143:             `SOUNDKIT.ACCOUNTSTORE_OPEN`) and that there is no intermediate \"configured \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:149:             (`SOUNDKIT.ACCOUNT_STORE_OPEN = {SENTINEL_SOUND_ID}`) did not mutate the global \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:150:             SOUNDKIT table the addon body reads from (a regression in Lua global-table \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:156:            PlaySound = _G.__behavior_on_show_sound_original_play_sound
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:163:        .expect("PlaySound restore + tracker tear-down must run cleanly");
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:220:             `PlaySound(SOUNDKIT.ACCOUNT_STORE_OPEN)`, which is a PCALL-style fire-and-forget, \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:277:        "natural PLAN-shaped name aligned with the `SOUNDKIT.ACCOUNT_STORE_OPEN` sound constant \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:14://!     PlaySound(SOUNDKIT.ACCOUNT_STORE_ITEM_SELECT);
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:26://!                 PlaySound(SOUNDKIT.ACCOUNT_STORE_ITEM_REFUND);
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:29://!                 PlaySound(SOUNDKIT.ACCOUNT_STORE_ITEM_PURCHASE);
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:55://!    `SOUNDKIT.ACCOUNT_STORE_ITEM_REFUND` and line 186 calls
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:80://! 5. **PLAN-omitted PlaySound dual-call.** Same shape as the purchase
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:82://!    `SOUNDKIT.ACCOUNT_STORE_ITEM_SELECT` at entry, line 185 plays
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:83://!    `SOUNDKIT.ACCOUNT_STORE_ITEM_REFUND` inside the closure when the
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:107://!   replaces PlaySound with a tracker that records the full
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:111://!   pins both PlaySound calls and their order, refuting the PLAN's
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:116://!   `BeginPurchase` was not called and the recorded PlaySound log
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:117://!   does not contain `SOUNDKIT.ACCOUNT_STORE_ITEM_PURCHASE`. Pins the
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:223:             branches on isRefundable (true here, status=Refundable), runs PlaySound (stubbed), \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:224:             and calls C_AccountStore.RefundItem(itemInfo.id) — both PlaySound and RefundItem are \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:248:             call (the only line above is PlaySound, which the test stubs to a no-op)."
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:290:            SOUNDKIT = SOUNDKIT or {{}}
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:291:            SOUNDKIT.ACCOUNT_STORE_ITEM_SELECT = {ITEM_SELECT_SOUND_ID}
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:292:            SOUNDKIT.ACCOUNT_STORE_ITEM_REFUND = {ITEM_REFUND_SOUND_ID}
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:296:        .expect("seeding SOUNDKIT.ACCOUNT_STORE_ITEM_SELECT/_REFUND sentinels must run cleanly");
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:303:            PlaySound = function(sound_kit_id)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:309:        .expect("replacing PlaySound with a logging tracker must run cleanly");
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:332:            .expect("post-callback PlaySound log probe must run cleanly");
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:336:            "Expected exactly one PlaySound call BEFORE the captured callback fires. The body at \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:338:             `PlaySound(SOUNDKIT.ACCOUNT_STORE_ITEM_SELECT)` as the first statement of SelectCard, \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:341:             pre-callback count of 0 means the entry PlaySound was removed; a count > 1 means the \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:347:            "Expected the first PlaySound call to use the sentinel for \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:348:             SOUNDKIT.ACCOUNT_STORE_ITEM_SELECT ({ITEM_SELECT_SOUND_ID}) — the body at line 173 \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:349:             reads `SOUNDKIT.ACCOUNT_STORE_ITEM_SELECT` BY NAME, so a sentinel-seed proves the \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:350:             constant name is literally `SOUNDKIT.ACCOUNT_STORE_ITEM_SELECT`. A different reading \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:356:            "Expected exactly two PlaySound calls total (entry + callback). The body fires one at \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:359:             feedback for the refund path); a total > 2 means a third PlaySound site was added \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:365:            "Expected the second PlaySound call to use the sentinel for \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:366:             SOUNDKIT.ACCOUNT_STORE_ITEM_REFUND ({ITEM_REFUND_SOUND_ID}) — the closure at line 185 \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:367:             reads `SOUNDKIT.ACCOUNT_STORE_ITEM_REFUND` BY NAME inside the `if isRefundable then` \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:369:             purchase-branch case (`SOUNDKIT.ACCOUNT_STORE_ITEM_PURCHASE`). A different reading \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:384:        .expect("PlaySound log tear-down must run cleanly");
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:397:            SOUNDKIT = SOUNDKIT or {{}}
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:398:            SOUNDKIT.ACCOUNT_STORE_ITEM_PURCHASE = {ITEM_PURCHASE_SOUND_ID}
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:399:            SOUNDKIT.ACCOUNT_STORE_ITEM_REFUND = {ITEM_REFUND_SOUND_ID}
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:403:        .expect("seeding SOUNDKIT.ACCOUNT_STORE_ITEM_PURCHASE/_REFUND sentinels must run cleanly");
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:410:            PlaySound = function(sound_kit_id)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:446:            "Expected `SOUNDKIT.ACCOUNT_STORE_ITEM_PURCHASE` ({ITEM_PURCHASE_SOUND_ID}) to NOT \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:447:             appear in the PlaySound log — the closure's `else` arm at line 188 plays this \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:460:        .expect("PlaySound log tear-down must run cleanly");
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:547:        _G.__behavior_card_refund_original_play_sound = PlaySound
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:548:        PlaySound = function() end
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:552:    .expect("seeding PlaySound silent stub must run cleanly");
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:575:        PlaySound = _G.__behavior_card_refund_original_play_sound
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_hide_sound.rs:12://!     PlaySound(SOUNDKIT.ACCOUNT_STORE_CLOSE);
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_hide_sound.rs:27://!    hardcoded SOUNDKIT constant `SOUNDKIT.ACCOUNT_STORE_CLOSE`
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_hide_sound.rs:28://!    directly to `PlaySound`. The constant is also not registered
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_hide_sound.rs:29://!    in the simulator's runtime SOUNDKIT bootstrap (`grep -rn
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_hide_sound.rs:32://!    `PlaySound` is whatever `SOUNDKIT.ACCOUNT_STORE_CLOSE`
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_hide_sound.rs:66://!   pre-seeds `SOUNDKIT.ACCOUNT_STORE_CLOSE` with a sentinel value,
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_hide_sound.rs:67://!   replaces `PlaySound` with a Lua tracker, directly invokes
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_hide_sound.rs:70://!   (`SOUNDKIT.ACCOUNT_STORE_CLOSE`, not e.g. `SOUNDKIT.ACCOUNT_STORE_CLOSE_SOUND`)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_hide_sound.rs:102:            SOUNDKIT = SOUNDKIT or {{}}
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_hide_sound.rs:103:            SOUNDKIT.ACCOUNT_STORE_CLOSE = {SENTINEL_SOUND_ID}
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_hide_sound.rs:106:            _G.__behavior_on_hide_sound_original_play_sound = PlaySound
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_hide_sound.rs:107:            PlaySound = function(sound_kit_id)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_hide_sound.rs:116:            "seeding SOUNDKIT.ACCOUNT_STORE_CLOSE sentinel and replacing PlaySound with a Lua \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_hide_sound.rs:124:                 `PlaySound(SOUNDKIT.ACCOUNT_STORE_CLOSE)` (now routed to the test's tracker), \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_hide_sound.rs:142:            "Expected the test's PlaySound tracker to have been invoked exactly once after \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_hide_sound.rs:144:             `Blizzard_AccountStore.lua:32` calls `PlaySound(SOUNDKIT.ACCOUNT_STORE_CLOSE)` \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_hide_sound.rs:146:             saved-variables check. A zero count means either (a) the original PlaySound was \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_hide_sound.rs:148:             (b) OnHide errored before reaching the PlaySound line — but it's the FIRST line \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_hide_sound.rs:149:             of the body, so a pre-PlaySound error would have to come from method dispatch \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_hide_sound.rs:150:             itself, or (c) Blizzard added a config gate around the PlaySound call (forcing a \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_hide_sound.rs:158:            "Expected the test's PlaySound tracker to have received the sentinel value \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_hide_sound.rs:160:             `SOUNDKIT.ACCOUNT_STORE_CLOSE`. The body at `Blizzard_AccountStore.lua:32` reads \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_hide_sound.rs:161:             `SOUNDKIT.ACCOUNT_STORE_CLOSE` BY NAME at the call site — pinning the sentinel \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_hide_sound.rs:163:             `SOUNDKIT.ACCOUNT_STORE_CLOSE` (not e.g. `SOUNDKIT.ACCOUNT_STORE_CLOSE_SOUND` or \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_hide_sound.rs:164:             `SOUNDKIT.ACCOUNTSTORE_CLOSE`) and that there is no intermediate \"configured \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_hide_sound.rs:170:             mutate the global SOUNDKIT table the addon body reads from (a regression in Lua \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_hide_sound.rs:176:            PlaySound = _G.__behavior_on_hide_sound_original_play_sound
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_hide_sound.rs:183:        .expect("PlaySound restore + tracker tear-down must run cleanly");
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_hide_sound.rs:238:             above is `PlaySound(SOUNDKIT.ACCOUNT_STORE_CLOSE)`, which is fire-and-forget, (b) \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_hide_sound.rs:293:        "natural PLAN-shaped name aligned with the `SOUNDKIT.ACCOUNT_STORE_CLOSE` sound \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:13://!     PlaySound(SOUNDKIT.ACCOUNT_STORE_ITEM_SELECT);
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:25://!                 PlaySound(SOUNDKIT.ACCOUNT_STORE_ITEM_REFUND);
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:28://!                 PlaySound(SOUNDKIT.ACCOUNT_STORE_ITEM_PURCHASE);
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:90://! 5. **PLAN-omitted PlaySound dual-call.** The body calls PlaySound
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:91://!    TWICE per accept: once with `SOUNDKIT.ACCOUNT_STORE_ITEM_SELECT`
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:93://!    `SOUNDKIT.ACCOUNT_STORE_ITEM_PURCHASE` inside the closure
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:125://!   replaces PlaySound with a tracker that records the full
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:129://!   pins both PlaySound calls and their order, refuting the PLAN's
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:297:             branches on isRefundable (false here, status=Unowned), runs PlaySound (stubbed), \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:298:             and calls C_AccountStore.BeginPurchase(itemInfo.id) — both PlaySound and \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:322:             BeginPurchase call (the only line above is PlaySound, which the test stubs to a \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:323:             no-op, so an error there would have to be in the SOUNDKIT lookup itself)."
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:367:            SOUNDKIT = SOUNDKIT or {{}}
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:368:            SOUNDKIT.ACCOUNT_STORE_ITEM_SELECT = {ITEM_SELECT_SOUND_ID}
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:369:            SOUNDKIT.ACCOUNT_STORE_ITEM_PURCHASE = {ITEM_PURCHASE_SOUND_ID}
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:373:        .expect("seeding SOUNDKIT.ACCOUNT_STORE_ITEM_SELECT/_PURCHASE sentinels must run cleanly");
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:380:            PlaySound = function(sound_kit_id)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:386:        .expect("replacing PlaySound with a logging tracker must run cleanly");
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:409:            .expect("post-callback PlaySound log probe must run cleanly");
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:413:            "Expected exactly one PlaySound call BEFORE the captured callback fires. The body \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:415:             `PlaySound(SOUNDKIT.ACCOUNT_STORE_ITEM_SELECT)` as the first statement of \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:418:             PlaySound was removed (a regression that would silently drop the click feedback), \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:426:            "Expected the first PlaySound call to use the sentinel for \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:427:             SOUNDKIT.ACCOUNT_STORE_ITEM_SELECT ({ITEM_SELECT_SOUND_ID}) — the body at line 173 \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:428:             reads `SOUNDKIT.ACCOUNT_STORE_ITEM_SELECT` BY NAME, so a sentinel-seed proves the \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:429:             constant name is literally `SOUNDKIT.ACCOUNT_STORE_ITEM_SELECT` (not e.g. \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:430:             `SOUNDKIT.ACCOUNT_STORE_CARD_SELECT` or a runtime-config'd alias). A different \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:436:            "Expected exactly two PlaySound calls total (entry + callback). The body fires one \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:439:             feedback for the purchase path); a total > 2 means a third PlaySound site was \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:445:            "Expected the second PlaySound call to use the sentinel for \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:446:             SOUNDKIT.ACCOUNT_STORE_ITEM_PURCHASE ({ITEM_PURCHASE_SOUND_ID}) — the closure at \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:447:             line 188 reads `SOUNDKIT.ACCOUNT_STORE_ITEM_PURCHASE` BY NAME inside the `else` \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:449:             pins the symmetric refund-branch case (`SOUNDKIT.ACCOUNT_STORE_ITEM_REFUND`). A \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:464:        .expect("PlaySound log tear-down must run cleanly");
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:563:        _G.__behavior_card_purchase_original_play_sound = PlaySound
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:564:        PlaySound = function() end
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:568:    .expect("seeding PlaySound silent stub must run cleanly");
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:591:        PlaySound = _G.__behavior_card_purchase_original_play_sound
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_artifact_ui/behavior_artifact_update_when_hidden_shows_panel.rs:105:expect(not C_ArtifactRelicForgeUI.IsAtForge(), "relic forge state should be false")
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_artifact_ui/behavior_artifact_update_when_hidden_shows_panel.rs:139:expect(C_ArtifactRelicForgeUI.IsAtForge(), "relic forge state should be true")
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_kiosk_loads.rs:119:         C_HouseEditor / C_Housing / C_CharacterCreation namespaces, the SOUNDKIT alias \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_kiosk_loads.rs:312:         sound-kit ID at file scope. KioskFrameMixin:OnEvent passes this to PlaySound when \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_delves_toast_loads.rs:62:         PlaySound, SOUNDKIT, C_Spell, Enum.AssistActionType, NOTIFY_ASSIST_ACTION_* strings) \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_scrapping_machine_ui_loads.rs:109:         SetItemButtonQuality, ButtonFrameTemplate, MagicButtonTemplate, PlaySound, \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_scrapping_machine_ui_loads.rs:110:         SOUNDKIT, PlayerGetTimerunningSeasonID), all of which load before any addon \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/utility_api.rs:522:    for func in &["PlaySound", "StopSound", "PlaySoundFile"] {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/utility_api.rs:535:        PlaySound(839)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/utility_api.rs:546:        "PlaySound should record the latest requested sound kit"
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/console_commands.rs:10:        for _, query in ipairs({ConsoleGetAllCommands, C_Console.GetAllCommands}) do
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/console_commands.rs:53:        local fresh = C_Console.GetAllCommands()
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/console_commands.rs:58:        assert(C_Console.GetAllCommands()[2] ~= nil)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_reforging_ui_loads.rs:95:         MoneyFrame_SetType / SOUNDKIT) is provided by FrameXML which loads-first"
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/data/patch_10_2_0_sweep_known_gaps.json:5:  "wt-global-api-C_Console.GetAllCommands-116",
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/data/patch_10_2_0_sweep_known_gaps.json:6:  "wt-global-api-C_Console.GetColorFromType-117",

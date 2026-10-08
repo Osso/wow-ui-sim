@@ -1,0 +1,10 @@
+{{apichanges|7.3.0|prev=7.2.0|next=7.3.2}}
+
+==New==
+* New AddOns: Blizzard_Console
+* New global table: SOUNDKIT - Keys are named similar to the old string names, and they hold the soundkit ID for the sound
+* New API tables: C_ArtifactRelicForgeUI, C_Console
+* New debug tool: Table Inspector - /tinspect
+
+==Changes==
+* PlaySound() will now only accept soundkit IDs.
