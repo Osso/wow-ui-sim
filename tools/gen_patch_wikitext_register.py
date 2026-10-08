@@ -410,6 +410,33 @@ def parse_top_level_api_bullets(text):
     return entries
 
 
+def parse_legacy_widget_cvar_bullets(text):
+    """Retain linked frame methods, nested CVar names and underscore API links."""
+    entries = []
+    section, cvars = None, False
+    for number, line in enumerate(text.splitlines(), 1):
+        heading = re.fullmatch(r'==\s*([^=]+?)\s*==', line)
+        if heading:
+            section, cvars = heading[1], False
+            continue
+        if section == 'New' and line.startswith('* '):
+            cvars = line == '* New CVars:'
+            if line.startswith('* New frame methods:'):
+                for match in re.finditer(r'\[\[API_Frame_\w+\|frame:(\w+)\([^]]*\)\]\]', line):
+                    entries.append(make_entry('widgets', 'added', number,
+                                              '{{api|Frame:' + match[1] + '}}'))
+        elif section == 'New' and cvars:
+            match = re.match(r"\*\* '''([A-Za-z_][A-Za-z0-9_]*)''' - ", line)
+            if match:
+                entries.append(make_entry('cvars', 'added', number, '{{api|' + match[1] + '}}'))
+        elif section == 'Changes':
+            for match in re.finditer(r'\[\[API_([^|\]]+)(?:\|[^\]]+)?\]\]', line):
+                entry = make_entry('global-api', 'changed', number, '{{api|' + match[1] + '}}')
+                entry['annotation'] = line
+                entries.append(entry)
+    return entries
+
+
 def parse_prose_api_links(text):
     """Retain each API-linked identity in Changes prose, without inventing an addition."""
     entries = []
@@ -468,6 +495,8 @@ def main():
                         help='Retain explicit New widget type/texture method links; opt-in')
     parser.add_argument('--prose-namespace-migrations', action='store_true',
                         help='Retain named Changes destination tables without inferring removals; opt-in')
+    parser.add_argument('--legacy-widget-cvar-bullets', action='store_true',
+                        help='Retain frame-method/CVar summaries and underscore API links; opt-in')
     args = parser.parse_args()
     patch, path, revid, out = args.patch, args.path, args.revid, args.out
     raw = Path(path).read_bytes()
@@ -510,6 +539,8 @@ def main():
         entries.extend(parse_legacy_widget_summaries(raw.decode('utf-8')))
     if args.prose_namespace_migrations:
         entries.extend(parse_prose_namespace_migrations(raw.decode('utf-8')))
+    if args.legacy_widget_cvar_bullets:
+        entries.extend(parse_legacy_widget_cvar_bullets(raw.decode('utf-8')))
     if args.inventory_only:
         for entry in entries:
             for key in ("kind", "page_default", "test_inline"):

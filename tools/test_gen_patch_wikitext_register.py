@@ -23,6 +23,24 @@ class InventoryTests(unittest.TestCase):
         self.assertEqual([(r['section'], r['symbol'], r['direction'], r['annotation']) for r in rows],
                          [('global-api', 'C_EquipmentSet', 'changed', statement)])
 
+    def test_legacy_widget_cvar_bullets_keep_methods_cvars_and_changed_links(self):
+        import gen_patch_wikitext_register as generator
+        raw = ('==New==\n* New API: {{api|AlreadyHandled}}\n'
+               '* New frame methods: [[API_Frame_SetClipsChildren|frame:SetClipsChildren(boolean)]], '
+               '[[API_Frame_DoesClipChildren|frame:DoesClipChildren()]]\n'
+               '* New XML frame attributes: [[Intrinsic frame|intrinsic]]\n'
+               '* New CVars:\n** \'\'\'NameplatePersonalShowAlways\'\'\' - Visibility.\n'
+               '*** 0 = off\n==Changes==\n'
+               '* [[API_GetItemInfo|GetItemInfo]] has four new returns\n'
+               '==Removals==\n* TitleRegion\n')
+        rows = generator.parse_legacy_widget_cvar_bullets(raw)
+        self.assertEqual([(r['section'], r['symbol'], r['direction']) for r in rows], [
+            ('widgets', 'Frame:SetClipsChildren', 'added'),
+            ('widgets', 'Frame:DoesClipChildren', 'added'),
+            ('cvars', 'NameplatePersonalShowAlways', 'added'),
+            ('global-api', 'GetItemInfo', 'changed')])
+        self.assertEqual(len(rows), len({r['id'] for r in rows}))
+
     def test_legacy_summary_tables_keep_names_not_prose_or_addons(self):
         import gen_patch_wikitext_register as generator
         raw = ('==New==\n* New AddOns: Blizzard_Console\n'

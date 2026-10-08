@@ -1,0 +1,186 @@
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/xml/template.rs:310:/// Register synthetic templates for C++ intrinsic frame types.
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/xml/template.rs:739:        let scroll_box = get_template("WoWScrollBoxList").expect("scroll box list intrinsic");
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/xml/template.rs:750:        let button_frame = get_template("ButtonFrameTemplate").expect("button frame intrinsic");
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/xml/mod.rs:94:                <Frame name="AuraContainer" intrinsic="true">
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/xml/types.rs:137:    // Unknown elements (intrinsic types, custom elements)
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/xml/types.rs:165:    #[serde(rename = "@intrinsic")]
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/xml/types.rs:166:    pub intrinsic: Option<bool>,
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/xml/types.rs:177:    #[serde(rename = "@clipChildren")]
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/c_api/item_spell/c_item.rs:136:                "GetDetailedItemLevelInfo",
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/c_api/item_spell/c_item.rs:291:    // this reads intrinsic metadata, not an individual item's bound/owner state.
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/frame/methods/text_attribute_event/mod.rs:534:        "SetClipsChildren",
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/frame/methods/text_attribute_event/mod.rs:540:        "DoesClipChildren",
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/frame/methods/forbidden_aspects.rs:74:/// Blizzard intrinsic OnLoad handlers must still run for frames created by addons.
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/frame/methods/forbidden_aspects.rs:174:    if frame.intrinsic == Some(true) {
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/frame/methods/forbidden_aspects.rs:188:fn native_intrinsic_aspects(intrinsic: Option<&str>) -> &'static [&'static str] {
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/frame/methods/forbidden_aspects.rs:189:    match intrinsic {
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/env.rs:89:            "intrinsic templates registered",
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/globals/create_frame/template_chain/runtime.rs:114:    let Some((frame, widget_type_name, intrinsic)) =
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/globals/create_frame/template_chain/runtime.rs:119:    let inherited_chain = super::build_child_inherits(intrinsic, frame.inherits.as_deref());
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/globals/create_frame/template_chain/runtime.rs:130:    apply_child_template_properties(state, child_id, frame, intrinsic)?;
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/globals/create_frame/template_chain/runtime.rs:401:    intrinsic: Option<&str>,
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/globals/create_frame/template_chain/runtime.rs:403:    let inherited_chain = super::build_child_inherits(intrinsic, frame.inherits.as_deref());
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/globals/create_frame/template_chain/runtime.rs:407:    if let Some(intrinsic) = intrinsic {
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/globals/create_frame/template_chain/runtime.rs:408:        crate::lua_api::globals::template::set_intrinsic(state, child_id, intrinsic);
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/globals/create_frame/mod.rs:281:/// 12.1.0: "Addons no longer create AuraButtons directly." INFERRED: an intrinsic
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/globals/create_frame/mod.rs:286:    let Some(intrinsic) =
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/globals/create_frame/mod.rs:287:        crate::xml::widget_type_for_tag(frame_type).and_then(|(_, intrinsic)| intrinsic)
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/globals/create_frame/mod.rs:291:    let restricted = crate::xml::get_template(intrinsic).is_some_and(|entry| {
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/globals/create_frame/mod.rs:292:        entry.frame.intrinsic == Some(true)
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/globals/create_frame/mod.rs:305:    let intrinsic =
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/globals/create_frame/mod.rs:306:        crate::xml::widget_type_for_tag(frame_type).and_then(|(_, intrinsic)| intrinsic);
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/globals/create_frame/mod.rs:307:    template_chain::build_child_inherits(intrinsic, explicit_inherits)
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/globals/create_frame/mod.rs:401:            .expect("CreateFrame should accept intrinsic aliases");
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/globals/create_frame/template_chain.rs:257:        let entry_is_intrinsic = entry.frame.intrinsic == Some(true);
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/globals/create_frame/template_chain.rs:650:        format!("{handler_name}|intrinsic={intrinsic_order}|{body}")
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/globals/create_frame/template_chain.rs:848:    intrinsic: Option<&str>,
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/globals/create_frame/template_chain.rs:851:    match (intrinsic, inherits.filter(|value| !value.trim().is_empty())) {
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/globals/create_frame/template_chain.rs:903:            .map(|(widget_type, intrinsic)| (frame, widget_type, intrinsic)),
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/globals/template/mod.rs:14:    table_set(state, frame, "intrinsic", value);
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/globals/template/direct.rs:617:/// Resolve and apply clipChildren from template chain + instance XML.
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/globals/profession_data.rs:550:/// dependency is intrinsic to the reagent item (not the recipe slot), so the
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/globals/loader_script_bindings.rs:4://! needs to install intrinsic script bindings without going through the public
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/env_runtime.rs:465:        function GetPhysicalScreenSize()
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/xml_frame/finalize.rs:211:/// - `DropDownToggleButton` / `EventButton` get intrinsic names (shared treats them as unknown)
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/xml_frame/finalize.rs:216:    let (wt, intrinsic) = match child_tag {
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/xml_frame/finalize.rs:221:    Some((child_frame, wt, intrinsic))
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/xml_frame/finalize.rs:256:        let (child_frame, child_type, intrinsic) =
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/xml_frame/finalize.rs:267:            intrinsic,
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/xml_frame/finalize.rs:296:    let (child_frame, child_type, intrinsic) = match frame_element_to_type(child_frame, child_tag) {
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/xml_frame/finalize.rs:306:        intrinsic,
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/xml_frame/setup.rs:411:/// Set the `intrinsic` property on intrinsic frames (e.g. frame.intrinsic = "DropdownButton").
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/xml_frame/tests.rs:8:/// Helper: call frame_element_to_type and return (widget_type, intrinsic).
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/xml_frame/preparation.rs:66:/// Register virtual/intrinsic frames as templates. Returns Some(None) to skip instantiation
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/xml_frame/preparation.rs:75:    if frame.is_virtual != Some(true) && frame.intrinsic != Some(true) {
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/xml_frame/preparation.rs:79:        // Prepend intrinsic base to inherits so the template chain includes
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/xml_frame/preparation.rs:80:        // the intrinsic mixin (e.g. DropdownButton → DropdownButtonMixin).
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/xml_frame/preparation.rs:144:/// Prepend intrinsic base template to the inherits chain.
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/precompiled.rs:16:    local intrinsic = __wow_bind_xml_method(frame, "OnLoad_Intrinsic")
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/precompiled.rs:17:    if type(intrinsic) == "function" then
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/precompiled.rs:18:        local ok, err = pcall(intrinsic, frame)
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/tests/runtime_template_xml.rs:245:        "xml-partitioned-intrinsic-onload-forbidden-self",
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/tests/runtime_template_xml.rs:270:        "private intrinsic method should be installed on forbidden frame table",
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/tests/runtime_template_xml.rs:274:        "private intrinsic OnLoad should not write to public frame",
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/tests/runtime_template_xml.rs:278:        "private intrinsic OnLoad should run with forbidden self",
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/tests/runtime_template_parenting.rs:135:        "runtime-empty-script-keeps-intrinsic",
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/tests/runtime_template_parenting.rs:163:        "empty XML OnUpdate should not clear the inherited intrinsic binding",
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/tests/runtime_template_parenting.rs:500:        "synthetic-theme-container-intrinsic",
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/tests/runtime_template_parenting.rs:513:            assert(type(frame.UpdateTheme) == "function", "UIThemeContainerFrame intrinsic should apply UIThemeContainerMixin")
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/tests/xml_basics_extra.rs:486:        "empty-runtime-template-script-clears-intrinsic-handler",
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/tests/xml_basics_extra.rs:489:            <Frame name="IntrinsicClearScriptFrame" intrinsic="true">
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/tests/xml_basics_extra.rs:509:        "An explicit empty runtime template script tag should clear an intrinsic handler",
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/tests/xml_basics_extra.rs:790:        "test-intrinsic-onupdate",
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/tests/xml_basics_extra.rs:797:                            table.insert(INTRINSIC_ONUPDATE_ORDER, "intrinsic")
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/tests/xml_basics_extra.rs:807:        "inline intrinsic OnUpdate should not occupy the normal script binding",
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/tests/xml_basics_extra.rs:827:        "normal,intrinsic",
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/tests/xml_basics_extra.rs:834:        "test-intrinsic-onupdate-bindings",
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/tests/xml_basics_extra.rs:849:                table.insert(INTRINSIC_ONUPDATE_BINDING_ORDER, "intrinsic")
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/tests/xml_basics_extra.rs:863:        "intrinsic",
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/tests/xml_basics_extra.rs:879:        "normal,intrinsic",
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/tests/xml_basics_extra.rs:893:        "intrinsic",
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/tests/xml_basics_extra.rs:909:        "hook,intrinsic",
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/tests/xml_basics_extra.rs:916:        "test-intrinsic-template-default-bindings",
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/tests/xml_basics_extra.rs:918:            <Frame name="IntrinsicDefaultBase" virtual="true" intrinsic="true">
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/tests/xml_basics_extra.rs:921:                        table.insert(INTRINSIC_TEMPLATE_ORDER, "intrinsic")
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/tests/xml_basics_extra.rs:944:        "intrinsic template default script should occupy the precall binding",
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/tests/xml_basics_extra.rs:950:        "intrinsic,normal",
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/tests/wow_api_item.rs:28:        "GetDetailedItemLevelInfo",
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/xml_file_tests.rs:7:/// Helper: call resolve_frame_element and return (widget_type, intrinsic).
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/xml_file_tests.rs:113:    // DropDownToggleButton and EventButton map to plain Button (no intrinsic) in XmlElement
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/xml_file_tests.rs:122:    // DropdownButton has intrinsic
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/xml_file_tests.rs:127:    // ContainedAlertFrame has intrinsic
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/xml_file_tests.rs:206:/// ItemButton resolves as a Button with the ItemButton intrinsic base here,
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/xml_file_tests.rs:208:/// DropDownToggleButton/EventButton have no intrinsic here but do in FrameElement.
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/xml_file_tests.rs:217:    // XmlElement::DropDownToggleButton -> ("Button", None) — no intrinsic
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/xml_file_tests.rs:222:    // XmlElement::EventButton -> ("Button", None) — no intrinsic
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/xml_file.rs:457:/// Extract the FrameXml data, widget type, and optional intrinsic name from an XmlElement.
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/xml_file.rs:460:/// - `DropDownToggleButton` and `EventButton` map to plain `"Button"` (no intrinsic)
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/xml_file.rs:465:    let (wt, intrinsic) = match tag {
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/xml_file.rs:469:    Some((f, wt, intrinsic))
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/xml_file.rs:516:    let Some((frame_xml, widget_type, intrinsic)) = resolve_frame_element(element) else {
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/xml_file.rs:521:    create_frame_from_xml(env, frame_xml, widget_type, None, None, intrinsic, timing)?;
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/xml_frame.rs:35:/// `intrinsic_base` is set when the XML element is an intrinsic type (e.g.
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/widget/frame.rs:791:            "ScrollFrame should not clip children by default (clipChildren defaults to false per XSD)"
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/blizzard_item_interaction_ui_loads.rs:160:         and the ItemButton intrinsic — come from auto-loaded foundational addons \
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/forbidden_aspect_creation.rs:143:                    assert(bit.band(button:GetForbiddenAspects(), e.ChangeParent) ~= 0, 'intrinsic XML aspect is applied')
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/blizzard_item_upgrade_ui_loads.rs:181:         deps; the ItemButton intrinsic comes from Blizzard_ItemButton"
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/widget_slider.rs:147:    <Slider name="SliderValuePrecall" intrinsic="true">
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/widget_slider.rs:247:        assert(table.concat(calls, ',') == 'pre:4,post:4', 'intrinsic bindings must run without normal script')
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/forbidden_aspect_enforcement.rs:223:                        'AuraContainer intrinsic carries EventRegistrations')
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/forbidden_aspect_enforcement.rs:242:                .expect("intrinsic AuraContainer aspect restricts addons only");
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/unit_frame_layer_probe.rs:31:        GetPhysicalScreenSize = function() return 3440, 1440 end
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/unit_frame_layer_probe.rs:137:        assert(c.metrics.GetPhysicalScreenSize.values[2].value == 1440)
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/unit_frame_layer_probe.rs:213:        GetPhysicalScreenSize = nil
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/unit_frame_layer_probe.rs:229:        assert(c.metrics.GetPhysicalScreenSize.status == 'missing')
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/blizzard_deprecated_item_script_loads.rs:165:                and type(GetDetailedItemLevelInfo) == 'function' \
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/c_item_api/c_item.rs:27:                "GetDetailedItemLevelInfo",
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/c_item_api/c_item.rs:544:        .eval("return C_Item.GetDetailedItemLevelInfo(42)")
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/c_item_api/c_item.rs:553:        .eval("return C_Item.GetDetailedItemLevelInfo(6948)")
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/blizzard_item_button_loads.rs:215:             true from allows_screen for all screens (src/toc.rs:307). The intrinsic `ItemButton` \
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/blizzard_item_button_loads.rs:237:         UI depends on `ItemButton` intrinsic + ItemButtonMixin"
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/blizzard_item_button_loads.rs:271:         ship divergent xml/lua against the same intrinsic, but only Mainline ships today"
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/blizzard_item_button_loads.rs:522:         `intrinsic=\"true\"`, which `register_virtual_or_intrinsic` (preparation.rs:75) routes \
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/blizzard_item_button_loads.rs:537:         loader registered `ItemButton` as a widget-type intrinsic. The created button inherits \
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/blizzard_item_button_loads.rs:551:         every ItemButton-intrinsic instance starts with the match-highlight overlay opted in"
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/widget_methods.rs:110:            <Frame name="FocusPrecall" intrinsic="true"><Scripts>
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/blizzard_frame_effects_loads.rs:65:         FrameXML core) and NineSlicePanelTemplate (an intrinsic template). The TOC \
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/xml_templates/registry.rs:273:        "WowLuaEnv::new should restore intrinsic XML templates after a clear"
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/xml_templates/registry.rs:287:            table.insert(XmlIntrinsicDropdownCalls, "intrinsic")
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/xml_templates/registry.rs:299:            <DropdownButton name="DropdownButton" intrinsic="true" mixin="XmlIntrinsicDropdownMixin">
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/xml_templates/registry.rs:329:        calls, "intrinsic,style",
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/xml_templates/registry.rs:330:        "intrinsic dropdown handlers should dispatch before style-template handlers"
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/xml_templates/inline_advanced/advanced_bindings.rs:517:    assert!(loaded, "XML intrinsic OnLoad should fire");
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/xml_templates/inline_advanced/rendering_templates.rs:85:    <Button name="ItemButton" intrinsic="true">
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/xml_templates/inline_advanced/rendering_templates.rs:111:        "top-level <ItemButton> should inherit the intrinsic ItemButton icon child"
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/xml_templates/inline_advanced/rendering_templates.rs:115:        "top-level <ItemButton> should inherit the intrinsic ItemButton border child"
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/xml_templates/inline_advanced/empty_script_overrides.rs:51:            <ScrollFrame name="XmlSlotBase" virtual="true" intrinsic="true">
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/xml_templates/inline_advanced/empty_script_overrides.rs:98:            <ScrollFrame name="XmlDefaultPre" virtual="true" intrinsic="true">
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/xml_templates/inline_advanced/empty_script_overrides.rs:107:            <ScrollFrame name="XmlDefaultClear" virtual="true" intrinsic="true">
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/pixel_rounding_probe.rs:17:        GetPhysicalScreenSize = function() return 3440, 1440 end
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/intrinsic_types.rs:1://! Tests for intrinsic frame types (ContainedAlertFrame, etc.).
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/intrinsic_types.rs:6:/// Register a ContainedAlertFrame intrinsic template and its mixin.
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/intrinsic_types.rs:10:            <Button name="ContainedAlertFrame" mixin="ContainedAlertFrameMixin" intrinsic="true">
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/intrinsic_types.rs:35:/// ContainedAlertFrame is a WoW intrinsic type that is a Button subtype.
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/intrinsic_types.rs:37:/// intrinsic mixin and size applied automatically.
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/intrinsic_types.rs:61:        "should have intrinsic width 300, got {}",
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/frame_creation/visibility_scripts.rs:168:        <Frame name="VisibilityPrecall" intrinsic="true">
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/frame_creation/visibility_scripts.rs:222:    "#).expect("real XML supplies intrinsic bindings independently of normal scripts");
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/frame_creation/visibility_scripts.rs:295:    .expect("a failing intrinsic handler must not abort sibling bindings or parent delivery");
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/scroll_widgets/script_bindings.rs:5:    <ScrollFrame name="ScrollBindingPre" virtual="true" intrinsic="true">
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/scroll_widgets/script_bindings.rs:223:            'normal script and hook run, but unregistered intrinsic property does not: ' .. table.concat(calls, ','))
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/recent_runtime_bootstrap_boundaries.rs:172:            "function GetPhysicalScreenSize",
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/blizzard_menu_loads.rs:373:         intrinsic / Menu.* / MenuUtil.* surface live by the time their own load runs"
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/blizzard_menu_loads.rs:413:             CreateFromMixins(CallbackRegistryMixin) — drives the intrinsic dropdown widget), \
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/blizzard_menu_loads.rs:636:         intrinsic=\"true\">` — this is NOT a virtual=\"true\" template, it's an `intrinsic=\"true\"` \
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/blizzard_menu_loads.rs:640:         so `get_template(\"DropdownButton\")` resolves the entry. The intrinsic carries 5 \
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/blizzard_menu_loads.rs:644:         that fire BEFORE the consumer's own scripts via the precompiled intrinsic-dispatch \
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/forever_forbidden_consumers.rs:59:            or type(container:GetScript('OnEvent', 2)) == 'function', 'native intrinsic binding missing')
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/forever_forbidden_consumers.rs:74:    "#).expect("construct the real intrinsic-only container before any test aura exists");
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/forever_forbidden_consumers.rs:140:            assert(registered and unit == 'player', 'ancestor show did not run native intrinsic registration')
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/forever_forbidden_consumers.rs:165:        .expect("hiding the ancestor must run the intrinsic unregistration handler");
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/blizzard_ui/blizzard_accessibilitytemplates/surface_frames.rs:9://! | `UIThemeContainerFrame`        | `AccessibilityIntrinsics.xml` (`<Frame intrinsic="true">`) | unified template registry |
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/blizzard_ui/blizzard_accessibilitytemplates/surface_frames.rs:24://! `<Frame virtual>` / `<Frame intrinsic>` (see `register_font_string_template`
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/blizzard_ui/blizzard_accessibilitytemplates/surface_frames.rs:53:                 AND `<Frame intrinsic>`."
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/blizzard_ui/blizzard_accessibilitytemplates/surface_mixins.rs:8://!   `UIThemeContainerFrame` intrinsic via `mixin="UIThemeContainerMixin"`
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/blizzard_ui/blizzard_accessibilitytemplates/surface_mixins.rs:31://! The four `..._OnPre*`/`..._OnPost*` intrinsic-script entry points on
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/blizzard_ui/blizzard_accessibilitytemplates/behavior_theme_update.rs:96:         {registered_count}. If this is 0, either the intrinsic mixin's \
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/methods_button/enabled_bindings.rs:5:    <Button name="ButtonEnablePrecall" intrinsic="true">
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/admin_event_api.rs:12:            <Frame name="SynchronousEventPre" intrinsic="true">
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/admin_event_api.rs:42:    .expect("real XML installs both intrinsic bindings independently of the normal script");
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/admin_event_api.rs:98:    "#).expect("intrinsic-only frames and independently filtered callbacks both receive events");
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/admin_event_api.rs:141:            if label == 'pre' then error('synchronous-intrinsic-probe') end
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/admin_event_api.rs:146:        assert(#reported == 1 and reported[1]:find('synchronous-intrinsic-probe', 1, true))
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/admin_event_api.rs:150:    .expect("intrinsic failures reach the error handler without skipping later bindings");
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/blizzard_ui_parent_loads.rs:329:             with `clipChildren=\"true\"` and `propagateMouseInput=\"Both\"`. \
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/blizzard_collections_loads.rs:218:        "Show Collected Only label should report its intrinsic text width, got {label_width}"
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/blizzard_flight_map_loads.rs:197:         `:GetParent()` is UIParent — confirms the MapCanvasFrameTemplate intrinsic \
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/screen_mode.rs:95:        return GetScreenWidth(), GetScreenHeight(), UIParent:GetWidth(), UIParent:GetHeight(), GetPhysicalScreenSize()
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/screen_mode.rs:124:        return GetScreenWidth(), GetScreenHeight(), GetPhysicalScreenSize()
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/screen_mode.rs:137:        return GetScreenWidth(), GetScreenHeight(), GetPhysicalScreenSize()
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/screen_mode.rs:156:        return GetScreenWidth(), GetScreenHeight(), GetPhysicalScreenSize()
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/screen_mode.rs:176:        local pw, ph = GetPhysicalScreenSize()
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/screen_mode.rs:195:        local width, height = GetPhysicalScreenSize()
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/screen_mode.rs:211:        .eval("return GetScreenWidth(), GetScreenHeight(), GetPhysicalScreenSize()")
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/patch_12_1_0_aura_creation.rs:1://! Retail 12.1.0 intrinsic creation and combat construction proof.
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/blizzard_event_trace_loads.rs:394:         intrinsic) and EventTraceMenuButtonTemplate template chain (Button → \
+/home/osso/.worktrees/wow-ui-sim-p710-page/tests/frame_position_replay.rs:36:            local pw, ph = GetPhysicalScreenSize()
