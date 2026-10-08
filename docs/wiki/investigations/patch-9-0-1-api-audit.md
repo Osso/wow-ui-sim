@@ -32,7 +32,7 @@ Negative control flips only CURSOR_CHANGED added → removed: **273 → 274 fail
 
 `cargo fmt`, `cargo fmt --check`, default `cargo check`, Mists `cargo check --no-default-features --features sound,gui,casc,client-mists --tests`, separate retail build and bounded startup pass. Mists has **zero non-vendor warnings**; six inherited iced manifest deprecations and their summary remain unsuppressed. Rebuilt retail startup exits zero and prints **`[]`**. All **42** generator/extractor fixtures pass. [Changed-Rust readability](../../../data/patch-api/evidence/9.0.1-session-2026-10-08/p901-readability.md) records additive flat data and explicit registration call; all five metric invocations exit zero.
 
-[Proof ledger](../../../data/patch-api/evidence/9.0.1-session-2026-10-08/p901-proof.json) records exact commands/revisions/scopes, cwd/own target, exit statuses and output hashes. Artifact validator is committed for separate current-artifact acceptance; its totals, register set and sweep set derive from source/fixture/result files, not frozen receipts.
+[Proof ledger](../../../data/patch-api/evidence/9.0.1-session-2026-10-08/p901-proof.json) records exact commands/revisions/scopes, cwd/own target, exit statuses and output hashes. Artifact validator passes at accounting revision `8c43b16d8`; [acceptance receipt](../../../data/patch-api/evidence/9.0.1-session-2026-10-08/p901-artifact-acceptance.json) retains exact command/result. Its totals, register set and sweep set derive from source/fixture/result files, not frozen receipts.
 
 ## Preservation and integration
 

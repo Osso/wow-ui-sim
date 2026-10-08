@@ -6,4 +6,4 @@ Scope: pinned page publication/extract accounting plus cheap unused-member retai
 - [x] Add publication sweep; review every gap and bound safe retirements.
 - [x] Verify all sweeps, negative control, affected behavior, format/default/Mists checks and clean startup.
 - [x] Account for all IDs; update audit, spec, index/log and preservation evidence.
-- [ ] Commit accounting and run retained-artifact validator; record acceptance.
+- [x] Commit accounting and run retained-artifact validator; record acceptance.
