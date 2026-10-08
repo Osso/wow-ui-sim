@@ -156,6 +156,23 @@ def split_sections(text, *, separate_inline_structures=False):
     return buckets
 
 
+def parse_simple_api_list(text):
+    """Retain the bullet additions under API/New (8.3.7's inventory format)."""
+    entries = []
+    in_api, added = False, False
+    for line_no, line in enumerate(text.splitlines(), 1):
+        heading = re.fullmatch(r'(={2,3})\s*(.*?)\s*\1', line)
+        if heading:
+            if len(heading[1]) == 2:
+                in_api, added = heading[2] == 'API', False
+            else:
+                added = in_api and heading[2] == 'New'
+        elif added and line.startswith('* '):
+            section = 'cvars' if line.startswith('* CVar ') else 'global-api'
+            entries.append(make_entry(section, 'added', line_no, line))
+    return entries
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("patch", "path", "revid", "out"):
@@ -170,6 +187,8 @@ def main():
                         help='Retain hidden-span CVar defaults; opt-in preserves prior registers')
     parser.add_argument('--skip-plain-scripts-label', action='store_true',
                         help='Skip the plain widget Scripts label; opt-in preserves prior registers')
+    parser.add_argument('--simple-api-list', action='store_true',
+                        help='Retain API/New bullet additions; opt-in preserves prior registers')
     args = parser.parse_args()
     patch, path, revid, out = args.patch, args.path, args.revid, args.out
     raw = Path(path).read_bytes()
@@ -188,6 +207,8 @@ def main():
                 count["section"] = "commands"
         entries += section_entries
         counts += section_counts
+    if args.simple_api_list:
+        entries.extend(parse_simple_api_list(raw.decode('utf-8')))
     if args.inventory_only:
         for entry in entries:
             for key in ("kind", "page_default", "test_inline"):

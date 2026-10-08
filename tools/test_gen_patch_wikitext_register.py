@@ -5,6 +5,19 @@ from gen_patch_wikitext_register import parse_section, split_sections
 
 
 class InventoryTests(unittest.TestCase):
+    def test_simple_api_list_retains_function_and_cvar_source_lines(self):
+        import gen_patch_wikitext_register as generator
+        raw = ('== Changes ==\n* TOC: <code>80300</code>\n'
+               '== API ==\n=== New ===\n* {{api|GetAreaText}}()\n'
+               '* CVar {{api|t=c|MouseUseLazyRepositioning}}\n')
+        entries = generator.parse_simple_api_list(raw)
+        self.assertEqual([(e['section'], e['symbol'], e['direction'], e['wikitext_line'])
+                          for e in entries], [
+            ('global-api', 'GetAreaText', 'added', 5),
+            ('cvars', 'MouseUseLazyRepositioning', 'added', 6),
+        ])
+        self.assertEqual(split_sections(raw), {})
+
     def test_plain_command_label_marks_commands_and_resets_at_removed_column(self):
         lines = [(1, '| valign="top" | <div>'),
                  (2, ': [[CVar GameplayContext|GameplayContext]]'),

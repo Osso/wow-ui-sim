@@ -1,0 +1,26 @@
+{
+  "batchcomplete": "",
+  "query": {
+    "pages": {
+      "160588": {
+        "pageid": 160588,
+        "ns": 0,
+        "title": "Patch 8.3.7/API changes",
+        "revisions": [
+          {
+            "revid": 1572710,
+            "parentid": 1572704,
+            "timestamp": "2021-04-23T01:19:54Z",
+            "slots": {
+              "main": {
+                "contentmodel": "wikitext",
+                "contentformat": "text/x-wiki",
+                "*": "{{apichanges|8.3.7|prev=8.3.0|next=9.0.1}}\n\n== Changes ==\n* TOC: <code>80300</code>\n* BlizzardInterfaceResources: [https://github.com/Ketho/BlizzardInterfaceResources/commit/db2638d14479e74a1c5eadca0c12e249ce8f45b4 8.3.7 (35114)]\n\n== API ==\n=== New ===\n* {{api|GetAreaText}}()\n* CVar {{api|t=c|MouseUseLazyRepositioning}}"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}
