@@ -1,0 +1,129 @@
+#[cfg(feature = "retail-12-1-0")]
+use super::permanent_shims::c_browser;
+use super::permanent_shims::{c_fog_of_war, c_nameplate};
+use super::{
+    c_allied_races, c_ardenweald_gardening, c_arrow_callout_manager, c_artifact_relic_forge_ui,
+    c_artifact_ui, c_azerite_empowered_item, c_azerite_essence, c_azerite_item, c_barber_shop,
+    c_cursor, c_major_factions, c_map, c_map_exploration_info, c_paper_doll_info,
+    c_player_interaction_manager, c_spell, c_spell_diminish, c_widget,
+};
+
+use rilua::LuaResult;
+use rilua::vm::state::LuaState;
+
+pub(crate) fn register_spell_and_widget_tables(state: &mut LuaState) -> LuaResult<()> {
+    #[cfg(feature = "client-wowforever")]
+    super::c_input_interface_style::register(state)?;
+    #[cfg(feature = "client-wowforever")]
+    super::c_gamepad_ui::register(state)?;
+    #[cfg(feature = "client-wowforever")]
+    super::c_game_pad::register(state)?;
+    #[cfg(feature = "client-wowforever")]
+    super::c_edit_mode::register(state)?;
+    #[cfg(feature = "client-wowforever")]
+    super::gamepad_action_bar_constants::register(state);
+    #[cfg(feature = "client-wowforever")]
+    super::forever_finite_constants::register(state);
+    c_spell::register_c_spell_surface(state)?;
+    #[cfg(feature = "retail-12-0-5")]
+    super::c_mount_spell_lookup::register(state)?;
+    c_spell_diminish::register_c_spell_diminish_surface(state)?;
+    c_widget::register_c_widget_surface(state)
+}
+
+pub(crate) fn register_item_power_tables(state: &mut LuaState) -> LuaResult<()> {
+    super::weapon_enchants::register(state)?;
+    c_paper_doll_info::register_c_paper_doll_info_surface(state)?;
+    c_artifact_ui::register_c_artifact_ui_surface(state)?;
+    c_artifact_relic_forge_ui::register_c_artifact_relic_forge_ui_surface(state)?;
+    c_azerite_item::register_c_azerite_item_surface(state)?;
+    c_azerite_essence::register_c_azerite_essence_surface(state)?;
+    c_azerite_empowered_item::register_c_azerite_empowered_item_surface(state)
+}
+
+pub(crate) fn register_character_progression_tables(state: &mut LuaState) -> LuaResult<()> {
+    c_barber_shop::register_c_barber_shop_surface(state)?;
+    c_cursor::register_c_cursor_surface(state)?;
+    c_major_factions::register_c_major_factions_surface(state)?;
+    c_allied_races::register_c_allied_races_surface(state)
+}
+
+pub(crate) fn register_interaction_tables(state: &mut LuaState) -> LuaResult<()> {
+    #[cfg(feature = "retail-12-0-0")]
+    super::c_voice_chat_volume::register(state)?;
+    #[cfg(feature = "retail-12-0-0")]
+    register_retirement_successors(state)?;
+    #[cfg(feature = "client-wowforever")]
+    super::addon_messages::register_chat(state)?;
+    #[cfg(feature = "client-wowforever")]
+    super::c_combat_log::register_publication(state)?;
+    #[cfg(feature = "retail-12-0-0")]
+    {
+        super::c_combat_log::register_restriction(state)?;
+        super::c_limited_input::register(state)?;
+    }
+    #[cfg(feature = "retail-12-0-0")]
+    super::c_combat_audio_alert::register(state)?;
+    #[cfg(feature = "retail-12-0-0")]
+    super::c_combat_text::register(state)?;
+    #[cfg(feature = "retail-12-0-0")]
+    super::c_encounter_warnings::register_settings(state)?;
+    #[cfg(feature = "retail-12-0-0")]
+    super::c_trade_skill_quality::register(state)?;
+    #[cfg(feature = "retail-12-0-0")]
+    super::c_crafting_orders::register(state)?;
+    #[cfg(feature = "retail-12-0-0")]
+    super::c_prey::register(state)?;
+    #[cfg(feature = "retail-12-0-0")]
+    super::c_weekly_rewards::register(state)?;
+    #[cfg(feature = "retail-12-0-0")]
+    super::c_key_bindings::register(state)?;
+    #[cfg(feature = "retail-12-0-0")]
+    super::c_dye_color::register(state)?;
+    super::c_item_interaction::register(state)?;
+    super::c_cooldown_viewer::register(state)?;
+    super::c_neighborhood_initiative::register(state)?;
+    super::c_roleset::register(state)?;
+    #[cfg(all(
+        feature = "retail-12-0-5",
+        any(feature = "profile-retail", feature = "client-ptr")
+    ))]
+    super::c_recent_allies::register(state)?;
+    #[cfg(feature = "retail-12-0-5")]
+    super::c_scenario_info::register(state)?;
+    #[cfg(feature = "retail-12-0-0")]
+    super::c_transmog_sets::register(state)?;
+    #[cfg(feature = "retail-12-0-0")]
+    super::c_transmog_outfit_info::register(state)?;
+    c_ardenweald_gardening::register_c_ardenweald_gardening_surface(state)?;
+    c_arrow_callout_manager::register_c_arrow_callout_manager_surface(state)?;
+    #[cfg(feature = "retail-12-1-0")]
+    c_browser::register_c_browser_surface(state)?;
+    super::c_sound::register(state)?;
+    c_player_interaction_manager::register_c_player_interaction_manager_surface(state)
+}
+
+#[cfg(feature = "retail-12-0-0")]
+fn register_retirement_successors(state: &mut LuaState) -> LuaResult<()> {
+    super::c_challenge_mode::register(state)?;
+    super::c_log::register(state)?;
+    super::c_spell_activation_overlay::register(state)
+}
+
+pub(crate) fn register_map_prefix_tables(state: &mut LuaState) -> LuaResult<()> {
+    c_map::register_c_map_surface(state)
+}
+
+pub(crate) fn register_map_environment_tables(state: &mut LuaState) -> LuaResult<()> {
+    c_fog_of_war::register_fog_of_war_surface(state)?;
+    c_map_exploration_info::register_c_map_exploration_info_surface(state)
+}
+
+pub(crate) fn register_nameplate_tables(state: &mut LuaState) -> LuaResult<()> {
+    #[cfg(feature = "retail-12-0-5")]
+    super::c_nameplate_manager::register(state)?;
+    c_nameplate::register_c_nameplate(state)?;
+    #[cfg(feature = "retail-12-0-0")]
+    super::c_nameplate_manager::register_configuration(state)?;
+    Ok(())
+}
