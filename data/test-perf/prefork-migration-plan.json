@@ -4533,7 +4533,7 @@
         "tests/blizzard_new_player_experience_loads.rs"
       ],
       "remaining_count": 0,
-      "remaining_seconds": 0
+      "remaining_seconds": 0.0
     },
     {
       "module": "blizzard_obliterum_ui_loads",
@@ -4557,7 +4557,7 @@
         "tests/blizzard_obliterum_ui_loads.rs"
       ],
       "remaining_count": 0,
-      "remaining_seconds": 0
+      "remaining_seconds": 0.0
     },
     {
       "module": "blizzard_order_hall_ui_loads",
@@ -4581,7 +4581,7 @@
         "tests/blizzard_order_hall_ui_loads.rs"
       ],
       "remaining_count": 0,
-      "remaining_seconds": 0
+      "remaining_seconds": 0.0
     },
     {
       "module": "blizzard_party_pose_ui_loads",
@@ -4605,7 +4605,7 @@
         "tests/blizzard_party_pose_ui_loads.rs"
       ],
       "remaining_count": 0,
-      "remaining_seconds": 0
+      "remaining_seconds": 0.0
     },
     {
       "module": "blizzard_perks_program_loads",
@@ -4629,7 +4629,7 @@
         "tests/blizzard_perks_program_loads.rs"
       ],
       "remaining_count": 0,
-      "remaining_seconds": 0
+      "remaining_seconds": 0.0
     },
     {
       "module": "blizzard_player_choice_loads",
@@ -4701,7 +4701,7 @@
         "tests/blizzard_plunderstorm_basics_loads.rs"
       ],
       "remaining_count": 0,
-      "remaining_seconds": 0
+      "remaining_seconds": 0.0
     },
     {
       "module": "blizzard_plunderstorm_prematch_ui_loads",
@@ -4725,7 +4725,7 @@
         "tests/blizzard_plunderstorm_prematch_ui_loads.rs"
       ],
       "remaining_count": 0,
-      "remaining_seconds": 0
+      "remaining_seconds": 0.0
     },
     {
       "module": "blizzard_ptr_feedback_glue_loads",
@@ -57049,7 +57049,7 @@
       ],
       "migrated_count": 38,
       "migrated_seconds": 183.05,
-      "prefork_result": "verification pending",
+      "prefork_result": "38 passed, 0 failed; all seven module filters passed at 331515ca9",
       "deferred": []
     }
   ]

@@ -1,6 +1,6 @@
 ## [2026-10-08] investigation | Prefork migration batch 2
 
-[Test-suite performance](investigations/test-suite-performance.md): 38 ADAPT publication/load cases moved across seven modules with unchanged assertions, per-module fixture equivalence and retained non-retail Plunderstorm wrappers. Targeted proof pending; no batch-2 deferrals or vendor changes.
+[Test-suite performance](investigations/test-suite-performance.md): 38 ADAPT publication/load cases moved across seven modules with unchanged assertions, per-module fixture equivalence and retained non-retail Plunderstorm wrappers. All 38 prefork cases pass; integration listing excludes all 38; format and Mists tests-check pass with zero non-vendor warnings at `331515ca9`. No batch-2 deferrals or vendor changes.
 
 ## [2026-10-08] evidence | 9.0.1 page audit
 
