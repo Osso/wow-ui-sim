@@ -523,6 +523,32 @@ def parse_legion_prepatch(text):
     return entries
 
 
+def parse_warlords_prepatch(text):
+    """Retain compact/nested 6.0.2 references; unnamed removals stay prose."""
+    entries, section = [], None
+    for number, line in enumerate(text.splitlines(), 1):
+        heading = re.fullmatch(r'==\s*([^=]+?)\s*==', line)
+        if heading:
+            section = heading[1]
+            continue
+        if section not in ('New', 'Changes') or not line.startswith('*'):
+            continue
+        rows = legion_reference_entries(number, line, section)
+        for row in rows:
+            if row['section'] == 'global-api' and ' ' in row['symbol']:
+                row['symbol'] = row['symbol'].replace(' ', ':')
+                row['section'] = 'widgets'
+                row['id'] = f"wt-widgets-{row['symbol']}-{number}"
+        names = re.findall(r'\b(C_[A-Za-z0-9_]+)\.\*', line) if section == 'New' else []
+        kind = re.search(r'New Widget type: ([A-Za-z_][A-Za-z0-9_]*)', line)
+        if kind:
+            rows.append(make_entry('widgets', 'added', number, '{{api|' + kind[1] + '}}'))
+        rows.extend(make_entry('global-api', 'added', number, '{{api|' + name + '}}')
+                    for name in names)
+        entries.extend({row['id']: dict(row, annotation=line) for row in rows}.values())
+    return entries
+
+
 def parse_indented_api_lists(text):
     """Retain standalone legacy lists, explicit rename pairs and named CVar removals."""
     entries = []
@@ -612,6 +638,8 @@ def main():
                         help='Retain standalone legacy API lists, rename pairs and CVar removals; opt-in')
     parser.add_argument('--colon-api-bullets', action='store_true',
                         help='Retain standalone colon-prefixed New API bullets; opt-in')
+    parser.add_argument('--warlords-prepatch', action='store_true',
+                        help='Retain compact Warlords summary references and canonical widget owners; opt-in')
     args = parser.parse_args()
     patch, path, revid, out = args.patch, args.path, args.revid, args.out
     raw = Path(path).read_bytes()
@@ -658,6 +686,8 @@ def main():
         entries.extend(parse_legacy_widget_cvar_bullets(raw.decode('utf-8')))
     if args.legion_prepatch:
         entries, counts = parse_legion_prepatch(raw.decode('utf-8')), []
+    if args.warlords_prepatch:
+        entries, counts = parse_warlords_prepatch(raw.decode('utf-8')), []
     if args.indented_api_lists:
         entries.extend(parse_indented_api_lists(raw.decode('utf-8')))
     if args.colon_api_bullets:

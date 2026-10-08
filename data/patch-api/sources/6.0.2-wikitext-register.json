@@ -1,0 +1,268 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "6.0.2",
+  "source": {
+    "path": "data/patch-api/sources/6.0.2-api-changes.wikitext",
+    "revid": 5363123,
+    "sha256": "8c3882d8457ff71a731d5534dd7e144c8faaafd342c997192d5dd8605eab8f60"
+  },
+  "header_counts": [],
+  "entries": [
+    {
+      "id": "wt-widgets-CinematicModel-6",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "CinematicModel",
+      "annotation": "*New Widget type: CinematicModel, derivative of PlayerModel",
+      "wikitext_line": 6
+    },
+    {
+      "id": "wt-widgets-Texture:SetAtlas-9",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Texture:SetAtlas",
+      "annotation": "*New \"atlas\" and \"useAtlasSize\" properties for textures defined in XML. Equivalent function added for texture widgets called [[API Texture SetAtlas|Texture:SetAtlas]]. For example:",
+      "wikitext_line": 9
+    },
+    {
+      "id": "wt-global-api-C_Timer.After-12",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Timer.After",
+      "annotation": "*C_Timer functions added - timers with callback functionality! See {{api|C_Timer.After}}, {{api|C_Timer.NewTimer}}, and {{api|C_Timer.NewTicker}} for more details.",
+      "wikitext_line": 12
+    },
+    {
+      "id": "wt-global-api-C_Timer.NewTimer-12",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Timer.NewTimer",
+      "annotation": "*C_Timer functions added - timers with callback functionality! See {{api|C_Timer.After}}, {{api|C_Timer.NewTimer}}, and {{api|C_Timer.NewTicker}} for more details.",
+      "wikitext_line": 12
+    },
+    {
+      "id": "wt-global-api-C_Timer.NewTicker-12",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Timer.NewTicker",
+      "annotation": "*C_Timer functions added - timers with callback functionality! See {{api|C_Timer.After}}, {{api|C_Timer.NewTimer}}, and {{api|C_Timer.NewTicker}} for more details.",
+      "wikitext_line": 12
+    },
+    {
+      "id": "wt-global-api-C_Timer.NewTimer-13",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Timer.NewTimer",
+      "annotation": "**handle = {{api|C_Timer.NewTimer}}(lengthInSeconds, callback)",
+      "wikitext_line": 13
+    },
+    {
+      "id": "wt-global-api-C_Garrison-15",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Garrison",
+      "annotation": "*[[Garrison]] stuff - AddOns/Blizzard_GarrisonUI, C_Garrison.*",
+      "wikitext_line": 15
+    },
+    {
+      "id": "wt-global-api-C_LFGList-17",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_LFGList",
+      "annotation": "*Group finder - FrameXML/LFGList.(lua,xml), C_LFGList.*",
+      "wikitext_line": 17
+    },
+    {
+      "id": "wt-widgets-CheckButton:SetChecked-22",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "CheckButton:SetChecked",
+      "annotation": "**{{api|CheckButton SetChecked|CheckButton:SetChecked}}()",
+      "wikitext_line": 22
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetText-23",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "GameTooltip:SetText",
+      "annotation": "**{{api|GameTooltip SetText|GameTooltip:SetText}}(): last parameter (textWrap)",
+      "wikitext_line": 23
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetMinimumWidth-24",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "GameTooltip:SetMinimumWidth",
+      "annotation": "**{{api|GameTooltip SetMinimumWidth|GameTooltip:SetMinimumWidth}}()",
+      "wikitext_line": 24
+    },
+    {
+      "id": "wt-global-api-TargetUnit-25",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "TargetUnit",
+      "annotation": "**{{api|TargetUnit}}() and friends",
+      "wikitext_line": 25
+    },
+    {
+      "id": "wt-widgets-Texture:SetDesaturated-26",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "Texture:SetDesaturated",
+      "annotation": "**{{api|Texture SetDesaturated|Texture:SetDesaturated}}()",
+      "wikitext_line": 26
+    },
+    {
+      "id": "wt-global-api-InCombatLockdown-27",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "InCombatLockdown",
+      "annotation": "**{{api|InCombatLockdown|InCombatLockdown}}()",
+      "wikitext_line": 27
+    },
+    {
+      "id": "wt-global-api-EquipmentManager_UnpackLocation-28",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "EquipmentManager_UnpackLocation",
+      "annotation": "*{{api|EquipmentManager_UnpackLocation}}() 2 new returns after bag, '''tab, voidSlot'''",
+      "wikitext_line": 28
+    },
+    {
+      "id": "wt-global-api-GetGlyphInfo-29",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetGlyphInfo",
+      "annotation": "*{{api|GetGlyphInfo}}() new return (#8): '''specMatches'''",
+      "wikitext_line": 29
+    },
+    {
+      "id": "wt-global-api-GetMapContinents-30",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetMapContinents",
+      "annotation": "*{{api|GetMapContinents}}() now also returns the mapID : '''mapID1,''' mapName1, '''mapID2,''' mapName2, etc.",
+      "wikitext_line": 30
+    },
+    {
+      "id": "wt-global-api-GetMapZones-31",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetMapZones",
+      "annotation": "*{{api|GetMapZones}}() now also returns the zoneID : '''zoneID1,''' zoneName1, '''zoneID2,''' zoneName2, etc.",
+      "wikitext_line": 31
+    },
+    {
+      "id": "wt-global-api-GetTalentInfo-32",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetTalentInfo",
+      "annotation": "*{{api|GetTalentInfo}}() has had its arguments and return values changed: ",
+      "wikitext_line": 32
+    },
+    {
+      "id": "wt-global-api-GetTalentInfoByID-35",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetTalentInfoByID",
+      "annotation": "* {{api|GetTalentInfoByID}}() is a new function that takes a talentID as its parameter, and returns the same as {{api|GetTalentInfo}}().",
+      "wikitext_line": 35
+    },
+    {
+      "id": "wt-global-api-GetTalentInfo-35",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetTalentInfo",
+      "annotation": "* {{api|GetTalentInfoByID}}() is a new function that takes a talentID as its parameter, and returns the same as {{api|GetTalentInfo}}().",
+      "wikitext_line": 35
+    },
+    {
+      "id": "wt-global-api-GetTalentLink-36",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetTalentLink",
+      "annotation": "*{{api|GetTalentLink}}() now takes a talentID as its parameter, as returned by {{api|GetTalentInfo}}().",
+      "wikitext_line": 36
+    },
+    {
+      "id": "wt-global-api-GetTalentInfo-36",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetTalentInfo",
+      "annotation": "*{{api|GetTalentLink}}() now takes a talentID as its parameter, as returned by {{api|GetTalentInfo}}().",
+      "wikitext_line": 36
+    },
+    {
+      "id": "wt-global-api-QueryAuctionItems-37",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "QueryAuctionItems",
+      "annotation": "*{{api|QueryAuctionItems}} new return (#11): '''exactMatch'''",
+      "wikitext_line": 37
+    },
+    {
+      "id": "wt-global-api-GetQuestLogTitle-38",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetQuestLogTitle",
+      "annotation": "*{{api|GetQuestLogTitle}} has greatly changed returns.",
+      "wikitext_line": 38
+    },
+    {
+      "id": "wt-global-api-GetQuestTagInfo-40",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetQuestTagInfo",
+      "annotation": "*{{api|GetQuestTagInfo}} replacement for removed questTag return value from GetQuestLogTitle.",
+      "wikitext_line": 40
+    },
+    {
+      "id": "wt-global-api-GetGossipAvailableQuests-42",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetGossipAvailableQuests",
+      "annotation": "*{{api|GetGossipAvailableQuests}} has changed returns.",
+      "wikitext_line": 42
+    },
+    {
+      "id": "wt-global-api-GetAvailableQuestInfo-44",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetAvailableQuestInfo",
+      "annotation": "*{{api|GetAvailableQuestInfo}} has changed returns.",
+      "wikitext_line": 44
+    },
+    {
+      "id": "wt-global-api-GetSpellInfo-46",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetSpellInfo",
+      "annotation": "*{{api|GetSpellInfo}} has removed some returns.",
+      "wikitext_line": 46
+    },
+    {
+      "id": "wt-global-api-GetWeaponEnchantInfo-48",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetWeaponEnchantInfo",
+      "annotation": "*{{api|GetWeaponEnchantInfo}} has greatly changed returns.",
+      "wikitext_line": 48
+    },
+    {
+      "id": "wt-events-LOOT_READY-52",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "LOOT_READY",
+      "annotation": "*A new event, {{api|t=e|LOOT_READY}}, signals the start of the availability of loot data for various loot-related API functions.",
+      "wikitext_line": 52
+    },
+    {
+      "id": "wt-events-COMBAT_LOG_EVENT-53",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "COMBAT_LOG_EVENT",
+      "annotation": "*{{api|t=e|COMBAT_LOG_EVENT}}",
+      "wikitext_line": 53
+    }
+  ]
+}

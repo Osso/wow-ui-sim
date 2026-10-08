@@ -1,0 +1,108 @@
+Patch 6.0.2 API changes
+
+Blizzard has also posted an official thread on 6.0 changes.
+
+== New ==
+*New Widget type: CinematicModel, derivative of PlayerModel
+*New XML element type: "keyValue", currently only supported for Frames.
+**Functionality appears equivalent to creating a new element in ParentKey's table.
+*New "atlas" and "useAtlasSize" properties for textures defined in XML. Equivalent function added for texture widgets called Texture:SetAtlas. For example:
+**Before: file="Interface\PetBattles\PetJournal"
+**After: atlas="PetJournal-BattleSlot-Locked" useAtlasSize="true"
+*C_Timer functions added - timers with callback functionality! See C_Timer.After, C_Timer.NewTimer, and C_Timer.NewTicker for more details.
+**handle = C_Timer.NewTimer(lengthInSeconds, callback)
+**if (handle) then handle:Cancel(); --timer complete code goes here; end
+*Garrison stuff - AddOns/Blizzard_GarrisonUI, C_Garrison.*
+*Objective Tracker - AddOns/Blizzard_ObjectiveTracker (quest, achievement, auto quest popup, scenario, bonus objective, ...)
+*Group finder - FrameXML/LFGList.(lua,xml), C_LFGList.*
+*Second Void Storage page
+
+== Changes ==
+*1/(nil|0) changed to true/false all over the API, notably:
+**CheckButton SetChecked()
+**GameTooltip SetText(): last parameter (textWrap)
+**GameTooltip SetMinimumWidth()
+**TargetUnit() and friends
+**Texture SetDesaturated()
+**InCombatLockdown()
+*EquipmentManager_UnpackLocation() 2 new returns after bag, tab, voidSlot
+*GetGlyphInfo() new return (#8): specMatches
+*GetMapContinents() now also returns the mapID : mapID1, mapName1, mapID2, mapName2, etc.
+*GetMapZones() now also returns the zoneID : zoneID1, zoneName1, zoneID2, zoneName2, etc.
+*GetTalentInfo() has had its arguments and return values changed:
+**args: (index[, isInspect, talentGroup, inspectedUnit, classID]) -> (tier, column, talentGroup[, isInspect, inspectUnit])
+**returns: name, iconTexture, tier, column, selected, available -> talentID, name, iconTexture, selected, available
+* GetTalentInfoByID() is a new function that takes a talentID as its parameter, and returns the same as GetTalentInfo().
+*GetTalentLink() now takes a talentID as its parameter, as returned by GetTalentInfo().
+*QueryAuctionItems new return (#11): exactMatch
+*GetQuestLogTitle has greatly changed returns.
+**returns: title, level, suggestedGroup, questTag, isHeader, isCollapsed, isComplete, isDaily, frequency, questID, startEvent, displayQuestID, isOnMap, hasLocalPOI, isTask, isStory
+*GetQuestTagInfo replacement for removed questTag return value from GetQuestLogTitle.
+**returns: tagID, tagName
+*GetGossipAvailableQuests has changed returns.
+**returns: title, level, isTrivial, isDaily, frequency, isRepeatable, isLegendary, ...
+*GetAvailableQuestInfo has changed returns.
+**returns: isTrivial, isDaily, frequency, isRepeatable, isLegendary
+*GetSpellInfo has removed some returns.
+**returns: name, rank, icon, powerCost, isFunnel, powerType, castingTime, minRange, maxRange
+*GetWeaponEnchantInfo has greatly changed returns.
+**returns:  hasMainHandEnchant, mainHandExpiration, mainHandCharges, mainHandEnchantID, hasOffHandEnchant, offHandExpiration, offHandCharges, offHandEnchantId, hasThrownEnchant, thrownExpiration, thrownCharges
+
+
+*A new event, LOOT_READY, signals the start of the availability of loot data for various loot-related API functions.
+*COMBAT_LOG_EVENT
+**SWING_DAMAGE/SPELL_DAMAGE/SPELL_PERIODIC_DAMAGE gain new parameters after crushing (isOffHand, multistrike)
+**SPELL_HEAL/SPELL_PERIODIC_HEAL gains new parameter after critical (multistrike)
+**SPELL_MISSED/SPELL_PERIODIC_MISSED/RANGE_MISSED/SWING_MISSED gains new parameter after isOffHand (multistrike)
+*New floating combat text type: PERIODIC_HEAL_CRIT
+*Instance difficulty
+**difficultyID 14 (Normal flex10-30, previously "Flex")
+**difficultyID 15 (Heroic flex10-30, new)
+**difficultyID 16 (Mythic 20, new)
+**difficultyID 17 (Looking For Raid flex10-30, new)
+*Many legacy mount-related and pet-related functions were removed and replaced by new functions in C_MountJournal.
+** Note: the legacy functions that remain, such as GetCompanionInfo, are almost completely broken as well.
+*New Globally Unique Identifier format :
+**For players: Player-[server ID]-[player UID] (Example: "Player-976-0002FD64")
+**For battle pets: BattlePet-0-[Battle Pet UID] (Example: "BattlePet-0-000000E0156B")
+**For creatures, pets, objects, and vehicles: [Unit type]-0-[server ID]-[instance ID]-[zone UID]-[ID]-[Spawn UID] (Example: "Creature-0-976-0-11-31146-000136DF91")
+**Unit Type Names: "Creature", "Pet", "GameObject", and "Vehicle"
+**For vignettes: Vignette-0-[server ID]-[instance ID]-[zone UID]-0-[spawn UID] (Example: "Vignette-0-970-1116-7-0-0017CAE465" for rare mob Sulfurious)
+*Item links data: itemID:enchant:gem1:gem2:gem3:gem4:suffixID:uniqueID:level:reforgeId:upgradeId -> itemID:enchant:gem1:gem2:gem3:gem4:suffixID:uniqueID:level:upgradeId:instanceDifficultyID:numBonusIDs:bonusID1:bonusID2... Example of some bonusIDs:
+**448 - Warforged, +6 item level
+**449 - Heroic, +13 item level
+**450 - Mythic, +26 item level
+**451 - Looking For Raid, -12 item level
+**15 - Epic, +20 item level
+**171 - Rare, +10 item level
+* BonusIDs are stored in ItemBonus.db2.
+* BonusIDs have a massive number of uses, including but not limited to:
+**Random suffixes with varying stat amounts - ex. of the Fireflash: BonusIDs 19-39
+**Random bonus tertiary stats - BonusID 40: +Avoidance, BonusID 41: +Leech, etc
+**Raid typing - see above
+**Dungeon typing - i.e. BonusID 518 with qualifier 17 restricts Bloodmaul Slag Mines Normal mode items to have -10 level
+**Random quest upgrades - see above entries for 'Rare' and 'Epic'
+**Crafting upgrades - BonusID 525: Basic, BonusID 526: Expert, etc
+* BonusIDs can do the following 10 actions:
+**1 - Adjust Itemlevel
+**2 - Modify Stats
+**3 - Change Item Quality
+**4 - Add Item Titles
+**5 - Append Words to Item Name
+**6 - Add Sockets
+**7 - Adjust ItemAppearanceID (which controls ItemDisplayInfoID and FileDataIconID)
+**8 - Adjust Equip Level
+**9 - Unknown
+**10 - Unknown
+
+* You can no longer anchor a frame to another frame that has negative, or zero, width or height. Previously, this was acceptable and could be used for adjusting layouts easily by changing a frame's size when it was hidden.
+
+== Removals ==
+*AddOns
+**Reforging
+*FrameXML
+**AnimTimerFrame.xml
+**FlexRaidFrame.(lua,xml)
+
+== Automated diff ==
+[Transcluded source: Patch 6.0.2/API changes/diff; not expanded]

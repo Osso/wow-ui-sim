@@ -1,0 +1,15 @@
+{
+  "pageid": 556401,
+  "title": "Patch 6.0.2/API changes",
+  "revid": 5363123,
+  "timestamp": "2015-01-12T21:05:30Z",
+  "sha256": "8c3882d8457ff71a731d5534dd7e144c8faaafd342c997192d5dd8605eab8f60",
+  "fetch_url": "https://warcraft.wiki.gg/api.php",
+  "fetched": "2026-10-08",
+  "extractor_flags": [
+    "--retain-patch-diff-reference"
+  ],
+  "generator_flags": [
+    "--warlords-prepatch"
+  ]
+}
