@@ -1,0 +1,33 @@
+{
+  "gate_revision": "cfee5d4cedee9d64d958383ea62b16b12ac55112",
+  "check_patch_validators": {
+    "clean": {
+      "failed": 0,
+      "passed": 29
+    },
+    "later_audit": {
+      "failed": 0,
+      "passed": 30
+    }
+  },
+  "status": "PASS",
+  "runtime_revision": "c0f58dad8",
+  "remaining_api_gaps": 275,
+  "pending_main_prose": 95,
+  "pending_enum_members": 79,
+  "inherited_extract_failures": [
+    "12.0.5",
+    "12.0.7",
+    "12.1.0"
+  ],
+  "pending_integrations": [
+    "6.1.0",
+    "6.2.0",
+    "6.2.2"
+  ],
+  "no_push_merge_agents_or_full_suite": true,
+  "wiki_lines": {
+    "docs/wiki/index.md": 2691,
+    "docs/wiki/log.md": 418
+  }
+}
