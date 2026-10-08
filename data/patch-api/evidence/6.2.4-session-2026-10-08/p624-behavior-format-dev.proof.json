@@ -1,0 +1,16 @@
+{
+  "command": [
+    "cargo",
+    "fmt"
+  ],
+  "revision": "aa6f8163f5f53bfff834bc01e09fb4a972746858",
+  "scope": "p624-behavior-format-dev",
+  "cwd": ".",
+  "target": "dedicated p624-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p624-behavior-format-dev.txt",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "seconds": 12.59953258799942,
+  "invalidated": false
+}
