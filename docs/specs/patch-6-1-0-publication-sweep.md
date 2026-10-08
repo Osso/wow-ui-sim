@@ -17,13 +17,14 @@ Audit the pinned [6.1.0 page](../../data/patch-api/sources/6.1.0-api-changes.pro
 
 ## Implementation inventory
 
-- `tests/patch_6_1_0_publication_sweep.rs` — prefork publication/absence sweep and ordered integration placeholders.
+- `tests/patch_6_1_0_publication_sweep.rs` — prefork publication/absence sweep with ordered merged 6.2.0/6.2.2/6.2.4 and later registers.
 - `tests/common/publication_sweep.rs` — unchanged shared classifier, supersession and exact known-gap comparison.
 - `tests/data/patch_6_1_0_sweep_known_gaps.json` — exact retained SendChatMessage absence mismatch.
 - `tools/gen_patch_wikitext_register.py` — opt-in colon-prefixed standalone API bullet parser.
 - `tools/extract_patch_non_inventory.py` — borrowed opt-in unexpanded patch-diff reference rendering.
 - `data/patch-api/sources/6.1.0-page-coverage.json` — per-occurrence coverage SSOT.
-- `data/patch-api/evidence/6.1.0-session-2026-10-08/validate.py` — read-only historical gate.
+- `data/patch-api/evidence/6.1.0-session-2026-10-08/validate.py` — read-only historical gate with explicit rebase/blob mapping.
+- `data/patch-api/evidence/6.1.0-session-2026-10-08/integrated/validate.py` — pinned integrated receipts, exact master observation comparison and retained historical proof.
 
 ## Tests asserting this spec
 

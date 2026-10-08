@@ -1,3 +1,7 @@
+## [2026-10-08] integration | Patch 6.1.0 API audit
+
+[Audit](investigations/patch-6-1-0-api-audit.md): rebased on master 787b47591 with real 6.2.0/6.2.2/6.2.4 registers. Existing SendChatMessage gap and eight extract limits unchanged. 53/53 publication cases, targeted recap/legacy checks, four Python fixture scripts, format and warning-clean non-vendor Mists pass. All 52 registers/49 extracts reproduce with three unchanged inherited failures; six-commit rebase mapping and historical receipts preserved.
+
 ## [2026-10-08] integration | Patch 6.2.0 API audit
 
 [Audit](investigations/patch-6-2-0-api-audit.md): integrated on master 8dd11c1b9 with real 6.2.2/6.2.4 registers. Own zero gaps and two pending item-link contracts unchanged. Branch 52/52 sweep cases; every observation on all 50 other pages equals pinned master. 51 registers/48 extracts reproduce with three inherited failures; explicit rebase mapping and historical records preserved. Spell-line integration 190/190 and prefork tooltip 34/34 pass; extended layout failure matches master. Portability gate PASS: clean 31/31, unrelated later audit 32/32.

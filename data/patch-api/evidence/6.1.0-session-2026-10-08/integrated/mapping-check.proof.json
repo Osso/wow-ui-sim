@@ -1,0 +1,18 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "-c",
+    "from pathlib import Path; p=Path('/home/osso/.worktrees/wow-ui-sim-p610-page/data/patch-api/evidence/6.1.0-session-2026-10-08/integrated/validate.py'); ns={'__name__':'mapping_check','__file__':str(p)}; exec(compile(p.read_text(),str(p),'exec'),ns); ns['check_mapping']({'master_revision':ns['git']('rev-parse','787b47591').decode().strip()}); print('PASS: all mapped historical blobs and rebased patch IDs')"
+  ],
+  "revision": "cc48360be9760b25336258c3f966022651872417",
+  "scope": "mapping-check",
+  "cwd": ".",
+  "target": "dedicated p610-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "mapping-check.txt",
+  "log_sha256": "caa47464c01377d9ad86f8e1f9440c2a9f10831f37f66418f87ca80a765a3148",
+  "seconds": 8.377142978002666,
+  "invalidated": false
+}

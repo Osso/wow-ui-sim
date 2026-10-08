@@ -430,3 +430,5 @@ Pinned pageid 122147/revision 6209268; exact navigation template only, no redire
 Integrated merged 6.2.2/6.2.4 registers; retained zero publication gaps and two pending item-link contracts. Fresh 52/52 sweeps and exact 50-page master comparison, 51/48 register/extract reproduction, 33 prior validators, 80 Python fixtures, format/Mists and addons-enabled startup `[]` verified. Rebase identities and historical records preserved; negative controls retain zero-row/source provenance invariants. See [[patch-6-2-0-api-audit]].
 
 Final integration proof: spell-line modules 190/190, prefork tooltip cases 34/34; extra viewport-clamping failure reproduced on pinned master at the same assertion. Both portability phases PASS at a8b719035: clean 31/31, unrelated later audit 32/32. Final updates only retain proof outputs and wiki results.
+
+- 2026-10-08 integration: [[patch-6-1-0-api-audit]] — merged 6.2.x registers, six-commit rebase mapping, historical receipt preservation, unchanged own gap and fresh targeted/publication proof.
