@@ -65,7 +65,7 @@ All twenty prior validators pass; together with this page, 21/21 pass. [Relocati
 
 No own or existing-page gap changes, new supersession closures, `LATER_AUDIT_REPLACEMENTS` changes or weakened checks. Four substantive prose limits remain. Shared extender refreshes the real 7.2.5 register/sweep rows and records the actual extension revision separately from its copied template revision; saved-extract receipts cover all 45 registers.
 
-Historical scope remains fixed at `8ae333df4` (44 registers, 45 cases), with all 155 sealed artifacts byte-identical. Fresh [integrated validator](../../../data/patch-api/evidence/7.2.0-session-2026-10-08/validate_integrated.py) independently fixes the new 45-register scope. All 22 required historical validators pass; the separate final integrated gate and command receipts are recorded in [validator matrix](../../../data/patch-api/evidence/7.2.0-session-2026-10-08/integrated/validator-matrix.json).
+Historical scope remains fixed at `8ae333df4` (44 registers, 45 cases), with all 155 sealed artifacts byte-identical. Fresh [integrated validator](../../../data/patch-api/evidence/7.2.0-session-2026-10-08/validate_integrated.py) independently fixes the new 45-register scope. All 22 required historical validators and the separate integrated validator pass (23/23 total). The integrated gate passed at `ed80b2ef0`; exact revisions, command receipts and outputs are recorded in [validator matrix](../../../data/patch-api/evidence/7.2.0-session-2026-10-08/integrated/validator-matrix.json). No broad checks were rerun after evidence/docs-only milestones.
 
 No runtime/vendor/profile changes versus master, no new startup or deployment claim, and no agents, push, merge, directory switching or `__pycache__`.
 

@@ -378,3 +378,5 @@ Second temporary clone: all nineteen validators pass from the original cwd. Futu
 - 2026-10-08: [7.2.0 integration](investigations/patch-7-2-0-api-audit.md) uses the real merged 7.2.5 supersession register after rebasing onto 8b6131f36; historical proof remains separately revision-scoped.
 
 - 2026-10-08: Integrated 7.2.0 commands pass: branch 46 sweep/factory cases versus exact master's 45, all 44 existing pages unchanged, own gaps zero. Prefork 4, scoped integration 25/10/6, library 7, fixtures 29/34/8, format/Mists and exact 0 → 1 negative control pass; bare own filter has zero cases, no coverage credited. Sources reproduce 45 registers / 42 extracts with three inherited failures; all 22 historical validators pass and all 155 sealed artifacts remain unchanged.
+
+- 2026-10-08: Final 7.2.0 integrated gate passes at ed80b2ef0: 23/23 validators (22 required historical scripts plus the separately sealed integrated validator), fixed 45-register/46-case scope, exact-master per-row comparison and negative receipt validated. No runtime/tool source changes or repeated broad checks.
