@@ -1,0 +1,11 @@
+{
+  "before_gaps": 2,
+  "after_gaps": 2,
+  "observation_changes": {},
+  "replacements": [],
+  "integrated_registers": [
+    "5.4.8",
+    "6.0.1"
+  ],
+  "reason": "5.4.7 has no CVar or UI-visibility inventory rows. The merged combat-protection, SetUIVisibility model and retirements change none of its nine publication observations. CHARACTER_UPGRADE_ABORTED and CHARACTER_UPGRADE_STARTED remain rejected."
+}

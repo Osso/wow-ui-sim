@@ -35,7 +35,13 @@ Own sweep now uses the merged **5.4.8** and **6.0.1** registers, followed by 6.0
 
 Discovery/backing/caller scans use untruncated whole-word **`/usr/bin/grep -RnwE`** outputs saved in the session directory. Bare symbols include callback uses (`pcall(Name, ...)`) and guards (`and Name then`). These are discovery evidence, not clearance to retire anything. No retirement scan exemptions are granted.
 
-## Verification
+## Integrated verification
+
+Integration targets master `bebcc5830`, including the merged 5.4.8 and 6.0.1 models/retirements. All nine 5.4.7 publication observations are byte-for-byte unchanged: two upgrade-event gaps remain, and no attributable later-audit replacements are needed. The three prose limits remain pending. The refreshed prefork sweep passes 1/1, all sweep/factory cases pass 57/57, and prefork `patch_5_4_7` passes 2/2. The requested integration `patch_5_4_7` filter exits 0 with **zero selected cases**; these tests are registered only in the prefork harness, so the integration command supplies no additional behavioral coverage.
+
+All 56 registers and 53 saved extracts reproduce with recorded flags. The same three inherited extract failures remain. Original receipts are preserved, with ten own rebased commits and one external pin mapped by stable patch IDs and recorded blob hashes. Changed historical inputs are retained as committed blobs; the historical validator replays its original invariants rather than accepting current shared files. [Integrated receipts](../../../data/patch-api/evidence/5.4.7-session-2026-10-08/integrated/) retain the new command logs and supersession review. Remaining gates are recorded there as they finish; this paragraph does not claim those pending checks passed.
+
+## Historical verification
 
 Initial committed discovery finds exactly two publication gaps. All five Python fixture scripts pass. **54 registers and 51 saved extracts reproduce**; inherited failures for 12.0.5, 12.0.7 and 12.1.0 remain exactly unchanged. Every prior source blob and extraction-mode result is preserved against pinned master **080f26f1c**.
 
