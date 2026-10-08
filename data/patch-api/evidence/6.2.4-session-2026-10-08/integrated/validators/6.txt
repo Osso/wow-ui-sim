@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "inventory_rows": 134,
+  "inventory_ok": 82,
+  "inventory_gaps": 52,
+  "extract_rows": 44,
+  "ledger_rows": 178,
+  "ledger_statuses": {
+    "bounded-coverage": 87,
+    "audit-pending": 86,
+    "metadata-only": 5
+  },
+  "pending_prose": 34,
+  "historical_registers": 46,
+  "sweep_cases": 47,
+  "prior_validators": 25
+}

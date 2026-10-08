@@ -33,9 +33,9 @@ No simulator `src/` changes, new shim, native-retirement gate, C API placement c
 
 All 25 global retail scans have zero matches. All corresponding src/tests scans are zero except `BNGetMaxPlayersInConversation`: two lines in `src/wrath/compat_bootstrap.lua`, retained for classic clients. `realmName` has 61 retail and 23 src/tests field/variable matches; those are not assumed to be CVar accesses and nothing is retired. All 26 named removals already satisfy current retail absence.
 
-[Later-register check](../../../data/patch-api/evidence/6.2.4-session-2026-10-08/p624-later-retirement-check.json) records exact master and p703-page revisions and complete register sets; **no re-additions**. The unmerged 7.0.3 register was read from its Git snapshot, not edited or inserted before merge. `later_registers` starts with one-line **7.0.1**, then **7.0.3** integration placeholders, then the real **7.1.0** register and all remaining merged later registers. Replace placeholders only after their pages merge.
+[Historical later-register check](../../../data/patch-api/evidence/6.2.4-session-2026-10-08/p624-later-retirement-check.json) records exact master and p703-page revisions and complete register sets; **no re-additions**. At original audit time, the unmerged 7.0.3 register was read from its Git snapshot. After integration onto master **846a30663**, `later_registers` contains the real **7.0.1** and **7.0.3** registers, followed by **7.1.0** and all remaining later registers. [Integrated supersession review](../../../data/patch-api/evidence/6.2.4-session-2026-10-08/integrated/supersession-review.json) finds no identity intersection with either newly merged page; zero gaps remain unchanged.
 
-## Targeted proof
+## Original targeted proof (historical)
 
 Evidence: [6.2.4-session-2026-10-08](../../../data/patch-api/evidence/6.2.4-session-2026-10-08/). [Command ledger](../../../data/patch-api/evidence/6.2.4-session-2026-10-08/p624-command-ledger.md) records exact commands, revisions, exits, source scopes and log hashes. Long Cargo commands ran asynchronously into files with the dedicated `p624-page` target; no poll-wait or full integration suite.
 
@@ -61,6 +61,29 @@ All **239** pre-audit source files and **100** old extraction-mode outcomes rema
 [Read-only validator](../../../data/patch-api/evidence/6.2.4-session-2026-10-08/validate.py) derives historical register/sweep sets using `historical_registers` / `historical_sweep_tests` at recorded revision **a690a6959**, never current globs or receipt-derived subsets. Evidence paths are relative to the resolved checkout; absolute cwd/target equality is not a gate. Wiki preservation is checked against a sealed historical revision, not mutable current wiki text. Complete history containing recorded revisions is required.
 
 Own validator passes, with **28/28 validators** also passing in an independent shared clone at sealed revision **64426ce39**. [Portability receipt](../../../data/patch-api/evidence/6.2.4-session-2026-10-08/p624-validator-portability.json) proves additional audit registers/sweeps and edited current wiki text do not expand historical scope. Whitespace tampering in either own accounting or a protected prior register fails; restoration passes. The clone was removed after proof. The [wiki preservation receipt](../../../data/patch-api/evidence/6.2.4-session-2026-10-08/p624-wiki-integrity.json) seals accounting revision **0b0bc4117**, preserving all original index/log text and growing **2667 → 2671**, **390 → 394** lines. The unexpanded diff and seven historical/model limitations remain explicit, not hidden by a passing publication sweep.
+
+## Integration onto master 846a30663
+
+Fresh evidence lives in [integrated/](../../../data/patch-api/evidence/6.2.4-session-2026-10-08/integrated/), separately from every sealed original artifact. [Gap comparison](../../../data/patch-api/evidence/6.2.4-session-2026-10-08/integrated/gap-comparison.json) records **49 pages / 50 sweep-and-factory cases / 9,051 observations**. Exact-master snapshot passes **49 cases**; all **48 other pages' complete observations** are byte-equivalent JSON data. Own **35/35** observations and **zero gaps** remain unchanged. No new supersession, retirement, runtime change or historical parity claim; seven substantive plaintext contracts remain pending.
+
+| Integrated command scope | Result |
+|---|---|
+| Own prefork publication sweep | **1/1**, zero gaps |
+| All prefork publication sweeps | **50/50**; exact master **49/49** |
+| Prefork / integration `patch_6_2_4` | **2/2**, **1/1** |
+| Integration `c_battle_net_probes::` / prefork `blizzard_deprecated_battle_net` | **11/11**, **3/3** |
+| Generator / extractor / validator fixtures | **32/36/8** |
+| All saved register / extract reproduction | **49/49**, **46/49**; inherited 12.0.5/12.0.7 mismatches and 12.1.0 template error unchanged |
+| Negative control | **0 → 1** gap, expected exit 1; exact original one-row mutation reused |
+| `cargo fmt --check` | Exit 0 |
+| Mists `cargo check --no-default-features --features sound,gui,casc,client-mists --tests` | Exit 0; zero non-vendor warnings, six inherited iced manifest deprecations unsuppressed |
+| Prior historical/integrated validators | **31/31**; new integrated gate recorded separately |
+
+[Command summary](../../../data/patch-api/evidence/6.2.4-session-2026-10-08/integrated/command-summary.json) retains commands, source revisions, exits and log hashes. All Cargo uses the dedicated `p624-page` target; background runner streams logs without poll-wait. `extend_patch_audit_receipts.py` supplies real 7.0.1/7.0.3 register and sweep rows. Reproduction preserves **249 master source files** and every recorded legacy extraction-mode outcome.
+
+The sole initial validator failure was 7.0.3's strict tool hash gate. Its [updated validator](../../../data/patch-api/evidence/7.0.3-session-2026-10-08/integrated/validate.py) admits only the **four exact tool/fixture blobs** between master **846a30663** and **0e40aff7e**: opt-in 6.2.4 additions coexist with `--legion-prepatch`. Every unrelated byte change remains rejected. Its original validator/seal table and failing log are preserved here; only its validator's own seal entry is refreshed. A concrete test accepts original/exact replacement bytes and rejects whitespace tampering, wrong recorded hashes and unrelated paths. No accounting or gap invariant is relaxed.
+
+[Integrated 6.2.4 validator](../../../data/patch-api/evidence/6.2.4-session-2026-10-08/integrated/validate.py) fixes register/sweep and prior-validator sets via `git ls-tree` at **f260499ee**, not live files or receipt subsets. It seals integrated artifacts, checks original preservation, exact master comparisons, flags, inherited failures, command input scopes, negative control and prior gates. Mutable current wiki text never changes historical proof scope.
 
 ## Sources
 

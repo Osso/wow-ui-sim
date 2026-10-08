@@ -1,0 +1,14 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p624-page/tools/test_patch_audit_validation.py"
+  ],
+  "revision": "c37c5e63587145249abec0e05cac1697232a5756",
+  "source_revision": "c37c5e63587145249abec0e05cac1697232a5756",
+  "environment": {},
+  "exit": 0,
+  "log": "patch_audit_validation-fixtures.txt",
+  "log_sha256": "87f7147fd5cb582ac56150ae191a8503a48bf6f56c729357de454e3ecf0bd31c",
+  "seconds": 0.24327925599936862
+}

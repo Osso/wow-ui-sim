@@ -1,0 +1,5 @@
+receipt 7.0.1 True
+receipt 7.0.3 True
+summary 6.2.4 {'patch': '6.2.4', 'rows': 35, 'ok': 35, 'gaps': 0, 'result': 'pass'}
+summary 7.0.1 {'patch': '7.0.1', 'rows': 0, 'ok': 0, 'gaps': 0, 'result': 'pass'}
+summary 7.0.3 {'patch': '7.0.3', 'rows': 134, 'ok': 82, 'gaps': 52, 'result': 'pass'}

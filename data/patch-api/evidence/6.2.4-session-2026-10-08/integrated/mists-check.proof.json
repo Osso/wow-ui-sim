@@ -1,0 +1,17 @@
+{
+  "command": [
+    "cargo",
+    "check",
+    "--no-default-features",
+    "--features",
+    "sound,gui,casc,client-mists",
+    "--tests"
+  ],
+  "revision": "c37c5e63587145249abec0e05cac1697232a5756",
+  "source_revision": "c37c5e63587145249abec0e05cac1697232a5756",
+  "environment": {},
+  "exit": 0,
+  "log": "mists-check.txt",
+  "log_sha256": "198b785f4c8507959b68f590d6eaf4c23bdf34d351b46d686f4092a96d6d3fad",
+  "seconds": 46.223198852996575
+}

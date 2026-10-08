@@ -1,0 +1,16 @@
+{
+  "own-sweep": 0,
+  "all-sweeps": 0,
+  "prefork-patch-6-2-4": 0,
+  "integration-patch-6-2-4": 0,
+  "bnet-model": 0,
+  "deprecated-bnet": 0,
+  "negative": 1,
+  "extend-receipts": 0,
+  "master-all-sweeps": 0,
+  "gen_patch_wikitext_register-fixtures": 0,
+  "extract_patch_non_inventory-fixtures": 0,
+  "patch_audit_validation-fixtures": 0,
+  "format": 0,
+  "mists-check": 0
+}

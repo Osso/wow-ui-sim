@@ -1,0 +1,14 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p624-page/tools/test_gen_patch_wikitext_register.py"
+  ],
+  "revision": "c37c5e63587145249abec0e05cac1697232a5756",
+  "source_revision": "c37c5e63587145249abec0e05cac1697232a5756",
+  "environment": {},
+  "exit": 0,
+  "log": "gen_patch_wikitext_register-fixtures.txt",
+  "log_sha256": "c3bb85b448a4660370e46cbb8584d2c8d186c2a44b7215ea21f520128fe12e6f",
+  "seconds": 0.04975360899697989
+}

@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p624-page/data/patch-api/evidence/6.2.4-session-2026-10-08/integrated/reproduce_sources.py"
+  ],
+  "revision": "0e40aff7e805e4a635ccef9d93b68029f700fd08",
+  "source_revision": "0e40aff7e805e4a635ccef9d93b68029f700fd08",
+  "exit": 0,
+  "log": "source-reproduction.txt",
+  "log_sha256": "bcf0d324887a920db7fbaca8f3a93584daa5e7c14d7c986732d4895b701f2771",
+  "scope": "All saved registers/extracts and master extractor modes; stdout retained from initial reproduction invocation."
+}

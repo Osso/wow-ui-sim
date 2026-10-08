@@ -1,0 +1,305 @@
+[
+  {
+    "label": "all-sweeps",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "publication_sweep"
+    ],
+    "revision": "f260499eea6b77f3e5fe218006c62441f1a75418",
+    "source_revision": "f260499eea6b77f3e5fe218006c62441f1a75418",
+    "exit": 0,
+    "test_counts": [
+      [
+        "50",
+        "0"
+      ]
+    ],
+    "fixture_counts": [],
+    "log": "all-sweeps.txt",
+    "log_sha256": "f958bfe5046efda62d87928d225f2087ffb068648bbd8a7fc52bd02fe5da9ec0"
+  },
+  {
+    "label": "bnet-model",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "c_battle_net_probes::"
+    ],
+    "revision": "f260499eea6b77f3e5fe218006c62441f1a75418",
+    "source_revision": "f260499eea6b77f3e5fe218006c62441f1a75418",
+    "exit": 0,
+    "test_counts": [
+      [
+        "11",
+        "0"
+      ]
+    ],
+    "fixture_counts": [],
+    "log": "bnet-model.txt",
+    "log_sha256": "b5df18808e964ace07599636c9a0b664dabb2d6e46815dfafb969ecb80a3c0df"
+  },
+  {
+    "label": "deprecated-bnet",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "blizzard_deprecated_battle_net"
+    ],
+    "revision": "f260499eea6b77f3e5fe218006c62441f1a75418",
+    "source_revision": "f260499eea6b77f3e5fe218006c62441f1a75418",
+    "exit": 0,
+    "test_counts": [
+      [
+        "3",
+        "0"
+      ]
+    ],
+    "fixture_counts": [],
+    "log": "deprecated-bnet.txt",
+    "log_sha256": "5090b4d76e9dc096c81f96e3101233c4f5d6c5f07503bb2bf2960c40533098c8"
+  },
+  {
+    "label": "extend-receipts",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/tools/extend_patch_audit_receipts.py",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/data/patch-api/evidence/6.2.4-session-2026-10-08/integrated/extension",
+      "p624",
+      "Merged 7.0.1/7.0.3 flags from pinned provenance",
+      "6.2.4"
+    ],
+    "revision": "f260499eea6b77f3e5fe218006c62441f1a75418",
+    "source_revision": "f260499eea6b77f3e5fe218006c62441f1a75418",
+    "exit": 0,
+    "test_counts": [],
+    "fixture_counts": [],
+    "log": "extend-receipts.txt",
+    "log_sha256": "0aedff73e939f74f32c1b7d7a223202b2281b28493cdf90e95f1f6ff8cd75ed5"
+  },
+  {
+    "label": "extract_patch_non_inventory-fixtures",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/tools/test_extract_patch_non_inventory.py"
+    ],
+    "revision": "c37c5e63587145249abec0e05cac1697232a5756",
+    "source_revision": "c37c5e63587145249abec0e05cac1697232a5756",
+    "exit": 0,
+    "test_counts": [],
+    "fixture_counts": [
+      "36"
+    ],
+    "log": "extract_patch_non_inventory-fixtures.txt",
+    "log_sha256": "207f3f076b91e3e5a1074586bed1d3c55b5e80e809e3eafdb9bafed81de83f18"
+  },
+  {
+    "label": "format",
+    "command": [
+      "cargo",
+      "fmt",
+      "--check"
+    ],
+    "revision": "c37c5e63587145249abec0e05cac1697232a5756",
+    "source_revision": "c37c5e63587145249abec0e05cac1697232a5756",
+    "exit": 0,
+    "test_counts": [],
+    "fixture_counts": [],
+    "log": "format.txt",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "label": "gen_patch_wikitext_register-fixtures",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/tools/test_gen_patch_wikitext_register.py"
+    ],
+    "revision": "c37c5e63587145249abec0e05cac1697232a5756",
+    "source_revision": "c37c5e63587145249abec0e05cac1697232a5756",
+    "exit": 0,
+    "test_counts": [],
+    "fixture_counts": [
+      "32"
+    ],
+    "log": "gen_patch_wikitext_register-fixtures.txt",
+    "log_sha256": "c3bb85b448a4660370e46cbb8584d2c8d186c2a44b7215ea21f520128fe12e6f"
+  },
+  {
+    "label": "integration-patch-6-2-4",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_6_2_4"
+    ],
+    "revision": "f260499eea6b77f3e5fe218006c62441f1a75418",
+    "source_revision": "f260499eea6b77f3e5fe218006c62441f1a75418",
+    "exit": 0,
+    "test_counts": [
+      [
+        "1",
+        "0"
+      ]
+    ],
+    "fixture_counts": [],
+    "log": "integration-patch-6-2-4.txt",
+    "log_sha256": "d18a59e5392a0542f0caa04b5f49c8572fd23e01224fef281cb1d4e1d281c8a7"
+  },
+  {
+    "label": "master-all-sweeps",
+    "command": [
+      "cargo",
+      "test",
+      "--manifest-path",
+      "/tmp/p624-master-74rz5nxs/Cargo.toml",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "publication_sweep"
+    ],
+    "revision": "f260499eea6b77f3e5fe218006c62441f1a75418",
+    "source_revision": "846a30663a0f5d5fd0aaecaec46937cd858ae95a",
+    "exit": 0,
+    "test_counts": [
+      [
+        "49",
+        "0"
+      ]
+    ],
+    "fixture_counts": [],
+    "log": "master-all-sweeps.txt",
+    "log_sha256": "785f6e0344780cd0aa83977559f4275b5e2d2ad698c5f69e33f471fadd44a384"
+  },
+  {
+    "label": "mists-check",
+    "command": [
+      "cargo",
+      "check",
+      "--no-default-features",
+      "--features",
+      "sound,gui,casc,client-mists",
+      "--tests"
+    ],
+    "revision": "c37c5e63587145249abec0e05cac1697232a5756",
+    "source_revision": "c37c5e63587145249abec0e05cac1697232a5756",
+    "exit": 0,
+    "test_counts": [],
+    "fixture_counts": [],
+    "log": "mists-check.txt",
+    "log_sha256": "198b785f4c8507959b68f590d6eaf4c23bdf34d351b46d686f4092a96d6d3fad"
+  },
+  {
+    "label": "negative",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "patch_6_2_4_publication_sweep"
+    ],
+    "revision": "f260499eea6b77f3e5fe218006c62441f1a75418",
+    "source_revision": "f260499eea6b77f3e5fe218006c62441f1a75418",
+    "exit": 1,
+    "test_counts": [
+      [
+        "0",
+        "1"
+      ]
+    ],
+    "fixture_counts": [],
+    "log": "negative.txt",
+    "log_sha256": "e122748a58981ec6f90eaccb34ca82c6bd526795219cf86b9e6b2d2547046722"
+  },
+  {
+    "label": "own-sweep",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "patch_6_2_4_publication_sweep"
+    ],
+    "revision": "f260499eea6b77f3e5fe218006c62441f1a75418",
+    "source_revision": "f260499eea6b77f3e5fe218006c62441f1a75418",
+    "exit": 0,
+    "test_counts": [
+      [
+        "1",
+        "0"
+      ]
+    ],
+    "fixture_counts": [],
+    "log": "own-sweep.txt",
+    "log_sha256": "93ff74e512954971fe22908f8d8b75f98d8f214b71d8043e8f78d8f5d3f157ed"
+  },
+  {
+    "label": "patch_audit_validation-fixtures",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/tools/test_patch_audit_validation.py"
+    ],
+    "revision": "c37c5e63587145249abec0e05cac1697232a5756",
+    "source_revision": "c37c5e63587145249abec0e05cac1697232a5756",
+    "exit": 0,
+    "test_counts": [],
+    "fixture_counts": [
+      "8"
+    ],
+    "log": "patch_audit_validation-fixtures.txt",
+    "log_sha256": "87f7147fd5cb582ac56150ae191a8503a48bf6f56c729357de454e3ecf0bd31c"
+  },
+  {
+    "label": "prefork-patch-6-2-4",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "patch_6_2_4"
+    ],
+    "revision": "f260499eea6b77f3e5fe218006c62441f1a75418",
+    "source_revision": "f260499eea6b77f3e5fe218006c62441f1a75418",
+    "exit": 0,
+    "test_counts": [
+      [
+        "2",
+        "0"
+      ]
+    ],
+    "fixture_counts": [],
+    "log": "prefork-patch-6-2-4.txt",
+    "log_sha256": "7bb8066fe9d4b4d601de707eea546261b6214e9b03250c04fc6588154963c6cf"
+  },
+  {
+    "label": "source-reproduction",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p624-page/data/patch-api/evidence/6.2.4-session-2026-10-08/integrated/reproduce_sources.py"
+    ],
+    "revision": "0e40aff7e805e4a635ccef9d93b68029f700fd08",
+    "source_revision": "0e40aff7e805e4a635ccef9d93b68029f700fd08",
+    "exit": 0,
+    "test_counts": [],
+    "fixture_counts": [],
+    "log": "source-reproduction.txt",
+    "log_sha256": "bcf0d324887a920db7fbaca8f3a93584daa5e7c14d7c986732d4895b701f2771"
+  }
+]

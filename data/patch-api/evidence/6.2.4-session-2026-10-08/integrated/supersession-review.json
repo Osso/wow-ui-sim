@@ -1,0 +1,13 @@
+{
+  "master_revision": "846a30663a0f5d5fd0aaecaec46937cd858ae95a",
+  "runtime_revision": "f260499eea6b77f3e5fe218006c62441f1a75418",
+  "before_gaps": 0,
+  "after_gaps": 0,
+  "later_intersections": {
+    "7.0.1": [],
+    "7.0.3": []
+  },
+  "replacements": [],
+  "pending_historical_contracts": 7,
+  "note": "Merged 7.0.1 and 7.0.3 registers do not intersect 6.2.4 identities; own sweep remains zero gaps. No supersession or modeling claim added."
+}

@@ -1,0 +1,19 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p624-page/tools/extend_patch_audit_receipts.py",
+    "/home/osso/.worktrees/wow-ui-sim-p624-page",
+    "/home/osso/.worktrees/wow-ui-sim-p624-page/data/patch-api/evidence/6.2.4-session-2026-10-08/integrated/extension",
+    "p624",
+    "Merged 7.0.1/7.0.3 flags from pinned provenance",
+    "6.2.4"
+  ],
+  "revision": "f260499eea6b77f3e5fe218006c62441f1a75418",
+  "source_revision": "f260499eea6b77f3e5fe218006c62441f1a75418",
+  "environment": {},
+  "exit": 0,
+  "log": "extend-receipts.txt",
+  "log_sha256": "0aedff73e939f74f32c1b7d7a223202b2281b28493cdf90e95f1f6ff8cd75ed5",
+  "seconds": 50.63034397699812
+}
