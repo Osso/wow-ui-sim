@@ -1,0 +1,17 @@
+{
+  "source": "master read-only git show; no checkout or integration",
+  "intersections": [
+    {
+      "gap_id": "wt-global-api-AcknowledgeAADCAlert-23",
+      "later_id": "wt-global-api-AcknowledgeAADCAlert-103",
+      "later_direction": "removed",
+      "may_change_publication": true
+    },
+    {
+      "gap_id": "wt-global-api-C_ItemUpgrade.GetItemLevelIncrement-42",
+      "later_id": "wt-global-api-C_ItemUpgrade.GetItemLevelIncrement-106",
+      "later_direction": "removed",
+      "may_change_publication": true
+    }
+  ]
+}

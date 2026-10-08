@@ -1,0 +1,210 @@
+[
+  {
+    "patch": "10.0.0",
+    "recorded_flags": [
+      "--expand-shared-changes"
+    ],
+    "matching_flags": [
+      "--expand-shared-changes"
+    ],
+    "byte_identical": true
+  },
+  {
+    "patch": "10.0.2",
+    "recorded_flags": null,
+    "matching_flags": [],
+    "byte_identical": true
+  },
+  {
+    "patch": "10.0.5",
+    "recorded_flags": null,
+    "matching_flags": [],
+    "byte_identical": true
+  },
+  {
+    "patch": "10.0.7",
+    "recorded_flags": null,
+    "matching_flags": [],
+    "byte_identical": true
+  },
+  {
+    "patch": "10.1.0",
+    "recorded_flags": null,
+    "matching_flags": [],
+    "byte_identical": true
+  },
+  {
+    "patch": "10.1.5",
+    "recorded_flags": null,
+    "matching_flags": [],
+    "byte_identical": true
+  },
+  {
+    "patch": "10.1.7",
+    "recorded_flags": null,
+    "matching_flags": [],
+    "byte_identical": true
+  },
+  {
+    "patch": "10.2.0",
+    "recorded_flags": null,
+    "matching_flags": [],
+    "byte_identical": true
+  },
+  {
+    "patch": "10.2.5",
+    "recorded_flags": null,
+    "matching_flags": [],
+    "byte_identical": true
+  },
+  {
+    "patch": "10.2.6",
+    "recorded_flags": null,
+    "matching_flags": [],
+    "byte_identical": true
+  },
+  {
+    "patch": "10.2.7",
+    "recorded_flags": null,
+    "matching_flags": [],
+    "byte_identical": true
+  },
+  {
+    "patch": "11.0.0",
+    "recorded_flags": null,
+    "matching_flags": [],
+    "byte_identical": true
+  },
+  {
+    "patch": "11.0.2",
+    "recorded_flags": null,
+    "matching_flags": [],
+    "byte_identical": true
+  },
+  {
+    "patch": "11.0.5",
+    "recorded_flags": null,
+    "matching_flags": [],
+    "byte_identical": true
+  },
+  {
+    "patch": "11.0.7",
+    "recorded_flags": null,
+    "matching_flags": [],
+    "byte_identical": true
+  },
+  {
+    "patch": "11.1.0",
+    "recorded_flags": null,
+    "matching_flags": [],
+    "byte_identical": true
+  },
+  {
+    "patch": "11.1.5",
+    "recorded_flags": null,
+    "matching_flags": [],
+    "byte_identical": true
+  },
+  {
+    "patch": "11.1.7",
+    "recorded_flags": null,
+    "matching_flags": [],
+    "byte_identical": true
+  },
+  {
+    "patch": "11.2.0",
+    "recorded_flags": null,
+    "matching_flags": [],
+    "byte_identical": true
+  },
+  {
+    "patch": "11.2.5",
+    "recorded_flags": null,
+    "matching_flags": [],
+    "byte_identical": true
+  },
+  {
+    "patch": "11.2.7",
+    "recorded_flags": null,
+    "matching_flags": [],
+    "byte_identical": true
+  },
+  {
+    "patch": "12.0.0",
+    "recorded_flags": null,
+    "matching_flags": [],
+    "byte_identical": true
+  },
+  {
+    "patch": "12.0.1",
+    "recorded_flags": null,
+    "matching_flags": [],
+    "byte_identical": true
+  },
+  {
+    "patch": "12.0.5",
+    "recorded_flags": null,
+    "matching_flags": [],
+    "byte_identical": true
+  },
+  {
+    "patch": "12.0.7",
+    "recorded_flags": null,
+    "matching_flags": [],
+    "byte_identical": true
+  },
+  {
+    "patch": "12.1.0",
+    "recorded_flags": null,
+    "matching_flags": [
+      "--inventory-only"
+    ],
+    "byte_identical": true
+  },
+  {
+    "patch": "9.1.0",
+    "recorded_flags": [
+      "--expand-shared-changes",
+      "--skip-plain-scripts-label"
+    ],
+    "matching_flags": [
+      "--expand-shared-changes",
+      "--skip-plain-scripts-label"
+    ],
+    "byte_identical": true
+  },
+  {
+    "patch": "9.2.0",
+    "recorded_flags": [
+      "--expand-shared-changes"
+    ],
+    "matching_flags": [
+      "--expand-shared-changes"
+    ],
+    "byte_identical": true
+  },
+  {
+    "patch": "9.2.5",
+    "recorded_flags": [
+      "--expand-shared-changes",
+      "--separate-inline-structures",
+      "--capture-span-defaults"
+    ],
+    "matching_flags": [
+      "--expand-shared-changes",
+      "--separate-inline-structures",
+      "--capture-span-defaults"
+    ],
+    "byte_identical": true
+  },
+  {
+    "patch": "9.2.7",
+    "recorded_flags": [
+      "--expand-shared-changes"
+    ],
+    "matching_flags": [
+      "--expand-shared-changes"
+    ],
+    "byte_identical": true
+  }
+]

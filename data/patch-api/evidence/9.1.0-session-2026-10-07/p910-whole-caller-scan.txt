@@ -1,0 +1,4 @@
+/home/osso/.worktrees/wow-ui-sim-p910-page/tests/transmog_outfit_catalog_inputs.rs:36:        local sources = api.GetSetSourcesForSlot(71,0)
+/home/osso/.worktrees/wow-ui-sim-p910-page/src/c_api/c_transmog_outfit_info/imports.rs:18:        ("GetSetSourcesForSlot", get_sources),
+/home/osso/.worktrees/wow-ui-sim-p910-page/src/lua_api/globals/missing_surface/transmog_collection.rs:85:                "GetShowMissingSourceInItemTooltips",
+/home/osso/.worktrees/wow-ui-sim-p910-page/tests/c_transmog_heirloom_api.rs:431:        .eval("return C_TransmogCollection.GetShowMissingSourceInItemTooltips()")

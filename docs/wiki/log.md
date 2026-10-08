@@ -1,3 +1,7 @@
+## [2026-10-07] evidence | 9.1.0 API audit
+
+[Audit](investigations/patch-9-1-0-api-audit.md): all 192 IDs accounted; opt-in plain Scripts label recovery, 21 bounded retirements and 53 exact publication gaps. Post-load tooltip re-registration reproduced and epoch-gated; current-scope sweep, negative-control, bare/cached/Mists, format/default/Mists-check and exit-0 startup `[]` proof retained. Earlier 153 inputs/58 mode outcomes and all 30 register reproductions preserved. Read-only 9.1.5 comparison identifies two likely gap supersessions; placeholder reserved for integrating main thread. No agents, push, merge, vendor/cache or sibling working-file edits.
+
 ## [2026-10-07] evidence | 9.2.5 API audit
 
 [Audit](investigations/patch-9-2-5-api-audit.md): revision 2301036, all 220 IDs accounted, warning/inline-structure/CVar-default boundaries recovered, nine retail retirements and 34 exact retained publication gaps. All 28 sweeps plus factory, exact 34 → 35 negative control, behavioral/cached/Mists/report regressions, 38 fixtures, format/default/Mists checks and exit-0 startup `[]` pass. Existing 143 inputs and 54 mode outcomes unchanged; all substantive extract contracts remain pending. Initial relative artifact writes briefly reached canonical cwd, immediately restored and documented; tracked canonical/vendor/cache files unchanged. No agents, push or merge.

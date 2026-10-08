@@ -1,0 +1,26 @@
+
+running 1 test
+test c_transmog_heirloom_api::test_transmog_collection_get_show_missing_source_in_item_tooltips ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 8157 filtered out; finished in 0.83s
+
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 2.13s
+     Running tests/integration.rs (target/debug/deps/integration-ffd649b41b2c85a7)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.011s] [Startup] SimState::default complete in 10.68ms
+[  0.012s] [Startup] rilua VM created in 641.54µs
+[  0.012s] [Startup] builtin frames initialized in 357.99µs
+[  0.012s] [Startup] template registry cleared in 41.54µs
+[  0.019s] [Startup] intrinsic templates registered in 6.87ms
+[  0.019s] [Startup] initial app_data lua handle installed in 6.05µs
+[  0.800s] [Startup] init_lua_state complete in 781.45ms
+[  0.800s] [Startup] final app_data lua handle installed in 922.00ns
+[  0.801s] [Startup] initial screen globals installed in 456.18µs
+[  0.801s] [Startup] WowLuaEnv::new complete

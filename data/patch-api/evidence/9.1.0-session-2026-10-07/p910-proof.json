@@ -1,0 +1,314 @@
+[
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "patch_9_1_0_publication_sweep"
+    ],
+    "revision": "3fa4c974584ca5162c109b448a771c7dba62637b",
+    "scope": "179-row initial discovery; empty fixture",
+    "exit": 1,
+    "output": "p910-initial-sweep.txt",
+    "invalidated": false,
+    "output_sha256": "7497c9d9c6eac82a24f65bd362831495e95643c97bcd0a61235191d4dd52b2a3"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_9_1_0_unused_members_stay_absent",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "3fa4c9745 plus retirement tests",
+    "scope": "21-member repeated lookup RED",
+    "exit": 101,
+    "output": "p910-retirement-red.txt",
+    "invalidated": false,
+    "output_sha256": "c282766000457aa3bec82d65a3da737bdc76fde0bd52a12a491e1320d6332d4d"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "publication_sweep"
+    ],
+    "revision": "13080ddd378fb401b9c7bef9c68033276cb4fa5e",
+    "scope": "all publication sweeps discovery after retirements; 30 passing cases, one post-load placeholder failure",
+    "env": {
+      "P1000_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p910-page/data/patch-api/evidence/9.1.0-session-2026-10-07/p1000_sweep_out-results.json",
+      "P1002_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p910-page/data/patch-api/evidence/9.1.0-session-2026-10-07/p1002_sweep_out-results.json",
+      "P1005_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p910-page/data/patch-api/evidence/9.1.0-session-2026-10-07/p1005_sweep_out-results.json",
+      "P1007_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p910-page/data/patch-api/evidence/9.1.0-session-2026-10-07/p1007_sweep_out-results.json",
+      "P1010_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p910-page/data/patch-api/evidence/9.1.0-session-2026-10-07/p1010_sweep_out-results.json",
+      "P1015_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p910-page/data/patch-api/evidence/9.1.0-session-2026-10-07/p1015_sweep_out-results.json",
+      "P1017_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p910-page/data/patch-api/evidence/9.1.0-session-2026-10-07/p1017_sweep_out-results.json",
+      "P1020_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p910-page/data/patch-api/evidence/9.1.0-session-2026-10-07/p1020_sweep_out-results.json",
+      "P1025_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p910-page/data/patch-api/evidence/9.1.0-session-2026-10-07/p1025_sweep_out-results.json",
+      "P1026_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p910-page/data/patch-api/evidence/9.1.0-session-2026-10-07/p1026_sweep_out-results.json",
+      "P1027_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p910-page/data/patch-api/evidence/9.1.0-session-2026-10-07/p1027_sweep_out-results.json",
+      "P1100_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p910-page/data/patch-api/evidence/9.1.0-session-2026-10-07/p1100_sweep_out-results.json",
+      "P1102_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p910-page/data/patch-api/evidence/9.1.0-session-2026-10-07/p1102_sweep_out-results.json",
+      "P1105_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p910-page/data/patch-api/evidence/9.1.0-session-2026-10-07/p1105_sweep_out-results.json",
+      "P1107_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p910-page/data/patch-api/evidence/9.1.0-session-2026-10-07/p1107_sweep_out-results.json",
+      "P1110_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p910-page/data/patch-api/evidence/9.1.0-session-2026-10-07/p1110_sweep_out-results.json",
+      "P1115_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p910-page/data/patch-api/evidence/9.1.0-session-2026-10-07/p1115_sweep_out-results.json",
+      "P1117_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p910-page/data/patch-api/evidence/9.1.0-session-2026-10-07/p1117_sweep_out-results.json",
+      "P1120_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p910-page/data/patch-api/evidence/9.1.0-session-2026-10-07/p1120_sweep_out-results.json",
+      "P1125_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p910-page/data/patch-api/evidence/9.1.0-session-2026-10-07/p1125_sweep_out-results.json",
+      "P1127_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p910-page/data/patch-api/evidence/9.1.0-session-2026-10-07/p1127_sweep_out-results.json",
+      "P1200_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p910-page/data/patch-api/evidence/9.1.0-session-2026-10-07/p1200_sweep_out-results.json",
+      "P1201_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p910-page/data/patch-api/evidence/9.1.0-session-2026-10-07/p1201_sweep_out-results.json",
+      "P1205_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p910-page/data/patch-api/evidence/9.1.0-session-2026-10-07/p1205_sweep_out-results.json",
+      "P1207_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p910-page/data/patch-api/evidence/9.1.0-session-2026-10-07/p1207_sweep_out-results.json",
+      "P1210_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p910-page/data/patch-api/evidence/9.1.0-session-2026-10-07/p1210_sweep_out-results.json",
+      "P910_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p910-page/data/patch-api/evidence/9.1.0-session-2026-10-07/p910_sweep_out-results.json",
+      "P920_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p910-page/data/patch-api/evidence/9.1.0-session-2026-10-07/p920_sweep_out-results.json",
+      "P925_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p910-page/data/patch-api/evidence/9.1.0-session-2026-10-07/p925_sweep_out-results.json",
+      "P927_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p910-page/data/patch-api/evidence/9.1.0-session-2026-10-07/p927_sweep_out-results.json"
+    },
+    "exit": 1,
+    "output": "p910-all-sweeps.txt",
+    "invalidated": false,
+    "passing_cases": [
+      "patch_10_0_0_publication_sweep::patch_10_0_0_animation_probe_factories",
+      "patch_10_0_2_publication_sweep::patch_10_0_2_publication_sweep",
+      "patch_10_0_0_publication_sweep::patch_10_0_0_publication_sweep",
+      "patch_10_0_5_publication_sweep::patch_10_0_5_publication_sweep",
+      "patch_10_0_7_publication_sweep::patch_10_0_7_publication_sweep",
+      "patch_10_1_0_publication_sweep::patch_10_1_0_publication_sweep",
+      "patch_10_1_5_publication_sweep::patch_10_1_5_publication_sweep",
+      "patch_10_1_7_publication_sweep::patch_10_1_7_publication_sweep",
+      "patch_10_2_5_publication_sweep::patch_10_2_5_publication_sweep",
+      "patch_10_2_0_publication_sweep::patch_10_2_0_publication_sweep",
+      "patch_10_2_7_publication_sweep::patch_10_2_7_publication_sweep",
+      "patch_10_2_6_publication_sweep::patch_10_2_6_publication_sweep",
+      "patch_11_0_2_publication_sweep::patch_11_0_2_publication_sweep",
+      "patch_11_0_5_publication_sweep::patch_11_0_5_publication_sweep",
+      "patch_11_0_7_publication_sweep::patch_11_0_7_publication_sweep",
+      "patch_11_0_0_publication_sweep::patch_11_0_0_publication_sweep",
+      "patch_11_1_5_publication_sweep::patch_11_1_5_publication_sweep",
+      "patch_11_1_0_publication_sweep::patch_11_1_0_publication_sweep",
+      "patch_11_1_7_publication_sweep::patch_11_1_7_publication_sweep",
+      "patch_11_2_0_publication_sweep::patch_11_2_0_publication_sweep",
+      "patch_11_2_5_publication_sweep::patch_11_2_5_publication_sweep",
+      "patch_11_2_7_publication_sweep::patch_11_2_7_publication_sweep",
+      "patch_12_0_1_publication_sweep::patch_12_0_1_publication_sweep",
+      "patch_12_0_0_publication_sweep::patch_12_0_0_publication_sweep",
+      "patch_12_0_7_publication_sweep::patch_12_0_7_publication_sweep",
+      "patch_12_0_5_publication_sweep::patch_12_0_5_publication_sweep",
+      "patch_9_2_0_publication_sweep::patch_9_2_0_publication_sweep",
+      "patch_12_1_0_publication_sweep::patch_12_1_0_publication_sweep",
+      "patch_9_2_5_publication_sweep::patch_9_2_5_publication_sweep",
+      "patch_9_2_7_publication_sweep::patch_9_2_7_publication_sweep"
+    ],
+    "failed_cases": [
+      "patch_9_1_0_publication_sweep::patch_9_1_0_publication_sweep"
+    ],
+    "note": "Only GetShowMissingSourceInItemTooltips is restored after retirement. Later registers have no occurrence of this identity; all 29 later sweeps and factory retain unchanged proof scope. Own sweep subsequently passes after registration gate fix.",
+    "output_sha256": "b90ba798ffa47694e72653e2cf27abdf07cf42c0ca34fdb1fd45987f52d087b3"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "patch_9_1_0_"
+    ],
+    "revision": "395bb40813cdf775e3b3a6a12bf7f83e28127569",
+    "scope": "9.1.0 sweep and cached retirements; post-load placeholder corrected",
+    "exit": 0,
+    "output": "p910-cached-green.txt",
+    "invalidated": false,
+    "output_sha256": "ce2a59442d92c821768e4c2abbac624bae0b3273a3def0ff0909f09855e6a9c6"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "patch_9_1_0_publication_sweep"
+    ],
+    "revision": "395bb40813cdf775e3b3a6a12bf7f83e28127569",
+    "scope": "DISPLAY_EVENT_TOASTS single-row negative control",
+    "exit": 1,
+    "output": "p910-negative.txt",
+    "invalidated": false,
+    "output_sha256": "bcf0784c76f1e13f5f4b3928010ac6036f93a9ec387a47943611e408de03c608"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_9_1_0_",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "395bb40813cdf775e3b3a6a12bf7f83e28127569",
+    "scope": "21-member bare repeated namespace lookup GREEN",
+    "exit": 0,
+    "output": "p910-retirement-green.txt",
+    "invalidated": false,
+    "output_sha256": "83e136a04557ee046512c70bece3e291af28f9ab3f18f1c3b27a09f62ea002a1"
+  },
+  {
+    "command": [
+      "cargo",
+      "fmt",
+      "--check"
+    ],
+    "revision": "06d0a2a29ecae2ef0f8ca419193e3f4bce9e8125",
+    "scope": "format-check",
+    "exit": 0,
+    "output": "p910-format-check.txt",
+    "invalidated": false,
+    "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "command": [
+      "cargo",
+      "check"
+    ],
+    "revision": "06d0a2a29ecae2ef0f8ca419193e3f4bce9e8125",
+    "scope": "default-check",
+    "exit": 0,
+    "output": "p910-default-check.txt",
+    "invalidated": false,
+    "output_sha256": "b3b9ffecba5bc5cd4934a7033d87ec5aa53c2999ef645bd65a0c282dfb7bf6fd"
+  },
+  {
+    "command": [
+      "cargo",
+      "check",
+      "--no-default-features",
+      "--features",
+      "sound,gui,casc,client-mists",
+      "--tests"
+    ],
+    "revision": "06d0a2a29ecae2ef0f8ca419193e3f4bce9e8125",
+    "scope": "mists-check",
+    "exit": 0,
+    "output": "p910-mists-check.txt",
+    "invalidated": false,
+    "output_sha256": "86d607d0c4bf820efb2e61950e4ad54d38482d1924ea1ea523e961f366a27e58"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--no-default-features",
+      "--features",
+      "sound,gui,casc,client-mists",
+      "--test",
+      "integration",
+      "patch_9_1_0_classic_preserves_legacy_lookup",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "06d0a2a29ecae2ef0f8ca419193e3f4bce9e8125",
+    "scope": "mists-regression",
+    "exit": 0,
+    "output": "p910-mists-regression.txt",
+    "invalidated": false,
+    "output_sha256": "24037f32dba47be966b499cc47991791e5396e61005c869db9a6b630b80d4f57"
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--no-default-features",
+      "--features",
+      "sound,gui,casc,client-mists",
+      "--test",
+      "integration",
+      "test_transmog_collection_get_show_missing_source_in_item_tooltips",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "06d0a2a29ecae2ef0f8ca419193e3f4bce9e8125",
+    "scope": "mists-legacy-caller",
+    "exit": 0,
+    "output": "p910-mists-legacy-caller.txt",
+    "invalidated": false,
+    "output_sha256": "b53b2a63999f0d126f70b63cdc07acc55777978214954705716e768156e74e45"
+  },
+  {
+    "command": [
+      "cargo",
+      "build",
+      "--bin",
+      "wow-sim"
+    ],
+    "revision": "06d0a2a29ecae2ef0f8ca419193e3f4bce9e8125",
+    "scope": "retail-build",
+    "exit": 0,
+    "output": "p910-retail-build.txt",
+    "invalidated": false,
+    "output_sha256": "ca4390f2498d2d4e19bd51ae48113e46b4a0097fb1692784ec5110cee07002e1"
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "/home/osso/.worktrees/wow-ui-sim-p910-page/target/debug/wow-sim",
+      "--no-addons",
+      "--no-saved-vars",
+      "lua-errors"
+    ],
+    "revision": "06d0a2a29ecae2ef0f8ca419193e3f4bce9e8125",
+    "scope": "retail-startup",
+    "exit": 0,
+    "output": "p910-startup.stdout",
+    "stderr": "p910-startup.stderr",
+    "invalidated": false,
+    "output_sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "stderr_sha256": "fdce647db94b9a0e1d6d86d9ac5bb9fd2b6fb2638f9d0ea2d10101323182d82c"
+  },
+  {
+    "command": [],
+    "revision": "ed577bd12be76ba7292cfb189ee8d46c880c0c9f",
+    "scope": "cfg correction proof scope",
+    "exit": 0,
+    "output": null,
+    "invalidated": false,
+    "note": "Legacy test gate changed from !client-retail to !retail-12-0-0, matching its registration. Mists selects the function under both; default retail excludes it under both. Prior Mists regression/check and default proofs retain unchanged selected source paths. No PTR verification claim."
+  },
+  {
+    "command": [
+      "python3",
+      "tools/test_gen_patch_wikitext_register.py"
+    ],
+    "revision": "635adaba3",
+    "scope": "generator-fixtures",
+    "exit": 0,
+    "output": "test_gen_patch_wikitext_register-green.txt",
+    "invalidated": false,
+    "output_sha256": "edecde55c6deed9a44f005853dbf1b80bb79f5daf63b49aa23fa401cf6e41cc0"
+  },
+  {
+    "command": [
+      "python3",
+      "tools/test_extract_patch_non_inventory.py"
+    ],
+    "revision": "635adaba3",
+    "scope": "extractor-fixtures",
+    "exit": 0,
+    "output": "test_extract_patch_non_inventory-green.txt",
+    "invalidated": false,
+    "output_sha256": "fd1e9c9e5d612adbd0687355197a9212cede63f98a5051c8b75670239cc42a17"
+  }
+]

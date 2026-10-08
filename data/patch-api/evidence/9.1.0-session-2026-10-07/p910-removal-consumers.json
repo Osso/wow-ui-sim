@@ -1,0 +1,308 @@
+[
+  {
+    "id": "wt-global-api-ApplyBarberShopStyle-102",
+    "symbol": "ApplyBarberShopStyle",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-global-api-BarberShopReset-103",
+    "symbol": "BarberShopReset",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-global-api-C_BarberShop.OldBarberShopLoaded-104",
+    "symbol": "C_BarberShop.OldBarberShopLoaded",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-global-api-C_LegendaryCrafting.GetRuneforgePowersByClassAndSpec-105",
+    "symbol": "C_LegendaryCrafting.GetRuneforgePowersByClassAndSpec",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-global-api-C_PetJournal.GetNumMaxPets-106",
+    "symbol": "C_PetJournal.GetNumMaxPets",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-global-api-C_PlayerChoice.GetPlayerChoiceInfo-107",
+    "symbol": "C_PlayerChoice.GetPlayerChoiceInfo",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-global-api-C_PlayerChoice.GetPlayerChoiceOptionInfo-108",
+    "symbol": "C_PlayerChoice.GetPlayerChoiceOptionInfo",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-global-api-C_PlayerChoice.GetPlayerChoiceRewardInfo-109",
+    "symbol": "C_PlayerChoice.GetPlayerChoiceRewardInfo",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-global-api-C_Soulbinds.GetConduitRankFromCollection-110",
+    "symbol": "C_Soulbinds.GetConduitRankFromCollection",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-global-api-C_Transmog.GetCost-111",
+    "symbol": "C_Transmog.GetCost",
+    "qualified": "",
+    "bare": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ItemInteractionUI/Blizzard_ItemInteractionUI.lua:139:function ItemInteractionMixin:GetCost()\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ItemInteractionUI/Blizzard_ItemInteractionUI.lua:817:\t\tif (not self:IsEnabled() and GetMoney() < itemInteractionFrame:GetCost()) then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ItemInteractionUI/Blizzard_ItemInteractionUI.lua:828:\t\tif (not self:IsEnabled() and amount < itemInteractionFrame:GetCost()) then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_RuneforgeUI/Blizzard_RuneforgeFrame.lua:614:function RuneforgeFrameMixin:GetCost()\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_RuneforgeUI/Blizzard_RuneforgeCreateFrame.lua:87:\tlocal currenciesCost = self:GetRuneforgeFrame():GetCost();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_RuneforgeUI/Blizzard_RuneforgeCreateFrame.lua:123:\tlocal currenciesCost = runeforgeFrame:GetCost();\n"
+  },
+  {
+    "id": "wt-global-api-C_Transmog.GetItemInfo-112",
+    "symbol": "C_Transmog.GetItemInfo",
+    "qualified": "",
+    "bare": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ActionBar/WoWLabs/ActionButtonOverrides.lua:473:\t\t\tUIErrorsFrame:AddMessage(format(ERR_SPELL_ALREADY_KNOWN_S, select(1, C_Item.GetItemInfo(itemID))), 1.0, 0.1, 0.1, 1.0);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DelvesDifficultyPicker/Blizzard_DelvesDifficultyPicker.lua:890:\t\t\t\tlocal name, _, quality, _, _, _, _, _, _, itemIcon = C_Item.GetItemInfo(reward.id);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AccountStore/Blizzard_AccountStoreCardTemplates.lua:128:\tlocal itemInfo = C_AccountStore.GetItemInfo(itemID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AccountStore/Blizzard_AccountStoreCardTemplates.lua:199:\tlocal refreshedItemInfo = C_AccountStore.GetItemInfo(self.itemID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseWoWTokenFrame.lua:110:\t\t\tlocal itemName = C_Item.GetItemInfo(WOW_TOKEN_ITEM_ID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseUtil.lua:345:\t\t\titemQuality = select(3, C_Item.GetItemInfo(itemLink)) or itemQuality;\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseUtil.lua:527:\t\t\tlocal itemLink = select(2, C_Item.GetItemInfo(itemID));\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ArchaeologyUI/Blizzard_ArchaeologyUI.lua:349:\t\truneName, _, _, _, _, _, _, _, _, runeStoneIconPath = C_Item.GetItemInfo(RaceitemID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseBrowseResultsFrame.lua:161:\t\t\t\tlocal _, itemLink = C_Item.GetItemInfo(browseResult.itemKey.itemID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseSellFrame.lua:425:\t\t\tlocal vendorPrice = select(11, C_Item.GetItemInfo(itemLink));\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseSharedTemplates.lua:279:\tlocal itemName, itemLink, itemQuality, itemLevel, itemIcon = self:GetItemInfo();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseSharedTemplates.lua:344:function AuctionHouseItemDisplayMixin:GetItemInfo()\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseSharedTemplates.lua:354:\t\tlocal itemName, itemLink, itemQuality, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemIcon = C_Item.GetItemInfo(self:GetItem());\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_BoostTutorial/Blizzard_TutorialLogic.lua:1110:\t\t\tlocal ilvl = select(4, C_Item.GetItemInfo(items[i].ItemID));\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_BoostTutorial/Blizzard_TutorialLogic.lua:1126:\tlocal loc = select(9, C_Item.GetItemInfo(itemID));\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_BoostTutorial/Blizzard_TutorialLogic.lua:1151:\t\t\texistingItemIlvl = select(4, C_Item.GetItemInfo(existingItemID)) or 0;\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_BoostTutorial/Blizzard_TutorialLogic.lua:1162:\t\t\tlocal itemInfo = {C_Item.GetItemInfo(itemID)};\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/SlashCommands.lua:371:\t\telseif ( slot or C_Item.GetItemInfo(name) ) then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/SlashCommands.lua:381:\t\tif ( slot or C_Item.GetItemInfo(name) ) then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChallengesUI/Mainline/Blizzard_ChallengesUI.lua:739:\t\tlocal texture = select(10, C_Item.GetItemInfo(itemID));\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/CastRandomManager.lua:17:\t\t\tif ( C_Item.GetItemInfo(action) or select(3, SecureCmdItemParse(action)) ) then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/CastRandomManager.lua:87:\t\tif ( slot or C_Item.GetItemInfo(name) ) then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/CastSequenceManager.lua:18:\t\t\tif ( C_Item.GetItemInfo(action) or select(3, SecureCmdItemParse(action)) ) then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/CastSequenceManager.lua:228:\t\t\tif ( select(3, SecureCmdItemParse(action)) or C_Item.GetItemInfo(action) ) then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/ChatFrameUtil.lua:532:\t\titemLink = select(2, C_Item.GetItemInfo(itemID));\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_WeeklyRewards/Blizzard_WeeklyRewards.lua:358:\t\t\t\t\tlocal setID = select(16, C_Item.GetItemInfo(reward.id));\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_WeeklyRewards/Blizzard_WeeklyRewards.lua:946:\t\t\tlocal itemName, itemLink, itemQuality, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemIcon = C_Item.GetItemInfo(rewardInfo.id);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_WeeklyRewards/Blizzard_WeeklyRewards.lua:1074:\t\t\t\tname = C_Item.GetItemInfo(rewardInfo.id);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_WeeklyRewards/Blizzard_WeeklyRewards.lua:1136:\t\tlocal itemName, _itemLink, itemQuality, _itemLevel, _itemMinLevel, _itemType, _itemSubType, _itemStackCount, _itemEquipLoc, itemIcon = C_Item.GetItemInfo(itemHyperlink);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_WeeklyRewards/Blizzard_WeeklyRewards.lua:1185:\t\t\t\tlocal itemName, itemLink, itemQuality, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemIcon = C_Item.GetItemInfo(itemHyperlink);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Contribution/Blizzard_Contribution.lua:196:\t\t\t\trcName = C_Item.GetItemInfo(itemID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/ChatFrameUtilOverrides.lua:22:\t\t\titem = C_Item.GetItemInfo(text);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/ChatFrameUtilOverrides.lua:44:\t\t\titem = C_Item.GetItemInfo(text);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/ChatFrameUtilOverrides.lua:68:\t\t\titem = C_Item.GetItemInfo(text);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedItemScript/Deprecated_ItemScript.lua:42:\tGetItemInfo = C_Item.GetItemInfo;\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_Journeys.lua:163:\t\t\t\t\t\tlocal itemName, itemLink, _, _, _, _, _, _, _, itemIcon, _, _, _, _, _, _, _, itemDescription = C_Item.GetItemInfo(itemID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_LootJournalItems.lua:221:\tlocal _, itemLink, itemQuality = C_Item.GetItemInfo(button.itemID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Cata/Blizzard_EncounterJournal.lua:185:\t\tlocal itemName, _, quality = C_Item.GetItemInfo(itemInfo.link);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_EncounterJournal.lua:235:\t\tlocal itemName, _, quality = C_Item.GetItemInfo(itemInfo.link);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_EncounterJournal.lua:3406:\t\t\tlocal itemName, _, quality = C_Item.GetItemInfo(rewardData.itemLink);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_EncounterJournal.lua:3473:\t\t\t\tlocal quality = select(3, C_Item.GetItemInfo(rewardData.itemLink));\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonTemplates/Blizzard_GarrisonSharedTemplates.lua:1396:\t\tlocal itemName, _, itemQuality, _, _, _, _, _, _, itemTexture = C_Item.GetItemInfo(itemID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonTemplates/Blizzard_GarrisonSharedTemplates.lua:2554:\t\t\tequipmentName = C_Item.GetItemInfo(itemID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonTemplates/Blizzard_GarrisonMissionTemplates.lua:2069:\tlocal itemName, _, itemRarity, _, _, _, _, _, _, itemTexture = C_Item.GetItemInfo(frame.itemLink or frame.itemID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonTemplates/Blizzard_CovenantMissionTemplates.lua:490:\t\t\tlocal itemName, _, itemRarity, _, _, _, _, _, _, itemTexture = C_Item.GetItemInfo(reward.itemID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonBase/FloatingGarrisonFollowerTooltip.lua:669:\t\t\t\tlocal itemName, _, itemRarity, _, _, _, _, _, _, itemTexture = C_Item.GetItemInfo(reward.itemID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GameTooltip/Mainline/GameTooltip.lua:811:\tlocal itemName, _, quality, _, _, _, _, _, _, itemTexture = C_Item.GetItemInfo(id);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXMLUtil/ItemUtil.lua:225:\t\titemName, itemLink, itemRarity, _, _, _, _, _, _, itemTexture = C_Item.GetItemInfo(itemLink);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXMLUtil/ItemUtil.lua:231:\tlocal _, link = C_Item.GetItemInfo(itemID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/PVPHonorSystem.lua:70:\tself.icon = select(10, C_Item.GetItemInfo(id));\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/BossBannerToast.lua:74:\tlocal itemName, itemLink, itemRarity, _, _, _, _, _, _, itemTexture, _, _, _, _, _, setID = C_Item.GetItemInfo(data.itemLink);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_NewPlayerExperience/Blizzard_TutorialServices.lua:262:\t\t\tlocal itemQuality = select(3, C_Item.GetItemInfo(itemLink));\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_NewPlayerExperience/Blizzard_TutorialServices.lua:283:\tlocal loc = select(9, C_Item.GetItemInfo(itemID));\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_NewPlayerExperience/Blizzard_TutorialServices.lua:315:\t\t\texistingItemQuality = select(3, C_Item.GetItemInfo(existingItemLink));\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_NewPlayerExperience/Blizzard_TutorialServices.lua:327:\t\t\tlocal itemInfo = {C_Item.GetItemInfo(itemLink)};\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonMissionUI.lua:1099:\t\t\t\tlocal itemName, _, itemRarity, _, _, _, _, _, _, itemTexture = C_Item.GetItemInfo(reward.itemID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_HousingBlueprint/Blizzard_HousingBlueprintContentEntry.lua:56:\t\t\tlocal itemLink = select(2, C_Item.GetItemInfo(self.entryData.recordID));\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonLandingPage.lua:616:\t\t\tlocal _, _, quality, _, _, _, _, _, _, itemTexture = C_Item.GetItemInfo(reward.itemLink or reward.itemID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_HousingTutorials/Blizzard_HousingTutorialsMisc.lua:42:\tlocal _name, _enchantLink, _displayQuality, _itemLevel, _requiredLevel, _className, _subclassName, _isStackable, _inventoryType, _iconFile, _sellPrice, itemClassID, itemSubclassID, _boundState, _expansionID, _itemSetID, _isTradeskill = C_Item.GetItemInfo(itemHyperlink);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Mainline/EquipmentManager.lua:231:\t\tname, _, _, _, _, _, _, _, invType, textureName = C_Item.GetItemInfo(itemID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Mainline/EquipmentManager.lua:242:\t\tname, _, _, _, _, _, _, _, invType = C_Item.GetItemInfo(itemID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Mainline/AlertFrameSystems.lua:436:\tlocal itemQuality, _, _, _, _, _, itemEquipLoc = select(3, C_Item.GetItemInfo(self.hyperlink));\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Mainline/AlertFrameSystems.lua:584:\tlocal itemName, itemHyperLink, itemRarity, _, _, _, _, _, _, itemTexture = C_Item.GetItemInfo(itemLink);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Mainline/AlertFrameSystems.lua:1136:\tlocal itemName, itemHyperLink, itemRarity, _, _, _, _, _, _, itemTexture = C_Item.GetItemInfo(itemLink);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ItemButton/Shared/ItemButtonTemplate.lua:159:\tlocal itemLink, itemQuality, itemIcon = self:GetItemInfo();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ItemButton/Shared/ItemButtonTemplate.lua:177:function ItemButtonMixin:GetItemInfo()\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ItemButton/Shared/ItemButtonTemplate.lua:187:\t\t\tlocal itemName, itemLink, itemQuality, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemIcon = C_Item.GetItemInfo(item);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MailFrame/MailFrame.lua:118:\t\tlocal itemName, itemLink, itemRarity, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemTexture = C_Item.GetItemInfo(itemLinkEvent);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MailFrame/MailFrame.lua:235:\t\t\t\tSetItemButtonQuality(button, select(3, C_Item.GetItemInfo(firstItemLink)), firstItemLink);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TransmogItemsDocumentation.lua:520:\t\t\tName = \"GetItemInfo\",\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PTRFeedback/Blizzard_Reports.lua:380:\t\treturn select(10, C_Item.GetItemInfo(value))\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PerksProgram/Blizzard_PerksProgramProducts.lua:688:\tlocal frozenProductItemInfo = self.FrozenProductContainer:GetItemInfo();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PerksProgram/Blizzard_PerksProgramProducts.lua:886:\tif self:GetItemInfo() then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PerksProgram/Blizzard_PerksProgramProducts.lua:893:function FrozenProductContainerMixin:GetItemInfo()\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PerksProgram/Blizzard_PerksProgramProducts.lua:894:\treturn self.ProductButton:GetItemInfo();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ProfessionsTemplates/Blizzard_ProfessionsTemplates.lua:170:\t\t\tlocal itemQuality = select(2, self:GetItemInfo());\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObliterumUI/Blizzard_ObliterumUI.lua:85:\t\titemName, itemHyperLink, itemRarity, _, _, _, _, _, _, itemTexture = C_Item.GetItemInfo(itemLink);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PerksProgram/Blizzard_PerksProgram.lua:310:\tlocal itemName, itemLink, itemRarity, _, _, _, _, _, _, itemTexture = C_Item.GetItemInfo(product.itemID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PerksProgram/Blizzard_PerksProgram.lua:375:\tlocal itemName, itemLink, itemRarity, _, _, _, _, _, _, itemTexture = C_Item.GetItemInfo(product.itemID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_AutoQuestPopUpTracker.lua:134:\tlocal texture = itemID and select(10, C_Item.GetItemInfo(itemID));\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PerksProgram/Blizzard_PerksProgramElements.lua:346:function PerksProgramProductButtonMixin:GetItemInfo()\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PerksProgram/Blizzard_PerksProgramElements.lua:618:\tlocal _, itemLink, itemRarity, _, _, _, _, _, _, itemTexture = C_Item.GetItemInfo(frozenVendorItem.itemID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Professions/Blizzard_ProfessionsCrafterOrderView.lua:11:\t\tlocal itemQuality = select(2, self:GetItemInfo());\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Professions/Blizzard_ProfessionsCrafterOrderView.lua:58:\t\titemName, _itemLink, itemQuality = C_Item.GetItemInfo(reward.itemLink);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectAPI/Mainline/Item.lua:212:\t\treturn (select(2, C_Item.GetItemInfo(self.itemID)));\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PVPUI/Mainline/Blizzard_PVPUI.lua:2011:\t\tlocal _, itemLink = C_Item.GetItemInfo(itemID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_RecruitAFriend/RecruitAFriendFrame.lua:1230:\t\t\tlocal name, link = C_Item.GetItemInfo(itemID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIWidgets/Blizzard_UIWidgetTemplateBase.lua:1609:\tlocal itemName, _, quality, _, _, _, _, _, _, itemTexture = C_Item.GetItemInfo(self.itemID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIWidgets/Blizzard_UIWidgetTemplateBase.lua:1807:\t\t\t\tlocal iconTexture = select(10, C_Item.GetItemInfo(iconInfo.sourceID));\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_TorghastLevelPicker/Blizzard_TorghastLevelPicker.lua:373:\t\t\t\tlocal name, _, quality, _, _, _, _, _, _, itemIcon = C_Item.GetItemInfo(reward.id);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Tutorials/Blizzard_Tutorials_Professions.lua:111:\t\t\tlocal invType = select(9, C_Item.GetItemInfo(itemLink));\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Tutorials/Blizzard_TutorialReagentBag.lua:38:\tlocal _name, _enchantLink, _displayQuality, _itemLevel, _requiredLevel, _className, _subclassName, _isStackable, _inventoryType, _iconFile, _sellPrice, itemClassID, itemSubclassID, _boundState, _expansionID, _itemSetID, _isTradeskill = C_Item.GetItemInfo(itemHyperlink);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXMLGame/Tooltip/TooltipUtil.lua:19:\t\t\tlocal name = C_Item.GetItemInfo(hyperlink);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Shared/ItemRefHandlersShared.lua:155:\t\tlocal name, itemLink = C_Item.GetItemInfo(text);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/WorldMapFrame.lua:54:\t\t\tlocal itemName, itemLink, itemRarity, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemTexture, sellPrice, classID, subclassID = C_Item.GetItemInfo(itemID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/AccountStoreDocumentation.lua:116:\t\t\tName = \"GetItemInfo\",\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/GroupLootFrame.lua:325:\t\t\t\tlocal itemIcon = select(10, C_Item.GetItemInfo(displayItemID));\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/ContainerFrame.lua:1282:\t\t\tlocal _, _, itemQuality = C_Item.GetItemInfo(itemLink);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/ContainerFrame.lua:1324:\tlocal itemName, _, itemQuality = C_Item.GetItemInfo(refundItemLink);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/ContainerFrame.lua:1839:\t\tlocal name, _, quality = C_Item.GetItemInfo(link);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/MerchantFrame.lua:213:\tlocal quality = link and select(3, C_Item.GetItemInfo(link)) or nil;\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/MerchantFrame.lua:283:\t\t\tinfo = C_MerchantFrame.GetItemInfo(index);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/MerchantFrame.lua:679:\t\t\tlocal info = C_MerchantFrame.GetItemInfo(self:GetID());\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/MerchantFrame.lua:771:\t\t\tlocal itemName, itemLink, itemQuality = C_Item.GetItemInfo(costItemLink);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/MerchantFrame.lua:835:\t\titemName, itemHyperlink, itemQuality = C_Item.GetItemInfo(itemButton.link);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/GameDialog.lua:784:\tlocal itemName, _, itemQuality, _, _, _, _, _, _, texture = C_Item.GetItemInfo(data.link);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/GameDialog.lua:811:\t\tlocal quality = select(3, C_Item.GetItemInfo(link));\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Mainline/SharedUIPanelTemplates.lua:1797:\t\t\t\ticon = select(10, C_Item.GetItemInfo(ID));\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemDocumentation.lua:604:\t\t\tName = \"GetItemInfo\",\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/MerchantFrameDocumentation.lua:27:\t\t\tName = \"GetItemInfo\",\n"
+  },
+  {
+    "id": "wt-global-api-C_Transmog.LoadSources-113",
+    "symbol": "C_Transmog.LoadSources",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-global-api-C_Transmog.ValidateAllPending-114",
+    "symbol": "C_Transmog.ValidateAllPending",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-global-api-C_TransmogCollection.CanSetFavoriteInCategory-115",
+    "symbol": "C_TransmogCollection.CanSetFavoriteInCategory",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-global-api-C_TransmogCollection.GetIllusionFallbackWeaponSource-116",
+    "symbol": "C_TransmogCollection.GetIllusionFallbackWeaponSource",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-global-api-C_TransmogCollection.GetIllusionSourceInfo-117",
+    "symbol": "C_TransmogCollection.GetIllusionSourceInfo",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-global-api-C_TransmogCollection.GetInspectSources-118",
+    "symbol": "C_TransmogCollection.GetInspectSources",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-global-api-C_TransmogCollection.GetOutfitName-119",
+    "symbol": "C_TransmogCollection.GetOutfitName",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-global-api-C_TransmogCollection.GetOutfitSources-120",
+    "symbol": "C_TransmogCollection.GetOutfitSources",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-global-api-C_TransmogCollection.GetShowMissingSourceInItemTooltips-121",
+    "symbol": "C_TransmogCollection.GetShowMissingSourceInItemTooltips",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-global-api-C_TransmogCollection.SaveOutfit-122",
+    "symbol": "C_TransmogCollection.SaveOutfit",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-global-api-C_TransmogCollection.SetShowMissingSourceInItemTooltips-123",
+    "symbol": "C_TransmogCollection.SetShowMissingSourceInItemTooltips",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-global-api-C_TransmogSets.GetSetSources-124",
+    "symbol": "C_TransmogSets.GetSetSources",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-global-api-C_TransmogSets.IsSetCollected-125",
+    "symbol": "C_TransmogSets.IsSetCollected",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-global-api-C_TransmogSets.IsSetUsable-126",
+    "symbol": "C_TransmogSets.IsSetUsable",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-global-api-CancelBarberShop-127",
+    "symbol": "CancelBarberShop",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-global-api-ClosePlayerChoice-128",
+    "symbol": "ClosePlayerChoice",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-global-api-GetBarberShopStyleInfo-129",
+    "symbol": "GetBarberShopStyleInfo",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-global-api-GetBarberShopTotalCost-130",
+    "symbol": "GetBarberShopTotalCost",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-global-api-GetCurrentLevelSpells-131",
+    "symbol": "GetCurrentLevelSpells",
+    "qualified": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SpellBookDocumentation.lua:100:\t\t\tName = \"GetCurrentLevelSpells\",\n",
+    "bare": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/SpellBookDocumentation.lua:100:\t\t\tName = \"GetCurrentLevelSpells\",\n"
+  },
+  {
+    "id": "wt-global-api-GetCustomizationDetails-132",
+    "symbol": "GetCustomizationDetails",
+    "qualified": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mists/CharacterCreate.lua:502:\tlocal facialHairType = C_CharacterCreation.GetCustomizationDetails(4);\n",
+    "bare": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mists/CharacterCreate.lua:502:\tlocal facialHairType = C_CharacterCreation.GetCustomizationDetails(4);\n"
+  },
+  {
+    "id": "wt-global-api-GetDungeonInfo-133",
+    "symbol": "GetDungeonInfo",
+    "qualified": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/LFGInfoDocumentation.lua:135:\t\t\tName = \"GetDungeonInfo\",\n",
+    "bare": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/LFGInfoDocumentation.lua:135:\t\t\tName = \"GetDungeonInfo\",\n"
+  },
+  {
+    "id": "wt-global-api-GetItemLevelIncrement-134",
+    "symbol": "GetItemLevelIncrement",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-global-api-GetItemUpgradeEffect-135",
+    "symbol": "GetItemUpgradeEffect",
+    "qualified": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ItemUpgradeUI/Mists/Blizzard_ItemUpgradeUI.lua:298:\t\tlocal leftText, rightText = C_ItemUpgrade.GetItemUpgradeEffect(i);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ItemUpgradeUI/Mainline/Blizzard_ItemUpgradeUI.lua:820:\t\tlocal originalText, upgradeText = C_ItemUpgrade.GetItemUpgradeEffect(index, numUpgradeLevels);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemUpgradeDocumentation.lua:105:\t\t\tName = \"GetItemUpgradeEffect\",\n",
+    "bare": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ItemUpgradeUI/Mainline/Blizzard_ItemUpgradeUI.lua:820:\t\tlocal originalText, upgradeText = C_ItemUpgrade.GetItemUpgradeEffect(index, numUpgradeLevels);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ItemUpgradeUI/Mists/Blizzard_ItemUpgradeUI.lua:298:\t\tlocal leftText, rightText = C_ItemUpgrade.GetItemUpgradeEffect(i);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemUpgradeDocumentation.lua:105:\t\t\tName = \"GetItemUpgradeEffect\",\n"
+  },
+  {
+    "id": "wt-global-api-GetLevelUpInstances-136",
+    "symbol": "GetLevelUpInstances",
+    "qualified": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/LFGInfoDocumentation.lua:160:\t\t\tName = \"GetLevelUpInstances\",\n",
+    "bare": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/LFGInfoDocumentation.lua:160:\t\t\tName = \"GetLevelUpInstances\",\n"
+  },
+  {
+    "id": "wt-global-api-GetNumItemUpgradeEffects-137",
+    "symbol": "GetNumItemUpgradeEffects",
+    "qualified": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ItemUpgradeUI/Mists/Blizzard_ItemUpgradeUI.lua:288:\tfor i = 1, C_ItemUpgrade.GetNumItemUpgradeEffects() do\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ItemUpgradeUI/Mainline/Blizzard_ItemUpgradeUI.lua:819:\tfor index = 1, C_ItemUpgrade.GetNumItemUpgradeEffects() do\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemUpgradeDocumentation.lua:150:\t\t\tName = \"GetNumItemUpgradeEffects\",\n",
+    "bare": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ItemUpgradeUI/Mists/Blizzard_ItemUpgradeUI.lua:288:\tfor i = 1, C_ItemUpgrade.GetNumItemUpgradeEffects() do\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ItemUpgradeUI/Mainline/Blizzard_ItemUpgradeUI.lua:819:\tfor index = 1, C_ItemUpgrade.GetNumItemUpgradeEffects() do\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/ItemUpgradeDocumentation.lua:150:\t\t\tName = \"GetNumItemUpgradeEffects\",\n"
+  },
+  {
+    "id": "wt-global-api-GetQuestLogPortraitGiver-138",
+    "symbol": "GetQuestLogPortraitGiver",
+    "qualified": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/QuestLogDocumentation.lua:457:\t\t\tName = \"GetQuestLogPortraitGiver\",\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:1007:\tlocal questPortrait, questPortraitText, questPortraitName, questPortraitMount, questPortraitModelSceneID = C_QuestLog.GetQuestLogPortraitGiver();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:2373:\tlocal questPortrait, questPortraitText, questPortraitName, questPortraitMount, questPortraitModelSceneID = C_QuestLog.GetQuestLogPortraitGiver();\n",
+    "bare": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:1007:\tlocal questPortrait, questPortraitText, questPortraitName, questPortraitMount, questPortraitModelSceneID = C_QuestLog.GetQuestLogPortraitGiver();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:2373:\tlocal questPortrait, questPortraitText, questPortraitName, questPortraitMount, questPortraitModelSceneID = C_QuestLog.GetQuestLogPortraitGiver();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/QuestLogDocumentation.lua:457:\t\t\tName = \"GetQuestLogPortraitGiver\",\n"
+  },
+  {
+    "id": "wt-global-api-HasAlternateForm-139",
+    "symbol": "HasAlternateForm",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-global-api-IsBarberShopStyleValid-140",
+    "symbol": "IsBarberShopStyleValid",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-global-api-IsDressableItem-141",
+    "symbol": "IsDressableItem",
+    "qualified": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedItemScript/Deprecated_ItemScript.lua:55:    IsDressableItem = C_Item.IsDressableItem;\n",
+    "bare": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedItemScript/Deprecated_ItemScript.lua:55:    IsDressableItem = C_Item.IsDressableItem;\n"
+  },
+  {
+    "id": "wt-global-api-SendPlayerChoiceResponse-142",
+    "symbol": "SendPlayerChoiceResponse",
+    "qualified": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PlayerChoice/Blizzard_PlayerChoiceOptionBase.lua:457:\tC_PlayerChoice.SendPlayerChoiceResponse(self.buttonID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PlayerChoiceDocumentation.lua:56:\t\t\tName = \"SendPlayerChoiceResponse\",\n",
+    "bare": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PlayerChoice/Blizzard_PlayerChoiceOptionBase.lua:457:\tC_PlayerChoice.SendPlayerChoiceResponse(self.buttonID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/PlayerChoiceDocumentation.lua:56:\t\t\tName = \"SendPlayerChoiceResponse\",\n"
+  },
+  {
+    "id": "wt-global-api-SetBarberShopAlternateFormFrame-143",
+    "symbol": "SetBarberShopAlternateFormFrame",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-global-api-SetNextBarberShopStyle-144",
+    "symbol": "SetNextBarberShopStyle",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-widgets-DressUpModel:GetSlotTransmogSources-173",
+    "symbol": "DressUpModel:GetSlotTransmogSources",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-widgets-ModelSceneActor:GetSlotTransmogSources-174",
+    "symbol": "ModelSceneActor:GetSlotTransmogSources",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-events-MYTHIC_PLUS_NEW_SEASON_RECORD-205",
+    "symbol": "MYTHIC_PLUS_NEW_SEASON_RECORD",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-cvars-GamePadSmoothFacing-239",
+    "symbol": "GamePadSmoothFacing",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-cvars-graphicsSunshafts-240",
+    "symbol": "graphicsSunshafts",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-cvars-raidGraphicsSunshafts-241",
+    "symbol": "raidGraphicsSunshafts",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-cvars-spamFilter-242",
+    "symbol": "spamFilter",
+    "qualified": "",
+    "bare": ""
+  },
+  {
+    "id": "wt-cvars-transmogShouldersSeparately-243",
+    "symbol": "transmogShouldersSeparately",
+    "qualified": "",
+    "bare": ""
+  }
+]
