@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/evidence/8.1.0-session-2026-10-08/run_integration_verification.py"
+  ],
+  "revision": "c3a3a065b7981ede3fd6e8bc5ce91dac0274787c",
+  "scope": "p810-integration-verification-chain",
+  "cwd": ".",
+  "target": "dedicated p810-page target (external to repository)",
+  "environment": {},
+  "exit": 1,
+  "log": "p810-integration-verification-chain.txt",
+  "log_sha256": "a8d17e0e69bc7e8f49803e09b153d9429ec0c1d8afc3bce5dba55fef9f355cd7",
+  "seconds": 10.643453296001098,
+  "invalidated": false
+}

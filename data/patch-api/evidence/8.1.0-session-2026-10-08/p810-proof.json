@@ -1,5 +1,5 @@
 {
-  "code_revision": "9b9c78b6a",
+  "code_revision": "7648b4718",
   "required": [
     {
       "receipt": "p810-integration-all-sweeps.proof.json",
@@ -44,7 +44,7 @@
       ]
     },
     {
-      "receipt": "p810-integration-bare.proof.json",
+      "receipt": "p810-integration-bare-final.proof.json",
       "expected_exit": 0,
       "source_scope": [
         "src/c_api/c_date_and_time.rs",
@@ -54,7 +54,8 @@
         "tests/patch_8_1_0_publication_fixes.rs",
         "tests/patch_8_1_0_cached_surfaces.rs",
         "tests/patch_8_1_0_publication_sweep.rs",
-        "tests/data/patch_8_1_0_sweep_known_gaps.json"
+        "tests/data/patch_8_1_0_sweep_known_gaps.json",
+        "tests/c_api_surface.rs"
       ]
     },
     {
@@ -138,11 +139,6 @@
         "tests/patch_8_1_0_publication_sweep.rs",
         "tests/data/patch_8_1_0_sweep_known_gaps.json"
       ]
-    },
-    {
-      "receipt": "p810-integration-validator-portability.proof.json",
-      "expected_exit": 0,
-      "source_scope": []
     }
   ],
   "historical_failures": {
@@ -154,7 +150,9 @@
     "p810-integration-discovery.proof.json": "Post-rebase RED: two exact resolved gaps still present in the old fixture.",
     "p810-integration-all-sweeps-discovery.proof.json": "Same old-fixture mismatch; all other sweeps passed with unchanged gaps.",
     "p810-integration-cached.proof.json": "Requested two-filter command rejected: prefork supports one positional filter; split without reducing scope.",
-    "p810-integration-verification-chain.proof.json": "Stopped on that harness argument rejection; remaining gates resumed separately without rerunning the passing all-sweeps proof."
+    "p810-integration-verification-chain.proof.json": "Stopped on that harness argument rejection; remaining gates resumed separately without rerunning the passing all-sweeps proof.",
+    "p810-integration-bare.proof.json": "36 pass, one stale source-substring assertion bans the real calendar model; replaced by provider-composition behavior with unchanged defaults.",
+    "p810-integration-verification-remaining.proof.json": "Stopped at that source-shape assertion; independently applicable provider/negative/tool/check gates continued separately."
   },
   "invalidation_policy": "Docs/evidence-only updates do not invalidate Rust proof. Scope equality checked between command revision and pinned code revision, not moving HEAD. No full integration suite.",
   "previous_code_revision": "c5e0f15ab6fcfa3397aa5a02df7df0c94a513e49"

@@ -1,0 +1,22 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_8_1_0_publication_sweep"
+  ],
+  "revision": "ba7e46ad6f6b0839f8443fb6173c5ca9de3a707b",
+  "scope": "p810-integration-discovery",
+  "cwd": ".",
+  "target": "dedicated p810-page target (external to repository)",
+  "environment": {
+    "P810_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/evidence/8.1.0-session-2026-10-08/p810-integration-discovery-results.json"
+  },
+  "exit": 1,
+  "log": "p810-integration-discovery.txt",
+  "log_sha256": "ccf4c5c6d5d43f86c3312f852802ff397c8aff028097d7c5a0e76101354fc7e9",
+  "seconds": 132.22362304499984,
+  "invalidated": false
+}

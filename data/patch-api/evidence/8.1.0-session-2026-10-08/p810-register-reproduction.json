@@ -1,5 +1,285 @@
 [
   {
+    "patch": "8.1.0",
+    "verified_flags": [
+      "--legacy-api-bullets",
+      "--legacy-api-renames"
+    ],
+    "inferred_historical_flags": false,
+    "exit": 0,
+    "byte_identical": true,
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "8.1.0",
+      "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/sources/8.1.0-api-changes.wikitext",
+      "4462737",
+      "/home/osso/.cache/wow-ui-sim-targets/p810-page/audit-reproduction/8.1.0-wikitext-register.json",
+      "--legacy-api-bullets",
+      "--legacy-api-renames"
+    ],
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "patch": "8.1.5",
+    "verified_flags": [
+      "--legacy-api-bullets"
+    ],
+    "inferred_historical_flags": false,
+    "exit": 0,
+    "byte_identical": true,
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "8.1.5",
+      "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/sources/8.1.5-api-changes.wikitext",
+      "3789732",
+      "/home/osso/.cache/wow-ui-sim-targets/p810-page/audit-reproduction/8.1.5-wikitext-register.json",
+      "--legacy-api-bullets"
+    ],
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "patch": "8.2.0",
+    "verified_flags": [
+      "--legacy-api-tables"
+    ],
+    "inferred_historical_flags": false,
+    "exit": 0,
+    "byte_identical": true,
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "8.2.0",
+      "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/sources/8.2.0-api-changes.wikitext",
+      "5142162",
+      "/home/osso/.cache/wow-ui-sim-targets/p810-page/audit-reproduction/8.2.0-wikitext-register.json",
+      "--legacy-api-tables"
+    ],
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "patch": "8.2.5",
+    "verified_flags": [
+      "--legacy-inventory-labels"
+    ],
+    "inferred_historical_flags": false,
+    "exit": 0,
+    "byte_identical": true,
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "8.2.5",
+      "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/sources/8.2.5-api-changes.wikitext",
+      "6471405",
+      "/home/osso/.cache/wow-ui-sim-targets/p810-page/audit-reproduction/8.2.5-wikitext-register.json",
+      "--legacy-inventory-labels"
+    ],
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "patch": "8.3.0",
+    "verified_flags": [
+      "--legacy-column-headers",
+      "--diff-api-additions"
+    ],
+    "inferred_historical_flags": false,
+    "exit": 0,
+    "byte_identical": true,
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "8.3.0",
+      "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/sources/8.3.0-api-changes.wikitext",
+      "6471393",
+      "/home/osso/.cache/wow-ui-sim-targets/p810-page/audit-reproduction/8.3.0-wikitext-register.json",
+      "--legacy-column-headers",
+      "--diff-api-additions"
+    ],
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "patch": "8.3.7",
+    "verified_flags": [
+      "--simple-api-list"
+    ],
+    "inferred_historical_flags": false,
+    "exit": 0,
+    "byte_identical": true,
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "8.3.7",
+      "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/sources/8.3.7-api-changes.wikitext",
+      "1572710",
+      "/home/osso/.cache/wow-ui-sim-targets/p810-page/audit-reproduction/8.3.7-wikitext-register.json",
+      "--simple-api-list"
+    ],
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "patch": "9.0.1",
+    "verified_flags": [
+      "--skip-plain-scripts-label"
+    ],
+    "inferred_historical_flags": false,
+    "exit": 0,
+    "byte_identical": true,
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "9.0.1",
+      "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/sources/9.0.1-api-changes.wikitext",
+      "6471353",
+      "/home/osso/.cache/wow-ui-sim-targets/p810-page/audit-reproduction/9.0.1-wikitext-register.json",
+      "--skip-plain-scripts-label"
+    ],
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "patch": "9.0.2",
+    "verified_flags": [],
+    "inferred_historical_flags": false,
+    "exit": 0,
+    "byte_identical": true,
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "9.0.2",
+      "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/sources/9.0.2-api-changes.wikitext",
+      "659986",
+      "/home/osso/.cache/wow-ui-sim-targets/p810-page/audit-reproduction/9.0.2-wikitext-register.json"
+    ],
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "patch": "9.0.5",
+    "verified_flags": [],
+    "inferred_historical_flags": false,
+    "exit": 0,
+    "byte_identical": true,
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "9.0.5",
+      "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/sources/9.0.5-api-changes.wikitext",
+      "4298844",
+      "/home/osso/.cache/wow-ui-sim-targets/p810-page/audit-reproduction/9.0.5-wikitext-register.json"
+    ],
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "patch": "9.1.0",
+    "verified_flags": [
+      "--expand-shared-changes",
+      "--skip-plain-scripts-label"
+    ],
+    "inferred_historical_flags": false,
+    "exit": 0,
+    "byte_identical": true,
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "9.1.0",
+      "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/sources/9.1.0-api-changes.wikitext",
+      "167980",
+      "/home/osso/.cache/wow-ui-sim-targets/p810-page/audit-reproduction/9.1.0-wikitext-register.json",
+      "--expand-shared-changes",
+      "--skip-plain-scripts-label"
+    ],
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "patch": "9.1.5",
+    "verified_flags": [
+      "--expand-shared-changes",
+      "--capture-span-defaults"
+    ],
+    "inferred_historical_flags": false,
+    "exit": 0,
+    "byte_identical": true,
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "9.1.5",
+      "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/sources/9.1.5-api-changes.wikitext",
+      "5920444",
+      "/home/osso/.cache/wow-ui-sim-targets/p810-page/audit-reproduction/9.1.5-wikitext-register.json",
+      "--expand-shared-changes",
+      "--capture-span-defaults"
+    ],
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "patch": "9.2.0",
+    "verified_flags": [],
+    "inferred_historical_flags": true,
+    "exit": 0,
+    "byte_identical": true,
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "9.2.0",
+      "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/sources/9.2.0-api-changes.wikitext",
+      "4788278",
+      "/home/osso/.cache/wow-ui-sim-targets/p810-page/audit-reproduction/9.2.0-wikitext-register.json"
+    ],
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "patch": "9.2.5",
+    "verified_flags": [
+      "--expand-shared-changes",
+      "--separate-inline-structures",
+      "--capture-span-defaults"
+    ],
+    "inferred_historical_flags": false,
+    "exit": 0,
+    "byte_identical": true,
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "9.2.5",
+      "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/sources/9.2.5-api-changes.wikitext",
+      "2301036",
+      "/home/osso/.cache/wow-ui-sim-targets/p810-page/audit-reproduction/9.2.5-wikitext-register.json",
+      "--expand-shared-changes",
+      "--separate-inline-structures",
+      "--capture-span-defaults"
+    ],
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "patch": "9.2.7",
+    "verified_flags": [],
+    "inferred_historical_flags": true,
+    "exit": 0,
+    "byte_identical": true,
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "9.2.7",
+      "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/sources/9.2.7-api-changes.wikitext",
+      "5227425",
+      "/home/osso/.cache/wow-ui-sim-targets/p810-page/audit-reproduction/9.2.7-wikitext-register.json"
+    ],
+    "stdout": "",
+    "stderr": ""
+  },
+  {
     "patch": "10.0.0",
     "verified_flags": [
       "--expand-shared-changes"
@@ -443,246 +723,6 @@
       "6886719",
       "/home/osso/.cache/wow-ui-sim-targets/p810-page/audit-reproduction/12.1.0-wikitext-register.json",
       "--inventory-only"
-    ],
-    "stdout": "",
-    "stderr": ""
-  },
-  {
-    "patch": "8.1.0",
-    "verified_flags": [
-      "--legacy-api-bullets",
-      "--legacy-api-renames"
-    ],
-    "inferred_historical_flags": false,
-    "exit": 0,
-    "byte_identical": true,
-    "command": [
-      "python3",
-      "tools/gen_patch_wikitext_register.py",
-      "8.1.0",
-      "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/sources/8.1.0-api-changes.wikitext",
-      "4462737",
-      "/home/osso/.cache/wow-ui-sim-targets/p810-page/audit-reproduction/8.1.0-wikitext-register.json",
-      "--legacy-api-bullets",
-      "--legacy-api-renames"
-    ],
-    "stdout": "",
-    "stderr": ""
-  },
-  {
-    "patch": "8.2.5",
-    "verified_flags": [
-      "--legacy-inventory-labels"
-    ],
-    "inferred_historical_flags": false,
-    "exit": 0,
-    "byte_identical": true,
-    "command": [
-      "python3",
-      "tools/gen_patch_wikitext_register.py",
-      "8.2.5",
-      "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/sources/8.2.5-api-changes.wikitext",
-      "6471405",
-      "/home/osso/.cache/wow-ui-sim-targets/p810-page/audit-reproduction/8.2.5-wikitext-register.json",
-      "--legacy-inventory-labels"
-    ],
-    "stdout": "",
-    "stderr": ""
-  },
-  {
-    "patch": "8.3.0",
-    "verified_flags": [
-      "--legacy-column-headers",
-      "--diff-api-additions"
-    ],
-    "inferred_historical_flags": false,
-    "exit": 0,
-    "byte_identical": true,
-    "command": [
-      "python3",
-      "tools/gen_patch_wikitext_register.py",
-      "8.3.0",
-      "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/sources/8.3.0-api-changes.wikitext",
-      "6471393",
-      "/home/osso/.cache/wow-ui-sim-targets/p810-page/audit-reproduction/8.3.0-wikitext-register.json",
-      "--legacy-column-headers",
-      "--diff-api-additions"
-    ],
-    "stdout": "",
-    "stderr": ""
-  },
-  {
-    "patch": "8.3.7",
-    "verified_flags": [
-      "--simple-api-list"
-    ],
-    "inferred_historical_flags": false,
-    "exit": 0,
-    "byte_identical": true,
-    "command": [
-      "python3",
-      "tools/gen_patch_wikitext_register.py",
-      "8.3.7",
-      "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/sources/8.3.7-api-changes.wikitext",
-      "1572710",
-      "/home/osso/.cache/wow-ui-sim-targets/p810-page/audit-reproduction/8.3.7-wikitext-register.json",
-      "--simple-api-list"
-    ],
-    "stdout": "",
-    "stderr": ""
-  },
-  {
-    "patch": "9.0.1",
-    "verified_flags": [
-      "--skip-plain-scripts-label"
-    ],
-    "inferred_historical_flags": false,
-    "exit": 0,
-    "byte_identical": true,
-    "command": [
-      "python3",
-      "tools/gen_patch_wikitext_register.py",
-      "9.0.1",
-      "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/sources/9.0.1-api-changes.wikitext",
-      "6471353",
-      "/home/osso/.cache/wow-ui-sim-targets/p810-page/audit-reproduction/9.0.1-wikitext-register.json",
-      "--skip-plain-scripts-label"
-    ],
-    "stdout": "",
-    "stderr": ""
-  },
-  {
-    "patch": "9.0.2",
-    "verified_flags": [],
-    "inferred_historical_flags": false,
-    "exit": 0,
-    "byte_identical": true,
-    "command": [
-      "python3",
-      "tools/gen_patch_wikitext_register.py",
-      "9.0.2",
-      "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/sources/9.0.2-api-changes.wikitext",
-      "659986",
-      "/home/osso/.cache/wow-ui-sim-targets/p810-page/audit-reproduction/9.0.2-wikitext-register.json"
-    ],
-    "stdout": "",
-    "stderr": ""
-  },
-  {
-    "patch": "9.0.5",
-    "verified_flags": [],
-    "inferred_historical_flags": false,
-    "exit": 0,
-    "byte_identical": true,
-    "command": [
-      "python3",
-      "tools/gen_patch_wikitext_register.py",
-      "9.0.5",
-      "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/sources/9.0.5-api-changes.wikitext",
-      "4298844",
-      "/home/osso/.cache/wow-ui-sim-targets/p810-page/audit-reproduction/9.0.5-wikitext-register.json"
-    ],
-    "stdout": "",
-    "stderr": ""
-  },
-  {
-    "patch": "9.1.0",
-    "verified_flags": [
-      "--expand-shared-changes",
-      "--skip-plain-scripts-label"
-    ],
-    "inferred_historical_flags": false,
-    "exit": 0,
-    "byte_identical": true,
-    "command": [
-      "python3",
-      "tools/gen_patch_wikitext_register.py",
-      "9.1.0",
-      "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/sources/9.1.0-api-changes.wikitext",
-      "167980",
-      "/home/osso/.cache/wow-ui-sim-targets/p810-page/audit-reproduction/9.1.0-wikitext-register.json",
-      "--expand-shared-changes",
-      "--skip-plain-scripts-label"
-    ],
-    "stdout": "",
-    "stderr": ""
-  },
-  {
-    "patch": "9.1.5",
-    "verified_flags": [
-      "--expand-shared-changes",
-      "--capture-span-defaults"
-    ],
-    "inferred_historical_flags": false,
-    "exit": 0,
-    "byte_identical": true,
-    "command": [
-      "python3",
-      "tools/gen_patch_wikitext_register.py",
-      "9.1.5",
-      "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/sources/9.1.5-api-changes.wikitext",
-      "5920444",
-      "/home/osso/.cache/wow-ui-sim-targets/p810-page/audit-reproduction/9.1.5-wikitext-register.json",
-      "--expand-shared-changes",
-      "--capture-span-defaults"
-    ],
-    "stdout": "",
-    "stderr": ""
-  },
-  {
-    "patch": "9.2.0",
-    "verified_flags": [],
-    "inferred_historical_flags": true,
-    "exit": 0,
-    "byte_identical": true,
-    "command": [
-      "python3",
-      "tools/gen_patch_wikitext_register.py",
-      "9.2.0",
-      "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/sources/9.2.0-api-changes.wikitext",
-      "4788278",
-      "/home/osso/.cache/wow-ui-sim-targets/p810-page/audit-reproduction/9.2.0-wikitext-register.json"
-    ],
-    "stdout": "",
-    "stderr": ""
-  },
-  {
-    "patch": "9.2.5",
-    "verified_flags": [
-      "--expand-shared-changes",
-      "--separate-inline-structures",
-      "--capture-span-defaults"
-    ],
-    "inferred_historical_flags": false,
-    "exit": 0,
-    "byte_identical": true,
-    "command": [
-      "python3",
-      "tools/gen_patch_wikitext_register.py",
-      "9.2.5",
-      "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/sources/9.2.5-api-changes.wikitext",
-      "2301036",
-      "/home/osso/.cache/wow-ui-sim-targets/p810-page/audit-reproduction/9.2.5-wikitext-register.json",
-      "--expand-shared-changes",
-      "--separate-inline-structures",
-      "--capture-span-defaults"
-    ],
-    "stdout": "",
-    "stderr": ""
-  },
-  {
-    "patch": "9.2.7",
-    "verified_flags": [],
-    "inferred_historical_flags": true,
-    "exit": 0,
-    "byte_identical": true,
-    "command": [
-      "python3",
-      "tools/gen_patch_wikitext_register.py",
-      "9.2.7",
-      "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/sources/9.2.7-api-changes.wikitext",
-      "5227425",
-      "/home/osso/.cache/wow-ui-sim-targets/p810-page/audit-reproduction/9.2.7-wikitext-register.json"
     ],
     "stdout": "",
     "stderr": ""

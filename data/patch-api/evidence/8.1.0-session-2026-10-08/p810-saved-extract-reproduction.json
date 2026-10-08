@@ -230,6 +230,26 @@
     "error": null
   },
   {
+    "patch": "8.1.5",
+    "verified_flags": [
+      "--legacy-api-bullets"
+    ],
+    "inferred_historical_flags": false,
+    "byte_identical": true,
+    "sha256": "37a8a38a0fa152908db96ce70242e705ec1284c7c1bff599a8eccf4da1a05a53",
+    "error": null
+  },
+  {
+    "patch": "8.2.0",
+    "verified_flags": [
+      "--legacy-api-tables"
+    ],
+    "inferred_historical_flags": false,
+    "byte_identical": true,
+    "sha256": "49736eb93e74da2436d5e600e58b6ee8674927ef4b15f50e10adffa675585dd0",
+    "error": null
+  },
+  {
     "patch": "8.2.5",
     "verified_flags": [
       "--preserve-examples",

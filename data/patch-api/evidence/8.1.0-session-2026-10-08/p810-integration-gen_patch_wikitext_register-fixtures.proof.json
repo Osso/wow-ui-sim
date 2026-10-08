@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p810-page/tools/test_gen_patch_wikitext_register.py"
+  ],
+  "revision": "7648b4718c11431e38bc437801ee708686cd7266",
+  "scope": "p810-integration-gen_patch_wikitext_register-fixtures",
+  "cwd": ".",
+  "target": "dedicated p810-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p810-integration-gen_patch_wikitext_register-fixtures.txt",
+  "log_sha256": "7b7dc7b80a1526f8fbd83449d2a67622138309015a7ab0ae6c04e5a3b61eb1a8",
+  "seconds": 0.037730094001744874,
+  "invalidated": false
+}

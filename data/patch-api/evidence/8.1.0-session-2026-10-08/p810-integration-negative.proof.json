@@ -1,0 +1,23 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_8_1_0_publication_sweep"
+  ],
+  "revision": "7648b4718c11431e38bc437801ee708686cd7266",
+  "scope": "p810-integration-negative",
+  "cwd": ".",
+  "target": "dedicated p810-page target (external to repository)",
+  "environment": {
+    "P810_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/evidence/8.1.0-session-2026-10-08/p810-negative-register.json",
+    "P810_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/evidence/8.1.0-session-2026-10-08/p810-negative-observation.json"
+  },
+  "exit": 1,
+  "log": "p810-integration-negative.txt",
+  "log_sha256": "e135114d5595952c2c5f5c0806ba351f498a4c38ebe40ac52e64a9f83dd578cb",
+  "seconds": 9.798084690002725,
+  "invalidated": false
+}

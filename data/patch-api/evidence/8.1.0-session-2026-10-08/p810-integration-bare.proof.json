@@ -1,0 +1,23 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "--",
+    "patch_8_1_0",
+    "c_calendar",
+    "c_map_probes",
+    "date_and_time"
+  ],
+  "revision": "9b9c78b6a9431857643b6daf8cf8f4d3a8105dcb",
+  "scope": "p810-integration-bare",
+  "cwd": ".",
+  "target": "dedicated p810-page target (external to repository)",
+  "environment": {},
+  "exit": 101,
+  "log": "p810-integration-bare.txt",
+  "log_sha256": "9435588b54dfbc62ba357920e436157f48c094490cd99f913832cad66698d13d",
+  "seconds": 41.72924355299983,
+  "invalidated": false
+}

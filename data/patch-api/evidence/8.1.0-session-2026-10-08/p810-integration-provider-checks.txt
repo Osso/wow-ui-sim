@@ -1,0 +1,8 @@
+p810-integration-lib 0
+p810-integration-negative 1
+p810-integration-extract_patch_non_inventory-fixtures 0
+p810-integration-gen_patch_wikitext_register-fixtures 0
+p810-integration-patch_audit_validation-fixtures 0
+p810-integration-format 0
+p810-integration-mists-check 0
+PASS: requested post-rebase verification

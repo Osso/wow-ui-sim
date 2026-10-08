@@ -1,0 +1,165 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p810-page)
+    Finished `test` profile [optimized + debuginfo] target(s) in 4.93s
+     Running tests/prefork_full_ui.rs (/home/osso/.cache/wow-ui-sim-targets/p810-page/debug/deps/prefork_full_ui-21dd5c807fe7a7b6)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 1.51ms
+[  0.002s] [Startup] rilua VM created in 82.73µs
+[  0.002s] [Startup] builtin frames initialized in 56.19µs
+[  0.002s] [Startup] template registry cleared in 5.96µs
+[  0.002s] [Startup] intrinsic templates registered in 6.46µs
+[  0.002s] [Startup] initial app_data lua handle installed in 361.00ns
+[  0.093s] [Startup] init_lua_state complete in 90.90ms
+[  0.093s] [Startup] final app_data lua handle installed in 170.00ns
+[  0.093s] [Startup] initial screen globals installed in 56.68µs
+[  0.093s] [Startup] WowLuaEnv::new complete
+[  1.986s] [Startup] apply_post_load_workarounds: begin
+[  1.986s] [Workarounds] starting patch_edit_mode_manager
+[  1.986s] [Workarounds] finished patch_edit_mode_manager in 244.61µs
+[  1.986s] [Workarounds] starting init_edit_mode_layout
+[  1.986s] [EditMode] starting setup_layout_info
+[  1.989s] [EditMode] finished setup_layout_info in 2.66ms
+[  1.989s] [EditMode] starting apply_system_anchors
+[  2.104s] [EditMode] finished apply_system_anchors in 115.38ms
+[  2.104s] [EditMode] starting finalize_action_bar_positions
+[  2.106s] [EditMode] finished finalize_action_bar_positions in 1.45ms
+[  2.106s] [EditMode] starting invoke_anchor_changed_hooks
+[  2.106s] [EditMode] finished invoke_anchor_changed_hooks in 339.52µs
+[  2.106s] [EditMode] starting fix_action_bar_nan_size
+[  2.106s] [EditMode] finished fix_action_bar_nan_size in 32.44µs
+[  2.106s] [EditMode] starting fix_action_bar_scale
+[  2.106s] [EditMode] finished fix_action_bar_scale in 3.62µs
+[  2.106s] [Workarounds] finished init_edit_mode_layout in 119.92ms
+[  2.106s] [Workarounds] starting patch_ui_parent_panel_toggles
+[  2.107s] [Workarounds] finished patch_ui_parent_panel_toggles in 183.82µs
+[  2.107s] [Workarounds] starting patch_uiparent_onupdate_worklists
+[  2.107s] [Workarounds] finished patch_uiparent_onupdate_worklists in 77.23µs
+[  2.107s] [Workarounds] starting init_chat_type_colors
+[  2.107s] [Workarounds] finished init_chat_type_colors in 95.28µs
+[  2.107s] [Workarounds] starting patch_chat_voice_button_surface
+[  2.107s] [Workarounds] finished patch_chat_voice_button_surface in 93.28µs
+[  2.107s] [Workarounds] starting patch_item_socketing_tooltips
+[  2.107s] [Workarounds] finished patch_item_socketing_tooltips in 45.71µs
+[  2.107s] [Workarounds] starting patch_character_select_selected_name
+[  2.107s] [Workarounds] finished patch_character_select_selected_name in 26.37µs
+[  2.107s] [Workarounds] starting patch_character_create_defaults
+[  2.107s] [Workarounds] finished patch_character_create_defaults in 183.52µs
+[  2.107s] [Workarounds] starting patch_character_frame_title_refresh
+[  2.112s] [Workarounds] finished patch_character_frame_title_refresh in 4.59ms
+[  2.112s] [Workarounds] starting patch_vignette_pin_template
+[  2.112s] [Workarounds] finished patch_vignette_pin_template in 75.37µs
+[  2.112s] [Workarounds] starting patch_fog_of_war_pin_mixin
+[  2.112s] [Workarounds] finished patch_fog_of_war_pin_mixin in 208.46µs
+[  2.112s] [Workarounds] starting patch_map_exploration_pin_mixin
+[  2.116s] [Workarounds] finished patch_map_exploration_pin_mixin in 4.50ms
+[  2.116s] [Workarounds] starting patch_map_canvas_data_provider_attachment
+[  2.117s] [Workarounds] finished patch_map_canvas_data_provider_attachment in 50.78µs
+[  2.117s] [Workarounds] starting ensure_adventure_map_frame_surface
+[  2.117s] [Workarounds] finished ensure_adventure_map_frame_surface in 353.38µs
+[  2.117s] [Workarounds] starting patch_action_bar_button_event_fanout
+[  2.117s] [Workarounds] finished patch_action_bar_button_event_fanout in 79.11µs
+[  2.117s] [Workarounds] starting patch_paging_controls_page_text
+[  2.117s] [Workarounds] finished patch_paging_controls_page_text in 31.59µs
+[  2.117s] [Workarounds] starting patch_talent_edge_frame_level_sync
+[  2.117s] [Workarounds] finished patch_talent_edge_frame_level_sync in 23.25µs
+[  2.117s] [Workarounds] starting patch_catalog_shop_product_card_defaults
+[  2.117s] [Workarounds] finished patch_catalog_shop_product_card_defaults in 52.63µs
+[  2.117s] [Workarounds] starting patch_game_time_defaults
+[  2.117s] [Workarounds] finished patch_game_time_defaults in 5.73µs
+[  2.117s] [Workarounds] starting patch_tooltip_nineslice_surface
+[  2.117s] [Workarounds] finished patch_tooltip_nineslice_surface in 34.36µs
+[  2.117s] [Workarounds] starting patch_container_frame_token_tracker
+[  2.117s] [Workarounds] finished patch_container_frame_token_tracker in 32.35µs
+[  2.117s] [Workarounds] starting patch_achievement_display_set_achievements
+[  2.117s] [Workarounds] finished patch_achievement_display_set_achievements in 7.20µs
+[  2.117s] [Workarounds] starting patch_housing_dashboard_preload
+[  2.117s] [Workarounds] finished patch_housing_dashboard_preload in 129.16µs
+[  2.117s] [Workarounds] starting patch_lfg_lock_list
+[  2.117s] [Workarounds] finished patch_lfg_lock_list in 27.66µs
+[  2.117s] [Workarounds] starting patch_auction_house_browse_results_event
+[  2.117s] [Workarounds] finished patch_auction_house_browse_results_event in 51.54µs
+[  2.117s] [Workarounds] starting patch_auction_house_search_context_aliases
+[  2.117s] [Workarounds] finished patch_auction_house_search_context_aliases in 22.94µs
+[  2.117s] [Workarounds] starting patch_auth_challenge_frame_parent
+[  2.117s] [Workarounds] finished patch_auth_challenge_frame_parent in 52.73µs
+[  2.117s] [Workarounds] starting patch_settings_surface_defaults
+[  2.118s] [Workarounds] finished patch_settings_surface_defaults in 274.85µs
+[  2.118s] [Workarounds] starting patch_settings_canvas_layout_visibility
+[  2.118s] [Workarounds] finished patch_settings_canvas_layout_visibility in 88.68µs
+[  2.118s] [Startup] apply_post_load_workarounds: workarounds complete
+[  2.174s] [Startup] apply_post_load_workarounds: globals restored
+[  2.175s] [Startup] apply_post_load_workarounds: patch 12.1 compatibility restored
+[  2.175s] [Startup] apply_post_load_workarounds: seterrorhandler restored
+[  2.315s] [Startup] begin login sequence
+[  2.315s] [Startup] Firing ADDON_LOADED
+[  2.315s] [Startup] Firing VARIABLES_LOADED
+[  2.397s] [Startup] Firing DISPLAY_SIZE_CHANGED
+[  2.435s] [Startup] Firing UI_SCALE_CHANGED
+[  2.436s] [Startup] Firing PLAYER_LOGIN
+[  2.436s] [Startup] end login sequence in 121.50ms
+[  2.436s] [Startup] begin world enter sequence
+[  2.436s] [Startup] Skipping EDIT_MODE_LAYOUTS_UPDATED
+[  2.436s] [Startup] Firing TIME_PLAYED_MSG via RequestTimePlayed
+[  2.436s] [Startup] Firing PLAYER_ENTERING_WORLD
+[  2.620s] [EditMode] starting setup_layout_info
+[  2.623s] [EditMode] finished setup_layout_info in 3.04ms
+[  2.623s] [EditMode] starting apply_system_anchors
+[  2.723s] [EditMode] finished apply_system_anchors in 100.24ms
+[  2.723s] [EditMode] starting finalize_action_bar_positions
+[  2.725s] [EditMode] finished finalize_action_bar_positions in 1.71ms
+[  2.725s] [EditMode] starting invoke_anchor_changed_hooks
+[  2.730s] [EditMode] finished invoke_anchor_changed_hooks in 4.51ms
+[  2.730s] [EditMode] starting fix_action_bar_nan_size
+[  2.730s] [EditMode] finished fix_action_bar_nan_size in 50.74µs
+[  2.730s] [EditMode] starting fix_action_bar_scale
+[  2.730s] [EditMode] finished fix_action_bar_scale in 3.48µs
+[  2.730s] [EditMode] starting reapply_player_frame_anchor
+[  2.731s] [EditMode] finished reapply_player_frame_anchor in 1.21ms
+[  2.738s] [Startup] end world enter sequence in 301.70ms
+[  2.738s] [Startup] begin post-login events
+[  2.739s] [Startup] Firing UNIT_AURA
+[  2.739s] [Startup] Firing PET_UI_UPDATE
+[  2.740s] [Startup] Firing BAG_UPDATE_DELAYED
+[  2.741s] [Startup] Firing QUEST_LOG_UPDATE
+[  2.742s] [Startup] Firing GROUP_ROSTER_UPDATE
+[  2.810s] [Startup] Firing ACTIONBAR_UPDATE_STATE
+[  2.810s] [Startup] Firing ACTIONBAR_UPDATE_COOLDOWN
+[  2.811s] [Startup] Firing UPDATE_BONUS_ACTIONBAR
+[  2.820s] [Startup] Firing PLAYER_CAN_GLIDE_CHANGED
+[  2.820s] [Startup] Firing PLAYER_IS_GLIDING_CHANGED
+[  2.820s] [Startup] Firing UPDATE_BINDINGS
+[  2.822s] [Startup] Firing UPDATE_CHAT_WINDOWS
+[  2.824s] [Startup] Firing LFG_UPDATE_RANDOM_INFO
+[  2.825s] [Startup] end post-login events in 87.03ms
+[  2.825s] [Startup] begin close startup special windows
+[  2.825s] [Startup] end close startup special windows in 207.61µs
+[  2.825s] [Startup] begin FIRST_FRAME_RENDERED
+[  2.825s] [Startup] Firing FIRST_FRAME_RENDERED
+[  2.825s] [Startup] end FIRST_FRAME_RENDERED in 124.47µs
+[  2.825s] [Startup] begin unblock hidden splash alerts
+[  2.825s] [Startup] end unblock hidden splash alerts in 11.54µs
+[  2.825s] [Startup] begin post-event workarounds
+[  2.825s] [Startup] end post-event workarounds in 922.00ns
+running 1 tests
+test patch_8_1_0_publication_sweep::patch_8_1_0_publication_sweep ... FAILED (panic: assertion `left == right` failed: new gaps: ["wt-global-api-C_DateAndTime.CompareCalendarTime-32"]; resolved/stale gaps: []
+  left: {"wt-global-api-C_AchievementInfo.GetSupercedingAchievements-13", "wt-global-api-C_Calendar.EventGetClubId-120", "wt-global-api-C_Calendar.EventSetClubId-121", "wt-global-api-C_Calendar.GetEventIndexInfo-20", "wt-global-api-C_Calendar.GetNextClubId-21", "wt-global-api-C_Calendar.SetNextClubId-22", "wt-global-api-C_ChatInfo.ResetDefaultZoneChannels-24", "wt-global-api-C_ChatInfo.SwapChatChannelsByChannelIndex-25", "wt-global-api-C_Club.AddClubStreamChatChannel-26", "wt-global-api-C_Club.Flush-27", "wt-global-api-C_ConfigurationWarnings.GetConfigurationWarningSeen-126", "wt-global-api-C_ConfigurationWarnings.GetConfigurationWarningString-127", "wt-global-api-C_ConfigurationWarnings.GetConfigurationWarnings-128", "wt-global-api-C_ConfigurationWarnings.SetConfigurationWarningSeen-129", "wt-global-api-C_CurrencyInfo.DoesWarModeBonusApply-29", "wt-global-api-C_DateAndTime.CompareCalendarTime-32", "wt-global-api-C_Debug.DashboardIsEnabled-35", "wt-global-api-C_FriendList.AddFriend-38", "wt-global-api-C_FriendList.AddIgnore-39", "wt-global-api-C_FriendList.AddOrDelIgnore-40", "wt-global-api-C_FriendList.AddOrRemoveFriend-41", "wt-global-api-C_FriendList.DelIgnore-42", "wt-global-api-C_FriendList.DelIgnoreByIndex-43", "wt-global-api-C_FriendList.GetFriendInfo-44", "wt-global-api-C_FriendList.GetSelectedFriend-51", "wt-global-api-C_FriendList.GetSelectedIgnore-52", "wt-global-api-C_FriendList.IsIgnored-55", "wt-global-api-C_FriendList.IsIgnoredByGuid-56", "wt-global-api-C_FriendList.RemoveFriend-57", "wt-global-api-C_FriendList.RemoveFriendByIndex-58", "wt-global-api-C_FriendList.SendWho-59", "wt-global-api-C_FriendList.SetFriendNotes-60", "wt-global-api-C_FriendList.SetFriendNotesByIndex-61", "wt-global-api-C_FriendList.SetSelectedFriend-62", "wt-global-api-C_FriendList.SetSelectedIgnore-63", "wt-global-api-C_FriendList.SortWho-66", "wt-global-api-C_Garrison.IsEnvironmentCountered-67", "wt-global-api-C_Item.CanScrapItem-71", "wt-global-api-C_Item.CanViewItemPowers-72", "wt-global-api-C_Loot.IsLegacyLootModeEnabled-76", "wt-global-api-C_Map.GetBountySetMaps-77", "wt-global-api-C_MountJournal.GetMountFromItem-78", "wt-global-api-C_PartyInfo.GetInviteReferralInfo-81", "wt-global-api-C_PetJournal.GetPetInfoByItemID-82", "wt-global-api-C_PlayerInfo.GUIDIsPlayer-83", "wt-global-api-C_PvP.CanToggleWarModeInArea-84", "wt-global-api-C_PvP.GetRewardItemLevelsByTierEnum-85", "wt-global-api-C_PvP.GetWeeklyChestInfo-88", "wt-global-api-C_QuestChoice.GetQuestChoiceInfo-90", "wt-global-api-C_QuestChoice.GetQuestChoiceOptionInfo-91", "wt-global-api-C_QuestLine.RequestQuestLinesForMap-92", "wt-global-api-C_ReportSystem.CanReportPlayer-96", "wt-global-api-C_ReportSystem.ReportServerLag-98", "wt-global-api-C_SummonInfo.CancelSummon-104", "wt-global-api-C_SummonInfo.ConfirmSummon-105", "wt-global-api-C_SummonInfo.GetSummonConfirmAreaName-106", "wt-global-api-C_SummonInfo.GetSummonConfirmSummoner-107", "wt-global-api-C_TradeSkillUI.GetTradeSkillLineInfoByID-113", "wt-global-api-C_UIWidgetManager.GetSpellDisplayVisualizationInfo-114"}
+ right: {"wt-global-api-C_AchievementInfo.GetSupercedingAchievements-13", "wt-global-api-C_Calendar.EventGetClubId-120", "wt-global-api-C_Calendar.EventSetClubId-121", "wt-global-api-C_Calendar.GetEventIndexInfo-20", "wt-global-api-C_Calendar.GetNextClubId-21", "wt-global-api-C_Calendar.SetNextClubId-22", "wt-global-api-C_ChatInfo.ResetDefaultZoneChannels-24", "wt-global-api-C_ChatInfo.SwapChatChannelsByChannelIndex-25", "wt-global-api-C_Club.AddClubStreamChatChannel-26", "wt-global-api-C_Club.Flush-27", "wt-global-api-C_ConfigurationWarnings.GetConfigurationWarningSeen-126", "wt-global-api-C_ConfigurationWarnings.GetConfigurationWarningString-127", "wt-global-api-C_ConfigurationWarnings.GetConfigurationWarnings-128", "wt-global-api-C_ConfigurationWarnings.SetConfigurationWarningSeen-129", "wt-global-api-C_CurrencyInfo.DoesWarModeBonusApply-29", "wt-global-api-C_Debug.DashboardIsEnabled-35",)
+---- patch_8_1_0_publication_sweep::patch_8_1_0_publication_sweep stderr ----
+
+thread 'main' (619344) panicked at /home/osso/.worktrees/wow-ui-sim-p810-page/tests/common/publication_sweep.rs:504:5:
+assertion `left == right` failed: new gaps: ["wt-global-api-C_DateAndTime.CompareCalendarTime-32"]; resolved/stale gaps: []
+  left: {"wt-global-api-C_AchievementInfo.GetSupercedingAchievements-13", "wt-global-api-C_Calendar.EventGetClubId-120", "wt-global-api-C_Calendar.EventSetClubId-121", "wt-global-api-C_Calendar.GetEventIndexInfo-20", "wt-global-api-C_Calendar.GetNextClubId-21", "wt-global-api-C_Calendar.SetNextClubId-22", "wt-global-api-C_ChatInfo.ResetDefaultZoneChannels-24", "wt-global-api-C_ChatInfo.SwapChatChannelsByChannelIndex-25", "wt-global-api-C_Club.AddClubStreamChatChannel-26", "wt-global-api-C_Club.Flush-27", "wt-global-api-C_ConfigurationWarnings.GetConfigurationWarningSeen-126", "wt-global-api-C_ConfigurationWarnings.GetConfigurationWarningString-127", "wt-global-api-C_ConfigurationWarnings.GetConfigurationWarnings-128", "wt-global-api-C_ConfigurationWarnings.SetConfigurationWarningSeen-129", "wt-global-api-C_CurrencyInfo.DoesWarModeBonusApply-29", "wt-global-api-C_DateAndTime.CompareCalendarTime-32", "wt-global-api-C_Debug.DashboardIsEnabled-35", "wt-global-api-C_FriendList.AddFriend-38", "wt-global-api-C_FriendList.AddIgnore-39", "wt-global-api-C_FriendList.AddOrDelIgnore-40", "wt-global-api-C_FriendList.AddOrRemoveFriend-41", "wt-global-api-C_FriendList.DelIgnore-42", "wt-global-api-C_FriendList.DelIgnoreByIndex-43", "wt-global-api-C_FriendList.GetFriendInfo-44", "wt-global-api-C_FriendList.GetSelectedFriend-51", "wt-global-api-C_FriendList.GetSelectedIgnore-52", "wt-global-api-C_FriendList.IsIgnored-55", "wt-global-api-C_FriendList.IsIgnoredByGuid-56", "wt-global-api-C_FriendList.RemoveFriend-57", "wt-global-api-C_FriendList.RemoveFriendByIndex-58", "wt-global-api-C_FriendList.SendWho-59", "wt-global-api-C_FriendList.SetFriendNotes-60", "wt-global-api-C_FriendList.SetFriendNotesByIndex-61", "wt-global-api-C_FriendList.SetSelectedFriend-62", "wt-global-api-C_FriendList.SetSelectedIgnore-63", "wt-global-api-C_FriendList.SortWho-66", "wt-global-api-C_Garrison.IsEnvironmentCountered-67", "wt-global-api-C_Item.CanScrapItem-71", "wt-global-api-C_Item.CanViewItemPowers-72", "wt-global-api-C_Loot.IsLegacyLootModeEnabled-76", "wt-global-api-C_Map.GetBountySetMaps-77", "wt-global-api-C_MountJournal.GetMountFromItem-78", "wt-global-api-C_PartyInfo.GetInviteReferralInfo-81", "wt-global-api-C_PetJournal.GetPetInfoByItemID-82", "wt-global-api-C_PlayerInfo.GUIDIsPlayer-83", "wt-global-api-C_PvP.CanToggleWarModeInArea-84", "wt-global-api-C_PvP.GetRewardItemLevelsByTierEnum-85", "wt-global-api-C_PvP.GetWeeklyChestInfo-88", "wt-global-api-C_QuestChoice.GetQuestChoiceInfo-90", "wt-global-api-C_QuestChoice.GetQuestChoiceOptionInfo-91", "wt-global-api-C_QuestLine.RequestQuestLinesForMap-92", "wt-global-api-C_ReportSystem.CanReportPlayer-96", "wt-global-api-C_ReportSystem.ReportServerLag-98", "wt-global-api-C_SummonInfo.CancelSummon-104", "wt-global-api-C_SummonInfo.ConfirmSummon-105", "wt-global-api-C_SummonInfo.GetSummonConfirmAreaName-106", "wt-global-api-C_SummonInfo.GetSummonConfirmSummoner-107", "wt-global-api-C_TradeSkillUI.GetTradeSkillLineInfoByID-113", "wt-global-api-C_UIWidgetManager.GetSpellDisplayVisualizationInfo-114"}
+ right: {"wt-global-api-C_AchievementInfo.GetSupercedingAchievements-13", "wt-global-api-C_Calendar.EventGetClubId-120", "wt-global-api-C_Calendar.EventSetClubId-121", "wt-global-api-C_Calendar.GetEventIndexInfo-20", "wt-global-api-C_Calendar.GetNextClubId-21", "wt-global-api-C_Calendar.SetNextClubId-22", "wt-global-api-C_ChatInfo.ResetDefaultZoneChannels-24", "wt-global-api-C_ChatInfo.SwapChatChannelsByChannelIndex-25", "wt-global-api-C_Club.AddClubStreamChatChannel-26", "wt-global-api-C_Club.Flush-27", "wt-global-api-C_ConfigurationWarnings.GetConfigurationWarningSeen-126", "wt-global-api-C_ConfigurationWarnings.GetConfigurationWarningString-127", "wt-global-api-C_ConfigurationWarnings.GetConfigurationWarnings-128", "wt-global-api-C_ConfigurationWarnings.SetConfigurationWarningSeen-129", "wt-global-api-C_CurrencyInfo.DoesWarModeBonusApply-29", "wt-global-api-C_Debug.DashboardIsEnabled-35", "wt-global-api-C_FriendList.AddFriend-38", "wt-global-api-C_FriendList.AddIgnore-39", "wt-global-api-C_FriendList.AddOrDelIgnore-40", "wt-global-api-C_FriendList.AddOrRemoveFriend-41", "wt-global-api-C_FriendList.DelIgnore-42", "wt-global-api-C_FriendList.DelIgnoreByIndex-43", "wt-global-api-C_FriendList.GetFriendInfo-44", "wt-global-api-C_FriendList.GetSelectedFriend-51", "wt-global-api-C_FriendList.GetSelectedIgnore-52", "wt-global-api-C_FriendList.IsIgnored-55", "wt-global-api-C_FriendList.IsIgnoredByGuid-56", "wt-global-api-C_FriendList.RemoveFriend-57", "wt-global-api-C_FriendList.RemoveFriendByIndex-58", "wt-global-api-C_FriendList.SendWho-59", "wt-global-api-C_FriendList.SetFriendNotes-60", "wt-global-api-C_FriendList.SetFriendNotesByIndex-61", "wt-global-api-C_FriendList.SetSelectedFriend-62", "wt-global-api-C_FriendList.SetSelectedIgnore-63", "wt-global-api-C_FriendList.SortWho-66", "wt-global-api-C_Garrison.IsEnvironmentCountered-67", "wt-global-api-C_Item.CanScrapItem-71", "wt-global-api-C_Item.CanViewItemPowers-72", "wt-global-api-C_Loot.IsLegacyLootModeEnabled-76", "wt-global-api-C_Map.GetBountySetMaps-77", "wt-global-api-C_MountJournal.GetMountFromItem-78", "wt-global-api-C_PartyInfo.GetInviteReferralInfo-81", "wt-global-api-C_PetJournal.GetPetInfoByItemID-82", "wt-global-api-C_PlayerInfo.GUIDIsPlayer-83", "wt-global-api-C_PvP.CanToggleWarModeInArea-84", "wt-global-api-C_PvP.GetRewardItemLevelsByTierEnum-85", "wt-global-api-C_PvP.GetWeeklyChestInfo-88", "wt-global-api-C_QuestChoice.GetQuestChoiceInfo-90", "wt-global-api-C_QuestChoice.GetQuestChoiceOptionInfo-91", "wt-global-api-C_QuestLine.RequestQuestLinesForMap-92", "wt-global-api-C_ReportSystem.CanReportPlayer-96", "wt-global-api-C_ReportSystem.ReportServerLag-98", "wt-global-api-C_SummonInfo.CancelSummon-104", "wt-global-api-C_SummonInfo.ConfirmSummon-105", "wt-global-api-C_SummonInfo.GetSummonConfirmAreaName-106", "wt-global-api-C_SummonInfo.GetSummonConfirmSummoner-107", "wt-global-api-C_TradeSkillUI.GetTradeSkillLineInfoByID-113", "wt-global-api-C_UIWidgetManager.GetSpellDisplayVisualizationInfo-114"}
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+test result: FAILED. 0 passed; 1 failed; 1 total
+error: test failed, to rerun pass `--test prefork_full_ui`
+
+Caused by:
+  process didn't exit successfully: `/home/osso/.cache/wow-ui-sim-targets/p810-page/debug/deps/prefork_full_ui-21dd5c807fe7a7b6 patch_8_1_0_publication_sweep` (exit status: 1)

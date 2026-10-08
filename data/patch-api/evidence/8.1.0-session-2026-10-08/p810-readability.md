@@ -1,3 +1,5 @@
 # Changed-Rust readability review
 
 Manual review of c_date_and_time.rs, c_api/mod.rs, patch_retired_members.rs and tests/patch_8_1_0_*.rs. Civil timestamp represented literally as five ordered integer fields; weekday excluded as derived metadata. Short register/read/compare functions, bounded nesting, explicit malformed-input errors; no hidden clock, defaults, warning suppressions or mutation. Numeric guard checks one integer representation rule. Wiring adds a named C API registration call; retirement data stays retail-only. Test assertions exercise observable Lua outputs, not source shape. No changed-line readability violations found. No agent/model CLI used.
+
+Integration review: replaced only the obsolete date/time source-name assertion in `tests/c_api_surface.rs` with a short observable Lua composition test. Concrete calendar inputs/outputs, no nested Rust control flow, hidden time reads, suppressions or duplicated default-value tests. No changed-line readability violations.

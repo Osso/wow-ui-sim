@@ -1,0 +1,20 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--lib",
+    "--",
+    "date_and_time_defaults",
+    "configuration_warnings_defaults"
+  ],
+  "revision": "7648b4718c11431e38bc437801ee708686cd7266",
+  "scope": "p810-integration-lib",
+  "cwd": ".",
+  "target": "dedicated p810-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p810-integration-lib.txt",
+  "log_sha256": "46a956bec29473f17e0b4d840310b06ba8dc8dce446732b4eeae50d4a4e1c1f0",
+  "seconds": 90.05441282299944,
+  "invalidated": false
+}

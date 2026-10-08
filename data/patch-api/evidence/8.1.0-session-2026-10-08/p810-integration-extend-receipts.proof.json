@@ -1,0 +1,22 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p810-page/tools/extend_patch_audit_receipts.py",
+    "/home/osso/.worktrees/wow-ui-sim-p810-page",
+    "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/evidence/8.1.0-session-2026-10-08",
+    "p810",
+    "Integrated 8.1.5 and 8.2.0 recorded provenance",
+    "8.1.0"
+  ],
+  "revision": "aba601dc26d659f4c7dc2df0b019cdc72e8663c4",
+  "scope": "p810-integration-extend-receipts",
+  "cwd": ".",
+  "target": "dedicated p810-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p810-integration-extend-receipts.txt",
+  "log_sha256": "404d24a92004e45d8db3503b1925a2e8e83aee95a2eee28f94f288d1282e701f",
+  "seconds": 55.71486118200119,
+  "invalidated": false
+}

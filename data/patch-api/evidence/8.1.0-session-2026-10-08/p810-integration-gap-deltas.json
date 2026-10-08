@@ -1,0 +1,325 @@
+[
+  {
+    "patch": "10.0.0",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 173,
+    "observed_gaps": 173,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "10.0.2",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 149,
+    "observed_gaps": 149,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "10.0.5",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 27,
+    "observed_gaps": 27,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "10.0.7",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 26,
+    "observed_gaps": 26,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "10.1.0",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 36,
+    "observed_gaps": 36,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "10.1.5",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 32,
+    "observed_gaps": 32,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "10.1.7",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 14,
+    "observed_gaps": 14,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "10.2.0",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 30,
+    "observed_gaps": 30,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "10.2.5",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 14,
+    "observed_gaps": 14,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "10.2.6",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 20,
+    "observed_gaps": 20,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "10.2.7",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 36,
+    "observed_gaps": 36,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "11.0.0",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 166,
+    "observed_gaps": 166,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "11.0.2",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 12,
+    "observed_gaps": 12,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "11.0.5",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 10,
+    "observed_gaps": 10,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "11.0.7",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 28,
+    "observed_gaps": 28,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "11.1.0",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 19,
+    "observed_gaps": 19,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "11.1.5",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 36,
+    "observed_gaps": 36,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "11.1.7",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 8,
+    "observed_gaps": 8,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "11.2.0",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 27,
+    "observed_gaps": 27,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "11.2.5",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 45,
+    "observed_gaps": 45,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "11.2.7",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 94,
+    "observed_gaps": 94,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "12.0.0",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 21,
+    "observed_gaps": 21,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "12.0.1",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 3,
+    "observed_gaps": 3,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "12.0.5",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 11,
+    "observed_gaps": 11,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "12.0.7",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 3,
+    "observed_gaps": 3,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "12.1.0",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 5,
+    "observed_gaps": 5,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "8.1.0",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 60,
+    "observed_gaps": 58,
+    "resolved": [
+      "wt-cvars-gxMTOpaque-158",
+      "wt-global-api-C_ReportSystem.ReportPlayer-97"
+    ],
+    "new": []
+  },
+  {
+    "patch": "8.1.5",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 24,
+    "observed_gaps": 24,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "8.2.0",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 53,
+    "observed_gaps": 53,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "8.2.5",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 61,
+    "observed_gaps": 61,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "8.3.0",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 41,
+    "observed_gaps": 41,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "8.3.7",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 1,
+    "observed_gaps": 1,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "9.0.1",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 263,
+    "observed_gaps": 263,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "9.0.2",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 26,
+    "observed_gaps": 26,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "9.0.5",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 13,
+    "observed_gaps": 13,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "9.1.0",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 51,
+    "observed_gaps": 51,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "9.1.5",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 47,
+    "observed_gaps": 47,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "9.2.0",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 26,
+    "observed_gaps": 26,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "9.2.5",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 33,
+    "observed_gaps": 33,
+    "resolved": [],
+    "new": []
+  },
+  {
+    "patch": "9.2.7",
+    "fixture_at_revision": "ba7e46ad6",
+    "baseline_gaps": 0,
+    "observed_gaps": 0,
+    "resolved": [],
+    "new": []
+  }
+]

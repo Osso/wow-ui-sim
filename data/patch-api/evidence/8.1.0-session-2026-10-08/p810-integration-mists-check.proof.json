@@ -1,0 +1,20 @@
+{
+  "command": [
+    "cargo",
+    "check",
+    "--no-default-features",
+    "--features",
+    "sound,gui,casc,client-mists",
+    "--tests"
+  ],
+  "revision": "7648b4718c11431e38bc437801ee708686cd7266",
+  "scope": "p810-integration-mists-check",
+  "cwd": ".",
+  "target": "dedicated p810-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p810-integration-mists-check.txt",
+  "log_sha256": "dcdb643419bb08bafd7f12475c0481e745ead0694d0029a65228954106bdd96a",
+  "seconds": 21.837500444999023,
+  "invalidated": false
+}

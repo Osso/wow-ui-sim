@@ -1,0 +1,55 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p810-page)
+    Finished `test` profile [optimized + debuginfo] target(s) in 34.18s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p810-page/debug/deps/integration-1db16289b0998b2a)
+
+running 37 tests
+test c_map_probes::get_map_art_id_returns_nothing_for_unknown_map ... ok
+test c_map_probes::get_map_info_at_position_is_inclusive_at_rect_edges ... ok
+test c_calendar_defaults_probes::calendar_default_guild_filter_has_expected_shape ... ok
+test c_map_probes::get_map_children_info_returns_empty_array_for_childless_map ... ok
+test c_map_probes::get_map_children_info_returns_direct_children ... ok
+test c_map_probes::get_map_children_info_returns_nothing_for_unknown_map ... ok
+test c_api_surface::date_and_time_defaults_compose_with_modeled_calendar_comparison ... ok
+test c_map_probes::get_map_children_info_filters_by_map_type ... ok
+test c_map_probes::get_map_children_info_with_all_descendants_walks_tree ... ok
+test c_map_probes::get_map_info_at_position_resolves_child_inside_rect ... ok
+test c_map_probes::get_map_art_id_returns_seeded_art_id ... ok
+test c_map_probes::get_map_info_at_position_picks_first_rect_when_overlapping ... ok
+test c_map_probes::get_map_rect_on_map_drives_get_map_center_on_map_helper ... ok
+test c_map_probes::get_map_rect_on_map_composes_rect_up_through_grandparent ... ok
+test c_map_probes::get_map_info_at_position_returns_nothing_when_parent_has_no_rects ... ok
+test c_map_probes::get_map_info_at_position_skips_rect_pointing_to_unknown_child ... ok
+test c_map_probes::get_map_info_exposes_cosmic_parent_for_seeded_world_maps ... ok
+test c_map_probes::get_map_rect_on_map_returns_nothing_when_chain_link_missing_rect ... ok
+test c_map_probes::get_map_rect_on_map_returns_identity_for_same_map ... ok
+test c_map_probes::get_map_info_at_position_returns_nothing_outside_any_rect ... ok
+test c_map_probes::get_map_rect_on_map_returns_nothing_for_unknown_ui_map_id ... ok
+test c_map_probes::get_map_info_at_position_returns_nothing_for_unknown_map ... ok
+test c_map_probes::get_map_rect_on_map_returns_rect_on_direct_parent ... ok
+test c_map_probes::get_map_rect_on_map_returns_nothing_when_top_is_not_an_ancestor ... ok
+test c_map_probes::get_player_map_position_reflects_sim_state_mutation ... ok
+test c_map_probes::get_player_map_position_returns_default_center ... ok
+test c_map_probes::get_player_map_position_returns_nil_for_non_player_unit ... ok
+test c_map_probes::get_player_map_position_returns_nil_for_unknown_map ... ok
+test p1207_mythic_calendar::history_calendar_fields_are_distinct_live_and_detached ... ok
+test c_map_probes::set_map_for_quest_log_updates_current_map_id ... ok
+test c_map_probes::get_player_map_position_supports_get_xy ... ok
+test p1207_mythic_calendar::weekly_calendar_uses_six_declared_tuple_slots_live ... ok
+test patch_8_1_0_calendar_compare::patch_8_1_0_calendar_ordering ... ok
+test p1207_mythic_calendar::season_in_time_overtime_dates_and_nil_sides_are_live ... ok
+test p1207_mythic_calendar::calendar_authenticates_every_flag_map_and_extra_before_validation ... ok
+test patch_8_1_0_publication_fixes::patch_8_1_0_unused_members_stay_absent ... ok
+test p1207_mythic_calendar::missing_dates_are_explicit_data_gaps_not_fabricated_calendar_values ... ok
+
+test result: ok. 37 passed; 0 failed; 0 ignored; 0 measured; 10626 filtered out; finished in 0.53s
+

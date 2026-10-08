@@ -20,7 +20,8 @@ Merged audit validators prove historical executions, not new executions against 
 | 9.2.0 | None; already passing | Unchanged |
 | 9.2.5 | Later ledger counts and gap fixture disagree with historical observations; absolute receipt paths | Validate current replacement provenance, then check historical ledger/fixture; remove path gates |
 | 9.2.7 | Absolute receipt cwd | Remove path gate |
-| 8.1.5 | Refreshed 8.2.0 register set; absolute receipt cwd/target; validator rewrites evidence | Pin integrated register scope at `ee2315426`; use shared exact preservation allowances; validate read-only |
+| 8.1.5 | Refreshed 8.2.0 register set; absolute receipt cwd/target; validator rewrites evidence; command scope compared with moving HEAD | Pin integrated register and proof comparison scope at `ee2315426`; use shared exact preservation allowances; validate read-only |
+| 8.1.0 | Merged 8.1.5/8.2.0 registers; formerly accepted arbitrary protected-file drift | Pin integrated register/sweep scope at `ba7e46ad6`; shared exact preservation checks; refresh own receipts and two attributable supersessions |
 | 8.2.0 | Later 8.1.5 expands register and sweep sets; absolute receipt cwd/target | Pin merged 8.2.0/8.2.5 scope at `ea9e5995e`; remove path gates |
 
 ## Historical inputs remain protected
@@ -31,7 +32,7 @@ Original before-hashes stay unchanged. Arbitrary row edits, unrelated file repla
 
 Register and sweep-source sets come from fixed audit revisions, not receipt-derived subsets. Every historically required file must still exist. New earlier-page audits do not retroactively expand historical proof scope. Full Git history containing those revisions is required; missing history fails explicitly, with no bypass.
 
-Only absolute cwd/target equality assertions were removed. Receipt commands, revisions, log/compressed-log hashes, exits, invalidation labels, warning checks, negative controls and source accounting retain their previous checks. No runtime proof was rerun or claimed fresh. Logs, results, receipts and before-hashes were not regenerated.
+Only absolute cwd/target equality assertions were removed. Receipt commands, revisions, log/compressed-log hashes, exits, invalidation labels, warning checks, negative controls and source accounting retain their previous checks. The original portability repair did not rerun runtime proof or regenerate logs, results, receipts or before-hashes. [8.1.0 integration](patch-8-1-0-api-audit.md) separately refreshes its own runtime/reproduction receipts; other audits retain historical proof.
 
 ## Verification
 

@@ -7,7 +7,7 @@
 
 ## [2026-10-08] evidence | 8.1.0 page audit
 
-[Audit](investigations/patch-8-1-0-api-audit.md): pinned revision 4462737; 145 inventory / 28 extract identities. Modeled civil-calendar comparison and three unused retail member absences; 60 exact publication gaps and two source unknowns retained. Complete grep scans and base-revision-safe validator; targeted gates recorded in linked evidence.
+[Audit](investigations/patch-8-1-0-api-audit.md): revision 4462737; 145 inventory / 28 extract identities. Integrated 8.1.5/8.2.0 removals close two gaps (60 → 58); no later-page closures. Modeled civil-calendar comparison and three retail member absences; two source unknowns retained. Forty sweeps plus factory, 58 → 59 negative control, requested regressions and all seventeen historical validators pass; exact-preservation portability proof rejects tampering.
 
 ## [2026-10-08] evidence | 8.2.5 API page audit
 

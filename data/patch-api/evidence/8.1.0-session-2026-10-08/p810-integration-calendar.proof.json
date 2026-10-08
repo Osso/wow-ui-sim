@@ -1,0 +1,20 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "blizzard_calendar_loads"
+  ],
+  "revision": "9b9c78b6a9431857643b6daf8cf8f4d3a8105dcb",
+  "scope": "p810-integration-calendar",
+  "cwd": ".",
+  "target": "dedicated p810-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p810-integration-calendar.txt",
+  "log_sha256": "a0f3cabe6fc2f60fa53f1b77cf2bc095f626c035ee38e63ada7a98b15db2dc09",
+  "seconds": 22.517586760000995,
+  "invalidated": false
+}

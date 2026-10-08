@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import sys; sys.path.insert(0, '/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/evidence/8.1.0-session-2026-10-08'); from run_integration_verification import run_remaining_checks; run_remaining_checks()
+                                                                                                                                                                                                  ~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/evidence/8.1.0-session-2026-10-08/run_integration_verification.py", line 44, in run_remaining_checks
+    require('p810-integration-bare', ['cargo', 'test', '--test', 'integration', '--',
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                     'patch_8_1_0', 'c_calendar', 'c_map_probes', 'date_and_time'])
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/evidence/8.1.0-session-2026-10-08/run_integration_verification.py", line 14, in require
+    raise RuntimeError(f'{name}: exit {result}, expected {expected}; see complete log')
+RuntimeError: p810-integration-bare: exit 101, expected 0; see complete log
+p810-integration-cached-final 0
+p810-integration-calendar 0
+p810-integration-bare 101

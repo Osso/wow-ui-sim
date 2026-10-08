@@ -6,12 +6,12 @@ Audit pinned Warcraft Wiki page 464337, revision 4462737 against current retail,
 
 - [x] Refetch and pin raw source, provenance and fetch receipt; retain every API/extract occurrence and both rename identities. Preserve CVar header counts and build/citation context.
 - [x] Reuse the 8.1.5 opt-in bullet parser without a competing implementation; keep rename and CVar-table additions separately opt-in. Every formerly reproducible saved artifact must reproduce.
-- [x] Enforce exact reviewed publication gaps through a prefork sweep, with 8.1.5 then 8.2.0 integration placeholders followed by 8.2.5 and later master registers.
+- [x] Enforce exact reviewed publication gaps through a prefork sweep, with integrated 8.1.5 then 8.2.0 registers followed by 8.2.5 and later master registers.
 - [x] Implement supplied civil calendar comparison with documented rhs-relative sign, chronological component ordering, weekday independence and no mutation/clock defaults.
 - [x] Retire only proven unused retail members; retain current cached consumers and live simulator provider callers. Preserve Mists paths and unmodified Blizzard Lua.
-- [x] Retain complete whole-word qualified/bare cached and source/test scans plus later re-addition checks, including unmerged 8.1.5/8.2.0 snapshots.
+- [x] Retain complete whole-word qualified/bare cached and source/test scans plus later re-addition checks, including the integrated 8.1.5/8.2.0 registers.
 - [x] Record passing targeted sweep/area/parser/reproduction/Mists/format gates and artifact acceptance, without a full integration suite.
-- [x] Validator must work after merge and later audits: no absolute checkout assertions; original shared-input checks compare pinned git revisions; counts derive from files.
+- [x] Validator must work after merge and later audits: no absolute checkout assertions; pin the complete historical register/sweep set; preserve original before-hashes and accept only exact attributable later-audit replacements; counts derive from files.
 
 ## How it works
 
@@ -36,11 +36,10 @@ Audit pinned Warcraft Wiki page 464337, revision 4462737 against current retail,
 
 ## Known gaps (current cycle)
 
-- [ ] 60 exact publication gaps retain per-ID model, identity, metadata, policy, request-lifecycle or protected-provider reasons.
+- [ ] 58 exact publication gaps retain per-ID model, identity, metadata, policy, request-lifecycle or protected-provider reasons.
 - [ ] Two literal `?` source statements specify no implementable contract; retained as uncertainty, never behavioral credit.
 - [ ] Current publication is not signature, populated-output, payload, security or historical parity proof. Calendar invalid civil-date/native security parity remains unverified.
 - [ ] Inherited 12.0.5/12.0.7/12.1.0 saved extracts remain non-reproducible; unchanged failure boundaries are recorded.
-- [ ] Main thread must replace the 8.1.5/8.2.0 placeholders during ordered integration and refresh any superseded observations/ledgers.
 
 ## Out of scope
 
