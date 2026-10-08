@@ -1,0 +1,14 @@
+F
+======================================================================
+FAIL: test_only_exact_recorded_later_bytes_replace_frozen_inputs (__main__.PatchAuditValidationTests.test_only_exact_recorded_later_bytes_replace_frozen_inputs)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p624-page/tools/test_patch_audit_validation.py", line 47, in test_only_exact_recorded_later_bytes_replace_frozen_inputs
+    self.assertTrue(preserved_input_matches(root, path, digest))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 1 test in 0.077s
+
+FAILED (failures=1)

@@ -1,0 +1,22 @@
+{
+  "before_revision": "846a30663",
+  "after_revision": "0e40aff7e",
+  "replacements": {
+    "tools/extract_patch_non_inventory.py": [
+      "2488f783d151c7cc1ec707b7e55cfc46d1e26ebc87e455c10a289e3c46bff5ac",
+      "2d23c352d158e6080d3e0788ab98071ad724d42930aaaaaa1da59248b723ced5"
+    ],
+    "tools/gen_patch_wikitext_register.py": [
+      "f87b07a173b1fb486685aa4c069f5287937b31dfaca424b2bc9aa9f14ab5cd27",
+      "8a50789dae2ecee8c8eebf34300f4329f4c971c9957c483c6d844f1d11854aad"
+    ],
+    "tools/test_extract_patch_non_inventory.py": [
+      "4c08e12d26179317097f810b0094ae3d11591c1d8d56cc4229929160032cbba6",
+      "3b0f339fea5caf09cce367d4d319fba67275a30f6b1913e4d93fdaf5a7963a13"
+    ],
+    "tools/test_gen_patch_wikitext_register.py": [
+      "05381bb443d8035bbce93393d96d598319ef3fdacf295004e5b013f06f3bb28f",
+      "8500b0ba0628ddd34b423e8466f865e6f6472ce78612491d60bba3e02bc162ff"
+    ]
+  }
+}
