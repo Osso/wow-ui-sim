@@ -23,11 +23,17 @@ The ledger accounts for all 85 identities: 68 inventory plus 17 retained extract
 
 No new retirements. StartUnratedArena and securerandom already have nil raw/ordinary lookup. Whole-word `/usr/bin/grep -R -n -w` cached scans exclude *Documentation* and source/test scans retain all lines, including possible pcall and conditional references; both removed globals have zero matches. Pinned a9d7c9566, p547-page 531ada0628ac9100228f228cce1fb96080ac4f16 and p548-page 2caa653ace4e52ae3b918bba8ad322bb80b06671 register trees contain no re-additions. Grep evidence is untruncated. Cache inventory/provenance is recorded, not treated as empty by assumption.
 
-Queued 5.4.7 then 5.4.8 placeholders start later_registers, followed by 6.0.1, 6.0.2 and the remaining merged retail chain. Replace placeholders during ordered integration. No 5.5.x Classic registers included. C_ProductChoice.GetNumSuppressed absence comes from existing 8.3.0 supersession; this audit does not retire it again.
+Merged 5.4.7 then 5.4.8 registers start later_registers, followed by 6.0.1, 6.0.2 and the remaining merged retail chain. No 5.5.x Classic registers included. C_ProductChoice.GetNumSuppressed absence comes from existing 8.3.0 supersession; this audit does not retire it again.
 
 ## Verification
 
 Discovery initially fails on the exact 39 unaccounted gaps. All publication sweeps pass 56/56; own cached cases 3/3, guild queries 22/22 and sliders 15/15 pass. All six Python fixture scripts pass (86 fixtures). All 55 registers and 52 extracts reproduce; three inherited extract failures (12.0.5, 12.0.7, 12.1.0) are unchanged, not repaired or hidden. Format and Mists tests check pass with zero non-vendor warnings; six inherited iced manifest warnings remain. Negative control adds exactly one gap (39 → 40) and fails as expected. Portable validator gate passes 37/37 in the clean committed checkout and 38/38 after synthetic later changes (including the synthetic validator). Own sealed-log tampering fails; the original log bytes are restored. The eight pending extract rows and 39 publication gaps are limitations, not passing behavior claims. No full integration suite. Runtime/src files are unchanged, so a shared-runtime startup-regression comparison is not required for this audit.
+
+## Integration against master 896086537
+
+Original receipts remain historical, including their original gap and test counts. [Integrated evidence](../../../data/patch-api/evidence/5.4.2-session-2026-10-08/integrated/) maps nine rebased audit commits and two external pins. Seven own patch-ids match; two conflicted commits retain original patch bytes plus exact original/rebased blob identities. The original validator is preserved and every invariant replays through those identities, including its sealed validator bytes.
+
+All 59 registers and 56 extracts reproduce using recorded flags; the same three inherited extract failures remain. All master source artifacts are byte-preserved; extractor outcomes agree with pinned master for the recorded modes, default mode and preserve-examples mode. The opt-in Mists automated diff coexists with canonical navigation, combat bullets and client-line options. No `src/`, Cargo, Interface, vendor or retirement changes versus master; runtime/module/startup regression comparisons are therefore not required. Fresh sweep, negative-control and portability receipts are pending until sealed.
 
 ## Sources
 
