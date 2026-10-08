@@ -13,5 +13,6 @@
   "log": "reproduction.txt",
   "log_sha256": "1c0288c591392da66e310ff1b639a86acbbe7c7a3149f1b249dc57912fa7ebdb",
   "seconds": 3.4431074329986586,
-  "invalidated": false
+  "invalidated": true,
+  "reason": "Reproduction runner was uncommitted when launched; final committed-script receipt replaces this exploratory proof."
 }
