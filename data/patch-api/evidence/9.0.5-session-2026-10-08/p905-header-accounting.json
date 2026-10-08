@@ -1,0 +1,34 @@
+[
+  {
+    "section": "Global API",
+    "direction": "added",
+    "wikitext_line": 10,
+    "literal": "! style=\"width: 50%; padding-right: 1em;\"| 16 new functions",
+    "header_count": 16,
+    "parsed_count": 16
+  },
+  {
+    "section": "Global API",
+    "direction": "removed",
+    "wikitext_line": 11,
+    "literal": "! style=\"width: 50%; padding-right: 1em;\"| 2 removed functions",
+    "header_count": 2,
+    "parsed_count": 2
+  },
+  {
+    "section": "CVars",
+    "direction": "added",
+    "wikitext_line": 60,
+    "literal": "! style=\"width: 50%; padding-right: 1em;\"| 6 new cvars",
+    "header_count": 6,
+    "parsed_count": 6
+  },
+  {
+    "section": "CVars",
+    "direction": "removed",
+    "wikitext_line": 61,
+    "literal": "! style=\"width: 50%; padding-right: 1em;\"| 2 removed cvars",
+    "header_count": 2,
+    "parsed_count": 2
+  }
+]

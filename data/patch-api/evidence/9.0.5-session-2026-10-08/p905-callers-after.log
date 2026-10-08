@@ -1,0 +1,5 @@
+/home/osso/.worktrees/wow-ui-sim-p905-page/src/c_api/patch_retired_members.rs:23:const RETIRED_9_0_5_MEMBERS: &[(&str, &[&str])] = &[("C_Soulbinds", &["GetConduitItemLevel"])];
+/home/osso/.worktrees/wow-ui-sim-p905-page/tests/patch_9_0_5_classic_surfaces.rs:7:    env.exec(r#"assert(type(C_Soulbinds.GetConduitItemLevel) == "function")"#).unwrap();
+/home/osso/.worktrees/wow-ui-sim-p905-page/tests/patch_9_0_5_publication_fixes.rs:5:assert(rawget(C_Soulbinds, "GetConduitItemLevel") == nil)
+/home/osso/.worktrees/wow-ui-sim-p905-page/tests/patch_9_0_5_publication_fixes.rs:6:assert(C_Soulbinds.GetConduitItemLevel == nil)
+/home/osso/.worktrees/wow-ui-sim-p905-page/tests/patch_9_0_5_publication_fixes.rs:7:assert(C_Soulbinds.GetConduitItemLevel == nil)

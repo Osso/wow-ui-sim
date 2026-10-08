@@ -1,0 +1,198 @@
+[
+  {
+    "source_id": "wt-global-api-C_ChallengeMode.CanUseKeystoneInCurrentMap-14",
+    "symbol": "C_ChallengeMode.CanUseKeystoneInCurrentMap",
+    "literal": ": {{api|C_ChallengeMode.CanUseKeystoneInCurrentMap}}",
+    "wikitext_line": 14,
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Keystone-to-current-map eligibility producer absent. Existing last-challenge completion snapshot does not model keystone item/current-map eligibility; returning a fixed boolean would be a placeholder."
+  },
+  {
+    "source_id": "wt-global-api-C_CovenantSanctumUI.HasMaximumRenown-15",
+    "symbol": "C_CovenantSanctumUI.HasMaximumRenown",
+    "literal": ": {{api|C_CovenantSanctumUI.HasMaximumRenown}}",
+    "wikitext_line": 15,
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Covenant maximum-renown state and cap predicate are not modeled; namespace lazy lookup is not a registered producer."
+  },
+  {
+    "source_id": "wt-global-api-C_CovenantSanctumUI.IsPlayerInRenownCatchUpMode-16",
+    "symbol": "C_CovenantSanctumUI.IsPlayerInRenownCatchUpMode",
+    "literal": ": {{api|C_CovenantSanctumUI.IsPlayerInRenownCatchUpMode}}",
+    "wikitext_line": 16,
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Covenant catch-up eligibility policy and player progression context are missing; no raw producer. Do not infer from unrelated major-faction renown."
+  },
+  {
+    "source_id": "wt-global-api-C_CovenantSanctumUI.IsWeeklyRenownCapped-17",
+    "symbol": "C_CovenantSanctumUI.IsWeeklyRenownCapped",
+    "literal": ": {{api|C_CovenantSanctumUI.IsWeeklyRenownCapped}}",
+    "wikitext_line": 17,
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Weekly covenant renown cap/earned state is missing; no raw producer. A constant false would hide the gap."
+  },
+  {
+    "source_id": "wt-global-api-C_CovenantSanctumUI.RequestCatchUpState-18",
+    "symbol": "C_CovenantSanctumUI.RequestCatchUpState",
+    "literal": ": {{api|C_CovenantSanctumUI.RequestCatchUpState}}",
+    "wikitext_line": 18,
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Catch-up request/reply lifecycle and COVENANT_RENOWN_CATCH_UP_STATE_UPDATE producer are unmodeled; event registration alone does not establish request behavior."
+  },
+  {
+    "source_id": "wt-global-api-C_Garrison.IsFollowerOnCompletedMission-19",
+    "symbol": "C_Garrison.IsFollowerOnCompletedMission",
+    "literal": ": {{api|C_Garrison.IsFollowerOnCompletedMission}}",
+    "wikitext_line": 19,
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Follower assignment/completed mission identity relation is missing from this endpoint; lazy lookup is not a modeled predicate."
+  },
+  {
+    "source_id": "wt-global-api-C_GossipInfo.GetCustomGossipDescriptionString-20",
+    "symbol": "C_GossipInfo.GetCustomGossipDescriptionString",
+    "literal": ": {{api|C_GossipInfo.GetCustomGossipDescriptionString}}",
+    "wikitext_line": 20,
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Custom gossip description and formatting context producer is missing; a constant or nil shim would not establish the contract."
+  },
+  {
+    "source_id": "wt-global-api-C_GuildInfo.QueryGuildMembersForRecipe-21",
+    "symbol": "C_GuildInfo.QueryGuildMembersForRecipe",
+    "literal": ": {{api|C_GuildInfo.QueryGuildMembersForRecipe}}",
+    "wikitext_line": 21,
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Guild member recipe query/request and response state are not modeled. Cached ProfessionsGuildMemberList.lua:59 calls this namespaced successor; missing raw registration remains a gap, not permission to retire it."
+  },
+  {
+    "source_id": "wt-global-api-C_QuestLog.ShouldDisplayTimeRemaining-24",
+    "symbol": "C_QuestLog.ShouldDisplayTimeRemaining",
+    "literal": ": {{api|C_QuestLog.ShouldDisplayTimeRemaining}}",
+    "wikitext_line": 24,
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Per-quest time-remaining visibility policy producer is missing; quest enumeration/timer values alone cannot establish display eligibility."
+  },
+  {
+    "source_id": "wt-global-api-C_WeeklyRewards.AreRewardsForCurrentRewardPeriod-25",
+    "symbol": "C_WeeklyRewards.AreRewardsForCurrentRewardPeriod",
+    "literal": ": {{api|C_WeeklyRewards.AreRewardsForCurrentRewardPeriod}}",
+    "wikitext_line": 25,
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Reward-period identity and available-reward association are missing. Activity-tier progress snapshots do not establish reward-period matching."
+  },
+  {
+    "source_id": "wt-global-api-C_WeeklyRewards.GetActivityEncounterInfo-26",
+    "symbol": "C_WeeklyRewards.GetActivityEncounterInfo",
+    "literal": ": {{api|C_WeeklyRewards.GetActivityEncounterInfo}}",
+    "wikitext_line": 26,
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Weekly reward activity-to-encounter records and encounter completion context producer are missing. Existing activity progress is not this DTO."
+  },
+  {
+    "source_id": "wt-global-api-C_WeeklyRewards.GetNextMythicPlusIncrease-27",
+    "symbol": "C_WeeklyRewards.GetNextMythicPlusIncrease",
+    "literal": ": {{api|C_WeeklyRewards.GetNextMythicPlusIncrease}}",
+    "wikitext_line": 27,
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Next Mythic+ vault increase thresholds/reward-level calculation producer is missing; existing difficulty progress does not establish the next-increase contract."
+  },
+  {
+    "source_id": "wt-global-api-C_WeeklyRewards.HasInteraction-28",
+    "symbol": "C_WeeklyRewards.HasInteraction",
+    "literal": ": {{api|C_WeeklyRewards.HasInteraction}}",
+    "wikitext_line": 28,
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Weekly vault interaction/availability state producer is missing; opening a frame or providing progress rows is not equivalent to modeled interaction eligibility."
+  },
+  {
+    "source_id": "wt-cvars-GamePadSmoothFacing-68",
+    "symbol": "GamePadSmoothFacing",
+    "literal": ": {{api|t=c|GamePadSmoothFacing}}",
+    "wikitext_line": 68,
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "reason": "Both CVar value and default are absent. Page supplies no default/persistence/behavior policy; do not invent a default solely for publication. A later removal can supersede this historical addition at integration."
+  }
+]

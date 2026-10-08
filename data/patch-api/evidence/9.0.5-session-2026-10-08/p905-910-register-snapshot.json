@@ -1,0 +1,1513 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "9.1.0",
+  "source": {
+    "path": "data/patch-api/sources/9.1.0-api-changes.wikitext",
+    "revid": 167980,
+    "sha256": "29871f1e6e2c9796399140cf0dc396c76c69d083fffb6a60b05172893301ce8c"
+  },
+  "header_counts": [
+    {
+      "section": "global-api",
+      "direction": "added",
+      "header_count": 77,
+      "parsed_count": 77
+    },
+    {
+      "section": "global-api",
+      "direction": "removed",
+      "header_count": 43,
+      "parsed_count": 43
+    },
+    {
+      "section": "widgets",
+      "direction": "added",
+      "header_count": 14,
+      "parsed_count": 14
+    },
+    {
+      "section": "widgets",
+      "direction": "removed",
+      "header_count": 2,
+      "parsed_count": 2
+    },
+    {
+      "section": "events",
+      "direction": "added",
+      "header_count": 18,
+      "parsed_count": 18
+    },
+    {
+      "section": "events",
+      "direction": "removed",
+      "header_count": 1,
+      "parsed_count": 1
+    },
+    {
+      "section": "cvars",
+      "direction": "added",
+      "header_count": 19,
+      "parsed_count": 19
+    },
+    {
+      "section": "cvars",
+      "direction": "removed",
+      "header_count": 5,
+      "parsed_count": 5
+    }
+  ],
+  "entries": [
+    {
+      "id": "wt-global-api-AcknowledgeAADCAlert-23",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "AcknowledgeAADCAlert",
+      "annotation": "",
+      "wikitext_line": 23
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.RandomizeCustomizationChoices-24",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BarberShop.RandomizeCustomizationChoices",
+      "annotation": "",
+      "wikitext_line": 24
+    },
+    {
+      "id": "wt-global-api-C_ChallengeMode.GetDungeonScoreRarityColor-25",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChallengeMode.GetDungeonScoreRarityColor",
+      "annotation": "",
+      "wikitext_line": 25
+    },
+    {
+      "id": "wt-global-api-C_ChallengeMode.GetKeystoneLevelRarityColor-26",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChallengeMode.GetKeystoneLevelRarityColor",
+      "annotation": "",
+      "wikitext_line": 26
+    },
+    {
+      "id": "wt-global-api-C_ChallengeMode.GetOverallDungeonScore-27",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChallengeMode.GetOverallDungeonScore",
+      "annotation": "",
+      "wikitext_line": 27
+    },
+    {
+      "id": "wt-global-api-C_ChallengeMode.GetSpecificDungeonOverallScoreRarityColor-28",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChallengeMode.GetSpecificDungeonOverallScoreRarityColor",
+      "annotation": "",
+      "wikitext_line": 28
+    },
+    {
+      "id": "wt-global-api-C_ChallengeMode.GetSpecificDungeonScoreRarityColor-29",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChallengeMode.GetSpecificDungeonScoreRarityColor",
+      "annotation": "",
+      "wikitext_line": 29
+    },
+    {
+      "id": "wt-global-api-C_ChatInfo.GetChannelInfoFromIdentifier-30",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChatInfo.GetChannelInfoFromIdentifier",
+      "annotation": "",
+      "wikitext_line": 30
+    },
+    {
+      "id": "wt-global-api-C_ChatInfo.GetChatTypeName-31",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChatInfo.GetChatTypeName",
+      "annotation": "",
+      "wikitext_line": 31
+    },
+    {
+      "id": "wt-global-api-C_ChatInfo.GetNumReservedChatWindows-32",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ChatInfo.GetNumReservedChatWindows",
+      "annotation": "",
+      "wikitext_line": 32
+    },
+    {
+      "id": "wt-global-api-C_EventToastManager.GetLevelUpDisplayToastsFromLevel-33",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_EventToastManager.GetLevelUpDisplayToastsFromLevel",
+      "annotation": "",
+      "wikitext_line": 33
+    },
+    {
+      "id": "wt-global-api-C_EventToastManager.GetNextToastToDisplay-34",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_EventToastManager.GetNextToastToDisplay",
+      "annotation": "",
+      "wikitext_line": 34
+    },
+    {
+      "id": "wt-global-api-C_EventToastManager.RemoveCurrentToast-35",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_EventToastManager.RemoveCurrentToast",
+      "annotation": "",
+      "wikitext_line": 35
+    },
+    {
+      "id": "wt-global-api-C_FrameManager.GetFrameVisibilityState-36",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_FrameManager.GetFrameVisibilityState",
+      "annotation": "",
+      "wikitext_line": 36
+    },
+    {
+      "id": "wt-global-api-C_Garrison.GetAutoMissionTargetingInfoForSpell-37",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Garrison.GetAutoMissionTargetingInfoForSpell",
+      "annotation": "",
+      "wikitext_line": 37
+    },
+    {
+      "id": "wt-global-api-C_Item.CanItemTransmogAppearance-38",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Item.CanItemTransmogAppearance",
+      "annotation": "",
+      "wikitext_line": 38
+    },
+    {
+      "id": "wt-global-api-C_Item.GetAppliedItemTransmogInfo-39",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Item.GetAppliedItemTransmogInfo",
+      "annotation": "",
+      "wikitext_line": 39
+    },
+    {
+      "id": "wt-global-api-C_Item.GetBaseItemTransmogInfo-40",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Item.GetBaseItemTransmogInfo",
+      "annotation": "",
+      "wikitext_line": 40
+    },
+    {
+      "id": "wt-global-api-C_Item.IsDressableItemByID-41",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Item.IsDressableItemByID",
+      "annotation": "",
+      "wikitext_line": 41
+    },
+    {
+      "id": "wt-global-api-C_ItemUpgrade.GetItemLevelIncrement-42",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ItemUpgrade.GetItemLevelIncrement",
+      "annotation": "",
+      "wikitext_line": 42
+    },
+    {
+      "id": "wt-global-api-C_ItemUpgrade.GetItemUpgradeEffect-43",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ItemUpgrade.GetItemUpgradeEffect",
+      "annotation": "",
+      "wikitext_line": 43
+    },
+    {
+      "id": "wt-global-api-C_ItemUpgrade.GetNumItemUpgradeEffects-44",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ItemUpgrade.GetNumItemUpgradeEffects",
+      "annotation": "",
+      "wikitext_line": 44
+    },
+    {
+      "id": "wt-global-api-C_LegendaryCrafting.GetRuneforgePowersByClassSpecAndCovenant-45",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_LegendaryCrafting.GetRuneforgePowersByClassSpecAndCovenant",
+      "annotation": "",
+      "wikitext_line": 45
+    },
+    {
+      "id": "wt-global-api-C_LFGInfo.GetDungeonInfo-46",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_LFGInfo.GetDungeonInfo",
+      "annotation": "",
+      "wikitext_line": 46
+    },
+    {
+      "id": "wt-global-api-C_LFGList.GetApplicantDungeonScoreForListing-47",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_LFGList.GetApplicantDungeonScoreForListing",
+      "annotation": "",
+      "wikitext_line": 47
+    },
+    {
+      "id": "wt-global-api-C_MythicPlus.GetSeasonBestAffixScoreInfoForMap-48",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MythicPlus.GetSeasonBestAffixScoreInfoForMap",
+      "annotation": "",
+      "wikitext_line": 48
+    },
+    {
+      "id": "wt-global-api-C_PetJournal.GetPetAbilityListTable-49",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PetJournal.GetPetAbilityListTable",
+      "annotation": "",
+      "wikitext_line": 49
+    },
+    {
+      "id": "wt-global-api-C_PetJournal.GetPetInfoTableByPetID-50",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PetJournal.GetPetInfoTableByPetID",
+      "annotation": "",
+      "wikitext_line": 50
+    },
+    {
+      "id": "wt-global-api-C_PlayerChoice.GetCurrentPlayerChoiceInfo-51",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PlayerChoice.GetCurrentPlayerChoiceInfo",
+      "annotation": "",
+      "wikitext_line": 51
+    },
+    {
+      "id": "wt-global-api-C_PlayerChoice.GetNumRerolls-52",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PlayerChoice.GetNumRerolls",
+      "annotation": "",
+      "wikitext_line": 52
+    },
+    {
+      "id": "wt-global-api-C_PlayerChoice.OnUIClosed-53",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PlayerChoice.OnUIClosed",
+      "annotation": "",
+      "wikitext_line": 53
+    },
+    {
+      "id": "wt-global-api-C_PlayerChoice.RequestRerollPlayerChoice-54",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PlayerChoice.RequestRerollPlayerChoice",
+      "annotation": "",
+      "wikitext_line": 54
+    },
+    {
+      "id": "wt-global-api-C_PlayerChoice.SendPlayerChoiceResponse-55",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PlayerChoice.SendPlayerChoiceResponse",
+      "annotation": "",
+      "wikitext_line": 55
+    },
+    {
+      "id": "wt-global-api-C_PlayerInfo.GetAlternateFormInfo-56",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PlayerInfo.GetAlternateFormInfo",
+      "annotation": "",
+      "wikitext_line": 56
+    },
+    {
+      "id": "wt-global-api-C_PlayerInfo.GetInstancesUnlockedAtLevel-57",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PlayerInfo.GetInstancesUnlockedAtLevel",
+      "annotation": "",
+      "wikitext_line": 57
+    },
+    {
+      "id": "wt-global-api-C_PlayerInfo.GetPlayerMythicPlusRatingSummary-58",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PlayerInfo.GetPlayerMythicPlusRatingSummary",
+      "annotation": "",
+      "wikitext_line": 58
+    },
+    {
+      "id": "wt-global-api-C_QuestLog.GetQuestLogPortraitGiver-59",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_QuestLog.GetQuestLogPortraitGiver",
+      "annotation": "",
+      "wikitext_line": 59
+    },
+    {
+      "id": "wt-global-api-C_QuestLog.GetQuestType-60",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_QuestLog.GetQuestType",
+      "annotation": "",
+      "wikitext_line": 60
+    },
+    {
+      "id": "wt-global-api-C_ScenarioInfo.GetScenarioInfo-61",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ScenarioInfo.GetScenarioInfo",
+      "annotation": "",
+      "wikitext_line": 61
+    },
+    {
+      "id": "wt-global-api-C_ScenarioInfo.GetScenarioStepInfo-62",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ScenarioInfo.GetScenarioStepInfo",
+      "annotation": "",
+      "wikitext_line": 62
+    },
+    {
+      "id": "wt-global-api-C_Soulbinds.GetConduitRank-63",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Soulbinds.GetConduitRank",
+      "annotation": "",
+      "wikitext_line": 63
+    },
+    {
+      "id": "wt-global-api-C_Soulbinds.GetSpecsAssignedToSoulbind-64",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Soulbinds.GetSpecsAssignedToSoulbind",
+      "annotation": "",
+      "wikitext_line": 64
+    },
+    {
+      "id": "wt-global-api-C_SpellBook.GetCurrentLevelSpells-65",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SpellBook.GetCurrentLevelSpells",
+      "annotation": "",
+      "wikitext_line": 65
+    },
+    {
+      "id": "wt-global-api-C_SpellBook.GetSpellInfo-66",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SpellBook.GetSpellInfo",
+      "annotation": "",
+      "wikitext_line": 66
+    },
+    {
+      "id": "wt-global-api-C_SpellBook.GetSpellLinkFromSpellID-67",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SpellBook.GetSpellLinkFromSpellID",
+      "annotation": "",
+      "wikitext_line": 67
+    },
+    {
+      "id": "wt-global-api-C_Transmog.CanHaveSecondaryAppearanceForSlotID-68",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Transmog.CanHaveSecondaryAppearanceForSlotID",
+      "annotation": "",
+      "wikitext_line": 68
+    },
+    {
+      "id": "wt-global-api-C_Transmog.CanTransmogItem-69",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Transmog.CanTransmogItem",
+      "annotation": "",
+      "wikitext_line": 69
+    },
+    {
+      "id": "wt-global-api-C_Transmog.GetApplyCost-70",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Transmog.GetApplyCost",
+      "annotation": "",
+      "wikitext_line": 70
+    },
+    {
+      "id": "wt-global-api-C_Transmog.GetPending-71",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Transmog.GetPending",
+      "annotation": "",
+      "wikitext_line": 71
+    },
+    {
+      "id": "wt-global-api-C_Transmog.GetSlotEffectiveCategory-72",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Transmog.GetSlotEffectiveCategory",
+      "annotation": "",
+      "wikitext_line": 72
+    },
+    {
+      "id": "wt-global-api-C_Transmog.IsAtTransmogNPC-73",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Transmog.IsAtTransmogNPC",
+      "annotation": "",
+      "wikitext_line": 73
+    },
+    {
+      "id": "wt-global-api-C_Transmog.IsSlotBeingCollapsed-74",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Transmog.IsSlotBeingCollapsed",
+      "annotation": "",
+      "wikitext_line": 74
+    },
+    {
+      "id": "wt-global-api-C_TransmogCollection.CanAppearanceHaveIllusion-75",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TransmogCollection.CanAppearanceHaveIllusion",
+      "annotation": "",
+      "wikitext_line": 75
+    },
+    {
+      "id": "wt-global-api-C_TransmogCollection.GetArtifactAppearanceStrings-76",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TransmogCollection.GetArtifactAppearanceStrings",
+      "annotation": "",
+      "wikitext_line": 76
+    },
+    {
+      "id": "wt-global-api-C_TransmogCollection.GetFallbackWeaponAppearance-77",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TransmogCollection.GetFallbackWeaponAppearance",
+      "annotation": "",
+      "wikitext_line": 77
+    },
+    {
+      "id": "wt-global-api-C_TransmogCollection.GetIllusionInfo-78",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TransmogCollection.GetIllusionInfo",
+      "annotation": "",
+      "wikitext_line": 78
+    },
+    {
+      "id": "wt-global-api-C_TransmogCollection.GetIllusionStrings-79",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TransmogCollection.GetIllusionStrings",
+      "annotation": "",
+      "wikitext_line": 79
+    },
+    {
+      "id": "wt-global-api-C_TransmogCollection.GetInspectItemTransmogInfoList-80",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TransmogCollection.GetInspectItemTransmogInfoList",
+      "annotation": "",
+      "wikitext_line": 80
+    },
+    {
+      "id": "wt-global-api-C_TransmogCollection.GetOutfitInfo-81",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TransmogCollection.GetOutfitInfo",
+      "annotation": "",
+      "wikitext_line": 81
+    },
+    {
+      "id": "wt-global-api-C_TransmogCollection.GetOutfitItemTransmogInfoList-82",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TransmogCollection.GetOutfitItemTransmogInfoList",
+      "annotation": "",
+      "wikitext_line": 82
+    },
+    {
+      "id": "wt-global-api-C_TransmogCollection.GetPairedArtifactAppearance-83",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TransmogCollection.GetPairedArtifactAppearance",
+      "annotation": "",
+      "wikitext_line": 83
+    },
+    {
+      "id": "wt-global-api-C_TransmogCollection.IsAppearanceHiddenVisual-84",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TransmogCollection.IsAppearanceHiddenVisual",
+      "annotation": "",
+      "wikitext_line": 84
+    },
+    {
+      "id": "wt-global-api-C_TransmogCollection.NewOutfit-85",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TransmogCollection.NewOutfit",
+      "annotation": "",
+      "wikitext_line": 85
+    },
+    {
+      "id": "wt-global-api-C_TransmogCollection.RenameOutfit-86",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TransmogCollection.RenameOutfit",
+      "annotation": "",
+      "wikitext_line": 86
+    },
+    {
+      "id": "wt-global-api-C_TransmogSets.GetSetPrimaryAppearances-87",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TransmogSets.GetSetPrimaryAppearances",
+      "annotation": "",
+      "wikitext_line": 87
+    },
+    {
+      "id": "wt-global-api-C_UIWidgetManager.GetSpacerVisualizationInfo-88",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_UIWidgetManager.GetSpacerVisualizationInfo",
+      "annotation": "",
+      "wikitext_line": 88
+    },
+    {
+      "id": "wt-global-api-C_UIWidgetManager.GetTextColumnRowVisualizationInfo-89",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_UIWidgetManager.GetTextColumnRowVisualizationInfo",
+      "annotation": "",
+      "wikitext_line": 89
+    },
+    {
+      "id": "wt-global-api-C_VoiceChat.ActivateChannelTranscription-90",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_VoiceChat.ActivateChannelTranscription",
+      "annotation": "",
+      "wikitext_line": 90
+    },
+    {
+      "id": "wt-global-api-C_VoiceChat.DeactivateChannelTranscription-91",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_VoiceChat.DeactivateChannelTranscription",
+      "annotation": "",
+      "wikitext_line": 91
+    },
+    {
+      "id": "wt-global-api-C_VoiceChat.GetRemoteTtsVoices-92",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_VoiceChat.GetRemoteTtsVoices",
+      "annotation": "",
+      "wikitext_line": 92
+    },
+    {
+      "id": "wt-global-api-C_VoiceChat.GetTtsVoices-93",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_VoiceChat.GetTtsVoices",
+      "annotation": "",
+      "wikitext_line": 93
+    },
+    {
+      "id": "wt-global-api-C_VoiceChat.IsSpeakForMeActive-94",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_VoiceChat.IsSpeakForMeActive",
+      "annotation": "",
+      "wikitext_line": 94
+    },
+    {
+      "id": "wt-global-api-C_VoiceChat.IsSpeakForMeAllowed-95",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_VoiceChat.IsSpeakForMeAllowed",
+      "annotation": "",
+      "wikitext_line": 95
+    },
+    {
+      "id": "wt-global-api-C_VoiceChat.IsTranscriptionAllowed-96",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_VoiceChat.IsTranscriptionAllowed",
+      "annotation": "",
+      "wikitext_line": 96
+    },
+    {
+      "id": "wt-global-api-C_VoiceChat.SpeakRemoteTextSample-97",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_VoiceChat.SpeakRemoteTextSample",
+      "annotation": "",
+      "wikitext_line": 97
+    },
+    {
+      "id": "wt-global-api-C_VoiceChat.SpeakText-98",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_VoiceChat.SpeakText",
+      "annotation": "",
+      "wikitext_line": 98
+    },
+    {
+      "id": "wt-global-api-C_VoiceChat.StopSpeakingText-99",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_VoiceChat.StopSpeakingText",
+      "annotation": "",
+      "wikitext_line": 99
+    },
+    {
+      "id": "wt-global-api-ApplyBarberShopStyle-102",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ApplyBarberShopStyle",
+      "annotation": "",
+      "wikitext_line": 102
+    },
+    {
+      "id": "wt-global-api-BarberShopReset-103",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BarberShopReset",
+      "annotation": "",
+      "wikitext_line": 103
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.OldBarberShopLoaded-104",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_BarberShop.OldBarberShopLoaded",
+      "annotation": "",
+      "wikitext_line": 104
+    },
+    {
+      "id": "wt-global-api-C_LegendaryCrafting.GetRuneforgePowersByClassAndSpec-105",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_LegendaryCrafting.GetRuneforgePowersByClassAndSpec",
+      "annotation": "",
+      "wikitext_line": 105
+    },
+    {
+      "id": "wt-global-api-C_PetJournal.GetNumMaxPets-106",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_PetJournal.GetNumMaxPets",
+      "annotation": "",
+      "wikitext_line": 106
+    },
+    {
+      "id": "wt-global-api-C_PlayerChoice.GetPlayerChoiceInfo-107",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_PlayerChoice.GetPlayerChoiceInfo",
+      "annotation": "",
+      "wikitext_line": 107
+    },
+    {
+      "id": "wt-global-api-C_PlayerChoice.GetPlayerChoiceOptionInfo-108",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_PlayerChoice.GetPlayerChoiceOptionInfo",
+      "annotation": "",
+      "wikitext_line": 108
+    },
+    {
+      "id": "wt-global-api-C_PlayerChoice.GetPlayerChoiceRewardInfo-109",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_PlayerChoice.GetPlayerChoiceRewardInfo",
+      "annotation": "",
+      "wikitext_line": 109
+    },
+    {
+      "id": "wt-global-api-C_Soulbinds.GetConduitRankFromCollection-110",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Soulbinds.GetConduitRankFromCollection",
+      "annotation": "",
+      "wikitext_line": 110
+    },
+    {
+      "id": "wt-global-api-C_Transmog.GetCost-111",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Transmog.GetCost",
+      "annotation": "",
+      "wikitext_line": 111
+    },
+    {
+      "id": "wt-global-api-C_Transmog.GetItemInfo-112",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Transmog.GetItemInfo",
+      "annotation": "",
+      "wikitext_line": 112
+    },
+    {
+      "id": "wt-global-api-C_Transmog.LoadSources-113",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Transmog.LoadSources",
+      "annotation": "",
+      "wikitext_line": 113
+    },
+    {
+      "id": "wt-global-api-C_Transmog.ValidateAllPending-114",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Transmog.ValidateAllPending",
+      "annotation": "",
+      "wikitext_line": 114
+    },
+    {
+      "id": "wt-global-api-C_TransmogCollection.CanSetFavoriteInCategory-115",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TransmogCollection.CanSetFavoriteInCategory",
+      "annotation": "",
+      "wikitext_line": 115
+    },
+    {
+      "id": "wt-global-api-C_TransmogCollection.GetIllusionFallbackWeaponSource-116",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TransmogCollection.GetIllusionFallbackWeaponSource",
+      "annotation": "",
+      "wikitext_line": 116
+    },
+    {
+      "id": "wt-global-api-C_TransmogCollection.GetIllusionSourceInfo-117",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TransmogCollection.GetIllusionSourceInfo",
+      "annotation": "",
+      "wikitext_line": 117
+    },
+    {
+      "id": "wt-global-api-C_TransmogCollection.GetInspectSources-118",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TransmogCollection.GetInspectSources",
+      "annotation": "",
+      "wikitext_line": 118
+    },
+    {
+      "id": "wt-global-api-C_TransmogCollection.GetOutfitName-119",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TransmogCollection.GetOutfitName",
+      "annotation": "",
+      "wikitext_line": 119
+    },
+    {
+      "id": "wt-global-api-C_TransmogCollection.GetOutfitSources-120",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TransmogCollection.GetOutfitSources",
+      "annotation": "",
+      "wikitext_line": 120
+    },
+    {
+      "id": "wt-global-api-C_TransmogCollection.GetShowMissingSourceInItemTooltips-121",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TransmogCollection.GetShowMissingSourceInItemTooltips",
+      "annotation": "",
+      "wikitext_line": 121
+    },
+    {
+      "id": "wt-global-api-C_TransmogCollection.SaveOutfit-122",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TransmogCollection.SaveOutfit",
+      "annotation": "",
+      "wikitext_line": 122
+    },
+    {
+      "id": "wt-global-api-C_TransmogCollection.SetShowMissingSourceInItemTooltips-123",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TransmogCollection.SetShowMissingSourceInItemTooltips",
+      "annotation": "",
+      "wikitext_line": 123
+    },
+    {
+      "id": "wt-global-api-C_TransmogSets.GetSetSources-124",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TransmogSets.GetSetSources",
+      "annotation": "",
+      "wikitext_line": 124
+    },
+    {
+      "id": "wt-global-api-C_TransmogSets.IsSetCollected-125",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TransmogSets.IsSetCollected",
+      "annotation": "",
+      "wikitext_line": 125
+    },
+    {
+      "id": "wt-global-api-C_TransmogSets.IsSetUsable-126",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_TransmogSets.IsSetUsable",
+      "annotation": "",
+      "wikitext_line": 126
+    },
+    {
+      "id": "wt-global-api-CancelBarberShop-127",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CancelBarberShop",
+      "annotation": "",
+      "wikitext_line": 127
+    },
+    {
+      "id": "wt-global-api-ClosePlayerChoice-128",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ClosePlayerChoice",
+      "annotation": "",
+      "wikitext_line": 128
+    },
+    {
+      "id": "wt-global-api-GetBarberShopStyleInfo-129",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetBarberShopStyleInfo",
+      "annotation": "",
+      "wikitext_line": 129
+    },
+    {
+      "id": "wt-global-api-GetBarberShopTotalCost-130",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetBarberShopTotalCost",
+      "annotation": "",
+      "wikitext_line": 130
+    },
+    {
+      "id": "wt-global-api-GetCurrentLevelSpells-131",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetCurrentLevelSpells",
+      "annotation": "",
+      "wikitext_line": 131
+    },
+    {
+      "id": "wt-global-api-GetCustomizationDetails-132",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetCustomizationDetails",
+      "annotation": "",
+      "wikitext_line": 132
+    },
+    {
+      "id": "wt-global-api-GetDungeonInfo-133",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetDungeonInfo",
+      "annotation": "",
+      "wikitext_line": 133
+    },
+    {
+      "id": "wt-global-api-GetItemLevelIncrement-134",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetItemLevelIncrement",
+      "annotation": "",
+      "wikitext_line": 134
+    },
+    {
+      "id": "wt-global-api-GetItemUpgradeEffect-135",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetItemUpgradeEffect",
+      "annotation": "",
+      "wikitext_line": 135
+    },
+    {
+      "id": "wt-global-api-GetLevelUpInstances-136",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetLevelUpInstances",
+      "annotation": "",
+      "wikitext_line": 136
+    },
+    {
+      "id": "wt-global-api-GetNumItemUpgradeEffects-137",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetNumItemUpgradeEffects",
+      "annotation": "",
+      "wikitext_line": 137
+    },
+    {
+      "id": "wt-global-api-GetQuestLogPortraitGiver-138",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetQuestLogPortraitGiver",
+      "annotation": "",
+      "wikitext_line": 138
+    },
+    {
+      "id": "wt-global-api-HasAlternateForm-139",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "HasAlternateForm",
+      "annotation": "",
+      "wikitext_line": 139
+    },
+    {
+      "id": "wt-global-api-IsBarberShopStyleValid-140",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "IsBarberShopStyleValid",
+      "annotation": "",
+      "wikitext_line": 140
+    },
+    {
+      "id": "wt-global-api-IsDressableItem-141",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "IsDressableItem",
+      "annotation": "",
+      "wikitext_line": 141
+    },
+    {
+      "id": "wt-global-api-SendPlayerChoiceResponse-142",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SendPlayerChoiceResponse",
+      "annotation": "",
+      "wikitext_line": 142
+    },
+    {
+      "id": "wt-global-api-SetBarberShopAlternateFormFrame-143",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetBarberShopAlternateFormFrame",
+      "annotation": "",
+      "wikitext_line": 143
+    },
+    {
+      "id": "wt-global-api-SetNextBarberShopStyle-144",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetNextBarberShopStyle",
+      "annotation": "",
+      "wikitext_line": 144
+    },
+    {
+      "id": "wt-widgets-Region:ClearPointsOffset-155",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Region:ClearPointsOffset",
+      "annotation": "",
+      "wikitext_line": 155
+    },
+    {
+      "id": "wt-widgets-AnimationGroup:RemoveAnimations-156",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "AnimationGroup:RemoveAnimations",
+      "annotation": "",
+      "wikitext_line": 156
+    },
+    {
+      "id": "wt-widgets-Frame:SetFrameBuffer-157",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Frame:SetFrameBuffer",
+      "annotation": "",
+      "wikitext_line": 157
+    },
+    {
+      "id": "wt-widgets-EditBox:ClearHighlightText-158",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "EditBox:ClearHighlightText",
+      "annotation": "",
+      "wikitext_line": 158
+    },
+    {
+      "id": "wt-widgets-GameTooltip:GetCustomLineSpacing-159",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "GameTooltip:GetCustomLineSpacing",
+      "annotation": "",
+      "wikitext_line": 159
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetCustomLineSpacing-160",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "GameTooltip:SetCustomLineSpacing",
+      "annotation": "",
+      "wikitext_line": 160
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetEnhancedConduit-161",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "GameTooltip:SetEnhancedConduit",
+      "annotation": "",
+      "wikitext_line": 161
+    },
+    {
+      "id": "wt-widgets-DressUpModel:GetItemTransmogInfo-162",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "DressUpModel:GetItemTransmogInfo",
+      "annotation": "",
+      "wikitext_line": 162
+    },
+    {
+      "id": "wt-widgets-DressUpModel:GetItemTransmogInfoList-163",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "DressUpModel:GetItemTransmogInfoList",
+      "annotation": "",
+      "wikitext_line": 163
+    },
+    {
+      "id": "wt-widgets-DressUpModel:SetItemTransmogInfo-164",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "DressUpModel:SetItemTransmogInfo",
+      "annotation": "",
+      "wikitext_line": 164
+    },
+    {
+      "id": "wt-widgets-ModelSceneActor:GetItemTransmogInfo-165",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "ModelSceneActor:GetItemTransmogInfo",
+      "annotation": "",
+      "wikitext_line": 165
+    },
+    {
+      "id": "wt-widgets-ModelSceneActor:GetItemTransmogInfoList-166",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "ModelSceneActor:GetItemTransmogInfoList",
+      "annotation": "",
+      "wikitext_line": 166
+    },
+    {
+      "id": "wt-widgets-ModelSceneActor:SetItemTransmogInfo-167",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "ModelSceneActor:SetItemTransmogInfo",
+      "annotation": "",
+      "wikitext_line": 167
+    },
+    {
+      "id": "wt-widgets-ModelScene OnDressModel-170",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "ModelScene OnDressModel",
+      "annotation": "",
+      "wikitext_line": 170,
+      "kind": "widget-script"
+    },
+    {
+      "id": "wt-widgets-DressUpModel:GetSlotTransmogSources-173",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "DressUpModel:GetSlotTransmogSources",
+      "annotation": "",
+      "wikitext_line": 173
+    },
+    {
+      "id": "wt-widgets-ModelSceneActor:GetSlotTransmogSources-174",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "ModelSceneActor:GetSlotTransmogSources",
+      "annotation": "",
+      "wikitext_line": 174
+    },
+    {
+      "id": "wt-events-CHAT_MSG_VOICE_TEXT-185",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CHAT_MSG_VOICE_TEXT",
+      "annotation": "",
+      "wikitext_line": 185
+    },
+    {
+      "id": "wt-events-DISPLAY_EVENT_TOAST_LINK-186",
+      "section": "events",
+      "direction": "added",
+      "symbol": "DISPLAY_EVENT_TOAST_LINK",
+      "annotation": "",
+      "wikitext_line": 186
+    },
+    {
+      "id": "wt-events-DISPLAY_EVENT_TOASTS-187",
+      "section": "events",
+      "direction": "added",
+      "symbol": "DISPLAY_EVENT_TOASTS",
+      "annotation": "",
+      "wikitext_line": 187
+    },
+    {
+      "id": "wt-events-FRAME_MANAGER_UPDATE_ALL-188",
+      "section": "events",
+      "direction": "added",
+      "symbol": "FRAME_MANAGER_UPDATE_ALL",
+      "annotation": "",
+      "wikitext_line": 188
+    },
+    {
+      "id": "wt-events-FRAME_MANAGER_UPDATE_FRAME-189",
+      "section": "events",
+      "direction": "added",
+      "symbol": "FRAME_MANAGER_UPDATE_FRAME",
+      "annotation": "",
+      "wikitext_line": 189
+    },
+    {
+      "id": "wt-events-GARRISON_SPEC_GROUP_UPDATED-190",
+      "section": "events",
+      "direction": "added",
+      "symbol": "GARRISON_SPEC_GROUP_UPDATED",
+      "annotation": "",
+      "wikitext_line": 190
+    },
+    {
+      "id": "wt-events-GARRISON_SPEC_GROUPS_CLEARED-191",
+      "section": "events",
+      "direction": "added",
+      "symbol": "GARRISON_SPEC_GROUPS_CLEARED",
+      "annotation": "",
+      "wikitext_line": 191
+    },
+    {
+      "id": "wt-events-SCRIPTED_ANIMATIONS_UPDATE-192",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SCRIPTED_ANIMATIONS_UPDATE",
+      "annotation": "",
+      "wikitext_line": 192
+    },
+    {
+      "id": "wt-events-UI_ERROR_POPUP-193",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UI_ERROR_POPUP",
+      "annotation": "",
+      "wikitext_line": 193
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_CHANNEL_MEMBER_STT_MESSAGE-194",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_CHANNEL_MEMBER_STT_MESSAGE",
+      "annotation": "",
+      "wikitext_line": 194
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_CHANNEL_TRANSCRIBING_CHANGED-195",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_CHANNEL_TRANSCRIBING_CHANGED",
+      "annotation": "",
+      "wikitext_line": 195
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_SPEAK_FOR_ME_ACTIVE_STATUS_UPDATED-196",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_SPEAK_FOR_ME_ACTIVE_STATUS_UPDATED",
+      "annotation": "",
+      "wikitext_line": 196
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_SPEAK_FOR_ME_FEATURE_STATUS_UPDATED-197",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_SPEAK_FOR_ME_FEATURE_STATUS_UPDATED",
+      "annotation": "",
+      "wikitext_line": 197
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_TTS_PLAYBACK_FAILED-198",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_TTS_PLAYBACK_FAILED",
+      "annotation": "",
+      "wikitext_line": 198
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_TTS_PLAYBACK_FINISHED-199",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_TTS_PLAYBACK_FINISHED",
+      "annotation": "",
+      "wikitext_line": 199
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_TTS_PLAYBACK_STARTED-200",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_TTS_PLAYBACK_STARTED",
+      "annotation": "",
+      "wikitext_line": 200
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_TTS_SPEAK_TEXT_UPDATE-201",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_TTS_SPEAK_TEXT_UPDATE",
+      "annotation": "",
+      "wikitext_line": 201
+    },
+    {
+      "id": "wt-events-VOICE_CHAT_TTS_VOICES_UPDATE-202",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VOICE_CHAT_TTS_VOICES_UPDATE",
+      "annotation": "",
+      "wikitext_line": 202
+    },
+    {
+      "id": "wt-events-MYTHIC_PLUS_NEW_SEASON_RECORD-205",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "MYTHIC_PLUS_NEW_SEASON_RECORD",
+      "annotation": "",
+      "wikitext_line": 205
+    },
+    {
+      "id": "wt-cvars-GamePadAnalogMovement-216",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "GamePadAnalogMovement",
+      "annotation": "",
+      "wikitext_line": 216,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-GamePadCursorPushCamera-217",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "GamePadCursorPushCamera",
+      "annotation": "",
+      "wikitext_line": 217,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-GamePadTurnWithCamera-218",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "GamePadTurnWithCamera",
+      "annotation": "",
+      "wikitext_line": 218,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-graphicsComputeEffects-219",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "graphicsComputeEffects",
+      "annotation": "",
+      "wikitext_line": 219,
+      "page_default": "4"
+    },
+    {
+      "id": "wt-cvars-lastCharacterGuid-220",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "lastCharacterGuid",
+      "annotation": "",
+      "wikitext_line": 220,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-lodObjectSizeScale-221",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "lodObjectSizeScale",
+      "annotation": "",
+      "wikitext_line": 221,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-questTextContrast-222",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "questTextContrast",
+      "annotation": "",
+      "wikitext_line": 222,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-raidGraphicsComputeEffects-223",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "raidGraphicsComputeEffects",
+      "annotation": "",
+      "wikitext_line": 223,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-RAIDVolumeFog-224",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "RAIDVolumeFog",
+      "annotation": "",
+      "wikitext_line": 224,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-remoteTextToSpeech-225",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "remoteTextToSpeech",
+      "annotation": "",
+      "wikitext_line": 225,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-remoteTextToSpeechVoice-226",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "remoteTextToSpeechVoice",
+      "annotation": "",
+      "wikitext_line": 226,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-showLoadingScreenTips-227",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "showLoadingScreenTips",
+      "annotation": "",
+      "wikitext_line": 227,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-specular-228",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "specular",
+      "annotation": "",
+      "wikitext_line": 228,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-speechToText-229",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "speechToText",
+      "annotation": "",
+      "wikitext_line": 229,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-SpellCooldownDebugger-230",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SpellCooldownDebugger",
+      "annotation": "",
+      "wikitext_line": 230,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-textToSpeech-231",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "textToSpeech",
+      "annotation": "",
+      "wikitext_line": 231,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-D3D11-234",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "D3D11",
+      "annotation": "",
+      "wikitext_line": 234,
+      "kind": "command"
+    },
+    {
+      "id": "wt-cvars-D3D11_LEGACY-235",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "D3D11_LEGACY",
+      "annotation": "",
+      "wikitext_line": 235,
+      "kind": "command"
+    },
+    {
+      "id": "wt-cvars-D3D12-236",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "D3D12",
+      "annotation": "",
+      "wikitext_line": 236,
+      "kind": "command"
+    },
+    {
+      "id": "wt-cvars-GamePadSmoothFacing-239",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "GamePadSmoothFacing",
+      "annotation": "",
+      "wikitext_line": 239
+    },
+    {
+      "id": "wt-cvars-graphicsSunshafts-240",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "graphicsSunshafts",
+      "annotation": "",
+      "wikitext_line": 240
+    },
+    {
+      "id": "wt-cvars-raidGraphicsSunshafts-241",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "raidGraphicsSunshafts",
+      "annotation": "",
+      "wikitext_line": 241
+    },
+    {
+      "id": "wt-cvars-spamFilter-242",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "spamFilter",
+      "annotation": "",
+      "wikitext_line": 242
+    },
+    {
+      "id": "wt-cvars-transmogShouldersSeparately-243",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "transmogShouldersSeparately",
+      "annotation": "",
+      "wikitext_line": 243
+    }
+  ]
+}

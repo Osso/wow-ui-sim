@@ -1,3 +1,7 @@
+## [2026-10-08] evidence | 9.0.5 page audit
+
+[Audit](investigations/patch-9-0-5-api-audit.md): revision 4298844, 28 inventory/four metadata occurrences, one bounded retail retirement and fourteen exact gaps. All 31 sweeps, negative control, bare/cached/Mists lookup, warning-clean non-vendor checks and startup `[]` pass. All prior inputs/mode outcomes preserved; 9.1.0 should supersede GamePadSmoothFacing at integration.
+
 ## [2026-10-07] evidence | 9.1.5 page audit
 
 [Audit](investigations/patch-9-1-5-api-audit.md) accounts for revision 5920444: 169 inventory + 18 extract + one context ID. Eleven bounded retail retirements close publication gaps; 47 exact gaps and eight substantive extract statements remain. All 29 publication sweeps, negative control, bare/cached/Mists proof, checks and exit-0 startup `[]` pass; 148 prior inputs and 56 extraction outcomes preserved. No 9.2.0 retained-gap intersection; integration placeholder remains.

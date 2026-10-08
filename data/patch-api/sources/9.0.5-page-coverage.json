@@ -1,0 +1,262 @@
+{
+  "schema": "patch-page-coverage/v1",
+  "patch": "9.0.5",
+  "source_register": "data/patch-api/sources/9.0.5-wikitext-register.json",
+  "source_sha256": "c9852dbae8b4cf0ccfa46810e571fe4bfe8f3435d9680855845a70979c819b13",
+  "audit_status": "publication-accounted; behavioral compatibility incomplete",
+  "proof_policy": "Every inventory/extract occurrence accounted. Publication or absence is not signature, output, security, payload, policy or native parity. Four extract rows are metadata only. Exact retained gaps need modeled producers. Integration must prepend 9.1.0 and recompute publication fixture, observations and ledger.",
+  "capabilities": [
+    {
+      "id": "publication-sweep-9-0-5",
+      "scope": "All inventory publication/absence probes with later-register supersession",
+      "spec": "docs/specs/patch-9-0-5-publication-sweep.md",
+      "tests": [
+        "tests/patch_9_0_5_publication_sweep.rs"
+      ],
+      "compiled_revision": "da0fc967a",
+      "ledger": "data/patch-api/evidence/9.0.5-session-2026-10-08/p905-proof.json"
+    },
+    {
+      "id": "retirement-9-0-5",
+      "scope": "Retail repeated lookup absence and Mists unchanged lazy lookup; no native behavior parity",
+      "tests": [
+        "tests/patch_9_0_5_publication_fixes.rs",
+        "tests/patch_9_0_5_cached_surfaces.rs",
+        "tests/patch_9_0_5_classic_surfaces.rs"
+      ],
+      "compiled_revision": "da0fc967a",
+      "ledger": "data/patch-api/evidence/9.0.5-session-2026-10-08/p905-proof.json"
+    }
+  ],
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/9.0.5-api-changes.txt",
+    "sha256": "7a7ca87f3b1973400a79c0458a35e76442cc2529050df94b6b84af2abb5cd4ce",
+    "wikitext_revid": 4298844,
+    "wikitext_sha256": "9c62ac72650f7c6b90761a9640555508e0deb3b07321f863d2a9cfe0dfc95673",
+    "extract_tool": "tools/extract_patch_non_inventory.py",
+    "preserve_examples": false
+  },
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-C_ChallengeMode.CanUseKeystoneInCurrentMap-14",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Keystone-to-current-map eligibility producer absent. Existing last-challenge completion snapshot does not model keystone item/current-map eligibility; returning a fixed boolean would be a placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_CovenantSanctumUI.HasMaximumRenown-15",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Covenant maximum-renown state and cap predicate are not modeled; namespace lazy lookup is not a registered producer."
+    },
+    {
+      "source_id": "wt-global-api-C_CovenantSanctumUI.IsPlayerInRenownCatchUpMode-16",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Covenant catch-up eligibility policy and player progression context are missing; no raw producer. Do not infer from unrelated major-faction renown."
+    },
+    {
+      "source_id": "wt-global-api-C_CovenantSanctumUI.IsWeeklyRenownCapped-17",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Weekly covenant renown cap/earned state is missing; no raw producer. A constant false would hide the gap."
+    },
+    {
+      "source_id": "wt-global-api-C_CovenantSanctumUI.RequestCatchUpState-18",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Catch-up request/reply lifecycle and COVENANT_RENOWN_CATCH_UP_STATE_UPDATE producer are unmodeled; event registration alone does not establish request behavior."
+    },
+    {
+      "source_id": "wt-global-api-C_Garrison.IsFollowerOnCompletedMission-19",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Follower assignment/completed mission identity relation is missing from this endpoint; lazy lookup is not a modeled predicate."
+    },
+    {
+      "source_id": "wt-global-api-C_GossipInfo.GetCustomGossipDescriptionString-20",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Custom gossip description and formatting context producer is missing; a constant or nil shim would not establish the contract."
+    },
+    {
+      "source_id": "wt-global-api-C_GuildInfo.QueryGuildMembersForRecipe-21",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Guild member recipe query/request and response state are not modeled. Cached ProfessionsGuildMemberList.lua:59 calls this namespaced successor; missing raw registration remains a gap, not permission to retire it."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemUpgrade.CanUpgradeItem-22",
+      "capabilities": [
+        "publication-sweep-9-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only; not native signature, DTO, security, policy, event payload or historical behavior parity. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.GetFilteredSearchResults-23",
+      "capabilities": [
+        "publication-sweep-9-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only; not native signature, DTO, security, policy, event payload or historical behavior parity. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_QuestLog.ShouldDisplayTimeRemaining-24",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Per-quest time-remaining visibility policy producer is missing; quest enumeration/timer values alone cannot establish display eligibility."
+    },
+    {
+      "source_id": "wt-global-api-C_WeeklyRewards.AreRewardsForCurrentRewardPeriod-25",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Reward-period identity and available-reward association are missing. Activity-tier progress snapshots do not establish reward-period matching."
+    },
+    {
+      "source_id": "wt-global-api-C_WeeklyRewards.GetActivityEncounterInfo-26",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Weekly reward activity-to-encounter records and encounter completion context producer are missing. Existing activity progress is not this DTO."
+    },
+    {
+      "source_id": "wt-global-api-C_WeeklyRewards.GetNextMythicPlusIncrease-27",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Next Mythic+ vault increase thresholds/reward-level calculation producer is missing; existing difficulty progress does not establish the next-increase contract."
+    },
+    {
+      "source_id": "wt-global-api-C_WeeklyRewards.HasInteraction-28",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Weekly vault interaction/availability state producer is missing; opening a frame or providing progress rows is not equivalent to modeled interaction eligibility."
+    },
+    {
+      "source_id": "wt-global-api-SpellIsPriorityAura-29",
+      "capabilities": [
+        "publication-sweep-9-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only; not native signature, DTO, security, policy, event payload or historical behavior parity. Observed: raw=function; lookup=function; deprecated-fallback=@Interface/AddOns/Blizzard_DeprecatedSpellScript/Deprecated_SpellScript.lua"
+    },
+    {
+      "source_id": "wt-global-api-C_Soulbinds.GetConduitItemLevel-32",
+      "capabilities": [
+        "publication-sweep-9-0-5",
+        "retirement-9-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only; not native signature, DTO, security, policy, event payload or historical behavior parity. Observed: raw=nil; lookup=nil; bare and cached repeated-lookup behavior passes; classic legacy lookup preserved."
+    },
+    {
+      "source_id": "wt-global-api-QueryGuildMembersForRecipe-33",
+      "capabilities": [
+        "publication-sweep-9-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only; not native signature, DTO, security, policy, event payload or historical behavior parity. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-widgets-GameTooltip:SetAllowShowWithNoLines-43",
+      "capabilities": [
+        "publication-sweep-9-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only; not native signature, DTO, security, policy, event payload or historical behavior parity. Observed: GameTooltip; lookup=function"
+    },
+    {
+      "source_id": "wt-events-COVENANT_RENOWN_CATCH_UP_STATE_UPDATE-53",
+      "capabilities": [
+        "publication-sweep-9-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only; not native signature, DTO, security, policy, event payload or historical behavior parity. Observed: pcall=true; return=true; registered=true"
+    },
+    {
+      "source_id": "wt-cvars-CursorFreelookStartDelta-64",
+      "capabilities": [
+        "publication-sweep-9-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only; not native signature, DTO, security, policy, event payload or historical behavior parity. Observed: value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-ffxLingeringVenari-65",
+      "capabilities": [
+        "publication-sweep-9-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only; not native signature, DTO, security, policy, event payload or historical behavior parity. Observed: value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-ffxVenari-66",
+      "capabilities": [
+        "publication-sweep-9-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only; not native signature, DTO, security, policy, event payload or historical behavior parity. Observed: value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-GamePadFaceMovementThreshold-67",
+      "capabilities": [
+        "publication-sweep-9-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only; not native signature, DTO, security, policy, event payload or historical behavior parity. Observed: value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-GamePadSmoothFacing-68",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Both CVar value and default are absent. Page supplies no default/persistence/behavior policy; do not invent a default solely for publication. A later removal can supersede this historical addition at integration."
+    },
+    {
+      "source_id": "wt-cvars-GamePadStickAxisButtons-69",
+      "capabilities": [
+        "publication-sweep-9-0-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only; not native signature, DTO, security, policy, event payload or historical behavior parity. Observed: value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-GamePadFaceAngleThreshold-72",
+      "capabilities": [
+        "publication-sweep-9-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only; not native signature, DTO, security, policy, event payload or historical behavior parity. Observed: value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-GamePadFaceMovement-73",
+      "capabilities": [
+        "publication-sweep-9-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only; not native signature, DTO, security, policy, event payload or historical behavior parity. Observed: value/default queried"
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-004",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-005",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    }
+  ]
+}

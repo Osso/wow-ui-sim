@@ -1,0 +1,14 @@
+{
+  "source": "read-only master 9.1.0 register snapshot after p910-page became unavailable",
+  "source_sha256": "deeaaed02589405b31b89341c48081a72890118cce878e802bd01df8cef1abdb",
+  "matches": [
+    {
+      "source_id": "wt-cvars-GamePadSmoothFacing-68",
+      "symbol": "GamePadSmoothFacing",
+      "retained_gap": true,
+      "later_id": "wt-cvars-GamePadSmoothFacing-239",
+      "later_direction": "removed",
+      "publication_flips": true
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "source_id": "source-context-001",
+    "extract_line": 1,
+    "literal": "Patch 9.0.5 API changes",
+    "wikitext_line": 1,
+    "raw_literal": "{{apichanges|9.0.5|prev=9.0.2|next=9.1.0}}",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-003",
+    "extract_line": 3,
+    "literal": "== Summary ==",
+    "wikitext_line": 3,
+    "raw_literal": "==Summary==",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "source-context-004",
+    "extract_line": 4,
+    "literal": "* TOC: 90005",
+    "wikitext_line": 4,
+    "raw_literal": "* TOC: <code>90005</code>",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-005",
+    "extract_line": 5,
+    "literal": "* Diffs: wow-ui-source, BlizzardInterfaceResources",
+    "wikitext_line": 5,
+    "raw_literal": "* Diffs: [https://github.com/Gethe/wow-ui-source/compare/ff6e520fa402e00084851daf0d810ee2f90d3ac0...e337b8949ffad2876ea0489d8331db2414342d32 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/a52060bdab48b242d44d990f450e9d808b5dd321...db92f8d1079cdedd6c771c128ce86c479c522b94 BlizzardInterfaceResources]",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+  }
+]

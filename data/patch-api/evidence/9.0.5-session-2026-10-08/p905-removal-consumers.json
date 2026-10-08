@@ -1,0 +1,38 @@
+[
+  {
+    "symbol": "C_Soulbinds.GetConduitItemLevel",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  {
+    "symbol": "QueryGuildMembersForRecipe",
+    "qualified": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Professions/Blizzard_ProfessionsGuildMemberList.lua:59:\tlocal updatedRecipeID = C_GuildInfo.QueryGuildMembersForRecipe(skillLineID, recipeID, recipeLevel);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/GuildInfoDocumentation.lua:248:\t\t\tName = \"QueryGuildMembersForRecipe\",\n",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Professions/Blizzard_ProfessionsGuildMemberList.lua:59:\tlocal updatedRecipeID = C_GuildInfo.QueryGuildMembersForRecipe(skillLineID, recipeID, recipeLevel);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/GuildInfoDocumentation.lua:248:\t\t\tName = \"QueryGuildMembersForRecipe\",\n",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  }
+]

@@ -1,0 +1,285 @@
+[
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "patch_9_0_5_publication_sweep"
+    ],
+    "revision": "240ef4646f998dbd8079b8ab47a3893d22c5a4f3",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p905-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p905-page/target",
+    "exit": 1,
+    "log": "p905-initial-sweep.log",
+    "invalidated": false,
+    "scope": "Initial 9.0.5 publication observation; empty fixture expected to fail when gaps exist.",
+    "expected_exit": 1,
+    "historical_only": true,
+    "superseded_by": "da0fc967a green observations; does not assert current failure",
+    "output_sha256": {
+      "p905-initial-sweep.log": "f67249a402123f4e51b9eddd741e987df56510b402a916d86c11b309f9ca582c"
+    }
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "patch_9_0_5_cached_retirement"
+    ],
+    "revision": "2ec9c5a87d9de5a7d5bba1c7f9de5c26721437c6",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p905-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p905-page/target",
+    "exit": 1,
+    "log": "p905-retirement-red.log",
+    "scope": "RED repeated lookup after unmodified full UI preload",
+    "invalidated": false,
+    "expected_exit": 1,
+    "historical_only": true,
+    "superseded_by": "da0fc967a green observations; does not assert current failure",
+    "output_sha256": {
+      "p905-retirement-red.log": "bbd6ce1c90392b7406b83e9806bc4f58806a13d9dccf01d6758e181a81726dce"
+    }
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "patch_9_0_5_cached_retirement"
+    ],
+    "revision": "da0fc967a0977f49ee7dc692b7ae834e33ca9112",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p905-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p905-page/target",
+    "exit": 0,
+    "log": "p905-retirement-green.log",
+    "scope": "retirement-green",
+    "invalidated": false,
+    "output_sha256": {
+      "p905-retirement-green.log": "99688d0208932ed8f7ac2297d5e18c0a85c0d8ac44cf9f0d29019d2e2bed00f9"
+    }
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_9_0_5_unused_member_stays_absent"
+    ],
+    "revision": "da0fc967a0977f49ee7dc692b7ae834e33ca9112",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p905-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p905-page/target",
+    "exit": 0,
+    "log": "p905-bare-green.log",
+    "scope": "bare-green",
+    "invalidated": false,
+    "output_sha256": {
+      "p905-bare-green.log": "def9ad0a4cbb505bdc0dd028cd1918ff1aa1ed628ffe189717e8c892c858a36e"
+    }
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "publication_sweep"
+    ],
+    "revision": "da0fc967a0977f49ee7dc692b7ae834e33ca9112",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p905-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p905-page/target",
+    "exit": 0,
+    "log": "p905-publication-sweeps.log",
+    "scope": "All publication sweeps",
+    "invalidated": false,
+    "output_sha256": {
+      "p905-publication-sweeps.log": "96cfd9079e069b5bf6887534509d30c9ffa6c2e99c9225bbdf766c3eff37429e"
+    }
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "patch_9_0_5_publication_sweep"
+    ],
+    "revision": "da0fc967a0977f49ee7dc692b7ae834e33ca9112",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p905-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p905-page/target",
+    "exit": 1,
+    "expected_exit": 1,
+    "log": "p905-negative-control.log",
+    "scope": "Exact one-row negative control",
+    "invalidated": false,
+    "output_sha256": {
+      "p905-negative-control.log": "b19a015475134e865d65cf70a163510afbe093312e5ce7216ae7d26a38b04297"
+    }
+  },
+  {
+    "command": [
+      "cargo",
+      "fmt",
+      "--check"
+    ],
+    "revision": "da0fc967a0977f49ee7dc692b7ae834e33ca9112",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p905-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p905-page/target",
+    "exit": 0,
+    "log": "p905-fmt-check.log",
+    "scope": "fmt-check",
+    "invalidated": false,
+    "output_sha256": {
+      "p905-fmt-check.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  {
+    "command": [
+      "cargo",
+      "check"
+    ],
+    "revision": "da0fc967a0977f49ee7dc692b7ae834e33ca9112",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p905-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p905-page/target",
+    "exit": 0,
+    "log": "p905-default-check.log",
+    "scope": "default-check",
+    "invalidated": false,
+    "output_sha256": {
+      "p905-default-check.log": "809884f011e1b08b788a007ce72c52f144e398ac9c96296f526fad3efd237917"
+    }
+  },
+  {
+    "command": [
+      "cargo",
+      "check",
+      "--no-default-features",
+      "--features",
+      "sound,gui,casc,client-mists",
+      "--tests"
+    ],
+    "revision": "da0fc967a0977f49ee7dc692b7ae834e33ca9112",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p905-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p905-page/target",
+    "exit": 0,
+    "log": "p905-mists-check.log",
+    "scope": "mists-check",
+    "invalidated": false,
+    "output_sha256": {
+      "p905-mists-check.log": "e6bc1a48c47879f1874c51b7e3ac923aed0849d73ae6374e74dfa8a10641c4c9"
+    }
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--no-default-features",
+      "--features",
+      "sound,gui,casc,client-mists",
+      "--test",
+      "integration",
+      "patch_9_0_5_mists_preserves_legacy_lookup"
+    ],
+    "revision": "da0fc967a0977f49ee7dc692b7ae834e33ca9112",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p905-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p905-page/target",
+    "exit": 0,
+    "log": "p905-mists-behavior.log",
+    "scope": "mists-behavior",
+    "invalidated": false,
+    "output_sha256": {
+      "p905-mists-behavior.log": "18fdc8955721af43ed99f2d07528de9c7c935eb065de6e30f231f591ba5c4f86"
+    }
+  },
+  {
+    "command": [
+      "cargo",
+      "build",
+      "--bin",
+      "wow-sim"
+    ],
+    "revision": "da0fc967a0977f49ee7dc692b7ae834e33ca9112",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p905-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p905-page/target",
+    "exit": 0,
+    "log": "p905-retail-build.log",
+    "scope": "Separate retail binary build after Mists tests",
+    "invalidated": false,
+    "output_sha256": {
+      "p905-retail-build.log": "c20faefc067e94cfa2bd6f94e4c17711fac4679227b0b850c86b1cb43f0087ba"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "/home/osso/.worktrees/wow-ui-sim-p905-page/target/debug/wow-sim",
+      "--no-addons",
+      "--no-saved-vars",
+      "lua-errors"
+    ],
+    "revision": "da0fc967a0977f49ee7dc692b7ae834e33ca9112",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p905-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p905-page/target",
+    "exit": 0,
+    "stdout": "p905-startup.stdout",
+    "stderr": "p905-startup.stderr",
+    "scope": "Retail startup Lua errors",
+    "invalidated": false,
+    "output_sha256": {
+      "p905-startup.stdout": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "p905-startup.stderr": "9438fd18378c94d7c1c0495e190bc36c64c07f247058377d39335d923eaea57f"
+    }
+  },
+  {
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "tools.test_gen_patch_wikitext_register",
+      "tools.test_extract_patch_non_inventory"
+    ],
+    "revision": "da0fc967a0977f49ee7dc692b7ae834e33ca9112",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p905-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p905-page/target",
+    "exit": 1,
+    "log": "p905-tool-fixtures.log",
+    "scope": "Existing generator and extractor behavioral fixtures; tools unchanged",
+    "invalidated": true,
+    "output_sha256": {
+      "p905-tool-fixtures.log": "1fb87ffc13fa86dee4f93a36b270b8f165277dffd04b148c4f7fe60819e34446"
+    },
+    "reason": "Invocation lacked tools/ on Python module search path; no fixtures executed. Corrected invocation follows."
+  },
+  {
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "tools.test_gen_patch_wikitext_register",
+      "tools.test_extract_patch_non_inventory"
+    ],
+    "env": {
+      "PYTHONPATH": "/home/osso/.worktrees/wow-ui-sim-p905-page/tools"
+    },
+    "revision": "da0fc967a0977f49ee7dc692b7ae834e33ca9112",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p905-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p905-page/target",
+    "exit": 0,
+    "log": "p905-tool-fixtures-green.log",
+    "output_sha256": {
+      "p905-tool-fixtures-green.log": "e7ea2890944652f56de7fb4881a47f1781b7279efe5fdf6d132d31300d8f2aa6"
+    },
+    "scope": "Existing generator/extractor fixture acceptance",
+    "invalidated": false
+  }
+]

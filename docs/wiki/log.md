@@ -268,3 +268,7 @@ Retained revision 4788278 and 80-row register; corrected unbolded Commands/HTML 
 ## [2026-10-07] evidence | Patch 9.1.5 publication accounting
 
 [[patch-9-1-5-api-audit]]: retained page 219137 revision 5920444, 169 inventory/18 extract/one context ID; eleven retail-only retirements, 122 OK/47 precise publication gaps. Ledger 188 IDs separates publication from eight pending extract contracts and historical/default boundaries. All 29 sweeps, exact negative control, bare/cached/Mists proof and startup `[]` pass; prior inputs/modes/registers preserved. 9.2.0 snapshot has no retained-gap intersection.
+
+## 2026-10-08 | ingest | 9.0.5 API page
+
+[Audit](investigations/patch-9-0-5-api-audit.md) records pinned source, all 32 IDs, one gated retirement, fourteen precise gaps, complete targeted proof and 9.1.0 GamePadSmoothFacing supersession. Existing source inputs preserved; no vendor/classic behavior changes.
