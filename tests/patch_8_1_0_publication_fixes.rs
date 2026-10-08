@@ -1,7 +1,6 @@
 //! Unused historical members stay absent; classic lookup stays reachable.
 pub(crate) const REMOVED_MEMBERS: &[&str] = &[
     "C_Map.GetBountySetIDForMap",
-    "C_ConfigurationWarnings.GetConfigurationWarningSeen",
     "C_Calendar.EventGetClubID",
     "C_Calendar.EventSetClubID",
 ];

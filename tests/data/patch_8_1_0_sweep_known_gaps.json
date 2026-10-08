@@ -10,6 +10,7 @@
   "wt-global-api-C_ChatInfo.SwapChatChannelsByChannelIndex-25",
   "wt-global-api-C_Club.AddClubStreamChatChannel-26",
   "wt-global-api-C_Club.Flush-27",
+  "wt-global-api-C_ConfigurationWarnings.GetConfigurationWarningSeen-126",
   "wt-global-api-C_ConfigurationWarnings.GetConfigurationWarningString-127",
   "wt-global-api-C_ConfigurationWarnings.GetConfigurationWarnings-128",
   "wt-global-api-C_ConfigurationWarnings.SetConfigurationWarningSeen-129",

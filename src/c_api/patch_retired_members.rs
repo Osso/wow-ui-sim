@@ -32,10 +32,9 @@ const RETIRED_8_2_0_MEMBERS: &[(&str, &[&str])] = &[(
 // Qualified/bare cached retail and complete src/tests scans find no consumers.
 // SpellBook.IsSpellDisabled and LeaveParty remain reachable for current consumers.
 // 8.1.0 qualified/bare cached consumer and complete caller scans are retained.
-// Keep the other C_ConfigurationWarnings members: current Blizzard Lua uses them.
+// Keep C_ConfigurationWarnings: cached consumers and simulator provider callers remain.
 const RETIRED_8_1_0_MEMBERS: &[(&str, &[&str])] = &[
     ("C_Map", &["GetBountySetIDForMap"]),
-    ("C_ConfigurationWarnings", &["GetConfigurationWarningSeen"]),
     ("C_Calendar", &["EventGetClubID", "EventSetClubID"]),
 ];
 

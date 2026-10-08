@@ -958,8 +958,8 @@
         }
       },
       "later_readds": [],
-      "decision": "retire",
-      "reason": "No qualified/bare non-Documentation cached consumer; no later register re-add. Source callers are registration definitions only."
+      "decision": "retain-provider-callers",
+      "reason": "No cached consumer, but existing temporary provider unit tests call getter; provider republishes it after C API marking. Retain pending profile-safe modeled provider/test migration."
     },
     {
       "symbol": "C_ConfigurationWarnings.GetConfigurationWarningString",
