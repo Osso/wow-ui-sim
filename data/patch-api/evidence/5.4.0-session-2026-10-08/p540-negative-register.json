@@ -40,12 +40,12 @@
   ],
   "entries": [
     {
-      "id": "wt-global-api-GetAuctionItemInfo-4",
+      "id": "p540-intentional-missing",
       "section": "global-api",
-      "direction": "changed",
-      "symbol": "GetAuctionItemInfo",
-      "annotation": "* Two new returns (bidderFullName at #13 and ownerFullName at #15) have been added to {{api|GetAuctionItemInfo}}. Owner, previously #13, has been pushed to #14. Returns previously after owner (saleStatus, itemId, hasAllInfo) have been pushed forward by two places.",
-      "wikitext_line": 4
+      "direction": "added",
+      "symbol": "P540DefinitelyMissingPublication",
+      "annotation": "Negative control, not an API claim",
+      "wikitext_line": 0
     },
     {
       "id": "wt-global-api-GetLFGRoleUpdate-6",
@@ -950,14 +950,10 @@
       "symbol": "Texture:IsForbidden",
       "annotation": "",
       "wikitext_line": 135
-    },
-    {
-      "id": "p540-intentional-missing",
-      "section": "global-api",
-      "direction": "added",
-      "symbol": "P540DefinitelyMissingPublication",
-      "annotation": "Negative control, not an API claim",
-      "wikitext_line": 0
     }
-  ]
+  ],
+  "negative_control": {
+    "replaced_passing_source_id": "wt-global-api-GetAuctionItemInfo-4",
+    "reason": "Shared sweep fixes row count; replace one passing occurrence, do not append."
+  }
 }
