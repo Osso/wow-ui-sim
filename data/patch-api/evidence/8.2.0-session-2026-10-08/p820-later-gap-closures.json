@@ -1,0 +1,13 @@
+[
+  {
+    "patch": "8.2.5",
+    "resolved": [
+      "wt-global-api-C_ClubFinder.ReturnCommunityApplicantList-76",
+      "wt-global-api-C_ClubFinder.ReturnGuildApplicantList-77",
+      "wt-global-api-C_ClubFinder.ReturnPendingCommunityApplicantList-80",
+      "wt-global-api-C_ClubFinder.ReturnPendingGuildApplicantList-81",
+      "wt-global-api-C_Commentator.GetElapsedMs-85",
+      "wt-global-api-C_PvP.GetMatchPVPStatIDs-112"
+    ]
+  }
+]

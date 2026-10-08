@@ -317,15 +317,19 @@
     },
     {
       "source_id": "wt-global-api-C_ClubFinder.ReturnCommunityApplicantList-76",
-      "status": "audit-pending",
-      "capabilities": [],
-      "note": "No raw community applicant snapshot producer; requires community-keyed applicant data, ordering and pending status."
+      "status": "bounded-coverage",
+      "capabilities": [
+        "retail-absence"
+      ],
+      "note": "Superseded by 8.2.5 removal: unused member retired on retail by the Patch 8.2.5 audit; cached retail has no consumer. Publication/absence only."
     },
     {
       "source_id": "wt-global-api-C_ClubFinder.ReturnGuildApplicantList-77",
-      "status": "audit-pending",
-      "capabilities": [],
-      "note": "No raw guild applicant snapshot producer; requires guild-keyed applicant data and result ordering."
+      "status": "bounded-coverage",
+      "capabilities": [
+        "retail-absence"
+      ],
+      "note": "Superseded by 8.2.5 removal: unused member retired on retail by the Patch 8.2.5 audit; cached retail has no consumer. Publication/absence only."
     },
     {
       "source_id": "wt-global-api-C_ClubFinder.ReturnMatchingCommunityList-78",
@@ -345,15 +349,19 @@
     },
     {
       "source_id": "wt-global-api-C_ClubFinder.ReturnPendingCommunityApplicantList-80",
-      "status": "audit-pending",
-      "capabilities": [],
-      "note": "No pending community applicant snapshot producer; pending request and accepted/rejected transitions are not specified by existing placeholder lookup."
+      "status": "bounded-coverage",
+      "capabilities": [
+        "retail-absence"
+      ],
+      "note": "Superseded by 8.2.5 removal: unused member retired on retail by the Patch 8.2.5 audit; cached retail has no consumer. Publication/absence only."
     },
     {
       "source_id": "wt-global-api-C_ClubFinder.ReturnPendingGuildApplicantList-81",
-      "status": "audit-pending",
-      "capabilities": [],
-      "note": "No pending guild applicant snapshot producer; requires pending membership lifecycle and guild identity."
+      "status": "bounded-coverage",
+      "capabilities": [
+        "retail-absence"
+      ],
+      "note": "Superseded by 8.2.5 removal: unused member retired on retail by the Patch 8.2.5 audit; cached retail has no consumer. Publication/absence only."
     },
     {
       "source_id": "wt-global-api-C_ClubFinder.SetPlayerApplicantSettings-82",
@@ -379,9 +387,11 @@
     },
     {
       "source_id": "wt-global-api-C_Commentator.GetElapsedMs-85",
-      "status": "audit-pending",
-      "capabilities": [],
-      "note": "No spectator match clock producer; needs match start/pause/end state and deterministic time input."
+      "status": "bounded-coverage",
+      "capabilities": [
+        "retail-absence"
+      ],
+      "note": "Superseded by 8.2.5 removal: unused member retired on retail by the Patch 8.2.5 audit; cached retail has no consumer. Publication/absence only."
     },
     {
       "source_id": "wt-global-api-C_EncounterJournal.SetPreviewMythicPlusLevel-86",
@@ -569,9 +579,11 @@
     },
     {
       "source_id": "wt-global-api-C_PvP.GetMatchPVPStatIDs-112",
-      "status": "audit-pending",
-      "capabilities": [],
-      "note": "No match-stat ID catalog producer; fabricated empty list would conceal missing scoreboard domain."
+      "status": "bounded-coverage",
+      "capabilities": [
+        "retail-absence"
+      ],
+      "note": "Superseded by 8.2.5 removal: unused member retired on retail by the Patch 8.2.5 audit; cached retail has no consumer. Publication/absence only."
     },
     {
       "source_id": "wt-global-api-C_PvP.GetPostMatchCurrencyRewards-113",

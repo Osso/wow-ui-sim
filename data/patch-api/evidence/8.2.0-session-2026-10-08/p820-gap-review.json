@@ -168,102 +168,6 @@
     "caller_scan": "p820-gap-caller-scout.json"
   },
   {
-    "source_id": "wt-global-api-C_ClubFinder.ReturnCommunityApplicantList-76",
-    "symbol": "C_ClubFinder.ReturnCommunityApplicantList",
-    "wikitext_line": 76,
-    "literal": ": {{api|C_ClubFinder.ReturnCommunityApplicantList}}",
-    "expectation": {
-      "direction": "added",
-      "page_default": null,
-      "publication": "published",
-      "section": "global-api",
-      "superseded_by": null,
-      "symbol": "C_ClubFinder.ReturnCommunityApplicantList"
-    },
-    "observation": {
-      "default": null,
-      "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
-      "kind": "member",
-      "value": null
-    },
-    "reason": "No raw community applicant snapshot producer; requires community-keyed applicant data, ordering and pending status.",
-    "decision": "recorded-problematic",
-    "caller_scan": "p820-gap-caller-scout.json"
-  },
-  {
-    "source_id": "wt-global-api-C_ClubFinder.ReturnGuildApplicantList-77",
-    "symbol": "C_ClubFinder.ReturnGuildApplicantList",
-    "wikitext_line": 77,
-    "literal": ": {{api|C_ClubFinder.ReturnGuildApplicantList}}",
-    "expectation": {
-      "direction": "added",
-      "page_default": null,
-      "publication": "published",
-      "section": "global-api",
-      "superseded_by": null,
-      "symbol": "C_ClubFinder.ReturnGuildApplicantList"
-    },
-    "observation": {
-      "default": null,
-      "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
-      "kind": "member",
-      "value": null
-    },
-    "reason": "No raw guild applicant snapshot producer; requires guild-keyed applicant data and result ordering.",
-    "decision": "recorded-problematic",
-    "caller_scan": "p820-gap-caller-scout.json"
-  },
-  {
-    "source_id": "wt-global-api-C_ClubFinder.ReturnPendingCommunityApplicantList-80",
-    "symbol": "C_ClubFinder.ReturnPendingCommunityApplicantList",
-    "wikitext_line": 80,
-    "literal": ": {{api|C_ClubFinder.ReturnPendingCommunityApplicantList}}",
-    "expectation": {
-      "direction": "added",
-      "page_default": null,
-      "publication": "published",
-      "section": "global-api",
-      "superseded_by": null,
-      "symbol": "C_ClubFinder.ReturnPendingCommunityApplicantList"
-    },
-    "observation": {
-      "default": null,
-      "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
-      "kind": "member",
-      "value": null
-    },
-    "reason": "No pending community applicant snapshot producer; pending request and accepted/rejected transitions are not specified by existing placeholder lookup.",
-    "decision": "recorded-problematic",
-    "caller_scan": "p820-gap-caller-scout.json"
-  },
-  {
-    "source_id": "wt-global-api-C_ClubFinder.ReturnPendingGuildApplicantList-81",
-    "symbol": "C_ClubFinder.ReturnPendingGuildApplicantList",
-    "wikitext_line": 81,
-    "literal": ": {{api|C_ClubFinder.ReturnPendingGuildApplicantList}}",
-    "expectation": {
-      "direction": "added",
-      "page_default": null,
-      "publication": "published",
-      "section": "global-api",
-      "superseded_by": null,
-      "symbol": "C_ClubFinder.ReturnPendingGuildApplicantList"
-    },
-    "observation": {
-      "default": null,
-      "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
-      "kind": "member",
-      "value": null
-    },
-    "reason": "No pending guild applicant snapshot producer; requires pending membership lifecycle and guild identity.",
-    "decision": "recorded-problematic",
-    "caller_scan": "p820-gap-caller-scout.json"
-  },
-  {
     "source_id": "wt-global-api-C_ClubFinder.ShouldShowClubFinder-84",
     "symbol": "C_ClubFinder.ShouldShowClubFinder",
     "wikitext_line": 84,
@@ -284,30 +188,6 @@
       "value": null
     },
     "reason": "No modeled finder eligibility/display policy; constant true would not model account restrictions or feature availability.",
-    "decision": "recorded-problematic",
-    "caller_scan": "p820-gap-caller-scout.json"
-  },
-  {
-    "source_id": "wt-global-api-C_Commentator.GetElapsedMs-85",
-    "symbol": "C_Commentator.GetElapsedMs",
-    "wikitext_line": 85,
-    "literal": ": {{api|C_Commentator.GetElapsedMs}}",
-    "expectation": {
-      "direction": "added",
-      "page_default": null,
-      "publication": "published",
-      "section": "global-api",
-      "superseded_by": null,
-      "symbol": "C_Commentator.GetElapsedMs"
-    },
-    "observation": {
-      "default": null,
-      "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
-      "kind": "member",
-      "value": null
-    },
-    "reason": "No spectator match clock producer; needs match start/pause/end state and deterministic time input.",
     "decision": "recorded-problematic",
     "caller_scan": "p820-gap-caller-scout.json"
   },
@@ -596,30 +476,6 @@
       "value": null
     },
     "reason": "No keyed match-stat column metadata producer; requires map-specific names/order/visibility.",
-    "decision": "recorded-problematic",
-    "caller_scan": "p820-gap-caller-scout.json"
-  },
-  {
-    "source_id": "wt-global-api-C_PvP.GetMatchPVPStatIDs-112",
-    "symbol": "C_PvP.GetMatchPVPStatIDs",
-    "wikitext_line": 112,
-    "literal": ": {{api|C_PvP.GetMatchPVPStatIDs}}",
-    "expectation": {
-      "direction": "added",
-      "page_default": null,
-      "publication": "published",
-      "section": "global-api",
-      "superseded_by": null,
-      "symbol": "C_PvP.GetMatchPVPStatIDs"
-    },
-    "observation": {
-      "default": null,
-      "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
-      "kind": "member",
-      "value": null
-    },
-    "reason": "No match-stat ID catalog producer; fabricated empty list would conceal missing scoreboard domain.",
     "decision": "recorded-problematic",
     "caller_scan": "p820-gap-caller-scout.json"
   },

@@ -5,7 +5,7 @@ Audit Warcraft Wiki page 533235 revision 5142162 against current retail. Source:
 ## Requirements
 
 - [x] Pin fetched current revision and retain every caption-table inventory and non-inventory occurrence with opt-in recipes.
-- [x] Discover publication gaps through the prefork full-UI harness; apply later master registers chronologically, reserving 8.2.5 for integration.
+- [x] Discover publication gaps through the prefork full-UI harness; apply later master registers chronologically, including the merged 8.2.5 register.
 - [x] Model `C_VoiceChat.SetMasterVolumeScale` through existing voice-chat state for normalized settings-slider inputs; getter reflects writes, unrelated output volume remains unchanged. Reject invalid input without mutation to preserve the simulator state invariant; native out-of-range/security parity is not claimed.
 - [x] Retire unused `C_UIWidgetManager.GetTextureWithStateVisualizationInfo` on retail only after whole-word cached/source/test consumer scans. Preserve Mists' existing lookup.
 - [x] Account for every unresolved inventory/prose gap with exact reasons, without placeholder publication credit.
@@ -13,8 +13,8 @@ Audit Warcraft Wiki page 533235 revision 5142162 against current retail. Source:
 
 ## Remaining contracts
 
-- [ ] Fifty-nine exact inventory gaps and ten substantive prose contracts remain recorded-problematic; exact producer, lifecycle or permission-policy reasons live in the audit's per-ID review.
-- [ ] Main thread inserts the real 8.2.5 register and refreshes supersessions/fixtures/accounting at integration.
+- [ ] Fifty-three exact inventory gaps and ten substantive prose contracts remain recorded-problematic; exact producer, lifecycle or permission-policy reasons live in the audit's per-ID review.
+- [x] Apply the merged 8.2.5 register; its six removals supersede six 8.2.0 publication gaps with bounded absence coverage.
 - [ ] Inherited 12.0.5, 12.0.7 and 12.1.0 saved-extract reproduction failures remain unchanged, as in the completed 8.3.0 audit.
 
 ## Tests
