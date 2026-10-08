@@ -13,15 +13,15 @@ Own cwd: p540-page worktree. Own target: `/home/osso/.cache/wow-ui-sim-targets/p
 | reproduce_sources.py committed invocation | 5d09d3ffc | 56 registers / 53 extracts; three inherited failures | Prior source bytes, all extraction-mode outcomes preserved; later ledger/fixture/docs do not change recipe scope |
 | Diff extract reproduction | 5d09d3ffc | Byte-identical | Exact copied extractor flags; no later extractor change |
 | 31 cached/src/tests bare removal scans | source code d0b490a60 | Untruncated grep evidence, pinned later-register scan | No subsequent src edits; caller tests added earlier |
-| cargo test --test prefork_full_ui -- publication_sweep | Pending final driver receipt | Pending | Complete historical source-defined sweep set, no full integration suite |
-| cargo test --test prefork_full_ui -- patch_5_4_0_behavior | Pending final driver receipt | Pending | Two current backed behaviors |
-| cargo test --test integration patch_5_4_0_behavior | Pending final driver receipt | Pending | Same behavior contract in standalone fixture |
-| cargo test --test integration instance_info:: | Pending final driver receipt | Pending | Existing instance-query callers |
-| cargo test --test integration protected_frame_enforcement:: | Pending final driver receipt | Pending | Existing forbidden/protection callers |
-| cargo fmt --check | Pending final driver receipt | Pending | No source changes after final format required |
-| cargo check --no-default-features --features sound,gui,casc,client-mists --tests | Pending final driver receipt | Pending | Zero non-vendor warnings required |
+| cargo test --test prefork_full_ui -- publication_sweep | 215952a29 | 57 PASS | Complete historical source-defined sweep set, no full integration suite |
+| cargo test --test prefork_full_ui -- patch_5_4_0_behavior | ae0b0b8ff | 2 PASS | Two current backed behaviors |
+| cargo test --test integration patch_5_4_0_behavior | 17cd91a9e | 2 PASS | Same behavior contract in standalone fixture |
+| cargo test --test integration instance_info:: | ba64625ed | 11 PASS | Existing instance-query callers |
+| cargo test --test integration protected_frame_enforcement:: | ba64625ed | 13 PASS | Existing forbidden/protection callers |
+| cargo fmt --check | 17cd91a9e | PASS | No source changes after final format required |
+| cargo check --no-default-features --features sound,gui,casc,client-mists --tests | ce64c8a37 | PASS | Zero non-vendor warnings required |
 | Synthetic missing-publication negative control | ae0b0b8ff | Expected failure; 22 → 23 gaps | Replace one passing occurrence to preserve fixed row count |
-| cargo test --lib frame_state:: | Pending receipt | Pending | Existing source-unit frame security/state callers; no source mutation |
+| cargo test --lib frame_state:: | ce64c8a37 | 6 PASS | Existing source-unit frame security/state callers; no source mutation |
 | tools/check_patch_validators.py | Pending sealed revision | Pending | Clean and later-audit phases; own-log tamper must fail |
 
 ## Conditional gates
@@ -39,3 +39,7 @@ The prefork marker defines runnable modules, not standalone #[test] functions. I
 ## Completed targeted proof scopes
 
 All publication/factory cases: 57/57. Prefork behavior: 2/2. Existing standalone instance/protection callers: 11/11 and 13/13. Source-unit frame-state callers: 6/6. Mists check: PASS, zero non-vendor warnings; six inherited vendor manifest deprecations plus their summary retained. Negative control: exactly 22 → 23 gaps and expected exit 1. Corrected standalone wrapper execution and portable gate remain pending. Initial extractor-green fixture expected an unspaced heading; corrected before the 88 passing Python fixtures.
+
+## Final targeted acceptance
+
+Corrected standalone selection: 2/2 PASS at 17cd91a9e. All ten independent positive receipts and the deliberate negative failure are sealed; zero-selected-test success is rejected. No relevant source change after these scopes. Portable gate and tamper proof remain pending.

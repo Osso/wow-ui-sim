@@ -1,0 +1,338 @@
+[
+  {
+    "test": "tests/patch_10_0_0_publication_sweep.rs",
+    "results": "patch_10_0_0_publication_sweep-results.json",
+    "observations": 639,
+    "gaps": 173
+  },
+  {
+    "test": "tests/patch_10_0_2_publication_sweep.rs",
+    "results": "patch_10_0_2_publication_sweep-results.json",
+    "observations": 416,
+    "gaps": 149
+  },
+  {
+    "test": "tests/patch_10_0_5_publication_sweep.rs",
+    "results": "patch_10_0_5_publication_sweep-results.json",
+    "observations": 93,
+    "gaps": 27
+  },
+  {
+    "test": "tests/patch_10_0_7_publication_sweep.rs",
+    "results": "patch_10_0_7_publication_sweep-results.json",
+    "observations": 70,
+    "gaps": 26
+  },
+  {
+    "test": "tests/patch_10_1_0_publication_sweep.rs",
+    "results": "patch_10_1_0_publication_sweep-results.json",
+    "observations": 129,
+    "gaps": 36
+  },
+  {
+    "test": "tests/patch_10_1_5_publication_sweep.rs",
+    "results": "patch_10_1_5_publication_sweep-results.json",
+    "observations": 101,
+    "gaps": 32
+  },
+  {
+    "test": "tests/patch_10_1_7_publication_sweep.rs",
+    "results": "patch_10_1_7_publication_sweep-results.json",
+    "observations": 48,
+    "gaps": 14
+  },
+  {
+    "test": "tests/patch_10_2_0_publication_sweep.rs",
+    "results": "patch_10_2_0_publication_sweep-results.json",
+    "observations": 150,
+    "gaps": 30
+  },
+  {
+    "test": "tests/patch_10_2_5_publication_sweep.rs",
+    "results": "patch_10_2_5_publication_sweep-results.json",
+    "observations": 59,
+    "gaps": 14
+  },
+  {
+    "test": "tests/patch_10_2_6_publication_sweep.rs",
+    "results": "patch_10_2_6_publication_sweep-results.json",
+    "observations": 220,
+    "gaps": 20
+  },
+  {
+    "test": "tests/patch_10_2_7_publication_sweep.rs",
+    "results": "patch_10_2_7_publication_sweep-results.json",
+    "observations": 104,
+    "gaps": 36
+  },
+  {
+    "test": "tests/patch_11_0_0_publication_sweep.rs",
+    "results": "patch_11_0_0_publication_sweep-results.json",
+    "observations": 495,
+    "gaps": 166
+  },
+  {
+    "test": "tests/patch_11_0_2_publication_sweep.rs",
+    "results": "patch_11_0_2_publication_sweep-results.json",
+    "observations": 34,
+    "gaps": 12
+  },
+  {
+    "test": "tests/patch_11_0_5_publication_sweep.rs",
+    "results": "patch_11_0_5_publication_sweep-results.json",
+    "observations": 48,
+    "gaps": 10
+  },
+  {
+    "test": "tests/patch_11_0_7_publication_sweep.rs",
+    "results": "patch_11_0_7_publication_sweep-results.json",
+    "observations": 98,
+    "gaps": 28
+  },
+  {
+    "test": "tests/patch_11_1_0_publication_sweep.rs",
+    "results": "patch_11_1_0_publication_sweep-results.json",
+    "observations": 116,
+    "gaps": 19
+  },
+  {
+    "test": "tests/patch_11_1_5_publication_sweep.rs",
+    "results": "patch_11_1_5_publication_sweep-results.json",
+    "observations": 125,
+    "gaps": 36
+  },
+  {
+    "test": "tests/patch_11_1_7_publication_sweep.rs",
+    "results": "patch_11_1_7_publication_sweep-results.json",
+    "observations": 48,
+    "gaps": 8
+  },
+  {
+    "test": "tests/patch_11_2_0_publication_sweep.rs",
+    "results": "patch_11_2_0_publication_sweep-results.json",
+    "observations": 162,
+    "gaps": 27
+  },
+  {
+    "test": "tests/patch_11_2_5_publication_sweep.rs",
+    "results": "patch_11_2_5_publication_sweep-results.json",
+    "observations": 163,
+    "gaps": 45
+  },
+  {
+    "test": "tests/patch_11_2_7_publication_sweep.rs",
+    "results": "patch_11_2_7_publication_sweep-results.json",
+    "observations": 508,
+    "gaps": 94
+  },
+  {
+    "test": "tests/patch_12_0_0_publication_sweep.rs",
+    "results": "patch_12_0_0_publication_sweep-results.json",
+    "observations": 1010,
+    "gaps": 21
+  },
+  {
+    "test": "tests/patch_12_0_1_publication_sweep.rs",
+    "results": "patch_12_0_1_publication_sweep-results.json",
+    "observations": 225,
+    "gaps": 3
+  },
+  {
+    "test": "tests/patch_12_0_5_publication_sweep.rs",
+    "results": "patch_12_0_5_publication_sweep-results.json",
+    "observations": 363,
+    "gaps": 11
+  },
+  {
+    "test": "tests/patch_12_0_7_publication_sweep.rs",
+    "results": "patch_12_0_7_publication_sweep-results.json",
+    "observations": 174,
+    "gaps": 3
+  },
+  {
+    "test": "tests/patch_12_1_0_publication_sweep.rs",
+    "results": "patch_12_1_0_publication_sweep-results.json",
+    "observations": 778,
+    "gaps": 5
+  },
+  {
+    "test": "tests/patch_5_4_0_publication_sweep.rs",
+    "results": "patch_5_4_0_publication_sweep-results.json",
+    "observations": 114,
+    "gaps": 22
+  },
+  {
+    "test": "tests/patch_5_4_8_publication_sweep.rs",
+    "results": "patch_5_4_8_publication_sweep-results.json",
+    "observations": 28,
+    "gaps": 7
+  },
+  {
+    "test": "tests/patch_6_0_1_publication_sweep.rs",
+    "results": "patch_6_0_1_publication_sweep-results.json",
+    "observations": 0,
+    "gaps": 0
+  },
+  {
+    "test": "tests/patch_6_0_2_publication_sweep.rs",
+    "results": "patch_6_0_2_publication_sweep-results.json",
+    "observations": 657,
+    "gaps": 275
+  },
+  {
+    "test": "tests/patch_6_1_0_publication_sweep.rs",
+    "results": "patch_6_1_0_publication_sweep-results.json",
+    "observations": 4,
+    "gaps": 1
+  },
+  {
+    "test": "tests/patch_6_2_0_publication_sweep.rs",
+    "results": "patch_6_2_0_publication_sweep-results.json",
+    "observations": 0,
+    "gaps": 0
+  },
+  {
+    "test": "tests/patch_6_2_2_publication_sweep.rs",
+    "results": "patch_6_2_2_publication_sweep-results.json",
+    "observations": 0,
+    "gaps": 0
+  },
+  {
+    "test": "tests/patch_6_2_4_publication_sweep.rs",
+    "results": "patch_6_2_4_publication_sweep-results.json",
+    "observations": 35,
+    "gaps": 0
+  },
+  {
+    "test": "tests/patch_7_0_1_publication_sweep.rs",
+    "results": "patch_7_0_1_publication_sweep-results.json",
+    "observations": 0,
+    "gaps": 0
+  },
+  {
+    "test": "tests/patch_7_0_3_publication_sweep.rs",
+    "results": "patch_7_0_3_publication_sweep-results.json",
+    "observations": 134,
+    "gaps": 52
+  },
+  {
+    "test": "tests/patch_7_1_0_publication_sweep.rs",
+    "results": "patch_7_1_0_publication_sweep-results.json",
+    "observations": 10,
+    "gaps": 0
+  },
+  {
+    "test": "tests/patch_7_2_0_publication_sweep.rs",
+    "results": "patch_7_2_0_publication_sweep-results.json",
+    "observations": 3,
+    "gaps": 0
+  },
+  {
+    "test": "tests/patch_7_2_5_publication_sweep.rs",
+    "results": "patch_7_2_5_publication_sweep-results.json",
+    "observations": 16,
+    "gaps": 3
+  },
+  {
+    "test": "tests/patch_7_3_0_publication_sweep.rs",
+    "results": "patch_7_3_0_publication_sweep-results.json",
+    "observations": 3,
+    "gaps": 0
+  },
+  {
+    "test": "tests/patch_7_3_2_publication_sweep.rs",
+    "results": "patch_7_3_2_publication_sweep-results.json",
+    "observations": 2,
+    "gaps": 0
+  },
+  {
+    "test": "tests/patch_8_0_1_publication_sweep.rs",
+    "results": "patch_8_0_1_publication_sweep-results.json",
+    "observations": 269,
+    "gaps": 17
+  },
+  {
+    "test": "tests/patch_8_1_0_publication_sweep.rs",
+    "results": "patch_8_1_0_publication_sweep-results.json",
+    "observations": 145,
+    "gaps": 58
+  },
+  {
+    "test": "tests/patch_8_1_5_publication_sweep.rs",
+    "results": "patch_8_1_5_publication_sweep-results.json",
+    "observations": 66,
+    "gaps": 24
+  },
+  {
+    "test": "tests/patch_8_2_0_publication_sweep.rs",
+    "results": "patch_8_2_0_publication_sweep-results.json",
+    "observations": 193,
+    "gaps": 53
+  },
+  {
+    "test": "tests/patch_8_2_5_publication_sweep.rs",
+    "results": "patch_8_2_5_publication_sweep-results.json",
+    "observations": 198,
+    "gaps": 61
+  },
+  {
+    "test": "tests/patch_8_3_0_publication_sweep.rs",
+    "results": "patch_8_3_0_publication_sweep-results.json",
+    "observations": 224,
+    "gaps": 41
+  },
+  {
+    "test": "tests/patch_8_3_7_publication_sweep.rs",
+    "results": "patch_8_3_7_publication_sweep-results.json",
+    "observations": 2,
+    "gaps": 1
+  },
+  {
+    "test": "tests/patch_9_0_1_publication_sweep.rs",
+    "results": "patch_9_0_1_publication_sweep-results.json",
+    "observations": 755,
+    "gaps": 263
+  },
+  {
+    "test": "tests/patch_9_0_2_publication_sweep.rs",
+    "results": "patch_9_0_2_publication_sweep-results.json",
+    "observations": 77,
+    "gaps": 26
+  },
+  {
+    "test": "tests/patch_9_0_5_publication_sweep.rs",
+    "results": "patch_9_0_5_publication_sweep-results.json",
+    "observations": 28,
+    "gaps": 13
+  },
+  {
+    "test": "tests/patch_9_1_0_publication_sweep.rs",
+    "results": "patch_9_1_0_publication_sweep-results.json",
+    "observations": 179,
+    "gaps": 51
+  },
+  {
+    "test": "tests/patch_9_1_5_publication_sweep.rs",
+    "results": "patch_9_1_5_publication_sweep-results.json",
+    "observations": 169,
+    "gaps": 47
+  },
+  {
+    "test": "tests/patch_9_2_0_publication_sweep.rs",
+    "results": "patch_9_2_0_publication_sweep-results.json",
+    "observations": 80,
+    "gaps": 26
+  },
+  {
+    "test": "tests/patch_9_2_5_publication_sweep.rs",
+    "results": "patch_9_2_5_publication_sweep-results.json",
+    "observations": 84,
+    "gaps": 33
+  },
+  {
+    "test": "tests/patch_9_2_7_publication_sweep.rs",
+    "results": "patch_9_2_7_publication_sweep-results.json",
+    "observations": 3,
+    "gaps": 0
+  }
+]

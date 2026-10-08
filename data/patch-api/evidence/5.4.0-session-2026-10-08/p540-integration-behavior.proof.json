@@ -1,0 +1,19 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "patch_5_4_0_behavior"
+  ],
+  "revision": "17cd91a9e8b1e725d090a6fe86543dcc3e3e8de5",
+  "scope": "p540-integration-behavior",
+  "cwd": ".",
+  "target": "dedicated p540-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p540-integration-behavior.txt",
+  "log_sha256": "12018f50e88d75e5c999034d0b95ceec72e4828b22a64947b776fe27103e55f1",
+  "seconds": 231.5785422370027,
+  "invalidated": false
+}

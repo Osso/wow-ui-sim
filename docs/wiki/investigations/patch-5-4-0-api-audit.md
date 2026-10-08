@@ -35,7 +35,7 @@ The Mists automated-inventory parser and extractor stripping function are byte-i
 
 All 56 saved registers reproduce byte-identically. 53 of 56 main extracts reproduce; inherited 12.0.5, 12.0.7 and 12.1.0 failures are unchanged. The separately pinned diff extract also reproduces. Prior source bytes and every recorded extraction-mode outcome are preserved. All 88 tools Python fixtures pass.
 
-Final targeted runtime/format/Mists and portable-validator acceptance is pending; see the session proof ledger rather than treating discovery as final acceptance. Runtime/lib-master and addons-enabled startup comparison gates are conditional on src changes; no src change occurred here. No full integration suite was run.
+Final targeted proof passes: 57 publication/factory cases, 2 prefork and 2 standalone behavior cases, 11 instance and 13 protection caller cases, 6 frame-state source-unit cases, format, and Mists compilation with zero non-vendor warnings. Six inherited vendor manifest deprecations are retained. Negative control fails with exactly 22 → 23 gaps. The initial standalone filter selected zero tests; registered wrappers and nonempty-selection gates correct that verification defect. Portable-validator acceptance remains pending; see the session proof ledger. Runtime/lib-master and addons-enabled startup comparison gates are conditional on src changes; no src change occurred here. No full integration suite was run.
 
 ## Sources
 

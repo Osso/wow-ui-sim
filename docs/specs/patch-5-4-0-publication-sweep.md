@@ -4,10 +4,13 @@ Audit the pinned 2013 retail Mists API page and separately pinned automated diff
 
 ## What it must do
 
-- [ ] Probe every register occurrence under the retail prefork fixture and compare the exact retained gap set.
-- [ ] Apply later retail registers in chronological order; retain queued 5.4.1, 5.4.2 and 5.4.7 placeholders before 5.4.8.
+- [x] Probe every register occurrence under the retail prefork fixture and compare the exact retained gap set.
+- [x] Apply later retail registers in chronological order; retain queued 5.4.1, 5.4.2 and 5.4.7 placeholders before 5.4.8.
 - [x] Reproduce pinned sources without changing older extracts/registers.
-- [ ] Preserve all removal consumer scans and account for every prose/enum occurrence without claiming publication proves semantics.
+- [x] Preserve all removal consumer scans and account for every prose/enum occurrence without claiming publication proves semantics.
+
+- [x] Observe current GetInstanceInfo return #9 changing from 17 to 22 independently of capacity 25 in prefork and standalone fixtures.
+- [x] Observe current Frame:IsForbidden flag transitions in both fixtures without claiming historical security enforcement.
 
 ## How it works
 

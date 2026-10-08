@@ -1,0 +1,2436 @@
+{
+  "base_revision": "bebcc5830dcb21e768a2e3c365105351a400fccb",
+  "code_revision": "b5aaff42e92c34fc1bb7fa9e534dd05d3a7484f4",
+  "own_files": [
+    {
+      "path": "p540-AcceptArenaTeam-cached-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-AcceptArenaTeam-callers-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-ArenaTeamDisband-cached-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-ArenaTeamDisband-callers-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-ArenaTeamInviteByName-cached-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-ArenaTeamInviteByName-callers-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-ArenaTeamLeave-cached-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-ArenaTeamLeave-callers-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-ArenaTeamRoster-cached-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-ArenaTeamRoster-callers-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-ArenaTeamSetLeaderByName-cached-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-ArenaTeamSetLeaderByName-callers-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-ArenaTeamUninviteByName-cached-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-ArenaTeamUninviteByName-callers-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-CalendarMassInviteArenaTeam-cached-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-CalendarMassInviteArenaTeam-callers-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-CloseArenaTeamRoster-cached-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-CloseArenaTeamRoster-callers-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-DeclineArenaTeam-cached-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-DeclineArenaTeam-callers-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-GetArenaTeam-cached-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-GetArenaTeam-callers-grep.txt",
+      "sha256": "19d86d4688185ce7f9e4734c33475fcaf6c71eb8199dc47534c4b84afb316ad3"
+    },
+    {
+      "path": "p540-GetArenaTeamGdfInfo-cached-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-GetArenaTeamGdfInfo-callers-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-GetArenaTeamIndexBySize-cached-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-GetArenaTeamIndexBySize-callers-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-GetArenaTeamRosterInfo-cached-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-GetArenaTeamRosterInfo-callers-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-GetArenaTeamRosterSelection-cached-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-GetArenaTeamRosterSelection-callers-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-GetArenaTeamRosterShowOffline-cached-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-GetArenaTeamRosterShowOffline-callers-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-GetInspectArenaTeamData-cached-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-GetInspectArenaTeamData-callers-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-GetNumArenaTeamMembers-cached-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-GetNumArenaTeamMembers-callers-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-GetPVPRankInfo-cached-grep.txt",
+      "sha256": "830a0cc85f4b1101d34a4175971cd2570d687c444fdfb707810eff41b005e02e"
+    },
+    {
+      "path": "p540-GetPVPRankInfo-callers-grep.txt",
+      "sha256": "a94d3f8e4c7699424dd3f08538a041bf5e20bc78a6c9ca8f72a60f0a47136c04"
+    },
+    {
+      "path": "p540-GetPVPRankProgress-cached-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-GetPVPRankProgress-callers-grep.txt",
+      "sha256": "83ab75f794453d28b9f5071ea8e130b7e13c117aee8212a51137f1dce7ed5cad"
+    },
+    {
+      "path": "p540-GetPersonalRatedArenaInfo-cached-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-GetPersonalRatedArenaInfo-callers-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-GetPersonalRatedBGInfo-cached-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-GetPersonalRatedBGInfo-callers-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-GuildUIEnabled-cached-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-GuildUIEnabled-callers-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-RegisterForSave-cached-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-RegisterForSave-callers-grep.txt",
+      "sha256": "a691421f86d2c27f22f2cf1c0abe0ac28a430925706aa2006ffa6804a9e457d6"
+    },
+    {
+      "path": "p540-RegisterForSavePerCharacter-cached-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-RegisterForSavePerCharacter-callers-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-RequestRatedArenaInfo-cached-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-RequestRatedArenaInfo-callers-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-RequestRatedBattlegroundInfo-cached-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-RequestRatedBattlegroundInfo-callers-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-SetArenaTeamRosterSelection-cached-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-SetArenaTeamRosterSelection-callers-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-SetArenaTeamRosterShowOffline-cached-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-SetArenaTeamRosterShowOffline-callers-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-SortArenaTeamRoster-cached-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-SortArenaTeamRoster-callers-grep.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-UnitPVPRank-cached-grep.txt",
+      "sha256": "e2f6f97b54bddb444e5828053eb7a4c408f08654fe06a2a1b71c883a5f40a3ff"
+    },
+    {
+      "path": "p540-UnitPVPRank-callers-grep.txt",
+      "sha256": "1f47ba32cc63e143aee3beeb46e1ef51c1008fb3720e27bf8661b2434e1838ec"
+    },
+    {
+      "path": "p540-accounting-summary.json",
+      "sha256": "d0d0f32bc7d160bf83d7b4327ca97d757e576fdd73566df316c0632d108ec22d"
+    },
+    {
+      "path": "p540-all-sweeps.proof.json",
+      "sha256": "e140bb016c1fa3a77d1da54a2d5b7cc37e4977ca8cdb9f628350ea98148c43e1"
+    },
+    {
+      "path": "p540-all-sweeps.txt",
+      "sha256": "0a4fcdc5d14f5c7addbd51a3b947d7f02d93a7783e6cf1c857d871a24263fd32"
+    },
+    {
+      "path": "p540-area-C_NewItems-grep.txt",
+      "sha256": "ba42d3133d8098293aa80bcb8b7cf0aa36701259f6e9329ced3b65506f7d1450"
+    },
+    {
+      "path": "p540-area-GetUnitName-grep.txt",
+      "sha256": "252f2a1fbd4295bb4837530c1902628606a90aa7a52c004cf574415dd025c109"
+    },
+    {
+      "path": "p540-bebcc5830-source-tree.txt",
+      "sha256": "f455112f2e324225b9fa463d60215a87724e033cfb9952475073803c4a94e2b6"
+    },
+    {
+      "path": "p540-contract-review.json",
+      "sha256": "89c3502b5749bc0c36038a2462d5086cf457672d219ff220a150e3488114ce09"
+    },
+    {
+      "path": "p540-diff-extract-reproduction.json",
+      "sha256": "cda21b1d0211c8d4bc3000108c6e2efa7c676b7ea0af5d5f54f9f8f7d6eebefb"
+    },
+    {
+      "path": "p540-diff-fetch.json",
+      "sha256": "181ef6b0b2eea800127952f93f57d0899c7211ba0305623f38f45e491e03696c"
+    },
+    {
+      "path": "p540-discovery-red.proof.json",
+      "sha256": "b342ce3928e20ff1eab3272e1628a49fda92f4a1272990011cb0ed4a23f27b20"
+    },
+    {
+      "path": "p540-discovery-red.txt",
+      "sha256": "00ce0451d4c87fe9170a653211f81adb08362d18778c0bd3f4780c2c55c95253"
+    },
+    {
+      "path": "p540-discovery-results.json",
+      "sha256": "cf51a2cf542a4243835bb90a4036d515b5a61692ad8bf1e8f311b26533f45a28"
+    },
+    {
+      "path": "p540-enum-callers-grep.txt",
+      "sha256": "71bba40ea38675175050016d84a9c20259f44617b43d1ce91bfaa538336bdeb4"
+    },
+    {
+      "path": "p540-extract-preservation.json",
+      "sha256": "af7b5fe03ec88964269656467c78afaf0274220722add5e2076a7328a90d3843"
+    },
+    {
+      "path": "p540-extract.txt",
+      "sha256": "6ec9a09b8614c5cd181f5a189e3de53b4a0f23132dae6fd79351c6c0df32b617"
+    },
+    {
+      "path": "p540-extractor-green.txt",
+      "sha256": "7f6852eb5e81a209f9382acb3884f2ed1e8d16004d0b49578602d7430ed7fa77"
+    },
+    {
+      "path": "p540-extractor-red.txt",
+      "sha256": "577c0c64287df3111d22eeae4cfe1080bd24221ea16835e189e60e4fe33c4f68"
+    },
+    {
+      "path": "p540-fetch-receipts.json",
+      "sha256": "0c04bea4e51e36fa0c2c428313d5d931e1504fd1fcc9001f54327cfd6ae8061b"
+    },
+    {
+      "path": "p540-fetch.json",
+      "sha256": "319f6ba8ecbd1e7f7bda3f088d708df323443b97802cfe26eab894c0609ad367"
+    },
+    {
+      "path": "p540-format-before-standalone.proof.json",
+      "sha256": "e020ff00dfac5b0f2e6c97631cdd2afddd224d90771739539dc95d55cf59a178"
+    },
+    {
+      "path": "p540-format-before-standalone.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-format.proof.json",
+      "sha256": "639359619fc1f4becae1d668212a3b34d3f0b5bbb047837d598aa3588ee8da63"
+    },
+    {
+      "path": "p540-format.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-gap-review.json",
+      "sha256": "30a2909635230e4dc543189339b3c3b294fb135b7b89dec849a0abf9500f1e69"
+    },
+    {
+      "path": "p540-generator-green.txt",
+      "sha256": "fe008aab760eb03ccac7578e2b84665b1b50b0d7f855b17a0c7a8d039435b658"
+    },
+    {
+      "path": "p540-generator-red.txt",
+      "sha256": "17370b5841af36163192d9721c7b587cc5c190c6028cfa19b417e72a4303c854"
+    },
+    {
+      "path": "p540-input-preservation.json",
+      "sha256": "5e964afd7d8c94a5796572a35188bf22ff1f57d02f89c6bcf38aa633d1d6be99"
+    },
+    {
+      "path": "p540-integration-behavior-empty-selection.proof.json",
+      "sha256": "1b3014e50af3c2ab9ca86bb1ffddc8f241bb3d52e43933809d49eae822c3e951"
+    },
+    {
+      "path": "p540-integration-behavior-empty-selection.txt",
+      "sha256": "2e4bda4d9ebf19cf31bd7ad586303c49113446e4f354c5fd94e96bf6cdcc7fe4"
+    },
+    {
+      "path": "p540-integration-behavior.proof.json",
+      "sha256": "f525f8a6672300a8945b582bfc91b4275824a60bbc4c24202cbf72818b4f98c8"
+    },
+    {
+      "path": "p540-integration-behavior.txt",
+      "sha256": "12018f50e88d75e5c999034d0b95ceec72e4828b22a64947b776fe27103e55f1"
+    },
+    {
+      "path": "p540-integration-forbidden.proof.json",
+      "sha256": "72c97bf760815e37876fb6cb5898a8211dde7b3a391649ddcfb686ffb63d3d9e"
+    },
+    {
+      "path": "p540-integration-forbidden.txt",
+      "sha256": "97715758a8e2ff646803af9bf08dec58f0c3fccb98b014904b51f835e12a6ca3"
+    },
+    {
+      "path": "p540-integration-instance.proof.json",
+      "sha256": "4f50ab4fc8889330394279f68f54bae3635314498e4910584ecdd17f4c8669e0"
+    },
+    {
+      "path": "p540-integration-instance.txt",
+      "sha256": "14f4e1350c40d91c326bcb5f9c67dbe643387a373f5220bd4c627ed9faa5c35f"
+    },
+    {
+      "path": "p540-later-register-check.json",
+      "sha256": "746b58b1c9c64835a858a20670413d9938bf6c93d914ee6a333ff897d8da6295"
+    },
+    {
+      "path": "p540-lib-area-grep.txt",
+      "sha256": "5bf762b072e5d0220ead70a2932a839665ac9108498a795349e829397d6ce927"
+    },
+    {
+      "path": "p540-lib-frame-state.proof.json",
+      "sha256": "0fa954e296f228b4e7e29f44905c1f0d11f45327e390c069c88745854ce99913"
+    },
+    {
+      "path": "p540-lib-frame-state.txt",
+      "sha256": "8e256101caf4fad72e775ad67dc3933850b7ff132b3b601175de442bcb41c14f"
+    },
+    {
+      "path": "p540-mists-check.proof.json",
+      "sha256": "1d4c6db6da6dd7ed4be6ea641b933ea64d3ee36a1c000640bb7b8d8b4c1d4390"
+    },
+    {
+      "path": "p540-mists-check.txt",
+      "sha256": "03716564d8dd5c367fe455ad0dd735bf3a9ab07d22bdd5da5873af582df61107"
+    },
+    {
+      "path": "p540-negative-register.json",
+      "sha256": "29b022dfbd38052d1c0aa633630f97ebddbe83af8e7aa9945dd3385fe736bd12"
+    },
+    {
+      "path": "p540-negative-results.json",
+      "sha256": "2c29240bb3b72d3538b35696e9d525a79e5f2d65e9e5ad344ac353cebda5d224"
+    },
+    {
+      "path": "p540-negative.proof.json",
+      "sha256": "86223ac90e56e874f99bff2784495a6732c94f6f5504a83442a8d15bafbafc28"
+    },
+    {
+      "path": "p540-negative.txt",
+      "sha256": "f46fa6acced12926fbabadefa0829019353e4a3d3a1d9fa9ec5728c7b5025396"
+    },
+    {
+      "path": "p540-p541-page-source-tree.txt",
+      "sha256": "02abb1188206b80372f7a571d1ba436b3ce428e3f1c1c45639623f65cf557e8e"
+    },
+    {
+      "path": "p540-p542-page-source-tree.txt",
+      "sha256": "35d806c83335b3c73892adefb21e07e43626f5078e2ab457c45f8a3316169829"
+    },
+    {
+      "path": "p540-p547-page-source-tree.txt",
+      "sha256": "babaab2912b2e27cfa0d6c31e1b9bf6da018a5b39fc40cd52d60ac71b7c4beaf"
+    },
+    {
+      "path": "p540-parent-fetch.json",
+      "sha256": "c8a27ebe34cd5d1bae1d94e20aca560f0c02779a0321850a6bd5dc83cbff614f"
+    },
+    {
+      "path": "p540-parser-origin.json",
+      "sha256": "8eb0b75971609308a45c72b9131c457290c83e2bc9c1e32ffd1bcde3204bebf3"
+    },
+    {
+      "path": "p540-prefork-behavior.proof.json",
+      "sha256": "ef414004646fce42159d0c960a2bb633f9dce7ae84abeb987c2dbc613cb63d5a"
+    },
+    {
+      "path": "p540-prefork-behavior.txt",
+      "sha256": "255c29820988a3b48a882388c9719f046b818e6bb3d0249cdf9234de77348302"
+    },
+    {
+      "path": "p540-python-fixtures.proof.json",
+      "sha256": "00cbc4302c13554ac11611b83013a03e4d99ab5b629b9731b91156c450a51317"
+    },
+    {
+      "path": "p540-python-fixtures.txt",
+      "sha256": "00a4f0a09c95e6ccbdd0ed8da4ef134f7829e8e29e687a29d318fb0842296287"
+    },
+    {
+      "path": "p540-register-generate.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "p540-register-reproduction.json",
+      "sha256": "70c2d46e26cde8d919366ff0dda411e8f6ea8a8b73aff664eeb97c1042ae538a"
+    },
+    {
+      "path": "p540-reproduction-development.proof.json",
+      "sha256": "a1a28d8df6495470f5bbd732580ce55f8e2cb1110cfe05380bb4482eb23d0a3f"
+    },
+    {
+      "path": "p540-reproduction-development.txt",
+      "sha256": "1535b088e1c9f767583ffca2c723c4191646d27ffa3fbac916339196ec244d56"
+    },
+    {
+      "path": "p540-reproduction.proof.json",
+      "sha256": "918daaf98270ffcfb7c2414822bcbb14d1669a82406abff09bbee3acaccb32bc"
+    },
+    {
+      "path": "p540-reproduction.txt",
+      "sha256": "1535b088e1c9f767583ffca2c723c4191646d27ffa3fbac916339196ec244d56"
+    },
+    {
+      "path": "p540-retail-confirmation.json",
+      "sha256": "1b298513b8ba11902106ed9a10cbc465c86b6e6b64d01add3e3d6f4dd619207f"
+    },
+    {
+      "path": "p540-retirement-scans.json",
+      "sha256": "7213580691306925ad94a642d38452653eaaf666ab9fb85799362de222c6d289"
+    },
+    {
+      "path": "p540-rust-readability.md",
+      "sha256": "17656bdd748815c0d459cbf031a480857f090647ac537bccee063190860a897e"
+    },
+    {
+      "path": "p540-saved-extract-reproduction.json",
+      "sha256": "3d7f713db3511dd4578afb55695813b4e87ac11a869f79531eec101f1464b2cb"
+    },
+    {
+      "path": "p540-sweep-summary.json",
+      "sha256": "902cca521f17d57edc8350b39225f4ce769f4a43b654d1516b4cc3335a03c4b6"
+    },
+    {
+      "path": "p540-targeted-driver.proof.json",
+      "sha256": "198dde80d77d087474b1bf97eb3dbe758348d85bfad3342e944fbc0e361564a7"
+    },
+    {
+      "path": "p540-targeted-driver.txt",
+      "sha256": "ec4acfa83e7ba3b11b30e41a7f6acdba1c679211cf99df4a56fb93275c8f15b8"
+    },
+    {
+      "path": "p540-targeted-summary.json",
+      "sha256": "8c342ebc17a19f121f092cc40ec11b3cf44c964e22845debce2c936dd69a2095"
+    },
+    {
+      "path": "p540-warning-review.json",
+      "sha256": "14bc5dd1d7966a3fa5e38cb75943f8664d168f1dc270df62812b4d631d9d383c"
+    },
+    {
+      "path": "p540-wiki-baseline.json",
+      "sha256": "bcced8dd48744050b02f0b7ddac0d278ed926bae2b529591cae8fd40b129bf0d"
+    },
+    {
+      "path": "patch_10_0_0_publication_sweep-results.json",
+      "sha256": "bd4532b7b4b2181e0a522e63bc2e90133e3efb639d231069fdc99570b0a0207c"
+    },
+    {
+      "path": "patch_10_0_2_publication_sweep-results.json",
+      "sha256": "d2ede209933cfa895e526f94443b34f598e5ca15326c26d9ee0512b8b6fee549"
+    },
+    {
+      "path": "patch_10_0_5_publication_sweep-results.json",
+      "sha256": "013a487fe4b954e932c414e8b7b281a9244928833c41cf4aff46ee9430df3926"
+    },
+    {
+      "path": "patch_10_0_7_publication_sweep-results.json",
+      "sha256": "84a026467f32d12f076db9d33a70b2ab52f1af9dc774ce825e88467e7720c4de"
+    },
+    {
+      "path": "patch_10_1_0_publication_sweep-results.json",
+      "sha256": "866aab81972645eda6daec742735bc20ada2f8ceadd501691223b88c347c76ce"
+    },
+    {
+      "path": "patch_10_1_5_publication_sweep-results.json",
+      "sha256": "8066560a252584d6248d96a6fdab7833055913c47e0f6eb604f95cc31e931f9f"
+    },
+    {
+      "path": "patch_10_1_7_publication_sweep-results.json",
+      "sha256": "91535c49b96baf0ea4c4b7dfb54da27934b3703c747361c54807d31d00ebf61b"
+    },
+    {
+      "path": "patch_10_2_0_publication_sweep-results.json",
+      "sha256": "abe59f329772a79e70648101705e776fefb23a75f858a7a4c436b050457e8bf1"
+    },
+    {
+      "path": "patch_10_2_5_publication_sweep-results.json",
+      "sha256": "1949aa22afe6263687cc4482b6e7cca1c7252f2829b2f1668babcd837d09cd8f"
+    },
+    {
+      "path": "patch_10_2_6_publication_sweep-results.json",
+      "sha256": "6f929eae9c1da576a1a8a178b62eff260d59489f887dffe1b70efdbdfc15319c"
+    },
+    {
+      "path": "patch_10_2_7_publication_sweep-results.json",
+      "sha256": "0a20fab185090eb9cc06e9ae6fed6a7af6e145b5bfd7e8dad036e2720e7d8579"
+    },
+    {
+      "path": "patch_11_0_0_publication_sweep-results.json",
+      "sha256": "6cd74d7f43021732984af2ef56a7e021fd82c9100d722f1cc29b4592c943d67c"
+    },
+    {
+      "path": "patch_11_0_2_publication_sweep-results.json",
+      "sha256": "782a377432c7c80deee9e7852abc929fd5343691a84563ed1438cf230f8b7eb6"
+    },
+    {
+      "path": "patch_11_0_5_publication_sweep-results.json",
+      "sha256": "d9cdb7f0d38652addd93d9fff753ce0bbc5b52e623979bc462c48ff1b389990b"
+    },
+    {
+      "path": "patch_11_0_7_publication_sweep-results.json",
+      "sha256": "667d25546aad70937bb5bf7e8b7eaf347c73d7b3af8723dd8cfbfeaaa9e1d985"
+    },
+    {
+      "path": "patch_11_1_0_publication_sweep-results.json",
+      "sha256": "c94c288d384ca8eddc13c8b91b1e493b011b56d8871455b0eb2d503750b9ec76"
+    },
+    {
+      "path": "patch_11_1_5_publication_sweep-results.json",
+      "sha256": "db288c9eb96cae842416094485e58eeea84ce40371cfcaa07ad8c93ebd32e2d9"
+    },
+    {
+      "path": "patch_11_1_7_publication_sweep-results.json",
+      "sha256": "48435e99e299b2a13110e0f7a27d47688d128f2774540f070cb0594728a1d20d"
+    },
+    {
+      "path": "patch_11_2_0_publication_sweep-results.json",
+      "sha256": "a4e1847a8ce3357fc25ff040dbd75c0e78fbda5a18763fa57931933e9af05eae"
+    },
+    {
+      "path": "patch_11_2_5_publication_sweep-results.json",
+      "sha256": "33bb90179c363e0b734f1df6d3c3950f8bba0be4a22e62248b7148004a6d998b"
+    },
+    {
+      "path": "patch_11_2_7_publication_sweep-results.json",
+      "sha256": "a5108e0ec2710b9e632d2e296a946dc140d0db2f7a3162b94729d0f4dc4bc5b6"
+    },
+    {
+      "path": "patch_12_0_0_publication_sweep-results.json",
+      "sha256": "6ac21c4a27738d4bba700115182d63414e772cddb92e135ea4748ba6a35934ea"
+    },
+    {
+      "path": "patch_12_0_1_publication_sweep-results.json",
+      "sha256": "65da561aeecdf24065c6368cbf0db0227bd87ad6c9b0370939595836334c0dd6"
+    },
+    {
+      "path": "patch_12_0_5_publication_sweep-results.json",
+      "sha256": "cac702f3f8daf845c58348d125950df7362739dadcdd90ffdb450416cb3e77d8"
+    },
+    {
+      "path": "patch_12_0_7_publication_sweep-results.json",
+      "sha256": "2dfa4c6469ecafd9704c8d4810aa670594545650382b9307502c1d5790f6ea46"
+    },
+    {
+      "path": "patch_12_1_0_publication_sweep-results.json",
+      "sha256": "bc45dc419a0c30481ff9e949515f6a0e2ab684ee5bbcc401a1ce7df383d1361f"
+    },
+    {
+      "path": "patch_5_4_0_publication_sweep-results.json",
+      "sha256": "cf51a2cf542a4243835bb90a4036d515b5a61692ad8bf1e8f311b26533f45a28"
+    },
+    {
+      "path": "patch_5_4_8_publication_sweep-results.json",
+      "sha256": "9dd8b499459de991911f0b39f27b39e5238b7ed56f7fd81469498ad7e96e1c8a"
+    },
+    {
+      "path": "patch_6_0_1_publication_sweep-results.json",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    {
+      "path": "patch_6_0_2_publication_sweep-results.json",
+      "sha256": "79d751e7a430a6d22af691055108391430067eeae7558f4b560a381802677282"
+    },
+    {
+      "path": "patch_6_1_0_publication_sweep-results.json",
+      "sha256": "cecdb13ceb2d6f2da5deefb1f4fb3d518bad020092a375fd23d9546899defca6"
+    },
+    {
+      "path": "patch_6_2_0_publication_sweep-results.json",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    {
+      "path": "patch_6_2_2_publication_sweep-results.json",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    {
+      "path": "patch_6_2_4_publication_sweep-results.json",
+      "sha256": "cd3e13a1f2eeda0c430dfd2f3cc913b9deaaa09047c18bfc724437a140ec5dec"
+    },
+    {
+      "path": "patch_7_0_1_publication_sweep-results.json",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    {
+      "path": "patch_7_0_3_publication_sweep-results.json",
+      "sha256": "60e4c82bab56711e7d32002cb4a196d0b251742c5f41d95a12828cca9d1b8e75"
+    },
+    {
+      "path": "patch_7_1_0_publication_sweep-results.json",
+      "sha256": "8b8784994ded3aebe0f4035fb7d6063bf9bacd0337bff92dca04fec9222fa6f1"
+    },
+    {
+      "path": "patch_7_2_0_publication_sweep-results.json",
+      "sha256": "0826c386337600a5a45df547b9b9a98985efb3e745d87359805d8d4cc58c4974"
+    },
+    {
+      "path": "patch_7_2_5_publication_sweep-results.json",
+      "sha256": "62c2c2385c6cd65f2f8051a24dc71e40eeda3b345e20acd9be7c49c6dcb54640"
+    },
+    {
+      "path": "patch_7_3_0_publication_sweep-results.json",
+      "sha256": "df47af7ac78df8419abe44d4e74f9c0f816b0ae046541b4c4fffb6ac22ed0074"
+    },
+    {
+      "path": "patch_7_3_2_publication_sweep-results.json",
+      "sha256": "7fc5f374c2a41df9a8a84d3fd31b8e9e92a40f9532630081b501edab54bda92c"
+    },
+    {
+      "path": "patch_8_0_1_publication_sweep-results.json",
+      "sha256": "5e5aa3658950d0b6c3ff6b315aa590079b2d2effdb7e734b966c45647ad9398e"
+    },
+    {
+      "path": "patch_8_1_0_publication_sweep-results.json",
+      "sha256": "51e18245da557e76770dc9607d0318e177bfbe3a8e7bd56972847ab06d2eff95"
+    },
+    {
+      "path": "patch_8_1_5_publication_sweep-results.json",
+      "sha256": "dab5c4be04451e47f36b067c2f7b360ae2019880bff681e0bf6afb9f54e5de14"
+    },
+    {
+      "path": "patch_8_2_0_publication_sweep-results.json",
+      "sha256": "4d3c6245a07b32960f3a9140e8015a1f39ba0444f3bcf194e084f9aa0364cd89"
+    },
+    {
+      "path": "patch_8_2_5_publication_sweep-results.json",
+      "sha256": "e51ecb8bf85b5afdee84e23d3ef55cb54471b500ad7ecef709edf6939219ca4b"
+    },
+    {
+      "path": "patch_8_3_0_publication_sweep-results.json",
+      "sha256": "3fecaeaf491d4fccd7a5d2dc2c22c9822c0c22ab415d0712906004cba0e1c075"
+    },
+    {
+      "path": "patch_8_3_7_publication_sweep-results.json",
+      "sha256": "d6f173835936181f7b7455002a7b18e8e9e48ae987b6197630a8868e36b5cbb4"
+    },
+    {
+      "path": "patch_9_0_1_publication_sweep-results.json",
+      "sha256": "8bacb4be7b84d0ea9ec5210b46b41da0e7757b42dd11e810a0de568ddcfb71b5"
+    },
+    {
+      "path": "patch_9_0_2_publication_sweep-results.json",
+      "sha256": "9b4f9badc099ee52711b462d77a906b293aa4d75f452cacc2a57559e85bbcc70"
+    },
+    {
+      "path": "patch_9_0_5_publication_sweep-results.json",
+      "sha256": "4d5a6e3bf1917adde86c66fecad5ef3539b8487b2c78fa1566ea2627f43af444"
+    },
+    {
+      "path": "patch_9_1_0_publication_sweep-results.json",
+      "sha256": "d85b2de60a7bab39c8f50aaead29bfdd021abbe249eed22e92056509a46c97c9"
+    },
+    {
+      "path": "patch_9_1_5_publication_sweep-results.json",
+      "sha256": "10c289379ca8afa49c5d7652857fdef4350cbddf30ad1ffac0076c11622176c7"
+    },
+    {
+      "path": "patch_9_2_0_publication_sweep-results.json",
+      "sha256": "cd6f83542c536542599fd78326ed42ac81567d8c93563b0d5e7fb0f715355c03"
+    },
+    {
+      "path": "patch_9_2_5_publication_sweep-results.json",
+      "sha256": "961c0b44ffecad59e032fe345f5012b00aae419ff714e2b56661b9e2ce34109b"
+    },
+    {
+      "path": "patch_9_2_7_publication_sweep-results.json",
+      "sha256": "75ee0c42a0ee28e36913384c4f8ce534bbbf4fc7cf90cc3ba5f8c9fee12c0fad"
+    },
+    {
+      "path": "reproduce_sources.py",
+      "sha256": "19bb00ef4ad13e3f03fc3a1a7b80cac49622cc8ff0c2ea6687261d13eabd6f83"
+    },
+    {
+      "path": "run_proof.py",
+      "sha256": "05fff672304076cafff774bbee332b9aea19e562d3adac0da67967f9b9748864"
+    },
+    {
+      "path": "verify_targeted.py",
+      "sha256": "783448e8e51f91025367f2acbea18cb6b66ca859b43ffb46aeebb9987bb64a09"
+    }
+  ],
+  "shared_files": [
+    {
+      "path": "Cargo.lock",
+      "sha256": "859f258fa21eb92f7f0c83c77d526ea0ce3e7535b0970df2e39c459023c0b9cf"
+    },
+    {
+      "path": "Cargo.toml",
+      "sha256": "98e73c27d7cd21438f61e6839c823c128d1be338ea60e603202a7417f51b0e07"
+    },
+    {
+      "path": "build.rs",
+      "sha256": "df6b286152daa948557c17c4abb8776af2aed573c45f1fcb4901fd2b4a8ccde2"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.0-api-changes.provenance.json",
+      "sha256": "21a910d436bb72f58253dbd849cb86ad33020aef71fcc8b4a72ec2051d02946e"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.0-api-changes.txt",
+      "sha256": "17a3a97fba53aad8c84b08c5e625211e5351ec8ce1fe190a05f9b3aa176fb6a2"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.0-api-changes.wikitext",
+      "sha256": "511e12f2dc5ffa02b49dbfec8132cdeffc3f5ea4e8f2ac11d2cf4c338d357f9c"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.0-page-coverage.json",
+      "sha256": "35b16d8f67d68bd85e484bdcd76a58fb537fcdcece1d5c151bbab98fdad9bded"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.0-wikitext-register.json",
+      "sha256": "c093335505ec54e96dda556f6011facd7c7616d80636843413fc193a25b7a1ca"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.2-api-changes.provenance.json",
+      "sha256": "e1f96a5d4b46370398a16837f69c21b7c94304e650eed04d47440c7660506aa7"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.2-api-changes.txt",
+      "sha256": "1f43010bba50fcfc6c323ab7d75c7984e87a8e588ab1693f641111fa0f249feb"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.2-api-changes.wikitext",
+      "sha256": "2c166624469ef741392de16f972a89f8ca9b4b71fa3f087fb9919954be4ae716"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.2-page-coverage.json",
+      "sha256": "061bcf0d44d5fb24579c55adb443980b2d61de9670f1eb450bd1a5f18a7d2842"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.2-wikitext-register.json",
+      "sha256": "84941b2b96c7c3a20e972045487ff66c5ede5845be7e453c5806669a18c85059"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.5-api-changes.provenance.json",
+      "sha256": "25ffadf070e5ea83857670e085e72082d123b6d3dcfdb0318c747514b273753c"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.5-api-changes.txt",
+      "sha256": "60f99c9d781367178a5a2220c4bb71cb59b8dd91b02a48959e8e2237a8119a20"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.5-api-changes.wikitext",
+      "sha256": "1a87bf3e9a5d52171e3ce04565c648a22b5ec9c791126ff42e0a4d659470c687"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.5-page-coverage.json",
+      "sha256": "98391910a850cda58dc12012309e620dc2aa765603646f670ae1abce0185a62b"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.5-wikitext-register.json",
+      "sha256": "336973622327eddaf6d21111354402b4b1faf424a0701e34a99c3a56640be0b1"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.7-api-changes.provenance.json",
+      "sha256": "dbea7ebcfe05e767e12669247d3e17af33f386c91fe3ef708351ac6810c93a0a"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.7-api-changes.txt",
+      "sha256": "879577e70ea3990e65b4044f07e1928e3ba9bf509f13400147016c483c9729a5"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.7-api-changes.wikitext",
+      "sha256": "b4175ca8755de168ade2800555c5576f452111b8de2b48be81a639516d584689"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.7-page-coverage.json",
+      "sha256": "a41b3e3ff34b199d006c024380bd48ba2579d79146e9677ede29c6a1fdce9d92"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.7-wikitext-register.json",
+      "sha256": "64ef0166fa31a83460312cb97ac2d0f4b65113779b4d6904c43283dc0854ad1e"
+    },
+    {
+      "path": "data/patch-api/sources/10.1.0-api-changes.provenance.json",
+      "sha256": "3d110b1b733d947a3b70cfb8c560a1f2ee9c9c431f107a238de4d5acc49dec4b"
+    },
+    {
+      "path": "data/patch-api/sources/10.1.0-api-changes.txt",
+      "sha256": "50ab412824b136929589560a58d933c2cf68ebccea09ad2dc4c3870d40a7c069"
+    },
+    {
+      "path": "data/patch-api/sources/10.1.0-api-changes.wikitext",
+      "sha256": "9b22cad6805e68ffbdb9c723c8e23ff208bd644fd5b94fadcf0493f96241c8d2"
+    },
+    {
+      "path": "data/patch-api/sources/10.1.0-page-coverage.json",
+      "sha256": "8aa9015ee0518fc8b6ea4073a01eb25da3f8f09ee04f4380110651d192e6c8d1"
+    },
+    {
+      "path": "data/patch-api/sources/10.1.0-wikitext-register.json",
+      "sha256": "9ef8625ab492bdc51b1a010b859044987e63f72dd89c65c878f447948edacd76"
+    },
+    {
+      "path": "data/patch-api/sources/10.1.5-api-changes.provenance.json",
+      "sha256": "1132fd8e1c794e577695b3f54990885a1af11db73060b4ab86b469a967fbeb14"
+    },
+    {
+      "path": "data/patch-api/sources/10.1.5-api-changes.txt",
+      "sha256": "d871bfe9ac485926da1fb380b1a7f1e7eb9aa18025b9f7b09354e43f4f66b1f1"
+    },
+    {
+      "path": "data/patch-api/sources/10.1.5-api-changes.wikitext",
+      "sha256": "9a0f1759634bf56323e005271e909439905662d6411f01768641a59114c4ed08"
+    },
+    {
+      "path": "data/patch-api/sources/10.1.5-page-coverage.json",
+      "sha256": "0a5e8de5456787e79caf715334c5624c96053fa2c784fb864aea8954cbbea6c7"
+    },
+    {
+      "path": "data/patch-api/sources/10.1.5-wikitext-register.json",
+      "sha256": "cbd9a9de7fff6b6e8d77e352dccbe96b21caed7650577d432eaa24673fb8746f"
+    },
+    {
+      "path": "data/patch-api/sources/10.1.7-api-changes.provenance.json",
+      "sha256": "8fecb6e6134d79d283739bbedfbad22cf13609ee9ef442632507a7d0f355a494"
+    },
+    {
+      "path": "data/patch-api/sources/10.1.7-api-changes.txt",
+      "sha256": "e2d9c557e865b7b9e9e2133064ddc229587001edf91ea08a3deaba65059bfc2a"
+    },
+    {
+      "path": "data/patch-api/sources/10.1.7-api-changes.wikitext",
+      "sha256": "065658e2e89ae0f2055c03c9e890a42321c1983165f1a33898747d7b0719b76a"
+    },
+    {
+      "path": "data/patch-api/sources/10.1.7-page-coverage.json",
+      "sha256": "d168e6c05e83e831df9d0800db54bacc83428a427baa65d0aa2ebe21c418fc85"
+    },
+    {
+      "path": "data/patch-api/sources/10.1.7-wikitext-register.json",
+      "sha256": "d0db70aa76a3aa2b01e39227420f3fb5c3874b8c3b2457847ae4fa913299c01c"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.0-api-changes.provenance.json",
+      "sha256": "9f30bf8cfae8dd58beea49f05484895ea2a6d935bac8c18db8dde23e63ecc04f"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.0-api-changes.txt",
+      "sha256": "9354b5bfd77b78079a216766945da4ad04c979c2bb3b723cc5fd86adc73af5fd"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.0-api-changes.wikitext",
+      "sha256": "11c35f322614c8645658d9a601df1b3b60eb44e559a38bc8dfa48bf5a8f4d0a5"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.0-page-coverage.json",
+      "sha256": "d960b0ac6a0edbce5fc9bf927201ab2a774117a53bfde93071ea5e938135c241"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.0-wikitext-register.json",
+      "sha256": "beaf8a6dd57229712abf3366b8ffc29163e75aa827533e108d59b89f6c56b979"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.5-api-changes.provenance.json",
+      "sha256": "17cf725dcad8449d8ab07c4d1a8de81b222ad5dee771ba230d9a1f20ae4c7e56"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.5-api-changes.txt",
+      "sha256": "cbeca6db214446a0cd8ea8acd939e2764d73bfb8e0a027398403afbcbb764fb0"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.5-api-changes.wikitext",
+      "sha256": "c2becc09182863ffce8ad75c3209159afdecea6223f4985d0bf3c6f6e89ef9db"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.5-page-coverage.json",
+      "sha256": "175e5022750738a6a43ad414f889a378db5b7ba8fdb1c8ee46c372058a672d4b"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.5-wikitext-register.json",
+      "sha256": "38bf561f25edb63ab3f34e17aef9e088471cc85844c3ca9d5c269c3b206723b8"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.6-api-changes.provenance.json",
+      "sha256": "5b019c053d33d0fa468c3bce941d0971a3fa238d6bae588ce6a13ba3bb46abba"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.6-api-changes.txt",
+      "sha256": "037da4f0fbbc43bc8cdee6545be687d07c083c3cdc334fc4284567abe22502b1"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.6-api-changes.wikitext",
+      "sha256": "a02ddeeb6bb50ce02a5c84de9b9848c54c3ad25784a58853249231caee1769d4"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.6-page-coverage.json",
+      "sha256": "8d1e994b5c445da4815e83ee46e33a6672de56928351f8d82139d33978ba15d6"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.6-wikitext-register.json",
+      "sha256": "922d9173720213392dc4c228881539cf59a45fd7b3f0a3155176c36d68deb772"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.7-api-changes.provenance.json",
+      "sha256": "1d4d9d086af8b69dda1cedc44560f54946884f8799837c7ae56745d2ad057b34"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.7-api-changes.txt",
+      "sha256": "3456a7aa752cca63eba2758ea0583b764826b808f04c6a8dd6752b19b7e6b832"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.7-api-changes.wikitext",
+      "sha256": "ccc82e24d9752949029abe27a38138463b304ef7f9ecfaf3b2767481bdf53182"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.7-page-coverage.json",
+      "sha256": "1fd7d0a1e5e701512ae7dd08915808c5bde88ef5a71abe6a91a850ecd37bb82c"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.7-wikitext-register.json",
+      "sha256": "f5415c7991f08f5cf958648d0b2aa8f62f43647be819b44156963c0f9a2ad045"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.0-api-changes.provenance.json",
+      "sha256": "ba3fe3417708d791d3994cb332cac4e2539d5249bdb4b11c863977aef4a99fb4"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.0-api-changes.txt",
+      "sha256": "f74031387786890b33d9c1b2bb49691c165e8720976db662cfddb3d9353f6826"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.0-api-changes.wikitext",
+      "sha256": "777f9c6031b93bc7070eeef547762da2869aa191b5ebf1e75a0282a7633ad347"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.0-page-coverage.json",
+      "sha256": "3a71321fe8277e2686050be03062b6765b0661776852723e64faf9bc0f169d63"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.0-wikitext-register.json",
+      "sha256": "628e96cf4efca59242d3a6c093f5d7fa09657b47c2d71e39563ea62ea56a0186"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.2-api-changes.provenance.json",
+      "sha256": "d78e66ee362fe92443ee93b21e9c1a89c1af25dedd981da7fcb8f6480663a3d1"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.2-api-changes.txt",
+      "sha256": "5df4b79162d245df301779c781bd8496143bc4e86fd7a882f0d77f40ed5c3b18"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.2-api-changes.wikitext",
+      "sha256": "d37630145361a8be11a668f10d0da5256eb0f8999cff424c4a3e84ea13e50ec4"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.2-page-coverage.json",
+      "sha256": "5aecdf0cde52791550463daad2bb4053d01ae0049feb8a40741c698fcbff4e19"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.2-wikitext-register.json",
+      "sha256": "a5edb6c195e1ccc9722aa1358fc0a392b772563a43bf5c4abf4d45446e6bf9ca"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.5-api-changes.provenance.json",
+      "sha256": "61a76366cae7f15e6f4fd8d31bb3401103fc522351fc5ac1dca358cf91d34c74"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.5-api-changes.txt",
+      "sha256": "c91cb989e635c029c6eabbc86523d68cbf33d16590af5f043614b667caeb87d4"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.5-api-changes.wikitext",
+      "sha256": "185e5cc92ca97494d00d7bdad8b770ceed22c075e4eacbbd30a4f1e7a3579f6c"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.5-page-coverage.json",
+      "sha256": "0024c3ef57b871835f41d1f329a653f859396dc558b2c693845b0e0beff96782"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.5-wikitext-register.json",
+      "sha256": "ba4d8add87e00805279188fc091f2b4dc3ded5b12a436d2d579768943280c4fd"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.7-api-changes.provenance.json",
+      "sha256": "489eb61c6c1b6f6a1b43fd1f98d8fe0d99405101fa324116e74b4a5c0af68868"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.7-api-changes.txt",
+      "sha256": "581f98e5dcb3d350df424725839f281dda7c90e015870d05c92e25a55d931cb1"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.7-api-changes.wikitext",
+      "sha256": "7452477854beac6fe0155caaf283801f15eb46acf20b69e90c8b8eb589ccb061"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.7-page-coverage.json",
+      "sha256": "c60e29517a1d199c389a10fe3a38faae71b5eb9116a8c161e2f9bc29382f121b"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.7-wikitext-register.json",
+      "sha256": "0e3807e89614ed0cca38ba8d80c803a5cbab8df45d6213255512f952f03071ae"
+    },
+    {
+      "path": "data/patch-api/sources/11.1.0-api-changes.provenance.json",
+      "sha256": "29850951754acd8c065ba68459c87541e4c91181c0cddb528ae4701a284db2ec"
+    },
+    {
+      "path": "data/patch-api/sources/11.1.0-api-changes.txt",
+      "sha256": "e954712fd44a0e153427bc18ac686523860753b4e04ede52dae715342f5c3aa6"
+    },
+    {
+      "path": "data/patch-api/sources/11.1.0-api-changes.wikitext",
+      "sha256": "1a802cad91a6b79b9ad5c8038627ba54c93ef963f0640494da7dfc3fd0eb6c99"
+    },
+    {
+      "path": "data/patch-api/sources/11.1.0-page-coverage.json",
+      "sha256": "46715e660bb909c4ee3e9a48c5dbab075f36f8b5f3b7d30e35dceff04c4c3406"
+    },
+    {
+      "path": "data/patch-api/sources/11.1.0-wikitext-register.json",
+      "sha256": "97a4d016518760cdbd1ff671c7f566747d9601d19785e84486eed2fdd84d9280"
+    },
+    {
+      "path": "data/patch-api/sources/11.1.5-api-changes.provenance.json",
+      "sha256": "8cbc4a2d49a66e8abbb51404a4cf686a0ad8a186a03abb389243c4e7f0e37fec"
+    },
+    {
+      "path": "data/patch-api/sources/11.1.5-api-changes.txt",
+      "sha256": "947ccdfae886c48429354ed3aea7af15a5901fcffb2ee8cabb8904b1c1ae734b"
+    },
+    {
+      "path": "data/patch-api/sources/11.1.5-api-changes.wikitext",
+      "sha256": "c77d271d67c0080d17f3e1610a7e0d11eb9ec64863cf75545d264f441582707e"
+    },
+    {
+      "path": "data/patch-api/sources/11.1.5-page-coverage.json",
+      "sha256": "f302d94b9195f994de49e1cb1deffd5c062742bd24ab6e59a6918e4a2a0c7357"
+    },
+    {
+      "path": "data/patch-api/sources/11.1.5-wikitext-register.json",
+      "sha256": "3d2d199167a33cb25baa1e83f4003897f271e06645b78bc636c83fcaf5c6b703"
+    },
+    {
+      "path": "data/patch-api/sources/11.1.7-api-changes.provenance.json",
+      "sha256": "8445fa731c1782f277581a2c67b86b101510d34de94a8e4766edcc344d521b5a"
+    },
+    {
+      "path": "data/patch-api/sources/11.1.7-api-changes.txt",
+      "sha256": "0f48983a93e1a1cf060f9bebc387ecc00d8a7a7d942efc7c94a0bea98801601b"
+    },
+    {
+      "path": "data/patch-api/sources/11.1.7-api-changes.wikitext",
+      "sha256": "c934013da17b5072d32f4b0ce0427572d6b26835d7abc1da4ab16c8dcae05ee7"
+    },
+    {
+      "path": "data/patch-api/sources/11.1.7-page-coverage.json",
+      "sha256": "70a05a425da0c36d458abe2a785409d9c74548eb79ae3787a07c7d1c00490931"
+    },
+    {
+      "path": "data/patch-api/sources/11.1.7-wikitext-register.json",
+      "sha256": "966516954a173cbbbfb3ad982982b1af4165535284b5f842837970fd964f7439"
+    },
+    {
+      "path": "data/patch-api/sources/11.2.0-api-changes.provenance.json",
+      "sha256": "bf1b8129a9a930552ca52b5aba78465f6c7a2461594f7f529f0d2ec754b32e1e"
+    },
+    {
+      "path": "data/patch-api/sources/11.2.0-api-changes.txt",
+      "sha256": "eb11e8cf5ce088bf2d6442578d3663c62f3963ce34ee1403d4a302cc2636952f"
+    },
+    {
+      "path": "data/patch-api/sources/11.2.0-api-changes.wikitext",
+      "sha256": "eea31d2692950b42d6e2395b0fc2d031757a41fb5f9acd63a082e540127b1af2"
+    },
+    {
+      "path": "data/patch-api/sources/11.2.0-page-coverage.json",
+      "sha256": "0672fbab61824d15901ae612b94b0ade5029d85da41bb418cf14c8217564ff66"
+    },
+    {
+      "path": "data/patch-api/sources/11.2.0-wikitext-register.json",
+      "sha256": "2a147afc5d7940f5d02c28817e224b504cd710277cc0a934f1bffef4a9c691e8"
+    },
+    {
+      "path": "data/patch-api/sources/11.2.5-api-changes.provenance.json",
+      "sha256": "da0afd750971017252067365d2dd833457c246a140a1e355b20fab95e27f6b45"
+    },
+    {
+      "path": "data/patch-api/sources/11.2.5-api-changes.txt",
+      "sha256": "f3d3e3bf435d6129ce031bbbf5aa8be0f14c424c51802a590fc6d424813e8be4"
+    },
+    {
+      "path": "data/patch-api/sources/11.2.5-api-changes.wikitext",
+      "sha256": "c729365457a32afff2af1020cac832504358c11e9e59aaad2987cada06c4950b"
+    },
+    {
+      "path": "data/patch-api/sources/11.2.5-page-coverage.json",
+      "sha256": "396d9a9eb576615cf9d2ae67ab94026ab7984afdb89952686109908339a1fe2c"
+    },
+    {
+      "path": "data/patch-api/sources/11.2.5-wikitext-register.json",
+      "sha256": "6d12d274d66f73fb8dedc45ba40f9036ac74a99a5721f3dab1bb9bd3dc10c46a"
+    },
+    {
+      "path": "data/patch-api/sources/11.2.7-api-changes.provenance.json",
+      "sha256": "7521d6e89f7db31b817f0c94769640bde208c39951c20757567dbbc40e15d223"
+    },
+    {
+      "path": "data/patch-api/sources/11.2.7-api-changes.txt",
+      "sha256": "9e53fa2661695fe940d744cd93754929ea9f84573d8033a97e52352b5345b53b"
+    },
+    {
+      "path": "data/patch-api/sources/11.2.7-api-changes.wikitext",
+      "sha256": "1538a9bdf49a0e09102b4f9c3905aada48e9e1aafdf9c4b9c780a1127179e324"
+    },
+    {
+      "path": "data/patch-api/sources/11.2.7-page-coverage.json",
+      "sha256": "5782d918f80b149a557ac0ba3a1689971d5569af3967ec9f92699632551878fb"
+    },
+    {
+      "path": "data/patch-api/sources/11.2.7-wikitext-register.json",
+      "sha256": "a45643efaf16dfeb58006019535ed43c304bb504d14697f7460f180ab8eb1986"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.0-api-changes.provenance.json",
+      "sha256": "070cb9cf466e09e62f51cdf70012202a9b015cf6893e4d4446ed827e3b531bef"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.0-api-changes.txt",
+      "sha256": "c8bb5d03f47cc3ca31d43bb0a0f973804790fbe430d962ffa2403a9364e5adeb"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.0-api-changes.wikitext",
+      "sha256": "74e0dee19960d40c551759c94b06f8393d445781200182b9c5971a64e57b9a19"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.0-page-coverage.json",
+      "sha256": "e758634432a644fd7230cfafce6020e7f6fc5cf4ba94a8f651d70a77c0b91de3"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.0-register.json",
+      "sha256": "6f26d194d0c3f721b3a071217cf69714f1278950512369272298735bdf44c863"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.0-wikitext-register.json",
+      "sha256": "2149b28b9165ecaa346b03a7192b775b77bd6bf9921851acc920bfefe412cf5d"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.1-api-changes.provenance.json",
+      "sha256": "3c8d9ced0b366c076984e54254eb641864812c0bbf8ebd86a1fa71a4a3365728"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.1-api-changes.txt",
+      "sha256": "6178cf0702bf7c1b79d39c8e3345b2aee15ee7c1cea2756c343b0918cab9906d"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.1-api-changes.wikitext",
+      "sha256": "cc4585de4c3d3600d8beacb5af7a278d9e9ee52d7c6e2aeb483b3baa259a465e"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.1-page-coverage.json",
+      "sha256": "a303140c42574cd5a5ad5b4afb0fc7e0b3912ee3c3f515364aef727415f7ef0e"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.1-wikitext-register.json",
+      "sha256": "3ae13ba41a6583c1d05c00552aa444501386fcf5484884d2395aa77cecd9a8cb"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.5-api-changes.provenance.json",
+      "sha256": "dcd524b1195af553f990cb78d9b0467e9bf1ff416e85f3ea24ae11da91c9d01e"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.5-api-changes.txt",
+      "sha256": "4da3872aa566695f46e2dacd4e79992f5b06be9541f0d19cf0e8dba45cea8329"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.5-api-changes.wikitext",
+      "sha256": "2fd339ed0c93d26fc7b8e14743bc0430aa5169153e793bc68f85224e510dafd4"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.5-page-coverage.json",
+      "sha256": "ae104353faa54bf77ec93eb3e3c2ad4762ceaaf462c46796e5d24478fbf12c9e"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.5-probes.json",
+      "sha256": "2d7671b7702eed71c5d8a3ae4e92595771f6c04bb58fe98bd771647ac26cddca"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.5-register.json",
+      "sha256": "eaea58ae8adf215587cea6de12349b3586fcb2520a4c8aefd4d7cee5406046ed"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.5-wikitext-register.json",
+      "sha256": "a87c2c978086e8b6c62fb560aa764556213c6b19735a4be35e12311ec42d6e23"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.7-api-changes.provenance.json",
+      "sha256": "f137413d236b2ae85f6855834c10e18580a83f1ede01a0cc5bd3497dc6169925"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.7-api-changes.txt",
+      "sha256": "014f7d51eca1b2fc5d76071978e09c537efd66d14069e21d163e58ccd04a561e"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.7-api-changes.wikitext",
+      "sha256": "6e1b87d7bfc7b6356ee8ad5371ad6739b67b76e12ab9d967269c8bad865a540c"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.7-page-coverage.json",
+      "sha256": "ebed23da005c1dcb0d7355b48fd8b9b8524bb956194c65722a5d6c77ca14b26f"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.7-register.json",
+      "sha256": "389e3b19174bf77c3646028f764cf186ccfe1b7dddaca2a3b3fcba75e3bdec60"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.7-wikitext-register.json",
+      "sha256": "aad4af3207d4585ed8494c837f253a23607bf1f8e752e0b52d39dd7e533189e7"
+    },
+    {
+      "path": "data/patch-api/sources/12.1-behaviors.json",
+      "sha256": "9e3ad69306c0e3d377e3aba6f5b928a21cd868ff98e5e9e43763385cdcecc83f"
+    },
+    {
+      "path": "data/patch-api/sources/12.1-framexml.json",
+      "sha256": "3b186f1a0618b1f9ad7f399c4ad56705b1511b08ac3bc67b2780a98a0b63c70d"
+    },
+    {
+      "path": "data/patch-api/sources/12.1.0-api-changes.provenance.json",
+      "sha256": "5f1d673088772fd3272f8d2028681c42c9d4f8499894398b946c53601945f58b"
+    },
+    {
+      "path": "data/patch-api/sources/12.1.0-api-changes.txt",
+      "sha256": "c051a68b442b2e69d602650d1c5ec07c1d0262dd1aea01fe73d3f60cd5f29c3b"
+    },
+    {
+      "path": "data/patch-api/sources/12.1.0-api-changes.wikitext",
+      "sha256": "de9e45f6e43c66c78be2d9e9c6a6e7945cd91676448bbe502a6a4db0d75d8bde"
+    },
+    {
+      "path": "data/patch-api/sources/12.1.0-page-coverage.json",
+      "sha256": "328bbb571f06940dc4af61809d99115f1967ddf5bde2ecc1b1e326000b88c5a2"
+    },
+    {
+      "path": "data/patch-api/sources/12.1.0-ptr-cache-manifest.txt",
+      "sha256": "fa104a0f58bb1f86949aeec78fd82388b8d1cb8da39a1f3b51b4e3bd89e4ac66"
+    },
+    {
+      "path": "data/patch-api/sources/12.1.0-wikitext-register.json",
+      "sha256": "924774ddea912d58af87211b41549d550a12594cc2b5de0b8b3de7574e9e8311"
+    },
+    {
+      "path": "data/patch-api/sources/12.1.5-register.json",
+      "sha256": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+    },
+    {
+      "path": "data/patch-api/sources/5.4.0-api-changes-diff.txt",
+      "sha256": "d01c7b4c11d9c1d1c7b9f8fab6e9a1ebf435ae91f7f8f44a8a8eb7affa39ee2f"
+    },
+    {
+      "path": "data/patch-api/sources/5.4.0-api-changes-diff.wikitext",
+      "sha256": "e3344340310c68a596c35337673ec0e1ae0a40d7defabf230c7225afa2e8caa1"
+    },
+    {
+      "path": "data/patch-api/sources/5.4.0-api-changes.provenance.json",
+      "sha256": "d913e0a3dbe2fec7aa72a473bc5d3415cf700335e81db564cf872acd912cd407"
+    },
+    {
+      "path": "data/patch-api/sources/5.4.0-api-changes.txt",
+      "sha256": "15226d5fe1409e68ef89c39b94bbb027292bbc5e87da3384f73b0506c939c2e7"
+    },
+    {
+      "path": "data/patch-api/sources/5.4.0-api-changes.wikitext",
+      "sha256": "0ece64098024279814fdec4b6aa6ea40dbae1d58c97ffb3d8a9af56eae742fa8"
+    },
+    {
+      "path": "data/patch-api/sources/5.4.0-page-coverage.json",
+      "sha256": "b3a4633d4ef01793f101d40a3e5f04296b4e500c987abf36d1438f300eac4ba6"
+    },
+    {
+      "path": "data/patch-api/sources/5.4.0-wikitext-register.json",
+      "sha256": "913268dda4b67403586fd5c76f922f37e423ddeb208e493314792a9841f95da1"
+    },
+    {
+      "path": "data/patch-api/sources/5.4.8-api-changes.provenance.json",
+      "sha256": "e00975f82f7c765a2d0c7cdfbbe8b567e2124ecf31166ff9c251bbb92e9b77bb"
+    },
+    {
+      "path": "data/patch-api/sources/5.4.8-api-changes.txt",
+      "sha256": "f881069e44e3d84a47dc46891795c9e5315b68e080a3d11ba873d2adc16d32e8"
+    },
+    {
+      "path": "data/patch-api/sources/5.4.8-api-changes.wikitext",
+      "sha256": "ab39eeb470444d78cd2e15236a46271fa70852c0a24a7c246e54a9b7255c3bf6"
+    },
+    {
+      "path": "data/patch-api/sources/5.4.8-page-coverage.json",
+      "sha256": "dd1e6f7911504bf891fcd29e2aa2a10b4a2fa3113b3232fa210dbc2328c2f978"
+    },
+    {
+      "path": "data/patch-api/sources/5.4.8-wikitext-register.json",
+      "sha256": "bff0a33a4df525cac8e73899cb318947358d699ffacbb2e736fed948b21c49e5"
+    },
+    {
+      "path": "data/patch-api/sources/6.0.1-api-changes.provenance.json",
+      "sha256": "7ba14473d987cd0508a3d7b2600798d8bc39f1c461f8300f578b2486725e3581"
+    },
+    {
+      "path": "data/patch-api/sources/6.0.1-api-changes.txt",
+      "sha256": "bbd5575edc2d20e35c52be0b2d23f8a44f17afe4ad5f0eafe87a926b4f2e5b30"
+    },
+    {
+      "path": "data/patch-api/sources/6.0.1-api-changes.wikitext",
+      "sha256": "4b165c4e4db1de0339eac46999fd4b4dcca1e48384c99e31bb35aae7ad4c2dc5"
+    },
+    {
+      "path": "data/patch-api/sources/6.0.1-page-coverage.json",
+      "sha256": "72c04c2896eeb84f3271c49f37482d55c297920a6a6c216a98cee181109c2394"
+    },
+    {
+      "path": "data/patch-api/sources/6.0.1-wikitext-register.json",
+      "sha256": "32a4b6b7db6b7fbb2bc3156514dce47e8679d057b8d911264430d81e5d0186c7"
+    },
+    {
+      "path": "data/patch-api/sources/6.0.2-api-changes.diff.wikitext",
+      "sha256": "2b938d39696995e8ea4a6d0e88328bcff94a91cf95bfae6cfa0153880b910cef"
+    },
+    {
+      "path": "data/patch-api/sources/6.0.2-api-changes.provenance.json",
+      "sha256": "307627c103acef2251f2578b994e673577a987f2a6fc2ada25a26cff655250f8"
+    },
+    {
+      "path": "data/patch-api/sources/6.0.2-api-changes.txt",
+      "sha256": "4b68d80331aece12872f495824ee67c46e775160b1eb5ea5988f7e3c3fcc2e34"
+    },
+    {
+      "path": "data/patch-api/sources/6.0.2-api-changes.wikitext",
+      "sha256": "8c3882d8457ff71a731d5534dd7e144c8faaafd342c997192d5dd8605eab8f60"
+    },
+    {
+      "path": "data/patch-api/sources/6.0.2-page-coverage.json",
+      "sha256": "e86813d408fc0b1189409c81ce99e69d33891ce270ac1e45ff86f281ff900953"
+    },
+    {
+      "path": "data/patch-api/sources/6.0.2-wikitext-register.json",
+      "sha256": "9c4e83c1306ca3e8143840afbc5c3981a64fa37ed332e05dadc0457faa1566e0"
+    },
+    {
+      "path": "data/patch-api/sources/6.1.0-api-changes.provenance.json",
+      "sha256": "8dadffb10bcaa28334e53d1d9229541e49d5e89eca169c139dafc87ad694ced2"
+    },
+    {
+      "path": "data/patch-api/sources/6.1.0-api-changes.txt",
+      "sha256": "3986ede4da66787e60603d968d597175210c4b376617a65f905f0c33be93f084"
+    },
+    {
+      "path": "data/patch-api/sources/6.1.0-api-changes.wikitext",
+      "sha256": "18c268e83e6e34c72e99eaf5318beaaec6b3b097d07fe85d88c2eced94583449"
+    },
+    {
+      "path": "data/patch-api/sources/6.1.0-page-coverage.json",
+      "sha256": "51ab0ff90e8c3033e6366a39354eeecfa865d41edd02f363586f8d1d8d420d88"
+    },
+    {
+      "path": "data/patch-api/sources/6.1.0-wikitext-register.json",
+      "sha256": "707e1512c0591afe8037d53c79f21ca197b01a8922ee3eb377a636ce4dd05418"
+    },
+    {
+      "path": "data/patch-api/sources/6.2.0-api-changes.provenance.json",
+      "sha256": "6fbd3910ef6b531cd85df7dbb47e0370e930294bd54afe7abf5688d6593a5735"
+    },
+    {
+      "path": "data/patch-api/sources/6.2.0-api-changes.txt",
+      "sha256": "36eae48608a4b7ac67fb3d1ac38ae85a378731113622a623236b5ca9821ee154"
+    },
+    {
+      "path": "data/patch-api/sources/6.2.0-api-changes.wikitext",
+      "sha256": "d091f4ebd2592b24fb6f1da267cbd178d69bd9a1a17b07fa96f9c96fac79033a"
+    },
+    {
+      "path": "data/patch-api/sources/6.2.0-page-coverage.json",
+      "sha256": "c013cd4f4c4e4c6ae68d19fcf981fcb70ab6c8f458db3496e07ef858d65fd1f9"
+    },
+    {
+      "path": "data/patch-api/sources/6.2.0-wikitext-register.json",
+      "sha256": "b4662f1f6b4abbed24dee47d8fe8f50de184788f93e6798c8e853c011a91e76c"
+    },
+    {
+      "path": "data/patch-api/sources/6.2.2-api-changes.provenance.json",
+      "sha256": "e5ba0ba956967499942b2ae70ef566cd52e6eba5e8447d915791786df64ec22e"
+    },
+    {
+      "path": "data/patch-api/sources/6.2.2-api-changes.txt",
+      "sha256": "66ba9602ace39aa500e39afd7ab11a83ab62e084c6e7369e8855e0fc4feea0e9"
+    },
+    {
+      "path": "data/patch-api/sources/6.2.2-api-changes.wikitext",
+      "sha256": "bc11548c8cbc0453f639c8053f7fc67845710d92a98a8a832dc815e4e406a741"
+    },
+    {
+      "path": "data/patch-api/sources/6.2.2-page-coverage.json",
+      "sha256": "81b302108e186d32faa3b9f7bb886218174ac9ad925f6a67998fad6d91b883e5"
+    },
+    {
+      "path": "data/patch-api/sources/6.2.2-wikitext-register.json",
+      "sha256": "4eee04950b20e3bd79f4fd3b724b5c0d4d531c796534e810c090c168f6cbd6f0"
+    },
+    {
+      "path": "data/patch-api/sources/6.2.4-api-changes.provenance.json",
+      "sha256": "5e252f3213e572fa697d1db20a249017b4868c9094724dfa98f803efb5e82e19"
+    },
+    {
+      "path": "data/patch-api/sources/6.2.4-api-changes.txt",
+      "sha256": "79e11a667980c8c0a00a1b8968e52840ab6ebe100203fb6f034f1064e21cde85"
+    },
+    {
+      "path": "data/patch-api/sources/6.2.4-api-changes.wikitext",
+      "sha256": "2460bc07a61df48e31c1b8f33d264c4270c901c753583e6d1cea920531a2b6fc"
+    },
+    {
+      "path": "data/patch-api/sources/6.2.4-page-coverage.json",
+      "sha256": "deb80205dae6d81d53766009f45b682440976c09a38264fac36e9a6ea591d21b"
+    },
+    {
+      "path": "data/patch-api/sources/6.2.4-wikitext-register.json",
+      "sha256": "ddcdfcec25740fed9c531a2a602323d9534ef3a44aa02edf045a7ad338bb6d64"
+    },
+    {
+      "path": "data/patch-api/sources/7.0.1-api-changes.provenance.json",
+      "sha256": "8caeb1f71aa1b2f29d1a6f27653d1fbfa2c73ef993f3d077193ff62712133f48"
+    },
+    {
+      "path": "data/patch-api/sources/7.0.1-api-changes.txt",
+      "sha256": "6027fa42fda80cb6af0a6dfe9f0448ada64381830374d09444e71a88679c42e1"
+    },
+    {
+      "path": "data/patch-api/sources/7.0.1-api-changes.wikitext",
+      "sha256": "1ccdea3045d48c436a307f6a3bc74412bac0ddb5b4a6347fbd00990943aaca3a"
+    },
+    {
+      "path": "data/patch-api/sources/7.0.1-page-coverage.json",
+      "sha256": "6795c504ebe4314c0445b6b759173504eb39f6e29baa44059ac3e0560f641255"
+    },
+    {
+      "path": "data/patch-api/sources/7.0.1-wikitext-register.json",
+      "sha256": "0e3321174be76f59454f4257cd2a69b2c878d58409c4a003ee63d004371bcc16"
+    },
+    {
+      "path": "data/patch-api/sources/7.0.3-api-changes.provenance.json",
+      "sha256": "bd4879bb3925d677f156f1587fbeb5231bb5fbf810f832a7bb87a27b35c85e4c"
+    },
+    {
+      "path": "data/patch-api/sources/7.0.3-api-changes.txt",
+      "sha256": "d3329d2bb546727c6f934f0c713fd70edef8309c956874bf2590e6a1f6220d33"
+    },
+    {
+      "path": "data/patch-api/sources/7.0.3-api-changes.wikitext",
+      "sha256": "d8951bad884b04b4686fdc7a0cc26b305b35c31ecc8872035d209937f13f3484"
+    },
+    {
+      "path": "data/patch-api/sources/7.0.3-page-coverage.json",
+      "sha256": "eca0070d7dbea49f86e1b5732dda444442a0ce78eb4be509ab7b0665e34f800a"
+    },
+    {
+      "path": "data/patch-api/sources/7.0.3-wikitext-register.json",
+      "sha256": "7c10a7a2a07b37ab1f92792de89ee28913aed9d12cf37c967f91d1f6fc026660"
+    },
+    {
+      "path": "data/patch-api/sources/7.1.0-api-changes.provenance.json",
+      "sha256": "0cda2c28113a4a3c5d5f6a80a6c13c1fc2876b3c7d665360e07b5d2e26fd956c"
+    },
+    {
+      "path": "data/patch-api/sources/7.1.0-api-changes.txt",
+      "sha256": "5575d7cd3d8e25e4d8a7e8328d84c449759490248d7c053bc3ca3db84c1393e9"
+    },
+    {
+      "path": "data/patch-api/sources/7.1.0-api-changes.wikitext",
+      "sha256": "710a4f960ae532a858a1ff7e39f6d956353f69565ced0b66e4fb2ec22c10ef87"
+    },
+    {
+      "path": "data/patch-api/sources/7.1.0-page-coverage.json",
+      "sha256": "485ffed53caa09a94fda91a4816ee55925f630d9b972a7fcb7a3073b2b6faf6c"
+    },
+    {
+      "path": "data/patch-api/sources/7.1.0-wikitext-register.json",
+      "sha256": "b7e2779fc45c104a7ca6a33e321a2672b0a2d5b1844d98595f189db7c9b25e83"
+    },
+    {
+      "path": "data/patch-api/sources/7.2.0-api-changes.provenance.json",
+      "sha256": "f517c6497baa805e38d967d789baa1b4b04f6a68957c8157b65c582a9d914f3b"
+    },
+    {
+      "path": "data/patch-api/sources/7.2.0-api-changes.txt",
+      "sha256": "6f7dbe3ba11d533de7738fa02bd708bd48274a7c5310b7cc0f513523382777e6"
+    },
+    {
+      "path": "data/patch-api/sources/7.2.0-api-changes.wikitext",
+      "sha256": "8441bd7ac745b2f839156b4e7e37a14f63f4f001649c5cecfb5110ea45db08cf"
+    },
+    {
+      "path": "data/patch-api/sources/7.2.0-page-coverage.json",
+      "sha256": "07c09ffb35d03778b47208830b4affcfd5fd03f7024414a7640749186c447ed1"
+    },
+    {
+      "path": "data/patch-api/sources/7.2.0-wikitext-register.json",
+      "sha256": "2b0589b9d07639b02e420dce174f8e373758bb6d86475c5305de745499a32973"
+    },
+    {
+      "path": "data/patch-api/sources/7.2.5-api-changes.provenance.json",
+      "sha256": "efead6a854169a6526812fca5b5c15dec8b714deab5ef9b22a6ad25e64e9f6ff"
+    },
+    {
+      "path": "data/patch-api/sources/7.2.5-api-changes.txt",
+      "sha256": "083f32ee619a4537ed1751345cc801a981d69dbd5b65e859d066f13cc53790cf"
+    },
+    {
+      "path": "data/patch-api/sources/7.2.5-api-changes.wikitext",
+      "sha256": "93081583da31739e03d087b525787d5e7aafdaeac23ea9ec8480be624c03803e"
+    },
+    {
+      "path": "data/patch-api/sources/7.2.5-page-coverage.json",
+      "sha256": "bf6a90d4826f984017dd9ca43d6b05a4293dc778898cfd3db2ffd3976bb4ac59"
+    },
+    {
+      "path": "data/patch-api/sources/7.2.5-wikitext-register.json",
+      "sha256": "753351c0b4616c5259fd9ec2ef3980248c83f0e3de88ae5c40a88b4ad8399bdd"
+    },
+    {
+      "path": "data/patch-api/sources/7.3.0-api-changes.provenance.json",
+      "sha256": "27a9ee1e1a9bb2ef8fae7bb290e015d86da0d8eee0e6d5d6f2f0bbd4748df7ec"
+    },
+    {
+      "path": "data/patch-api/sources/7.3.0-api-changes.txt",
+      "sha256": "0fce01e22d2750a479d65e8604900f331598c169bee2beee12e7dc89fce5e8f8"
+    },
+    {
+      "path": "data/patch-api/sources/7.3.0-api-changes.wikitext",
+      "sha256": "4fa82825b87c700d8fb0ab6d4d7c51061ed045675b644682a36f0eb495a1a082"
+    },
+    {
+      "path": "data/patch-api/sources/7.3.0-page-coverage.json",
+      "sha256": "7df83a34742be654e3f20e8e248c922ab247055d0884b2e1e8eb7f650279a4be"
+    },
+    {
+      "path": "data/patch-api/sources/7.3.0-wikitext-register.json",
+      "sha256": "b0f06f6e0f8ce4fd8be89845fce0fa0ef5ac2ddf71de7885b8adcd49af3daa10"
+    },
+    {
+      "path": "data/patch-api/sources/7.3.2-api-changes.provenance.json",
+      "sha256": "fc2d326fca7c57f8321969ea3bc853352d69d2ffdfdd97f85069ff9ad256502a"
+    },
+    {
+      "path": "data/patch-api/sources/7.3.2-api-changes.txt",
+      "sha256": "7522a20ff388b43514565be6b56e858cd10362f7e72d7f03ec09e853d55b187e"
+    },
+    {
+      "path": "data/patch-api/sources/7.3.2-api-changes.wikitext",
+      "sha256": "a510a7538a0925f0059bdb95a9ac696c9f4215444e3e65032784e78a3e6fb6d1"
+    },
+    {
+      "path": "data/patch-api/sources/7.3.2-page-coverage.json",
+      "sha256": "621afa93aa91eca6035eb7b80170bd41200ac03b4465298a8896dd2f930fb796"
+    },
+    {
+      "path": "data/patch-api/sources/7.3.2-wikitext-register.json",
+      "sha256": "32b35ec0157db219051eeddc58d5e8d0ab34afe0f7d99690c1c3e112bfac1a35"
+    },
+    {
+      "path": "data/patch-api/sources/8.0.1-api-changes.provenance.json",
+      "sha256": "2b3898470e4716286bed474e2846a956f2ad7f9f9ed47bb458e1e0e93a6b654d"
+    },
+    {
+      "path": "data/patch-api/sources/8.0.1-api-changes.txt",
+      "sha256": "c5408fce8e67bc856215b01e26c787e68f6ac27fcd9ad449967294d7745a03c4"
+    },
+    {
+      "path": "data/patch-api/sources/8.0.1-api-changes.wikitext",
+      "sha256": "7fb0d6ed76e37632e306fb464dadaf33e151c8ec5346793366df6d4eef3641d4"
+    },
+    {
+      "path": "data/patch-api/sources/8.0.1-page-coverage.json",
+      "sha256": "3d5dba616f000aa37f971248461f84968ddf7a15bc6ffb01536abcf6ce03198f"
+    },
+    {
+      "path": "data/patch-api/sources/8.0.1-wikitext-register.json",
+      "sha256": "df597a39c9802be51ad66720abb7dfb1b58e5c155b7735a0d9ce99a784a7ae83"
+    },
+    {
+      "path": "data/patch-api/sources/8.1.0-api-changes.provenance.json",
+      "sha256": "5a1290d7775ed8ccbc3d3393a9372b227e5e7f94297cef41b8dc57b8b099b0ea"
+    },
+    {
+      "path": "data/patch-api/sources/8.1.0-api-changes.txt",
+      "sha256": "3ebb449f9291e15c4df3341cee40daee03fa6299a986d3ca5a15f2d5c8403812"
+    },
+    {
+      "path": "data/patch-api/sources/8.1.0-api-changes.wikitext",
+      "sha256": "9cc26872abfdc3de1b9708ea9eeb79287d114bd1aa2b652e0fef0e20ee592832"
+    },
+    {
+      "path": "data/patch-api/sources/8.1.0-page-coverage.json",
+      "sha256": "3cfb9a8b4d1e35bb0538563165c0ba21a12a82d46abc4c56b25694d95675ae01"
+    },
+    {
+      "path": "data/patch-api/sources/8.1.0-wikitext-register.json",
+      "sha256": "2b14287b5e8eba20cfc674184f2838ba87c551382eed782dfe39661c2807e147"
+    },
+    {
+      "path": "data/patch-api/sources/8.1.5-api-changes.provenance.json",
+      "sha256": "972aaec312a90f90b5ed0d521d994a63e277605ea463068e755de3186cf56076"
+    },
+    {
+      "path": "data/patch-api/sources/8.1.5-api-changes.txt",
+      "sha256": "37a8a38a0fa152908db96ce70242e705ec1284c7c1bff599a8eccf4da1a05a53"
+    },
+    {
+      "path": "data/patch-api/sources/8.1.5-api-changes.wikitext",
+      "sha256": "fc40dccee6ebfd304bce361e9251bcaab39e79e6fe2c6e3406c55fa4d6f5d8e4"
+    },
+    {
+      "path": "data/patch-api/sources/8.1.5-page-coverage.json",
+      "sha256": "c2ef6ea13f309b9d2b29a5f929625bfd6bdb48cc01da3d563e44afca04d145f5"
+    },
+    {
+      "path": "data/patch-api/sources/8.1.5-wikitext-register.json",
+      "sha256": "8eacfb4ecb374f539aecc39bc64cfe5d117e243d19f89f45600289cae72a33fb"
+    },
+    {
+      "path": "data/patch-api/sources/8.2.0-api-changes.provenance.json",
+      "sha256": "1d5df891c1cc6aab2f5928bd9a820a5fbdd60281cbe441b953b2b12e5c1c2123"
+    },
+    {
+      "path": "data/patch-api/sources/8.2.0-api-changes.txt",
+      "sha256": "49736eb93e74da2436d5e600e58b6ee8674927ef4b15f50e10adffa675585dd0"
+    },
+    {
+      "path": "data/patch-api/sources/8.2.0-api-changes.wikitext",
+      "sha256": "35a296d3044d68b92286a0d3ec653283a7dc0beba2b4b64d3c9e9410f129e41f"
+    },
+    {
+      "path": "data/patch-api/sources/8.2.0-page-coverage.json",
+      "sha256": "9ee55ede08f2af0de1e6d94e4722be461614a9ed8136454d6a1e86f9d571ed68"
+    },
+    {
+      "path": "data/patch-api/sources/8.2.0-wikitext-register.json",
+      "sha256": "0755a978c7c9821a87431337fc2ae834f5fdfc139180f38af3bf613168b21203"
+    },
+    {
+      "path": "data/patch-api/sources/8.2.5-api-changes.provenance.json",
+      "sha256": "9dfac01fd2047b2d3620938678766cdffd58149ce6ab70fc367dbceb127bf7d5"
+    },
+    {
+      "path": "data/patch-api/sources/8.2.5-api-changes.txt",
+      "sha256": "acee4aa6cb4716ce55ea115b277924d234c2142bf635236d40d62072a12f939e"
+    },
+    {
+      "path": "data/patch-api/sources/8.2.5-api-changes.wikitext",
+      "sha256": "f8d21b89e4551b6b1478247f2ce5e6859a0a0ac8ea3b8a25b35b48da160059a8"
+    },
+    {
+      "path": "data/patch-api/sources/8.2.5-page-coverage.json",
+      "sha256": "c4cbc96838f936f540d76871f07ae3b436f74b8a12649c4f77caabe961d3ac1e"
+    },
+    {
+      "path": "data/patch-api/sources/8.2.5-wikitext-register.json",
+      "sha256": "9068d2c59c69fa49a3bc0a257707597d4a9d98a971187e374fc92c20f46f9f4c"
+    },
+    {
+      "path": "data/patch-api/sources/8.3.0-api-changes.provenance.json",
+      "sha256": "a99b7d45c9837f0717f978ea0169823f4b85a1c2f121ee2b91b7f54fc642f906"
+    },
+    {
+      "path": "data/patch-api/sources/8.3.0-api-changes.txt",
+      "sha256": "5de022982639c186f36ba05a3a1c6e6140d0dd79e0da356cbfafc3f46b57a1d3"
+    },
+    {
+      "path": "data/patch-api/sources/8.3.0-api-changes.wikitext",
+      "sha256": "01f5ca887f8dbe81b64ed25d5691bd2634e3367def22d8a713b892e2b01694f2"
+    },
+    {
+      "path": "data/patch-api/sources/8.3.0-page-coverage.json",
+      "sha256": "e8c34cb7bc29595266f59c7615d598f1b83f6686b269d0e77c17914868d933fd"
+    },
+    {
+      "path": "data/patch-api/sources/8.3.0-wikitext-register.json",
+      "sha256": "372ee6b18ee3a47ec80c7886621a7686cf90381f113e50caed4594b6d18dcbef"
+    },
+    {
+      "path": "data/patch-api/sources/8.3.7-api-changes.provenance.json",
+      "sha256": "dcc42f935a6d32dbe875e4e952ff2257073c1fa573db0bc0e76621ce92e08f61"
+    },
+    {
+      "path": "data/patch-api/sources/8.3.7-api-changes.txt",
+      "sha256": "78f1f7c357923c589ba34c865cf3309c444d8493b788b17c105809e6dc35efc2"
+    },
+    {
+      "path": "data/patch-api/sources/8.3.7-api-changes.wikitext",
+      "sha256": "0fae3d8d22e456e84eb0082b729586429c9151d7ec32ecd851f8d3c8b1575784"
+    },
+    {
+      "path": "data/patch-api/sources/8.3.7-page-coverage.json",
+      "sha256": "24d8b245aad861315a387e3bfe0882a2c485e2d23579a98abe0e67c51eca43ae"
+    },
+    {
+      "path": "data/patch-api/sources/8.3.7-wikitext-register.json",
+      "sha256": "12c1c3a4d678b3a4ba2c1ae808fc3831a672375eebb2158b0e25261bb0a7e175"
+    },
+    {
+      "path": "data/patch-api/sources/9.0.1-api-changes.provenance.json",
+      "sha256": "cc9a201526d56dd7cd4961ee77fff04a4e48693a9674a41d0e0d24d5a1ea896e"
+    },
+    {
+      "path": "data/patch-api/sources/9.0.1-api-changes.txt",
+      "sha256": "b4bfffbdad9981f0156a5ed21e7ce9ecef236c033c04c749a4f3100fce2f80c0"
+    },
+    {
+      "path": "data/patch-api/sources/9.0.1-api-changes.wikitext",
+      "sha256": "51c3ecf32ee65f178aaae7c711ff7af7bd9f243aea27712bf98261d78682d236"
+    },
+    {
+      "path": "data/patch-api/sources/9.0.1-page-coverage.json",
+      "sha256": "519f9c49c5aaf3f1c6f219760cb8acd5282e23ae556107735214708d5402a199"
+    },
+    {
+      "path": "data/patch-api/sources/9.0.1-wikitext-register.json",
+      "sha256": "b61d5965061e199bd4149093e5fd2b5b03ee82a2bdabd18070a7b449454fa665"
+    },
+    {
+      "path": "data/patch-api/sources/9.0.2-api-changes.provenance.json",
+      "sha256": "8186d7361ee145fa9a9fa17e381373c9eb7c1ffaf26f5fc1cb3725452e87f056"
+    },
+    {
+      "path": "data/patch-api/sources/9.0.2-api-changes.txt",
+      "sha256": "9a193fe2a9b927d74db45a14a7fbe774eea57583235d8f1113d97fe8c86b50f6"
+    },
+    {
+      "path": "data/patch-api/sources/9.0.2-api-changes.wikitext",
+      "sha256": "9a75f475bb5db0d455aaa03260717a480af2f32008c9947e2ae59b3aeb62262e"
+    },
+    {
+      "path": "data/patch-api/sources/9.0.2-page-coverage.json",
+      "sha256": "36e7451d3faf0ff5aa5e2e2745ab7d968aa45fb4939cb0ed56d82c430e4fe7d3"
+    },
+    {
+      "path": "data/patch-api/sources/9.0.2-wikitext-register.json",
+      "sha256": "e9c69d02cbd34aab19236d82b52a6ae574312ef8e4f6ee9c07896a8dddef8e6b"
+    },
+    {
+      "path": "data/patch-api/sources/9.0.5-api-changes.provenance.json",
+      "sha256": "9405359118ccbc3f618530933c507f4f65f473c123a0f62644b3a2eac6b88fed"
+    },
+    {
+      "path": "data/patch-api/sources/9.0.5-api-changes.txt",
+      "sha256": "7a7ca87f3b1973400a79c0458a35e76442cc2529050df94b6b84af2abb5cd4ce"
+    },
+    {
+      "path": "data/patch-api/sources/9.0.5-api-changes.wikitext",
+      "sha256": "9c62ac72650f7c6b90761a9640555508e0deb3b07321f863d2a9cfe0dfc95673"
+    },
+    {
+      "path": "data/patch-api/sources/9.0.5-page-coverage.json",
+      "sha256": "09539ca21fd3ec98e0135c79b0f6190e2d9570110ea8e9444cef8c141f1041db"
+    },
+    {
+      "path": "data/patch-api/sources/9.0.5-wikitext-register.json",
+      "sha256": "c9852dbae8b4cf0ccfa46810e571fe4bfe8f3435d9680855845a70979c819b13"
+    },
+    {
+      "path": "data/patch-api/sources/9.1.0-api-changes.provenance.json",
+      "sha256": "cc52cea2597d6daafefe08780aebdba8149a4697c4e8c22e7d72f8e39051a973"
+    },
+    {
+      "path": "data/patch-api/sources/9.1.0-api-changes.txt",
+      "sha256": "961a8cd7dff7cf67ab13b4112ff18520a074f369a8201df3f192a5694c942783"
+    },
+    {
+      "path": "data/patch-api/sources/9.1.0-api-changes.wikitext",
+      "sha256": "29871f1e6e2c9796399140cf0dc396c76c69d083fffb6a60b05172893301ce8c"
+    },
+    {
+      "path": "data/patch-api/sources/9.1.0-page-coverage.json",
+      "sha256": "a6c52a530ea481193f2ece3dee2cadd9b6d0408b8ce4569b16edeba50a752401"
+    },
+    {
+      "path": "data/patch-api/sources/9.1.0-wikitext-register.json",
+      "sha256": "deeaaed02589405b31b89341c48081a72890118cce878e802bd01df8cef1abdb"
+    },
+    {
+      "path": "data/patch-api/sources/9.1.5-api-changes.provenance.json",
+      "sha256": "2be15b8fac2c01d8145197b0b8d7cd29983d486f42ffcf1148a7c56876efc0db"
+    },
+    {
+      "path": "data/patch-api/sources/9.1.5-api-changes.txt",
+      "sha256": "e9e3b40f6d63639f224a0297b82dfe62bcc0d07f61931e2c1c9354bcdb822eba"
+    },
+    {
+      "path": "data/patch-api/sources/9.1.5-api-changes.wikitext",
+      "sha256": "1af11608f2f057faf74f95cfefdfad43c282a4153357dc8900c64e870f438476"
+    },
+    {
+      "path": "data/patch-api/sources/9.1.5-page-coverage.json",
+      "sha256": "d16fc5171d0177f16049fcd753308c612a3f6fa57f1a49d4bb648558860451fd"
+    },
+    {
+      "path": "data/patch-api/sources/9.1.5-wikitext-register.json",
+      "sha256": "f47c868a2a650f6119ade3f755c02c1c6d352330ed0cef1e7c5cb067e4df6f6f"
+    },
+    {
+      "path": "data/patch-api/sources/9.2.0-api-changes.provenance.json",
+      "sha256": "e08a78723f968381c66bf88d4ce55337dd1f6bbd54488378fa0df22785878278"
+    },
+    {
+      "path": "data/patch-api/sources/9.2.0-api-changes.txt",
+      "sha256": "4946812493aa7bbf9cf4ddc3b18857ee603e0bb4577533a8860759fa9bb0e43e"
+    },
+    {
+      "path": "data/patch-api/sources/9.2.0-api-changes.wikitext",
+      "sha256": "2592e6464c46add082bdf18b7310c3ad6aa640c53b4a8a58552b15658d3467ae"
+    },
+    {
+      "path": "data/patch-api/sources/9.2.0-page-coverage.json",
+      "sha256": "f2edcdb933d7df5075c6ee1ef1c4059c1befa0b769b8b789a789e60044d51e31"
+    },
+    {
+      "path": "data/patch-api/sources/9.2.0-wikitext-register.json",
+      "sha256": "69dd92fb3a392bb6c73917fa4c7917a787a57299bf5eb584061d0de542b48191"
+    },
+    {
+      "path": "data/patch-api/sources/9.2.5-api-changes.provenance.json",
+      "sha256": "ba9ad839781d395344b3881a48f2a8e1ac07138a7aabe869c546e10abe19fef9"
+    },
+    {
+      "path": "data/patch-api/sources/9.2.5-api-changes.txt",
+      "sha256": "e1b3b6e79876aa416513d622bc823e5a1f372096d7c0f9c7054c4c4a0c1a9518"
+    },
+    {
+      "path": "data/patch-api/sources/9.2.5-api-changes.wikitext",
+      "sha256": "f0c554edcdce15afe3cfa3a2dfaf3c723d11864d377613640538d43596cb12e3"
+    },
+    {
+      "path": "data/patch-api/sources/9.2.5-page-coverage.json",
+      "sha256": "64896487daebe0b4710259a861edd9fe17a2114a8822e00e4363f0aa4c284e97"
+    },
+    {
+      "path": "data/patch-api/sources/9.2.5-wikitext-register.json",
+      "sha256": "de6a6208e1989a5a811e6706c6a8d42e5c2f730e96be75293b48c43741e1a0b0"
+    },
+    {
+      "path": "data/patch-api/sources/9.2.7-api-changes.provenance.json",
+      "sha256": "215b9bb070a19470a6806735e4f865a6e37bd193aeff1710cb58d49f4a7fe46c"
+    },
+    {
+      "path": "data/patch-api/sources/9.2.7-api-changes.txt",
+      "sha256": "6528a2aadae856784b4a8530cc3fbe592ab8eb5097a65f5e62789de9c6c3e86b"
+    },
+    {
+      "path": "data/patch-api/sources/9.2.7-api-changes.wikitext",
+      "sha256": "882bb3907d301a9213b6aefa636ae7b2daa0818ed5f14013845d3e09626f5157"
+    },
+    {
+      "path": "data/patch-api/sources/9.2.7-page-coverage.json",
+      "sha256": "2ad3a668b96a6afb6ba2813153ec5859d50665a878178d4222f5761c7e96c22a"
+    },
+    {
+      "path": "data/patch-api/sources/9.2.7-wikitext-register.json",
+      "sha256": "c349d4a3d3f5dba40f60e2a9739a7467322effc7111188aab5bb15b040b39fc7"
+    },
+    {
+      "path": "data/patch-api/sources/api-change-pages-remaining.json",
+      "sha256": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c"
+    },
+    {
+      "path": "tests/common/publication_sweep.rs",
+      "sha256": "33a70cae97985a4ebdc9897f6955a6dc6309d1cb0e51903688a7f036b4723b64"
+    },
+    {
+      "path": "tests/data/patch_10_0_0_sweep_known_gaps.json",
+      "sha256": "e6e0214cd31bba35f46e777ea57907a7da75b197a803bc5f39c1e4d2fba23819"
+    },
+    {
+      "path": "tests/data/patch_10_0_2_sweep_known_gaps.json",
+      "sha256": "6b4b5a740fee6214af8b69145ab6e041ee04208be751c91215d226815ddfe703"
+    },
+    {
+      "path": "tests/data/patch_10_0_5_sweep_known_gaps.json",
+      "sha256": "6dfe437bf9c5801ed0619cc4ee3718258c2e2ab8397fb75edd535414f2903ae7"
+    },
+    {
+      "path": "tests/data/patch_10_0_7_sweep_known_gaps.json",
+      "sha256": "71c8d522077cbc3ac585d6ab0a8f23818f0f48580f25b3b4e6025909eb860ddb"
+    },
+    {
+      "path": "tests/data/patch_10_1_0_sweep_known_gaps.json",
+      "sha256": "08bed0068c3ea7b6aef5f582d306bb141656509d4d536b3a07c9c06dd3348974"
+    },
+    {
+      "path": "tests/data/patch_10_1_5_sweep_known_gaps.json",
+      "sha256": "dc0820985994a102e6fc8c2606efe9b8fae7ae1179f24c525e4391a20a94952f"
+    },
+    {
+      "path": "tests/data/patch_10_1_7_sweep_known_gaps.json",
+      "sha256": "fcee43cd00197d470c455af52178cb439bb1fbc9c72949955baae367bc5acc5b"
+    },
+    {
+      "path": "tests/data/patch_10_2_0_sweep_known_gaps.json",
+      "sha256": "6bd6c9f74757c2240492849afec91b4acf8017c5a7a3dd773a82359d654e6e7b"
+    },
+    {
+      "path": "tests/data/patch_10_2_5_sweep_known_gaps.json",
+      "sha256": "2df48e1d3d7e92d81cbeeff946070e444a8cb6560da5f66a1b01e33b6753fbe7"
+    },
+    {
+      "path": "tests/data/patch_10_2_6_sweep_known_gaps.json",
+      "sha256": "07ed9137d74a75742dcd306000f72f404504da174ae88162133e247350f21a69"
+    },
+    {
+      "path": "tests/data/patch_10_2_7_sweep_known_gaps.json",
+      "sha256": "cca99a02aff745936c4946f5bd9c411b295df017f485c471d2799b35e8d38d5d"
+    },
+    {
+      "path": "tests/data/patch_11_0_0_sweep_known_gaps.json",
+      "sha256": "582c6722cdbf1f5c714e79285d733aa16b576bd1150f014e79263757c80c59fe"
+    },
+    {
+      "path": "tests/data/patch_11_0_2_sweep_known_gaps.json",
+      "sha256": "2b67f011dada188c6e29edeb2c354ec1b022898de7f09973e29f18a9a9019ccc"
+    },
+    {
+      "path": "tests/data/patch_11_0_5_sweep_known_gaps.json",
+      "sha256": "ac7849ac53136a8fd0069b1a8cd5b1ed1ec479ebd0dc91f26a61caf6d82de001"
+    },
+    {
+      "path": "tests/data/patch_11_0_7_sweep_known_gaps.json",
+      "sha256": "862a753dd970643fbb6c6a2e1ff5bd020b852f3ddca5bb0302d2824e2017e505"
+    },
+    {
+      "path": "tests/data/patch_11_1_0_sweep_known_gaps.json",
+      "sha256": "37060e5e90811b78acf06a9f218fc3e44e7ac8dfe340afd8b4b75f1b8ecb099b"
+    },
+    {
+      "path": "tests/data/patch_11_1_5_sweep_known_gaps.json",
+      "sha256": "faff51bfc8c5353064e898599684424b20729a10878ce3a499598eb2397b48c3"
+    },
+    {
+      "path": "tests/data/patch_11_1_7_sweep_known_gaps.json",
+      "sha256": "ca385ab6271755b60fe494629ebaf9ea3f9b27a4c004ca9127aa74403b9641df"
+    },
+    {
+      "path": "tests/data/patch_11_2_0_sweep_known_gaps.json",
+      "sha256": "790565e283a5d9d4439fbe8906247aad9e4048aced21a7b76e9cd7d322614504"
+    },
+    {
+      "path": "tests/data/patch_11_2_5_sweep_known_gaps.json",
+      "sha256": "724d83c4a636dbd978da250b22b24ae0868bb08521306df0bf8afe82647fd8e0"
+    },
+    {
+      "path": "tests/data/patch_11_2_7_sweep_known_gaps.json",
+      "sha256": "c430f3939ffa83b5a6875dbcb8c9f4d77df186e6d43dfffe174af11a4981d904"
+    },
+    {
+      "path": "tests/data/patch_12_0_0_sweep_known_gaps.json",
+      "sha256": "1631c386c966967440bed0feed597ce6d920ca0ee6ff15384482ea531446d54f"
+    },
+    {
+      "path": "tests/data/patch_12_0_1_sweep_known_gaps.json",
+      "sha256": "e54f1163d3973d114fad6b278305877871970457724b9e0b8698197bb8e061e8"
+    },
+    {
+      "path": "tests/data/patch_12_0_5_sweep_known_gaps.json",
+      "sha256": "b7f23ae23eb3a727b315e4b2da0ceb241fe97f4fb7a267d0dfeb160129ed168b"
+    },
+    {
+      "path": "tests/data/patch_12_0_7_sweep_known_gaps.json",
+      "sha256": "4e8adaddfec027082455f008704102e9a96af42335317a543f0522b58bb078d0"
+    },
+    {
+      "path": "tests/data/patch_12_1_0_sweep_known_gaps.json",
+      "sha256": "8771981d939bf6072c33d443cb84de299243a0dbbaeeee780b1c87d776226b39"
+    },
+    {
+      "path": "tests/data/patch_5_4_0_sweep_known_gaps.json",
+      "sha256": "b16cde449811fd7f0f00071079f5df97072ca29c10e186f286973d1153ea001a"
+    },
+    {
+      "path": "tests/data/patch_5_4_8_sweep_known_gaps.json",
+      "sha256": "9f74a2fd46f9cedb7e1d4411db531f879406a27565fe425641e0f5b4726911da"
+    },
+    {
+      "path": "tests/data/patch_6_0_1_sweep_known_gaps.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "tests/data/patch_6_0_2_sweep_known_gaps.json",
+      "sha256": "78c6791977dbbe8285235a0e77ab41c1d4112f57ab99f55357e5e7ca57f7b346"
+    },
+    {
+      "path": "tests/data/patch_6_1_0_sweep_known_gaps.json",
+      "sha256": "5f394427573c3f752805ed5bef4e6ce1396e28546f1dccc4d541d0ef021c69a6"
+    },
+    {
+      "path": "tests/data/patch_6_2_0_sweep_known_gaps.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "tests/data/patch_6_2_2_sweep_known_gaps.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "tests/data/patch_6_2_4_sweep_known_gaps.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "tests/data/patch_7_0_1_sweep_known_gaps.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "tests/data/patch_7_0_3_sweep_known_gaps.json",
+      "sha256": "f12cf9653812746a780004e1240661e2de1b3f62db785f654b450c147d245d22"
+    },
+    {
+      "path": "tests/data/patch_7_1_0_sweep_known_gaps.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "tests/data/patch_7_2_0_sweep_known_gaps.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "tests/data/patch_7_2_5_sweep_known_gaps.json",
+      "sha256": "3f7f956a60864b0bd3a98eaee19656b545282581264089c704bdbc483c21889c"
+    },
+    {
+      "path": "tests/data/patch_7_3_0_sweep_known_gaps.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "tests/data/patch_7_3_2_sweep_known_gaps.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "tests/data/patch_8_0_1_sweep_known_gaps.json",
+      "sha256": "bad5e7e4e77494f4e506684fb63b97d5b0d8ff9dd8279f714fbf00ad32bac55a"
+    },
+    {
+      "path": "tests/data/patch_8_1_0_sweep_known_gaps.json",
+      "sha256": "ac3c6a4c321141c4e817a3945bacad1d2b111596680089ea32be50d15e04d83e"
+    },
+    {
+      "path": "tests/data/patch_8_1_5_sweep_known_gaps.json",
+      "sha256": "fa690343b6f7f9215298380587912e740b047ca2ac3a28861684d4ea4170c6cd"
+    },
+    {
+      "path": "tests/data/patch_8_2_0_sweep_known_gaps.json",
+      "sha256": "d17815999ae8fd6305f30fe002b4eaecd92e7d37488586d35511f2c2c66f21d7"
+    },
+    {
+      "path": "tests/data/patch_8_2_5_sweep_known_gaps.json",
+      "sha256": "7f5192573ee12f65f39befe8f5de106aca3eaa0a8a7a0910f85e929af38a4e1b"
+    },
+    {
+      "path": "tests/data/patch_8_3_0_sweep_known_gaps.json",
+      "sha256": "b103b0035e040871a23baf7e4a9d367b8095ed79012fadd35ff6e7a8464e7c92"
+    },
+    {
+      "path": "tests/data/patch_8_3_7_sweep_known_gaps.json",
+      "sha256": "daf0f01f8766066a62aacce09907410998541709f389fc95df41e75e1198a119"
+    },
+    {
+      "path": "tests/data/patch_9_0_1_sweep_known_gaps.json",
+      "sha256": "b432c86184dac68bc2fe7c908671bbe4db20c3f296806a6fd98116c370160743"
+    },
+    {
+      "path": "tests/data/patch_9_0_2_sweep_known_gaps.json",
+      "sha256": "fd493f70b2a7599944017f31d57e6f23b948e5417dfd57105b290b3202b08dec"
+    },
+    {
+      "path": "tests/data/patch_9_0_5_sweep_known_gaps.json",
+      "sha256": "4c3a3200559a7716ac89b1366163cad05e112f3e74df09270c57e35d7043d2b1"
+    },
+    {
+      "path": "tests/data/patch_9_1_0_sweep_known_gaps.json",
+      "sha256": "65e517e2e8c4d7351728246d77e194af7c683ab5c7c8afdae263119029659d5a"
+    },
+    {
+      "path": "tests/data/patch_9_1_5_sweep_known_gaps.json",
+      "sha256": "26c5154d411efbed9ae47e9c5512cc7f9b29dd3677915ee88c24d9cf42b141a5"
+    },
+    {
+      "path": "tests/data/patch_9_2_0_sweep_known_gaps.json",
+      "sha256": "c00ce7cf935205e0465cfae492d61cb1ae2bf7cc67483451791b6c0e4982c82a"
+    },
+    {
+      "path": "tests/data/patch_9_2_5_sweep_known_gaps.json",
+      "sha256": "f7370f8626dab454cb1815e064173a7ad12c36b53046c1db2ae44a31a32c524a"
+    },
+    {
+      "path": "tests/data/patch_9_2_7_sweep_known_gaps.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "tests/patch_10_0_0_publication_sweep.rs",
+      "sha256": "86048c874fc8fee4656e72467e3ad78d8666a3368683f49d032b476b0b1607b7"
+    },
+    {
+      "path": "tests/patch_10_0_2_publication_sweep.rs",
+      "sha256": "52faebbe253b992fbac58c469856826d8168a557c6b9aee7a28e67256d23b6bb"
+    },
+    {
+      "path": "tests/patch_10_0_5_publication_sweep.rs",
+      "sha256": "0fa168a976a18bec845f81e773b111c689742807b6502708e477ef9afba4601d"
+    },
+    {
+      "path": "tests/patch_10_0_7_publication_sweep.rs",
+      "sha256": "4c1f8b54ef5e6c376cab4a7316cc55ccb08208224fc3cc98fef18e82fddaaf5e"
+    },
+    {
+      "path": "tests/patch_10_1_0_publication_sweep.rs",
+      "sha256": "f604d9820dba5566a87d023c5e0a2e3d326fb87a00d49e5bc951c69ab13e9b6a"
+    },
+    {
+      "path": "tests/patch_10_1_5_publication_sweep.rs",
+      "sha256": "1dc88829999d5bcf6091077d4e8a9652dda58f3ab3a4e7a68cebff745d8d890e"
+    },
+    {
+      "path": "tests/patch_10_1_7_publication_sweep.rs",
+      "sha256": "c507847a429299d5ab544aadc9e9eaf7811e269e1c075d5bf68f7782a604f7e8"
+    },
+    {
+      "path": "tests/patch_10_2_0_publication_sweep.rs",
+      "sha256": "7cb7cfd64062623022c9d34a6ff1fe85192c6b6e44af120003a826757fc05c9a"
+    },
+    {
+      "path": "tests/patch_10_2_5_publication_sweep.rs",
+      "sha256": "84866166aab565d9a3f5ddedf9e289374b772a259469938f0b6881eeb48d1166"
+    },
+    {
+      "path": "tests/patch_10_2_6_publication_sweep.rs",
+      "sha256": "f220c365fd05f9777a216b2c7ad1c65f702876758a93630dfdce450e4f039678"
+    },
+    {
+      "path": "tests/patch_10_2_7_publication_sweep.rs",
+      "sha256": "7690939639f44b9938b3d7ed8911a9f5821034fdf01a3cd703a410c1d52bf614"
+    },
+    {
+      "path": "tests/patch_11_0_0_publication_sweep.rs",
+      "sha256": "af3eda7f4b7f8f38cc2d368fb2a9180970bebc688fb39c232220c952b7e42470"
+    },
+    {
+      "path": "tests/patch_11_0_2_publication_sweep.rs",
+      "sha256": "ef66de434c9ba34f699de7f5bd722aa0e54484d7743d1fa263a1e233737650c8"
+    },
+    {
+      "path": "tests/patch_11_0_5_publication_sweep.rs",
+      "sha256": "7109cc43d9e72b2a4fd2d34b230d1af7259c37f31006a272884912c64ae39fec"
+    },
+    {
+      "path": "tests/patch_11_0_7_publication_sweep.rs",
+      "sha256": "0843c29049a4062617db3134d7585bf13060699f71fc72ebb56a142620ddf514"
+    },
+    {
+      "path": "tests/patch_11_1_0_publication_sweep.rs",
+      "sha256": "83d8a31890db2403329d1ecd94f7ea92cc86d422f5a212675ef5f8ff5030a700"
+    },
+    {
+      "path": "tests/patch_11_1_5_publication_sweep.rs",
+      "sha256": "4756905f0fa07f9144d84f3d478716b0278e7a7e41db92e0145a81b86d262cea"
+    },
+    {
+      "path": "tests/patch_11_1_7_publication_sweep.rs",
+      "sha256": "18729c50a54e175057206e4764a8b040db276d6a1d1331a016f014778ad8edf2"
+    },
+    {
+      "path": "tests/patch_11_2_0_publication_sweep.rs",
+      "sha256": "6cc07fedc09a9ca45a13ffc516bc718e6607b7422f1ecb5dcd37a7e555fc5b9b"
+    },
+    {
+      "path": "tests/patch_11_2_5_publication_sweep.rs",
+      "sha256": "c87f081c1e7bb606472768405da1d12de358c53bf63ccfa5081474a41a297283"
+    },
+    {
+      "path": "tests/patch_11_2_7_publication_sweep.rs",
+      "sha256": "895986c0ebb7f9229da5b6baa79c82ae06df8bdca580182c5391f7cb8cccb146"
+    },
+    {
+      "path": "tests/patch_12_0_0_publication_sweep.rs",
+      "sha256": "959397e0bc6056675bd5ea10b17cdf62e990157bef3d6701d1ee7d40b2f9a819"
+    },
+    {
+      "path": "tests/patch_12_0_1_publication_sweep.rs",
+      "sha256": "8e5ec9074cfa4afc890317fee78cb77e7fbd0c5f05360ba2aa9a5f4f5010ebed"
+    },
+    {
+      "path": "tests/patch_12_0_5_publication_sweep.rs",
+      "sha256": "10c0763fa622319eac584214a0420e89b5a6d8ac3acc7dbd6237f995a08b128e"
+    },
+    {
+      "path": "tests/patch_12_0_7_publication_sweep.rs",
+      "sha256": "ff8a2fddb35ba6f199727bed041a0b320adc3ea41f2f12767807c4883f2d9a2a"
+    },
+    {
+      "path": "tests/patch_12_1_0_publication_sweep.rs",
+      "sha256": "b5b9bfab1bd7ceb4bc24d288575e48251dd37a19d811062c7fc4753ce0da673d"
+    },
+    {
+      "path": "tests/patch_5_4_0_behavior.rs",
+      "sha256": "df744a2ac9909c367aa145e3cb23e15f9fbfb4bbfe5fa286a6da7cb4ed19ade4"
+    },
+    {
+      "path": "tests/patch_5_4_0_publication_sweep.rs",
+      "sha256": "55b6ec503fbce52eeee920a71f2bfe62ebe4e10b6af09c92fbf473883f42a310"
+    },
+    {
+      "path": "tests/patch_5_4_8_publication_sweep.rs",
+      "sha256": "0596a783c43c8efb7731753efc218c86c7073e37c721cafcc144a562daa80bfc"
+    },
+    {
+      "path": "tests/patch_6_0_1_publication_sweep.rs",
+      "sha256": "c42090609325eb5318945219fd3f0199a52376d8fe9ae371a8e13a85ab517dd6"
+    },
+    {
+      "path": "tests/patch_6_0_2_publication_sweep.rs",
+      "sha256": "02eb45a401882cb9909f429374640bb320eb992290c72e6b307fa24d71b258f2"
+    },
+    {
+      "path": "tests/patch_6_1_0_publication_sweep.rs",
+      "sha256": "df9714d2025013631fb1dd042b4203ecb667b7136f28d8a169f6c9698c1e0aa8"
+    },
+    {
+      "path": "tests/patch_6_2_0_publication_sweep.rs",
+      "sha256": "19b69f12987c679692074319d32002539d602e0a9ce5f8344f150cb8d7e5b940"
+    },
+    {
+      "path": "tests/patch_6_2_2_publication_sweep.rs",
+      "sha256": "64eeb8be7cadd8969d4ecad467691f02a24dd58ca8cda888e39cde20e7c1d13b"
+    },
+    {
+      "path": "tests/patch_6_2_4_publication_sweep.rs",
+      "sha256": "52d64db22059fa6a04c7dbd25940470dbf4f36f3d9349c67b8fed7d1df949022"
+    },
+    {
+      "path": "tests/patch_7_0_1_publication_sweep.rs",
+      "sha256": "bd8dfe46c6ac7ae5d56203fd84e2754b77935138d06cf7d7a723ef5ca4ea20a0"
+    },
+    {
+      "path": "tests/patch_7_0_3_publication_sweep.rs",
+      "sha256": "e2b24a0d76e2e4b76a8030d82a35b5a5d11be7793847d71d5500311ec1ed9a20"
+    },
+    {
+      "path": "tests/patch_7_1_0_publication_sweep.rs",
+      "sha256": "c0f1280a4806833cb7c818bb4f12604a97556ff03a51d61c9877c0e5a6d68358"
+    },
+    {
+      "path": "tests/patch_7_2_0_publication_sweep.rs",
+      "sha256": "b418465bd0d45cd0f32c866c9d0268dd9eae50cd39892946b16dca4d5708d006"
+    },
+    {
+      "path": "tests/patch_7_2_5_publication_sweep.rs",
+      "sha256": "8a6d8a931aadd75b97ed142fbabe879a178f417f21d1031d40381ec6c6e81976"
+    },
+    {
+      "path": "tests/patch_7_3_0_publication_sweep.rs",
+      "sha256": "e91a749c131234230773039981b17db238322cf4927129ca5ec0760a35883454"
+    },
+    {
+      "path": "tests/patch_7_3_2_publication_sweep.rs",
+      "sha256": "ec880205697ecd0eb7e6f8c602fdd78649c1f49bf2156c31bd7d60dfe2bb2b7f"
+    },
+    {
+      "path": "tests/patch_8_0_1_publication_sweep.rs",
+      "sha256": "f0d056c4d658428253a281fe02c65bc30233f6f12c3ca635f3738edf34facea4"
+    },
+    {
+      "path": "tests/patch_8_1_0_publication_sweep.rs",
+      "sha256": "57c9a40bcd1d2f0a83fdfd7b7df2803e1693ee5e5fa3d5bc7938b85a18980200"
+    },
+    {
+      "path": "tests/patch_8_1_5_publication_sweep.rs",
+      "sha256": "aa992b8b4f9c2aa340f363953ffdb1ab483c91ea56e1d83787d70aabf80724b4"
+    },
+    {
+      "path": "tests/patch_8_2_0_publication_sweep.rs",
+      "sha256": "4f832fe16fbdec8d3bf1306175f1450736d6fff0d131ef2867a915f16226269c"
+    },
+    {
+      "path": "tests/patch_8_2_5_publication_sweep.rs",
+      "sha256": "429beb4a2e9e30fa2c0ded9a02c3a577d11ce2567d319232997c50534fe64dfb"
+    },
+    {
+      "path": "tests/patch_8_3_0_publication_sweep.rs",
+      "sha256": "bf58e3c335e51033d84099dcfbdc7a8b837566b6175140c77a8dfc2526544eb4"
+    },
+    {
+      "path": "tests/patch_8_3_7_publication_sweep.rs",
+      "sha256": "ff123fb1f88570777d458bd77ba412a364ba46a54912eeb2f03e10e3149fec86"
+    },
+    {
+      "path": "tests/patch_9_0_1_publication_sweep.rs",
+      "sha256": "45582084078603ed32b03f85619114796775a51603df446181da1593983840e7"
+    },
+    {
+      "path": "tests/patch_9_0_2_publication_sweep.rs",
+      "sha256": "5b239438f9fae4ab9b1082273c5198fa8700d6d3748403c3e66180d519539bd7"
+    },
+    {
+      "path": "tests/patch_9_0_5_publication_sweep.rs",
+      "sha256": "26b6d929e0e9a5e474e52c752013d2bb39a8e28e75dc5e74ded1b681b30328ff"
+    },
+    {
+      "path": "tests/patch_9_1_0_publication_sweep.rs",
+      "sha256": "7b776457ee9ef81570d69d9f5c5a30600797811351217f67e8c8b3bc5d9b2f19"
+    },
+    {
+      "path": "tests/patch_9_1_5_publication_sweep.rs",
+      "sha256": "c6d020ae46c1229d9c39140cacb5e91d7c13d3d1a0c610db2e02eeb51e49e3f9"
+    },
+    {
+      "path": "tests/patch_9_2_0_publication_sweep.rs",
+      "sha256": "818994888f4870b893023ecfd0e00d34e536f6f2025c34c6c18a5e4a66d71e83"
+    },
+    {
+      "path": "tests/patch_9_2_5_publication_sweep.rs",
+      "sha256": "7ad54585af719f1f44e0017392bd2ad3ed42cbb9d2b5ce16adf2c6dac676c0c5"
+    },
+    {
+      "path": "tests/patch_9_2_7_publication_sweep.rs",
+      "sha256": "7b5e8c975731d97e0c882793cd68963697cb09cdd5b2e73bd5a9923363b67477"
+    },
+    {
+      "path": "tools/check_patch_validators.py",
+      "sha256": "72226ca4823ac3564cc7afe7987608d51808a22c1a235a7302e06081b6f6127d"
+    },
+    {
+      "path": "tools/extract_patch_non_inventory.py",
+      "sha256": "e8df42186c3f47511fcd976ba2614b0eebfb546e07c1c763171357f96a31f0dc"
+    },
+    {
+      "path": "tools/gen_patch_wikitext_register.py",
+      "sha256": "ce70763c3415e8321c67528983ca9f92a447d652206f989b682d328aa2fbac98"
+    },
+    {
+      "path": "tools/patch_audit_validation.py",
+      "sha256": "ece34f1c15a1f4e27bb82abf0ae2f137b228c2b7f29c5042a38b8d0fcc9131e8"
+    }
+  ],
+  "passing_receipts": [
+    "p540-python-fixtures",
+    "p540-reproduction",
+    "p540-all-sweeps",
+    "p540-prefork-behavior",
+    "p540-integration-behavior",
+    "p540-integration-instance",
+    "p540-integration-forbidden",
+    "p540-lib-frame-state",
+    "p540-format",
+    "p540-mists-check"
+  ]
+}

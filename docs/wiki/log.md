@@ -527,4 +527,4 @@ Pinned API revision 2150406 and parent 6428967: 2013 retail, not Classic. [Audit
 
 ## [2026-10-08] investigation | Patch 5.4.0 API audit
 
-Retail page and transcluded diff pinned; all 159 IDs accounted. [Audit](investigations/patch-5-4-0-api-audit.md) records 22 gaps, 27 pending contracts, bounded existing instance/forbidden behavior, complete grep removal scans and no runtime retirement. Final targeted/portable acceptance pending.
+Retail page and transcluded diff pinned; all 159 IDs accounted. [Audit](investigations/patch-5-4-0-api-audit.md) records 22 gaps, 27 pending contracts, bounded existing instance/forbidden behavior, complete grep removal scans and no runtime retirement. Targeted proof passes: 57 publication/factory, 2 prefork/2 standalone, 24 caller/6 source-unit cases, format and warning-clean non-vendor Mists; portable acceptance pending.
