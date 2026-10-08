@@ -17,8 +17,8 @@ fn patch_6_2_4_publication_sweep(env: &WowLuaEnv) {
         register_env: "P624_SWEEP_REGISTER",
         out_env: "P624_SWEEP_OUT",
         later_registers: &[
-            // 7.0.1 integration placeholder: redirect-only register pending merge.
-            // 7.0.3 integration placeholder: register pending merge.
+            include_str!("../data/patch-api/sources/7.0.1-wikitext-register.json"),
+            include_str!("../data/patch-api/sources/7.0.3-wikitext-register.json"),
             include_str!("../data/patch-api/sources/7.1.0-wikitext-register.json"),
             include_str!("../data/patch-api/sources/7.2.0-wikitext-register.json"),
             include_str!("../data/patch-api/sources/7.2.5-wikitext-register.json"),
