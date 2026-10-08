@@ -57,14 +57,16 @@ def render_line(line):
 
 def extract_text(raw, *, preserve_examples=False, normalize_inventory_headings=False):
     if normalize_inventory_headings:
-        raw = re.sub(r'^==\s*(Global API|Widgets|Events|CVars)\s*==$'
-                     , r'==\1==', raw, flags=re.M)
+        raw = re.sub(r'^==\s*(Global API|Widgets|Events|CVars)\s*==$',
+                     r'==\1==', raw, flags=re.M)
     lines = []
     inventory = False
     in_example = False
     xml_example = False
     in_ambox = False
     unheaded = "===Global API===" not in raw.splitlines()
+    if normalize_inventory_headings and '==Global API==' in raw.splitlines():
+        unheaded = False
     level_two = any(heading in raw.splitlines() for heading in (
         "==Global API==", "==Events=="))
     for line in raw.splitlines():
