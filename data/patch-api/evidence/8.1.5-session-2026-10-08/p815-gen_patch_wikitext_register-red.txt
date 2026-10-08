@@ -1,0 +1,14 @@
+......E..............
+======================================================================
+ERROR: test_legacy_bullets_preserve_new_removals_and_event_occurrences (__main__.InventoryTests.test_legacy_bullets_preserve_new_removals_and_event_occurrences)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p815-page/tools/test_gen_patch_wikitext_register.py", line 50, in test_legacy_bullets_preserve_new_removals_and_event_occurrences
+    entries = generator.parse_legacy_api_bullets(raw)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'gen_patch_wikitext_register' has no attribute 'parse_legacy_api_bullets'
+
+----------------------------------------------------------------------
+Ran 21 tests in 0.003s
+
+FAILED (errors=1)

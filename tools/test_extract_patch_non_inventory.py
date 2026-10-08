@@ -10,6 +10,19 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 class ExtractTests(unittest.TestCase):
+    def test_legacy_bullets_strip_only_inventory_and_retain_unknown_sections(self):
+        raw = ('Diff: 8.1.0 to 8.1.5\n==API==\n====New====\n'
+               'New C_CVar table\n* {{api|C_CVar.GetCVar}}\n'
+               '====Changes====\n?\n====Removals====\n* {{api|GetCVar}}\n'
+               '==Widgets==\n?\n==Events==\n* {{api|t=e|NEW_TOY_ADDED}}\n'
+               '==CVars==\n?\n')
+        self.assertEqual(extract_text(raw, legacy_api_bullets=True),
+                         'Diff: 8.1.0 to 8.1.5\n== API ==\n==== New ====\n'
+                         'New C_CVar table\n==== Changes ====\n?\n'
+                         '==== Removals ====\n== Widgets ==\n?\n== Events ==\n'
+                         '== CVars ==\n?\n')
+        self.assertNotEqual(extract_text(raw), extract_text(raw, legacy_api_bullets=True))
+
     def test_cli_self_test_runs_without_argument_conflict(self):
         result = subprocess.run(
             [sys.executable, str(ROOT / 'tools/extract_patch_non_inventory.py'), '--self-test'],

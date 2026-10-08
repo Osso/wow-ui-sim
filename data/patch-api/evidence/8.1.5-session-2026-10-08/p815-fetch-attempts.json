@@ -1,0 +1,29 @@
+[
+  {
+    "url": "https://warcraft.wiki.gg/api.php?action=query&format=json&pageids=394493&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main",
+    "status": 200,
+    "headers": {
+      "Date": "Thu, 08 Oct 2026 12:34:44 GMT",
+      "Content-Type": "application/json; charset=utf-8",
+      "Transfer-Encoding": "chunked",
+      "Connection": "close",
+      "Server": "cloudflare",
+      "vary": "Accept-Encoding",
+      "x-content-type-options": "nosniff",
+      "x-frame-options": "DENY",
+      "content-disposition": "inline; filename=api-result.json",
+      "Cache-Control": "private, must-revalidate, max-age=0",
+      "x-request-id": "b89ccf892d64e2d8203601e3",
+      "x-xss-protection": "1; mode=block",
+      "Report-To": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=UZ3W8sw1dwvg8xJXfDxE0q4Sij1WgzhpGzm3Ym38CJqk7GRc4TcgV1eLVtUA%2FrCaXIQ2FPVie7he9UXQYYIcKYczfIsNhqhc98o6%2F5xjoji2SKAhv0%2F52hpUUxcik%2BojXPoVC%2Fj4giXBwISiC1I%3D\"}]}",
+      "Nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.01,\"max_age\":604800}",
+      "cf-cache-status": "BYPASS",
+      "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+      "Speculation-Rules": "\"/cdn-cgi/speculation\"",
+      "Server-Timing": "cfCacheStatus;desc=\"BYPASS\"",
+      "CF-RAY": "a4752e735ac035a2-DFW",
+      "alt-svc": "h3=\":443\"; ma=86400"
+    },
+    "attempt": 1
+  }
+]

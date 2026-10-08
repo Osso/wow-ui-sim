@@ -63,6 +63,22 @@ class InventoryTests(unittest.TestCase):
         self.assertNotIn('kind', legacy[1])
         self.assertEqual(old_counts, [])
 
+    def test_legacy_bullets_preserve_new_removals_and_event_occurrences(self):
+        import gen_patch_wikitext_register as generator
+        raw = ('==API==\n====New====\nNew C_CVar table\n'
+               '* {{api|C_CVar.GetCVar}}\n====Changes====\n?\n'
+               '====Removals====\n* {{api|GetCVar}}\n'
+               '==Widgets==\n?\n==Events==\n* {{api|t=e|NEW_TOY_ADDED}}\n'
+               '==CVars==\n?\n')
+        entries = generator.parse_legacy_api_bullets(raw)
+        self.assertEqual([(e['section'], e['symbol'], e['direction'], e['wikitext_line'])
+                          for e in entries], [
+            ('global-api', 'C_CVar.GetCVar', 'added', 4),
+            ('global-api', 'GetCVar', 'removed', 8),
+            ('events', 'NEW_TOY_ADDED', 'added', 12),
+        ])
+        self.assertEqual(generator.parse_simple_api_list(raw), [])
+
     def test_simple_api_list_retains_function_and_cvar_source_lines(self):
         import gen_patch_wikitext_register as generator
         raw = ('== Changes ==\n* TOC: <code>80300</code>\n'

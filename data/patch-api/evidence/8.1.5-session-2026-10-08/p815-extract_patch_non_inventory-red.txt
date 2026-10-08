@@ -1,0 +1,14 @@
+..................E...........
+======================================================================
+ERROR: test_legacy_bullets_strip_only_inventory_and_retain_unknown_sections (__main__.ExtractTests.test_legacy_bullets_strip_only_inventory_and_retain_unknown_sections)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p815-page/tools/test_extract_patch_non_inventory.py", line 19, in test_legacy_bullets_strip_only_inventory_and_retain_unknown_sections
+    self.assertEqual(extract_text(raw, legacy_api_bullets=True),
+                     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: extract_text() got an unexpected keyword argument 'legacy_api_bullets'
+
+----------------------------------------------------------------------
+Ran 30 tests in 0.071s
+
+FAILED (errors=1)

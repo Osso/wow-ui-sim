@@ -235,6 +235,24 @@ def parse_simple_api_list(text):
     return entries
 
 
+def parse_legacy_api_bullets(text):
+    """Retain New/Removals API bullets and unqualified event additions (8.1.5)."""
+    entries = []
+    section, direction = None, None
+    for number, line in enumerate(text.splitlines(), 1):
+        heading = re.fullmatch(r'(=+)\s*(.*?)\s*\1', line)
+        if heading:
+            title = heading[2]
+            if len(heading[1]) == 2:
+                section = {'API': 'global-api', 'Events': 'events'}.get(title)
+                direction = 'added' if section == 'events' else None
+            elif section == 'global-api':
+                direction = {'New': 'added', 'Removals': 'removed'}.get(title)
+        elif section and direction and line.startswith('* ') and TEMPLATE.search(line):
+            entries.append(make_entry(section, direction, number, line))
+    return entries
+
+
 def parse_diff_api_additions(text):
     """Retain each explicit late-build addition outside consolidated inventories."""
     entries = []
@@ -274,6 +292,8 @@ def main():
                         help='Retain prose counts and singular CVar/Command labels; opt-in preserves prior registers')
     parser.add_argument('--legacy-api-tables', action='store_true',
                         help='Parse older unheaded/repeated caption inventories independently')
+    parser.add_argument('--legacy-api-bullets', action='store_true',
+                        help='Retain API New/Removals and event bullet inventories; opt-in')
     args = parser.parse_args()
     patch, path, revid, out = args.patch, args.path, args.revid, args.out
     raw = Path(path).read_bytes()
@@ -296,6 +316,8 @@ def main():
         counts += section_counts
     if args.legacy_api_tables:
         entries, counts = parse_legacy_caption_tables(raw.decode('utf-8'))
+    if args.legacy_api_bullets:
+        entries.extend(parse_legacy_api_bullets(raw.decode('utf-8')))
     if args.simple_api_list:
         entries.extend(parse_simple_api_list(raw.decode('utf-8')))
     if args.diff_api_additions:

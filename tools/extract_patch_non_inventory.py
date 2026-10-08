@@ -56,7 +56,8 @@ def render_line(line):
 
 
 def extract_text(raw, *, preserve_examples=False, normalize_inventory_headings=False,
-                 retain_reference_notes=False, legacy_api_tables=False):
+                 retain_reference_notes=False, legacy_api_tables=False,
+                 legacy_api_bullets=False):
     if legacy_api_tables:
         raw = re.sub(r'^\{\|[^\n]*\n\|\+ (?:Global API|Widget API|Widget Handlers|Events|Console variables|Console commands) [\s\S]*?^\|\}\n?',
                      '', raw, flags=re.M)
@@ -78,6 +79,13 @@ def extract_text(raw, *, preserve_examples=False, normalize_inventory_headings=F
     level_two = any(heading in raw.splitlines() for heading in (
         "==Global API==", "==Events=="))
     for line in raw.splitlines():
+        if legacy_api_bullets:
+            if line.startswith('* ') and '{{api|' in line:
+                continue
+            # Bullet inventories are removed individually, not by section: retain
+            # unknown '?' statements, namespace notes and source/build context.
+            lines.append(render_line(re.sub(r'^(=+)\s*(.*?)\s*\1$', r'\1 \2 \1', line)))
+            continue
         if line == '{{Ambox':
             in_ambox = True
             continue
@@ -252,6 +260,8 @@ def main():
                         help='Retain inline ref web citation fields alongside publication prose')
     parser.add_argument('--legacy-api-tables', action='store_true',
                         help='Strip older caption inventories while retaining API prose and references')
+    parser.add_argument('--legacy-api-bullets', action='store_true',
+                        help='Strip legacy API/event bullets without losing prose or unknown markers')
     parser.add_argument('--text-only', action='store_true',
                         help='Write/check plaintext only; never read or modify a coverage ledger')
     args = parser.parse_args()
@@ -266,7 +276,8 @@ def main():
     text = extract_text(raw_path.read_text(), preserve_examples=args.preserve_examples,
                         normalize_inventory_headings=args.normalize_inventory_headings,
                         retain_reference_notes=args.retain_reference_notes,
-                        legacy_api_tables=args.legacy_api_tables)
+                        legacy_api_tables=args.legacy_api_tables,
+                        legacy_api_bullets=args.legacy_api_bullets)
     rows = seed_rows(text, args.patch)
     if args.text_only:
         if args.check:
