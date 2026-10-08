@@ -1,0 +1,18 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "publication_sweep_client_lines",
+    "--",
+    "--nocapture"
+  ],
+  "revision": "f74c89cc04d5a1dcae87b0fbfcd7a4fa485262ff",
+  "profile": "retail",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p554-page",
+  "exit": 101,
+  "log": "p554-client-lines-red.log",
+  "log_sha256": "bbd61218670f2c32fe12fa20e26c088b6331e24e74a002c3935e2841fe22ba59",
+  "invalidated": false
+}

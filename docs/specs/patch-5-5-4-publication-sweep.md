@@ -29,7 +29,8 @@ Audit the pinned [5.5.4 source](../../data/patch-api/sources/5.5.4-api-changes.w
 
 - `tools/test_gen_patch_wikitext_register.py`.
 - `tools/test_extract_patch_non_inventory.py`.
-- Rust discovery and client-line tests pending.
+- `tests/patch_5_5_4_publication_sweep.rs`: Mists cached-UI discovery and same-line controls.
+- `tests/publication_sweep_client_lines.rs`: retail cross-line, ordering and wrong-profile controls.
 
 ## Known gaps (current cycle)
 

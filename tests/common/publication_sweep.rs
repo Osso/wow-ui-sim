@@ -14,14 +14,37 @@ pub(crate) struct SweepSpec {
     pub row_count: usize,
     pub register_env: &'static str,
     pub out_env: &'static str,
-    /// Wikitext registers of later patches, oldest first. The Retail build carries the
-    /// latest surface, so a later add/remove of the same symbol overrides this patch's
-    /// expected publication (recorded as `superseded_by`).
+    /// Later patches, oldest first, within the same client line. A later add/remove
+    /// overrides expected publication (recorded as `superseded_by`). Registers from
+    /// another client history never supersede this patch.
     pub later_registers: &'static [&'static str],
+}
+
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, Deserialize)]
+#[serde(rename_all = "kebab-case")]
+enum ClientLine {
+    #[default]
+    Retail,
+    MistsClassic,
+    ClassicEra,
+}
+
+impl ClientLine {
+    fn matches_profile(self, profile: wow_ui_sim::client_profile::ClientProfile) -> bool {
+        use wow_ui_sim::client_profile::ClientProfile;
+        matches!(
+            (self, profile),
+            (Self::Retail, ClientProfile::Retail | ClientProfile::Ptr)
+                | (Self::MistsClassic, ClientProfile::Mists)
+                | (Self::ClassicEra, ClientProfile::Era | ClientProfile::Anniversary)
+        )
+    }
 }
 
 #[derive(Deserialize)]
 struct Register {
+    #[serde(default)]
+    client_line: ClientLine,
     entries: Vec<Entry>,
 }
 
@@ -357,10 +380,14 @@ fn read_register(spec: &SweepSpec) -> Register {
 }
 
 /// Latest later-patch add/remove per symbol; `changed` rows keep publication as-is.
-fn later_publication(spec: &SweepSpec) -> BTreeMap<String, Entry> {
+fn later_publication(spec: &SweepSpec, client_line: ClientLine) -> BTreeMap<String, Entry> {
     let mut latest = BTreeMap::new();
     for source in spec.later_registers {
-        for entry in parse_register(source, None).entries {
+        let register = parse_register(source, None);
+        if register.client_line != client_line {
+            continue;
+        }
+        for entry in register.entries {
             if entry.direction != "changed" {
                 latest.insert(entry.symbol.clone(), entry);
             }
@@ -481,7 +508,11 @@ fn parse_deprecated_alias(line: &str, source: &str) -> Option<(String, (String, 
 /// ID set to equal the reviewed known-gap set exactly.
 pub(crate) fn run_publication_sweep(env: &WowLuaEnv, spec: &SweepSpec) {
     let register = read_register(spec);
-    let later = later_publication(spec);
+    assert!(
+        register.client_line.matches_profile(wow_ui_sim::client_profile::ACTIVE),
+        "register client line does not match active profile"
+    );
+    let later = later_publication(spec, register.client_line);
     let known: BTreeSet<String> =
         serde_json::from_str(spec.known_gaps).expect("parse known-gap IDs");
     let aliases = read_deprecated_aliases(env);

@@ -12,7 +12,9 @@ The page states `TOC: 50504`; [client profile code](../../../src/client_profile.
 
 [Prefork target declaration](../../../Cargo.toml) requires `client-retail`. The retained [Mists probe](../../../data/patch-api/evidence/5.5.4-session-2026-10-08/p554-mists-prefork-probe.log) fails before compilation with that feature requirement. Enabling retail alongside Mists would violate the mutually-exclusive profile contract. Do not weaken the prefork executable's retail conformance assertions merely for this page.
 
-The narrow alternative is a Mists integration case using the existing [profile-aware full-UI preload](../../../tests/common/prefork_full_ui_preload.rs), with assertions for active profile, interface `50504`, Mists cache selection and loaded UI, followed by the shared register-driven classifier. Publication is not native signature/output/security parity. An empty inventory cannot establish positive API coverage.
+[Shared classifier](../../../tests/common/publication_sweep.rs) now parses a default-retail `ClientLine` enum, excludes mismatched later registers, and checks the executing profile. Three retail controls reproduced erroneous cross-line supersession and absent profile rejection before the fix.
+
+The narrow alternative is a [Mists integration case](../../../tests/patch_5_5_4_publication_sweep.rs) using the existing [profile-aware full-UI preload](../../../tests/common/prefork_full_ui_preload.rs), with assertions for active profile, interface `50504`, Mists cache selection and loaded UI, followed by the shared register-driven classifier. Publication is not native signature/output/security parity. An empty inventory cannot establish positive API coverage.
 
 ## Exact source accounting
 

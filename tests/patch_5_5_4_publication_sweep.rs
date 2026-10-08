@@ -7,6 +7,30 @@ mod preload;
 mod sweep;
 
 use wow_ui_sim::client_profile::{ACTIVE, ACTIVE_INTERFACE_VERSION, ClientProfile};
+use wow_ui_sim::lua_api::WowLuaEnv;
+
+const MISTS_ADDITION: &str = r#"{"client_line":"mists-classic","entries":[{"id":"own","section":"global-api","direction":"added","symbol":"GetTime"}]}"#;
+const MISTS_REMOVAL: &str = r#"{"client_line":"mists-classic","entries":[{"id":"later","section":"global-api","direction":"removed","symbol":"GetTime"}]}"#;
+const RETAIL_REMOVAL: &str = r#"{"entries":[{"id":"retail","section":"global-api","direction":"removed","symbol":"GetTime"}]}"#;
+const ERA_REMOVAL: &str = r#"{"client_line":"classic-era","entries":[{"id":"era","section":"global-api","direction":"removed","symbol":"GetTime"}]}"#;
+
+fn run_mists_control(later: &'static [&'static str], gaps: &'static str) {
+    let env = WowLuaEnv::new().expect("create Mists publication control environment");
+    sweep::run_publication_sweep(&env, &sweep::SweepSpec {
+        register: MISTS_ADDITION,
+        known_gaps: gaps,
+        row_count: 1,
+        register_env: "MISTS_LINE_CONTROL_REGISTER",
+        out_env: "MISTS_LINE_CONTROL_OUT",
+        later_registers: later,
+    });
+}
+
+#[test]
+fn patch_5_5_4_client_line_excludes_retail_and_era() {
+    run_mists_control(&[RETAIL_REMOVAL, ERA_REMOVAL], "[]");
+    run_mists_control(&[MISTS_REMOVAL, RETAIL_REMOVAL], r#"["own"]"#);
+}
 
 #[test]
 fn patch_5_5_4_publication_sweep() {
