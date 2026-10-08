@@ -127,9 +127,9 @@
   },
   "wt-events-AUCTION_CANCELED-223": {
     "expected": {
-      "direction": "added",
+      "direction": "removed",
       "page_default": null,
-      "publication": "published",
+      "publication": "absent",
       "section": "events",
       "superseded_by": null,
       "symbol": "AUCTION_CANCELED"
@@ -141,7 +141,7 @@
       "kind": "event",
       "value": null
     },
-    "ok": true
+    "ok": false
   },
   "wt-events-AUCTION_HOUSE_AUCTION_CREATED-224": {
     "expected": {

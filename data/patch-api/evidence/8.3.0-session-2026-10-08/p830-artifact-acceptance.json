@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "/home/osso/.worktrees/wow-ui-sim-p830-page/data/patch-api/evidence/8.3.0-session-2026-10-08/validate.py"
+  ],
+  "revision": "073d223fb28ca4482543830066c1ece0e9801b01",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p830-page",
+  "target": "/home/osso/.worktrees/wow-ui-sim-p830-page/target",
+  "scope": "dynamic pinned-source/accounting/preservation/supersession/proof validation",
+  "exit": 0,
+  "stdout_sha256": "171a3bb1d4478a1ee6f96c690772f529294e8e883ff124602f454f9152b2307e",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

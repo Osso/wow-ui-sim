@@ -1,6 +1,6 @@
-## [2026-10-08] investigation | 8.3.0 API page audit
+## [2026-10-08] evidence | 8.3.0 API page audit
 
-[Audit](investigations/patch-8-3-0-api-audit.md): pinned revision 6471393, 220 inventory rows and opt-in source retention; discovery and acceptance pending.
+[Audit](investigations/patch-8-3-0-api-audit.md): revision 6471393, 224 inventory / sixteen extract / four caption IDs; six bounded retail retirements and 41 exact publication gaps. All 36 sweeps plus animation regression, negative control, five affected Mists cases, warning-clean non-vendor checks and startup `[]` pass. Unrelated unchanged HonorFrame diagnostic assertion fails in broader Mists selection; retained and reported. All 183 prior inputs, 70 extraction outcomes and 36 register reproductions preserved.
 
 ## [2026-10-08] evidence | 9.0.1 page audit
 

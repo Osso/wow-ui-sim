@@ -288,3 +288,7 @@ Retained revision 4788278 and 80-row register; corrected unbolded Commands/HTML 
 ## [2026-10-08] ingest | 8.3.0 API changes
 
 Pinned page 109654 revision 6471393; 220 inventory rows, command-column identity and inline reference retention. [Audit](investigations/patch-8-3-0-api-audit.md); acceptance pending.
+
+## [2026-10-08] evidence | 8.3.0 complete publication accounting
+
+[Audit](investigations/patch-8-3-0-api-audit.md): 244 IDs (224 inventory, sixteen extract, four captions), six retail-only closures, 41 exact gaps and one pending revamp summary. All 37 publication tests, 46 parser fixtures, negative control, five affected Mists cases, checks and startup [] pass. Broader Mists selection retains unrelated HonorFrame diagnostic assertion failure. Dynamic validator, 183 preserved inputs, 70 preserved extraction outcomes and 36 byte-identical registers verified.
