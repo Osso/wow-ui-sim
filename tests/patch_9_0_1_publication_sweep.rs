@@ -15,7 +15,7 @@ fn patch_9_0_1_publication_sweep(env: &WowLuaEnv) {
         register_env: "P901_SWEEP_REGISTER",
         out_env: "P901_SWEEP_OUT",
         later_registers: &[
-            // Main thread: prepend 9.0.2 register at integration.
+            include_str!("../data/patch-api/sources/9.0.2-wikitext-register.json"),
             include_str!("../data/patch-api/sources/9.0.5-wikitext-register.json"),
             include_str!("../data/patch-api/sources/9.1.0-wikitext-register.json"),
             include_str!("../data/patch-api/sources/9.1.5-wikitext-register.json"),

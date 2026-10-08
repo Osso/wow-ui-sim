@@ -107,3 +107,5 @@ Publication/absence only; passing requires exact fixture identities, not zero ga
 - [[patch-9-1-0-api-audit]] — retail retirement, qualified/bare consumer scans and classic gates.
 
 Every command explicitly used p901-page cwd and its own target. No canonical/sibling working-file writes, agents/models/CLIs, push or merge.
+
+**Integration (2026-10-08):** after 9.0.2 merged, its register was prepended to the later-register list. Ten of the eleven predicted supersessions resolved (soulbind pending-conduit APIs, renown milestones, Maw rarity atlas, widget layout direction, SOULBIND_CONDUITS_RESET): the exact-gap fixture drops from **273 to 263** and those ledger rows move to bounded-coverage (current absence only). `C_Soulbinds.MatchesCurrentSpecSet` stays a gap because 9.0.2 deliberately retained it for current specialization consumers. Results, gap review, negative control (263 → 264), sweep summary and register-reproduction receipt were regenerated; the validator passes over 34 sweeps.

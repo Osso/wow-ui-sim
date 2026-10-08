@@ -2883,9 +2883,9 @@
     "expected": {
       "direction": "added",
       "page_default": null,
-      "publication": "published",
+      "publication": "absent",
       "section": "events",
-      "superseded_by": null,
+      "superseded_by": "wt-events-SOULBIND_CONDUITS_RESET-113",
       "symbol": "SOULBIND_CONDUITS_RESET"
     },
     "observed": {
@@ -2895,7 +2895,7 @@
       "kind": "event",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-events-SOULBIND_CONDUIT_COLLECTION_CLEARED-807": {
     "expected": {
@@ -5097,19 +5097,19 @@
     "expected": {
       "direction": "added",
       "page_default": null,
-      "publication": "published",
+      "publication": "absent",
       "section": "global-api",
-      "superseded_by": null,
+      "superseded_by": "wt-global-api-C_CovenantSanctumUI.GetRenownMilestones-67",
       "symbol": "C_CovenantSanctumUI.GetRenownMilestones"
     },
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=nil; lookup=nil",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_CovenantSanctumUI.GetRenownRewardsForLevel-247": {
     "expected": {
@@ -9093,19 +9093,19 @@
     "expected": {
       "direction": "added",
       "page_default": null,
-      "publication": "published",
+      "publication": "absent",
       "section": "global-api",
-      "superseded_by": null,
+      "superseded_by": "wt-global-api-C_Soulbinds.AddPendingConduit-68",
       "symbol": "C_Soulbinds.AddPendingConduit"
     },
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=nil; lookup=nil",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_Soulbinds.CanActivateSoulbind-453": {
     "expected": {
@@ -9363,37 +9363,37 @@
     "expected": {
       "direction": "added",
       "page_default": null,
-      "publication": "published",
+      "publication": "absent",
       "section": "global-api",
-      "superseded_by": null,
+      "superseded_by": "wt-global-api-C_Soulbinds.GetPendingConduitID-69",
       "symbol": "C_Soulbinds.GetPendingConduitID"
     },
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=nil; lookup=nil",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_Soulbinds.GetPendingNodeIDInSoulbind-468": {
     "expected": {
       "direction": "added",
       "page_default": null,
-      "publication": "published",
+      "publication": "absent",
       "section": "global-api",
-      "superseded_by": null,
+      "superseded_by": "wt-global-api-C_Soulbinds.GetPendingNodeIDInSoulbind-70",
       "symbol": "C_Soulbinds.GetPendingNodeIDInSoulbind"
     },
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=nil; lookup=nil",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_Soulbinds.GetSoulbindData-469": {
     "expected": {
@@ -9471,19 +9471,19 @@
     "expected": {
       "direction": "added",
       "page_default": null,
-      "publication": "published",
+      "publication": "absent",
       "section": "global-api",
-      "superseded_by": null,
+      "superseded_by": "wt-global-api-C_Soulbinds.HasPendingConduitInSoulbind-71",
       "symbol": "C_Soulbinds.HasPendingConduitInSoulbind"
     },
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=nil; lookup=nil",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_Soulbinds.HasPendingConduitsInSoulbind-474": {
     "expected": {
@@ -9579,9 +9579,9 @@
     "expected": {
       "direction": "added",
       "page_default": null,
-      "publication": "published",
+      "publication": "absent",
       "section": "global-api",
-      "superseded_by": null,
+      "superseded_by": "wt-global-api-C_Soulbinds.MatchesCurrentSpecSet-72",
       "symbol": "C_Soulbinds.MatchesCurrentSpecSet"
     },
     "observed": {
@@ -9597,37 +9597,37 @@
     "expected": {
       "direction": "added",
       "page_default": null,
-      "publication": "published",
+      "publication": "absent",
       "section": "global-api",
-      "superseded_by": null,
+      "superseded_by": "wt-global-api-C_Soulbinds.RemovePendingConduit-73",
       "symbol": "C_Soulbinds.RemovePendingConduit"
     },
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=nil; lookup=nil",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_Soulbinds.ResetSoulbindConduits-481": {
     "expected": {
       "direction": "added",
       "page_default": null,
-      "publication": "published",
+      "publication": "absent",
       "section": "global-api",
-      "superseded_by": null,
+      "superseded_by": "wt-global-api-C_Soulbinds.ResetSoulbindConduits-74",
       "symbol": "C_Soulbinds.ResetSoulbindConduits"
     },
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=nil; lookup=nil",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_Soulbinds.SelectNode-482": {
     "expected": {
@@ -9705,19 +9705,19 @@
     "expected": {
       "direction": "added",
       "page_default": null,
-      "publication": "published",
+      "publication": "absent",
       "section": "global-api",
-      "superseded_by": null,
+      "superseded_by": "wt-global-api-C_Spell.GetMawPowerRarityStringAndBorderAtlasBySpellID-75",
       "symbol": "C_Spell.GetMawPowerRarityStringAndBorderAtlasBySpellID"
     },
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=nil; lookup=nil",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_SpellBook.GetSkillLineIndexByID-487": {
     "expected": {
@@ -10209,19 +10209,19 @@
     "expected": {
       "direction": "added",
       "page_default": null,
-      "publication": "published",
+      "publication": "absent",
       "section": "global-api",
-      "superseded_by": null,
+      "superseded_by": "wt-global-api-C_UIWidgetManager.GetWidgetLayoutDirectionFromWidgetSetID-76",
       "symbol": "C_UIWidgetManager.GetWidgetLayoutDirectionFromWidgetSetID"
     },
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=nil; lookup=nil",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_UIWidgetManager.RegisterUnitForWidgetUpdates-513": {
     "expected": {

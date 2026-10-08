@@ -2,8 +2,15 @@
   {
     "patch": "9.0.1",
     "rows": 755,
-    "ok": 482,
-    "gaps": 273,
+    "ok": 492,
+    "gaps": 263,
+    "result": "pass"
+  },
+  {
+    "patch": "9.0.2",
+    "rows": 77,
+    "ok": 51,
+    "gaps": 26,
     "result": "pass"
   },
   {

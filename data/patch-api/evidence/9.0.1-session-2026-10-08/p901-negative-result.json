@@ -1,7 +1,7 @@
 {
   "mutation": "wt-events-CURSOR_CHANGED-777",
-  "baseline_gaps": 273,
-  "negative_gaps": 274,
+  "baseline_gaps": 263,
+  "negative_gaps": 264,
   "added": [
     "wt-events-CURSOR_CHANGED-777"
   ],

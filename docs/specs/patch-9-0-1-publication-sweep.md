@@ -23,3 +23,5 @@ Exact gap identities and reasons live in the fixture and per-ID review; counts a
 - `tests/patch_9_0_1_publication_sweep.rs`
 - `tests/data/patch_9_0_1_sweep_known_gaps.json`
 - [Audit, sweep table and proof](../wiki/investigations/patch-9-0-1-api-audit.md).
+
+Integration (2026-10-08): 9.0.2 register prepended; 10 gaps superseded (273 → 263); `MatchesCurrentSpecSet` retained.

@@ -688,9 +688,11 @@
     },
     {
       "source_id": "wt-global-api-C_CovenantSanctumUI.GetRenownMilestones-246",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "C_CovenantSanctumUI.GetRenownMilestones requires covenant sanctum renown catalog and interaction state for this endpoint. No raw producer (raw=nil; lookup=function); namespace lookup/fixed return is not a modeled implementation. Existing similarly named surfaces do not establish its signature, outputs or lifecycle."
+      "capabilities": [
+        "publication-sweep-9-0-1"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence is superseded by the 9.0.2 removal (applied at integration); historical behavior is not reconstructed."
     },
     {
       "source_id": "wt-global-api-C_CovenantSanctumUI.GetRenownRewardsForLevel-247",
@@ -2104,9 +2106,11 @@
     },
     {
       "source_id": "wt-global-api-C_Soulbinds.AddPendingConduit-452",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "C_Soulbinds.AddPendingConduit requires soulbind graph selection, conduit collection and pending transactions for this endpoint. No raw producer (raw=nil; lookup=function); namespace lookup/fixed return is not a modeled implementation. Existing similarly named surfaces do not establish its signature, outputs or lifecycle."
+      "capabilities": [
+        "publication-sweep-9-0-1"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence is superseded by the 9.0.2 removal (applied at integration); historical behavior is not reconstructed."
     },
     {
       "source_id": "wt-global-api-C_Soulbinds.CanActivateSoulbind-453",
@@ -2202,15 +2206,19 @@
     },
     {
       "source_id": "wt-global-api-C_Soulbinds.GetPendingConduitID-467",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "C_Soulbinds.GetPendingConduitID requires soulbind graph selection, conduit collection and pending transactions for this endpoint. No raw producer (raw=nil; lookup=function); namespace lookup/fixed return is not a modeled implementation. Existing similarly named surfaces do not establish its signature, outputs or lifecycle."
+      "capabilities": [
+        "publication-sweep-9-0-1"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence is superseded by the 9.0.2 removal (applied at integration); historical behavior is not reconstructed."
     },
     {
       "source_id": "wt-global-api-C_Soulbinds.GetPendingNodeIDInSoulbind-468",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "C_Soulbinds.GetPendingNodeIDInSoulbind requires soulbind graph selection, conduit collection and pending transactions for this endpoint. No raw producer (raw=nil; lookup=function); namespace lookup/fixed return is not a modeled implementation. Existing similarly named surfaces do not establish its signature, outputs or lifecycle."
+      "capabilities": [
+        "publication-sweep-9-0-1"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence is superseded by the 9.0.2 removal (applied at integration); historical behavior is not reconstructed."
     },
     {
       "source_id": "wt-global-api-C_Soulbinds.GetSoulbindData-469",
@@ -2240,9 +2248,11 @@
     },
     {
       "source_id": "wt-global-api-C_Soulbinds.HasPendingConduitInSoulbind-473",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "C_Soulbinds.HasPendingConduitInSoulbind requires soulbind graph selection, conduit collection and pending transactions for this endpoint. No raw producer (raw=nil; lookup=function); namespace lookup/fixed return is not a modeled implementation. Existing similarly named surfaces do not establish its signature, outputs or lifecycle."
+      "capabilities": [
+        "publication-sweep-9-0-1"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence is superseded by the 9.0.2 removal (applied at integration); historical behavior is not reconstructed."
     },
     {
       "source_id": "wt-global-api-C_Soulbinds.HasPendingConduitsInSoulbind-474",
@@ -2284,15 +2294,19 @@
     },
     {
       "source_id": "wt-global-api-C_Soulbinds.RemovePendingConduit-480",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "C_Soulbinds.RemovePendingConduit requires soulbind graph selection, conduit collection and pending transactions for this endpoint. No raw producer (raw=nil; lookup=function); namespace lookup/fixed return is not a modeled implementation. Existing similarly named surfaces do not establish its signature, outputs or lifecycle."
+      "capabilities": [
+        "publication-sweep-9-0-1"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence is superseded by the 9.0.2 removal (applied at integration); historical behavior is not reconstructed."
     },
     {
       "source_id": "wt-global-api-C_Soulbinds.ResetSoulbindConduits-481",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "C_Soulbinds.ResetSoulbindConduits requires soulbind graph selection, conduit collection and pending transactions for this endpoint. No raw producer (raw=nil; lookup=function); namespace lookup/fixed return is not a modeled implementation. Existing similarly named surfaces do not establish its signature, outputs or lifecycle."
+      "capabilities": [
+        "publication-sweep-9-0-1"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence is superseded by the 9.0.2 removal (applied at integration); historical behavior is not reconstructed."
     },
     {
       "source_id": "wt-global-api-C_Soulbinds.SelectNode-482",
@@ -2324,9 +2338,11 @@
     },
     {
       "source_id": "wt-global-api-C_Spell.GetMawPowerRarityStringAndBorderAtlasBySpellID-486",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "C_Spell.GetMawPowerRarityStringAndBorderAtlasBySpellID requires spell-specific Maw power rarity presentation for this endpoint. No raw producer (raw=nil; lookup=function); namespace lookup/fixed return is not a modeled implementation. Existing similarly named surfaces do not establish its signature, outputs or lifecycle."
+      "capabilities": [
+        "publication-sweep-9-0-1"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence is superseded by the 9.0.2 removal (applied at integration); historical behavior is not reconstructed."
     },
     {
       "source_id": "wt-global-api-C_SpellBook.GetSkillLineIndexByID-487",
@@ -2498,9 +2514,11 @@
     },
     {
       "source_id": "wt-global-api-C_UIWidgetManager.GetWidgetLayoutDirectionFromWidgetSetID-512",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "C_UIWidgetManager.GetWidgetLayoutDirectionFromWidgetSetID requires widget-set layout/subscription and typed visualization records for this endpoint. No raw producer (raw=nil; lookup=function); namespace lookup/fixed return is not a modeled implementation. Existing similarly named surfaces do not establish its signature, outputs or lifecycle."
+      "capabilities": [
+        "publication-sweep-9-0-1"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence is superseded by the 9.0.2 removal (applied at integration); historical behavior is not reconstructed."
     },
     {
       "source_id": "wt-global-api-C_UIWidgetManager.RegisterUnitForWidgetUpdates-513",
@@ -4496,9 +4514,11 @@
     },
     {
       "source_id": "wt-events-SOULBIND_CONDUITS_RESET-806",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "SOULBIND_CONDUITS_RESET is rejected by the current event registry. Soulbind reset lifecycle/payload producer and historical registration parity are unproved; broad permissive registration is not a modeled fix."
+      "capabilities": [
+        "publication-sweep-9-0-1"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence is superseded by the 9.0.2 removal (applied at integration); historical behavior is not reconstructed."
     },
     {
       "source_id": "wt-events-SOULBIND_CONDUIT_COLLECTION_CLEARED-807",

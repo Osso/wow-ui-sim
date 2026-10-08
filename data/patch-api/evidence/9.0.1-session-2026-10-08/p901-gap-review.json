@@ -476,20 +476,6 @@
     "reason": "C_CovenantSanctumUI.GetRenownLevel requires covenant sanctum renown catalog and interaction state for this endpoint. No raw producer (raw=nil; lookup=function); namespace lookup/fixed return is not a modeled implementation. Existing similarly named surfaces do not establish its signature, outputs or lifecycle."
   },
   {
-    "source_id": "wt-global-api-C_CovenantSanctumUI.GetRenownMilestones-246",
-    "symbol": "C_CovenantSanctumUI.GetRenownMilestones",
-    "wikitext_line": 246,
-    "literal": ": {{api|C_CovenantSanctumUI.GetRenownMilestones}}",
-    "observation": {
-      "default": null,
-      "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
-      "kind": "member",
-      "value": null
-    },
-    "reason": "C_CovenantSanctumUI.GetRenownMilestones requires covenant sanctum renown catalog and interaction state for this endpoint. No raw producer (raw=nil; lookup=function); namespace lookup/fixed return is not a modeled implementation. Existing similarly named surfaces do not establish its signature, outputs or lifecycle."
-  },
-  {
     "source_id": "wt-global-api-C_CovenantSanctumUI.GetSanctumType-248",
     "symbol": "C_CovenantSanctumUI.GetSanctumType",
     "wikitext_line": 248,
@@ -2100,20 +2086,6 @@
     "reason": "C_Soulbinds.ActivateSoulbind requires soulbind graph selection, conduit collection and pending transactions for this endpoint. No raw producer (raw=nil; lookup=function); namespace lookup/fixed return is not a modeled implementation. Existing similarly named surfaces do not establish its signature, outputs or lifecycle."
   },
   {
-    "source_id": "wt-global-api-C_Soulbinds.AddPendingConduit-452",
-    "symbol": "C_Soulbinds.AddPendingConduit",
-    "wikitext_line": 452,
-    "literal": ": {{api|C_Soulbinds.AddPendingConduit}}",
-    "observation": {
-      "default": null,
-      "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
-      "kind": "member",
-      "value": null
-    },
-    "reason": "C_Soulbinds.AddPendingConduit requires soulbind graph selection, conduit collection and pending transactions for this endpoint. No raw producer (raw=nil; lookup=function); namespace lookup/fixed return is not a modeled implementation. Existing similarly named surfaces do not establish its signature, outputs or lifecycle."
-  },
-  {
     "source_id": "wt-global-api-C_Soulbinds.CanActivateSoulbind-453",
     "symbol": "C_Soulbinds.CanActivateSoulbind",
     "wikitext_line": 453,
@@ -2254,34 +2226,6 @@
     "reason": "C_Soulbinds.GetNode requires soulbind graph selection, conduit collection and pending transactions for this endpoint. No raw producer (raw=nil; lookup=function); namespace lookup/fixed return is not a modeled implementation. Existing similarly named surfaces do not establish its signature, outputs or lifecycle."
   },
   {
-    "source_id": "wt-global-api-C_Soulbinds.GetPendingConduitID-467",
-    "symbol": "C_Soulbinds.GetPendingConduitID",
-    "wikitext_line": 467,
-    "literal": ": {{api|C_Soulbinds.GetPendingConduitID}}",
-    "observation": {
-      "default": null,
-      "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
-      "kind": "member",
-      "value": null
-    },
-    "reason": "C_Soulbinds.GetPendingConduitID requires soulbind graph selection, conduit collection and pending transactions for this endpoint. No raw producer (raw=nil; lookup=function); namespace lookup/fixed return is not a modeled implementation. Existing similarly named surfaces do not establish its signature, outputs or lifecycle."
-  },
-  {
-    "source_id": "wt-global-api-C_Soulbinds.GetPendingNodeIDInSoulbind-468",
-    "symbol": "C_Soulbinds.GetPendingNodeIDInSoulbind",
-    "wikitext_line": 468,
-    "literal": ": {{api|C_Soulbinds.GetPendingNodeIDInSoulbind}}",
-    "observation": {
-      "default": null,
-      "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
-      "kind": "member",
-      "value": null
-    },
-    "reason": "C_Soulbinds.GetPendingNodeIDInSoulbind requires soulbind graph selection, conduit collection and pending transactions for this endpoint. No raw producer (raw=nil; lookup=function); namespace lookup/fixed return is not a modeled implementation. Existing similarly named surfaces do not establish its signature, outputs or lifecycle."
-  },
-  {
     "source_id": "wt-global-api-C_Soulbinds.GetTree-470",
     "symbol": "C_Soulbinds.GetTree",
     "wikitext_line": 470,
@@ -2322,20 +2266,6 @@
       "value": null
     },
     "reason": "C_Soulbinds.HasAnyPendingConduits requires soulbind graph selection, conduit collection and pending transactions for this endpoint. No raw producer (raw=nil; lookup=function); namespace lookup/fixed return is not a modeled implementation. Existing similarly named surfaces do not establish its signature, outputs or lifecycle."
-  },
-  {
-    "source_id": "wt-global-api-C_Soulbinds.HasPendingConduitInSoulbind-473",
-    "symbol": "C_Soulbinds.HasPendingConduitInSoulbind",
-    "wikitext_line": 473,
-    "literal": ": {{api|C_Soulbinds.HasPendingConduitInSoulbind}}",
-    "observation": {
-      "default": null,
-      "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
-      "kind": "member",
-      "value": null
-    },
-    "reason": "C_Soulbinds.HasPendingConduitInSoulbind requires soulbind graph selection, conduit collection and pending transactions for this endpoint. No raw producer (raw=nil; lookup=function); namespace lookup/fixed return is not a modeled implementation. Existing similarly named surfaces do not establish its signature, outputs or lifecycle."
   },
   {
     "source_id": "wt-global-api-C_Soulbinds.HasPendingConduitsInSoulbind-474",
@@ -2408,34 +2338,6 @@
     "reason": "C_Soulbinds.MatchesCurrentSpecSet requires soulbind graph selection, conduit collection and pending transactions for this endpoint. No raw producer (raw=nil; lookup=function); namespace lookup/fixed return is not a modeled implementation. Existing similarly named surfaces do not establish its signature, outputs or lifecycle."
   },
   {
-    "source_id": "wt-global-api-C_Soulbinds.RemovePendingConduit-480",
-    "symbol": "C_Soulbinds.RemovePendingConduit",
-    "wikitext_line": 480,
-    "literal": ": {{api|C_Soulbinds.RemovePendingConduit}}",
-    "observation": {
-      "default": null,
-      "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
-      "kind": "member",
-      "value": null
-    },
-    "reason": "C_Soulbinds.RemovePendingConduit requires soulbind graph selection, conduit collection and pending transactions for this endpoint. No raw producer (raw=nil; lookup=function); namespace lookup/fixed return is not a modeled implementation. Existing similarly named surfaces do not establish its signature, outputs or lifecycle."
-  },
-  {
-    "source_id": "wt-global-api-C_Soulbinds.ResetSoulbindConduits-481",
-    "symbol": "C_Soulbinds.ResetSoulbindConduits",
-    "wikitext_line": 481,
-    "literal": ": {{api|C_Soulbinds.ResetSoulbindConduits}}",
-    "observation": {
-      "default": null,
-      "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
-      "kind": "member",
-      "value": null
-    },
-    "reason": "C_Soulbinds.ResetSoulbindConduits requires soulbind graph selection, conduit collection and pending transactions for this endpoint. No raw producer (raw=nil; lookup=function); namespace lookup/fixed return is not a modeled implementation. Existing similarly named surfaces do not establish its signature, outputs or lifecycle."
-  },
-  {
     "source_id": "wt-global-api-C_Soulbinds.SelectNode-482",
     "symbol": "C_Soulbinds.SelectNode",
     "wikitext_line": 482,
@@ -2462,20 +2364,6 @@
       "value": null
     },
     "reason": "C_SpecializationInfo.CanPlayerUsePVPTalentUI requires specialization-specific PvP talent eligibility for this endpoint. No raw producer (raw=nil; lookup=function); namespace lookup/fixed return is not a modeled implementation. Existing similarly named surfaces do not establish its signature, outputs or lifecycle."
-  },
-  {
-    "source_id": "wt-global-api-C_Spell.GetMawPowerRarityStringAndBorderAtlasBySpellID-486",
-    "symbol": "C_Spell.GetMawPowerRarityStringAndBorderAtlasBySpellID",
-    "wikitext_line": 486,
-    "literal": ": {{api|C_Spell.GetMawPowerRarityStringAndBorderAtlasBySpellID}}",
-    "observation": {
-      "default": null,
-      "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
-      "kind": "member",
-      "value": null
-    },
-    "reason": "C_Spell.GetMawPowerRarityStringAndBorderAtlasBySpellID requires spell-specific Maw power rarity presentation for this endpoint. No raw producer (raw=nil; lookup=function); namespace lookup/fixed return is not a modeled implementation. Existing similarly named surfaces do not establish its signature, outputs or lifecycle."
   },
   {
     "source_id": "wt-global-api-C_SpellBook.GetSkillLineIndexByID-487",
@@ -2700,20 +2588,6 @@
       "value": null
     },
     "reason": "C_UIWidgetManager.GetTextureWithAnimationVisualizationInfo requires widget-set layout/subscription and typed visualization records for this endpoint. No raw producer (raw=nil; lookup=function); namespace lookup/fixed return is not a modeled implementation. Existing similarly named surfaces do not establish its signature, outputs or lifecycle."
-  },
-  {
-    "source_id": "wt-global-api-C_UIWidgetManager.GetWidgetLayoutDirectionFromWidgetSetID-512",
-    "symbol": "C_UIWidgetManager.GetWidgetLayoutDirectionFromWidgetSetID",
-    "wikitext_line": 512,
-    "literal": ": {{api|C_UIWidgetManager.GetWidgetLayoutDirectionFromWidgetSetID}}",
-    "observation": {
-      "default": null,
-      "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
-      "kind": "member",
-      "value": null
-    },
-    "reason": "C_UIWidgetManager.GetWidgetLayoutDirectionFromWidgetSetID requires widget-set layout/subscription and typed visualization records for this endpoint. No raw producer (raw=nil; lookup=function); namespace lookup/fixed return is not a modeled implementation. Existing similarly named surfaces do not establish its signature, outputs or lifecycle."
   },
   {
     "source_id": "wt-global-api-C_UIWidgetManager.RegisterUnitForWidgetUpdates-513",
@@ -3666,20 +3540,6 @@
       "value": null
     },
     "reason": "Frame OnGamePadButtonUp is not a supported script. Gamepad button-down/up host input dispatch and callback contract are missing; adding HasScript credit alone would not provide input behavior."
-  },
-  {
-    "source_id": "wt-events-SOULBIND_CONDUITS_RESET-806",
-    "symbol": "SOULBIND_CONDUITS_RESET",
-    "wikitext_line": 806,
-    "literal": ": {{api|t=e|SOULBIND_CONDUITS_RESET}}",
-    "observation": {
-      "default": null,
-      "default_mismatch": false,
-      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"SOULBIND_CONDUITS_RESET\"; registered=false",
-      "kind": "event",
-      "value": null
-    },
-    "reason": "SOULBIND_CONDUITS_RESET is rejected by the current event registry. Soulbind reset lifecycle/payload producer and historical registration parity are unproved; broad permissive registration is not a modeled fix."
   },
   {
     "source_id": "wt-cvars-vrsParticles-934",
