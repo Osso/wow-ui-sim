@@ -1,0 +1,30 @@
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world.rs:14:#[derive(Debug, Clone, Default)]
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world.rs:143:#[derive(Debug, Clone, Copy, Default)]
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world.rs:162:#[derive(Debug, Clone, Copy, Default)]
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world.rs:170:#[derive(Debug, Clone, Copy, Default)]
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world.rs:196:#[derive(Debug, Clone, Default)]
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world.rs:215:impl Default for MovementSpeeds {
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world.rs:227:/// `Default` is derived: every field is its zero/empty value. The seeded
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world.rs:229:#[derive(Debug, Clone, Default)]
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world.rs:328:    /// All other fields keep their `Default`-derived zero/empty values.
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world.rs:353:/// and `Mainline/HonorBar.lua`. Default values mirror "level 70 paladin in a
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world.rs:370:    /// `IsPlayerAtEffectiveMaxLevel()`. Default false — the seeded paladin
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world.rs:399:impl Default for PlayerXpState {
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world.rs:423:#[derive(Debug, Default, Clone)]
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world.rs:445:/// `Default::default()` produces a fully-empty / zero-valued state. The
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world.rs:448:/// by `SimState::Default`.
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world.rs:449:#[derive(Debug, Default, Clone)]
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world.rs:450:pub struct WorldState {
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world.rs:521:    pub collected_toys: HashSet<i32>,
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world.rs:541:    /// `"arena"`, `"friendly"`, `"hostile"`, `"combat"`. Default `"contested"`.
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world.rs:565:    /// `C_GuildInfo.IsGuildOfficer()`. Default false (no guild).
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world.rs:568:    /// Default true — matches retail's "no explicit mute" baseline so addons
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world.rs:626:#[derive(Debug, Clone, Default)]
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world.rs:637:/// the message's index in `WorldState::guild_chat_messages`.
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world.rs:645:#[derive(Debug, Clone, Default)]
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world.rs:658:#[derive(Debug, Clone, Default)]
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world.rs:672:#[derive(Debug, Default, Clone)]
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world.rs:682:#[derive(Debug, Default, Clone, PartialEq)]
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world.rs:689:#[derive(Debug, Default, Clone, PartialEq)]
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world.rs:766:#[derive(Debug, Clone, Default)]
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world/seeded.rs:190:pub(super) fn apply_collection_defaults(ws: &mut WorldState) {

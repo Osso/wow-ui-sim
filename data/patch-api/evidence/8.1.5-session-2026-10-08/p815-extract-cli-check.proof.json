@@ -1,0 +1,24 @@
+{
+  "command": [
+    "python3",
+    "tools/extract_patch_non_inventory.py",
+    "--patch",
+    "8.1.5",
+    "--text-only",
+    "--legacy-api-bullets",
+    "--check"
+  ],
+  "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+  "scope": "p815-extract-cli-check",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p815-page",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "exit": 0,
+  "expected_exit": 0,
+  "log": "p815-extract-cli-check.txt",
+  "log_sha256": "a2df288e3d80346c09b635c14e79b9b9e9d75bf4492a560bbc1cd416e21e251b",
+  "invalidated": false,
+  "seconds": 0.02651263300140272
+}

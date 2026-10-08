@@ -1,0 +1,25 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_8_1_5_publication_sweep"
+  ],
+  "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+  "scope": "p815-negative",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p815-page",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "P815_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p815-page/data/patch-api/evidence/8.1.5-session-2026-10-08/p815-negative-register.json",
+    "P815_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p815-page/data/patch-api/evidence/8.1.5-session-2026-10-08/p815-negative-observation.json"
+  },
+  "exit": 1,
+  "expected_exit": 1,
+  "log": "p815-negative.txt",
+  "log_sha256": "7aa602d7f22b88ac6e74dc629cd1d68243c26cc71e460296e60f975c3108ef44",
+  "invalidated": false,
+  "seconds": 4.692008637000981
+}

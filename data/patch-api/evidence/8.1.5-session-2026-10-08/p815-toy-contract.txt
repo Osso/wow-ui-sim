@@ -1,0 +1,29 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Collections/Mainline/Blizzard_ToyBox.lua:237:					C_ToyBoxInfo.ClearFanfare(self.itemID);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Collections/Mainline/Blizzard_ToyBox.lua:322:	local itemID, toyName, icon, isFavorite, hasFanfare = C_ToyBox.GetToyInfo(self.itemID);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Collections/Mainline/Blizzard_MountCollection.xml:557:								if MountJournal.selectedMountID and C_MountJournal.NeedsFanfare(MountJournal.selectedMountID) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Collections/Mainline/Blizzard_MountCollection.lua:269:	local needsFanfare = C_MountJournal.NeedsFanfare(menuMountID);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Collections/Mainline/Blizzard_MountCollection.lua:330:	local needsFanfare = C_MountJournal.NeedsFanfare(mountID);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Collections/Mainline/Blizzard_MountCollection.lua:733:		local needsFanfare = C_MountJournal.NeedsFanfare(MountJournal.selectedMountID);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Collections/Mainline/Blizzard_MountCollection.lua:872:	elseif ( C_MountJournal.NeedsFanfare(mountID) ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Collections/Mainline/Blizzard_MountCollection.lua:874:			C_MountJournal.ClearFanfare(mountID);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Collections/Mainline/Blizzard_MountCollection.lua:896:	local needsFanFare = MountJournal.selectedMountID and C_MountJournal.NeedsFanfare(MountJournal.selectedMountID);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Collections/Shared/Blizzard_PetCollection.lua:1451:		C_PetJournal.ClearFanfare(petID);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Mainline/AlertFrameSystems.lua:1273:	local itemID, toyName, icon, isFavorite, hasFanfare, itemQuality = C_ToyBox.GetToyInfo(self.toyID);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/ModelSceneTemplates.lua:36:function WrappedModelSceneMixin:NeedsFanfare()
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/ModelSceneTemplates.lua:45:	if self:NeedsFanfare() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/ModelSceneTemplates.lua:62:		if self:NeedsFanfare() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/ModelSceneTemplates.lua:75:	if not self:NeedsFanfare() or self:IsUnwrapAnimating() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/ModelSceneTemplates.lua:116:		if self:NeedsFanfare() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/ModelSceneTemplates.lua:133:	if not self:NeedsFanfare() or self:IsUnwrapAnimating() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_BonusObjectiveTracker.lua:395:				if self:NeedsFanfare(questID) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_BonusObjectiveTracker.lua:447:		if self:NeedsFanfare(questID) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_ObjectiveTrackerAnimTemplates.lua:98:	if self.parentModule:NeedsFanfare(self.id) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_ObjectiveTrackerModule.lua:643:function ObjectiveTrackerModuleMixin:NeedsFanfare(key)
+/home/osso/.worktrees/wow-ui-sim-p815-page/tests/admin_pvp_guild_api.rs:24:                "SetToyCollected",
+/home/osso/.worktrees/wow-ui-sim-p815-page/tests/admin_pvp_guild_api.rs:32:                "CollectToy",
+/home/osso/.worktrees/wow-ui-sim-p815-page/tests/c_collection_api.rs:212:        env.eval("return C_ToyBox.GetToyInfo(1)").unwrap();
+/home/osso/.worktrees/wow-ui-sim-p815-page/tests/test_collections.rs:332:            local itemID, name, icon = C_ToyBox.GetToyInfo(13379)
+/home/osso/.worktrees/wow-ui-sim-p815-page/tests/test_collections.rs:339:    assert_eq!(result, "ok", "GetToyInfo: {result}");
+/home/osso/.worktrees/wow-ui-sim-p815-page/tests/test_collections.rs:395:            A_Admin.CollectToy(187421)
+/home/osso/.worktrees/wow-ui-sim-p815-page/tests/test_collections.rs:405:    assert_eq!(result, "ok", "CollectToy/UncollectToy: {result}");
+/usr/bin/grep: /home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/globals/admin_rilua: No such file or directory

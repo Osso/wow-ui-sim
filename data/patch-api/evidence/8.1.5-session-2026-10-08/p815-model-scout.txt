@@ -1,0 +1,11 @@
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/c_api/c_party_info/roles_1207.rs:67:// INFERRED: case-sensitive exact/realm-qualified matching; short names omit realm.
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/c_api/c_recent_allies.rs:39:    pub realm_name: String,
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/c_api/c_recent_allies.rs:250:        ("realmName", input.realm_name.as_str()),
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/c_api/patch_retired_members.rs:411:    ("C_PlayerInfo", &["CanPlayerUseEventScheduler"]),
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/c_api/c_battle_net.rs:632:    let realm_name = create_string(state, &ga.realm_name);
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/c_api/c_battle_net.rs:638:    table_set(state, t, "realmName", realm_name);
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/globals/real/player_identity.rs:39:    let realm = create_string(state, SIM_REALM);
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/globals/real/player_identity.rs:47:    state.push(realm);
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/globals/real/player_identity.rs:59:    let realm = create_string(state, SIM_REALM);
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/globals/real/player_identity.rs:61:    state.push(realm);
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/globals/real/ambiguate.rs:71:    // Preserve the former Lua pattern: a realm separator needs a nonempty suffix.

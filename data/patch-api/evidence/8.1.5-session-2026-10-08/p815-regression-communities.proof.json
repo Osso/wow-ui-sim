@@ -1,0 +1,23 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "blizzard_communities_loads"
+  ],
+  "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+  "scope": "p815-regression-communities",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p815-page",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "exit": 0,
+  "expected_exit": 0,
+  "log": "p815-regression-communities.txt",
+  "log_sha256": "425065ccb609b5a91486b419fd4828ae677fb84e6fa338acbb542f7c24c12148",
+  "invalidated": false,
+  "seconds": 4.653844080999988
+}

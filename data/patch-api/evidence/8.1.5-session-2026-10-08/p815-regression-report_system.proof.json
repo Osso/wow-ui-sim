@@ -1,0 +1,23 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "--",
+    "report_system"
+  ],
+  "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+  "scope": "p815-regression-report_system",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p815-page",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "exit": 0,
+  "expected_exit": 0,
+  "log": "p815-regression-report_system.txt",
+  "log_sha256": "9e972a40cf72578ce89e30926cd9face644b321850d1d8892158ca68cc6f1edd",
+  "invalidated": false,
+  "seconds": 0.2843355490003887
+}

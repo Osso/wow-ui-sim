@@ -1,0 +1,2 @@
+27:const RETIRED_8_2_5_MEMBERS: &[(&str, &[&str])] = &[
+514:    mark_members(state, RETIRED_8_2_5_MEMBERS)?;

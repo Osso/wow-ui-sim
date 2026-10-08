@@ -1,0 +1,25 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_8_1_5"
+  ],
+  "revision": "af1efeef57442ad211a37f6986dfa2dbf1cf62d1",
+  "scope": "p815-cached-discovery",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p815-page",
+  "environment": {
+    "P815_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p815-page/data/patch-api/evidence/8.1.5-session-2026-10-08/patch_8_1_5_publication_sweep-results.json",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "exit": 1,
+  "expected_exit": 1,
+  "log": "p815-cached-discovery.txt",
+  "log_sha256": "be5766be33c5615caeda23b8ac1e5fc53c57579dc63f78aee38af27f49ba4852",
+  "invalidated": false,
+  "seconds": 54.41394447199855,
+  "purpose": "development-red"
+}

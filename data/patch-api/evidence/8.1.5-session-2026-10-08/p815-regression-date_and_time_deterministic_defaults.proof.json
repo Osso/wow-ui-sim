@@ -1,0 +1,23 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "--",
+    "date_and_time_deterministic_defaults"
+  ],
+  "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+  "scope": "p815-regression-date_and_time_deterministic_defaults",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p815-page",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "exit": 0,
+  "expected_exit": 0,
+  "log": "p815-regression-date_and_time_deterministic_defaults.txt",
+  "log_sha256": "db95b159d0608e48336924dbd7db2786a7dc6f974fd91043f7af5398cb7ce01a",
+  "invalidated": false,
+  "seconds": 0.18234718500025338
+}

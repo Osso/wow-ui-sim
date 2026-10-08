@@ -1,0 +1,19 @@
+{
+  "command": [
+    "python3",
+    "/home/osso/.worktrees/wow-ui-sim-p815-page/data/patch-api/evidence/8.1.5-session-2026-10-08/reproduce_sources.py"
+  ],
+  "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+  "scope": "p815-source-reproduction",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p815-page",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "exit": 0,
+  "expected_exit": 0,
+  "log": "p815-source-reproduction.txt",
+  "log_sha256": "938142e98e01ecaaaf5fc997eb25f927aebe4a2caf4e65faf6758b3be092e95e",
+  "invalidated": false,
+  "seconds": 1.282425475998025
+}

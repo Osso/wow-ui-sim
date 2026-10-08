@@ -1,0 +1,1169 @@
+{
+  "base_revision": "127aa3724",
+  "rows": [
+    {
+      "path": "data/patch-api/sources/10.0.5-api-changes.provenance.json",
+      "before": "25ffadf070e5ea83857670e085e72082d123b6d3dcfdb0318c747514b273753c",
+      "after": "25ffadf070e5ea83857670e085e72082d123b6d3dcfdb0318c747514b273753c",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.2.0-api-changes.txt",
+      "before": "4946812493aa7bbf9cf4ddc3b18857ee603e0bb4577533a8860759fa9bb0e43e",
+      "after": "4946812493aa7bbf9cf4ddc3b18857ee603e0bb4577533a8860759fa9bb0e43e",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.1.0-api-changes.provenance.json",
+      "before": "29850951754acd8c065ba68459c87541e4c91181c0cddb528ae4701a284db2ec",
+      "after": "29850951754acd8c065ba68459c87541e4c91181c0cddb528ae4701a284db2ec",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/12.1.0-wikitext-register.json",
+      "before": "924774ddea912d58af87211b41549d550a12594cc2b5de0b8b3de7574e9e8311",
+      "after": "924774ddea912d58af87211b41549d550a12594cc2b5de0b8b3de7574e9e8311",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.2.7-api-changes.provenance.json",
+      "before": "7521d6e89f7db31b817f0c94769640bde208c39951c20757567dbbc40e15d223",
+      "after": "7521d6e89f7db31b817f0c94769640bde208c39951c20757567dbbc40e15d223",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.1.7-api-changes.txt",
+      "before": "e2d9c557e865b7b9e9e2133064ddc229587001edf91ea08a3deaba65059bfc2a",
+      "after": "e2d9c557e865b7b9e9e2133064ddc229587001edf91ea08a3deaba65059bfc2a",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/12.0.7-wikitext-register.json",
+      "before": "aad4af3207d4585ed8494c837f253a23607bf1f8e752e0b52d39dd7e533189e7",
+      "after": "aad4af3207d4585ed8494c837f253a23607bf1f8e752e0b52d39dd7e533189e7",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/12.0.0-api-changes.txt",
+      "before": "c8bb5d03f47cc3ca31d43bb0a0f973804790fbe430d962ffa2403a9364e5adeb",
+      "after": "c8bb5d03f47cc3ca31d43bb0a0f973804790fbe430d962ffa2403a9364e5adeb",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/8.3.7-api-changes.txt",
+      "before": "78f1f7c357923c589ba34c865cf3309c444d8493b788b17c105809e6dc35efc2",
+      "after": "78f1f7c357923c589ba34c865cf3309c444d8493b788b17c105809e6dc35efc2",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/12.0.0-api-changes.wikitext",
+      "before": "74e0dee19960d40c551759c94b06f8393d445781200182b9c5971a64e57b9a19",
+      "after": "74e0dee19960d40c551759c94b06f8393d445781200182b9c5971a64e57b9a19",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.0.7-api-changes.txt",
+      "before": "879577e70ea3990e65b4044f07e1928e3ba9bf509f13400147016c483c9729a5",
+      "after": "879577e70ea3990e65b4044f07e1928e3ba9bf509f13400147016c483c9729a5",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/8.3.7-page-coverage.json",
+      "before": "24d8b245aad861315a387e3bfe0882a2c485e2d23579a98abe0e67c51eca43ae",
+      "after": "24d8b245aad861315a387e3bfe0882a2c485e2d23579a98abe0e67c51eca43ae",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.1.0-api-changes.txt",
+      "before": "50ab412824b136929589560a58d933c2cf68ebccea09ad2dc4c3870d40a7c069",
+      "after": "50ab412824b136929589560a58d933c2cf68ebccea09ad2dc4c3870d40a7c069",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.0.0-page-coverage.json",
+      "before": "3a71321fe8277e2686050be03062b6765b0661776852723e64faf9bc0f169d63",
+      "after": "3a71321fe8277e2686050be03062b6765b0661776852723e64faf9bc0f169d63",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.1.0-wikitext-register.json",
+      "before": "97a4d016518760cdbd1ff671c7f566747d9601d19785e84486eed2fdd84d9280",
+      "after": "97a4d016518760cdbd1ff671c7f566747d9601d19785e84486eed2fdd84d9280",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/12.0.7-api-changes.provenance.json",
+      "before": "f137413d236b2ae85f6855834c10e18580a83f1ede01a0cc5bd3497dc6169925",
+      "after": "f137413d236b2ae85f6855834c10e18580a83f1ede01a0cc5bd3497dc6169925",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.0.2-wikitext-register.json",
+      "before": "a5edb6c195e1ccc9722aa1358fc0a392b772563a43bf5c4abf4d45446e6bf9ca",
+      "after": "a5edb6c195e1ccc9722aa1358fc0a392b772563a43bf5c4abf4d45446e6bf9ca",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.2.5-page-coverage.json",
+      "before": "396d9a9eb576615cf9d2ae67ab94026ab7984afdb89952686109908339a1fe2c",
+      "after": "396d9a9eb576615cf9d2ae67ab94026ab7984afdb89952686109908339a1fe2c",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/8.3.0-api-changes.txt",
+      "before": "5de022982639c186f36ba05a3a1c6e6140d0dd79e0da356cbfafc3f46b57a1d3",
+      "after": "5de022982639c186f36ba05a3a1c6e6140d0dd79e0da356cbfafc3f46b57a1d3",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.2.5-api-changes.wikitext",
+      "before": "c2becc09182863ffce8ad75c3209159afdecea6223f4985d0bf3c6f6e89ef9db",
+      "after": "c2becc09182863ffce8ad75c3209159afdecea6223f4985d0bf3c6f6e89ef9db",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.2.5-api-changes.provenance.json",
+      "before": "da0afd750971017252067365d2dd833457c246a140a1e355b20fab95e27f6b45",
+      "after": "da0afd750971017252067365d2dd833457c246a140a1e355b20fab95e27f6b45",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.2.5-wikitext-register.json",
+      "before": "6d12d274d66f73fb8dedc45ba40f9036ac74a99a5721f3dab1bb9bd3dc10c46a",
+      "after": "6d12d274d66f73fb8dedc45ba40f9036ac74a99a5721f3dab1bb9bd3dc10c46a",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.2.7-api-changes.wikitext",
+      "before": "1538a9bdf49a0e09102b4f9c3905aada48e9e1aafdf9c4b9c780a1127179e324",
+      "after": "1538a9bdf49a0e09102b4f9c3905aada48e9e1aafdf9c4b9c780a1127179e324",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.1.5-api-changes.txt",
+      "before": "d871bfe9ac485926da1fb380b1a7f1e7eb9aa18025b9f7b09354e43f4f66b1f1",
+      "after": "d871bfe9ac485926da1fb380b1a7f1e7eb9aa18025b9f7b09354e43f4f66b1f1",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/12.0.7-page-coverage.json",
+      "before": "ebed23da005c1dcb0d7355b48fd8b9b8524bb956194c65722a5d6c77ca14b26f",
+      "after": "ebed23da005c1dcb0d7355b48fd8b9b8524bb956194c65722a5d6c77ca14b26f",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.0.7-api-changes.wikitext",
+      "before": "b4175ca8755de168ade2800555c5576f452111b8de2b48be81a639516d584689",
+      "after": "b4175ca8755de168ade2800555c5576f452111b8de2b48be81a639516d584689",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.0.0-wikitext-register.json",
+      "before": "628e96cf4efca59242d3a6c093f5d7fa09657b47c2d71e39563ea62ea56a0186",
+      "after": "628e96cf4efca59242d3a6c093f5d7fa09657b47c2d71e39563ea62ea56a0186",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/12.1.5-register.json",
+      "before": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+      "after": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/12.0.7-api-changes.txt",
+      "before": "014f7d51eca1b2fc5d76071978e09c537efd66d14069e21d163e58ccd04a561e",
+      "after": "014f7d51eca1b2fc5d76071978e09c537efd66d14069e21d163e58ccd04a561e",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/12.0.5-probes.json",
+      "before": "2d7671b7702eed71c5d8a3ae4e92595771f6c04bb58fe98bd771647ac26cddca",
+      "after": "2d7671b7702eed71c5d8a3ae4e92595771f6c04bb58fe98bd771647ac26cddca",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.2.6-api-changes.provenance.json",
+      "before": "5b019c053d33d0fa468c3bce941d0971a3fa238d6bae588ce6a13ba3bb46abba",
+      "after": "5b019c053d33d0fa468c3bce941d0971a3fa238d6bae588ce6a13ba3bb46abba",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/12.1.0-api-changes.provenance.json",
+      "before": "5f1d673088772fd3272f8d2028681c42c9d4f8499894398b946c53601945f58b",
+      "after": "5f1d673088772fd3272f8d2028681c42c9d4f8499894398b946c53601945f58b",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.2.0-api-changes.provenance.json",
+      "before": "e08a78723f968381c66bf88d4ce55337dd1f6bbd54488378fa0df22785878278",
+      "after": "e08a78723f968381c66bf88d4ce55337dd1f6bbd54488378fa0df22785878278",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/8.3.0-api-changes.provenance.json",
+      "before": "a99b7d45c9837f0717f978ea0169823f4b85a1c2f121ee2b91b7f54fc642f906",
+      "after": "a99b7d45c9837f0717f978ea0169823f4b85a1c2f121ee2b91b7f54fc642f906",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.0.7-api-changes.wikitext",
+      "before": "7452477854beac6fe0155caaf283801f15eb46acf20b69e90c8b8eb589ccb061",
+      "after": "7452477854beac6fe0155caaf283801f15eb46acf20b69e90c8b8eb589ccb061",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.1.0-page-coverage.json",
+      "before": "8aa9015ee0518fc8b6ea4073a01eb25da3f8f09ee04f4380110651d192e6c8d1",
+      "after": "8aa9015ee0518fc8b6ea4073a01eb25da3f8f09ee04f4380110651d192e6c8d1",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.0.1-wikitext-register.json",
+      "before": "b61d5965061e199bd4149093e5fd2b5b03ee82a2bdabd18070a7b449454fa665",
+      "after": "b61d5965061e199bd4149093e5fd2b5b03ee82a2bdabd18070a7b449454fa665",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.0.5-api-changes.txt",
+      "before": "7a7ca87f3b1973400a79c0458a35e76442cc2529050df94b6b84af2abb5cd4ce",
+      "after": "7a7ca87f3b1973400a79c0458a35e76442cc2529050df94b6b84af2abb5cd4ce",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/8.3.0-page-coverage.json",
+      "before": "e8c34cb7bc29595266f59c7615d598f1b83f6686b269d0e77c17914868d933fd",
+      "after": "e8c34cb7bc29595266f59c7615d598f1b83f6686b269d0e77c17914868d933fd",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.1.0-api-changes.txt",
+      "before": "e954712fd44a0e153427bc18ac686523860753b4e04ede52dae715342f5c3aa6",
+      "after": "e954712fd44a0e153427bc18ac686523860753b4e04ede52dae715342f5c3aa6",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.1.5-page-coverage.json",
+      "before": "d16fc5171d0177f16049fcd753308c612a3f6fa57f1a49d4bb648558860451fd",
+      "after": "d16fc5171d0177f16049fcd753308c612a3f6fa57f1a49d4bb648558860451fd",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.1.5-api-changes.provenance.json",
+      "before": "2be15b8fac2c01d8145197b0b8d7cd29983d486f42ffcf1148a7c56876efc0db",
+      "after": "2be15b8fac2c01d8145197b0b8d7cd29983d486f42ffcf1148a7c56876efc0db",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.1.7-api-changes.provenance.json",
+      "before": "8fecb6e6134d79d283739bbedfbad22cf13609ee9ef442632507a7d0f355a494",
+      "after": "8fecb6e6134d79d283739bbedfbad22cf13609ee9ef442632507a7d0f355a494",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.0.0-api-changes.provenance.json",
+      "before": "21a910d436bb72f58253dbd849cb86ad33020aef71fcc8b4a72ec2051d02946e",
+      "after": "21a910d436bb72f58253dbd849cb86ad33020aef71fcc8b4a72ec2051d02946e",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.2.7-api-changes.txt",
+      "before": "9e53fa2661695fe940d744cd93754929ea9f84573d8033a97e52352b5345b53b",
+      "after": "9e53fa2661695fe940d744cd93754929ea9f84573d8033a97e52352b5345b53b",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.2.7-api-changes.txt",
+      "before": "6528a2aadae856784b4a8530cc3fbe592ab8eb5097a65f5e62789de9c6c3e86b",
+      "after": "6528a2aadae856784b4a8530cc3fbe592ab8eb5097a65f5e62789de9c6c3e86b",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.0.5-page-coverage.json",
+      "before": "0024c3ef57b871835f41d1f329a653f859396dc558b2c693845b0e0beff96782",
+      "after": "0024c3ef57b871835f41d1f329a653f859396dc558b2c693845b0e0beff96782",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/12.1.0-api-changes.wikitext",
+      "before": "de9e45f6e43c66c78be2d9e9c6a6e7945cd91676448bbe502a6a4db0d75d8bde",
+      "after": "de9e45f6e43c66c78be2d9e9c6a6e7945cd91676448bbe502a6a4db0d75d8bde",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/8.2.5-page-coverage.json",
+      "before": "c4cbc96838f936f540d76871f07ae3b436f74b8a12649c4f77caabe961d3ac1e",
+      "after": "c4cbc96838f936f540d76871f07ae3b436f74b8a12649c4f77caabe961d3ac1e",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.0.2-api-changes.txt",
+      "before": "5df4b79162d245df301779c781bd8496143bc4e86fd7a882f0d77f40ed5c3b18",
+      "after": "5df4b79162d245df301779c781bd8496143bc4e86fd7a882f0d77f40ed5c3b18",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/12.0.0-register.json",
+      "before": "6f26d194d0c3f721b3a071217cf69714f1278950512369272298735bdf44c863",
+      "after": "6f26d194d0c3f721b3a071217cf69714f1278950512369272298735bdf44c863",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.1.5-page-coverage.json",
+      "before": "f302d94b9195f994de49e1cb1deffd5c062742bd24ab6e59a6918e4a2a0c7357",
+      "after": "f302d94b9195f994de49e1cb1deffd5c062742bd24ab6e59a6918e4a2a0c7357",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/12.0.0-wikitext-register.json",
+      "before": "2149b28b9165ecaa346b03a7192b775b77bd6bf9921851acc920bfefe412cf5d",
+      "after": "2149b28b9165ecaa346b03a7192b775b77bd6bf9921851acc920bfefe412cf5d",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.2.5-page-coverage.json",
+      "before": "64896487daebe0b4710259a861edd9fe17a2114a8822e00e4363f0aa4c284e97",
+      "after": "64896487daebe0b4710259a861edd9fe17a2114a8822e00e4363f0aa4c284e97",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.0.2-api-changes.txt",
+      "before": "9a193fe2a9b927d74db45a14a7fbe774eea57583235d8f1113d97fe8c86b50f6",
+      "after": "9a193fe2a9b927d74db45a14a7fbe774eea57583235d8f1113d97fe8c86b50f6",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.0.1-api-changes.wikitext",
+      "before": "51c3ecf32ee65f178aaae7c711ff7af7bd9f243aea27712bf98261d78682d236",
+      "after": "51c3ecf32ee65f178aaae7c711ff7af7bd9f243aea27712bf98261d78682d236",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/12.0.1-api-changes.provenance.json",
+      "before": "3c8d9ced0b366c076984e54254eb641864812c0bbf8ebd86a1fa71a4a3365728",
+      "after": "3c8d9ced0b366c076984e54254eb641864812c0bbf8ebd86a1fa71a4a3365728",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.2.5-api-changes.wikitext",
+      "before": "f0c554edcdce15afe3cfa3a2dfaf3c723d11864d377613640538d43596cb12e3",
+      "after": "f0c554edcdce15afe3cfa3a2dfaf3c723d11864d377613640538d43596cb12e3",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.0.0-api-changes.wikitext",
+      "before": "511e12f2dc5ffa02b49dbfec8132cdeffc3f5ea4e8f2ac11d2cf4c338d357f9c",
+      "after": "511e12f2dc5ffa02b49dbfec8132cdeffc3f5ea4e8f2ac11d2cf4c338d357f9c",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/12.1-framexml.json",
+      "before": "3b186f1a0618b1f9ad7f399c4ad56705b1511b08ac3bc67b2780a98a0b63c70d",
+      "after": "3b186f1a0618b1f9ad7f399c4ad56705b1511b08ac3bc67b2780a98a0b63c70d",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.2.0-api-changes.wikitext",
+      "before": "2592e6464c46add082bdf18b7310c3ad6aa640c53b4a8a58552b15658d3467ae",
+      "after": "2592e6464c46add082bdf18b7310c3ad6aa640c53b4a8a58552b15658d3467ae",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.0.5-api-changes.wikitext",
+      "before": "185e5cc92ca97494d00d7bdad8b770ceed22c075e4eacbbd30a4f1e7a3579f6c",
+      "after": "185e5cc92ca97494d00d7bdad8b770ceed22c075e4eacbbd30a4f1e7a3579f6c",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/12.0.5-wikitext-register.json",
+      "before": "a87c2c978086e8b6c62fb560aa764556213c6b19735a4be35e12311ec42d6e23",
+      "after": "a87c2c978086e8b6c62fb560aa764556213c6b19735a4be35e12311ec42d6e23",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.1.7-api-changes.wikitext",
+      "before": "c934013da17b5072d32f4b0ce0427572d6b26835d7abc1da4ab16c8dcae05ee7",
+      "after": "c934013da17b5072d32f4b0ce0427572d6b26835d7abc1da4ab16c8dcae05ee7",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.2.7-api-changes.wikitext",
+      "before": "ccc82e24d9752949029abe27a38138463b304ef7f9ecfaf3b2767481bdf53182",
+      "after": "ccc82e24d9752949029abe27a38138463b304ef7f9ecfaf3b2767481bdf53182",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.0.5-api-changes.provenance.json",
+      "before": "9405359118ccbc3f618530933c507f4f65f473c123a0f62644b3a2eac6b88fed",
+      "after": "9405359118ccbc3f618530933c507f4f65f473c123a0f62644b3a2eac6b88fed",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.1.0-api-changes.wikitext",
+      "before": "9b22cad6805e68ffbdb9c723c8e23ff208bd644fd5b94fadcf0493f96241c8d2",
+      "after": "9b22cad6805e68ffbdb9c723c8e23ff208bd644fd5b94fadcf0493f96241c8d2",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.0.2-wikitext-register.json",
+      "before": "e9c69d02cbd34aab19236d82b52a6ae574312ef8e4f6ee9c07896a8dddef8e6b",
+      "after": "e9c69d02cbd34aab19236d82b52a6ae574312ef8e4f6ee9c07896a8dddef8e6b",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.2.7-api-changes.provenance.json",
+      "before": "1d4d9d086af8b69dda1cedc44560f54946884f8799837c7ae56745d2ad057b34",
+      "after": "1d4d9d086af8b69dda1cedc44560f54946884f8799837c7ae56745d2ad057b34",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.0.2-api-changes.provenance.json",
+      "before": "e1f96a5d4b46370398a16837f69c21b7c94304e650eed04d47440c7660506aa7",
+      "after": "e1f96a5d4b46370398a16837f69c21b7c94304e650eed04d47440c7660506aa7",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.0.5-api-changes.wikitext",
+      "before": "9c62ac72650f7c6b90761a9640555508e0deb3b07321f863d2a9cfe0dfc95673",
+      "after": "9c62ac72650f7c6b90761a9640555508e0deb3b07321f863d2a9cfe0dfc95673",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/8.3.0-api-changes.wikitext",
+      "before": "01f5ca887f8dbe81b64ed25d5691bd2634e3367def22d8a713b892e2b01694f2",
+      "after": "01f5ca887f8dbe81b64ed25d5691bd2634e3367def22d8a713b892e2b01694f2",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.0.5-api-changes.provenance.json",
+      "before": "61a76366cae7f15e6f4fd8d31bb3401103fc522351fc5ac1dca358cf91d34c74",
+      "after": "61a76366cae7f15e6f4fd8d31bb3401103fc522351fc5ac1dca358cf91d34c74",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/api-change-pages-remaining.json",
+      "before": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c",
+      "after": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.0.5-page-coverage.json",
+      "before": "09539ca21fd3ec98e0135c79b0f6190e2d9570110ea8e9444cef8c141f1041db",
+      "after": "09539ca21fd3ec98e0135c79b0f6190e2d9570110ea8e9444cef8c141f1041db",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.2.7-page-coverage.json",
+      "before": "1fd7d0a1e5e701512ae7dd08915808c5bde88ef5a71abe6a91a850ecd37bb82c",
+      "after": "1fd7d0a1e5e701512ae7dd08915808c5bde88ef5a71abe6a91a850ecd37bb82c",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.0.0-api-changes.txt",
+      "before": "17a3a97fba53aad8c84b08c5e625211e5351ec8ce1fe190a05f9b3aa176fb6a2",
+      "after": "17a3a97fba53aad8c84b08c5e625211e5351ec8ce1fe190a05f9b3aa176fb6a2",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.2.6-wikitext-register.json",
+      "before": "922d9173720213392dc4c228881539cf59a45fd7b3f0a3155176c36d68deb772",
+      "after": "922d9173720213392dc4c228881539cf59a45fd7b3f0a3155176c36d68deb772",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.0.0-wikitext-register.json",
+      "before": "c093335505ec54e96dda556f6011facd7c7616d80636843413fc193a25b7a1ca",
+      "after": "c093335505ec54e96dda556f6011facd7c7616d80636843413fc193a25b7a1ca",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.2.7-api-changes.provenance.json",
+      "before": "215b9bb070a19470a6806735e4f865a6e37bd193aeff1710cb58d49f4a7fe46c",
+      "after": "215b9bb070a19470a6806735e4f865a6e37bd193aeff1710cb58d49f4a7fe46c",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/8.2.5-wikitext-register.json",
+      "before": "9068d2c59c69fa49a3bc0a257707597d4a9d98a971187e374fc92c20f46f9f4c",
+      "after": "9068d2c59c69fa49a3bc0a257707597d4a9d98a971187e374fc92c20f46f9f4c",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/8.2.5-api-changes.txt",
+      "before": "acee4aa6cb4716ce55ea115b277924d234c2142bf635236d40d62072a12f939e",
+      "after": "acee4aa6cb4716ce55ea115b277924d234c2142bf635236d40d62072a12f939e",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.1.7-page-coverage.json",
+      "before": "d168e6c05e83e831df9d0800db54bacc83428a427baa65d0aa2ebe21c418fc85",
+      "after": "d168e6c05e83e831df9d0800db54bacc83428a427baa65d0aa2ebe21c418fc85",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.1.0-api-changes.wikitext",
+      "before": "1a802cad91a6b79b9ad5c8038627ba54c93ef963f0640494da7dfc3fd0eb6c99",
+      "after": "1a802cad91a6b79b9ad5c8038627ba54c93ef963f0640494da7dfc3fd0eb6c99",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.0.7-wikitext-register.json",
+      "before": "64ef0166fa31a83460312cb97ac2d0f4b65113779b4d6904c43283dc0854ad1e",
+      "after": "64ef0166fa31a83460312cb97ac2d0f4b65113779b4d6904c43283dc0854ad1e",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.0.7-api-changes.txt",
+      "before": "581f98e5dcb3d350df424725839f281dda7c90e015870d05c92e25a55d931cb1",
+      "after": "581f98e5dcb3d350df424725839f281dda7c90e015870d05c92e25a55d931cb1",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.1.5-api-changes.wikitext",
+      "before": "c77d271d67c0080d17f3e1610a7e0d11eb9ec64863cf75545d264f441582707e",
+      "after": "c77d271d67c0080d17f3e1610a7e0d11eb9ec64863cf75545d264f441582707e",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.0.2-api-changes.provenance.json",
+      "before": "8186d7361ee145fa9a9fa17e381373c9eb7c1ffaf26f5fc1cb3725452e87f056",
+      "after": "8186d7361ee145fa9a9fa17e381373c9eb7c1ffaf26f5fc1cb3725452e87f056",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.0.5-api-changes.txt",
+      "before": "c91cb989e635c029c6eabbc86523d68cbf33d16590af5f043614b667caeb87d4",
+      "after": "c91cb989e635c029c6eabbc86523d68cbf33d16590af5f043614b667caeb87d4",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.2.0-wikitext-register.json",
+      "before": "69dd92fb3a392bb6c73917fa4c7917a787a57299bf5eb584061d0de542b48191",
+      "after": "69dd92fb3a392bb6c73917fa4c7917a787a57299bf5eb584061d0de542b48191",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.2.7-wikitext-register.json",
+      "before": "f5415c7991f08f5cf958648d0b2aa8f62f43647be819b44156963c0f9a2ad045",
+      "after": "f5415c7991f08f5cf958648d0b2aa8f62f43647be819b44156963c0f9a2ad045",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.2.5-wikitext-register.json",
+      "before": "38bf561f25edb63ab3f34e17aef9e088471cc85844c3ca9d5c269c3b206723b8",
+      "after": "38bf561f25edb63ab3f34e17aef9e088471cc85844c3ca9d5c269c3b206723b8",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.2.7-page-coverage.json",
+      "before": "5782d918f80b149a557ac0ba3a1689971d5569af3967ec9f92699632551878fb",
+      "after": "5782d918f80b149a557ac0ba3a1689971d5569af3967ec9f92699632551878fb",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/12.0.5-register.json",
+      "before": "eaea58ae8adf215587cea6de12349b3586fcb2520a4c8aefd4d7cee5406046ed",
+      "after": "eaea58ae8adf215587cea6de12349b3586fcb2520a4c8aefd4d7cee5406046ed",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/12.1.0-page-coverage.json",
+      "before": "328bbb571f06940dc4af61809d99115f1967ddf5bde2ecc1b1e326000b88c5a2",
+      "after": "328bbb571f06940dc4af61809d99115f1967ddf5bde2ecc1b1e326000b88c5a2",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.1.7-api-changes.wikitext",
+      "before": "065658e2e89ae0f2055c03c9e890a42321c1983165f1a33898747d7b0719b76a",
+      "after": "065658e2e89ae0f2055c03c9e890a42321c1983165f1a33898747d7b0719b76a",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.0.2-api-changes.txt",
+      "before": "1f43010bba50fcfc6c323ab7d75c7984e87a8e588ab1693f641111fa0f249feb",
+      "after": "1f43010bba50fcfc6c323ab7d75c7984e87a8e588ab1693f641111fa0f249feb",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.1.0-page-coverage.json",
+      "before": "46715e660bb909c4ee3e9a48c5dbab075f36f8b5f3b7d30e35dceff04c4c3406",
+      "after": "46715e660bb909c4ee3e9a48c5dbab075f36f8b5f3b7d30e35dceff04c4c3406",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.0.1-api-changes.txt",
+      "before": "b4bfffbdad9981f0156a5ed21e7ce9ecef236c033c04c749a4f3100fce2f80c0",
+      "after": "b4bfffbdad9981f0156a5ed21e7ce9ecef236c033c04c749a4f3100fce2f80c0",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.0.5-wikitext-register.json",
+      "before": "ba4d8add87e00805279188fc091f2b4dc3ded5b12a436d2d579768943280c4fd",
+      "after": "ba4d8add87e00805279188fc091f2b4dc3ded5b12a436d2d579768943280c4fd",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/12.0.5-api-changes.wikitext",
+      "before": "2fd339ed0c93d26fc7b8e14743bc0430aa5169153e793bc68f85224e510dafd4",
+      "after": "2fd339ed0c93d26fc7b8e14743bc0430aa5169153e793bc68f85224e510dafd4",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.1.7-page-coverage.json",
+      "before": "70a05a425da0c36d458abe2a785409d9c74548eb79ae3787a07c7d1c00490931",
+      "after": "70a05a425da0c36d458abe2a785409d9c74548eb79ae3787a07c7d1c00490931",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.0.7-page-coverage.json",
+      "before": "a41b3e3ff34b199d006c024380bd48ba2579d79146e9677ede29c6a1fdce9d92",
+      "after": "a41b3e3ff34b199d006c024380bd48ba2579d79146e9677ede29c6a1fdce9d92",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.1.7-wikitext-register.json",
+      "before": "966516954a173cbbbfb3ad982982b1af4165535284b5f842837970fd964f7439",
+      "after": "966516954a173cbbbfb3ad982982b1af4165535284b5f842837970fd964f7439",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.1.0-page-coverage.json",
+      "before": "a6c52a530ea481193f2ece3dee2cadd9b6d0408b8ce4569b16edeba50a752401",
+      "after": "a6c52a530ea481193f2ece3dee2cadd9b6d0408b8ce4569b16edeba50a752401",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.2.7-wikitext-register.json",
+      "before": "c349d4a3d3f5dba40f60e2a9739a7467322effc7111188aab5bb15b040b39fc7",
+      "after": "c349d4a3d3f5dba40f60e2a9739a7467322effc7111188aab5bb15b040b39fc7",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.1.7-api-changes.provenance.json",
+      "before": "8445fa731c1782f277581a2c67b86b101510d34de94a8e4766edcc344d521b5a",
+      "after": "8445fa731c1782f277581a2c67b86b101510d34de94a8e4766edcc344d521b5a",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.1.5-wikitext-register.json",
+      "before": "cbd9a9de7fff6b6e8d77e352dccbe96b21caed7650577d432eaa24673fb8746f",
+      "after": "cbd9a9de7fff6b6e8d77e352dccbe96b21caed7650577d432eaa24673fb8746f",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/12.0.1-api-changes.wikitext",
+      "before": "cc4585de4c3d3600d8beacb5af7a278d9e9ee52d7c6e2aeb483b3baa259a465e",
+      "after": "cc4585de4c3d3600d8beacb5af7a278d9e9ee52d7c6e2aeb483b3baa259a465e",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.0.7-api-changes.provenance.json",
+      "before": "489eb61c6c1b6f6a1b43fd1f98d8fe0d99405101fa324116e74b4a5c0af68868",
+      "after": "489eb61c6c1b6f6a1b43fd1f98d8fe0d99405101fa324116e74b4a5c0af68868",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/8.3.7-api-changes.wikitext",
+      "before": "0fae3d8d22e456e84eb0082b729586429c9151d7ec32ecd851f8d3c8b1575784",
+      "after": "0fae3d8d22e456e84eb0082b729586429c9151d7ec32ecd851f8d3c8b1575784",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/12.0.7-api-changes.wikitext",
+      "before": "6e1b87d7bfc7b6356ee8ad5371ad6739b67b76e12ab9d967269c8bad865a540c",
+      "after": "6e1b87d7bfc7b6356ee8ad5371ad6739b67b76e12ab9d967269c8bad865a540c",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/12.1.0-ptr-cache-manifest.txt",
+      "before": "fa104a0f58bb1f86949aeec78fd82388b8d1cb8da39a1f3b51b4e3bd89e4ac66",
+      "after": "fa104a0f58bb1f86949aeec78fd82388b8d1cb8da39a1f3b51b4e3bd89e4ac66",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.2.5-api-changes.txt",
+      "before": "f3d3e3bf435d6129ce031bbbf5aa8be0f14c424c51802a590fc6d424813e8be4",
+      "after": "f3d3e3bf435d6129ce031bbbf5aa8be0f14c424c51802a590fc6d424813e8be4",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.1.5-api-changes.provenance.json",
+      "before": "1132fd8e1c794e577695b3f54990885a1af11db73060b4ab86b469a967fbeb14",
+      "after": "1132fd8e1c794e577695b3f54990885a1af11db73060b4ab86b469a967fbeb14",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.1.0-api-changes.provenance.json",
+      "before": "3d110b1b733d947a3b70cfb8c560a1f2ee9c9c431f107a238de4d5acc49dec4b",
+      "after": "3d110b1b733d947a3b70cfb8c560a1f2ee9c9c431f107a238de4d5acc49dec4b",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.0.2-page-coverage.json",
+      "before": "061bcf0d44d5fb24579c55adb443980b2d61de9670f1eb450bd1a5f18a7d2842",
+      "after": "061bcf0d44d5fb24579c55adb443980b2d61de9670f1eb450bd1a5f18a7d2842",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.1.0-api-changes.wikitext",
+      "before": "29871f1e6e2c9796399140cf0dc396c76c69d083fffb6a60b05172893301ce8c",
+      "after": "29871f1e6e2c9796399140cf0dc396c76c69d083fffb6a60b05172893301ce8c",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.0.5-wikitext-register.json",
+      "before": "c9852dbae8b4cf0ccfa46810e571fe4bfe8f3435d9680855845a70979c819b13",
+      "after": "c9852dbae8b4cf0ccfa46810e571fe4bfe8f3435d9680855845a70979c819b13",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.2.0-api-changes.wikitext",
+      "before": "eea31d2692950b42d6e2395b0fc2d031757a41fb5f9acd63a082e540127b1af2",
+      "after": "eea31d2692950b42d6e2395b0fc2d031757a41fb5f9acd63a082e540127b1af2",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.2.0-wikitext-register.json",
+      "before": "beaf8a6dd57229712abf3366b8ffc29163e75aa827533e108d59b89f6c56b979",
+      "after": "beaf8a6dd57229712abf3366b8ffc29163e75aa827533e108d59b89f6c56b979",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.2.5-api-changes.wikitext",
+      "before": "c729365457a32afff2af1020cac832504358c11e9e59aaad2987cada06c4950b",
+      "after": "c729365457a32afff2af1020cac832504358c11e9e59aaad2987cada06c4950b",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.1.0-api-changes.provenance.json",
+      "before": "cc52cea2597d6daafefe08780aebdba8149a4697c4e8c22e7d72f8e39051a973",
+      "after": "cc52cea2597d6daafefe08780aebdba8149a4697c4e8c22e7d72f8e39051a973",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.2.7-page-coverage.json",
+      "before": "2ad3a668b96a6afb6ba2813153ec5859d50665a878178d4222f5761c7e96c22a",
+      "after": "2ad3a668b96a6afb6ba2813153ec5859d50665a878178d4222f5761c7e96c22a",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/12.0.5-api-changes.txt",
+      "before": "4da3872aa566695f46e2dacd4e79992f5b06be9541f0d19cf0e8dba45cea8329",
+      "after": "4da3872aa566695f46e2dacd4e79992f5b06be9541f0d19cf0e8dba45cea8329",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.0.1-api-changes.provenance.json",
+      "before": "cc9a201526d56dd7cd4961ee77fff04a4e48693a9674a41d0e0d24d5a1ea896e",
+      "after": "cc9a201526d56dd7cd4961ee77fff04a4e48693a9674a41d0e0d24d5a1ea896e",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.0.0-page-coverage.json",
+      "before": "35b16d8f67d68bd85e484bdcd76a58fb537fcdcece1d5c151bbab98fdad9bded",
+      "after": "35b16d8f67d68bd85e484bdcd76a58fb537fcdcece1d5c151bbab98fdad9bded",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.2.6-api-changes.txt",
+      "before": "037da4f0fbbc43bc8cdee6545be687d07c083c3cdc334fc4284567abe22502b1",
+      "after": "037da4f0fbbc43bc8cdee6545be687d07c083c3cdc334fc4284567abe22502b1",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/12.0.5-page-coverage.json",
+      "before": "ae104353faa54bf77ec93eb3e3c2ad4762ceaaf462c46796e5d24478fbf12c9e",
+      "after": "ae104353faa54bf77ec93eb3e3c2ad4762ceaaf462c46796e5d24478fbf12c9e",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/8.3.0-wikitext-register.json",
+      "before": "372ee6b18ee3a47ec80c7886621a7686cf90381f113e50caed4594b6d18dcbef",
+      "after": "372ee6b18ee3a47ec80c7886621a7686cf90381f113e50caed4594b6d18dcbef",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.2.0-api-changes.wikitext",
+      "before": "11c35f322614c8645658d9a601df1b3b60eb44e559a38bc8dfa48bf5a8f4d0a5",
+      "after": "11c35f322614c8645658d9a601df1b3b60eb44e559a38bc8dfa48bf5a8f4d0a5",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.0.2-page-coverage.json",
+      "before": "5aecdf0cde52791550463daad2bb4053d01ae0049feb8a40741c698fcbff4e19",
+      "after": "5aecdf0cde52791550463daad2bb4053d01ae0049feb8a40741c698fcbff4e19",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.2.6-page-coverage.json",
+      "before": "8d1e994b5c445da4815e83ee46e33a6672de56928351f8d82139d33978ba15d6",
+      "after": "8d1e994b5c445da4815e83ee46e33a6672de56928351f8d82139d33978ba15d6",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.0.0-api-changes.wikitext",
+      "before": "777f9c6031b93bc7070eeef547762da2869aa191b5ebf1e75a0282a7633ad347",
+      "after": "777f9c6031b93bc7070eeef547762da2869aa191b5ebf1e75a0282a7633ad347",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.0.2-wikitext-register.json",
+      "before": "84941b2b96c7c3a20e972045487ff66c5ede5845be7e453c5806669a18c85059",
+      "after": "84941b2b96c7c3a20e972045487ff66c5ede5845be7e453c5806669a18c85059",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.2.5-api-changes.provenance.json",
+      "before": "17cf725dcad8449d8ab07c4d1a8de81b222ad5dee771ba230d9a1f20ae4c7e56",
+      "after": "17cf725dcad8449d8ab07c4d1a8de81b222ad5dee771ba230d9a1f20ae4c7e56",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.0.2-api-changes.wikitext",
+      "before": "2c166624469ef741392de16f972a89f8ca9b4b71fa3f087fb9919954be4ae716",
+      "after": "2c166624469ef741392de16f972a89f8ca9b4b71fa3f087fb9919954be4ae716",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/12.0.7-register.json",
+      "before": "389e3b19174bf77c3646028f764cf186ccfe1b7dddaca2a3b3fcba75e3bdec60",
+      "after": "389e3b19174bf77c3646028f764cf186ccfe1b7dddaca2a3b3fcba75e3bdec60",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.0.0-api-changes.txt",
+      "before": "f74031387786890b33d9c1b2bb49691c165e8720976db662cfddb3d9353f6826",
+      "after": "f74031387786890b33d9c1b2bb49691c165e8720976db662cfddb3d9353f6826",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.0.7-page-coverage.json",
+      "before": "c60e29517a1d199c389a10fe3a38faae71b5eb9116a8c161e2f9bc29382f121b",
+      "after": "c60e29517a1d199c389a10fe3a38faae71b5eb9116a8c161e2f9bc29382f121b",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.1.5-api-changes.wikitext",
+      "before": "9a0f1759634bf56323e005271e909439905662d6411f01768641a59114c4ed08",
+      "after": "9a0f1759634bf56323e005271e909439905662d6411f01768641a59114c4ed08",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.0.1-page-coverage.json",
+      "before": "519f9c49c5aaf3f1c6f219760cb8acd5282e23ae556107735214708d5402a199",
+      "after": "519f9c49c5aaf3f1c6f219760cb8acd5282e23ae556107735214708d5402a199",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.0.5-api-changes.txt",
+      "before": "60f99c9d781367178a5a2220c4bb71cb59b8dd91b02a48959e8e2237a8119a20",
+      "after": "60f99c9d781367178a5a2220c4bb71cb59b8dd91b02a48959e8e2237a8119a20",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.1.5-api-changes.provenance.json",
+      "before": "8cbc4a2d49a66e8abbb51404a4cf686a0ad8a186a03abb389243c4e7f0e37fec",
+      "after": "8cbc4a2d49a66e8abbb51404a4cf686a0ad8a186a03abb389243c4e7f0e37fec",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.2.0-api-changes.txt",
+      "before": "eb11e8cf5ce088bf2d6442578d3663c62f3963ce34ee1403d4a302cc2636952f",
+      "after": "eb11e8cf5ce088bf2d6442578d3663c62f3963ce34ee1403d4a302cc2636952f",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.2.6-api-changes.wikitext",
+      "before": "a02ddeeb6bb50ce02a5c84de9b9848c54c3ad25784a58853249231caee1769d4",
+      "after": "a02ddeeb6bb50ce02a5c84de9b9848c54c3ad25784a58853249231caee1769d4",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.2.0-page-coverage.json",
+      "before": "d960b0ac6a0edbce5fc9bf927201ab2a774117a53bfde93071ea5e938135c241",
+      "after": "d960b0ac6a0edbce5fc9bf927201ab2a774117a53bfde93071ea5e938135c241",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.2.0-api-changes.txt",
+      "before": "9354b5bfd77b78079a216766945da4ad04c979c2bb3b723cc5fd86adc73af5fd",
+      "after": "9354b5bfd77b78079a216766945da4ad04c979c2bb3b723cc5fd86adc73af5fd",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/12.0.1-api-changes.txt",
+      "before": "6178cf0702bf7c1b79d39c8e3345b2aee15ee7c1cea2756c343b0918cab9906d",
+      "after": "6178cf0702bf7c1b79d39c8e3345b2aee15ee7c1cea2756c343b0918cab9906d",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.0.2-api-changes.wikitext",
+      "before": "9a75f475bb5db0d455aaa03260717a480af2f32008c9947e2ae59b3aeb62262e",
+      "after": "9a75f475bb5db0d455aaa03260717a480af2f32008c9947e2ae59b3aeb62262e",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/12.0.1-page-coverage.json",
+      "before": "a303140c42574cd5a5ad5b4afb0fc7e0b3912ee3c3f515364aef727415f7ef0e",
+      "after": "a303140c42574cd5a5ad5b4afb0fc7e0b3912ee3c3f515364aef727415f7ef0e",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/12.0.1-wikitext-register.json",
+      "before": "3ae13ba41a6583c1d05c00552aa444501386fcf5484884d2395aa77cecd9a8cb",
+      "after": "3ae13ba41a6583c1d05c00552aa444501386fcf5484884d2395aa77cecd9a8cb",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.2.5-page-coverage.json",
+      "before": "175e5022750738a6a43ad414f889a378db5b7ba8fdb1c8ee46c372058a672d4b",
+      "after": "175e5022750738a6a43ad414f889a378db5b7ba8fdb1c8ee46c372058a672d4b",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.2.7-api-changes.txt",
+      "before": "3456a7aa752cca63eba2758ea0583b764826b808f04c6a8dd6752b19b7e6b832",
+      "after": "3456a7aa752cca63eba2758ea0583b764826b808f04c6a8dd6752b19b7e6b832",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.1.0-wikitext-register.json",
+      "before": "deeaaed02589405b31b89341c48081a72890118cce878e802bd01df8cef1abdb",
+      "after": "deeaaed02589405b31b89341c48081a72890118cce878e802bd01df8cef1abdb",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.2.7-api-changes.wikitext",
+      "before": "882bb3907d301a9213b6aefa636ae7b2daa0818ed5f14013845d3e09626f5157",
+      "after": "882bb3907d301a9213b6aefa636ae7b2daa0818ed5f14013845d3e09626f5157",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.2.5-wikitext-register.json",
+      "before": "de6a6208e1989a5a811e6706c6a8d42e5c2f730e96be75293b48c43741e1a0b0",
+      "after": "de6a6208e1989a5a811e6706c6a8d42e5c2f730e96be75293b48c43741e1a0b0",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.2.0-page-coverage.json",
+      "before": "f2edcdb933d7df5075c6ee1ef1c4059c1befa0b769b8b789a789e60044d51e31",
+      "after": "f2edcdb933d7df5075c6ee1ef1c4059c1befa0b769b8b789a789e60044d51e31",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.1.0-api-changes.txt",
+      "before": "961a8cd7dff7cf67ab13b4112ff18520a074f369a8201df3f192a5694c942783",
+      "after": "961a8cd7dff7cf67ab13b4112ff18520a074f369a8201df3f192a5694c942783",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/8.3.7-api-changes.provenance.json",
+      "before": "dcc42f935a6d32dbe875e4e952ff2257073c1fa573db0bc0e76621ce92e08f61",
+      "after": "dcc42f935a6d32dbe875e4e952ff2257073c1fa573db0bc0e76621ce92e08f61",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.0.5-wikitext-register.json",
+      "before": "336973622327eddaf6d21111354402b4b1faf424a0701e34a99c3a56640be0b1",
+      "after": "336973622327eddaf6d21111354402b4b1faf424a0701e34a99c3a56640be0b1",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.2.5-api-changes.txt",
+      "before": "cbeca6db214446a0cd8ea8acd939e2764d73bfb8e0a027398403afbcbb764fb0",
+      "after": "cbeca6db214446a0cd8ea8acd939e2764d73bfb8e0a027398403afbcbb764fb0",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.1.5-api-changes.wikitext",
+      "before": "1af11608f2f057faf74f95cfefdfad43c282a4153357dc8900c64e870f438476",
+      "after": "1af11608f2f057faf74f95cfefdfad43c282a4153357dc8900c64e870f438476",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.2.0-wikitext-register.json",
+      "before": "2a147afc5d7940f5d02c28817e224b504cd710277cc0a934f1bffef4a9c691e8",
+      "after": "2a147afc5d7940f5d02c28817e224b504cd710277cc0a934f1bffef4a9c691e8",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.0.5-page-coverage.json",
+      "before": "98391910a850cda58dc12012309e620dc2aa765603646f670ae1abce0185a62b",
+      "after": "98391910a850cda58dc12012309e620dc2aa765603646f670ae1abce0185a62b",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/12.0.5-api-changes.provenance.json",
+      "before": "dcd524b1195af553f990cb78d9b0467e9bf1ff416e85f3ea24ae11da91c9d01e",
+      "after": "dcd524b1195af553f990cb78d9b0467e9bf1ff416e85f3ea24ae11da91c9d01e",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.2.5-api-changes.txt",
+      "before": "e1b3b6e79876aa416513d622bc823e5a1f372096d7c0f9c7054c4c4a0c1a9518",
+      "after": "e1b3b6e79876aa416513d622bc823e5a1f372096d7c0f9c7054c4c4a0c1a9518",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.1.5-api-changes.txt",
+      "before": "947ccdfae886c48429354ed3aea7af15a5901fcffb2ee8cabb8904b1c1ae734b",
+      "after": "947ccdfae886c48429354ed3aea7af15a5901fcffb2ee8cabb8904b1c1ae734b",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.0.7-api-changes.provenance.json",
+      "before": "dbea7ebcfe05e767e12669247d3e17af33f386c91fe3ef708351ac6810c93a0a",
+      "after": "dbea7ebcfe05e767e12669247d3e17af33f386c91fe3ef708351ac6810c93a0a",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.1.5-wikitext-register.json",
+      "before": "f47c868a2a650f6119ade3f755c02c1c6d352330ed0cef1e7c5cb067e4df6f6f",
+      "after": "f47c868a2a650f6119ade3f755c02c1c6d352330ed0cef1e7c5cb067e4df6f6f",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/8.2.5-api-changes.wikitext",
+      "before": "f8d21b89e4551b6b1478247f2ce5e6859a0a0ac8ea3b8a25b35b48da160059a8",
+      "after": "f8d21b89e4551b6b1478247f2ce5e6859a0a0ac8ea3b8a25b35b48da160059a8",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.0.5-api-changes.wikitext",
+      "before": "1a87bf3e9a5d52171e3ce04565c648a22b5ec9c791126ff42e0a4d659470c687",
+      "after": "1a87bf3e9a5d52171e3ce04565c648a22b5ec9c791126ff42e0a4d659470c687",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.2.7-wikitext-register.json",
+      "before": "a45643efaf16dfeb58006019535ed43c304bb504d14697f7460f180ab8eb1986",
+      "after": "a45643efaf16dfeb58006019535ed43c304bb504d14697f7460f180ab8eb1986",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.2.0-api-changes.provenance.json",
+      "before": "bf1b8129a9a930552ca52b5aba78465f6c7a2461594f7f529f0d2ec754b32e1e",
+      "after": "bf1b8129a9a930552ca52b5aba78465f6c7a2461594f7f529f0d2ec754b32e1e",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/12.0.0-page-coverage.json",
+      "before": "e758634432a644fd7230cfafce6020e7f6fc5cf4ba94a8f651d70a77c0b91de3",
+      "after": "e758634432a644fd7230cfafce6020e7f6fc5cf4ba94a8f651d70a77c0b91de3",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/12.1-behaviors.json",
+      "before": "9e3ad69306c0e3d377e3aba6f5b928a21cd868ff98e5e9e43763385cdcecc83f",
+      "after": "9e3ad69306c0e3d377e3aba6f5b928a21cd868ff98e5e9e43763385cdcecc83f",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.1.7-api-changes.txt",
+      "before": "0f48983a93e1a1cf060f9bebc387ecc00d8a7a7d942efc7c94a0bea98801601b",
+      "after": "0f48983a93e1a1cf060f9bebc387ecc00d8a7a7d942efc7c94a0bea98801601b",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.2.0-page-coverage.json",
+      "before": "0672fbab61824d15901ae612b94b0ade5029d85da41bb418cf14c8217564ff66",
+      "after": "0672fbab61824d15901ae612b94b0ade5029d85da41bb418cf14c8217564ff66",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.1.5-wikitext-register.json",
+      "before": "3d2d199167a33cb25baa1e83f4003897f271e06645b78bc636c83fcaf5c6b703",
+      "after": "3d2d199167a33cb25baa1e83f4003897f271e06645b78bc636c83fcaf5c6b703",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.2.5-api-changes.provenance.json",
+      "before": "ba9ad839781d395344b3881a48f2a8e1ac07138a7aabe869c546e10abe19fef9",
+      "after": "ba9ad839781d395344b3881a48f2a8e1ac07138a7aabe869c546e10abe19fef9",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.1.5-page-coverage.json",
+      "before": "0a5e8de5456787e79caf715334c5624c96053fa2c784fb864aea8954cbbea6c7",
+      "after": "0a5e8de5456787e79caf715334c5624c96053fa2c784fb864aea8954cbbea6c7",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.1.0-wikitext-register.json",
+      "before": "9ef8625ab492bdc51b1a010b859044987e63f72dd89c65c878f447948edacd76",
+      "after": "9ef8625ab492bdc51b1a010b859044987e63f72dd89c65c878f447948edacd76",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.1.5-api-changes.txt",
+      "before": "e9e3b40f6d63639f224a0297b82dfe62bcc0d07f61931e2c1c9354bcdb822eba",
+      "after": "e9e3b40f6d63639f224a0297b82dfe62bcc0d07f61931e2c1c9354bcdb822eba",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/8.2.5-api-changes.provenance.json",
+      "before": "9dfac01fd2047b2d3620938678766cdffd58149ce6ab70fc367dbceb127bf7d5",
+      "after": "9dfac01fd2047b2d3620938678766cdffd58149ce6ab70fc367dbceb127bf7d5",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.0.2-api-changes.provenance.json",
+      "before": "d78e66ee362fe92443ee93b21e9c1a89c1af25dedd981da7fcb8f6480663a3d1",
+      "after": "d78e66ee362fe92443ee93b21e9c1a89c1af25dedd981da7fcb8f6480663a3d1",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.0.0-api-changes.provenance.json",
+      "before": "ba3fe3417708d791d3994cb332cac4e2539d5249bdb4b11c863977aef4a99fb4",
+      "after": "ba3fe3417708d791d3994cb332cac4e2539d5249bdb4b11c863977aef4a99fb4",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.1.7-wikitext-register.json",
+      "before": "d0db70aa76a3aa2b01e39227420f3fb5c3874b8c3b2457847ae4fa913299c01c",
+      "after": "d0db70aa76a3aa2b01e39227420f3fb5c3874b8c3b2457847ae4fa913299c01c",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/8.3.7-wikitext-register.json",
+      "before": "12c1c3a4d678b3a4ba2c1ae808fc3831a672375eebb2158b0e25261bb0a7e175",
+      "after": "12c1c3a4d678b3a4ba2c1ae808fc3831a672375eebb2158b0e25261bb0a7e175",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/12.0.0-api-changes.provenance.json",
+      "before": "070cb9cf466e09e62f51cdf70012202a9b015cf6893e4d4446ed827e3b531bef",
+      "after": "070cb9cf466e09e62f51cdf70012202a9b015cf6893e4d4446ed827e3b531bef",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/10.2.0-api-changes.provenance.json",
+      "before": "9f30bf8cfae8dd58beea49f05484895ea2a6d935bac8c18db8dde23e63ecc04f",
+      "after": "9f30bf8cfae8dd58beea49f05484895ea2a6d935bac8c18db8dde23e63ecc04f",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/12.1.0-api-changes.txt",
+      "before": "c051a68b442b2e69d602650d1c5ec07c1d0262dd1aea01fe73d3f60cd5f29c3b",
+      "after": "c051a68b442b2e69d602650d1c5ec07c1d0262dd1aea01fe73d3f60cd5f29c3b",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/9.0.2-page-coverage.json",
+      "before": "36e7451d3faf0ff5aa5e2e2745ab7d968aa45fb4939cb0ed56d82c430e4fe7d3",
+      "after": "36e7451d3faf0ff5aa5e2e2745ab7d968aa45fb4939cb0ed56d82c430e4fe7d3",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.0.7-wikitext-register.json",
+      "before": "0e3807e89614ed0cca38ba8d80c803a5cbab8df45d6213255512f952f03071ae",
+      "after": "0e3807e89614ed0cca38ba8d80c803a5cbab8df45d6213255512f952f03071ae",
+      "unchanged": true
+    },
+    {
+      "path": "data/patch-api/sources/11.0.2-api-changes.wikitext",
+      "before": "d37630145361a8be11a668f10d0da5256eb0f8999cff424c4a3e84ea13e50ec4",
+      "after": "d37630145361a8be11a668f10d0da5256eb0f8999cff424c4a3e84ea13e50ec4",
+      "unchanged": true
+    }
+  ]
+}

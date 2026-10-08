@@ -1,0 +1,10 @@
+{
+  "mutation": "wt-events-NEW_TOY_ADDED-88",
+  "baseline_gaps": 24,
+  "negative_gaps": 25,
+  "new_gaps": [
+    "wt-events-NEW_TOY_ADDED-88"
+  ],
+  "resolved_gaps": [],
+  "exit": 1
+}

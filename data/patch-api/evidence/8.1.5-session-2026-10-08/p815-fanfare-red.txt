@@ -1,0 +1,39 @@
+
+running 1 test
+test patch_8_1_5_toy_fanfare::patch_8_1_5_toy_fanfare_tracks_collection_transitions ... FAILED
+
+failures:
+
+---- patch_8_1_5_toy_fanfare::patch_8_1_5_toy_fanfare_tracks_collection_transitions stdout ----
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 2.25ms
+[  0.002s] [Startup] rilua VM created in 112.19µs
+[  0.002s] [Startup] builtin frames initialized in 87.97µs
+[  0.002s] [Startup] template registry cleared in 8.80µs
+[  0.003s] [Startup] intrinsic templates registered in 8.47µs
+[  0.003s] [Startup] initial app_data lua handle installed in 871.00ns
+[  0.151s] [Startup] init_lua_state complete in 148.72ms
+[  0.151s] [Startup] final app_data lua handle installed in 852.00ns
+[  0.151s] [Startup] initial screen globals installed in 139.11µs
+[  0.151s] [Startup] WowLuaEnv::new complete
+
+thread 'patch_8_1_5_toy_fanfare::patch_8_1_5_toy_fanfare_tracks_collection_transitions' (384987) panicked at /home/osso/.worktrees/wow-ui-sim-p815-page/tests/patch_8_1_5_toy_fanfare.rs:31:9:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    patch_8_1_5_toy_fanfare::patch_8_1_5_toy_fanfare_tracks_collection_transitions
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10682 filtered out; finished in 0.16s
+
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.39s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p815-page/debug/deps/integration-1db16289b0998b2a)
+error: test failed, to rerun pass `--test integration`

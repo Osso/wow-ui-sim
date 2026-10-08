@@ -1,0 +1,530 @@
+[
+  {
+    "source_id": "wt-global-api-C_AccountInfo.GetIDFromBattleNetAccountGUID-10",
+    "symbol": "C_AccountInfo.GetIDFromBattleNetAccountGUID",
+    "wikitext_line": 10,
+    "literal": "* {{api|C_AccountInfo.GetIDFromBattleNetAccountGUID}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_AccountInfo.GetIDFromBattleNetAccountGUID"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "parent raw-absent; raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Missing Battle.net account-GUID to account-ID mapping and validation. Character GUID parsing does not supply the account identity producer."
+  },
+  {
+    "source_id": "wt-global-api-C_EncounterJournal.IsEncounterComplete-24",
+    "symbol": "C_EncounterJournal.IsEncounterComplete",
+    "wikitext_line": 24,
+    "literal": "* {{api|C_EncounterJournal.IsEncounterComplete}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_EncounterJournal.IsEncounterComplete"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Missing encounter completion lookup for the selected journal/instance context. Requires completion history keyed by encounter and instance/difficulty, not a false-return shim."
+  },
+  {
+    "source_id": "wt-global-api-C_MerchantFrame.IsMerchantItemRefundable-27",
+    "symbol": "C_MerchantFrame.IsMerchantItemRefundable",
+    "wikitext_line": 27,
+    "literal": "* {{api|C_MerchantFrame.IsMerchantItemRefundable}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_MerchantFrame.IsMerchantItemRefundable"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Missing merchant item refund eligibility/expiry metadata and current merchant index lookup. Ownership or price alone does not establish refundability."
+  },
+  {
+    "source_id": "wt-global-api-C_PlayerInfo.UnitIsSameServer-28",
+    "symbol": "C_PlayerInfo.UnitIsSameServer",
+    "wikitext_line": 28,
+    "literal": "* {{api|C_PlayerInfo.UnitIsSameServer}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PlayerInfo.UnitIsSameServer"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Missing unit-to-realm/server identity relationship. Existing fixed local SimRealm is not a populated remote-unit realm producer; connected-realm and invalid-token semantics need evidence."
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetAvailableBrawlInfo-30",
+    "symbol": "C_PvP.GetAvailableBrawlInfo",
+    "wikitext_line": 30,
+    "literal": "* {{api|C_PvP.GetAvailableBrawlInfo}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.GetAvailableBrawlInfo"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Missing available brawl schedule/eligibility and brawl DTO producer. Existing battleground fixture does not model the next available brawl."
+  },
+  {
+    "source_id": "wt-global-api-C_ReportSystem.InitiateReportPlayer-32",
+    "symbol": "C_ReportSystem.InitiateReportPlayer",
+    "wikitext_line": 32,
+    "literal": "* {{api|C_ReportSystem.InitiateReportPlayer}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_ReportSystem.InitiateReportPlayer-124",
+      "symbol": "C_ReportSystem.InitiateReportPlayer"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Later 9.2.5 removal expects absence, but modeled report-token production and help/report/XML tests still use this legacy API. Requires explicit successor migration; not unused-member cleanup."
+  },
+  {
+    "source_id": "wt-global-api-C_ReportSystem.SendReportPlayer-33",
+    "symbol": "C_ReportSystem.SendReportPlayer",
+    "wikitext_line": 33,
+    "literal": "* {{api|C_ReportSystem.SendReportPlayer}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_ReportSystem.SendReportPlayer-126",
+      "symbol": "C_ReportSystem.SendReportPlayer"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Later 9.2.5 removal expects absence, but modeled report-token submission and help/report/XML tests still use this legacy API. Requires explicit successor migration; not unused-member cleanup."
+  },
+  {
+    "source_id": "wt-global-api-C_UIWidgetManager.GetDoubleStateIconRowVisualizationInfo-43",
+    "symbol": "C_UIWidgetManager.GetDoubleStateIconRowVisualizationInfo",
+    "wikitext_line": 43,
+    "literal": "* {{api|C_UIWidgetManager.GetDoubleStateIconRowVisualizationInfo}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_UIWidgetManager.GetDoubleStateIconRowVisualizationInfo"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Missing native double-state icon-row widget DTO, paired icon states and visibility/layout metadata. Generic widget defaults cannot supply populated visualization data."
+  },
+  {
+    "source_id": "wt-global-api-BNGetDisplayName-44",
+    "symbol": "BNGetDisplayName",
+    "wikitext_line": 44,
+    "literal": "* {{api|BNGetDisplayName}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "BNGetDisplayName"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "Missing Battle.net display-name lookup by GUID/account identity. Needs account display-name data and invalid/missing identity behavior, not a player-name constant."
+  },
+  {
+    "source_id": "wt-global-api-UnitPvpClassification-46",
+    "symbol": "UnitPvpClassification",
+    "wikitext_line": 46,
+    "literal": "* {{api|UnitPvpClassification}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "UnitPvpClassification"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "Missing per-unit PvP classification state and enum mapping (honor/leader/flag-carrier context), including invalid/absent tokens. Unit reaction is not this classification."
+  },
+  {
+    "source_id": "wt-global-api-UnitSelectionType-47",
+    "symbol": "UnitSelectionType",
+    "wikitext_line": 47,
+    "literal": "* {{api|UnitSelectionType}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "UnitSelectionType"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "Missing per-unit selection/highlight category state and native selection-type mapping. Friendly/hostile unit predicates do not determine every selection class."
+  },
+  {
+    "source_id": "wt-global-api-UnitWidgetSet-49",
+    "symbol": "UnitWidgetSet",
+    "wikitext_line": 49,
+    "literal": "* {{api|UnitWidgetSet}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "UnitWidgetSet"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "Missing unit-to-widget-set association and lifecycle. Global UI widget-set data cannot identify a particular unit widget set."
+  },
+  {
+    "source_id": "wt-global-api-C_ChatInfo.CanReportPlayer-57",
+    "symbol": "C_ChatInfo.CanReportPlayer",
+    "wikitext_line": 57,
+    "literal": "* {{api|C_ChatInfo.CanReportPlayer}}",
+    "expectation": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ChatInfo.CanReportPlayer"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No qualified cached consumer, but two bare CanReportPlayer consumers under C_ReportSystem prohibit retirement under the conservative scan rule. Requires namespace-specific migration/publication policy, not an autostub tombstone."
+  },
+  {
+    "source_id": "wt-global-api-C_Club.SetCommunityID-60",
+    "symbol": "C_Club.SetCommunityID",
+    "wikitext_line": 60,
+    "literal": "* {{api|C_Club.SetCommunityID}}",
+    "expectation": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_Club.SetCommunityID-52",
+      "symbol": "C_Club.SetCommunityID"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Historical removal superseded by 10.2.7 addition wt-global-api-C_Club.SetCommunityID-52. Zero cached consumers; initial test match is a gap fixture only. Needs community selection state/model. A trial retirement could not satisfy the later published expectation and was reverted; prior inputs restored."
+  },
+  {
+    "source_id": "wt-global-api-GetCVar-70",
+    "symbol": "GetCVar",
+    "wikitext_line": 70,
+    "literal": "* {{api|GetCVar}}",
+    "expectation": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetCVar"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "Whole-word cached bare-name consumers remain (including C_CVar namespace/deprecation references); simulator globals and tests also call this CVar API. Consumer rule forbids retirement. Requires explicit legacy-global/deprecation ownership and caller migration, not deleting shared CVar state."
+  },
+  {
+    "source_id": "wt-global-api-GetCVarBitfield-71",
+    "symbol": "GetCVarBitfield",
+    "wikitext_line": 71,
+    "literal": "* {{api|GetCVarBitfield}}",
+    "expectation": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetCVarBitfield"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "Whole-word cached bare-name consumers remain (including C_CVar namespace/deprecation references); simulator globals and tests also call this CVar API. Consumer rule forbids retirement. Requires explicit legacy-global/deprecation ownership and caller migration, not deleting shared CVar state."
+  },
+  {
+    "source_id": "wt-global-api-GetCVarBool-72",
+    "symbol": "GetCVarBool",
+    "wikitext_line": 72,
+    "literal": "* {{api|GetCVarBool}}",
+    "expectation": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetCVarBool"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "Whole-word cached bare-name consumers remain (including C_CVar namespace/deprecation references); simulator globals and tests also call this CVar API. Consumer rule forbids retirement. Requires explicit legacy-global/deprecation ownership and caller migration, not deleting shared CVar state."
+  },
+  {
+    "source_id": "wt-global-api-GetCVarDefault-73",
+    "symbol": "GetCVarDefault",
+    "wikitext_line": 73,
+    "literal": "* {{api|GetCVarDefault}}",
+    "expectation": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetCVarDefault"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "Whole-word cached bare-name consumers remain (including C_CVar namespace/deprecation references); simulator globals and tests also call this CVar API. Consumer rule forbids retirement. Requires explicit legacy-global/deprecation ownership and caller migration, not deleting shared CVar state."
+  },
+  {
+    "source_id": "wt-global-api-InActiveBattlefield-76",
+    "symbol": "InActiveBattlefield",
+    "wikitext_line": 76,
+    "literal": "* {{api|InActiveBattlefield}}",
+    "expectation": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "InActiveBattlefield"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "No cached consumer; existing inert-global registration and a Mists world-map caller remain. Needs retail-only publication removal with classic preservation, not cross-profile deletion."
+  },
+  {
+    "source_id": "wt-global-api-RegisterCVar-77",
+    "symbol": "RegisterCVar",
+    "wikitext_line": 77,
+    "literal": "* {{api|RegisterCVar}}",
+    "expectation": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "RegisterCVar"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "Whole-word cached bare-name consumers remain (including C_CVar namespace/deprecation references); simulator globals and tests also call this CVar API. Consumer rule forbids retirement. Requires explicit legacy-global/deprecation ownership and caller migration, not deleting shared CVar state."
+  },
+  {
+    "source_id": "wt-global-api-ResetTestCvars-79",
+    "symbol": "ResetTestCvars",
+    "wikitext_line": 79,
+    "literal": "* {{api|ResetTestCvars}}",
+    "expectation": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "ResetTestCvars"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "Whole-word cached bare-name consumers remain (including C_CVar namespace/deprecation references); simulator globals and tests also call this CVar API. Consumer rule forbids retirement. Requires explicit legacy-global/deprecation ownership and caller migration, not deleting shared CVar state."
+  },
+  {
+    "source_id": "wt-global-api-SetCVar-80",
+    "symbol": "SetCVar",
+    "wikitext_line": 80,
+    "literal": "* {{api|SetCVar}}",
+    "expectation": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "SetCVar"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "Whole-word cached bare-name consumers remain (including C_CVar namespace/deprecation references); simulator globals and tests also call this CVar API. Consumer rule forbids retirement. Requires explicit legacy-global/deprecation ownership and caller migration, not deleting shared CVar state."
+  },
+  {
+    "source_id": "wt-global-api-SetCVarBitfield-81",
+    "symbol": "SetCVarBitfield",
+    "wikitext_line": 81,
+    "literal": "* {{api|SetCVarBitfield}}",
+    "expectation": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "SetCVarBitfield"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "Whole-word cached bare-name consumers remain (including C_CVar namespace/deprecation references); simulator globals and tests also call this CVar API. Consumer rule forbids retirement. Requires explicit legacy-global/deprecation ownership and caller migration, not deleting shared CVar state."
+  },
+  {
+    "source_id": "wt-global-api-gcinfo-82",
+    "symbol": "gcinfo",
+    "wikitext_line": 82,
+    "literal": "* {{api|gcinfo}}",
+    "expectation": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "gcinfo"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "Native rilua Lua 5.1 primitive remains published. Zero cached/source callers, but removal needs retail-only VM/global publication policy with classic preservation; not namespace autostub cleanup."
+  }
+]

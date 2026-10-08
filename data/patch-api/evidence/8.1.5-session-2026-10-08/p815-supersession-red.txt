@@ -1,0 +1,212 @@
+running 39 tests
+test patch_10_0_0_publication_sweep::patch_10_0_0_animation_probe_factories ... ok
+test patch_10_0_2_publication_sweep::patch_10_0_2_publication_sweep ... ok
+test patch_10_0_0_publication_sweep::patch_10_0_0_publication_sweep ... ok
+test patch_10_0_5_publication_sweep::patch_10_0_5_publication_sweep ... ok
+test patch_10_0_7_publication_sweep::patch_10_0_7_publication_sweep ... ok
+test patch_10_1_0_publication_sweep::patch_10_1_0_publication_sweep ... ok
+test patch_10_1_5_publication_sweep::patch_10_1_5_publication_sweep ... ok
+test patch_10_1_7_publication_sweep::patch_10_1_7_publication_sweep ... ok
+test patch_10_2_0_publication_sweep::patch_10_2_0_publication_sweep ... ok
+test patch_10_2_5_publication_sweep::patch_10_2_5_publication_sweep ... ok
+test patch_10_2_7_publication_sweep::patch_10_2_7_publication_sweep ... FAILED (panic: assertion `left == right` failed: new gaps: ["wt-global-api-C_Club.SetCommunityID-52"]; resolved/stale gaps: []
+  left: {"wt-cvars-GamePadPlunderstormDefaults-208", "wt-global-api-C_AreaPoiInfo.GetDragonridingRacesForMap-50", "wt-global-api-C_ChatInfo.RegisterAddonMessagePrefix-108", "wt-global-api-C_ChatInfo.SendAddonMessage-110", "wt-global-api-C_ChatInfo.SendAddonMessageLogged-112", "wt-global-api-C_Club.SetCommunityID-52", "wt-global-api-C_Item.GetItemGemID-55", "wt-global-api-C_Item.GetItemInventorySlotKey-56", "wt-global-api-C_Item.GetItemLearnTransmogSet-57", "wt-global-api-C_Item.GetItemNumAddedSockets-58", "wt-global-api-C_Item.GetItemNumSockets-59", "wt-global-api-C_LFGInfo.CanPlayerUseScenarioFinder-60", "wt-global-api-C_LFGList.CreateScenarioListing-62", "wt-global-api-C_LFGList.GetApplicantBestDungeonScore-64", "wt-global-api-C_LFGList.SetSearchToScenarioID-66", "wt-global-api-C_PerksProgram.IsAttackAnimToggleEnabled-67", "wt-global-api-C_PerksProgram.IsMountSpecialAnimToggleEnabled-68", "wt-global-api-C_PetInfo.PetAbandon-69", "wt-global-api-C_PetInfo.PetRename-70", "wt-global-api-C_QuestLog.IsQuestFromContentPush-71", "wt-global-api-C_QuestLog.UpdateCampaignHeaders-72", "wt-global-api-C_StableInfo.GetActivePetList-78", "wt-global-api-C_StableInfo.GetStablePetFoodTypes-80", "wt-global-api-C_StableInfo.GetStablePetInfo-81", "wt-global-api-C_StableInfo.GetStabledPetList-79", "wt-global-api-C_StableInfo.IsAtStableMaster-82", "wt-global-api-C_StableInfo.IsPetFavorite-83", "wt-global-api-C_StableInfo.PickupStablePet-84", "wt-global-api-C_StableInfo.SetPetFavorite-85", "wt-global-api-C_StableInfo.SetPetSlot-86", "wt-global-api-C_TooltipInfo.GetItemByItemModifiedAppearanceID-87", "wt-global-api-C_WorldLootObject.IsWorldLootObject-122", "wt-global-api-C_WorldLootObject.OnWorldLootObjectClick-124", "wt-global-api-StartAttack-126", "wt-global-api-issecurevalue-90", "wt-widgets-ModelSceneActor:DressPlayerSlot-143"}
+ right: {"wt-cvars-GamePadPlunderstormDefaults-208", "wt-global-api-C_AreaPoiInfo.GetDragonridingRacesForMap-50", "wt-global-api-C_ChatInfo.RegisterAddonMessagePrefix-108", "wt-global-api-C_ChatInfo.SendAddonMessage-110", "wt-global-api-C_ChatInfo.SendAddonMessageLogged-112", "wt-global-api-C_Item.GetItemGemID-55", "wt-global-api-C_Item.GetItemInventorySlotKey-56", "wt-global-api-C_Item.GetItemLearnTransmogSet-57", "wt-global-api-C_Item.GetItemNumAddedSockets-58", "wt-global-api-C_Item.GetItemNumSockets-59", "wt-global-api-C_LFGInfo.CanPlayerUseScenarioFinder-60", "wt-global-api-C_LFGList.CreateScenarioListing-62", "wt-global-api-C_LFGList.GetApplicantBestDungeonScore-64", "wt-global-api-C_LFGList.SetSearchToScenarioID-66", "wt-global-api-C_PerksProgram.IsAttackAnimToggleEnabled-67", "wt-global-api-C_PerksProgram.IsMountSpecialAnimToggleEnabled-68", "wt-global-api-C_PetInfo.PetAbandon-69", "wt-global-api-C_PetInfo.PetRename-70", "wt-global-api-C_QuestLog.IsQuestFromContentPush-71", "wt-global-api-C_QuestLog.UpdateCampaignHeaders-72", "wt-global-api-C_StableInfo.GetActivePetList-78", "wt-global-api-C_StableInfo.GetStablePetFoodTypes-80", "wt-global-api-C_StableInfo.GetStablePetInfo-81", "wt-global-api-C_StableInfo.GetStabledPetList-79", "wt-global-api-C_StableInfo.IsAtStableMaster-82", "wt-global-api-C_StableInfo.IsPetFavorite-83", "wt-global-api-C_StableInfo.PickupStablePet-84", "wt-global-api-C_StableInfo.SetPetFavorite-85", "wt-global-api-C_StableInfo.SetPetSlot-86", "wt-global-api-C_TooltipInfo.GetItemByItemModifiedAppearanceID-87", "wt-global-api-C_WorldLootObject.IsWorldLootObject-122", "wt-global-api-C_WorldLootObject.OnWorldLootObjectClick-124", "wt-global-api-StartAttack-126", "wt-global-api-issecurevalue-90", "wt-widgets-ModelSceneActor:DressPlayerSlot-143"})
+---- patch_10_2_7_publication_sweep::patch_10_2_7_publication_sweep stderr ----
+
+thread 'main' (417934) panicked at /home/osso/.worktrees/wow-ui-sim-p815-page/tests/common/publication_sweep.rs:503:5:
+assertion `left == right` failed: new gaps: ["wt-global-api-C_Club.SetCommunityID-52"]; resolved/stale gaps: []
+  left: {"wt-cvars-GamePadPlunderstormDefaults-208", "wt-global-api-C_AreaPoiInfo.GetDragonridingRacesForMap-50", "wt-global-api-C_ChatInfo.RegisterAddonMessagePrefix-108", "wt-global-api-C_ChatInfo.SendAddonMessage-110", "wt-global-api-C_ChatInfo.SendAddonMessageLogged-112", "wt-global-api-C_Club.SetCommunityID-52", "wt-global-api-C_Item.GetItemGemID-55", "wt-global-api-C_Item.GetItemInventorySlotKey-56", "wt-global-api-C_Item.GetItemLearnTransmogSet-57", "wt-global-api-C_Item.GetItemNumAddedSockets-58", "wt-global-api-C_Item.GetItemNumSockets-59", "wt-global-api-C_LFGInfo.CanPlayerUseScenarioFinder-60", "wt-global-api-C_LFGList.CreateScenarioListing-62", "wt-global-api-C_LFGList.GetApplicantBestDungeonScore-64", "wt-global-api-C_LFGList.SetSearchToScenarioID-66", "wt-global-api-C_PerksProgram.IsAttackAnimToggleEnabled-67", "wt-global-api-C_PerksProgram.IsMountSpecialAnimToggleEnabled-68", "wt-global-api-C_PetInfo.PetAbandon-69", "wt-global-api-C_PetInfo.PetRename-70", "wt-global-api-C_QuestLog.IsQuestFromContentPush-71", "wt-global-api-C_QuestLog.UpdateCampaignHeaders-72", "wt-global-api-C_StableInfo.GetActivePetList-78", "wt-global-api-C_StableInfo.GetStablePetFoodTypes-80", "wt-global-api-C_StableInfo.GetStablePetInfo-81", "wt-global-api-C_StableInfo.GetStabledPetList-79", "wt-global-api-C_StableInfo.IsAtStableMaster-82", "wt-global-api-C_StableInfo.IsPetFavorite-83", "wt-global-api-C_StableInfo.PickupStablePet-84", "wt-global-api-C_StableInfo.SetPetFavorite-85", "wt-global-api-C_StableInfo.SetPetSlot-86", "wt-global-api-C_TooltipInfo.GetItemByItemModifiedAppearanceID-87", "wt-global-api-C_WorldLootObject.IsWorldLootObject-122", "wt-global-api-C_WorldLootObject.OnWorldLootObjectClick-124", "wt-global-api-StartAttack-126", "wt-global-api-issecurevalue-90", "wt-widgets-ModelSceneActor:DressPlayerSlot-143"}
+ right: {"wt-cvars-GamePadPlunderstormDefaults-208", "wt-global-api-C_AreaPoiInfo.GetDragonridingRacesForMap-50", "wt-global-api-C_ChatInfo.RegisterAddonMessagePrefix-108", "wt-global-api-C_ChatInfo.SendAddonMessage-110", "wt-global-api-C_ChatInfo.SendAddonMessageLogged-112", "wt-global-api-C_Item.GetItemGemID-55", "wt-global-api-C_Item.GetItemInventorySlotKey-56", "wt-global-api-C_Item.GetItemLearnTransmogSet-57", "wt-global-api-C_Item.GetItemNumAddedSockets-58", "wt-global-api-C_Item.GetItemNumSockets-59", "wt-global-api-C_LFGInfo.CanPlayerUseScenarioFinder-60", "wt-global-api-C_LFGList.CreateScenarioListing-62", "wt-global-api-C_LFGList.GetApplicantBestDungeonScore-64", "wt-global-api-C_LFGList.SetSearchToScenarioID-66", "wt-global-api-C_PerksProgram.IsAttackAnimToggleEnabled-67", "wt-global-api-C_PerksProgram.IsMountSpecialAnimToggleEnabled-68", "wt-global-api-C_PetInfo.PetAbandon-69", "wt-global-api-C_PetInfo.PetRename-70", "wt-global-api-C_QuestLog.IsQuestFromContentPush-71", "wt-global-api-C_QuestLog.UpdateCampaignHeaders-72", "wt-global-api-C_StableInfo.GetActivePetList-78", "wt-global-api-C_StableInfo.GetStablePetFoodTypes-80", "wt-global-api-C_StableInfo.GetStablePetInfo-81", "wt-global-api-C_StableInfo.GetStabledPetList-79", "wt-global-api-C_StableInfo.IsAtStableMaster-82", "wt-global-api-C_StableInfo.IsPetFavorite-83", "wt-global-api-C_StableInfo.PickupStablePet-84", "wt-global-api-C_StableInfo.SetPetFavorite-85", "wt-global-api-C_StableInfo.SetPetSlot-86", "wt-global-api-C_TooltipInfo.GetItemByItemModifiedAppearanceID-87", "wt-global-api-C_WorldLootObject.IsWorldLootObject-122", "wt-global-api-C_WorldLootObject.OnWorldLootObjectClick-124", "wt-global-api-StartAttack-126", "wt-global-api-issecurevalue-90", "wt-widgets-ModelSceneActor:DressPlayerSlot-143"}
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test patch_10_2_6_publication_sweep::patch_10_2_6_publication_sweep ... ok
+test patch_11_0_2_publication_sweep::patch_11_0_2_publication_sweep ... ok
+test patch_11_0_5_publication_sweep::patch_11_0_5_publication_sweep ... ok
+test patch_11_0_0_publication_sweep::patch_11_0_0_publication_sweep ... ok
+test patch_11_0_7_publication_sweep::patch_11_0_7_publication_sweep ... ok
+test patch_11_1_0_publication_sweep::patch_11_1_0_publication_sweep ... ok
+test patch_11_1_5_publication_sweep::patch_11_1_5_publication_sweep ... ok
+test patch_11_1_7_publication_sweep::patch_11_1_7_publication_sweep ... ok
+test patch_11_2_0_publication_sweep::patch_11_2_0_publication_sweep ... ok
+test patch_11_2_5_publication_sweep::patch_11_2_5_publication_sweep ... ok
+test patch_11_2_7_publication_sweep::patch_11_2_7_publication_sweep ... ok
+test patch_12_0_1_publication_sweep::patch_12_0_1_publication_sweep ... ok
+test patch_12_0_0_publication_sweep::patch_12_0_0_publication_sweep ... ok
+test patch_12_0_7_publication_sweep::patch_12_0_7_publication_sweep ... ok
+test patch_12_0_5_publication_sweep::patch_12_0_5_publication_sweep ... ok
+test patch_8_1_5_publication_sweep::patch_8_1_5_publication_sweep ... FAILED (panic: assertion `left == right` failed: new gaps: ["wt-global-api-C_Club.SetCommunityID-60"]; resolved/stale gaps: []
+  left: {"wt-global-api-BNGetDisplayName-44", "wt-global-api-C_AccountInfo.GetIDFromBattleNetAccountGUID-10", "wt-global-api-C_ChatInfo.CanReportPlayer-57", "wt-global-api-C_Club.SetCommunityID-60", "wt-global-api-C_EncounterJournal.IsEncounterComplete-24", "wt-global-api-C_MerchantFrame.IsMerchantItemRefundable-27", "wt-global-api-C_PlayerInfo.UnitIsSameServer-28", "wt-global-api-C_PvP.GetAvailableBrawlInfo-30", "wt-global-api-C_ReportSystem.InitiateReportPlayer-32", "wt-global-api-C_ReportSystem.SendReportPlayer-33", "wt-global-api-C_UIWidgetManager.GetDoubleStateIconRowVisualizationInfo-43", "wt-global-api-GetCVar-70", "wt-global-api-GetCVarBitfield-71", "wt-global-api-GetCVarBool-72", "wt-global-api-GetCVarDefault-73", "wt-global-api-InActiveBattlefield-76", "wt-global-api-RegisterCVar-77", "wt-global-api-ResetTestCvars-79", "wt-global-api-SetCVar-80", "wt-global-api-SetCVarBitfield-81", "wt-global-api-UnitPvpClassification-46", "wt-global-api-UnitSelectionType-47", "wt-global-api-UnitWidgetSet-49", "wt-global-api-gcinfo-82"}
+ right: {"wt-global-api-BNGetDisplayName-44", "wt-global-api-C_AccountInfo.GetIDFromBattleNetAccountGUID-10", "wt-global-api-C_ChatInfo.CanReportPlayer-57", "wt-global-api-C_EncounterJournal.IsEncounterComplete-24", "wt-global-api-C_MerchantFrame.IsMerchantItemRefundable-27", "wt-global-api-C_PlayerInfo.UnitIsSameServer-28", "wt-global-api-C_PvP.GetAvailableBrawlInfo-30", "wt-global-api-C_ReportSystem.InitiateReportPlayer-32", "wt-global-api-C_ReportSystem.SendReportPlayer-33", "wt-global-api-C_UIWidgetManager.GetDoubleStateIconRowVisualizationInfo-43", "wt-global-api-GetCVar-70", "wt-global-api-GetCVarBitfield-71", "wt-global-api-GetCVarBool-72", "wt-global-api-GetCVarDefault-73", "wt-global-api-InActiveBattlefield-76", "wt-global-api-RegisterCVar-77", "wt-global-api-ResetTestCvars-79", "wt-global-api-SetCVar-80", "wt-global-api-SetCVarBitfield-81", "wt-global-api-UnitPvpClassification-46", "wt-global-api-UnitSelectionType-47", "wt-global-api-UnitWidgetSet-49", "wt-global-api-gcinfo-82"})
+---- patch_8_1_5_publication_sweep::patch_8_1_5_publication_sweep stderr ----
+
+thread 'main' (417956) panicked at /home/osso/.worktrees/wow-ui-sim-p815-page/tests/common/publication_sweep.rs:503:5:
+assertion `left == right` failed: new gaps: ["wt-global-api-C_Club.SetCommunityID-60"]; resolved/stale gaps: []
+  left: {"wt-global-api-BNGetDisplayName-44", "wt-global-api-C_AccountInfo.GetIDFromBattleNetAccountGUID-10", "wt-global-api-C_ChatInfo.CanReportPlayer-57", "wt-global-api-C_Club.SetCommunityID-60", "wt-global-api-C_EncounterJournal.IsEncounterComplete-24", "wt-global-api-C_MerchantFrame.IsMerchantItemRefundable-27", "wt-global-api-C_PlayerInfo.UnitIsSameServer-28", "wt-global-api-C_PvP.GetAvailableBrawlInfo-30", "wt-global-api-C_ReportSystem.InitiateReportPlayer-32", "wt-global-api-C_ReportSystem.SendReportPlayer-33", "wt-global-api-C_UIWidgetManager.GetDoubleStateIconRowVisualizationInfo-43", "wt-global-api-GetCVar-70", "wt-global-api-GetCVarBitfield-71", "wt-global-api-GetCVarBool-72", "wt-global-api-GetCVarDefault-73", "wt-global-api-InActiveBattlefield-76", "wt-global-api-RegisterCVar-77", "wt-global-api-ResetTestCvars-79", "wt-global-api-SetCVar-80", "wt-global-api-SetCVarBitfield-81", "wt-global-api-UnitPvpClassification-46", "wt-global-api-UnitSelectionType-47", "wt-global-api-UnitWidgetSet-49", "wt-global-api-gcinfo-82"}
+ right: {"wt-global-api-BNGetDisplayName-44", "wt-global-api-C_AccountInfo.GetIDFromBattleNetAccountGUID-10", "wt-global-api-C_ChatInfo.CanReportPlayer-57", "wt-global-api-C_EncounterJournal.IsEncounterComplete-24", "wt-global-api-C_MerchantFrame.IsMerchantItemRefundable-27", "wt-global-api-C_PlayerInfo.UnitIsSameServer-28", "wt-global-api-C_PvP.GetAvailableBrawlInfo-30", "wt-global-api-C_ReportSystem.InitiateReportPlayer-32", "wt-global-api-C_ReportSystem.SendReportPlayer-33", "wt-global-api-C_UIWidgetManager.GetDoubleStateIconRowVisualizationInfo-43", "wt-global-api-GetCVar-70", "wt-global-api-GetCVarBitfield-71", "wt-global-api-GetCVarBool-72", "wt-global-api-GetCVarDefault-73", "wt-global-api-InActiveBattlefield-76", "wt-global-api-RegisterCVar-77", "wt-global-api-ResetTestCvars-79", "wt-global-api-SetCVar-80", "wt-global-api-SetCVarBitfield-81", "wt-global-api-UnitPvpClassification-46", "wt-global-api-UnitSelectionType-47", "wt-global-api-UnitWidgetSet-49", "wt-global-api-gcinfo-82"}
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test patch_8_2_5_publication_sweep::patch_8_2_5_publication_sweep ... ok
+test patch_12_1_0_publication_sweep::patch_12_1_0_publication_sweep ... ok
+test patch_8_3_7_publication_sweep::patch_8_3_7_publication_sweep ... ok
+test patch_8_3_0_publication_sweep::patch_8_3_0_publication_sweep ... ok
+test patch_9_0_2_publication_sweep::patch_9_0_2_publication_sweep ... ok
+test patch_9_0_5_publication_sweep::patch_9_0_5_publication_sweep ... ok
+test patch_9_0_1_publication_sweep::patch_9_0_1_publication_sweep ... ok
+test patch_9_1_0_publication_sweep::patch_9_1_0_publication_sweep ... ok
+test patch_9_1_5_publication_sweep::patch_9_1_5_publication_sweep ... ok
+test patch_9_2_0_publication_sweep::patch_9_2_0_publication_sweep ... ok
+test patch_9_2_5_publication_sweep::patch_9_2_5_publication_sweep ... ok
+test patch_9_2_7_publication_sweep::patch_9_2_7_publication_sweep ... ok
+
+test result: FAILED. 37 passed; 2 failed; 39 total
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p815-page)
+    Finished `test` profile [optimized + debuginfo] target(s) in 29.70s
+     Running tests/prefork_full_ui.rs (/home/osso/.cache/wow-ui-sim-targets/p815-page/debug/deps/prefork_full_ui-21dd5c807fe7a7b6)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 2.30ms
+[  0.002s] [Startup] rilua VM created in 116.89µs
+[  0.003s] [Startup] builtin frames initialized in 69.44µs
+[  0.003s] [Startup] template registry cleared in 7.59µs
+[  0.003s] [Startup] intrinsic templates registered in 7.23µs
+[  0.003s] [Startup] initial app_data lua handle installed in 531.00ns
+[  0.096s] [Startup] init_lua_state complete in 93.01ms
+[  0.096s] [Startup] final app_data lua handle installed in 170.00ns
+[  0.096s] [Startup] initial screen globals installed in 61.83µs
+[  0.096s] [Startup] WowLuaEnv::new complete
+[  2.111s] [Startup] apply_post_load_workarounds: begin
+[  2.111s] [Workarounds] starting patch_edit_mode_manager
+[  2.111s] [Workarounds] finished patch_edit_mode_manager in 348.02µs
+[  2.111s] [Workarounds] starting init_edit_mode_layout
+[  2.111s] [EditMode] starting setup_layout_info
+[  2.116s] [EditMode] finished setup_layout_info in 4.74ms
+[  2.116s] [EditMode] starting apply_system_anchors
+[  2.235s] [EditMode] finished apply_system_anchors in 119.09ms
+[  2.235s] [EditMode] starting finalize_action_bar_positions
+[  2.237s] [EditMode] finished finalize_action_bar_positions in 1.44ms
+[  2.237s] [EditMode] starting invoke_anchor_changed_hooks
+[  2.237s] [EditMode] finished invoke_anchor_changed_hooks in 334.82µs
+[  2.237s] [EditMode] starting fix_action_bar_nan_size
+[  2.237s] [EditMode] finished fix_action_bar_nan_size in 31.58µs
+[  2.237s] [EditMode] starting fix_action_bar_scale
+[  2.237s] [EditMode] finished fix_action_bar_scale in 3.75µs
+[  2.237s] [Workarounds] finished init_edit_mode_layout in 125.67ms
+[  2.237s] [Workarounds] starting patch_ui_parent_panel_toggles
+[  2.237s] [Workarounds] finished patch_ui_parent_panel_toggles in 189.38µs
+[  2.237s] [Workarounds] starting patch_uiparent_onupdate_worklists
+[  2.237s] [Workarounds] finished patch_uiparent_onupdate_worklists in 76.78µs
+[  2.237s] [Workarounds] starting init_chat_type_colors
+[  2.237s] [Workarounds] finished init_chat_type_colors in 100.89µs
+[  2.237s] [Workarounds] starting patch_chat_voice_button_surface
+[  2.237s] [Workarounds] finished patch_chat_voice_button_surface in 91.54µs
+[  2.237s] [Workarounds] starting patch_item_socketing_tooltips
+[  2.237s] [Workarounds] finished patch_item_socketing_tooltips in 45.15µs
+[  2.237s] [Workarounds] starting patch_character_select_selected_name
+[  2.237s] [Workarounds] finished patch_character_select_selected_name in 24.34µs
+[  2.237s] [Workarounds] starting patch_character_create_defaults
+[  2.238s] [Workarounds] finished patch_character_create_defaults in 177.89µs
+[  2.238s] [Workarounds] starting patch_character_frame_title_refresh
+[  2.242s] [Workarounds] finished patch_character_frame_title_refresh in 4.49ms
+[  2.242s] [Workarounds] starting patch_vignette_pin_template
+[  2.242s] [Workarounds] finished patch_vignette_pin_template in 73.80µs
+[  2.242s] [Workarounds] starting patch_fog_of_war_pin_mixin
+[  2.242s] [Workarounds] finished patch_fog_of_war_pin_mixin in 211.36µs
+[  2.242s] [Workarounds] starting patch_map_exploration_pin_mixin
+[  2.247s] [Workarounds] finished patch_map_exploration_pin_mixin in 4.32ms
+[  2.247s] [Workarounds] starting patch_map_canvas_data_provider_attachment
+[  2.247s] [Workarounds] finished patch_map_canvas_data_provider_attachment in 51.61µs
+[  2.247s] [Workarounds] starting ensure_adventure_map_frame_surface
+[  2.247s] [Workarounds] finished ensure_adventure_map_frame_surface in 344.24µs
+[  2.247s] [Workarounds] starting patch_action_bar_button_event_fanout
+[  2.247s] [Workarounds] finished patch_action_bar_button_event_fanout in 76.33µs
+[  2.247s] [Workarounds] starting patch_paging_controls_page_text
+[  2.247s] [Workarounds] finished patch_paging_controls_page_text in 30.20µs
+[  2.247s] [Workarounds] starting patch_talent_edge_frame_level_sync
+[  2.247s] [Workarounds] finished patch_talent_edge_frame_level_sync in 23.64µs
+[  2.247s] [Workarounds] starting patch_catalog_shop_product_card_defaults
+[  2.247s] [Workarounds] finished patch_catalog_shop_product_card_defaults in 48.17µs
+[  2.247s] [Workarounds] starting patch_game_time_defaults
+[  2.247s] [Workarounds] finished patch_game_time_defaults in 5.89µs
+[  2.247s] [Workarounds] starting patch_tooltip_nineslice_surface
+[  2.247s] [Workarounds] finished patch_tooltip_nineslice_surface in 34.69µs
+[  2.247s] [Workarounds] starting patch_container_frame_token_tracker
+[  2.247s] [Workarounds] finished patch_container_frame_token_tracker in 31.63µs
+[  2.247s] [Workarounds] starting patch_achievement_display_set_achievements
+[  2.247s] [Workarounds] finished patch_achievement_display_set_achievements in 6.26µs
+[  2.247s] [Workarounds] starting patch_housing_dashboard_preload
+[  2.248s] [Workarounds] finished patch_housing_dashboard_preload in 124.36µs
+[  2.248s] [Workarounds] starting patch_lfg_lock_list
+[  2.248s] [Workarounds] finished patch_lfg_lock_list in 24.89µs
+[  2.248s] [Workarounds] starting patch_auction_house_browse_results_event
+[  2.248s] [Workarounds] finished patch_auction_house_browse_results_event in 50.24µs
+[  2.248s] [Workarounds] starting patch_auction_house_search_context_aliases
+[  2.248s] [Workarounds] finished patch_auction_house_search_context_aliases in 23.25µs
+[  2.248s] [Workarounds] starting patch_auth_challenge_frame_parent
+[  2.248s] [Workarounds] finished patch_auth_challenge_frame_parent in 52.58µs
+[  2.248s] [Workarounds] starting patch_settings_surface_defaults
+[  2.248s] [Workarounds] finished patch_settings_surface_defaults in 269.53µs
+[  2.248s] [Workarounds] starting patch_settings_canvas_layout_visibility
+[  2.248s] [Workarounds] finished patch_settings_canvas_layout_visibility in 88.30µs
+[  2.248s] [Startup] apply_post_load_workarounds: workarounds complete
+[  2.306s] [Startup] apply_post_load_workarounds: globals restored
+[  2.306s] [Startup] apply_post_load_workarounds: patch 12.1 compatibility restored
+[  2.306s] [Startup] apply_post_load_workarounds: seterrorhandler restored
+[  2.436s] [Startup] begin login sequence
+[  2.436s] [Startup] Firing ADDON_LOADED
+[  2.436s] [Startup] Firing VARIABLES_LOADED
+[  2.518s] [Startup] Firing DISPLAY_SIZE_CHANGED
+[  2.561s] [Startup] Firing UI_SCALE_CHANGED
+[  2.562s] [Startup] Firing PLAYER_LOGIN
+[  2.562s] [Startup] end login sequence in 126.31ms
+[  2.562s] [Startup] begin world enter sequence
+[  2.562s] [Startup] Skipping EDIT_MODE_LAYOUTS_UPDATED
+[  2.562s] [Startup] Firing TIME_PLAYED_MSG via RequestTimePlayed
+[  2.562s] [Startup] Firing PLAYER_ENTERING_WORLD
+[  2.766s] [EditMode] starting setup_layout_info
+[  2.770s] [EditMode] finished setup_layout_info in 3.21ms
+[  2.770s] [EditMode] starting apply_system_anchors
+[  2.870s] [EditMode] finished apply_system_anchors in 100.66ms
+[  2.870s] [EditMode] starting finalize_action_bar_positions
+[  2.872s] [EditMode] finished finalize_action_bar_positions in 2.03ms
+[  2.872s] [EditMode] starting invoke_anchor_changed_hooks
+[  2.878s] [EditMode] finished invoke_anchor_changed_hooks in 5.99ms
+[  2.878s] [EditMode] starting fix_action_bar_nan_size
+[  2.878s] [EditMode] finished fix_action_bar_nan_size in 51.82µs
+[  2.878s] [EditMode] starting fix_action_bar_scale
+[  2.878s] [EditMode] finished fix_action_bar_scale in 3.50µs
+[  2.878s] [EditMode] starting reapply_player_frame_anchor
+[  2.880s] [EditMode] finished reapply_player_frame_anchor in 1.49ms
+[  2.887s] [Startup] end world enter sequence in 325.52ms
+[  2.887s] [Startup] begin post-login events
+[  2.888s] [Startup] Firing UNIT_AURA
+[  2.889s] [Startup] Firing PET_UI_UPDATE
+[  2.890s] [Startup] Firing BAG_UPDATE_DELAYED
+[  2.891s] [Startup] Firing QUEST_LOG_UPDATE
+[  2.892s] [Startup] Firing GROUP_ROSTER_UPDATE
+[  2.967s] [Startup] Firing ACTIONBAR_UPDATE_STATE
+[  2.967s] [Startup] Firing ACTIONBAR_UPDATE_COOLDOWN
+[  2.968s] [Startup] Firing UPDATE_BONUS_ACTIONBAR
+[  2.977s] [Startup] Firing PLAYER_CAN_GLIDE_CHANGED
+[  2.977s] [Startup] Firing PLAYER_IS_GLIDING_CHANGED
+[  2.977s] [Startup] Firing UPDATE_BINDINGS
+[  2.980s] [Startup] Firing UPDATE_CHAT_WINDOWS
+[  2.982s] [Startup] Firing LFG_UPDATE_RANDOM_INFO
+[  2.983s] [Startup] end post-login events in 95.30ms
+[  2.983s] [Startup] begin close startup special windows
+[  2.983s] [Startup] end close startup special windows in 218.81µs
+[  2.983s] [Startup] begin FIRST_FRAME_RENDERED
+[  2.983s] [Startup] Firing FIRST_FRAME_RENDERED
+[  2.983s] [Startup] end FIRST_FRAME_RENDERED in 131.75µs
+[  2.983s] [Startup] begin unblock hidden splash alerts
+[  2.983s] [Startup] end unblock hidden splash alerts in 10.56µs
+[  2.983s] [Startup] begin post-event workarounds
+[  2.983s] [Startup] end post-event workarounds in 571.00ns
+error: test failed, to rerun pass `--test prefork_full_ui`
+
+Caused by:
+  process didn't exit successfully: `/home/osso/.cache/wow-ui-sim-targets/p815-page/debug/deps/prefork_full_ui-21dd5c807fe7a7b6 publication_sweep` (exit status: 1)

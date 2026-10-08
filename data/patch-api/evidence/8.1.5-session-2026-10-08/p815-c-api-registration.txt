@@ -1,0 +1,7 @@
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/globals/missing_surface.rs:23:mod player_info;
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/globals/missing_surface.rs:292:    player_info::register_player_info_surface(state)?;
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/globals/stubs/namespace_stubs.rs:85:    // C_PlayerInfo probes are registered in missing_surface/player_info.rs.
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/globals/stubs/namespace_stubs.rs:192:    // C_PlayerInfo probes are registered in missing_surface/player_info.rs.
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/globals/font_strings_collection/mod.rs:39:pub use toy_box::register_rilua_toy_box;
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/globals/font_strings_collection/mod.rs:66:    toy_box::register_rilua_toy_box(lua)?;
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/globals/font_strings_collection/toy_box.rs:221:pub fn register_rilua_toy_box(lua: &mut rilua::Lua) -> LuaResult<()> {

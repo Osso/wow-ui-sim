@@ -1,0 +1,23 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "--",
+    "c_area_poi_probes"
+  ],
+  "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+  "scope": "p815-regression-c_area_poi_probes",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p815-page",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "exit": 0,
+  "expected_exit": 0,
+  "log": "p815-regression-c_area_poi_probes.txt",
+  "log_sha256": "45c1eb40b49d44aa91c00363272fee4538f5d5736002d25c6ce8d1de041cddad",
+  "invalidated": false,
+  "seconds": 0.3010458730022947
+}

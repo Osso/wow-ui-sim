@@ -1,0 +1,608 @@
+{
+  "schema": "patch-api-page-coverage/v1",
+  "patch": "8.1.5",
+  "source": "data/patch-api/sources/8.1.5-wikitext-register.json",
+  "source_sha256": "8eacfb4ecb374f539aecc39bc64cfe5d117e243d19f89f45600289cae72a33fb",
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/8.1.5-api-changes.txt",
+    "sha256": "37a8a38a0fa152908db96ce70242e705ec1284c7c1bff599a8eccf4da1a05a53"
+  },
+  "proof_policy": "Exhaustive occurrence accounting. Bounded toy/admin behavior and consumer-free absence only; publication does not prove native/historical parity. Incomplete ? markers retained without invented contracts.",
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-C_AccountInfo.GetIDFromBattleNetAccountGUID-10",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Missing Battle.net account-GUID to account-ID mapping and validation. Character GUID parsing does not supply the account identity producer."
+    },
+    {
+      "source_id": "wt-global-api-C_CVar.GetCVar-12",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Publication/event registration only. Existing functions may be compatibility defaults; no populated-output, security, signature, payload or historical parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CVar.GetCVarBitfield-13",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Publication/event registration only. Existing functions may be compatibility defaults; no populated-output, security, signature, payload or historical parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CVar.GetCVarBool-14",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Publication/event registration only. Existing functions may be compatibility defaults; no populated-output, security, signature, payload or historical parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CVar.GetCVarDefault-15",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Publication/event registration only. Existing functions may be compatibility defaults; no populated-output, security, signature, payload or historical parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CVar.RegisterCVar-16",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Publication/event registration only. Existing functions may be compatibility defaults; no populated-output, security, signature, payload or historical parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CVar.ResetTestCVars-17",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Publication/event registration only. Existing functions may be compatibility defaults; no populated-output, security, signature, payload or historical parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CVar.SetCVar-18",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Publication/event registration only. Existing functions may be compatibility defaults; no populated-output, security, signature, payload or historical parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CVar.SetCVarBitfield-19",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Publication/event registration only. Existing functions may be compatibility defaults; no populated-output, security, signature, payload or historical parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.ReplaceIconAndGroupExpressions-20",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Publication/event registration only. Existing functions may be compatibility defaults; no populated-output, security, signature, payload or historical parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ClassColor.GetClassColor-22",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Publication/event registration only. Existing functions may be compatibility defaults; no populated-output, security, signature, payload or historical parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_DateAndTime.GetServerTimeLocal-23",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Publication/event registration only. Existing functions may be compatibility defaults; no populated-output, security, signature, payload or historical parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_EncounterJournal.IsEncounterComplete-24",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Missing encounter completion lookup for the selected journal/instance context. Requires completion history keyed by encounter and instance/difficulty, not a false-return shim."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemSocketInfo.CompleteSocketing-26",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Publication/event registration only. Existing functions may be compatibility defaults; no populated-output, security, signature, payload or historical parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_MerchantFrame.IsMerchantItemRefundable-27",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Missing merchant item refund eligibility/expiry metadata and current merchant index lookup. Ownership or price alone does not establish refundability."
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerInfo.UnitIsSameServer-28",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Missing unit-to-realm/server identity relationship. Existing fixed local SimRealm is not a populated remote-unit realm producer; connected-realm and invalid-token semantics need evidence."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetActiveBrawlInfo-29",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Publication/event registration only. Existing functions may be compatibility defaults; no populated-output, security, signature, payload or historical parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetAvailableBrawlInfo-30",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Missing available brawl schedule/eligibility and brawl DTO producer. Existing battleground fixture does not model the next available brawl."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.IsActiveBattlefield-31",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Publication/event registration only. Existing functions may be compatibility defaults; no populated-output, security, signature, payload or historical parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ReportSystem.InitiateReportPlayer-32",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Later 9.2.5 removal expects absence, but modeled report-token production and help/report/XML tests still use this legacy API. Requires explicit successor migration; not unused-member cleanup. Superseded by wt-global-api-C_ReportSystem.InitiateReportPlayer-124."
+    },
+    {
+      "source_id": "wt-global-api-C_ReportSystem.SendReportPlayer-33",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Later 9.2.5 removal expects absence, but modeled report-token submission and help/report/XML tests still use this legacy API. Requires explicit successor migration; not unused-member cleanup. Superseded by wt-global-api-C_ReportSystem.SendReportPlayer-126."
+    },
+    {
+      "source_id": "wt-global-api-C_Social.GetLastScreenshotIndex-34",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation provenance only; no historical behavior credit. Superseded by wt-global-api-C_Social.GetLastScreenshotIndex-53."
+    },
+    {
+      "source_id": "wt-global-api-C_Social.GetMaxTweetLength-35",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation provenance only; no historical behavior credit. Superseded by wt-global-api-C_Social.GetMaxTweetLength-54."
+    },
+    {
+      "source_id": "wt-global-api-C_Social.GetScreenshotInfoByIndex-36",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation provenance only; no historical behavior credit. Superseded by wt-global-api-C_Social.GetScreenshotInfoByIndex-55."
+    },
+    {
+      "source_id": "wt-global-api-C_SpecializationInfo.IsInitialized-37",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Publication/event registration only. Existing functions may be compatibility defaults; no populated-output, security, signature, payload or historical parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TaskQuest.GetQuestTimeLeftSeconds-38",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Publication/event registration only. Existing functions may be compatibility defaults; no populated-output, security, signature, payload or historical parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Texture.GetAtlasInfo-40",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Publication/event registration only. Existing functions may be compatibility defaults; no populated-output, security, signature, payload or historical parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ToyBoxInfo.ClearFanfare-41",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Publication/event registration only. Existing functions may be compatibility defaults; no populated-output, security, signature, payload or historical parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ToyBoxInfo.NeedsFanfare-42",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication",
+        "toy-acquisition-fanfare-clear"
+      ],
+      "note": "Shared acquisition/clear backing state agrees with GetToyInfo fifth result. Lua integration proves collection transitions; native NEW_TOY_ADDED event/payload and persistence parity not claimed."
+    },
+    {
+      "source_id": "wt-global-api-C_UIWidgetManager.GetDoubleStateIconRowVisualizationInfo-43",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Missing native double-state icon-row widget DTO, paired icon states and visibility/layout metadata. Generic widget defaults cannot supply populated visualization data."
+    },
+    {
+      "source_id": "wt-global-api-BNGetDisplayName-44",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Missing Battle.net display-name lookup by GUID/account identity. Needs account display-name data and invalid/missing identity behavior, not a player-name constant."
+    },
+    {
+      "source_id": "wt-global-api-DumpMovementCapture-45",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation provenance only; no historical behavior credit. Superseded by wt-global-api-DumpMovementCapture-155."
+    },
+    {
+      "source_id": "wt-global-api-UnitPvpClassification-46",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Missing per-unit PvP classification state and enum mapping (honor/leader/flag-carrier context), including invalid/absent tokens. Unit reaction is not this classification."
+    },
+    {
+      "source_id": "wt-global-api-UnitSelectionType-47",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Missing per-unit selection/highlight category state and native selection-type mapping. Friendly/hostile unit predicates do not determine every selection class."
+    },
+    {
+      "source_id": "wt-global-api-UnitTreatAsPlayerForDisplay-48",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Publication/event registration only. Existing functions may be compatibility defaults; no populated-output, security, signature, payload or historical parity credit."
+    },
+    {
+      "source_id": "wt-global-api-UnitWidgetSet-49",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Missing unit-to-widget-set association and lifecycle. Global UI widget-set data cannot identify a particular unit widget set."
+    },
+    {
+      "source_id": "wt-global-api-C_AreaPoiInfo.GetAreaPOITimeLeft-55",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation provenance only; no historical behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Calendar.GetDate-56",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation provenance only; no historical behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.CanReportPlayer-57",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No qualified cached consumer, but two bare CanReportPlayer consumers under C_ReportSystem prohibit retirement under the conservative scan rule. Requires namespace-specific migration/publication policy, not an autostub tombstone."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.ReportPlayer-58",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation provenance only; no historical behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Club.AddClubStreamToChatWindow-59",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation provenance only; no historical behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Club.SetCommunityID-60",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal superseded by 10.2.7 addition wt-global-api-C_Club.SetCommunityID-52. Zero cached consumers; initial test match is a gap fixture only. Needs community selection state/model. A trial retirement could not satisfy the later published expectation and was reverted; prior inputs restored. Superseded by wt-global-api-C_Club.SetCommunityID-52."
+    },
+    {
+      "source_id": "wt-global-api-C_DateAndTime.GetDateFromEpoch-61",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation provenance only; no historical behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_DateAndTime.GetTodaysDate-62",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation provenance only; no historical behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_DateAndTime.GetYesterdaysDate-63",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation provenance only; no historical behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetBrawlInfo-64",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation provenance only; no historical behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ReportSystem.ReportPlayer-65",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation provenance only; no historical behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Social.GetLastScreenshot-66",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation provenance only; no historical behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Social.GetNumCharactersPerMedia-67",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation provenance only; no historical behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Social.GetScreenshotByIndex-68",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation provenance only; no historical behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetAtlasInfo-69",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation provenance only; no historical behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetCVar-70",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Whole-word cached bare-name consumers remain (including C_CVar namespace/deprecation references); simulator globals and tests also call this CVar API. Consumer rule forbids retirement. Requires explicit legacy-global/deprecation ownership and caller migration, not deleting shared CVar state."
+    },
+    {
+      "source_id": "wt-global-api-GetCVarBitfield-71",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Whole-word cached bare-name consumers remain (including C_CVar namespace/deprecation references); simulator globals and tests also call this CVar API. Consumer rule forbids retirement. Requires explicit legacy-global/deprecation ownership and caller migration, not deleting shared CVar state."
+    },
+    {
+      "source_id": "wt-global-api-GetCVarBool-72",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Whole-word cached bare-name consumers remain (including C_CVar namespace/deprecation references); simulator globals and tests also call this CVar API. Consumer rule forbids retirement. Requires explicit legacy-global/deprecation ownership and caller migration, not deleting shared CVar state."
+    },
+    {
+      "source_id": "wt-global-api-GetCVarDefault-73",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Whole-word cached bare-name consumers remain (including C_CVar namespace/deprecation references); simulator globals and tests also call this CVar API. Consumer rule forbids retirement. Requires explicit legacy-global/deprecation ownership and caller migration, not deleting shared CVar state."
+    },
+    {
+      "source_id": "wt-global-api-GetInspectGlyph-74",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation provenance only; no historical behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-HasInspectHonorData-75",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation provenance only; no historical behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-InActiveBattlefield-76",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No cached consumer; existing inert-global registration and a Mists world-map caller remain. Needs retail-only publication removal with classic preservation, not cross-profile deletion."
+    },
+    {
+      "source_id": "wt-global-api-RegisterCVar-77",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Whole-word cached bare-name consumers remain (including C_CVar namespace/deprecation references); simulator globals and tests also call this CVar API. Consumer rule forbids retirement. Requires explicit legacy-global/deprecation ownership and caller migration, not deleting shared CVar state."
+    },
+    {
+      "source_id": "wt-global-api-RequestInspectHonorData-78",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation provenance only; no historical behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-ResetTestCvars-79",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Whole-word cached bare-name consumers remain (including C_CVar namespace/deprecation references); simulator globals and tests also call this CVar API. Consumer rule forbids retirement. Requires explicit legacy-global/deprecation ownership and caller migration, not deleting shared CVar state."
+    },
+    {
+      "source_id": "wt-global-api-SetCVar-80",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Whole-word cached bare-name consumers remain (including C_CVar namespace/deprecation references); simulator globals and tests also call this CVar API. Consumer rule forbids retirement. Requires explicit legacy-global/deprecation ownership and caller migration, not deleting shared CVar state."
+    },
+    {
+      "source_id": "wt-global-api-SetCVarBitfield-81",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Whole-word cached bare-name consumers remain (including C_CVar namespace/deprecation references); simulator globals and tests also call this CVar API. Consumer rule forbids retirement. Requires explicit legacy-global/deprecation ownership and caller migration, not deleting shared CVar state."
+    },
+    {
+      "source_id": "wt-global-api-gcinfo-82",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Native rilua Lua 5.1 primitive remains published. Zero cached/source callers, but removal needs retail-only VM/global publication policy with classic preservation; not namespace autostub cleanup."
+    },
+    {
+      "source_id": "wt-events-NEW_TOY_ADDED-88",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Publication/event registration only. Existing functions may be compatibility defaults; no populated-output, security, signature, payload or historical parity credit."
+    },
+    {
+      "source_id": "wt-events-SOCKET_INFO_BIND_CONFIRM-89",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Publication/event registration only. Existing functions may be compatibility defaults; no populated-output, security, signature, payload or historical parity credit."
+    },
+    {
+      "source_id": "source-context-001",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Editorial heading/build/deprecated-source link; linked pages not expanded and no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-003",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Editorial heading/build/deprecated-source link; linked pages not expanded and no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Editorial heading/build/deprecated-source link; linked pages not expanded and no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-005",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Editorial heading/build/deprecated-source link; linked pages not expanded and no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-006",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Editorial heading/build/deprecated-source link; linked pages not expanded and no runtime credit."
+    },
+    {
+      "source_id": "source-context-008",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Editorial heading/build/deprecated-source link; linked pages not expanded and no runtime credit."
+    },
+    {
+      "source_id": "source-context-009",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Editorial heading/build/deprecated-source link; linked pages not expanded and no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-010",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Namespace migration note; exact members are independently inventoried. No behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-011",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Namespace migration note; exact members are independently inventoried. No behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-012",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Namespace migration note; exact members are independently inventoried. No behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-013",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Namespace migration note; exact members are independently inventoried. No behavioral credit."
+    },
+    {
+      "source_id": "source-context-015",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Editorial heading/build/deprecated-source link; linked pages not expanded and no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-016",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Unspecified ? marker: page supplies no widget/change/CVar contract to implement. Retained as editorial incomplete-source context, not behavior coverage."
+    },
+    {
+      "source_id": "source-context-018",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Editorial heading/build/deprecated-source link; linked pages not expanded and no runtime credit."
+    },
+    {
+      "source_id": "source-context-020",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Editorial heading/build/deprecated-source link; linked pages not expanded and no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-021",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Unspecified ? marker: page supplies no widget/change/CVar contract to implement. Retained as editorial incomplete-source context, not behavior coverage."
+    },
+    {
+      "source_id": "source-context-023",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Editorial heading/build/deprecated-source link; linked pages not expanded and no runtime credit."
+    },
+    {
+      "source_id": "source-context-025",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Editorial heading/build/deprecated-source link; linked pages not expanded and no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-026",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Unspecified ? marker: page supplies no widget/change/CVar contract to implement. Retained as editorial incomplete-source context, not behavior coverage."
+    }
+  ]
+}

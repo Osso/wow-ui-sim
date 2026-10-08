@@ -14,11 +14,17 @@ TARGET = '/home/osso/.cache/wow-ui-sim-targets/p815-page'
 
 def run_proof(name, command, extra_env=None, expected_exit=0):
     revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
-    env = dict(os.environ, CARGO_TARGET_DIR=TARGET, **(extra_env or {}))
+    extra_env = extra_env or {key: value for key, value in os.environ.items()
+                              if '_SWEEP_' in key or key == 'PYTHONDONTWRITEBYTECODE'}
+    expected_exit = int(os.environ.get('PROOF_EXPECT_EXIT', expected_exit))
+    env = dict(os.environ, CARGO_TARGET_DIR=TARGET, **extra_env)
     started = time.monotonic()
     result = subprocess.run(command, cwd=ROOT, env=env, capture_output=True, text=True)
     log = EVIDENCE / f'{name}.txt'
     log.write_text(result.stdout + result.stderr)
+    if name == 'p815-startup':
+        (EVIDENCE / f'{name}.stdout').write_text(result.stdout)
+        (EVIDENCE / f'{name}.stderr').write_text(result.stderr)
     receipt = {
         'command': command, 'revision': revision, 'scope': name,
         'cwd': str(ROOT), 'target': TARGET, 'environment': extra_env or {},

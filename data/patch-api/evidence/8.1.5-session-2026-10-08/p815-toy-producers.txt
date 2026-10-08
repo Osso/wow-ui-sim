@@ -1,0 +1,25 @@
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/event/valid_events_b.rs:316:    "NEW_TOY_ADDED",
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world/tests.rs:26:    assert!(!world.toys.is_empty());
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world/seeded.rs:204:    ws.toys = default_toys();
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world_tests.rs:28:    assert!(!world.toys.is_empty());
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world_defaults.rs:244:    ws.toys = default_toys();
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world.rs:522:    pub toys: Vec<ToyData>,
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/state_types/character_world.rs:524:    pub favorite_toys: HashSet<u32>,
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/globals/missing_surface/tooltip_info/spell.rs:242:            .toys
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/globals/admin_collections.rs:310:    if let Some(toy) = st.world.toys.iter_mut().find(|t| t.item_id == item_id) {
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/globals/admin_collections.rs:321:    if let Some(toy) = st.world.toys.iter_mut().find(|t| t.item_id == item_id) {
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/globals/font_strings_collection/toy_box.rs:24:    let count = borrow_state(state)?.world.toys.len() as i32;
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/globals/font_strings_collection/toy_box.rs:31:        .toys
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/globals/font_strings_collection/toy_box.rs:39:    let count = borrow_state(state)?.world.toys.len() as i32;
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/globals/font_strings_collection/toy_box.rs:44:    let count = borrow_state(state)?.world.toys.len() as i32;
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/globals/font_strings_collection/toy_box.rs:53:        st.world.toys.get(toy_index).map(|toy| toy.item_id as i32)
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/globals/font_strings_collection/toy_box.rs:66:            .toys
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/globals/font_strings_collection/toy_box.rs:88:        .toys
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/globals/font_strings_collection/toy_box.rs:100:        .toys
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/globals/font_strings_collection/toy_box.rs:112:        .toys
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/globals/font_strings_collection/toy_box.rs:125:            .toys
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/globals/font_strings_collection/toy_box.rs:156:        let fav = st.world.favorite_toys.contains(&(item_id as u32));
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/globals/font_strings_collection/toy_box.rs:162:        let has = !st.world.favorite_toys.is_empty();
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/globals/font_strings_collection/toy_box.rs:171:            st.world.favorite_toys.insert(item_id as u32);
+/home/osso/.worktrees/wow-ui-sim-p815-page/src/lua_api/globals/font_strings_collection/toy_box.rs:173:            st.world.favorite_toys.remove(&(item_id as u32));
+/home/osso/.worktrees/wow-ui-sim-p815-page/tests/test_showuipanel_toggles.rs:322:            "ToggleCollectionsJournal(tab) should open, switch tabs, accept search text, and close for mounts, pets, and toys: {result}"

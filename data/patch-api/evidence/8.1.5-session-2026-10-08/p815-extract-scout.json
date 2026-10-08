@@ -1,0 +1,173 @@
+[
+  {
+    "source_id": "source-context-001",
+    "extract_line": 1,
+    "wikitext_line": 1,
+    "literal": "Patch 8.1.5 API changes",
+    "raw_literal": "{{apichanges|8.1.5|prev=8.1.0|next=8.2.0}}",
+    "status": "metadata-only",
+    "reason": "Editorial heading/build/deprecated-source link; linked pages not expanded and no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-003",
+    "extract_line": 3,
+    "wikitext_line": 3,
+    "literal": "Diff: 8.1.0 (29482) to 8.1.5 (29701)",
+    "raw_literal": "Diff: 8.1.0 (29482) to 8.1.5 (29701)",
+    "status": "metadata-only",
+    "reason": "Editorial heading/build/deprecated-source link; linked pages not expanded and no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-004",
+    "extract_line": 4,
+    "wikitext_line": 4,
+    "literal": "* https://github.com/Gethe/wow-ui-source/commit/93e7041bf9340ca2bcfca8a56feab94ff0bee066",
+    "raw_literal": "* https://github.com/Gethe/wow-ui-source/commit/93e7041bf9340ca2bcfca8a56feab94ff0bee066",
+    "status": "metadata-only",
+    "reason": "Editorial heading/build/deprecated-source link; linked pages not expanded and no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-005",
+    "extract_line": 5,
+    "wikitext_line": 5,
+    "literal": "Blizzard Deprecated",
+    "raw_literal": "Blizzard Deprecated",
+    "status": "metadata-only",
+    "reason": "Editorial heading/build/deprecated-source link; linked pages not expanded and no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-006",
+    "extract_line": 6,
+    "wikitext_line": 6,
+    "literal": "* https://www.townlong-yak.com/framexml/8.1.5/Blizzard_Deprecated/Deprecated_8_1_5.lua",
+    "raw_literal": "* https://www.townlong-yak.com/framexml/8.1.5/Blizzard_Deprecated/Deprecated_8_1_5.lua",
+    "status": "metadata-only",
+    "reason": "Editorial heading/build/deprecated-source link; linked pages not expanded and no runtime credit."
+  },
+  {
+    "source_id": "source-context-008",
+    "extract_line": 8,
+    "wikitext_line": 8,
+    "literal": "== API ==",
+    "raw_literal": "==API==",
+    "status": "metadata-only",
+    "reason": "Editorial heading/build/deprecated-source link; linked pages not expanded and no runtime credit."
+  },
+  {
+    "source_id": "source-context-009",
+    "extract_line": 9,
+    "wikitext_line": 9,
+    "literal": "==== New ====",
+    "raw_literal": "====New====",
+    "status": "metadata-only",
+    "reason": "Editorial heading/build/deprecated-source link; linked pages not expanded and no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-010",
+    "extract_line": 10,
+    "wikitext_line": 11,
+    "literal": "New C_CVar table",
+    "raw_literal": "New C_CVar table",
+    "status": "metadata-only",
+    "reason": "Namespace migration note; exact members are independently inventoried. No behavioral credit."
+  },
+  {
+    "source_id": "prose-undated-011",
+    "extract_line": 11,
+    "wikitext_line": 21,
+    "literal": "New C_ClassColor table",
+    "raw_literal": "New C_ClassColor table",
+    "status": "metadata-only",
+    "reason": "Namespace migration note; exact members are independently inventoried. No behavioral credit."
+  },
+  {
+    "source_id": "prose-undated-012",
+    "extract_line": 12,
+    "wikitext_line": 25,
+    "literal": "New C_ItemSocketInfo table",
+    "raw_literal": "New C_ItemSocketInfo table",
+    "status": "metadata-only",
+    "reason": "Namespace migration note; exact members are independently inventoried. No behavioral credit."
+  },
+  {
+    "source_id": "prose-undated-013",
+    "extract_line": 13,
+    "wikitext_line": 39,
+    "literal": "New C_Texture table",
+    "raw_literal": "New C_Texture table",
+    "status": "metadata-only",
+    "reason": "Namespace migration note; exact members are independently inventoried. No behavioral credit."
+  },
+  {
+    "source_id": "source-context-015",
+    "extract_line": 15,
+    "wikitext_line": 51,
+    "literal": "==== Changes ====",
+    "raw_literal": "====Changes====",
+    "status": "metadata-only",
+    "reason": "Editorial heading/build/deprecated-source link; linked pages not expanded and no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-016",
+    "extract_line": 16,
+    "wikitext_line": 52,
+    "literal": "?",
+    "raw_literal": "?",
+    "status": "metadata-only",
+    "reason": "Unspecified ? marker: page supplies no widget/change/CVar contract to implement. Retained as editorial incomplete-source context, not behavior coverage."
+  },
+  {
+    "source_id": "source-context-018",
+    "extract_line": 18,
+    "wikitext_line": 54,
+    "literal": "==== Removals ====",
+    "raw_literal": "====Removals====",
+    "status": "metadata-only",
+    "reason": "Editorial heading/build/deprecated-source link; linked pages not expanded and no runtime credit."
+  },
+  {
+    "source_id": "source-context-020",
+    "extract_line": 20,
+    "wikitext_line": 84,
+    "literal": "== Widgets ==",
+    "raw_literal": "==Widgets==",
+    "status": "metadata-only",
+    "reason": "Editorial heading/build/deprecated-source link; linked pages not expanded and no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-021",
+    "extract_line": 21,
+    "wikitext_line": 85,
+    "literal": "?",
+    "raw_literal": "?",
+    "status": "metadata-only",
+    "reason": "Unspecified ? marker: page supplies no widget/change/CVar contract to implement. Retained as editorial incomplete-source context, not behavior coverage."
+  },
+  {
+    "source_id": "source-context-023",
+    "extract_line": 23,
+    "wikitext_line": 87,
+    "literal": "== Events ==",
+    "raw_literal": "==Events==",
+    "status": "metadata-only",
+    "reason": "Editorial heading/build/deprecated-source link; linked pages not expanded and no runtime credit."
+  },
+  {
+    "source_id": "source-context-025",
+    "extract_line": 25,
+    "wikitext_line": 91,
+    "literal": "== CVars ==",
+    "raw_literal": "==CVars==",
+    "status": "metadata-only",
+    "reason": "Editorial heading/build/deprecated-source link; linked pages not expanded and no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-026",
+    "extract_line": 26,
+    "wikitext_line": 92,
+    "literal": "?",
+    "raw_literal": "?",
+    "status": "metadata-only",
+    "reason": "Unspecified ? marker: page supplies no widget/change/CVar contract to implement. Retained as editorial incomplete-source context, not behavior coverage."
+  }
+]
