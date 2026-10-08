@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p602-page/data/patch-api/evidence/6.0.2-session-2026-10-08/integrated/check_tamper.py"
+  ],
+  "revision": "076a89d78aec05e42557d917d931255882089752",
+  "scope": "tamper",
+  "cwd": ".",
+  "target": "dedicated p602-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "tamper.txt",
+  "log_sha256": "13419f4d98757415637f6044aa9c5f7e0a71edae7d18f114b7254ba3999388c0",
+  "seconds": 8.324533684004564,
+  "invalidated": false
+}

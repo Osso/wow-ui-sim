@@ -1,0 +1,20 @@
+[
+  {
+    "validator": "data/patch-api/evidence/6.0.2-session-2026-10-08/validate.py",
+    "receipt": "data/patch-api/evidence/6.0.2-session-2026-10-08/p602-all-sweeps.txt",
+    "baseline_exit": 0,
+    "tampered_exit": 1,
+    "sha256_after_restore": "b9be53a8a4e24ef9b001000b2469b19e325f31eca0bcc12abeddbca782ea6bf3",
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p602-page/data/patch-api/evidence/6.0.2-session-2026-10-08/validate.py\", line 7, in <module>\n    runpy.run_path(str(Path(__file__).resolve().parent / 'integrated/replay_history.py'),\n    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n                   run_name='__main__')\n                   ^^^^^^^^^^^^^^^^^^^^\n  File \"<frozen runpy>\", line 294, in run_path\n  File \"<frozen runpy>\", line 98, in _run_module_code\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"/home/osso/.worktrees/wow-ui-sim-p602-page/data/patch-api/evidence/6.0.2-session-2026-10-08/integrated/replay_history.py\", line 89, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p602-page/data/patch-api/evidence/6.0.2-session-2026-10-08/integrated/replay_history.py\", line 77, in main\n    assert digest(path.read_bytes()) == expected, name\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: p602-all-sweeps.txt\n"
+  },
+  {
+    "validator": "data/patch-api/evidence/6.0.2-session-2026-10-08/integrated/validate.py",
+    "receipt": "data/patch-api/evidence/6.0.2-session-2026-10-08/integrated/all-sweeps.txt",
+    "baseline_exit": 0,
+    "tampered_exit": 1,
+    "sha256_after_restore": "38dae94897d178396f34548b673f408c9315788a5754da239b59b5e4b9aa294c",
+    "stdout": "",
+    "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p602-page/data/patch-api/evidence/6.0.2-session-2026-10-08/integrated/validate.py\", line 217, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p602-page/data/patch-api/evidence/6.0.2-session-2026-10-08/integrated/validate.py\", line 205, in main\n    assert digest((HERE / path).read_bytes()) == expected, path\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: all-sweeps.txt\n"
+  }
+]

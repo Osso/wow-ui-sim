@@ -1,0 +1,1 @@
+PASS: historical and integrated receipt tampering rejected; bytes restored
