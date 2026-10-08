@@ -48,8 +48,27 @@ def preserve_historical():
     dump(FRESH / 'historical-preservation.json', {'revision': git('rev-parse', HISTORICAL), 'artifacts': rows})
 
 
+def preserve_prior_inputs():
+    matrix = read(FRESH / 'prior-validator-matrix.json')
+    revisions = {row['revision'] for row in matrix}
+    assert len(revisions) == 1
+    revision = revisions.pop()
+    directories = ['tools', 'tests/data', 'data/patch-api/sources', 'data/patch-api/evidence']
+    previous = set(git('ls-tree', '-r', '--name-only', revision, *directories).splitlines())
+    changed = set(git('diff', '--name-only', revision, '--', *directories).splitlines())
+    # These newly introduced orchestration files are not loaded by any reused validator.
+    orchestration = {str((HERE / name).relative_to(ROOT)) for name in
+                     ('run_integrated.py', 'finalize_integrated.py', 'validate_integrated.py')}
+    assert not (changed & previous) - orchestration, 'reused validator inputs changed'
+    dump(FRESH / 'prior-input-preservation.json', {'revision': revision,
+         'scope': directories, 'existing_input_changes': [],
+         'orchestration_changes_not_used_by_reused_validators': sorted(changed & previous & orchestration),
+         'wiki': 'Only the 7.1.0 historical validator reads current wiki lengths; rerun it after wiki edits.'})
+
+
 def seal():
     preserve_historical()
+    preserve_prior_inputs()
     validator = load_validator()
     context = read(FRESH / 'context.json')
     summaries = []
