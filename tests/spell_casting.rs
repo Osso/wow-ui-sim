@@ -135,16 +135,17 @@ fn instant_spell_does_not_show_cast_bar() {
 }
 
 /// Load all Blizzard addons and fire startup events.
+#[cfg(not(feature = "client-retail"))]
 pub(crate) fn env_with_full_blizzard_ui() -> WowLuaEnv {
     let ui = wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available for cached full UI tests");
     env_with_blizzard_ui_from(ui)
 }
 
+#[cfg(not(feature = "client-retail"))]
 fn env_with_blizzard_ui_from(ui: std::path::PathBuf) -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("create env");
     env.set_screen_size(1024.0, 768.0);
-
 
     {
         let mut state = env.state().borrow_mut();
@@ -160,6 +161,7 @@ fn env_with_blizzard_ui_from(ui: std::path::PathBuf) -> WowLuaEnv {
     env
 }
 
+#[cfg(not(feature = "client-retail"))]
 fn fire_startup_events(env: &WowLuaEnv) {
     common::fire_addon_loaded(env, "WoWUISim");
     for ev in ["VARIABLES_LOADED", "PLAYER_LOGIN"] {
@@ -176,10 +178,9 @@ fn fire_startup_events(env: &WowLuaEnv) {
     }
 }
 
-#[test]
-fn action_button_down_sets_pushed_state() {
-    test_timeout! {
-        let env = env_with_full_blizzard_ui();
+prefork_full_ui_case! {
+fn action_button_down_sets_pushed_state(env: &WowLuaEnv) {
+
         // ActionButtonDown calls SetButtonState("PUSHED") on the button widget
         let state_before: String = env
             .eval(r#"return _G["ActionButton1"]:GetButtonState()"#)
@@ -200,7 +201,15 @@ fn action_button_down_sets_pushed_state() {
             .eval(r#"return _G["ActionButton1"]:GetButtonState()"#)
             .unwrap();
         assert_eq!(state_reset, "NORMAL", "ActionButtonUp should reset to NORMAL");
-    }
+
+}
+}
+
+#[cfg(not(feature = "client-retail"))]
+#[test]
+fn action_button_down_sets_pushed_state() {
+    let env = env_with_full_blizzard_ui();
+    action_button_down_sets_pushed_state::run(&env);
 }
 
 #[test]
@@ -267,10 +276,9 @@ pub(crate) fn drain_test_errors(env: &WowLuaEnv) -> Vec<String> {
     common::drain_string_table(env, "__test_errors")
 }
 
-#[test]
-fn use_action_with_blizzard_ui_no_errors() {
-    test_timeout! {
-        let env = env_with_full_blizzard_ui();
+prefork_full_ui_case! {
+fn use_action_with_blizzard_ui_no_errors(env: &WowLuaEnv) {
+
         env.exec("TargetUnit('party1')").expect("target party1");
         install_test_error_handler(&env);
 
@@ -285,7 +293,15 @@ fn use_action_with_blizzard_ui_no_errors() {
             errors.len(),
             errors.join("\n"),
         );
-    }
+
+}
+}
+
+#[cfg(not(feature = "client-retail"))]
+#[test]
+fn use_action_with_blizzard_ui_no_errors() {
+    let env = env_with_full_blizzard_ui();
+    use_action_with_blizzard_ui_no_errors::run(&env);
 }
 
 /// Diagnose cast bar state — prints mixin/handler info for debugging.
@@ -338,10 +354,9 @@ fn assert_cast_bar_shows(env: &WowLuaEnv) {
     assert!(shown, "PlayerCastingBarFrame should be visible during cast");
 }
 
-#[test]
-fn cast_bar_visible_during_cast() {
-    test_timeout! {
-        let env = env_with_full_blizzard_ui();
+prefork_full_ui_case! {
+fn cast_bar_visible_during_cast(env: &WowLuaEnv) {
+
         env.exec("TargetUnit('party1')").expect("target party1");
         install_test_error_handler(&env);
 
@@ -364,13 +379,20 @@ fn cast_bar_visible_during_cast() {
 
         env.exec("UseAction(1)").expect("UseAction(1)");
         assert_cast_bar_shows(&env);
-    }
+
+}
 }
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn cast_bar_respects_edit_mode_lock_setting_after_startup_fix() {
-    test_timeout! {
-        let env = env_with_full_blizzard_ui();
+fn cast_bar_visible_during_cast() {
+    let env = env_with_full_blizzard_ui();
+    cast_bar_visible_during_cast::run(&env);
+}
+
+prefork_full_ui_case! {
+fn cast_bar_respects_edit_mode_lock_setting_after_startup_fix(env: &WowLuaEnv) {
+
 
         let (lock_value, attached_after_post_event, parent_after_post_event): (i64, bool, String) = env
             .eval(
@@ -449,7 +471,15 @@ fn cast_bar_respects_edit_mode_lock_setting_after_startup_fix() {
             "locked cast-bar edit-mode anchor path should attach to PlayerFrame"
         );
         assert_eq!(parent_after_cast_anchor, "PlayerFrame");
-    }
+
+}
+}
+
+#[cfg(not(feature = "client-retail"))]
+#[test]
+fn cast_bar_respects_edit_mode_lock_setting_after_startup_fix() {
+    let env = env_with_full_blizzard_ui();
+    cast_bar_respects_edit_mode_lock_setting_after_startup_fix::run(&env);
 }
 
 #[test]
@@ -575,10 +605,9 @@ fn paladin_aura_spell_replaces_previous_paladin_aura() {
     }
 }
 
-#[test]
-fn paladin_aura_cast_refreshes_blizzard_buff_frame() {
-    test_timeout! {
-        let env = env_with_full_blizzard_ui();
+prefork_full_ui_case! {
+fn paladin_aura_cast_refreshes_blizzard_buff_frame(env: &WowLuaEnv) {
+
         install_test_error_handler(&env);
         env.exec(
             r#"
@@ -616,13 +645,20 @@ fn paladin_aura_cast_refreshes_blizzard_buff_frame() {
             first_button_shown,
             "BuffFrame should show an aura button after an aura cast"
         );
-    }
+
+}
 }
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn ui_error_message_wired_with_blizzard_ui() {
-    test_timeout! {
-        let env = env_with_full_blizzard_ui();
+fn paladin_aura_cast_refreshes_blizzard_buff_frame() {
+    let env = env_with_full_blizzard_ui();
+    paladin_aura_cast_refreshes_blizzard_buff_frame::run(&env);
+}
+
+prefork_full_ui_case! {
+fn ui_error_message_wired_with_blizzard_ui(env: &WowLuaEnv) {
+
         env.exec("TargetUnit('party1')").expect("target party1");
         install_test_error_handler(&env);
 
@@ -642,13 +678,20 @@ fn ui_error_message_wired_with_blizzard_ui() {
             errors.len(),
             errors.join("\n"),
         );
-    }
+
+}
 }
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn spellcast_input_blizzard_bar_observes_delay_and_failure() {
-    test_timeout! {
-        let env = env_with_full_blizzard_ui();
+fn ui_error_message_wired_with_blizzard_ui() {
+    let env = env_with_full_blizzard_ui();
+    ui_error_message_wired_with_blizzard_ui::run(&env);
+}
+
+prefork_full_ui_case! {
+fn spellcast_input_blizzard_bar_observes_delay_and_failure(env: &WowLuaEnv) {
+
         install_test_error_handler(&env);
         env.exec(r#"
             CastingBarMixin.OnLoad(PlayerCastingBarFrame, "player", true, false)
@@ -672,5 +715,13 @@ fn spellcast_input_blizzard_bar_observes_delay_and_failure() {
         "#).unwrap();
         let errors = drain_test_errors(&env);
         assert!(errors.is_empty(), "cast input consumer errors: {errors:?}");
-    }
+
+}
+}
+
+#[cfg(not(feature = "client-retail"))]
+#[test]
+fn spellcast_input_blizzard_bar_observes_delay_and_failure() {
+    let env = env_with_full_blizzard_ui();
+    spellcast_input_blizzard_bar_observes_delay_and_failure::run(&env);
 }
