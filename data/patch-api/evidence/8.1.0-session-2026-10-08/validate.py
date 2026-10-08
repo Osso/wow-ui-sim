@@ -13,6 +13,18 @@ ROOT = Path(__file__).resolve().parents[4]
 EVIDENCE = Path(__file__).resolve().parent
 SOURCES = ROOT / 'data/patch-api/sources'
 PATCH = '8.1.0'
+sys.path.insert(0, str(ROOT / 'tools'))
+from patch_audit_validation import (
+    historical_registers, historical_sweep_tests, preserved_input_matches,
+)
+
+# Integrated 8.1.5/8.2.0 registers and the complete 8.1.0 sweep source set.
+AUDIT_REVISION = 'ba7e46ad6'
+
+
+def audit_patches():
+    return {path.name.removesuffix('-wikitext-register.json')
+            for path in historical_registers(ROOT, AUDIT_REVISION)}
 
 
 def read(path):
@@ -102,13 +114,23 @@ def check_preservation():
         before = hashlib.sha256(git_blob(receipt['base_revision'], row['path'])).hexdigest()
         after = hashlib.sha256(git_blob(receipt['audit_revision'], row['path'])).hexdigest()
         assert before == row['base_sha256'] == after == row['audit_sha256']
-    # Mutable shared files intentionally are NOT compared to frozen digests.
+        assert preserved_input_matches(ROOT, row['path'], row['base_sha256']), row['path']
+    # Current replacements require exact attributable later-audit byte pairs.
     modes = read(EVIDENCE / 'p810-extract-preservation.json')
     assert all(row['before'] == row['after'] for row in modes)
     registers = read(EVIDENCE / 'p810-register-reproduction.json')
+    assert {row['patch'] for row in registers} == audit_patches()
     assert all(row['byte_identical'] and row['exit'] == 0 for row in registers)
     extracts = read(EVIDENCE / 'p810-saved-extract-reproduction.json')
-    assert all(row['byte_identical'] or row['patch'] in ('12.0.5', '12.0.7', '12.1.0') for row in extracts)
+    assert {row['patch'] for row in extracts} == audit_patches()
+    inherited = {row['patch']: row for row in read(
+        ROOT / 'data/patch-api/evidence/8.1.5-session-2026-10-08/p815-saved-extract-reproduction.json')}
+    for row in extracts:
+        if row['patch'] in inherited:
+            old = inherited[row['patch']]
+            assert (row['byte_identical'], row['error']) == (old['byte_identical'], old['error'])
+        else:
+            assert row['byte_identical']
     return {'preserved_inputs': len(receipt['rows']), 'preserved_extract_modes': len(modes),
             'reproduced_registers': len(registers),
             'inherited_extract_failures': [row['patch'] for row in extracts if not row['byte_identical']]}
@@ -166,6 +188,9 @@ def check_proof():
                   and not line.startswith(('warning: iced-wgpu-patched/', 'warning: `iced_wgpu`'))]
     assert not non_vendor, non_vendor
     summary = read(EVIDENCE / 'p810-sweep-summary.json')
+    expected_files = {path.stem + '-results.json'
+                      for path in historical_sweep_tests(ROOT, AUDIT_REVISION)}
+    assert {row['file'] for row in summary} == expected_files
     for row in summary:
         results = read(EVIDENCE / row['file'])
         assert row['rows'] == len(results)
