@@ -4,6 +4,7 @@
   "wt-global-api-C_ChatInfo.RegisterAddonMessagePrefix-108",
   "wt-global-api-C_ChatInfo.SendAddonMessage-110",
   "wt-global-api-C_ChatInfo.SendAddonMessageLogged-112",
+  "wt-global-api-C_Club.SetCommunityID-52",
   "wt-global-api-C_Item.GetItemGemID-55",
   "wt-global-api-C_Item.GetItemInventorySlotKey-56",
   "wt-global-api-C_Item.GetItemLearnTransmogSet-57",

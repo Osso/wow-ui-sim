@@ -2,6 +2,7 @@
   "wt-global-api-BNGetDisplayName-44",
   "wt-global-api-C_AccountInfo.GetIDFromBattleNetAccountGUID-10",
   "wt-global-api-C_ChatInfo.CanReportPlayer-57",
+  "wt-global-api-C_Club.SetCommunityID-60",
   "wt-global-api-C_EncounterJournal.IsEncounterComplete-24",
   "wt-global-api-C_MerchantFrame.IsMerchantItemRefundable-27",
   "wt-global-api-C_PlayerInfo.UnitIsSameServer-28",
