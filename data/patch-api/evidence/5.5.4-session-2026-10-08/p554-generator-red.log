@@ -1,0 +1,36 @@
+...F.............................
+======================================================================
+FAIL: test_client_line_is_opt_in_and_does_not_invent_resources_inventory (test_gen_patch_wikitext_register.InventoryTests.test_client_line_is_opt_in_and_does_not_invent_resources_inventory)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p554-page/tools/test_gen_patch_wikitext_register.py", line 29, in test_client_line_is_opt_in_and_does_not_invent_resources_inventory
+    self.assertEqual(result.returncode, 0, result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 2 != 0 : usage: gen_patch_wikitext_register.py [-h] [--inventory-only]
+                                      [--expand-shared-changes]
+                                      [--separate-inline-structures]
+                                      [--capture-span-defaults]
+                                      [--skip-plain-scripts-label]
+                                      [--simple-api-list]
+                                      [--legacy-column-headers]
+                                      [--diff-api-additions]
+                                      [--legacy-inventory-labels]
+                                      [--legacy-api-tables]
+                                      [--legacy-api-bullets]
+                                      [--legacy-api-renames] [--bfa-prepatch]
+                                      [--prose-api-links]
+                                      [--legacy-summary-tables]
+                                      [--top-level-api-bullets]
+                                      [--legacy-widget-summaries]
+                                      [--prose-namespace-migrations]
+                                      [--legacy-widget-cvar-bullets]
+                                      [--legion-prepatch]
+                                      [--indented-api-lists]
+                                      patch path revid out
+gen_patch_wikitext_register.py: error: unrecognized arguments: --client-line mists-classic
+
+
+----------------------------------------------------------------------
+Ran 33 tests in 0.376s
+
+FAILED (failures=1)
