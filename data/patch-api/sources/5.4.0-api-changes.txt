@@ -1,0 +1,38 @@
+Patch 5.4.0 API changes
+
+== Breaking changes ==
+* Two new returns (bidderFullName at #13 and ownerFullName at #15) have been added to GetAuctionItemInfo. Owner, previously #13, has been pushed to #14. Returns previously after owner (saleStatus, itemId, hasAllInfo) have been pushed forward by two places.
+** The full call signature is now name, texture, count, quality, canUse, level, levelColHeader, minBid, minIncrement, buyoutPrice, bidAmount, highBidder, bidderFullName, owner, ownerFullName, saleStatus, itemId, hasAllInfo =  GetAuctionItemInfo("list", offset)
+*  One new return (bgQueue pushed from #4 to #5) have been added to GetLFGRoleUpdate.
+** The full call signature is now inProgress, slots, members, category, lfgID, bgQueue = GetLFGRoleUpdate()
+* StartWarGame("target"[, area]) "target" unitid was unitName previously
+
+== Modified API ==
+* GetUnitName(unitid[,showServer]) returns 'name-realm' instead of 'name - realm' (spaces removed) and most commands that accept a unitname now, work with 'name-server' format (/invite, /ginvite, /trade etc
+* UnitIsSameServer("otherUnit")
+* GetInstanceInfo()
+* GetLFGDungeonInfo(dungeonID)
+* GetLFGMode(category, lfgID)
+* GetLFGQueueStats(category[, activeID])
+* GetPVPRewards()
+* GetWorldElapsedTime(timerID)
+* GetSmoothProgressChange(value, displayedValue, range, elapsed, minPerSecond, maxPerSecond)
+* A new return has been added to GetInstanceInfo - instanceGroupSize at #9 which gives the number of players that the raid's difficulty is tuned for (either the max players for normal raids, or the current number of players for flex raids)
+
+== Bugs ==
+* Slider widgets ignore the Slider:SetValueStep property when Slider:SetStepsPerPage is not set.
+
+== New features ==
+* Players from Connected Realms (5.4 feature) can be interacted with in more ways (e.g. trading) than players from Coalesced Realms (old cross-realm zone functionality). UnitRealmRelationship returns information about another player's realm.
+* A new error condition event, SAVED_VARIABLES_TOO_LARGE, was added which indicates that some, or all, of an AddOn's SavedVariables were not loaded due to the player's machine being out-of-memory. http://us.battle.net/wow/en/forum/topic/9362996672
+
+== Automated diff ==
+Click on the headers to expand the tables below.
+
+[Transcluded source: Patch 5.4.0/API changes/diff; not expanded]
+
+== References ==
+[References list; not expanded]
+
+== External links ==
+[External link: WoWInterface; http://www.wowinterface.com/forums/showthread.php?t=46657; Assorted 5.4.0 API changes]

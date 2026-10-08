@@ -1,0 +1,14 @@
+E
+======================================================================
+ERROR: test_external_link_and_noinclude_wrapper (__main__.MistsExtractTests.test_external_link_and_noinclude_wrapper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p540-page/tools/test_patch_mists_extract.py", line 10, in test_external_link_and_noinclude_wrapper
+    self.assertEqual(extract_text(raw, mists_source_markup=True),
+                     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: extract_text() got an unexpected keyword argument 'mists_source_markup'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)

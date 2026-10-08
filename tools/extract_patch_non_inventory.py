@@ -123,12 +123,22 @@ def normalize_lowercase_reflist(raw):
     return raw.replace('{{reflist}}', '{{Reflist}}')
 
 
+def render_mists_source_markup(raw):
+    """Retain Elink fields and omit only the non-transcluded wrapper."""
+    raw = raw.replace('<noinclude>{{Transclude|}}</noinclude>', '')
+    return re.sub(r'\{\{Elink\|site=([^{}|]+)\|link=([^{}|]+)\|desc=([^{}|]+)\}\}',
+                  r'[External link: \1; \2; \3]', raw)
+
+
 def extract_text(raw, *, preserve_examples=False, normalize_inventory_headings=False,
                  retain_reference_notes=False, legacy_api_tables=False,
                  legacy_api_bullets=False, legacy_cvar_tables=False,
                  bfa_prepatch=False, legion_prepatch=False,
                  retain_patch_diff_reference=False, canonical_patch_navigation=False,
-                 mists_automated_diff=False, lowercase_reflist=False):
+                 mists_automated_diff=False, lowercase_reflist=False,
+                 mists_source_markup=False):
+    if mists_source_markup:
+        raw = render_mists_source_markup(raw)
     if lowercase_reflist:
         raw = normalize_lowercase_reflist(raw)
     if canonical_patch_navigation:
@@ -366,6 +376,8 @@ def main():
                         help='Strip 2013 Mists API tables while retaining prose and enums; opt-in')
     parser.add_argument('--lowercase-reflist', action='store_true',
                         help='Retain lowercase reflist as an unexpanded reference marker; opt-in')
+    parser.add_argument('--mists-source-markup', action='store_true',
+                        help='Retain Mists external-link fields and omit noinclude wrappers; opt-in')
     args = parser.parse_args()
     if args.self_test:
         check_examples()
@@ -386,7 +398,8 @@ def main():
                         retain_patch_diff_reference=args.retain_patch_diff_reference,
                         canonical_patch_navigation=args.canonical_patch_navigation,
                         mists_automated_diff=args.mists_automated_diff,
-                        lowercase_reflist=args.lowercase_reflist)
+                        lowercase_reflist=args.lowercase_reflist,
+                        mists_source_markup=args.mists_source_markup)
     rows = seed_rows(text, args.patch)
     if args.text_only:
         if args.check:

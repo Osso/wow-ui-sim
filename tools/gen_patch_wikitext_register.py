@@ -667,6 +667,26 @@ def parse_mists_automated_diff(text):
     return entries, counts
 
 
+def parse_mists_summary(text):
+    """Keep explicit 5.4.0 prose references without inferring historical removals."""
+    entries = []
+    section = None
+    for number, line in enumerate(text.splitlines(), 1):
+        heading = re.fullmatch(r'==\s*([^=]+?)\s*==', line)
+        if heading:
+            section = heading[1]
+        elif section in ('Breaking changes', 'Modified API', 'Bugs', 'New features'):
+            for match in TEMPLATE.finditer(line):
+                category = 'widgets' if '|t=w|' in match[0] else (
+                    'events' if '|t=e|' in match[0] else 'global-api')
+                direction = 'added' if section == 'New features' else 'changed'
+                symbol = next(part for part in match[2].split('|') if '=' not in part)
+                entry = make_entry(category, direction, number, '{{api|' + symbol + '}}')
+                entry['annotation'] = line
+                entries.append(entry)
+    return entries
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("patch", "path", "revid", "out"):
@@ -725,6 +745,9 @@ def main():
                         help='Label the client history for isolated supersession; opt-in')
     parser.add_argument('--mists-automated-diff', action='store_true',
                         help='Parse 2013 Mists captioned APIs and bare removals; opt-in')
+    parser.add_argument('--mists-summary', action='store_true',
+                        help='Retain explicit 5.4.0 summary API occurrences; opt-in')
+    parser.add_argument('--mists-diff', help='Separately pinned Mists transcluded inventory; opt-in')
     args = parser.parse_args()
     patch, path, revid, out = args.patch, args.path, args.revid, args.out
     raw = Path(path).read_bytes()
@@ -787,6 +810,14 @@ def main():
         entries.extend(parse_combat_restriction_bullets(raw.decode('utf-8')))
     if args.mists_automated_diff:
         entries, counts = parse_mists_automated_diff(raw.decode('utf-8'))
+    if args.mists_summary:
+        entries.extend(parse_mists_summary(raw.decode('utf-8')))
+    if args.mists_diff:
+        diff_entries, diff_counts = parse_mists_automated_diff(Path(args.mists_diff).read_text())
+        for entry in diff_entries:
+            entry['id'] = 'diff-' + entry['id']
+        entries.extend(diff_entries)
+        counts.extend(diff_counts)
     if args.inventory_only:
         for entry in entries:
             for key in ("kind", "page_default", "test_inline"):

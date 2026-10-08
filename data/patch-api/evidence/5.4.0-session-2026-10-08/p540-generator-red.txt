@@ -1,0 +1,23 @@
+EE
+======================================================================
+ERROR: test_caption_inventory_keeps_bare_removal_and_counts (__main__.MistsTests.test_caption_inventory_keeps_bare_removal_and_counts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p540-page/tools/test_patch_mists_register.py", line 13, in test_caption_inventory_keeps_bare_removal_and_counts
+    rows, counts = generator.parse_mists_automated_diff(raw)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'gen_patch_wikitext_register' has no attribute 'parse_mists_automated_diff'
+
+======================================================================
+ERROR: test_summary_preserves_occurrences_and_reference_kinds (__main__.MistsTests.test_summary_preserves_occurrences_and_reference_kinds)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p540-page/tools/test_patch_mists_register.py", line 25, in test_summary_preserves_occurrences_and_reference_kinds
+    rows = generator.parse_mists_summary(raw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'gen_patch_wikitext_register' has no attribute 'parse_mists_summary'
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.002s
+
+FAILED (errors=2)

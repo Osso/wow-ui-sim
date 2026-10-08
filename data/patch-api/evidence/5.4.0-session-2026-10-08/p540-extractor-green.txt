@@ -1,0 +1,22 @@
+F
+======================================================================
+FAIL: test_external_link_and_noinclude_wrapper (__main__.MistsExtractTests.test_external_link_and_noinclude_wrapper)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p540-page/tools/test_patch_mists_extract.py", line 10, in test_external_link_and_noinclude_wrapper
+    self.assertEqual(extract_text(raw, mists_source_markup=True),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     '\n==External links==\n[External link: WoWInterface; http://example.test/thread; Assorted changes]\n')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '\n== External links ==\n[External link: WoWIn[52 chars]s]\n' != '\n==External links==\n[External link: WoWInte[50 chars]s]\n'
+  
+- == External links ==
+?   -              -
++ ==External links==
+  [External link: WoWInterface; http://example.test/thread; Assorted changes]
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+FAILED (failures=1)
