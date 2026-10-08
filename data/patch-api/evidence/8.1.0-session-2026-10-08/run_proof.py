@@ -17,7 +17,8 @@ def run_proof(name, command):
     started = time.monotonic()
     log = EVIDENCE / f'{name}.txt'
     environment = {key: value for key, value in os.environ.items()
-                   if key.startswith(('P810_', 'PATCH_', 'WOW_SIM_', 'PREFORK_'))}
+                   if key.startswith(('P810_', 'PATCH_', 'WOW_SIM_', 'PREFORK_'))
+                   or key.endswith('_SWEEP_OUT')}
     with log.open('w') as output:
         result = subprocess.run(command, cwd=ROOT,
                                 env=dict(os.environ, CARGO_TARGET_DIR=TARGET,

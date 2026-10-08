@@ -1,0 +1,1217 @@
+{
+  "tool": "/usr/bin/grep (rg unavailable); whole-word qualified and bare scans; bare caller scan includes pcall(Name, ...) and and Name then; complete outputs retained",
+  "base_revision": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+  "cache_exists": true,
+  "later_inputs": [
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/10.0.0-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/10.0.2-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/10.0.5-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/10.0.7-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/10.1.0-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/10.1.5-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/10.1.7-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/10.2.0-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/10.2.5-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/10.2.6-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/10.2.7-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/11.0.0-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/11.0.2-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/11.0.5-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/11.0.7-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/11.1.0-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/11.1.5-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/11.1.7-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/11.2.0-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/11.2.5-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/11.2.7-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/12.0.0-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/12.0.1-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/12.0.5-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/12.0.7-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/12.1.0-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/8.2.5-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/8.3.0-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/8.3.7-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/9.0.1-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/9.0.2-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/9.0.5-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/9.1.0-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/9.1.5-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/9.2.0-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/9.2.5-wikitext-register.json"
+    },
+    {
+      "ref": "7fab847ebe3ec0ef4b4b6212482bd4e9b86cae9b",
+      "path": "data/patch-api/sources/9.2.7-wikitext-register.json"
+    },
+    {
+      "ref": "88276709e95b4ffd79e4ddfd38854827d2928c35",
+      "path": "data/patch-api/sources/8.1.5-wikitext-register.json"
+    },
+    {
+      "ref": "9c8e19340fdaf7a5f01efb8fbbf609ca9787a3d6",
+      "path": "data/patch-api/sources/8.2.0-wikitext-register.json"
+    }
+  ],
+  "rows": [
+    {
+      "symbol": "gxRefresh",
+      "id": "wt-cvars-gxRefresh-172",
+      "section": "cvars",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bgxRefresh\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bgxRefresh\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bgxRefresh\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/tests"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        }
+      },
+      "later_readds": [],
+      "decision": "already-absent",
+      "reason": "Discovery confirms absent CVar; no new retirement or default added."
+    },
+    {
+      "symbol": "gxWindow",
+      "id": "wt-cvars-gxWindow-173",
+      "section": "cvars",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bgxWindow\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bgxWindow\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bgxWindow\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/tests"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        }
+      },
+      "later_readds": [],
+      "decision": "already-absent",
+      "reason": "Discovery confirms absent CVar; no new retirement or default added."
+    },
+    {
+      "symbol": "RAIDSSAOBlur",
+      "id": "wt-cvars-RAIDSSAOBlur-174",
+      "section": "cvars",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bRAIDSSAOBlur\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bRAIDSSAOBlur\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bRAIDSSAOBlur\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/tests"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        }
+      },
+      "later_readds": [],
+      "decision": "already-absent",
+      "reason": "Discovery confirms absent CVar; no new retirement or default added."
+    },
+    {
+      "symbol": "spellClutterDefaultTargetScalar",
+      "id": "wt-cvars-spellClutterDefaultTargetScalar-175",
+      "section": "cvars",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bspellClutterDefaultTargetScalar\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bspellClutterDefaultTargetScalar\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bspellClutterDefaultTargetScalar\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/tests"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        }
+      },
+      "later_readds": [],
+      "decision": "already-absent",
+      "reason": "Discovery confirms absent CVar; no new retirement or default added."
+    },
+    {
+      "symbol": "spellClutterHostileScalar",
+      "id": "wt-cvars-spellClutterHostileScalar-176",
+      "section": "cvars",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bspellClutterHostileScalar\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bspellClutterHostileScalar\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bspellClutterHostileScalar\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/tests"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        }
+      },
+      "later_readds": [],
+      "decision": "already-absent",
+      "reason": "Discovery confirms absent CVar; no new retirement or default added."
+    },
+    {
+      "symbol": "spellClutterMinSpellCount",
+      "id": "wt-cvars-spellClutterMinSpellCount-177",
+      "section": "cvars",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bspellClutterMinSpellCount\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bspellClutterMinSpellCount\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bspellClutterMinSpellCount\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/tests"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        }
+      },
+      "later_readds": [],
+      "decision": "already-absent",
+      "reason": "Discovery confirms absent CVar; no new retirement or default added."
+    },
+    {
+      "symbol": "spellClutterMinWeaponTrailCount",
+      "id": "wt-cvars-spellClutterMinWeaponTrailCount-178",
+      "section": "cvars",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bspellClutterMinWeaponTrailCount\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bspellClutterMinWeaponTrailCount\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bspellClutterMinWeaponTrailCount\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/tests"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        }
+      },
+      "later_readds": [],
+      "decision": "already-absent",
+      "reason": "Discovery confirms absent CVar; no new retirement or default added."
+    },
+    {
+      "symbol": "spellClutterPartySizeScalar",
+      "id": "wt-cvars-spellClutterPartySizeScalar-179",
+      "section": "cvars",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bspellClutterPartySizeScalar\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bspellClutterPartySizeScalar\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bspellClutterPartySizeScalar\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/tests"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        }
+      },
+      "later_readds": [],
+      "decision": "already-absent",
+      "reason": "Discovery confirms absent CVar; no new retirement or default added."
+    },
+    {
+      "symbol": "spellClutterPlayerScalarMultiplier",
+      "id": "wt-cvars-spellClutterPlayerScalarMultiplier-180",
+      "section": "cvars",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bspellClutterPlayerScalarMultiplier\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bspellClutterPlayerScalarMultiplier\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bspellClutterPlayerScalarMultiplier\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/tests"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        }
+      },
+      "later_readds": [],
+      "decision": "already-absent",
+      "reason": "Discovery confirms absent CVar; no new retirement or default added."
+    },
+    {
+      "symbol": "spellClutterRangeConstant",
+      "id": "wt-cvars-spellClutterRangeConstant-181",
+      "section": "cvars",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bspellClutterRangeConstant\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bspellClutterRangeConstant\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bspellClutterRangeConstant\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/tests"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        }
+      },
+      "later_readds": [],
+      "decision": "already-absent",
+      "reason": "Discovery confirms absent CVar; no new retirement or default added."
+    },
+    {
+      "symbol": "spellClutterRangeConstantRaid",
+      "id": "wt-cvars-spellClutterRangeConstantRaid-182",
+      "section": "cvars",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bspellClutterRangeConstantRaid\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bspellClutterRangeConstantRaid\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bspellClutterRangeConstantRaid\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/tests"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        }
+      },
+      "later_readds": [],
+      "decision": "already-absent",
+      "reason": "Discovery confirms absent CVar; no new retirement or default added."
+    },
+    {
+      "symbol": "SSAOBlur",
+      "id": "wt-cvars-SSAOBlur-183",
+      "section": "cvars",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bSSAOBlur\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bSSAOBlur\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bSSAOBlur\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/tests"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        }
+      },
+      "later_readds": [],
+      "decision": "already-absent",
+      "reason": "Discovery confirms absent CVar; no new retirement or default added."
+    },
+    {
+      "symbol": "SSAODistance",
+      "id": "wt-cvars-SSAODistance-184",
+      "section": "cvars",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bSSAODistance\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bSSAODistance\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bSSAODistance\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/tests"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        }
+      },
+      "later_readds": [],
+      "decision": "already-absent",
+      "reason": "Discovery confirms absent CVar; no new retirement or default added."
+    },
+    {
+      "symbol": "worldPoolUsage",
+      "id": "wt-cvars-worldPoolUsage-185",
+      "section": "cvars",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bworldPoolUsage\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bworldPoolUsage\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bworldPoolUsage\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/tests"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        }
+      },
+      "later_readds": [],
+      "decision": "already-absent",
+      "reason": "Discovery confirms absent CVar; no new retirement or default added."
+    },
+    {
+      "symbol": "C_Map.GetBountySetIDForMap",
+      "id": "wt-global-api-C_Map.GetBountySetIDForMap-124",
+      "section": "global-api",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bC_Map\\.GetBountySetIDForMap\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bGetBountySetIDForMap\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bGetBountySetIDForMap\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/tests"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p810-page/src/c_api/patch_retired_members.rs:30:    (\"C_Map\", &[\"GetBountySetIDForMap\"]),\n/home/osso/.worktrees/wow-ui-sim-p810-page/tests/patch_8_1_0_publication_fixes.rs:3:    \"C_Map.GetBountySetIDForMap\",\n",
+          "stderr": ""
+        }
+      },
+      "later_readds": [],
+      "decision": "retire",
+      "reason": "No qualified/bare non-Documentation cached consumer; no later register re-add. Source callers are registration definitions only."
+    },
+    {
+      "symbol": "C_ConfigurationWarnings.GetConfigurationWarningSeen",
+      "id": "wt-global-api-C_ConfigurationWarnings.GetConfigurationWarningSeen-126",
+      "section": "global-api",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bC_ConfigurationWarnings\\.GetConfigurationWarningSeen\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bGetConfigurationWarningSeen\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bGetConfigurationWarningSeen\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/tests"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:26:installConfigurationWarningsDefault(\"GetConfigurationWarningSeen\", function(warning)\n/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:114:                    C_ConfigurationWarnings.GetConfigurationWarningSeen(\"warning\")\n/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:130:                return C_ConfigurationWarnings.GetConfigurationWarningSeen(\"warning\")\n/home/osso/.worktrees/wow-ui-sim-p810-page/tests/data/patch_8_1_0_sweep_known_gaps.json:13:  \"wt-global-api-C_ConfigurationWarnings.GetConfigurationWarningSeen-126\",\n",
+          "stderr": ""
+        }
+      },
+      "later_readds": [],
+      "decision": "retain-provider-callers",
+      "reason": "No cached consumer, but existing temporary provider unit tests call getter; provider republishes it after C API marking. Retain pending profile-safe modeled provider/test migration."
+    },
+    {
+      "symbol": "C_ConfigurationWarnings.GetConfigurationWarningString",
+      "id": "wt-global-api-C_ConfigurationWarnings.GetConfigurationWarningString-127",
+      "section": "global-api",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bC_ConfigurationWarnings\\.GetConfigurationWarningString\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueParent/Mainline/GlueParent.lua:873:\t\tlocal text = C_ConfigurationWarnings.GetConfigurationWarningString(warning);\n",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bGetConfigurationWarningString\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueParent/Mainline/GlueParent.lua:873:\t\tlocal text = C_ConfigurationWarnings.GetConfigurationWarningString(warning);\n",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bGetConfigurationWarningString\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/tests"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:32:installConfigurationWarningsDefault(\"GetConfigurationWarningString\", function()\n/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:83:                if type(C_ConfigurationWarnings.GetConfigurationWarningString) == \"function\" then\n/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:84:                    text = C_ConfigurationWarnings.GetConfigurationWarningString(warning)\n/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:113:                    C_ConfigurationWarnings.GetConfigurationWarningString(\"warning\"),\n/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:188:            C_ConfigurationWarnings.GetConfigurationWarningString = function(warning)\n/home/osso/.worktrees/wow-ui-sim-p810-page/tests/data/patch_8_1_0_sweep_known_gaps.json:14:  \"wt-global-api-C_ConfigurationWarnings.GetConfigurationWarningString-127\",\n",
+          "stderr": ""
+        }
+      },
+      "later_readds": [],
+      "decision": "retain-current-consumer",
+      "reason": "Current cached non-Documentation Blizzard consumer prohibits retirement; complete matches retained."
+    },
+    {
+      "symbol": "C_ConfigurationWarnings.GetConfigurationWarnings",
+      "id": "wt-global-api-C_ConfigurationWarnings.GetConfigurationWarnings-128",
+      "section": "global-api",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bC_ConfigurationWarnings\\.GetConfigurationWarnings\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mainline/CharacterSelect.lua:717:\t\tCharacterSelectUI.VisibilityFramesContainer.ConfigurationWarnings:SetShown(#C_ConfigurationWarnings.GetConfigurationWarnings(includeSeenWarnings) > 0);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueParent/Mainline/GlueParent.lua:871:\tlocal configWarnings = C_ConfigurationWarnings.GetConfigurationWarnings(includeSeenWarnings);\n",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bGetConfigurationWarnings\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mainline/CharacterSelect.lua:717:\t\tCharacterSelectUI.VisibilityFramesContainer.ConfigurationWarnings:SetShown(#C_ConfigurationWarnings.GetConfigurationWarnings(includeSeenWarnings) > 0);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueParent/Mainline/GlueParent.lua:871:\tlocal configWarnings = C_ConfigurationWarnings.GetConfigurationWarnings(includeSeenWarnings);\n",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bGetConfigurationWarnings\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/tests"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:36:installConfigurationWarningsDefault(\"GetConfigurationWarnings\", function()\n/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:68:            if type(C_ConfigurationWarnings.GetConfigurationWarnings) ~= \"function\" then\n/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:72:            local warnings = C_ConfigurationWarnings.GetConfigurationWarnings(includeSeenWarnings)\n/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:111:                local warnings = C_ConfigurationWarnings.GetConfigurationWarnings(false)\n/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:143:            function C_ConfigurationWarnings.GetConfigurationWarnings()\n/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:153:            .eval(\"return C_ConfigurationWarnings.GetConfigurationWarnings()[1]\")\n/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:184:            C_ConfigurationWarnings.GetConfigurationWarnings = function(includeSeenWarnings)\n/home/osso/.worktrees/wow-ui-sim-p810-page/tests/glue_character_select.rs:287:            .eval(\"return type(C_ConfigurationWarnings.GetConfigurationWarnings(false))\")\n/home/osso/.worktrees/wow-ui-sim-p810-page/tests/data/patch_8_1_0_sweep_known_gaps.json:15:  \"wt-global-api-C_ConfigurationWarnings.GetConfigurationWarnings-128\",\n",
+          "stderr": ""
+        }
+      },
+      "later_readds": [],
+      "decision": "retain-current-consumer",
+      "reason": "Current cached non-Documentation Blizzard consumer prohibits retirement; complete matches retained."
+    },
+    {
+      "symbol": "C_ConfigurationWarnings.SetConfigurationWarningSeen",
+      "id": "wt-global-api-C_ConfigurationWarnings.SetConfigurationWarningSeen-129",
+      "section": "global-api",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bC_ConfigurationWarnings\\.SetConfigurationWarningSeen\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Glue/GlueDialogDefs.lua:256:\t\tC_ConfigurationWarnings.SetConfigurationWarningSeen(data.configurationWarning);\n",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bSetConfigurationWarningSeen\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Glue/GlueDialogDefs.lua:256:\t\tC_ConfigurationWarnings.SetConfigurationWarningSeen(data.configurationWarning);\n",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bSetConfigurationWarningSeen\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/tests"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:40:installConfigurationWarningsDefault(\"SetConfigurationWarningSeen\", function(warning)\n/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:129:                C_ConfigurationWarnings.SetConfigurationWarningSeen(\"warning\")\n/home/osso/.worktrees/wow-ui-sim-p810-page/tests/data/patch_8_1_0_sweep_known_gaps.json:16:  \"wt-global-api-C_ConfigurationWarnings.SetConfigurationWarningSeen-129\",\n",
+          "stderr": ""
+        }
+      },
+      "later_readds": [],
+      "decision": "retain-current-consumer",
+      "reason": "Current cached non-Documentation Blizzard consumer prohibits retirement; complete matches retained."
+    },
+    {
+      "symbol": "C_Calendar.EventGetClubID",
+      "id": "wt-global-api-C_Calendar.EventGetClubID-120",
+      "section": "global-api",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bC_Calendar\\.EventGetClubID\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bEventGetClubID\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bEventGetClubID\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/tests"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p810-page/src/c_api/patch_retired_members.rs:31:    (\"C_Calendar\", &[\"EventGetClubID\", \"EventSetClubID\"]),\n/home/osso/.worktrees/wow-ui-sim-p810-page/tests/patch_8_1_0_publication_fixes.rs:4:    \"C_Calendar.EventGetClubID\",\n",
+          "stderr": ""
+        }
+      },
+      "later_readds": [],
+      "decision": "retire",
+      "reason": "No qualified/bare non-Documentation cached consumer; no later register re-add. Source callers are registration definitions only."
+    },
+    {
+      "symbol": "C_Calendar.EventSetClubID",
+      "id": "wt-global-api-C_Calendar.EventSetClubID-121",
+      "section": "global-api",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bC_Calendar\\.EventSetClubID\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bEventSetClubID\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bEventSetClubID\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p810-page/tests"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p810-page/src/c_api/patch_retired_members.rs:31:    (\"C_Calendar\", &[\"EventGetClubID\", \"EventSetClubID\"]),\n/home/osso/.worktrees/wow-ui-sim-p810-page/tests/patch_8_1_0_publication_fixes.rs:5:    \"C_Calendar.EventSetClubID\",\n",
+          "stderr": ""
+        }
+      },
+      "later_readds": [],
+      "decision": "retire",
+      "reason": "No qualified/bare non-Documentation cached consumer; no later register re-add. Source callers are registration definitions only."
+    }
+  ],
+  "stage": "after-runtime-change",
+  "audit_revision": "71ad73fbc07d2605f747768174d34746712ba570"
+}
