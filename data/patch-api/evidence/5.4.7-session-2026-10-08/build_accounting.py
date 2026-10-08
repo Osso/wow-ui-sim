@@ -54,8 +54,15 @@ def main():
             note = ('Current strict retail event catalog rejects ' + entry['symbol'] +
                     '; source-era character-boost start/abort lifecycle and its service producer are unmodeled. Do not make a historical name registerable without modeling the relevant lifecycle, or reuse the unrelated modern boost/store completion callback.')
             gaps.append({'source_id': entry['id'], 'symbol': entry['symbol'], 'reason': note, 'observed': result})
+        capabilities = ['publication-absence'] if ok else []
+        if entry['symbol'] == 'BNSendGameData':
+            capabilities.append('bounded-outbound-intent')
+            note += (' Unmodified cached deprecated wrapper also preserves online-account intent prefix/data/target, returns no values, and rejects intent after the account goes offline. Existing c_api backing only; no native transport or 2014 rate-limit parity.')
+        elif entry['symbol'] == 'GetSpecializationNameForSpecID':
+            capabilities.append('catalog-identity')
+            note += (' Existing specialization catalog behavior for IDs 70/65/577 and unknown IDs is verified by the retained 11.1.0 identity test. No gender/localization or historical catalog completeness claim.')
         rows.append({'source_id': entry['id'], 'status': 'bounded-coverage' if ok else 'audit-pending',
-                     'capabilities': ['publication-absence'] if ok else [], 'note': note})
+                     'capabilities': capabilities, 'note': note})
     rows.extend(extract_rows())
     assert len({row['source_id'] for row in rows}) == len(rows)
     write(SOURCES / '5.4.7-page-coverage.json', {

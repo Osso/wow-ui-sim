@@ -39,7 +39,7 @@ Discovery/backing/caller scans use untruncated whole-word **`/usr/bin/grep -RnwE
 
 Initial committed discovery finds exactly two publication gaps. All five Python fixture scripts pass. **54 registers and 51 saved extracts reproduce**; inherited failures for 12.0.5, 12.0.7 and 12.1.0 remain exactly unchanged. Every prior source blob and extraction-mode result is preserved against pinned master **080f26f1c**.
 
-Final acceptance remains pending: all publication sweeps, new cached sender behavior, cached Battle.net consumers, existing specialization/namespace behavior, Mists tests check, format, negative control and clean/future-audit validator gate. No full integration suite. No shared/runtime path changed, so an addons-enabled startup comparison is not triggered; this audit makes no fresh startup-output claim.
+At source/test scope `7ba500c07`, all publication sweeps plus classifier factory pass **55/55**; own sweep/cached sender **2/2**, cached Battle.net consumer cases **3/3**, existing specialization and namespace backing cases **1/1 each**. Python fixtures pass **84/84**. Final acceptance remains pending: Mists tests check, format, negative control and clean/future-audit validator gate. No full integration suite. No shared/runtime path changed, so an addons-enabled startup comparison is not triggered; this audit makes no fresh startup-output claim.
 
 ## Sources
 
