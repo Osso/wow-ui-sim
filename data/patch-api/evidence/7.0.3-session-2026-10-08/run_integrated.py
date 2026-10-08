@@ -51,16 +51,26 @@ def main():
     HERE.mkdir(exist_ok=True)
     if '--detach' in sys.argv:
         with (HERE / 'launcher.txt').open('wb') as handle:
-            process = subprocess.Popen([sys.executable, '-B', str(Path(__file__).resolve())], cwd=ROOT, stdout=handle, stderr=subprocess.STDOUT, start_new_session=True)
+            process = subprocess.Popen([sys.executable, '-B', str(Path(__file__).resolve()), *[arg for arg in sys.argv[1:] if arg != '--detach']], cwd=ROOT, stdout=handle, stderr=subprocess.STDOUT, start_new_session=True)
         dump('job.json', {'pid': process.pid})
         print('Launched integrated proofs:', process.pid)
         return
     revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
     source_scope = scope(ROOT)
     master_scope = scope(MASTER)
-    dump('context.json', {'runtime_revision': revision, 'master_revision': BASE, 'runtime_scope': source_scope, 'master_scope': master_scope})
+    if '--resume' not in sys.argv:
+        dump('context.json', {'runtime_revision': revision, 'master_revision': BASE, 'runtime_scope': source_scope, 'master_scope': master_scope})
     results = {}
+    if '--resume' in sys.argv:
+        context = json.loads((HERE / 'context.json').read_text())
+        assert context['runtime_scope'] == source_scope and context['master_scope'] == master_scope
+        revision = context['runtime_revision']
+        results = json.loads((HERE / 'command-results.json').read_text())
     def run(label, command, extra=None, master=False):
+        if label in results:
+            receipt = json.loads((HERE / (label + '.proof.json')).read_text())
+            assert receipt['command'] == command and receipt['log_sha256'] == digest(HERE / receipt['log'])
+            return
         results[label] = prove(label, command, BASE if master else revision, master_scope if master else source_scope, extra, master)
         dump('command-results.json', results)
     # The own sweep already passed on the unchanged runtime; retain its full log.
@@ -79,8 +89,11 @@ def main():
     run('format', ['cargo', 'fmt', '--check'])
     extension = HERE / 'extension'
     extension.mkdir(exist_ok=True)
-    for name in ('p703-register-reproduction.json', 'p703-sweep-summary.json'):
+    name = 'p703-register-reproduction.json'
+    if not (extension / name).exists():
         (extension / name).write_bytes((HERE.parent / name).read_bytes())
+    if not (extension / 'p703-sweep-summary.json').exists():
+        (extension / 'p703-sweep-summary.json').write_text('[]\n')
     run('extend-receipts', ['python3', '-B', str(ROOT / 'tools/extend_patch_audit_receipts.py'), str(ROOT), str(extension), 'p703', 'merged 7.1.0; recorded provenance flags', '7.0.3'])
     manifest = str(MASTER / 'Cargo.toml')
     run('master-all-sweeps', ['cargo', 'test', '--manifest-path', manifest, '--test', 'prefork_full_ui', '--', 'publication_sweep'], master=True)
