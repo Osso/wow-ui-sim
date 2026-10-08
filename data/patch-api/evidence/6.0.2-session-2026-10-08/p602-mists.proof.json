@@ -1,0 +1,20 @@
+{
+  "command": [
+    "cargo",
+    "check",
+    "--no-default-features",
+    "--features",
+    "sound,gui,casc,client-mists",
+    "--tests"
+  ],
+  "revision": "c0f58dad85ae20d75713136e5d80bd15fa2a6e53",
+  "scope": "p602-mists",
+  "cwd": ".",
+  "target": "dedicated p602-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p602-mists.txt",
+  "log_sha256": "60da277a2de0dfe720e6a3e2eb204b719e535cb1ba358822dea73757160b256b",
+  "seconds": 120.37409929999558,
+  "invalidated": false
+}
