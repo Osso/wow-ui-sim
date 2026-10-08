@@ -1,0 +1,98 @@
+{
+  "base_revision": "25fbde058514034692df481bd568e952a2b9851e",
+  "runtime_revision": "2c43df7ea924009562b906689d9b1c5c85fd8e2f",
+  "documentation_revision": "950c52aac2ca69dde4231d3b99168afdf0179986",
+  "receipts": {
+    "p701-discovery": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_7_0_1"
+      ],
+      "revision": "2c43df7ea924009562b906689d9b1c5c85fd8e2f",
+      "sha256": "20bad3a74bc736d4f8f426921e10c8eca5a136b04801cf5b7b2dc36056fac693"
+    },
+    "p701-all-sweeps": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "publication_sweep"
+      ],
+      "revision": "3026d96d129a6bbb9a48d0e8db85e0cb3f44230f",
+      "sha256": "66003f8f99fed55e59d329adb0dcff43fbdb980149eed1a11504a51cbdc0fd2c"
+    },
+    "p701-format": {
+      "command": [
+        "cargo",
+        "fmt",
+        "--check"
+      ],
+      "revision": "950c52aac2ca69dde4231d3b99168afdf0179986",
+      "sha256": "8e8cc68f75d22f5768da5ce473674673f5c6607a12788939776fbaef55888397"
+    },
+    "p701-mists-check": {
+      "command": [
+        "cargo",
+        "check",
+        "--no-default-features",
+        "--features",
+        "sound,gui,casc,client-mists",
+        "--tests"
+      ],
+      "revision": "950c52aac2ca69dde4231d3b99168afdf0179986",
+      "sha256": "940702ea7558e07628e308592dba43cff8942c30f5535a2d105cd0cc65169b5c"
+    },
+    "p701-source-reproduction": {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p701-page/data/patch-api/evidence/7.0.1-session-2026-10-08/reproduce_sources.py"
+      ],
+      "revision": "2c43df7ea924009562b906689d9b1c5c85fd8e2f",
+      "sha256": "1d2e193299631e20b7b654f63e6ad77d812f3a4af33aab7bb23f7c7cd50faffb"
+    },
+    "p701-generator-fixtures": {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p701-page/tools/test_gen_patch_wikitext_register.py"
+      ],
+      "revision": "2c43df7ea924009562b906689d9b1c5c85fd8e2f",
+      "sha256": "57a8c3b6d63f8ba09a056576357a46447a7b3e5f5eba061ca41aca13a7a6fbfc"
+    },
+    "p701-extractor-fixtures": {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p701-page/tools/test_extract_patch_non_inventory.py"
+      ],
+      "revision": "2c43df7ea924009562b906689d9b1c5c85fd8e2f",
+      "sha256": "0dda68b3325f1ecc2778e6ad2ac3cae4b37c816d7eeb1e3f4caf1c5a1c78e761"
+    },
+    "p701-validator-fixtures": {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p701-page/tools/test_patch_audit_validation.py"
+      ],
+      "revision": "2c43df7ea924009562b906689d9b1c5c85fd8e2f",
+      "sha256": "b435180c2be68219fc65484619751e732a28f156fb9ccc976d844a20cfccdb3e"
+    },
+    "p701-targeted-driver": {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p701-page/data/patch-api/evidence/7.0.1-session-2026-10-08/verify_targeted.py"
+      ],
+      "revision": "3026d96d129a6bbb9a48d0e8db85e0cb3f44230f",
+      "sha256": "99c426519c03961e33f0d155b66947127acd3f0c2f18b3af141cac28a5a353eb"
+    }
+  },
+  "prior_validators_sha256": "5045716065a31e918f3f60a43f67b8e146e1459b0b1fafd870b93e3772263d03"
+}

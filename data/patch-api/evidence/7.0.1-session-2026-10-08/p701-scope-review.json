@@ -1,0 +1,14 @@
+{
+  "runtime_changed": false,
+  "tools_changed": false,
+  "own_test_cases": 1,
+  "own_publication_observations": 0,
+  "all_publication_cases": 48,
+  "sweep_pages": 47,
+  "publication_observations": 8882,
+  "retirements": [],
+  "area_tests": "Own prefork discovery; no backing model/API path touched, no additional area regression scope.",
+  "startup_comparison": "Not applicable: no widely-used runtime path changes. Not executed or credited.",
+  "rust_readability": "Full new sweep review: no violations, suppression or runtime shortcuts.",
+  "no_pycache": true
+}

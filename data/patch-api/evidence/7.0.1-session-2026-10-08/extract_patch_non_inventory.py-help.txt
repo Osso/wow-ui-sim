@@ -1,0 +1,37 @@
+usage: extract_patch_non_inventory.py [-h] [--check] [--self-test]
+                                      [--patch PATCH] [--preserve-examples]
+                                      [--normalize-inventory-headings]
+                                      [--retain-reference-notes]
+                                      [--legacy-api-tables]
+                                      [--legacy-api-bullets] [--text-only]
+                                      [--legacy-cvar-tables] [--bfa-prepatch]
+
+Extract retained patch non-inventory wikitext and seed supplemental rows. No
+network or dependencies. Line suffixes refer to the generated plaintext,
+including blank lines, as in the 12.1.0 page ledger. --check never writes. The
+12.0.0 capture has no Notes/Blue posts; 12.0.1 retains Blue posts. Linked
+pages are not expanded. --text-only never accesses a coverage ledger.
+
+options:
+  -h, --help            show this help message and exit
+  --check
+  --self-test
+  --patch PATCH
+  --preserve-examples   Retain Lua/XML syntaxhighlight contents verbatim in
+                        fenced blocks
+  --normalize-inventory-headings
+                        Recognize spaced inventory headings without swallowing
+                        earlier deprecated tables
+  --retain-reference-notes
+                        Retain inline ref web citation fields alongside
+                        publication prose
+  --legacy-api-tables   Strip older caption inventories while retaining API
+                        prose and references
+  --legacy-api-bullets  Strip legacy API/event bullets without losing prose or
+                        unknown markers
+  --text-only           Write/check plaintext only; never read or modify a
+                        coverage ledger
+  --legacy-cvar-tables  Strip CVar inventory tables, retaining
+                        captions/citations; opt-in
+  --bfa-prepatch        Strip 8.0.1 nested additions/events, retaining prose
+                        and reference fields; opt-in

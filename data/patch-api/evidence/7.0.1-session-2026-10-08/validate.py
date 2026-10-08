@@ -118,6 +118,10 @@ def retirements():
 
 
 def command_proof(context):
+    required = {'p701-discovery', 'p701-all-sweeps', 'p701-format', 'p701-mists-check',
+                'p701-source-reproduction', 'p701-generator-fixtures',
+                'p701-extractor-fixtures', 'p701-validator-fixtures', 'p701-targeted-driver'}
+    assert set(context['receipts']) == required
     for name, expected in context['receipts'].items():
         receipt = read(HERE / f'{name}.proof.json')
         assert digest(HERE / f'{name}.proof.json') == expected['sha256']
@@ -134,6 +138,7 @@ def command_proof(context):
     assert {row['test'] for row in summaries} == {p.stem for p in tests}
     for row in summaries:
         observed = read(HERE / row['file'])
+        assert digest(HERE / row['file']) == row['sha256']
         assert row['rows'] == len(observed)
         assert row['gaps'] == sum(not v['ok'] for v in observed.values())
         fixture = f"tests/data/{row['test'].removesuffix('_publication_sweep')}_sweep_known_gaps.json"
@@ -146,7 +151,15 @@ def command_proof(context):
     prior = [p for p in paths_at(context['base_revision'], 'data/patch-api/evidence')
              if Path(p).name in ('validate.py', 'validate_integrated.py')]
     assert {row['path'] for row in matrix} == set(prior)
-    assert all(row['exit'] == 0 for row in matrix)
+    assert digest(HERE / 'p701-other-validator-matrix.json') == context['prior_validators_sha256']
+    for row in matrix:
+        assert row['exit'] == 0
+        assert digest(HERE / row['log']) == row['log_sha256']
+    changed_runtime = subprocess.check_output(
+        ['git', 'diff', '--name-only', context['base_revision'], context['runtime_revision'],
+         '--', 'src', 'tools'], cwd=ROOT, text=True)
+    assert not changed_runtime, changed_runtime
+    assert not (HERE / 'p701-runtime-diff.txt').read_text()
     return {'sweeps': len(summaries), 'validators': len(matrix)}
 
 

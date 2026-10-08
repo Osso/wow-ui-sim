@@ -1,0 +1,80 @@
+usage: gen_patch_wikitext_register.py [-h] [--inventory-only]
+                                      [--expand-shared-changes]
+                                      [--separate-inline-structures]
+                                      [--capture-span-defaults]
+                                      [--skip-plain-scripts-label]
+                                      [--simple-api-list]
+                                      [--legacy-column-headers]
+                                      [--diff-api-additions]
+                                      [--legacy-inventory-labels]
+                                      [--legacy-api-tables]
+                                      [--legacy-api-bullets]
+                                      [--legacy-api-renames] [--bfa-prepatch]
+                                      [--prose-api-links]
+                                      [--legacy-summary-tables]
+                                      [--top-level-api-bullets]
+                                      [--legacy-widget-summaries]
+                                      [--prose-namespace-migrations]
+                                      [--legacy-widget-cvar-bullets]
+                                      patch path revid out
+
+Build a patch-api-wikitext-register/v1 from a Patch_X/API_changes raw
+wikitext. The MediaWiki plaintext extract drops the collapsed "Consolidated
+changes" inventories; this parses them from the raw wikitext instead. Usage:
+gen_patch_wikitext_register.py PATCH WIKITEXT REVID OUT
+
+positional arguments:
+  patch
+  path
+  revid
+  out
+
+options:
+  -h, --help            show this help message and exit
+  --inventory-only      Omit optional metadata for legacy inventory-only
+                        registers
+  --expand-shared-changes
+                        Account for every API on shared changed lines; opt-in
+                        preserves prior registers
+  --separate-inline-structures
+                        Exclude unheaded Structures from API annotations; opt-
+                        in preserves prior registers
+  --capture-span-defaults
+                        Retain hidden-span CVar defaults; opt-in preserves
+                        prior registers
+  --skip-plain-scripts-label
+                        Skip the plain widget Scripts label; opt-in preserves
+                        prior registers
+  --simple-api-list     Retain API/New bullet additions; opt-in preserves
+                        prior registers
+  --legacy-column-headers
+                        Retain prose numerical headers and command-column
+                        kinds; opt-in preserves prior registers
+  --diff-api-additions  Retain explicit late-build additions in Diffs; opt-in
+                        preserves prior registers
+  --legacy-inventory-labels
+                        Retain prose counts and singular CVar/Command labels;
+                        opt-in preserves prior registers
+  --legacy-api-tables   Parse older unheaded/repeated caption inventories
+                        independently
+  --legacy-api-bullets  Retain API New/Removals and event bullet inventories;
+                        opt-in
+  --legacy-api-renames  Retain both identities in API/Renamed bullet pairs;
+                        opt-in
+  --bfa-prepatch        Parse 8.0.1 nested namespaces, prose removals and
+                        event lists; opt-in
+  --prose-api-links     Retain API-linked identities in Changes prose; opt-in
+  --legacy-summary-tables
+                        Retain bare New global/API table summary names; opt-in
+  --top-level-api-bullets
+                        Retain top-level New/Changes summary identities and
+                        rename pairs; opt-in
+  --legacy-widget-summaries
+                        Retain explicit New widget type/texture method links;
+                        opt-in
+  --prose-namespace-migrations
+                        Retain named Changes destination tables without
+                        inferring removals; opt-in
+  --legacy-widget-cvar-bullets
+                        Retain frame-method/CVar summaries and underscore API
+                        links; opt-in

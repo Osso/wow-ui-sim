@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p701-page/data/patch-api/evidence/7.0.1-session-2026-10-08/verify_targeted.py"
+  ],
+  "revision": "3026d96d129a6bbb9a48d0e8db85e0cb3f44230f",
+  "scope": "p701-targeted-driver",
+  "cwd": ".",
+  "target": "dedicated p701-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p701-targeted-driver.txt",
+  "log_sha256": "7362982fac33fcff83b035f3d541e518235c39e4b5f09607b851cecf5d829293",
+  "seconds": 393.2302570180036,
+  "invalidated": false
+}
