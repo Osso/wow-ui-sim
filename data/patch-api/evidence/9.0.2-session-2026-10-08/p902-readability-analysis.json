@@ -1,0 +1,58 @@
+[
+  {
+    "path": "src/c_api/patch_retired_members.rs",
+    "command": [
+      "/home/osso/.cargo/bin/rust-code-analysis-cli",
+      "-m",
+      "-p",
+      "/home/osso/.worktrees/wow-ui-sim-p902-page/src/c_api/patch_retired_members.rs",
+      "-O",
+      "json"
+    ],
+    "exit": 0,
+    "stdout_path": "patch_retired_members-readability.json",
+    "stderr_path": "patch_retired_members-readability.json.stderr"
+  },
+  {
+    "path": "tests/patch_9_0_2_publication_sweep.rs",
+    "command": [
+      "/home/osso/.cargo/bin/rust-code-analysis-cli",
+      "-m",
+      "-p",
+      "/home/osso/.worktrees/wow-ui-sim-p902-page/tests/patch_9_0_2_publication_sweep.rs",
+      "-O",
+      "json"
+    ],
+    "exit": 0,
+    "stdout_path": "patch_9_0_2_publication_sweep-readability.json",
+    "stderr_path": "patch_9_0_2_publication_sweep-readability.json.stderr"
+  },
+  {
+    "path": "tests/patch_9_0_2_retirements.rs",
+    "command": [
+      "/home/osso/.cargo/bin/rust-code-analysis-cli",
+      "-m",
+      "-p",
+      "/home/osso/.worktrees/wow-ui-sim-p902-page/tests/patch_9_0_2_retirements.rs",
+      "-O",
+      "json"
+    ],
+    "exit": 0,
+    "stdout_path": "patch_9_0_2_retirements-readability.json",
+    "stderr_path": "patch_9_0_2_retirements-readability.json.stderr"
+  },
+  {
+    "path": "tests/patch_9_0_2_classic.rs",
+    "command": [
+      "/home/osso/.cargo/bin/rust-code-analysis-cli",
+      "-m",
+      "-p",
+      "/home/osso/.worktrees/wow-ui-sim-p902-page/tests/patch_9_0_2_classic.rs",
+      "-O",
+      "json"
+    ],
+    "exit": 0,
+    "stdout_path": "patch_9_0_2_classic-readability.json",
+    "stderr_path": "patch_9_0_2_classic-readability.json.stderr"
+  }
+]

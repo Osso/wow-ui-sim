@@ -272,3 +272,7 @@ Retained revision 4788278 and 80-row register; corrected unbolded Commands/HTML 
 ## 2026-10-08 | ingest | 9.0.5 API page
 
 [Audit](investigations/patch-9-0-5-api-audit.md) records pinned source, all 32 IDs, one gated retirement, fourteen precise gaps, complete targeted proof and 9.1.0 GamePadSmoothFacing supersession. Existing source inputs preserved; no vendor/classic behavior changes.
+
+## [2026-10-08] evidence | 9.0.2 API audit
+
+[Audit](investigations/patch-9-0-2-api-audit.md) records pinned source, every inventory/extract/caption occurrence, conservative retail retirements, per-ID model boundaries and targeted acceptance. Prior inputs and reproduction outcomes preserved; read-only 9.0.5 comparison has no gap intersections.

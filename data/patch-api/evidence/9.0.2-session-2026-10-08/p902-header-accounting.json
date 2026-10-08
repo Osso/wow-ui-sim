@@ -32,6 +32,14 @@
     "parsed_count": 8
   },
   {
+    "section": "events",
+    "direction": "removed",
+    "wikitext_line": 100,
+    "literal": "! style=\"width: 50%; padding-right: 1em;\"| 1 removed event",
+    "header_count": 1,
+    "parsed_count": 1
+  },
+  {
     "section": "cvars",
     "direction": "added",
     "wikitext_line": 121,

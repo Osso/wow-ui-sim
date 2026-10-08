@@ -1,0 +1,628 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "9.0.2",
+  "source": {
+    "path": "data/patch-api/sources/9.0.2-api-changes.wikitext",
+    "revid": 659986,
+    "sha256": "9a75f475bb5db0d455aaa03260717a480af2f32008c9947e2ae59b3aeb62262e"
+  },
+  "header_counts": [],
+  "entries": [
+    {
+      "id": "wt-global-api-C_ArdenwealdGardening.GetGardenData-23",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ArdenwealdGardening.GetGardenData",
+      "annotation": "",
+      "wikitext_line": 23
+    },
+    {
+      "id": "wt-global-api-C_ArdenwealdGardening.IsGardenAccessible-24",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ArdenwealdGardening.IsGardenAccessible",
+      "annotation": "",
+      "wikitext_line": 24
+    },
+    {
+      "id": "wt-global-api-C_CovenantSanctumUI.CanAccessReservoir-25",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CovenantSanctumUI.CanAccessReservoir",
+      "annotation": "",
+      "wikitext_line": 25
+    },
+    {
+      "id": "wt-global-api-C_CovenantSanctumUI.CanDepositAnima-26",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CovenantSanctumUI.CanDepositAnima",
+      "annotation": "",
+      "wikitext_line": 26
+    },
+    {
+      "id": "wt-global-api-C_CovenantSanctumUI.GetCurrentTalentTreeID-27",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CovenantSanctumUI.GetCurrentTalentTreeID",
+      "annotation": "",
+      "wikitext_line": 27
+    },
+    {
+      "id": "wt-global-api-C_CovenantSanctumUI.GetRenownLevels-28",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CovenantSanctumUI.GetRenownLevels",
+      "annotation": "",
+      "wikitext_line": 28
+    },
+    {
+      "id": "wt-global-api-C_DateAndTime.GetSecondsUntilDailyReset-29",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_DateAndTime.GetSecondsUntilDailyReset",
+      "annotation": "",
+      "wikitext_line": 29
+    },
+    {
+      "id": "wt-global-api-C_Garrison.GetAutoMissionEnvironmentEffect-30",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Garrison.GetAutoMissionEnvironmentEffect",
+      "annotation": "",
+      "wikitext_line": 30
+    },
+    {
+      "id": "wt-global-api-C_Garrison.GetTalentUnlockWorldQuest-31",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Garrison.GetTalentUnlockWorldQuest",
+      "annotation": "",
+      "wikitext_line": 31
+    },
+    {
+      "id": "wt-global-api-C_Garrison.HasAdventures-32",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Garrison.HasAdventures",
+      "annotation": "",
+      "wikitext_line": 32
+    },
+    {
+      "id": "wt-global-api-C_Garrison.RushHealAllFollowers-33",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Garrison.RushHealAllFollowers",
+      "annotation": "",
+      "wikitext_line": 33
+    },
+    {
+      "id": "wt-global-api-C_GossipInfo.RefreshOptions-34",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_GossipInfo.RefreshOptions",
+      "annotation": "",
+      "wikitext_line": 34
+    },
+    {
+      "id": "wt-global-api-C_Item.IsAnimaItemByID-35",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Item.IsAnimaItemByID",
+      "annotation": "",
+      "wikitext_line": 35
+    },
+    {
+      "id": "wt-global-api-C_Item.IsItemConduit-36",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Item.IsItemConduit",
+      "annotation": "",
+      "wikitext_line": 36
+    },
+    {
+      "id": "wt-global-api-C_PartyInfo.IsPartyInJailersTower-37",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PartyInfo.IsPartyInJailersTower",
+      "annotation": "",
+      "wikitext_line": 37
+    },
+    {
+      "id": "wt-global-api-C_ScenarioInfo.GetJailersTowerTypeString-38",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ScenarioInfo.GetJailersTowerTypeString",
+      "annotation": "",
+      "wikitext_line": 38
+    },
+    {
+      "id": "wt-global-api-C_Soulbinds.CanSwitchActiveSoulbindTreeBranch-39",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Soulbinds.CanSwitchActiveSoulbindTreeBranch",
+      "annotation": "",
+      "wikitext_line": 39
+    },
+    {
+      "id": "wt-global-api-C_Soulbinds.FindNodeIDActuallyInstalled-40",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Soulbinds.FindNodeIDActuallyInstalled",
+      "annotation": "",
+      "wikitext_line": 40
+    },
+    {
+      "id": "wt-global-api-C_Soulbinds.FindNodeIDAppearingInstalled-41",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Soulbinds.FindNodeIDAppearingInstalled",
+      "annotation": "",
+      "wikitext_line": 41
+    },
+    {
+      "id": "wt-global-api-C_Soulbinds.FindNodeIDPendingInstall-42",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Soulbinds.FindNodeIDPendingInstall",
+      "annotation": "",
+      "wikitext_line": 42
+    },
+    {
+      "id": "wt-global-api-C_Soulbinds.FindNodeIDPendingUninstall-43",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Soulbinds.FindNodeIDPendingUninstall",
+      "annotation": "",
+      "wikitext_line": 43
+    },
+    {
+      "id": "wt-global-api-C_Soulbinds.GetConduitCharges-44",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Soulbinds.GetConduitCharges",
+      "annotation": "",
+      "wikitext_line": 44
+    },
+    {
+      "id": "wt-global-api-C_Soulbinds.GetConduitChargesCapacity-45",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Soulbinds.GetConduitChargesCapacity",
+      "annotation": "",
+      "wikitext_line": 45
+    },
+    {
+      "id": "wt-global-api-C_Soulbinds.GetConduitCollectionCount-46",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Soulbinds.GetConduitCollectionCount",
+      "annotation": "",
+      "wikitext_line": 46
+    },
+    {
+      "id": "wt-global-api-C_Soulbinds.GetConduitCollectionDataByVirtualID-47",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Soulbinds.GetConduitCollectionDataByVirtualID",
+      "annotation": "",
+      "wikitext_line": 47
+    },
+    {
+      "id": "wt-global-api-C_Soulbinds.GetConduitDisplayed-48",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Soulbinds.GetConduitDisplayed",
+      "annotation": "",
+      "wikitext_line": 48
+    },
+    {
+      "id": "wt-global-api-C_Soulbinds.GetConduitIDPendingInstall-49",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Soulbinds.GetConduitIDPendingInstall",
+      "annotation": "",
+      "wikitext_line": 49
+    },
+    {
+      "id": "wt-global-api-C_Soulbinds.GetConduitRankFromCollection-50",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Soulbinds.GetConduitRankFromCollection",
+      "annotation": "",
+      "wikitext_line": 50
+    },
+    {
+      "id": "wt-global-api-C_Soulbinds.GetInstalledConduitID-51",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Soulbinds.GetInstalledConduitID",
+      "annotation": "",
+      "wikitext_line": 51
+    },
+    {
+      "id": "wt-global-api-C_Soulbinds.GetTotalConduitChargesPending-52",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Soulbinds.GetTotalConduitChargesPending",
+      "annotation": "",
+      "wikitext_line": 52
+    },
+    {
+      "id": "wt-global-api-C_Soulbinds.GetTotalConduitChargesPendingInSoulbind-53",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Soulbinds.GetTotalConduitChargesPendingInSoulbind",
+      "annotation": "",
+      "wikitext_line": 53
+    },
+    {
+      "id": "wt-global-api-C_Soulbinds.IsNodePendingModify-54",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Soulbinds.IsNodePendingModify",
+      "annotation": "",
+      "wikitext_line": 54
+    },
+    {
+      "id": "wt-global-api-C_Soulbinds.ModifyNode-55",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Soulbinds.ModifyNode",
+      "annotation": "",
+      "wikitext_line": 55
+    },
+    {
+      "id": "wt-global-api-C_Soulbinds.UnmodifyNode-56",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Soulbinds.UnmodifyNode",
+      "annotation": "",
+      "wikitext_line": 56
+    },
+    {
+      "id": "wt-global-api-C_SpecializationInfo.GetSpecIDs-57",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SpecializationInfo.GetSpecIDs",
+      "annotation": "",
+      "wikitext_line": 57
+    },
+    {
+      "id": "wt-global-api-C_SpecializationInfo.MatchesCurrentSpecSet-58",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SpecializationInfo.MatchesCurrentSpecSet",
+      "annotation": "",
+      "wikitext_line": 58
+    },
+    {
+      "id": "wt-global-api-C_Spell.GetMawPowerBorderAtlasBySpellID-59",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Spell.GetMawPowerBorderAtlasBySpellID",
+      "annotation": "",
+      "wikitext_line": 59
+    },
+    {
+      "id": "wt-global-api-C_TaskQuest.GetUIWidgetSetIDFromQuestID-60",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TaskQuest.GetUIWidgetSetIDFromQuestID",
+      "annotation": "",
+      "wikitext_line": 60
+    },
+    {
+      "id": "wt-global-api-C_UIWidgetManager.GetWidgetSetInfo-61",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_UIWidgetManager.GetWidgetSetInfo",
+      "annotation": "",
+      "wikitext_line": 61
+    },
+    {
+      "id": "wt-global-api-IsCosmeticItem-62",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsCosmeticItem",
+      "annotation": "",
+      "wikitext_line": 62
+    },
+    {
+      "id": "wt-global-api-IsJailersTowerLayerTimeLocked-63",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsJailersTowerLayerTimeLocked",
+      "annotation": "",
+      "wikitext_line": 63
+    },
+    {
+      "id": "wt-global-api-UnitNameUnmodified-64",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitNameUnmodified",
+      "annotation": "",
+      "wikitext_line": 64
+    },
+    {
+      "id": "wt-global-api-C_CovenantSanctumUI.GetRenownMilestones-67",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_CovenantSanctumUI.GetRenownMilestones",
+      "annotation": "",
+      "wikitext_line": 67
+    },
+    {
+      "id": "wt-global-api-C_Soulbinds.AddPendingConduit-68",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Soulbinds.AddPendingConduit",
+      "annotation": "",
+      "wikitext_line": 68
+    },
+    {
+      "id": "wt-global-api-C_Soulbinds.GetPendingConduitID-69",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Soulbinds.GetPendingConduitID",
+      "annotation": "",
+      "wikitext_line": 69
+    },
+    {
+      "id": "wt-global-api-C_Soulbinds.GetPendingNodeIDInSoulbind-70",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Soulbinds.GetPendingNodeIDInSoulbind",
+      "annotation": "",
+      "wikitext_line": 70
+    },
+    {
+      "id": "wt-global-api-C_Soulbinds.HasPendingConduitInSoulbind-71",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Soulbinds.HasPendingConduitInSoulbind",
+      "annotation": "",
+      "wikitext_line": 71
+    },
+    {
+      "id": "wt-global-api-C_Soulbinds.MatchesCurrentSpecSet-72",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Soulbinds.MatchesCurrentSpecSet",
+      "annotation": "",
+      "wikitext_line": 72
+    },
+    {
+      "id": "wt-global-api-C_Soulbinds.RemovePendingConduit-73",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Soulbinds.RemovePendingConduit",
+      "annotation": "",
+      "wikitext_line": 73
+    },
+    {
+      "id": "wt-global-api-C_Soulbinds.ResetSoulbindConduits-74",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Soulbinds.ResetSoulbindConduits",
+      "annotation": "",
+      "wikitext_line": 74
+    },
+    {
+      "id": "wt-global-api-C_Spell.GetMawPowerRarityStringAndBorderAtlasBySpellID-75",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Spell.GetMawPowerRarityStringAndBorderAtlasBySpellID",
+      "annotation": "",
+      "wikitext_line": 75
+    },
+    {
+      "id": "wt-global-api-C_UIWidgetManager.GetWidgetLayoutDirectionFromWidgetSetID-76",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_UIWidgetManager.GetWidgetLayoutDirectionFromWidgetSetID",
+      "annotation": "",
+      "wikitext_line": 76
+    },
+    {
+      "id": "wt-widgets-Frame:HasFixedFrameLevel-87",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Frame:HasFixedFrameLevel",
+      "annotation": "",
+      "wikitext_line": 87
+    },
+    {
+      "id": "wt-widgets-Frame:HasFixedFrameStrata-88",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Frame:HasFixedFrameStrata",
+      "annotation": "",
+      "wikitext_line": 88
+    },
+    {
+      "id": "wt-widgets-Frame:SetFixedFrameLevel-89",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Frame:SetFixedFrameLevel",
+      "annotation": "",
+      "wikitext_line": 89
+    },
+    {
+      "id": "wt-widgets-Frame:SetFixedFrameStrata-90",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Frame:SetFixedFrameStrata",
+      "annotation": "",
+      "wikitext_line": 90
+    },
+    {
+      "id": "wt-widgets-PlayerModel:ZeroCachedCenterXY-91",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "PlayerModel:ZeroCachedCenterXY",
+      "annotation": "",
+      "wikitext_line": 91
+    },
+    {
+      "id": "wt-events-COVENANT_RENOWN_INTERACTION_ENDED-103",
+      "section": "events",
+      "direction": "added",
+      "symbol": "COVENANT_RENOWN_INTERACTION_ENDED",
+      "annotation": "",
+      "wikitext_line": 103
+    },
+    {
+      "id": "wt-events-COVENANT_RENOWN_INTERACTION_STARTED-104",
+      "section": "events",
+      "direction": "added",
+      "symbol": "COVENANT_RENOWN_INTERACTION_STARTED",
+      "annotation": "",
+      "wikitext_line": 104
+    },
+    {
+      "id": "wt-events-GARRISON_FOLLOWER_HEALED-105",
+      "section": "events",
+      "direction": "added",
+      "symbol": "GARRISON_FOLLOWER_HEALED",
+      "annotation": "",
+      "wikitext_line": 105
+    },
+    {
+      "id": "wt-events-GARRISON_TALENT_UNLOCKS_RESULT-106",
+      "section": "events",
+      "direction": "added",
+      "symbol": "GARRISON_TALENT_UNLOCKS_RESULT",
+      "annotation": "",
+      "wikitext_line": 106
+    },
+    {
+      "id": "wt-events-GOSSIP_OPTIONS_REFRESHED-107",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "GOSSIP_OPTIONS_REFRESHED",
+      "annotation": "",
+      "wikitext_line": 107
+    },
+    {
+      "id": "wt-events-MENTORSHIP_STATUS_CHANGED-108",
+      "section": "events",
+      "direction": "added",
+      "symbol": "MENTORSHIP_STATUS_CHANGED",
+      "annotation": "",
+      "wikitext_line": 108
+    },
+    {
+      "id": "wt-events-SOULBIND_CONDUIT_CHARGES_UPDATED-109",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SOULBIND_CONDUIT_CHARGES_UPDATED",
+      "annotation": "",
+      "wikitext_line": 109
+    },
+    {
+      "id": "wt-events-UNIT_AREA_CHANGED-110",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UNIT_AREA_CHANGED",
+      "annotation": "",
+      "wikitext_line": 110
+    },
+    {
+      "id": "wt-events-SOULBIND_CONDUITS_RESET-113",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "SOULBIND_CONDUITS_RESET",
+      "annotation": "",
+      "wikitext_line": 113
+    },
+    {
+      "id": "wt-cvars-AuraDebugger-125",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "AuraDebugger",
+      "annotation": "",
+      "wikitext_line": 125
+    },
+    {
+      "id": "wt-cvars-covenantMissionTutorial-126",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "covenantMissionTutorial",
+      "annotation": "",
+      "wikitext_line": 126
+    },
+    {
+      "id": "wt-cvars-fstack_showRaisedFrameLevels-127",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "fstack_showRaisedFrameLevels",
+      "annotation": "",
+      "wikitext_line": 127
+    },
+    {
+      "id": "wt-cvars-lastRenownForCovenant1-128",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "lastRenownForCovenant1",
+      "annotation": "",
+      "wikitext_line": 128
+    },
+    {
+      "id": "wt-cvars-lastRenownForCovenant2-129",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "lastRenownForCovenant2",
+      "annotation": "",
+      "wikitext_line": 129
+    },
+    {
+      "id": "wt-cvars-lastRenownForCovenant3-130",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "lastRenownForCovenant3",
+      "annotation": "",
+      "wikitext_line": 130
+    },
+    {
+      "id": "wt-cvars-lastRenownForCovenant4-131",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "lastRenownForCovenant4",
+      "annotation": "",
+      "wikitext_line": 131
+    },
+    {
+      "id": "wt-cvars-ResolvedSSAOType-132",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "ResolvedSSAOType",
+      "annotation": "",
+      "wikitext_line": 132
+    },
+    {
+      "id": "wt-cvars-worldQuestFilterAnima-133",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "worldQuestFilterAnima",
+      "annotation": "",
+      "wikitext_line": 133
+    },
+    {
+      "id": "wt-cvars-M2UseLOD-136",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "M2UseLOD",
+      "annotation": "",
+      "wikitext_line": 136
+    },
+    {
+      "id": "wt-cvars-showQuestTrackingTooltips-137",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "showQuestTrackingTooltips",
+      "annotation": "",
+      "wikitext_line": 137
+    }
+  ]
+}

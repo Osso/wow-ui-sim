@@ -1,0 +1,11 @@
+{
+  "mutation": "wt-events-GOSSIP_OPTIONS_REFRESHED-107",
+  "baseline_gaps": 26,
+  "negative_gaps": 27,
+  "added_failures": [
+    "wt-events-GOSSIP_OPTIONS_REFRESHED-107"
+  ],
+  "resolved_failures": [],
+  "unchanged_source_ids": true,
+  "exit": 1
+}

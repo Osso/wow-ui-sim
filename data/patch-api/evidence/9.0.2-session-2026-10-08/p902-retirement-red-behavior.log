@@ -1,0 +1,38 @@
+
+running 1 test
+test patch_9_0_2_retirements::patch_9_0_2_unused_members_stay_absent ... FAILED
+
+failures:
+
+failures:
+    patch_9_0_2_retirements::patch_9_0_2_unused_members_stay_absent
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10811 filtered out; finished in 0.81s
+
+
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p902-page)
+    Finished `test` profile [optimized + debuginfo] target(s) in 8m 58s
+     Running tests/integration.rs (target/debug/deps/integration-aef10a2b503e13d5)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.011s] [Startup] SimState::default complete in 10.88ms
+[  0.012s] [Startup] rilua VM created in 595.00µs
+[  0.012s] [Startup] builtin frames initialized in 353.74µs
+[  0.012s] [Startup] template registry cleared in 15.41µs
+[  0.012s] [Startup] intrinsic templates registered in 29.48µs
+[  0.012s] [Startup] initial app_data lua handle installed in 1.43µs
+[  0.778s] [Startup] init_lua_state complete in 765.57ms
+[  0.778s] [Startup] final app_data lua handle installed in 1.12µs
+[  0.778s] [Startup] initial screen globals installed in 513.43µs
+[  0.778s] [Startup] WowLuaEnv::new complete
+
+thread 'patch_9_0_2_retirements::patch_9_0_2_unused_members_stay_absent' (839836) panicked at /home/osso/.worktrees/wow-ui-sim-p902-page/tests/patch_9_0_2_retirements.rs:28:37:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "C_CovenantSanctumUI.GetRenownMilestones", level: 0, traceback: [] }))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+error: test failed, to rerun pass `--test integration`
