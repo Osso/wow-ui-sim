@@ -5,12 +5,16 @@ import importlib.util
 import json
 import re
 import subprocess
+import sys
 from collections import Counter
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[3]
 SOURCES = ROOT / 'data/patch-api/sources'
+sys.dont_write_bytecode = True
+sys.path.insert(0, str(ROOT / 'tools'))
+from patch_audit_validation import historical_registers, historical_sweep_tests
 
 
 def read(path):
@@ -86,12 +90,12 @@ def check_source():
 
 def check_accounting(context, register, extractor, raw, text):
     result = read(HERE / 'patch_8_0_1_publication_sweep-results.json')
-    known = set(historical_json(context['runtime_revision'], 'tests/data/patch_8_0_1_sweep_known_gaps.json'))
+    known = set(historical_json(context['integrated_runtime_revision'], 'tests/data/patch_8_0_1_sweep_known_gaps.json'))
     ids = {row['id'] for row in register['entries']}
     assert len(ids) == len(register['entries']) and set(result) == ids
     assert {key for key, row in result.items() if not row['ok']} == known
     ledger_path = 'data/patch-api/sources/8.0.1-page-coverage.json'
-    ledger_blob = git_blob(context['accounting_revision'], ledger_path)
+    ledger_blob = git_blob(context['integrated_accounting_revision'], ledger_path)
     assert sha(ledger_blob) == read(HERE / 'p801-accounting-hashes.json')[ledger_path]
     ledger = json.loads(ledger_blob)
     rows = {row['source_id']: row for row in ledger['source_rows']}
@@ -128,7 +132,7 @@ def check_accounting(context, register, extractor, raw, text):
     closures = [key for key in ids if not initial[key]['ok'] and result[key]['ok']]
     summary['discovery_closures'] = sorted(closures)
     negative = read(HERE / 'p801-negative-observation.json')
-    receipt = read(HERE / 'p801-negative.proof.json')
+    receipt = read(HERE / 'p801-integration-negative.proof.json')
     failures = {key for key, row in negative.items() if not row['ok']}
     assert set(negative) == ids and receipt['exit'] != 0
     assert sorted(failures - known) == receipt['new_gaps'] == [receipt['mutation']]
@@ -138,16 +142,20 @@ def check_accounting(context, register, extractor, raw, text):
 
 
 def check_sweeps_and_reproduction(context):
-    helper = load_tool('patch_audit_validation')
-    paths = helper.historical_registers(ROOT, context['runtime_revision'])
+    revision = context['integrated_runtime_revision']
+    paths = historical_registers(ROOT, revision)
+    assert {path.stem.removesuffix('-wikitext-register') for path in paths} == {
+        path.stem.removeprefix('patch_').removesuffix('_publication_sweep').replace('_', '.')
+        for path in historical_sweep_tests(ROOT, revision)
+    }
     summary = []
     for path in paths:
         relative = path.relative_to(ROOT).as_posix()
         patch = path.name.split('-')[0]
-        rows = historical_json(context['runtime_revision'], relative)['entries']
+        rows = historical_json(revision, relative)['entries']
         result = read(HERE / f"patch_{patch.replace('.', '_')}_publication_sweep-results.json")
         assert set(result) == {row['id'] for row in rows}
-        known = historical_json(context['runtime_revision'], f"tests/data/patch_{patch.replace('.', '_')}_sweep_known_gaps.json")
+        known = historical_json(revision, f"tests/data/patch_{patch.replace('.', '_')}_sweep_known_gaps.json")
         assert {key for key, row in result.items() if not row['ok']} == set(known)
         summary.append({'patch': patch, 'rows': len(rows),
                         'ok': sum(row['ok'] for row in result.values()),
@@ -164,11 +172,11 @@ def check_sweeps_and_reproduction(context):
                                (extracts, 'extractor_flags', 'api-changes.txt')]:
         for row in proof:
             path = f"data/patch-api/sources/{row['patch']}-api-changes.provenance.json"
-            provenance = historical_json(context['runtime_revision'], path)
+            provenance = historical_json(revision, path)
             assert row['recorded_flags'] == provenance.get(kind)
             if row['recorded_flags'] is not None:
                 assert row['verified_flags'] == row['recorded_flags']
-            content = git_blob(context['runtime_revision'], f"data/patch-api/sources/{row['patch']}-{suffix}")
+            content = git_blob(revision, f"data/patch-api/sources/{row['patch']}-{suffix}")
             assert row['sha256'] == sha(content)
             if kind == 'generator_flags' or row['patch'] not in prior_failures:
                 assert row['exit'] == 0 and row['byte_identical']
@@ -255,6 +263,56 @@ def check_preservation(context):
     return len(before)
 
 
+def check_integrated_proofs(context):
+    proof = read(HERE / 'p801-integration-proof.json')
+    for row in proof['required']:
+        receipt = read(HERE / row['receipt'])
+        assert receipt['exit'] == row['expected_exit'] and not receipt['invalidated']
+        assert sha((HERE / receipt['log']).read_bytes()) == receipt['log_sha256']
+        for path in row.get('source_scope', []):
+            original = subprocess.check_output(['git', 'rev-parse', f"{receipt['revision']}:{path}"], cwd=ROOT)
+            integrated = subprocess.check_output(['git', 'rev-parse', f"{context['integrated_runtime_revision']}:{path}"], cwd=ROOT)
+            assert original == integrated, (row['receipt'], path)
+    check = read(HERE / 'p801-integration-mists-check.proof.json')
+    warnings = [line for line in (HERE / check['log']).read_text().splitlines()
+                if line.startswith('warning:') and not line.startswith(
+                    ('warning: iced-wgpu-patched/', 'warning: `iced_wgpu`'))]
+    assert not warnings, warnings
+    receipt = read(HERE / 'p801-integration-all-sweeps.proof.json')
+    log = (HERE / receipt['log']).read_text()
+    passing = set(re.findall(r'test patch_([\d_]+)_publication_sweep::patch_[\d_]+_publication_sweep \.\.\. ok', log))
+    patches = {path.name.removesuffix('-wikitext-register.json').replace('.', '_')
+               for path in historical_registers(ROOT, context['integrated_runtime_revision'])}
+    assert passing == patches and '0 failed' in log
+    return {'integrated_required_receipts': len(proof['required']),
+            'non_vendor_mists_warnings': len(warnings)}
+
+
+def check_supersessions(context):
+    closures = read(HERE / 'p801-later-gap-closures.json')
+    current = set(historical_json(context['integrated_runtime_revision'], 'tests/data/patch_8_0_1_sweep_known_gaps.json'))
+    assert len(closures) == 1 and closures[0]['patch'] == '8.0.1'
+    previous = set(historical_json(closures[0]['prior_revision'], 'tests/data/patch_8_0_1_sweep_known_gaps.json'))
+    assert set(closures[0]['resolved']) == previous - current and not current - previous
+    results = read(HERE / 'patch_8_0_1_publication_sweep-results.json')
+    ledger = {row['source_id']: row for row in historical_json(
+        context['integrated_accounting_revision'], 'data/patch-api/sources/8.0.1-page-coverage.json')['source_rows']}
+    for closure in closures[0]['closures']:
+        identifier = closure['source_id']
+        assert results[identifier]['ok']
+        assert results[identifier]['expected']['superseded_by'] == closure['superseded_by']
+        later = read(SOURCES / (closure['superseded_by_patch'] + '-wikitext-register.json'))
+        assert any(row['id'] == closure['superseded_by'] and row['symbol'] == closure['symbol']
+                   and row['direction'] == 'removed' for row in later['entries'])
+        assert ledger[identifier]['status'] == 'bounded-coverage'
+        assert ledger[identifier]['note'].startswith('Superseded by ' + closure['superseded_by_patch'] + ' removal')
+    assert {row['source_id'] for row in closures[0]['closures']} == previous - current
+    impact = read(HERE / 'p801-later-sweep-impact.json')
+    assert not impact['later_resolved_gaps'] and not impact['later_new_gaps']
+    assert not impact['later_audit_replacements_required']
+    return {'integrated_gap_closures': len(previous - current)}
+
+
 def main():
     context = read(HERE / 'p801-context.json')
     summary = {'sealed_artifacts': check_seal()}
@@ -264,6 +322,7 @@ def main():
     summary['scanned_removal_identities'] = check_scans(register)
     summary['proof_receipts'] = check_proofs(context)
     summary['historical_preserved_inputs'] = check_preservation(context)
+    summary.update(check_integrated_proofs(context), check_supersessions(context))
     print(json.dumps({'status': 'PASS', **summary}, indent=2))
 
 

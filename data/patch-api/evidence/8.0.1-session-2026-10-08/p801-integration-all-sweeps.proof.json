@@ -1,0 +1,17 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "publication_sweep"
+  ],
+  "revision": "d142860059e816cb15ebefcbd12e75bc8cdc8372",
+  "scope": "Integrated p801-page command; evidence-only updates do not change Rust scope",
+  "exit": 0,
+  "log": "p801-integration-all-sweeps.log",
+  "log_sha256": "35e97f05c432e30eea54c2c02556197ad05a5b299887a48f77fd6942380a892e",
+  "elapsed_seconds": 25.79,
+  "invalidated": false
+}

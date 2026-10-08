@@ -1,0 +1,116 @@
+{
+  "code_revision": "d14286005",
+  "required": [
+    {
+      "receipt": "p801-integration-all-sweeps.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src",
+        "tests",
+        "Cargo.toml",
+        "Cargo.lock"
+      ]
+    },
+    {
+      "receipt": "p801-integration-negative.proof.json",
+      "expected_exit": 1,
+      "source_scope": [
+        "src",
+        "tests",
+        "Cargo.toml",
+        "Cargo.lock"
+      ]
+    },
+    {
+      "receipt": "p801-integration-cached.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src",
+        "tests",
+        "Cargo.toml",
+        "Cargo.lock"
+      ]
+    },
+    {
+      "receipt": "p801-integration-behavior.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src",
+        "tests",
+        "Cargo.toml",
+        "Cargo.lock"
+      ]
+    },
+    {
+      "receipt": "p801-integration-map-probes.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src",
+        "tests",
+        "Cargo.toml",
+        "Cargo.lock"
+      ]
+    },
+    {
+      "receipt": "p801-integration-map-api.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src",
+        "tests",
+        "Cargo.toml",
+        "Cargo.lock"
+      ]
+    },
+    {
+      "receipt": "p801-integration-format.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src",
+        "tests",
+        "Cargo.toml",
+        "Cargo.lock"
+      ]
+    },
+    {
+      "receipt": "p801-integration-mists-check.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src",
+        "tests",
+        "Cargo.toml",
+        "Cargo.lock"
+      ]
+    },
+    {
+      "receipt": "p801-integration-extract_patch_non_inventory-fixtures.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "tools/extract_patch_non_inventory.py",
+        "tools/test_extract_patch_non_inventory.py"
+      ]
+    },
+    {
+      "receipt": "p801-integration-gen_patch_wikitext_register-fixtures.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "tools/gen_patch_wikitext_register.py",
+        "tools/test_gen_patch_wikitext_register.py"
+      ]
+    },
+    {
+      "receipt": "p801-integration-patch_audit_validation-fixtures.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "tools/patch_audit_validation.py",
+        "tools/test_patch_audit_validation.py"
+      ]
+    },
+    {
+      "receipt": "p801-integration-extend-receipts.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "tools/extend_patch_audit_receipts.py"
+      ]
+    }
+  ]
+}
