@@ -27,7 +27,7 @@ def main():
     revision = git('rev-parse', 'HEAD').decode().strip()
     receipts = ['p540-python-fixtures', 'p540-reproduction', 'p540-all-sweeps',
                 'p540-prefork-behavior', 'p540-integration-behavior',
-                'p540-integration-instance', 'p540-integration-forbidden',
+                'p540-integration-instance', 'p540-integration-forbidden', 'p540-lib-frame-state',
                 'p540-format', 'p540-mists-check', 'p540-targeted-driver']
     for name in receipts:
         receipt = json.loads((HERE / (name + '.proof.json')).read_text())

@@ -20,7 +20,8 @@ Own cwd: p540-page worktree. Own target: `/home/osso/.cache/wow-ui-sim-targets/p
 | cargo test --test integration protected_frame_enforcement:: | Pending final driver receipt | Pending | Existing forbidden/protection callers |
 | cargo fmt --check | Pending final driver receipt | Pending | No source changes after final format required |
 | cargo check --no-default-features --features sound,gui,casc,client-mists --tests | Pending final driver receipt | Pending | Zero non-vendor warnings required |
-| Synthetic missing-publication negative control | Pending | Pending | Must add exactly one gap and fail |
+| Synthetic missing-publication negative control | ae0b0b8ff | Expected failure; 22 → 23 gaps | Replace one passing occurrence to preserve fixed row count |
+| cargo test --lib frame_state:: | Pending receipt | Pending | Existing source-unit frame security/state callers; no source mutation |
 | tools/check_patch_validators.py | Pending sealed revision | Pending | Clean and later-audit phases; own-log tamper must fail |
 
 ## Conditional gates

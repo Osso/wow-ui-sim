@@ -1,0 +1,11 @@
+src/loader/tests/frame_state.rs:114:        ForbiddenSecretFrame:SetForbidden(true)
+src/loader/tests/wow_api_globals/frames_and_attributes.rs:37:            return type(f.SetForbidden), type(f.SetScript), type(f.RegisterEvent), type(f.GetObjectType),
+src/loader/tests/wow_api_globals/frames_and_attributes.rs:38:                type(mt), type(mt and mt.__index), type(mt and mt.SetForbidden), type(mt and mt.GetObjectType)
+src/loader/tests/wow_api_globals/frames_and_attributes.rs:50:        "frame surface mismatch: registry={registry_mt_type}, mt={mt_type}, mt.__index={mt_index_type}, mt.SetForbidden={mt_set_forbidden}, mt.GetObjectType={mt_get_object_type}",
+src/loader/tests/wow_api_globals/frames_and_attributes.rs:362:            return type(mt), type(mt and mt.__index), type(mt and mt.GetObjectType), type(mt and mt.SetForbidden)
+src/lua_api/frame/methods/text_attribute_event/mod.rs:471:    table_set_rust_fn_static(state, table, "SetForbidden", attributes::set_forbidden)?;
+src/lua_api/frame/methods/text_attribute_event/mod.rs:478:    table_set_rust_fn_static(state, table, "IsForbidden", attributes::is_forbidden)?;
+src/lua_api/frame/methods/text_attribute_event/attributes.rs:506:pub(super) fn is_forbidden(state: &mut LuaState) -> LuaResult<u32> {
+src/lua_api/globals/instance_info.rs:5://! - `GetInstanceInfo()`          → 10 values (11 with Retail 12.0.7's
+src/lua_api/globals/instance_info.rs:69:        group_size: w.instance_group_size,
+src/lua_api/globals/instance_info.rs:218:    LuaApiMut::register_function(lua, "GetInstanceInfo", get_instance_info)?;
