@@ -1,0 +1,22 @@
+{
+  "tested_revision": "06c990d45ee0325a3a8b3b230e88e4fdcafb922b",
+  "status": "PASS",
+  "phases": {
+    "clean": {
+      "failed": 0,
+      "passed": 32
+    },
+    "later_audit": {
+      "failed": 0,
+      "passed": 33
+    }
+  },
+  "command": [
+    "python3",
+    "-B",
+    "tools/check_patch_validators.py",
+    "HEAD"
+  ],
+  "report_sha256": "7720d4bea5b1e4aeb0eb3d49fdccea5a684b253dc3b4fc495f842c59598dc484",
+  "own_validator": "{\"accounting\": {\"extract_rows\": 4, \"inventory_rows\": 0, \"metadata_rows\": 4, \"modeled_gaps\": 0, \"problematic_gaps\": 0, \"publication_gaps\": 0, \"retirements\": 0}, \"reproduction\": {\"extracts_passed\": 49, \"inherited_extract_failures\": [\"12.0.5\", \"12.0.7\", \"12.1.0\"], \"registers\": 52}, \"retail\": {\"observations\": 9051, \"pages\": 51}, \"status\": \"PASS\"}\n"
+}

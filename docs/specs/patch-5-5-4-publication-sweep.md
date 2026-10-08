@@ -10,7 +10,7 @@ Audit the pinned [5.5.4 source](../../data/patch-api/sources/5.5.4-api-changes.w
 - [x] Reject a sweep executed under the wrong client profile.
 - [x] Preserve every existing retail sweep's observations and exact known-gap sets.
 - [x] Reproduce all historical registers/extracts, retaining precisely the inherited extract failures.
-- [ ] Validate committed evidence from a clean relocated checkout and after unrelated later work.
+- [x] Validate committed evidence from a clean relocated checkout and after unrelated later work.
 
 ## How it works
 
@@ -34,7 +34,7 @@ Audit the pinned [5.5.4 source](../../data/patch-api/sources/5.5.4-api-changes.w
 
 ## Known gaps (current cycle)
 
-- [ ] Clean/later-audit portability gate pending; other targeted proofs pass.
+No unfinished page-inventory contracts. Full-Game preload and linked-diff/native parity remain explicit exclusions.
 
 ## Out of scope
 

@@ -1,0 +1,14 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "data/patch-api/evidence/5.5.4-session-2026-10-08/validate.py"
+  ],
+  "revision": "06c990d45ee0325a3a8b3b230e88e4fdcafb922b",
+  "changed_input": "p554-source-response.json",
+  "exit": 1,
+  "log": "p554-tamper-negative.log",
+  "log_sha256": "fb03fac64dec8f436e35453dbc8575c8a5e1f8d1a05a0258c5fb427d49191779",
+  "restored_sha256": "17c07f2ea438a6c82cc86219ff0b09704fe57d20fda5c30e2e06083278bc9cd7",
+  "restored_exactly": true
+}

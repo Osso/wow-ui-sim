@@ -1,0 +1,15 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "tools/check_patch_validators.py",
+    "HEAD"
+  ],
+  "revision": "06c990d45ee0325a3a8b3b230e88e4fdcafb922b",
+  "profile": "retail",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p554-page",
+  "exit": 0,
+  "log": "p554-portability.log",
+  "log_sha256": "7720d4bea5b1e4aeb0eb3d49fdccea5a684b253dc3b4fc495f842c59598dc484",
+  "invalidated": false
+}

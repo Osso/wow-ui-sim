@@ -34,7 +34,7 @@ Final Rust scope `9ca9cd746`: 52 retail sweep/factory cases pass; all 9,051 obse
 
 The evidence launcher originally saved the Mists line-control result under the page filename. Its first-match scanner was corrected to capture every output environment separately; [final page results](../../../data/patch-api/evidence/5.5.4-session-2026-10-08/p554-mists-evidence/patch_5_5_4_publication_sweep-results.json) are `{}`, while control observations retain their distinct file. No runtime sweep was changed to conceal that evidence bug.
 
-The portable historical validator is committed with Git-pinned shared inputs and own-session seals. Clean/later-audit portability gate pending. No full integration suite, native game probe, or runtime/API modifications are claimed.
+The portable historical validator is committed with Git-pinned shared inputs and own-session seals. [Gate summary](../../../data/patch-api/evidence/5.5.4-session-2026-10-08/p554-gate-summary.json): clean: 32 passed / 0 failed, later_audit: 33 passed / 0 failed. The additional later-audit validator is the synthetic 9.9.9 case. Own sealed-source tampering fails before exact restoration. No full integration suite, native game probe, or runtime/API modifications are claimed.
 
 ## Sources
 
