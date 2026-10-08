@@ -1,0 +1,366 @@
+[
+  {
+    "source_id": "wt-global-api-C_CovenantSanctumUI.CanAccessReservoir-25",
+    "symbol": "C_CovenantSanctumUI.CanAccessReservoir",
+    "wikitext_line": 25,
+    "literal": ": {{api|C_CovenantSanctumUI.CanAccessReservoir}}",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Missing covenant reservoir access/interaction eligibility model; existing anima deposit placeholders do not establish access gates."
+  },
+  {
+    "source_id": "wt-global-api-C_CovenantSanctumUI.GetRenownLevels-28",
+    "symbol": "C_CovenantSanctumUI.GetRenownLevels",
+    "wikitext_line": 28,
+    "literal": ": {{api|C_CovenantSanctumUI.GetRenownLevels}}",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Missing covenant-specific renown level/reward catalog; C_MajorFactions.GetRenownLevels uses a different faction contract."
+  },
+  {
+    "source_id": "wt-global-api-C_Garrison.GetAutoMissionEnvironmentEffect-30",
+    "symbol": "C_Garrison.GetAutoMissionEnvironmentEffect",
+    "wikitext_line": 30,
+    "literal": ": {{api|C_Garrison.GetAutoMissionEnvironmentEffect}}",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Missing adventure environment-effect DTO and mission relation; existing mission queries do not provide this contract."
+  },
+  {
+    "source_id": "wt-global-api-C_Garrison.HasAdventures-32",
+    "symbol": "C_Garrison.HasAdventures",
+    "wikitext_line": 32,
+    "literal": ": {{api|C_Garrison.HasAdventures}}",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Missing adventure-mode eligibility/state predicate, not a constant garrison availability flag."
+  },
+  {
+    "source_id": "wt-global-api-C_Garrison.RushHealAllFollowers-33",
+    "symbol": "C_Garrison.RushHealAllFollowers",
+    "wikitext_line": 33,
+    "literal": ": {{api|C_Garrison.RushHealAllFollowers}}",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Missing follower healing costs, health transitions and notifications; no meaningful no-op producer can close this."
+  },
+  {
+    "source_id": "wt-global-api-C_GossipInfo.RefreshOptions-34",
+    "symbol": "C_GossipInfo.RefreshOptions",
+    "wikitext_line": 34,
+    "literal": ": {{api|C_GossipInfo.RefreshOptions}}",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Missing refresh request/reply lifecycle and GOSSIP_OPTIONS_REFRESHED producer; publishing the event alone is insufficient."
+  },
+  {
+    "source_id": "wt-global-api-C_Item.IsAnimaItemByID-35",
+    "symbol": "C_Item.IsAnimaItemByID",
+    "wikitext_line": 35,
+    "literal": ": {{api|C_Item.IsAnimaItemByID}}",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Missing anima-item classification metadata; item inventory/tooltip presence does not establish this predicate."
+  },
+  {
+    "source_id": "wt-global-api-C_Item.IsItemConduit-36",
+    "symbol": "C_Item.IsItemConduit",
+    "wikitext_line": 36,
+    "literal": ": {{api|C_Item.IsItemConduit}}",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Missing item-to-conduit catalog mapping; item existence does not establish conduit identity."
+  },
+  {
+    "source_id": "wt-global-api-C_ScenarioInfo.GetJailersTowerTypeString-38",
+    "symbol": "C_ScenarioInfo.GetJailersTowerTypeString",
+    "wikitext_line": 38,
+    "literal": ": {{api|C_ScenarioInfo.GetJailersTowerTypeString}}",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Missing tower-type/localized display catalog; existing scenario state does not establish tower naming."
+  },
+  {
+    "source_id": "wt-global-api-C_Soulbinds.CanSwitchActiveSoulbindTreeBranch-39",
+    "symbol": "C_Soulbinds.CanSwitchActiveSoulbindTreeBranch",
+    "wikitext_line": 39,
+    "literal": ": {{api|C_Soulbinds.CanSwitchActiveSoulbindTreeBranch}}",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Missing active branch switch eligibility and soulbind constraints."
+  },
+  {
+    "source_id": "wt-global-api-C_Soulbinds.FindNodeIDActuallyInstalled-40",
+    "symbol": "C_Soulbinds.FindNodeIDActuallyInstalled",
+    "wikitext_line": 40,
+    "literal": ": {{api|C_Soulbinds.FindNodeIDActuallyInstalled}}",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Missing installed conduit-to-node relation in the soulbind graph."
+  },
+  {
+    "source_id": "wt-global-api-C_Soulbinds.FindNodeIDAppearingInstalled-41",
+    "symbol": "C_Soulbinds.FindNodeIDAppearingInstalled",
+    "wikitext_line": 41,
+    "literal": ": {{api|C_Soulbinds.FindNodeIDAppearingInstalled}}",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Missing displayed effective installation relation, including pending changes distinct from committed installation."
+  },
+  {
+    "source_id": "wt-global-api-C_Soulbinds.FindNodeIDPendingInstall-42",
+    "symbol": "C_Soulbinds.FindNodeIDPendingInstall",
+    "wikitext_line": 42,
+    "literal": ": {{api|C_Soulbinds.FindNodeIDPendingInstall}}",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Missing conduit-to-node pending installation relation and transaction state."
+  },
+  {
+    "source_id": "wt-global-api-C_Soulbinds.FindNodeIDPendingUninstall-43",
+    "symbol": "C_Soulbinds.FindNodeIDPendingUninstall",
+    "wikitext_line": 43,
+    "literal": ": {{api|C_Soulbinds.FindNodeIDPendingUninstall}}",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Missing conduit-to-node pending removal relation and transaction state."
+  },
+  {
+    "source_id": "wt-global-api-C_Soulbinds.GetConduitCollectionCount-46",
+    "symbol": "C_Soulbinds.GetConduitCollectionCount",
+    "wikitext_line": 46,
+    "literal": ": {{api|C_Soulbinds.GetConduitCollectionCount}}",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Missing ordered owned-conduit collection producer; existing GetConduitCollection placeholder is not a modeled collection."
+  },
+  {
+    "source_id": "wt-global-api-C_Soulbinds.GetConduitCollectionDataByVirtualID-47",
+    "symbol": "C_Soulbinds.GetConduitCollectionDataByVirtualID",
+    "wikitext_line": 47,
+    "literal": ": {{api|C_Soulbinds.GetConduitCollectionDataByVirtualID}}",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Missing virtual-index conduit collection mapping and complete collection DTOs."
+  },
+  {
+    "source_id": "wt-global-api-C_Soulbinds.GetConduitDisplayed-48",
+    "symbol": "C_Soulbinds.GetConduitDisplayed",
+    "wikitext_line": 48,
+    "literal": ": {{api|C_Soulbinds.GetConduitDisplayed}}",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Missing effective displayed conduit selection, distinct from committed and pending installation."
+  },
+  {
+    "source_id": "wt-global-api-C_Soulbinds.GetConduitIDPendingInstall-49",
+    "symbol": "C_Soulbinds.GetConduitIDPendingInstall",
+    "wikitext_line": 49,
+    "literal": ": {{api|C_Soulbinds.GetConduitIDPendingInstall}}",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Missing node-indexed pending conduit installation query."
+  },
+  {
+    "source_id": "wt-global-api-C_Soulbinds.GetInstalledConduitID-51",
+    "symbol": "C_Soulbinds.GetInstalledConduitID",
+    "wikitext_line": 51,
+    "literal": ": {{api|C_Soulbinds.GetInstalledConduitID}}",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Missing committed node-to-conduit installation state."
+  },
+  {
+    "source_id": "wt-global-api-C_Soulbinds.IsNodePendingModify-54",
+    "symbol": "C_Soulbinds.IsNodePendingModify",
+    "wikitext_line": 54,
+    "literal": ": {{api|C_Soulbinds.IsNodePendingModify}}",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Missing pending node modification transaction state/predicate."
+  },
+  {
+    "source_id": "wt-global-api-C_Soulbinds.ModifyNode-55",
+    "symbol": "C_Soulbinds.ModifyNode",
+    "wikitext_line": 55,
+    "literal": ": {{api|C_Soulbinds.ModifyNode}}",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Missing validated soulbind transaction mutation, costs and pending graph updates."
+  },
+  {
+    "source_id": "wt-global-api-C_Soulbinds.UnmodifyNode-56",
+    "symbol": "C_Soulbinds.UnmodifyNode",
+    "wikitext_line": 56,
+    "literal": ": {{api|C_Soulbinds.UnmodifyNode}}",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Missing reversible pending node mutation and restoration of committed graph state."
+  },
+  {
+    "source_id": "wt-global-api-C_SpecializationInfo.MatchesCurrentSpecSet-58",
+    "symbol": "C_SpecializationInfo.MatchesCurrentSpecSet",
+    "wikitext_line": 58,
+    "literal": ": {{api|C_SpecializationInfo.MatchesCurrentSpecSet}}",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Missing specialization-set membership catalog; current spec identity alone cannot derive arbitrary set membership."
+  },
+  {
+    "source_id": "wt-global-api-IsJailersTowerLayerTimeLocked-63",
+    "symbol": "IsJailersTowerLayerTimeLocked",
+    "wikitext_line": 63,
+    "literal": ": {{api|IsJailersTowerLayerTimeLocked}}",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "Missing tower layer unlock schedule/time policy; avoid inventing dates or unconditional false."
+  },
+  {
+    "source_id": "wt-global-api-C_Soulbinds.MatchesCurrentSpecSet-72",
+    "symbol": "C_Soulbinds.MatchesCurrentSpecSet",
+    "wikitext_line": 72,
+    "literal": ": {{api|C_Soulbinds.MatchesCurrentSpecSet}}",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Retained removed namespace member under conservative bare-name rule: Blizzard_Soulbinds/Blizzard_SoulbindsConduitList.lua:135,396 uses C_SpecializationInfo.MatchesCurrentSpecSet. Qualified old-namespace scan empty; successor is not mislabeled as old API consumer."
+  },
+  {
+    "source_id": "wt-widgets-PlayerModel:ZeroCachedCenterXY-91",
+    "symbol": "PlayerModel:ZeroCachedCenterXY",
+    "wikitext_line": 91,
+    "literal": ": {{api|t=w|PlayerModel:ZeroCachedCenterXY}}",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "PlayerModel; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "reason": "Intentionally unsupported 3D/player-model center/cache behavior; 2D-only simulator has no mesh/camera cache to reset."
+  }
+]

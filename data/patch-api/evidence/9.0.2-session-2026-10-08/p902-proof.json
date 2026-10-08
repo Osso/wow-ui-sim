@@ -60,5 +60,66 @@
     "invalidated": true,
     "reason": "Expected lazy-fabrication RED before retirement",
     "output_sha256": {}
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "publication_sweep"
+    ],
+    "revision": "ebdf20c6dbdb3a2fce6bc36acb82ddb6deb65933",
+    "scope": "p902-all-publication-sweeps",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p902-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p902-page/target",
+    "exit": 0,
+    "invalidated": false,
+    "seconds": 484.4075178250205,
+    "output_sha256": {
+      "p902-all-publication-sweeps.log": "02fba8cb04b3d8cd4c7b3e8f51c228bf6b058881b283d9912a0c78d91ccdf15c"
+    }
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "patch_9_0_2_unused_members_stay_absent",
+      "--",
+      "--nocapture"
+    ],
+    "revision": "ebdf20c6dbdb3a2fce6bc36acb82ddb6deb65933",
+    "scope": "p902-retirement-green",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p902-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p902-page/target",
+    "exit": 0,
+    "invalidated": false,
+    "seconds": 44.75243027403485,
+    "output_sha256": {
+      "p902-retirement-green.log": "5aa424842f5e862cd5d1ff1fc2b2bbf672e5d5eb7e59a3d4c7940818839bd35f"
+    }
+  },
+  {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "patch_9_0_2_cached_retirements"
+    ],
+    "revision": "ebdf20c6dbdb3a2fce6bc36acb82ddb6deb65933",
+    "scope": "p902-cached-retirement-green",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p902-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p902-page/target",
+    "exit": 0,
+    "invalidated": false,
+    "seconds": 30.676096293958835,
+    "output_sha256": {
+      "p902-cached-retirement-green.log": "a4aef96b569e864594f9711cf648c5a88b7d66160b4acc0c16e26303d0205b88"
+    }
   }
 ]

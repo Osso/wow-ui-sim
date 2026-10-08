@@ -1,0 +1,101 @@
+[
+  {
+    "source_id": "source-context-001",
+    "extract_line": 1,
+    "literal": "Patch 9.0.2 API changes",
+    "wikitext_line": 1,
+    "raw_literal": "{{apichanges|9.0.2|prev=9.0.1|next=9.0.5}}",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-003",
+    "extract_line": 3,
+    "literal": "== Summary ==",
+    "wikitext_line": 3,
+    "raw_literal": "== Summary ==",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-004",
+    "extract_line": 4,
+    "literal": "Patch 9.0.2 Shadowlands content patch.",
+    "wikitext_line": 4,
+    "raw_literal": "Patch 9.0.2 ''Shadowlands'' content patch.",
+    "status": "metadata-only",
+    "reason": "Historical release context or external 9.0.1 link; linked page not expanded, no runtime credit."
+  },
+  {
+    "source_id": "source-context-005",
+    "extract_line": 5,
+    "literal": "* TOC: 90002",
+    "wikitext_line": 5,
+    "raw_literal": "* TOC: <code>90002</code>",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-006",
+    "extract_line": 6,
+    "literal": "* Diffs: wow-ui-source, BlizzardInterfaceResources",
+    "wikitext_line": 6,
+    "raw_literal": "* Diffs: [https://github.com/Gethe/wow-ui-source/compare/e0b5e2dfd18e9767ee792ef530feeb0b19a31367..13daf5957f148b83ef6e6d7f68e0ceee59686221 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/commit/bf666c9eb1699118b6ec386e9194a02e3f407b89 BlizzardInterfaceResources]",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-008",
+    "extract_line": 8,
+    "literal": "== Notable changes ==",
+    "wikitext_line": 8,
+    "raw_literal": "== Notable changes ==",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-009",
+    "extract_line": 9,
+    "literal": "* Help frame overhaul",
+    "wikitext_line": 9,
+    "raw_literal": "* Help frame overhaul",
+    "status": "audit-pending",
+    "reason": "Pending full help-frame behavior/interaction audit; cached loading is not overhaul parity."
+  },
+  {
+    "source_id": "prose-undated-010",
+    "extract_line": 10,
+    "literal": "* DeleteCursorItem now requires a hardware event",
+    "wikitext_line": 10,
+    "raw_literal": "* {{api|DeleteCursorItem}} now requires a hardware event",
+    "status": "audit-pending",
+    "reason": "Pending DeleteCursorItem hardware-event enforcement proof; publication alone does not establish hardware-origin security."
+  },
+  {
+    "source_id": "prose-undated-011",
+    "extract_line": 11,
+    "literal": "* Shadowlands feature additions",
+    "wikitext_line": 11,
+    "raw_literal": "* ''Shadowlands'' feature additions",
+    "status": "audit-pending",
+    "reason": "Unspecified broad feature summary; requires feature-by-feature behavioral audit, not blanket source credit."
+  },
+  {
+    "source_id": "prose-undated-013",
+    "extract_line": 13,
+    "literal": "Most significant changes took place in 9.0.1. See Patch 9.0.1/API changes for more information.",
+    "wikitext_line": 13,
+    "raw_literal": "Most significant changes took place in 9.0.1. See [[Patch 9.0.1/API changes]] for more information.",
+    "status": "metadata-only",
+    "reason": "Historical release context or external 9.0.1 link; linked page not expanded, no runtime credit."
+  },
+  {
+    "source_id": "source-context-015",
+    "extract_line": 15,
+    "literal": "== Global API ==",
+    "wikitext_line": 15,
+    "raw_literal": "== Global API ==",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  }
+]

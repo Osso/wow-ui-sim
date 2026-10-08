@@ -1,0 +1,50 @@
+[
+  {
+    "section": "global-api",
+    "direction": "added",
+    "wikitext_line": 19,
+    "literal": "! style=\"width: 50%; padding-right: 1em;\"| 42 new functions",
+    "header_count": 42,
+    "parsed_count": 42
+  },
+  {
+    "section": "global-api",
+    "direction": "removed",
+    "wikitext_line": 20,
+    "literal": "! style=\"width: 50%; padding-right: 1em;\"| 10 removed/renamed functions",
+    "header_count": 10,
+    "parsed_count": 10
+  },
+  {
+    "section": "widgets",
+    "direction": "added",
+    "wikitext_line": 84,
+    "literal": "! style=\"width: 50%; padding-right: 1em;\"| 5 new methods",
+    "header_count": 5,
+    "parsed_count": 5
+  },
+  {
+    "section": "events",
+    "direction": "added",
+    "wikitext_line": 99,
+    "literal": "! style=\"width: 50%; padding-right: 1em;\"| 8 new events",
+    "header_count": 8,
+    "parsed_count": 8
+  },
+  {
+    "section": "cvars",
+    "direction": "added",
+    "wikitext_line": 121,
+    "literal": "! style=\"width: 50%; padding-right: 1em;\"| 9 new cvars",
+    "header_count": 9,
+    "parsed_count": 9
+  },
+  {
+    "section": "cvars",
+    "direction": "removed",
+    "wikitext_line": 122,
+    "literal": "! style=\"width: 50%; padding-right: 1em;\"| 2 removed cvars",
+    "header_count": 2,
+    "parsed_count": 2
+  }
+]

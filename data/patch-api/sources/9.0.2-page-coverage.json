@@ -1,0 +1,730 @@
+{
+  "schema": "patch-page-coverage/v1",
+  "patch": "9.0.2",
+  "source_register": "data/patch-api/sources/9.0.2-wikitext-register.json",
+  "source_sha256": "e9c69d02cbd34aab19236d82b52a6ae574312ef8e4f6ee9c07896a8dddef8e6b",
+  "audit_status": "publication-accounted; behavioral work remains",
+  "proof_policy": "Complete occurrence accounting, not complete compatibility. Current retail 12.1.0 with chronological later registers; 9.0.5 awaits main-thread integration. Publication, registration and current absence do not prove signatures, populated outputs, payloads, security or native behavior. Linked pages are not expanded.",
+  "capabilities": [
+    {
+      "id": "publication-sweep-9-0-2",
+      "symbols": [
+        "C_ArdenwealdGardening.GetGardenData",
+        "C_ArdenwealdGardening.IsGardenAccessible",
+        "C_CovenantSanctumUI.CanDepositAnima",
+        "C_CovenantSanctumUI.GetCurrentTalentTreeID",
+        "C_DateAndTime.GetSecondsUntilDailyReset",
+        "C_Garrison.GetTalentUnlockWorldQuest",
+        "C_PartyInfo.IsPartyInJailersTower",
+        "C_Soulbinds.GetConduitCharges",
+        "C_Soulbinds.GetConduitChargesCapacity",
+        "C_Soulbinds.GetConduitRankFromCollection",
+        "C_Soulbinds.GetTotalConduitChargesPending",
+        "C_Soulbinds.GetTotalConduitChargesPendingInSoulbind",
+        "C_SpecializationInfo.GetSpecIDs",
+        "C_Spell.GetMawPowerBorderAtlasBySpellID",
+        "C_TaskQuest.GetUIWidgetSetIDFromQuestID",
+        "C_UIWidgetManager.GetWidgetSetInfo",
+        "IsCosmeticItem",
+        "UnitNameUnmodified",
+        "C_CovenantSanctumUI.GetRenownMilestones",
+        "C_Soulbinds.AddPendingConduit",
+        "C_Soulbinds.GetPendingConduitID",
+        "C_Soulbinds.GetPendingNodeIDInSoulbind",
+        "C_Soulbinds.HasPendingConduitInSoulbind",
+        "C_Soulbinds.RemovePendingConduit",
+        "C_Soulbinds.ResetSoulbindConduits",
+        "C_Spell.GetMawPowerRarityStringAndBorderAtlasBySpellID",
+        "C_UIWidgetManager.GetWidgetLayoutDirectionFromWidgetSetID",
+        "Frame:HasFixedFrameLevel",
+        "Frame:HasFixedFrameStrata",
+        "Frame:SetFixedFrameLevel",
+        "Frame:SetFixedFrameStrata",
+        "COVENANT_RENOWN_INTERACTION_ENDED",
+        "COVENANT_RENOWN_INTERACTION_STARTED",
+        "GARRISON_FOLLOWER_HEALED",
+        "GARRISON_TALENT_UNLOCKS_RESULT",
+        "GOSSIP_OPTIONS_REFRESHED",
+        "MENTORSHIP_STATUS_CHANGED",
+        "SOULBIND_CONDUIT_CHARGES_UPDATED",
+        "UNIT_AREA_CHANGED",
+        "SOULBIND_CONDUITS_RESET",
+        "AuraDebugger",
+        "covenantMissionTutorial",
+        "fstack_showRaisedFrameLevels",
+        "lastRenownForCovenant1",
+        "lastRenownForCovenant2",
+        "lastRenownForCovenant3",
+        "lastRenownForCovenant4",
+        "ResolvedSSAOType",
+        "worldQuestFilterAnima",
+        "M2UseLOD",
+        "showQuestTrackingTooltips"
+      ],
+      "scope": "Publication/registration or current absence only."
+    }
+  ],
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-C_ArdenwealdGardening.GetGardenData-23",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Current retail publication/registration only; no signature, payload, output, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ArdenwealdGardening.IsGardenAccessible-24",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Current retail publication/registration only; no signature, payload, output, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CovenantSanctumUI.CanAccessReservoir-25",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing covenant reservoir access/interaction eligibility model; existing anima deposit placeholders do not establish access gates."
+    },
+    {
+      "source_id": "wt-global-api-C_CovenantSanctumUI.CanDepositAnima-26",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Current retail publication/registration only; no signature, payload, output, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CovenantSanctumUI.GetCurrentTalentTreeID-27",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Current retail publication/registration only; no signature, payload, output, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CovenantSanctumUI.GetRenownLevels-28",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing covenant-specific renown level/reward catalog; C_MajorFactions.GetRenownLevels uses a different faction contract."
+    },
+    {
+      "source_id": "wt-global-api-C_DateAndTime.GetSecondsUntilDailyReset-29",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Current retail publication/registration only; no signature, payload, output, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Garrison.GetAutoMissionEnvironmentEffect-30",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing adventure environment-effect DTO and mission relation; existing mission queries do not provide this contract."
+    },
+    {
+      "source_id": "wt-global-api-C_Garrison.GetTalentUnlockWorldQuest-31",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Current retail publication/registration only; no signature, payload, output, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Garrison.HasAdventures-32",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing adventure-mode eligibility/state predicate, not a constant garrison availability flag."
+    },
+    {
+      "source_id": "wt-global-api-C_Garrison.RushHealAllFollowers-33",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing follower healing costs, health transitions and notifications; no meaningful no-op producer can close this."
+    },
+    {
+      "source_id": "wt-global-api-C_GossipInfo.RefreshOptions-34",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing refresh request/reply lifecycle and GOSSIP_OPTIONS_REFRESHED producer; publishing the event alone is insufficient."
+    },
+    {
+      "source_id": "wt-global-api-C_Item.IsAnimaItemByID-35",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing anima-item classification metadata; item inventory/tooltip presence does not establish this predicate."
+    },
+    {
+      "source_id": "wt-global-api-C_Item.IsItemConduit-36",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing item-to-conduit catalog mapping; item existence does not establish conduit identity."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.IsPartyInJailersTower-37",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Current retail publication/registration only; no signature, payload, output, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ScenarioInfo.GetJailersTowerTypeString-38",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing tower-type/localized display catalog; existing scenario state does not establish tower naming."
+    },
+    {
+      "source_id": "wt-global-api-C_Soulbinds.CanSwitchActiveSoulbindTreeBranch-39",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing active branch switch eligibility and soulbind constraints."
+    },
+    {
+      "source_id": "wt-global-api-C_Soulbinds.FindNodeIDActuallyInstalled-40",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing installed conduit-to-node relation in the soulbind graph."
+    },
+    {
+      "source_id": "wt-global-api-C_Soulbinds.FindNodeIDAppearingInstalled-41",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing displayed effective installation relation, including pending changes distinct from committed installation."
+    },
+    {
+      "source_id": "wt-global-api-C_Soulbinds.FindNodeIDPendingInstall-42",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing conduit-to-node pending installation relation and transaction state."
+    },
+    {
+      "source_id": "wt-global-api-C_Soulbinds.FindNodeIDPendingUninstall-43",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing conduit-to-node pending removal relation and transaction state."
+    },
+    {
+      "source_id": "wt-global-api-C_Soulbinds.GetConduitCharges-44",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence only; no historical/native behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Soulbinds.GetConduitChargesCapacity-45",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence only; no historical/native behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Soulbinds.GetConduitCollectionCount-46",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing ordered owned-conduit collection producer; existing GetConduitCollection placeholder is not a modeled collection."
+    },
+    {
+      "source_id": "wt-global-api-C_Soulbinds.GetConduitCollectionDataByVirtualID-47",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing virtual-index conduit collection mapping and complete collection DTOs."
+    },
+    {
+      "source_id": "wt-global-api-C_Soulbinds.GetConduitDisplayed-48",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing effective displayed conduit selection, distinct from committed and pending installation."
+    },
+    {
+      "source_id": "wt-global-api-C_Soulbinds.GetConduitIDPendingInstall-49",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing node-indexed pending conduit installation query."
+    },
+    {
+      "source_id": "wt-global-api-C_Soulbinds.GetConduitRankFromCollection-50",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence only; no historical/native behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Soulbinds.GetInstalledConduitID-51",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing committed node-to-conduit installation state."
+    },
+    {
+      "source_id": "wt-global-api-C_Soulbinds.GetTotalConduitChargesPending-52",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence only; no historical/native behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Soulbinds.GetTotalConduitChargesPendingInSoulbind-53",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence only; no historical/native behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Soulbinds.IsNodePendingModify-54",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing pending node modification transaction state/predicate."
+    },
+    {
+      "source_id": "wt-global-api-C_Soulbinds.ModifyNode-55",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing validated soulbind transaction mutation, costs and pending graph updates."
+    },
+    {
+      "source_id": "wt-global-api-C_Soulbinds.UnmodifyNode-56",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing reversible pending node mutation and restoration of committed graph state."
+    },
+    {
+      "source_id": "wt-global-api-C_SpecializationInfo.GetSpecIDs-57",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Current retail publication/registration only; no signature, payload, output, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_SpecializationInfo.MatchesCurrentSpecSet-58",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing specialization-set membership catalog; current spec identity alone cannot derive arbitrary set membership."
+    },
+    {
+      "source_id": "wt-global-api-C_Spell.GetMawPowerBorderAtlasBySpellID-59",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence only; no historical/native behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TaskQuest.GetUIWidgetSetIDFromQuestID-60",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence only; no historical/native behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_UIWidgetManager.GetWidgetSetInfo-61",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Current retail publication/registration only; no signature, payload, output, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-IsCosmeticItem-62",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence only; no historical/native behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-IsJailersTowerLayerTimeLocked-63",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing tower layer unlock schedule/time policy; avoid inventing dates or unconditional false."
+    },
+    {
+      "source_id": "wt-global-api-UnitNameUnmodified-64",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Current retail publication/registration only; no signature, payload, output, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CovenantSanctumUI.GetRenownMilestones-67",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence only; no historical/native behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Soulbinds.AddPendingConduit-68",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence only; no historical/native behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Soulbinds.GetPendingConduitID-69",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence only; no historical/native behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Soulbinds.GetPendingNodeIDInSoulbind-70",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence only; no historical/native behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Soulbinds.HasPendingConduitInSoulbind-71",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence only; no historical/native behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Soulbinds.MatchesCurrentSpecSet-72",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Retained removed namespace member under conservative bare-name rule: Blizzard_Soulbinds/Blizzard_SoulbindsConduitList.lua:135,396 uses C_SpecializationInfo.MatchesCurrentSpecSet. Qualified old-namespace scan empty; successor is not mislabeled as old API consumer."
+    },
+    {
+      "source_id": "wt-global-api-C_Soulbinds.RemovePendingConduit-73",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence only; no historical/native behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Soulbinds.ResetSoulbindConduits-74",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence only; no historical/native behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Spell.GetMawPowerRarityStringAndBorderAtlasBySpellID-75",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence only; no historical/native behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_UIWidgetManager.GetWidgetLayoutDirectionFromWidgetSetID-76",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence only; no historical/native behavior credit."
+    },
+    {
+      "source_id": "wt-widgets-Frame:HasFixedFrameLevel-87",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Current retail publication/registration only; no signature, payload, output, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-widgets-Frame:HasFixedFrameStrata-88",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Current retail publication/registration only; no signature, payload, output, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-widgets-Frame:SetFixedFrameLevel-89",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Current retail publication/registration only; no signature, payload, output, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-widgets-Frame:SetFixedFrameStrata-90",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Current retail publication/registration only; no signature, payload, output, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-widgets-PlayerModel:ZeroCachedCenterXY-91",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Intentionally unsupported 3D/player-model center/cache behavior; 2D-only simulator has no mesh/camera cache to reset."
+    },
+    {
+      "source_id": "wt-events-COVENANT_RENOWN_INTERACTION_ENDED-103",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence only; no historical/native behavior credit."
+    },
+    {
+      "source_id": "wt-events-COVENANT_RENOWN_INTERACTION_STARTED-104",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence only; no historical/native behavior credit."
+    },
+    {
+      "source_id": "wt-events-GARRISON_FOLLOWER_HEALED-105",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Current retail publication/registration only; no signature, payload, output, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-events-GARRISON_TALENT_UNLOCKS_RESULT-106",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Current retail publication/registration only; no signature, payload, output, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-events-GOSSIP_OPTIONS_REFRESHED-107",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Current retail publication/registration only; no signature, payload, output, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-events-MENTORSHIP_STATUS_CHANGED-108",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Current retail publication/registration only; no signature, payload, output, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-events-SOULBIND_CONDUIT_CHARGES_UPDATED-109",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence only; no historical/native behavior credit."
+    },
+    {
+      "source_id": "wt-events-UNIT_AREA_CHANGED-110",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Current retail publication/registration only; no signature, payload, output, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-events-SOULBIND_CONDUITS_RESET-113",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence only; no historical/native behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-AuraDebugger-125",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Current retail publication/registration only; no signature, payload, output, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-covenantMissionTutorial-126",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Current retail publication/registration only; no signature, payload, output, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-fstack_showRaisedFrameLevels-127",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Current retail publication/registration only; no signature, payload, output, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-lastRenownForCovenant1-128",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Current retail publication/registration only; no signature, payload, output, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-lastRenownForCovenant2-129",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Current retail publication/registration only; no signature, payload, output, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-lastRenownForCovenant3-130",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Current retail publication/registration only; no signature, payload, output, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-lastRenownForCovenant4-131",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Current retail publication/registration only; no signature, payload, output, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-ResolvedSSAOType-132",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence only; no historical/native behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-worldQuestFilterAnima-133",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "partial-development-green",
+      "note": "Current retail publication/registration only; no signature, payload, output, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-M2UseLOD-136",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence only; no historical/native behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-showQuestTrackingTooltips-137",
+      "capabilities": [
+        "publication-sweep-9-0-2"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence only; no historical/native behavior credit."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Historical release context or external 9.0.1 link; linked page not expanded, no runtime credit."
+    },
+    {
+      "source_id": "source-context-005",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-006",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-008",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-009",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Pending full help-frame behavior/interaction audit; cached loading is not overhaul parity."
+    },
+    {
+      "source_id": "prose-undated-010",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Pending DeleteCursorItem hardware-event enforcement proof; publication alone does not establish hardware-origin security."
+    },
+    {
+      "source_id": "prose-undated-011",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Unspecified broad feature summary; requires feature-by-feature behavioral audit, not blanket source credit."
+    },
+    {
+      "source_id": "prose-undated-013",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Historical release context or external 9.0.1 link; linked page not expanded, no runtime credit."
+    },
+    {
+      "source_id": "source-context-015",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-wikitext-017",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Historical inventory build caption; no runtime credit."
+    },
+    {
+      "source_id": "source-context-wikitext-082",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Historical inventory build caption; no runtime credit."
+    },
+    {
+      "source_id": "source-context-wikitext-097",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Historical inventory build caption; no runtime credit."
+    },
+    {
+      "source_id": "source-context-wikitext-119",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Historical inventory build caption; no runtime credit."
+    }
+  ],
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/9.0.2-api-changes.txt",
+    "sha256": "9a193fe2a9b927d74db45a14a7fbe774eea57583235d8f1113d97fe8c86b50f6",
+    "wikitext_revid": 659986,
+    "wikitext_sha256": "9a75f475bb5db0d455aaa03260717a480af2f32008c9947e2ae59b3aeb62262e",
+    "extract_tool": "tools/extract_patch_non_inventory.py"
+  }
+}
