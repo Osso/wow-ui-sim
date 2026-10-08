@@ -1,1 +1,17 @@
-[]
+[
+  "diff-wt-global-api-AcknowledgeSurvey-12",
+  "diff-wt-global-api-GetBattlegroundPoints-17",
+  "diff-wt-global-api-GetLFGRoleUpdateBattlegroundInfo-19",
+  "diff-wt-global-api-SetLootSpecialization-24",
+  "diff-wt-framexml-HideKnowledgeBase-39",
+  "diff-wt-framexml-ShowKnowledgeBase-41",
+  "diff-wt-widgets-Browser:CopyExternalLink-78",
+  "diff-wt-widgets-Browser:DeleteCookies-79",
+  "diff-wt-widgets-Browser:NavigateBack-81",
+  "diff-wt-widgets-Browser:NavigateForward-82",
+  "diff-wt-widgets-Browser:NavigateReload-84",
+  "diff-wt-widgets-Browser:NavigateStop-85",
+  "diff-wt-widgets-Browser:OpenTicket-87",
+  "diff-wt-widgets-Browser OnEditFocusGained-103",
+  "diff-wt-widgets-Browser OnEditFocusLost-104"
+]

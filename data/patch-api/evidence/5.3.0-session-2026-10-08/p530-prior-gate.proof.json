@@ -1,0 +1,18 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "tools/check_patch_validators.py",
+    "896086537a2b3c1ead5886d5ae3e430d56e7ef20"
+  ],
+  "revision": "7f15ce9a6a64117fb3720f25ee1dd004ec64c477",
+  "scope": "p530-prior-gate",
+  "cwd": ".",
+  "target": "dedicated p530-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p530-prior-gate.txt",
+  "log_sha256": "058aad682874ba87bdde7ea1e9f060e26581759b063ef9e2ec68537752173887",
+  "seconds": 804.8305282729998,
+  "invalidated": false
+}

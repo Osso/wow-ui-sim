@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p530-page/tools/test_extract_patch_non_inventory.py"
+  ],
+  "revision": "b1e21b6c27eb1e530d62b2cf78a1403c5f4a371b",
+  "scope": "test_extract_patch_non_inventory",
+  "cwd": ".",
+  "target": "dedicated p530-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "test_extract_patch_non_inventory.txt",
+  "log_sha256": "b2bd5915ce029e7832c133ca236d808a6d2d994c692f5c13f3e9a7dae29ac1eb",
+  "seconds": 0.6540201910029282,
+  "invalidated": false
+}

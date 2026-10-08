@@ -1,0 +1,347 @@
+[
+  {
+    "source_id": "diff-wt-global-api-AcknowledgeSurvey-12",
+    "symbol": "AcknowledgeSurvey",
+    "reason": "Historical support/knowledge-base/survey service has no state-backed lifecycle or embedded-browser integration. Current help-panel consumers do not supply 2013 survey acknowledgement or old knowledge-base semantics; no shim added.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "AcknowledgeSurvey"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetBattlegroundPoints-17",
+    "symbol": "GetBattlegroundPoints",
+    "reason": "No battleground team score/objective producer or legacy point-query contract. The source names the function but supplies no result layout/fixture; do not substitute rated PvP statistics or fabricate zero team points.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetBattlegroundPoints"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetLFGRoleUpdateBattlegroundInfo-19",
+    "symbol": "GetLFGRoleUpdateBattlegroundInfo",
+    "reason": "No historical battleground role-update invitation state/query structure. Stored lfg_roles booleans support GetPVPRoles/SetPVPRoles only, not queue invitation metadata or role-update lifecycle.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "GetLFGRoleUpdateBattlegroundInfo"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-SetLootSpecialization-24",
+    "symbol": "SetLootSpecialization",
+    "reason": "No legacy loot-specialization setter or loot-award policy backing. GetLootSpecialization is only a temporary constant-zero default; selecting class/spec IDs cannot be modeled by aliasing character specialization.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "SetLootSpecialization"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-framexml-HideKnowledgeBase-39",
+    "symbol": "HideKnowledgeBase",
+    "reason": "Historical support/knowledge-base/survey service has no state-backed lifecycle or embedded-browser integration. Current help-panel consumers do not supply 2013 survey acknowledgement or old knowledge-base semantics; no shim added.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "framexml",
+        "superseded_by": null,
+        "symbol": "HideKnowledgeBase"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-framexml-ShowKnowledgeBase-41",
+    "symbol": "ShowKnowledgeBase",
+    "reason": "Historical support/knowledge-base/survey service has no state-backed lifecycle or embedded-browser integration. Current help-panel consumers do not supply 2013 survey acknowledgement or old knowledge-base semantics; no shim added.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "framexml",
+        "superseded_by": null,
+        "symbol": "ShowKnowledgeBase"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Browser:CopyExternalLink-78",
+    "symbol": "Browser:CopyExternalLink",
+    "reason": "No embedded-browser engine/backing for the 2013 support website. Browser:CopyExternalLink is not supported by the current Browser object publication. Generic frame focus methods and two inert navigation methods do not establish browser cache/cookies/history/ticket/connection/zoom behavior. No inert aliases added.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Browser:CopyExternalLink"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Browser; lookup=nil",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Browser:DeleteCookies-79",
+    "symbol": "Browser:DeleteCookies",
+    "reason": "No embedded-browser engine/backing for the 2013 support website. Browser:DeleteCookies is not supported by the current Browser object publication. Generic frame focus methods and two inert navigation methods do not establish browser cache/cookies/history/ticket/connection/zoom behavior. No inert aliases added.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Browser:DeleteCookies"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Browser; lookup=nil",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Browser:NavigateBack-81",
+    "symbol": "Browser:NavigateBack",
+    "reason": "No embedded-browser engine/backing for the 2013 support website. Browser:NavigateBack is not supported by the current Browser object publication. Generic frame focus methods and two inert navigation methods do not establish browser cache/cookies/history/ticket/connection/zoom behavior. No inert aliases added.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Browser:NavigateBack"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Browser; lookup=nil",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Browser:NavigateForward-82",
+    "symbol": "Browser:NavigateForward",
+    "reason": "No embedded-browser engine/backing for the 2013 support website. Browser:NavigateForward is not supported by the current Browser object publication. Generic frame focus methods and two inert navigation methods do not establish browser cache/cookies/history/ticket/connection/zoom behavior. No inert aliases added.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Browser:NavigateForward"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Browser; lookup=nil",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Browser:NavigateReload-84",
+    "symbol": "Browser:NavigateReload",
+    "reason": "No embedded-browser engine/backing for the 2013 support website. Browser:NavigateReload is not supported by the current Browser object publication. Generic frame focus methods and two inert navigation methods do not establish browser cache/cookies/history/ticket/connection/zoom behavior. No inert aliases added.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Browser:NavigateReload"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Browser; lookup=nil",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Browser:NavigateStop-85",
+    "symbol": "Browser:NavigateStop",
+    "reason": "No embedded-browser engine/backing for the 2013 support website. Browser:NavigateStop is not supported by the current Browser object publication. Generic frame focus methods and two inert navigation methods do not establish browser cache/cookies/history/ticket/connection/zoom behavior. No inert aliases added.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Browser:NavigateStop"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Browser; lookup=nil",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Browser:OpenTicket-87",
+    "symbol": "Browser:OpenTicket",
+    "reason": "No embedded-browser engine/backing for the 2013 support website. Browser:OpenTicket is not supported by the current Browser object publication. Generic frame focus methods and two inert navigation methods do not establish browser cache/cookies/history/ticket/connection/zoom behavior. No inert aliases added.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Browser:OpenTicket"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Browser; lookup=nil",
+        "kind": "object-method",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Browser OnEditFocusGained-103",
+    "symbol": "Browser OnEditFocusGained",
+    "reason": "No embedded-browser engine/backing for the 2013 support website. Browser OnEditFocusGained is not supported by the current Browser object publication. Generic frame focus methods and two inert navigation methods do not establish browser cache/cookies/history/ticket/connection/zoom behavior. No inert aliases added.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Browser OnEditFocusGained"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Browser HasScript=false",
+        "kind": "widget-script",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-Browser OnEditFocusLost-104",
+    "symbol": "Browser OnEditFocusLost",
+    "reason": "No embedded-browser engine/backing for the 2013 support website. Browser OnEditFocusLost is not supported by the current Browser object publication. Generic frame focus methods and two inert navigation methods do not establish browser cache/cookies/history/ticket/connection/zoom behavior. No inert aliases added.",
+    "observed": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "widgets",
+        "superseded_by": null,
+        "symbol": "Browser OnEditFocusLost"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "Browser HasScript=false",
+        "kind": "widget-script",
+        "value": null
+      },
+      "ok": false
+    }
+  }
+]

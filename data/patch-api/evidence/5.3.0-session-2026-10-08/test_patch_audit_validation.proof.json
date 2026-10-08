@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p530-page/tools/test_patch_audit_validation.py"
+  ],
+  "revision": "b1e21b6c27eb1e530d62b2cf78a1403c5f4a371b",
+  "scope": "test_patch_audit_validation",
+  "cwd": ".",
+  "target": "dedicated p530-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "test_patch_audit_validation.txt",
+  "log_sha256": "70c4dd25db404a6f7e21242425b9da8cea9a699b555d4affd219df802859cfbf",
+  "seconds": 2.128613620996475,
+  "invalidated": false
+}

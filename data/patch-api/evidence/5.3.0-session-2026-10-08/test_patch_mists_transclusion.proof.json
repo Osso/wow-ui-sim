@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p530-page/tools/test_patch_mists_transclusion.py"
+  ],
+  "revision": "b1e21b6c27eb1e530d62b2cf78a1403c5f4a371b",
+  "scope": "test_patch_mists_transclusion",
+  "cwd": ".",
+  "target": "dedicated p530-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "test_patch_mists_transclusion.txt",
+  "log_sha256": "fe008aab760eb03ccac7578e2b84665b1b50b0d7f855b17a0c7a8d039435b658",
+  "seconds": 0.29943323000043165,
+  "invalidated": false
+}

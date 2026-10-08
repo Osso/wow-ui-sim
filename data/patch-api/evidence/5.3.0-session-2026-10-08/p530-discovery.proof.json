@@ -1,0 +1,20 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_5_3_0"
+  ],
+  "revision": "896086537a2b3c1ead5886d5ae3e430d56e7ef20",
+  "scope": "p530-discovery",
+  "cwd": ".",
+  "target": "dedicated p530-page target (external to repository)",
+  "environment": {},
+  "exit": 1,
+  "log": "p530-discovery.txt",
+  "log_sha256": "fec246cdcc0a95916d730cf9c92ccefbd9c92e4f46dcfab373177ee60985c981",
+  "seconds": 942.9409739110051,
+  "invalidated": false
+}

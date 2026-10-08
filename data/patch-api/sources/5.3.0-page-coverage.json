@@ -1,0 +1,431 @@
+{
+  "patch": "5.3.0",
+  "source_revid": 4065122,
+  "diff_revid": 3188422,
+  "proof_policy": "Publication is distinct from bounded existing backing; unsupported historical contracts remain pending.",
+  "source_rows": [
+    {
+      "source_id": "diff-wt-global-api-AcknowledgeSurvey-12",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical support/knowledge-base/survey service has no state-backed lifecycle or embedded-browser integration. Current help-panel consumers do not supply 2013 survey acknowledgement or old knowledge-base semantics; no shim added."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_PetBattles.CanAcceptQueuedPVPMatch-13",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current publication/absence after ordered later-retail supersession only; not historical signature/output/security/domain parity. Temporary pet-battle queue compatibility value, not network PvP-match lifecycle."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_Scenario.GetBonusCriteriaInfo-14",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current publication/absence after ordered later-retail supersession only; not historical signature/output/security/domain parity. Superseded by diff-wt-global-api-C_Scenario.GetBonusCriteriaInfo-387."
+    },
+    {
+      "source_id": "diff-wt-global-api-C_Scenario.GetBonusStepInfo-15",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current publication/absence after ordered later-retail supersession only; not historical signature/output/security/domain parity. Superseded by diff-wt-global-api-C_Scenario.GetBonusStepInfo-388."
+    },
+    {
+      "source_id": "diff-wt-global-api-CanTrackBattlePets-16",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current publication/absence after ordered later-retail supersession only; not historical signature/output/security/domain parity. Superseded by wt-global-api-CanTrackBattlePets-525."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetBattlegroundPoints-17",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No battleground team score/objective producer or legacy point-query contract. The source names the function but supplies no result layout/fixture; do not substitute rated PvP statistics or fabricate zero team points."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetItemUpgradeEffect-18",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current publication/absence after ordered later-retail supersession only; not historical signature/output/security/domain parity. Superseded by wt-global-api-GetItemUpgradeEffect-135."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetLFGRoleUpdateBattlegroundInfo-19",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No historical battleground role-update invitation state/query structure. Stored lfg_roles booleans support GetPVPRoles/SetPVPRoles only, not queue invitation metadata or role-update lifecycle."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetLootSpecialization-20",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current publication/absence after ordered later-retail supersession only; not historical signature/output/security/domain parity. Temporary inert constant-zero default, not loot-selection backing."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetNumItemUpgradeEffects-21",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current publication/absence after ordered later-retail supersession only; not historical signature/output/security/domain parity. Superseded by wt-global-api-GetNumItemUpgradeEffects-137."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetPVPRoles-22",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence",
+        "bounded-role-state"
+      ],
+      "note": "Current publication/absence after ordered later-retail supersession only; not historical signature/output/security/domain parity. Existing lfg_roles backing is tested across tank/dps, healer-only and all-false transitions in bare and cached environments. No historical queue/role-update event semantics credited."
+    },
+    {
+      "source_id": "diff-wt-global-api-GetWebTicket-23",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current publication/absence after ordered later-retail supersession only; not historical signature/output/security/domain parity. Temporary nil default, not web-ticket service backing."
+    },
+    {
+      "source_id": "diff-wt-global-api-SetLootSpecialization-24",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No legacy loot-specialization setter or loot-award policy backing. GetLootSpecialization is only a temporary constant-zero default; selecting class/spec IDs cannot be modeled by aliasing character specialization."
+    },
+    {
+      "source_id": "diff-wt-global-api-SetPVPRoles-25",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence",
+        "bounded-role-state"
+      ],
+      "note": "Current publication/absence after ordered later-retail supersession only; not historical signature/output/security/domain parity. Existing lfg_roles backing is tested across tank/dps, healer-only and all-false transitions in bare and cached environments. No historical queue/role-update event semantics credited."
+    },
+    {
+      "source_id": "diff-wt-global-api-PrepVoidStorageForTransmogrify-28",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current publication/absence after ordered later-retail supersession only; not historical signature/output/security/domain parity."
+    },
+    {
+      "source_id": "diff-wt-framexml-HideKnowledgeBase-39",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical support/knowledge-base/survey service has no state-backed lifecycle or embedded-browser integration. Current help-panel consumers do not supply 2013 survey acknowledgement or old knowledge-base semantics; no shim added."
+    },
+    {
+      "source_id": "diff-wt-framexml-PrintLootSpecialization-40",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current publication/absence after ordered later-retail supersession only; not historical signature/output/security/domain parity."
+    },
+    {
+      "source_id": "diff-wt-framexml-ShowKnowledgeBase-41",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical support/knowledge-base/survey service has no state-backed lifecycle or embedded-browser integration. Current help-panel consumers do not supply 2013 survey acknowledgement or old knowledge-base semantics; no shim added."
+    },
+    {
+      "source_id": "diff-wt-events-BATTLEGROUND_POINTS_UPDATE-55",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current publication/absence after ordered later-retail supersession only; not historical signature/output/security/domain parity."
+    },
+    {
+      "source_id": "diff-wt-events-BONUS_ROLL_ACTIVATE-56",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current publication/absence after ordered later-retail supersession only; not historical signature/output/security/domain parity."
+    },
+    {
+      "source_id": "diff-wt-events-BONUS_ROLL_DEACTIVATE-57",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current publication/absence after ordered later-retail supersession only; not historical signature/output/security/domain parity."
+    },
+    {
+      "source_id": "diff-wt-events-PLAYER_LOOT_SPEC_UPDATED-58",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current publication/absence after ordered later-retail supersession only; not historical signature/output/security/domain parity."
+    },
+    {
+      "source_id": "diff-wt-events-PVP_ROLE_UPDATE-59",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current publication/absence after ordered later-retail supersession only; not historical signature/output/security/domain parity."
+    },
+    {
+      "source_id": "diff-wt-events-SIMPLE_BROWSER_WEB_ERROR-60",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current publication/absence after ordered later-retail supersession only; not historical signature/output/security/domain parity."
+    },
+    {
+      "source_id": "diff-wt-events-SIMPLE_BROWSER_WEB_PROXY_FAILED-61",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current publication/absence after ordered later-retail supersession only; not historical signature/output/security/domain parity."
+    },
+    {
+      "source_id": "diff-wt-events-UPDATE_WEB_TICKET-62",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current publication/absence after ordered later-retail supersession only; not historical signature/output/security/domain parity."
+    },
+    {
+      "source_id": "diff-wt-events-UNIT_DYNAMIC_FLAGS-65",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current publication/absence after ordered later-retail supersession only; not historical signature/output/security/domain parity."
+    },
+    {
+      "source_id": "diff-wt-widgets-Browser:ClearCache-76",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current publication/absence after ordered later-retail supersession only; not historical signature/output/security/domain parity. Generic shared frame/script publication or inert navigation only; no native browser engine or focus/history semantics credited. Superseded by wt-widgets-Browser:ClearCache-182."
+    },
+    {
+      "source_id": "diff-wt-widgets-Browser:ClearFocus-77",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current publication/absence after ordered later-retail supersession only; not historical signature/output/security/domain parity. Generic shared frame/script publication or inert navigation only; no native browser engine or focus/history semantics credited."
+    },
+    {
+      "source_id": "diff-wt-widgets-Browser:CopyExternalLink-78",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No embedded-browser engine/backing for the 2013 support website. Browser:CopyExternalLink is not supported by the current Browser object publication. Generic frame focus methods and two inert navigation methods do not establish browser cache/cookies/history/ticket/connection/zoom behavior. No inert aliases added."
+    },
+    {
+      "source_id": "diff-wt-widgets-Browser:DeleteCookies-79",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No embedded-browser engine/backing for the 2013 support website. Browser:DeleteCookies is not supported by the current Browser object publication. Generic frame focus methods and two inert navigation methods do not establish browser cache/cookies/history/ticket/connection/zoom behavior. No inert aliases added."
+    },
+    {
+      "source_id": "diff-wt-widgets-Browser:HasConnection-80",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current publication/absence after ordered later-retail supersession only; not historical signature/output/security/domain parity. Generic shared frame/script publication or inert navigation only; no native browser engine or focus/history semantics credited. Superseded by wt-widgets-Browser:HasConnection-183."
+    },
+    {
+      "source_id": "diff-wt-widgets-Browser:NavigateBack-81",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No embedded-browser engine/backing for the 2013 support website. Browser:NavigateBack is not supported by the current Browser object publication. Generic frame focus methods and two inert navigation methods do not establish browser cache/cookies/history/ticket/connection/zoom behavior. No inert aliases added."
+    },
+    {
+      "source_id": "diff-wt-widgets-Browser:NavigateForward-82",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No embedded-browser engine/backing for the 2013 support website. Browser:NavigateForward is not supported by the current Browser object publication. Generic frame focus methods and two inert navigation methods do not establish browser cache/cookies/history/ticket/connection/zoom behavior. No inert aliases added."
+    },
+    {
+      "source_id": "diff-wt-widgets-Browser:NavigateHome-83",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current publication/absence after ordered later-retail supersession only; not historical signature/output/security/domain parity. Generic shared frame/script publication or inert navigation only; no native browser engine or focus/history semantics credited."
+    },
+    {
+      "source_id": "diff-wt-widgets-Browser:NavigateReload-84",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No embedded-browser engine/backing for the 2013 support website. Browser:NavigateReload is not supported by the current Browser object publication. Generic frame focus methods and two inert navigation methods do not establish browser cache/cookies/history/ticket/connection/zoom behavior. No inert aliases added."
+    },
+    {
+      "source_id": "diff-wt-widgets-Browser:NavigateStop-85",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No embedded-browser engine/backing for the 2013 support website. Browser:NavigateStop is not supported by the current Browser object publication. Generic frame focus methods and two inert navigation methods do not establish browser cache/cookies/history/ticket/connection/zoom behavior. No inert aliases added."
+    },
+    {
+      "source_id": "diff-wt-widgets-Browser:OpenExternalLink-86",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current publication/absence after ordered later-retail supersession only; not historical signature/output/security/domain parity. Generic shared frame/script publication or inert navigation only; no native browser engine or focus/history semantics credited."
+    },
+    {
+      "source_id": "diff-wt-widgets-Browser:OpenTicket-87",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No embedded-browser engine/backing for the 2013 support website. Browser:OpenTicket is not supported by the current Browser object publication. Generic frame focus methods and two inert navigation methods do not establish browser cache/cookies/history/ticket/connection/zoom behavior. No inert aliases added."
+    },
+    {
+      "source_id": "diff-wt-widgets-Browser:SetFocus-88",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current publication/absence after ordered later-retail supersession only; not historical signature/output/security/domain parity. Generic shared frame/script publication or inert navigation only; no native browser engine or focus/history semantics credited."
+    },
+    {
+      "source_id": "diff-wt-widgets-Browser:SetZoom-89",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current publication/absence after ordered later-retail supersession only; not historical signature/output/security/domain parity. Generic shared frame/script publication or inert navigation only; no native browser engine or focus/history semantics credited."
+    },
+    {
+      "source_id": "diff-wt-widgets-Browser OnEditFocusGained-103",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No embedded-browser engine/backing for the 2013 support website. Browser OnEditFocusGained is not supported by the current Browser object publication. Generic frame focus methods and two inert navigation methods do not establish browser cache/cookies/history/ticket/connection/zoom behavior. No inert aliases added."
+    },
+    {
+      "source_id": "diff-wt-widgets-Browser OnEditFocusLost-104",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No embedded-browser engine/backing for the 2013 support website. Browser OnEditFocusLost is not supported by the current Browser object publication. Generic frame focus methods and two inert navigation methods do not establish browser cache/cookies/history/ticket/connection/zoom behavior. No inert aliases added."
+    },
+    {
+      "source_id": "diff-wt-widgets-Browser OnEscapePressed-105",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "publication-absence"
+      ],
+      "note": "Current publication/absence after ordered later-retail supersession only; not historical signature/output/security/domain parity. Generic shared frame/script publication or inert navigation only; no native browser engine or focus/history semantics credited."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "* You can now control for which specialization you will receive loot from LFR/Quests. No award-policy state or setter; constant-zero GetLootSpecialization is publication only, not modeled selection."
+    },
+    {
+      "source_id": "prose-undated-005",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "* The number of pet stable pages has increased from 2 to 5 (Increasing the number of slots from 20 to 50). Historical five-page/fifty-slot stable layout is not demonstrated by current stable APIs/fixtures. No 2013 roster/page model introduced."
+    },
+    {
+      "source_id": "prose-undated-006",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "* Knowledge base and GM tickets now use an embedded web browser to interact with Blizzard's Support website. Current Browser creation maps to a generic frame, with no embedded web engine, support-service persistence or native browsing. Intentional unsupported browser domain; not modeled parity."
+    },
+    {
+      "source_id": "prose-undated-007",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "** The embedded browser functionality is encapsulated by the Browser widget type. Current Browser creation maps to a generic frame, with no embedded web engine, support-service persistence or native browsing. Intentional unsupported browser domain; not modeled parity."
+    },
+    {
+      "source_id": "source-context-009",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-010",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "* tradeSkillLink encoding changed significantly. The first four fields were re-arranged, and specialization data was added for Cooking. No before/after four-field trade-link fixture or Cooking specialization encoding supplied. Current hyperlink handling does not prove the historical bit/field layout migration."
+    },
+    {
+      "source_id": "source-context-012",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-013",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "* If InterfaceOptionsFrame_OpenToCategory(panel) is called before the addon panels list is updated after adding a new panel, the interface options frame will open to another panel. You can work around this behavior by calling the function twice. Historical InterfaceOptions panel list/update ordering and wrong-panel bug are not reproducible in current Settings UI. Do not monkey-patch Blizzard Lua with the page double-call workaround."
+    },
+    {
+      "source_id": "prose-undated-015",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "[Transcluded source: Patch 5.3.0/API changes/diff; not expanded] Separately pinned diff inventoried; this pointer gives no runtime credit."
+    },
+    {
+      "source_id": "diff-caption-006",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "2013 build context, not API behavior: Global API (5.2.0.16650 &rarr; 5.3.0.16965)"
+    },
+    {
+      "source_id": "diff-caption-033",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "2013 build context, not API behavior: FrameXML (5.2.0.16650 &rarr; 5.3.0.16965)"
+    },
+    {
+      "source_id": "diff-caption-049",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "2013 build context, not API behavior: Events (5.2.0.16650 &rarr; 5.3.0.16965)"
+    },
+    {
+      "source_id": "diff-caption-070",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "2013 build context, not API behavior: Widget API (5.2.0.16650 &rarr; 5.3.0.16965)"
+    },
+    {
+      "source_id": "diff-caption-097",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "2013 build context, not API behavior: Widget Handlers (5.2.0.16650 &rarr; 5.3.0.16965)"
+    }
+  ],
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/5.3.0-api-changes.txt"
+  }
+}
