@@ -1,0 +1,31 @@
+{
+  "patch": "5.3.0",
+  "pageid": 423274,
+  "revid": 4065122,
+  "client_line": "retail",
+  "source_url": "https://warcraft.wiki.gg/wiki/Patch_5.3.0/API_changes?oldid=4065122",
+  "generator_flags": [
+    "--mists-diff",
+    "data/patch-api/sources/5.3.0-api-changes.diff.wikitext",
+    "--mists-widget-handlers",
+    "--client-line",
+    "retail"
+  ],
+  "extractor_flags": [
+    "--retain-patch-diff-reference"
+  ],
+  "transcluded_diff": {
+    "pageid": 330804,
+    "revid": 3188422,
+    "path": "data/patch-api/sources/5.3.0-api-changes.diff.wikitext"
+  },
+  "parent": {
+    "pageid": 38992,
+    "revid": 6611399,
+    "toc": 50300,
+    "release": "2013-05-21",
+    "build": 16977,
+    "diff_build": 16965
+  },
+  "status": "content with pinned transcluded diff; not redirect or stub"
+}

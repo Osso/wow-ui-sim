@@ -1,0 +1,23 @@
+EE
+======================================================================
+ERROR: test_caption_tables_and_bare_removal (__main__.MistsTransclusionTests.test_caption_tables_and_bare_removal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p530-page/tools/test_patch_mists_transclusion.py", line 20, in test_caption_tables_and_bare_removal
+    rows, counts = generator.parse_mists_automated_diff(raw)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'gen_patch_wikitext_register' has no attribute 'parse_mists_automated_diff'
+
+======================================================================
+ERROR: test_widget_handler_ownership_and_kind (__main__.MistsTransclusionTests.test_widget_handler_ownership_and_kind)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p530-page/tools/test_patch_mists_transclusion.py", line 39, in test_widget_handler_ownership_and_kind
+    rows, counts = generator.parse_mists_widget_handlers(raw)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'gen_patch_wikitext_register' has no attribute 'parse_mists_widget_handlers'
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+FAILED (errors=2)

@@ -687,6 +687,23 @@ def parse_mists_summary(text):
     return entries
 
 
+def parse_mists_widget_handlers(text):
+    """Keep Browser handler owner/name pairs in the dedicated 2013 table."""
+    entries, counts = [], []
+    for table in re.finditer(r'^\{\|[^\n]*\n([\s\S]*?)^\|\}', text, re.M):
+        lines = table[1].splitlines()
+        if not any(line.startswith('|+ Widget Handlers ') for line in lines):
+            continue
+        first_line = text[:table.start(1)].count('\n') + 1
+        rows, headers = parse_section(
+            'widgets', list(enumerate(lines, first_line)), legacy_column_headers=True)
+        for row in rows:
+            row['kind'] = 'widget-script'
+        entries.extend(rows)
+        counts.extend(headers)
+    return entries, counts
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("patch", "path", "revid", "out"):
@@ -748,6 +765,8 @@ def main():
     parser.add_argument('--mists-summary', action='store_true',
                         help='Retain explicit 5.4.0 summary API occurrences; opt-in')
     parser.add_argument('--mists-diff', help='Separately pinned Mists transcluded inventory; opt-in')
+    parser.add_argument('--mists-widget-handlers', action='store_true',
+                        help='Retain captioned Mists widget handler ownership; opt-in')
     args = parser.parse_args()
     patch, path, revid, out = args.patch, args.path, args.revid, args.out
     raw = Path(path).read_bytes()
@@ -818,6 +837,14 @@ def main():
             entry['id'] = 'diff-' + entry['id']
         entries.extend(diff_entries)
         counts.extend(diff_counts)
+    if args.mists_widget_handlers:
+        handler_raw = Path(args.mists_diff).read_text() if args.mists_diff else raw.decode('utf-8')
+        handler_entries, handler_counts = parse_mists_widget_handlers(handler_raw)
+        if args.mists_diff:
+            for entry in handler_entries:
+                entry['id'] = 'diff-' + entry['id']
+        entries.extend(handler_entries)
+        counts.extend(handler_counts)
     if args.inventory_only:
         for entry in entries:
             for key in ("kind", "page_default", "test_inline"):

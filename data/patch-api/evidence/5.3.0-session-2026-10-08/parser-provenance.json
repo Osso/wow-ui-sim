@@ -1,0 +1,14 @@
+{
+  "automated_diff": {
+    "branch": "p542-page",
+    "revision": "a016e9393943de703ae070d8ce33b5497113c3fc",
+    "function": "parse_mists_automated_diff",
+    "copy": "byte-identical function and dispatch"
+  },
+  "transclusion_dispatch": {
+    "branch": "p540-page",
+    "revision": "9698f09862b6cd91b4f87e840295a3fce304940a",
+    "copy": "byte-identical --mists-diff argparse and dispatch"
+  },
+  "new_behavior": "opt-in --mists-widget-handlers; separate parse_mists_widget_handlers function"
+}

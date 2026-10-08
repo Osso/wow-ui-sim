@@ -1,0 +1,505 @@
+{{Redirect|Escalation|the questline|Mists of Pandaria campaign#Escalation}}
+{{Patchbox
+|Patchname = Escalation
+|Image = [[Image:Chapter26.png|256px]]
+|Caption = 
+|Release = May 21, 2013
+|Latest = June 28, 2013
+|Version = 16977
+|Latestv = 17128
+|toc = 50300
+|api = 1
+|Highlights = 
+|Related = 
+* [https://worldofwarcraft.blizzard.com/en-us/news/9679398 Patch Notes]
+* [https://worldofwarcraft.blizzard.com/en-us/news/9241762 Item Upgrades in 5.3]
+* [https://worldofwarcraft.blizzard.com/en-us/news/9331806 PvP Gear in Patch 5.3]
+|Prev = 5.2.0
+|Current = 5.3.0
+|Next = 5.4.0
+}}{{tocright}}
+[[File:Escalation key art.jpg|thumb|Escalation key art]]
+
+'''Patch 5.3.0: Escalation''' is the second non-raid patch of ''[[World of Warcraft: Mists of Pandaria]]'' and focuses on the escalating tensions between [[Garrosh]] and [[Vol'jin|Vol'jin's]] [[Darkspear Rebellion]]. The patch includes a new world event in the [[Barrens]], the addition of Heroic Scenarios, a brand new [[Arena]] and [[Battleground]], new foes to fight in the [[Brawler's Guild]]  and much more.
+
+==General==
+*'''New Battleground&#58; [[Deepwind Gorge]]'''
+**In the new Battleground situated in the [[Valley of the Four Winds]], the [[Alliance]] and [[Horde]] continue their war for Pandaria's precious resources. While the two factions battle for control over mines, they must also protect their own resources from being stolen and turned against them!
+*'''New Arena&#58; [[Tiger's Peak|The Tiger's Peak]]'''
+**Gladiator hopefuls have a new location to test their mettle amidst the [[Kun-Lai Summit|Kun-Lai]] mountain tops, in the training grounds of the powerful [[Shado-Pan]]. Players must make use of the looming tiger statues and fenced platforms to gain an advantage that will bring victory and glory!
+*'''New Scenario&#58; [[Battle on the High Seas]]'''
+**Help your faction fend off enemy forces in the midst of a battle for naval supremacy on the High Seas.
+*'''New Scenario<nowiki>:</nowiki> [[Blood in the Snow]]'''
+**An agent of [[Zandalar tribe|Zandalar]] has infiltrated [[Dun Morogh]] and rallied the [[Frostmane tribe|Frostmane trolls]]. At [[Varian Wrynn|Varian's]] request, [[Moira Thaurissan|Moira]] will lead her personal guard against them once the king's champions have stopped the magical storm protecting [[Shimmer Ridge]].
+*'''New Scenario&#58; [[Dark Heart of Pandaria]]'''
+**[[Bilgewater Cartel|Goblin]] engineers have been excavating in the [[Vale of Eternal Blossoms]] to find a mysterious artifact, but all they've found is trouble; you have been personally called upon by [[Garrosh Hellscream|the Warchief]] to aid them in their hour of need.
+*'''New Scenario&#58; [[Secrets of Ragefire]]'''
+**Infiltrate the Emberdeep Caverns and assist the [[Gob Squad]] in investigating a recent disappearance in [[Durotar]].
+*'''Heroic Scenarios'''
+**A heroic difficulty for Scenarios have been added and are designed to provide challenging content for small groups of well-seasoned adventurers. Completing a Heroic Scenario awards [[Valor Points]], and a chance to obtain high level Epic quality items.
+**Heroic scenarios require a pre-made group to join.
+**Heroic scenarios offer bonus objectives that will reward additional valor if completed.
+***An option to run a random heroic scenario has been added as a drop-down in the scenario tab in Dungeon Finder.
+**Players can complete a normal or heroic scenario for bonus valor each day, but not both.
+**Six heroic scenarios will be available in patch 5.3. Four are new and two are upgrades of existing normal scenarios.
+***[[Battle on the High Seas]]
+***[[Blood in the Snow]]
+***[[Dark Heart of Pandaria]]
+***[[Secrets of Ragefire|The Secrets of Ragefire]]
+***[[Crypt of Forgotten Kings]]
+***[[A Brewing Storm]]
+*'''Quest Campaign&#58; Escalation'''
+**The [[Darkspear tribe|Darkspear Trolls]] are in [[Darkspear Rebellion|open rebellion]] against the Warchief! Aid your faction in preparing to rout [[Garrosh Hellscream]] from [[Orgrimmar]]
+***Alliance heroes will scout Orgrimmar's outskirts and engage in [[SI:7]] espionage to weaken Garrosh's power structure.
+***Horde heroes will help [[Vol'jin|Vol'jin's]] insurgency survive a [[Kor'kron]] assault and advance towards the Horde capital.
+**Visit [[Lorewalker Cho]] at the [[Seat of Knowledge]] in the [[Vale of Eternal Blossoms]] to [[The King and the Council|begin questing]].
+*'''Battlefield&#58; Barrens'''
+**Put the stranglehold on Orgrimmar by undermining the Kor'kron supply chain in [[Northern Barrens]].
+***Collect resources by killing Kor'kron loyalists and their supporters.
+***Get a group together to kill [[Kor'kron Commander|Kor'kron leaders]] for bonus resources.
+***Escort your [[Barrens Caravan|faction's]] [[Pack Kodo (Battlefield: Barrens)|caravans]] across the zone for even more additional resources.
+**The [[Darkspear Rebellion]] will reward your efforts to undermine the Warchief by helping you upgrade Latent Kor'kron Armor into usable gear.
+**Participate in the Escalation Quest Campaign to learn how to engage in the Barrens conflict.
+*'''The Legendary Quest Continues'''
+**Journey with [[Wrathion]] to the four corners of [[Pandaria]] to speak with the [[August Celestial]]s.
+**Champions will have had to complete [http://us.battle.net/wow/en/blog/8636639/ Wrathion's earlier tasks] (including "[[Heart of the Thunder King (quest)]]") to continue.
+*'''[[Brawler's Guild]] Updates'''
+**Test your might against two new tiers of bosses in the [[Brawl'gar Arena]] in [[Orgrimmar]] or [[Bizmo's Brawlpub]] in [[Stormwind]].
+**New VIP areas are now accessible for brawlers at or above rank 8.
+**[[Bizmo]] has raised the floor in his arena to hide the bodies. Or... maybe to improve the sight lines. We'll never know for sure.
+**Special "[[Challenge Card]]s" can now drop from mobs or reward satchels, allowing you to unlock unique bonus bosses.
+**Brawlers that manage to prove their mettle and reach Rank 9 will receive an additional invitation to the Brawler's Guild that can be traded or given to a friend.
+*Experience needed to increase from level 85 to level 90 has been reduced by 33%.
+
+==Classes==
+*Healing abilities and spells which automatically pick targets now follow consistent rules for targeting logic. Targets with lower % health will be preferred, and players are weighted more heavily than pets.
+*[[Avoidance (passive)]] passive on all pets and guardians has been changed. It now reduces [[Area of Effect|area-of-effect]] damage from creatures and NPCs by 95% (up from 90%), and from players by 50% (up from 0%). Warlock pets already had the new version of Avoidance since Patch 5.0 and will not notice any differences.
+*The following summoned pets/totems will now chain cast their spells with no delay between casts, allowing them to cast their spells more frequently in the same amount of time.
+**Death Knight: [[Summon Gargoyle]]
+**Druid: [[Force of Nature]] (Balance, Restoration), [[Mirror Image (Symbiosis)]] (Symbiosis)
+**Mage: [[Mirror Image]], [[Summon Water Elemental]]
+**Shaman: [[Searing Totem]]
+**Warlock: [[Summon Doomguard]], [[Summon Terrorguard]], [[Wild Imps]]
+
+===Death Knight===
+General
+*[[Blood Plague (Wrath Classic)]] no longer benefits from the damage increase granted by [[Tricks of the Trade]].
+*[[Frost Fever (Wrath Classic)]] no longer benefits from the damage increase granted by [[Tricks of the Trade]].
+*[[Necrotic Strike]]'s healing absorption effect has been increased to 225% from attack power, up from 200%.
+Talents
+*[[Gorefiend's Grasp]] can now affect a maximum of 4 player targets. The number of non-player targets that can be affected remains unlimited.
+Unholy
+*[[Sudden Doom]] now requires the Death Knight to be in [[Unholy Presence]] to activate the effect that causes [[Death Coil]] to cost no [[Runic Power]].
+*[[Unholy Might]] now increases the Death Knight's Strength by 10%, down from 15%.
+
+===Druid===
+General
+*[[Mark of the Wild]] had its mana cost reduced to 5%, down from 10%.
+*[[Symbiosis]]: [[Intimidating Roar]] had its cooldown increased to 90 seconds, up from 60 seconds.
+*[[Tranquility]] now targets 12 raid members (up from 5) each time it heals when used in a 25-player instance. This change also applies to players using the Symbiosis version of [[Tranquility (Symbiosis)]].
+Talents
+*[[Force of Nature]] is no longer on [[global cooldown]] and summons a single [[Treant]]. The Treant no longer has a control bar, immediately uses its special abilities on the Druid's current target, and accumulates 1 charge every 20 seconds up to a maximum of 3 charges.
+**Restoration version of the Treant now casts [[Swiftmend]] on the Druid's target when summoned. This version of Swiftmend does not require or consume a heal-over-time effect on the target.
+Glyphs
+*[[Glyph of Solar Beam]] have been removed and replaced with Glyph of Omens.
+*New Glyph: [[Glyph of Omens]]: While the Druid is not in a Solar or Lunar [[Eclipse]], the following abilities will generate 10 Solar or Lunar Energy: [[Entangling Roots]], [[Cyclone]], [[Faerie Fire]], [[Faerie Swarm]], [[Mass Entanglement]], [[Typhoon]], [[Disorienting Roar]], [[Ursol's Vortex]], and [[Mighty Bash]].
+Balance
+*[[Solar Beam]] is now more responsive when players enter and leave the beam's area-of-effect.
+Feral
+*[[Savage Roar]] now increases physical damage done by 40%, up from 30%.
+Guardian
+*[[Mastery: Nature's Guardian]] is now 33% stronger (2% per point instead of 1.5%).
+Restoration
+*[[Ironbark]] now has a cooldown of 60 seconds, down from 2 minutes.
+*[[Swiftmend]]'s area-of-effect component now heals injured allies within 10 yards, up from 8 yards.
+*[[Wild Mushroom: Bloom]]: Healing from this spell has been increased by 100%, which includes all bonus healing from [[Rejuvenation]] overhealing. In addition, the radius has been increased to 10 yards (up from 8).
+Item Sets
+*Restoration PvP 4-piece set bonus now reduces the cooldown of [[Ironbark]] by 30 seconds (down from 90 seconds).
+
+===Hunter===
+General
+*Hunters now have 50 pet [[stable master|stable]] slots, up from 20.
+*Cooldown on crowd control abilities for several Hunter pet families have changed.
+**Basilisk pet family's [[Petrifying Gaze]] cooldown is now 2 minutes (up from 1 minute).
+**Bat pet family's [[Sonic Blast (pet ability)]] cooldown is now 2 minutes (up from 1 minute).
+**Crane pet family's [[Lullaby]] cooldown is now 2 minutes (up from 1 minute).
+**Porcupine pet family's [[Paralyzing Quill]] cooldown is now 2 minutes (up from 1 minute).
+**Shale Spider pet family's [[Web Wrap (pet ability)]] cooldown is now 90 seconds (up from 45 seconds).
+**Worm pet family's [[Burrow Attack]] Attack has had its cooldown reduced to 14 seconds (down from 20 seconds).
+*[[Aspect of the Hawk]] now increases ranged attack power by 25%, up from 15%.
+*[[Revive Pet]] now has a cast time of 4 seconds, down from 6 seconds.
+Talents
+*[[Aspect of the Iron Hawk]] now increases ranged attack power by 25%, up from 15%.
+*[[Binding Shot]] is no longer a talent and learned by Marksmanship Hunters at level 30.
+*[[Blink Strike]] has been renamed [[Blink Strikes]] and turned into a passive ability. The pet's Basic Attacks deal 50% increased damage, can now be used from 30 yards away, and will instantly cause the pet to teleport behind their target.
+*[[Intimidation]] is now a level-30 talent available to all Hunter specializations and no longer learned by Beast Mastery Hunters at level 20.
+Beast Mastery
+*[[Beast Cleave]] now deals 75% of the original damage, up from 50%.
+*[[Exotic Beasts]] no longer reduces the cooldown of pet special abilities by 30%.
+Marksmanship
+*[[Bombardment (Cataclysm Classic)]] now increases the damage of Multi-Shot by 60%, up from 30%.
+Item Sets
+*PvP 2-piece set bonus has been redesigned. Using Arcane Shot now causes the Hunter's PvP Power to increase by 800 for 6 seconds.
+
+===Mage===
+General
+*[[Arcane Brilliance]] had its mana cost reduced to 1%, down from 4%.
+*[[Arcane Explosion]] now deals 40% more damage.
+*[[Blizzard]] now deals 40% more damage.
+*[[Dalaran Brilliance]] had its mana cost reduced to 1%, down from 4%.
+*[[Flamestrike]] now deals 100% more initial damage. Periodic damage remains unchanged.
+*[[Mirror Image]] creates copies that no longer cast Fire Blast, but their Frostbolts do 10% more damage.
+*[[Teleport]]: Vale of Eternal Blossoms and [[Portal (spell)]]: Vale of Eternal Blossoms now have new icons.
+Talents
+*[[Flameglow]] now absorbs damage from each attack made against the Mage equal to 15% of their spellpower (down from 20%).
+*[[Incanter's Ward]] now allows the Mage to gain up to a maximum of 15% increase to spell damage, down from 30%, but the effect now lasts 25 seconds, up from 15 seconds.
+*[[Living Bomb]]'s periodic damage has been increased by 121%. Its explosion damage has been reduced by 78%, but now scales with additional periodic ticks added by haste, and hits all nearby targets (up from 3).
+
+===Monk===
+General
+*[[Legacy of the Emperor]] had its energy cost reduced to 1%, down from 6%.
+*[[Nimble Brew (MoP Classic)]] now also removes horrify effects, and reduces the duration of horrify effects and fear, and is available to all Monk specializations (formerly only available for Brewmaster and Windwalker Monks).
+*[[Spear Hand Strike]] now locks a spell school out for 4 seconds, down from 5 seconds.
+Talents
+*[[Ring of Peace]] had been redesigned. The ability forms an 8-yard sanctuary around a friendly target for 8 seconds, instantly disarming and silencing enemies within the area-of-effect for 3 seconds. Enemies that use abilities other than auto-attacks or cast spells on allies within the Ring of Peace will be disarmed and silenced for 3 seconds. Disarm and silence effects are subject to diminishing returns.
+Brewmaster
+*[[Gift of the Ox]] should now activate its effect more frequently for dual-wielding Monks.
+Mistweaver
+*[[Revival]] now has a healing cap of 15 raid members (up from 6) when used in a 25-player instance.
+Windwalker
+*[[Legacy of the White Tiger]] had its mana cost reduced to 1%, down from 6%.
+*[[Rising Sun Kick]] now causes all targets within 8 yards to take an increased 20% damage from the Monk's abilities, up from 10%.
+*Fixed an issue that caused ticks from [[Fists of Fury]] to sometimes be skipped.
+
+===Paladin===
+General
+*[[Blessing of Kings]] had its mana cost reduced to 5%, down from 22.3%.
+*[[Blessing of Might]] had its mana cost reduced to 5%, down from 22.3%.
+*[[Devotion Aura]] now clears all silence effects when used.
+*[[Divine Protection]] is now usable while stunned.
+Glyphs
+*[[Glyph of the Battle Healer]] now heals a nearby injured friendly target, excluding the Paladin, for 20% of damage dealt while [[Seal of Insight]] is active, down from 30%.
+Holy
+*[[Mastery: Illuminated Healing]] now places an absorb shield for 10% of the amount healed, down from 12%.
+*[[Daybreak (Cataclysm Classic)]] is now a stackable effect with a duration of 10 seconds, stacks up to 2 times, and causes the next [[Holy Shock]] to also heal other allies within 10 yards of the target for an amount equal to 75%/150% of the original healing done. Daybreak no longer incorrectly hits the primary target of the Holy Shock.
+Protection
+*[[Shield of the Righteous]] now reduces physical damage taken by 25%, down from 30%.
+Retribution
+*[[Sword of Light]] now increases damage with two-handed melee weapons by 30%, up from 15%.
+Item Sets
+*[[White Tiger Vestments|Tier-14 Holy Paladin]] 4-piece set bonus now reduces the cooldown of [[Holy Shock]] by 1 second, down from 2 seconds.
+
+===Priest===
+General
+*[[Power Word: Fortitude]] had its mana cost reduced to 1%, down from 4.4%.
+*[[Mass Dispel]] no longer dispels magic effects that are normally undispellable. Cast time has been decreased to 0.5 seconds, down from 1.5 seconds for Discipline and Holy Priests.
+*[[Void Shift]] had its cooldown decreased to 5 minutes, down from 6 minutes for Discipline and Holy Priests. For Shadow Priests, cooldown has been increased to 10 minutes, up from 6 minutes, and the spell is no longer usable while in Arenas or Rated Battlegrounds.
+Glyphs
+*[[Glyph of Mass Dispel]] has been redesigned and no longer reduces cast time. The glyph now enables Mass Dispel to dispel magic effects that are normally undispellable.
+*[[Glyph of Smite]] no longer causes the additional 20% damage dealt by [[Smite]] to transfer into [[Atonement]].
+*Fixed an issue where [[Glyph of Mind Flay]]'s movement speed increase was not stacking correctly.
+Discipline
+*[[Atonement]] now heals nearby friendly targets for 90% of the damage dealt, down from 100%.
+*[[Borrowed Time]] now reduces the cast or channel time of the next Priest spell by 15% after casting Power Word: Shield (was 15% spell haste).
+*[[Penance]] now deals 10% less damage, but healing done is increased by 10%.
+Holy
+*[[Divine Hymn]] now targets 12 raid members (up from 5) each time it heals when used in a 25-player instance.
+Shadow
+*[[Vampiric Embrace]] now has a healing cap of 15 raid members (up from 6) when used in a 25-player instance.
+
+===Rogue===
+Talents
+*[[Cloak and Dagger]] now requires the Rogue to be in Stealth. Shadow Dance will not remove the Stealth requirement for Cloak and Dagger.
+*[[Shuriken Toss]] now deals 100% more damage in the initial ranged attack, damage is no longer doubled when used on targets farther than 10 yards away, and energy cost has been increased to 40 energy, up from 20.
+Glyphs
+*[[Glyph of Cheap Shot]] now increases the duration of [[Cheap Shot]] by 0.5 second, down from 1 second.
+*[[Glyph of Garrote]] now increases the duration of [[Garrote]]'s silence effect by 1 second, down from 1.5 seconds.
+Combat
+*[[Blade Flurry]]'s damage to secondary targets should no longer be affected by [[Resilience]] or [[PvP Power]] if the primary target was a player as both had already been factored in for the initial damage calculation.
+*[[Revealing Strike]] now lasts 24 seconds, up from 18 seconds.
+Subtlety
+*[[Find Weakness]] now bypasses 100% of armor against non-player targets, and bypasses 50% of armor when used against other players (was 70% armor bypass for all targets).
+
+===Shaman===
+General
+*[[Lava Burst]] now has a 2 second cast time, up from 1.5 seconds, and deals 25% more damage.
+*[[Lightning Bolt]] can now be cast while moving.
+Glyphs
+*New Glyph: [[Glyph of Lightning Shield]] causes [[Lightning Shield]] to reduce the amount of damage taken by 10% for 6 seconds after Lightning Shield is triggered.
+*[[Glyph of Unleashed Lightning]] has been removed and replaced with Glyph of Lightning Shield.
+Enhancement
+*[[Feral Spirit]]'s summoned Spirit Wolves are now immune to root and snare effects.
+*[[Lava Lash]] now deals 300% weapons damage, up from 250%.
+*[[Mental Quickness]] now converts 65% of the Shaman's attack power to spell power, up from 55%.
+*[[Stormstrike]] now deals 450% weapon damage, up from 375%.
+
+===Warlock===
+General
+*[[Dark Intent]] had its mana cost reduced to 1%, down from 4%.
+*[[Demonic Gateway]] cast time has been reduced to 3 seconds, down from 5 seconds, gains its first charge after 5 seconds (down from 13 seconds), and gains a new charge every 10 seconds (down from 15 seconds). The summoned gateway has 100% of the summoning Warlock's health, 100% of the Warlock's resilience, and can now be attacked and killed by enemy players.
+*[[Health Funnel]] now causes the [[Soulburn]] portion of the spell to increase healing generated from Health Funnel by 140% instead of instantly restoring 36% health.
+Talents
+*[[Blood Horror]] no longer activates from attacks made by pets.
+Glyphs
+*[[Glyph of Siphon Life]] has been redesigned. Glyph of Siphon Life now heals the Warlock for 0.5% of their maximum health when [[Corruption]] or [[Immolate]] deal periodic damage.
+Affliction
+*[[Haunt (warlock talent)]] now refunds a [[Soul Shard]] when it is dispelled.
+Destruction
+*[[Fire and Brimstone]] no longer requires a [[Burning Ember]] to cast. Instead, the spell causes [[Immolate]], [[Incinerate]], [[Conflagrate]], and Curse spells to consume a Burning Ember when cast, and the effect remains active as long as the Warlock has at least 1 Burning Ember remaining.
+Item Sets
+*Warlock PvP 2-piece set bonus no longer reduces cooldown on Unending Resolve and have been replaced by the former 4-piece set bonus where the Warlock's Twilight Ward absorbs damage from all magical schools.
+*Warlock PvP 4-piece set bonus now increases damage dealt by Agony, Corruption, Doom, Immolate, and Unstable Affliction by 10%.
+
+===Warrior===
+General
+*[[Defensive Stance]] now decreases damage taken by 25%, up from 15%.
+*[[Shield Wall]]'s cooldown has been reduced to 3 minutes, down from 5 minutes.
+Talents
+*[[Enraged Regeneration]] no longer costs rage to use, instantly heals the Warrior for 5% of their total health, and healing an additional 5% over 5 seconds. Using the ability while Enraged doubles the healing effects to 10% of the Warrior's total health and an additional 10% over 5 seconds.
+*[[Second Wind]] no longer generates rage when the Warrior is struck by a Stun or Immobilize effect.
+**Arms and Fury Warriors receive [[Unbridled Wrath|a passive ability]] that enables them to generate rage when struck by a Stun or Immobilize effect at level 56.
+*[[Spell Reflection]] is no longer consumed by spells from player pets and guardians.
+*[[Vigilance]] now resets the cooldown on [[Taunt (warrior ability)]] in addition to its current effects.
+Arms
+*[[Sweeping Strikes]]' damage to secondary targets should no longer be affected by [[Resilience]] or [[PvP Power]] if the primary target was a player as both had already been factored in for the initial damage calculation.
+Protection
+*[[Bastion of Defense]] now reduces the cooldown of Shield Wall by 1 minute, down from a 3-minute reduction. For Protection Warriors, this results in no net change to Shield Wall's cooldown.
+*[[Shield Slam]] now receives a 50% bonus to attack damage from attack power (down from 100%) for Warriors below level 85.
+*[[Unwavering Sentinel]] no longer increases the damage reduction of Defensive Stance by 10%.
+
+==Quests==
+*[[Shado-Pan]] and [[August Celestials (faction)|The August Celestials]] daily quests no longer have a faction prerequisite to be Revered with the [[Golden Lotus]].
+*[[A Test of Valor (quest)]]: Reduced the amount of Valor needed for this achievement to 3000 [[Valor Points]], down from 6000.
+*[[Flames of the Void]]: Fixed an issue where players were unable to mount the War Serpents.
+*[[The Strength of One's Foes]]: All bosses in [[Mogu'shan Vaults]], [[Heart of Fear]], and [[Terrace of the Endless Spring]] now have a chance to drop either a [[Sigil of Power]] or [[Sigil of Wisdom]].
+
+==Creatures==
+*Creatures that are outdoors in the world and are Level-90 and above now have a chance to drop [[Lesser Charm of Good Fortune|Lesser Charms of Good Fortune]].
+*[[Pandarian champion|Rare spawns]] in Pandaria (except [[Zandalari Warscout]]s, and [[Zandalari Warbringer]]s) and [[Kor'kron Commander|bosses]] in [[Battlefield: Barrens]] will now always drop Lesser Charms of Good Fortune.
+*Rare spawns in Pandaria (except those on [[Isle of Thunder]]) now have a chance to drop a [[BoP|bind-on-pickup]] invitation to the [[Brawler's Guild]].
+*[[Oondasta]]
+**[[Shiny Pile of Refuse]] now has a chance to contain a [[Primal Egg]], and a number of [[Giant Dinosaur Bone|Dinosaur Bones]].
+**Spitfire Beam no longer increases in damage with each jump, deals a flat 200,000 damage(up from 150,000 damage), and jumps to 99 targets (up from 20 targets).
+*Zandalari NPCs on the Isle of Thunder should now drop Zandalari Journals needed for the [[Zandalari Library Card]] achievement more frequently. The sell value of Zandalari Journals to vendors have been decreased to adjust for the increased drop rates.
+
+==Pet Battles==
+===General===
+*Bonus damage has been added to many basic abilities, at the cost of slightly reduced accuracy.
+**Check out our blog: [http://us.battle.net/wow/en/blog/9425567/ Pet Battle Accuracy Changes in Patch 5.3] for additional information.
+*Pet Battle Duels are now available in all dungeons and raids. Enjoy!
+*Pet Battles in the wild and duels are now viewable by other players in the world.
+*Hit Chance is now displayed for all abilities.
+*Battle Pet Abilities no longer have a base chance to miss or be dodged by opposing pets of the same level.
+*Reduced the chance to miss when fighting higher-level opponents from 5% per level to 2% per level.
+*A series of new achievements and rewards have been added for max-level matchmaking PvP pet battles
+*Wins for max-level, matchmaking PvP pet battles can now be tracked in statistics.
+*Battle pets' recent ability loadouts will now be saved when pets are swapped in and out of battle slots.
+*Pandaren Spirit Pet Supplies now has a chance to drop a family specific rare Battle-Stone.
+*Species specific Flawless Battle-Stones are now [[Bind to Account|Bind to Battle.net account]].
+*[[Black Claw]] now deals 20% less damage.
+*[[Blistering Cold]] had now deals 100% more damage.
+*[[Corrosion (pet battle ability)]] now deals 5 damage-per-round, up from 2, and increases damage taken by 2, down from 5.
+*[[Counterspell (pet battle ability)]] now deals 10 damage in addition to the ability's previous effects.
+*[[Deep Freeze (pet battle ability)]] now has a 10% reduced chance to hit.
+*[[Fury of 1,000 Fists]] now has a 4-round cooldown, up from 3 rounds.
+*[[Haymaker]] now has a 3-round cooldown.
+*[[Headbutt]] now has a 4-round cooldown, up from 3 rounds.
+*[[Hunting Party (pet battle ability)]] now has an increased cooldown of 4 rounds, up from 3 rounds.
+*[[Impale]] now has a cooldown of 2 rounds, down from 5 rounds, deals 17% less damage, and no longer deals damage as a percentage of the target’s health. The ability now deals a flat amount of bonus damage instead.
+*[[Interrupting Gaze]] now deals 50% more damage.
+*[[Interrupting Jolt]] now has a 4-round cooldown, down from 5 rounds.
+*[[Kick (pet battle ability)]] now deals 50% more damage.
+*[[Minefield]] now has a 5-round cooldown, and lasts for 9 rounds, down from 10 rounds.
+*[[Mudslide]] now has a 4-round cooldown, up from 3 rounds.
+*[[Predatory Strike]] no longer deal damage as a percentage of the target’s health. The ability now deals a flat amount of bonus damage instead.
+*[[Quicksand]] now has a 4-round cooldown, up from 3 rounds.
+*[[Reckless Strike]] now has a 1-round cooldown.
+*[[Rupture (pet battle ability)]] now has a 4-round cooldown, up from 3 rounds.
+*[[Shock and Awe]] now has a 4-round cooldown, up from 3 rounds.
+*[[Soulrush]] now has a 4-round cooldown, up from 3 rounds.
+*Fixed an issue where pet abilities that had a chance to stun were not working correctly.
+
+===Battle Pets===
+*A number of new battle pets have been added to the [[Throne of Thunder]] and [[Isle of Thunder]]. Happy hunting!
+*Whispers from pet tamers in the north have spread word of an elusive new battle pet that can be found in the frozen tundras of [[Northrend]]. The [[Unborn Val'kyr]] awaits.
+*Battle Pet drops have been added to Burning Crusade raids. These new pets can be obtained from raid bosses in [[Karazhan]], [[Tempest Keep]] and [[Serpentshrine Cavern]]. Obtaining all of these new pets will reward players with a new battle pet, [[Tito]]!
+*[[Tiny Blue Carp]], [[Tiny Green Carp]], [[Tiny Red Carp]], and [[Tiny White Carp]] are now tradable, and can be caught more than once.
+*[[Electrified Razortooth]]: swapped positions of [[Blood in the Water]] and [[Paralyzing Shock]] abilities.
+*[[Ethereal Soul-Trader]] has been returned to his original, larger size.
+*[[Teldrassil Sproutling]], [[Withers]], and [[Ruby Sapling]]'s [[Shell Shield (pet battle ability)]] has been replaced with a new ability: [[Ironbark (pet battle ability)]].
+
+===Battle Pet Quests===
+*A new [[The Longest Day|achievement]] and [[Marked Flawless Battle-Stone|reward]] has been added for characters that complete every Pet Battle daily quest in a single day.
+*Protection for bad luck streaks have been added to Battle-Stones from pet supplies bags and wild battles. Each bag or battle that does not provide a stone has a progressively better chance to award a stone to the player.
+*Beasts of Fable daily quest has been broken into three separate chapters. Players can now choose to do any or all of the chapters each day. Rewards have been modified to include a new consumable that will boost battle pet XP for a limited time.
+*All Pet Battle daily quests on Pandaria, Beasts of Fable and Spirit Tamer quests will now award experience, [[Valor Points]], and [[Lesser Charm of Good Fortune]].
+*All Pet Battle quests will now award experience.
+*Increased the difficulty of elite pets on the Beasts of Fable quest.
+*A new weekly quest for max-level, matchmaking PvP pet battles has been added.
+
+==Raids, Dungeons, and Scenarios==
+===Loot Specialization===
+*Players can now choose to receive loot for specializations other than the one that's currently active. This feature can be accessed by right-clicking on the character portrait and selecting the option from the drop-down list. Loot specialization is available for [[bonus roll]]s, Raid Finder, and Pandarian quest rewards.
+**Please check out the blog: [https://worldofwarcraft.blizzard.com/en-us/news/9447311 Patch 5.3 Adds Off-Spec Loot and Rewards] for an in-depth explanation of how the Loot Specialization system will work.
+
+===Raids===
+*Bonus rolls, [[Treasures of the Thunder King]], [[Amber Encased Treasure Pouch]], [[Cache of Mogu Riches]], and [[Dividends of the Everlasting Spring]] now have a small chance to award a larger than usual amount of gold.
+*[[Bonus roll|Bonus Roll]]
+**Protection for bad luck streaks have been added to bonus rolls. Each bonus roll that does not provide loot has a progressively better chance to award loot to the player.
+**Reduced the number of [[Lesser Charm of Good Fortune|Lesser Charms of Good Fortune]] needed for the [[Mogu Runes of Fate]] weekly quest to 50, down from 90.
+*[[Serpentshrine Cavern]]
+**For the [[Fathom-Lord Karathress]] encounter, Cataclysmic Bolt now deals 10% of the target's maximum health plus 5000 damage, down from 50% of target's maximum health, the stun effect can be removed by abilities that free the player from stuns, and the spell now targets any character class instead of only targeting character classes with mana.
+**[[Lady Vashj (tactics)|Lady Vashj]]
+***[[Coilfang Strider]]'s Panic ability now activates every 4 seconds, up from every 2 seconds.
+***Shock Blast's stun effect can now be removed by abilities that free the player from stuns.
+***[[Tainted Elemental]]s now despawn after 20 seconds, up from 15 seconds.
+*[[Eye (Tempest Keep)|Tempest Keep]]
+**For the [[High Astromancer Solarian]] encounter, Nether Scryer's Domination spell now has a 2 second cast time, up from instant cast, and can be silenced.
+**For the [[Void Reaver]] encounter, the radius for Arcane Orb has been reduced to 15 yards, down from 20 yards.
+*[[Terrace of Endless Spring]]
+**Players no longer need to have defeated [[Grand Empress Shek'zeer]] to enter the Terrace of Endless Spring in Normal difficulty.
+*[[Throne of Thunder]]
+**[[Valor Points]] are awarded for defeating the following lieutenants in Throne of Thunder.
+***[[Stormbringer Draz'kil]]: 20 Valor Points
+***[[Manchu]]: 10 Valor Points each
+***[[Weisheng]]: 10 Valor Points each
+***{[[Eternal Guardian (Throne of Thunder)|Eternal Guardian]]: 5 Valor Points each
+**[[Horridon]]
+***[[Amani'shi Beast Shaman]] no longer casts Chain Lightning while mounted on [[Amani Warbear]]s.
+**[[Primordius]]
+***The [[Genetically Unmodified Organism]] achievement has been redesigned. It now requires players to defeat Primordius while none of the players in the raid received a harmful mutation.
+
+===Dungeons===
+*Completing the Challenge mode daily quest now awards a [[Heroic Cache of Treasures]] with a chance to contain an epic item!
+*Minimum level requirement to enter and equip items found in the following dungeons via [[Dungeon Finder]] have been adjusted.
+**[[Gate of the Setting Sun]] is now available in Normal difficulty, and accessible to level 89 characters.
+**[[Grim Batol (instance)|Grim Batol]] is now accessible at level 84, down from level 85.
+**[[Lost City of the Tol'vir]] is now accessible at level 84, down from level 85.
+**[[Magisters' Terrace (Burning Crusade)|Magisters' Terrace]] is now accessible at level 68, down from level 70.
+**[[Mechanar|The Mechanar]] is now accessible at level 68, down from level 70.
+*[[Zul'Gurub (instance)|Zul'Gurub]]
+**[[Bloodlord Mandokir (tactics)|Bloodlord Mandokir]] will no longer use Decapitate against his current target.
+
+===Scenarios===
+*Lorewalker Cho now allows heroes to take part in either faction's Scenarios, so players can see what the other side has been up to.
+*[[Crypt of the Forgotten Kings]]
+**Fixed an issue where Uncontrolled Anger was improperly causing characters to drop out of stealth.
+
+==PvP==
+*A blog titled: [http://us.battle.net/wow/en/blog/9331806/ PvP Gear in Patch 5.3] has additional information and reasoning behind the PvP changes in 5.3.
+*All level-90 characters now have a base [[Resilience]] of 65%.
+*All characters below level 90 now have a base Resilience of 40%.
+*Battle Fatigue now reduces the amount of healing and absorbs by 45%, up from 30%.
+*[[PvP Power]] conversion ratio to obtain 1% damage at level 90 has been changed from 265 to 400.
+*PvP Power bonus to healing is now based on class and specialization.
+**Healing specializations receive a 100% bonus to healing from PvP Power.
+**Damage specializations for Druids, Monks, Paladins, Priests, and Shaman receive a 70% bonus to healing from PvP Power.
+**All other specializations and classes (including tanking) receive a 40% bonus to healing from PvP Power.
+
+===PvP Items===
+*[[Season 13]] Tyrannical gear had their item levels increased to ilevel 496, up from ilevel 493. Weapons and shields/off-hand items remain unchanged at ilevel 498.
+*Season 13 Tyrannical Elite gear had their item levels decreased to ilevel 496, down from ilevel 512.
+*Resilience has been removed from most PvP gear.
+**Resilience gems and enchants will continue to be available and remain unchanged.
+**4-piece PvP set bonus for all Season 12 and 13 armor sets that granted 1000 Resilience now grants 1000 PvP Power instead.
+*[[PvP Power]] will remain exclusively on PvP gear.
+*The amount of PvP Power and Resilience on gems and [[Mystic Cogwheel]] have been reduced by 50%.
+*Tyrannical weapons no longer have a conquest-earned prerequisite to purchase them.
+*[[Enchant Weapon - Glorious Tyranny]] weapon enchantment now grants 600 PvP Power instead of 400 PvP Power and 200 Resilience.
+*New weapon enchantment: [[Enchant Weapon - Bloody Dancing Steel]] is functionally equivalent to [[Enchant Weapon - Dancing Steel]], shares the same visual effect as Glorious Tyranny, costs a scroll of the base enchant, and requires a 2200 rating.
+*New weapon enchantment: [[Enchant Weapon - Spirit of Conquest]] is functionally equivalent to [[Enchant Weapon - Jade Spirit]], shares the same visual effect as Glorious Tyranny, costs a scroll of the base enchant, and requires a 2200 rating.
+*[[Tyrannical Gladiator's Tabard]] and [[Tyrannical Gladiator's Greatcloak]] are available as new prestige items at 2500 rating for 1000 Conquest Points.
+*[[Big Zokk Torquewrench]] has returned from their leave of absence.
+*Glorious Conquest Quartermasters ([[Acon Deathwielder]], [[Ethan Natice]]) have returned after refitting their wares.
+
+===Battlegrounds and Arenas===
+*Battlegrounds, Rated Battlegrounds, and Arenas now have an [[PvP item level cap|ilevel cap]]. All gear will be scaled down to ilevel 496.
+*To facilitate a more balanced team composition, players now need to select a role when queuing up for a Battleground or Rated Battleground. Role selection should have no effect on queue times. The matchmaking system attempts to balance the number of healers on each team based on the ratio of healers and non-healers queued.
+*Mid-season catch-up for [[Conquest Points]] has been added. Players will now see their cap on Conquest Points increased by 1000 per week since the start of Season 13 minus the amount of Conquest Points earned so far in this season.
+*Picking up the Alliance or Horde flag while in a Rated Battleground now increases damage taken by 50% for characters in a tanking specialization, and increases damage taken by 20% for characters in a non-tanking specialization.
+*[[Dalaran Arena]]: Masons of Dalaran have been hard at work installing steps in the two remaining corners of the arena.
+*[[Eye of the Storm]]: The starting platforms have been lowered.
+
+==Professions==
+*[[Herbalism|Herbalists]] of low skill can now pick herbs in Pandaria for a small amount of usable material. The yield an herbalist will be able to harvest from each node is determined by skill level.
+*[[Mining|Miners]] of low skill can now mine mineral deposits in Pandaria for a small amount of usable material. The yield a miner will be able to harvest from each node is determined by skill level.
+
+==Items==
+*The [http://us.battle.net/wow/en/blog/9241762/ Voidbinders are back] in capital cities and shrines.
+**PvE [[Item Upgrade]]s
+***Items upgradable by Valor now require 250 [[Valor Points|Valor]] to upgrade per 4 item levels, for a total of 500 Valor for 8 item levels per item. This is retroactive to all items that use Valor.
+***Items upgradable by Justice now require 750 [[Justice Points|Justice]] to upgrade per 8 item levels, for a total of 750 Justice for 8 item levels per item. This is retroactive to all items that use Justice.
+**PvP Item Upgrades
+***Malevolent Gladiator's Conquest ([[Season 12]]) items that have upgrades available are still upgradable at their original costs.
+***Dreadful Gladiator's Honor (Season 12) items that have upgrades available are still upgradable at their original costs.
+***No other PvP items are upgradable.
+*Players can now use items that are in the bank or [[Void Storage]] for [[transmogrification]].
+*Reduced the amount of [[Justice Points|Justice]], [[Honor Points|Honor]], and [[Darkmoon Prize Ticket|Darkmoon Faire tickets]] needed to upgrade [[heirloom]] items by 60%.
+*Players starting on Cataclysm content can purchase level-80 gear from [[Iris Moondreamer]] in [[Mount Hyjal|Hyjal]] and [[Erunak]] in [[Vashj'ir]] to more easily qualify for [[Blackrock Caverns]] and Abyssal Maw: [[Throne of Tides]].
+*:''The items available are the same [[Cataclysm starting sets]] that were previously used for [[Scroll of Resurrection]] level 80 boosts.''
+*Two new purchasable items using {{item|Elder Charm of Good Fortune|Elder Charms of Good Fortune}} have been added to the quartermasters on the [[Isle of Thunder]]. 
+**An [[Empty Supply Crate]] that can be placed and jumped on in the [[Troves of the Thunder King]] Scenario.
+**Excess Elder Charms of Good Fortune can be used to purchase an [[Arcane Trove]]/[[Sunreaver Bounty]].
+*A [[Mount Parade|new achievement]] and reward has been added for obtaining 200 mounts.
+*[[Unclaimed Black Market Container]]s are now available on the [[Black Market Auction House]]. What's inside? It's a mystery! When opened, the container has a chance to contain any item that can be available on the BMAH.
+*[[Eye of the Black Prince]] can now be used to apply a prismatic socket on Reborn weapons.
+*Justice Heirloom vendors now have Heirloom shields in stock.
+*{{item|Kirin Tor Beacon|Kirin Tor}} and {{item|Sunreaver Beacon|Sunreaver Beacons}} are now usable from inside the Throne of Thunder.
+*[[Shado-Pan Assault]] belts now require {{rep|Friendly}} reputation to purchase, down from {{rep|Revered}}.
+*Shado-Pan Assault chest pieces now require {{rep|Honored}} reputation to purchase, down from Revered.
+*The following PvP trinkets now have a cooldown of 2 minutes, down from 5 minutes.
+**[[Bequeathed Insignia of the Alliance]]
+**[[Bequeathed Insignia of the Horde]]
+**[[Inherited Insignia of the Alliance]]
+**[[Inherited Insignia of the Horde]]
+**[[Inherited Mark of Tyranny]]
+**[[Insignia of the Alliance]]
+**[[Insignia of the Horde]]
+*The following trinkets have on-use effects reduced by 33%, but have a 100% increase to duration when used in a Battleground or Arena.
+**[[Fabled Feather of Ji-Kun]]
+**[[Renataki's Soul Charm]]
+**[[Steadfast Talisman of the Shado-Pan Assault]]
+**[[Wushoolay's Final Choice]]
+*The following trinkets have on-use effects reduced by 75%, but have a 400% increase to duration when used in a Battleground or Arena.
+**[[Delicate Vial of the Sanguinaire]]
+**[[Gaze of the Twins]]
+**[[Primordius' Talisman of Rage]]
+**[[Talisman of Bloodlust]]
+*All other trinkets above ilevel 502 have on-use effects reduced by 50%, but have a 100% increase to duration when used in a Battleground or Arena.
+*[[Courageous Primal Diamond]] had its clearcasting effect renamed to "Lucidity" to differentiate it from other spells with that name.
+
+==UI==
+*In-game support system is now a direct portal to the Battle.net Support site, allowing players to access the knowledge base and support contact system. 
+*[[Dungeon Journal]] has been reorganized. The model view has moved into a sub-tab and replaced with a listing of bosses for the dungeon or raid.
+*A new option to display pet tamers on the world map has been added. This should help players looking to find unlocked Pet Battle daily quests.
+*When using name plates, castbars will now display for all creatures and players in the area.
+
+==Bug Fixes==
+*Fixed an issue in [[Brawl'gar Arena]] where players boarding [[Skybag|The Skybag]] may be unable to spectate brawls that were taking place.
+
+==Client patches==
+{|class=darktable
+!Build !! Date !! Notes
+|-
+| 17128 || 2013-06-28 || Unspecified
+|-
+| 17116 || 2013-06-26 || Unspecified
+|-
+| 17055 || 2013-06-11 || Unspecified
+|-
+| 16992 || 2013-05-23 || Fixed sound-related issue, and Divine Protection casting while stunned<ref>{{ref web|url=https://twitter.com/Rygarius/status/337738348435234816|title=Twitter|author={{Blizz}}[[Rygarius]]|accessdate=2013-05-24|quote=''The small client patch should fix sound related issues and Divine Protection casting while stunned.''}}</ref>
+|-
+| 16983 || 2013-05-22 || Unspecified
+|-
+| 16981 || 2013-05-21 || Fixed crash on Mac, stopped AVG triggering as Keylogger <ref>{{ref web|url=https://twitter.com/Rygarius/status/337055549227163648|title=Twitter|author={{Blizz}}[[Rygarius]]|accessdate=2013-05-22|quote=''Binary patch, fixed a crash on Macs w/certain chipsets and stopped triggering anti-virus tagging files as bad.''}}</ref>
+|-
+| 16977 || 2013-05-21 || Initial release
+|}
+
+==References==
+{{reflist}}
+
+{{Patches}}
+
+[[Category:World of Warcraft patches|5.3.0]]
+[[Category:Named patches|Escalation]]
