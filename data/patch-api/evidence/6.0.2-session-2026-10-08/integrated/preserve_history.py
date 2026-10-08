@@ -98,8 +98,9 @@ def main():
         else:
             revision = by_original[original]
             paths = git('ls-tree', '-r', '--name-only', original, 'data/patch-api/sources', 'tests', 'tools', 'src/c_api', 'data/patch-api/evidence').decode().splitlines()
-        inventories = {directory: git('ls-tree', '-r', '--name-only', original, directory).decode().splitlines()
-                       for directory in ('data/patch-api/sources', 'tests', 'data/patch-api/evidence')}
+        inventories = {'data/patch-api/sources': git('ls-tree', '-r', '--name-only', original, 'data/patch-api/sources').decode().splitlines(),
+                       'tests': [path for path in git('ls-tree', '-r', '--name-only', original, 'tests').decode().splitlines()
+                                 if path.endswith('_publication_sweep.rs')]}
         inputs = {}
         for name in paths:
             if not (name.startswith('data/patch-api/sources/') or
