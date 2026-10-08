@@ -6,7 +6,6 @@ use wow_ui_sim::loader::{
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
-use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
@@ -49,32 +48,9 @@ const VIRTUAL_TEMPLATES_NOT_IN_GLOBALS: &[&str] = &[
 
 const PUBLIC_GLOBAL_FUNCTIONS: &[&str] = &["OrderHallTalentFrame_ToggleFrame"];
 
-fn load_full_game_ui_then_request_order_hall() -> WowLuaEnv {
-    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
-    env.set_screen_size(1024.0, 768.0);
-    env.set_screen_mode(ScreenKind::Game);
-
-    {
-        let mut state = env.state().borrow_mut();
-        state.addon_base_paths = vec![blizzard_ui_dir()];
-    }
-
-    wow_ui_sim::xml::register_intrinsic_templates();
-
-    let ui = blizzard_ui_dir();
-    let addons = discover_blizzard_addons_for_screen(&ui, ScreenKind::Game);
-    for (name, toc_path) in &addons {
-        load_addon(&env.loader_env(), toc_path)
-            .unwrap_or_else(|err| panic!("[load {name}] FAILED: {err}"));
-    }
-
+fn load_order_hall_ui_after_fork(env: &WowLuaEnv) {
     load_addon(&env.loader_env(), &order_hall_toc())
         .expect("Blizzard_OrderHallUI load_addon succeeds after eager Game-screen sweep");
-
-    env.apply_post_load_workarounds();
-    fire_startup_events_for_screen(&env, ScreenKind::Game);
-
-    env
 }
 
 #[test]
@@ -241,9 +217,9 @@ fn blizzard_order_hall_appears_in_full_addon_inventory() {
     );
 }
 
-#[test]
-fn blizzard_order_hall_loads_without_addon_specific_lua_errors() {
-    let env = load_full_game_ui_then_request_order_hall();
+prefork_full_ui_case! {
+    fn blizzard_order_hall_loads_without_addon_specific_lua_errors(env: &WowLuaEnv) {
+    load_order_hall_ui_after_fork(env);
 
     let load_errors: Vec<String> = env
         .state()
@@ -267,10 +243,11 @@ fn blizzard_order_hall_loads_without_addon_specific_lua_errors() {
         load_errors.join("\n  ")
     );
 }
+}
 
-#[test]
-fn blizzard_order_hall_is_addon_loaded_after_explicit_load() {
-    let env = load_full_game_ui_then_request_order_hall();
+prefork_full_ui_case! {
+    fn blizzard_order_hall_is_addon_loaded_after_explicit_load(env: &WowLuaEnv) {
+    load_order_hall_ui_after_fork(env);
 
     let loaded: bool = env
         .eval("return C_AddOns.IsAddOnLoaded('Blizzard_OrderHallUI')")
@@ -282,10 +259,11 @@ fn blizzard_order_hall_is_addon_loaded_after_explicit_load() {
          registry once load_addon completes"
     );
 }
+}
 
-#[test]
-fn blizzard_order_hall_publishes_four_mixin_tables() {
-    let env = load_full_game_ui_then_request_order_hall();
+prefork_full_ui_case! {
+    fn blizzard_order_hall_publishes_four_mixin_tables(env: &WowLuaEnv) {
+    load_order_hall_ui_after_fork(env);
 
     for mixin in PUBLIC_MIXINS {
         let kind: String = env
@@ -311,10 +289,11 @@ fn blizzard_order_hall_publishes_four_mixin_tables() {
         );
     }
 }
+}
 
-#[test]
-fn blizzard_order_hall_creates_named_frame_after_load() {
-    let env = load_full_game_ui_then_request_order_hall();
+prefork_full_ui_case! {
+    fn blizzard_order_hall_creates_named_frame_after_load(env: &WowLuaEnv) {
+    load_order_hall_ui_after_fork(env);
 
     for frame_name in NAMED_FRAMES {
         let kind: String = env
@@ -333,10 +312,11 @@ fn blizzard_order_hall_creates_named_frame_after_load() {
         );
     }
 }
+}
 
-#[test]
-fn blizzard_order_hall_publishes_toggle_global_function() {
-    let env = load_full_game_ui_then_request_order_hall();
+prefork_full_ui_case! {
+    fn blizzard_order_hall_publishes_toggle_global_function(env: &WowLuaEnv) {
+    load_order_hall_ui_after_fork(env);
 
     for fname in PUBLIC_GLOBAL_FUNCTIONS {
         let kind: String = env
@@ -355,10 +335,11 @@ fn blizzard_order_hall_publishes_toggle_global_function() {
         );
     }
 }
+}
 
-#[test]
-fn blizzard_order_hall_does_not_leak_virtual_templates_to_globals() {
-    let env = load_full_game_ui_then_request_order_hall();
+prefork_full_ui_case! {
+    fn blizzard_order_hall_does_not_leak_virtual_templates_to_globals(env: &WowLuaEnv) {
+    load_order_hall_ui_after_fork(env);
 
     for template in VIRTUAL_TEMPLATES_NOT_IN_GLOBALS {
         let kind: String = env
@@ -376,4 +357,5 @@ fn blizzard_order_hall_does_not_leak_virtual_templates_to_globals() {
              definition and break every existing instance"
         );
     }
+}
 }
