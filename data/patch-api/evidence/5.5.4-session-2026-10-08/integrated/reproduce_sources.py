@@ -27,6 +27,9 @@ def main():
     own = json.loads(blob(revision, 'data/patch-api/sources/5.5.4-api-changes.provenance.json'))
     register_flags['5.5.4'] = own['generator_flags']
     extract_flags['5.5.4'] = own['extractor_flags']
+    extractor = {'__file__': str(ROOT / 'tools/extract_patch_non_inventory.py'), '__name__': 'pinned_extractor'}
+    exec(compile(blob(revision, 'tools/extract_patch_non_inventory.py'), 'pinned_extractor', 'exec'), extractor)
+    inherited_extracts = {row['patch']: row for row in json.loads(blob(BASE, FLAG_PREFIX + 'p548-saved-extract-reproduction.json'))}
     records = []
     with tempfile.TemporaryDirectory(prefix='p554-reproduction-') as directory:
         scratch = Path(directory)
@@ -67,6 +70,17 @@ def main():
                               extract_byte_identical=result.returncode == 0 and
                               (scratch / text_path).read_bytes() == expected_text,
                               extract_error=result.stderr)
+            options = {flag.removeprefix('--').replace('-', '_'): True for flag in extract_flags[patch]}
+            try:
+                generated = extractor['extract_text'](blob(revision, raw_path).decode(), **options)
+                record['generated_extract_sha256'] = hashlib.sha256(generated.encode()).hexdigest()
+                record['generated_extract_error'] = None
+            except ValueError as error:
+                record['generated_extract_sha256'] = None
+                record['generated_extract_error'] = str(error)
+            if patch in inherited_extracts:
+                before = inherited_extracts[patch]
+                assert (record['generated_extract_sha256'], record['generated_extract_error'], record['extract_byte_identical']) == (before['sha256'], before['error'], before['byte_identical']), patch
             records.append(record)
     report = {'revision': revision, 'historical_flags_revision': BASE,
               'historical_flags_sources': [FLAG_PREFIX + 'p548-register-reproduction.json',

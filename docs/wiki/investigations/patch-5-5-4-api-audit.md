@@ -6,7 +6,7 @@ Verified source: 2026-10-08. Pageid `686958`, revision `6778083` (2026-07-22T05:
 
 The page states `TOC: 50504`; [client profile code](../../../src/client_profile.rs) assigns `ACTIVE_INTERFACE_VERSION = 50504` to `client-mists`, whose source cache is `mists/AddOns`. Therefore expected publication is the Mists Classic surface. Retail's MoP-era 5.0–5.4 pages and the 2025–2026 Classic 5.5.x pages are different client histories. Version sorting cannot establish supersession between them.
 
-5.5.4 does **not** belong in any older retail page's `later_registers`. No placeholders for queued 6.1.0, 6.0.2, or 6.0.1 are needed here. This audit does not touch their worktrees or results. Subsequent 5.5.3–5.5.0 audits should use `client_line: mists-classic` and Mists-profile tests; Classic Era 1.13–1.15 pages should use `client_line: classic-era` and the source-proven Era/Anniversary profile, not numerical inference. Historical unlabeled registers retain `retail` meaning. An explicitly different client line is excluded from supersession, even if accidentally supplied among later registers. A sweep must also reject an incompatible execution profile.
+5.5.4 does **not** belong in any older retail page's `later_registers`. Merged retail 6.2.x, 6.1.0, 6.0.2, 6.0.1 and 5.4.8 registers remain outside this client line; none belongs in a Mists supersession chain. Subsequent 5.5.3–5.5.0 audits should use `client_line: mists-classic` and Mists-profile tests; Classic Era 1.13–1.15 pages should use `client_line: classic-era` and the source-proven Era/Anniversary profile, not numerical inference. Historical unlabeled registers retain `retail` meaning. An explicitly different client line is excluded from supersession, even if accidentally supplied among later registers. A sweep must also reject an incompatible execution profile.
 
 ## Harness decision
 
@@ -28,7 +28,13 @@ The final [Mists integration case](../../../tests/patch_5_5_4_publication_sweep.
 
 The opt-in extractor flag renders the positional `5.5.4` navigation value rather than mistaking the preceding `prev=5.5.3` parameter for the current patch. Defaults remain unchanged so prior extracts reproduce byte-for-byte.
 
-## Verification
+## Integrated verification
+
+Rebased onto master `bebcc5830`. [Integrated receipts](../../../data/patch-api/evidence/5.5.4-session-2026-10-08/integrated/) preserve 188 historical artifacts and map all nine original commits with patch IDs and original/rebased blob hashes. The historical validator replays every original invariant from those preserved inputs, without relying on unreachable pre-rebase commits or live shared files.
+
+Retail branch/master sweeps pass 56/56 each; [comparison](../../../data/patch-api/evidence/5.5.4-session-2026-10-08/integrated/gap-comparison.json) proves all 9,740 observations on all 55 retail pages exactly identical. Unlabeled retail registers remain byte-identical. Mists SharedXML/page/line tests pass 2/2; retail client-line controls pass 3/3. Mists `cargo check --tests` has zero non-vendor warnings; `cargo fmt --check` and all 87 Python fixtures pass. All 56 registers and 53/56 extracts reproduce with recorded flags; the three inherited extract errors are exactly unchanged. The rerun negative control rejects one injected row against the empty inventory (1 → 0). All 38 prior validators selected with `git ls-tree` at the pinned master pass. Empty inventory and SharedXML-only loading still confer no positive API or full-Game startup coverage.
+
+## Historical verification
 
 Final Rust scope `9ca9cd746`: 52 retail sweep/factory cases pass; all 9,051 observations across 51 pinned retail pages are exactly unchanged. Mists SharedXML/page/line cases pass 2/2; retail client-line controls pass 3/3 after their three-case RED. Mists `cargo check --tests` has zero non-vendor warnings; all 82 Python fixtures and Cargo/explicit generated-module formatting checks pass. All 52 registers and 49/52 extracts reproduce; inherited 12.0.5, 12.0.7 and 12.1.0 extract failures remain exact source boundaries. The negative register adds one row to the empty inventory and correctly fails 1 → 0 row-count enforcement.
 

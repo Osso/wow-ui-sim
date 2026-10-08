@@ -21,7 +21,9 @@
       "extract_exit": 0,
       "extract_sha256": "17a3a97fba53aad8c84b08c5e625211e5351ec8ce1fe190a05f9b3aa176fb6a2",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "17a3a97fba53aad8c84b08c5e625211e5351ec8ce1fe190a05f9b3aa176fb6a2",
+      "generated_extract_error": null
     },
     {
       "patch": "10.0.2",
@@ -36,7 +38,9 @@
       "extract_exit": 0,
       "extract_sha256": "1f43010bba50fcfc6c323ab7d75c7984e87a8e588ab1693f641111fa0f249feb",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "1f43010bba50fcfc6c323ab7d75c7984e87a8e588ab1693f641111fa0f249feb",
+      "generated_extract_error": null
     },
     {
       "patch": "10.0.5",
@@ -49,7 +53,9 @@
       "extract_exit": 0,
       "extract_sha256": "60f99c9d781367178a5a2220c4bb71cb59b8dd91b02a48959e8e2237a8119a20",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "60f99c9d781367178a5a2220c4bb71cb59b8dd91b02a48959e8e2237a8119a20",
+      "generated_extract_error": null
     },
     {
       "patch": "10.0.7",
@@ -62,7 +68,9 @@
       "extract_exit": 0,
       "extract_sha256": "879577e70ea3990e65b4044f07e1928e3ba9bf509f13400147016c483c9729a5",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "879577e70ea3990e65b4044f07e1928e3ba9bf509f13400147016c483c9729a5",
+      "generated_extract_error": null
     },
     {
       "patch": "10.1.0",
@@ -77,7 +85,9 @@
       "extract_exit": 0,
       "extract_sha256": "50ab412824b136929589560a58d933c2cf68ebccea09ad2dc4c3870d40a7c069",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "50ab412824b136929589560a58d933c2cf68ebccea09ad2dc4c3870d40a7c069",
+      "generated_extract_error": null
     },
     {
       "patch": "10.1.5",
@@ -90,7 +100,9 @@
       "extract_exit": 0,
       "extract_sha256": "d871bfe9ac485926da1fb380b1a7f1e7eb9aa18025b9f7b09354e43f4f66b1f1",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "d871bfe9ac485926da1fb380b1a7f1e7eb9aa18025b9f7b09354e43f4f66b1f1",
+      "generated_extract_error": null
     },
     {
       "patch": "10.1.7",
@@ -105,7 +117,9 @@
       "extract_exit": 0,
       "extract_sha256": "e2d9c557e865b7b9e9e2133064ddc229587001edf91ea08a3deaba65059bfc2a",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "e2d9c557e865b7b9e9e2133064ddc229587001edf91ea08a3deaba65059bfc2a",
+      "generated_extract_error": null
     },
     {
       "patch": "10.2.0",
@@ -118,7 +132,9 @@
       "extract_exit": 0,
       "extract_sha256": "9354b5bfd77b78079a216766945da4ad04c979c2bb3b723cc5fd86adc73af5fd",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "9354b5bfd77b78079a216766945da4ad04c979c2bb3b723cc5fd86adc73af5fd",
+      "generated_extract_error": null
     },
     {
       "patch": "10.2.5",
@@ -133,7 +149,9 @@
       "extract_exit": 0,
       "extract_sha256": "cbeca6db214446a0cd8ea8acd939e2764d73bfb8e0a027398403afbcbb764fb0",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "cbeca6db214446a0cd8ea8acd939e2764d73bfb8e0a027398403afbcbb764fb0",
+      "generated_extract_error": null
     },
     {
       "patch": "10.2.6",
@@ -146,7 +164,9 @@
       "extract_exit": 0,
       "extract_sha256": "037da4f0fbbc43bc8cdee6545be687d07c083c3cdc334fc4284567abe22502b1",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "037da4f0fbbc43bc8cdee6545be687d07c083c3cdc334fc4284567abe22502b1",
+      "generated_extract_error": null
     },
     {
       "patch": "10.2.7",
@@ -159,7 +179,9 @@
       "extract_exit": 0,
       "extract_sha256": "3456a7aa752cca63eba2758ea0583b764826b808f04c6a8dd6752b19b7e6b832",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "3456a7aa752cca63eba2758ea0583b764826b808f04c6a8dd6752b19b7e6b832",
+      "generated_extract_error": null
     },
     {
       "patch": "11.0.0",
@@ -172,7 +194,9 @@
       "extract_exit": 0,
       "extract_sha256": "f74031387786890b33d9c1b2bb49691c165e8720976db662cfddb3d9353f6826",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "f74031387786890b33d9c1b2bb49691c165e8720976db662cfddb3d9353f6826",
+      "generated_extract_error": null
     },
     {
       "patch": "11.0.2",
@@ -185,7 +209,9 @@
       "extract_exit": 0,
       "extract_sha256": "5df4b79162d245df301779c781bd8496143bc4e86fd7a882f0d77f40ed5c3b18",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "5df4b79162d245df301779c781bd8496143bc4e86fd7a882f0d77f40ed5c3b18",
+      "generated_extract_error": null
     },
     {
       "patch": "11.0.5",
@@ -198,7 +224,9 @@
       "extract_exit": 0,
       "extract_sha256": "c91cb989e635c029c6eabbc86523d68cbf33d16590af5f043614b667caeb87d4",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "c91cb989e635c029c6eabbc86523d68cbf33d16590af5f043614b667caeb87d4",
+      "generated_extract_error": null
     },
     {
       "patch": "11.0.7",
@@ -211,7 +239,9 @@
       "extract_exit": 0,
       "extract_sha256": "581f98e5dcb3d350df424725839f281dda7c90e015870d05c92e25a55d931cb1",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "581f98e5dcb3d350df424725839f281dda7c90e015870d05c92e25a55d931cb1",
+      "generated_extract_error": null
     },
     {
       "patch": "11.1.0",
@@ -224,7 +254,9 @@
       "extract_exit": 0,
       "extract_sha256": "e954712fd44a0e153427bc18ac686523860753b4e04ede52dae715342f5c3aa6",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "e954712fd44a0e153427bc18ac686523860753b4e04ede52dae715342f5c3aa6",
+      "generated_extract_error": null
     },
     {
       "patch": "11.1.5",
@@ -237,7 +269,9 @@
       "extract_exit": 0,
       "extract_sha256": "947ccdfae886c48429354ed3aea7af15a5901fcffb2ee8cabb8904b1c1ae734b",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "947ccdfae886c48429354ed3aea7af15a5901fcffb2ee8cabb8904b1c1ae734b",
+      "generated_extract_error": null
     },
     {
       "patch": "11.1.7",
@@ -250,7 +284,9 @@
       "extract_exit": 0,
       "extract_sha256": "0f48983a93e1a1cf060f9bebc387ecc00d8a7a7d942efc7c94a0bea98801601b",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "0f48983a93e1a1cf060f9bebc387ecc00d8a7a7d942efc7c94a0bea98801601b",
+      "generated_extract_error": null
     },
     {
       "patch": "11.2.0",
@@ -263,7 +299,9 @@
       "extract_exit": 0,
       "extract_sha256": "eb11e8cf5ce088bf2d6442578d3663c62f3963ce34ee1403d4a302cc2636952f",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "eb11e8cf5ce088bf2d6442578d3663c62f3963ce34ee1403d4a302cc2636952f",
+      "generated_extract_error": null
     },
     {
       "patch": "11.2.5",
@@ -276,7 +314,9 @@
       "extract_exit": 0,
       "extract_sha256": "f3d3e3bf435d6129ce031bbbf5aa8be0f14c424c51802a590fc6d424813e8be4",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "f3d3e3bf435d6129ce031bbbf5aa8be0f14c424c51802a590fc6d424813e8be4",
+      "generated_extract_error": null
     },
     {
       "patch": "11.2.7",
@@ -289,7 +329,9 @@
       "extract_exit": 0,
       "extract_sha256": "9e53fa2661695fe940d744cd93754929ea9f84573d8033a97e52352b5345b53b",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "9e53fa2661695fe940d744cd93754929ea9f84573d8033a97e52352b5345b53b",
+      "generated_extract_error": null
     },
     {
       "patch": "12.0.0",
@@ -302,7 +344,9 @@
       "extract_exit": 0,
       "extract_sha256": "c8bb5d03f47cc3ca31d43bb0a0f973804790fbe430d962ffa2403a9364e5adeb",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "c8bb5d03f47cc3ca31d43bb0a0f973804790fbe430d962ffa2403a9364e5adeb",
+      "generated_extract_error": null
     },
     {
       "patch": "12.0.1",
@@ -315,7 +359,9 @@
       "extract_exit": 0,
       "extract_sha256": "6178cf0702bf7c1b79d39c8e3345b2aee15ee7c1cea2756c343b0918cab9906d",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "6178cf0702bf7c1b79d39c8e3345b2aee15ee7c1cea2756c343b0918cab9906d",
+      "generated_extract_error": null
     },
     {
       "patch": "12.0.5",
@@ -328,7 +374,9 @@
       "extract_exit": 0,
       "extract_sha256": "4da3872aa566695f46e2dacd4e79992f5b06be9541f0d19cf0e8dba45cea8329",
       "extract_byte_identical": false,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "f446822f72eeb475e5b261657104cc87984c98079487b233c68988dc2cde202a",
+      "generated_extract_error": null
     },
     {
       "patch": "12.0.7",
@@ -341,7 +389,9 @@
       "extract_exit": 0,
       "extract_sha256": "014f7d51eca1b2fc5d76071978e09c537efd66d14069e21d163e58ccd04a561e",
       "extract_byte_identical": false,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "ad333a5b736549f66f6756386baad2039d1980315fdf6b6f650e9a9f157b1855",
+      "generated_extract_error": null
     },
     {
       "patch": "12.1.0",
@@ -356,7 +406,9 @@
       "extract_exit": 1,
       "extract_sha256": "c051a68b442b2e69d602650d1c5ec07c1d0262dd1aea01fe73d3f60cd5f29c3b",
       "extract_byte_identical": false,
-      "extract_error": "Traceback (most recent call last):\n  File \"/tmp/p554-reproduction-tvp0_dqo/tools/extract_patch_non_inventory.py\", line 411, in <module>\n    main()\n    ~~~~^^\n  File \"/tmp/p554-reproduction-tvp0_dqo/tools/extract_patch_non_inventory.py\", line 356, in main\n    text = extract_text(raw_path.read_text(), preserve_examples=args.preserve_examples,\n                        normalize_inventory_headings=args.normalize_inventory_headings,\n    ...<6 lines>...\n                        retain_patch_diff_reference=args.retain_patch_diff_reference,\n                        canonical_patch_navigation=args.canonical_patch_navigation)\n  File \"/tmp/p554-reproduction-tvp0_dqo/tools/extract_patch_non_inventory.py\", line 215, in extract_text\n    raise ValueError(f\"unhandled template: {line}\")\nValueError: unhandled template: {{#description2:Midnight 12.1.0 (Curse of Ula\u2019tek)}}\n"
+      "extract_error": "Traceback (most recent call last):\n  File \"/tmp/p554-reproduction-n5ekfqtd/tools/extract_patch_non_inventory.py\", line 411, in <module>\n    main()\n    ~~~~^^\n  File \"/tmp/p554-reproduction-n5ekfqtd/tools/extract_patch_non_inventory.py\", line 356, in main\n    text = extract_text(raw_path.read_text(), preserve_examples=args.preserve_examples,\n                        normalize_inventory_headings=args.normalize_inventory_headings,\n    ...<6 lines>...\n                        retain_patch_diff_reference=args.retain_patch_diff_reference,\n                        canonical_patch_navigation=args.canonical_patch_navigation)\n  File \"/tmp/p554-reproduction-n5ekfqtd/tools/extract_patch_non_inventory.py\", line 215, in extract_text\n    raise ValueError(f\"unhandled template: {line}\")\nValueError: unhandled template: {{#description2:Midnight 12.1.0 (Curse of Ula\u2019tek)}}\n",
+      "generated_extract_sha256": null,
+      "generated_extract_error": "unhandled template: {{#description2:Midnight 12.1.0 (Curse of Ula\u2019tek)}}"
     },
     {
       "patch": "5.4.8",
@@ -371,7 +423,9 @@
       "extract_exit": 0,
       "extract_sha256": "f881069e44e3d84a47dc46891795c9e5315b68e080a3d11ba873d2adc16d32e8",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "f881069e44e3d84a47dc46891795c9e5315b68e080a3d11ba873d2adc16d32e8",
+      "generated_extract_error": null
     },
     {
       "patch": "5.5.4",
@@ -389,7 +443,9 @@
       "extract_exit": 0,
       "extract_sha256": "e9035a133ea157e16c301856937e953e372c3d2d9d8e1df6032f2d6e1cdac49b",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "e9035a133ea157e16c301856937e953e372c3d2d9d8e1df6032f2d6e1cdac49b",
+      "generated_extract_error": null
     },
     {
       "patch": "6.0.1",
@@ -402,7 +458,9 @@
       "extract_exit": 0,
       "extract_sha256": "bbd5575edc2d20e35c52be0b2d23f8a44f17afe4ad5f0eafe87a926b4f2e5b30",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "bbd5575edc2d20e35c52be0b2d23f8a44f17afe4ad5f0eafe87a926b4f2e5b30",
+      "generated_extract_error": null
     },
     {
       "patch": "6.0.2",
@@ -421,7 +479,9 @@
       "extract_exit": 0,
       "extract_sha256": "4b68d80331aece12872f495824ee67c46e775160b1eb5ea5988f7e3c3fcc2e34",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "4b68d80331aece12872f495824ee67c46e775160b1eb5ea5988f7e3c3fcc2e34",
+      "generated_extract_error": null
     },
     {
       "patch": "6.1.0",
@@ -439,7 +499,9 @@
       "extract_exit": 0,
       "extract_sha256": "3986ede4da66787e60603d968d597175210c4b376617a65f905f0c33be93f084",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "3986ede4da66787e60603d968d597175210c4b376617a65f905f0c33be93f084",
+      "generated_extract_error": null
     },
     {
       "patch": "6.2.0",
@@ -454,7 +516,9 @@
       "extract_exit": 0,
       "extract_sha256": "36eae48608a4b7ac67fb3d1ac38ae85a378731113622a623236b5ca9821ee154",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "36eae48608a4b7ac67fb3d1ac38ae85a378731113622a623236b5ca9821ee154",
+      "generated_extract_error": null
     },
     {
       "patch": "6.2.2",
@@ -467,7 +531,9 @@
       "extract_exit": 0,
       "extract_sha256": "66ba9602ace39aa500e39afd7ab11a83ab62e084c6e7369e8855e0fc4feea0e9",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "66ba9602ace39aa500e39afd7ab11a83ab62e084c6e7369e8855e0fc4feea0e9",
+      "generated_extract_error": null
     },
     {
       "patch": "6.2.4",
@@ -485,7 +551,9 @@
       "extract_exit": 0,
       "extract_sha256": "79e11a667980c8c0a00a1b8968e52840ab6ebe100203fb6f034f1064e21cde85",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "79e11a667980c8c0a00a1b8968e52840ab6ebe100203fb6f034f1064e21cde85",
+      "generated_extract_error": null
     },
     {
       "patch": "7.0.1",
@@ -498,7 +566,9 @@
       "extract_exit": 0,
       "extract_sha256": "6027fa42fda80cb6af0a6dfe9f0448ada64381830374d09444e71a88679c42e1",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "6027fa42fda80cb6af0a6dfe9f0448ada64381830374d09444e71a88679c42e1",
+      "generated_extract_error": null
     },
     {
       "patch": "7.0.3",
@@ -515,7 +585,9 @@
       "extract_exit": 0,
       "extract_sha256": "d3329d2bb546727c6f934f0c713fd70edef8309c956874bf2590e6a1f6220d33",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "d3329d2bb546727c6f934f0c713fd70edef8309c956874bf2590e6a1f6220d33",
+      "generated_extract_error": null
     },
     {
       "patch": "7.1.0",
@@ -531,7 +603,9 @@
       "extract_exit": 0,
       "extract_sha256": "5575d7cd3d8e25e4d8a7e8328d84c449759490248d7c053bc3ca3db84c1393e9",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "5575d7cd3d8e25e4d8a7e8328d84c449759490248d7c053bc3ca3db84c1393e9",
+      "generated_extract_error": null
     },
     {
       "patch": "7.2.0",
@@ -547,7 +621,9 @@
       "extract_exit": 0,
       "extract_sha256": "6f7dbe3ba11d533de7738fa02bd708bd48274a7c5310b7cc0f513523382777e6",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "6f7dbe3ba11d533de7738fa02bd708bd48274a7c5310b7cc0f513523382777e6",
+      "generated_extract_error": null
     },
     {
       "patch": "7.2.5",
@@ -562,7 +638,9 @@
       "extract_exit": 0,
       "extract_sha256": "083f32ee619a4537ed1751345cc801a981d69dbd5b65e859d066f13cc53790cf",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "083f32ee619a4537ed1751345cc801a981d69dbd5b65e859d066f13cc53790cf",
+      "generated_extract_error": null
     },
     {
       "patch": "7.3.0",
@@ -577,7 +655,9 @@
       "extract_exit": 0,
       "extract_sha256": "0fce01e22d2750a479d65e8604900f331598c169bee2beee12e7dc89fce5e8f8",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "0fce01e22d2750a479d65e8604900f331598c169bee2beee12e7dc89fce5e8f8",
+      "generated_extract_error": null
     },
     {
       "patch": "7.3.2",
@@ -594,7 +674,9 @@
       "extract_exit": 0,
       "extract_sha256": "7522a20ff388b43514565be6b56e858cd10362f7e72d7f03ec09e853d55b187e",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "7522a20ff388b43514565be6b56e858cd10362f7e72d7f03ec09e853d55b187e",
+      "generated_extract_error": null
     },
     {
       "patch": "8.0.1",
@@ -611,7 +693,9 @@
       "extract_exit": 0,
       "extract_sha256": "c5408fce8e67bc856215b01e26c787e68f6ac27fcd9ad449967294d7745a03c4",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "c5408fce8e67bc856215b01e26c787e68f6ac27fcd9ad449967294d7745a03c4",
+      "generated_extract_error": null
     },
     {
       "patch": "8.1.0",
@@ -631,7 +715,9 @@
       "extract_exit": 0,
       "extract_sha256": "3ebb449f9291e15c4df3341cee40daee03fa6299a986d3ca5a15f2d5c8403812",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "3ebb449f9291e15c4df3341cee40daee03fa6299a986d3ca5a15f2d5c8403812",
+      "generated_extract_error": null
     },
     {
       "patch": "8.1.5",
@@ -648,7 +734,9 @@
       "extract_exit": 0,
       "extract_sha256": "37a8a38a0fa152908db96ce70242e705ec1284c7c1bff599a8eccf4da1a05a53",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "37a8a38a0fa152908db96ce70242e705ec1284c7c1bff599a8eccf4da1a05a53",
+      "generated_extract_error": null
     },
     {
       "patch": "8.2.0",
@@ -665,7 +753,9 @@
       "extract_exit": 0,
       "extract_sha256": "49736eb93e74da2436d5e600e58b6ee8674927ef4b15f50e10adffa675585dd0",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "49736eb93e74da2436d5e600e58b6ee8674927ef4b15f50e10adffa675585dd0",
+      "generated_extract_error": null
     },
     {
       "patch": "8.2.5",
@@ -683,7 +773,9 @@
       "extract_exit": 0,
       "extract_sha256": "acee4aa6cb4716ce55ea115b277924d234c2142bf635236d40d62072a12f939e",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "acee4aa6cb4716ce55ea115b277924d234c2142bf635236d40d62072a12f939e",
+      "generated_extract_error": null
     },
     {
       "patch": "8.3.0",
@@ -703,7 +795,9 @@
       "extract_exit": 0,
       "extract_sha256": "5de022982639c186f36ba05a3a1c6e6140d0dd79e0da356cbfafc3f46b57a1d3",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "5de022982639c186f36ba05a3a1c6e6140d0dd79e0da356cbfafc3f46b57a1d3",
+      "generated_extract_error": null
     },
     {
       "patch": "8.3.7",
@@ -720,7 +814,9 @@
       "extract_exit": 0,
       "extract_sha256": "78f1f7c357923c589ba34c865cf3309c444d8493b788b17c105809e6dc35efc2",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "78f1f7c357923c589ba34c865cf3309c444d8493b788b17c105809e6dc35efc2",
+      "generated_extract_error": null
     },
     {
       "patch": "9.0.1",
@@ -738,7 +834,9 @@
       "extract_exit": 0,
       "extract_sha256": "b4bfffbdad9981f0156a5ed21e7ce9ecef236c033c04c749a4f3100fce2f80c0",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "b4bfffbdad9981f0156a5ed21e7ce9ecef236c033c04c749a4f3100fce2f80c0",
+      "generated_extract_error": null
     },
     {
       "patch": "9.0.2",
@@ -753,7 +851,9 @@
       "extract_exit": 0,
       "extract_sha256": "9a193fe2a9b927d74db45a14a7fbe774eea57583235d8f1113d97fe8c86b50f6",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "9a193fe2a9b927d74db45a14a7fbe774eea57583235d8f1113d97fe8c86b50f6",
+      "generated_extract_error": null
     },
     {
       "patch": "9.0.5",
@@ -766,7 +866,9 @@
       "extract_exit": 0,
       "extract_sha256": "7a7ca87f3b1973400a79c0458a35e76442cc2529050df94b6b84af2abb5cd4ce",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "7a7ca87f3b1973400a79c0458a35e76442cc2529050df94b6b84af2abb5cd4ce",
+      "generated_extract_error": null
     },
     {
       "patch": "9.1.0",
@@ -784,7 +886,9 @@
       "extract_exit": 0,
       "extract_sha256": "961a8cd7dff7cf67ab13b4112ff18520a074f369a8201df3f192a5694c942783",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "961a8cd7dff7cf67ab13b4112ff18520a074f369a8201df3f192a5694c942783",
+      "generated_extract_error": null
     },
     {
       "patch": "9.1.5",
@@ -800,7 +904,9 @@
       "extract_exit": 0,
       "extract_sha256": "e9e3b40f6d63639f224a0297b82dfe62bcc0d07f61931e2c1c9354bcdb822eba",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "e9e3b40f6d63639f224a0297b82dfe62bcc0d07f61931e2c1c9354bcdb822eba",
+      "generated_extract_error": null
     },
     {
       "patch": "9.2.0",
@@ -815,7 +921,9 @@
       "extract_exit": 0,
       "extract_sha256": "4946812493aa7bbf9cf4ddc3b18857ee603e0bb4577533a8860759fa9bb0e43e",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "4946812493aa7bbf9cf4ddc3b18857ee603e0bb4577533a8860759fa9bb0e43e",
+      "generated_extract_error": null
     },
     {
       "patch": "9.2.5",
@@ -834,7 +942,9 @@
       "extract_exit": 0,
       "extract_sha256": "e1b3b6e79876aa416513d622bc823e5a1f372096d7c0f9c7054c4c4a0c1a9518",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "e1b3b6e79876aa416513d622bc823e5a1f372096d7c0f9c7054c4c4a0c1a9518",
+      "generated_extract_error": null
     },
     {
       "patch": "9.2.7",
@@ -849,7 +959,9 @@
       "extract_exit": 0,
       "extract_sha256": "6528a2aadae856784b4a8530cc3fbe592ab8eb5097a65f5e62789de9c6c3e86b",
       "extract_byte_identical": true,
-      "extract_error": ""
+      "extract_error": "",
+      "generated_extract_sha256": "6528a2aadae856784b4a8530cc3fbe592ab8eb5097a65f5e62789de9c6c3e86b",
+      "generated_extract_error": null
     }
   ]
 }

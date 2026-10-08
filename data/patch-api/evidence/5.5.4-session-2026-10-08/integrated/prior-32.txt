@@ -1,0 +1,14 @@
+{
+  "result": "pass",
+  "inventory": 28,
+  "ledger_statuses": {
+    "audit-pending": 13,
+    "partial-development-green": 8,
+    "bounded-coverage": 7,
+    "metadata-only": 4
+  },
+  "gaps": 13,
+  "preserved_inputs": 158,
+  "reproduced_registers": 32,
+  "publication_sweeps": 31
+}

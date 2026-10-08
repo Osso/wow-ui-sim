@@ -1,3 +1,7 @@
+## [2026-10-08] integration | Patch 5.5.4 Mists Classic API audit
+
+[Audit](investigations/patch-5-5-4-api-audit.md): rebased onto bebcc5830; nine commit mappings and 188 historical artifacts preserved. All 9,740 observations on 55 retail pages equal master; both sweeps 56/56, Mists 2/2 and retail line controls 3/3 pass. Mists check has zero non-vendor warnings; format and 87 Python fixtures pass. All 56 registers/53 extracts reproduce with three exact inherited failures. Rerun negative rejects 1 → 0 rows; 38 pinned prior validators pass. SharedXML-only/empty-inventory coverage limits retained.
+
 ## [2026-10-08] integration | Patch 6.0.2 API audit
 
 [Audit](investigations/patch-6-0-2-api-audit.md): real 6.1.0/6.2.0/6.2.2 supersession registers; own 275 gaps/657 observations unchanged, all 52 other pages equal pinned master d0fabed03. Branch/master sweeps 54/53 pass; scoped bonus, tracker and vignette consumers pass; broader scenario assertion fails identically on master and remains untouched. 53 registers/50 extracts reproduce with three inherited failures; 84 Python fixtures, format, warning-clean non-vendor Mists and 37 prior validators pass. Twelve original/rebased commit identities and all historical validator invariants preserved. Both addons-enabled startups []; negative 275 → 276; sealed portability PASS clean 35/35 and later 36/36, own-log tampering rejected.
