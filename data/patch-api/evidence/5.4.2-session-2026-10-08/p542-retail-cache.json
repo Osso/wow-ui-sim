@@ -1,0 +1,5 @@
+{
+  "files": 4044,
+  "bytes": 33178983,
+  "provenance": "schema=1\nprofile=retail\nproduct=wow\nversion=12.1.0.69933\nbuild_key=dcfc90fffd79ba00406ae46f5f657592\ninstall_key=\nmanifest_sha256=aa7dfec3fb3bc9440a8c737c2274363502cb3d22c7939b8a570a58e717202edd\nsource=casc-local-or-cdn\nfallback=none\n"
+}

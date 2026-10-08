@@ -1,0 +1,41 @@
+# Patch 5.4.2 API audit
+
+Pinned from scratch on 2026-10-08: Warcraft Wiki pageid 262849, revision 2543251 (2014-02-20). Parent pageid 151415 revision 6441253 states December 10, 2013 release, TOC 50400 and latest build 17688; the API tables compare 5.4.1.17538 → 5.4.2.17688. This is the 2013 retail chain, not Mists Classic 5.5.x. Neither page is a redirect or navigation stub.
+
+## Source and accounting
+
+The page contains 68 inventory occurrences: seven new/two removed global APIs, two FrameXML additions, 55 events and two slider methods. All caption counts match. The opt-in `--mists-automated-diff` generator preserves bare removals and widget ownership; the extractor retains three prose contracts and five enum values instead of dropping the Lua Enums table. Saved sources use recorded flags; no default parser behavior changed.
+
+The ledger accounts for all 85 identities: 68 inventory plus 17 retained extract rows. Discovery found 39 publication gaps: 37 glue/auth/patcher events, fastrandom, and the IsOnGlueScreen name collision. No new runtime registrations, models or shims were added. Existing publication/absence covers 29 inventory rows; it does not prove historical behavior. Five numeric enum rows have exact cached assertions. Nine extract rows are metadata; three prose rows remain pending.
+
+## Behavior and problematic cases
+
+| Contract | Current proof | Remaining boundary |
+|---|---|---|
+| Explicit guild name-realm | Cached query preserves Arthas-Silvermoon, follows Jaina-Proudmoore replacement, nil on roster removal | GuildMember stores only name/rank/online; no separate realm or local identity source. Bare Jaina stays bare. Automatic qualification unmodeled. |
+| Autocomplete priorities | Exact OTHER=1, INTERACTED=2, IN_GROUP=3, GUILD=4, FRIEND=5 | Native ranking/lifecycle not claimed. |
+| Slider methods, full-name/ambiguation/color APIs | Inventory publication; existing targeted area tests requested | No 2013 signature/native parity claim. |
+| 37 missing events | Each rejected registration recorded | No authentication/network/launcher/patcher backend supplies lifecycle/payload. Registering arbitrary names would be a shim. |
+| RNG and secure environment | fastrandom absent; raw prose retained verbatim | Fast/secure generator separation, performance and secure-environment exclusion unmodeled. Prose redirects random/Math.random to securerandom while diff removes that exported name; no alias inferred. |
+| IsOnGlueScreen | Later 6.0.2 removal meets current boolean export; whole-word consumers retained | Boolean is consumed by current Blizzard UI; do not delete or patch consumers. |
+
+## Retirements and ordering
+
+No new retirements. StartUnratedArena and securerandom already have nil raw/ordinary lookup. Whole-word `/usr/bin/grep -R -n -w` cached scans exclude *Documentation* and source/test scans retain all lines, including possible pcall and conditional references; both removed globals have zero matches. Pinned a9d7c9566, p547-page 531ada0628ac9100228f228cce1fb96080ac4f16 and p548-page 2caa653ace4e52ae3b918bba8ad322bb80b06671 register trees contain no re-additions. Grep evidence is untruncated. Cache inventory/provenance is recorded, not treated as empty by assumption.
+
+Queued 5.4.7 then 5.4.8 placeholders start later_registers, followed by 6.0.1, 6.0.2 and the remaining merged retail chain. Replace placeholders during ordered integration. No 5.5.x Classic registers included. C_ProductChoice.GetNumSuppressed absence comes from existing 8.3.0 supersession; this audit does not retire it again.
+
+## Verification
+
+Discovery initially fails on the exact 39 unaccounted gaps. Targeted positive, negative-control, reproduction, fixtures, format/Mists and portability results are retained in the session evidence and summarized after final gates. No full integration suite. Runtime/src files are unchanged, so a shared-runtime startup-regression comparison is not required for this audit.
+
+## Sources
+
+- [Pinned provenance](../../../data/patch-api/sources/5.4.2-api-changes.provenance.json), [page](../../../data/patch-api/sources/5.4.2-api-changes.wikitext), [extract](../../../data/patch-api/sources/5.4.2-api-changes.txt), [register](../../../data/patch-api/sources/5.4.2-wikitext-register.json), [ledger](../../../data/patch-api/sources/5.4.2-page-coverage.json).
+- [Session evidence](../../../data/patch-api/evidence/5.4.2-session-2026-10-08/).
+- [Spec](../../specs/patch-5-4-2-publication-sweep.md).
+
+## See Also
+
+- [[patch-6-0-2-api-audit]] — later removal and register/reproduction template.
+- [[patch-audit-validator-portability]] — clean/later-audit gate and historical pins.

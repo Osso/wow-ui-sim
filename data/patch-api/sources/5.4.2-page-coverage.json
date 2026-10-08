@@ -1,0 +1,591 @@
+{
+  "schema": "patch-api-page-coverage/v1",
+  "patch": "5.4.2",
+  "source": "data/patch-api/sources/5.4.2-wikitext-register.json",
+  "source_sha256": "d079278f9323c1139b7772224e40b28fa482206f3fc7400e70fb969cc672fc87",
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/5.4.2-api-changes.txt",
+    "sha256": "fe2e48eb7d1f14f4995d9cd9c35fef099d6e50d6dfc6bf16f630400de3880980"
+  },
+  "proof_policy": "2013 retail only. Publication/absence is not behavior. Enum values and explicitly stored roster names bounded; secure RNG and missing realm identity remain pending. Queued 5.4.7 then 5.4.8 placeholders precede 6.0.1, 6.0.2 and remaining retail registers.",
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-Ambiguate-18",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after the ordered later retail registers; no historical signature, native producer, return or security credit. Existing C_ProductChoice removal is 8.3.0 supersession, not a new retirement."
+    },
+    {
+      "source_id": "wt-global-api-C_ProductChoice.GetNumSuppressed-19",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after the ordered later retail registers; no historical signature, native producer, return or security credit. Existing C_ProductChoice removal is 8.3.0 supersession, not a new retirement."
+    },
+    {
+      "source_id": "wt-global-api-GetDefaultVideoQualityOption-20",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after the ordered later retail registers; no historical signature, native producer, return or security credit. Existing C_ProductChoice removal is 8.3.0 supersession, not a new retirement."
+    },
+    {
+      "source_id": "wt-global-api-GetSpecializationNameForClassID-21",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after the ordered later retail registers; no historical signature, native producer, return or security credit. Existing C_ProductChoice removal is 8.3.0 supersession, not a new retirement."
+    },
+    {
+      "source_id": "wt-global-api-IsOnGlueScreen-22",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Later 6.0.2 removal expects function absence, but cached current GlueXML exports IsOnGlueScreen as a boolean used in UI code. Deleting the consumed field would break current behavior; publication classifier reports that non-nil collision explicitly."
+    },
+    {
+      "source_id": "wt-global-api-UnitFullName-23",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after the ordered later retail registers; no historical signature, native producer, return or security credit. Existing C_ProductChoice removal is 8.3.0 supersession, not a new retirement."
+    },
+    {
+      "source_id": "wt-global-api-fastrandom-24",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical fast RNG and secure-environment separation have no backed API implementation; aliasing math.random would not prove independent fast/secure generators, performance or environment visibility."
+    },
+    {
+      "source_id": "wt-global-api-StartUnratedArena-27",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after the ordered later retail registers; no historical signature, native producer, return or security credit. Existing C_ProductChoice removal is 8.3.0 supersession, not a new retirement."
+    },
+    {
+      "source_id": "wt-global-api-securerandom-28",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after the ordered later retail registers; no historical signature, native producer, return or security credit. Existing C_ProductChoice removal is 8.3.0 supersession, not a new retirement."
+    },
+    {
+      "source_id": "wt-framexml-RGBTableToColorCode-38",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after the ordered later retail registers; no historical signature, native producer, return or security credit. Existing C_ProductChoice removal is 8.3.0 supersession, not a new retirement."
+    },
+    {
+      "source_id": "wt-framexml-RGBToColorCode-39",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after the ordered later retail registers; no historical signature, native producer, return or security credit. Existing C_ProductChoice removal is 8.3.0 supersession, not a new retirement."
+    },
+    {
+      "source_id": "wt-events-ACCOUNT_DATA_INITIALIZED-49",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after the ordered later retail registers; no historical signature, native producer, return or security credit. Existing C_ProductChoice removal is 8.3.0 supersession, not a new retirement."
+    },
+    {
+      "source_id": "wt-events-ACCOUNT_MESSAGES_AVAILABLE-50",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-ACCOUNT_MESSAGES_BODY_LOADED-51",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-ACCOUNT_MESSAGES_HEADERS_LOADED-52",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-ADDON_LIST_UPDATE-53",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-AUTH_CHALLENGE_UI_INVALID-54",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-CHARACTER_LIST_UPDATE-55",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after the ordered later retail registers; no historical signature, native producer, return or security credit. Existing C_ProductChoice removal is 8.3.0 supersession, not a new retirement."
+    },
+    {
+      "source_id": "wt-events-CLIENT_ACCOUNT_MISMATCH-56",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-CLIENT_CONVERTED-57",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-CLIENT_TRIAL-58",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-CLOSE_STATUS_DIALOG-59",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-DISCONNECTED_FROM_SERVER-60",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-DISPLAY_PROMOTION-61",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after the ordered later retail registers; no historical signature, native producer, return or security credit. Existing C_ProductChoice removal is 8.3.0 supersession, not a new retirement."
+    },
+    {
+      "source_id": "wt-events-ENCOUNTER_END-62",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after the ordered later retail registers; no historical signature, native producer, return or security credit. Existing C_ProductChoice removal is 8.3.0 supersession, not a new retirement."
+    },
+    {
+      "source_id": "wt-events-ENCOUNTER_START-63",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after the ordered later retail registers; no historical signature, native producer, return or security credit. Existing C_ProductChoice removal is 8.3.0 supersession, not a new retirement."
+    },
+    {
+      "source_id": "wt-events-FORCE_DECLINE_CHARACTER-64",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-FORCE_RENAME_CHARACTER-65",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after the ordered later retail registers; no historical signature, native producer, return or security credit. Existing C_ProductChoice removal is 8.3.0 supersession, not a new retirement."
+    },
+    {
+      "source_id": "wt-events-FRAMES_LOADED-66",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after the ordered later retail registers; no historical signature, native producer, return or security credit. Existing C_ProductChoice removal is 8.3.0 supersession, not a new retirement."
+    },
+    {
+      "source_id": "wt-events-GAME_ACCOUNTS_UPDATED-67",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-GET_PREFERRED_REALM_INFO-68",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-GLUE_SCREENSHOT_FAILED-69",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after the ordered later retail registers; no historical signature, native producer, return or security credit. Existing C_ProductChoice removal is 8.3.0 supersession, not a new retirement."
+    },
+    {
+      "source_id": "wt-events-GLUE_SCREENSHOT_SUCCEEDED-70",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after the ordered later retail registers; no historical signature, native producer, return or security credit. Existing C_ProductChoice removal is 8.3.0 supersession, not a new retirement."
+    },
+    {
+      "source_id": "wt-events-GLUE_UPDATE_EXPANSION_LEVEL-71",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-LAUNCHER_LOGIN_STATUS_CHANGED-72",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after the ordered later retail registers; no historical signature, native producer, return or security credit. Existing C_ProductChoice removal is 8.3.0 supersession, not a new retirement."
+    },
+    {
+      "source_id": "wt-events-LOGIN_STARTED-73",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-LOGIN_STOPPED-74",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-LUA_WARNING-75",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after the ordered later retail registers; no historical signature, native producer, return or security credit. Existing C_ProductChoice removal is 8.3.0 supersession, not a new retirement."
+    },
+    {
+      "source_id": "wt-events-OPEN_REALM_LIST-76",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-OPEN_STATUS_DIALOG-77",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after the ordered later retail registers; no historical signature, native producer, return or security credit. Existing C_ProductChoice removal is 8.3.0 supersession, not a new retirement."
+    },
+    {
+      "source_id": "wt-events-PATCH_DOWNLOADED-78",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-PATCH_UPDATE_PROGRESS-79",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-PET_JOURNAL_PET_RESTORED-80",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after the ordered later retail registers; no historical signature, native producer, return or security credit. Existing C_ProductChoice removal is 8.3.0 supersession, not a new retirement."
+    },
+    {
+      "source_id": "wt-events-PET_JOURNAL_PET_REVOKED-81",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after the ordered later retail registers; no historical signature, native producer, return or security credit. Existing C_ProductChoice removal is 8.3.0 supersession, not a new retirement."
+    },
+    {
+      "source_id": "wt-events-PLAYER_ENTER_MATRIX-82",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-PLAYER_ENTER_PIN-83",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-PLAYER_ENTER_TOKEN-84",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-RANDOM_CHARACTER_NAME_RESULT-85",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after the ordered later retail registers; no historical signature, native producer, return or security credit. Existing C_ProductChoice removal is 8.3.0 supersession, not a new retirement."
+    },
+    {
+      "source_id": "wt-events-SCANDLL_DOWNLOADING-86",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-SCANDLL_ERROR-87",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-SCANDLL_FINISHED-88",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-SCREEN_FIRST_DISPLAYED-89",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after the ordered later retail registers; no historical signature, native producer, return or security credit. Existing C_ProductChoice removal is 8.3.0 supersession, not a new retirement."
+    },
+    {
+      "source_id": "wt-events-SELECT_FIRST_CHARACTER-90",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-SELECT_LAST_CHARACTER-91",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-SERVER_SPLIT_NOTICE-92",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-SET_GLUE_SCREEN-93",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-SHOW_SERVER_ALERT-94",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after the ordered later retail registers; no historical signature, native producer, return or security credit. Existing C_ProductChoice removal is 8.3.0 supersession, not a new retirement."
+    },
+    {
+      "source_id": "wt-events-SHOW_SURVEY_NOTIFICATION-95",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-START_GLUE_MUSIC-96",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-SUGGEST_REALM-97",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-SUGGEST_REALM_WRONG_CATEGORY-98",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-SUGGEST_REALM_WRONG_PVP-99",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-TIMER_ALERT-100",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-UPDATE_SELECTED_CHARACTER-101",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after the ordered later retail registers; no historical signature, native producer, return or security credit. Existing C_ProductChoice removal is 8.3.0 supersession, not a new retirement."
+    },
+    {
+      "source_id": "wt-events-UPDATE_SELECTED_RACE-102",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-events-UPDATE_STATUS_DIALOG-103",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior."
+    },
+    {
+      "source_id": "wt-widgets-Slider:GetObeyStepOnDrag-113",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after the ordered later retail registers; no historical signature, native producer, return or security credit. Existing C_ProductChoice removal is 8.3.0 supersession, not a new retirement."
+    },
+    {
+      "source_id": "wt-widgets-Slider:SetObeyStepOnDrag-114",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after the ordered later retail registers; no historical signature, native producer, return or security credit. Existing C_ProductChoice removal is 8.3.0 supersession, not a new retirement."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No modeled secure RNG/fast RNG split or performance contract. The raw page says random and Math.random redirect to securerandom while its diff removes the securerandom name; retain both claims without inferring an alias or export."
+    },
+    {
+      "source_id": "prose-undated-005",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Secure environment exclusion requires explicit RNG implementations and environment-specific publication. No evidence for an addon/global alias proves this boundary."
+    },
+    {
+      "source_id": "prose-undated-007",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Existing GuildMember.name preserves explicitly supplied name-realm strings; the model lacks a separate realm field and local-realm identity source, and bare names stay bare. Cached test proves stored-name changes and missing rows, not automatic qualification."
+    },
+    {
+      "source_id": "source-context-009",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-010",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-011",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-012",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-013",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-014",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-015",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Named enum family heading; five exact values retained in the following rows, not an API function or table."
+    },
+    {
+      "source_id": "prose-undated-016",
+      "capabilities": [
+        "cached-five-autocomplete-priority-values"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact pinned numeric value asserted by patch_5_4_2_enum_values_and_existing_absence; no native autocomplete-ranking lifecycle parity."
+    },
+    {
+      "source_id": "prose-undated-017",
+      "capabilities": [
+        "cached-five-autocomplete-priority-values"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact pinned numeric value asserted by patch_5_4_2_enum_values_and_existing_absence; no native autocomplete-ranking lifecycle parity."
+    },
+    {
+      "source_id": "prose-undated-018",
+      "capabilities": [
+        "cached-five-autocomplete-priority-values"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact pinned numeric value asserted by patch_5_4_2_enum_values_and_existing_absence; no native autocomplete-ranking lifecycle parity."
+    },
+    {
+      "source_id": "prose-undated-019",
+      "capabilities": [
+        "cached-five-autocomplete-priority-values"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact pinned numeric value asserted by patch_5_4_2_enum_values_and_existing_absence; no native autocomplete-ranking lifecycle parity."
+    },
+    {
+      "source_id": "prose-undated-020",
+      "capabilities": [
+        "cached-five-autocomplete-priority-values"
+      ],
+      "status": "bounded-coverage",
+      "note": "Exact pinned numeric value asserted by patch_5_4_2_enum_values_and_existing_absence; no native autocomplete-ranking lifecycle parity."
+    }
+  ]
+}

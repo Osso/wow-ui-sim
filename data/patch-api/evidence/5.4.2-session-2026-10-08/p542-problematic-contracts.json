@@ -1,0 +1,938 @@
+[
+  {
+    "source_id": "wt-events-ACCOUNT_MESSAGES_AVAILABLE-50",
+    "symbol": "ACCOUNT_MESSAGES_AVAILABLE",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "ACCOUNT_MESSAGES_AVAILABLE"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"ACCOUNT_MESSAGES_AVAILABLE\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-ACCOUNT_MESSAGES_BODY_LOADED-51",
+    "symbol": "ACCOUNT_MESSAGES_BODY_LOADED",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "ACCOUNT_MESSAGES_BODY_LOADED"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"ACCOUNT_MESSAGES_BODY_LOADED\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-ACCOUNT_MESSAGES_HEADERS_LOADED-52",
+    "symbol": "ACCOUNT_MESSAGES_HEADERS_LOADED",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "ACCOUNT_MESSAGES_HEADERS_LOADED"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"ACCOUNT_MESSAGES_HEADERS_LOADED\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-ADDON_LIST_UPDATE-53",
+    "symbol": "ADDON_LIST_UPDATE",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "ADDON_LIST_UPDATE"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"ADDON_LIST_UPDATE\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-AUTH_CHALLENGE_UI_INVALID-54",
+    "symbol": "AUTH_CHALLENGE_UI_INVALID",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "AUTH_CHALLENGE_UI_INVALID"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"AUTH_CHALLENGE_UI_INVALID\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-CLIENT_ACCOUNT_MISMATCH-56",
+    "symbol": "CLIENT_ACCOUNT_MISMATCH",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "CLIENT_ACCOUNT_MISMATCH"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"CLIENT_ACCOUNT_MISMATCH\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-CLIENT_CONVERTED-57",
+    "symbol": "CLIENT_CONVERTED",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "CLIENT_CONVERTED"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"CLIENT_CONVERTED\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-CLIENT_TRIAL-58",
+    "symbol": "CLIENT_TRIAL",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "CLIENT_TRIAL"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"CLIENT_TRIAL\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-CLOSE_STATUS_DIALOG-59",
+    "symbol": "CLOSE_STATUS_DIALOG",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "CLOSE_STATUS_DIALOG"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"CLOSE_STATUS_DIALOG\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-DISCONNECTED_FROM_SERVER-60",
+    "symbol": "DISCONNECTED_FROM_SERVER",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "DISCONNECTED_FROM_SERVER"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"DISCONNECTED_FROM_SERVER\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-FORCE_DECLINE_CHARACTER-64",
+    "symbol": "FORCE_DECLINE_CHARACTER",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "FORCE_DECLINE_CHARACTER"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"FORCE_DECLINE_CHARACTER\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-GAME_ACCOUNTS_UPDATED-67",
+    "symbol": "GAME_ACCOUNTS_UPDATED",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "GAME_ACCOUNTS_UPDATED"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"GAME_ACCOUNTS_UPDATED\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-GET_PREFERRED_REALM_INFO-68",
+    "symbol": "GET_PREFERRED_REALM_INFO",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "GET_PREFERRED_REALM_INFO"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"GET_PREFERRED_REALM_INFO\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-GLUE_UPDATE_EXPANSION_LEVEL-71",
+    "symbol": "GLUE_UPDATE_EXPANSION_LEVEL",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "GLUE_UPDATE_EXPANSION_LEVEL"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"GLUE_UPDATE_EXPANSION_LEVEL\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-LOGIN_STARTED-73",
+    "symbol": "LOGIN_STARTED",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "LOGIN_STARTED"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"LOGIN_STARTED\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-LOGIN_STOPPED-74",
+    "symbol": "LOGIN_STOPPED",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "LOGIN_STOPPED"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"LOGIN_STOPPED\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-OPEN_REALM_LIST-76",
+    "symbol": "OPEN_REALM_LIST",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "OPEN_REALM_LIST"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"OPEN_REALM_LIST\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-PATCH_DOWNLOADED-78",
+    "symbol": "PATCH_DOWNLOADED",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "PATCH_DOWNLOADED"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"PATCH_DOWNLOADED\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-PATCH_UPDATE_PROGRESS-79",
+    "symbol": "PATCH_UPDATE_PROGRESS",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "PATCH_UPDATE_PROGRESS"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"PATCH_UPDATE_PROGRESS\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-PLAYER_ENTER_MATRIX-82",
+    "symbol": "PLAYER_ENTER_MATRIX",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "PLAYER_ENTER_MATRIX"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"PLAYER_ENTER_MATRIX\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-PLAYER_ENTER_PIN-83",
+    "symbol": "PLAYER_ENTER_PIN",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "PLAYER_ENTER_PIN"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"PLAYER_ENTER_PIN\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-PLAYER_ENTER_TOKEN-84",
+    "symbol": "PLAYER_ENTER_TOKEN",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "PLAYER_ENTER_TOKEN"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"PLAYER_ENTER_TOKEN\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-SCANDLL_DOWNLOADING-86",
+    "symbol": "SCANDLL_DOWNLOADING",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "SCANDLL_DOWNLOADING"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"SCANDLL_DOWNLOADING\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-SCANDLL_ERROR-87",
+    "symbol": "SCANDLL_ERROR",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "SCANDLL_ERROR"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"SCANDLL_ERROR\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-SCANDLL_FINISHED-88",
+    "symbol": "SCANDLL_FINISHED",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "SCANDLL_FINISHED"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"SCANDLL_FINISHED\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-SELECT_FIRST_CHARACTER-90",
+    "symbol": "SELECT_FIRST_CHARACTER",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "SELECT_FIRST_CHARACTER"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"SELECT_FIRST_CHARACTER\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-SELECT_LAST_CHARACTER-91",
+    "symbol": "SELECT_LAST_CHARACTER",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "SELECT_LAST_CHARACTER"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"SELECT_LAST_CHARACTER\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-SERVER_SPLIT_NOTICE-92",
+    "symbol": "SERVER_SPLIT_NOTICE",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "SERVER_SPLIT_NOTICE"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"SERVER_SPLIT_NOTICE\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-SET_GLUE_SCREEN-93",
+    "symbol": "SET_GLUE_SCREEN",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "SET_GLUE_SCREEN"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"SET_GLUE_SCREEN\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-SHOW_SURVEY_NOTIFICATION-95",
+    "symbol": "SHOW_SURVEY_NOTIFICATION",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "SHOW_SURVEY_NOTIFICATION"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"SHOW_SURVEY_NOTIFICATION\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-START_GLUE_MUSIC-96",
+    "symbol": "START_GLUE_MUSIC",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "START_GLUE_MUSIC"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"START_GLUE_MUSIC\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-SUGGEST_REALM-97",
+    "symbol": "SUGGEST_REALM",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "SUGGEST_REALM"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"SUGGEST_REALM\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-SUGGEST_REALM_WRONG_CATEGORY-98",
+    "symbol": "SUGGEST_REALM_WRONG_CATEGORY",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "SUGGEST_REALM_WRONG_CATEGORY"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"SUGGEST_REALM_WRONG_CATEGORY\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-SUGGEST_REALM_WRONG_PVP-99",
+    "symbol": "SUGGEST_REALM_WRONG_PVP",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "SUGGEST_REALM_WRONG_PVP"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"SUGGEST_REALM_WRONG_PVP\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-TIMER_ALERT-100",
+    "symbol": "TIMER_ALERT",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "TIMER_ALERT"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"TIMER_ALERT\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-UPDATE_SELECTED_RACE-102",
+    "symbol": "UPDATE_SELECTED_RACE",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "UPDATE_SELECTED_RACE"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"UPDATE_SELECTED_RACE\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-events-UPDATE_STATUS_DIALOG-103",
+    "symbol": "UPDATE_STATUS_DIALOG",
+    "status": "audit-pending",
+    "reason": "Historical glue/authentication/launcher/patcher event is not accepted by the current in-game event catalogue. No modeled glue/network/patcher producer supplies its lifecycle or payload; permissive registration would be a shim, not behavior.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "UPDATE_STATUS_DIALOG"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"UPDATE_STATUS_DIALOG\"; registered=false",
+        "kind": "event",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-IsOnGlueScreen-22",
+    "symbol": "IsOnGlueScreen",
+    "status": "audit-pending",
+    "reason": "Later 6.0.2 removal expects function absence, but cached current GlueXML exports IsOnGlueScreen as a boolean used in UI code. Deleting the consumed field would break current behavior; publication classifier reports that non-nil collision explicitly.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": "wt-global-api-IsOnGlueScreen-48",
+        "symbol": "IsOnGlueScreen"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=boolean; lookup=boolean",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    }
+  },
+  {
+    "source_id": "wt-global-api-fastrandom-24",
+    "symbol": "fastrandom",
+    "status": "audit-pending",
+    "reason": "Historical fast RNG and secure-environment separation have no backed API implementation; aliasing math.random would not prove independent fast/secure generators, performance or environment visibility.",
+    "observation": {
+      "expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "fastrandom"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=nil; lookup=nil",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    }
+  }
+]

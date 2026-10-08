@@ -1,0 +1,33 @@
+src/c_api/c_glue.rs:11:    table_set_rust_fn_static(state, ns, "IsOnGlueScreen", c_glue_is_on_glue_screen)?;
+tests/forever_auto_roll.rs:304:        assert(C_Glue.IsOnGlueScreen() == false)
+tests/blizzard_settings_shared_loads.rs:644:         C_Glue.IsOnGlueScreen() then ... end` so glue-screen loads do NOT \
+tests/blizzard_settings_shared_loads.rs:646:         C_Glue.IsOnGlueScreen returns false on ScreenKind::Game so the table \
+tests/blizzard_plunderstorm_basics_loads.rs:120:             (the addon's OnShow branches on `C_Glue.IsOnGlueScreen()` to add the \
+tests/blizzard_deprecated_glue_loads.rs:50:        "Blizzard_DeprecatedGlue declares `## LoadOnDemand: 0` — the IsOnGlueScreen global \
+tests/blizzard_deprecated_glue_loads.rs:68:         (src/toc.rs:311). NOTE: this means `IsOnGlueScreen` is materialized to `false` at \
+tests/blizzard_deprecated_glue_loads.rs:98:         IsOnGlueScreen global was an in-game snapshot only; glue-screen Lua never read it"
+tests/blizzard_deprecated_glue_loads.rs:125:        .eval("return type(IsOnGlueScreen)")
+tests/blizzard_deprecated_glue_loads.rs:126:        .expect("type(IsOnGlueScreen) query should succeed");
+tests/blizzard_deprecated_glue_loads.rs:129:        "Deprecated_Glue.lua line 9 reads `IsOnGlueScreen = C_Glue.IsOnGlueScreen();` — note \
+tests/blizzard_deprecated_glue_loads.rs:132:         is intentional in Blizzard's source — legacy callers wrote `if IsOnGlueScreen then` \
+tests/blizzard_deprecated_glue_loads.rs:133:         expecting a value-typed boolean, not `if IsOnGlueScreen() then`. type() should report \
+tests/blizzard_deprecated_glue_loads.rs:138:        .eval("return IsOnGlueScreen")
+tests/blizzard_deprecated_glue_loads.rs:139:        .expect("read of IsOnGlueScreen should succeed");
+tests/blizzard_deprecated_glue_loads.rs:143:         `C_Glue.IsOnGlueScreen()` returns false from the SimState-backed C_Glue surface. \
+tests/blizzard_deprecated_glue_loads.rs:144:         Therefore the materialized `IsOnGlueScreen` boolean must be false in this load context"
+tests/blizzard_deprecated_glue_loads.rs:159:         `IsOnGlueScreen` is defined. If this CVar flips to false, any legacy addon reading \
+tests/blizzard_deprecated_glue_loads.rs:160:         `if IsOnGlueScreen then` gets `nil` instead of `false`, which is still falsy — but \
+tests/blizzard_deprecated_glue_loads.rs:161:         any code doing explicit `IsOnGlueScreen == false` comparisons would break"
+tests/blizzard_deprecated_glue_loads.rs:186:         materializes IsOnGlueScreen as a boolean snapshot)"
+tests/blizzard_static_popup_loads.rs:159:         C_Glue.IsOnGlueScreen, SecureTypes.CreateSecureMap, \
+tests/blizzard_secure_transfer_ui_loads.rs:128:             explicitly checks `if not C_Glue.IsOnGlueScreen() then \
+tests/patch_11_0_5_cached_surfaces.rs:28:        assert(C_Glue.IsOnGlueScreen() == false)
+tests/patch_11_0_5_cached_surfaces.rs:29:        assert(IsOnGlueScreen == false)
+tests/blizzard_settings_definitions_shared_loads.rs:96:         glue. Groups.lua loads first and runs `if C_Glue.IsOnGlueScreen()` to \
+tests/blizzard_settings_definitions_shared_loads.rs:242:         Groups.lua MUST run first — it gates `if C_Glue.IsOnGlueScreen()` and \
+tests/screen_mode.rs:10:    assert!(env.eval::<bool>("return C_Glue.IsOnGlueScreen()").unwrap());
+tests/screen_mode.rs:32:    assert!(env.eval::<bool>("return C_Glue.IsOnGlueScreen()").unwrap());
+tests/screen_mode.rs:52:    assert!(env.eval::<bool>("return C_Glue.IsOnGlueScreen()").unwrap());
+tests/blizzard_timerunning_util_loads.rs:263:         C_Glue.IsOnGlueScreen), GetTimerunningExpansion \
+tests/data/patch_5_4_2_sweep_known_gaps.json:39:  "wt-global-api-IsOnGlueScreen-22",
+tests/data/patch_11_0_5_sweep_known_gaps.json:11:  "wt-global-api-IsOnGlueScreen-48"

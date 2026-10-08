@@ -1,0 +1,22 @@
+EE
+======================================================================
+ERROR: test_extract_keeps_prose_enum_values_and_framexml_heading_not_api_rows (__main__.MistsDiffTests.test_extract_keeps_prose_enum_values_and_framexml_heading_not_api_rows)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p542-page/tools/test_patch_mists_register.py", line 34, in test_extract_keeps_prose_enum_values_and_framexml_heading_not_api_rows
+    rendered = extractor.extract_text(raw, mists_automated_diff=True)
+TypeError: extract_text() got an unexpected keyword argument 'mists_automated_diff'
+
+======================================================================
+ERROR: test_inventory_keeps_bare_removals_widget_owners_and_counts (__main__.MistsDiffTests.test_inventory_keeps_bare_removals_widget_owners_and_counts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p542-page/tools/test_patch_mists_register.py", line 18, in test_inventory_keeps_bare_removals_widget_owners_and_counts
+    rows, counts = generator.parse_mists_automated_diff(raw)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'gen_patch_wikitext_register' has no attribute 'parse_mists_automated_diff'
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+FAILED (errors=2)

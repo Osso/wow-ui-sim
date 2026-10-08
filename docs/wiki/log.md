@@ -14,6 +14,10 @@
 
 [Audit](investigations/patch-5-4-7-api-audit.md): pageid 549368 revision 5298169, linked retail TOC 50400; 19 IDs, two upgrade-event gaps and three chat-prose limits. Existing backing behavior passes, no retirements/runtime/tool/vendor changes. Sweeps/factory 55/55, scoped cases 2/3/1/1, Python 84/84, Mists/format, negative 2 → 3 and 54 register/51 extract reproductions pass (three inherited failures unchanged). Gate PASS clean 36/36, later 37/37; tampering rejected. Wiki preserved without shrinkage.
 
+## [2026-10-08] investigation | Patch 5.4.2 retail API audit
+
+[Audit](investigations/patch-5-4-2-api-audit.md): pageid 262849 revision 2543251; parent TOC 50400/build 17688 confirms December 2013 retail, not Classic. All 68 inventory/17 extract IDs retained; 39 publication gaps precisely pending, five enum values and explicit roster backing bounded. No new models, retirements or shims; queued 5.4.7/5.4.8 placeholders precede 6.0.1/6.0.2. Targeted and portability verification in progress.
+
 ## [2026-10-08] integration | Patch 6.2.4 API audit
 
 [Audit](investigations/patch-6-2-4-api-audit.md): merged 7.0.1/7.0.3 registers integrated on master 846a30663; own zero gaps and seven pending historical contracts unchanged. All 50 sweep/factory cases pass; all 48 other pages match exact master observations. 49 registers / 46 extracts reproduce, three inherited failures retained. Negative 0 → 1, identity/BN regressions, 32/36/8 fixtures and format/Mists checks pass; 32 historical/integrated validators pass. Historical artifacts preserved. Rebase onto 15b417367 supersedes the four-file 7.0.3 allowlist; durable ten-commit mapping and 30 pinned-master validators pass. Fresh sweeps 50/50 and 1/1, fixtures 32/36/8 and format pass.

@@ -1,0 +1,134 @@
+[
+  {
+    "symbol": "StartUnratedArena",
+    "scope": "retail",
+    "command": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
+      "StartUnratedArena",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "log": "p542-StartUnratedArena-retail-grep.txt",
+    "matches": 0
+  },
+  {
+    "symbol": "StartUnratedArena",
+    "scope": "callers",
+    "command": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "StartUnratedArena",
+      "src",
+      "tests"
+    ],
+    "exit": 1,
+    "log": "p542-StartUnratedArena-callers-grep.txt",
+    "matches": 0
+  },
+  {
+    "symbol": "securerandom",
+    "scope": "retail",
+    "command": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
+      "securerandom",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "log": "p542-securerandom-retail-grep.txt",
+    "matches": 0
+  },
+  {
+    "symbol": "securerandom",
+    "scope": "callers",
+    "command": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "securerandom",
+      "src",
+      "tests"
+    ],
+    "exit": 1,
+    "log": "p542-securerandom-callers-grep.txt",
+    "matches": 0
+  },
+  {
+    "symbol": "GetGuildRosterInfo",
+    "scope": "retail",
+    "command": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
+      "GetGuildRosterInfo",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "log": "p542-GetGuildRosterInfo-retail-grep.txt",
+    "matches": 0
+  },
+  {
+    "symbol": "GetGuildRosterInfo",
+    "scope": "callers",
+    "command": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "GetGuildRosterInfo",
+      "src",
+      "tests"
+    ],
+    "exit": 0,
+    "log": "p542-GetGuildRosterInfo-callers-grep.txt",
+    "matches": 10
+  },
+  {
+    "symbol": "IsOnGlueScreen",
+    "scope": "retail",
+    "command": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
+      "IsOnGlueScreen",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 0,
+    "log": "p542-IsOnGlueScreen-retail-grep.txt",
+    "matches": 140
+  },
+  {
+    "symbol": "IsOnGlueScreen",
+    "scope": "callers",
+    "command": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "IsOnGlueScreen",
+      "src",
+      "tests"
+    ],
+    "exit": 0,
+    "log": "p542-IsOnGlueScreen-callers-grep.txt",
+    "matches": 33
+  }
+]

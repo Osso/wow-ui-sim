@@ -1,0 +1,140 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_TimerunningUtil/Blizzard_TimerunningUtil.lua:22:	local getActiveTimerunningSeasonID = C_Glue.IsOnGlueScreen() and GetActiveTimerunningSeasonID or C_TimerunningUI.GetActiveTimerunningSeasonID;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CatalogShopTopUpFlow/Blizzard_CatalogShopTopUpFlow.lua:13:	if ( C_Glue.IsOnGlueScreen() ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CatalogShopTopUpFlow/Blizzard_CatalogShopTopUpFlow.lua:41:	if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MoneyFrame/Mainline/MoneyFrame.lua:449:	if not C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/ChatFrameOverrides.lua:84:	if C_Glue.IsOnGlueScreen() and not C_GameRules.IsGameRuleActive(Enum.GameRule.FrontEndChat) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/ChatFrameOverrides.lua:130:		if not C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:343:	if ( (id == 2) and C_Glue.IsOnGlueScreen() ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:388:		local isOnGlueScreen = C_Glue.IsOnGlueScreen();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/SlashCommandsOverrides.lua:35:if not C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/ChatFrameUtilOverrides.lua:174:	if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/ChatFrameUtilOverrides.lua:182:	if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/ChatFrameUtilOverrides.lua:190:	if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/ChatEmoteConstants.lua:325:if not C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/ChatFrameMenuButton.lua:83:		local isOnGlueScreen = C_Glue.IsOnGlueScreen();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/MacroExecutionManager.lua:3:if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/ChatFrame.lua:22:	if not C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/ChatFrameUtil.lua:395:				if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/ChatFrameEditBox.lua:578:	if ( C_Glue.IsOnGlueScreen() and (C_GameRules.GetActiveGameMode() == Enum.GameMode.Plunderstorm) and IsInGroup(LE_PARTY_CATEGORY_HOME) ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AddFriend/AddFriendTemplates.lua:73:	if not C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SecureTransferUI/Blizzard_SecureTransferUI.lua:354:	if ( not C_Glue.IsOnGlueScreen() ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AccountStore/Blizzard_AccountStoreCardTemplates.lua:277:		if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AccountStore/Blizzard_AccountStoreCardTemplates.lua:312:		if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Colors/Mainline/ColorManager.lua:7:	if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PTRFeedback/Blizzard_PTRFeedback.lua:75:	if not(C_Glue.IsOnGlueScreen()) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PTRFeedback/Blizzard_PTRFeedback.lua:542:	if (C_Glue.IsOnGlueScreen() or event == PTR_IssueReporter.ReportEventTypes.UIButtonClicked) or (event == PTR_IssueReporter.ReportEventTypes.UIPanelButtonClicked) or (event == PTR_IssueReporter.ReportEventTypes.Tooltip) then -- These event types warrant an immediate pop due to them being prompted from the player, the rest should be delayed until combat ends since their are prompted from game state
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PTRFeedback/Blizzard_PTRFeedback.lua:700:if not(C_Glue.IsOnGlueScreen()) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PTRFeedback/Blizzard_PTRFeedback.lua:717:if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PTRFeedback/Blizzard_PTRFeedback_Frames.lua:719:			if not(C_Glue.IsOnGlueScreen()) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PTRFeedback/Blizzard_PTRFeedback_Frames.lua:772:	if(C_Glue.IsOnGlueScreen()) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PTRFeedback/Blizzard_PTRFeedback_Frames.lua:874:				if not(C_Glue.IsOnGlueScreen()) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PTRFeedback/Blizzard_PTRFeedback_Frames.lua:1001:	if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PTRFeedback/Blizzard_PTRFeedback_Frames.lua:1014:		if not(C_Glue.IsOnGlueScreen()) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CatalogShop/Blizzard_CatalogShop_Elements.lua:773:	if not playerData or C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CatalogShop/Blizzard_CatalogShop_Model.lua:46:	if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CatalogShop/Blizzard_CatalogShop.lua:61:	if ( C_Glue.IsOnGlueScreen() ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CatalogShop/Blizzard_CatalogShop.lua:86:	if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CatalogShop/Blizzard_CatalogShop.lua:407:		if (C_Glue.IsOnGlueScreen()) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CatalogShop/Blizzard_CatalogShop.lua:424:	if ( not C_Glue.IsOnGlueScreen() ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CatalogShop/Blizzard_CatalogShop.lua:441:	if ( not C_Glue.IsOnGlueScreen() ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CatalogShop/Blizzard_CatalogShop.lua:1003:	local isTokenOnGlues = (C_Glue.IsOnGlueScreen() and displayInfo.productType == CatalogShopConstants.ProductType.Token);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CatalogShopRefundFlow/Blizzard_CatalogShopRefundFlow.lua:24:	if ( C_Glue.IsOnGlueScreen() ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CatalogShopRefundFlow/Blizzard_CatalogShopRefundFlow.lua:129:	if ( not C_Glue.IsOnGlueScreen() ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CatalogShopRefundFlow/Blizzard_CatalogShopRefundFlow.lua:148:	if ( not C_Glue.IsOnGlueScreen() ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup/StaticPopup.lua:3:local atGlues = C_Glue.IsOnGlueScreen();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SocialUIShared/SocialUIControl.lua:14:	if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SocialUIShared/SocialUIControl.lua:53:	if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopupShared/UnitPopupSharedButtonMixins.lua:584:	if not C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopupShared/UnitPopupShared.lua:122:			if class and not C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Shared/AudioAssist.lua:1267:		if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Shared/AudioAssist.lua:1289:		elseif C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Shared/Audio.lua:540:	if not C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Shared/Groups.lua:1:if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DebugTools/Blizzard_TexelSnappingVisualizer.lua:5:if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SocialUI/Mainline/SocialUITemplates.lua:269:	return not C_Glue.IsOnGlueScreen();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SocialUI/Mainline/SocialUI.lua:2:	return not C_Glue.IsOnGlueScreen();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SocialUI/Mainline/SocialUI.lua:84:	if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SocialUI/Mainline/SocialUI.lua:726:	local uiPanelManagerIsUsed = not C_Glue.IsOnGlueScreen();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MatchmakingQueueDisplay/Blizzard_MatchmakingQueueDisplay.lua:16:	if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MatchmakingQueueDisplay/Blizzard_MatchmakingQueueDisplay.lua:29:	if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MatchmakingQueueDisplay/Blizzard_MatchmakingQueueDisplay.lua:136:	local notAtGlues = not C_Glue.IsOnGlueScreen();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MatchmakingQueueDisplay/Blizzard_MatchmakingQueueDisplay.lua:340:		if C_Glue.IsOnGlueScreen() and gameModeSettingsFrame.useLocalPlayIndex then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Accessibility.lua:16:		return not C_Glue.IsOnGlueScreen() and C_CVar.GetCVar(cvarName) ~= nil;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Settings_Shared/Blizzard_Registration.lua:2:	if not C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsRegistrar.lua:6:	if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Settings_Shared/Mainline/AudioOverrides.lua:4:	if not C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Settings_Shared/Mainline/AudioOverrides.lua:39:	if not C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:175:	if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:209:	if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:273:	if not C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:309:	if not C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Settings_Shared/Blizzard_Settings.lua:148:	if not C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/ModelPreviewFrame.lua:133:		if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/ModelSceneMixin.lua:151:			if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/ModelSceneMixin.lua:171:	if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Mainline/ModelFrameMixin.lua:67:elseif ( not C_Glue.IsOnGlueScreen() ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/SecureUtil.lua:118:		if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/DebugBarManager.lua:30:	if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/DebugBarManager.lua:111:		if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Narration/Blizzard_NarrationUtil.lua:122:	return CVarCallbackRegistry:GetCVarValueBool("accessibilityScreenNarrationEnabled") and C_Glue.IsOnGlueScreen();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CatalogShopSharedUtil/Blizzard_CatalogShop_SharedUtil.lua:11:	if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CatalogShopSharedUtil/Blizzard_CatalogShop_SharedUtil.lua:270:	if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CatalogShopSharedUtil/Blizzard_CatalogShop_SharedUtil.lua:374:				if not C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CatalogShopSharedUtil/Blizzard_CatalogShop_SharedUtil.lua:399:			if not C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CatalogShopSharedUtil/Blizzard_CatalogShop_SharedUtil.lua:472:			if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CatalogShopSharedUtil/Blizzard_CatalogShop_SharedUtil.lua:848:	if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CatalogShopSharedUtil/Blizzard_CatalogShop_SharedUtil.lua:985:		if not C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CatalogShopSharedUtil/Blizzard_CatalogShop_SharedUtil.lua:1136:	if ( (not C_Glue.IsOnGlueScreen() and GetCVar("colorblindMode") == "1" ) or forceColorBlind ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXMLBase/EnvironmentUtil.lua:2:	return C_Glue and C_Glue.IsOnGlueScreen and C_Glue.IsOnGlueScreen();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PTRFeedbackGlue/Blizzard_PTRFeedback_Events_Glue.lua:69:if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedGlue/Deprecated_Glue.lua:9:	IsOnGlueScreen = C_Glue.IsOnGlueScreen();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:150:	if ( (not C_Glue.IsOnGlueScreen() and GetCVar("colorblindMode") == "1" ) or forceColorBlind ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:1119:	if (not C_Glue.IsOnGlueScreen()) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:1129:	if ( C_Glue.IsOnGlueScreen() ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:1292:		if (C_Glue.IsOnGlueScreen()) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:1311:	if ( not C_Glue.IsOnGlueScreen() ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:1334:	if ( not C_Glue.IsOnGlueScreen() ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:1343:	elseif (WaitingOnVASToComplete > 0 and C_Glue.IsOnGlueScreen()) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:1370:	if (C_Glue.IsOnGlueScreen() and BoostDeliveredUsageReason and not StoreOutbound.IsCharacterSelectUndeleting()) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:1374:	elseif (not C_Glue.IsOnGlueScreen() and StoreFrameHasBeenShown and not StoreOutbound.IsExpansionTrialUpgradeDialogShowing()) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:1391:	if (C_Glue.IsOnGlueScreen()) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:1538:		if (C_Glue.IsOnGlueScreen()) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:1598:		if (C_Glue.IsOnGlueScreen()) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:1639:	elseif ( not C_Glue.IsOnGlueScreen() and not StoreFrame_HasFreeBagSlots() ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:1833:	if (self.variablesLoaded and self.distributionsUpdated and C_SharedCharacterServices.HasFreePromotionalUpgrade() and not C_SharedCharacterServices.HasSeenFreePromotionalUpgradePopup() and not C_Glue.IsOnGlueScreen()) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:2214:	if (C_Glue.IsOnGlueScreen()) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:2390:if (C_Glue.IsOnGlueScreen()) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:2530:		elseif (C_Glue.IsOnGlueScreen() and StoreOutbound.IsCharacterSelectVisible()) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:2626:	if (C_Glue.IsOnGlueScreen()) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:2698:	if ( C_Glue.IsOnGlueScreen() ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:2753:			if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUIToggle.lua:4:	 if not C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_ProductCardTemplates.lua:101:	return entryInfo.sharedData.productDecorator == Enum.BattlepayProductDecorator.VasService and not C_Glue.IsOnGlueScreen();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_ProductCardTemplates.lua:597:	if entryInfo.sharedData.itemID and not C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PlunderstormBasics/Blizzard_PlunderstormBasics.lua:48:	if C_Glue.IsOnGlueScreen() and not self.PlunderstoreToggle then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsListUtil.lua:32:	return not C_Glue.IsOnGlueScreen() and not C_GameRules.IsCharacterlessLoginActive();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsListUtil.lua:85:	local partyInfoAvailable = not C_Glue.IsOnGlueScreen() and C_PartyInfo ~= nil;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsListUtil.lua:105:	local realmInfoAvailable = not C_Glue.IsOnGlueScreen();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsListUtil.lua:253:		if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsListUtil.lua:540:	if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFriendsFrame.lua:248:	if not C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendRequestsListTemplates.lua:18:	return not C_Glue.IsOnGlueScreen();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsListTemplates.lua:819:		local bestMenu = C_Glue.IsOnGlueScreen() and "GLUE_FRIEND" or "BN_FRIEND";
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsListTemplates.lua:1342:	return not C_Glue.IsOnGlueScreen();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFrame.xml:326:						if not C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:157:	if C_Glue.IsOnGlueScreen() or (C_GameRules.GetActiveGameMode() == Enum.GameMode.Plunderstorm) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:223:		-- MENU RETEST IsOnGlueScreen
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:224:		local which = connected and (C_Glue.IsOnGlueScreen() and "GLUE_FRIEND" or "FRIEND") or "FRIEND_OFFLINE";
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:247:		-- MENU RETEST IsOnGlueScreen
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:248:		local which = connected and (C_Glue.IsOnGlueScreen() and "GLUE_FRIEND" or "BN_FRIEND") or "BN_FRIEND_OFFLINE";
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:259:	local hideAllTabs = C_Glue.IsOnGlueScreen() or C_GameRules.IsGameRuleActive(Enum.GameRule.IngameFriendsListDisabled);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:324:	if C_Glue.IsOnGlueScreen() or inGameFriendsListDisabled then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:335:	if C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:407:	local onGlues =  C_Glue.IsOnGlueScreen();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:521:	if not C_Glue.IsOnGlueScreen() and (C_GameRules.GetActiveGameMode() ~= Enum.GameMode.Plunderstorm) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:613:	if not C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:657:		rafEnabled = not C_Glue.IsOnGlueScreen() and (not inGameFriendsListDisabled);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:811:	if not C_Glue.IsOnGlueScreen() and not InWoWLabs() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:1113:	if not C_Glue.IsOnGlueScreen() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:1470:	if not C_Glue.IsOnGlueScreen() and inGameFriendsListDisabled then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:2681:	if C_Glue.IsOnGlueScreen() then

@@ -1,0 +1,10 @@
+src/lua_api/globals/stubs/global_stubs.rs:175:    // GetGuildRosterInfo / GetGuildRosterMOTD / GetGuildRosterSize are
+src/lua_api/globals/guild_probes.rs:32://! - `GetGuildRosterInfo(i)`  -> synth row from `guild_members[i-1]` +
+src/lua_api/globals/guild_probes.rs:283:/// `GetGuildRosterInfo(index)` — retail returns 16 values per roster row.
+src/lua_api/globals/guild_probes.rs:417:    LuaApiMut::register_function(lua, "GetGuildRosterInfo", get_guild_roster_info)?;
+tests/guild_probes.rs:195:            local _, _, _, _, _, _, _, _, firstOnline = GetGuildRosterInfo(1)
+tests/guild_probes.rs:196:            local _, _, _, _, _, _, _, _, secondOnline = GetGuildRosterInfo(2)
+tests/guild_probes.rs:240:// ── GetGuildRosterInfo ────────────────────────────────────────────────────────
+tests/guild_probes.rs:245:    let name: Option<String> = env.eval("return (GetGuildRosterInfo(99))").unwrap();
+tests/guild_probes.rs:291:                = GetGuildRosterInfo(1)
+tests/guild_probes.rs:319:            local _, _, _, _, _, _, _, _, online = GetGuildRosterInfo(1)

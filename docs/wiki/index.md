@@ -14,6 +14,10 @@
 
 [Audit](investigations/patch-5-4-7-api-audit.md): retail revision 5298169, linked TOC 50400; nine inventory/19 total IDs, two upgrade-event gaps and three chat-prose limits. Merged 5.4.8/6.0.1 registers integrated against bebcc5830 without replacements. Sweeps/factory 57/57; all 55 other pages identical to fresh master. Own prefork 2/2, negative 2 → 3, Python 85/85, Mists/format and 38 prior validators pass. 56 registers/53 extracts reproduce, three inherited failures unchanged. Historical receipts preserved through ten own patch-equivalent rebase mappings and one external pin. Portability PASS at e65d0f2fb: clean 40/40, synthetic later audit 41/41; zero failures.
 
+## [2026-10-08] investigation | Patch 5.4.2 retail API audit
+
+[Audit](investigations/patch-5-4-2-api-audit.md): pageid 262849 revision 2543251; parent TOC 50400/build 17688 confirms December 2013 retail, not Classic. All 68 inventory/17 extract IDs retained; 39 publication gaps precisely pending, five enum values and explicit roster backing bounded. No new models, retirements or shims; queued 5.4.7/5.4.8 placeholders precede 6.0.1/6.0.2. Targeted and portability verification in progress.
+
 ## [2026-10-08] integration | Patch 6.0.2 API audit
 
 [Audit](investigations/patch-6-0-2-api-audit.md): real 6.1.0/6.2.0/6.2.2 supersession registers; own 275 gaps/657 observations unchanged, all 52 other pages equal pinned master d0fabed03. Branch/master sweeps 54/53 pass; scoped bonus, tracker and vignette consumers pass; broader scenario assertion fails identically on master and remains untouched. 53 registers/50 extracts reproduce with three inherited failures; 84 Python fixtures, format, warning-clean non-vendor Mists and 37 prior validators pass. Twelve original/rebased commit identities and all historical validator invariants preserved. Both addons-enabled startups []; negative 275 → 276; sealed portability PASS clean 35/35 and later 36/36, own-log tampering rejected.
