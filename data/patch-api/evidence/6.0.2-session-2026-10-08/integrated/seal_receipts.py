@@ -21,7 +21,9 @@ def read(path):
 
 
 def dump(name, value):
-    (HERE / name).write_text(json.dumps(value, indent=2) + '\n')
+    path = HERE / name
+    previous = path.read_bytes() if path.exists() else None
+    path.write_text(json.dumps(value, indent=2) + '\n')
 
 
 def main():
@@ -70,7 +72,9 @@ def main():
                   '53 registers/50 extracts reproduce; three inherited extract failures remain unchanged.',
                   '37 prior validators enumerated with git ls-tree at pinned master all pass.',
                   'Historical receipts and validator invariants replay unchanged through mapped pins.'])
-    (HERE / 'command-ledger.md').write_text('\n'.join(lines) + '\n')
+    path = HERE / 'command-ledger.md'
+    previous = path.read_bytes() if path.exists() else None
+    path.write_text('\n'.join(lines) + '\n')
     print(json.dumps({'pages': len(pages), 'other_pages_unchanged': len(pages)-1,
                       'receipts': len(receipts), 'own_gaps': 275}))
 
@@ -86,6 +90,10 @@ def seal_committed_inputs():
         content = subprocess.check_output(['git', 'show', 'HEAD:' + path], cwd=ROOT)
         assert (ROOT / path).read_bytes() == content, path
         seals[name] = hashlib.sha256(content).hexdigest()
+    wrapper = HERE.parent / 'validate.py'
+    content = subprocess.check_output(['git', 'show', 'HEAD:' + wrapper.relative_to(ROOT).as_posix()], cwd=ROOT)
+    assert wrapper.read_bytes() == content
+    seals['../validate.py'] = hashlib.sha256(content).hexdigest()
     assert 'context.json' in seals and 'validate.py' in seals
     dump('artifact-hashes.json', seals)
     print('Sealed', len(seals), 'committed inputs')

@@ -18,7 +18,9 @@ def git(*args, input=None):
 
 
 def dump(name, value):
-    (HERE / name).write_text(json.dumps(value, indent=2) + '\n')
+    path = HERE / name
+    previous = path.read_bytes() if path.exists() else None
+    path.write_text(json.dumps(value, indent=2) + '\n')
 
 
 def digest(value):
@@ -41,7 +43,9 @@ def main():
             assert path.read_bytes() == content, name
         preserved[name] = digest(content)
         if path.name == 'validate.py':
-            (HERE / 'historical-validator.py.txt').write_bytes(content)
+            output = HERE / 'historical-validator.py.txt'
+            previous = output.read_bytes() if output.exists() else None
+            output.write_bytes(content)
     dump('historical-preservation.json', preserved)
     rebased = {}
     for revision in git('rev-list', MASTER + '..' + REBASED_TIP).decode().splitlines():
@@ -117,6 +121,7 @@ def main():
                    'sha256': digest(old)}
             if old != new:
                 output = blobs / (row['recorded_blob'] + '.txt')
+                previous = output.read_bytes() if output.exists() else None
                 output.write_bytes(old)
                 row['historical_file'] = output.relative_to(HERE).as_posix()
             inputs[name] = row
