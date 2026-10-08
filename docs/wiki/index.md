@@ -1,6 +1,6 @@
 ## [2026-10-08] integration | Patch 7.1.0 API audit
 
-[Audit](investigations/patch-7-1-0-api-audit.md): real merged 7.2.0 register, fixed historical/integrated scopes; 46 registers / 43 extracts reproduce with unchanged inherited failures. Own gaps remain zero; archived custom-intrinsic probe still fails, not closed by the shared factory change. Exact-master comparison and final checks pending.
+[Audit](investigations/patch-7-1-0-api-audit.md): merged 7.2.0 register, fixed historical/integrated scopes; 46 registers / 43 extracts reproduce with three inherited failures. 47 sweep/factory cases pass; all 45 existing pages unchanged versus exact master. Own gaps zero; custom-intrinsic failure persists. Scoped checks, 30/34/8 fixtures, format/Mists and all 27 historical/integrated validators pass; 127 old artifacts preserved.
 
 ## [2026-10-08] investigation | Patch 7.1.0 API audit
 

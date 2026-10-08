@@ -1,0 +1,182 @@
+{
+  "wt-cvars-NameplatePersonalHideDelayAlpha-13": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": "wt-cvars-NameplatePersonalHideDelayAlpha-1088",
+      "symbol": "NameplatePersonalHideDelayAlpha"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-NameplatePersonalHideDelaySeconds-12": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": "wt-cvars-NameplatePersonalHideDelaySeconds-1089",
+      "symbol": "NameplatePersonalHideDelaySeconds"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-NameplatePersonalShowAlways-8": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": "wt-cvars-NameplatePersonalShowAlways-1090",
+      "symbol": "NameplatePersonalShowAlways"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-NameplatePersonalShowInCombat-9": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": "wt-cvars-NameplatePersonalShowInCombat-1091",
+      "symbol": "NameplatePersonalShowInCombat"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-NameplatePersonalShowWithTarget-10": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": "wt-cvars-NameplatePersonalShowWithTarget-1092",
+      "symbol": "NameplatePersonalShowWithTarget"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-GetDetailedItemLevelInfo-4": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-GetDetailedItemLevelInfo-163",
+      "symbol": "GetDetailedItemLevelInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedItemScript/Deprecated_ItemScript.lua; alias=C_Item.GetDetailedItemLevelInfo",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-GetItemInfo-19": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-GetItemInfo-173",
+      "symbol": "GetItemInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedItemScript/Deprecated_ItemScript.lua; alias=C_Item.GetItemInfo",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-GetPhysicalScreenSize-4": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetPhysicalScreenSize"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-Frame:DoesClipChildren-6": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Frame:DoesClipChildren"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Frame; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-Frame:SetClipsChildren-6": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Frame:SetClipsChildren"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Frame; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  }
+}

@@ -49,7 +49,26 @@ No full integration suite, CASC texture tests, agents/model CLIs, other-worktree
 
 Rebased onto merged 7.2.0 master `aa57dd8f830ec9c53e2f9c9dac5c7a69b5b042ec`. The real 7.2.0 register now appears first in `later_registers`; the placeholder is gone. Historical validator register/sweep scope remains pinned at `7778521e8`; integrated runtime/register/sweep scope is separately pinned at `50c69faa3938e23b3e339d47c0ac2f7f0c7bdc6d`.
 
-[Integrated source reproduction](../../../data/patch-api/evidence/7.1.0-session-2026-10-08/integrated/source-reproduction-summary.json) verifies **46/46 registers** and **43/46 extracts**, retaining exactly the three historical extract failures. Own publication remains **zero gaps**; all ten observations are byte-equivalent to the historical result. The shared 7.2.0 probe-factory change does **not** resolve arbitrary intrinsic tags: the [archived custom-intrinsic experiment](../../../data/patch-api/evidence/7.1.0-session-2026-10-08/integrated/intrinsic-discovery-context.json) still fails exactly with `unknown frame type 'P710ClipIntrinsic'`. No supersession closure or runtime fix is credited. Exact-master all-sweep comparison and remaining integrated checks are pending.
+[Integrated source reproduction](../../../data/patch-api/evidence/7.1.0-session-2026-10-08/integrated/source-reproduction-summary.json) verifies **46/46 registers** and **43/46 extracts**, retaining exactly the three historical extract failures. Own publication remains **zero gaps**; all ten observations are byte-equivalent to the historical result. The shared 7.2.0 probe-factory change does **not** resolve arbitrary intrinsic tags: the [archived custom-intrinsic experiment](../../../data/patch-api/evidence/7.1.0-session-2026-10-08/integrated/intrinsic-discovery-context.json) still fails exactly with `unknown frame type 'P710ClipIntrinsic'`. No supersession closure or runtime fix is credited.
+
+## Integrated proof status
+
+[Command ledger](../../../data/patch-api/evidence/7.1.0-session-2026-10-08/integrated/p710-final-command-ledger.md), [per-page gap comparison](../../../data/patch-api/evidence/7.1.0-session-2026-10-08/integrated/gap-comparison.json) and [validator matrix](../../../data/patch-api/evidence/7.1.0-session-2026-10-08/integrated/validator-matrix.json) retain exact commands, revisions, source hashes, exits and logs.
+
+| Scope | Result | Coverage boundary |
+|---|---|---|
+| Own publication | 1/1; zero gaps | Ten historical observations unchanged; no new/resolved gaps or supersession closures |
+| All publication sweeps | Branch 47/47 cases; exact master 46/46 | 46 pages plus factory, 8,882 observations; all 45 existing pages have identical IDs, per-row ok status and known-gap sets versus master |
+| Page-specific filters | Prefork 3/3; integration 0 selected | Bare integration filter has no cases; no coverage credited |
+| Existing integration regressions | screen_mode 9/9; c_item_api 100/100; intrinsic_types 1/1 | Known intrinsic alias only; arbitrary intrinsic registration still unsupported |
+| Python fixtures | generator/extractor/validator 30/34/8 | Additive recorded flags; three inherited extract failures remain exact |
+| Format and Mists tests-check | Both exit 0 | Zero non-vendor warnings; six inherited iced manifest deprecations unsuppressed |
+| Evidence validators | 27/27: 23 historical and four integrated | Every validate.py and validate_integrated.py covered; unchanged prior inputs proven before reusing passing receipts |
+| Negative control | Exact Frame:SetClipsChildren row; gaps 0 → 1; expected exit 1 | No resolved/stale IDs; initial copied P720 env names did not select the mutation and that exit-zero attempt is explicitly invalidated |
+
+All **127 original 7.1.0 artifacts** remain byte-identical at `67ec8fb94`; original custom-intrinsic failure and historical receipts are neither rewritten nor relabeled passing. The extender adds the real 7.2.0 register and three sweep observations; added rows retain the template revision and actual extension revision. Fresh saved-extract receipts cover all 46 registers, with only the same 12.0.5/12.0.7 mismatches and 12.1.0 unsupported-template failure.
+
+No runtime, Cargo/build, Interface/vendor, shared probe-factory or later-audit replacement-policy drift versus exact master. No known-gap invariants relaxed, new shims, deployment/startup claim, agents, cwd switching, push or merge. No __pycache__. Wiki index/log never shrink; broad Rust checks run once at integrated scope, not again at evidence/doc milestones.
 
 ## Sources
 

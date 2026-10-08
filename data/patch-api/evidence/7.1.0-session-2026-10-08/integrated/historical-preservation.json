@@ -1,0 +1,513 @@
+{
+  "revision": "67ec8fb945f22deb3271cebfef646c424e8344cb",
+  "artifacts": [
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/build_accounting.py",
+      "sha256": "2c584da30ea889b0553d452ff40c2af14e79f02169a1badc2f162030522e3b27"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/check_other_validators.py",
+      "sha256": "9836d76757f64eddf5549ae42e35c0c907619adf0c5f70ae482c4ed9fb02b9a5"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-all-sweeps.proof.json",
+      "sha256": "dcd591ea393282551b47fea2c44384f45c2a2caadbb9024a092fd6d2a7ce1669"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-all-sweeps.txt",
+      "sha256": "b15c01b5ff7159979faedeeb876d176a722a7e7939199209c87361dc692e4d24"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-behavior-discovery.proof.json",
+      "sha256": "e4ad093b2550d7cff723f2f08bde7f51af1a54880896aaf76d2cbf39efaaef95"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-behavior-discovery.txt",
+      "sha256": "301dc55f5b86e9006f686f09a5833e117ca347b09b870a615ee4d2cd02db3a77"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-bounded-results.json",
+      "sha256": "8b8784994ded3aebe0f4035fb7d6063bf9bacd0337bff92dca04fec9222fa6f1"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-command-ledger.md",
+      "sha256": "949e5b0106ca341206e2df96c620cf52f643310dbe2e59c23b6d30afa1e052ec"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-context.json",
+      "sha256": "427f9901c709305251cb344fe877f3a710b3c5bc101290c729169c03b34a01bd"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-discovery-results.json",
+      "sha256": "8b8784994ded3aebe0f4035fb7d6063bf9bacd0337bff92dca04fec9222fa6f1"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-discovery.launcher.txt",
+      "sha256": "95dcbbafc34179060946fe886723f5c0a72fab5e932a9045cbb27dc6baeda901"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-discovery.proof.json",
+      "sha256": "257a883bb7f559f32f3a25abe6f82866e352a990c0480c637bd656b9ee9cb5c3"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-discovery.txt",
+      "sha256": "0e6eae4a1ee3e4e16310c35161f04a66efb4bd8320e217094ea485085a201986"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-extract-preservation.json",
+      "sha256": "763f6fbc3f9f6806a9462612d670392126bd094cb2d3207d77c5e099ccabbc48"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-extract-scout.json",
+      "sha256": "694a5070b8f0b3d02dafdafa00bcb202d3d8ea8ea3a691babb82490eaceb14dd"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-extractor-fixtures.launcher.txt",
+      "sha256": "ba7caa48549a06335c6dc7402f06ff3416aeb6a574ebc9534928b0409af450d6"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-extractor-fixtures.proof.json",
+      "sha256": "f7ac0d22d49be6ab03af92f33ad9a6f565e4d1a5b233ab27152de4930f47f147"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-extractor-fixtures.txt",
+      "sha256": "3b7301c8e4728e8952b1fea0a0e570ffbd0b8e49776bffa0de3c54c6a04adebd"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-fetch-receipt.json",
+      "sha256": "c6019de383681a10579aaf4e54677da88fdd06b6f570893ad469e3db0de40948"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-fetch.json",
+      "sha256": "b4995fffb8c333bbc3aeb5812b81189b1b718e4dcc1954811aa6641aa86b7d1e"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-final-format.proof.json",
+      "sha256": "dd02a615987d3f3cc00cfe2c0bd1c18a894e226a599f0b2aacda5c00b2b2edde"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-final-format.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-format.proof.json",
+      "sha256": "c9b768747c631aab1b01336f3bad7664db672f741860ec5a73a837e2c623e8fe"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-format.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-gap-review.json",
+      "sha256": "78433a7374f5be996f3ba5e63bddd099cc17eea8568674f33b18f29ec062aeaa"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-generator-fixtures.launcher.txt",
+      "sha256": "70ca7c3cadc40fe9e4f39472389fd370f57d40dfdaca0136f442673b0bb4ae46"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-generator-fixtures.proof.json",
+      "sha256": "1c586afbf1b1001c315e5b68ea202b4b706c1a02e323327da0c03f0dbc9d2f96"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-generator-fixtures.txt",
+      "sha256": "7f8256f6e9cf13fa6c48232a6ec38db795c57e47d3f329b0ed60458cee4f737f"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-initial-callers.txt",
+      "sha256": "389c948e6a258525fd64967bc830fdfb39d08350ca5f6d3570c65fba4fa486f9"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-input-preservation.json",
+      "sha256": "451904c3742ba722a1ca9700e3739537bccd429c67d07dfa3d243067974a009b"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-intrinsic-discovery-context.json",
+      "sha256": "8c09570dcdf0ae031def8dfe3f442b3ebb516ee4c8107b18e2765c3e193afee3"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-intrinsic-discovery.rs",
+      "sha256": "8d73603a69a9d803fc030b9a7f316e9b802e1b16e51202ada703d02af2b0cafe"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-intrinsic.proof.json",
+      "sha256": "ff667092c3cddea5eb52cbbd537f1b2d0802098b893ce0ac1d774bbd24a4b282"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-intrinsic.txt",
+      "sha256": "698ff382abfc7f6fe0cd6d296a99741249adb81ac4abfb4f6d2da8023366d074"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-items.proof.json",
+      "sha256": "114076886a26d35a168f152d7a5b976f49b0ee682f33e32fb8e9c1dc73443d87"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-items.txt",
+      "sha256": "21a5b8a6447482c9f180a1524b437967acaf96e0c07b8657ab97b4bfe0057723"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-mists-check.proof.json",
+      "sha256": "42807c9fc8014a1124e0f9369ce97845aad9aed0c8ac5903a7f19959d5a9bae9"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-mists-check.txt",
+      "sha256": "8738d0f98e726830083ef0a96798a64f1834f52c6834225130b5912e56c62444"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-model-scan.txt",
+      "sha256": "3ef0036b51ab3c2badae1b95051dd894afa659dd6840a998112ccb0da11a621f"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-negative-control.json",
+      "sha256": "1f12215a9eb3a6141cd74b4c7a03d63ad47cf74b9d8dc11fd3ccc9cad118ae9a"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-negative-register.json",
+      "sha256": "7588638b86c5f818990a68918331ff8f9be60d37e0af9b56cac37c1046ca87f2"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-negative-results.json",
+      "sha256": "15223e842bf0344eb2e78c3efe1d589cbdcc925158cd94e80f69055567bee865"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-negative.proof.json",
+      "sha256": "c61ee87d86d1e1a6c0f449af14553579bcbc19f4e6a6df67f8ad767dfc75aff3"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-negative.txt",
+      "sha256": "bf270fa455682194c59aebe4f14ee22129a5f61750203d5c06625d43d1c3a39f"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-other-validator-matrix.json",
+      "sha256": "386e33be867b858aa4fe686413883cc2f0d6de5d238b9066aa07d73cc9a63b1d"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-other-validators.launcher.txt",
+      "sha256": "849866603e458051fb82ff45548023a99c33864c03c9afa3010ff35630b146bd"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-other-validators.proof.json",
+      "sha256": "1de673e124abc5217f0fcc57389bf6ad8242f43775b0c1b58686270bf12e08bf"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-other-validators.txt",
+      "sha256": "966053716dce1c9b0ef9d24b26c4da20316d2862326f823d03883e5926c587ec"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-own-bounded.launcher.txt",
+      "sha256": "028153e7cfb078959d0b55aeed52b570b86865b32a39503a4f9638e552e384f0"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-own-bounded.proof.json",
+      "sha256": "df4540fd87de75bd1ec01e11369e22376ae6b6f29c496b417548c950178b77ad"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-own-bounded.txt",
+      "sha256": "c80e6b3ffbe72947757286adcf58168a277a7b2e62e268d9f0dc2eea6da1bd76"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-own-green.proof.json",
+      "sha256": "e4ad093b2550d7cff723f2f08bde7f51af1a54880896aaf76d2cbf39efaaef95"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-own-green.txt",
+      "sha256": "301dc55f5b86e9006f686f09a5833e117ca347b09b870a615ee4d2cd02db3a77"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-readability.md",
+      "sha256": "1b822e22c96942e2140e1b5c73a694edc1e0004972b2458b6ff7b1f3470d75f8"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-register-reproduction.json",
+      "sha256": "2f99297351e79efec631527bac433520ed3520cc569e8fb5d271336b04760e1e"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-retirement-callers.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-retirement-retail.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-retirement-scans.json",
+      "sha256": "b3d8de3b96c36397fbbf28466a4f3b6c3e3368194fe06230163cd19f5e39ada8"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-saved-extract-reproduction.json",
+      "sha256": "6dabebed5ac019668274c96f730bd4d822f4f2977b482b57c560573cf41a8cb4"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-screen.proof.json",
+      "sha256": "75f533af6d3ac66588944ba36fd95195e6f9d08aad3dbea43203d13eeda9f644"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-screen.txt",
+      "sha256": "ed02b3c281d7217658f66b3a8a9e701922abb0d7efc85c173405f1bad147422c"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-source-reproduction.proof.json",
+      "sha256": "c745a4726c4ad66714ec40438de2f757e7d51f014d9c68d913cc4e08e4e45dbf"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-source-reproduction.txt",
+      "sha256": "9d651b9ed3626f23fc3613730640c8758bf19b3a652a830c7c68ec901b10f102"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-sweep-summary.json",
+      "sha256": "688bd25fb04e9fc856b1d082b01e9bd7386df980562e9692fd272f04a1cb7f9c"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-targeted-driver.launcher.txt",
+      "sha256": "3f96185a877c7690a8f13985cf071b97233abbe01d25e52792effff66e880af9"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-targeted-driver.proof.json",
+      "sha256": "5f6b908ca624e350a417bf5afccc2117847895a67b2e8235f152d27354a8edd3"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-targeted-driver.txt",
+      "sha256": "4185a34dece37825dc0a8f2206294c1601b438807bd7fb35e43d8448f20aa2a1"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-title-related-callers.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-title-related-retail.txt",
+      "sha256": "c3aa9ac8579931c28cba1de2c922f3368a5341d5485409ccf55f7f8a5b8138bb"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-title-related-scans.json",
+      "sha256": "8858b7ca7010af866b300e4e8e1c6cd7a43729ee0f1855a19c55387aa4b7492d"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-validator-fixtures.launcher.txt",
+      "sha256": "6adbce2bd41637f91f23c40aaf3e2e641eadd1bf17ab628ef0092f29625655ad"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-validator-fixtures.proof.json",
+      "sha256": "9307743ff0f903a9007cda1ad4a56ad9fbb544b3da25b5c6171910b85794f2cd"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-validator-fixtures.txt",
+      "sha256": "771dcb69cad7d0fb2ff1f9f4ec638c5fda9e3b7e7d22095934b5942b2463e021"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-validator-portability.json",
+      "sha256": "be87ad5e156ede81fd777f7608b6c90ea0d8ba584bd2541167e032e2e32799ac"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-validator-preseal.txt",
+      "sha256": "6b5a18421fdced427451f3f28f98c79331b1a76adb8140deb06b72c8d96c7750"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-validator-wiki-scope-portability.json",
+      "sha256": "b955c778ffc70f60f734d5892f55a122984a7ea1b0e0dc5ad8b8a659422ef639"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-verification-results.json",
+      "sha256": "960e8a2a5ded504933e4174a4fb4faa6dedfb126d478eefba2e888f395da618d"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/p710-wiki-integrity.json",
+      "sha256": "74c718bfdb83157921946c58b317ca3d9f3edc80674a1fb41088faab750e435f"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_10_0_0_publication_sweep-results.json",
+      "sha256": "bd4532b7b4b2181e0a522e63bc2e90133e3efb639d231069fdc99570b0a0207c"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_10_0_2_publication_sweep-results.json",
+      "sha256": "d2ede209933cfa895e526f94443b34f598e5ca15326c26d9ee0512b8b6fee549"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_10_0_5_publication_sweep-results.json",
+      "sha256": "013a487fe4b954e932c414e8b7b281a9244928833c41cf4aff46ee9430df3926"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_10_0_7_publication_sweep-results.json",
+      "sha256": "84a026467f32d12f076db9d33a70b2ab52f1af9dc774ce825e88467e7720c4de"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_10_1_0_publication_sweep-results.json",
+      "sha256": "866aab81972645eda6daec742735bc20ada2f8ceadd501691223b88c347c76ce"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_10_1_5_publication_sweep-results.json",
+      "sha256": "8066560a252584d6248d96a6fdab7833055913c47e0f6eb604f95cc31e931f9f"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_10_1_7_publication_sweep-results.json",
+      "sha256": "91535c49b96baf0ea4c4b7dfb54da27934b3703c747361c54807d31d00ebf61b"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_10_2_0_publication_sweep-results.json",
+      "sha256": "abe59f329772a79e70648101705e776fefb23a75f858a7a4c436b050457e8bf1"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_10_2_5_publication_sweep-results.json",
+      "sha256": "1949aa22afe6263687cc4482b6e7cca1c7252f2829b2f1668babcd837d09cd8f"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_10_2_6_publication_sweep-results.json",
+      "sha256": "6f929eae9c1da576a1a8a178b62eff260d59489f887dffe1b70efdbdfc15319c"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_10_2_7_publication_sweep-results.json",
+      "sha256": "0a20fab185090eb9cc06e9ae6fed6a7af6e145b5bfd7e8dad036e2720e7d8579"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_11_0_0_publication_sweep-results.json",
+      "sha256": "6cd74d7f43021732984af2ef56a7e021fd82c9100d722f1cc29b4592c943d67c"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_11_0_2_publication_sweep-results.json",
+      "sha256": "782a377432c7c80deee9e7852abc929fd5343691a84563ed1438cf230f8b7eb6"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_11_0_5_publication_sweep-results.json",
+      "sha256": "d9cdb7f0d38652addd93d9fff753ce0bbc5b52e623979bc462c48ff1b389990b"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_11_0_7_publication_sweep-results.json",
+      "sha256": "667d25546aad70937bb5bf7e8b7eaf347c73d7b3af8723dd8cfbfeaaa9e1d985"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_11_1_0_publication_sweep-results.json",
+      "sha256": "c94c288d384ca8eddc13c8b91b1e493b011b56d8871455b0eb2d503750b9ec76"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_11_1_5_publication_sweep-results.json",
+      "sha256": "db288c9eb96cae842416094485e58eeea84ce40371cfcaa07ad8c93ebd32e2d9"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_11_1_7_publication_sweep-results.json",
+      "sha256": "48435e99e299b2a13110e0f7a27d47688d128f2774540f070cb0594728a1d20d"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_11_2_0_publication_sweep-results.json",
+      "sha256": "a4e1847a8ce3357fc25ff040dbd75c0e78fbda5a18763fa57931933e9af05eae"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_11_2_5_publication_sweep-results.json",
+      "sha256": "33bb90179c363e0b734f1df6d3c3950f8bba0be4a22e62248b7148004a6d998b"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_11_2_7_publication_sweep-results.json",
+      "sha256": "a5108e0ec2710b9e632d2e296a946dc140d0db2f7a3162b94729d0f4dc4bc5b6"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_12_0_0_publication_sweep-results.json",
+      "sha256": "6ac21c4a27738d4bba700115182d63414e772cddb92e135ea4748ba6a35934ea"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_12_0_1_publication_sweep-results.json",
+      "sha256": "65da561aeecdf24065c6368cbf0db0227bd87ad6c9b0370939595836334c0dd6"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_12_0_5_publication_sweep-results.json",
+      "sha256": "cac702f3f8daf845c58348d125950df7362739dadcdd90ffdb450416cb3e77d8"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_12_0_7_publication_sweep-results.json",
+      "sha256": "2dfa4c6469ecafd9704c8d4810aa670594545650382b9307502c1d5790f6ea46"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_12_1_0_publication_sweep-results.json",
+      "sha256": "bc45dc419a0c30481ff9e949515f6a0e2ab684ee5bbcc401a1ce7df383d1361f"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_7_1_0_publication_sweep-results.json",
+      "sha256": "8b8784994ded3aebe0f4035fb7d6063bf9bacd0337bff92dca04fec9222fa6f1"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_7_2_5_publication_sweep-results.json",
+      "sha256": "62c2c2385c6cd65f2f8051a24dc71e40eeda3b345e20acd9be7c49c6dcb54640"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_7_3_0_publication_sweep-results.json",
+      "sha256": "df47af7ac78df8419abe44d4e74f9c0f816b0ae046541b4c4fffb6ac22ed0074"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_7_3_2_publication_sweep-results.json",
+      "sha256": "7fc5f374c2a41df9a8a84d3fd31b8e9e92a40f9532630081b501edab54bda92c"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_8_0_1_publication_sweep-results.json",
+      "sha256": "5e5aa3658950d0b6c3ff6b315aa590079b2d2effdb7e734b966c45647ad9398e"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_8_1_0_publication_sweep-results.json",
+      "sha256": "51e18245da557e76770dc9607d0318e177bfbe3a8e7bd56972847ab06d2eff95"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_8_1_5_publication_sweep-results.json",
+      "sha256": "dab5c4be04451e47f36b067c2f7b360ae2019880bff681e0bf6afb9f54e5de14"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_8_2_0_publication_sweep-results.json",
+      "sha256": "4d3c6245a07b32960f3a9140e8015a1f39ba0444f3bcf194e084f9aa0364cd89"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_8_2_5_publication_sweep-results.json",
+      "sha256": "e51ecb8bf85b5afdee84e23d3ef55cb54471b500ad7ecef709edf6939219ca4b"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_8_3_0_publication_sweep-results.json",
+      "sha256": "3fecaeaf491d4fccd7a5d2dc2c22c9822c0c22ab415d0712906004cba0e1c075"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_8_3_7_publication_sweep-results.json",
+      "sha256": "d6f173835936181f7b7455002a7b18e8e9e48ae987b6197630a8868e36b5cbb4"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_9_0_1_publication_sweep-results.json",
+      "sha256": "8bacb4be7b84d0ea9ec5210b46b41da0e7757b42dd11e810a0de568ddcfb71b5"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_9_0_2_publication_sweep-results.json",
+      "sha256": "9b4f9badc099ee52711b462d77a906b293aa4d75f452cacc2a57559e85bbcc70"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_9_0_5_publication_sweep-results.json",
+      "sha256": "4d5a6e3bf1917adde86c66fecad5ef3539b8487b2c78fa1566ea2627f43af444"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_9_1_0_publication_sweep-results.json",
+      "sha256": "d85b2de60a7bab39c8f50aaead29bfdd021abbe249eed22e92056509a46c97c9"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_9_1_5_publication_sweep-results.json",
+      "sha256": "10c289379ca8afa49c5d7652857fdef4350cbddf30ad1ffac0076c11622176c7"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_9_2_0_publication_sweep-results.json",
+      "sha256": "cd6f83542c536542599fd78326ed42ac81567d8c93563b0d5e7fb0f715355c03"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_9_2_5_publication_sweep-results.json",
+      "sha256": "961c0b44ffecad59e032fe345f5012b00aae419ff714e2b56661b9e2ce34109b"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/patch_9_2_7_publication_sweep-results.json",
+      "sha256": "75ee0c42a0ee28e36913384c4f8ce534bbbf4fc7cf90cc3ba5f8c9fee12c0fad"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/reproduce_sources.py",
+      "sha256": "8c8b6e5fb16aee55ecd4b2386e5d44f3bd101fd1412d6e750d440eecfba90441"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/run_proof.py",
+      "sha256": "63b5e66559c35b23ab55dbb7d8b0600d57411bfe46023623ab605e3810131658"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/validate.py",
+      "sha256": "6759f21e21823b0118a9f59717423d775828788ee68ad299b1ac181794bc9047"
+    },
+    {
+      "path": "data/patch-api/evidence/7.1.0-session-2026-10-08/verify_targeted.py",
+      "sha256": "4a41b2421bcfd1f23228673361e54856080b2483eab04e2315779847f9b9ba16"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "registers": 46,
+  "extracts": 43,
+  "inherited_extract_failures": [
+    "12.0.5",
+    "12.0.7",
+    "12.1.0"
+  ]
+}

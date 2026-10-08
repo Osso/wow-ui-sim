@@ -1,0 +1,16 @@
+{
+  "master_revision": "aa57dd8f830ec9c53e2f9c9dac5c7a69b5b042ec",
+  "branch_revision": "f8a72ed604ef6dafa8d863f0467d40fe5cd5ab76",
+  "changed_paths": [],
+  "scope": [
+    "src",
+    "Cargo.toml",
+    "Cargo.lock",
+    "build.rs",
+    "Interface",
+    "iced-wgpu-patched",
+    "tests/common/publication_sweep.rs",
+    "tools/patch_audit_validation.py"
+  ],
+  "runtime_deployment": "not applicable: no runtime-source change"
+}

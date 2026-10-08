@@ -1,0 +1,17 @@
+own-sweep 0
+extend-receipts 0
+intrinsic-discovery 1
+master-all-sweeps 0
+all-sweeps 0
+integration-p710 0
+prefork-p710 0
+screen-regression 0
+items-regression 0
+intrinsic-regression 0
+gen_patch_wikitext_register-fixtures 0
+extract_patch_non_inventory-fixtures 0
+patch_audit_validation-fixtures 0
+format 0
+mists-check 0
+negative 0
+negative failed; inspect its retained log before continuing

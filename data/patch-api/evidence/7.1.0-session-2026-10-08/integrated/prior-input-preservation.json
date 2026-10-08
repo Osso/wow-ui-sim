@@ -1,0 +1,15 @@
+{
+  "revision": "44a4c402e3b26a9ee1778a92f7938b3938bff932",
+  "scope": [
+    "tools",
+    "tests/data",
+    "data/patch-api/sources",
+    "data/patch-api/evidence"
+  ],
+  "existing_input_changes": [],
+  "orchestration_changes_not_used_by_reused_validators": [
+    "data/patch-api/evidence/7.1.0-session-2026-10-08/finalize_integrated.py",
+    "data/patch-api/evidence/7.1.0-session-2026-10-08/run_integrated.py"
+  ],
+  "wiki": "Only the 7.1.0 historical validator reads current wiki lengths; rerun it after wiki edits."
+}

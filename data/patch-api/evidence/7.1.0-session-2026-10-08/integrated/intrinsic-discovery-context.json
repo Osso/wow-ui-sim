@@ -1,0 +1,7 @@
+{
+  "revision": "50c69faa3938e23b3e339d47c0ac2f7f0c7bdc6d",
+  "archived_harness": "../p710-intrinsic-discovery.rs",
+  "harness_sha256": "8d73603a69a9d803fc030b9a7f316e9b802e1b16e51202ada703d02af2b0cafe",
+  "original_sha256": "d7370127655b29533a323fd7aebabc57ecbdaf5223416e2cd727f3eae597161b",
+  "exit": 1
+}
