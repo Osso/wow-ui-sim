@@ -25,16 +25,16 @@ fn check_spell_link_cost(env: &WowLuaEnv) {
         end
         tooltip:SetSpellByID(19750)
         local direct = textLines()
-        assert(direct:find('Mana'), direct)
+        assert(direct:find('MANA'), direct)
         for _, link in ipairs({'spell:19750', '|Hspell:19750|h[Flash of Light]|h'}) do
             tooltip:SetHyperlink(link)
             local linked = textLines()
             assert(linked:find('Flash of Light'), linked)
-            assert(not linked:find('Mana'), linked)
+            assert(not linked:find('MANA'), linked)
             local name, id = tooltip:GetSpell()
             assert(name == 'Flash of Light' and id == 19750)
         end
         tooltip:SetSpellByID(19750)
-        assert(textLines():find('Mana'), textLines())
+        assert(textLines():find('MANA'), textLines())
     "#).unwrap();
 }

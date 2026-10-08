@@ -1,0 +1,17 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_6_2_0"
+  ],
+  "revision": "153f9a8c0",
+  "status": "aborted-no-proof",
+  "reason": "Pyrun returned no result; cargo orphaned to PID 1, capture lost. Cancelled owned process tree; rerun uses file-backed output.",
+  "pids": [
+    1875619,
+    1938634
+  ]
+}
