@@ -1,0 +1,51 @@
+src/iced_app/update.rs:62:            Message::ReloadUI => self.handle_reload_ui(),
+src/iced_app/mod.rs:136:    ReloadUI,
+src/iced_app/view.rs:79:        return Some(Message::ReloadUI);
+src/c_api/permanent_shims/c_ui.rs:1://! Permanent `C_UI` display-safe-area shim.
+src/c_api/permanent_shims/c_ui.rs:13:    let ns = ensure_namespace(state, "C_UI")?;
+src/c_api/c_chat_bubbles.rs:3://! `C_ChatBubbles.GetAllChatBubbles(includeForbidden?)` returns an array of
+src/c_api/c_chat_bubbles.rs:20:        "GetAllChatBubbles",
+src/c_api/c_action_bar_spell_slots.rs:25:        "IsOnBarOrSpecialBar",
+src/c_api/c_action_bar_spell_slots.rs:79:        "C_ActionBar.IsOnBarOrSpecialBar",
+src/lua_api/state_types/collections.rs:102:/// Drives `C_ChatBubbles.GetAllChatBubbles`. Since we don't render 3D
+src/lua_api/hot_literals.rs:200:    b"C_UI",
+src/lua_api/globals/state_backed_queries.rs:25:    LuaApiMut::register_function(lua, "ReloadUI", reload_ui)?;
+src/lua_api/globals/stubs/namespace_stubs.rs:37:    // C_ChatBubbles.GetAllChatBubbles is SimState-backed in
+src/lua_api/globals/action_bar_api/registration.rs:12:    ("IsOnBarOrSpecialBar", is_on_bar_or_special_bar),
+src/lua_api/globals/group_queries.rs:104:        "UnitIsOwnerOrControllerOfUnit",
+src/lua_api/globals/group_queries_relationships.rs:66:/// `UnitIsOwnerOrControllerOfUnit(controllingUnit, controlledUnit)` — pet and
+src/loader/tests/wow_api_globals/global_functions.rs:316:        "ReloadUI",
+tests/c_chat_bubbles_probes.rs:14:        .eval("return #C_ChatBubbles.GetAllChatBubbles()")
+tests/c_chat_bubbles_probes.rs:37:            local bubbles = C_ChatBubbles.GetAllChatBubbles()
+tests/c_chat_bubbles_probes.rs:57:        .eval("return C_ChatBubbles.GetAllChatBubbles()[1].chatType")
+tests/c_chat_bubbles_probes.rs:72:        .eval("return C_ChatBubbles.GetAllChatBubbles()[1].frameID")
+tests/c_chat_bubbles_probes.rs:82:        .eval("return #C_ChatBubbles.GetAllChatBubbles()")
+tests/c_chat_bubbles_probes.rs:93:        .eval("return #C_ChatBubbles.GetAllChatBubbles()")
+tests/lua_api_boundary.rs:61:            local bubbles = C_ChatBubbles.GetAllChatBubbles()
+tests/c_api_surface.rs:1050:        "static C_UI display-safe-area defaults should not live as a root state-backed C API module"
+tests/c_api_surface.rs:1054:        "static C_UI display-safe-area defaults should stay in permanent_shims"
+tests/action_bar_membership.rs:55:            checkResult(C_ActionBar.IsOnBarOrSpecialBar(identifier))
+tests/recent_runtime_bootstrap_boundaries.rs:4:        ("function ReloadUI", "Rust event API"),
+tests/pdeid_specialbar.rs:28:            check(C_ActionBar.IsOnBarOrSpecialBar(identifier))
+tests/pdeid_specialbar.rs:226:        local query = C_ActionBar.IsOnBarOrSpecialBar
+tests/startup_api_glue.rs:79:            return type(C_UI),
+tests/startup_api_glue.rs:80:                   C_UI.ShouldUIParentAvoidNotch(),
+tests/startup_api_glue.rs:81:                   C_UI.DoesAnyDisplayHaveNotch(),
+tests/blizzard_script_errors_frame_loads.rs:322:         children (especially the `Reload` button which calls `ReloadUI` and the \
+tests/blizzard_script_errors_frame_loads.rs:508:             multi-line text), Reload (UIPanelButton calling ReloadUI), \
+tests/c_ui.rs:10:            if C_UI.ShouldUIParentAvoidNotch() ~= false then return "avoid" end
+tests/c_ui.rs:11:            if C_UI.DoesAnyDisplayHaveNotch() ~= false then return "display" end
+tests/c_ui.rs:13:            local left, top, right, bottom = C_UI.GetTopLeftNotchSafeRegion()
+tests/c_ui.rs:21:        .expect("C_UI display-safe-area defaults should be callable");
+tests/blizzard_ui/blizzard_addonperformance/behavior_specific_error_popup_disable_path.rs:13:                local originalReloadUI = ReloadUI
+tests/blizzard_ui/blizzard_addonperformance/behavior_specific_error_popup_disable_path.rs:20:                ReloadUI = function()
+tests/blizzard_ui/blizzard_addonperformance/behavior_specific_error_popup_disable_path.rs:33:                ReloadUI = originalReloadUI
+tests/blizzard_ui/blizzard_addonperformance/behavior_specific_error_popup_disable_path.rs:67:        "popup accept must call `ReloadUI` after disabling the addon"
+tests/blizzard_ui/blizzard_addonlist/behavior_okay_button_saves_when_pending_changes.rs:40:                ReloadUI = function()
+tests/blizzard_ui/blizzard_addonlist/behavior_okay_button_saves_when_pending_changes.rs:74:            "`AddonList.OkayButton:Click()` must route through `AddonList_OnOkay` and call `ReloadUI`"
+tests/system_api.rs:297:// FireEvent / ReloadUI
+tests/system_api.rs:309:    let is_func: bool = env.eval("return type(ReloadUI) == 'function'").unwrap();
+tests/system_api.rs:330:            ReloadUI()
+tests/data/patch_9_2_0_sweep_known_gaps.json:24:  "wt-global-api-C_UI.GetTopRightNotchSafeRegion-73",
+tests/patch_12_1_0_unit_secrecy.rs:69:    UnitIsOwnerOrControllerOfUnit = function(u) return UnitIsOwnerOrControllerOfUnit('player', u) end,
+tests/patch_12_1_0_unit_secrecy.rs:70:    UnitIsOwnerOrControllerOfUnitControlled = function(u) return UnitIsOwnerOrControllerOfUnit(u, 'player') end,

@@ -347,6 +347,35 @@ def parse_diff_api_additions(text):
     return entries
 
 
+def parse_top_level_api_bullets(text):
+    """Retain explicit New/Changes summary identities, not shortened labels (7.2.5)."""
+    entries = []
+    section = None
+    for number, line in enumerate(text.splitlines(), 1):
+        heading = re.fullmatch(r'==\s*([^=]+?)\s*==', line)
+        if heading:
+            section = heading[1]
+            continue
+        if section not in ('New', 'Changes') or not line.startswith('* '):
+            continue
+        references = list(TEMPLATE.finditer(line))
+        renamed = ' renamed to ' in line
+        if renamed and len(references) != 2:
+            raise ValueError(f'expected old/successor rename pair: {line}')
+        for index, match in enumerate(references):
+            parts = match[2].split('|')
+            symbol = next(part for part in parts if '=' not in part)
+            namespace = 't=n' in parts
+            if renamed:
+                direction = 'removed' if index == 0 else 'added'
+            else:
+                direction = 'changed' if section == 'Changes' and namespace else 'added'
+            entry = make_entry('global-api', direction, number, '{{api|' + symbol + '}}')
+            entry['annotation'] = line
+            entries.append(entry)
+    return entries
+
+
 def parse_prose_api_links(text):
     """Retain each API-linked identity in Changes prose, without inventing an addition."""
     entries = []
@@ -399,6 +428,8 @@ def main():
                         help='Retain API-linked identities in Changes prose; opt-in')
     parser.add_argument('--legacy-summary-tables', action='store_true',
                         help='Retain bare New global/API table summary names; opt-in')
+    parser.add_argument('--top-level-api-bullets', action='store_true',
+                        help='Retain top-level New/Changes summary identities and rename pairs; opt-in')
     args = parser.parse_args()
     patch, path, revid, out = args.patch, args.path, args.revid, args.out
     raw = Path(path).read_bytes()
@@ -435,6 +466,8 @@ def main():
         entries.extend(parse_prose_api_links(raw.decode('utf-8')))
     if args.legacy_summary_tables:
         entries.extend(parse_legacy_summary_tables(raw.decode('utf-8')))
+    if args.top_level_api_bullets:
+        entries.extend(parse_top_level_api_bullets(raw.decode('utf-8')))
     if args.inventory_only:
         for entry in entries:
             for key in ("kind", "page_default", "test_inline"):

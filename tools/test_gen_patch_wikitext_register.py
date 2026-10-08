@@ -19,6 +19,22 @@ class InventoryTests(unittest.TestCase):
                           ('C_Console', 'added', 4)])
         self.assertEqual(len({r['id'] for r in rows}), 3)
 
+    def test_top_level_bullets_keep_canonical_names_and_rename_directions(self):
+        import gen_patch_wikitext_register as generator
+        raw = ('== New ==\n* {{api|t=n|C_Bubbles}} added with '
+               '{{api|C_Bubbles.GetAll|GetAll}}()\n'
+               '== Changes ==\n* {{api|t=n|C_Trees}} now includes '
+               '{{api|C_Trees.GetID|GetID}}() and {{api|C_Trees.GetIDs}}()\n'
+               '* {{api|Old}}() renamed to {{api|C_New.Reload}}()\n'
+               '== References ==\n* {{api|Ignore}}\n')
+        rows = generator.parse_top_level_api_bullets(raw)
+        self.assertEqual([(r['symbol'], r['direction']) for r in rows], [
+            ('C_Bubbles', 'added'), ('C_Bubbles.GetAll', 'added'),
+            ('C_Trees', 'changed'), ('C_Trees.GetID', 'added'),
+            ('C_Trees.GetIDs', 'added'), ('Old', 'removed'), ('C_New.Reload', 'added')])
+        self.assertEqual(len(rows), len({r['id'] for r in rows}))
+        self.assertEqual(generator.split_sections(raw), {})
+
     def test_bfa_prepatch_nested_namespaces_events_and_removal_successors(self):
         import gen_patch_wikitext_register as generator
         raw = ('==New==\n* New {{api|C_Map}} table.\n**{{api|C_Map.GetMapInfo}}\n'
