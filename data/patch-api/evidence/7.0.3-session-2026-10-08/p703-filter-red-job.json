@@ -1,0 +1,1 @@
+{"pid": 1113088, "argv": ["/usr/bin/python3", "-B", "/home/osso/.worktrees/wow-ui-sim-p703-page/data/patch-api/evidence/7.0.3-session-2026-10-08/run_proof.py", "p703-filter-red", "cargo", "test", "--test", "integration", "patch_7_0_3_recipe_name_filter_changes_catalog_results", "--", "--nocapture"]}

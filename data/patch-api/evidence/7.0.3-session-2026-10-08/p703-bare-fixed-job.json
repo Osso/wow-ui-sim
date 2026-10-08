@@ -1,0 +1,1 @@
+{"pid": 1195994, "argv": ["/usr/bin/python3", "-B", "/home/osso/.worktrees/wow-ui-sim-p703-page/data/patch-api/evidence/7.0.3-session-2026-10-08/run_proof.py", "p703-bare-fixed", "cargo", "test", "--test", "integration", "patch_7_0_3", "--", "--nocapture"]}

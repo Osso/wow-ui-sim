@@ -1,0 +1,8 @@
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/c_api/permanent_shims/c_nameplate.rs:3://! Retail `GetNamePlateForUnit(unit)` returns a Frame rendered above the
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/c_api/permanent_shims/c_nameplate.rs:19:        "GetNamePlateForUnit",
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_api/globals/missing_surface/professions/professions_registration.rs:44:    ("GetAllRecipeIDs", c_trade_skill_ui_get_all_recipe_ids),
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_api/globals/missing_surface/professions/professions_registration.rs:103:    ("GetRecipeInfo", c_trade_skill_ui_get_recipe_info),
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_api/globals/missing_surface/professions/professions_registration.rs:106:        "GetRecipeItemNameFilter",
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_api/globals/stubs/namespace_stubs.rs:77:    // C_NamePlate GetNamePlateForUnit / GetNamePlates are registered in
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_api/globals/stubs/namespace_stubs.rs:112:    ("C_TradeSkillUI", "GetRecipeInfo", stub_nil),
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_api/globals/stubs/namespace_stubs.rs:120:    ("C_TradeSkillUI", "SetInventorySlotFilter", stub_nil),

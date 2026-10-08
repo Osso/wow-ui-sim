@@ -1,0 +1,2 @@
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/mists/compat_bootstrap.lua:1378:if rawget(_G, "GetGlyphInfo") == nil then
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/mists/compat_bootstrap.lua:1379:  function GetGlyphInfo(index)

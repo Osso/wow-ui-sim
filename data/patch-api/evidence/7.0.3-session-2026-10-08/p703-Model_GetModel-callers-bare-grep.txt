@@ -1,0 +1,4 @@
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_api/frame/methods/widgets/model.rs:633:    ("GetModel", get_model),
+/home/osso/.worktrees/wow-ui-sim-p703-page/tests/widget_methods_model.rs:24:        local model = frame:GetModel()
+/home/osso/.worktrees/wow-ui-sim-p703-page/tests/widget_methods_model.rs:182:        .eval("return TestPlayerModelSetModel:GetModel()")
+/home/osso/.worktrees/wow-ui-sim-p703-page/tests/widget_methods_model.rs:356:                   TestPlayerModelAppearanceState:GetModel(),

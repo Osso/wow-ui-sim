@@ -1,0 +1,1042 @@
+[
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.ClearRecipeCategoryFilter-13",
+    "symbol": "C_TradeSkillUI.ClearRecipeCategoryFilter",
+    "reason": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.ClearRecipeCategoryFilter"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.IsRecipeSourceTypeFiltered-14",
+    "symbol": "C_TradeSkillUI.IsRecipeSourceTypeFiltered",
+    "reason": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.IsRecipeSourceTypeFiltered"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.DropPendingObliterateItemFromCursor-16",
+    "symbol": "C_TradeSkillUI.DropPendingObliterateItemFromCursor",
+    "reason": "Legion Obliterum forge has no cursor conversion, eligibility, yield/cost or forge lifecycle model/fixture. No guessed value or no-op producer. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.DropPendingObliterateItemFromCursor"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.ObliterateItem-17",
+    "symbol": "C_TradeSkillUI.ObliterateItem",
+    "reason": "Legion Obliterum forge has no cursor conversion, eligibility, yield/cost or forge lifecycle model/fixture. No guessed value or no-op producer. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.ObliterateItem"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.GetPendingObliterateItemID-22",
+    "symbol": "C_TradeSkillUI.GetPendingObliterateItemID",
+    "reason": "Legion Obliterum forge has no cursor conversion, eligibility, yield/cost or forge lifecycle model/fixture. No guessed value or no-op producer. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetPendingObliterateItemID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.GetOnlyShowUnlearnedRecipes-26",
+    "symbol": "C_TradeSkillUI.GetOnlyShowUnlearnedRecipes",
+    "reason": "Later register wt-global-api-C_TradeSkillUI.GetOnlyShowUnlearnedRecipes-512 requests absence, but ordinary lookup still synthesizes/retains a function. No later-page retirement without its own current-consumer review. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_TradeSkillUI.GetOnlyShowUnlearnedRecipes-512",
+      "symbol": "C_TradeSkillUI.GetOnlyShowUnlearnedRecipes"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.SetRecipeRepeatCount-27",
+    "symbol": "C_TradeSkillUI.SetRecipeRepeatCount",
+    "reason": "Later register wt-global-api-C_TradeSkillUI.SetRecipeRepeatCount-524 requests absence, but ordinary lookup still synthesizes/retains a function. No later-page retirement without its own current-consumer review. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_TradeSkillUI.SetRecipeRepeatCount-524",
+      "symbol": "C_TradeSkillUI.SetRecipeRepeatCount"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.GetOnlyShowSkillUpRecipes-29",
+    "symbol": "C_TradeSkillUI.GetOnlyShowSkillUpRecipes",
+    "reason": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetOnlyShowSkillUpRecipes"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.SetOnlyShowSkillUpRecipes-31",
+    "symbol": "C_TradeSkillUI.SetOnlyShowSkillUpRecipes",
+    "reason": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.SetOnlyShowSkillUpRecipes"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.StopRecipeRepeat-32",
+    "symbol": "C_TradeSkillUI.StopRecipeRepeat",
+    "reason": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.StopRecipeRepeat"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.AnyRecipeCategoriesFiltered-33",
+    "symbol": "C_TradeSkillUI.AnyRecipeCategoriesFiltered",
+    "reason": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.AnyRecipeCategoriesFiltered"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.SetOnlyShowLearnedRecipes-34",
+    "symbol": "C_TradeSkillUI.SetOnlyShowLearnedRecipes",
+    "reason": "Later register wt-global-api-C_TradeSkillUI.SetOnlyShowLearnedRecipes-522 requests absence, but ordinary lookup still synthesizes/retains a function. No later-page retirement without its own current-consumer review. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_TradeSkillUI.SetOnlyShowLearnedRecipes-522",
+      "symbol": "C_TradeSkillUI.SetOnlyShowLearnedRecipes"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.CanObliterateCursorItem-36",
+    "symbol": "C_TradeSkillUI.CanObliterateCursorItem",
+    "reason": "Legion Obliterum forge has no cursor conversion, eligibility, yield/cost or forge lifecycle model/fixture. No guessed value or no-op producer. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.CanObliterateCursorItem"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.ClearPendingObliterateItem-37",
+    "symbol": "C_TradeSkillUI.ClearPendingObliterateItem",
+    "reason": "Legion Obliterum forge has no cursor conversion, eligibility, yield/cost or forge lifecycle model/fixture. No guessed value or no-op producer. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.ClearPendingObliterateItem"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.GetObliterateSpellID-39",
+    "symbol": "C_TradeSkillUI.GetObliterateSpellID",
+    "reason": "Legion Obliterum forge has no cursor conversion, eligibility, yield/cost or forge lifecycle model/fixture. No guessed value or no-op producer. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetObliterateSpellID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.GetOnlyShowLearnedRecipes-42",
+    "symbol": "C_TradeSkillUI.GetOnlyShowLearnedRecipes",
+    "reason": "Later register wt-global-api-C_TradeSkillUI.GetOnlyShowLearnedRecipes-511 requests absence, but ordinary lookup still synthesizes/retains a function. No later-page retirement without its own current-consumer review. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_TradeSkillUI.GetOnlyShowLearnedRecipes-511",
+      "symbol": "C_TradeSkillUI.GetOnlyShowLearnedRecipes"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.CloseObliterumForge-43",
+    "symbol": "C_TradeSkillUI.CloseObliterumForge",
+    "reason": "Legion Obliterum forge has no cursor conversion, eligibility, yield/cost or forge lifecycle model/fixture. No guessed value or no-op producer. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.CloseObliterumForge"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.SetRecipeFavorite-46",
+    "symbol": "C_TradeSkillUI.SetRecipeFavorite",
+    "reason": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.SetRecipeFavorite"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.GetOnlyShowMakeableRecipes-47",
+    "symbol": "C_TradeSkillUI.GetOnlyShowMakeableRecipes",
+    "reason": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetOnlyShowMakeableRecipes"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.IsRecipeSearchInProgress-49",
+    "symbol": "C_TradeSkillUI.IsRecipeSearchInProgress",
+    "reason": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.IsRecipeSearchInProgress"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.SetRecipeItemLevelFilter-50",
+    "symbol": "C_TradeSkillUI.SetRecipeItemLevelFilter",
+    "reason": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.SetRecipeItemLevelFilter"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.GetSubCategories-51",
+    "symbol": "C_TradeSkillUI.GetSubCategories",
+    "reason": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetSubCategories"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeNumReagents-53",
+    "symbol": "C_TradeSkillUI.GetRecipeNumReagents",
+    "reason": "Later register wt-global-api-C_TradeSkillUI.GetRecipeNumReagents-516 requests absence, but ordinary lookup still synthesizes/retains a function. No later-page retirement without its own current-consumer review. raw=function; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_TradeSkillUI.GetRecipeNumReagents-516",
+      "symbol": "C_TradeSkillUI.GetRecipeNumReagents"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.GetTradeSkillLine-54",
+    "symbol": "C_TradeSkillUI.GetTradeSkillLine",
+    "reason": "Later register wt-global-api-C_TradeSkillUI.GetTradeSkillLine-520 requests absence, but ordinary lookup still synthesizes/retains a function. No later-page retirement without its own current-consumer review. raw=function; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_TradeSkillUI.GetTradeSkillLine-520",
+      "symbol": "C_TradeSkillUI.GetTradeSkillLine"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.SetOnlyShowMakeableRecipes-55",
+    "symbol": "C_TradeSkillUI.SetOnlyShowMakeableRecipes",
+    "reason": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.SetOnlyShowMakeableRecipes"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.IsRecipeFavorite-56",
+    "symbol": "C_TradeSkillUI.IsRecipeFavorite",
+    "reason": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.IsRecipeFavorite"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeSourceText-58",
+    "symbol": "C_TradeSkillUI.GetRecipeSourceText",
+    "reason": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetRecipeSourceText"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.ClearRecipeSourceTypeFilter-59",
+    "symbol": "C_TradeSkillUI.ClearRecipeSourceTypeFilter",
+    "reason": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.ClearRecipeSourceTypeFilter"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.IsRecipeRepeating-61",
+    "symbol": "C_TradeSkillUI.IsRecipeRepeating",
+    "reason": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.IsRecipeRepeating"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeItemLevelFilter-62",
+    "symbol": "C_TradeSkillUI.GetRecipeItemLevelFilter",
+    "reason": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetRecipeItemLevelFilter"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.GetTradeSkillLineForRecipe-63",
+    "symbol": "C_TradeSkillUI.GetTradeSkillLineForRecipe",
+    "reason": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetTradeSkillLineForRecipe"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeReagentItemLink-65",
+    "symbol": "C_TradeSkillUI.GetRecipeReagentItemLink",
+    "reason": "Later register wt-global-api-C_TradeSkillUI.GetRecipeReagentItemLink-518 requests absence, but ordinary lookup still synthesizes/retains a function. No later-page retirement without its own current-consumer review. raw=function; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_TradeSkillUI.GetRecipeReagentItemLink-518",
+      "symbol": "C_TradeSkillUI.GetRecipeReagentItemLink"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.SetRecipeSourceTypeFilter-67",
+    "symbol": "C_TradeSkillUI.SetRecipeSourceTypeFilter",
+    "reason": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.SetRecipeSourceTypeFilter"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.GetPendingObliterateItemLink-69",
+    "symbol": "C_TradeSkillUI.GetPendingObliterateItemLink",
+    "reason": "Legion Obliterum forge has no cursor conversion, eligibility, yield/cost or forge lifecycle model/fixture. No guessed value or no-op producer. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetPendingObliterateItemLink"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeReagentInfo-71",
+    "symbol": "C_TradeSkillUI.GetRecipeReagentInfo",
+    "reason": "Later register wt-global-api-C_TradeSkillUI.GetRecipeReagentInfo-517 requests absence, but ordinary lookup still synthesizes/retains a function. No later-page retirement without its own current-consumer review. raw=function; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_TradeSkillUI.GetRecipeReagentInfo-517",
+      "symbol": "C_TradeSkillUI.GetRecipeReagentInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeLink-73",
+    "symbol": "C_TradeSkillUI.GetRecipeLink",
+    "reason": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetRecipeLink"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.SetRecipeCategoryFilter-75",
+    "symbol": "C_TradeSkillUI.SetRecipeCategoryFilter",
+    "reason": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.SetRecipeCategoryFilter"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeNumItemsProduced-76",
+    "symbol": "C_TradeSkillUI.GetRecipeNumItemsProduced",
+    "reason": "Later register wt-global-api-C_TradeSkillUI.GetRecipeNumItemsProduced-515 requests absence, but ordinary lookup still synthesizes/retains a function. No later-page retirement without its own current-consumer review. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_TradeSkillUI.GetRecipeNumItemsProduced-515",
+      "symbol": "C_TradeSkillUI.GetRecipeNumItemsProduced"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeCooldown-77",
+    "symbol": "C_TradeSkillUI.GetRecipeCooldown",
+    "reason": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.GetRecipeCooldown"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.SetOnlyShowUnlearnedRecipes-78",
+    "symbol": "C_TradeSkillUI.SetOnlyShowUnlearnedRecipes",
+    "reason": "Later register wt-global-api-C_TradeSkillUI.SetOnlyShowUnlearnedRecipes-523 requests absence, but ordinary lookup still synthesizes/retains a function. No later-page retirement without its own current-consumer review. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_TradeSkillUI.SetOnlyShowUnlearnedRecipes-523",
+      "symbol": "C_TradeSkillUI.SetOnlyShowUnlearnedRecipes"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.IsAnyRecipeFromSource-81",
+    "symbol": "C_TradeSkillUI.IsAnyRecipeFromSource",
+    "reason": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.IsAnyRecipeFromSource"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.IsRecipeCategoryFiltered-82",
+    "symbol": "C_TradeSkillUI.IsRecipeCategoryFiltered",
+    "reason": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function",
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TradeSkillUI.IsRecipeCategoryFiltered"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-GetNumNamePlateMotionTypes-90",
+    "symbol": "GetNumNamePlateMotionTypes",
+    "reason": "Old global is absent; migration summary does not explicitly retire it. No historical nameplate motion/frame catalog or 3D plate lifecycle; retain exact source gap.",
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetNumNamePlateMotionTypes"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-GetNameplateFrames-90",
+    "symbol": "GetNameplateFrames",
+    "reason": "Old global is absent; migration summary does not explicitly retire it. No historical nameplate motion/frame catalog or 3D plate lifecycle; retain exact source gap.",
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetNameplateFrames"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_NamePlate.GetNamePlateSizes-92",
+    "symbol": "C_NamePlate.GetNamePlateSizes",
+    "reason": "Historical plural size API has no modeled 3D world-nameplate size/lifecycle system; singular current shim is not an equivalent implementation. No new shim. raw=nil; lookup=function",
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_NamePlate.GetNamePlateSizes"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_NamePlate.SetNamePlateSizes-95",
+    "symbol": "C_NamePlate.SetNamePlateSizes",
+    "reason": "Historical plural size API has no modeled 3D world-nameplate size/lifecycle system; singular current shim is not an equivalent implementation. No new shim. raw=nil; lookup=function",
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_NamePlate.SetNamePlateSizes"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-widgets-Alpha:SetChange-100",
+    "symbol": "Alpha:SetChange",
+    "reason": "Historical removal conflicts with current concrete src/tests callers retained in whole-word scans; no deletion or vendor patch. Alpha; lookup=function",
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Alpha:SetChange"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Alpha; lookup=function",
+      "kind": "object-method",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-GetNumDungeonMapLevels-103",
+    "symbol": "GetNumDungeonMapLevels",
+    "reason": "Historical dungeon floor-array API absent; no archive dungeon floor fixture in the current map model.",
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetNumDungeonMapLevels"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-GetMapLandmarkInfo-104",
+    "symbol": "GetMapLandmarkInfo",
+    "reason": "Historical landmark index/type tuple absent; no archive landmark fixture or demonstrated modern equivalent.",
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetMapLandmarkInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-widgets-GameTooltip:SetTradeSkillItem-106",
+    "symbol": "GameTooltip:SetTradeSkillItem",
+    "reason": "Historical removal conflicts with current concrete src/tests callers retained in whole-word scans; no deletion or vendor patch. GameTooltip; lookup=function",
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "GameTooltip:SetTradeSkillItem"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "GameTooltip; lookup=function",
+      "kind": "object-method",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_MountJournal.Summon-112",
+    "symbol": "C_MountJournal.Summon",
+    "reason": "Historical removal conflicts with current concrete src/tests callers retained in whole-word scans; no deletion or vendor patch. raw=function; lookup=function",
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_MountJournal.Summon"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-widgets-Model:GetModel-123",
+    "symbol": "Model:GetModel",
+    "reason": "Historical removal conflicts with current concrete src/tests callers retained in whole-word scans; no deletion or vendor patch. Model; lookup=function",
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Model:GetModel"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Model; lookup=function",
+      "kind": "object-method",
+      "value": null
+    }
+  }
+]

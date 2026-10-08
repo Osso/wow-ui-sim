@@ -1,0 +1,21 @@
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/c_api/c_housing/catalog/snapshot.rs:33:fn push_sequence<T>(
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/c_api/c_housing/exterior/queries.rs:187:fn push_sequence<T>(
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/c_api/crafting_input.rs:9:pub(crate) fn read_array(state: &LuaState, value: Val) -> LuaResult<Vec<Val>> {
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/c_api/crafting_input.rs:130:fn read_regular_array(state: &mut LuaState, table: Val) -> LuaResult<Vec<RegularReagentInfo>> {
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/c_api/c_recent_allies.rs:187:fn push_ally_sequence(state: &mut LuaState, entries: &[RecentAllyData]) {
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/c_api/c_transmog_outfit_info/catalog.rs:105:fn build_entry_array(state: &mut LuaState, entries: &[OutfitEntry]) -> Val {
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/c_api/c_allied_races.rs:98:fn build_racial_ability_sequence(
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/c_api/c_allied_races.rs:115:fn build_achievement_id_sequence(state: &mut LuaState, ids: &[i64]) -> Val {
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/c_api/c_allied_races.rs:119:fn build_sequence<T, F>(state: &mut LuaState, items: &[T], mut to_val: F) -> Val
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/c_api/club_members.rs:248:fn build_role_array(state: &mut LuaState, roles: &[u8]) -> Val {
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/c_api/helpers.rs:86:pub(crate) fn set_table_array(state: &mut LuaState, table: Val, index: i64, value: Val) {
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/c_api/c_catalog_shop_products.rs:234:fn push_sequence<T>(
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/c_api/c_damage_meter/snapshot.rs:19:fn push_sequence<T>(
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/c_api/c_spec.rs:177:fn push_number_array(state: &mut LuaState, values: &[u32]) {
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/c_api/c_aura_container_util.rs:405:fn copy_sequence(state: &mut LuaState, input: Val, inner: Kind, path: &str) -> LuaResult<Val> {
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/c_api/abbreviated_number_formatter/config.rs:83:fn read_array(
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/c_api/crafting_tables.rs:65:pub(crate) fn regular_array(state: &mut LuaState, infos: &[RegularReagentInfo]) -> Val {
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/c_api/c_neighborhood_initiative/publication.rs:323:fn encode_array(state: &mut LuaState, values: Vec<serde_json::Value>) -> Val {
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_bridge/multivalue.rs:22:    pub fn from_vec(values: Vec<Val>) -> Self {
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_bridge/multivalue.rs:50:    pub fn into_vec(self) -> Vec<Val> {
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_api/globals/missing_surface/professions/professions_tables.rs:40:pub(super) fn recipe_id_table(state: &mut LuaState, recipe_ids: &[i32]) -> Val {

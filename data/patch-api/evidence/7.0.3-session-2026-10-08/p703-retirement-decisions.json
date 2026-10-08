@@ -1,0 +1,728 @@
+{
+  "new_retirements": [
+    "C_MountJournal.GetMountInfo",
+    "C_MountJournal.GetMountInfoExtra"
+  ],
+  "members": [
+    {
+      "source_id": "wt-widgets-Texture:SetToFileData-98",
+      "symbol": "Texture:SetToFileData",
+      "action": "already-absent",
+      "reason": "Observed required absence already passes; no code retirement or broad name-based deletion performed.",
+      "scans": [
+        "p703-Texture_SetToFileData-cached-qualified-grep.txt",
+        "p703-Texture_SetToFileData-cached-bare-grep.txt",
+        "p703-Texture_SetToFileData-callers-qualified-grep.txt",
+        "p703-Texture_SetToFileData-callers-bare-grep.txt"
+      ],
+      "later_additions": [],
+      "observed": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "widgets",
+          "superseded_by": null,
+          "symbol": "Texture:SetToFileData"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "Texture; lookup=nil",
+          "kind": "object-method",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-widgets-Alpha:SetChange-100",
+      "symbol": "Alpha:SetChange",
+      "action": "retained-current-callers",
+      "reason": "Existing animation_anim tests invoke SetChange and assert from/to-alpha behavior; shared dispatch is retained.",
+      "scans": [
+        "p703-Alpha_SetChange-cached-qualified-grep.txt",
+        "p703-Alpha_SetChange-cached-bare-grep.txt",
+        "p703-Alpha_SetChange-callers-qualified-grep.txt",
+        "p703-Alpha_SetChange-callers-bare-grep.txt"
+      ],
+      "later_additions": [],
+      "observed": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "widgets",
+          "superseded_by": null,
+          "symbol": "Alpha:SetChange"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "Alpha; lookup=function",
+          "kind": "object-method",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-widgets-GameTooltip:SetTradeSkillItem-106",
+      "symbol": "GameTooltip:SetTradeSkillItem",
+      "action": "retained-current-callers",
+      "reason": "Existing tooltip_trade_skill tests invoke legacy trade-index method; retain current modeled caller.",
+      "scans": [
+        "p703-GameTooltip_SetTradeSkillItem-cached-qualified-grep.txt",
+        "p703-GameTooltip_SetTradeSkillItem-cached-bare-grep.txt",
+        "p703-GameTooltip_SetTradeSkillItem-callers-qualified-grep.txt",
+        "p703-GameTooltip_SetTradeSkillItem-callers-bare-grep.txt"
+      ],
+      "later_additions": [],
+      "observed": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "widgets",
+          "superseded_by": null,
+          "symbol": "GameTooltip:SetTradeSkillItem"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "GameTooltip; lookup=function",
+          "kind": "object-method",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_MountJournal.GetMountInfo-110",
+      "symbol": "C_MountJournal.GetMountInfo",
+      "action": "new-retirement",
+      "reason": "No cached qualified/bare consumers, no pre-implementation src/tests callers and no later re-addition. Marked absent to prevent namespace autostub fabrication.",
+      "scans": [
+        "p703-C_MountJournal_GetMountInfo-cached-qualified-grep.txt",
+        "p703-C_MountJournal_GetMountInfo-cached-bare-grep.txt",
+        "p703-C_MountJournal_GetMountInfo-callers-qualified-grep.txt",
+        "p703-C_MountJournal_GetMountInfo-callers-bare-grep.txt"
+      ],
+      "later_additions": [],
+      "observed": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_MountJournal.GetMountInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_MountJournal.GetMountInfoExtra-111",
+      "symbol": "C_MountJournal.GetMountInfoExtra",
+      "action": "new-retirement",
+      "reason": "No cached qualified/bare consumers, no pre-implementation src/tests callers and no later re-addition. Marked absent to prevent namespace autostub fabrication.",
+      "scans": [
+        "p703-C_MountJournal_GetMountInfoExtra-cached-qualified-grep.txt",
+        "p703-C_MountJournal_GetMountInfoExtra-cached-bare-grep.txt",
+        "p703-C_MountJournal_GetMountInfoExtra-callers-qualified-grep.txt",
+        "p703-C_MountJournal_GetMountInfoExtra-callers-bare-grep.txt"
+      ],
+      "later_additions": [],
+      "observed": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_MountJournal.GetMountInfoExtra"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "member",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-global-api-C_MountJournal.Summon-112",
+      "symbol": "C_MountJournal.Summon",
+      "action": "retained-current-callers",
+      "reason": "Existing c_collection_api and c_function_diff_coverage invoke/require Summon; cached bare hits are unrelated spell names/comments, not member calls. Current caller prevents retirement.",
+      "scans": [
+        "p703-C_MountJournal_Summon-cached-qualified-grep.txt",
+        "p703-C_MountJournal_Summon-cached-bare-grep.txt",
+        "p703-C_MountJournal_Summon-callers-qualified-grep.txt",
+        "p703-C_MountJournal_Summon-callers-bare-grep.txt"
+      ],
+      "later_additions": [],
+      "observed": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "C_MountJournal.Summon"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "member",
+          "value": null
+        },
+        "ok": false
+      }
+    },
+    {
+      "source_id": "wt-global-api-CastGlyph-115",
+      "symbol": "CastGlyph",
+      "action": "already-absent",
+      "reason": "Observed required absence already passes; no code retirement or broad name-based deletion performed.",
+      "scans": [
+        "p703-CastGlyph-cached-qualified-grep.txt",
+        "p703-CastGlyph-cached-bare-grep.txt",
+        "p703-CastGlyph-callers-qualified-grep.txt",
+        "p703-CastGlyph-callers-bare-grep.txt"
+      ],
+      "later_additions": [],
+      "observed": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "CastGlyph"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-global-api-SetGlyph-115",
+      "symbol": "SetGlyph",
+      "action": "already-absent",
+      "reason": "Observed required absence already passes; no code retirement or broad name-based deletion performed. Bare cached match is GameTooltip:SetGlyph in InspectUI; preserve that consumer.",
+      "scans": [
+        "p703-SetGlyph-cached-qualified-grep.txt",
+        "p703-SetGlyph-cached-bare-grep.txt",
+        "p703-SetGlyph-callers-qualified-grep.txt",
+        "p703-SetGlyph-callers-bare-grep.txt"
+      ],
+      "later_additions": [],
+      "observed": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "SetGlyph"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-global-api-GetGlyphInfo-115",
+      "symbol": "GetGlyphInfo",
+      "action": "already-absent",
+      "reason": "Observed required absence already passes; no code retirement or broad name-based deletion performed.",
+      "scans": [
+        "p703-GetGlyphInfo-cached-qualified-grep.txt",
+        "p703-GetGlyphInfo-cached-bare-grep.txt",
+        "p703-GetGlyphInfo-callers-qualified-grep.txt",
+        "p703-GetGlyphInfo-callers-bare-grep.txt"
+      ],
+      "later_additions": [],
+      "observed": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "GetGlyphInfo"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-global-api-GetInventoryItemGems-116",
+      "symbol": "GetInventoryItemGems",
+      "action": "already-absent",
+      "reason": "Observed required absence already passes; no code retirement or broad name-based deletion performed.",
+      "scans": [
+        "p703-GetInventoryItemGems-cached-qualified-grep.txt",
+        "p703-GetInventoryItemGems-cached-bare-grep.txt",
+        "p703-GetInventoryItemGems-callers-qualified-grep.txt",
+        "p703-GetInventoryItemGems-callers-bare-grep.txt"
+      ],
+      "later_additions": [],
+      "observed": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "GetInventoryItemGems"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-global-api-GetContainerItemGems-116",
+      "symbol": "GetContainerItemGems",
+      "action": "already-absent",
+      "reason": "Observed required absence already passes; no code retirement or broad name-based deletion performed.",
+      "scans": [
+        "p703-GetContainerItemGems-cached-qualified-grep.txt",
+        "p703-GetContainerItemGems-cached-bare-grep.txt",
+        "p703-GetContainerItemGems-callers-qualified-grep.txt",
+        "p703-GetContainerItemGems-callers-bare-grep.txt"
+      ],
+      "later_additions": [],
+      "observed": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "GetContainerItemGems"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-global-api-GetQuestLogRewardTalents-117",
+      "symbol": "GetQuestLogRewardTalents",
+      "action": "already-absent",
+      "reason": "Observed required absence already passes; no code retirement or broad name-based deletion performed.",
+      "scans": [
+        "p703-GetQuestLogRewardTalents-cached-qualified-grep.txt",
+        "p703-GetQuestLogRewardTalents-cached-bare-grep.txt",
+        "p703-GetQuestLogRewardTalents-callers-qualified-grep.txt",
+        "p703-GetQuestLogRewardTalents-callers-bare-grep.txt"
+      ],
+      "later_additions": [],
+      "observed": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "global-api",
+          "superseded_by": null,
+          "symbol": "GetQuestLogRewardTalents"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=nil; lookup=nil",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-global-api-ShowHelm-118",
+      "symbol": "ShowHelm",
+      "action": "retained-later-addition",
+      "reason": "Explicitly re-added by later 12.0.0 register; current modeled helm/cloak callers preserved.",
+      "scans": [
+        "p703-ShowHelm-cached-qualified-grep.txt",
+        "p703-ShowHelm-cached-bare-grep.txt",
+        "p703-ShowHelm-callers-qualified-grep.txt",
+        "p703-ShowHelm-callers-bare-grep.txt"
+      ],
+      "later_additions": [
+        {
+          "patch": "12.0.0",
+          "revision": "aa57dd8f830ec9c53e2f9c9dac5c7a69b5b042ec",
+          "entry": {
+            "id": "wt-global-api-ShowHelm-434",
+            "section": "global-api",
+            "direction": "added",
+            "symbol": "ShowHelm",
+            "annotation": "",
+            "wikitext_line": 434
+          }
+        },
+        {
+          "patch": "12.0.0",
+          "revision": "50c69faa3938e23b3e339d47c0ac2f7f0c7bdc6d",
+          "entry": {
+            "id": "wt-global-api-ShowHelm-434",
+            "section": "global-api",
+            "direction": "added",
+            "symbol": "ShowHelm",
+            "annotation": "",
+            "wikitext_line": 434
+          }
+        }
+      ],
+      "observed": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": "wt-global-api-ShowHelm-434",
+          "symbol": "ShowHelm"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-global-api-ShowCloak-118",
+      "symbol": "ShowCloak",
+      "action": "retained-later-addition",
+      "reason": "Explicitly re-added by later 12.0.0 register; current modeled helm/cloak callers preserved.",
+      "scans": [
+        "p703-ShowCloak-cached-qualified-grep.txt",
+        "p703-ShowCloak-cached-bare-grep.txt",
+        "p703-ShowCloak-callers-qualified-grep.txt",
+        "p703-ShowCloak-callers-bare-grep.txt"
+      ],
+      "later_additions": [
+        {
+          "patch": "12.0.0",
+          "revision": "aa57dd8f830ec9c53e2f9c9dac5c7a69b5b042ec",
+          "entry": {
+            "id": "wt-global-api-ShowCloak-433",
+            "section": "global-api",
+            "direction": "added",
+            "symbol": "ShowCloak",
+            "annotation": "",
+            "wikitext_line": 433
+          }
+        },
+        {
+          "patch": "12.0.0",
+          "revision": "50c69faa3938e23b3e339d47c0ac2f7f0c7bdc6d",
+          "entry": {
+            "id": "wt-global-api-ShowCloak-433",
+            "section": "global-api",
+            "direction": "added",
+            "symbol": "ShowCloak",
+            "annotation": "",
+            "wikitext_line": 433
+          }
+        }
+      ],
+      "observed": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": "wt-global-api-ShowCloak-433",
+          "symbol": "ShowCloak"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-global-api-ShowingHelm-118",
+      "symbol": "ShowingHelm",
+      "action": "retained-later-addition",
+      "reason": "Explicitly re-added by later 12.0.0 register; current modeled helm/cloak callers preserved.",
+      "scans": [
+        "p703-ShowingHelm-cached-qualified-grep.txt",
+        "p703-ShowingHelm-cached-bare-grep.txt",
+        "p703-ShowingHelm-callers-qualified-grep.txt",
+        "p703-ShowingHelm-callers-bare-grep.txt"
+      ],
+      "later_additions": [
+        {
+          "patch": "12.0.0",
+          "revision": "aa57dd8f830ec9c53e2f9c9dac5c7a69b5b042ec",
+          "entry": {
+            "id": "wt-global-api-ShowingHelm-436",
+            "section": "global-api",
+            "direction": "added",
+            "symbol": "ShowingHelm",
+            "annotation": "",
+            "wikitext_line": 436
+          }
+        },
+        {
+          "patch": "12.0.0",
+          "revision": "50c69faa3938e23b3e339d47c0ac2f7f0c7bdc6d",
+          "entry": {
+            "id": "wt-global-api-ShowingHelm-436",
+            "section": "global-api",
+            "direction": "added",
+            "symbol": "ShowingHelm",
+            "annotation": "",
+            "wikitext_line": 436
+          }
+        }
+      ],
+      "observed": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": "wt-global-api-ShowingHelm-436",
+          "symbol": "ShowingHelm"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-global-api-ShowingCloak-118",
+      "symbol": "ShowingCloak",
+      "action": "retained-later-addition",
+      "reason": "Explicitly re-added by later 12.0.0 register; current modeled helm/cloak callers preserved.",
+      "scans": [
+        "p703-ShowingCloak-cached-qualified-grep.txt",
+        "p703-ShowingCloak-cached-bare-grep.txt",
+        "p703-ShowingCloak-callers-qualified-grep.txt",
+        "p703-ShowingCloak-callers-bare-grep.txt"
+      ],
+      "later_additions": [
+        {
+          "patch": "12.0.0",
+          "revision": "aa57dd8f830ec9c53e2f9c9dac5c7a69b5b042ec",
+          "entry": {
+            "id": "wt-global-api-ShowingCloak-435",
+            "section": "global-api",
+            "direction": "added",
+            "symbol": "ShowingCloak",
+            "annotation": "",
+            "wikitext_line": 435
+          }
+        },
+        {
+          "patch": "12.0.0",
+          "revision": "50c69faa3938e23b3e339d47c0ac2f7f0c7bdc6d",
+          "entry": {
+            "id": "wt-global-api-ShowingCloak-435",
+            "section": "global-api",
+            "direction": "added",
+            "symbol": "ShowingCloak",
+            "annotation": "",
+            "wikitext_line": 435
+          }
+        }
+      ],
+      "observed": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "published",
+          "section": "global-api",
+          "superseded_by": "wt-global-api-ShowingCloak-435",
+          "symbol": "ShowingCloak"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "raw=function; lookup=function",
+          "kind": "global",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-widgets-Frame:AllowAttributeChanges-120",
+      "symbol": "Frame:AllowAttributeChanges",
+      "action": "already-absent",
+      "reason": "Observed required absence already passes; no code retirement or broad name-based deletion performed.",
+      "scans": [
+        "p703-Frame_AllowAttributeChanges-cached-qualified-grep.txt",
+        "p703-Frame_AllowAttributeChanges-cached-bare-grep.txt",
+        "p703-Frame_AllowAttributeChanges-callers-qualified-grep.txt",
+        "p703-Frame_AllowAttributeChanges-callers-bare-grep.txt"
+      ],
+      "later_additions": [],
+      "observed": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "widgets",
+          "superseded_by": null,
+          "symbol": "Frame:AllowAttributeChanges"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "Frame; lookup=nil",
+          "kind": "object-method",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-events-UNIT_COMBO_POINTS-121",
+      "symbol": "UNIT_COMBO_POINTS",
+      "action": "already-absent",
+      "reason": "Observed required absence already passes; no code retirement or broad name-based deletion performed.",
+      "scans": [
+        "p703-UNIT_COMBO_POINTS-cached-qualified-grep.txt",
+        "p703-UNIT_COMBO_POINTS-cached-bare-grep.txt",
+        "p703-UNIT_COMBO_POINTS-callers-qualified-grep.txt",
+        "p703-UNIT_COMBO_POINTS-callers-bare-grep.txt"
+      ],
+      "later_additions": [],
+      "observed": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "events",
+          "superseded_by": null,
+          "symbol": "UNIT_COMBO_POINTS"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"UNIT_COMBO_POINTS\"; registered=false",
+          "kind": "event",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-cvars-floatingCombatTextComboPoints-122",
+      "symbol": "floatingCombatTextComboPoints",
+      "action": "already-absent",
+      "reason": "Observed required absence already passes; no code retirement or broad name-based deletion performed.",
+      "scans": [
+        "p703-floatingCombatTextComboPoints-cached-qualified-grep.txt",
+        "p703-floatingCombatTextComboPoints-cached-bare-grep.txt",
+        "p703-floatingCombatTextComboPoints-callers-qualified-grep.txt",
+        "p703-floatingCombatTextComboPoints-callers-bare-grep.txt"
+      ],
+      "later_additions": [],
+      "observed": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "cvars",
+          "superseded_by": null,
+          "symbol": "floatingCombatTextComboPoints"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "value/default queried",
+          "kind": "cvar",
+          "value": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "source_id": "wt-widgets-Model:GetModel-123",
+      "symbol": "Model:GetModel",
+      "action": "retained-current-callers",
+      "reason": "Existing widget_methods_model tests assert stored model state returned by GetModel; retain live getter.",
+      "scans": [
+        "p703-Model_GetModel-cached-qualified-grep.txt",
+        "p703-Model_GetModel-cached-bare-grep.txt",
+        "p703-Model_GetModel-callers-qualified-grep.txt",
+        "p703-Model_GetModel-callers-bare-grep.txt"
+      ],
+      "later_additions": [],
+      "observed": {
+        "expected": {
+          "direction": "removed",
+          "page_default": null,
+          "publication": "absent",
+          "section": "widgets",
+          "superseded_by": null,
+          "symbol": "Model:GetModel"
+        },
+        "observed": {
+          "default": null,
+          "default_mismatch": false,
+          "detail": "Model; lookup=function",
+          "kind": "object-method",
+          "value": null
+        },
+        "ok": false
+      }
+    }
+  ]
+}

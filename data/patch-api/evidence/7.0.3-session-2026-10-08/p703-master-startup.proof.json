@@ -1,0 +1,15 @@
+{
+  "revision": "aa57dd8f830ec9c53e2f9c9dac5c7a69b5b042ec",
+  "command": [
+    "timeout",
+    "90",
+    "/home/osso/.cache/wow-ui-sim-targets/p703-page/master-wow-sim",
+    "--no-saved-vars",
+    "lua-errors"
+  ],
+  "exit": 0,
+  "addons_enabled": true,
+  "snapshot": "/home/osso/.cache/wow-ui-sim-targets/p703-page/master-source",
+  "log": "p703-master-startup.log",
+  "log_sha256": "679c03300c87541072a5134a0d1f3b64156c92428162354738618c4b7737a080"
+}

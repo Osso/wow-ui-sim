@@ -1,0 +1,1084 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "7.0.3",
+  "source": {
+    "path": "data/patch-api/sources/7.0.3-api-changes.wikitext",
+    "revid": 5295335,
+    "sha256": "d8951bad884b04b4686fdc7a0cc26b305b35c31ecc8872035d209937f13f3484"
+  },
+  "header_counts": [],
+  "entries": [
+    {
+      "id": "wt-widgets-Line-4",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Line",
+      "annotation": "* New Widget types: [[UIOBJECT Line|Line]] - derived from Texture, and [[UIOBJECT UiCamera|UiCamera]] - derived from Model",
+      "wikitext_line": 4
+    },
+    {
+      "id": "wt-widgets-UiCamera-4",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "UiCamera",
+      "annotation": "* New Widget types: [[UIOBJECT Line|Line]] - derived from Texture, and [[UIOBJECT UiCamera|UiCamera]] - derived from Model",
+      "wikitext_line": 4
+    },
+    {
+      "id": "wt-widgets-Region:GetDebugName-5",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Region:GetDebugName",
+      "annotation": "* New [[UIOBJECT Region|Region]] method: [[API Region GetDebugName|Region:GetDebugName]]()",
+      "wikitext_line": 5
+    },
+    {
+      "id": "wt-widgets-Frame:CreateLine-6",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Frame:CreateLine",
+      "annotation": "* New [[UIOBJECT Frame|Frame]] methods: [[API Frame CreateLine|Frame:CreateLine]](), [[API Frame GetFlattensRenderLayers|Frame:GetFlattensRenderLayers]](), [[API Frame SetFlattensRenderLayers|Frame:SetFlattensRenderLayers]]()",
+      "wikitext_line": 6
+    },
+    {
+      "id": "wt-widgets-Frame:GetFlattensRenderLayers-6",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Frame:GetFlattensRenderLayers",
+      "annotation": "* New [[UIOBJECT Frame|Frame]] methods: [[API Frame CreateLine|Frame:CreateLine]](), [[API Frame GetFlattensRenderLayers|Frame:GetFlattensRenderLayers]](), [[API Frame SetFlattensRenderLayers|Frame:SetFlattensRenderLayers]]()",
+      "wikitext_line": 6
+    },
+    {
+      "id": "wt-widgets-Frame:SetFlattensRenderLayers-6",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Frame:SetFlattensRenderLayers",
+      "annotation": "* New [[UIOBJECT Frame|Frame]] methods: [[API Frame CreateLine|Frame:CreateLine]](), [[API Frame GetFlattensRenderLayers|Frame:GetFlattensRenderLayers]](), [[API Frame SetFlattensRenderLayers|Frame:SetFlattensRenderLayers]]()",
+      "wikitext_line": 6
+    },
+    {
+      "id": "wt-widgets-Texture:SetColorTexture-7",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Texture:SetColorTexture",
+      "annotation": "* New [[UIOBJECT Texture|Texture]] method: [[API Texture SetColorTexture|Texture:SetColorTexture]]()",
+      "wikitext_line": 7
+    },
+    {
+      "id": "wt-global-api-C_AdventureMap-8",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "P703_NONEXISTENT_NAMESPACE",
+      "annotation": "* Adventure Map - AddOns/Blizzard_AdventureMap, C_AdventureMap",
+      "wikitext_line": 8
+    },
+    {
+      "id": "wt-global-api-C_ArtifactUI-9",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ArtifactUI",
+      "annotation": "* Artifacts - AddOns/Blizzard_ArtifactUI, C_ArtifactUI",
+      "wikitext_line": 9
+    },
+    {
+      "id": "wt-global-api-C_Transmog-10",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Transmog",
+      "annotation": "* Wardrobe - AddOns/Blizzard_Collections/Blizzard_Wardrobe, C_Transmog and C_TransmogCollection",
+      "wikitext_line": 10
+    },
+    {
+      "id": "wt-global-api-C_TransmogCollection-10",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TransmogCollection",
+      "annotation": "* Wardrobe - AddOns/Blizzard_Collections/Blizzard_Wardrobe, C_Transmog and C_TransmogCollection",
+      "wikitext_line": 10
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI-12",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI",
+      "annotation": "* New C_TradeSkillUI table.",
+      "wikitext_line": 12
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.ClearRecipeCategoryFilter-13",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.ClearRecipeCategoryFilter",
+      "annotation": "**{{api|C_TradeSkillUI.ClearRecipeCategoryFilter}},",
+      "wikitext_line": 13
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.IsRecipeSourceTypeFiltered-14",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.IsRecipeSourceTypeFiltered",
+      "annotation": "**{{api|C_TradeSkillUI.IsRecipeSourceTypeFiltered}},",
+      "wikitext_line": 14
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetRecipeRepeatCount-15",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetRecipeRepeatCount",
+      "annotation": "**{{api|C_TradeSkillUI.GetRecipeRepeatCount}},",
+      "wikitext_line": 15
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.DropPendingObliterateItemFromCursor-16",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.DropPendingObliterateItemFromCursor",
+      "annotation": "**{{api|C_TradeSkillUI.DropPendingObliterateItemFromCursor}},",
+      "wikitext_line": 16
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.ObliterateItem-17",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.ObliterateItem",
+      "annotation": "**{{api|C_TradeSkillUI.ObliterateItem}},",
+      "wikitext_line": 17
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetRecipeInfo-18",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetRecipeInfo",
+      "annotation": "**{{api|C_TradeSkillUI.GetRecipeInfo}},",
+      "wikitext_line": 18
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.IsTradeSkillReady-19",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.IsTradeSkillReady",
+      "annotation": "**{{api|C_TradeSkillUI.IsTradeSkillReady}},",
+      "wikitext_line": 19
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetRecipeItemNameFilter-20",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetRecipeItemNameFilter",
+      "annotation": "**{{api|C_TradeSkillUI.GetRecipeItemNameFilter}},",
+      "wikitext_line": 20
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetCategoryInfo-21",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetCategoryInfo",
+      "annotation": "**{{api|C_TradeSkillUI.GetCategoryInfo}},",
+      "wikitext_line": 21
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetPendingObliterateItemID-22",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetPendingObliterateItemID",
+      "annotation": "**{{api|C_TradeSkillUI.GetPendingObliterateItemID}},",
+      "wikitext_line": 22
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.SetRecipeItemNameFilter-23",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.SetRecipeItemNameFilter",
+      "annotation": "**{{api|C_TradeSkillUI.SetRecipeItemNameFilter}},",
+      "wikitext_line": 23
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.SetInventorySlotFilter-24",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.SetInventorySlotFilter",
+      "annotation": "**{{api|C_TradeSkillUI.SetInventorySlotFilter}},",
+      "wikitext_line": 24
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.IsTradeSkillGuild-25",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.IsTradeSkillGuild",
+      "annotation": "**{{api|C_TradeSkillUI.IsTradeSkillGuild}},",
+      "wikitext_line": 25
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetOnlyShowUnlearnedRecipes-26",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetOnlyShowUnlearnedRecipes",
+      "annotation": "**{{api|C_TradeSkillUI.GetOnlyShowUnlearnedRecipes}},",
+      "wikitext_line": 26
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.SetRecipeRepeatCount-27",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.SetRecipeRepeatCount",
+      "annotation": "**{{api|C_TradeSkillUI.SetRecipeRepeatCount}},",
+      "wikitext_line": 27
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.IsNPCCrafting-28",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.IsNPCCrafting",
+      "annotation": "**{{api|C_TradeSkillUI.IsNPCCrafting}},",
+      "wikitext_line": 28
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetOnlyShowSkillUpRecipes-29",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetOnlyShowSkillUpRecipes",
+      "annotation": "**{{api|C_TradeSkillUI.GetOnlyShowSkillUpRecipes}},",
+      "wikitext_line": 29
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetAllRecipeIDs-30",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetAllRecipeIDs",
+      "annotation": "**{{api|C_TradeSkillUI.GetAllRecipeIDs}},",
+      "wikitext_line": 30
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.SetOnlyShowSkillUpRecipes-31",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.SetOnlyShowSkillUpRecipes",
+      "annotation": "**{{api|C_TradeSkillUI.SetOnlyShowSkillUpRecipes}},",
+      "wikitext_line": 31
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.StopRecipeRepeat-32",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.StopRecipeRepeat",
+      "annotation": "**{{api|C_TradeSkillUI.StopRecipeRepeat}},",
+      "wikitext_line": 32
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.AnyRecipeCategoriesFiltered-33",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.AnyRecipeCategoriesFiltered",
+      "annotation": "**{{api|C_TradeSkillUI.AnyRecipeCategoriesFiltered}},",
+      "wikitext_line": 33
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.SetOnlyShowLearnedRecipes-34",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.SetOnlyShowLearnedRecipes",
+      "annotation": "**{{api|C_TradeSkillUI.SetOnlyShowLearnedRecipes}},",
+      "wikitext_line": 34
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.IsInventorySlotFiltered-35",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.IsInventorySlotFiltered",
+      "annotation": "**{{api|C_TradeSkillUI.IsInventorySlotFiltered}},",
+      "wikitext_line": 35
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.CanObliterateCursorItem-36",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.CanObliterateCursorItem",
+      "annotation": "**{{api|C_TradeSkillUI.CanObliterateCursorItem}},",
+      "wikitext_line": 36
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.ClearPendingObliterateItem-37",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.ClearPendingObliterateItem",
+      "annotation": "**{{api|C_TradeSkillUI.ClearPendingObliterateItem}},",
+      "wikitext_line": 37
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetCategories-38",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetCategories",
+      "annotation": "**{{api|C_TradeSkillUI.GetCategories}},",
+      "wikitext_line": 38
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetObliterateSpellID-39",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetObliterateSpellID",
+      "annotation": "**{{api|C_TradeSkillUI.GetObliterateSpellID}},",
+      "wikitext_line": 39
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetRecipeTools-40",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetRecipeTools",
+      "annotation": "**{{api|C_TradeSkillUI.GetRecipeTools}},",
+      "wikitext_line": 40
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.IsTradeSkillLinked-41",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.IsTradeSkillLinked",
+      "annotation": "**{{api|C_TradeSkillUI.IsTradeSkillLinked}},",
+      "wikitext_line": 41
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetOnlyShowLearnedRecipes-42",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetOnlyShowLearnedRecipes",
+      "annotation": "**{{api|C_TradeSkillUI.GetOnlyShowLearnedRecipes}},",
+      "wikitext_line": 42
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.CloseObliterumForge-43",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.CloseObliterumForge",
+      "annotation": "**{{api|C_TradeSkillUI.CloseObliterumForge}},",
+      "wikitext_line": 43
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.AreAnyInventorySlotsFiltered-44",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.AreAnyInventorySlotsFiltered",
+      "annotation": "**{{api|C_TradeSkillUI.AreAnyInventorySlotsFiltered}},",
+      "wikitext_line": 44
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetTradeSkillTexture-45",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetTradeSkillTexture",
+      "annotation": "**{{api|C_TradeSkillUI.GetTradeSkillTexture}},",
+      "wikitext_line": 45
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.SetRecipeFavorite-46",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.SetRecipeFavorite",
+      "annotation": "**{{api|C_TradeSkillUI.SetRecipeFavorite}},",
+      "wikitext_line": 46
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetOnlyShowMakeableRecipes-47",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetOnlyShowMakeableRecipes",
+      "annotation": "**{{api|C_TradeSkillUI.GetOnlyShowMakeableRecipes}},",
+      "wikitext_line": 47
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetTradeSkillListLink-48",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetTradeSkillListLink",
+      "annotation": "**{{api|C_TradeSkillUI.GetTradeSkillListLink}},",
+      "wikitext_line": 48
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.IsRecipeSearchInProgress-49",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.IsRecipeSearchInProgress",
+      "annotation": "**{{api|C_TradeSkillUI.IsRecipeSearchInProgress}},",
+      "wikitext_line": 49
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.SetRecipeItemLevelFilter-50",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.SetRecipeItemLevelFilter",
+      "annotation": "**{{api|C_TradeSkillUI.SetRecipeItemLevelFilter}},",
+      "wikitext_line": 50
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetSubCategories-51",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetSubCategories",
+      "annotation": "**{{api|C_TradeSkillUI.GetSubCategories}},",
+      "wikitext_line": 51
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.CraftRecipe-52",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.CraftRecipe",
+      "annotation": "**{{api|C_TradeSkillUI.CraftRecipe}},",
+      "wikitext_line": 52
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetRecipeNumReagents-53",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetRecipeNumReagents",
+      "annotation": "**{{api|C_TradeSkillUI.GetRecipeNumReagents}},",
+      "wikitext_line": 53
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetTradeSkillLine-54",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetTradeSkillLine",
+      "annotation": "**{{api|C_TradeSkillUI.GetTradeSkillLine}},",
+      "wikitext_line": 54
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.SetOnlyShowMakeableRecipes-55",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.SetOnlyShowMakeableRecipes",
+      "annotation": "**{{api|C_TradeSkillUI.SetOnlyShowMakeableRecipes}},",
+      "wikitext_line": 55
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.IsRecipeFavorite-56",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.IsRecipeFavorite",
+      "annotation": "**{{api|C_TradeSkillUI.IsRecipeFavorite}},",
+      "wikitext_line": 56
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.CanTradeSkillListLink-57",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.CanTradeSkillListLink",
+      "annotation": "**{{api|C_TradeSkillUI.CanTradeSkillListLink}},",
+      "wikitext_line": 57
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetRecipeSourceText-58",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetRecipeSourceText",
+      "annotation": "**{{api|C_TradeSkillUI.GetRecipeSourceText}},",
+      "wikitext_line": 58
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.ClearRecipeSourceTypeFilter-59",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.ClearRecipeSourceTypeFilter",
+      "annotation": "**{{api|C_TradeSkillUI.ClearRecipeSourceTypeFilter}},",
+      "wikitext_line": 59
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetFilterableInventorySlots-60",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetFilterableInventorySlots",
+      "annotation": "**{{api|C_TradeSkillUI.GetFilterableInventorySlots}},",
+      "wikitext_line": 60
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.IsRecipeRepeating-61",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.IsRecipeRepeating",
+      "annotation": "**{{api|C_TradeSkillUI.IsRecipeRepeating}},",
+      "wikitext_line": 61
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetRecipeItemLevelFilter-62",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetRecipeItemLevelFilter",
+      "annotation": "**{{api|C_TradeSkillUI.GetRecipeItemLevelFilter}},",
+      "wikitext_line": 62
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetTradeSkillLineForRecipe-63",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetTradeSkillLineForRecipe",
+      "annotation": "**{{api|C_TradeSkillUI.GetTradeSkillLineForRecipe}},",
+      "wikitext_line": 63
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetAllFilterableInventorySlots-64",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetAllFilterableInventorySlots",
+      "annotation": "**{{api|C_TradeSkillUI.GetAllFilterableInventorySlots}},",
+      "wikitext_line": 64
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetRecipeReagentItemLink-65",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetRecipeReagentItemLink",
+      "annotation": "**{{api|C_TradeSkillUI.GetRecipeReagentItemLink}},",
+      "wikitext_line": 65
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.OpenTradeSkill-66",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.OpenTradeSkill",
+      "annotation": "**{{api|C_TradeSkillUI.OpenTradeSkill}},",
+      "wikitext_line": 66
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.SetRecipeSourceTypeFilter-67",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.SetRecipeSourceTypeFilter",
+      "annotation": "**{{api|C_TradeSkillUI.SetRecipeSourceTypeFilter}},",
+      "wikitext_line": 67
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetFilteredRecipeIDs-68",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetFilteredRecipeIDs",
+      "annotation": "**{{api|C_TradeSkillUI.GetFilteredRecipeIDs}},",
+      "wikitext_line": 68
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetPendingObliterateItemLink-69",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetPendingObliterateItemLink",
+      "annotation": "**{{api|C_TradeSkillUI.GetPendingObliterateItemLink}},",
+      "wikitext_line": 69
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.CloseTradeSkill-70",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.CloseTradeSkill",
+      "annotation": "**{{api|C_TradeSkillUI.CloseTradeSkill}},",
+      "wikitext_line": 70
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetRecipeReagentInfo-71",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetRecipeReagentInfo",
+      "annotation": "**{{api|C_TradeSkillUI.GetRecipeReagentInfo}},",
+      "wikitext_line": 71
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.IsDataSourceChanging-72",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.IsDataSourceChanging",
+      "annotation": "**{{api|C_TradeSkillUI.IsDataSourceChanging}},",
+      "wikitext_line": 72
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetRecipeLink-73",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetRecipeLink",
+      "annotation": "**{{api|C_TradeSkillUI.GetRecipeLink}},",
+      "wikitext_line": 73
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.ClearInventorySlotFilter-74",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.ClearInventorySlotFilter",
+      "annotation": "**{{api|C_TradeSkillUI.ClearInventorySlotFilter}},",
+      "wikitext_line": 74
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.SetRecipeCategoryFilter-75",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.SetRecipeCategoryFilter",
+      "annotation": "**{{api|C_TradeSkillUI.SetRecipeCategoryFilter}},",
+      "wikitext_line": 75
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetRecipeNumItemsProduced-76",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetRecipeNumItemsProduced",
+      "annotation": "**{{api|C_TradeSkillUI.GetRecipeNumItemsProduced}},",
+      "wikitext_line": 76
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetRecipeCooldown-77",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetRecipeCooldown",
+      "annotation": "**{{api|C_TradeSkillUI.GetRecipeCooldown}},",
+      "wikitext_line": 77
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.SetOnlyShowUnlearnedRecipes-78",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.SetOnlyShowUnlearnedRecipes",
+      "annotation": "**{{api|C_TradeSkillUI.SetOnlyShowUnlearnedRecipes}},",
+      "wikitext_line": 78
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetRecipeDescription-79",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetRecipeDescription",
+      "annotation": "**{{api|C_TradeSkillUI.GetRecipeDescription}},",
+      "wikitext_line": 79
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.GetRecipeItemLink-80",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.GetRecipeItemLink",
+      "annotation": "**{{api|C_TradeSkillUI.GetRecipeItemLink}},",
+      "wikitext_line": 80
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.IsAnyRecipeFromSource-81",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.IsAnyRecipeFromSource",
+      "annotation": "**{{api|C_TradeSkillUI.IsAnyRecipeFromSource}},",
+      "wikitext_line": 81
+    },
+    {
+      "id": "wt-global-api-C_TradeSkillUI.IsRecipeCategoryFiltered-82",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TradeSkillUI.IsRecipeCategoryFiltered",
+      "annotation": "**{{api|C_TradeSkillUI.IsRecipeCategoryFiltered}},",
+      "wikitext_line": 82
+    },
+    {
+      "id": "wt-global-api-GetNumQuestLogRewardSpells-83",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumQuestLogRewardSpells",
+      "annotation": "* [[API GetNumQuestLogRewardSpells|GetNumQuestLogRewardSpells]]",
+      "wikitext_line": 83
+    },
+    {
+      "id": "wt-events-NAME_PLATE_CREATED-89",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "NAME_PLATE_CREATED",
+      "annotation": "** New events: {{api|t=e|NAME_PLATE_CREATED}}, {{api|t=e|NAME_PLATE_UNIT_ADDED}}, {{api|t=e|NAME_PLATE_UNIT_REMOVED}}",
+      "wikitext_line": 89
+    },
+    {
+      "id": "wt-events-NAME_PLATE_UNIT_ADDED-89",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "NAME_PLATE_UNIT_ADDED",
+      "annotation": "** New events: {{api|t=e|NAME_PLATE_CREATED}}, {{api|t=e|NAME_PLATE_UNIT_ADDED}}, {{api|t=e|NAME_PLATE_UNIT_REMOVED}}",
+      "wikitext_line": 89
+    },
+    {
+      "id": "wt-events-NAME_PLATE_UNIT_REMOVED-89",
+      "section": "events",
+      "direction": "changed",
+      "symbol": "NAME_PLATE_UNIT_REMOVED",
+      "annotation": "** New events: {{api|t=e|NAME_PLATE_CREATED}}, {{api|t=e|NAME_PLATE_UNIT_ADDED}}, {{api|t=e|NAME_PLATE_UNIT_REMOVED}}",
+      "wikitext_line": 89
+    },
+    {
+      "id": "wt-global-api-GetNumNamePlateMotionTypes-90",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetNumNamePlateMotionTypes",
+      "annotation": "** Functions like GetNumNamePlateMotionTypes and GetNameplateFrames have been moved to a new C_Nameplates table.",
+      "wikitext_line": 90
+    },
+    {
+      "id": "wt-global-api-GetNameplateFrames-90",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetNameplateFrames",
+      "annotation": "** Functions like GetNumNamePlateMotionTypes and GetNameplateFrames have been moved to a new C_Nameplates table.",
+      "wikitext_line": 90
+    },
+    {
+      "id": "wt-global-api-C_NamePlate.GetNamePlateForUnit-91",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_NamePlate.GetNamePlateForUnit",
+      "annotation": "***{{api|C_NamePlate.GetNamePlateForUnit}},",
+      "wikitext_line": 91
+    },
+    {
+      "id": "wt-global-api-C_NamePlate.GetNamePlateSizes-92",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_NamePlate.GetNamePlateSizes",
+      "annotation": "***{{api|C_NamePlate.GetNamePlateSizes}},",
+      "wikitext_line": 92
+    },
+    {
+      "id": "wt-global-api-C_NamePlate.GetNamePlates-93",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_NamePlate.GetNamePlates",
+      "annotation": "***{{api|C_NamePlate.GetNamePlates}},",
+      "wikitext_line": 93
+    },
+    {
+      "id": "wt-global-api-C_NamePlate.GetNumNamePlateMotionTypes-94",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_NamePlate.GetNumNamePlateMotionTypes",
+      "annotation": "***{{api|C_NamePlate.GetNumNamePlateMotionTypes}},",
+      "wikitext_line": 94
+    },
+    {
+      "id": "wt-global-api-C_NamePlate.SetNamePlateSizes-95",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "C_NamePlate.SetNamePlateSizes",
+      "annotation": "***{{api|C_NamePlate.SetNamePlateSizes}},",
+      "wikitext_line": 95
+    },
+    {
+      "id": "wt-widgets-Texture:SetTexture-96",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "Texture:SetTexture",
+      "annotation": "* The [[UIOBJECT Texture|Texture]] method [[API Texture SetTexture|Texture:SetTexture]](R, G, B[, A]) no longer works properly in many cases. Use the new method [[API Texture SetColorTexture|Texture:SetColorTexture]] instead.",
+      "wikitext_line": 96
+    },
+    {
+      "id": "wt-widgets-Texture:SetColorTexture-96",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "Texture:SetColorTexture",
+      "annotation": "* The [[UIOBJECT Texture|Texture]] method [[API Texture SetTexture|Texture:SetTexture]](R, G, B[, A]) no longer works properly in many cases. Use the new method [[API Texture SetColorTexture|Texture:SetColorTexture]] instead.",
+      "wikitext_line": 96
+    },
+    {
+      "id": "wt-widgets-Texture:SetTexCoord-97",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "Texture:SetTexCoord",
+      "annotation": "* The [[UIOBJECT Texture|Texture]] method [[API Texture SetTexCoord|Texture:SetTexCoord]] no longer works properly for values greater than 1. This was previously used for horizontal and (especially) vertical tiling. For now, use the optional parameters in the method [[API Texture SetTexture|Texture:SetTexture]](texturePath[, horizTile[, vertTile]]) instead to tile textures.  Alternatively, [[API Texture SetVertTile|Texture:SetVertTile]](<bool>) and [[API Texture SetHorizTile|Texture:SetHorizTile]](<bool>) might be the intended replacements for this behavior.",
+      "wikitext_line": 97
+    },
+    {
+      "id": "wt-widgets-Texture:SetTexture-97",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "Texture:SetTexture",
+      "annotation": "* The [[UIOBJECT Texture|Texture]] method [[API Texture SetTexCoord|Texture:SetTexCoord]] no longer works properly for values greater than 1. This was previously used for horizontal and (especially) vertical tiling. For now, use the optional parameters in the method [[API Texture SetTexture|Texture:SetTexture]](texturePath[, horizTile[, vertTile]]) instead to tile textures.  Alternatively, [[API Texture SetVertTile|Texture:SetVertTile]](<bool>) and [[API Texture SetHorizTile|Texture:SetHorizTile]](<bool>) might be the intended replacements for this behavior.",
+      "wikitext_line": 97
+    },
+    {
+      "id": "wt-widgets-Texture:SetVertTile-97",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "Texture:SetVertTile",
+      "annotation": "* The [[UIOBJECT Texture|Texture]] method [[API Texture SetTexCoord|Texture:SetTexCoord]] no longer works properly for values greater than 1. This was previously used for horizontal and (especially) vertical tiling. For now, use the optional parameters in the method [[API Texture SetTexture|Texture:SetTexture]](texturePath[, horizTile[, vertTile]]) instead to tile textures.  Alternatively, [[API Texture SetVertTile|Texture:SetVertTile]](<bool>) and [[API Texture SetHorizTile|Texture:SetHorizTile]](<bool>) might be the intended replacements for this behavior.",
+      "wikitext_line": 97
+    },
+    {
+      "id": "wt-widgets-Texture:SetHorizTile-97",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "Texture:SetHorizTile",
+      "annotation": "* The [[UIOBJECT Texture|Texture]] method [[API Texture SetTexCoord|Texture:SetTexCoord]] no longer works properly for values greater than 1. This was previously used for horizontal and (especially) vertical tiling. For now, use the optional parameters in the method [[API Texture SetTexture|Texture:SetTexture]](texturePath[, horizTile[, vertTile]]) instead to tile textures.  Alternatively, [[API Texture SetVertTile|Texture:SetVertTile]](<bool>) and [[API Texture SetHorizTile|Texture:SetHorizTile]](<bool>) might be the intended replacements for this behavior.",
+      "wikitext_line": 97
+    },
+    {
+      "id": "wt-widgets-Texture:SetToFileData-98",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Texture:SetToFileData",
+      "annotation": "* The [[UIOBJECT Texture|Texture]] method [[API Texture SetToFileData|Texture:SetToFileData]] has been removed and is now handled by [[API Texture SetTexture|Texture:SetTexture]] instead.",
+      "wikitext_line": 98
+    },
+    {
+      "id": "wt-widgets-Texture:SetTexture-98",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Texture:SetTexture",
+      "annotation": "* The [[UIOBJECT Texture|Texture]] method [[API Texture SetToFileData|Texture:SetToFileData]] has been removed and is now handled by [[API Texture SetTexture|Texture:SetTexture]] instead.",
+      "wikitext_line": 98
+    },
+    {
+      "id": "wt-global-api-GetSpellInfo-99",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetSpellInfo",
+      "annotation": "* [[API GetSpellInfo|GetSpellInfo]](spellid) now returns [[fileID]] for its 3rd return instead if iconPath.",
+      "wikitext_line": 99
+    },
+    {
+      "id": "wt-widgets-Alpha:SetChange-100",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Alpha:SetChange",
+      "annotation": "* The deprecated animation method [[API Alpha SetChange|Alpha:SetChange]] has been removed. Use [[API Alpha SetFromAlpha|Alpha:SetFromAlpha]] and/or [[API Alpha SetToAlpha|Alpha:SetToAlpha]] instead.",
+      "wikitext_line": 100
+    },
+    {
+      "id": "wt-widgets-Alpha:SetFromAlpha-100",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Alpha:SetFromAlpha",
+      "annotation": "* The deprecated animation method [[API Alpha SetChange|Alpha:SetChange]] has been removed. Use [[API Alpha SetFromAlpha|Alpha:SetFromAlpha]] and/or [[API Alpha SetToAlpha|Alpha:SetToAlpha]] instead.",
+      "wikitext_line": 100
+    },
+    {
+      "id": "wt-widgets-Alpha:SetToAlpha-100",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Alpha:SetToAlpha",
+      "annotation": "* The deprecated animation method [[API Alpha SetChange|Alpha:SetChange]] has been removed. Use [[API Alpha SetFromAlpha|Alpha:SetFromAlpha]] and/or [[API Alpha SetToAlpha|Alpha:SetToAlpha]] instead.",
+      "wikitext_line": 100
+    },
+    {
+      "id": "wt-global-api-GetInboxItem-101",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetInboxItem",
+      "annotation": "* [[API GetInboxItem|GetInboxItem]] now returns the itemID between name and itemTexture:  name, itemID, itemTexture, count, quality, canUse = [[API GetInboxItem|GetInboxItem]](index, itemIndex)",
+      "wikitext_line": 101
+    },
+    {
+      "id": "wt-global-api-GetSendMailItem-102",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetSendMailItem",
+      "annotation": "* [[API GetSendMailItem|GetSendMailItem]] now returns the itemID between name and itemTexture:  name, itemID, itemTexture, count, quality = [[API GetSendMailItem|GetSendMailItem]](sendMailIndex)",
+      "wikitext_line": 102
+    },
+    {
+      "id": "wt-global-api-GetNumDungeonMapLevels-103",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetNumDungeonMapLevels",
+      "annotation": "* [[API GetNumDungeonMapLevels|GetNumDungeonMapLevels]] now returns an array of level numbers. To get the count of levels, get the length of the returned array",
+      "wikitext_line": 103
+    },
+    {
+      "id": "wt-global-api-GetMapLandmarkInfo-104",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetMapLandmarkInfo",
+      "annotation": "* [[API GetMapLandmarkInfo|GetMapLandmarkInfo]] now returns a type integer as its first return value, before name which used to be the first return value",
+      "wikitext_line": 104
+    },
+    {
+      "id": "wt-global-api-CreateFrame-105",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "CreateFrame",
+      "annotation": "* Frame type [[XML/Minimap|Minimap]] are no longer creatable by [[API CreateFrame|CreateFrame]] and will be ignored in xml files for 3rd party addons.",
+      "wikitext_line": 105
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetTradeSkillItem-106",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "GameTooltip:SetTradeSkillItem",
+      "annotation": "* [[API GameTooltip SetTradeSkillItem|GameTooltip:SetTradeSkillItem]](tradeItemIndex[, reagentIndex]) replaced by [[API GameTooltip SetRecipeReagentItem|GameTooltip:SetRecipeReagentItem]](recipeID, reagentIndex).",
+      "wikitext_line": 106
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetRecipeReagentItem-106",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "GameTooltip:SetRecipeReagentItem",
+      "annotation": "* [[API GameTooltip SetTradeSkillItem|GameTooltip:SetTradeSkillItem]](tradeItemIndex[, reagentIndex]) replaced by [[API GameTooltip SetRecipeReagentItem|GameTooltip:SetRecipeReagentItem]](recipeID, reagentIndex).",
+      "wikitext_line": 106
+    },
+    {
+      "id": "wt-global-api-GetQuestLogRewardSpell-107",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetQuestLogRewardSpell",
+      "annotation": "* [[API GetQuestLogRewardSpell|GetQuestLogRewardSpell]](rewardSpellIndex) requires rewardSpellIndex parameter now",
+      "wikitext_line": 107
+    },
+    {
+      "id": "wt-global-api-C_MountJournal.GetMountInfo-110",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_MountJournal.GetMountInfo",
+      "annotation": "** {{api|C_MountJournal.GetMountInfo}} has been renamed to {{api|C_MountJournal.GetMountInfoByID}}",
+      "wikitext_line": 110
+    },
+    {
+      "id": "wt-global-api-C_MountJournal.GetMountInfoByID-110",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MountJournal.GetMountInfoByID",
+      "annotation": "** {{api|C_MountJournal.GetMountInfo}} has been renamed to {{api|C_MountJournal.GetMountInfoByID}}",
+      "wikitext_line": 110
+    },
+    {
+      "id": "wt-global-api-C_MountJournal.GetMountInfoExtra-111",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_MountJournal.GetMountInfoExtra",
+      "annotation": "** {{api|C_MountJournal.GetMountInfoExtra}} has been renamed to {{api|C_MountJournal.GetMountInfoExtraByID}}",
+      "wikitext_line": 111
+    },
+    {
+      "id": "wt-global-api-C_MountJournal.GetMountInfoExtraByID-111",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MountJournal.GetMountInfoExtraByID",
+      "annotation": "** {{api|C_MountJournal.GetMountInfoExtra}} has been renamed to {{api|C_MountJournal.GetMountInfoExtraByID}}",
+      "wikitext_line": 111
+    },
+    {
+      "id": "wt-global-api-C_MountJournal.Summon-112",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_MountJournal.Summon",
+      "annotation": "** {{api|C_MountJournal.Summon}} has been renamed to {{api|C_MountJournal.SummonByID}}",
+      "wikitext_line": 112
+    },
+    {
+      "id": "wt-global-api-C_MountJournal.SummonByID-112",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_MountJournal.SummonByID",
+      "annotation": "** {{api|C_MountJournal.Summon}} has been renamed to {{api|C_MountJournal.SummonByID}}",
+      "wikitext_line": 112
+    },
+    {
+      "id": "wt-global-api-CastGlyph-115",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CastGlyph",
+      "annotation": "* Glyph handling: CastGlyph, SetGlyph, GetGlyphInfo, etc.",
+      "wikitext_line": 115
+    },
+    {
+      "id": "wt-global-api-SetGlyph-115",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetGlyph",
+      "annotation": "* Glyph handling: CastGlyph, SetGlyph, GetGlyphInfo, etc.",
+      "wikitext_line": 115
+    },
+    {
+      "id": "wt-global-api-GetGlyphInfo-115",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetGlyphInfo",
+      "annotation": "* Glyph handling: CastGlyph, SetGlyph, GetGlyphInfo, etc.",
+      "wikitext_line": 115
+    },
+    {
+      "id": "wt-global-api-GetInventoryItemGems-116",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetInventoryItemGems",
+      "annotation": "* GetInventoryItemGems and GetContainerItemGems (but gem information is still apparently extractable from the itemString)",
+      "wikitext_line": 116
+    },
+    {
+      "id": "wt-global-api-GetContainerItemGems-116",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetContainerItemGems",
+      "annotation": "* GetInventoryItemGems and GetContainerItemGems (but gem information is still apparently extractable from the itemString)",
+      "wikitext_line": 116
+    },
+    {
+      "id": "wt-global-api-GetQuestLogRewardTalents-117",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetQuestLogRewardTalents",
+      "annotation": "* GetQuestLogRewardTalents",
+      "wikitext_line": 117
+    },
+    {
+      "id": "wt-global-api-ShowHelm-118",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ShowHelm",
+      "annotation": "* API regarding in-field visibility changes to helms and cloaks:  ShowHelm, ShowCloak, ShowingHelm, ShowingCloak",
+      "wikitext_line": 118
+    },
+    {
+      "id": "wt-global-api-ShowCloak-118",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ShowCloak",
+      "annotation": "* API regarding in-field visibility changes to helms and cloaks:  ShowHelm, ShowCloak, ShowingHelm, ShowingCloak",
+      "wikitext_line": 118
+    },
+    {
+      "id": "wt-global-api-ShowingHelm-118",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ShowingHelm",
+      "annotation": "* API regarding in-field visibility changes to helms and cloaks:  ShowHelm, ShowCloak, ShowingHelm, ShowingCloak",
+      "wikitext_line": 118
+    },
+    {
+      "id": "wt-global-api-ShowingCloak-118",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ShowingCloak",
+      "annotation": "* API regarding in-field visibility changes to helms and cloaks:  ShowHelm, ShowCloak, ShowingHelm, ShowingCloak",
+      "wikitext_line": 118
+    },
+    {
+      "id": "wt-widgets-Frame:AllowAttributeChanges-120",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Frame:AllowAttributeChanges",
+      "annotation": "* Frame method: [[API Frame AllowAttributeChanges|Frame:AllowAttributeChanges]]()",
+      "wikitext_line": 120
+    },
+    {
+      "id": "wt-events-UNIT_COMBO_POINTS-121",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "UNIT_COMBO_POINTS",
+      "annotation": "* Event UNIT_COMBO_POINTS (streamlined into UNIT_POWER)",
+      "wikitext_line": 121
+    },
+    {
+      "id": "wt-cvars-floatingCombatTextComboPoints-122",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "floatingCombatTextComboPoints",
+      "annotation": "* CVar [[CVar floatingCombatTextComboPoints|floatingCombatTextComboPoints]] (streamlined into [[CVar floatingCombatTextEnergyGains]])",
+      "wikitext_line": 122
+    },
+    {
+      "id": "wt-widgets-Model:GetModel-123",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "Model:GetModel",
+      "annotation": "* [[API Model GetModel|Model:GetModel()]] has been replaced by [[API Model GetModelFileID|Model:GetModelFileID()]]",
+      "wikitext_line": 123
+    },
+    {
+      "id": "wt-widgets-Model:GetModelFileID-123",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Model:GetModelFileID",
+      "annotation": "* [[API Model GetModel|Model:GetModel()]] has been replaced by [[API Model GetModelFileID|Model:GetModelFileID()]]",
+      "wikitext_line": 123
+    }
+  ]
+}

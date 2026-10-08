@@ -1,0 +1,2 @@
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/mists/compat_bootstrap.lua:1450:if rawget(_G, "CastGlyph") == nil then
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/mists/compat_bootstrap.lua:1451:  function CastGlyph(index)

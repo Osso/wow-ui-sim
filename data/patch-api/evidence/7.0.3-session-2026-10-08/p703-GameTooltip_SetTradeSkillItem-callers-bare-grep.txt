@@ -1,0 +1,2 @@
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_api/frame/methods/widgets/tooltip.rs:69:    ("SetTradeSkillItem", set_trade_skill_item),
+/home/osso/.worktrees/wow-ui-sim-p703-page/tests/tooltip_trade_skill.rs:58:    env.exec("GameTooltip:SetTradeSkillItem(100005)").unwrap();

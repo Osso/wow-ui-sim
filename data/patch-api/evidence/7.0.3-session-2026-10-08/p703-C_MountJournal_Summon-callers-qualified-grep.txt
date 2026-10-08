@@ -1,0 +1,2 @@
+/home/osso/.worktrees/wow-ui-sim-p703-page/tests/c_collection_api.rs:186:    env.eval::<()>("C_MountJournal.Summon(1)").unwrap();
+/home/osso/.worktrees/wow-ui-sim-p703-page/tests/c_function_diff_coverage.rs:126:        "C_MountJournal.Summon",

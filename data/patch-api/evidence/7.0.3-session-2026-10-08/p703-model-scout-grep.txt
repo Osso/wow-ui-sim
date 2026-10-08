@@ -1,0 +1,36 @@
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/self_test.rs:399:        Line = function() return augment_parent:CreateLine() end,
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/c_api/patch_retired_members.rs:293:        "GetRecipeRepeatCount",
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_api/frame/methods/button_anchor_hierarchy/mod.rs:10://! - `hierarchy`   — parent/children/regions hierarchy, CreateTexture, CreateLine, masks
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_api/frame/methods/button_anchor_hierarchy/mod.rs:297:    table_set_rust_fn_static(state, table, "CreateLine", hierarchy::create_line)?;
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_api/frame/methods/misc/render_layers.rs:24:        "GetFlattensRenderLayers",
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_api/hot_literals.rs:294:    b"CreateLine",
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_api/workarounds/temporary/trade_skill_ui_fallbacks.rs:38:if rawget(C_TradeSkillUI, "GetTradeSkillTexture") == nil then
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_api/workarounds/temporary/trade_skill_ui_fallbacks.rs:39:    function C_TradeSkillUI.GetTradeSkillTexture()
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_api/workarounds/temporary/trade_skill_ui_fallbacks.rs:44:if GetTradeSkillTexture == nil then
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_api/workarounds/temporary/trade_skill_ui_fallbacks.rs:45:    function GetTradeSkillTexture(...)
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_api/workarounds/temporary/trade_skill_ui_fallbacks.rs:47:            and type(C_TradeSkillUI.GetTradeSkillTexture) == "function"
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_api/workarounds/temporary/trade_skill_ui_fallbacks.rs:49:            return C_TradeSkillUI.GetTradeSkillTexture(...)
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_api/workarounds/temporary/trade_skill_ui_fallbacks.rs:109:                if type(C_TradeSkillUI.GetTradeSkillTexture) ~= "function" then
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_api/workarounds/temporary/trade_skill_ui_fallbacks.rs:112:                if type(GetTradeSkillTexture) ~= "function" then
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_api/workarounds/temporary/trade_skill_ui_fallbacks.rs:115:                if GetTradeSkillTexture() ~= C_TradeSkillUI.GetTradeSkillTexture() then
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_api/globals/missing_surface/professions/professions_registration.rs:140:        "GetTradeSkillTexture",
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_api/globals/template/elements/texture/codegen.rs:47:        "CreateLine"
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_api/globals/template/elements/texture/codegen.rs:435:        assert!(code.contains("CreateLine(\"ParentFrameLine\", \"OVERLAY\")"));
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/loader/tests/frame_state.rs:149:        assert(not FlattenRootFrame:GetFlattensRenderLayers(), "new frames should default flatten=false")
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/loader/tests/frame_state.rs:151:        assert(not FlattenChildFrame:GetFlattensRenderLayers(), "child local flatten should default false")
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/loader/tests/frame_state.rs:156:        assert(FlattenParentFrame:GetFlattensRenderLayers(), "local flatten flag should persist on the frame")
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/loader/tests/frame_state.rs:158:        assert(not FlattenChildFrame:GetFlattensRenderLayers(), "descendants should not inherit the local flatten flag itself")
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/loader/tests/frame_state.rs:165:        assert(FlattenChildFrame:GetFlattensRenderLayers(), "child local flatten flag should persist independently")
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/loader/tests/frame_state.rs:167:        assert(not FlattenParentFrame:GetFlattensRenderLayers(), "parent local flatten flag should clear")
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/loader/xml_texture.rs:301:        "CreateLine"
+/home/osso/.worktrees/wow-ui-sim-p703-page/tests/forbidden_aspect_creation.rs:26:        local children = {frame, parent:CreateTexture(), parent:CreateFontString(), parent:CreateMaskTexture(), parent:CreateLine()}
+/home/osso/.worktrees/wow-ui-sim-p703-page/tests/pool_api.rs:20:/// Bare env without SharedXML — for tests that only need CreateLine etc.
+/home/osso/.worktrees/wow-ui-sim-p703-page/tests/pool_api.rs:500:        local bg = edge:CreateLine("Background", "OVERLAY")
+/home/osso/.worktrees/wow-ui-sim-p703-page/tests/pool_api.rs:504:        local fill = edge:CreateLine("Fill", "OVERLAY")
+/home/osso/.worktrees/wow-ui-sim-p703-page/tests/pool_api.rs:610:        local line = parent:CreateLine("TestLine", "OVERLAY")
+/home/osso/.worktrees/wow-ui-sim-p703-page/tests/pool_api.rs:658:            local line = parent:CreateLine(nil, "OVERLAY", "RuntimeLineTemplate")
+/home/osso/.worktrees/wow-ui-sim-p703-page/tests/pool_api.rs:665:    assert!(key_value, "CreateLine should apply inherited template KeyValues");
+/home/osso/.worktrees/wow-ui-sim-p703-page/tests/recent_runtime_bootstrap_boundaries.rs:607:            "function GetTradeSkillTexture",
+/home/osso/.worktrees/wow-ui-sim-p703-page/tests/patch_10_0_5_publication_fixes.rs:5:for _, name in ipairs({'ContinueRecast', 'GetRecipeRepeatCount', 'HasRecipesTracked'}) do
+/home/osso/.worktrees/wow-ui-sim-p703-page/tests/global_function_diff_coverage.rs:22:    "GetTradeSkillTexture",
+/home/osso/.worktrees/wow-ui-sim-p703-page/tests/patch_10_0_5_classic_surfaces.rs:9:        for _, name in ipairs({'ContinueRecast', 'GetRecipeRepeatCount', 'HasRecipesTracked'}) do

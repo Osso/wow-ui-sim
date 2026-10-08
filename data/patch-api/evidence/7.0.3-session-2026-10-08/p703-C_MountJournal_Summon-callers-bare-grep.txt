@@ -1,0 +1,4 @@
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_api/globals/font_strings_collection/mount_journal.rs:289:    tb.set_function("Summon", |_state| Ok(0))?
+/home/osso/.worktrees/wow-ui-sim-p703-page/tests/blizzard_friends_frame_loads.rs:311:        .expect("Summon/who/broadcast mixin probe should succeed");
+/home/osso/.worktrees/wow-ui-sim-p703-page/tests/c_collection_api.rs:186:    env.eval::<()>("C_MountJournal.Summon(1)").unwrap();
+/home/osso/.worktrees/wow-ui-sim-p703-page/tests/c_function_diff_coverage.rs:126:        "C_MountJournal.Summon",

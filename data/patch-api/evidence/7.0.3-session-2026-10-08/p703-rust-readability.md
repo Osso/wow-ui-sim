@@ -1,0 +1,3 @@
+# Changed Rust readability review
+
+Read every changed line in c_trade_skill_filter.rs, CraftingState, profession registration/delegation, retail retired members and shared probes/tests. New production functions are under 30 body lines, nesting at most two levels; pure catalogue filtering is separated from state reads/writes and event dispatch. Existing Lua array helper is reused. No new warning suppressions, fallback paths, magic defaults, deep nesting or duplicated state decisions. All changed runtime APIs are wired through profession registration; retired member array is wired into retail utility bootstrap only. Existing adjacent stubs/suppressions are outside this audit.

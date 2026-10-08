@@ -1,0 +1,1256 @@
+{
+  "schema": "patch-api-page-coverage/v1",
+  "patch": "7.0.3",
+  "source": "data/patch-api/sources/7.0.3-wikitext-register.json",
+  "source_sha256": "7c10a7a2a07b37ab1f92792de89ee28913aed9d12cf37c967f91d1f6fc026660",
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/7.0.3-api-changes.txt",
+    "sha256": "d3329d2bb546727c6f934f0c713fd70edef8309c956874bf2590e6a1f6220d33"
+  },
+  "proof_policy": "Every retained occurrence accounted; publication is not behavioral/native parity. Only named consumer-free removals; 7.1.0 first-position integration placeholder remains.",
+  "source_rows": [
+    {
+      "source_id": "wt-widgets-Line-4",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-widgets-UiCamera-4",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-widgets-Region:GetDebugName-5",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-widgets-Frame:CreateLine-6",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-widgets-Frame:GetFlattensRenderLayers-6",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-widgets-Frame:SetFlattensRenderLayers-6",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-widgets-Texture:SetColorTexture-7",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_AdventureMap-8",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ArtifactUI-9",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Transmog-10",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection-10",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI-12",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.ClearRecipeCategoryFilter-13",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.IsRecipeSourceTypeFiltered-14",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeRepeatCount-15",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.DropPendingObliterateItemFromCursor-16",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Legion Obliterum forge has no cursor conversion, eligibility, yield/cost or forge lifecycle model/fixture. No guessed value or no-op producer. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.ObliterateItem-17",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Legion Obliterum forge has no cursor conversion, eligibility, yield/cost or forge lifecycle model/fixture. No guessed value or no-op producer. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeInfo-18",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.IsTradeSkillReady-19",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeItemNameFilter-20",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetCategoryInfo-21",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetPendingObliterateItemID-22",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Legion Obliterum forge has no cursor conversion, eligibility, yield/cost or forge lifecycle model/fixture. No guessed value or no-op producer. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.SetRecipeItemNameFilter-23",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence",
+        "state-backed-recipe-name-filter"
+      ],
+      "note": "Concrete name-filter state, nil clear, case-insensitive existing learned catalogue search and list-update dispatch; cached and bare behavioral proof. Other filters/native locale collation not implied."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.SetInventorySlotFilter-24",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.IsTradeSkillGuild-25",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetOnlyShowUnlearnedRecipes-26",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Later register wt-global-api-C_TradeSkillUI.GetOnlyShowUnlearnedRecipes-512 requests absence, but ordinary lookup still synthesizes/retains a function. No later-page retirement without its own current-consumer review. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.SetRecipeRepeatCount-27",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Later register wt-global-api-C_TradeSkillUI.SetRecipeRepeatCount-524 requests absence, but ordinary lookup still synthesizes/retains a function. No later-page retirement without its own current-consumer review. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.IsNPCCrafting-28",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetOnlyShowSkillUpRecipes-29",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetAllRecipeIDs-30",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.SetOnlyShowSkillUpRecipes-31",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.StopRecipeRepeat-32",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.AnyRecipeCategoriesFiltered-33",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.SetOnlyShowLearnedRecipes-34",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Later register wt-global-api-C_TradeSkillUI.SetOnlyShowLearnedRecipes-522 requests absence, but ordinary lookup still synthesizes/retains a function. No later-page retirement without its own current-consumer review. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.IsInventorySlotFiltered-35",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.CanObliterateCursorItem-36",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Legion Obliterum forge has no cursor conversion, eligibility, yield/cost or forge lifecycle model/fixture. No guessed value or no-op producer. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.ClearPendingObliterateItem-37",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Legion Obliterum forge has no cursor conversion, eligibility, yield/cost or forge lifecycle model/fixture. No guessed value or no-op producer. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetCategories-38",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetObliterateSpellID-39",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Legion Obliterum forge has no cursor conversion, eligibility, yield/cost or forge lifecycle model/fixture. No guessed value or no-op producer. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeTools-40",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.IsTradeSkillLinked-41",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetOnlyShowLearnedRecipes-42",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Later register wt-global-api-C_TradeSkillUI.GetOnlyShowLearnedRecipes-511 requests absence, but ordinary lookup still synthesizes/retains a function. No later-page retirement without its own current-consumer review. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.CloseObliterumForge-43",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Legion Obliterum forge has no cursor conversion, eligibility, yield/cost or forge lifecycle model/fixture. No guessed value or no-op producer. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.AreAnyInventorySlotsFiltered-44",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetTradeSkillTexture-45",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.SetRecipeFavorite-46",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetOnlyShowMakeableRecipes-47",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetTradeSkillListLink-48",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.IsRecipeSearchInProgress-49",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.SetRecipeItemLevelFilter-50",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetSubCategories-51",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.CraftRecipe-52",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeNumReagents-53",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Later register wt-global-api-C_TradeSkillUI.GetRecipeNumReagents-516 requests absence, but ordinary lookup still synthesizes/retains a function. No later-page retirement without its own current-consumer review. raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetTradeSkillLine-54",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Later register wt-global-api-C_TradeSkillUI.GetTradeSkillLine-520 requests absence, but ordinary lookup still synthesizes/retains a function. No later-page retirement without its own current-consumer review. raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.SetOnlyShowMakeableRecipes-55",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.IsRecipeFavorite-56",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.CanTradeSkillListLink-57",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeSourceText-58",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.ClearRecipeSourceTypeFilter-59",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetFilterableInventorySlots-60",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.IsRecipeRepeating-61",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeItemLevelFilter-62",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetTradeSkillLineForRecipe-63",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetAllFilterableInventorySlots-64",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeReagentItemLink-65",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Later register wt-global-api-C_TradeSkillUI.GetRecipeReagentItemLink-518 requests absence, but ordinary lookup still synthesizes/retains a function. No later-page retirement without its own current-consumer review. raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.OpenTradeSkill-66",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.SetRecipeSourceTypeFilter-67",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetFilteredRecipeIDs-68",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetPendingObliterateItemLink-69",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Legion Obliterum forge has no cursor conversion, eligibility, yield/cost or forge lifecycle model/fixture. No guessed value or no-op producer. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.CloseTradeSkill-70",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeReagentInfo-71",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Later register wt-global-api-C_TradeSkillUI.GetRecipeReagentInfo-517 requests absence, but ordinary lookup still synthesizes/retains a function. No later-page retirement without its own current-consumer review. raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.IsDataSourceChanging-72",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeLink-73",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.ClearInventorySlotFilter-74",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.SetRecipeCategoryFilter-75",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeNumItemsProduced-76",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Later register wt-global-api-C_TradeSkillUI.GetRecipeNumItemsProduced-515 requests absence, but ordinary lookup still synthesizes/retains a function. No later-page retirement without its own current-consumer review. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeCooldown-77",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.SetOnlyShowUnlearnedRecipes-78",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Later register wt-global-api-C_TradeSkillUI.SetOnlyShowUnlearnedRecipes-523 requests absence, but ordinary lookup still synthesizes/retains a function. No later-page retirement without its own current-consumer review. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeDescription-79",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetRecipeItemLink-80",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.IsAnyRecipeFromSource-81",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.IsRecipeCategoryFiltered-82",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No concrete raw producer/backing state for this historical recipe filter/category/source/favorite/search/repeat/output contract; name search is modeled separately, not a substitute. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-GetNumQuestLogRewardSpells-83",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-events-NAME_PLATE_CREATED-89",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-events-NAME_PLATE_UNIT_ADDED-89",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-events-NAME_PLATE_UNIT_REMOVED-89",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-GetNumNamePlateMotionTypes-90",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Old global is absent; migration summary does not explicitly retire it. No historical nameplate motion/frame catalog or 3D plate lifecycle; retain exact source gap."
+    },
+    {
+      "source_id": "wt-global-api-GetNameplateFrames-90",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Old global is absent; migration summary does not explicitly retire it. No historical nameplate motion/frame catalog or 3D plate lifecycle; retain exact source gap."
+    },
+    {
+      "source_id": "wt-global-api-C_NamePlate.GetNamePlateForUnit-91",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_NamePlate.GetNamePlateSizes-92",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical plural size API has no modeled 3D world-nameplate size/lifecycle system; singular current shim is not an equivalent implementation. No new shim. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_NamePlate.GetNamePlates-93",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_NamePlate.GetNumNamePlateMotionTypes-94",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_NamePlate.SetNamePlateSizes-95",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical plural size API has no modeled 3D world-nameplate size/lifecycle system; singular current shim is not an equivalent implementation. No new shim. raw=nil; lookup=function"
+    },
+    {
+      "source_id": "wt-widgets-Texture:SetTexture-96",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-widgets-Texture:SetColorTexture-96",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-widgets-Texture:SetTexCoord-97",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-widgets-Texture:SetTexture-97",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-widgets-Texture:SetVertTile-97",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-widgets-Texture:SetHorizTile-97",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-widgets-Texture:SetToFileData-98",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-widgets-Texture:SetTexture-98",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-GetSpellInfo-99",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-widgets-Alpha:SetChange-100",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with current concrete src/tests callers retained in whole-word scans; no deletion or vendor patch. Alpha; lookup=function"
+    },
+    {
+      "source_id": "wt-widgets-Alpha:SetFromAlpha-100",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-widgets-Alpha:SetToAlpha-100",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-GetInboxItem-101",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-GetSendMailItem-102",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-GetNumDungeonMapLevels-103",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical dungeon floor-array API absent; no archive dungeon floor fixture in the current map model."
+    },
+    {
+      "source_id": "wt-global-api-GetMapLandmarkInfo-104",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical landmark index/type tuple absent; no archive landmark fixture or demonstrated modern equivalent."
+    },
+    {
+      "source_id": "wt-global-api-CreateFrame-105",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-widgets-GameTooltip:SetTradeSkillItem-106",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with current concrete src/tests callers retained in whole-word scans; no deletion or vendor patch. GameTooltip; lookup=function"
+    },
+    {
+      "source_id": "wt-widgets-GameTooltip:SetRecipeReagentItem-106",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-GetQuestLogRewardSpell-107",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_MountJournal.GetMountInfo-110",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_MountJournal.GetMountInfoByID-110",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_MountJournal.GetMountInfoExtra-111",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_MountJournal.GetMountInfoExtraByID-111",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_MountJournal.Summon-112",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with current concrete src/tests callers retained in whole-word scans; no deletion or vendor patch. raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_MountJournal.SummonByID-112",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-CastGlyph-115",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-SetGlyph-115",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-GetGlyphInfo-115",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-GetInventoryItemGems-116",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-GetContainerItemGems-116",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-GetQuestLogRewardTalents-117",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-ShowHelm-118",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-ShowCloak-118",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-ShowingHelm-118",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-ShowingCloak-118",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-widgets-Frame:AllowAttributeChanges-120",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-events-UNIT_COMBO_POINTS-121",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-floatingCombatTextComboPoints-122",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "wt-widgets-Model:GetModel-123",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Historical removal conflicts with current concrete src/tests callers retained in whole-word scans; no deletion or vendor patch. Model; lookup=function"
+    },
+    {
+      "source_id": "wt-widgets-Model:GetModelFileID-123",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; no signature, output, security or historical behavior parity credit."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Line region publication is exercised through its real frame factory. UiCamera publication is present but native camera/model behavior and 3D rendering are intentionally unsupported; inheritance/native behavior is not proved."
+    },
+    {
+      "source_id": "prose-undated-005",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Region:GetDebugName publication is present; page gives no naming format or unnamed-region debug identity contract. Publication is not exact formatting parity."
+    },
+    {
+      "source_id": "prose-undated-006",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "CreateLine and flatten-layer getters/setters are published. Complete flatten-rendering semantics and historical draw-order parity are outside this publication test; no rendering credit inferred."
+    },
+    {
+      "source_id": "prose-undated-007",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "SetColorTexture is published. Existing color storage is not an independent native Legion visual or legacy numeric-SetTexture comparison."
+    },
+    {
+      "source_id": "prose-undated-008",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "AdventureMap namespace publication is present. No historical Legion adventure-map mission fixture or scenario flow is supplied by this page; complete new-addon behavior is not proved."
+    },
+    {
+      "source_id": "prose-undated-009",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "ArtifactUI namespace publication is present. No historical artifact unlock/power/relic fixture or Legion server lifecycle is supplied; no domain implementation inferred from its name."
+    },
+    {
+      "source_id": "prose-undated-010",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Transmog and TransmogCollection namespaces are published. Historical wardrobe acquisition/appearance/cost behavior is not specified or independently probed here."
+    },
+    {
+      "source_id": "prose-undated-012",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "TradeSkillUI namespace and explicitly listed methods are accounted independently. The implemented name filter has concrete backing behavior; remaining recipe/source/category/favorite/Obliterum contracts need distinct models/fixtures. Table presence is not full domain parity."
+    },
+    {
+      "source_id": "prose-undated-013",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "GetNumQuestLogRewardSpells publication does not establish dynamic quest reward spell cardinality or native reward fixtures; this page supplies no concrete quest reward data."
+    },
+    {
+      "source_id": "source-context-015",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-016",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Literal item-link example is preserved. Serializer-wide omission of zero fields and compatibility across actual item producers are not established by publication tests; no native item-string probe is available."
+    },
+    {
+      "source_id": "prose-undated-017",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Complete nameplate creation changed without a lifecycle contract. The simulator intentionally has no 3D world nameplate renderer; no event/frame lifecycle model is fabricated."
+    },
+    {
+      "source_id": "prose-undated-018",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Blizzard_Nameplates is named as an addon but historical Legion contents are not in the active retail cache. Addon naming alone is not historical loading or lifecycle proof."
+    },
+    {
+      "source_id": "prose-undated-019",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "All three nameplate events are registered and publication-probed. Creation/removal payload ordering and 3D plate association have no supported world-nameplate backing system."
+    },
+    {
+      "source_id": "prose-undated-020",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source calls the destination C_Nameplates, while its explicit members use C_NamePlate. Preserve this spelling discrepancy; do not fabricate the plural namespace or infer retirement of old globals from a migration summary."
+    },
+    {
+      "source_id": "prose-undated-021",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "SetColorTexture publication exists. Source says numeric SetTexture fails in many cases but does not identify the exact failing cases; no guessed legacy overload restriction added."
+    },
+    {
+      "source_id": "prose-undated-022",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Explicit tiling methods are publication-accounted. Source qualifies replacements as possibly intended and omits precise UV/clamping behavior; no guessed GPU/native tiling compatibility claim."
+    },
+    {
+      "source_id": "prose-undated-023",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "SetToFileData is already absent and SetTexture is published. FileDataID texture resolution/native output requires a WoW CASC install unavailable on this host; no runtime or vendor workaround added."
+    },
+    {
+      "source_id": "prose-undated-024",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "GetSpellInfo publication does not independently prove third-return fileDataID for historical spell fixtures; current spell metadata/native probes are outside this bounded sweep."
+    },
+    {
+      "source_id": "prose-undated-025",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Alpha endpoints use the real animation factory. SetChange remains because current animation behavior tests call it; deleting shared dispatch would regress live callers. Historical removal remains an exact gap, not hidden by a shim."
+    },
+    {
+      "source_id": "prose-undated-026",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "GetInboxItem is published; exact six-return mail layout with itemID needs concrete native mailbox input and behavioral parity proof. Publication alone receives no mail contract credit."
+    },
+    {
+      "source_id": "prose-undated-027",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "GetSendMailItem is published; exact five-return attachment layout with itemID needs concrete native send-mail input and parity proof. Publication alone receives no mail contract credit."
+    },
+    {
+      "source_id": "prose-undated-028",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "GetNumDungeonMapLevels is absent; current map backing data does not model the removed historical dungeon floor-array API. No guessed array or fake count added."
+    },
+    {
+      "source_id": "prose-undated-029",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "GetMapLandmarkInfo is absent; historical landmark index/type ordering has no concrete archive map fixture. Modern map/area-POI queries are not assumed equivalent."
+    },
+    {
+      "source_id": "prose-undated-030",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Third-party Minimap creation/XML rejection is a loader ownership/security contract, not mere CreateFrame publication. It is not proved here; do not change shared frame creation from this summary alone."
+    },
+    {
+      "source_id": "prose-undated-031",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "RecipeReagentItem successor is published. SetTradeSkillItem is retained for live tooltip tests; historical recipe-index versus recipeID translation and reagent fixtures are not proved."
+    },
+    {
+      "source_id": "prose-undated-032",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "GetQuestLogRewardSpell is published, but required-index validation/return/security parity is not exercised with native quest rewards. No fabricated reward fixture added."
+    },
+    {
+      "source_id": "prose-undated-033",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Garrison wildcard migration names neither concrete members, LE_* constants nor new return fields. No guessed changes to the current Garrison model or current consumers."
+    },
+    {
+      "source_id": "prose-undated-034",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Mount rename summary is expanded into the three explicit old/successor pairs below; no additional unnamed function is inferred."
+    },
+    {
+      "source_id": "prose-undated-035",
+      "capabilities": [
+        "mount-retirement-lookup"
+      ],
+      "status": "bounded-coverage",
+      "note": "Consumer-free GetMountInfo is retired from both raw and synthesized lookup. GetMountInfoByID stays published; no historical display-index versus ID behavioral equivalence claim."
+    },
+    {
+      "source_id": "prose-undated-036",
+      "capabilities": [
+        "mount-retirement-lookup"
+      ],
+      "status": "bounded-coverage",
+      "note": "Consumer-free GetMountInfoExtra is retired from both raw and synthesized lookup. GetMountInfoExtraByID stays published; no historical extra-info tuple parity claim."
+    },
+    {
+      "source_id": "prose-undated-037",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "SummonByID is published; Summon remains for live collection callers. Historic old-index versus ID summoning behavior is not proved or deleted to silence this sweep."
+    },
+    {
+      "source_id": "source-context-039",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-040",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Three explicit glyph names are publication-accounted; etc. has no member catalog. Cached InspectUI uses a SetGlyph method, so broad name-based removal is unsafe; no unnamed glyph model or deletion inferred."
+    },
+    {
+      "source_id": "prose-undated-041",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Both gem globals are already absent. Parenthetical itemString extraction is qualified by apparently and gives no exact format/parsing contract; no gem parser parity inferred."
+    },
+    {
+      "source_id": "prose-undated-042",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "GetQuestLogRewardTalents is already absent; no code retirement required."
+    },
+    {
+      "source_id": "prose-undated-043",
+      "capabilities": [
+        "later-register-publication-supersession"
+      ],
+      "status": "bounded-coverage",
+      "note": "All four helm/cloak globals are explicitly re-added in the 12.0.0 register and have current modeled transition callers. Preserve later semantics; do not retire from this historical page."
+    },
+    {
+      "source_id": "prose-undated-044",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Multistrike and Amplify are unnamed domains, not member catalogs. No API identities, return contracts or replacement semantics are supplied; no guessed retirements."
+    },
+    {
+      "source_id": "prose-undated-045",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Frame:AllowAttributeChanges is already absent; no shared frame dispatch change required."
+    },
+    {
+      "source_id": "prose-undated-046",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "UNIT_COMBO_POINTS is already unregistered. UNIT_POWER is named as a successor, but old/new event payload ordering is not supplied or modeled by this publication check."
+    },
+    {
+      "source_id": "prose-undated-047",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "floatingCombatTextComboPoints is already absent after later removal. Successor CVar default/behavior and combat text routing are not specified by this historical summary."
+    },
+    {
+      "source_id": "prose-undated-048",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "GetModel remains for live model state tests; GetModelFileID is published. Native 3D behavior is intentionally unsupported and shared state callers must not be broken to force historical absence."
+    }
+  ]
+}

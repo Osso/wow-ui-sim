@@ -1,0 +1,308 @@
+[
+  {
+    "source_id": "prose-undated-004",
+    "extract_line": 4,
+    "wikitext_line": 4,
+    "literal": "* New Widget types: Line - derived from Texture, and UiCamera - derived from Model",
+    "raw_literal": "* New Widget types: [[UIOBJECT Line|Line]] - derived from Texture, and [[UIOBJECT UiCamera|UiCamera]] - derived from Model",
+    "status": "audit-pending",
+    "reason": "Line region publication is exercised through its real frame factory. UiCamera publication is present but native camera/model behavior and 3D rendering are intentionally unsupported; inheritance/native behavior is not proved."
+  },
+  {
+    "source_id": "prose-undated-005",
+    "extract_line": 5,
+    "wikitext_line": 5,
+    "literal": "* New Region method: Region:GetDebugName()",
+    "raw_literal": "* New [[UIOBJECT Region|Region]] method: [[API Region GetDebugName|Region:GetDebugName]]()",
+    "status": "audit-pending",
+    "reason": "Region:GetDebugName publication is present; page gives no naming format or unnamed-region debug identity contract. Publication is not exact formatting parity."
+  },
+  {
+    "source_id": "prose-undated-006",
+    "extract_line": 6,
+    "wikitext_line": 6,
+    "literal": "* New Frame methods: Frame:CreateLine(), Frame:GetFlattensRenderLayers(), Frame:SetFlattensRenderLayers()",
+    "raw_literal": "* New [[UIOBJECT Frame|Frame]] methods: [[API Frame CreateLine|Frame:CreateLine]](), [[API Frame GetFlattensRenderLayers|Frame:GetFlattensRenderLayers]](), [[API Frame SetFlattensRenderLayers|Frame:SetFlattensRenderLayers]]()",
+    "status": "audit-pending",
+    "reason": "CreateLine and flatten-layer getters/setters are published. Complete flatten-rendering semantics and historical draw-order parity are outside this publication test; no rendering credit inferred."
+  },
+  {
+    "source_id": "prose-undated-007",
+    "extract_line": 7,
+    "wikitext_line": 7,
+    "literal": "* New Texture method: Texture:SetColorTexture()",
+    "raw_literal": "* New [[UIOBJECT Texture|Texture]] method: [[API Texture SetColorTexture|Texture:SetColorTexture]]()",
+    "status": "audit-pending",
+    "reason": "SetColorTexture is published. Existing color storage is not an independent native Legion visual or legacy numeric-SetTexture comparison."
+  },
+  {
+    "source_id": "prose-undated-008",
+    "extract_line": 8,
+    "wikitext_line": 8,
+    "literal": "* Adventure Map - AddOns/Blizzard_AdventureMap, C_AdventureMap",
+    "raw_literal": "* Adventure Map - AddOns/Blizzard_AdventureMap, C_AdventureMap",
+    "status": "audit-pending",
+    "reason": "AdventureMap namespace publication is present. No historical Legion adventure-map mission fixture or scenario flow is supplied by this page; complete new-addon behavior is not proved."
+  },
+  {
+    "source_id": "prose-undated-009",
+    "extract_line": 9,
+    "wikitext_line": 9,
+    "literal": "* Artifacts - AddOns/Blizzard_ArtifactUI, C_ArtifactUI",
+    "raw_literal": "* Artifacts - AddOns/Blizzard_ArtifactUI, C_ArtifactUI",
+    "status": "audit-pending",
+    "reason": "ArtifactUI namespace publication is present. No historical artifact unlock/power/relic fixture or Legion server lifecycle is supplied; no domain implementation inferred from its name."
+  },
+  {
+    "source_id": "prose-undated-010",
+    "extract_line": 10,
+    "wikitext_line": 10,
+    "literal": "* Wardrobe - AddOns/Blizzard_Collections/Blizzard_Wardrobe, C_Transmog and C_TransmogCollection",
+    "raw_literal": "* Wardrobe - AddOns/Blizzard_Collections/Blizzard_Wardrobe, C_Transmog and C_TransmogCollection",
+    "status": "audit-pending",
+    "reason": "Transmog and TransmogCollection namespaces are published. Historical wardrobe acquisition/appearance/cost behavior is not specified or independently probed here."
+  },
+  {
+    "source_id": "prose-undated-012",
+    "extract_line": 12,
+    "wikitext_line": 12,
+    "literal": "* New C_TradeSkillUI table.",
+    "raw_literal": "* New C_TradeSkillUI table.",
+    "status": "audit-pending",
+    "reason": "TradeSkillUI namespace and explicitly listed methods are accounted independently. The implemented name filter has concrete backing behavior; remaining recipe/source/category/favorite/Obliterum contracts need distinct models/fixtures. Table presence is not full domain parity."
+  },
+  {
+    "source_id": "prose-undated-013",
+    "extract_line": 13,
+    "wikitext_line": 83,
+    "literal": "* GetNumQuestLogRewardSpells",
+    "raw_literal": "* [[API GetNumQuestLogRewardSpells|GetNumQuestLogRewardSpells]]",
+    "status": "audit-pending",
+    "reason": "GetNumQuestLogRewardSpells publication does not establish dynamic quest reward spell cardinality or native reward fixtures; this page supplies no concrete quest reward data."
+  },
+  {
+    "source_id": "prose-undated-016",
+    "extract_line": 16,
+    "wikitext_line": 86,
+    "literal": "* Zeroes have been removed from item links. They now look like: |cff0070dd|Hitem:128955::::::::99:577::11::::|h[The Spider Queen's Veil]|h|r",
+    "raw_literal": "* Zeroes have been removed from item links. They now look like: |cff0070dd|Hitem:128955::::::::99:577::11::::|h[The Spider Queen's Veil]|h|r",
+    "status": "audit-pending",
+    "reason": "Literal item-link example is preserved. Serializer-wide omission of zero fields and compatibility across actual item producers are not established by publication tests; no native item-string probe is available."
+  },
+  {
+    "source_id": "prose-undated-017",
+    "extract_line": 17,
+    "wikitext_line": 87,
+    "literal": "* The way nameplates are created has changed completely.",
+    "raw_literal": "* The way nameplates are created has changed completely.",
+    "status": "audit-pending",
+    "reason": "Complete nameplate creation changed without a lifecycle contract. The simulator intentionally has no 3D world nameplate renderer; no event/frame lifecycle model is fabricated."
+  },
+  {
+    "source_id": "prose-undated-018",
+    "extract_line": 18,
+    "wikitext_line": 88,
+    "literal": "** New addon: Blizzard_Nameplates",
+    "raw_literal": "** New addon: Blizzard_Nameplates",
+    "status": "audit-pending",
+    "reason": "Blizzard_Nameplates is named as an addon but historical Legion contents are not in the active retail cache. Addon naming alone is not historical loading or lifecycle proof."
+  },
+  {
+    "source_id": "prose-undated-019",
+    "extract_line": 19,
+    "wikitext_line": 89,
+    "literal": "** New events: NAME_PLATE_CREATED, NAME_PLATE_UNIT_ADDED, NAME_PLATE_UNIT_REMOVED",
+    "raw_literal": "** New events: {{api|t=e|NAME_PLATE_CREATED}}, {{api|t=e|NAME_PLATE_UNIT_ADDED}}, {{api|t=e|NAME_PLATE_UNIT_REMOVED}}",
+    "status": "audit-pending",
+    "reason": "All three nameplate events are registered and publication-probed. Creation/removal payload ordering and 3D plate association have no supported world-nameplate backing system."
+  },
+  {
+    "source_id": "prose-undated-020",
+    "extract_line": 20,
+    "wikitext_line": 90,
+    "literal": "** Functions like GetNumNamePlateMotionTypes and GetNameplateFrames have been moved to a new C_Nameplates table.",
+    "raw_literal": "** Functions like GetNumNamePlateMotionTypes and GetNameplateFrames have been moved to a new C_Nameplates table.",
+    "status": "audit-pending",
+    "reason": "Source calls the destination C_Nameplates, while its explicit members use C_NamePlate. Preserve this spelling discrepancy; do not fabricate the plural namespace or infer retirement of old globals from a migration summary."
+  },
+  {
+    "source_id": "prose-undated-021",
+    "extract_line": 21,
+    "wikitext_line": 96,
+    "literal": "* The Texture method Texture:SetTexture(R, G, B[, A]) no longer works properly in many cases. Use the new method Texture:SetColorTexture instead.",
+    "raw_literal": "* The [[UIOBJECT Texture|Texture]] method [[API Texture SetTexture|Texture:SetTexture]](R, G, B[, A]) no longer works properly in many cases. Use the new method [[API Texture SetColorTexture|Texture:SetColorTexture]] instead.",
+    "status": "audit-pending",
+    "reason": "SetColorTexture publication exists. Source says numeric SetTexture fails in many cases but does not identify the exact failing cases; no guessed legacy overload restriction added."
+  },
+  {
+    "source_id": "prose-undated-022",
+    "extract_line": 22,
+    "wikitext_line": 97,
+    "literal": "* The Texture method Texture:SetTexCoord no longer works properly for values greater than 1. This was previously used for horizontal and (especially) vertical tiling. For now, use the optional parameters in the method Texture:SetTexture(texturePath[, horizTile[, vertTile]]) instead to tile textures.  Alternatively, Texture:SetVertTile() and Texture:SetHorizTile() might be the intended replacements for this behavior.",
+    "raw_literal": "* The [[UIOBJECT Texture|Texture]] method [[API Texture SetTexCoord|Texture:SetTexCoord]] no longer works properly for values greater than 1. This was previously used for horizontal and (especially) vertical tiling. For now, use the optional parameters in the method [[API Texture SetTexture|Texture:SetTexture]](texturePath[, horizTile[, vertTile]]) instead to tile textures.  Alternatively, [[API Texture SetVertTile|Texture:SetVertTile]](<bool>) and [[API Texture SetHorizTile|Texture:SetHorizTile]](<bool>) might be the intended replacements for this behavior.",
+    "status": "audit-pending",
+    "reason": "Explicit tiling methods are publication-accounted. Source qualifies replacements as possibly intended and omits precise UV/clamping behavior; no guessed GPU/native tiling compatibility claim."
+  },
+  {
+    "source_id": "prose-undated-023",
+    "extract_line": 23,
+    "wikitext_line": 98,
+    "literal": "* The Texture method Texture:SetToFileData has been removed and is now handled by Texture:SetTexture instead.",
+    "raw_literal": "* The [[UIOBJECT Texture|Texture]] method [[API Texture SetToFileData|Texture:SetToFileData]] has been removed and is now handled by [[API Texture SetTexture|Texture:SetTexture]] instead.",
+    "status": "audit-pending",
+    "reason": "SetToFileData is already absent and SetTexture is published. FileDataID texture resolution/native output requires a WoW CASC install unavailable on this host; no runtime or vendor workaround added."
+  },
+  {
+    "source_id": "prose-undated-024",
+    "extract_line": 24,
+    "wikitext_line": 99,
+    "literal": "* GetSpellInfo(spellid) now returns fileID for its 3rd return instead if iconPath.",
+    "raw_literal": "* [[API GetSpellInfo|GetSpellInfo]](spellid) now returns [[fileID]] for its 3rd return instead if iconPath.",
+    "status": "audit-pending",
+    "reason": "GetSpellInfo publication does not independently prove third-return fileDataID for historical spell fixtures; current spell metadata/native probes are outside this bounded sweep."
+  },
+  {
+    "source_id": "prose-undated-025",
+    "extract_line": 25,
+    "wikitext_line": 100,
+    "literal": "* The deprecated animation method Alpha:SetChange has been removed. Use Alpha:SetFromAlpha and/or Alpha:SetToAlpha instead.",
+    "raw_literal": "* The deprecated animation method [[API Alpha SetChange|Alpha:SetChange]] has been removed. Use [[API Alpha SetFromAlpha|Alpha:SetFromAlpha]] and/or [[API Alpha SetToAlpha|Alpha:SetToAlpha]] instead.",
+    "status": "audit-pending",
+    "reason": "Alpha endpoints use the real animation factory. SetChange remains because current animation behavior tests call it; deleting shared dispatch would regress live callers. Historical removal remains an exact gap, not hidden by a shim."
+  },
+  {
+    "source_id": "prose-undated-026",
+    "extract_line": 26,
+    "wikitext_line": 101,
+    "literal": "* GetInboxItem now returns the itemID between name and itemTexture:  name, itemID, itemTexture, count, quality, canUse = GetInboxItem(index, itemIndex)",
+    "raw_literal": "* [[API GetInboxItem|GetInboxItem]] now returns the itemID between name and itemTexture:  name, itemID, itemTexture, count, quality, canUse = [[API GetInboxItem|GetInboxItem]](index, itemIndex)",
+    "status": "audit-pending",
+    "reason": "GetInboxItem is published; exact six-return mail layout with itemID needs concrete native mailbox input and behavioral parity proof. Publication alone receives no mail contract credit."
+  },
+  {
+    "source_id": "prose-undated-027",
+    "extract_line": 27,
+    "wikitext_line": 102,
+    "literal": "* GetSendMailItem now returns the itemID between name and itemTexture:  name, itemID, itemTexture, count, quality = GetSendMailItem(sendMailIndex)",
+    "raw_literal": "* [[API GetSendMailItem|GetSendMailItem]] now returns the itemID between name and itemTexture:  name, itemID, itemTexture, count, quality = [[API GetSendMailItem|GetSendMailItem]](sendMailIndex)",
+    "status": "audit-pending",
+    "reason": "GetSendMailItem is published; exact five-return attachment layout with itemID needs concrete native send-mail input and parity proof. Publication alone receives no mail contract credit."
+  },
+  {
+    "source_id": "prose-undated-028",
+    "extract_line": 28,
+    "wikitext_line": 103,
+    "literal": "* GetNumDungeonMapLevels now returns an array of level numbers. To get the count of levels, get the length of the returned array",
+    "raw_literal": "* [[API GetNumDungeonMapLevels|GetNumDungeonMapLevels]] now returns an array of level numbers. To get the count of levels, get the length of the returned array",
+    "status": "audit-pending",
+    "reason": "GetNumDungeonMapLevels is absent; current map backing data does not model the removed historical dungeon floor-array API. No guessed array or fake count added."
+  },
+  {
+    "source_id": "prose-undated-029",
+    "extract_line": 29,
+    "wikitext_line": 104,
+    "literal": "* GetMapLandmarkInfo now returns a type integer as its first return value, before name which used to be the first return value",
+    "raw_literal": "* [[API GetMapLandmarkInfo|GetMapLandmarkInfo]] now returns a type integer as its first return value, before name which used to be the first return value",
+    "status": "audit-pending",
+    "reason": "GetMapLandmarkInfo is absent; historical landmark index/type ordering has no concrete archive map fixture. Modern map/area-POI queries are not assumed equivalent."
+  },
+  {
+    "source_id": "prose-undated-030",
+    "extract_line": 30,
+    "wikitext_line": 105,
+    "literal": "* Frame type Minimap are no longer creatable by CreateFrame and will be ignored in xml files for 3rd party addons.",
+    "raw_literal": "* Frame type [[XML/Minimap|Minimap]] are no longer creatable by [[API CreateFrame|CreateFrame]] and will be ignored in xml files for 3rd party addons.",
+    "status": "audit-pending",
+    "reason": "Third-party Minimap creation/XML rejection is a loader ownership/security contract, not mere CreateFrame publication. It is not proved here; do not change shared frame creation from this summary alone."
+  },
+  {
+    "source_id": "prose-undated-031",
+    "extract_line": 31,
+    "wikitext_line": 106,
+    "literal": "* GameTooltip:SetTradeSkillItem(tradeItemIndex[, reagentIndex]) replaced by GameTooltip:SetRecipeReagentItem(recipeID, reagentIndex).",
+    "raw_literal": "* [[API GameTooltip SetTradeSkillItem|GameTooltip:SetTradeSkillItem]](tradeItemIndex[, reagentIndex]) replaced by [[API GameTooltip SetRecipeReagentItem|GameTooltip:SetRecipeReagentItem]](recipeID, reagentIndex).",
+    "status": "audit-pending",
+    "reason": "RecipeReagentItem successor is published. SetTradeSkillItem is retained for live tooltip tests; historical recipe-index versus recipeID translation and reagent fixtures are not proved."
+  },
+  {
+    "source_id": "prose-undated-032",
+    "extract_line": 32,
+    "wikitext_line": 107,
+    "literal": "* GetQuestLogRewardSpell(rewardSpellIndex) requires rewardSpellIndex parameter now",
+    "raw_literal": "* [[API GetQuestLogRewardSpell|GetQuestLogRewardSpell]](rewardSpellIndex) requires rewardSpellIndex parameter now",
+    "status": "audit-pending",
+    "reason": "GetQuestLogRewardSpell is published, but required-index validation/return/security parity is not exercised with native quest rewards. No fabricated reward fixture added."
+  },
+  {
+    "source_id": "prose-undated-033",
+    "extract_line": 33,
+    "wikitext_line": 108,
+    "literal": "* GarrisonUI API have been updated and multiple of the C_Garrison.* now requires a LE_* filter and new return values have been added.",
+    "raw_literal": "* GarrisonUI API have been updated and multiple of the C_Garrison.* now requires a LE_* filter and new return values have been added.",
+    "status": "audit-pending",
+    "reason": "Garrison wildcard migration names neither concrete members, LE_* constants nor new return fields. No guessed changes to the current Garrison model or current consumers."
+  },
+  {
+    "source_id": "prose-undated-037",
+    "extract_line": 37,
+    "wikitext_line": 112,
+    "literal": "** C_MountJournal.Summon has been renamed to C_MountJournal.SummonByID",
+    "raw_literal": "** {{api|C_MountJournal.Summon}} has been renamed to {{api|C_MountJournal.SummonByID}}",
+    "status": "audit-pending",
+    "reason": "SummonByID is published; Summon remains for live collection callers. Historic old-index versus ID summoning behavior is not proved or deleted to silence this sweep."
+  },
+  {
+    "source_id": "prose-undated-040",
+    "extract_line": 40,
+    "wikitext_line": 115,
+    "literal": "* Glyph handling: CastGlyph, SetGlyph, GetGlyphInfo, etc.",
+    "raw_literal": "* Glyph handling: CastGlyph, SetGlyph, GetGlyphInfo, etc.",
+    "status": "audit-pending",
+    "reason": "Three explicit glyph names are publication-accounted; etc. has no member catalog. Cached InspectUI uses a SetGlyph method, so broad name-based removal is unsafe; no unnamed glyph model or deletion inferred."
+  },
+  {
+    "source_id": "prose-undated-041",
+    "extract_line": 41,
+    "wikitext_line": 116,
+    "literal": "* GetInventoryItemGems and GetContainerItemGems (but gem information is still apparently extractable from the itemString)",
+    "raw_literal": "* GetInventoryItemGems and GetContainerItemGems (but gem information is still apparently extractable from the itemString)",
+    "status": "audit-pending",
+    "reason": "Both gem globals are already absent. Parenthetical itemString extraction is qualified by apparently and gives no exact format/parsing contract; no gem parser parity inferred."
+  },
+  {
+    "source_id": "prose-undated-044",
+    "extract_line": 44,
+    "wikitext_line": 119,
+    "literal": "* Functions regarding defunct stats Multistrike and Amplify",
+    "raw_literal": "* Functions regarding defunct stats [[Multistrike]] and Amplify",
+    "status": "audit-pending",
+    "reason": "Multistrike and Amplify are unnamed domains, not member catalogs. No API identities, return contracts or replacement semantics are supplied; no guessed retirements."
+  },
+  {
+    "source_id": "prose-undated-046",
+    "extract_line": 46,
+    "wikitext_line": 121,
+    "literal": "* Event UNIT_COMBO_POINTS (streamlined into UNIT_POWER)",
+    "raw_literal": "* Event UNIT_COMBO_POINTS (streamlined into UNIT_POWER)",
+    "status": "audit-pending",
+    "reason": "UNIT_COMBO_POINTS is already unregistered. UNIT_POWER is named as a successor, but old/new event payload ordering is not supplied or modeled by this publication check."
+  },
+  {
+    "source_id": "prose-undated-047",
+    "extract_line": 47,
+    "wikitext_line": 122,
+    "literal": "* CVar floatingCombatTextComboPoints (streamlined into CVar floatingCombatTextEnergyGains)",
+    "raw_literal": "* CVar [[CVar floatingCombatTextComboPoints|floatingCombatTextComboPoints]] (streamlined into [[CVar floatingCombatTextEnergyGains]])",
+    "status": "audit-pending",
+    "reason": "floatingCombatTextComboPoints is already absent after later removal. Successor CVar default/behavior and combat text routing are not specified by this historical summary."
+  },
+  {
+    "source_id": "prose-undated-048",
+    "extract_line": 48,
+    "wikitext_line": 123,
+    "literal": "* Model:GetModel() has been replaced by Model:GetModelFileID()",
+    "raw_literal": "* [[API Model GetModel|Model:GetModel()]] has been replaced by [[API Model GetModelFileID|Model:GetModelFileID()]]",
+    "status": "audit-pending",
+    "reason": "GetModel remains for live model state tests; GetModelFileID is published. Native 3D behavior is intentionally unsupported and shared state callers must not be broken to force historical absence."
+  }
+]

@@ -1,0 +1,14 @@
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_api/globals/missing_surface/professions/professions_registration.rs:76:        "GetFilteredRecipeIDs",
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_api/globals/missing_surface/professions/professions_registration.rs:106:        "GetRecipeItemNameFilter",
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_api/globals/stubs/namespace_stubs.rs:109:    ("C_TradeSkillUI", "GetFilteredRecipeIDs", stub_nil),
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_api/globals/stubs/namespace_stubs.rs:286:    ("C_TradeSkillUI", "GetFilteredRecipeIDs", stub_empty_table),
+/home/osso/.worktrees/wow-ui-sim-p703-page/tests/professions_api.rs:444:        .eval("return #C_TradeSkillUI.GetFilteredRecipeIDs()")
+/home/osso/.worktrees/wow-ui-sim-p703-page/tests/test_showuipanel_professions_crafting.rs:42:            -- Recipe list: GetFilteredRecipeIDs is what the crafting page
+/home/osso/.worktrees/wow-ui-sim-p703-page/tests/test_showuipanel_professions_crafting.rs:44:            local ids = C_TradeSkillUI.GetFilteredRecipeIDs()
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Professions/Blizzard_ProfessionsCrafting.lua:274:	self.RecipeList.SearchBox:SetText(C_TradeSkillUI.GetRecipeItemNameFilter());
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Professions/Blizzard_ProfessionsCrafterOrderPage.lua:457:	self.BrowseFrame.RecipeList.SearchBox:SetText(C_TradeSkillUI.GetRecipeItemNameFilter());
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ProfessionsTemplates/Blizzard_Professions.lua:840:	for index, recipeID in ipairs(C_TradeSkillUI.GetFilteredRecipeIDs()) do
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ProfessionsTemplates/Blizzard_Professions.lua:1163:		textFilter = C_TradeSkillUI.GetRecipeItemNameFilter(),
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ProfessionsTemplates/Blizzard_Professions.lua:1320:	if strcmputf8i(C_TradeSkillUI.GetRecipeItemNameFilter(), text) == 0 then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ProfessionsTemplates/Blizzard_Professions.lua:1344:		C_TradeSkillUI.SetRecipeItemNameFilter(nil);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ProfessionsTemplates/Blizzard_Professions.lua:1347:		C_TradeSkillUI.SetRecipeItemNameFilter(text);

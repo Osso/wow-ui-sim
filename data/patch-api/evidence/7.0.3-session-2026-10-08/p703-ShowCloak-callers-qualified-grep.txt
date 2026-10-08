@@ -1,0 +1,6 @@
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_api/globals/real/publication_12_0_0.rs:102:    LuaApiMut::register_function(lua, "ShowCloak", show_cloak)?;
+/home/osso/.worktrees/wow-ui-sim-p703-page/tests/p1200_plain_globals.rs:32:        ShowCloak(false); ShowHelm(true)
+/home/osso/.worktrees/wow-ui-sim-p703-page/tests/p1200_plain_globals.rs:34:        ShowCloak(true); ShowHelm(false)
+/home/osso/.worktrees/wow-ui-sim-p703-page/tests/p1200_plain_globals.rs:36:        ShowCloak(cloak); ShowHelm(helm)
+/home/osso/.worktrees/wow-ui-sim-p703-page/tests/p1200_plain_globals.rs:49:        ShowCloak(hidden); ShowHelm(hidden)
+/home/osso/.worktrees/wow-ui-sim-p703-page/tests/p1200_plain_globals.rs:52:            assert(not pcall(ShowCloak, hidden))

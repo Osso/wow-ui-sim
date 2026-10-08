@@ -1,0 +1,5 @@
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_api/frame/methods/button_anchor_hierarchy/mod.rs:561:        "SetChange",
+/home/osso/.worktrees/wow-ui-sim-p703-page/src/lua_api/frame/methods/button_anchor_hierarchy/mod.rs:575:            "SetChange" => animations::animation_set_change,
+/home/osso/.worktrees/wow-ui-sim-p703-page/tests/animation_anim.rs:10:// Anim: property methods (SetOffset, SetChange, SetScale, SetDegrees, etc.)
+/home/osso/.worktrees/wow-ui-sim-p703-page/tests/animation_anim.rs:35:        anim:SetChange(0.5)
+/home/osso/.worktrees/wow-ui-sim-p703-page/tests/animation_anim.rs:37:        assert(math.abs(to - 0.7) < 0.01, "SetChange should set to_alpha = from_alpha + change, got " .. to)

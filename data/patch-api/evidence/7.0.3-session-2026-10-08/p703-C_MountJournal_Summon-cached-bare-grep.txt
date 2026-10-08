@@ -1,0 +1,9 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_NewPlayerExperience/Blizzard_TutorialData.lua:122:		688,	-- Summon Imp, level 3
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_NewPlayerExperience/Blizzard_TutorialData.lua:302:		classQuestSpellID = 697,			-- Summon Voidwalker
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/GameDialogDefs.lua:2467:-- Summon dialog when being summoned when in a starting area
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_BoostTutorial/Blizzard_TutorialRacialData.lua:1083:			SpellID	= 66393, -- Rolling with my Homies: Summon Hot Rod
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CooldownBroadcaster/TrackedCooldowns.lua:294:		205180, -- Summon Darkglare
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CooldownBroadcaster/TrackedCooldowns.lua:301:		265187, -- Summon Demonic Tyrant
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CooldownBroadcaster/TrackedCooldowns.lua:308:		1122, -- Summon Infernal
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:195:		--Summon by WoW friends list ID (not BNet id.)
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:200:		--Summon by BNet friends list ID (index in this case.)

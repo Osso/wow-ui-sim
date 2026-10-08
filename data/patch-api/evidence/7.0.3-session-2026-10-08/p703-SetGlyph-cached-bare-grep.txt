@@ -1,0 +1,1 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_InspectUI/Mists/InspectTalentFrame.lua:86:	GameTooltip:SetGlyph(self:GetID(), 1, true, INSPECTED_UNIT);
