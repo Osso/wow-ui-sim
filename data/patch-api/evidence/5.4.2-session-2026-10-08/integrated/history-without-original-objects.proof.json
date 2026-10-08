@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p542-history-proof/data/patch-api/evidence/5.4.2-session-2026-10-08/validate.py"
+  ],
+  "revision": "d47f90834a4f8501bbffe11917e1038c4409307a",
+  "scope": "history-without-original-objects",
+  "cwd": ".",
+  "target": "dedicated p542-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "history-without-original-objects.txt",
+  "log_sha256": "c105cf9a0d1649fe39044ec423aba1cff418fc15af389286f540cbfc7d28bd50",
+  "seconds": 25.80628943299962,
+  "invalidated": false
+}

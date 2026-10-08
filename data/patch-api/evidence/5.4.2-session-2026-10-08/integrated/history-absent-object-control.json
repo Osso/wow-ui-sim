@@ -1,0 +1,61 @@
+{
+  "clone_revision": "d47f90834a4f8501bbffe11917e1038c4409307a",
+  "missing_original_objects": [
+    {
+      "recorded_revision": "8691fe460bebf2b1db12237e728a97e321e1c766",
+      "exit": 128,
+      "stderr": "fatal: Not a valid object name 8691fe460bebf2b1db12237e728a97e321e1c766^{commit}\n"
+    },
+    {
+      "recorded_revision": "90372a7381b315c29627629a6448fa3296f346e0",
+      "exit": 128,
+      "stderr": "fatal: Not a valid object name 90372a7381b315c29627629a6448fa3296f346e0^{commit}\n"
+    },
+    {
+      "recorded_revision": "bda4563b105fcd7c08daaaec31f84011126d2dce",
+      "exit": 128,
+      "stderr": "fatal: Not a valid object name bda4563b105fcd7c08daaaec31f84011126d2dce^{commit}\n"
+    },
+    {
+      "recorded_revision": "e7781aac1fd1f9a21a94ffdf1fef464b39ab7d33",
+      "exit": 128,
+      "stderr": "fatal: Not a valid object name e7781aac1fd1f9a21a94ffdf1fef464b39ab7d33^{commit}\n"
+    },
+    {
+      "recorded_revision": "8668ec5de8cdeba98ad9ac43853f969ad080c47b",
+      "exit": 128,
+      "stderr": "fatal: Not a valid object name 8668ec5de8cdeba98ad9ac43853f969ad080c47b^{commit}\n"
+    },
+    {
+      "recorded_revision": "564f99c750a78a4f0a4b79b04fdd47b0f5f28793",
+      "exit": 128,
+      "stderr": "fatal: Not a valid object name 564f99c750a78a4f0a4b79b04fdd47b0f5f28793^{commit}\n"
+    },
+    {
+      "recorded_revision": "554541cca7faddde6660341dbe4bed0f4afbbd3b",
+      "exit": 128,
+      "stderr": "fatal: Not a valid object name 554541cca7faddde6660341dbe4bed0f4afbbd3b^{commit}\n"
+    },
+    {
+      "recorded_revision": "8d5196d4c70cc5a0846b4a7e9b68d23f02b8ef35",
+      "exit": 128,
+      "stderr": "fatal: Not a valid object name 8d5196d4c70cc5a0846b4a7e9b68d23f02b8ef35^{commit}\n"
+    },
+    {
+      "recorded_revision": "acabce19acb9002a3ee89ab79612b497c777df61",
+      "exit": 128,
+      "stderr": "fatal: Not a valid object name acabce19acb9002a3ee89ab79612b497c777df61^{commit}\n"
+    },
+    {
+      "recorded_revision": "2caa653ace4e52ae3b918bba8ad322bb80b06671",
+      "exit": 128,
+      "stderr": "fatal: Not a valid object name 2caa653ace4e52ae3b918bba8ad322bb80b06671^{commit}\n"
+    },
+    {
+      "recorded_revision": "531ada0628ac9100228f228cce1fb96080ac4f16",
+      "exit": 128,
+      "stderr": "fatal: Not a valid object name 531ada0628ac9100228f228cce1fb96080ac4f16^{commit}\n"
+    }
+  ],
+  "historical_validator_exit": 0
+}
