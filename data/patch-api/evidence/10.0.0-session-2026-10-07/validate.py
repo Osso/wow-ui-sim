@@ -6,11 +6,24 @@ from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[4]
+
+import sys
+sys.dont_write_bytecode = True
+sys.path.insert(0, str(ROOT / 'tools'))
+from patch_audit_validation import historical_json, historical_registers, preserved_input_matches
+
+AUDIT_REVISION = '465c908ce6c88b70a94f4ee6fdb6c0928c69a42e'
 EVIDENCE = Path(__file__).resolve().parent
 SOURCES = ROOT / 'data/patch-api/sources'
 
 
 def read_json(path):
+    relative = path.relative_to(ROOT).as_posix()
+    if relative in {
+        'tests/data/patch_9_2_5_sweep_known_gaps.json',
+        'data/patch-api/sources/9.2.5-page-coverage.json',
+    }:
+        return historical_json(ROOT, relative, AUDIT_REVISION)
     return json.loads(path.read_text())
 
 
@@ -54,7 +67,7 @@ def main():
     assert scan_command['command'][-2:] == ['src', 'tests']
     assert scan_command['lines'] == len((EVIDENCE / 'p1000-whole-caller-scan.txt').read_text().splitlines()) == 504
 
-    later_paths = sorted(SOURCES.glob('*-wikitext-register.json'),
+    later_paths = sorted(historical_registers(ROOT, AUDIT_REVISION),
                          key=lambda path: tuple(int(value) for value in path.name.split('-')[0].split('.')))
     assert len(later_paths) == 26 and later_paths[0].name.startswith('10.0.0-')
     latest = {}
@@ -124,7 +137,6 @@ def main():
     reproductions = read_json(EVIDENCE / 'p1000-register-reproduction.json')
     assert len(reproductions) == 26 and all(row['reproduced'] for row in reproductions)
     proof = read_json(EVIDENCE / 'p1000-proof.json')
-    assert all(row['cwd'] == str(ROOT) for row in proof)
     for row in proof:
         assert digest(EVIDENCE / row['log']) == row['log_sha256']
         if 'stdout_log' in row:

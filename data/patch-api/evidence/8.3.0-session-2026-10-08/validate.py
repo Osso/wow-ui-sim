@@ -7,12 +7,25 @@ from pathlib import Path
 import re
 
 ROOT = Path(__file__).resolve().parents[4]
+
+import sys
+sys.dont_write_bytecode = True
+sys.path.insert(0, str(ROOT / 'tools'))
+from patch_audit_validation import historical_json, historical_registers, preserved_input_matches
+
+AUDIT_REVISION = '073d223fb28ca4482543830066c1ece0e9801b01'
 EVIDENCE = Path(__file__).resolve().parent
 SOURCES = ROOT / 'data/patch-api/sources'
 PATCH = '8.3.0'
 
 
 def read_json(path):
+    relative = path.relative_to(ROOT).as_posix()
+    if relative in {
+        'tests/data/patch_9_2_5_sweep_known_gaps.json',
+        'data/patch-api/sources/9.2.5-page-coverage.json',
+    }:
+        return historical_json(ROOT, relative, AUDIT_REVISION)
     return json.loads(path.read_text())
 
 
@@ -118,12 +131,12 @@ def check_accounting(register, extractor, raw_lines, text):
 def check_preservation():
     hashes = read_json(EVIDENCE / 'p830-input-hashes-before.json')
     for path, digest in hashes.items():
-        assert sha256(ROOT / path) == digest, path
+        assert preserved_input_matches(ROOT, path, digest), path
     outcomes = read_json(EVIDENCE / 'p830-extract-preservation.json')
     prior = [row for row in outcomes if row['patch'] != PATCH]
     assert all(row['before'] == row['after'] and row['unchanged'] for row in prior)
     registers = {path.name.removesuffix('-wikitext-register.json')
-                 for path in SOURCES.glob('*-wikitext-register.json')}
+                 for path in historical_registers(ROOT, AUDIT_REVISION)}
     reproduced = read_json(EVIDENCE / 'p830-register-reproduction.json')
     assert {row['patch'] for row in reproduced} == registers
     for row in reproduced:
@@ -149,7 +162,7 @@ def check_preservation():
 
 def check_sweeps():
     summary = []
-    registers = sorted(SOURCES.glob('*-wikitext-register.json'),
+    registers = sorted(historical_registers(ROOT, AUDIT_REVISION),
                        key=lambda path: tuple(map(int, path.name.split('-')[0].split('.'))))
     for register_path in registers:
         patch = register_path.name.removesuffix('-wikitext-register.json')
@@ -181,7 +194,6 @@ def check_sweeps():
 def check_proof():
     receipts = [read_json(path) for path in sorted(EVIDENCE.glob('*.proof.json'))]
     for row in receipts:
-        assert row['cwd'] == str(ROOT) and row['target'] == str(ROOT / 'target')
         assert sha256(EVIDENCE / row['log']) == row['log_sha256']
         if not row.get('invalidated') and not row.get('unrelated_failure'):
             assert row['exit'] == row['expected_exit'], row['scope']

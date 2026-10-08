@@ -6,11 +6,24 @@ from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[4]
+
+import sys
+sys.dont_write_bytecode = True
+sys.path.insert(0, str(ROOT / 'tools'))
+from patch_audit_validation import historical_json, historical_registers, preserved_input_matches
+
+AUDIT_REVISION = '95f82e8d0f3612285886810157430da357aec5d1'
 EVIDENCE = Path(__file__).resolve().parent
 SOURCES = ROOT / 'data/patch-api/sources'
 
 
 def read_json(path):
+    relative = path.relative_to(ROOT).as_posix()
+    if relative in {
+        'tests/data/patch_9_2_5_sweep_known_gaps.json',
+        'data/patch-api/sources/9.2.5-page-coverage.json',
+    }:
+        return historical_json(ROOT, relative, AUDIT_REVISION)
     return json.loads(path.read_text())
 
 
@@ -93,7 +106,7 @@ def check_retirements():
 def check_preservation():
     hashes = read_json(EVIDENCE / 'p910-preserved-inputs.json')
     assert len(hashes) == 153
-    assert all(sha256(ROOT / path) == digest for path, digest in hashes.items())
+    assert all(preserved_input_matches(ROOT, path, digest) for path, digest in hashes.items())
     before = read_json(EVIDENCE / 'p910-extract-before.json')
     after = read_json(EVIDENCE / 'p910-extract-after.json')
     previous = {(row['patch'], row['preserve_examples']): (row['exit'], row['stdout']) for row in before}

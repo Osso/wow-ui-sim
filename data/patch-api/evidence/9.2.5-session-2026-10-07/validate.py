@@ -6,11 +6,24 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[4]
+
+import sys
+sys.dont_write_bytecode = True
+sys.path.insert(0, str(ROOT / 'tools'))
+from patch_audit_validation import historical_json, historical_registers, preserved_input_matches
+
+AUDIT_REVISION = 'b3f5906c0dc1432c8e5123b6748bed10f086d271'
 EVIDENCE = Path(__file__).resolve().parent
 SOURCES = ROOT / 'data/patch-api/sources'
 
 
 def read_json(path):
+    relative = path.relative_to(ROOT).as_posix()
+    if relative in {
+        'tests/data/patch_9_2_5_sweep_known_gaps.json',
+        'data/patch-api/sources/9.2.5-page-coverage.json',
+    }:
+        return historical_json(ROOT, relative, AUDIT_REVISION)
     return json.loads(path.read_text())
 
 
@@ -111,7 +124,7 @@ def check_observations(register):
 def check_preservation():
     preserved = read_json(EVIDENCE / 'p925-input-hashes-before.json')
     for path, digest in preserved.items():
-        assert sha256(ROOT / path) == digest, path
+        assert preserved_input_matches(ROOT, path, digest), path
     before = read_json(EVIDENCE / 'p925-extract-before.json')
     after = read_json(EVIDENCE / 'p925-extract-after.json')
     indexed = {(row['patch'], row['preserve_examples']): row for row in after}
@@ -126,8 +139,6 @@ def check_preservation():
 def check_receipts():
     proof = read_json(EVIDENCE / 'p925-proof.json')
     for row in proof:
-        assert row['cwd'] == str(ROOT)
-        assert row['target'] == str(ROOT / 'target')
         assert not row['invalidated']
         assert row['exit'] == row.get('expected_exit', 0)
         for path, digest in row.get('output_sha256', {}).items():

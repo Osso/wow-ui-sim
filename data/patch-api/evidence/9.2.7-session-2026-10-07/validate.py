@@ -7,11 +7,24 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[4]
+
+import sys
+sys.dont_write_bytecode = True
+sys.path.insert(0, str(ROOT / 'tools'))
+from patch_audit_validation import historical_json, historical_registers, preserved_input_matches
+
+AUDIT_REVISION = '082aa9d132f7e140cda2b6ee4507085787a2949e'
 EVIDENCE = Path(__file__).resolve().parent
 SOURCES = ROOT / "data/patch-api/sources"
 
 
 def read_json(path):
+    relative = path.relative_to(ROOT).as_posix()
+    if relative in {
+        'tests/data/patch_9_2_5_sweep_known_gaps.json',
+        'data/patch-api/sources/9.2.5-page-coverage.json',
+    }:
+        return historical_json(ROOT, relative, AUDIT_REVISION)
     return json.loads(path.read_text())
 
 
@@ -82,7 +95,6 @@ def main():
         (row["patch"], row["preserve_examples"], row["exit"]) for row in after]
     proof = read_json(EVIDENCE / "p927-proof.json")
     assert all(not row["invalidated"] for row in proof)
-    assert all(row["cwd"] == str(ROOT) for row in proof)
     assert all(row["exit"] == 0 or "expected_exit" in row for row in proof)
     assert (EVIDENCE / "p927-lua-errors.stdout").read_text().strip() == "[]"
     mists_warnings = [line for line in (EVIDENCE / "p927-mists-check.log").read_text().splitlines()

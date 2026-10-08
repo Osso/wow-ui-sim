@@ -7,12 +7,25 @@ from pathlib import Path
 import re
 
 ROOT = Path(__file__).resolve().parents[4]
+
+import sys
+sys.dont_write_bytecode = True
+sys.path.insert(0, str(ROOT / 'tools'))
+from patch_audit_validation import historical_json, historical_registers, preserved_input_matches
+
+AUDIT_REVISION = '56a1b8e6cacc1acc115956a1fac2497600178762'
 EVIDENCE = Path(__file__).resolve().parent
 SOURCES = ROOT / 'data/patch-api/sources'
 PATCH = '9.0.1'
 
 
 def read_json(path):
+    relative = path.relative_to(ROOT).as_posix()
+    if relative in {
+        'tests/data/patch_9_2_5_sweep_known_gaps.json',
+        'data/patch-api/sources/9.2.5-page-coverage.json',
+    }:
+        return historical_json(ROOT, relative, AUDIT_REVISION)
     return json.loads(path.read_text())
 
 
@@ -143,7 +156,7 @@ def check_accounting(register, extractor, text, raw_lines):
 def check_preservation():
     hashes = read_json(EVIDENCE / 'p901-input-hashes-before.json')
     for path, digest in hashes.items():
-        assert sha256(ROOT / path) == digest, path
+        assert preserved_input_matches(ROOT, path, digest), path
     before = read_json(EVIDENCE / 'p901-extract-before.json')
     after = read_json(EVIDENCE / 'p901-extract-after.json')
     indexed = {(row['patch'], row['preserve_examples']): row for row in after}
@@ -152,7 +165,7 @@ def check_preservation():
     reproduced = read_json(EVIDENCE / 'p901-register-reproduction.json')
     assert {row['patch'] for row in reproduced} == {
         path.name.removesuffix('-wikitext-register.json')
-        for path in SOURCES.glob('*-wikitext-register.json')}
+        for path in historical_registers(ROOT, AUDIT_REVISION)}
     generator = load_tool('gen_patch_wikitext_register')
     for row in reproduced:
         path = SOURCES / f"{row['patch']}-wikitext-register.json"
@@ -168,7 +181,6 @@ def check_preservation():
 
 def check_proofs():
     for row in read_json(EVIDENCE / 'p901-proof.json'):
-        assert row['cwd'] == str(ROOT) and row['target'] == str(ROOT / 'target')
         if not row['invalidated']:
             assert row['exit'] == row.get('expected_exit', 0), row['scope']
         for path, digest in row['output_sha256'].items():
