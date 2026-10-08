@@ -1,0 +1,8 @@
+{
+  "exit": 1,
+  "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p553-page/data/patch-api/evidence/5.5.3-session-2026-10-08/validate.py\", line 209, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p553-page/data/patch-api/evidence/5.5.3-session-2026-10-08/validate.py\", line 191, in main\n    assert digest(path.read_bytes()) == expected, name\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: mists-pages-final.txt\n",
+  "protected_input": "mists-pages-final.txt",
+  "original_sha256": "099dd23487fcf682a27e0639801a236d2622e3c129c60063b5468d3681ad9738",
+  "rejected": true,
+  "restored_byte_identical": true
+}

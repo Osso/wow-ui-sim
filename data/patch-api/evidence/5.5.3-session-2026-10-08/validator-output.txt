@@ -1,8 +1,1 @@
-Traceback (most recent call last):
-  File "/home/osso/.worktrees/wow-ui-sim-p553-page/data/patch-api/evidence/5.5.3-session-2026-10-08/validate.py", line 209, in <module>
-    main()
-    ~~~~^^
-  File "/home/osso/.worktrees/wow-ui-sim-p553-page/data/patch-api/evidence/5.5.3-session-2026-10-08/validate.py", line 204, in main
-    assert sorted(context['proofs'][label]['passed_cases']) == sorted(expected_cases), label
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AssertionError: mists-pages-final
+{"accounting": {"gaps": 0, "inventory": 0, "metadata": 4}, "reproduction": {"extracts": 54, "inherited_extract_failures": ["12.0.5", "12.0.7", "12.1.0"], "registers": 57}, "retail": {"differences": 0, "observations": 9740, "pages": 55}, "status": "PASS"}
