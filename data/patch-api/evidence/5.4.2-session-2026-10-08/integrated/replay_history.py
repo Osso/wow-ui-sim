@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import subprocess
 import sys
+import types
 
 sys.dont_write_bytecode = True
 ROOT = Path(__file__).resolve().parents[5]
@@ -66,6 +67,10 @@ def main():
 
     source = (HERE / 'historical-validator.py.txt').read_text()
     namespace = {'__name__': 'historical_547_validator', '__file__': str(HISTORY / 'validate.py')}
+    helper = types.ModuleType('patch_audit_validation')
+    revision = read(HISTORY / 'p542-context.json')['source_revision']
+    exec(compile(historical_blob(revision, 'tools/patch_audit_validation.py'), 'pinned_helpers', 'exec'), helper.__dict__)
+    sys.modules['patch_audit_validation'] = helper
     exec(compile(source, 'historical-validator.py.txt', 'exec'), namespace)
     native_git = historical_git
     def mapped_git(*args):
@@ -85,19 +90,13 @@ def main():
             changed = sorted(path for path in set(before) | set(after) if before.get(path) != after.get(path))
             return ('\n'.join(changed) + ('\n' if changed else '')).encode()
         return native_git(*args)
-    def mapped_helpers(revision):
-        helpers = {'__name__': 'pinned_helpers'}
-        exec(compile(historical_blob(revision, 'tools/patch_audit_validation.py'), 'pinned_helpers', 'exec'), helpers)
-        def historical_paths(root, pin, directory, pattern):
-            paths = [root / name for name in historical_names(pin, directory) if (root / name).match(pattern)]
-            assert paths and all(path.is_file() for path in paths)
-            return paths
-        helpers['_historical_paths'] = historical_paths
-        return helpers
-    namespace.update(HERE=HISTORY, git=mapped_git, blob=historical_blob, names=historical_names,
-                     historical_helpers=mapped_helpers)
-    namespace['historical_registers'] = lambda root, pin: [root / name for name in historical_names(pin, 'data/patch-api/sources') if name.endswith('-wikitext-register.json')]
-    namespace['historical_sweep_tests'] = lambda root, pin: [root / name for name in historical_names(pin, 'tests') if name.endswith('_publication_sweep.rs')]
+    namespace.update(HERE=HISTORY, git=mapped_git, blob=historical_blob)
+    def historical_paths(root, pin, directory, suffix):
+        paths = [root / name for name in historical_names(pin, directory) if name.endswith(suffix)]
+        assert paths and all(path.is_file() for path in paths)
+        return paths
+    namespace['historical_registers'] = lambda root, pin: historical_paths(root, pin, 'data/patch-api/sources', '-wikitext-register.json')
+    namespace['historical_sweep_tests'] = lambda root, pin: historical_paths(root, pin, 'tests', '_publication_sweep.rs')
     def preserved_seals(context):
         for name, expected in context['session_sha256'].items():
             path = HERE / 'historical-validator.py.txt' if name == 'validate.py' else HISTORY / name
