@@ -475,6 +475,15 @@ fn minimap_removals_survive_cached_deprecation_load() {
     }
 }
 
+prefork_full_ui_case! {
+fn minimap_removals_survive_full_cached_game_ui_startup(env: &WowLuaEnv) {
+    for method in REMOVED_MINIMAP_METHODS {
+        assert_minimap_method_absent(&env, method);
+    }
+}
+}
+
+#[cfg(not(feature = "client-retail"))]
 #[test]
 fn minimap_removals_survive_full_cached_game_ui_startup() {
     use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, load_addon};
