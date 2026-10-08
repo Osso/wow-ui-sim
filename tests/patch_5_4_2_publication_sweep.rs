@@ -17,8 +17,8 @@ fn patch_5_4_2_publication_sweep(env: &WowLuaEnv) {
         register_env: "P542_SWEEP_REGISTER",
         out_env: "P542_SWEEP_OUT",
         later_registers: &[
-            // 5.4.7 register queued on p547-page.
-            // 5.4.8 register queued on p548-page.
+            include_str!("../data/patch-api/sources/5.4.7-wikitext-register.json"),
+            include_str!("../data/patch-api/sources/5.4.8-wikitext-register.json"),
             include_str!("../data/patch-api/sources/6.0.1-wikitext-register.json"),
             include_str!("../data/patch-api/sources/6.0.2-wikitext-register.json"),
             include_str!("../data/patch-api/sources/6.1.0-wikitext-register.json"),
