@@ -32,7 +32,7 @@
 
 ## [2026-10-08] investigation | Patch 5.4.0 API audit
 
-[Audit](investigations/patch-5-4-0-api-audit.md): retail TOC 50400/build 17345; pinned page/diff revisions 6200158/3741686. All 159 IDs accounted (114 inventory, 45 extract); 22 exact publication gaps, 27 pending substantive extract contracts, two bounded existing-model cases and 31 pre-existing absences. No runtime changes or new retirements. Complete grep scans, preserved sources, 56 register/53 extract reproductions and 88 Python fixtures pass; 57 publication/factory, 2 prefork/2 standalone, 24 caller/6 source-unit cases, format and warning-clean non-vendor Mists pass. Portable gate pending.
+[Audit](investigations/patch-5-4-0-api-audit.md): retail TOC 50400/build 17345; pinned page/diff revisions 6200158/3741686. All 159 IDs accounted (114 inventory, 45 extract); 22 exact publication gaps, 27 pending substantive extract contracts, two bounded existing-model cases and 31 pre-existing absences. No runtime changes or new retirements. Complete grep scans, preserved sources, 56 register/53 extract reproductions and 88 Python fixtures pass; 57 publication/factory, 2 prefork/2 standalone, 24 caller/6 source-unit cases, format and warning-clean non-vendor Mists pass. Portable gate PASS 39/39 clean, 40/40 later-audit; own-log tampering rejected and exact bytes restored.
 
 ## [2026-10-08] integration | Patch 6.0.2 API audit
 

@@ -1,0 +1,31 @@
+{
+  "revision": "d155b456d4536d5cb9637479f9d543656454400a",
+  "status": "PASS",
+  "summary": {
+    "clean": {
+      "failed": 0,
+      "passed": 39
+    },
+    "later_audit": {
+      "failed": 0,
+      "passed": 40
+    }
+  },
+  "accounting": {
+    "inventory": 114,
+    "extract": 45,
+    "ledger": 159,
+    "publication_gaps": 22,
+    "extract_statuses": {
+      "metadata-only": 17,
+      "audit-pending": 27,
+      "bounded-coverage": 1
+    },
+    "new_runtime_models": 0,
+    "new_retirements": 0,
+    "existing_absences": 31
+  },
+  "own_log_tamper": "rejected; original bytes restored",
+  "runtime_changes": false,
+  "no_push_merge_or_agents": true
+}

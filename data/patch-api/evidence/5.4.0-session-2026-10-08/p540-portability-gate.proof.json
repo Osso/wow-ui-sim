@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "tools/check_patch_validators.py"
+  ],
+  "revision": "d155b456d4536d5cb9637479f9d543656454400a",
+  "scope": "p540-portability-gate",
+  "cwd": ".",
+  "target": "dedicated p540-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p540-portability-gate.txt",
+  "log_sha256": "2388b1aa4e3e29b138d2ef05bb535a6f2e23fbe2575e00c9b95b36d87c7809cf",
+  "seconds": 283.47574704600265,
+  "invalidated": false
+}

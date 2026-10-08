@@ -22,7 +22,7 @@ Own cwd: p540-page worktree. Own target: `/home/osso/.cache/wow-ui-sim-targets/p
 | cargo check --no-default-features --features sound,gui,casc,client-mists --tests | ce64c8a37 | PASS | Zero non-vendor warnings required |
 | Synthetic missing-publication negative control | ae0b0b8ff | Expected failure; 22 → 23 gaps | Replace one passing occurrence to preserve fixed row count |
 | cargo test --lib frame_state:: | ce64c8a37 | 6 PASS | Existing source-unit frame security/state callers; no source mutation |
-| tools/check_patch_validators.py | Pending sealed revision | Pending | Clean and later-audit phases; own-log tamper must fail |
+| tools/check_patch_validators.py | d155b456d | 39/39 clean, 40/40 later-audit PASS | Own-log tamper rejected; original bytes restored |
 
 ## Conditional gates
 
@@ -47,3 +47,7 @@ Corrected standalone selection: 2/2 PASS at 17cd91a9e. All ten independent posit
 ## Portable proof development
 
 Own historical validator PASS at d155b456d: 114 inventory, 45 extract rows, 22 retained gaps, 56 register/53 main extract reproductions and 31 removal scans. Own all-sweeps-log tampering is rejected and original bytes restored exactly; no runtime/test rerun needed after exact restoration. Fresh-checkout/later-audit gate runs asynchronously at d155b456d; new docs/receipts do not expand its historical proof scope.
+
+## Completion
+
+Portable gate PASS: 39/39 clean and 40/40 later-audit at d155b456d. Both phases include the own historical validator; own-log tampering is independently rejected. Later commits contain documentation/receipts only and do not invalidate proof scope. No check remains unfinished. Retained compatibility work is 22 publication gaps, 27 substantive extract contracts and queued 5.4.1/5.4.2/5.4.7 register integration. Three inherited extraction failures remain unchanged.
