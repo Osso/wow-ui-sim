@@ -4532,8 +4532,8 @@
       "sources": [
         "tests/blizzard_new_player_experience_loads.rs"
       ],
-      "remaining_count": 6,
-      "remaining_seconds": 27.093
+      "remaining_count": 0,
+      "remaining_seconds": 0
     },
     {
       "module": "blizzard_obliterum_ui_loads",
@@ -4556,8 +4556,8 @@
       "sources": [
         "tests/blizzard_obliterum_ui_loads.rs"
       ],
-      "remaining_count": 5,
-      "remaining_seconds": 24.354
+      "remaining_count": 0,
+      "remaining_seconds": 0
     },
     {
       "module": "blizzard_order_hall_ui_loads",
@@ -4580,8 +4580,8 @@
       "sources": [
         "tests/blizzard_order_hall_ui_loads.rs"
       ],
-      "remaining_count": 6,
-      "remaining_seconds": 25.898
+      "remaining_count": 0,
+      "remaining_seconds": 0
     },
     {
       "module": "blizzard_party_pose_ui_loads",
@@ -4604,8 +4604,8 @@
       "sources": [
         "tests/blizzard_party_pose_ui_loads.rs"
       ],
-      "remaining_count": 5,
-      "remaining_seconds": 23.153
+      "remaining_count": 0,
+      "remaining_seconds": 0
     },
     {
       "module": "blizzard_perks_program_loads",
@@ -4628,8 +4628,8 @@
       "sources": [
         "tests/blizzard_perks_program_loads.rs"
       ],
-      "remaining_count": 6,
-      "remaining_seconds": 28.638
+      "remaining_count": 0,
+      "remaining_seconds": 0
     },
     {
       "module": "blizzard_player_choice_loads",
@@ -4700,8 +4700,8 @@
       "sources": [
         "tests/blizzard_plunderstorm_basics_loads.rs"
       ],
-      "remaining_count": 5,
-      "remaining_seconds": 27.872
+      "remaining_count": 0,
+      "remaining_seconds": 0
     },
     {
       "module": "blizzard_plunderstorm_prematch_ui_loads",
@@ -4724,8 +4724,8 @@
       "sources": [
         "tests/blizzard_plunderstorm_prematch_ui_loads.rs"
       ],
-      "remaining_count": 5,
-      "remaining_seconds": 26.042
+      "remaining_count": 0,
+      "remaining_seconds": 0
     },
     {
       "module": "blizzard_ptr_feedback_glue_loads",
@@ -19271,51 +19271,6 @@
       "shared_helpers": []
     },
     {
-      "module": "blizzard_perks_program_loads",
-      "count": 6,
-      "seconds": 28.638,
-      "files": [
-        "tests/blizzard_perks_program_loads.rs"
-      ],
-      "shared_helpers": []
-    },
-    {
-      "module": "blizzard_plunderstorm_basics_loads",
-      "count": 5,
-      "seconds": 27.872,
-      "files": [
-        "tests/blizzard_plunderstorm_basics_loads.rs"
-      ],
-      "shared_helpers": []
-    },
-    {
-      "module": "blizzard_new_player_experience_loads",
-      "count": 6,
-      "seconds": 27.093,
-      "files": [
-        "tests/blizzard_new_player_experience_loads.rs"
-      ],
-      "shared_helpers": []
-    },
-    {
-      "module": "blizzard_plunderstorm_prematch_ui_loads",
-      "count": 5,
-      "seconds": 26.042,
-      "files": [
-        "tests/blizzard_plunderstorm_prematch_ui_loads.rs"
-      ],
-      "shared_helpers": []
-    },
-    {
-      "module": "blizzard_order_hall_ui_loads",
-      "count": 6,
-      "seconds": 25.898,
-      "files": [
-        "tests/blizzard_order_hall_ui_loads.rs"
-      ],
-      "shared_helpers": []
-    },
-    {
       "module": "full_ui_preload_bootstrap",
       "count": 1,
       "seconds": 24.796,
@@ -19334,15 +19289,6 @@
       "shared_helpers": []
     },
     {
-      "module": "blizzard_obliterum_ui_loads",
-      "count": 5,
-      "seconds": 24.354,
-      "files": [
-        "tests/blizzard_obliterum_ui_loads.rs"
-      ],
-      "shared_helpers": []
-    },
-    {
       "module": "click_targeting",
       "count": 4,
       "seconds": 23.566,
@@ -19352,15 +19298,6 @@
       "shared_helpers": [
         "tests/click_targeting/full_ui.rs"
       ]
-    },
-    {
-      "module": "blizzard_party_pose_ui_loads",
-      "count": 5,
-      "seconds": 23.153,
-      "files": [
-        "tests/blizzard_party_pose_ui_loads.rs"
-      ],
-      "shared_helpers": []
     },
     {
       "module": "patch_12_0_1_enums",
@@ -26303,7 +26240,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_new_player_experience_loads.rs"
@@ -26328,7 +26265,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_new_player_experience_loads.rs"
@@ -26353,7 +26290,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_new_player_experience_loads.rs"
@@ -26378,7 +26315,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_new_player_experience_loads.rs"
@@ -26403,7 +26340,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_new_player_experience_loads.rs"
@@ -26428,7 +26365,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_new_player_experience_loads.rs"
@@ -26453,7 +26390,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_obliterum_ui_loads.rs"
@@ -26478,7 +26415,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_obliterum_ui_loads.rs"
@@ -26503,7 +26440,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_obliterum_ui_loads.rs"
@@ -26528,7 +26465,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_obliterum_ui_loads.rs"
@@ -26553,7 +26490,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_obliterum_ui_loads.rs"
@@ -26578,7 +26515,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_order_hall_ui_loads.rs"
@@ -26603,7 +26540,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_order_hall_ui_loads.rs"
@@ -26628,7 +26565,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_order_hall_ui_loads.rs"
@@ -26653,7 +26590,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_order_hall_ui_loads.rs"
@@ -26678,7 +26615,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_order_hall_ui_loads.rs"
@@ -26703,7 +26640,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_order_hall_ui_loads.rs"
@@ -26728,7 +26665,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_party_pose_ui_loads.rs"
@@ -26753,7 +26690,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_party_pose_ui_loads.rs"
@@ -26778,7 +26715,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_party_pose_ui_loads.rs"
@@ -26803,7 +26740,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_party_pose_ui_loads.rs"
@@ -26828,7 +26765,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_party_pose_ui_loads.rs"
@@ -26853,7 +26790,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_perks_program_loads.rs"
@@ -26878,7 +26815,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_perks_program_loads.rs"
@@ -26903,7 +26840,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_perks_program_loads.rs"
@@ -26928,7 +26865,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_perks_program_loads.rs"
@@ -26953,7 +26890,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_perks_program_loads.rs"
@@ -26978,7 +26915,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_perks_program_loads.rs"
@@ -27503,7 +27440,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_plunderstorm_basics_loads.rs"
@@ -27528,7 +27465,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_plunderstorm_basics_loads.rs"
@@ -27579,7 +27516,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_plunderstorm_basics_loads.rs"
@@ -27604,7 +27541,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_plunderstorm_basics_loads.rs"
@@ -27629,7 +27566,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_plunderstorm_prematch_ui_loads.rs"
@@ -27654,7 +27591,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_plunderstorm_basics_loads.rs"
@@ -27679,7 +27616,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_plunderstorm_prematch_ui_loads.rs"
@@ -27704,7 +27641,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_plunderstorm_prematch_ui_loads.rs"
@@ -27749,7 +27686,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_plunderstorm_prematch_ui_loads.rs"
@@ -27774,7 +27711,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "integration",
+      "status": "prefork",
       "reason": "Full Game-screen fixture; move explicit LoD load/dependencies or headless settling into fork body, without replaying startup or changing assertions.",
       "fixture_sources": [
         "tests/blizzard_plunderstorm_prematch_ui_loads.rs"
@@ -57098,6 +57035,22 @@
       "deferred": [
         "blizzard_player_spells_loads::mainline_spellbook_keybind_opens_and_closes_without_runtime_errors"
       ]
+    },
+    {
+      "batch": 2,
+      "modules": [
+        "blizzard_new_player_experience_loads",
+        "blizzard_obliterum_ui_loads",
+        "blizzard_order_hall_ui_loads",
+        "blizzard_party_pose_ui_loads",
+        "blizzard_perks_program_loads",
+        "blizzard_plunderstorm_basics_loads",
+        "blizzard_plunderstorm_prematch_ui_loads"
+      ],
+      "migrated_count": 38,
+      "migrated_seconds": 183.05,
+      "prefork_result": "verification pending",
+      "deferred": []
     }
   ]
 }

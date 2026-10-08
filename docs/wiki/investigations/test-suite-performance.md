@@ -69,3 +69,9 @@ Nextest explicitly rejects the custom prefork listing (`--format terse` is unsup
 - KEEP: 1496 tests, 6728.398s.
 
 Most slow fixtures are bare environments, selected addon closures, Glue, explicit clean-LoD coverage, custom preload, screenshot/font startup or timing/process tests. Those stay integration; widening their addon/state boundary merely to hit a numeric migration target would change coverage. The classified source revision lists 10,814 integration tests (10,816 output lines) and 2,077 prefork cases, rather than the older 2,053 baseline.
+
+## Prefork migration batch 2 (2026-10-08)
+
+Migrated 38 ADAPT cases across NewPlayerExperience, ObliterumUI, OrderHallUI, PartyPoseUI, PerksProgram, PlunderstormBasics and PlunderstormPrematchUI. Each module has its own commit with its fixture-equivalence argument. Same 1024×768 Game screen, complete eager addon dependency closure and parent-provided startup/workarounds; retain the exact explicit LoD load in each child, without replaying startup or ADDON_LOADED. Assertions observe publication, loaded bookkeeping and addon-specific errors, not lifecycle ordering. All 38 probe/assertion bodies are byte-identical after removing fixture calls. No batch-2 cases deferred; non-retail Plunderstorm wrappers retain their original integration fixtures.
+
+[Migration plan](../../../data/test-perf/prefork-migration-plan.json) preserves original source traces and historical durations (not measured savings). Targeted prefork, integration listing and Mists tests-check verification pending in `/tmp/prefork-migrate-2-proof/`; no full suite, vendor changes, push, merge or agents.
