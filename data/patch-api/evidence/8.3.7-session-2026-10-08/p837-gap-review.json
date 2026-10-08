@@ -1,0 +1,16 @@
+[
+  {
+    "source_id": "wt-global-api-GetAreaText-9",
+    "symbol": "GetAreaText",
+    "wikitext_line": 9,
+    "literal": "* {{api|GetAreaText}}()",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "GetAreaText has no registered producer. Existing GetZoneText/GetSubZoneText/GetMinimapZoneText model different named contracts; the retained API reference specifies only a string return, not which zone/area state to select. Retain missing publication rather than invent an alias or placeholder; requires a defined area-text state/selection contract and behavioral fixtures."
+  }
+]

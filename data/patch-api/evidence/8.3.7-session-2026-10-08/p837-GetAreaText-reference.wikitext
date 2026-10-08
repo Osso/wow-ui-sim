@@ -1,0 +1,8 @@
+{{wowapi}}
+{{apisig|areaText {{=}} GetAreaText()}}
+
+==Returns==
+:;areaText:{{apitype|string}}
+
+==Patch changes==
+* {{Patch 8.3.7|note=Added.}}

@@ -1,0 +1,58 @@
+[
+  {
+    "source_id": "source-context-001",
+    "extract_line": 1,
+    "literal": "Patch 8.3.7 API changes",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-003",
+    "extract_line": 3,
+    "literal": "== Changes ==",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "source-context-004",
+    "extract_line": 4,
+    "literal": "* TOC: 80300",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-005",
+    "extract_line": 5,
+    "literal": "* BlizzardInterfaceResources: 8.3.7 (35114)",
+    "status": "metadata-only",
+    "reason": "External build-resource source link; no runtime claim or transcluded content."
+  },
+  {
+    "source_id": "source-context-007",
+    "extract_line": 7,
+    "literal": "== API ==",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "source-context-008",
+    "extract_line": 8,
+    "literal": "=== New ===",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-009",
+    "extract_line": 9,
+    "literal": "* GetAreaText()",
+    "status": "metadata-only",
+    "reason": "Duplicate rendering of inventory occurrence wt-global-api-GetAreaText-9; publication is accounted once under that inventory ID. No independent behavior credit."
+  },
+  {
+    "source_id": "prose-undated-010",
+    "extract_line": 10,
+    "literal": "* CVar MouseUseLazyRepositioning",
+    "status": "metadata-only",
+    "reason": "Duplicate rendering of inventory occurrence wt-cvars-MouseUseLazyRepositioning-10; publication is accounted once under that inventory ID. No independent behavior credit."
+  }
+]

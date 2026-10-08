@@ -1,0 +1,9 @@
+{
+  "read_only_register_sha256": "b61d5965061e199bd4149093e5fd2b5b03ee82a2bdabd18070a7b449454fa665",
+  "gap_intersections": [
+    {
+      "gap_id": "wt-global-api-GetAreaText-9",
+      "later_rows": []
+    }
+  ]
+}

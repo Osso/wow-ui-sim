@@ -1,0 +1,28 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "8.3.7",
+  "source": {
+    "path": "data/patch-api/sources/8.3.7-api-changes.wikitext",
+    "revid": 1572710,
+    "sha256": "0fae3d8d22e456e84eb0082b729586429c9151d7ec32ecd851f8d3c8b1575784"
+  },
+  "header_counts": [],
+  "entries": [
+    {
+      "id": "wt-global-api-GetAreaText-9",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetAreaText",
+      "annotation": "",
+      "wikitext_line": 9
+    },
+    {
+      "id": "wt-cvars-MouseUseLazyRepositioning-10",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "MouseUseLazyRepositioning",
+      "annotation": "",
+      "wikitext_line": 10
+    }
+  ]
+}
