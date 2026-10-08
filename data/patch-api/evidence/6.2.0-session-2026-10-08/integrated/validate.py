@@ -158,9 +158,13 @@ def check_sweeps(context):
     assert review == {'before_gaps': [], 'after_gaps': [], 'replacements': [],
                       'later_intersections': {'6.2.2': [], '6.2.4': []},
                       'pending_item_link_contracts': 2}
-    negative = read(HERE / 'negative-results.json')
-    assert set(negative) == {'p620-negative-global'} and not negative['p620-negative-global']['ok']
+    # No inventory row can be injected into this parent page without violating
+    # its zero-row contract. Keep that rejection, plus a source-integrity control.
+    assert 'register row count changed' in (HERE / 'negative.txt').read_text()
     assert 'P620MissingNegativeControl' in (HERE / 'negative-register.json').read_text()
+    original = json.loads((HISTORY / 'p620-fetch.json').read_text())
+    original['query']['pages'][0]['title'] += ' tampered'
+    assert read(HERE / 'negative-fetch.json') == original
     return len(pages), len(passed)
 
 
@@ -169,7 +173,7 @@ def check_commands(context):
                 'tooltip_item_spell', 'tooltip_basic', 'tooltip_spell_mount_identifiers',
                 'tooltip_gc_rooting', 'tooltip_item_sources', 'tooltip_talent',
                 'prefork-tooltip', 'build-startup', 'startup',
-                'format', 'mists-check', 'negative', 'master-all-sweeps',
+                'format', 'mists-check', 'negative', 'negative-source', 'master-all-sweeps',
                 'test_check_patch_validators', 'test_extract_patch_non_inventory',
                 'test_gen_patch_wikitext_register', 'test_patch_audit_validation'}
     assert required <= set(context['receipts'])
@@ -177,7 +181,7 @@ def check_commands(context):
         receipt = read(HERE / (label + '.proof.json'))
         assert receipt == expected
         assert digest((HERE / receipt['log']).read_bytes()) == receipt['log_sha256']
-        assert receipt['exit'] != 0 if label == 'negative' else receipt['exit'] == 0
+        assert receipt['exit'] == 1 if label in ('negative', 'negative-source') else receipt['exit'] == 0
         if receipt['command'][:2] == ['cargo', 'test'] and label != 'negative':
             counts = re.findall(r'test result: ok\. (\d+) passed; 0 failed;', (HERE / receipt['log']).read_text())
             assert counts and sum(map(int, counts)) > 0
@@ -203,7 +207,8 @@ def check_commands(context):
     assert '--no-addons' not in context['receipts']['startup']['command']
     warnings = [line for line in (HERE / 'mists-check.txt').read_text().splitlines() if line.startswith('warning:')]
     assert all('iced-wgpu-patched/Cargo.toml:' in line or '`iced_wgpu` (manifest)' in line for line in warnings), warnings
-    assert 'new gaps: ["p620-negative-global"]' in (HERE / 'negative.txt').read_text()
+    negative_log = (HERE / 'negative-source.txt').read_text()
+    assert 'AssertionError' in negative_log and "page['title'] == provenance['title']" in negative_log
     matrix = read(HERE / 'prior-validator-matrix.json')
     paths = {path for path in names(context['master_revision'], 'data/patch-api/evidence')
              if Path(path).name in ('validate.py', 'validate_integrated.py')}

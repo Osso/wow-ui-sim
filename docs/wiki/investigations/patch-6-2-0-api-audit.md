@@ -23,7 +23,7 @@ Extractor `--retain-patch-diff-reference` originates unchanged from **6.2.4 comm
 
 ## Verification
 
-[Proof ledger](../../../data/patch-api/evidence/6.2.0-session-2026-10-08/p620-proof-ledger.md) gives exact commands, revisions, full logs and invalidations. Runtime src/tests remain pinned at `da30fc360`; later evidence/docs commits do not invalidate these scopes.
+[Historical proof ledger](../../../data/patch-api/evidence/6.2.0-session-2026-10-08/p620-proof-ledger.md) retains original commands, revisions, full logs and invalidations. Original runtime `da30fc360` maps to `7c2173ccb` after rebasing onto master `8dd11c1b9`; [rebase mapping](../../../data/patch-api/evidence/6.2.0-session-2026-10-08/integrated/rebase-mapping.json) records patch IDs, changed blobs, trees and the upstream-dropped repair. Historical counts below remain frozen, not current integration counts.
 
 | Command / boundary | Result |
 |---|---|
@@ -38,7 +38,7 @@ Extractor `--retain-patch-diff-reference` originates unchanged from **6.2.4 comm
 | Separate branch / immutable master `846a30663` builds, `timeout 90 … --no-saved-vars lua-errors` | Both exit 0, addons enabled, identical `[]` |
 | Historical validators | All 30 `validate*.py` files present at fixed base pass; own gate adds the 31st |
 
-[Validator](../../../data/patch-api/evidence/6.2.0-session-2026-10-08/validate.py) is read-only. Register/sweep sets use historical helpers at recorded revisions; prior-validator set comes from fixed `git ls-tree`, not live files. Counts derive from retained files. No absolute cwd/target equality. [Portability proof](../../../data/patch-api/evidence/6.2.0-session-2026-10-08/p620-validator-portability.json): independent clone passes, added register/validator files leave counts unchanged, whitespace tampering fails, exact restoration passes. Unmerged p624 register inventory is read from Git objects, not assumed present in this checkout.
+[Historical validator](../../../data/patch-api/evidence/6.2.0-session-2026-10-08/validate.py) remains read-only. Shared files and tool implementations now come from pinned Git objects; historical register/sweep inventories are retained explicitly in the rebase mapping. Prior-validator sets come from fixed `git ls-tree`, not live discovery. The formerly unmerged p624 inventory is proved against identical blobs at reachable master `8dd11c1b9`, avoiding a dangling commit dependency. Original validator bytes and all historical records are preserved under [integrated evidence](../../../data/patch-api/evidence/6.2.0-session-2026-10-08/integrated/). [Historical portability proof](../../../data/patch-api/evidence/6.2.0-session-2026-10-08/p620-validator-portability.json) remains available.
 
 The 7.0.3 integrated gate initially rejected the new shared module through a live runtime hash check. Final repair is copied exactly from master `15b417367` (validator and self-hash artifact), per coordination instruction; local alternative is superseded. Original failure logs remain retained.
 
@@ -48,7 +48,7 @@ Changed Rust readability review found no new suppressions, deep nesting or dupli
 
 ## Recorded limits
 
-Two item-link contracts remain pending because static item IDs/context clones lack historical specialization, variable bonus-ID, upgrade and cross-level scaling relationships. Difficulty checks prove identifiers only; native five-player metadata remains unmodeled. Automated diff is explicitly not expanded. Cost policy has only the existing Flash of Light fixture. Integration must replace the first-position 6.2.2 then 6.2.4 placeholders; neither branch was merged here.
+Two item-link contracts remain pending because static item IDs/context clones lack historical specialization, variable bonus-ID, upgrade and cross-level scaling relationships. Difficulty checks prove identifiers only; native five-player metadata remains unmodeled. Automated diff is explicitly not expanded. Cost policy has only the existing Flash of Light fixture. Integrated sweep now uses the real merged 6.2.2 and 6.2.4 registers; neither intersects this zero-entry parent inventory, so no supersession or retirement invariant changed.
 
 ## Sources
 

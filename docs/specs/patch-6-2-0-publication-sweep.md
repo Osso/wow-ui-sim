@@ -6,7 +6,7 @@ Audit pageid 149103, revision 1460518. This is a narrative page, not a redirect/
 
 - [x] Pin parent-page response, revision, wikitext and digest; preserve the automated-diff reference without pretending it was expanded.
 - [x] Account for every retained extract statement and generate a zero-entry publication register.
-- [x] Add a prefork publication sweep with chronological 6.2.2/6.2.4 integration placeholders.
+- [x] Add a prefork publication sweep with chronological merged 6.2.2/6.2.4 registers.
 - [x] Model retail spell-link cost omission while retaining direct spell costs and all non-cost payload lines/identity; retain pre-Warlords behavior.
 - [x] Verify existing difficulty identifiers 23/24 without claiming native five-player difficulty metadata.
 - [x] Complete targeted tests, source reproduction, warning-clean Mists check and portable historical validators.

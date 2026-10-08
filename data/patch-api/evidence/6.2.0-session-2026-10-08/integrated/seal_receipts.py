@@ -49,7 +49,8 @@ def main():
     receipts = {path.name.removesuffix('.proof.json'): read(path)
                 for path in sorted(HERE.glob('*.proof.json'))}
     diagnostics = {name: receipts.pop(name) for name in ('integration-tooltip', 'master-tooltip-clamp')}
-    assert all(row['exit'] == 0 for name, row in receipts.items() if name != 'negative')
+    assert all(row['exit'] == 1 if name in ('negative', 'negative-source') else row['exit'] == 0
+               for name, row in receipts.items())
     trees = {name: git('rev-parse', RUNTIME + ':' + name)
              for name in ('src', 'tests', 'tools', 'data/patch-api/sources', 'Cargo.toml', 'Cargo.lock')}
     dump(HERE / 'context.json', {'runtime_revision': RUNTIME, 'master_revision': MASTER,
@@ -62,7 +63,7 @@ def main():
         ledger.append('| `' + ' '.join(row['command']) + '` | `' + row['revision'] + '` | ' +
                       str(row['exit']) + ' | [' + row['log'] + '](' + row['log'] + ') |')
     ledger.extend(['', '51 saved registers / 48 extracts reproduced; three inherited failures unchanged.',
-                   'Negative control: zero gaps → one attributable missing synthetic global.',
+                   'Negative controls: zero-row injection rejected before probing; one-field source tamper rejected by provenance equality.',
                    'All other publication observations match immutable master byte-for-byte as JSON.'])
     (HERE / 'command-ledger.md').write_text('\n'.join(ledger) + '\n')
     excluded = {'artifact-hashes.json', 'final-validation.txt', 'portability.json'}
