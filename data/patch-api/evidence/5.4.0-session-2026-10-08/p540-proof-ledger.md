@@ -43,3 +43,7 @@ All publication/factory cases: 57/57. Prefork behavior: 2/2. Existing standalone
 ## Final targeted acceptance
 
 Corrected standalone selection: 2/2 PASS at 17cd91a9e. All ten independent positive receipts and the deliberate negative failure are sealed; zero-selected-test success is rejected. No relevant source change after these scopes. Portable gate and tamper proof remain pending.
+
+## Portable proof development
+
+Own historical validator PASS at d155b456d: 114 inventory, 45 extract rows, 22 retained gaps, 56 register/53 main extract reproductions and 31 removal scans. Own all-sweeps-log tampering is rejected and original bytes restored exactly; no runtime/test rerun needed after exact restoration. Fresh-checkout/later-audit gate runs asynchronously at d155b456d; new docs/receipts do not expand its historical proof scope.

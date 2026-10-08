@@ -1,0 +1,54 @@
+{
+  "base_revision": "bebcc5830dcb21e768a2e3c365105351a400fccb",
+  "through_revision": "d155b456d4536d5cb9637479f9d543656454400a",
+  "commits": [
+    {
+      "revision": "67a3a86cfc18caa0f72c3882419ec179cb203810",
+      "subject": "Pin retail 5.4.0 page and transcluded Mists inventory"
+    },
+    {
+      "revision": "28f10977f44fb3a4273a3198f91e4460e765c137",
+      "subject": "Add retail 5.4.0 prefork discovery sweep"
+    },
+    {
+      "revision": "d0b490a60474103748e10f6d33cdcc217f538c1b",
+      "subject": "Assert bounded 5.4.0 instance and forbidden-flag behavior"
+    },
+    {
+      "revision": "5d09d3ffc0e717ef42f5f8b922a2f5a4a956d461",
+      "subject": "Record exhaustive 5.4.0 removal consumers and pinned re-addition scans"
+    },
+    {
+      "revision": "215952a29f2a41c281f020bb015633eb5cb71fee",
+      "subject": "Account for 5.4.0 publication gaps and historical contract limits"
+    },
+    {
+      "revision": "ae0b0b8ff3dc2eff0d90597841a7bc4a0a0a245d",
+      "subject": "Keep 5.4.0 negative control within fixed sweep row count"
+    },
+    {
+      "revision": "ba64625ed35125ca86455fdc4d0d0de68bc14c6d",
+      "subject": "Add fixed-revision sealing for 5.4.0 targeted proof receipts"
+    },
+    {
+      "revision": "ce64c8a37a091704429fa19f2131dd0a28d46bc9",
+      "subject": "Include bounded source-unit frame-state coverage in 5.4.0 proof"
+    },
+    {
+      "revision": "17cd91a9e8b1e725d090a6fe86543dcc3e3e8de5",
+      "subject": "Register standalone 5.4.0 behavior tests and reject empty selections"
+    },
+    {
+      "revision": "b5aaff42e92c34fc1bb7fa9e534dd05d3a7484f4",
+      "subject": "Record 5.4.0 publication, caller, library and warning-clean Mists proof"
+    },
+    {
+      "revision": "b9a5bec37f3dbe2c076197d63603f1e59bb75106",
+      "subject": "Seal 5.4.0 historical evidence and completed targeted acceptance"
+    },
+    {
+      "revision": "d155b456d4536d5cb9637479f9d543656454400a",
+      "subject": "Anchor portable 5.4.0 validator to committed evidence seal"
+    }
+  ]
+}
