@@ -432,3 +432,4 @@ Integrated merged 6.2.2/6.2.4 registers; retained zero publication gaps and two 
 Final integration proof: spell-line modules 190/190, prefork tooltip cases 34/34; extra viewport-clamping failure reproduced on pinned master at the same assertion. Both portability phases PASS at a8b719035: clean 31/31, unrelated later audit 32/32. Final updates only retain proof outputs and wiki results.
 
 - 2026-10-08 integration: [[patch-6-1-0-api-audit]] — merged 6.2.x registers, six-commit rebase mapping, historical receipt preservation, unchanged own gap and fresh targeted/publication proof.
+- 2026-10-08 verification: [[patch-6-1-0-api-audit]] — all 51 other pages match pinned master; committed two-phase validator gate PASS, clean 33/33 and later audit 34/34.
