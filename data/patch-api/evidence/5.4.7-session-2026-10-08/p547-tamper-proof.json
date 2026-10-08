@@ -1,0 +1,14 @@
+{
+  "validator_revision": "517ca44b128f41ad4368d7a91ffcf624c02cacaf",
+  "command": [
+    "python3",
+    "-B",
+    "data/patch-api/evidence/5.4.7-session-2026-10-08/validate.py"
+  ],
+  "mutated_file": "p547-own-behavior.txt",
+  "original_sha256": "510c6e061742b6c0cb6f6fcbcba8f65ca490e2834ebb759f0363fef5efcb9d52",
+  "exit": 1,
+  "rejected": true,
+  "output": "p547-tamper-validator.txt",
+  "restored_byte_identically": true
+}
