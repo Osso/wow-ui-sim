@@ -5,7 +5,6 @@
 mod sweep;
 
 use wow_ui_sim::client_profile::{ACTIVE, ACTIVE_INTERFACE_VERSION, ClientProfile};
-use wow_ui_sim::lua_api::WowLuaEnv;
 
 #[test]
 fn patch_5_5_3_publication_sweep() {
