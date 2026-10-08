@@ -1,5 +1,4 @@
 [
-  "wt-cvars-gxMTOpaque-158",
   "wt-global-api-C_AchievementInfo.GetSupercedingAchievements-13",
   "wt-global-api-C_Calendar.EventGetClubId-120",
   "wt-global-api-C_Calendar.EventSetClubId-121",
@@ -51,7 +50,6 @@
   "wt-global-api-C_QuestChoice.GetQuestChoiceOptionInfo-91",
   "wt-global-api-C_QuestLine.RequestQuestLinesForMap-92",
   "wt-global-api-C_ReportSystem.CanReportPlayer-96",
-  "wt-global-api-C_ReportSystem.ReportPlayer-97",
   "wt-global-api-C_ReportSystem.ReportServerLag-98",
   "wt-global-api-C_SummonInfo.CancelSummon-104",
   "wt-global-api-C_SummonInfo.ConfirmSummon-105",

@@ -83,9 +83,14 @@
     {
       "source_id": "wt-cvars-gxMTOpaque-158",
       "source": "gxMTOpaque",
-      "status": "audit-pending",
-      "capabilities": [],
-      "note": "CVar not registered. The page gives no default or simulator render-thread control contract; registering an arbitrary string would only fabricate publication."
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Superseded by 8.2.0 removal. Current retail absence verified against the integrated later register; no historical/native behavior credit."
     },
     {
       "source_id": "wt-cvars-gxMTPrepass-159",
@@ -1125,9 +1130,14 @@
     {
       "source_id": "wt-global-api-C_ReportSystem.ReportPlayer-97",
       "source": "C_ReportSystem.ReportPlayer",
-      "status": "audit-pending",
-      "capabilities": [],
-      "note": "No player-report submission lifecycle. Current report-system state does not store target, report type and submission/result transition for this legacy member."
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Superseded by 8.1.5 removal. Current retail absence verified against the integrated later register; no historical/native behavior credit."
     },
     {
       "source_id": "wt-global-api-C_ReportSystem.ReportServerLag-98",

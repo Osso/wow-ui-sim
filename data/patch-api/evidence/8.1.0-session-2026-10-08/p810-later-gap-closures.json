@@ -1,0 +1,25 @@
+[
+  {
+    "patch": "8.1.0",
+    "resolved": [
+      "wt-cvars-gxMTOpaque-158",
+      "wt-global-api-C_ReportSystem.ReportPlayer-97"
+    ],
+    "closures": [
+      {
+        "source_id": "wt-cvars-gxMTOpaque-158",
+        "symbol": "gxMTOpaque",
+        "superseded_by_patch": "8.2.0",
+        "superseded_by": "wt-cvars-gxMTOpaque-269",
+        "kind": "removal"
+      },
+      {
+        "source_id": "wt-global-api-C_ReportSystem.ReportPlayer-97",
+        "symbol": "C_ReportSystem.ReportPlayer",
+        "superseded_by_patch": "8.1.5",
+        "superseded_by": "wt-global-api-C_ReportSystem.ReportPlayer-65",
+        "kind": "removal"
+      }
+    ]
+  }
+]

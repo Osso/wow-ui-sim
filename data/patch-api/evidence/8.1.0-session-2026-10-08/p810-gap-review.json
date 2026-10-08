@@ -1,27 +1,5 @@
 [
   {
-    "source_id": "wt-cvars-gxMTOpaque-158",
-    "symbol": "gxMTOpaque",
-    "wikitext_line": 158,
-    "literal": ": {{api|t=c|gxMTOpaque}}",
-    "expectation": {
-      "direction": "added",
-      "page_default": null,
-      "publication": "published",
-      "section": "cvars",
-      "superseded_by": null,
-      "symbol": "gxMTOpaque"
-    },
-    "observation": {
-      "default": null,
-      "default_mismatch": false,
-      "detail": "value/default queried",
-      "kind": "cvar",
-      "value": null
-    },
-    "reason": "CVar not registered. The page gives no default or simulator render-thread control contract; registering an arbitrary string would only fabricate publication."
-  },
-  {
     "source_id": "wt-global-api-C_AchievementInfo.GetSupercedingAchievements-13",
     "symbol": "C_AchievementInfo.GetSupercedingAchievements",
     "wikitext_line": 13,
@@ -1010,28 +988,6 @@
       "value": null
     },
     "reason": "No player-report eligibility policy. Needs target/report context and permission restrictions; account presence is insufficient."
-  },
-  {
-    "source_id": "wt-global-api-C_ReportSystem.ReportPlayer-97",
-    "symbol": "C_ReportSystem.ReportPlayer",
-    "wikitext_line": 97,
-    "literal": "* {{api|C_ReportSystem.ReportPlayer}}",
-    "expectation": {
-      "direction": "added",
-      "page_default": null,
-      "publication": "published",
-      "section": "global-api",
-      "superseded_by": null,
-      "symbol": "C_ReportSystem.ReportPlayer"
-    },
-    "observation": {
-      "default": null,
-      "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
-      "kind": "member",
-      "value": null
-    },
-    "reason": "No player-report submission lifecycle. Current report-system state does not store target, report type and submission/result transition for this legacy member."
   },
   {
     "source_id": "wt-global-api-C_ReportSystem.ReportServerLag-98",

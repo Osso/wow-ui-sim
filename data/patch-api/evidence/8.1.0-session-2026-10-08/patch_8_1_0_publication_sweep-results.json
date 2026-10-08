@@ -183,9 +183,9 @@
     "expected": {
       "direction": "added",
       "page_default": null,
-      "publication": "published",
+      "publication": "absent",
       "section": "cvars",
-      "superseded_by": null,
+      "superseded_by": "wt-cvars-gxMTOpaque-269",
       "symbol": "gxMTOpaque"
     },
     "observed": {
@@ -195,7 +195,7 @@
       "kind": "cvar",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-cvars-gxMTPrepass-159": {
     "expected": {
@@ -2307,19 +2307,19 @@
     "expected": {
       "direction": "added",
       "page_default": null,
-      "publication": "published",
+      "publication": "absent",
       "section": "global-api",
-      "superseded_by": null,
+      "superseded_by": "wt-global-api-C_ReportSystem.ReportPlayer-65",
       "symbol": "C_ReportSystem.ReportPlayer"
     },
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=nil; lookup=nil",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_ReportSystem.ReportServerLag-98": {
     "expected": {
