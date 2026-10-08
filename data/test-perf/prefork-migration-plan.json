@@ -56940,7 +56940,7 @@
       ],
       "migrated_count": 25,
       "migrated_seconds": 191.472,
-      "prefork_result": "Pending targeted verification; commands and logs in /tmp/prefork-batch3-jobs.json.",
+      "prefork_result": "25/25 migrated cases passed; all targeted prefork filters pass. Three failed equivalence probes passed on original master 102fb5088 and remain integration with precise deferrals; spellbook keybind also retained. Final integration listing: 10,655 names, all 25 migrated names absent and all four deferred names present. KEEP filters: 65 passed; four deferred cases pass. Mists tests-check passes with zero non-vendor warnings; cargo fmt and fmt --check pass. Final relevant test-source revision: 26e2c5a67.",
       "deferred": [
         "blizzard_player_spells_loads::mainline_spellbook_keybind_opens_and_closes_without_runtime_errors",
         "chat_frame::test_chat_editbox_click_type_and_submit",
