@@ -1,0 +1,25 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.15s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p624-page/debug/deps/integration-1db16289b0998b2a)
+
+running 11 tests
+test c_battle_net_probes::get_friend_account_info_returns_table_for_valid_index ... ok
+test c_battle_net_probes::get_account_info_by_guid_found ... ok
+test c_battle_net_probes::get_game_account_info_by_guid_found ... ok
+test c_battle_net_probes::get_friend_account_info_returns_nested_game_account ... ok
+test c_battle_net_probes::get_friend_account_info_returns_nil_for_out_of_range_index ... ok
+test c_battle_net_probes::get_friend_num_accounts_returns_correct_count ... ok
+test c_battle_net_probes::get_game_account_info_by_guid_not_found_returns_nil ... ok
+test c_battle_net_probes::get_account_info_by_guid_not_found_returns_nil ... ok
+test c_battle_net_probes::bnet_friends_reflect_sim_state_mutation ... ok
+test c_battle_net_probes::get_num_friends_returns_seeded_count ... ok
+test c_battle_net_probes::get_friend_account_info_returns_nil_for_index_zero ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 10660 filtered out; finished in 0.19s
+

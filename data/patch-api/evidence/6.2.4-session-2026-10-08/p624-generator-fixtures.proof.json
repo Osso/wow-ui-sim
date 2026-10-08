@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "tools/test_gen_patch_wikitext_register.py"
+  ],
+  "revision": "aa6f8163f5f53bfff834bc01e09fb4a972746858",
+  "scope": "p624-generator-fixtures",
+  "cwd": ".",
+  "target": "dedicated p624-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p624-generator-fixtures.txt",
+  "log_sha256": "aa9de8e6336c91276985e8b7edfd74ee4053e151c065e21365799c14cea15e97",
+  "seconds": 0.05891900000278838,
+  "invalidated": false
+}

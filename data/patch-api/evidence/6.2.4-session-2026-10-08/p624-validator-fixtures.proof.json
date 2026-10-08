@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "tools/test_patch_audit_validation.py"
+  ],
+  "revision": "aa6f8163f5f53bfff834bc01e09fb4a972746858",
+  "scope": "p624-validator-fixtures",
+  "cwd": ".",
+  "target": "dedicated p624-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p624-validator-fixtures.txt",
+  "log_sha256": "87f7147fd5cb582ac56150ae191a8503a48bf6f56c729357de454e3ecf0bd31c",
+  "seconds": 0.23868578299880028,
+  "invalidated": false
+}

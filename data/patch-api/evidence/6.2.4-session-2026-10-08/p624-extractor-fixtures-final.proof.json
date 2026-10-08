@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "tools/test_extract_patch_non_inventory.py"
+  ],
+  "revision": "a690a6959a26c345730407f5c92716e9cca4bded",
+  "scope": "p624-extractor-fixtures-final",
+  "cwd": ".",
+  "target": "dedicated p624-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p624-extractor-fixtures-final.txt",
+  "log_sha256": "68a6a4cc70869aba044e172a4c8b166706d7bd826ddd99a580193e7092813d9c",
+  "seconds": 0.07368965600471711,
+  "invalidated": false
+}

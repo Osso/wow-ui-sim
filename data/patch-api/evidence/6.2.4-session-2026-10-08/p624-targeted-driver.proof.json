@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p624-page/data/patch-api/evidence/6.2.4-session-2026-10-08/verify_targeted.py"
+  ],
+  "revision": "a690a6959a26c345730407f5c92716e9cca4bded",
+  "scope": "p624-targeted-driver",
+  "cwd": ".",
+  "target": "dedicated p624-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p624-targeted-driver.txt",
+  "log_sha256": "d124bc54de18fe4716ccd9770a3d9e98287d67ac3e2e2575eb230a995f33f7f5",
+  "seconds": 197.33225849100563,
+  "invalidated": false
+}

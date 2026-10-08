@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p624-page/data/patch-api/evidence/6.2.4-session-2026-10-08/reproduce_sources.py"
+  ],
+  "revision": "aa6f8163f5f53bfff834bc01e09fb4a972746858",
+  "scope": "p624-source-reproduction",
+  "cwd": ".",
+  "target": "dedicated p624-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p624-source-reproduction.txt",
+  "log_sha256": "e55183daaf12cad7bd02034a3bce5bdfd54083b6deaff5f6e13f53375d406193",
+  "seconds": 2.6108626810018905,
+  "invalidated": false
+}

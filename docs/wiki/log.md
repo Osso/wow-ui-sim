@@ -2,6 +2,10 @@
 
 [Audit](investigations/patch-7-0-1-api-audit.md): pageid 336026 revision 3241525 redirects to 7.0.3; zero API entries, one metadata-only ID, no retirements or runtime changes. 48/48 sweep/factory cases, fixtures 30/34/8, format/Mists and 28 validators pass; 47 registers/44 extracts reproduce with three inherited failures. Independent-clone expanded-scope/tamper portability proof passes.
 
+## [2026-10-08] investigation | Patch 6.2.4 API audit
+
+[Audit](investigations/patch-6-2-4-api-audit.md): revision 2072181, 35 inventory/46 extract IDs, zero publication gaps after 8.2.5 supersession; current parent/game backing bounded, seven historical/model rows pending. No runtime retirements. Whole-word grep scans and master/p703 re-addition checks retained. 48 sweep/factory cases, targeted 1/1/11/3 tests, fixtures 31/35/8, format/Mists and 27 prior validators pass; 47 registers/44 extracts reproduce with three unchanged inherited failures. Final own-validator seal follows accounting commit.
+
 ## [2026-10-08] investigation | Patch 7.1.0 API audit
 
 Pinned 3742660; ten inventory/twenty-one extract IDs. Publication discovery passes; custom intrinsic gap retained, no retirement. Added [audit](investigations/patch-7-1-0-api-audit.md), bounded probes and opt-in generator. Forty-five sweeps plus factory, scoped tests, fixtures, format/Mists and 22 validators pass; 45 registers/42 extracts reproduce, three inherited failures unchanged.

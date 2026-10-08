@@ -1,0 +1,868 @@
+{
+  "schema": "patch-page-coverage/v1",
+  "patch": "6.2.4",
+  "source_sha256": "ddcdfcec25740fed9c531a2a602323d9534ef3a44aa02edf045a7ad338bb6d64",
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/6.2.4-api-changes.txt",
+    "sha256": "79e11a667980c8c0a00a1b8968e52840ab6ebe100203fb6f034f1064e21cde85"
+  },
+  "proof_policy": "Current superseded publication/absence and bounded successor backing only; no native/historical tuple parity.",
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-BNGetFriendGameAccountInfo-4",
+      "source": "BNGetFriendGameAccountInfo",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current absence after later 8.2.5 removal; not historical added-global behavior."
+    },
+    {
+      "source_id": "wt-global-api-BNGetGameAccountInfo-5",
+      "source": "BNGetGameAccountInfo",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current absence after later 8.2.5 removal; not historical added-global behavior."
+    },
+    {
+      "source_id": "wt-global-api-BNGetNumFriendGameAccounts-6",
+      "source": "BNGetNumFriendGameAccounts",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current absence after later 8.2.5 removal; not historical added-global behavior."
+    },
+    {
+      "source_id": "wt-global-api-BNGetToonInfo-20",
+      "source": "BNGetToonInfo",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current raw/lookup publication or absence only; no historical signature/output/native parity."
+    },
+    {
+      "source_id": "wt-global-api-BNGetGameAccountInfo-20",
+      "source": "BNGetGameAccountInfo",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current absence after later 8.2.5 removal; not historical added-global behavior."
+    },
+    {
+      "source_id": "wt-global-api-BNGetFriendToonInfo-21",
+      "source": "BNGetFriendToonInfo",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current raw/lookup publication or absence only; no historical signature/output/native parity."
+    },
+    {
+      "source_id": "wt-global-api-BNGetFriendGameAccountInfo-21",
+      "source": "BNGetFriendGameAccountInfo",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current absence after later 8.2.5 removal; not historical added-global behavior."
+    },
+    {
+      "source_id": "wt-global-api-BNGetNumFriendToons-22",
+      "source": "BNGetNumFriendToons",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current raw/lookup publication or absence only; no historical signature/output/native parity."
+    },
+    {
+      "source_id": "wt-global-api-BNGetNumFriendGameAccounts-22",
+      "source": "BNGetNumFriendGameAccounts",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current absence after later 8.2.5 removal; not historical added-global behavior."
+    },
+    {
+      "source_id": "wt-cvars-realmName-26",
+      "source": "realmName",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current raw/lookup publication or absence only; no historical signature/output/native parity."
+    },
+    {
+      "source_id": "wt-global-api-BNCreateConversation-27",
+      "source": "BNCreateConversation",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current raw/lookup publication or absence only; no historical signature/output/native parity."
+    },
+    {
+      "source_id": "wt-global-api-BNGetBlockedToonInfo-28",
+      "source": "BNGetBlockedToonInfo",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current raw/lookup publication or absence only; no historical signature/output/native parity."
+    },
+    {
+      "source_id": "wt-global-api-BNGetConversationInfo-29",
+      "source": "BNGetConversationInfo",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current raw/lookup publication or absence only; no historical signature/output/native parity."
+    },
+    {
+      "source_id": "wt-global-api-BNGetConversationMemberInfo-30",
+      "source": "BNGetConversationMemberInfo",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current raw/lookup publication or absence only; no historical signature/output/native parity."
+    },
+    {
+      "source_id": "wt-global-api-BNGetCustomMessageTable-31",
+      "source": "BNGetCustomMessageTable",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current raw/lookup publication or absence only; no historical signature/output/native parity."
+    },
+    {
+      "source_id": "wt-global-api-BNGetFriendToonInfo-32",
+      "source": "BNGetFriendToonInfo",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current raw/lookup publication or absence only; no historical signature/output/native parity."
+    },
+    {
+      "source_id": "wt-global-api-BNGetMatureLanguageFilter-33",
+      "source": "BNGetMatureLanguageFilter",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current raw/lookup publication or absence only; no historical signature/output/native parity."
+    },
+    {
+      "source_id": "wt-global-api-BNGetMaxNumConversations-34",
+      "source": "BNGetMaxNumConversations",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current raw/lookup publication or absence only; no historical signature/output/native parity."
+    },
+    {
+      "source_id": "wt-global-api-BNGetMaxPlayersInConversation-35",
+      "source": "BNGetMaxPlayersInConversation",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current raw/lookup publication or absence only; no historical signature/output/native parity."
+    },
+    {
+      "source_id": "wt-global-api-BNGetNumBlockedToons-36",
+      "source": "BNGetNumBlockedToons",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current raw/lookup publication or absence only; no historical signature/output/native parity."
+    },
+    {
+      "source_id": "wt-global-api-BNGetNumConversationMembers-37",
+      "source": "BNGetNumConversationMembers",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current raw/lookup publication or absence only; no historical signature/output/native parity."
+    },
+    {
+      "source_id": "wt-global-api-BNGetNumFriendToons-38",
+      "source": "BNGetNumFriendToons",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current raw/lookup publication or absence only; no historical signature/output/native parity."
+    },
+    {
+      "source_id": "wt-global-api-BNGetSelectedToonBlock-39",
+      "source": "BNGetSelectedToonBlock",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current raw/lookup publication or absence only; no historical signature/output/native parity."
+    },
+    {
+      "source_id": "wt-global-api-BNGetToonInfo-40",
+      "source": "BNGetToonInfo",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current raw/lookup publication or absence only; no historical signature/output/native parity."
+    },
+    {
+      "source_id": "wt-global-api-BNInviteToConversation-41",
+      "source": "BNInviteToConversation",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current raw/lookup publication or absence only; no historical signature/output/native parity."
+    },
+    {
+      "source_id": "wt-global-api-BNIsFriendConversationValid-42",
+      "source": "BNIsFriendConversationValid",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current raw/lookup publication or absence only; no historical signature/output/native parity."
+    },
+    {
+      "source_id": "wt-global-api-BNIsToonBlocked-43",
+      "source": "BNIsToonBlocked",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current raw/lookup publication or absence only; no historical signature/output/native parity."
+    },
+    {
+      "source_id": "wt-global-api-BNLeaveConversation-44",
+      "source": "BNLeaveConversation",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current raw/lookup publication or absence only; no historical signature/output/native parity."
+    },
+    {
+      "source_id": "wt-global-api-BNListConversation-45",
+      "source": "BNListConversation",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current raw/lookup publication or absence only; no historical signature/output/native parity."
+    },
+    {
+      "source_id": "wt-global-api-BNReportFriendInvite-46",
+      "source": "BNReportFriendInvite",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current raw/lookup publication or absence only; no historical signature/output/native parity."
+    },
+    {
+      "source_id": "wt-global-api-BNSendConversationMessage-47",
+      "source": "BNSendConversationMessage",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current raw/lookup publication or absence only; no historical signature/output/native parity."
+    },
+    {
+      "source_id": "wt-global-api-BNSetFocus-48",
+      "source": "BNSetFocus",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current raw/lookup publication or absence only; no historical signature/output/native parity."
+    },
+    {
+      "source_id": "wt-global-api-BNSetMatureLanguageFilter-49",
+      "source": "BNSetMatureLanguageFilter",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current raw/lookup publication or absence only; no historical signature/output/native parity."
+    },
+    {
+      "source_id": "wt-global-api-BNSetSelectedToonBlock-50",
+      "source": "BNSetSelectedToonBlock",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current raw/lookup publication or absence only; no historical signature/output/native parity."
+    },
+    {
+      "source_id": "wt-global-api-BNSetToonBlocked-51",
+      "source": "BNSetToonBlocked",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "note": "Current raw/lookup publication or absence only; no historical signature/output/native parity."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source title/heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source title/heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [
+        {
+          "kind": "current-publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named occurrences match register publication/absence observations only; later 8.2.5 removals supersede the three GameAccount additions. Historical signatures, tuple outputs and native rename behavior are not credited."
+    },
+    {
+      "source_id": "prose-undated-005",
+      "capabilities": [
+        {
+          "kind": "current-publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named occurrences match register publication/absence observations only; later 8.2.5 removals supersede the three GameAccount additions. Historical signatures, tuple outputs and native rename behavior are not credited."
+    },
+    {
+      "source_id": "prose-undated-006",
+      "capabilities": [
+        {
+          "kind": "current-publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named occurrences match register publication/absence observations only; later 8.2.5 removals supersede the three GameAccount additions. Historical signatures, tuple outputs and native rename behavior are not credited."
+    },
+    {
+      "source_id": "source-context-008",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source title/heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-009",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current C_BattleNet backing distinguishes parent account IDs, game-account IDs and GUIDs. tests/patch_6_2_4_behavior.rs bounds distinct output IDs, index-vs-ID and wrong-GUID lookups. The three numeric-ID BN* query globals are superseded by 8.2.5 removals; no exhaustive historical all-functions strict numeric-input/invalid-ID contract or native capture. Do not reintroduce retired globals or alias numeric IDs to friend indices."
+    },
+    {
+      "source_id": "prose-undated-011",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "select(17, BNGetGameAccountInfo(gameID)) is an explicit historical tuple contract. Current API queries return tables through GUID-based C_BattleNet backing; the BNGetGameAccountInfo global is absent after 8.2.5 removal. No current numeric gameID-to-parent lookup or 17-return tuple is modeled; successor identity/count tests are not proof of this tuple. No compatibility shim added."
+    },
+    {
+      "source_id": "prose-undated-012",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "select(17, BNGetGameAccountInfo(gameID)) is an explicit historical tuple contract. Current API queries return tables through GUID-based C_BattleNet backing; the BNGetGameAccountInfo global is absent after 8.2.5 removal. No current numeric gameID-to-parent lookup or 17-return tuple is modeled; successor identity/count tests are not proof of this tuple. No compatibility shim added."
+    },
+    {
+      "source_id": "prose-undated-014",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "select(6, BNGetFriendInfoByID(accountID)) is an explicit historical active-account contract. BNGetFriendInfoByID is removed in 8.2.5. Current GetFriendAccountInfo takes a friend index and selects the first game account; optional account selection is ignored. No modeled historical active-account selection or six-position tuple; do not equate index with account ID."
+    },
+    {
+      "source_id": "prose-undated-015",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "select(6, BNGetFriendInfoByID(accountID)) is an explicit historical active-account contract. BNGetFriendInfoByID is removed in 8.2.5. Current GetFriendAccountInfo takes a friend index and selects the first game account; optional account selection is ignored. No modeled historical active-account selection or six-position tuple; do not equate index with account ID."
+    },
+    {
+      "source_id": "prose-undated-018",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Three named Toon-to-GameAccount pairs are publication-accounted separately. Unquantified many-functions architecture transition supplies no exhaustive native input/output contract; current separate parent/game backing is bounded, not historical migration parity."
+    },
+    {
+      "source_id": "prose-undated-019",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Label for the three following explicit rename pairs; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-020",
+      "capabilities": [
+        {
+          "kind": "current-publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named occurrences match register publication/absence observations only; later 8.2.5 removals supersede the three GameAccount additions. Historical signatures, tuple outputs and native rename behavior are not credited."
+    },
+    {
+      "source_id": "prose-undated-021",
+      "capabilities": [
+        {
+          "kind": "current-publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named occurrences match register publication/absence observations only; later 8.2.5 removals supersede the three GameAccount additions. Historical signatures, tuple outputs and native rename behavior are not credited."
+    },
+    {
+      "source_id": "prose-undated-022",
+      "capabilities": [
+        {
+          "kind": "current-publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named occurrences match register publication/absence observations only; later 8.2.5 removals supersede the three GameAccount additions. Historical signatures, tuple outputs and native rename behavior are not credited."
+    },
+    {
+      "source_id": "source-context-024",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source title/heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-025",
+      "capabilities": [
+        {
+          "kind": "current-publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Both named C-function removals and every explicit conversation-related removal in the list are raw/lookup absent in cached retail. Current non-documentation cached consumers are absent. Unenumerated etc. and all historical Lua/XML-reference removal are not independently reconstructed."
+    },
+    {
+      "source_id": "prose-undated-026",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "realmName CVar value/default absence is observed. GetRealmName remains a temporary constant SimulatedRealm in client_info_defaults.rs, not an authoritative current-realm backing model. The page provides no realm-selection/update fixture, and variable/field consumers with the same name are retained. No existing CVar/global consumers retired; no constant promoted as modeled realm behavior."
+    },
+    {
+      "source_id": "prose-undated-027",
+      "capabilities": [
+        {
+          "kind": "current-publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named occurrences match register publication/absence observations only; later 8.2.5 removals supersede the three GameAccount additions. Historical signatures, tuple outputs and native rename behavior are not credited."
+    },
+    {
+      "source_id": "prose-undated-028",
+      "capabilities": [
+        {
+          "kind": "current-publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named occurrences match register publication/absence observations only; later 8.2.5 removals supersede the three GameAccount additions. Historical signatures, tuple outputs and native rename behavior are not credited."
+    },
+    {
+      "source_id": "prose-undated-029",
+      "capabilities": [
+        {
+          "kind": "current-publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named occurrences match register publication/absence observations only; later 8.2.5 removals supersede the three GameAccount additions. Historical signatures, tuple outputs and native rename behavior are not credited."
+    },
+    {
+      "source_id": "prose-undated-030",
+      "capabilities": [
+        {
+          "kind": "current-publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named occurrences match register publication/absence observations only; later 8.2.5 removals supersede the three GameAccount additions. Historical signatures, tuple outputs and native rename behavior are not credited."
+    },
+    {
+      "source_id": "prose-undated-031",
+      "capabilities": [
+        {
+          "kind": "current-publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named occurrences match register publication/absence observations only; later 8.2.5 removals supersede the three GameAccount additions. Historical signatures, tuple outputs and native rename behavior are not credited."
+    },
+    {
+      "source_id": "prose-undated-032",
+      "capabilities": [
+        {
+          "kind": "current-publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named occurrences match register publication/absence observations only; later 8.2.5 removals supersede the three GameAccount additions. Historical signatures, tuple outputs and native rename behavior are not credited."
+    },
+    {
+      "source_id": "prose-undated-033",
+      "capabilities": [
+        {
+          "kind": "current-publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named occurrences match register publication/absence observations only; later 8.2.5 removals supersede the three GameAccount additions. Historical signatures, tuple outputs and native rename behavior are not credited."
+    },
+    {
+      "source_id": "prose-undated-034",
+      "capabilities": [
+        {
+          "kind": "current-publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named occurrences match register publication/absence observations only; later 8.2.5 removals supersede the three GameAccount additions. Historical signatures, tuple outputs and native rename behavior are not credited."
+    },
+    {
+      "source_id": "prose-undated-035",
+      "capabilities": [
+        {
+          "kind": "current-publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named occurrences match register publication/absence observations only; later 8.2.5 removals supersede the three GameAccount additions. Historical signatures, tuple outputs and native rename behavior are not credited."
+    },
+    {
+      "source_id": "prose-undated-036",
+      "capabilities": [
+        {
+          "kind": "current-publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named occurrences match register publication/absence observations only; later 8.2.5 removals supersede the three GameAccount additions. Historical signatures, tuple outputs and native rename behavior are not credited."
+    },
+    {
+      "source_id": "prose-undated-037",
+      "capabilities": [
+        {
+          "kind": "current-publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named occurrences match register publication/absence observations only; later 8.2.5 removals supersede the three GameAccount additions. Historical signatures, tuple outputs and native rename behavior are not credited."
+    },
+    {
+      "source_id": "prose-undated-038",
+      "capabilities": [
+        {
+          "kind": "current-publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named occurrences match register publication/absence observations only; later 8.2.5 removals supersede the three GameAccount additions. Historical signatures, tuple outputs and native rename behavior are not credited."
+    },
+    {
+      "source_id": "prose-undated-039",
+      "capabilities": [
+        {
+          "kind": "current-publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named occurrences match register publication/absence observations only; later 8.2.5 removals supersede the three GameAccount additions. Historical signatures, tuple outputs and native rename behavior are not credited."
+    },
+    {
+      "source_id": "prose-undated-040",
+      "capabilities": [
+        {
+          "kind": "current-publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named occurrences match register publication/absence observations only; later 8.2.5 removals supersede the three GameAccount additions. Historical signatures, tuple outputs and native rename behavior are not credited."
+    },
+    {
+      "source_id": "prose-undated-041",
+      "capabilities": [
+        {
+          "kind": "current-publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named occurrences match register publication/absence observations only; later 8.2.5 removals supersede the three GameAccount additions. Historical signatures, tuple outputs and native rename behavior are not credited."
+    },
+    {
+      "source_id": "prose-undated-042",
+      "capabilities": [
+        {
+          "kind": "current-publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named occurrences match register publication/absence observations only; later 8.2.5 removals supersede the three GameAccount additions. Historical signatures, tuple outputs and native rename behavior are not credited."
+    },
+    {
+      "source_id": "prose-undated-043",
+      "capabilities": [
+        {
+          "kind": "current-publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named occurrences match register publication/absence observations only; later 8.2.5 removals supersede the three GameAccount additions. Historical signatures, tuple outputs and native rename behavior are not credited."
+    },
+    {
+      "source_id": "prose-undated-044",
+      "capabilities": [
+        {
+          "kind": "current-publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named occurrences match register publication/absence observations only; later 8.2.5 removals supersede the three GameAccount additions. Historical signatures, tuple outputs and native rename behavior are not credited."
+    },
+    {
+      "source_id": "prose-undated-045",
+      "capabilities": [
+        {
+          "kind": "current-publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named occurrences match register publication/absence observations only; later 8.2.5 removals supersede the three GameAccount additions. Historical signatures, tuple outputs and native rename behavior are not credited."
+    },
+    {
+      "source_id": "prose-undated-046",
+      "capabilities": [
+        {
+          "kind": "current-publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named occurrences match register publication/absence observations only; later 8.2.5 removals supersede the three GameAccount additions. Historical signatures, tuple outputs and native rename behavior are not credited."
+    },
+    {
+      "source_id": "prose-undated-047",
+      "capabilities": [
+        {
+          "kind": "current-publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named occurrences match register publication/absence observations only; later 8.2.5 removals supersede the three GameAccount additions. Historical signatures, tuple outputs and native rename behavior are not credited."
+    },
+    {
+      "source_id": "prose-undated-048",
+      "capabilities": [
+        {
+          "kind": "current-publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named occurrences match register publication/absence observations only; later 8.2.5 removals supersede the three GameAccount additions. Historical signatures, tuple outputs and native rename behavior are not credited."
+    },
+    {
+      "source_id": "prose-undated-049",
+      "capabilities": [
+        {
+          "kind": "current-publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named occurrences match register publication/absence observations only; later 8.2.5 removals supersede the three GameAccount additions. Historical signatures, tuple outputs and native rename behavior are not credited."
+    },
+    {
+      "source_id": "prose-undated-050",
+      "capabilities": [
+        {
+          "kind": "current-publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named occurrences match register publication/absence observations only; later 8.2.5 removals supersede the three GameAccount additions. Historical signatures, tuple outputs and native rename behavior are not credited."
+    },
+    {
+      "source_id": "prose-undated-051",
+      "capabilities": [
+        {
+          "kind": "current-publication",
+          "proof": "tests/patch_6_2_4_publication_sweep.rs"
+        }
+      ],
+      "status": "bounded-coverage",
+      "note": "Named occurrences match register publication/absence observations only; later 8.2.5 removals supersede the three GameAccount additions. Historical signatures, tuple outputs and native rename behavior are not credited."
+    },
+    {
+      "source_id": "source-context-053",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source title/heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-054",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Automated diff subpage is referenced but not expanded by this page audit; no subpage API inventory or native contract credit."
+    }
+  ]
+}

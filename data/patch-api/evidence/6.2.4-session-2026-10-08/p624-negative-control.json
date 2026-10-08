@@ -1,0 +1,7 @@
+{
+  "source_id": "wt-global-api-BNGetFriendGameAccountInfo-4",
+  "symbol": "__P624MissingPublication",
+  "before": 0,
+  "after": 1,
+  "scope": "Replace exactly one added identity, preserving row count and ID; expect a single new publication gap."
+}

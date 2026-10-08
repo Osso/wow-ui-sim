@@ -1,0 +1,22 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_6_2_4"
+  ],
+  "revision": "aa6f8163f5f53bfff834bc01e09fb4a972746858",
+  "scope": "p624-discovery",
+  "cwd": ".",
+  "target": "dedicated p624-page target (external to repository)",
+  "environment": {
+    "P624_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p624-page/data/patch-api/evidence/6.2.4-session-2026-10-08/p624-discovery-results.json"
+  },
+  "exit": 0,
+  "log": "p624-discovery.txt",
+  "log_sha256": "e914c2bd611c4ca0474e481a2e69124b9d36faead19c1c9201fb164be10c6c34",
+  "seconds": 198.569595287001,
+  "invalidated": false
+}

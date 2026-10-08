@@ -1,0 +1,40 @@
+{
+  "publication_gaps": [],
+  "unmodeled_source_contracts": [
+    {
+      "source_id": "prose-undated-009",
+      "literal": "*Presence IDs have been replaced with bnetIDAccount and bnetIDGameAccount. With this change, we\u2019ve made all functions strict about whether they accept Account IDs or Game Account IDs. In order to make this easier, all Lua variables have been updated to specify which type of ID they are.",
+      "reason": "Current C_BattleNet backing distinguishes parent account IDs, game-account IDs and GUIDs. tests/patch_6_2_4_behavior.rs bounds distinct output IDs, index-vs-ID and wrong-GUID lookups. The three numeric-ID BN* query globals are superseded by 8.2.5 removals; no exhaustive historical all-functions strict numeric-input/invalid-ID contract or native capture. Do not reintroduce retired globals or alias numeric IDs to friend indices."
+    },
+    {
+      "source_id": "prose-undated-011",
+      "literal": "You can translate from a bnetIDGameAccount to a bnetIDAccount as follows:",
+      "reason": "select(17, BNGetGameAccountInfo(gameID)) is an explicit historical tuple contract. Current API queries return tables through GUID-based C_BattleNet backing; the BNGetGameAccountInfo global is absent after 8.2.5 removal. No current numeric gameID-to-parent lookup or 17-return tuple is modeled; successor identity/count tests are not proof of this tuple. No compatibility shim added."
+    },
+    {
+      "source_id": "prose-undated-012",
+      "literal": "bnetIDAccount = select(17, BNGetGameAccountInfo(bnetIDGameAccount));",
+      "reason": "select(17, BNGetGameAccountInfo(gameID)) is an explicit historical tuple contract. Current API queries return tables through GUID-based C_BattleNet backing; the BNGetGameAccountInfo global is absent after 8.2.5 removal. No current numeric gameID-to-parent lookup or 17-return tuple is modeled; successor identity/count tests are not proof of this tuple. No compatibility shim added."
+    },
+    {
+      "source_id": "prose-undated-014",
+      "literal": "You can find a player\u2019s active bnetIDGameAccount from a bnetIDAccount as follows:",
+      "reason": "select(6, BNGetFriendInfoByID(accountID)) is an explicit historical active-account contract. BNGetFriendInfoByID is removed in 8.2.5. Current GetFriendAccountInfo takes a friend index and selects the first game account; optional account selection is ignored. No modeled historical active-account selection or six-position tuple; do not equate index with account ID."
+    },
+    {
+      "source_id": "prose-undated-015",
+      "literal": "bnetIDGameAccount = select(6, BNGetFriendInfoByID(bnetIDAccount));",
+      "reason": "select(6, BNGetFriendInfoByID(accountID)) is an explicit historical active-account contract. BNGetFriendInfoByID is removed in 8.2.5. Current GetFriendAccountInfo takes a friend index and selects the first game account; optional account selection is ignored. No modeled historical active-account selection or six-position tuple; do not equate index with account ID."
+    },
+    {
+      "source_id": "prose-undated-018",
+      "literal": "*The new Battle.net architecture doesn\u2019t have the concept of \u201cToons\u201d. Instead, we refer to \u201cGameAccounts\u201d. As a result, many functions with \u201cToon\u201d in the name now refer to \u201cGameAccount\u201d",
+      "reason": "Three named Toon-to-GameAccount pairs are publication-accounted separately. Unquantified many-functions architecture transition supplies no exhaustive native input/output contract; current separate parent/game backing is bounded, not historical migration parity."
+    },
+    {
+      "source_id": "prose-undated-026",
+      "literal": "* The \u201crealmName\u201d CVar no longer exists. You can get the name of the current realm using GetRealmName().",
+      "reason": "realmName CVar value/default absence is observed. GetRealmName remains a temporary constant SimulatedRealm in client_info_defaults.rs, not an authoritative current-realm backing model. The page provides no realm-selection/update fixture, and variable/field consumers with the same name are retained. No existing CVar/global consumers retired; no constant promoted as modeled realm behavior."
+    }
+  ]
+}

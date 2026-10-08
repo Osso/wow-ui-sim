@@ -1,0 +1,35 @@
+[
+  {
+    "name": "p624-all-sweeps",
+    "exit": 0
+  },
+  {
+    "name": "p624-cached-identity",
+    "exit": 0
+  },
+  {
+    "name": "p624-bare-identity",
+    "exit": 0
+  },
+  {
+    "name": "p624-bnet-model",
+    "exit": 0
+  },
+  {
+    "name": "p624-deprecated-bnet",
+    "exit": 0
+  },
+  {
+    "name": "p624-final-format",
+    "exit": 0
+  },
+  {
+    "name": "p624-mists-check",
+    "exit": 0
+  },
+  {
+    "name": "p624-negative",
+    "exit": 1,
+    "expected": 1
+  }
+]
