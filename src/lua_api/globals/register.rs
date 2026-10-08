@@ -271,7 +271,7 @@ fn register_ui_action_verbs(lua: &mut rilua::Lua) -> crate::Result<()> {
     super::set_cvar_verb::register_all(lua)?;
     super::ui_visibility::register_all(lua)?;
     super::real::session_exit::register_all(lua)?;
-    crate::lua_api::workarounds::temporary::session_exit_defaults::register_all(lua)?;
+    crate::lua_api::workarounds::register_session_exit_defaults(lua)?;
     Ok(())
 }
 

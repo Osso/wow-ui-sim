@@ -7,6 +7,7 @@ mod temporary;
 
 pub(crate) use temporary::client_info_defaults::CLASSIC_EXPANSION_LEVEL;
 pub(crate) use temporary::environment_cleanup_restore::restore_post_cleanup_globals;
+pub(crate) use temporary::session_exit_defaults::register_all as register_session_exit_defaults;
 pub(crate) use temporary::source_patches::patch_lua_source;
 
 use logging::log_step;
