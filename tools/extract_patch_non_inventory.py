@@ -110,13 +110,24 @@ def canonicalize_patch_navigation(raw):
     return re.sub(r'\{\{apichanges\|([^{}]+)\}\}', replace, raw)
 
 
+def strip_mists_automated_inventories(raw):
+    """Keep 2013 prose and enum values; omit API tables already in the register."""
+    raw = re.sub(r'^\{\|[^\n]*\n\|\+ (?:Global API|FrameXML|Widget API|Events) [\s\S]*?^\|\}\n?',
+                 '', raw, flags=re.M)
+    return '\n'.join(line for line in raw.splitlines()
+                     if not line.startswith(('{|', '|+', '|-', '!', '| valign', '</div>', '|}'))) + '\n'
+
+
 def extract_text(raw, *, preserve_examples=False, normalize_inventory_headings=False,
                  retain_reference_notes=False, legacy_api_tables=False,
                  legacy_api_bullets=False, legacy_cvar_tables=False,
                  bfa_prepatch=False, legion_prepatch=False,
-                 retain_patch_diff_reference=False, canonical_patch_navigation=False):
+                 retain_patch_diff_reference=False, canonical_patch_navigation=False,
+                 mists_automated_diff=False):
     if canonical_patch_navigation:
         raw = canonicalize_patch_navigation(raw)
+    if mists_automated_diff:
+        raw = strip_mists_automated_inventories(raw)
     if retain_patch_diff_reference:
         raw = render_patch_diff_reference(raw)
     if legion_prepatch:
@@ -344,6 +355,8 @@ def main():
                         help='Retain transcluded patch diffs as unexpanded source references; opt-in')
     parser.add_argument('--canonical-patch-navigation', action='store_true',
                         help='Render positional apichanges patch after named parameters; opt-in')
+    parser.add_argument('--mists-automated-diff', action='store_true',
+                        help='Strip 2013 Mists API tables while retaining prose and enums; opt-in')
     args = parser.parse_args()
     if args.self_test:
         check_examples()
@@ -362,7 +375,8 @@ def main():
                         bfa_prepatch=args.bfa_prepatch,
                         legion_prepatch=args.legion_prepatch,
                         retain_patch_diff_reference=args.retain_patch_diff_reference,
-                        canonical_patch_navigation=args.canonical_patch_navigation)
+                        canonical_patch_navigation=args.canonical_patch_navigation,
+                        mists_automated_diff=args.mists_automated_diff)
     rows = seed_rows(text, args.patch)
     if args.text_only:
         if args.check:

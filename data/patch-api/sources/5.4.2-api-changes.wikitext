@@ -1,0 +1,131 @@
+{{apichanges|5.4.2|prev=5.4.1|next=5.4.7}}
+
+== Changes ==
+*{{api|random}}() and Math.random() now point to {{api|securerandom}}(), which is significantly slower. To explicitly use the pre-5.4.2 random, use {{api|fastrandom}}() instead.
+**Fastrandom is no longer accessible in the secure environment
+
+*{{api|GetGuildRosterInfo}}()'s first return value now returns player name - realm name instead of just the player name (e.g. "Arthas-Silvermoon")
+
+== Automated diff ==
+=== Global API ===
+{| class="wikitable" style="min-width: 600px"
+|+ Global API (5.4.1.17538 &rarr; 5.4.2.17688)
+|- class="mw-customtoggle-global-c" style="cursor: pointer" 
+! style="width: 50%; padding-right: 1em;"| 7 new functions
+! style="width: 50%; padding-right: 1em;"| 2 removed functions
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|Ambiguate}}
+: {{api|C_ProductChoice.GetNumSuppressed}}
+: {{api|GetDefaultVideoQualityOption}}
+: {{api|GetSpecializationNameForClassID}}
+: {{api|IsOnGlueScreen}}
+: {{api|UnitFullName}}
+: {{api|fastrandom}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
+: StartUnratedArena
+: securerandom
+</div>
+|}
+=== FrameXML ===
+{| class="wikitable" style="min-width: 600px"
+|+ FrameXML (5.4.1.17538 &rarr; 5.4.2.17688)
+|- class="mw-customtoggle-global-fxml" style="cursor: pointer" 
+! style="padding: 0 1em;"| 2 new functions
+|- class="mw-collapsible" id="mw-customcollapsible-global-fxml"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|RGBTableToColorCode}}
+: {{api|RGBToColorCode}}
+</div>
+|}
+=== Events ===
+{| class="wikitable" style="min-width: 600px"
+|+ Events (5.4.1.17538 &rarr; 5.4.2.17688)
+|- class="mw-customtoggle-events" style="cursor: pointer" 
+! style="padding: 0 1em;"| 55 new events
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|ACCOUNT_DATA_INITIALIZED}}
+: {{api|t=e|ACCOUNT_MESSAGES_AVAILABLE}}
+: {{api|t=e|ACCOUNT_MESSAGES_BODY_LOADED}}
+: {{api|t=e|ACCOUNT_MESSAGES_HEADERS_LOADED}}
+: {{api|t=e|ADDON_LIST_UPDATE}}
+: {{api|t=e|AUTH_CHALLENGE_UI_INVALID}}
+: {{api|t=e|CHARACTER_LIST_UPDATE}}
+: {{api|t=e|CLIENT_ACCOUNT_MISMATCH}}
+: {{api|t=e|CLIENT_CONVERTED}}
+: {{api|t=e|CLIENT_TRIAL}}
+: {{api|t=e|CLOSE_STATUS_DIALOG}}
+: {{api|t=e|DISCONNECTED_FROM_SERVER}}
+: {{api|t=e|DISPLAY_PROMOTION}}
+: {{api|t=e|ENCOUNTER_END}}
+: {{api|t=e|ENCOUNTER_START}}
+: {{api|t=e|FORCE_DECLINE_CHARACTER}}
+: {{api|t=e|FORCE_RENAME_CHARACTER}}
+: {{api|t=e|FRAMES_LOADED}}
+: {{api|t=e|GAME_ACCOUNTS_UPDATED}}
+: {{api|t=e|GET_PREFERRED_REALM_INFO}}
+: {{api|t=e|GLUE_SCREENSHOT_FAILED}}
+: {{api|t=e|GLUE_SCREENSHOT_SUCCEEDED}}
+: {{api|t=e|GLUE_UPDATE_EXPANSION_LEVEL}}
+: {{api|t=e|LAUNCHER_LOGIN_STATUS_CHANGED}}
+: {{api|t=e|LOGIN_STARTED}}
+: {{api|t=e|LOGIN_STOPPED}}
+: {{api|t=e|LUA_WARNING}}
+: {{api|t=e|OPEN_REALM_LIST}}
+: {{api|t=e|OPEN_STATUS_DIALOG}}
+: {{api|t=e|PATCH_DOWNLOADED}}
+: {{api|t=e|PATCH_UPDATE_PROGRESS}}
+: {{api|t=e|PET_JOURNAL_PET_RESTORED}}
+: {{api|t=e|PET_JOURNAL_PET_REVOKED}}
+: {{api|t=e|PLAYER_ENTER_MATRIX}}
+: {{api|t=e|PLAYER_ENTER_PIN}}
+: {{api|t=e|PLAYER_ENTER_TOKEN}}
+: {{api|t=e|RANDOM_CHARACTER_NAME_RESULT}}
+: {{api|t=e|SCANDLL_DOWNLOADING}}
+: {{api|t=e|SCANDLL_ERROR}}
+: {{api|t=e|SCANDLL_FINISHED}}
+: {{api|t=e|SCREEN_FIRST_DISPLAYED}}
+: {{api|t=e|SELECT_FIRST_CHARACTER}}
+: {{api|t=e|SELECT_LAST_CHARACTER}}
+: {{api|t=e|SERVER_SPLIT_NOTICE}}
+: {{api|t=e|SET_GLUE_SCREEN}}
+: {{api|t=e|SHOW_SERVER_ALERT}}
+: {{api|t=e|SHOW_SURVEY_NOTIFICATION}}
+: {{api|t=e|START_GLUE_MUSIC}}
+: {{api|t=e|SUGGEST_REALM}}
+: {{api|t=e|SUGGEST_REALM_WRONG_CATEGORY}}
+: {{api|t=e|SUGGEST_REALM_WRONG_PVP}}
+: {{api|t=e|TIMER_ALERT}}
+: {{api|t=e|UPDATE_SELECTED_CHARACTER}}
+: {{api|t=e|UPDATE_SELECTED_RACE}}
+: {{api|t=e|UPDATE_STATUS_DIALOG}}
+</div>
+|}
+=== Widget API ===
+{| class="wikitable" style="min-width: 600px"
+|+ Widget API (5.4.1.17538 &rarr; 5.4.2.17688)
+|- class="mw-customtoggle-widgets" style="cursor: pointer" 
+! style="padding: 0 1em;"| 2 new methods
+|- class="mw-collapsible" id="mw-customcollapsible-widgets"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|Slider:GetObeyStepOnDrag}}
+: {{api|t=w|Slider:SetObeyStepOnDrag}}
+</div>
+|}
+=== Lua Enums ===
+{| class="wikitable" style="min-width: 600px"
+|+ Lua Enums (5.4.1.17538 &rarr; 5.4.2.17688)
+|- class="mw-customtoggle-lua-enums" style="cursor: pointer" 
+! style="padding: 0 1em;"| New
+|- class="mw-collapsible" id="mw-customcollapsible-lua-enums"
+| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
+: [[LE_AUTOCOMPLETE_PRIORITY]] (new)
+:: _OTHER = 1
+:: _INTERACTED = 2
+:: _IN_GROUP = 3
+:: _GUILD = 4
+:: _FRIEND = 5
+</div>
+|}

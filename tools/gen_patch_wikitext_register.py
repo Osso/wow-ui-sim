@@ -644,6 +644,29 @@ def parse_combat_restriction_bullets(text):
     return entries
 
 
+def parse_mists_automated_diff(text):
+    """Parse 2013 captioned inventories; enum values stay in the prose extract."""
+    sections = {'Global API': 'global-api', 'FrameXML': 'framexml',
+                'Events': 'events', 'Widget API': 'widgets'}
+    entries, counts = [], []
+    for table in re.finditer(r'^\{\|[^\n]*\n([\s\S]*?)^\|\}', text, re.M):
+        lines = table[1].splitlines()
+        caption = next((line for line in lines if line.startswith('|+ ')), '')
+        section = next((value for name, value in sections.items()
+                        if caption.startswith('|+ ' + name + ' ')), None)
+        if section is None:
+            continue
+        first_line = text[:table.start(1)].count('\n') + 1
+        normalized = [(first_line + offset, ': {{api|' + line[2:] + '}}')
+                      if re.fullmatch(r': [A-Za-z_][A-Za-z0-9_:.]*', line)
+                      else (first_line + offset, line)
+                      for offset, line in enumerate(lines)]
+        rows, headers = parse_section(section, normalized, legacy_column_headers=True)
+        entries.extend(rows)
+        counts.extend(headers)
+    return entries, counts
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("patch", "path", "revid", "out"):
@@ -700,11 +723,15 @@ def main():
                         help='Retain changed CVar/API identities in Breaking changes; opt-in')
     parser.add_argument('--client-line', choices=('retail', 'mists-classic', 'classic-era'),
                         help='Label the client history for isolated supersession; opt-in')
+    parser.add_argument('--mists-automated-diff', action='store_true',
+                        help='Parse 2013 Mists captioned APIs and bare removals; opt-in')
     args = parser.parse_args()
     patch, path, revid, out = args.patch, args.path, args.revid, args.out
     raw = Path(path).read_bytes()
     buckets = split_sections(raw.decode("utf-8"),
                              separate_inline_structures=args.separate_inline_structures)
+    if args.mists_automated_diff:
+        buckets = {}
     entries, counts = [], []
     for section in SECTIONS.values():
         entry_section = "cvars" if section == "commands" else section
@@ -758,6 +785,8 @@ def main():
         counts.extend(diff_counts)
     if args.combat_restriction_bullets:
         entries.extend(parse_combat_restriction_bullets(raw.decode('utf-8')))
+    if args.mists_automated_diff:
+        entries, counts = parse_mists_automated_diff(raw.decode('utf-8'))
     if args.inventory_only:
         for entry in entries:
             for key in ("kind", "page_default", "test_inline"):
