@@ -15118,8 +15118,8 @@
       "sources": [
         "tests/chat_frame.rs"
       ],
-      "remaining_count": 0,
-      "remaining_seconds": 0
+      "remaining_count": 2,
+      "remaining_seconds": 13.963
     },
     {
       "module": "chat_frame::layout_lock",
@@ -19267,6 +19267,15 @@
       "seconds": 3.519,
       "files": [
         "tests/spell_casting.rs"
+      ],
+      "shared_helpers": []
+    },
+    {
+      "module": "chat_frame",
+      "count": 2,
+      "seconds": 13.963,
+      "files": [
+        "tests/chat_frame.rs"
       ],
       "shared_helpers": []
     }
@@ -43593,7 +43602,7 @@
       "result": "passed",
       "failure": null,
       "class": "MIGRATE",
-      "status": "prefork",
+      "status": "integration",
       "reason": "Full 1024x768 Game eager UI followed by ordinary startup; tests act/assert on chat controls after load. No custom pre-load setup.",
       "fixture_sources": [
         "tests/chat_frame.rs"
@@ -43609,7 +43618,8 @@
           "function": "setup_env",
           "line": 78
         }
-      ]
+      ],
+      "deferred_reason": "Original master 102fb5088 passes with setup_env manual startup events (no UPDATE_CHAT_WINDOWS). Completed preload_full_game_ui activates channel-colored input (1, 0.75, 0.5), not the asserted white (1, 1, 1). Preserve this partial startup/default-input boundary instead of changing input state or assertions after fork."
     },
     {
       "name": "chat_frame::test_chat_editbox_click_type_and_submit",
@@ -43618,7 +43628,7 @@
       "result": "passed",
       "failure": null,
       "class": "MIGRATE",
-      "status": "prefork",
+      "status": "integration",
       "reason": "Full 1024x768 Game eager UI followed by ordinary startup; tests act/assert on chat controls after load. No custom pre-load setup.",
       "fixture_sources": [
         "tests/chat_frame.rs"
@@ -43634,7 +43644,8 @@
           "function": "setup_env",
           "line": 78
         }
-      ]
+      ],
+      "deferred_reason": "Original master 102fb5088 passes with setup_env manual startup events (no UPDATE_CHAT_WINDOWS). Completed preload_full_game_ui initializes chat input as CHANNEL rather than the asserted SAY, failing the unchanged submission assertion. Preserve the original partial event/default-input fixture; do not normalize chatType after fork."
     },
     {
       "name": "click_targeting::blizzard_secure_action_button_macrotext_targets_unit",
@@ -56912,7 +56923,6 @@
       "batch": 3,
       "modules": [
         "channel_blizzard",
-        "chat_frame",
         "chat_frame::layout_lock",
         "chat_frame::scrollbar",
         "click_targeting",
@@ -56928,11 +56938,13 @@
         "spell_casting",
         "unit_cast_durations"
       ],
-      "migrated_count": 27,
-      "migrated_seconds": 205.435,
+      "migrated_count": 25,
+      "migrated_seconds": 191.472,
       "prefork_result": "Pending targeted verification; commands and logs in /tmp/prefork-batch3-jobs.json.",
       "deferred": [
         "blizzard_player_spells_loads::mainline_spellbook_keybind_opens_and_closes_without_runtime_errors",
+        "chat_frame::test_chat_editbox_click_type_and_submit",
+        "chat_frame::test_chat_editbox_text_color_after_activation",
         "spell_casting::cast_bar_respects_edit_mode_lock_setting_after_startup_fix"
       ]
     }
