@@ -181,7 +181,7 @@
   "data/patch-api/evidence/7.0.3-session-2026-10-08/run_proof.py": "331eb7da6b5b82c1bc682ee28c5a1cf8e0eb9ac7e973e6c593915f1993042736",
   "data/patch-api/evidence/7.0.3-session-2026-10-08/p703-extractor-green.log": "68a6a4cc70869aba044e172a4c8b166706d7bd826ddd99a580193e7092813d9c",
   "data/patch-api/evidence/7.0.3-session-2026-10-08/p703-own-fixed.log": "593b55c211a3a58d3fcfd8cdbdfe860b8114c417cbd60a721e67bc14c6cb99d2",
-  "data/patch-api/evidence/7.0.3-session-2026-10-08/p703-session-plan.md": "30b649692d059be3bf76b3f257f8c82d95e0f632070d1b69639eaec28485b454",
+  "data/patch-api/evidence/7.0.3-session-2026-10-08/p703-session-plan.md": "62fea641135e2f5e5f6872309c543d489295bc645e2431e4cf6425a85e32ab38",
   "data/patch-api/evidence/7.0.3-session-2026-10-08/p703-Model_GetModel-cached-qualified-grep.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
   "data/patch-api/evidence/7.0.3-session-2026-10-08/patch_10_2_6_publication_sweep-results.json": "6f929eae9c1da576a1a8a178b62eff260d59489f887dffe1b70efdbdfc15319c",
   "data/patch-api/evidence/7.0.3-session-2026-10-08/p703-Frame_AllowAttributeChanges-cached-qualified-grep.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -243,5 +243,6 @@
   "data/patch-api/sources/7.0.3-api-changes.wikitext": "d8951bad884b04b4686fdc7a0cc26b305b35c31ecc8872035d209937f13f3484",
   "data/patch-api/sources/7.0.3-api-changes.provenance.json": "bd4879bb3925d677f156f1587fbeb5231bb5fbf810f832a7bb87a27b35c85e4c",
   "data/patch-api/sources/7.0.3-api-changes.txt": "d3329d2bb546727c6f934f0c713fd70edef8309c956874bf2590e6a1f6220d33",
-  "data/patch-api/sources/7.0.3-wikitext-register.json": "7c10a7a2a07b37ab1f92792de89ee28913aed9d12cf37c967f91d1f6fc026660"
+  "data/patch-api/sources/7.0.3-wikitext-register.json": "7c10a7a2a07b37ab1f92792de89ee28913aed9d12cf37c967f91d1f6fc026660",
+  "data/patch-api/evidence/7.0.3-session-2026-10-08/p703-validator-portability.json": "0a189b9cc8809c1ec289ab70f7bec2f3ef71466049afdfb7cf8cb557657cdfeb"
 }
