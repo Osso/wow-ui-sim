@@ -53,3 +53,9 @@ No full integration suite. No runtime source changed, so addons-enabled startup 
 - [[patch-audit-validator-portability]] — historical proof must survive later page merges.
 - [[patch-7-0-3-api-audit]] — audit/evidence template.
 - [[patch-7-0-1-api-audit]] — distinguishes an actual redirect page.
+
+## Rebased integration (2026-10-08)
+
+Master `787b47591` supplies the merged 6.2.0/6.2.2/6.2.4 registers. Commit `59ccbbc6a` replaces the ordered placeholders with those real registers; no runtime source changed. The extractor and its fixture follow master byte-for-byte. The generator retains both `--colon-api-bullets` (6.1.0) and `--indented-api-lists` (6.2.4).
+
+[Integrated evidence](../../../data/patch-api/evidence/6.1.0-session-2026-10-08/integrated/) preserves historical receipts separately. Six rewritten commits have stable patch IDs and blob mappings; eight changed historical blobs are retained within this session rather than requiring unreachable pre-rebase commits. Historical inventory scopes remain frozen. All 52 registers reproduce; 49 extracts reproduce with the same inherited 12.0.5/12.0.7/12.1.0 failures. Final sweep, negative-control, comparison and portability receipts follow in this directory.

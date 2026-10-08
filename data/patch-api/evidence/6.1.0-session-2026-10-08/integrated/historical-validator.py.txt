@@ -11,21 +11,8 @@ import sys
 sys.dont_write_bytecode = True
 ROOT = Path(__file__).resolve().parents[4]
 HERE = Path(__file__).resolve().parent
-MAPPING = json.loads((HERE / 'integrated/rebase-mapping.json').read_text())['commits']
-
-
-def mapped_row(revision):
-    return next((row for row in MAPPING if row['recorded_revision'].startswith(revision)), None)
-
-
-def historical_registers(root, revision):
-    return [root / path for path in paths_at(revision, 'data/patch-api/sources')
-            if path.endswith('-wikitext-register.json')]
-
-
-def historical_sweep_tests(root, revision):
-    return [root / path for path in paths_at(revision, 'tests')
-            if path.endswith('_publication_sweep.rs')]
+sys.path.insert(0, str(ROOT / 'tools'))
+from patch_audit_validation import historical_registers, historical_sweep_tests
 
 
 def read(path):
@@ -37,21 +24,10 @@ def sha(data):
 
 
 def blob(revision, path):
-    row = mapped_row(revision)
-    if row:
-        exception = row['historical_exceptions'].get(path)
-        if exception:
-            content = (HERE / 'integrated' / exception['file']).read_bytes()
-            assert sha(content) == exception['sha256']
-            return content
-        revision = row['rebased_revision']
     return subprocess.check_output(['git', 'show', f'{revision}:{path}'], cwd=ROOT)
 
 
 def paths_at(revision, directory):
-    row = mapped_row(revision)
-    if row:
-        return row['inventories'][directory]
     return subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', revision, directory],
                                    cwd=ROOT, text=True).splitlines()
 
@@ -199,10 +175,8 @@ def command_proof(context):
         assert row['exit'] == 0
         assert sha((HERE / row['log']).read_bytes()) == row['log_sha256']
         assert row['script_sha256'] == sha(blob(context['base_revision'], row['path']))
-    original_src = mapped_row(context['sweep_revision'])['recorded_src_tree']
-    base_src = subprocess.check_output(['git', 'rev-parse', context['base_revision'] + ':src'],
-                                       cwd=ROOT, text=True).strip()
-    assert original_src == base_src
+    assert not subprocess.check_output(['git', 'diff', '--name-only', context['base_revision'],
+                                       context['sweep_revision'], '--', 'src'], cwd=ROOT)
     return {'sweeps': len(summaries), 'prior_validators': len(matrix)}
 
 
