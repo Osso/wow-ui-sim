@@ -12,7 +12,7 @@ MASTER = '896086537a2b3c1ead5886d5ae3e430d56e7ef20'
 REQUIRED = ['own-sweep', 'all-sweeps', 'prefork-patch_5_4_2', 'integration-patch_5_4_2',
             'negative', 'reproduction', 'prior-validators', 'checks', 'master-all-sweeps',
             'format', 'mists-check', 'test_check_patch_validators', 'test_extract_patch_non_inventory',
-            'test_gen_patch_wikitext_register', 'test_patch_audit_validation', 'test_patch_warlords_register', 'test_patch_mists_register', 'mists-all-sweeps', 'master-mists-all-sweeps', 'mists-sweeps-driver', 'historical-replay']
+            'test_gen_patch_wikitext_register', 'test_patch_audit_validation', 'test_patch_warlords_register', 'test_patch_mists_register', 'mists-all-sweeps', 'master-mists-all-sweeps', 'mists-sweeps-driver', 'historical-replay', 'history-without-original-objects']
 
 
 def read(name):
@@ -36,12 +36,13 @@ def summarize():
     lines = ['# 5.4.2 integrated command ledger', '',
              'Base: `' + MASTER + '`. Own source/test scope: `' + receipts['own-sweep']['revision'] + '`.',
              'All Cargo commands use `CARGO_TARGET_DIR=/home/osso/.cache/wow-ui-sim-targets/p542-page`.',
-             'Commands ran sequentially in the logged asynchronous driver; no poll-wait or repeated broad checks.', '',
+             'Cargo commands ran sequentially in logged asynchronous drivers; prior validators and source reproduction ran independently. No poll-wait or repeated broad checks.', '',
              '| Receipt | Command | Revision | Exit |', '|---|---|---|---|']
     for label, row in receipts.items():
         lines.append('| ' + label + ' | `' + ' '.join(row['command']) + '` | `' + row['revision'] + '` | ' + str(row['exit']) + ' |')
     lines.extend(['', 'Full environment, duration, log digest and revision are in each `.proof.json`.',
                   'Integration `patch_5_4_2` selects zero cases; prefork owns all three 5.4.2 tests. No integration behavior claim.',
+                  'Separate Mists integration publication sweeps cover the 5.5.3/5.5.4 empty inventories and SharedXML startup only, not full UI or API behavior.',
                   'Negative control must fail with exactly one added gap (39 → 40). Three inherited extract failures are unchanged.',
                   'No runtime, vendor or retirement changes; parser flags coexist with merged master flags. No startup comparison or full integration-suite claim.',
                   'Later evidence/wiki/validator-only commits do not invalidate the pinned Rust, shared-tool or source scopes.'])
