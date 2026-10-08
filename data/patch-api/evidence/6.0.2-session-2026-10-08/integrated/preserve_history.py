@@ -71,14 +71,30 @@ def main():
     blobs.mkdir(exist_ok=True)
     by_original = {row['recorded_revision']: row['rebased_revision'] for row in rows}
     scopes = []
+    external = []
+    master_subjects = {}
+    for line in git('log', '--format=%H %s', MASTER).decode().splitlines():
+        commit, subject = line.split(' ', 1)
+        master_subjects.setdefault(subject, []).append(commit)
+    later_scans = json.loads((HISTORY / 'p602-later-register-scan.json').read_text())
     for pin in sorted(pins):
         original = git('rev-parse', pin).decode().strip()
-        if original not in by_original:
-            # Base/master/other audit pins are already in master history.
-            assert subprocess.run(['git', 'merge-base', '--is-ancestor', original, MASTER], cwd=ROOT).returncode == 0, pin
-            continue
-        revision = by_original[original]
-        paths = git('ls-tree', '-r', '--name-only', original, 'data/patch-api/sources', 'tests', 'tools', 'src/c_api').decode().splitlines()
+        own = original in by_original
+        if not own:
+            if subprocess.run(['git', 'merge-base', '--is-ancestor', original, MASTER], cwd=ROOT).returncode == 0:
+                continue
+            subject = git('show', '-s', '--format=%s', original).decode().strip()
+            candidates = master_subjects[subject]
+            assert len(candidates) == 1, (pin, candidates)
+            revision = candidates[0]
+            external.append({'recorded_revision': original, 'rebased_revision': revision,
+                             'subject': subject, 'recorded_patch_id': patch_id(original),
+                             'rebased_patch_id': patch_id(revision),
+                             'rebased_tree': git('rev-parse', revision + '^{tree}').decode().strip()})
+            paths = sorted({row['path'] for row in later_scans if row['revision'] == pin})
+        else:
+            revision = by_original[original]
+            paths = git('ls-tree', '-r', '--name-only', original, 'data/patch-api/sources', 'tests', 'tools', 'src/c_api').decode().splitlines()
         inputs = {}
         for name in paths:
             if not (name.startswith('data/patch-api/sources/') or
@@ -100,7 +116,7 @@ def main():
         scopes.append({'recorded_revision': original, 'rebased_revision': revision, 'inputs': inputs})
     dump('rebase-mapping.json', {'original_base': git('rev-parse', BASE).decode().strip(),
                                'rebased_base': git('rev-parse', MASTER).decode().strip(),
-                               'commits': rows, 'pinned_inputs': scopes})
+                               'commits': rows, 'external_commits': external, 'pinned_inputs': scopes})
     print(json.dumps({'mapped_commits': len(rows), 'pinned_revisions': len(scopes),
                       'historical_files': len(preserved)}))
 
