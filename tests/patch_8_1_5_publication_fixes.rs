@@ -4,6 +4,7 @@ pub(crate) const REMOVED_MEMBERS: &[&str] = &[
     "C_Calendar.GetDate",
     "C_ChatInfo.ReportPlayer",
     "C_Club.AddClubStreamToChatWindow",
+    "C_Club.SetCommunityID",
     "C_DateAndTime.GetDateFromEpoch",
     "C_DateAndTime.GetTodaysDate",
     "C_DateAndTime.GetYesterdaysDate",

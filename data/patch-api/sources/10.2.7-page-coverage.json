@@ -55,9 +55,11 @@
     },
     {
       "source_id": "wt-global-api-C_Club.SetCommunityID-52",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Selected community ID requires club selection/lifetime state and observable consumer updates, not a getter table or inert setter."
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Consumer-free SetCommunityID retired by the 8.1.5 audit; see its p815-removal-consumers.json and sweep results. Current-retail absence only."
     },
     {
       "source_id": "wt-global-api-C_ClubFinder.IsCommunityFinderEnabled-53",

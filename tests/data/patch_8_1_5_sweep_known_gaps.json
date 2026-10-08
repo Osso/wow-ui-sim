@@ -1,1 +1,25 @@
-[]
+[
+  "wt-global-api-BNGetDisplayName-44",
+  "wt-global-api-C_AccountInfo.GetIDFromBattleNetAccountGUID-10",
+  "wt-global-api-C_ChatInfo.CanReportPlayer-57",
+  "wt-global-api-C_EncounterJournal.IsEncounterComplete-24",
+  "wt-global-api-C_MerchantFrame.IsMerchantItemRefundable-27",
+  "wt-global-api-C_PlayerInfo.UnitIsSameServer-28",
+  "wt-global-api-C_PvP.GetAvailableBrawlInfo-30",
+  "wt-global-api-C_ReportSystem.InitiateReportPlayer-32",
+  "wt-global-api-C_ReportSystem.SendReportPlayer-33",
+  "wt-global-api-C_UIWidgetManager.GetDoubleStateIconRowVisualizationInfo-43",
+  "wt-global-api-GetCVar-70",
+  "wt-global-api-GetCVarBitfield-71",
+  "wt-global-api-GetCVarBool-72",
+  "wt-global-api-GetCVarDefault-73",
+  "wt-global-api-InActiveBattlefield-76",
+  "wt-global-api-RegisterCVar-77",
+  "wt-global-api-ResetTestCvars-79",
+  "wt-global-api-SetCVar-80",
+  "wt-global-api-SetCVarBitfield-81",
+  "wt-global-api-UnitPvpClassification-46",
+  "wt-global-api-UnitSelectionType-47",
+  "wt-global-api-UnitWidgetSet-49",
+  "wt-global-api-gcinfo-82"
+]

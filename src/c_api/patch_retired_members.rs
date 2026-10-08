@@ -32,12 +32,13 @@ const RETIRED_8_2_0_MEMBERS: &[(&str, &[&str])] = &[(
 // Qualified/bare cached retail and complete src/tests scans find no consumers.
 // SpellBook.IsSpellDisabled and LeaveParty remain reachable for current consumers.
 // 8.1.5: whole-word cached qualified/bare and source/test scans find no consumers.
-// Keep CanReportPlayer and SetCommunityID: current consumers/callers remain.
+// Keep CanReportPlayer: a current bare-name consumer remains.
+// SetCommunityID's only initial test match was a known-gap fixture, not a caller.
 const RETIRED_8_1_5_MEMBERS: &[(&str, &[&str])] = &[
     ("C_AreaPoiInfo", &["GetAreaPOITimeLeft"]),
     ("C_Calendar", &["GetDate"]),
     ("C_ChatInfo", &["ReportPlayer"]),
-    ("C_Club", &["AddClubStreamToChatWindow"]),
+    ("C_Club", &["AddClubStreamToChatWindow", "SetCommunityID"]),
     (
         "C_DateAndTime",
         &["GetDateFromEpoch", "GetTodaysDate", "GetYesterdaysDate"],
