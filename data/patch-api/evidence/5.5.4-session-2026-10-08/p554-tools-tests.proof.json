@@ -1,0 +1,20 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tools",
+    "-p",
+    "test_*.py"
+  ],
+  "revision": "74baa6172ada83010408ed892e35f38addcf67ff",
+  "profile": "retail",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p554-page",
+  "exit": 0,
+  "log": "p554-tools-tests.log",
+  "log_sha256": "a315e2da6adaf5d66fb67293dc4276831a37df66e7a5b81c4eb1aa53c6b66454",
+  "invalidated": false
+}

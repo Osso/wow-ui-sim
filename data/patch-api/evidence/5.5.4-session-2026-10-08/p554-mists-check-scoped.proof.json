@@ -1,0 +1,17 @@
+{
+  "command": [
+    "cargo",
+    "check",
+    "--no-default-features",
+    "--features",
+    "sound,gui,casc,client-mists",
+    "--tests"
+  ],
+  "revision": "9ca9cd746cacf25803c5d5ac5d2e073caef0fc9e",
+  "profile": "mists",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p554-page-mists",
+  "exit": 0,
+  "log": "p554-mists-check-scoped.log",
+  "log_sha256": "81132e0dffcb125b72ef384502875cdb013e5bcf5cbd327d43ab9cb883199134",
+  "invalidated": false
+}

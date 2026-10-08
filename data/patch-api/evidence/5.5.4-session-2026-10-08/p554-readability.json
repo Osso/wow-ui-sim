@@ -1,0 +1,11 @@
+{
+  "revision": "9ca9cd746cacf25803c5d5ac5d2e073caef0fc9e",
+  "method": "Manual changed-line audit; rust-code-analysis-cli is not installed.",
+  "files": [
+    "tests/common/publication_sweep.rs",
+    "tests/publication_sweep_client_lines.rs",
+    "tests/patch_5_5_4_publication_sweep.rs"
+  ],
+  "findings": [],
+  "notes": "ClientLine match is one flat expression; supersession adds one early-continue boundary; scoped loading asserts both publishers and no Lua errors. No new warning suppressions, vendor changes, fallback paths, or unused fields."
+}

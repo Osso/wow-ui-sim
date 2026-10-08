@@ -1,0 +1,21 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--no-default-features",
+    "--features",
+    "sound,gui,casc,client-mists",
+    "--test",
+    "integration",
+    "patch_5_5_4_publication_sweep",
+    "--",
+    "--nocapture"
+  ],
+  "revision": "f74c89cc04d5a1dcae87b0fbfcd7a4fa485262ff",
+  "profile": "mists",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p554-page-mists",
+  "exit": 101,
+  "log": "p554-mists-discovery.log",
+  "log_sha256": "2c89cf5b5b1c8a9da9235495c9d256898dbe37edcefaac00fdfc590665b23914",
+  "invalidated": false
+}

@@ -1,0 +1,17 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "publication_sweep"
+  ],
+  "revision": "44ebca873e7e187b429301c96234df7b2b3a4f51",
+  "profile": "retail",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p554-page",
+  "exit": 0,
+  "log": "p554-retail-before.log",
+  "log_sha256": "7a78e59f50f4921e1758d4ae0f4e58a234277de3869267ede675c0409a305fc3",
+  "invalidated": false
+}

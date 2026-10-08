@@ -1,0 +1,89 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on build directory
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p554-page)
+    Finished `test` profile [optimized + debuginfo] target(s) in 1m 03s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p554-page-mists/debug/deps/integration-f15e4c1da9a8b8f4)
+
+running 2 tests
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.010s] [Startup] SimState::default complete in 10.01ms
+[  0.010s] [Startup] rilua VM created in 207.04µs
+[  0.011s] [Startup] builtin frames initialized in 138.48µs
+[  0.011s] [Startup] template registry cleared in 13.66µs
+[  0.013s] [Startup] intrinsic templates registered in 2.39ms
+[  0.013s] [Startup] initial app_data lua handle installed in 2.07µs
+[  0.560s] [Startup] init_lua_state complete in 546.68ms
+[  0.560s] [Startup] final app_data lua handle installed in 361.00ns
+[  0.560s] [Startup] initial screen globals installed in 578.97µs
+[  0.560s] [Startup] WowLuaEnv::new complete
+[  0.604s] [Startup] WowLuaEnv::new begin
+[  0.609s] [Startup] SimState::default complete in 4.49ms
+[  0.609s] [Startup] rilua VM created in 230.15µs
+[  0.609s] [Startup] builtin frames initialized in 126.61µs
+[  0.609s] [Startup] template registry cleared in 40.58µs
+[  0.610s] [Startup] intrinsic templates registered in 281.35µs
+[  0.610s] [Startup] initial app_data lua handle installed in 1.01µs
+[  0.993s] [Startup] init_lua_state complete in 383.68ms
+[  0.993s] [Startup] final app_data lua handle installed in 932.00ns
+[  0.994s] [Startup] initial screen globals installed in 569.97µs
+[  0.994s] [Startup] WowLuaEnv::new complete
+test patch_5_5_4_publication_sweep::patch_5_5_4_client_line_excludes_retail_and_era ... ok
+
+running 1 test
+test patch_5_5_4_publication_sweep::patch_5_5_4_publication_sweep ... FAILED
+
+failures:
+
+failures:
+    patch_5_5_4_publication_sweep::patch_5_5_4_publication_sweep
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8177 filtered out; finished in 9.90s
+
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.005s] [Startup] SimState::default complete in 4.67ms
+[  0.008s] [Startup] rilua VM created in 277.90µs
+[  0.008s] [Startup] builtin frames initialized in 198.84µs
+[  0.008s] [Startup] template registry cleared in 26.90µs
+[  0.011s] [Startup] intrinsic templates registered in 2.83ms
+[  0.014s] [Startup] initial app_data lua handle installed in 2.38µs
+[  0.708s] [Startup] init_lua_state complete in 694.15ms
+[  0.708s] [Startup] final app_data lua handle installed in 911.00ns
+[  0.709s] [Startup] initial screen globals installed in 487.21µs
+[  0.709s] [Startup] WowLuaEnv::new complete
+Lua error: Failed to create frame __Blizzard_UIPanels_Game_20250: Lua error: layer children on __Blizzard_UIPanels_Game_20250: Action[SetPoint] failed because[Cannot anchor to itself]: attempted from: Frame:SetPoint.
+stack traceback:
+	(string):1: in main chunk
+Lua error: Lua Error: Failed to create frame __Blizzard_UIPanels_Game_20250: Lua error: layer children on __Blizzard_UIPanels_Game_20250: Action[SetPoint] failed because[Cannot anchor to itself]: attempted from: Frame:SetPoint.
+stack traceback:
+	(string):1: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+
+thread 'patch_5_5_4_publication_sweep::patch_5_5_4_publication_sweep' (3344851) panicked at /home/osso/.worktrees/wow-ui-sim-p554-page/tests/patch_5_5_4_publication_sweep.rs:43:51:
+load cached Mists Game UI: "loading Blizzard addon `Blizzard_UIPanels_Game` produced 2 Lua error(s):\nFailed to create frame __Blizzard_UIPanels_Game_20250: Lua error: layer children on __Blizzard_UIPanels_Game_20250: Action[SetPoint] failed because[Cannot anchor to itself]: attempted from: Frame:SetPoint.\nstack traceback:\n\t(string):1: in main chunk\nLua Error: Failed to create frame __Blizzard_UIPanels_Game_20250: Lua error: layer children on __Blizzard_UIPanels_Game_20250: Action[SetPoint] failed because[Cannot anchor to itself]: attempted from: Frame:SetPoint.\nstack traceback:\n\t(string):1: in main chunk\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'\n[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>\n"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'patch_5_5_4_publication_sweep::patch_5_5_4_publication_sweep' (3344839) panicked at /home/osso/.worktrees/wow-ui-sim-p554-page/tests/common/timeout_reexec.rs:181:9:
+timeout child for `patch_5_5_4_publication_sweep::patch_5_5_4_publication_sweep` failed (exit code 101)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test patch_5_5_4_publication_sweep::patch_5_5_4_publication_sweep ... FAILED
+
+failures:
+
+failures:
+    patch_5_5_4_publication_sweep::patch_5_5_4_publication_sweep
+
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 8176 filtered out; finished in 10.17s
+
+error: test failed, to rerun pass `--test integration`

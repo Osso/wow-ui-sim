@@ -15,7 +15,8 @@
     "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "line_count": 0,
     "scope": "Page-context scan only: pinned source has no removed API identities. No guessed retirement candidates.",
-    "untruncated": true
+    "untruncated": true,
+    "manifest_revision": "787b47591824a1be135c14b395d539dd2438a95e"
   },
   {
     "tool": "/usr/bin/grep",
@@ -32,6 +33,43 @@
     "log_sha256": "86716d6e7cfff975f4909ae55177aaf238588573d0a9cf19b8cbe93e3b08e100",
     "line_count": 219,
     "scope": "Page-context scan only: pinned source has no removed API identities. No guessed retirement candidates.",
-    "untruncated": true
+    "untruncated": true,
+    "source_revision": "f74c89cc04d5a1dcae87b0fbfcd7a4fa485262ff"
+  },
+  {
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-RInw",
+      "-E",
+      "50504|RETIRED_5_5_4_MEMBERS|client-mists",
+      "/home/osso/.worktrees/wow-ui-sim-p554-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p554-page/tests"
+    ],
+    "exit": 0,
+    "log": "p554-src-tests-final-caller-context-scan.log",
+    "log_sha256": "0cd1f4b203caf04a6bd36447bef90059d54ac4f1693c049fb70451ac3a57bc97",
+    "line_count": 221,
+    "source_revision": "167c371767fc7676937077df451b54aa397d6f88",
+    "untruncated": true,
+    "scope": "Final src/tests context scan. No page-listed removal members exist; no retirement claims."
+  },
+  {
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-RInw",
+      "-E",
+      "50504|RETIRED_5_5_4_MEMBERS|client-mists",
+      "/home/osso/.worktrees/wow-ui-sim-p554-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p554-page/tests"
+    ],
+    "exit": 0,
+    "log": "p554-src-tests-scoped-caller-context-scan.log",
+    "log_sha256": "e1846c2dc5b809fb09b7538e97d588123883eba2cff9bc259e117ce2f18db39e",
+    "line_count": 221,
+    "source_revision": "9ca9cd746cacf25803c5d5ac5d2e073caef0fc9e",
+    "untruncated": true,
+    "scope": "Final scoped-loader src/tests scan. Zero source-listed removed identities; no retirement claims."
   }
 ]

@@ -1,0 +1,16 @@
+{
+  "command": [
+    "rustfmt",
+    "--edition",
+    "2024",
+    "--check",
+    "tests/common/publication_sweep.rs",
+    "tests/publication_sweep_client_lines.rs",
+    "tests/patch_5_5_4_publication_sweep.rs"
+  ],
+  "revision": "9ca9cd746cacf25803c5d5ac5d2e073caef0fc9e",
+  "exit": 0,
+  "log": "p554-rustfmt.log",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "invalidated": false
+}
