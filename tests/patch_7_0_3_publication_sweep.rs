@@ -15,7 +15,7 @@ fn patch_7_0_3_publication_sweep(env: &WowLuaEnv) {
         register_env: "P703_SWEEP_REGISTER",
         out_env: "P703_SWEEP_OUT",
         later_registers: &[
-            // 7.1.0 register: integrate p710-page first.
+            include_str!("../data/patch-api/sources/7.1.0-wikitext-register.json"),
             include_str!("../data/patch-api/sources/7.2.0-wikitext-register.json"),
             include_str!("../data/patch-api/sources/7.2.5-wikitext-register.json"),
             include_str!("../data/patch-api/sources/7.3.0-wikitext-register.json"),
