@@ -61,6 +61,7 @@ def check_source(context):
     fetched = read(HERE / 'p547-fetch.json')['query']['pages']['549368']
     current = fetched['revisions'][0]
     assert current['revid'] == provenance['revid'] == register['source']['revid']
+    assert read(HERE / 'p547-rendered.json')['parse']['revid'] == current['revid']
     assert current['slots']['main']['*'].encode() == raw
     assert digest(raw) == provenance['sha256'] == register['source']['sha256']
     assert provenance['client_line'] == 'retail' and provenance['toc'] == 50400
@@ -159,7 +160,12 @@ def check_proofs(context):
         receipt = read(HERE / (name + '.proof.json'))
         assert receipt['exit'] in expected_exit and not receipt['invalidated'], name
         assert receipt['log_sha256'] == digest((HERE / receipt['log']).read_bytes()), name
+        assert receipt['scope'] == name
         assert git('rev-parse', receipt['revision'] + '^{commit}').strip()
+        proof_scope = ('src', 'tools', 'Cargo.toml', 'Cargo.lock', 'Interface')
+        if name.startswith('p547-') and name not in ('p547-discovery', 'p547-reproduction'):
+            proof_scope += ('tests',)
+        assert not git('diff', '--name-only', receipt['revision'], context['acceptance_revision'], '--', *proof_scope), name
     source_revision = context['acceptance_revision']
     helpers = historical_helpers(source_revision)
     sweeps = helpers['historical_sweep_tests'](ROOT, source_revision)
