@@ -8,7 +8,7 @@
 
 ## [2026-10-08] investigation | Patch 6.2.4 API audit
 
-[Audit](investigations/patch-6-2-4-api-audit.md): revision 2072181, 35 inventory/46 extract IDs, zero publication gaps after 8.2.5 supersession; current parent/game backing bounded, seven historical/model rows pending. No runtime retirements. Whole-word grep scans and master/p703 re-addition checks retained. 48 sweep/factory cases, targeted 1/1/11/3 tests, fixtures 31/35/8, format/Mists and 27 prior validators pass; 47 registers/44 extracts reproduce with three unchanged inherited failures. Final own-validator seal follows accounting commit.
+[Audit](investigations/patch-6-2-4-api-audit.md): revision 2072181, 35 inventory/46 extract IDs, zero publication gaps after 8.2.5 supersession; current parent/game backing bounded, seven historical/model rows pending. No runtime retirements. Whole-word grep scans and master/p703 re-addition checks retained. 48 sweep/factory cases, targeted 1/1/11/3 tests, fixtures 31/35/8, format/Mists and 27 prior validators pass; 47 registers/44 extracts reproduce with three unchanged inherited failures. Own validator and all 28 relocated validators pass; expanded audit/wiki scope passes, own/prior-source tampering fails.
 
 ## [2026-10-08] integration | Patch 7.1.0 API audit
 

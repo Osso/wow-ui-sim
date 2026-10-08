@@ -1,0 +1,19 @@
+{
+  "runtime_revision": "a690a6959",
+  "sealed_revision": "64426ce39",
+  "validator_exit": 0,
+  "relocated_validators": 28,
+  "relocated_passing": 28,
+  "portability_passed": true,
+  "known_unfinished": [
+    "Seven retained historical/model contract rows across five topics.",
+    "Unexpanded automated-diff subpage; no audit credit.",
+    "7.0.1 and 7.0.3 placeholders await integration after their pages merge.",
+    "Inherited 12.0.5/12.0.7 extract mismatches and 12.1.0 unsupported-template error remain."
+  ],
+  "scope_exclusions_respected": [
+    "No src/runtime/vendor edits or new retirements.",
+    "No full integration or unavailable texture tests.",
+    "No other-worktree changes, agents/model CLIs, push or merge."
+  ]
+}

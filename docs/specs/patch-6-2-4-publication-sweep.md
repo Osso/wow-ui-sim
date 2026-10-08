@@ -9,7 +9,7 @@ Audit [Warcraft Wiki page 212964, revision 2072181](../../data/patch-api/sources
 - [x] Require the exact known-gap set; prove one-identity negative control and bounded current parent/game identity/count behavior with real backing state, in bare and cached environments.
 - [x] Retain complete whole-word cached-retail and src/tests scans for all removed names and exact master/p703 later-register checks. Any consumer prevents new retirement; preserve classic compatibility.
 - [x] Preserve previous inputs/extraction outcomes, reproduce registers/extracts using recorded flags, run only targeted requested gates, compile Mists tests with zero non-vendor warnings and preserve wiki index/log.
-- [ ] Seal the read-only, checkout-independent historical validator and prove extra later audits do not expand scope; tampered protected inputs must fail.
+- [x] Seal the read-only, checkout-independent historical validator and prove extra later audits do not expand scope; tampered protected inputs must fail.
 
 ## How it works
 
