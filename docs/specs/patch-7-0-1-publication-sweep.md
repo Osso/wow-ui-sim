@@ -7,7 +7,7 @@ Audit [pinned source](../../data/patch-api/sources/7.0.1-api-changes.wikitext), 
 - [x] Reproduce the empty register and retained redirect extract from the pinned revision without expanding the target page.
 - [x] Account for the single redirect context row as metadata-only, with no runtime capability credit.
 - [x] Execute the prefork sweep against the exact empty inventory and gap set; record zero observations explicitly.
-- [ ] Preserve historical artifacts and validate proof from any checkout after later audits add registers.
+- [x] Preserve historical artifacts and validate proof from any checkout after later audits add registers.
 
 ## How it works
 
@@ -28,7 +28,7 @@ Audit [pinned source](../../data/patch-api/sources/7.0.1-api-changes.wikitext), 
 
 ## Known gaps (current cycle)
 
-- [ ] Independent-checkout expanded-scope portability proof pending.
+No unresolved contracts in this redirect-only source. Destination-page audit and later-register integration remain outside this page’s completed proof.
 
 ## Out of scope
 

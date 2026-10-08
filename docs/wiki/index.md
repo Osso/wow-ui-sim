@@ -4,7 +4,7 @@
 
 ## [2026-10-08] investigation | Patch 7.0.1 redirect audit
 
-[Audit](investigations/patch-7-0-1-api-audit.md): pageid 336026 revision 3241525 redirects to 7.0.3; zero API entries, one metadata-only ID, no retirements or runtime changes. 48/48 sweep/factory cases, fixtures 30/34/8, format/Mists and 28 validators pass; 47 registers/44 extracts reproduce with three inherited failures. Portability clone proof pending.
+[Audit](investigations/patch-7-0-1-api-audit.md): pageid 336026 revision 3241525 redirects to 7.0.3; zero API entries, one metadata-only ID, no retirements or runtime changes. 48/48 sweep/factory cases, fixtures 30/34/8, format/Mists and 28 validators pass; 47 registers/44 extracts reproduce with three inherited failures. Independent-clone expanded-scope/tamper portability proof passes.
 
 ## [2026-10-08] integration | Patch 7.1.0 API audit
 
