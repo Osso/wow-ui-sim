@@ -3,6 +3,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 import subprocess
 import sys
@@ -20,6 +21,12 @@ def run_worker(label, command):
     revision = git('rev-parse', 'HEAD')
     env = dict(os.environ, CARGO_TARGET_DIR=TARGET, PYTHONDONTWRITEBYTECODE='1',
                P620_SWEEP_OUT=str(HERE / 'patch_6_2_0_publication_sweep-results.json'))
+    env.pop('WOW_SIM_NO_ADDONS', None)
+    env.pop('WOW_SIM_NO_SAVED_VARS', None)
+    for source in (ROOT / 'tests').glob('patch_*_publication_sweep.rs'):
+        match = re.search(r'out_env: "([^"]+)"', source.read_text())
+        if match:
+            env[match[1]] = str(HERE / (source.stem + '-results.json'))
     log = HERE / (label + '.txt')
     with log.open('wb') as output:
         result = subprocess.run(command, cwd=ROOT, env=env, stdout=output,

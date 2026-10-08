@@ -1,0 +1,18 @@
+{
+  "revision": "846a30663a0f5d5fd0aaecaec46937cd858ae95a",
+  "command": [
+    "git",
+    "archive",
+    "--format=tar",
+    "846a30663"
+  ],
+  "archive_sha256": "788a631f4c95784cfae3ec40a6fe114886aa7edd27bb446fba387f2c9a119bec",
+  "scope": {
+    "Cargo.toml": "98e73c27d7cd21438f61e6839c823c128d1be338ea60e603202a7417f51b0e07",
+    "Cargo.lock": "859f258fa21eb92f7f0c83c77d526ea0ce3e7535b0970df2e39c459023c0b9cf",
+    "build.rs": "df6b286152daa948557c17c4abb8776af2aed573c45f1fcb4901fd2b4a8ccde2",
+    "src/lua_api/frame/methods/widgets/tooltip/content.rs": "d2a49c1bd5e1b2026ec2b10258cf34e452ad3f8959cc4449437de15006576a6a",
+    "src/lua_api/globals/missing_surface/tooltip_info/probes.rs": "3ae94eed1e4ef2be2d43be20167a16206e870c22925431c7f383da4987b7a16e",
+    "src/lua_api/globals/missing_surface/tooltip_info/spell.rs": "8a6e08407f377f4e9ca5d6927baf6c04a5602254d109cedf97da0cf7d417ba45"
+  }
+}

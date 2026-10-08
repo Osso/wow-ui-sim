@@ -1,0 +1,46 @@
+[
+  {
+    "scanner": "grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-Rn",
+      "-w",
+      "-e",
+      "SetSpellByID",
+      "-e",
+      "SetHyperlink",
+      "-e",
+      "GetHyperlink",
+      "-e",
+      "tooltip_for_spell_id",
+      "src",
+      "tests"
+    ],
+    "exit": 0,
+    "output": "p620-tooltip-callers.txt",
+    "sha256": "0cb9885a0c4b906535117b917deb3ee5ab976c2a9cc14c1d999278d840e9fe11",
+    "lines": 81,
+    "scope": "Untruncated whole-word src/tests; arbitrary Lua syntax, including pcall(Name, ...) and and Name then, is not filtered."
+  },
+  {
+    "scanner": "grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-Rn",
+      "-w",
+      "-e",
+      "difficultyID",
+      "-e",
+      "upgradeType",
+      "-e",
+      "parse_prefixed_id",
+      "src",
+      "tests"
+    ],
+    "exit": 0,
+    "output": "p620-item-difficulty-callers.txt",
+    "sha256": "c82df70c1ebf43cb13501aea8e27143900ff993ffbb68400a45ab4be08220d8d",
+    "lines": 38,
+    "scope": "Untruncated whole-word src/tests; arbitrary Lua syntax, including pcall(Name, ...) and and Name then, is not filtered."
+  }
+]
