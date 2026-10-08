@@ -18,7 +18,10 @@ fn request_logout(state: &mut LuaState) -> LuaResult<u32> {
 }
 
 fn require_secure_session_call(state: &LuaState, name: &str) -> LuaResult<()> {
-    if cfg!(feature = "client-retail") && state.call_stack[state.ci].taint.is_some() {
+    let insecure = state.call_stack[..=state.ci]
+        .iter()
+        .any(|frame| frame.taint.is_some());
+    if cfg!(feature = "client-retail") && insecure {
         return Err(LuaError::Runtime(RuntimeError {
             message: format!("{name} is protected from insecure code"),
             level: 1,

@@ -1,0 +1,39 @@
+rilua revision 842e4d3ff8592af45a5a93058eddf93419d29012; src/stdlib/taint.rs; sha256=09c1b1beb5f5cdd4ea7fb6a34c4cd628d206d87c83cb3b4306de8abddc93a8d3
+// debug.getstacktaint()
+// ---------------------------------------------------------------------------
+
+fn getstacktaint(state: &mut LuaState) -> LuaResult<u32> {
+    ensure_runtime_tables(state)?;
+    // Report the deepest taint visible to the caller — matches the Elune
+    // `L->stacktaint` semantics where taint persists across calls. Our
+    // per-CI storage requires walking the stack to find it.
+    let taint = (0..=state.ci)
+        .rev()
+        .filter_map(|depth| state.call_stack.get(depth))
+        .find_map(|ci| ci.taint.as_ref());
+    match taint {
+        Some(name) => {
+            let s = state.gc.intern_string(name.as_bytes());
+            state.push(Val::Str(s));
+            Ok(1)
+        }
+        None => Ok(0),
+    }
+}
+
+
+rilua revision 842e4d3ff8592af45a5a93058eddf93419d29012; src/vm/execute.rs; sha256=fb28792701376d10f4babe09bccd2f49eb5f4df3aaae402e5a044e4a992a62c1
+            Closure::Rust(rust_cl) => {
+                let func = rust_cl.func;
+
+                // Ensure minimum stack for Rust functions.
+                self.ensure_stack_len(self.top + LUA_MINSTACK);
+
+                let ci_top = self.top + LUA_MINSTACK;
+                let mut ci = CallInfo::new(func_idx, func_idx + 1, ci_top, num_results);
+                ci.taint = closure_taint;
+                self.push_ci(ci);
+                self.base = func_idx + 1;
+
+                // Note: n_ccalls is NOT incremented here. The C-call boundary
+                // counter is managed by call_function() (the luaD_call equivalent).

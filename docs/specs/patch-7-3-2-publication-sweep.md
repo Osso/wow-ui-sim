@@ -18,7 +18,7 @@ Audit Warcraft Wiki page 230850, revision 6200179, refetched 2026-10-08. Current
 
 ## Implementation inventory
 
-- `src/lua_api/globals/real/session_exit.rs` — existing session state transitions, retail stack-taint gate.
+- `src/lua_api/globals/real/session_exit.rs` — existing session state transitions, retail active-stack taint gate.
 - `src/lua_api/globals/register.rs`, `real/mod.rs`, `globals/mod.rs`, `admin.rs` — registration and Admin query wiring.
 - `src/lua_api/workarounds/temporary/session_exit_defaults.rs`, `temporary/mod.rs` — relocate existing CancelLogout no-op without changing behavior; not protection coverage.
 - `tools/gen_patch_wikitext_register.py` — opt-in Changes prose API-link occurrence capture.
