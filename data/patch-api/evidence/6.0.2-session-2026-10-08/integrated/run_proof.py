@@ -13,7 +13,7 @@ TARGET = '/home/osso/.cache/wow-ui-sim-targets/p602-page'
 
 
 def run_proof(name, command):
-    revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
+    revision = subprocess.check_output(['git', 'rev-parse', os.environ.get('PATCH_PROOF_REVISION', 'HEAD')], cwd=ROOT, text=True).strip()
     started = time.monotonic()
     log = EVIDENCE / f'{name}.txt'
     environment = {key: value for key, value in os.environ.items()
