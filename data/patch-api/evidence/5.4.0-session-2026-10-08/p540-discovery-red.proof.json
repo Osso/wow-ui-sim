@@ -18,5 +18,6 @@
   "log": "p540-discovery-red.txt",
   "log_sha256": "00ce0451d4c87fe9170a653211f81adb08362d18778c0bd3f4780c2c55c95253",
   "seconds": 385.2436541900024,
-  "invalidated": false
+  "invalidated": true,
+  "note": "RED discovery only; new behavior source was committed during dependency compilation."
 }

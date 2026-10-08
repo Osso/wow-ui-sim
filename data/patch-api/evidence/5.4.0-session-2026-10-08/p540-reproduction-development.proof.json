@@ -13,5 +13,6 @@
   "log": "p540-reproduction.txt",
   "log_sha256": "1535b088e1c9f767583ffca2c723c4191646d27ffa3fbac916339196ec244d56",
   "seconds": 10.591271793993656,
-  "invalidated": false
+  "invalidated": true,
+  "note": "Reproduction driver was uncommitted at execution; superseded by committed-driver proof."
 }

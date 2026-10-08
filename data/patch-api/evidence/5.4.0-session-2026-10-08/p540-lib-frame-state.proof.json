@@ -1,0 +1,18 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--lib",
+    "frame_state::"
+  ],
+  "revision": "ce64c8a37a091704429fa19f2131dd0a28d46bc9",
+  "scope": "p540-lib-frame-state",
+  "cwd": ".",
+  "target": "dedicated p540-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p540-lib-frame-state.txt",
+  "log_sha256": "8e256101caf4fad72e775ad67dc3933850b7ff132b3b601175de442bcb41c14f",
+  "seconds": 249.7234749229974,
+  "invalidated": false
+}

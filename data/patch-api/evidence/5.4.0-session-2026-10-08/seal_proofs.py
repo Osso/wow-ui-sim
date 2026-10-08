@@ -51,13 +51,13 @@ def main():
                      'gaps': sum(not row['ok'] for row in observations.values())})
     dump('p540-sweep-summary.json', rows)
     shared_paths = git('ls-tree', '-r', '--name-only', revision,
-                       'data/patch-api/sources', 'tests', 'tools').decode().splitlines()
+                       'data/patch-api/sources', 'tests', 'tools', 'Cargo.toml', 'Cargo.lock', 'build.rs').decode().splitlines()
     shared = [{'path': path, 'sha256': digest(git('show', f'{revision}:{path}'))}
               for path in shared_paths if path.startswith('data/patch-api/sources/')
               or path in ('tests/common/publication_sweep.rs', 'tests/patch_5_4_0_behavior.rs')
               or Path(path).match('patch_*_publication_sweep.rs')
               or Path(path).match('patch_*_sweep_known_gaps.json')
-              or path in ('tools/gen_patch_wikitext_register.py', 'tools/extract_patch_non_inventory.py',
+              or path in ('Cargo.toml', 'Cargo.lock', 'build.rs', 'tools/gen_patch_wikitext_register.py', 'tools/extract_patch_non_inventory.py',
                           'tools/patch_audit_validation.py', 'tools/check_patch_validators.py')]
     excluded = {'p540-seal.json', 'validate.py', 'seal_proofs.py', 'p540-proof-ledger.md'}
     own = [{'path': path.name, 'sha256': digest(path.read_bytes())}

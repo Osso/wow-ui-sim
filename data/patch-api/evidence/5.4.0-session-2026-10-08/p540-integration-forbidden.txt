@@ -1,0 +1,27 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.34s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p540-page/debug/deps/integration-1db16289b0998b2a)
+
+running 13 tests
+test protected_frame_enforcement::test_insecure_combat_blocks_protected_parent_and_anchored_frame_mutations ... ok
+test protected_frame_enforcement::test_protected_state_does_not_propagate_to_descendants_or_anchors ... ok
+test protected_frame_enforcement::test_insecure_combat_blocks_protected_visibility_and_scale_mutations ... ok
+test protected_frame_enforcement::test_insecure_out_of_combat_can_mutate_protected_frame ... ok
+test protected_frame_enforcement::test_retail_create_forbidden_frame_is_absent ... ok
+test protected_frame_enforcement::test_allowed_protected_anchor_offset_mutations ... ok
+test protected_frame_enforcement::test_insecure_addon_created_normal_frame_set_forbidden_is_noop ... ok
+test protected_frame_enforcement::test_insecure_combat_blocks_protected_strata_level_and_toplevel_mutations ... ok
+test protected_frame_enforcement::test_secure_caller_can_mutate_protected_frame_during_combat ... ok
+test protected_frame_enforcement::test_insecure_combat_blocks_protected_anchor_mutations ... ok
+test protected_frame_enforcement::test_retail_plain_frame_protection_probe ... ok
+test protected_frame_enforcement::test_insecure_combat_blocks_protected_anchor_offset_mutations ... ok
+test protected_frame_enforcement::test_secure_set_forbidden_marks_frame_forbidden ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 10665 filtered out; finished in 0.97s
+

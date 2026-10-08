@@ -1,0 +1,23 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_5_4_0_publication_sweep"
+  ],
+  "revision": "ae0b0b8ff3dc2eff0d90597841a7bc4a0a0a245d",
+  "scope": "p540-negative",
+  "cwd": ".",
+  "target": "dedicated p540-page target (external to repository)",
+  "environment": {
+    "P540_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p540-page/data/patch-api/evidence/5.4.0-session-2026-10-08/p540-negative-register.json",
+    "P540_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p540-page/data/patch-api/evidence/5.4.0-session-2026-10-08/p540-negative-results.json"
+  },
+  "exit": 1,
+  "log": "p540-negative.txt",
+  "log_sha256": "f46fa6acced12926fbabadefa0829019353e4a3d3a1d9fa9ec5728c7b5025396",
+  "seconds": 15.372653828999319,
+  "invalidated": false
+}

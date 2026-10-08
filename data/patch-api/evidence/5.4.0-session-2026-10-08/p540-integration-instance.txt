@@ -1,0 +1,25 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.49s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p540-page/debug/deps/integration-1db16289b0998b2a)
+
+running 11 tests
+test instance_info::mirror_timer_count_matches_blizzard_fixed_timer_slots ... ok
+test instance_info::absent_saved_raid_instance_rows_return_nil_fields ... ok
+test instance_info::get_instance_info_defaults_to_open_world ... ok
+test instance_info::get_instance_info_returns_nil_for_absent_lfg_dungeon_id ... ok
+test instance_info::get_mirror_timer_info_returns_unknown_sentinel_when_unset ... ok
+test instance_info::get_mirror_timer_info_returns_seven_values_by_index ... ok
+test instance_info::get_mirror_timer_info_out_of_range_returns_unknown_sentinel ... ok
+test instance_info::is_in_lfg_dungeon_reflects_lfg_instance_state ... ok
+test instance_info::get_instance_info_reports_all_ten_fields ... ok
+test instance_info::get_mirror_timer_progress_reads_by_name ... ok
+test instance_info::saved_raid_instance_counts_default_to_empty_lists ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 10667 filtered out; finished in 0.79s
+

@@ -35,3 +35,7 @@ Command receipts record exact Git revision, command, environment, log hash, exit
 ## Standalone registration correction
 
 The prefork marker defines runnable modules, not standalone #[test] functions. Initial integration selection returned exit 0 but ran zero tests; its receipt is explicitly invalidated and retained as empty-selection evidence. Added two standalone wrappers reusing unchanged prefork assertions. This invalidates the standalone selection and format check only: publication tests/assertions, existing caller tests, source-unit modules and Python recipes are unchanged; new wrappers remain under client-retail and do not alter the Mists profile. Final seals reject zero-test success. Outer development-driver success is not acceptance evidence.
+
+## Completed targeted proof scopes
+
+All publication/factory cases: 57/57. Prefork behavior: 2/2. Existing standalone instance/protection callers: 11/11 and 13/13. Source-unit frame-state callers: 6/6. Mists check: PASS, zero non-vendor warnings; six inherited vendor manifest deprecations plus their summary retained. Negative control: exactly 22 → 23 gaps and expected exit 1. Corrected standalone wrapper execution and portable gate remain pending. Initial extractor-green fixture expected an unspaced heading; corrected before the 88 passing Python fixtures.
