@@ -18,6 +18,20 @@ class ExtractTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(result.stdout, 'PASS: extraction and row-ID behavioral fixtures\n')
 
+    def test_legacy_api_caption_inventory_retains_prose_and_reference(self):
+        raw = ('{{apichanges|8.2.0|prev=8.1.5|next=8.2.5}}\n'
+               '* {{ref web|url=https://example.test|author=Kaivax|title=UI Changes}}\n'
+               '==API==\n====Changes====\n* {{api|GetFileIDFromPath}} changed.\n'
+               '{| class="wikitable"\n|+ Global API 8.1.5 to 8.2.0\n'
+               '| valign="top" | <div>\n: {{api|IgnoreMe}}\n</div>\n|}\n'
+               '==Widgets==\n{| class="wikitable"\n|+ Widget Handlers 8.1.5 to 8.2.0\n'
+               ': [[UIHANDLER OnError|Checkout:OnError]]\n|}\n==References==\n')
+        self.assertEqual(extract_text(raw, legacy_api_tables=True),
+                         'Patch 8.2.0 API changes\n'
+                         '* [Reference: url=https://example.test|author=Kaivax|title=UI Changes]\n'
+                         '== API ==\n==== Changes ====\n* GetFileIDFromPath changed.\n'
+                         '== References ==\n')
+
     def test_reference_note_preserves_publication_prose_and_citation(self):
         raw = ('* The [[Auction House]] was revamped <ref>{{ref web|'
                'url=https://example.test/source|author=[[Kaivax]]|date=2019-10-07|'

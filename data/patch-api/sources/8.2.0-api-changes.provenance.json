@@ -1,0 +1,17 @@
+{
+  "pageid": 533235,
+  "title": "Patch 8.2.0/API changes",
+  "revid": 5142162,
+  "timestamp": "2021-04-23T01:19:12Z",
+  "retrieved": "2026-10-08",
+  "method": "MediaWiki revisions API; response p820-fetch.json and HTTP receipts p820-fetch-attempts.json",
+  "wikitext_sha256": "35a296d3044d68b92286a0d3ec653283a7dc0beba2b4b64d3c9e9410f129e41f",
+  "generator_flags": [
+    "--legacy-api-tables"
+  ],
+  "extractor_flags": [
+    "--legacy-api-tables"
+  ],
+  "register_generator": "tools/gen_patch_wikitext_register.py",
+  "extract_generator": "tools/extract_patch_non_inventory.py"
+}

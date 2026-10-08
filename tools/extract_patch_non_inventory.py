@@ -56,7 +56,11 @@ def render_line(line):
 
 
 def extract_text(raw, *, preserve_examples=False, normalize_inventory_headings=False,
-                 retain_reference_notes=False):
+                 retain_reference_notes=False, legacy_api_tables=False):
+    if legacy_api_tables:
+        raw = re.sub(r'^\{\|[^\n]*\n\|\+ (?:Global API|Widget API|Widget Handlers|Events|Console variables|Console commands) [\s\S]*?^\|\}\n?',
+                     '', raw, flags=re.M)
+        raw = re.sub(r'\{\{ref web\|([^{}]+)\}\}', r'[Reference: \1]', raw)
     if retain_reference_notes:
         raw = re.sub(r'<ref>\{\{ref web\|([^{}]+)\}\}</ref>',
                      r'[Reference: \1]', raw)
@@ -246,6 +250,8 @@ def main():
                         help='Recognize spaced inventory headings without swallowing earlier deprecated tables')
     parser.add_argument('--retain-reference-notes', action='store_true',
                         help='Retain inline ref web citation fields alongside publication prose')
+    parser.add_argument('--legacy-api-tables', action='store_true',
+                        help='Strip older caption inventories while retaining API prose and references')
     parser.add_argument('--text-only', action='store_true',
                         help='Write/check plaintext only; never read or modify a coverage ledger')
     args = parser.parse_args()
@@ -259,7 +265,8 @@ def main():
     coverage_path = base / f'{args.patch}-page-coverage.json'
     text = extract_text(raw_path.read_text(), preserve_examples=args.preserve_examples,
                         normalize_inventory_headings=args.normalize_inventory_headings,
-                        retain_reference_notes=args.retain_reference_notes)
+                        retain_reference_notes=args.retain_reference_notes,
+                        legacy_api_tables=args.legacy_api_tables)
     rows = seed_rows(text, args.patch)
     if args.text_only:
         if args.check:

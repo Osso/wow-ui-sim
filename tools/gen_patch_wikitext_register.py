@@ -189,6 +189,35 @@ def split_sections(text, *, separate_inline_structures=False):
     return buckets
 
 
+def parse_legacy_caption_tables(text):
+    """Parse older unheaded and repeated inventories independently by table caption."""
+    sections = {'Global API': 'global-api', 'Widget API': 'widgets',
+                'Widget Handlers': 'widgets', 'Events': 'events',
+                'Console variables': 'cvars', 'Console commands': 'commands'}
+    entries, counts, table = [], [], []
+    section = None
+    for number, line in enumerate(text.splitlines(), 1):
+        if line.startswith('{|'):
+            table, section = [], None
+        elif line.startswith('|+'):
+            section = next((value for caption, value in sections.items()
+                            if line.startswith('|+ ' + caption + ' ')), None)
+        elif line == '|}' and section:
+            rows, headers = parse_section('cvars' if section == 'commands' else section,
+                                          table, legacy_column_headers=True)
+            if section == 'commands':
+                for row in rows:
+                    row['kind'] = 'command'
+                for header in headers:
+                    header['section'] = 'commands'
+            entries.extend(rows)
+            counts.extend(headers)
+            section = None
+        else:
+            table.append((number, line))
+    return entries, counts
+
+
 def parse_simple_api_list(text):
     """Retain the bullet additions under API/New (8.3.7's inventory format)."""
     entries = []
@@ -243,6 +272,8 @@ def main():
                         help='Retain explicit late-build additions in Diffs; opt-in preserves prior registers')
     parser.add_argument('--legacy-inventory-labels', action='store_true',
                         help='Retain prose counts and singular CVar/Command labels; opt-in preserves prior registers')
+    parser.add_argument('--legacy-api-tables', action='store_true',
+                        help='Parse older unheaded/repeated caption inventories independently')
     args = parser.parse_args()
     patch, path, revid, out = args.patch, args.path, args.revid, args.out
     raw = Path(path).read_bytes()
@@ -263,6 +294,8 @@ def main():
                 count["section"] = "commands"
         entries += section_entries
         counts += section_counts
+    if args.legacy_api_tables:
+        entries, counts = parse_legacy_caption_tables(raw.decode('utf-8'))
     if args.simple_api_list:
         entries.extend(parse_simple_api_list(raw.decode('utf-8')))
     if args.diff_api_additions:

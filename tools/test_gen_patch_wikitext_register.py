@@ -5,6 +5,29 @@ from gen_patch_wikitext_register import parse_section, split_sections
 
 
 class InventoryTests(unittest.TestCase):
+    def test_legacy_caption_tables_keep_handlers_commands_and_directions(self):
+        import gen_patch_wikitext_register as generator
+        raw = ('==API==\n====Changes====\n* {{api|NotInventory}}\n'
+               '{| class="wikitable"\n|+ Global API 8.1.5 to 8.2.0\n'
+               '! style="width:50%"| 1 new functions\n'
+               '! style="width:50%"| 1 removed functions\n'
+               '| valign="top" | <div>\n: {{api|NewGlobal}}\n</div>\n'
+               '| valign="top" | <div>\n: DEPRECATED {{api|OldGlobal}}\n</div>\n|}\n'
+               '==Widgets==\n{| class="wikitable"\n|+ Widget Handlers 8.1.5 to 8.2.0\n'
+               '! style="padding:0"| 1 new handlers\n'
+               '| valign="top" | <div>\n: [[UIHANDLER  OnError|Checkout:OnError]]\n</div>\n|}\n'
+               '==CVars==\n{| class="wikitable"\n|+ Console commands 8.1.5 to 8.2.0\n'
+               '! style="width:50%"| 1 new commands\n'
+               '| valign="top" | <div>\n: {{api|t=c|UpdateWindow}}\n</div>\n|}\n')
+        entries, counts = generator.parse_legacy_caption_tables(raw)
+        self.assertEqual([(e['symbol'], e['direction'], e.get('kind')) for e in entries],
+                         [('NewGlobal', 'added', None), ('OldGlobal', 'removed', None),
+                          ('Checkout:OnError', 'added', 'widget-script'),
+                          ('UpdateWindow', 'added', 'command')])
+        self.assertTrue(all(c['header_count'] == c['parsed_count'] for c in counts))
+        self.assertEqual([c['section'] for c in counts],
+                         ['global-api', 'global-api', 'widgets', 'commands'])
+
     def test_diff_additions_retain_each_late_build_publication(self):
         import gen_patch_wikitext_register as generator
         raw = ('==Changes==\n* New functions: {{api|Ignore}}\n'
