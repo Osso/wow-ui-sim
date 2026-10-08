@@ -1,0 +1,1 @@
+{"external_commits": 1, "extracts": 53, "inherited_extract_failures": ["12.0.5", "12.0.7", "12.1.0"], "mapped_commits": 10, "prior_validators": 38, "publication_gaps": 2, "receipts": 16, "registers": 56, "status": "PASS", "sweep_pages": 56}

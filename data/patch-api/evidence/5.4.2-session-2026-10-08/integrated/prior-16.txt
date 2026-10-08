@@ -1,0 +1,23 @@
+{
+  "cases": 50,
+  "commands": 16,
+  "extract": 11,
+  "extracts_reproduced": 46,
+  "inherited_extract_failures": [
+    "12.0.5",
+    "12.0.7",
+    "12.1.0"
+  ],
+  "inventory": 0,
+  "observations": 9016,
+  "pages": 49,
+  "prior_validators": 30,
+  "protected_inputs": 249,
+  "registers": 49,
+  "status": "PASS",
+  "statuses": {
+    "audit-pending": 2,
+    "bounded-coverage": 3,
+    "metadata-only": 6
+  }
+}
