@@ -1,0 +1,21 @@
+{
+  "command": [
+    "cargo",
+    "check",
+    "--no-default-features",
+    "--features",
+    "sound,gui,casc,client-mists",
+    "--tests"
+  ],
+  "revision": "50d3c7d320581754ecdc22c9530c3b2dc1a12fe5",
+  "scope": "p825-mists-check",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p825-page",
+  "exit": 0,
+  "expected_exit": 0,
+  "log": "p825-mists-check.txt",
+  "log_sha256": "a9ed2bac3784a40e2d8b31e5cf798b12eaced6702a2fdd6f9d908638fb02bb5a",
+  "invalidated": false,
+  "seconds": 54.36961118100044,
+  "environment": {}
+}

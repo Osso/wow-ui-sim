@@ -1,0 +1,17 @@
+{
+  "command": [
+    "cargo",
+    "check"
+  ],
+  "revision": "5e289fcadab4bedc5283f3fb1b3dc13109e7932c",
+  "scope": "p825-default-check",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p825-page",
+  "exit": 0,
+  "expected_exit": 0,
+  "log": "p825-default-check.txt",
+  "log_sha256": "c03d1fc192f0871b705f0875fc8288b9527814c4faa6990912586c6b3218b336",
+  "invalidated": false,
+  "seconds": 86.24328785100079,
+  "environment": {}
+}

@@ -1,0 +1,838 @@
+{
+  "tool_note": "/usr/bin/grep substituted for unavailable rg. Whole-word qualified/bare scans; exclude Documentation files and directories. Complete output including pcall and conditional-reference forms; no truncation.",
+  "rows": [
+    {
+      "symbol": "BNGetFriendInfo",
+      "decision": "retain",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "BNGetFriendInfo\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bBNGetFriendInfo\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bBNGetFriendInfo\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p825-page/src/lua_api/workarounds/temporary/inert_global_defaults.rs:136:if BNGetFriendInfo == nil then\n/home/osso/.worktrees/wow-ui-sim-p825-page/src/lua_api/workarounds/temporary/inert_global_defaults.rs:137:    function BNGetFriendInfo() return nil end\n/home/osso/.worktrees/wow-ui-sim-p825-page/src/lua_api/workarounds/temporary/inert_global_defaults.rs:314:                if BNGetFriendInfo(1) ~= nil then return \"bnet_info\" end\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/system_api_seeded.rs:165:    let is_nil: bool = env.eval(\"return BNGetFriendInfo(1) == nil\").unwrap();\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/data/patch_8_2_5_sweep_known_gaps.json:3:  \"wt-global-api-BNGetFriendInfo-131\",\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "symbol": "C_ClubFinder.ReportPosting",
+      "decision": "retire",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "C_ClubFinder\\.ReportPosting\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bReportPosting\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bReportPosting\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p825-page/src/c_api/patch_retired_members.rs:31:            \"ReportPosting\",\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/patch_8_2_5_publication_fixes.rs:3:    \"C_ClubFinder.ReportPosting\",\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "symbol": "C_ClubFinder.ReturnCommunityApplicantList",
+      "decision": "retire",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "C_ClubFinder\\.ReturnCommunityApplicantList\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bReturnCommunityApplicantList\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bReturnCommunityApplicantList\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p825-page/src/c_api/patch_retired_members.rs:32:            \"ReturnCommunityApplicantList\",\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/patch_8_2_5_publication_fixes.rs:4:    \"C_ClubFinder.ReturnCommunityApplicantList\",\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "symbol": "C_ClubFinder.ReturnGuildApplicantList",
+      "decision": "retire",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "C_ClubFinder\\.ReturnGuildApplicantList\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bReturnGuildApplicantList\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bReturnGuildApplicantList\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p825-page/src/c_api/patch_retired_members.rs:33:            \"ReturnGuildApplicantList\",\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/patch_8_2_5_publication_fixes.rs:5:    \"C_ClubFinder.ReturnGuildApplicantList\",\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "symbol": "C_ClubFinder.ReturnPendingCommunityApplicantList",
+      "decision": "retire",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "C_ClubFinder\\.ReturnPendingCommunityApplicantList\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bReturnPendingCommunityApplicantList\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bReturnPendingCommunityApplicantList\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p825-page/src/c_api/patch_retired_members.rs:34:            \"ReturnPendingCommunityApplicantList\",\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/patch_8_2_5_publication_fixes.rs:6:    \"C_ClubFinder.ReturnPendingCommunityApplicantList\",\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "symbol": "C_ClubFinder.ReturnPendingGuildApplicantList",
+      "decision": "retire",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "C_ClubFinder\\.ReturnPendingGuildApplicantList\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bReturnPendingGuildApplicantList\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bReturnPendingGuildApplicantList\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p825-page/src/c_api/patch_retired_members.rs:35:            \"ReturnPendingGuildApplicantList\",\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/patch_8_2_5_publication_fixes.rs:7:    \"C_ClubFinder.ReturnPendingGuildApplicantList\",\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "symbol": "C_Commentator.GetElapsedMs",
+      "decision": "retire",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "C_Commentator\\.GetElapsedMs\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bGetElapsedMs\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bGetElapsedMs\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p825-page/src/c_api/patch_retired_members.rs:41:            \"GetElapsedMs\",\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/patch_8_2_5_publication_fixes.rs:8:    \"C_Commentator.GetElapsedMs\",\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "symbol": "C_Commentator.GetTrackedDefensiveCooldowns",
+      "decision": "retire",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "C_Commentator\\.GetTrackedDefensiveCooldowns\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bGetTrackedDefensiveCooldowns\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bGetTrackedDefensiveCooldowns\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p825-page/src/c_api/patch_retired_members.rs:42:            \"GetTrackedDefensiveCooldowns\",\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/patch_8_2_5_publication_fixes.rs:9:    \"C_Commentator.GetTrackedDefensiveCooldowns\",\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "symbol": "C_Commentator.GetTrackedOffensiveCooldowns",
+      "decision": "retire",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "C_Commentator\\.GetTrackedOffensiveCooldowns\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bGetTrackedOffensiveCooldowns\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bGetTrackedOffensiveCooldowns\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p825-page/src/c_api/patch_retired_members.rs:43:            \"GetTrackedOffensiveCooldowns\",\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/patch_8_2_5_publication_fixes.rs:10:    \"C_Commentator.GetTrackedOffensiveCooldowns\",\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "symbol": "C_Commentator.IsTrackedDefensiveCooldown",
+      "decision": "retire",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "C_Commentator\\.IsTrackedDefensiveCooldown\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bIsTrackedDefensiveCooldown\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bIsTrackedDefensiveCooldown\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p825-page/src/c_api/patch_retired_members.rs:44:            \"IsTrackedDefensiveCooldown\",\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/patch_8_2_5_publication_fixes.rs:11:    \"C_Commentator.IsTrackedDefensiveCooldown\",\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "symbol": "C_Commentator.IsTrackedOffensiveCooldown",
+      "decision": "retire",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "C_Commentator\\.IsTrackedOffensiveCooldown\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bIsTrackedOffensiveCooldown\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bIsTrackedOffensiveCooldown\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p825-page/src/c_api/patch_retired_members.rs:45:            \"IsTrackedOffensiveCooldown\",\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/patch_8_2_5_publication_fixes.rs:12:    \"C_Commentator.IsTrackedOffensiveCooldown\",\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "symbol": "C_PvP.GetMatchPVPStatIDs",
+      "decision": "retire",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "C_PvP\\.GetMatchPVPStatIDs\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bGetMatchPVPStatIDs\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bGetMatchPVPStatIDs\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p825-page/src/c_api/patch_retired_members.rs:48:    (\"C_PvP\", &[\"GetMatchPVPStatIDs\"]),\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/patch_8_2_5_publication_fixes.rs:13:    \"C_PvP.GetMatchPVPStatIDs\",\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "symbol": "C_RecruitAFriend.CheckEmailEnabled",
+      "decision": "retire",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "C_RecruitAFriend\\.CheckEmailEnabled\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bCheckEmailEnabled\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bCheckEmailEnabled\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p825-page/src/c_api/patch_retired_members.rs:51:        &[\"CheckEmailEnabled\", \"IsSendingEnabled\", \"SendRecruit\"],\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/patch_8_2_5_publication_fixes.rs:14:    \"C_RecruitAFriend.CheckEmailEnabled\",\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "symbol": "C_RecruitAFriend.IsSendingEnabled",
+      "decision": "retire",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "C_RecruitAFriend\\.IsSendingEnabled\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bIsSendingEnabled\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bIsSendingEnabled\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p825-page/src/c_api/patch_retired_members.rs:51:        &[\"CheckEmailEnabled\", \"IsSendingEnabled\", \"SendRecruit\"],\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/patch_8_2_5_publication_fixes.rs:15:    \"C_RecruitAFriend.IsSendingEnabled\",\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "symbol": "C_RecruitAFriend.SendRecruit",
+      "decision": "retire",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "C_RecruitAFriend\\.SendRecruit\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bSendRecruit\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bSendRecruit\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p825-page/src/c_api/patch_retired_members.rs:51:        &[\"CheckEmailEnabled\", \"IsSendingEnabled\", \"SendRecruit\"],\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/patch_8_2_5_publication_fixes.rs:16:    \"C_RecruitAFriend.SendRecruit\",\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "symbol": "C_SpellBook.IsSpellDisabled",
+      "decision": "retain",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "C_SpellBook\\.IsSpellDisabled\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 0,
+          "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:130:C_SpellBook.IsSpellDisabled = C_Spell.IsSpellDisabled\n",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bIsSpellDisabled\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 0,
+          "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:130:C_SpellBook.IsSpellDisabled = C_Spell.IsSpellDisabled\n",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bIsSpellDisabled\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p825-page/src/c_api/patch_retired_members.rs:26:// SpellBook.IsSpellDisabled and LeaveParty remain reachable for current consumers.\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/data/patch_11_0_0_sweep_known_gaps.json:95:  \"wt-global-api-C_Spell.IsSpellDisabled-307\",\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/data/patch_11_0_0_sweep_known_gaps.json:119:  \"wt-global-api-C_SpellBook.IsSpellDisabled-410\",\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/data/patch_8_2_5_sweep_known_gaps.json:50:  \"wt-global-api-C_SpellBook.IsSpellDisabled-118\",\n",
+          "stderr": ""
+        }
+      }
+    },
+    {
+      "symbol": "LeaveParty",
+      "decision": "retain",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "LeaveParty\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 0,
+          "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/QuestSession.lua:539:\tC_PartyInfo.ConfirmLeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Mainline/InstanceAbandon.lua:40:\t\tC_PartyInfo.ConfirmLeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_LFGUtil/Classic/LFGUtil.lua:23:\t\tLeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_LFGUtil/Mainline/LFGUtil.lua:34:\tC_PartyInfo.LeaveParty(LE_PARTY_CATEGORY_INSTANCE);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_LFGUtil/Shared/LFGUtilShared.lua:18:function ConfirmOrLeaveParty()\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopupShared/UnitPopupSharedButtonMixins.lua:938:\tC_PartyInfo.LeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopupShared/UnitPopupSharedButtonMixins.lua:960:\tConfirmOrLeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopupShared/Mainline/UnitPopupSharedButtonMixins.lua:34:\tC_WoWLabsMatchmaking.LeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_QueueStatusFrame/Mainline/QueueStatusFrame.lua:1477:\t\t\t\tConfirmOrLeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CompactRaidFrames/Mainline/Blizzard_CompactRaidFrameManager.lua:1314:\t\tC_PartyInfo.LeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CompactRaidFrames/Mainline/Blizzard_CompactRaidFrameManager.lua:1336:\tConfirmOrLeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopup/WoWLabs/UnitPopupButtons.lua:461:\tC_PartyInfo.LeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopup/WoWLabs/UnitPopupButtons.lua:559:\tC_WoWLabsMatchmaking.LeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopup/WoWHack/UnitPopupButtons.lua:398:\tC_PartyInfo.LeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopup/Standard/UnitPopupButtons.lua:562:\tC_PartyInfo.LeaveParty();\n",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bLeaveParty\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 0,
+          "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_LFGUtil/Classic/LFGUtil.lua:23:\t\tLeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_LFGUtil/Mainline/LFGUtil.lua:34:\tC_PartyInfo.LeaveParty(LE_PARTY_CATEGORY_INSTANCE);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopupShared/UnitPopupSharedButtonMixins.lua:938:\tC_PartyInfo.LeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopupShared/Mainline/UnitPopupSharedButtonMixins.lua:34:\tC_WoWLabsMatchmaking.LeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CompactRaidFrames/Mainline/Blizzard_CompactRaidFrameManager.lua:1314:\t\tC_PartyInfo.LeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopup/WoWLabs/UnitPopupButtons.lua:461:\tC_PartyInfo.LeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopup/WoWLabs/UnitPopupButtons.lua:559:\tC_WoWLabsMatchmaking.LeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopup/WoWHack/UnitPopupButtons.lua:398:\tC_PartyInfo.LeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopup/Standard/UnitPopupButtons.lua:562:\tC_PartyInfo.LeaveParty();\n",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "\\bLeaveParty\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p825-page/src/c_api/c_party_info/roles_1207.rs:251:        // INFERRED: self-uninvite is a no-op; use LeaveParty explicitly.\n/home/osso/.worktrees/wow-ui-sim-p825-page/src/c_api/patch_retired_members.rs:26:// SpellBook.IsSpellDisabled and LeaveParty remain reachable for current consumers.\n/home/osso/.worktrees/wow-ui-sim-p825-page/src/c_api/c_party_info.rs:4://! `IsGUIDInGroup` read the existing party roster model. `LeaveParty` and\n/home/osso/.worktrees/wow-ui-sim-p825-page/src/c_api/c_party_info.rs:76:    table_set_rust_fn_static(state, table_ref, \"LeaveParty\", c_party_info_leave_party)?;\n/home/osso/.worktrees/wow-ui-sim-p825-page/src/lua_api/globals/group_verbs.rs:12://! - `LeaveParty()`            \u2014 clears members + `party_group_active`,\n/home/osso/.worktrees/wow-ui-sim-p825-page/src/lua_api/globals/group_verbs.rs:112:/// `LeaveParty()` \u2014 clear members + active flag.\n/home/osso/.worktrees/wow-ui-sim-p825-page/src/lua_api/globals/group_verbs.rs:236:    LuaApiMut::register_function(lua, \"LeaveParty\", leave_party)?;\n/home/osso/.worktrees/wow-ui-sim-p825-page/src/lua_api/globals/wowlabs.rs:71:        (\"LeaveParty\", leave_party),\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/blizzard_unit_popup_shared_loads.rs:501:             UnitPopupGlueLeavePartyButton uses LeaveParty + \\\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/patch_12_0_5_pending_party.rs:10:        LeaveParty()\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/group_verbs.rs:67:// \u2500\u2500 LeaveParty \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/group_verbs.rs:86:    env.exec(\"LeaveParty()\").unwrap();\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/c_party_info_probes.rs:144:// \u2500\u2500 LeaveParty \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/c_party_info_probes.rs:153:            C_PartyInfo.LeaveParty()\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/wowlabs_matchmaking.rs:110:            if not C_WoWLabsMatchmaking.LeaveParty() then\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/party_1207_audit.rs:13:    env.exec(\"LeaveParty()\").unwrap();\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/party_1207_audit.rs:155:        LeaveParty()\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/data/patch_8_2_5_sweep_known_gaps.json:54:  \"wt-global-api-LeaveParty-161\",\n",
+          "stderr": ""
+        }
+      }
+    }
+  ]
+}

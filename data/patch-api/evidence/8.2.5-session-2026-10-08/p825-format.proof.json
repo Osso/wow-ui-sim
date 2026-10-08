@@ -1,0 +1,18 @@
+{
+  "command": [
+    "cargo",
+    "fmt",
+    "--check"
+  ],
+  "revision": "5e289fcadab4bedc5283f3fb1b3dc13109e7932c",
+  "scope": "p825-format",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p825-page",
+  "exit": 0,
+  "expected_exit": 0,
+  "log": "p825-format.txt",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "invalidated": false,
+  "seconds": 15.787753939999675,
+  "environment": {}
+}

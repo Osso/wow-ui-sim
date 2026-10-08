@@ -1,0 +1,19 @@
+{
+  "command": [
+    "cargo",
+    "build",
+    "--bin",
+    "wow-sim"
+  ],
+  "revision": "5e289fcadab4bedc5283f3fb1b3dc13109e7932c",
+  "scope": "p825-retail-build",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p825-page",
+  "exit": 0,
+  "expected_exit": 0,
+  "log": "p825-retail-build.txt",
+  "log_sha256": "787fc08bb41f5e7f1a053df93afd8a7266a77b293886deae1548615e3b4d9c3c",
+  "invalidated": false,
+  "seconds": 0.6992903999998816,
+  "environment": {}
+}

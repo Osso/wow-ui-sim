@@ -1,0 +1,22 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "patch_8_2_5_unused_members_stay_absent",
+    "--",
+    "--nocapture"
+  ],
+  "revision": "23e9056861a7217ea100c3567c70b892ca0c2b4b",
+  "scope": "p825-bare-green",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p825-page",
+  "exit": 0,
+  "expected_exit": 0,
+  "log": "p825-bare-green.txt",
+  "log_sha256": "e72ba9776a88298b661439437505e876cf8415209a3bd830000a965555624a20",
+  "invalidated": false,
+  "seconds": 92.68423468100082,
+  "environment": {}
+}

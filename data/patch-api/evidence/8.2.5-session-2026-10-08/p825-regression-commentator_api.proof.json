@@ -1,0 +1,22 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "commentator_api",
+    "--",
+    "--nocapture"
+  ],
+  "revision": "5e289fcadab4bedc5283f3fb1b3dc13109e7932c",
+  "scope": "p825-regression-commentator_api",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p825-page",
+  "exit": 0,
+  "expected_exit": 0,
+  "log": "p825-regression-commentator_api.txt",
+  "log_sha256": "6981a79aa15c7f6fde32a9501f2572df65e069c2fce016621d64ba460edc2b3d",
+  "invalidated": false,
+  "seconds": 0.381032690000211,
+  "environment": {}
+}

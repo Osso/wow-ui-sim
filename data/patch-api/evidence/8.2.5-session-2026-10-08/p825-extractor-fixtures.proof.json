@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "tools/test_extract_patch_non_inventory.py"
+  ],
+  "revision": "50d3c7d320581754ecdc22c9530c3b2dc1a12fe5",
+  "scope": "p825-extractor-fixtures",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p825-page",
+  "exit": 0,
+  "expected_exit": 0,
+  "log": "p825-extractor-fixtures.txt",
+  "log_sha256": "612da2f93885b9ca7ae3e4bc35dc8ec3c414e4e1350e72b7a0db6db1fa55f019",
+  "invalidated": false,
+  "seconds": 0.0639721700008522,
+  "environment": {}
+}

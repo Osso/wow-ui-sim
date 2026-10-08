@@ -1,0 +1,21 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "blizzard_recruit_a_friend_loads"
+  ],
+  "revision": "5e289fcadab4bedc5283f3fb1b3dc13109e7932c",
+  "scope": "p825-regression-blizzard_recruit_a_friend_loads",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p825-page",
+  "exit": 0,
+  "expected_exit": 0,
+  "log": "p825-regression-blizzard_recruit_a_friend_loads.txt",
+  "log_sha256": "8c53be2d7c2a11cb555cc976eb4e881e5578abce7aa0a8603c67c46750530b15",
+  "invalidated": false,
+  "seconds": 6.810447261001173,
+  "environment": {}
+}

@@ -16,5 +16,9 @@
   "log": "p825-discovery.txt",
   "log_sha256": "c4f441cab3cd195f6b42c3a028da7fad84031e954870decfc6e90faa52d9f159",
   "invalidated": false,
-  "seconds": 420.8314814567566
+  "seconds": 420.8314814567566,
+  "environment": {
+    "P825_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p825-page/data/patch-api/evidence/8.2.5-session-2026-10-08/p825-discovery-results.json"
+  },
+  "historical_red_or_negative": true
 }

@@ -1,0 +1,22 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "c_club_probes",
+    "--",
+    "--nocapture"
+  ],
+  "revision": "5e289fcadab4bedc5283f3fb1b3dc13109e7932c",
+  "scope": "p825-regression-c_club_probes",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p825-page",
+  "exit": 0,
+  "expected_exit": 0,
+  "log": "p825-regression-c_club_probes.txt",
+  "log_sha256": "ef5d7aca014e967e1cb3945b8a51ce2d76f0c880d6c3048c712608fbb1c7ffd0",
+  "invalidated": false,
+  "seconds": 0.685683973999403,
+  "environment": {}
+}

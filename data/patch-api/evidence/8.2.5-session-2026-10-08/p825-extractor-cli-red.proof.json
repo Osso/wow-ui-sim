@@ -13,5 +13,7 @@
   "log": "p825-extractor-cli-red.txt",
   "log_sha256": "6042765fc6e3d673a56d0ff368cb0853c484dd954809d886c3a50b968b6134e4",
   "invalidated": false,
-  "seconds": 0.0669570179998118
+  "seconds": 0.0669570179998118,
+  "environment": {},
+  "historical_red_or_negative": true
 }

@@ -1,0 +1,23 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "pvp_scoreboard",
+    "--",
+    "--nocapture"
+  ],
+  "revision": "5e289fcadab4bedc5283f3fb1b3dc13109e7932c",
+  "scope": "p825-regression-pvp_scoreboard",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p825-page",
+  "exit": 0,
+  "expected_exit": 0,
+  "log": "p825-regression-pvp_scoreboard.txt",
+  "log_sha256": "01825b1ebd76abe1f571fc599fe442d779911d4dd91f24ac79cec82b3454dfac",
+  "invalidated": false,
+  "seconds": 0.2570177859997784,
+  "calibration_only": "Zero tests selected; replaced by pvp_info scope, not accepted as behavioral proof.",
+  "environment": {}
+}

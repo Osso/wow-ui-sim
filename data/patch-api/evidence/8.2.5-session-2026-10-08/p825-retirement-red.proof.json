@@ -16,5 +16,7 @@
   "log": "p825-retirement-red.txt",
   "log_sha256": "676c24319d6052e6464a92dbb3fee92a1fa938a77e314b1197b990c1baa89ef5",
   "invalidated": false,
-  "seconds": 36.32838844100115
+  "seconds": 36.32838844100115,
+  "environment": {},
+  "historical_red_or_negative": true
 }

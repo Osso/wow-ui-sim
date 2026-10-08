@@ -21,7 +21,8 @@ def run_proof(name, command, extra_env=None, expected_exit=0):
     log.write_text(result.stdout + result.stderr)
     receipt = {
         'command': command, 'revision': revision, 'scope': name,
-        'cwd': str(ROOT), 'target': TARGET, 'exit': result.returncode,
+        'cwd': str(ROOT), 'target': TARGET, 'environment': extra_env or {},
+        'exit': result.returncode,
         'expected_exit': expected_exit, 'log': log.name,
         'log_sha256': hashlib.sha256(log.read_bytes()).hexdigest(),
         'invalidated': False, 'seconds': time.monotonic() - started,

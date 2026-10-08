@@ -1,0 +1,22 @@
+[
+  {
+    "source_id": "build-context-018",
+    "wikitext_line": 18,
+    "literal": "|+ Global API 8.2.0 (30948) &rarr; 8.2.5 (31884)"
+  },
+  {
+    "source_id": "build-context-169",
+    "wikitext_line": 169,
+    "literal": "|+ Widget API 8.2.0 (30948) &rarr; 8.2.5 (31884)"
+  },
+  {
+    "source_id": "build-context-196",
+    "wikitext_line": 196,
+    "literal": "|+ Events 8.2.0 (30948) &rarr; 8.2.5 (31884)"
+  },
+  {
+    "source_id": "build-context-247",
+    "wikitext_line": 247,
+    "literal": "|+ Console variables 8.2.0 (30948) &rarr; 8.2.5 (31884)"
+  }
+]

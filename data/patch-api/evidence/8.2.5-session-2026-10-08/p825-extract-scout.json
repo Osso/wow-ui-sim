@@ -1,0 +1,128 @@
+[
+  {
+    "source_id": "source-context-001",
+    "extract_line": 1,
+    "literal": "Patch 8.2.5 API changes",
+    "wikitext_line": 1,
+    "raw_literal": "{{apichanges|8.2.5|prev=8.2.0|next=8.3.0}}",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-003",
+    "extract_line": 3,
+    "literal": "== Changes ==",
+    "wikitext_line": 3,
+    "raw_literal": "==Changes==",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "source-context-004",
+    "extract_line": 4,
+    "literal": "* TOC: 80205",
+    "wikitext_line": 4,
+    "raw_literal": "* TOC: <code>80205</code>",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-005",
+    "extract_line": 5,
+    "literal": "* C_FriendList.SendWho() is hardware event protected.",
+    "wikitext_line": 5,
+    "raw_literal": "* {{api|C_FriendList.SendWho}}() is hardware event protected.",
+    "status": "audit-pending",
+    "reason": "Hardware-event protection of C_FriendList.SendWho is retained verbatim; no native hardware-event differential or historical protection test is credited by the publication sweep."
+  },
+  {
+    "source_id": "prose-undated-006",
+    "extract_line": 6,
+    "literal": "* SendChatMessage() is partially hw event protected:",
+    "wikitext_line": 6,
+    "raw_literal": "* {{api|SendChatMessage}}() is partially hw event protected:",
+    "status": "audit-pending",
+    "reason": "SendChatMessage partial hardware-event restriction statement retained; publication proves neither hardware-event gating nor instance-dependent delivery."
+  },
+  {
+    "source_id": "prose-undated-007",
+    "extract_line": 7,
+    "literal": ":: \"CHANNEL\" is protected, \"SAY\", \"YELL\" are protected while outside of instances/raids. [Reference: url=https://twitter.com/deadlybossmods/status/1176685822223011842|author=Deadly Boss Mods|date=2019-09-25|title=SendChatMessage restrictions|quote=Ok, a bunch of addon authors got to bottom of it after tons of testing. SendChatMessage automation disabled in public/private chat channels It’s ALSO disabled from SAY/YELL out in world. It’s permitted in raid/party/guild chat, and SAY/YELL within instances.]",
+    "wikitext_line": 7,
+    "raw_literal": ":: \"CHANNEL\" is protected, \"SAY\", \"YELL\" are protected while outside of instances/raids. <ref>{{ref web|url=https://twitter.com/deadlybossmods/status/1176685822223011842|author=Deadly Boss Mods|date=2019-09-25|title=SendChatMessage restrictions|quote=''Ok, a bunch of addon authors got to bottom of it after tons of testing. SendChatMessage automation disabled in public/private chat channels It’s ALSO disabled from SAY/YELL out in world. It’s permitted in raid/party/guild chat, and SAY/YELL within instances.''}}</ref>",
+    "status": "audit-pending",
+    "reason": "Exact channel/SAY/YELL/instance restriction and inline reference retained; historical cited behavior needs hardware-event and instance/raid differential proof. No native security parity credited."
+  },
+  {
+    "source_id": "prose-undated-008",
+    "extract_line": 8,
+    "literal": "* Added Party Sync and revamped Recruit-A-Friend",
+    "wikitext_line": 8,
+    "raw_literal": "* Added [[Patch_8.2.5#Making_it_Easier_to_Party_Up_with_Friends|Party Sync]] and revamped [[Patch_8.2.5#Recruit_A_Friend_Returns|Recruit-A-Friend]]",
+    "status": "audit-pending",
+    "reason": "Party Sync and Recruit-A-Friend overhaul spans consent/session/reward/server lifecycles; missing inventory producers remain explicit. A broad overhaul cannot be established by publication alone."
+  },
+  {
+    "source_id": "source-context-009",
+    "extract_line": 9,
+    "literal": "* Deprecated API: Deprecated_8_2_5.lua",
+    "wikitext_line": 9,
+    "raw_literal": "* Deprecated API: [https://www.townlong-yak.com/framexml/8.2.5/Blizzard_Deprecated/Deprecated_8_2_5.lua Deprecated_8_2_5.lua]",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-011",
+    "extract_line": 11,
+    "literal": "== Diffs ==",
+    "wikitext_line": 11,
+    "raw_literal": "==Diffs==",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-012",
+    "extract_line": 12,
+    "literal": "8.2.0 (31429) to 8.2.5 (31921)",
+    "wikitext_line": 12,
+    "raw_literal": "'''8.2.0 (31429) to 8.2.5 (31921)'''",
+    "status": "metadata-only",
+    "reason": "Build comparison, external diff URL or References marker; editorial source context, no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-013",
+    "extract_line": 13,
+    "literal": ": FrameXML: https://github.com/Gethe/wow-ui-source/commit/cf91ea29e5b84b9dd5b204de61d9349d578d73d8",
+    "wikitext_line": 13,
+    "raw_literal": ": FrameXML: https://github.com/Gethe/wow-ui-source/commit/cf91ea29e5b84b9dd5b204de61d9349d578d73d8",
+    "status": "metadata-only",
+    "reason": "Build comparison, external diff URL or References marker; editorial source context, no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-014",
+    "extract_line": 14,
+    "literal": ": InterfaceResources: https://github.com/Ketho/BlizzardInterfaceResources/commit/139c0ae4ea4533a49965079e6fb222c9f60862d6",
+    "wikitext_line": 14,
+    "raw_literal": ": InterfaceResources: https://github.com/Ketho/BlizzardInterfaceResources/commit/139c0ae4ea4533a49965079e6fb222c9f60862d6",
+    "status": "metadata-only",
+    "reason": "Build comparison, external diff URL or References marker; editorial source context, no runtime credit."
+  },
+  {
+    "source_id": "source-context-016",
+    "extract_line": 16,
+    "literal": "== References ==",
+    "wikitext_line": 261,
+    "raw_literal": "==References==",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-017",
+    "extract_line": 17,
+    "literal": "[References list; not expanded]",
+    "wikitext_line": 262,
+    "raw_literal": "{{Reflist}}",
+    "status": "metadata-only",
+    "reason": "Build comparison, external diff URL or References marker; editorial source context, no runtime credit."
+  }
+]

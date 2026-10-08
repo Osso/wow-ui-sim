@@ -1,0 +1,22 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "recruit_a_friend_surface",
+    "--",
+    "--nocapture"
+  ],
+  "revision": "5e289fcadab4bedc5283f3fb1b3dc13109e7932c",
+  "scope": "p825-regression-recruit_a_friend_surface",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p825-page",
+  "exit": 0,
+  "expected_exit": 0,
+  "log": "p825-regression-recruit_a_friend_surface.txt",
+  "log_sha256": "23e2c2db8c14f41b0e17f50fcb95e20fdeb17c377666f9961e1ede5c3dca6d00",
+  "invalidated": false,
+  "seconds": 0.3473830149996502,
+  "environment": {}
+}

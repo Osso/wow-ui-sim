@@ -1,0 +1,1344 @@
+[
+  {
+    "source_id": "wt-global-api-C_BattleNet.GetAccountInfoByID-26",
+    "symbol": "C_BattleNet.GetAccountInfoByID",
+    "wikitext_line": 26,
+    "literal": ": [[API C_BattleNet.GetAccountInfoByID|C_BattleNet.GetAccountInfoByID]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_BattleNet.GetAccountInfoByID"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw account-ID to account DTO lookup. Needs populated Battle.net account/friend/game-account identity indexes and missing-ID/index behavior; GUID/default queries cannot prove this producer."
+  },
+  {
+    "source_id": "wt-global-api-C_BattleNet.GetFriendGameAccountInfo-28",
+    "symbol": "C_BattleNet.GetFriendGameAccountInfo",
+    "wikitext_line": 28,
+    "literal": ": [[API C_BattleNet.GetFriendGameAccountInfo|C_BattleNet.GetFriendGameAccountInfo]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_BattleNet.GetFriendGameAccountInfo"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw friend-index/game-account-index DTO lookup. Needs populated Battle.net account/friend/game-account identity indexes and missing-ID/index behavior; GUID/default queries cannot prove this producer."
+  },
+  {
+    "source_id": "wt-global-api-C_BattleNet.GetFriendNumGameAccounts-29",
+    "symbol": "C_BattleNet.GetFriendNumGameAccounts",
+    "wikitext_line": 29,
+    "literal": ": [[API C_BattleNet.GetFriendNumGameAccounts|C_BattleNet.GetFriendNumGameAccounts]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_BattleNet.GetFriendNumGameAccounts"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw friend-index game-account collection count. Needs populated Battle.net account/friend/game-account identity indexes and missing-ID/index behavior; GUID/default queries cannot prove this producer."
+  },
+  {
+    "source_id": "wt-global-api-C_BattleNet.GetGameAccountInfoByID-31",
+    "symbol": "C_BattleNet.GetGameAccountInfoByID",
+    "wikitext_line": 31,
+    "literal": ": [[API C_BattleNet.GetGameAccountInfoByID|C_BattleNet.GetGameAccountInfoByID]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_BattleNet.GetGameAccountInfoByID"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw game-account-ID to game-account DTO lookup. Needs populated Battle.net account/friend/game-account identity indexes and missing-ID/index behavior; GUID/default queries cannot prove this producer."
+  },
+  {
+    "source_id": "wt-global-api-C_Calendar.EventRemoveInviteByGuid-32",
+    "symbol": "C_Calendar.EventRemoveInviteByGuid",
+    "wikitext_line": 32,
+    "literal": ": [[API C_Calendar.EventRemoveInviteByGuid|C_Calendar.EventRemoveInviteByGuid]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Calendar.EventRemoveInviteByGuid"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw GUID-based invite mutation. Closure needs calendar-event invitation ownership, GUID-to-invite mapping and update-event semantics; indexed editor calls are not proof of GUID removal."
+  },
+  {
+    "source_id": "wt-global-api-C_ClubFinder.GetPlayerSettingsFocusFlagsSelectedCount-39",
+    "symbol": "C_ClubFinder.GetPlayerSettingsFocusFlagsSelectedCount",
+    "wikitext_line": 39,
+    "literal": ": [[API C_ClubFinder.GetPlayerSettingsFocusFlagsSelectedCount|C_ClubFinder.GetPlayerSettingsFocusFlagsSelectedCount]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.GetPlayerSettingsFocusFlagsSelectedCount"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw selection-count producer. Focus-bit selection/storage and the selected-count rule need a concrete populated settings model; namespace lookup fabrication is not a count implementation."
+  },
+  {
+    "source_id": "wt-global-api-C_ClubFinder.GetRecruitingClubInfoFromClubID-40",
+    "symbol": "C_ClubFinder.GetRecruitingClubInfoFromClubID",
+    "wikitext_line": 40,
+    "literal": ": [[API C_ClubFinder.GetRecruitingClubInfoFromClubID|C_ClubFinder.GetRecruitingClubInfoFromClubID]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.GetRecruitingClubInfoFromClubID"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw club-ID recruiting DTO producer. Requires a populated club-ID-to-posting index with missing-ID semantics; existing GUID queries do not prove this lookup."
+  },
+  {
+    "source_id": "wt-global-api-C_ClubFinder.GetRecruitingClubInfoFromFinderGUID-41",
+    "symbol": "C_ClubFinder.GetRecruitingClubInfoFromFinderGUID",
+    "wikitext_line": 41,
+    "literal": ": [[API C_ClubFinder.GetRecruitingClubInfoFromFinderGUID|C_ClubFinder.GetRecruitingClubInfoFromFinderGUID]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.GetRecruitingClubInfoFromFinderGUID"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw finder-GUID recruiting DTO producer. Requires populated posting identity mapping and a complete recruiting-info result, not an empty table."
+  },
+  {
+    "source_id": "wt-global-api-C_Commentator.GetIndirectSpellID-57",
+    "symbol": "C_Commentator.GetIndirectSpellID",
+    "wikitext_line": 57,
+    "literal": ": [[API C_Commentator.GetIndirectSpellID|C_Commentator.GetIndirectSpellID]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Commentator.GetIndirectSpellID"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw tracked-to-indirect spell mapping. Requires spectator spell relationships and unknown-ID behavior; returning the input would invent the relationship."
+  },
+  {
+    "source_id": "wt-global-api-C_Commentator.GetMatchDuration-58",
+    "symbol": "C_Commentator.GetMatchDuration",
+    "wikitext_line": 58,
+    "literal": ": [[API C_Commentator.GetMatchDuration|C_Commentator.GetMatchDuration]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Commentator.GetMatchDuration"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw match clock producer. Needs start/end snapshots and clock units/lifecycle, rather than an arbitrary duration constant."
+  },
+  {
+    "source_id": "wt-global-api-C_Commentator.GetPlayerAuraInfo-59",
+    "symbol": "C_Commentator.GetPlayerAuraInfo",
+    "wikitext_line": 59,
+    "literal": ": [[API C_Commentator.GetPlayerAuraInfo|C_Commentator.GetPlayerAuraInfo]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Commentator.GetPlayerAuraInfo"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw spectator aura DTO producer. Needs team/player identity and aura-instance state; normal player aura state is not a spectator team mapping."
+  },
+  {
+    "source_id": "wt-global-api-C_Commentator.GetTrackedSpellID-60",
+    "symbol": "C_Commentator.GetTrackedSpellID",
+    "wikitext_line": 60,
+    "literal": ": [[API C_Commentator.GetTrackedSpellID|C_Commentator.GetTrackedSpellID]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Commentator.GetTrackedSpellID"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw indirect-to-tracked spell mapping. Requires spectator canonical spell identity and missing-ID behavior."
+  },
+  {
+    "source_id": "wt-global-api-C_Commentator.GetTrackedSpells-61",
+    "symbol": "C_Commentator.GetTrackedSpells",
+    "wikitext_line": 61,
+    "literal": ": [[API C_Commentator.GetTrackedSpells|C_Commentator.GetTrackedSpells]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Commentator.GetTrackedSpells"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw spectator tracked-spell collection. Needs concrete per-player tracked spell lists and defensive/offensive categorization."
+  },
+  {
+    "source_id": "wt-global-api-C_Commentator.IsTrackedSpell-62",
+    "symbol": "C_Commentator.IsTrackedSpell",
+    "wikitext_line": 62,
+    "literal": ": [[API C_Commentator.IsTrackedSpell|C_Commentator.IsTrackedSpell]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Commentator.IsTrackedSpell"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw tracked-membership predicate. Requires the tracked-spell collection and category policy; a constant boolean is not modeled membership."
+  },
+  {
+    "source_id": "wt-global-api-C_Commentator.SetRequestedDebuffCooldowns-63",
+    "symbol": "C_Commentator.SetRequestedDebuffCooldowns",
+    "wikitext_line": 63,
+    "literal": ": [[API C_Commentator.SetRequestedDebuffCooldowns|C_Commentator.SetRequestedDebuffCooldowns]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Commentator.SetRequestedDebuffCooldowns"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw spectator request mutation. Needs requested-debuff selection storage and the resulting cooldown delivery lifecycle."
+  },
+  {
+    "source_id": "wt-global-api-C_LFGInfo.GetRoleCheckDifficultyDetails-65",
+    "symbol": "C_LFGInfo.GetRoleCheckDifficultyDetails",
+    "wikitext_line": 65,
+    "literal": ": [[API C_LFGInfo.GetRoleCheckDifficultyDetails|C_LFGInfo.GetRoleCheckDifficultyDetails]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_LFGInfo.GetRoleCheckDifficultyDetails"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw role-check difficulty DTO. Needs active role-check context, difficulty metadata and missing-context outputs; generic LFG activity rows do not establish this result."
+  },
+  {
+    "source_id": "wt-global-api-C_PartyInfo.CanInvite-69",
+    "symbol": "C_PartyInfo.CanInvite",
+    "wikitext_line": 69,
+    "literal": ": [[API C_PartyInfo.CanInvite|C_PartyInfo.CanInvite]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PartyInfo.CanInvite"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw invitation-eligibility predicate. Roster count alone lacks leader/assistant, target, restriction and pending-invite policy; a capacity-only boolean would claim incomplete eligibility."
+  },
+  {
+    "source_id": "wt-global-api-C_PartyInfo.ConfirmConvertToRaid-70",
+    "symbol": "C_PartyInfo.ConfirmConvertToRaid",
+    "wikitext_line": 70,
+    "literal": ": [[API C_PartyInfo.ConfirmConvertToRaid|C_PartyInfo.ConfirmConvertToRaid]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PartyInfo.ConfirmConvertToRaid"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw conversion-confirmation mutation. Needs a pending conversion prompt and accepted/declined transition, not direct conversion or no-op acknowledgment."
+  },
+  {
+    "source_id": "wt-global-api-C_PartyInfo.ConfirmInviteTravelPass-71",
+    "symbol": "C_PartyInfo.ConfirmInviteTravelPass",
+    "wikitext_line": 71,
+    "literal": ": [[API C_PartyInfo.ConfirmInviteTravelPass|C_PartyInfo.ConfirmInviteTravelPass]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PartyInfo.ConfirmInviteTravelPass"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw Battle.net travel-pass confirmation. Needs pending account invitation identity and acceptance/decline request delivery."
+  },
+  {
+    "source_id": "wt-global-api-C_PartyInfo.ConfirmInviteUnit-72",
+    "symbol": "C_PartyInfo.ConfirmInviteUnit",
+    "wikitext_line": 72,
+    "literal": ": [[API C_PartyInfo.ConfirmInviteUnit|C_PartyInfo.ConfirmInviteUnit]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PartyInfo.ConfirmInviteUnit"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw unit-invite confirmation. Needs pending unit identity, acceptance/decline and roster/invitation events."
+  },
+  {
+    "source_id": "wt-global-api-C_PartyInfo.ConfirmLeaveParty-73",
+    "symbol": "C_PartyInfo.ConfirmLeaveParty",
+    "wikitext_line": 73,
+    "literal": ": [[API C_PartyInfo.ConfirmLeaveParty|C_PartyInfo.ConfirmLeaveParty]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PartyInfo.ConfirmLeaveParty"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw leave-confirmation mutation. Needs pending leave prompt ownership and confirmed/declined state transition; existing LeaveParty is not prompt confirmation."
+  },
+  {
+    "source_id": "wt-global-api-C_PartyInfo.ConfirmRequestInviteFromUnit-74",
+    "symbol": "C_PartyInfo.ConfirmRequestInviteFromUnit",
+    "wikitext_line": 74,
+    "literal": ": [[API C_PartyInfo.ConfirmRequestInviteFromUnit|C_PartyInfo.ConfirmRequestInviteFromUnit]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PartyInfo.ConfirmRequestInviteFromUnit"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw request-invite confirmation. Needs pending request identity and accepted/declined delivery, rather than a generic invite call."
+  },
+  {
+    "source_id": "wt-global-api-C_PartyInfo.ConvertToParty-75",
+    "symbol": "C_PartyInfo.ConvertToParty",
+    "wikitext_line": 75,
+    "literal": ": [[API C_PartyInfo.ConvertToParty|C_PartyInfo.ConvertToParty]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PartyInfo.ConvertToParty"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw raid-to-party mutation. Requires conversion eligibility, excess-member handling and roster-update lifecycle; namespace autostub does not change group state."
+  },
+  {
+    "source_id": "wt-global-api-C_PartyInfo.ConvertToRaid-76",
+    "symbol": "C_PartyInfo.ConvertToRaid",
+    "wikitext_line": 76,
+    "literal": ": [[API C_PartyInfo.ConvertToRaid|C_PartyInfo.ConvertToRaid]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PartyInfo.ConvertToRaid"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw party-to-raid mutation. Requires leadership eligibility and coherent raid roster transition/events."
+  },
+  {
+    "source_id": "wt-global-api-C_PartyInfo.InviteUnit-77",
+    "symbol": "C_PartyInfo.InviteUnit",
+    "wikitext_line": 77,
+    "literal": ": [[API C_PartyInfo.InviteUnit|C_PartyInfo.InviteUnit]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PartyInfo.InviteUnit"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw unit-invitation producer. Requires pending invitations, target resolution and eligibility/error events; adding roster members immediately is not an invitation."
+  },
+  {
+    "source_id": "wt-global-api-C_PartyInfo.RequestInviteFromUnit-80",
+    "symbol": "C_PartyInfo.RequestInviteFromUnit",
+    "wikitext_line": 80,
+    "literal": ": [[API C_PartyInfo.RequestInviteFromUnit|C_PartyInfo.RequestInviteFromUnit]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PartyInfo.RequestInviteFromUnit"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw outgoing join-request producer. Requires request target/expiry/response state rather than a no-op or immediate roster join."
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetMatchPVPStatColumns-81",
+    "symbol": "C_PvP.GetMatchPVPStatColumns",
+    "wikitext_line": 81,
+    "literal": ": [[API C_PvP.GetMatchPVPStatColumns|C_PvP.GetMatchPVPStatColumns]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.GetMatchPVPStatColumns"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw match-stat column DTO producer. Needs active-match column definitions and ordered statistic metadata; score values alone cannot reconstruct columns."
+  },
+  {
+    "source_id": "wt-global-api-C_QuestLog.GetQuestDifficultyLevel-84",
+    "symbol": "C_QuestLog.GetQuestDifficultyLevel",
+    "wikitext_line": 84,
+    "literal": ": [[API C_QuestLog.GetQuestDifficultyLevel|C_QuestLog.GetQuestDifficultyLevel]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestLog.GetQuestDifficultyLevel"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw difficulty-level query. Needs quest-ID metadata and scaling/difficulty rules tied to player/session context; fixed levels would fabricate quest data."
+  },
+  {
+    "source_id": "wt-global-api-C_QuestLog.IsQuestReplayedRecently-88",
+    "symbol": "C_QuestLog.IsQuestReplayedRecently",
+    "wikitext_line": 88,
+    "literal": ": [[API C_QuestLog.IsQuestReplayedRecently|C_QuestLog.IsQuestReplayedRecently]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestLog.IsQuestReplayedRecently"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw replay-recency query. Needs replay completion timestamps and the native recency boundary, not generic completion flags."
+  },
+  {
+    "source_id": "wt-global-api-C_QuestLog.IsQuestTrivial-89",
+    "symbol": "C_QuestLog.IsQuestTrivial",
+    "wikitext_line": 89,
+    "literal": ": [[API C_QuestLog.IsQuestTrivial|C_QuestLog.IsQuestTrivial]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestLog.IsQuestTrivial"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw quest triviality predicate. Needs effective quest difficulty and player-level triviality thresholds; quest completion/disabled state is not triviality."
+  },
+  {
+    "source_id": "wt-global-api-C_QuestSession.CanStop-93",
+    "symbol": "C_QuestSession.CanStop",
+    "wikitext_line": 93,
+    "literal": ": [[API C_QuestSession.CanStop|C_QuestSession.CanStop]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestSession.CanStop"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw stop-eligibility producer. Needs active session ownership and pending start/stop lifecycle, not a constant based only on session existence."
+  },
+  {
+    "source_id": "wt-global-api-C_QuestSession.GetAvailableSessionCommand-95",
+    "symbol": "C_QuestSession.GetAvailableSessionCommand",
+    "wikitext_line": 95,
+    "literal": ": [[API C_QuestSession.GetAvailableSessionCommand|C_QuestSession.GetAvailableSessionCommand]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestSession.GetAvailableSessionCommand"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw available-command producer. Needs role/session lifecycle and command enum eligibility; pending-command defaults are not available commands."
+  },
+  {
+    "source_id": "wt-global-api-C_QuestSession.GetSuperTrackedQuest-98",
+    "symbol": "C_QuestSession.GetSuperTrackedQuest",
+    "wikitext_line": 98,
+    "literal": ": [[API C_QuestSession.GetSuperTrackedQuest|C_QuestSession.GetSuperTrackedQuest]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestSession.GetSuperTrackedQuest"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw session supertracked selection. Needs session-owned selected quest identity and clear/missing semantics distinct from ordinary quest tracking."
+  },
+  {
+    "source_id": "wt-global-api-C_QuestSession.HasJoined-99",
+    "symbol": "C_QuestSession.HasJoined",
+    "wikitext_line": 99,
+    "literal": ": [[API C_QuestSession.HasJoined|C_QuestSession.HasJoined]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestSession.HasJoined"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw joined-state producer. Needs participant acceptance/join state separate from session existence."
+  },
+  {
+    "source_id": "wt-global-api-C_QuestSession.HasPendingCommand-100",
+    "symbol": "C_QuestSession.HasPendingCommand",
+    "wikitext_line": 100,
+    "literal": ": [[API C_QuestSession.HasPendingCommand|C_QuestSession.HasPendingCommand]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestSession.HasPendingCommand"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw command-pending predicate. Needs pending command state and response/clear transitions."
+  },
+  {
+    "source_id": "wt-global-api-C_QuestSession.RequestSessionStart-101",
+    "symbol": "C_QuestSession.RequestSessionStart",
+    "wikitext_line": 101,
+    "literal": ": [[API C_QuestSession.RequestSessionStart|C_QuestSession.RequestSessionStart]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestSession.RequestSessionStart"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw session-start request producer. Needs member consent, pending command and session-created/joined lifecycle; immediate toggling would omit consent."
+  },
+  {
+    "source_id": "wt-global-api-C_QuestSession.RequestSessionStop-102",
+    "symbol": "C_QuestSession.RequestSessionStop",
+    "wikitext_line": 102,
+    "literal": ": [[API C_QuestSession.RequestSessionStop|C_QuestSession.RequestSessionStop]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestSession.RequestSessionStop"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw session-stop request producer. Needs ownership validation, pending stop and destruction/left event lifecycle."
+  },
+  {
+    "source_id": "wt-global-api-C_QuestSession.SendSessionBeginResponse-103",
+    "symbol": "C_QuestSession.SendSessionBeginResponse",
+    "wikitext_line": 103,
+    "literal": ": [[API C_QuestSession.SendSessionBeginResponse|C_QuestSession.SendSessionBeginResponse]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestSession.SendSessionBeginResponse"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw begin-response mutation. Needs pending participant response identity and accepted/declined progression."
+  },
+  {
+    "source_id": "wt-global-api-C_QuestSession.SetQuestIsSuperTracked-104",
+    "symbol": "C_QuestSession.SetQuestIsSuperTracked",
+    "wikitext_line": 104,
+    "literal": ": [[API C_QuestSession.SetQuestIsSuperTracked|C_QuestSession.SetQuestIsSuperTracked]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestSession.SetQuestIsSuperTracked"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw supertracked selection mutation. Needs session-owned selection storage and corresponding query/notification lifecycle."
+  },
+  {
+    "source_id": "wt-global-api-C_RecruitAFriend.ClaimActivityReward-105",
+    "symbol": "C_RecruitAFriend.ClaimActivityReward",
+    "wikitext_line": 105,
+    "literal": ": [[API C_RecruitAFriend.ClaimActivityReward|C_RecruitAFriend.ClaimActivityReward]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_RecruitAFriend.ClaimActivityReward"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw reward-claim mutation. Needs earned activity reward state, eligibility, consumption and entitlement delivery; a no-op would not claim anything."
+  },
+  {
+    "source_id": "wt-global-api-C_RecruitAFriend.ClaimNextReward-106",
+    "symbol": "C_RecruitAFriend.ClaimNextReward",
+    "wikitext_line": 106,
+    "literal": ": [[API C_RecruitAFriend.ClaimNextReward|C_RecruitAFriend.ClaimNextReward]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_RecruitAFriend.ClaimNextReward"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw next-reward claim. Needs ordered unlocked/claimed rewards and eligibility/entitlement transition."
+  },
+  {
+    "source_id": "wt-global-api-C_RecruitAFriend.GenerateRecruitmentLink-107",
+    "symbol": "C_RecruitAFriend.GenerateRecruitmentLink",
+    "wikitext_line": 107,
+    "literal": ": [[API C_RecruitAFriend.GenerateRecruitmentLink|C_RecruitAFriend.GenerateRecruitmentLink]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_RecruitAFriend.GenerateRecruitmentLink"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw recruitment-link producer. Native token issuance is server-backed; inventing a URL is not a modeled enrollment token."
+  },
+  {
+    "source_id": "wt-global-api-C_RecruitAFriend.GetRecruitActivityRequirementsText-110",
+    "symbol": "C_RecruitAFriend.GetRecruitActivityRequirementsText",
+    "wikitext_line": 110,
+    "literal": ": [[API C_RecruitAFriend.GetRecruitActivityRequirementsText|C_RecruitAFriend.GetRecruitActivityRequirementsText]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_RecruitAFriend.GetRecruitActivityRequirementsText"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw requirement-text producer. Needs activity requirement metadata and localization inputs, not an arbitrary string."
+  },
+  {
+    "source_id": "wt-global-api-C_RecruitAFriend.RemoveRAFRecruit-113",
+    "symbol": "C_RecruitAFriend.RemoveRAFRecruit",
+    "wikitext_line": 113,
+    "literal": ": [[API C_RecruitAFriend.RemoveRAFRecruit|C_RecruitAFriend.RemoveRAFRecruit]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_RecruitAFriend.RemoveRAFRecruit"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw recruit removal. Needs linked recruit identity and relationship mutation/update events."
+  },
+  {
+    "source_id": "wt-global-api-C_RecruitAFriend.RequestUpdatedRecruitmentInfo-114",
+    "symbol": "C_RecruitAFriend.RequestUpdatedRecruitmentInfo",
+    "wikitext_line": 114,
+    "literal": ": [[API C_RecruitAFriend.RequestUpdatedRecruitmentInfo|C_RecruitAFriend.RequestUpdatedRecruitmentInfo]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_RecruitAFriend.RequestUpdatedRecruitmentInfo"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw asynchronous recruitment refresh. Needs host snapshot/request completion and RAF_INFO_UPDATED delivery, not an empty callback."
+  },
+  {
+    "source_id": "wt-global-api-C_SocialRestrictions.IsMuted-115",
+    "symbol": "C_SocialRestrictions.IsMuted",
+    "wikitext_line": 115,
+    "literal": ": [[API C_SocialRestrictions.IsMuted|C_SocialRestrictions.IsMuted]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_SocialRestrictions.IsMuted"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw social mute-state producer. Voice-chat mute is a different domain; requires account/chat restriction snapshot and transitions."
+  },
+  {
+    "source_id": "wt-global-api-C_SpellBook.IsSpellDisabled-118",
+    "symbol": "C_SpellBook.IsSpellDisabled",
+    "wikitext_line": 118,
+    "literal": ": [[API C_SpellBook.IsSpellDisabled|C_SpellBook.IsSpellDisabled]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_SpellBook.IsSpellDisabled-410",
+      "symbol": "C_SpellBook.IsSpellDisabled"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Current cached retail consumer in Blizzard_Deprecated remains (whole-word/bare scans retained). Do not retire despite later-page absence expectation; no raw producer and ordinary autostub lookup remains an exact gap."
+  },
+  {
+    "source_id": "wt-global-api-C_UIWidgetManager.GetCaptureZoneVisualizationInfo-119",
+    "symbol": "C_UIWidgetManager.GetCaptureZoneVisualizationInfo",
+    "wikitext_line": 119,
+    "literal": ": [[API C_UIWidgetManager.GetCaptureZoneVisualizationInfo|C_UIWidgetManager.GetCaptureZoneVisualizationInfo]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_UIWidgetManager.GetCaptureZoneVisualizationInfo"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw capture-zone visualization DTO. Needs server widget ID/type payload with capture-zone fields; existing widget DTO types do not prove this shape."
+  },
+  {
+    "source_id": "wt-global-api-ConfirmBNRequestInviteFriend-120",
+    "symbol": "ConfirmBNRequestInviteFriend",
+    "wikitext_line": 120,
+    "literal": ": [[API ConfirmBNRequestInviteFriend|ConfirmBNRequestInviteFriend]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "ConfirmBNRequestInviteFriend"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "No global Battle.net invite-request confirmation. Needs pending friend/account request state with accept/decline lifecycle; a placeholder would discard the response."
+  },
+  {
+    "source_id": "wt-global-api-GetExpansionForLevel-121",
+    "symbol": "GetExpansionForLevel",
+    "wikitext_line": 121,
+    "literal": ": [[API GetExpansionForLevel|GetExpansionForLevel]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetExpansionForLevel"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "Global absent on retail. Mists-only fixed thresholds are not evidence for current retail post-squish expansion-level mapping; needs profile-correct level metadata and boundary fixtures."
+  },
+  {
+    "source_id": "wt-global-api-BNGetFriendInfo-131",
+    "symbol": "BNGetFriendInfo",
+    "wikitext_line": 131,
+    "literal": ": [[API BNGetFriendInfo|BNGetFriendInfo]]",
+    "expectation": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "BNGetFriendInfo"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "Legacy inert_global_defaults registration and system_api_seeded call remain. No cached consumer, but deleting this cross-profile global needs a separate classic-safe registration/test migration; not treated as unused namespace cleanup."
+  },
+  {
+    "source_id": "wt-global-api-LeaveParty-161",
+    "symbol": "LeaveParty",
+    "wikitext_line": 161,
+    "literal": ": [[API LeaveParty|LeaveParty]]",
+    "expectation": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "LeaveParty"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "Current cached retail whole-word/bare consumers and modeled legacy group callers remain. Retirement prohibited; retain precise historical absence gap rather than deleting caller behavior."
+  },
+  {
+    "source_id": "wt-widgets-ModelSceneActor:AttachToMount-177",
+    "symbol": "ModelSceneActor:AttachToMount",
+    "wikitext_line": 177,
+    "literal": ": [[API ModelSceneActor AttachToMount|ModelSceneActor:AttachToMount]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "ModelSceneActor:AttachToMount"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "ModelSceneActor; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "reason": "AttachToMount missing on ModelSceneActor. Native 3D actor mesh/equipment/mount/sheathe domain is intentionally unsupported (AGENTS.md 3D scope); no new shim or claim of 3D behavior."
+  },
+  {
+    "source_id": "wt-widgets-ModelSceneActor:CalculateMountScale-178",
+    "symbol": "ModelSceneActor:CalculateMountScale",
+    "wikitext_line": 178,
+    "literal": ": [[API ModelSceneActor CalculateMountScale|ModelSceneActor:CalculateMountScale]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "ModelSceneActor:CalculateMountScale"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "ModelSceneActor; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "reason": "CalculateMountScale missing on ModelSceneActor. Native 3D actor mesh/equipment/mount/sheathe domain is intentionally unsupported (AGENTS.md 3D scope); no new shim or claim of 3D behavior."
+  },
+  {
+    "source_id": "wt-widgets-ModelSceneActor:Dress-179",
+    "symbol": "ModelSceneActor:Dress",
+    "wikitext_line": 179,
+    "literal": ": [[API ModelSceneActor Dress|ModelSceneActor:Dress]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "ModelSceneActor:Dress"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "ModelSceneActor; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "reason": "Dress missing on ModelSceneActor. Native 3D actor mesh/equipment/mount/sheathe domain is intentionally unsupported (AGENTS.md 3D scope); no new shim or claim of 3D behavior."
+  },
+  {
+    "source_id": "wt-widgets-ModelSceneActor:GetAutoDress-180",
+    "symbol": "ModelSceneActor:GetAutoDress",
+    "wikitext_line": 180,
+    "literal": ": [[API ModelSceneActor GetAutoDress|ModelSceneActor:GetAutoDress]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "ModelSceneActor:GetAutoDress"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "ModelSceneActor; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "reason": "GetAutoDress missing on ModelSceneActor. Native 3D actor mesh/equipment/mount/sheathe domain is intentionally unsupported (AGENTS.md 3D scope); no new shim or claim of 3D behavior."
+  },
+  {
+    "source_id": "wt-widgets-ModelSceneActor:GetSheathed-181",
+    "symbol": "ModelSceneActor:GetSheathed",
+    "wikitext_line": 181,
+    "literal": ": [[API ModelSceneActor GetSheathed|ModelSceneActor:GetSheathed]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "ModelSceneActor:GetSheathed"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "ModelSceneActor; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "reason": "GetSheathed missing on ModelSceneActor. Native 3D actor mesh/equipment/mount/sheathe domain is intentionally unsupported (AGENTS.md 3D scope); no new shim or claim of 3D behavior."
+  },
+  {
+    "source_id": "wt-widgets-ModelSceneActor:GetUseTransmogSkin-183",
+    "symbol": "ModelSceneActor:GetUseTransmogSkin",
+    "wikitext_line": 183,
+    "literal": ": [[API ModelSceneActor GetUseTransmogSkin|ModelSceneActor:GetUseTransmogSkin]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "ModelSceneActor:GetUseTransmogSkin"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "ModelSceneActor; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "reason": "GetUseTransmogSkin missing on ModelSceneActor. Native 3D actor mesh/equipment/mount/sheathe domain is intentionally unsupported (AGENTS.md 3D scope); no new shim or claim of 3D behavior."
+  },
+  {
+    "source_id": "wt-widgets-ModelSceneActor:SetPlayerModelFromGlues-185",
+    "symbol": "ModelSceneActor:SetPlayerModelFromGlues",
+    "wikitext_line": 185,
+    "literal": ": [[API ModelSceneActor SetPlayerModelFromGlues|ModelSceneActor:SetPlayerModelFromGlues]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "ModelSceneActor:SetPlayerModelFromGlues"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "ModelSceneActor; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "reason": "SetPlayerModelFromGlues missing on ModelSceneActor. Native 3D actor mesh/equipment/mount/sheathe domain is intentionally unsupported (AGENTS.md 3D scope); no new shim or claim of 3D behavior."
+  },
+  {
+    "source_id": "wt-widgets-ModelSceneActor:SetSheathed-186",
+    "symbol": "ModelSceneActor:SetSheathed",
+    "wikitext_line": 186,
+    "literal": ": [[API ModelSceneActor SetSheathed|ModelSceneActor:SetSheathed]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "ModelSceneActor:SetSheathed"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "ModelSceneActor; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "reason": "SetSheathed missing on ModelSceneActor. Native 3D actor mesh/equipment/mount/sheathe domain is intentionally unsupported (AGENTS.md 3D scope); no new shim or claim of 3D behavior."
+  },
+  {
+    "source_id": "wt-cvars-DefragmentGPU-258",
+    "symbol": "DefragmentGPU",
+    "wikitext_line": 258,
+    "literal": ": {{api|t=c|DefragmentGPU}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "DefragmentGPU"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Command record present=false",
+      "kind": "command",
+      "value": null
+    },
+    "reason": "Command record absent. Simulator GPU atlas allocation has no native console GPU-memory defragmentation operation; adding a command record/no-op would not model it."
+  }
+]

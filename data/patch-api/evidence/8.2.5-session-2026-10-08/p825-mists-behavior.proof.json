@@ -1,0 +1,25 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--no-default-features",
+    "--features",
+    "sound,gui,casc,client-mists",
+    "--test",
+    "integration",
+    "patch_8_2_5_classic_members_stay_reachable",
+    "--",
+    "--nocapture"
+  ],
+  "revision": "50d3c7d320581754ecdc22c9530c3b2dc1a12fe5",
+  "scope": "p825-mists-behavior",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p825-page",
+  "exit": 0,
+  "expected_exit": 0,
+  "log": "p825-mists-behavior.txt",
+  "log_sha256": "8112d54fb3e4baa533adeacaf29639bbf2cef2f77226ad479e90da330b48bbbb",
+  "invalidated": false,
+  "seconds": 124.02723039500052,
+  "environment": {}
+}
