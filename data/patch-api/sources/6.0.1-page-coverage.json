@@ -1,0 +1,18 @@
+{
+  "schema": "patch-page-coverage/v1",
+  "patch": "6.0.1",
+  "source_sha256": "32a4b6b7db6b7fbb2bc3156514dce47e8679d057b8d911264430d81e5d0186c7",
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/6.0.1-api-changes.txt",
+    "sha256": "bbd5575edc2d20e35c52be0b2d23f8a44f17afe4ad5f0eafe87a926b4f2e5b30"
+  },
+  "proof_policy": "Redirect-only audit; zero publication rows does not prove API or behavior coverage of the target page.",
+  "source_rows": [
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Redirect identity only; Patch 6.0.2/API changes is separately owned by p602-page. No API or behavior statements in the pinned source."
+    }
+  ]
+}
