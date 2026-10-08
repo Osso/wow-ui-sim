@@ -184,8 +184,14 @@ def retirements(context):
     scans = read(HERE / 'p610-retirement-scans.json')
     assert scans['members'] == scans['scans'] == [] and scans['tool'] == '/usr/bin/grep'
     for row in scans['later_registers'].values():
-        paths = [p for p in paths_at(row['revision'], 'data/patch-api/sources') if p.endswith('-wikitext-register.json')]
+        # No proposed retirements: readdition checks are vacuous. Keep the complete
+        # ls-tree receipt without requiring unrelated, unmerged branch objects later.
+        tree = (HERE / row['tree_file']).read_bytes()
+        assert sha(tree) == row['tree_sha256']
+        paths = [p for p in tree.decode().splitlines() if p.endswith('-wikitext-register.json')]
         assert set(row['registers']) == set(paths) and row['readditions'] == []
+    master = next(row for row in scans['later_registers'].values() if row['revision'] == context['base_revision'])
+    assert (HERE / master['tree_file']).read_text().splitlines() == paths_at(context['base_revision'], 'data/patch-api/sources')
     for row in read(HERE / 'p610-named-api-scans.json'):
         assert row['command'][0] == '/usr/bin/grep' and '-w' in row['command']
         assert row['exit'] in (0, 1)

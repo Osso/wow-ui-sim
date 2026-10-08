@@ -1,0 +1,25 @@
+[
+  {
+    "source_id": "wt-global-api-SendChatMessage-14",
+    "symbol": "SendChatMessage",
+    "observation": {
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "absent",
+        "section": "global-api",
+        "superseded_by": "wt-global-api-SendChatMessage-136",
+        "symbol": "SendChatMessage"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "raw=function; lookup=function",
+        "kind": "global",
+        "value": null
+      },
+      "ok": false
+    },
+    "decision": "Later register removal expects absence, but simulator deliberately publishes log-only SendChatMessage and current Blizzard chat consumers call it. Whole-word cached/src/tests grep retained; retiring it would break current callers. No absence shim or consumer patch added. UTF-8 rejection also remains separately unproved."
+  }
+]

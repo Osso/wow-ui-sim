@@ -56,7 +56,9 @@
         "data/patch-api/sources/9.2.5-wikitext-register.json",
         "data/patch-api/sources/9.2.7-wikitext-register.json"
       ],
-      "readditions": []
+      "readditions": [],
+      "tree_file": "p610-15b417367-source-tree.txt",
+      "tree_sha256": "41f051c12a7e2f1b6f276a4eb37a076cb20f5913ab74dbc472421162318c79fa"
     },
     "p620-page": {
       "revision": "a4f7f688caaba2dc4370d0d456db5c944ef7a226",
@@ -111,7 +113,9 @@
         "data/patch-api/sources/9.2.5-wikitext-register.json",
         "data/patch-api/sources/9.2.7-wikitext-register.json"
       ],
-      "readditions": []
+      "readditions": [],
+      "tree_file": "p610-p620-page-source-tree.txt",
+      "tree_sha256": "a06beb5fbb3994760dd140e4022e79cb5d066f50ef2926b8aa4adbc27c091867"
     },
     "p622-page": {
       "revision": "e799943ef58b6a5704abe6103105fcec702ebce5",
@@ -165,7 +169,9 @@
         "data/patch-api/sources/9.2.5-wikitext-register.json",
         "data/patch-api/sources/9.2.7-wikitext-register.json"
       ],
-      "readditions": []
+      "readditions": [],
+      "tree_file": "p610-p622-page-source-tree.txt",
+      "tree_sha256": "a7b82170970ce28bd2135325a4d13791ec4475bf6b1fb5a0c2c4fbc5de94dc5f"
     },
     "p624-page": {
       "revision": "1dbc6204c0e09437e50585212b389727c9bbe758",
@@ -220,7 +226,9 @@
         "data/patch-api/sources/9.2.5-wikitext-register.json",
         "data/patch-api/sources/9.2.7-wikitext-register.json"
       ],
-      "readditions": []
+      "readditions": [],
+      "tree_file": "p610-p624-page-source-tree.txt",
+      "tree_sha256": "0575f3fc8221da052fbc7e5a62bb0ae7c3127e0657a9e6322aae916f123f38cd"
     }
   }
 }

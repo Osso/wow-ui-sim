@@ -27,7 +27,15 @@ No source removal members; no retirement candidate or removal code. Required per
 
 ## Verification
 
-Discovery exposed exactly one SendChatMessage absence mismatch; it is retained in the known-gap fixture, not hidden behind a shim. Final targeted proof is in progress. Required gates: all publication sweeps, recap model/UI/alias and legacy absence tests, three Python fixture scripts, source reproduction, cargo fmt, warning-clean non-vendor Mists check and every prior validator. No full integration suite. No runtime source changed, so addons-enabled startup comparison is not required by the widely-used-path condition.
+Discovery exposed exactly one SendChatMessage absence mismatch; it is retained in the known-gap fixture, not hidden behind a shim. Targeted proof passes:
+
+- `cargo test --test prefork_full_ui -- patch_6_1_0`: 1/1; all publication sweeps: 50/50 (49 pages plus factory), 9,020 observations. Missing-API negative control fails as required, increasing gaps 1 → 2 with three unaffected observations identical.
+- Recap UI/alias prefork cases: 8/8; seeded C_DeathRecap integration probes: 6/6; bare legacy-absence integration case: 1/1.
+- Python generator/extractor/validator fixtures: 32/36/8 pass. All 49 registers reproduce; 46 extracts reproduce, with only unchanged inherited 12.0.5/12.0.7/12.1.0 failures. 249 earlier source artifacts and 105 mode outcomes preserved.
+- `cargo fmt --check` and `cargo check --no-default-features --features sound,gui,casc,client-mists --tests`: pass, zero non-vendor warnings. Six existing iced_wgpu manifest deprecations remain unmodified.
+- All 30 pre-audit validators pass. Own clean-checkout/synthetic-later-commit gate is pending.
+
+No full integration suite. No runtime source changed, so addons-enabled startup comparison is not required by the widely-used-path condition.
 
 ## Validator portability
 

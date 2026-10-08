@@ -1,0 +1,22 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_6_1_0"
+  ],
+  "revision": "c7aeb5dbc3e2ad78e9f7772f9908d31a6ff2be9e",
+  "scope": "p610-discovery",
+  "cwd": ".",
+  "target": "dedicated p610-page target (external to repository)",
+  "environment": {
+    "P610_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p610-page/data/patch-api/evidence/6.1.0-session-2026-10-08/patch_6_1_0_publication_sweep-results.json"
+  },
+  "exit": 0,
+  "log": "p610-discovery.txt",
+  "log_sha256": "2120d076310c561b3a0f9d5475c2eb4a63974a9382f4ecbc16541b7b5364d214",
+  "seconds": 32.347322427995095,
+  "invalidated": false
+}

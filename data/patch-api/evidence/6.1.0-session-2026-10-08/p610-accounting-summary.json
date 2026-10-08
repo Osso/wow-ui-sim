@@ -1,0 +1,14 @@
+{
+  "source_revision": 1216027,
+  "inventory": 4,
+  "extract": 14,
+  "publication_gaps": 1,
+  "new_runtime_models": [],
+  "retirements": [],
+  "status_counts": {
+    "audit-pending": 9,
+    "bounded-coverage": 3,
+    "metadata-only": 6
+  },
+  "transclusion": "unexpanded source boundary; not API inventory coverage"
+}

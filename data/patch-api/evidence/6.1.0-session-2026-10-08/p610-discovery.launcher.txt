@@ -1,1 +1,1 @@
-p610-discovery 1
+p610-discovery 0

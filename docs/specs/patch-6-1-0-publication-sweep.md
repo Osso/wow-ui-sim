@@ -4,10 +4,10 @@ Audit the pinned [6.1.0 page](../../data/patch-api/sources/6.1.0-api-changes.pro
 
 ## What it must do
 
-- [ ] Retain all four explicit API identities and every nonblank supplemental extract occurrence, with precise coverage or problematic reasons.
-- [ ] Probe the three legacy recap globals and SendChatMessage against later-register supersession; require the exact known-gap set, not a count-only allowance.
-- [ ] Detect a missing-API negative control without changing unaffected observations.
-- [ ] Reproduce registers using recorded opt-in flags and preserve old extracts' outcomes, including inherited failures.
+- [x] Retain all four explicit API identities and every nonblank supplemental extract occurrence, with precise coverage or problematic reasons.
+- [x] Probe the three legacy recap globals and SendChatMessage against later-register supersession; require the exact known-gap set, not a count-only allowance.
+- [x] Detect a missing-API negative control without changing unaffected observations.
+- [x] Reproduce registers using recorded opt-in flags and preserve old extracts' outcomes, including inherited failures.
 - [ ] Validate historical proof from another checkout and after newer audits merge, without absolute-path equality or comparisons to moving source/evidence digests.
 
 ## How it works

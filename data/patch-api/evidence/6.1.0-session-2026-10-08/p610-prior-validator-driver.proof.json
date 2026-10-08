@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p610-page/data/patch-api/evidence/6.1.0-session-2026-10-08/check_prior_validators.py"
+  ],
+  "revision": "c7aeb5dbc3e2ad78e9f7772f9908d31a6ff2be9e",
+  "scope": "p610-prior-validator-driver",
+  "cwd": ".",
+  "target": "dedicated p610-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p610-prior-validator-driver.txt",
+  "log_sha256": "774a1c2470b5ff73e2550312acc84486c18eaf44431cba09c3018967f3ec15a1",
+  "seconds": 55.44600323800114,
+  "invalidated": false
+}

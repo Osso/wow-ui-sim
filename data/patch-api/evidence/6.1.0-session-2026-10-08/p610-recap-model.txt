@@ -1,0 +1,21 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p610-page)
+    Finished `test` profile [optimized + debuginfo] target(s) in 1m 25s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p610-page/debug/deps/integration-1db16289b0998b2a)
+
+running 6 tests
+test c_death_recap_probes::get_most_recent_death_recap_returns_table_with_correct_fields ... ok
+test c_death_recap_probes::get_most_recent_death_recap_returns_nil_when_empty ... ok
+test c_death_recap_probes::get_killing_blows_fields_match_seeded_data ... ok
+test c_death_recap_probes::get_killing_blows_reflects_most_recent_death ... ok
+test c_death_recap_probes::get_killing_blows_returns_array_after_seeding ... ok
+test c_death_recap_probes::get_killing_blows_returns_empty_array_when_no_deaths ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 10667 filtered out; finished in 0.18s
+
