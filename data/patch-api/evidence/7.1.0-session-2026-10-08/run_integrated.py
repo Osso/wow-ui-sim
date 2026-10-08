@@ -41,6 +41,9 @@ def run(label, command, env, revision, scope):
     dump(FRESH / (label + '.proof.json'), {
         'command': command, 'revision': git('rev-parse', 'HEAD'),
         'source_revision': revision, 'scope': scope, 'exit': result.returncode,
+        'environment': {name: value for name, value in env.items()
+                        if name in ('CARGO_TARGET_DIR', 'PYTHONDONTWRITEBYTECODE')
+                        or name.endswith(('_SWEEP_REGISTER', '_SWEEP_OUT'))},
         'log': log.name, 'log_sha256': digest(log),
     })
     print(label, result.returncode, flush=True)
