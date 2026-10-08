@@ -33,6 +33,19 @@ def summarize():
         assert row['exit'] in ((1, 101) if label == 'negative' else (0,)), (label, row['exit'])
         assert row['log_sha256'] == digest((HERE / row['log']).read_bytes())
     dump('receipts.json', receipts)
+    lines = ['# 5.4.7 integrated command ledger', '',
+             'Base: `' + MASTER + '`. Own source/test scope: `' + receipts['own-sweep']['revision'] + '`.',
+             'All Cargo commands use `CARGO_TARGET_DIR=/home/osso/.cache/wow-ui-sim-targets/p547-page`.',
+             'Commands ran sequentially in the logged asynchronous driver; no poll-wait or repeated broad checks.', '',
+             '| Receipt | Command | Revision | Exit |', '|---|---|---|---|']
+    for label, row in receipts.items():
+        lines.append('| ' + label + ' | `' + ' '.join(row['command']) + '` | `' + row['revision'] + '` | ' + str(row['exit']) + ' |')
+    lines.extend(['', 'Full environment, duration, log digest and revision are in each `.proof.json`.',
+                  'Integration `patch_5_4_7` selects zero cases; prefork owns both 5.4.7 tests. No integration behavior claim.',
+                  'Negative control must fail with exactly one added gap (2 → 3). Three inherited extract failures are unchanged.',
+                  'No runtime, shared tool, vendor or retirement changes. No startup comparison or full integration-suite claim.',
+                  'Later evidence/wiki/validator-only commits do not invalidate the pinned Rust, shared-tool or source scopes.'])
+    (HERE / 'command-ledger.md').write_text('\n'.join(lines) + '\n')
     pages = []
     for path in sorted(HERE.glob('patch_*_publication_sweep-results.json')):
         patch = path.stem.removeprefix('patch_').removesuffix('_publication_sweep-results').replace('_', '.')
