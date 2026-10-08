@@ -1,0 +1,1 @@
+{"extract": 32, "extracts": 50, "inherited_extract_failures": ["12.0.5", "12.0.7", "12.1.0"], "inventory": 28, "meaningful_models": 14, "publication_gaps": 7, "registers": 53, "startup_errors": 0, "status": "PASS", "statuses": {"audit-pending": 21, "bounded-coverage": 36, "metadata-only": 3}, "sweep_pages": 53}

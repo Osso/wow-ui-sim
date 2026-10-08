@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "tools/check_patch_validators.py"
+  ],
+  "revision": "e9b815c8d6717587e3d61512322a5e7139eb303e",
+  "scope": "p548-portability-gate",
+  "cwd": ".",
+  "target": "dedicated p548-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p548-portability-gate.txt",
+  "log_sha256": "475c9058db41c40b8fbe6ffdaf1e4a7496e812208ad962deefc712c08c307c68",
+  "seconds": 84.38075693599967,
+  "invalidated": false
+}

@@ -8,7 +8,7 @@ Audit the pinned [2014 retail source](../../data/patch-api/sources/5.4.8-api-cha
 - [x] Retain precise absent/retired-CVar and native-policy limits rather than adding compatibility shims.
 - [x] Block insecure combat writes to the page's currently readable CVars before value, scale, persistence or event mutation; allow secure writes and out-of-combat addon writes.
 - [x] Block insecure `SetUIVisibility(false)` in combat, allow `true`, and preserve secure/out-of-combat transitions.
-- [ ] Keep extraction and register generation opt-in/reproducible; validate historical scope at pinned Git revisions in clean/later-audit checkouts.
+- [x] Keep extraction and register generation opt-in/reproducible; validate historical scope at pinned Git revisions in clean/later-audit checkouts.
 
 ## How it works
 

@@ -32,7 +32,11 @@ Initial RED reproduced insecure combat writes; the first fixture was incorrectly
 
 All 53 registers reproduce byte-identically; 50 extracts reproduce, with the unchanged inherited 12.0.5/12.0.7/12.1.0 failures retained. Every earlier source byte and extractor mode is preserved. Negative control adds exactly one gap (seven → eight). No full integration suite was run.
 
-Portability gate and own-log tamper proof remain pending. Preliminary discovery receipts are not final acceptance, especially where later test/fixture changes supersede their scope.
+Portability gate PASS at `e9b815c8d`: clean detached checkout 34/34 validators, unrelated synthetic later audit 35/35 (includes its dummy validator). Own validator passes with counts derived from retained files; own-log tampering is rejected and original bytes restored. Shared sources/register/sweep sets resolve at recorded Git revisions, not live files. No ignored/uncommitted validation inputs. Preliminary discovery receipts are not final acceptance where later test/fixture changes supersede their scope.
+
+## Remaining limits
+
+Seven publication gaps, 14 inactive historical behavioral rows and exact native failure/default/notification parity remain precisely accounted, not solved with shims. Three inherited extract reproduction failures remain unchanged. The ordered 6.0.1/6.0.2 placeholders require main-thread integration after those retail pages merge; neither queued register intersects an own identity at its recorded revision. This branch was not pushed or merged.
 
 ## Sources
 

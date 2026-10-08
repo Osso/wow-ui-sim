@@ -457,3 +457,7 @@ Pinned pageid 3058 revision 31159 without following redirect to 6.0.2; empty reg
 ## [2026-10-08] verification | Patch 5.4.8 bounded combat models
 
 [Audit](investigations/patch-5-4-8-api-audit.md): 60 IDs accounted, 14 meaningful models, seven publication gaps/14 inactive historical contracts. All 54 sweeps/factory and targeted callers pass; all 52 prior pages unchanged. 82 Python fixtures, format and warning-clean non-vendor Mists pass; addons-enabled startup matches master `[]`. 53 registers/50 extracts reproduce, three inherited failures retained. Portable gate pending.
+
+## [2026-10-08] gate | Patch 5.4.8 API audit
+
+[Audit](investigations/patch-5-4-8-api-audit.md): sealed historical proof PASS; portability clean 34/34 and synthetic later 35/35 at e9b815c8d. Own-log tamper rejected/restored. All requested targeted checks complete; seven publication gaps, 14 inactive historical rows, three inherited extract failures and ordered 6.0.1/6.0.2 integration placeholders remain documented. No push or merge.

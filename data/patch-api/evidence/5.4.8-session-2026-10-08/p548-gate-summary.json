@@ -1,0 +1,43 @@
+{
+  "revision": "e9b815c8d6717587e3d61512322a5e7139eb303e",
+  "status": "PASS",
+  "phases": {
+    "clean": {
+      "failed": 0,
+      "passed": 34
+    },
+    "later_audit": {
+      "failed": 0,
+      "passed": 35
+    }
+  },
+  "own_validator": {
+    "extract": 32,
+    "extracts": 50,
+    "inherited_extract_failures": [
+      "12.0.5",
+      "12.0.7",
+      "12.1.0"
+    ],
+    "inventory": 28,
+    "meaningful_models": 14,
+    "publication_gaps": 7,
+    "registers": 53,
+    "startup_errors": 0,
+    "status": "PASS",
+    "statuses": {
+      "audit-pending": 21,
+      "bounded-coverage": 36,
+      "metadata-only": 3
+    },
+    "sweep_pages": 53
+  },
+  "tamper_rejected": true,
+  "unfinished": [
+    "seven publication gaps",
+    "14 currently inactive historical behavioral rows and exact native parity",
+    "three unchanged inherited extract failures",
+    "ordered retail 6.0.1/6.0.2 placeholders awaiting integration"
+  ],
+  "push_or_merge": false
+}

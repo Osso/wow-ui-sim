@@ -29,3 +29,5 @@ Python fixture source stayed unchanged since its recorded revision; Rust checks 
 Master startup executed before runtime changes; its src/crates/Cargo scope equals pinned master exactly.
 No full integration suite, agent/model CLI, push or merge. No live external-cache input to validation.
 Scan tool: /usr/bin/grep, whole-word -w, untruncated output files.
+
+Final gate: clean 34/34, synthetic later 35/35 at `e9b815c8d`; own validator PASS and own-log tamper rejected/restored. No Rust/runtime/tool change after accepted targeted proofs.
