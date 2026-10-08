@@ -8,12 +8,13 @@
 
 use crate::common;
 #[path = "chat_frame/layout_lock.rs"]
-mod layout_lock;
+pub(crate) mod layout_lock;
 #[path = "chat_frame/scrollbar.rs"]
-mod scrollbar;
+pub(crate) mod scrollbar;
 
 #[cfg(feature = "gui")]
 use std::cell::RefCell;
+#[cfg(not(feature = "client-retail"))]
 use std::path::PathBuf;
 #[cfg(feature = "gui")]
 use std::rc::Rc;
@@ -21,6 +22,7 @@ use std::rc::Rc;
 use wow_ui_sim::iced_app::{
     RegistryQuadBatchParams, build_quad_batch_for_registry, compute_frame_rect,
 };
+#[cfg(not(feature = "client-retail"))]
 use wow_ui_sim::loader::{discover_blizzard_addons, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
 #[cfg(feature = "gui")]
@@ -68,6 +70,7 @@ const CHAT_LAYOUT_DEBUG_LUA: &str = r#"
     return table.concat(out, "\n")
 "#;
 
+#[cfg(not(feature = "client-retail"))]
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(env!(
         "CARGO_MANIFEST_DIR"
@@ -75,6 +78,7 @@ fn blizzard_ui_dir() -> PathBuf {
 }
 
 /// Create a fully loaded environment with all Blizzard addons and startup events.
+#[cfg(not(feature = "client-retail"))]
 fn setup_env() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
@@ -98,6 +102,7 @@ fn setup_env() -> WowLuaEnv {
 }
 
 /// Fire startup events (same sequence as main.rs).
+#[cfg(not(feature = "client-retail"))]
 fn fire_startup_events(env: &WowLuaEnv) {
     common::fire_addon_loaded(env, "WoWUISim");
     for event in ["VARIABLES_LOADED", "PLAYER_LOGIN"] {
@@ -349,10 +354,9 @@ fn assert_message_sent(env: &WowLuaEnv, expected_text: &str, expected_type: &str
     assert_eq!(text_after, "", "EditBox should be cleared after submit");
 }
 
-#[test]
-fn test_chat_editbox_click_type_and_submit() {
-    test_timeout! {
-        let env = setup_env();
+prefork_full_ui_case! {
+fn test_chat_editbox_click_type_and_submit(env: &WowLuaEnv) {
+
 
         let exists: bool = env
             .eval("return ChatFrame1EditBox ~= nil")
@@ -393,7 +397,15 @@ fn test_chat_editbox_click_type_and_submit() {
             .eval("return ChatFrame1EditBox:GetText() or ''")
             .expect("GetText failed");
         assert_eq!(text_after, "", "EditBox should be cleared after submit");
-    }
+
+}
+}
+
+#[cfg(not(feature = "client-retail"))]
+#[test]
+fn test_chat_editbox_click_type_and_submit() {
+    let env = setup_env();
+    test_chat_editbox_click_type_and_submit::run(&env);
 }
 
 prefork_full_ui_case! {
@@ -432,10 +444,9 @@ fn test_chat_message_contains_timestamp(env: &WowLuaEnv) {
 }
 }
 
-#[test]
-fn test_chat_editbox_text_color_after_activation() {
-    test_timeout! {
-        let env = setup_env();
+prefork_full_ui_case! {
+fn test_chat_editbox_text_color_after_activation(env: &WowLuaEnv) {
+
 
         click_chat_editbox(&env);
 
@@ -457,7 +468,15 @@ fn test_chat_editbox_text_color_after_activation() {
             (alpha - 1.0).abs() < 0.01,
             "EditBox alpha should be 1.0 after activation, got {alpha}"
         );
-    }
+
+}
+}
+
+#[cfg(not(feature = "client-retail"))]
+#[test]
+fn test_chat_editbox_text_color_after_activation() {
+    let env = setup_env();
+    test_chat_editbox_text_color_after_activation::run(&env);
 }
 
 prefork_full_ui_case! {
