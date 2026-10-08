@@ -1,0 +1,13 @@
+{
+  "revision": "e9135e73d",
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p541-page/data/patch-api/evidence/5.4.1-session-2026-10-08/validate.py"
+  ],
+  "tampered": "own-green.txt",
+  "exit": 1,
+  "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p541-page/data/patch-api/evidence/5.4.1-session-2026-10-08/validate.py\", line 229, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p541-page/data/patch-api/evidence/5.4.1-session-2026-10-08/validate.py\", line 214, in main\n    check_seal()\n    ~~~~~~~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p541-page/data/patch-api/evidence/5.4.1-session-2026-10-08/validate.py\", line 41, in check_seal\n    assert digest(path.read_bytes()) == expected, 'own evidence drift: ' + name\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: own evidence drift: own-green.txt\n",
+  "verdict": "PASS: rejects changed sealed own log",
+  "original_sha256": "1129d03c824a436183b9b4f6debe899e72d0d8eed0a1e4143f9004296861f30f"
+}

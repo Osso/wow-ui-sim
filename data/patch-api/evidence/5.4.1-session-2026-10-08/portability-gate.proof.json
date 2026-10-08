@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "tools/check_patch_validators.py"
+  ],
+  "revision": "e9135e73dcaeefcfa26cbe765d707de10d48d0bc",
+  "scope": "portability-gate",
+  "cwd": ".",
+  "target": "dedicated p541-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "portability-gate.txt",
+  "log_sha256": "131cfcc30634b18fc858bc79b3b836b20ba017c16435979501c6157411fe4e1e",
+  "seconds": 215.1870481099977,
+  "invalidated": false
+}

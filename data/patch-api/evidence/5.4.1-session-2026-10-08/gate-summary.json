@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "revision": "e9135e73dcaeefcfa26cbe765d707de10d48d0bc",
+  "later_revision": "411b10fcf4acf717d3aa17b417432f8a8e24c2ba",
+  "summary": {
+    "clean": {
+      "failed": 0,
+      "passed": 37
+    },
+    "later_audit": {
+      "failed": 0,
+      "passed": 38
+    }
+  },
+  "local_validator": "PASS; validator-local.txt",
+  "own_log_tamper": "rejected; tamper-test.json",
+  "runtime_gate_scope": "no src changes; caller/lib/startup comparisons not triggered",
+  "unfinished": "two publication and two prose contracts explicitly pending; three inherited extract failures unchanged; queued later-register comments awaiting integration"
+}

@@ -34,7 +34,7 @@ Final targeted receipts and clean/later-audit gate results are retained in the [
 
 ## Targeted results
 
-At committed source revision `8462a4c89`: 2/2 own prefork cases, 56/56 publication/factory cases, 86/86 Python fixtures and format pass. Mists `cargo check --no-default-features --features sound,gui,casc,client-mists --tests` passes with zero non-vendor warnings (six unchanged vendor manifest deprecations). All 55 registers and 52 extracts reproduce; three inherited extract failures remain unchanged. Negative control changes publication gaps from 2 to 3 and fails as required. No src changes trigger caller/lib/startup comparison gates. Clean/later-audit validator gate is recorded separately after sealing.
+At committed source revision `8462a4c89`: 2/2 own prefork cases, 56/56 publication/factory cases, 86/86 Python fixtures and format pass. Mists `cargo check --no-default-features --features sound,gui,casc,client-mists --tests` passes with zero non-vendor warnings (six unchanged vendor manifest deprecations). All 55 registers and 52 extracts reproduce; three inherited extract failures remain unchanged. Negative control changes publication gaps from 2 to 3 and fails as required. No src changes trigger caller/lib/startup comparison gates. Sealed validator passes locally and rejects own-log tampering. `tools/check_patch_validators.py` at `e9135e73d` passes 37/37 clean validators and 38/38 after an unrelated synthetic later audit (including the synthetic validator). [Gate summary](../../../data/patch-api/evidence/5.4.1-session-2026-10-08/gate-summary.json).
 
 ## Sources
 

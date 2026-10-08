@@ -514,4 +514,4 @@ Pinned pageid 3058 revision 31159 without following redirect to 6.0.2; empty reg
 
 ## [2026-10-08] investigation | Patch 5.4.1 API audit
 
-Pinned API revision 2150406 and parent 6428967: 2013 retail, not Classic. [Audit](investigations/patch-5-4-1-api-audit.md) records complete inventory/prose accounting, ordered queued retail placeholders, whole-word grep evidence and historical-validator proof.
+Pinned API revision 2150406 and parent 6428967: 2013 retail, not Classic. [Audit](investigations/patch-5-4-1-api-audit.md) records 25 IDs, two publication/two prose limits, ordered queued retail placeholders and 72 whole-word grep scans. Targeted proof: 56 sweeps/factory, 2 own cases, 86 Python fixtures, 55 registers/52 extracts (three inherited failures), format/Mists. Validator gate 37/37 clean and 38/38 later-audit; own-log tampering rejected.
