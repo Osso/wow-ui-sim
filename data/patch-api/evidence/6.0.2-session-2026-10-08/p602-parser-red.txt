@@ -1,0 +1,23 @@
+EE
+======================================================================
+ERROR: test_nested_references_and_canonical_widget_owners (__main__.WarlordsRegisterTests.test_nested_references_and_canonical_widget_owners)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p602-page/tools/test_patch_warlords_register.py", line 15, in test_nested_references_and_canonical_widget_owners
+    rows = generator.parse_warlords_prepatch(raw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'gen_patch_wikitext_register' has no attribute 'parse_warlords_prepatch'. Did you mean: 'parse_legion_prepatch'?
+
+======================================================================
+ERROR: test_unnamed_removals_and_transclusion_not_invented (__main__.WarlordsRegisterTests.test_unnamed_removals_and_transclusion_not_invented)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p602-page/tools/test_patch_warlords_register.py", line 29, in test_unnamed_removals_and_transclusion_not_invented
+    self.assertEqual(generator.parse_warlords_prepatch(raw), [])
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'gen_patch_wikitext_register' has no attribute 'parse_warlords_prepatch'. Did you mean: 'parse_legion_prepatch'?
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+FAILED (errors=2)
