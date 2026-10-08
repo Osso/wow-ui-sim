@@ -8,6 +8,7 @@ Audit the pinned [page source](../../data/patch-api/sources/7.3.0-api-changes.wi
 - [ ] Keep the 7.3.2 integration placeholder first, then 8.0.1 and all newer registers in chronological order.
 - [ ] Account for every retained nonblank prose line, separately from table publication.
 - [ ] Verify a concrete SOUNDKIT numeric ID reaches the existing sound-request state; reject the old string name without replacing the accepted request.
+- [ ] Exercise the actual Table Inspector window with concrete root/child tables, navigation and close lifecycle, without vendor overrides.
 - [ ] Preserve every earlier source and reproduce registers using recorded flags; inherited extract failures remain explicitly distinguished.
 - [ ] Validate historical proof read-only from any checkout, with fixed historical register scope and file-derived counts.
 

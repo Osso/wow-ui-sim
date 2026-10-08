@@ -8,7 +8,7 @@ The default extractor retains every statement. Existing inventory options requir
 
 ## Bounded proof and remaining work
 
-Prefork discovery probes the three table additions, with the pending 7.3.2 placeholder first in later registers. Sound transition test exercises the existing `last_sound_kit_requested` backing state, concrete ID 861, rejection of the old string name and a subsequent ID 839. It does not mock PlaySound or change Blizzard Lua. Discovery, gap accounting, validator and targeted Cargo verification remain pending.
+Prefork discovery probes the three table additions, with the pending 7.3.2 placeholder first in later registers. Sound transition test exercises the existing `last_sound_kit_requested` backing state, concrete ID 861, rejection of the old string name and a subsequent ID 839. It does not mock PlaySound or change Blizzard Lua. Actual Table Inspector focus/navigation/close is also probed after loading Blizzard_DebugTools. Initial Cargo discovery stopped at an unsupported Rust `u32` result conversion; fixed to the supported signed result with checked conversion. This compile failure is not a runtime gap. Discovery, gap accounting, validator and targeted Cargo verification remain pending.
 
 ## Retirement policy
 
