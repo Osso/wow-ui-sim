@@ -1,0 +1,18 @@
+[
+  {
+    "origin_patch": "5.4.2",
+    "origin_revision": "8691fe460bebf2b1db12237e728a97e321e1c766",
+    "path": "tools/gen_patch_wikitext_register.py",
+    "function": "parse_mists_automated_diff",
+    "sha256": "0d629ba5d23b3af451a47c2995dec119f80b77c8e0cbf45965a6b8c9b5d896e2",
+    "byte_identical": true
+  },
+  {
+    "origin_patch": "5.4.2",
+    "origin_revision": "8691fe460bebf2b1db12237e728a97e321e1c766",
+    "path": "tools/extract_patch_non_inventory.py",
+    "function": "strip_mists_automated_inventories",
+    "sha256": "f0652c2bc7e35988cea67f828883bd0c467f184771ec4982dbeea06588ec2524",
+    "byte_identical": true
+  }
+]

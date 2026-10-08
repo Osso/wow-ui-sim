@@ -1,0 +1,13 @@
+{
+  "revision": "8462a4c89cfd029d2b70966bb496d48d5c981e94",
+  "rust_files": [
+    "tests/patch_5_4_1_publication_sweep.rs",
+    "tests/patch_5_4_1_behavior.rs"
+  ],
+  "readability_violations": [],
+  "wired_evidence": "own-green receipt executes both prefork cases; all-sweeps executes new publication case",
+  "runtime_changes": false,
+  "caller_lib_startup_comparison": "not triggered: git diff base..source_revision -- src is empty",
+  "source_accounting": "13 publication-only bounded rows; 2 publication and 2 prose pending rows; 8 metadata rows",
+  "excluded_scope": "no full integration, agents, push, merge, Classic or vendor changes"
+}
