@@ -12,7 +12,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT / 'tools'))
 from patch_audit_validation import historical_registers, historical_sweep_tests
 
-SEAL_REVISION = 'P540_SEAL_REVISION'
+SEAL_REVISION = 'b9a5bec37f3dbe2c076197d63603f1e59bb75106'
 SESSION = HERE.relative_to(ROOT).as_posix()
 
 

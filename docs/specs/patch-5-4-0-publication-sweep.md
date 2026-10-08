@@ -20,13 +20,14 @@ Audit the pinned 2013 retail Mists API page and separately pinned automated diff
 ## Implementation inventory
 
 - `tests/patch_5_4_0_publication_sweep.rs`: occurrence probes and later retail registers.
+- `tests/patch_5_4_0_behavior.rs`: shared assertions executed by prefork markers and standalone test wrappers.
 - `tests/data/patch_5_4_0_sweep_known_gaps.json`: exact known gap identities.
 - `tools/gen_patch_wikitext_register.py`: opt-in reused Mists inventory parser and summary/diff flags.
 - `tools/extract_patch_non_inventory.py`: opt-in source markup and copied Mists inventory stripping.
 
 ## Tests asserting this spec
 
-- `tests/patch_5_4_0_publication_sweep.rs`.
+- `tests/patch_5_4_0_publication_sweep.rs`, `tests/patch_5_4_0_behavior.rs`.
 - `tools/test_patch_mists_register.py`, `tools/test_patch_mists_extract.py`.
 
 ## Known gaps (current cycle)
