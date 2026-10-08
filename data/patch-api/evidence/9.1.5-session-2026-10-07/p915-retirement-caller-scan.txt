@@ -1,0 +1,61 @@
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/achievements_api.rs:102:        .eval("local n, p, f = GetCategoryInfo(92); return n, p, f")
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/achievements_api.rs:112:    let name: String = env.eval("local n = GetCategoryInfo(81); return n").unwrap();
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/achievements_api.rs:120:        .eval("local n = GetCategoryInfo(99999); return n == nil")
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/achievements_api.rs:161:        .eval("local n, p, f = GetCategoryInfo(202); return n, p, f")
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/account_store.rs:521:        .eval(r#"return C_AccountStore.GetCategoryInfo(404) and 1 or nil"#)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/account_store.rs:544:            local info = C_AccountStore.GetCategoryInfo(42)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/account_store.rs:582:            local a = C_AccountStore.GetCategoryInfo(1)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/account_store.rs:583:            local b = C_AccountStore.GetCategoryInfo(2)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/account_store.rs:584:            local c = C_AccountStore.GetCategoryInfo(3)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/globals/missing_surface/achievement_info/registration.rs:194:    table_set_rust_fn_static(state, globals, "GetCategoryInfo", get_category_info)?;
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/globals/missing_surface/achievement_info.rs:9://! `GetCategoryList`, `GetCategoryInfo`,
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/globals/missing_surface/account_store.rs:38:    table_set_rust_fn_static(state, table_ref, "GetCategoryInfo", get_category_info)?;
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/globals/missing_surface/transmog_collection.rs:66:    table_set_rust_fn_static(state, table_ref, "GetCategoryInfo", get_category_info)?;
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/globals/missing_surface/professions/professions_registration.rs:49:    ("GetCategoryInfo", c_trade_skill_ui_get_category_info),
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/perks_program_defaults.rs:22:if rawget(C_PerksProgram, "GetCategoryInfo") == nil then
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/perks_program_defaults.rs:23:    function C_PerksProgram.GetCategoryInfo(_categoryID)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/perks_program_defaults.rs:68:                       select("#", C_PerksProgram.GetCategoryInfo(1)),
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/housing_catalog_state.lua:563:  GetCategoryInfo = function(categoryID)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/housing_catalog_state.lua:596:      return C_CatalogShop.GetCategoryInfo(101)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_achievementui/surface_mixins.rs:28://!     -- looks up category name + completion counts via GetCategoryInfo +
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_achievementui/surface_globals.rs:299:///   `GetCategoryInfo(id)` (with `ACHIEVEMENT_SUMMARY_CATEGORY` override
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/c_transmog_heirloom_api.rs:357:        .eval("return C_TransmogCollection.GetCategoryInfo(1)")
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/c_transmog_heirloom_api.rs:369:            local name, isWeapon, canEnchant, canMainHand, canOffHand = C_TransmogCollection.GetCategoryInfo(14)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/c_transmog_heirloom_api.rs:388:            local name, isWeapon, canEnchant, canMainHand, canOffHand = C_TransmogCollection.GetCategoryInfo(18)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_achievementui/behavior_statistic_row.rs:31://!             text = GetCategoryInfo(category)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_achievementui/behavior_statistic_row.rs:100://! `GetStatistic`, `GetCategoryInfo`, and `GetAchievementCriteriaInfo`
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_achievementui/behavior_statistic_row.rs:331:                local original_category_info = _G.GetCategoryInfo
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_achievementui/behavior_statistic_row.rs:332:                _G.GetCategoryInfo = function(category) return "{header_text}" end
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_achievementui/behavior_statistic_row.rs:381:                _G.GetCategoryInfo = original_category_info
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_achievementui/behavior_statistic_row.rs:427:             `{{id=555, colorIndex=1, header=true}}` and stubs `GetCategoryInfo` to \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_achievementui/behavior_category_default.rs:60://!         local _, parent = GetCategoryInfo(id);
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_achievementui/behavior_search_filter.rs:270:                local original_category_info = _G.GetCategoryInfo
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_achievementui/behavior_search_filter.rs:271:                _G.GetCategoryInfo = function(id) return "StubCategory", -1 end
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_achievementui/behavior_search_filter.rs:294:                _G.GetCategoryInfo = original_category_info
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/surface_mixins/category.rs:46:         categoryInfo via C_AccountStore.GetCategoryInfo and writes self.Text:SetText(name) + \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_selected.rs:43://!    gates ALL of the GetCategoryItems / GetCategoryInfo / itemRack
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_selected.rs:245:             handler shape — and likely re-routing the C_API GetCategoryItems / GetCategoryInfo \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_selected.rs:282:                C_AccountStore.GetCategoryInfo
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_selected.rs:288:            C_AccountStore.GetCategoryInfo = function()
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_selected.rs:338:             GetCategoryItems and GetCategoryInfo run (both stubbed), GetOrCreateTableEntryByCallback \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_selected.rs:451:            C_AccountStore.GetCategoryInfo =
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_list_refresh.rs:6://! `GetCategoryInfo`, preserving selection across refresh). FOUR claims
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_list_refresh.rs:23://! 3. **`GetCategoryInfo` is NOT called by the list mixin at all.** It is
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_list_refresh.rs:55://!   `GetCategoryInfo` call site (line 12). A nil reading would prove the
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_list_refresh.rs:67://!   `C_AccountStore.GetCategoryInfo` with a tracker, neuters
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_list_refresh.rs:70://!   GetCategoryInfo at item_display.lua:120) cannot fire indirectly,
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_list_refresh.rs:72://!   `GetCategoryInfo` tracker received ZERO calls. Pins axis 3: a
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_list_refresh.rs:164:             from the list mixin) is the actual `C_AccountStore.GetCategoryInfo` call site \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_list_refresh.rs:167:             GetCategoryInfo — the lookup is deferred to button realization. Got \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_list_refresh.rs:259:            .expect("GetCategoryInfo call-count readout must run cleanly");
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_list_refresh.rs:263:            "Expected ZERO direct `C_AccountStore.GetCategoryInfo` calls during SetCategories \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_list_refresh.rs:267:             GetCategoryInfo call site is `AccountStoreCategoryMixin:SetCategory` (line 12), \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_list_refresh.rs:422:            C_AccountStore.GetCategoryInfo
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_list_refresh.rs:423:        C_AccountStore.GetCategoryInfo = function(_category_id)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_list_refresh.rs:431:    .expect("seeding GetCategoryInfo tracker must run cleanly");
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_list_refresh.rs:437:        C_AccountStore.GetCategoryInfo =
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_list_refresh.rs:444:    .expect("GetCategoryInfo tracker tear-down must run cleanly");
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/professions_api.rs:310:                local category = C_TradeSkillUI.GetCategoryInfo(recipe.categoryID)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/professions_api.rs:337:                local category = C_TradeSkillUI.GetCategoryInfo(categoryID)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/professions_api.rs:611:            "local c = C_TradeSkillUI.GetCategoryInfo(1); \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/professions_api.rs:623:        .eval("return C_TradeSkillUI.GetCategoryInfo(9999) == nil")

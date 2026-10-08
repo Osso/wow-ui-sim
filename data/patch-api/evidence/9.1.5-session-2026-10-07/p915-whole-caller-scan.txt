@@ -1,0 +1,293 @@
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/xml_templates/registry.rs:427:        assert(securecallfunction(readTrust), 'trusted OnLoad tainted its deferred callback')
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/xml_templates/registry.rs:447:        assert(not securecallfunction(frame.readTrust), 'addon OnLoad callback became trusted')
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/xml_secure_delegates.rs:22:            securecallfunction(callback)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/utility_api.rs:701:fn test_strsplittable() {
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/utility_api.rs:706:            local t = strsplittable(',', 'x,y')
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/loader/tests/wow_api_tooltip_helpers.rs:141:            C_ItemUpgrade.SetItemUpgradeFromLocation({ bagID = 0, slotIndex = 1 })
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/loader/tests/wow_api_tooltip_helpers.rs:142:            return C_TooltipInfo.GetUpgradeItem()
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/loader/tests/wow_api_tooltip.rs:323:            C_ItemUpgrade.SetItemUpgradeFromLocation({ bagID = 0, slotIndex = 1 })
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/loader/tests/wow_api_tooltip.rs:324:            local tooltip = C_TooltipInfo.GetUpgradeItem()
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/loader/tests/wow_api_tooltip.rs:325:            C_ItemUpgrade.ClearItemUpgrade()
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/loader/tests/wow_api_tooltip.rs:326:            local emptyTooltip = C_TooltipInfo.GetUpgradeItem()
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/loader/tests/wow_api_tooltip.rs:348:        "C_TooltipInfo.GetUpgradeItem should return the currently selected item-upgrade tooltip and empty data when nothing is selected",
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/tooltip_hover.rs:513:            C_ItemUpgrade.SetItemUpgradeFromLocation({ bagID = 0, slotIndex = 1 })
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/tooltip_hover.rs:514:            assert(GameTooltip.SetUpgradeItem, "GameTooltip:SetUpgradeItem should exist")
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/tooltip_hover.rs:516:            GameTooltip:SetUpgradeItem()
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/tooltip_hover.rs:526:            return info.getterName == "GetUpgradeItem"
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/tooltip_hover.rs:537:        "TooltipDataHandler should populate GameTooltip:SetUpgradeItem through C_TooltipInfo.GetUpgradeItem",
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds_editmode_tests/apply_system_anchors/singletons.rs:282:            function frame:GetSettingValue(setting)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds_editmode_tests/apply_system_anchors/singletons.rs:291:                table.insert(self.replayedValues, tostring(setting) .. "=" .. tostring(self:GetSettingValue(setting)))
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds_editmode_tests/apply_system_anchors/singletons.rs:590:            function frame:GetSettingValue(setting)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds_editmode_tests/apply_system_anchors/singletons.rs:598:                table.insert(self.replayedValues, tostring(setting) .. "=" .. tostring(self:GetSettingValue(setting)))
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/c_api/patch_retired_members.rs:311:            "GetItemTransmogInfoListFromOutfitHyperlink",
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/c_api/patch_retired_members.rs:313:            "GetOutfitHyperlinkFromItemTransmogInfoList",
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/achievements_api.rs:102:        .eval("local n, p, f = GetCategoryInfo(92); return n, p, f")
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/achievements_api.rs:112:    let name: String = env.eval("local n = GetCategoryInfo(81); return n").unwrap();
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/achievements_api.rs:120:        .eval("local n = GetCategoryInfo(99999); return n == nil")
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/achievements_api.rs:161:        .eval("local n, p, f = GetCategoryInfo(202); return n, p, f")
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/test_showuipanel_lod.rs:451:                local setting = initializer.GetSetting and initializer:GetSetting()
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/account_store.rs:521:        .eval(r#"return C_AccountStore.GetCategoryInfo(404) and 1 or nil"#)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/account_store.rs:544:            local info = C_AccountStore.GetCategoryInfo(42)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/account_store.rs:582:            local a = C_AccountStore.GetCategoryInfo(1)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/account_store.rs:583:            local b = C_AccountStore.GetCategoryInfo(2)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/account_store.rs:584:            local c = C_AccountStore.GetCategoryInfo(3)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds_editmode_tests/apply_system_anchors/cast_and_player.rs:79:        function frame:GetSettingValue(setting, useRawValue)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds_editmode_tests/apply_system_anchors/cast_and_player.rs:188:        function frame:GetSettingValue(setting)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds_editmode_tests/apply_system_anchors/cast_and_player.rs:192:        function frame:GetSettingValueBool(setting)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds_editmode_tests/apply_system_anchors/cast_and_player.rs:193:            return self:GetSettingValue(setting) == 1
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds_editmode_tests/apply_system_anchors/cast_and_player.rs:226:                self:SetScale(self:GetSettingValue(setting) / 100)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds_editmode_tests/apply_system_anchors/cast_and_player.rs:337:        function frame:GetSettingValue(setting, useRawValue)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds_editmode_tests/apply_system_anchors/cast_and_player.rs:365:                self:SetScale(self:GetSettingValue(setting) / 100)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/test_premade_groups.rs:96:            local info = C_LFGList.GetActivityInfoTable(1195)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/test_premade_groups.rs:104:    assert_eq!(result, "ok", "GetActivityInfoTable: {result}");
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/test_premade_groups.rs:244:                local activityInfo = C_LFGList.GetActivityInfoTable(info.activityIDs[1])
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/test_premade_groups.rs:245:                local text = C_LFGList.GetPlaystyleString(
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds_editmode_tests/apply_system_anchors/auras_and_cooldowns.rs:62:            function frame:GetSettingValue(setting)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds_editmode_tests/apply_system_anchors/auras_and_cooldowns.rs:70:                table.insert(self.replayedValues, tostring(setting) .. "=" .. tostring(self:GetSettingValue(setting)))
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds_editmode_tests/apply_system_anchors/auras_and_cooldowns.rs:484:        function frame:GetSettingValue(setting)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds_editmode_tests/apply_system_anchors/auras_and_cooldowns.rs:490:            self.appliedSettings[setting] = self:GetSettingValue(setting)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds_editmode_tests/apply_system_anchors/action_bars.rs:80:        function frame:GetSettingValue(setting, useRawValue)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds_editmode_tests/apply_system_anchors/action_bars.rs:485:            function frame:GetSettingValue(settingId)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/bags.rs:170:                   C_ItemUpgrade.CanUpgradeItem(itemLocation) == false,
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds_editmode.rs:177:/// Blizzard code path. Per-frame errors are caught by secureexecuterange.
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/c_api/item_spell/c_container.rs:19:        "SetItemUpgradeFromLocation",
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/c_api/item_spell/c_container.rs:22:    table_set_rust_fn_static(state, table_ref, "ClearItemUpgrade", c_item_upgrade_clear)?;
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_behavioral_messaging_loads.rs:73:             and type(C_BehavioralMessaging.SendNotificationReceipt) == 'function'",
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_behavioral_messaging_loads.rs:78:        "C_BehavioralMessaging.SendNotificationReceipt should be registered"
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_damage_meter_loads.rs:218:                and type(DamageMeterSessionWindowMixin.GetSettingsDropdown) == 'function'",
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_damage_meter_loads.rs:228:         (GetSourceWindow / GetScrollBox / GetSettingsDropdown / GetHeader / GetMinimizeButton \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_commentator_loads.rs:174:                and type(CommentatorMixin.SetDefaultSettings) == 'function' \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_combat_log_processor_loads.rs:186:         which re-wraps each function in securecallfunction) should expose its three \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_combat_log_processor_loads.rs:210:         error — each is a securecallfunction wrapper around an EventRegistry:TriggerEvent call \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/spell_casting.rs:380:                local lockValue = cast and cast.GetSettingValue
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/spell_casting.rs:381:                    and cast:GetSettingValue(Enum.EditModeCastBarSetting.LockToPlayerFrame)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/tts_settings_defaults.rs:16:installTtsSettingsDefault("GetSpeechVolume", function()
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/tts_settings_defaults.rs:20:installTtsSettingsDefault("SetSpeechVolume", function()
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/tts_settings_defaults.rs:23:installTtsSettingsDefault("GetSpeechRate", function()
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/tts_settings_defaults.rs:27:installTtsSettingsDefault("SetSpeechRate", function()
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/tts_settings_defaults.rs:30:installTtsSettingsDefault("GetVoiceOptionID", function()
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/tts_settings_defaults.rs:34:installTtsSettingsDefault("SetVoiceOptionID", function()
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/tts_settings_defaults.rs:37:installTtsSettingsDefault("SetVoiceOption", function()
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/tts_settings_defaults.rs:57:                C_TTSSettings.SetSpeechVolume(50)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/tts_settings_defaults.rs:58:                C_TTSSettings.SetSpeechRate(5)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/tts_settings_defaults.rs:59:                C_TTSSettings.SetVoiceOptionID(1, 2)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/tts_settings_defaults.rs:60:                C_TTSSettings.SetVoiceOption(1, 2)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/tts_settings_defaults.rs:61:                return C_TTSSettings.GetSpeechVolume(),
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/tts_settings_defaults.rs:62:                    C_TTSSettings.GetSpeechRate(),
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/tts_settings_defaults.rs:63:                    C_TTSSettings.GetVoiceOptionID(1)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/tts_settings_defaults.rs:76:            function C_TTSSettings.GetSpeechVolume()
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/tts_settings_defaults.rs:86:            .eval("return C_TTSSettings.GetSpeechVolume()")
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/security_api.rs:126:// securecall / securecallfunction
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/security_api.rs:155:fn test_securecallfunction() {
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/security_api.rs:158:        .eval("return securecallfunction(function(a, b) return a + b end, 3, 4)")
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/security_api.rs:164:fn test_securecallfunction_passes_table_self_to_unbound_method() {
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/security_api.rs:174:            return securecallfunction(mixin.GetName, object)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/security_api.rs:182:// secureexecuterange
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/security_api.rs:186:fn test_secureexecuterange() {
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/security_api.rs:193:            secureexecuterange(t, function(key, value) SECURE_TOTAL = SECURE_TOTAL + value end)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_frame_xml_loads.rs:61:         `secureexecuterange` paths within it (e.g. GhostFrame's secureMixin) opt into \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_game_tooltip_loads.rs:349:         uses securecallfunction on GetPrimaryTooltipInfo to prevent prior-tooltip taint \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/runtime_bootstrap_boundaries.rs:313:        "strsplittable",
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/rilua_rows.rs:37:            securecallfunction(probe)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_map_lane.rs:38://!                                      securecallfunction-style helpers)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_map_lane.rs:153:         normal eager addon. MapCanvas's mixin file calls `securecallfunction(rawget, ...)` \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_map_lane.rs:162:         registries with priority sorting and tainted-array enumeration via securecallfunction). \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_map_canvas_secure_util_loads.rs:102:         `securecallfunction` to invoke tainted handler bodies without taint leakage, NOT \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_map_canvas_secure_util_loads.rs:109:         `securecallfunction` / `SafePack` / `SafeUnpack` runtime helpers, all available \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_map_canvas_secure_util_loads.rs:304:             linear-scans via securecallfunction-wrapped rawget for taint isolation, \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_map_canvas_secure_util_loads.rs:305:             InvokeHandlers iterates via the same securecallfunction wrap and short-circuits \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_map_canvas_secure_util_loads.rs:325:             globally would let addon code bypass the securecallfunction taint isolation \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_map_canvas_secure_util_loads.rs:350:         AddHandler tsorts the array after every insert via securecallfunction. This makes \
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/settings_surface_defaults.rs:317:                GetSetting = function() return setting end,
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/professions_api.rs:310:                local category = C_TradeSkillUI.GetCategoryInfo(recipe.categoryID)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/professions_api.rs:337:                local category = C_TradeSkillUI.GetCategoryInfo(categoryID)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/professions_api.rs:611:            "local c = C_TradeSkillUI.GetCategoryInfo(1); \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/professions_api.rs:623:        .eval("return C_TradeSkillUI.GetCategoryInfo(9999) == nil")
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_item_upgrade_ui_loads.rs:41:    "UpdateUpgradeItemInfo",
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_item_upgrade_ui_loads.rs:74:    "GetItemUpgradeItemsCallBack",
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_item_upgrade_ui_loads.rs:91:    "ItemUpgradeItemInfoMixin",
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_item_upgrade_ui_loads.rs:193:         (C_ItemUpgrade.GetItemUpgradeItemInfo / GetItemHyperlink / GetUpgradeCostInfo) and \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_item_upgrade_ui_loads.rs:313:                || message.contains("ItemUpgradeItemInfoMixin")
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_item_upgrade_ui_loads.rs:360:         UI plumbing (InitDropdown / UpdateButtonAndArrowStates / UpdateUpgradeItemInfo), the \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_item_upgrade_ui_loads.rs:400:             ItemUpgradeItemInfoMixin drives the ResizeLayoutFrame item-info pane; \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_item_upgrade_ui_loads.rs:420:             mixin owns 3 methods: OnClick fires C_ItemUpgrade.UpgradeItem after the static-popup \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_item_upgrade_ui_loads.rs:464:             GetItemUpgradeItemsCallBack walks the player's bag/equipped to populate the flyout \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_item_upgrade_ui_loads.rs:480:                "return type(ItemUpgradeItemInfoMixin['{method}'])"
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_item_upgrade_ui_loads.rs:482:            .unwrap_or_else(|err| panic!("ItemUpgradeItemInfoMixin.{method} probe failed: {err}"));
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_item_upgrade_ui_loads.rs:485:            "ItemUpgradeItemInfoMixin.{method} must publish as a function — the item-info-pane \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_item_upgrade_ui_loads.rs:551:             ShowUIPanel(ItemUpgradeFrame) and falls back to C_ItemUpgrade.CloseItemUpgrade if \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_item_upgrade_ui_loads.rs:633:         via ItemUpgradeFrame_Show's IsShown() guard that calls C_ItemUpgrade.CloseItemUpgrade)"
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/state_types/collections.rs:119:/// `C_LFGList.GetLfgCategoryInfo(categoryID)`. Seeded with standard
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/state_types/collections.rs:152:/// Drives `C_LFGList.GetAvailableActivities` and `GetActivityInfoTable`.
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/secure_types_defaults.rs:27:  if type(securecallfunction) == "function" then
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/secure_types_defaults.rs:28:    return securecallfunction(fn, ...)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/secure_types_defaults.rs:86:    return secureexecuterange(self.tbl, func, ...)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ping_ui_loads.rs:416:             `securecallfunction(GetScaledCursorPosition_Insecure)` (line 211) where \
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/env_init/shared_bootstrap.lua:134:local callPrivateProjectionFactory = securecallfunction
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/env_init/shared_bootstrap.lua:258:          return securecallfunction(fn, delegateSelf, __wow_project_forbidden_arguments(...))
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/env_init/shared_bootstrap.lua:809:local callSecureHookFactory = securecallfunction
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/state_types/barber_shop.rs:103:    /// "Seen" choice ids — `MarkCustomizationChoiceAsSeen` inserts.
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/state_types/barber_shop.rs:104:    /// `SaveSeenChoices` is a no-op because the set already lives in
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/state_types/barber_shop.rs:107:    /// "Seen" option ids — `MarkCustomizationOptionAsSeen` inserts.
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_settings_shared_loads.rs:83:    "GetSetting",
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_report_frame_shared_loads.rs:358:             deep-copy via securecallfunction) before invoking InitiateReportInternal. The \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_report_frame_shared_loads.rs:509:         in securecallfunction to walk the tainted attribute table without acquiring the \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_runeforge_ui_loads.rs:51:    "RuneforgeUpgradeItemSlotMixin",
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_runeforge_ui_loads.rs:68:    "RuneforgeUpgradeItemSlotTemplate",
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_runeforge_ui_loads.rs:368:             ModifiersChanged/ItemSlotOnEnter|Leave/UpgradeItemChanged/\
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_runeforge_ui_loads.rs:369:             UpgradeItemSlotOnEnter|Leave). Child frames: RuneforgeCraftingFrameMixin / \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_runeforge_ui_loads.rs:374:             RuneforgeUpgradeItemSlotMixin (extends via CreateFromMixins). Modifier \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_runeforge_ui_loads.rs:502:         \"ItemSlotOnLeave\", \"UpgradeItemChanged\", \"UpgradeItemSlotOnEnter\", \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_runeforge_ui_loads.rs:503:         \"UpgradeItemSlotOnLeave\" }})` at Blizzard_RuneforgeFrame.lua:34. \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/c_item_api/c_container.rs:300:            return C_ItemUpgrade.CanUpgradeItem(location)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/globals/security/mod.rs:10://! `securecall`, `securecallfunction`, `forceinsecure`, `hooksecurefunc`,
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/globals/security/mod.rs:11://! `secureexecuterange`) are NOT registered here.
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/c_barber_shop.rs:327:        C_BarberShop.MarkCustomizationChoiceAsSeen(101)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/c_barber_shop.rs:328:        C_BarberShop.MarkCustomizationChoiceAsSeen(102)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/c_barber_shop.rs:329:        C_BarberShop.MarkCustomizationOptionAsSeen(31)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/c_barber_shop.rs:330:        C_BarberShop.SaveSeenChoices()
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/channel_verbs.rs:101:                info.zoneChannelID, info.channelType, C_TTSSettings.GetChannelEnabled(info)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/c_transmog_heirloom_api.rs:76:        .eval("return C_TransmogCollection.PlayerHasTransmogByItemInfo('item:1')")
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/c_transmog_heirloom_api.rs:105:        .eval("return C_TransmogCollection.PlayerHasTransmogByItemInfo('item:99:0')")
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/c_transmog_heirloom_api.rs:357:        .eval("return C_TransmogCollection.GetCategoryInfo(1)")
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/c_transmog_heirloom_api.rs:369:            local name, isWeapon, canEnchant, canMainHand, canOffHand = C_TransmogCollection.GetCategoryInfo(14)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/c_transmog_heirloom_api.rs:388:            local name, isWeapon, canEnchant, canMainHand, canOffHand = C_TransmogCollection.GetCategoryInfo(18)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/c_transmog_heirloom_api.rs:502:            if not C_Transmog.PlayerHasTransmogByItemInfo("item:31110") then return "missing collected item" end
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/c_transmog_heirloom_api.rs:503:            if C_Transmog.PlayerHasTransmogByItemInfo("item:99989") then return "found uncollected item" end
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/c_transmog_heirloom_api.rs:505:            if not C_Transmog.PlayerHasTransmogByItemInfo("item:77:0") then return "missing collected source id" end
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/perks_program_defaults.rs:22:if rawget(C_PerksProgram, "GetCategoryInfo") == nil then
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/perks_program_defaults.rs:23:    function C_PerksProgram.GetCategoryInfo(_categoryID)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/perks_program_defaults.rs:68:                       select("#", C_PerksProgram.GetCategoryInfo(1)),
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/c_system_api.rs:193:    let rate: i32 = env.eval("return C_TTSSettings.GetSpeechRate()").unwrap();
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/c_system_api.rs:200:    env.eval::<()>("C_TTSSettings.SetSpeechRate(5)").unwrap();
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/c_system_api.rs:206:    let volume: i32 = env.eval("return C_TTSSettings.GetSpeechVolume()").unwrap();
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/c_system_api.rs:213:    env.eval::<()>("C_TTSSettings.SetSpeechVolume(50)").unwrap();
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/c_system_api.rs:220:        .eval("return C_TTSSettings.GetVoiceOptionID(1)")
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/c_system_api.rs:228:    env.eval::<()>("C_TTSSettings.SetVoiceOption(1, 2)")
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/data/patch_9_2_5_sweep_known_gaps.json:18:  "wt-global-api-C_LFGList.SetEntryTitle-151",
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/data/patch_12_0_0_sweep_known_gaps.json:16:  "wt-global-api-C_LFGList.SetEntryTitle-631",
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/mists_legacy_service_panel_interactions.rs:141:    C_ItemUpgrade.SetItemUpgradeFromLocation({ bagID = 0, slotIndex = 1 })
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/mists_legacy_service_panel_interactions.rs:145:    C_ItemUpgrade.ClearItemUpgrade()
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/data/patch_11_0_7_sweep_known_gaps.json:11:  "wt-global-api-C_LFGList.IsPlayerAuthenticatedForLFG-113",
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/behavioral_messaging_defaults.rs:9:if rawget(C_BehavioralMessaging, "SendNotificationReceipt") == nil then
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/behavioral_messaging_defaults.rs:10:    function C_BehavioralMessaging.SendNotificationReceipt(_notificationID, _receiptType)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/behavioral_messaging_defaults.rs:31:                local result_count = select("#", C_BehavioralMessaging.SendNotificationReceipt(1, "shown"))
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/behavioral_messaging_defaults.rs:45:            function C_BehavioralMessaging.SendNotificationReceipt()
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/behavioral_messaging_defaults.rs:55:            .eval("return C_BehavioralMessaging.SendNotificationReceipt()")
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_actionbarcontroller/behavior_show_bottomleft_after_settings_loaded.rs:20:            function Settings.GetSetting(name)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_actionbar/surface_globals.rs:227:///   Trampolines through `securecallfunction(SecureGetNewActionHighlightMark, ...)`
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_actionbar/surface_globals.rs:232:///   `securecallfunction` is the runtime defence.
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_actionbar/surface_globals.rs:242:///   `ON_BAR_HIGHLIGHT_MARKS`; same `securecallfunction` taint
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/forever_auto_roll.rs:289:        assert(Settings.GetSetting('AutoRoll_enabled'):GetValue() == true)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/forever_auto_roll.rs:290:        assert(Settings.GetSetting('AutoRoll_defaultRollMode'):GetValue() == 2)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/forever_auto_roll.rs:291:        assert(Settings.GetSetting('AutoRoll_raid_2522'):GetValue() == true)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/forever_auto_roll.rs:292:        assert(Settings.GetSetting('AutoRoll_raid_2649'):GetValue() == false)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/globals/compat_overrides.rs:59:if strsplittable == nil then
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/globals/compat_overrides.rs:60:  function strsplittable(delimiter, input, limit)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/item_upgrade_availability_defaults.rs:3://! `C_ItemUpgrade.SetItemUpgradeFromLocation` / `ClearItemUpgrade` keep real
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/item_upgrade_availability_defaults.rs:5://! modeled yet, so `CanUpgradeItem` remains a false compatibility default here.
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/item_upgrade_availability_defaults.rs:9:if rawget(C_ItemUpgrade, "CanUpgradeItem") == nil then
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/item_upgrade_availability_defaults.rs:10:    function C_ItemUpgrade.CanUpgradeItem(_location)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/item_upgrade_availability_defaults.rs:30:            .eval("return C_ItemUpgrade.CanUpgradeItem({ bagID = 0, slotIndex = 1 })")
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/item_upgrade_availability_defaults.rs:41:            function C_ItemUpgrade.CanUpgradeItem()
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/item_upgrade_availability_defaults.rs:51:            .eval("return C_ItemUpgrade.CanUpgradeItem({ bagID = 0, slotIndex = 1 })")
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/lfg_categories.rs:36:            local info = C_LFGList.GetLfgCategoryInfo(2)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/lfg_categories.rs:44:    assert_eq!(result, "ok", "GetLfgCategoryInfo(2): {result}");
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/lfg_categories.rs:53:            local info = C_LFGList.GetLfgCategoryInfo(99)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/lfg_categories.rs:122:            local name = C_LFGList.GetActivityFullName(1195)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/lfg_categories.rs:128:    assert_eq!(result, "ok", "GetActivityFullName(1195): {result}");
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/lfg_categories.rs:209:            local info = C_LFGList.GetActivityInfoTable(1195)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/lfg_categories.rs:215:            local info2 = C_LFGList.GetActivityInfoTable(1296)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/lfg_categories.rs:221:    assert_eq!(result, "ok", "GetActivityInfoTable: {result}");
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/inert_global_defaults.rs:55:if rawget(C_SocialRestrictions, "IsChatDisabled") == nil then
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/inert_global_defaults.rs:56:    function C_SocialRestrictions.IsChatDisabled() return false end
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/inert_global_defaults.rs:299:                if C_SocialRestrictions.IsChatDisabled() ~= false then return "social" end
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/inert_global_defaults.rs:352:            C_SocialRestrictions.IsChatDisabled = function() return true end
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/inert_global_defaults.rs:383:                if C_SocialRestrictions.IsChatDisabled() ~= true then return "overwrote_namespace_member" end
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_achievementui/surface_mixins.rs:28://!     -- looks up category name + completion counts via GetCategoryInfo +
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/globals/channel_verbs.rs:432:        "GetChannelEnabled",
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/globals/channel_verbs.rs:438:        "SetChannelEnabled",
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_achievementui/surface_globals.rs:299:///   `GetCategoryInfo(id)` (with `ACHIEVEMENT_SUMMARY_CATEGORY` override
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_achievementui/behavior_statistic_row.rs:31://!             text = GetCategoryInfo(category)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_achievementui/behavior_statistic_row.rs:100://! `GetStatistic`, `GetCategoryInfo`, and `GetAchievementCriteriaInfo`
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_achievementui/behavior_statistic_row.rs:331:                local original_category_info = _G.GetCategoryInfo
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_achievementui/behavior_statistic_row.rs:332:                _G.GetCategoryInfo = function(category) return "{header_text}" end
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_achievementui/behavior_statistic_row.rs:381:                _G.GetCategoryInfo = original_category_info
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_achievementui/behavior_statistic_row.rs:427:             `{{id=555, colorIndex=1, header=true}}` and stubs `GetCategoryInfo` to \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_achievementui/behavior_search_filter.rs:270:                local original_category_info = _G.GetCategoryInfo
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_achievementui/behavior_search_filter.rs:271:                _G.GetCategoryInfo = function(id) return "StubCategory", -1 end
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_achievementui/behavior_search_filter.rs:294:                _G.GetCategoryInfo = original_category_info
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/globals/lfg_list/catalog.rs:102:/// `GetLfgCategoryInfo(categoryID)` -> table or nil.
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/globals/lfg_list/catalog.rs:290:/// `GetActivityFullName(activityID, questID?, showWarmode?)` -> string.
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/globals/lfg_list/catalog.rs:304:/// `GetPlaystyleString(playstyle, generalPlaystyle, activityInfo)` -> string.
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/editmode/patch_enter_exit_edit_mode.lua:25:            secureexecuterange(
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_achievementui/behavior_category_default.rs:60://!         local _, parent = GetCategoryInfo(id);
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/housing_catalog_state.lua:563:  GetCategoryInfo = function(categoryID)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/housing_catalog_state.lua:596:      return C_CatalogShop.GetCategoryInfo(101)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/globals/lfg_list.rs:745:            ("GetActivityInfoTable", catalog::get_activity_info_table),
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/globals/lfg_list.rs:747:            ("GetLfgCategoryInfo", catalog::get_lfg_category_info),
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/globals/lfg_list.rs:754:            ("GetActivityFullName", catalog::get_activity_full_name),
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/globals/lfg_list.rs:755:            ("GetPlaystyleString", catalog::get_playstyle_string),
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/editmode/apply_system_anchors.lua:167:            if systemFrame.GetSettingValueBool then
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/editmode/apply_system_anchors.lua:168:                local ok, locked = pcall(systemFrame.GetSettingValueBool, systemFrame, lockSetting)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/editmode/apply_system_anchors.lua:306:            local oldGetSettingValue = systemFrame.GetSettingValue
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/editmode/apply_system_anchors.lua:307:            if oldGetSettingValue then
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/editmode/apply_system_anchors.lua:308:                systemFrame.GetSettingValue = function(self, requestedSetting, ...)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/editmode/apply_system_anchors.lua:312:                    return oldGetSettingValue(self, requestedSetting, ...)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/editmode/apply_system_anchors.lua:318:            if oldGetSettingValue then
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/editmode/apply_system_anchors.lua:319:                systemFrame.GetSettingValue = oldGetSettingValue
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/editmode/apply_system_anchors.lua:325:            if systemFrame.GetSettingValue then
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/editmode/apply_system_anchors.lua:326:                local ok, value = pcall(systemFrame.GetSettingValue, systemFrame, setting)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/editmode/apply_system_anchors.lua:401:                    if systemFrame.GetSettingValueBool then
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/editmode/apply_system_anchors.lua:402:                        local ok, value = pcall(systemFrame.GetSettingValueBool, systemFrame, setting)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/editmode/apply_system_anchors.lua:550:                    if systemFrame.GetSettingValue then
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/editmode/apply_system_anchors.lua:552:                            systemFrame.GetSettingValue,
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/surface_mixins/category.rs:46:         categoryInfo via C_AccountStore.GetCategoryInfo and writes self.Text:SetText(name) + \
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/c_api/c_barber_shop.rs:56:        "MarkCustomizationChoiceAsSeen",
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/c_api/c_barber_shop.rs:60:        "MarkCustomizationOptionAsSeen",
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/c_api/c_barber_shop.rs:63:    ("SaveSeenChoices", save_seen_choices),
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:217:             dispatch to all registered callbacks via secureexecuterange \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:222:             rilua's native secureexecuterange traversal), or (c) the callback was registered against a different \
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/formatting_utility_defaults.rs:64:if strsplittable == nil then
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/formatting_utility_defaults.rs:65:  function strsplittable(delimiter, input, limit)
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/formatting_utility_defaults.rs:354:                local split = strsplittable(",", "a,b")
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/formatting_utility_defaults.rs:355:                if split[1] ~= "a" or split[2] ~= "b" then return "strsplittable" end
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_hide_sound.rs:240:             rilua's native secureexecuterange traversal), or (c) the callback was registered against a \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_selected.rs:43://!    gates ALL of the GetCategoryItems / GetCategoryInfo / itemRack
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_selected.rs:245:             handler shape — and likely re-routing the C_API GetCategoryItems / GetCategoryInfo \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_selected.rs:282:                C_AccountStore.GetCategoryInfo
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_selected.rs:288:            C_AccountStore.GetCategoryInfo = function()
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_selected.rs:338:             GetCategoryItems and GetCategoryInfo run (both stubbed), GetOrCreateTableEntryByCallback \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_selected.rs:451:            C_AccountStore.GetCategoryInfo =
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_list_refresh.rs:6://! `GetCategoryInfo`, preserving selection across refresh). FOUR claims
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_list_refresh.rs:23://! 3. **`GetCategoryInfo` is NOT called by the list mixin at all.** It is
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_list_refresh.rs:55://!   `GetCategoryInfo` call site (line 12). A nil reading would prove the
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_list_refresh.rs:67://!   `C_AccountStore.GetCategoryInfo` with a tracker, neuters
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_list_refresh.rs:70://!   GetCategoryInfo at item_display.lua:120) cannot fire indirectly,
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_list_refresh.rs:72://!   `GetCategoryInfo` tracker received ZERO calls. Pins axis 3: a
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_list_refresh.rs:164:             from the list mixin) is the actual `C_AccountStore.GetCategoryInfo` call site \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_list_refresh.rs:167:             GetCategoryInfo — the lookup is deferred to button realization. Got \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_list_refresh.rs:259:            .expect("GetCategoryInfo call-count readout must run cleanly");
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_list_refresh.rs:263:            "Expected ZERO direct `C_AccountStore.GetCategoryInfo` calls during SetCategories \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_list_refresh.rs:267:             GetCategoryInfo call site is `AccountStoreCategoryMixin:SetCategory` (line 12), \
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_list_refresh.rs:422:            C_AccountStore.GetCategoryInfo
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_list_refresh.rs:423:        C_AccountStore.GetCategoryInfo = function(_category_id)
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_list_refresh.rs:431:    .expect("seeding GetCategoryInfo tracker must run cleanly");
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_list_refresh.rs:437:        C_AccountStore.GetCategoryInfo =
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accountstore/behavior_category_list_refresh.rs:444:    .expect("GetCategoryInfo tracker tear-down must run cleanly");
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/globals/font_strings_collection/mount_journal.rs:271:    tb.set_function("IsTypeChecked", |state| false.into_stack(state))?
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/globals/font_strings_collection/mount_journal.rs:272:        .set_function("SetTypeFilter", |_state| Ok(0))?
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/globals/font_strings_collection/mount_journal.rs:273:        .set_function("IsValidTypeFilter", |state| true.into_stack(state))
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accessibilitytemplates/surface_mixins.rs:74:    "GetSettingValue",
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accessibilitytemplates/surface_mixins.rs:75:    "GetSettingDefaultValue",
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_ui/blizzard_accessibilitytemplates/surface_mixins.rs:76:    "SetSettingValue",
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/globals/missing_surface/achievement_info/registration.rs:194:    table_set_rust_fn_static(state, globals, "GetCategoryInfo", get_category_info)?;
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/workarounds/temporary/debug_environment_defaults.rs:17:  local callSecureDelegate = securecallfunction
+/home/osso/.worktrees/wow-ui-sim-p915-page/tests/blizzard_simple_checkout_loads.rs:425:         securecallfunction(HouseEditorFrame_*) / \
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/globals/missing_surface/transmog_collection.rs:27:        "PlayerHasTransmogByItemInfo",
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/globals/missing_surface/transmog_collection.rs:66:    table_set_rust_fn_static(state, table_ref, "GetCategoryInfo", get_category_info)?;
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/globals/missing_surface/transmog.rs:33:        "PlayerHasTransmogByItemInfo",
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/globals/missing_surface/achievement_info.rs:9://! `GetCategoryList`, `GetCategoryInfo`,
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/globals/missing_surface/account_store.rs:38:    table_set_rust_fn_static(state, table_ref, "GetCategoryInfo", get_category_info)?;
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/globals/missing_surface/professions/professions_registration.rs:49:    ("GetCategoryInfo", c_trade_skill_ui_get_category_info),
+/home/osso/.worktrees/wow-ui-sim-p915-page/src/lua_api/globals/missing_surface/tooltip_info/mod.rs:157:            ("GetUpgradeItem", c_tooltip_get_upgrade_item),
