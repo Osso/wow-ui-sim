@@ -1,0 +1,36 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "7.3.0",
+  "source": {
+    "path": "data/patch-api/sources/7.3.0-api-changes.wikitext",
+    "revid": 5335723,
+    "sha256": "4fa82825b87c700d8fb0ab6d4d7c51061ed045675b644682a36f0eb495a1a082"
+  },
+  "header_counts": [],
+  "entries": [
+    {
+      "id": "wt-global-api-SOUNDKIT-5",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "P730_NEGATIVE_NONEXISTENT_TABLE",
+      "annotation": "",
+      "wikitext_line": 5
+    },
+    {
+      "id": "wt-global-api-C_ArtifactRelicForgeUI-6",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ArtifactRelicForgeUI",
+      "annotation": "",
+      "wikitext_line": 6
+    },
+    {
+      "id": "wt-global-api-C_Console-6",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Console",
+      "annotation": "",
+      "wikitext_line": 6
+    }
+  ]
+}

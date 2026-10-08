@@ -348,3 +348,7 @@ Integrated merged 8.1.0/8.1.5/8.2.0 extraction modes; 41 registers and 38 extrac
 ## 2026-10-08 — Patch 7.3.0 source and discovery
 
 Pinned page 553643 revision 5335723; additive opt-in table-summary parser, three-row prefork discovery and concrete sound input/request-state test. [Audit](investigations/patch-7-3-0-api-audit.md); acceptance pending.
+
+## 2026-10-08 — Patch 7.3.0 audit proof
+
+[Audit](investigations/patch-7-3-0-api-audit.md): modeled C_Sound request path fixes cached PlaySound aliasing without vendor edits; real inspector lifecycle and all three table publications pass. Eleven IDs, zero inventory gaps, slash/consent pending. Forty-three sweeps, scoped regressions, 33/25/8 Python fixtures, warning-clean non-vendor Mists check, format and startup `[]` pass. Forty-two registers reproduce; three inherited extract failures unchanged. Read-only historical validator and eighteen prior validators pass; 7.3.2 integration placeholder retained.

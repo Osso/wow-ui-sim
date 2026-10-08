@@ -1,0 +1,24 @@
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/c_api/patch_retired_members.rs:326:    "C_Console",
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/hot_literals.rs:126:    b"C_Console",
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/missing_surface/small_namespaces.rs:34:    register_flat_namespace(state, "C_Console", C_CONSOLE_METHODS)?;
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/publication_sweep.rs:231:    for _, record in ipairs(C_Console.GetAllCommands()) do
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/patch_11_1_7_publication_fixes.rs:31:            for _, record in ipairs(C_Console.GetAllCommands()) do
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/patch_10_2_0_publication_fixes.rs:29:    assert(rawget(C_Console, name) == nil)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/patch_10_2_0_publication_fixes.rs:30:    assert(C_Console[name] == nil)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/patch_10_2_0_publication_fixes.rs:31:    assert(C_Console[name] == nil)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/c_namespace_diff_coverage.rs:56:        "C_Console",
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/c_namespace_diff_coverage.rs:122:                { "C_Console", "GetAllCommands" },
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/patch_11_2_7_retirement.rs:20:            for _, record in ipairs(C_Console.GetAllCommands()) do
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/c_system_api.rs:3://! Covers: C_XMLUtil, C_Console, C_VoiceChat, C_TTSSettings, C_Reputation,
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/c_system_api.rs:42:// C_Console
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/c_system_api.rs:49:        .eval("return type(C_Console.GetAllCommands()) == 'table'")
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/c_system_api.rs:60:            local before = C_Console.GetAllCommands()
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/c_system_api.rs:64:            for _, record in ipairs(C_Console.GetAllCommands()) do
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/c_system_api.rs:93:            for _, record in ipairs(C_Console.GetAllCommands()) do
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/c_system_api.rs:120:            local c = C_Console.GetColorFromType(0)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/c_system_api.rs:757:        "C_Console",
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/console_commands.rs:10:        for _, query in ipairs({ConsoleGetAllCommands, C_Console.GetAllCommands}) do
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/console_commands.rs:53:        local fresh = C_Console.GetAllCommands()
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/console_commands.rs:58:        assert(C_Console.GetAllCommands()[2] ~= nil)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/data/patch_10_2_0_sweep_known_gaps.json:5:  "wt-global-api-C_Console.GetAllCommands-116",
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/data/patch_10_2_0_sweep_known_gaps.json:6:  "wt-global-api-C_Console.GetColorFromType-117",

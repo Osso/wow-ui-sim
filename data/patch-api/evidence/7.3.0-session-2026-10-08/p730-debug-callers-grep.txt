@@ -1,0 +1,23 @@
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/addon_coverage_baseline.rs:30:    ("Blizzard_Console", 4),
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/load_order.rs:321:            "Blizzard_Console",
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_debug_tools_loads.rs:441:                and type(DisplayTableInspectorWindow) == 'function'",
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_debug_tools_loads.rs:451:         per-frame attribute inspector. `DisplayTableInspectorWindow(focusedTable, \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/startup_targeted_regressions/late.rs:192:        let toc_path = blizzard_ui_dir().join("Blizzard_Console/Blizzard_Console.toc");
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/startup_targeted_regressions/late.rs:194:            .expect("Blizzard_Console should load without a saved vars manager");
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_console_loads.rs:18:    blizzard_ui_dir().join("Blizzard_Console/Blizzard_Console.toc")
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_console_loads.rs:47:    let toc = TocFile::from_file(&console_toc()).expect("Blizzard_Console TOC should parse");
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_console_loads.rs:50:        "Blizzard_Console is a non-LOD addon (it should auto-load on Game and Login screens)"
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_console_loads.rs:55:        "Blizzard_Console should declare `## RequiredDep: Blizzard_CommandLineUtil` (so its \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_console_loads.rs:61:        "Blizzard_Console declares `## SavedVariablesMachine: Blizzard_Console_SavedVars` (so \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_console_loads.rs:73:        .any(|(name, _)| name == "Blizzard_Console");
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_console_loads.rs:76:        "Blizzard_Console (`## AllowLoad: Both`, non-LOD) should appear in Game-screen discovery"
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_console_loads.rs:82:        .any(|(name, _)| name == "Blizzard_Console");
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_console_loads.rs:85:        "Blizzard_Console (`## AllowLoad: Both`) should also appear in Login-screen discovery so \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_console_loads.rs:99:            message.contains("Blizzard_Console") || message.contains("DeveloperConsole")
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_console_loads.rs:105:        "Blizzard_Console emitted Lua errors during load:\n  {}",
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_console_loads.rs:122:        "Blizzard_Console should define the top-level `DeveloperConsole` frame \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_console_loads.rs:124:         after Blizzard_Console.xml loads"
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_console_loads.rs:227:        "Blizzard_Console.lua should define three module-global helpers: \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/patch_7_3_0_cached_behavior.rs:41:            local inspector = DisplayTableInspectorWindow(root, "Patch 7.3.0 fixture")
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/fixtures/ptr-12-1-5-eager-load-order.txt:121:Blizzard_Console
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_event_trace_loads.rs:99:         Blizzard_Console)"

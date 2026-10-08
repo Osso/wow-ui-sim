@@ -1,0 +1,38 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.13s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p730-page/debug/deps/integration-1db16289b0998b2a)
+
+running 2 tests
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 1.94ms
+[  0.002s] [Startup] SimState::default complete in 1.99ms
+[  0.002s] [Startup] rilua VM created in 85.79µs
+[  0.002s] [Startup] builtin frames initialized in 59.63µs
+[  0.002s] [Startup] template registry cleared in 4.55µs
+[  0.002s] [Startup] intrinsic templates registered in 4.56µs
+[  0.002s] [Startup] initial app_data lua handle installed in 1.16µs
+[  0.002s] [Startup] rilua VM created in 120.64µs
+[  0.002s] [Startup] builtin frames initialized in 66.26µs
+[  0.002s] [Startup] template registry cleared in 2.46µs
+[  0.002s] [Startup] intrinsic templates registered in 5.79µs
+[  0.002s] [Startup] initial app_data lua handle installed in 190.00ns
+[  0.093s] [Startup] init_lua_state complete in 90.83ms
+[  0.093s] [Startup] final app_data lua handle installed in 170.00ns
+[  0.093s] [Startup] init_lua_state complete in 90.80ms
+[  0.093s] [Startup] final app_data lua handle installed in 171.00ns
+[  0.093s] [Startup] initial screen globals installed in 69.28µs
+[  0.093s] [Startup] WowLuaEnv::new complete
+[  0.093s] [Startup] initial screen globals installed in 54.05µs
+[  0.093s] [Startup] WowLuaEnv::new complete
+test soundkit_ig_inventory_rotate_character::play_sound_with_ig_inventory_rotate_character_does_not_error ... ok
+test soundkit_ig_inventory_rotate_character::soundkit_ig_inventory_rotate_character_resolves_to_canonical_id ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 10664 filtered out; finished in 0.10s
+

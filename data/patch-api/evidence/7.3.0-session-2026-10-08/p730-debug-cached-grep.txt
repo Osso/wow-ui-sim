@@ -1,0 +1,10 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/SlashCommands.lua:120:	TABLEINSPECT = "TABLEINSPECT",
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/SlashCommands.lua:1348:SlashCommandUtil.CheckAddSlashCommand(SLASH_COMMAND.TABLEINSPECT, SLASH_COMMAND_CATEGORY.DEBUG_COMMAND, function(msg)
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/SlashCommands.lua:1367:		DisplayTableInspectorWindow(focusedTable);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/SlashCommands.lua:1371:			DisplayTableInspectorWindow(highlightFrame);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/SlashCommands.lua:1373:			DisplayTableInspectorWindow(UIParent);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Console/Blizzard_Console.toc:9:Blizzard_Console.lua
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Console/Blizzard_Console.toc:10:Blizzard_Console.xml
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DebugTools/Blizzard_TableInspector.lua:133:	local copy = DisplayTableInspectorWindow(self.focusedTable);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DebugTools/Blizzard_TableInspector.lua:280:function DisplayTableInspectorWindow(focusedTable, customTitle, tableFocusedCallback)
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DebugTools/Blizzard_TableInspectorAttributeDataProvider.lua:231:		DisplayTableInspectorWindow(attributeData.rawValue, newTitle);

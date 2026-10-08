@@ -1,0 +1,86 @@
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:58:    filter: Option<String>,
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:92:    match run_with_args(state, cases, config, env::args_os().skip(1)) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:106:    let args = env::args_os().skip(1);
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:107:    match run_with_setup_args(cases, config, setup, args) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:113:fn run_with_setup_args<S, E>(
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:117:    args: impl Iterator<Item = OsString>,
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:122:    run_selected_from_args(cases, args, |selected, worker_count, nocapture| {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:128:fn run_with_args<S>(
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:132:    args: impl Iterator<Item = OsString>,
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:134:    run_selected_from_args(cases, args, |selected, worker_count, nocapture| {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:139:fn run_selected_from_args<'a, S>(
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:141:    args: impl Iterator<Item = OsString>,
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:144:    let options = parse_args(args).map_err(report_cli_error)?;
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:159:fn parse_args(args: impl Iterator<Item = OsString>) -> Result<Options, String> {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:161:    let mut args = args;
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:162:    while let Some(argument) = args.next() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:166:        parse_argument(&mut options, &mut args, argument)?;
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:168:    if options.exact && options.filter.is_none() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:169:        return Err("--exact requires a positional filter".to_string());
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:174:fn parse_argument(
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:176:    args: &mut impl Iterator<Item = OsString>,
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:184:            let value = next_option_value(args, "--test-threads")?;
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:188:            let value = next_option_value(args, "--skip")?;
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:193:        _ => parse_compact_or_positional_argument(options, argument),
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:197:fn parse_compact_or_positional_argument(
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:212:    set_filter(options, argument)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:224:    args: &mut impl Iterator<Item = OsString>,
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:227:    args.next()
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:237:    options.test_threads = Some(parse_worker_count(value, "--test-threads")?);
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:241:fn set_filter(options: &mut Options, filter: String) -> Result<(), String> {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:242:    if options.filter.is_some() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:243:        return Err("only one positional filter is supported".to_string());
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:245:    options.filter = Some(filter);
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:256:fn parse_worker_count(value: &str, source: &str) -> Result<usize, String> {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:258:        .parse::<usize>()
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:269:        .filter(|case| matches_filter(case.name, options))
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:270:        .filter(|case| !options.skips.iter().any(|skip| case.name.contains(skip)))
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:275:fn matches_filter(name: &str, options: &Options) -> bool {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:276:    let Some(filter) = options.filter.as_deref() else {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:280:        name == filter
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:282:        name.contains(filter)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/prefork.rs:311:    parse_worker_count(&value, "RUST_TEST_THREADS")
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:82:    Case::new("conformance::filtering_and_listing", filtering_and_listing),
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:523:        .filter(|fd| {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:540:                .parse()
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:564:fn filtering_and_listing(state: &ConformanceState) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:623:        .args(["--list", CASE_NAME, "--exact"])
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:641:        .args(["--list", CASE_NAME, "--exact"])
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:667:    for (module_filter, expected_count) in MODULE_COUNTS {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:669:            .args(["--list", module_filter])
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:680:            .filter(|line| line.ends_with(": test"))
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:684:            "unexpected generated case count for {module_filter}:\n{listed}"
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:688:            "unexpected libtest-compatible summary for {module_filter}:\n{listed}"
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:711:    for (module_filter, expected_count) in MODULE_COUNTS {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:713:            .args(["--list", module_filter])
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:724:            .filter(|line| line.ends_with(": test"))
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:728:            "unexpected generated case count for {module_filter}:\n{listed}"
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:732:            "unexpected libtest-compatible summary for {module_filter}:\n{listed}"
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:757:    for (module_filter, expected_count) in MODULE_COUNTS {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:759:            .args(["--list", module_filter])
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:770:            .filter(|line| line.ends_with(": test"))
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:774:            "unexpected generated case count for {module_filter}:\n{listed}"
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:778:            "unexpected libtest-compatible summary for {module_filter}:\n{listed}"
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:807:    for (module_filter, expected_count) in MODULE_COUNTS {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:809:            .args(["--list", module_filter])
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:820:            .filter(|line| line.ends_with(": test"))
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:824:            "unexpected generated case count for {module_filter}:\n{listed}"
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:828:            "unexpected libtest-compatible summary for {module_filter}:\n{listed}"
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:907:        .parse()
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:908:        .expect("parse grandchild pid");
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:958:    let two_filters = run_driver(state, ["alpha", "beta"], []);
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:959:    assert_failure(&two_filters);
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:960:    assert!(stderr(&two_filters).contains("only one positional filter is supported"));
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:1007:        .args(["resource::", "--test-threads=2", "--nocapture"])
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:1081:            .map(|value| value.parse().expect("parse driver child pid"))
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:1115:            .filter(|pid| unsafe { libc::kill(*pid, 0) } == 0)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:1134:    args: [&str; N],
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:1142:    command.args(args).env(WORKER_STATE_ENV, &worker_path);
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:1153:    args: [&str; N],
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:1157:    command.args(args).envs(environment);
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:1163:    args: [&str; N],
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:1167:    command.args(args).envs(environment);
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:1337:        .parse()
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:1338:        .expect("parse active workers");
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:1342:        .parse()
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/prefork_full_ui.rs:1343:        .expect("parse maximum workers");

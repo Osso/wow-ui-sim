@@ -1,0 +1,14 @@
+E
+======================================================================
+ERROR: test_legacy_summary_tables_keep_names_not_prose_or_addons (__main__.InventoryTests.test_legacy_summary_tables_keep_names_not_prose_or_addons)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p730-page/tools/test_gen_patch_wikitext_register.py", line 15, in test_legacy_summary_tables_keep_names_not_prose_or_addons
+    rows = generator.parse_legacy_summary_tables(raw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'gen_patch_wikitext_register' has no attribute 'parse_legacy_summary_tables'. Did you mean: 'parse_legacy_caption_tables'?
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)

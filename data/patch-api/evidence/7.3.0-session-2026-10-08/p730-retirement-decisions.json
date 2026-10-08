@@ -1,0 +1,8 @@
+{
+  "source_revision": 5335723,
+  "removed_inventory_members": [],
+  "new_retirements": [],
+  "reason": "Pinned page contains only New and Changes, with no removal/rename/member retirement statements. No namespace/member/global retirement is authorized. Whole-word grep scans are retained for all named identities; no vendor consumers are modified.",
+  "later_register_snapshots": "p730-later-register-scan.json",
+  "caller_scan_policy": "grep -R -n -w -F bare names, with complete stdout/stderr; captures pcall(Name, ...) and and Name then without syntax filtering."
+}

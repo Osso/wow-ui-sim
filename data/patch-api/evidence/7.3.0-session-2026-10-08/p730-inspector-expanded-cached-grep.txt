@@ -1,0 +1,13 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/SlashCommands.lua:120:	TABLEINSPECT = "TABLEINSPECT",
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/SlashCommands.lua:1348:SlashCommandUtil.CheckAddSlashCommand(SLASH_COMMAND.TABLEINSPECT, SLASH_COMMAND_CATEGORY.DEBUG_COMMAND, function(msg)
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DebugTools/Blizzard_TableInspectorDataProvider.lua:4:function TableInspectorDataProviderMixin:Initialize(tableInspector, parent)
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DebugTools/Blizzard_TableInspectorDataProvider.lua:5:	self.tableInspector = tableInspector;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DebugTools/Blizzard_TableInspectorDataProvider.lua:17:	return self.tableInspector;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DebugTools/Blizzard_TableInspectorAnchorDataProvider.lua:4:function TableInspectorAnchorDataProviderMixin:Initialize(tableInspector, parent)
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DebugTools/Blizzard_TableInspectorAnchorDataProvider.lua:5:	TableInspectorDataProviderMixin.Initialize(tableInspector, parent);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DebugTools/Blizzard_TableInspectorAttributeDataProvider.lua:4:function TableInspectorAttributeDataProviderMixin:Initialize(tableInspector, parent)
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DebugTools/Blizzard_TableInspectorAttributeDataProvider.lua:5:	TableInspectorDataProviderMixin.Initialize(self, tableInspector, parent);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DebugTools/Blizzard_TableInspectorAttributeDataProvider.lua:198:	local tableInspector = line:GetTableInspector();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DebugTools/Blizzard_TableInspectorAttributeDataProvider.lua:199:	tableInspector:SetDynamicUpdates(false);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DebugTools/Blizzard_TableInspectorAttributeDataProvider.lua:224:	local tableInspector = line:GetTableInspector();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DebugTools/Blizzard_TableInspectorAttributeDataProvider.lua:233:		tableInspector:SelectTable(attributeData.rawValue, tableTitle);

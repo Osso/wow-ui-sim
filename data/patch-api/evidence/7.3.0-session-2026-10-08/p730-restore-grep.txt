@@ -1,0 +1,105 @@
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/global_placeholder_tables.rs:5://! surface, so keep them out of `globals::missing_surface`.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/voice_chat_verbs.rs:4://! Migrates 4 entries off `GLOBAL_NIL_STUBS`:
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/voice_chat_verbs.rs:14://! Registered from `register_tail_globals` after `missing_surface`.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/trade_verbs.rs:4://! Migrates 5 entries off `GLOBAL_NIL_STUBS`:
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/trade_verbs.rs:20://! Registered from `register_tail_globals` after `missing_surface`.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/movement_verbs.rs:11://! Registered from `register_tail_globals` after `missing_surface`.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/missing_surface/tooltip_info/probes.rs:21:use crate::lua_api::globals::missing_surface::item_spell::{
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/missing_surface/tooltip_info/probes.rs:267:    use crate::lua_api::globals::missing_surface::item_socket_info;
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/missing_surface/tooltip_info/probes.rs:276:    use crate::lua_api::globals::missing_surface::item_socket_info;
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/missing_surface/tooltip_info/probes.rs:286:    use crate::lua_api::globals::missing_surface::item_socket_info;
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/missing_surface/tooltip_info/sources.rs:5:use crate::lua_api::globals::missing_surface::item_spell::parse_prefixed_id;
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/lua_duration_object.rs:15://! `missing_surface::register_all`, so the duration surface is installed before
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/targeting_verbs.rs:3://! Migrated off `GLOBAL_NIL_STUBS` in `stubs/global_stubs.rs`. Each function
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/mail_verbs.rs:4://! Migrates 4 entries off `GLOBAL_NIL_STUBS`:
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/mail_verbs.rs:20://! Registered from `register_tail_globals` after `missing_surface` so the
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/inventory_verbs.rs:4://! Migrates 7 entries off `GLOBAL_NIL_STUBS`:
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/inventory_verbs.rs:18://! Registered from `register_tail_globals` after `missing_surface` so the
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/group_verbs.rs:5://! Migrates 7 entries off `GLOBAL_NIL_STUBS` and adds one new global
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/group_verbs.rs:20://! Registered from `register_tail_globals` after `missing_surface`.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/auction_verbs.rs:9:use crate::lua_api::globals::missing_surface::item_link_for_id;
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/register.rs:228:    super::missing_surface::register_all(lua)?;
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/register.rs:232:    super::missing_surface::register_quest_log_overrides(lua)?;
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/missing_surface.rs:36:#[path = "missing_surface/ui_widget_manager.rs"]
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/missing_surface.rs:78:    register_legacy_global_shims(lua)?;
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/missing_surface.rs:87:fn register_legacy_global_shims(lua: &mut rilua::Lua) -> LuaResult<()> {
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/missing_surface.rs:88:    register_audio_and_utility_globals(lua)?;
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/missing_surface.rs:96:fn register_audio_and_utility_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/channel_verbs.rs:26://! Registered from `register_tail_globals` after `missing_surface`.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/quest_verbs.rs:5://! Migrates 8 entries off `GLOBAL_NIL_STUBS`:
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/quest_verbs.rs:25://! Registered from `register_tail_globals` after `missing_surface`.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:24:    // missing_surface/achievement_info.rs, not stubs.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:29:    // are SimState-backed in missing_surface/auction_house.rs, not
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:33:    // are SimState-backed in missing_surface/battle_net.rs, not stubs.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:41:    // TalentState-backed in missing_surface/traits.rs, not stubs.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:43:    // are WorldState-backed in missing_surface/club_info.rs, not stubs.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:46:    // `currency_info` map) in missing_surface/item_spell/c_currency.rs,
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:51:    // static-seeded in missing_surface/encounter_journal.rs, not stubs.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:53:    // SimState-backed in missing_surface/gossip_info.rs. GetPoiForUiMapID
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:56:    // missing_surface/heirloom.rs, not a stub.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:62:    // are ITEM_DB-backed in missing_surface/item_spell/c_item.rs, not
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:69:    // missing_surface/small_namespaces.rs, not stubs.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:72:    // missing_surface/c_map.rs, not stubs.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:75:    // SimState-backed in missing_surface/mythic_plus.rs. GetLastWeeklyChest
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:78:    // missing_surface/nameplate.rs (nil and empty-table respectively).
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:81:    // missing_surface/pet_battles.rs; static pet-journal fallbacks live in
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:85:    // C_PlayerInfo probes are registered in missing_surface/player_info.rs.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:86:    // C_QuestLog probes are registered in missing_surface/quest_log.rs.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:90:    // missing_surface/c_spell.rs, not stubs.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:95:    // missing_surface/small_probes.rs, not a stub.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:97:    // missing_surface/small_probes.rs, not a stub.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:99:    // missing_surface/tooltip_info.rs; no stubs needed here.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:123:    // missing_surface/small_namespaces.rs, not a stub.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:144:    // missing_surface/voice_chat.rs, not stubs.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:157:    // missing_surface/achievement_info.rs, not a stub.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:159:    // missing_surface/small_namespaces.rs, not a stub.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:166:    // missing_surface/traits.rs, not stubs.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:167:    // C_Club IsEnabled is WorldState-backed in missing_surface/club_info.rs, not a stub.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:169:    // missing_surface/small_namespaces.rs, not a stub.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:185:    // missing_surface/small_namespaces.rs, not a stub.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:187:    // in missing_surface/mythic_plus.rs, not stubs.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:190:    // missing_surface/small_namespaces.rs, not a stub.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:192:    // C_PlayerInfo probes are registered in missing_surface/player_info.rs.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:193:    // C_QuestLog probes are registered in missing_surface/quest_log.rs.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:195:    // TargetSpell* are SimState/spell-data-backed in missing_surface/c_spell.rs.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:201:    // IsTalking are SimState-backed in missing_surface/voice_chat.rs, not stubs.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:209:    // SimState-backed in missing_surface/battle_net.rs, not stubs.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:210:    // C_Club GetClubCapacity is WorldState-backed in missing_surface/club_info.rs, not a stub.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:212:    // missing_surface/small_namespaces.rs, not a stub.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:214:    // in missing_surface/mythic_plus.rs, not stubs.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:216:    // C_QuestLog probes are registered in missing_surface/quest_log.rs.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:217:    // C_Spell GetSpellCooldown is SimState-backed in missing_surface/c_spell.rs.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:229:    // missing_surface/voice_chat.rs, not stubs.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:237:    // missing_surface/auction_house.rs, not a stub.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:241:    // missing_surface/traits.rs, not a stub.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:243:    // registered in missing_surface/club_info.rs, not stubs.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:250:    // SimState-backed in missing_surface/gossip_info.rs, not stubs.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:272:    // C_NamePlate GetNamePlates is registered in missing_surface/nameplate.rs.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:279:    // C_QuestLog probes are registered in missing_surface/quest_log.rs.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/namespace_stubs.rs:303:    // C_VoiceChat GetChannels is SimState-backed in missing_surface/voice_chat.rs, not a stub.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/global_stubs.rs:18:static GLOBAL_NIL_STUBS: &[&str] = &[
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/stubs/global_stubs.rs:308:    for &name in GLOBAL_NIL_STUBS {
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/inventory_probes.rs:16:use super::missing_surface::item_link_for_id;
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/mod.rs:67:pub mod missing_surface;
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/guild_verbs.rs:4://! Migrates 8 entries off `GLOBAL_NIL_STUBS`:
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/guild_verbs.rs:18://! Registered from `register_tail_globals` after `missing_surface`.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/spell_macro_verbs.rs:4://! Migrates 8 entries off `GLOBAL_NIL_STUBS`:
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/spell_macro_verbs.rs:20://! Registered from `register_tail_globals` after `missing_surface`.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/battlefield_verbs.rs:4://! Migrates 6 entries off `GLOBAL_NIL_STUBS`:
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/battlefield_verbs.rs:20://! Registered from `register_tail_globals` after `missing_surface`.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/panel_toggle_verbs.rs:3://! Migrates 10 entries off `GLOBAL_NIL_STUBS` (`ToggleDropDownMenu` is
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/panel_toggle_verbs.rs:23://! Registered from `register_tail_globals` after `missing_surface`.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/close_frames.rs:4://! Migrates 9 entries off `GLOBAL_NIL_STUBS`:
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/close_frames.rs:24://! Registered from `register_tail_globals` after `missing_surface`.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/chat_window_verbs.rs:3://! Migrates chat-window entries off `GLOBAL_NIL_STUBS`:
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/chat_window_verbs.rs:20://! Registered from `register_tail_globals` after `missing_surface`.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/mail_probes.rs:8:use crate::lua_api::globals::missing_surface::item_link_for_id;
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/combat_verbs.rs:3://! Migrates action/cast globals off `GLOBAL_NIL_STUBS` onto the existing cast
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/combat_verbs.rs:31://! `missing_surface` so the real Rust bodies overwrite any pre-existing
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/combat_verbs.rs:207:        crate::lua_api::globals::missing_surface::professions::open_trade_skill_for_skill_line(
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/message_verbs.rs:4://! Migrates 3 entries off `GLOBAL_NIL_STUBS`:
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/message_verbs.rs:15://! Registered from `register_tail_globals` after `missing_surface`.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/offer_verbs.rs:4://! Migrates 6 entries off `GLOBAL_NIL_STUBS`:
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/offer_verbs.rs:20://! Registered from `register_tail_globals` after `missing_surface`.
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/globals/admin_crafting.rs:10:use crate::lua_api::globals::missing_surface::professions::{
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/env_init/runtime_surface_bootstrap.lua:260:-- C_ZoneAbility is state-backed via `src/lua_api/globals/missing_surface/zone_ability.rs`.

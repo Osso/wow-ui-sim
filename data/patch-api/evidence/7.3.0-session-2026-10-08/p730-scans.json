@@ -1,0 +1,150 @@
+[
+  {
+    "symbol": "SOUNDKIT",
+    "area": "cached",
+    "scanner": "grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
+      "SOUNDKIT",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 0,
+    "output": "p730-SOUNDKIT-cached-grep.txt",
+    "sha256": "d598abf35f42a04cbd027af1ddf012a865d47dc7681926e5c044d306f1363b54"
+  },
+  {
+    "symbol": "SOUNDKIT",
+    "area": "callers",
+    "scanner": "grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "SOUNDKIT",
+      "/home/osso/.worktrees/wow-ui-sim-p730-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p730-page/tests"
+    ],
+    "exit": 0,
+    "output": "p730-SOUNDKIT-callers-grep.txt",
+    "sha256": "a8fadeec77722be18083e57c46a057f450bf59579164e1d6e20538d046641ba9"
+  },
+  {
+    "symbol": "C_ArtifactRelicForgeUI",
+    "area": "cached",
+    "scanner": "grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
+      "C_ArtifactRelicForgeUI",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 0,
+    "output": "p730-C_ArtifactRelicForgeUI-cached-grep.txt",
+    "sha256": "9d83b7ebcbd0f5da55212e3a2a20f455b1203e68e64abfdb1edd1de2055b1c41"
+  },
+  {
+    "symbol": "C_ArtifactRelicForgeUI",
+    "area": "callers",
+    "scanner": "grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "C_ArtifactRelicForgeUI",
+      "/home/osso/.worktrees/wow-ui-sim-p730-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p730-page/tests"
+    ],
+    "exit": 0,
+    "output": "p730-C_ArtifactRelicForgeUI-callers-grep.txt",
+    "sha256": "2477211c97eb37f8a0acabde0b630efe9e36882cc341521c0869ddd2a05d990f"
+  },
+  {
+    "symbol": "C_Console",
+    "area": "cached",
+    "scanner": "grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
+      "C_Console",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "output": "p730-C_Console-cached-grep.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "symbol": "C_Console",
+    "area": "callers",
+    "scanner": "grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "C_Console",
+      "/home/osso/.worktrees/wow-ui-sim-p730-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p730-page/tests"
+    ],
+    "exit": 0,
+    "output": "p730-C_Console-callers-grep.txt",
+    "sha256": "d85409f7893d9c9cea176c22764a746a749f28a34a5f9e9144795f3b47dd37bf"
+  },
+  {
+    "symbol": "PlaySound",
+    "area": "cached",
+    "scanner": "grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "--exclude-dir=*Documentation*",
+      "--exclude=*Documentation*",
+      "PlaySound",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 0,
+    "output": "p730-PlaySound-cached-grep.txt",
+    "sha256": "b0fb641080b874304beb17a6b5ef092e4ddd6876150f39abdfa8cf63e72dd971"
+  },
+  {
+    "symbol": "PlaySound",
+    "area": "callers",
+    "scanner": "grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "PlaySound",
+      "/home/osso/.worktrees/wow-ui-sim-p730-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p730-page/tests"
+    ],
+    "exit": 0,
+    "output": "p730-PlaySound-callers-grep.txt",
+    "sha256": "2bf493218cb770ea20644a38ac0d945747fdb89b3a519973e8c3cc0d5da76564"
+  }
+]

@@ -1,0 +1,20 @@
+60:		dataProvider:Clear(self.focusedTable);
+73:			dataProvider:RefreshData(self.focusedTable);
+104:	local parent = self.focusedTable.GetParent and self.focusedTable:GetParent() or nil;
+133:	local copy = DisplayTableInspectorWindow(self.focusedTable);
+151:	if self.focusedTable and self.focusedTable.SetShown then
+152:		self.focusedTable:SetShown(shown);
+170:	if self.focusedTable and self.focusedTable.GetDebugName and self.HighlightButton:GetChecked() then
+172:		self.FrameHighlight:HighlightFrame(self.focusedTable);
+178:function TableInspectorMixin:SelectTable(selectedTable, selectedTableTitle)
+197:function TableInspectorMixin:InspectTable(focusedTable, title)
+201:	self:UpdateTableNavigation(focusedTable);
+202:	self.OpenParentButton:SetEnabled(focusedTable and focusedTable.GetParent and focusedTable:GetParent());
+203:	self.focusedTable = focusedTable;
+204:	if not focusedTable then
+210:	if focusedTable.SetShown then
+211:		self.VisibilityButton:SetChecked(focusedTable:IsShown());
+222:		if focusedTable.GetDebugName then
+223:			title = "Frame Attributes - "..focusedTable:GetDebugName();
+280:function DisplayTableInspectorWindow(focusedTable, customTitle, tableFocusedCallback)
+288:	attributeDisplay:InspectTable(focusedTable, customTitle);

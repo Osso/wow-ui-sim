@@ -10,8 +10,8 @@ Audit the pinned [page source](../../data/patch-api/sources/7.3.0-api-changes.wi
 - [x] Both `C_Sound.PlaySound` and the legacy global must use the same simulator request model; cached Blizzard aliasing must retain numeric validation and recording.
 - [x] Verify a concrete SOUNDKIT numeric ID reaches the existing sound-request state; reject the old string name without replacing the accepted request.
 - [x] Exercise the actual Table Inspector window with concrete root/child tables, navigation and close lifecycle, without vendor overrides.
-- [ ] Preserve every earlier source and reproduce registers using recorded flags; inherited extract failures remain explicitly distinguished.
-- [ ] Validate historical proof read-only from any checkout, with fixed historical register scope and file-derived counts.
+- [x] Preserve every earlier source and reproduce registers using recorded flags; inherited extract failures remain explicitly distinguished.
+- [x] Validate historical proof read-only from any checkout, with fixed historical register scope and file-derived counts.
 
 ## How it works
 
@@ -33,6 +33,8 @@ Audit the pinned [page source](../../data/patch-api/sources/7.3.0-api-changes.wi
 - `tools/test_gen_patch_wikitext_register.py::InventoryTests.test_legacy_summary_tables_keep_names_not_prose_or_addons`.
 - `tests/patch_7_3_0_publication_sweep.rs`.
 - `tests/patch_7_3_0_cached_behavior.rs`.
+- `tests/patch_7_3_0_sound_model.rs`.
+- `data/patch-api/evidence/7.3.0-session-2026-10-08/validate.py`.
 
 ## Known gaps (current cycle)
 

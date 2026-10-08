@@ -1,0 +1,154 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.13s
+     Running tests/prefork_full_ui.rs (/home/osso/.cache/wow-ui-sim-targets/p730-page/debug/deps/prefork_full_ui-21dd5c807fe7a7b6)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 1.92ms
+[  0.002s] [Startup] rilua VM created in 79.09µs
+[  0.002s] [Startup] builtin frames initialized in 61.26µs
+[  0.002s] [Startup] template registry cleared in 4.71µs
+[  0.002s] [Startup] intrinsic templates registered in 4.74µs
+[  0.002s] [Startup] initial app_data lua handle installed in 521.00ns
+[  0.085s] [Startup] init_lua_state complete in 83.10ms
+[  0.085s] [Startup] final app_data lua handle installed in 171.00ns
+[  0.085s] [Startup] initial screen globals installed in 49.48µs
+[  0.085s] [Startup] WowLuaEnv::new complete
+[  1.857s] [Startup] apply_post_load_workarounds: begin
+[  1.858s] [Workarounds] starting patch_edit_mode_manager
+[  1.858s] [Workarounds] finished patch_edit_mode_manager in 235.79µs
+[  1.858s] [Workarounds] starting init_edit_mode_layout
+[  1.858s] [EditMode] starting setup_layout_info
+[  1.860s] [EditMode] finished setup_layout_info in 2.49ms
+[  1.860s] [EditMode] starting apply_system_anchors
+[  1.963s] [EditMode] finished apply_system_anchors in 102.30ms
+[  1.963s] [EditMode] starting finalize_action_bar_positions
+[  1.964s] [EditMode] finished finalize_action_bar_positions in 1.30ms
+[  1.964s] [EditMode] starting invoke_anchor_changed_hooks
+[  1.964s] [EditMode] finished invoke_anchor_changed_hooks in 315.38µs
+[  1.964s] [EditMode] starting fix_action_bar_nan_size
+[  1.964s] [EditMode] finished fix_action_bar_nan_size in 30.81µs
+[  1.964s] [EditMode] starting fix_action_bar_scale
+[  1.964s] [EditMode] finished fix_action_bar_scale in 3.53µs
+[  1.964s] [Workarounds] finished init_edit_mode_layout in 106.48ms
+[  1.964s] [Workarounds] starting patch_ui_parent_panel_toggles
+[  1.964s] [Workarounds] finished patch_ui_parent_panel_toggles in 178.06µs
+[  1.964s] [Workarounds] starting patch_uiparent_onupdate_worklists
+[  1.964s] [Workarounds] finished patch_uiparent_onupdate_worklists in 76.41µs
+[  1.964s] [Workarounds] starting init_chat_type_colors
+[  1.965s] [Workarounds] finished init_chat_type_colors in 95.64µs
+[  1.965s] [Workarounds] starting patch_chat_voice_button_surface
+[  1.965s] [Workarounds] finished patch_chat_voice_button_surface in 85.65µs
+[  1.965s] [Workarounds] starting patch_item_socketing_tooltips
+[  1.965s] [Workarounds] finished patch_item_socketing_tooltips in 46.47µs
+[  1.965s] [Workarounds] starting patch_character_select_selected_name
+[  1.965s] [Workarounds] finished patch_character_select_selected_name in 24.48µs
+[  1.965s] [Workarounds] starting patch_character_create_defaults
+[  1.965s] [Workarounds] finished patch_character_create_defaults in 175.15µs
+[  1.965s] [Workarounds] starting patch_character_frame_title_refresh
+[  1.970s] [Workarounds] finished patch_character_frame_title_refresh in 4.63ms
+[  1.970s] [Workarounds] starting patch_vignette_pin_template
+[  1.970s] [Workarounds] finished patch_vignette_pin_template in 68.23µs
+[  1.970s] [Workarounds] starting patch_fog_of_war_pin_mixin
+[  1.970s] [Workarounds] finished patch_fog_of_war_pin_mixin in 204.21µs
+[  1.970s] [Workarounds] starting patch_map_exploration_pin_mixin
+[  1.974s] [Workarounds] finished patch_map_exploration_pin_mixin in 4.17ms
+[  1.974s] [Workarounds] starting patch_map_canvas_data_provider_attachment
+[  1.974s] [Workarounds] finished patch_map_canvas_data_provider_attachment in 47.06µs
+[  1.974s] [Workarounds] starting ensure_adventure_map_frame_surface
+[  1.974s] [Workarounds] finished ensure_adventure_map_frame_surface in 327.92µs
+[  1.974s] [Workarounds] starting patch_action_bar_button_event_fanout
+[  1.974s] [Workarounds] finished patch_action_bar_button_event_fanout in 75.07µs
+[  1.974s] [Workarounds] starting patch_paging_controls_page_text
+[  1.975s] [Workarounds] finished patch_paging_controls_page_text in 30.00µs
+[  1.975s] [Workarounds] starting patch_talent_edge_frame_level_sync
+[  1.975s] [Workarounds] finished patch_talent_edge_frame_level_sync in 23.25µs
+[  1.975s] [Workarounds] starting patch_catalog_shop_product_card_defaults
+[  1.975s] [Workarounds] finished patch_catalog_shop_product_card_defaults in 47.67µs
+[  1.975s] [Workarounds] starting patch_game_time_defaults
+[  1.975s] [Workarounds] finished patch_game_time_defaults in 5.59µs
+[  1.975s] [Workarounds] starting patch_tooltip_nineslice_surface
+[  1.975s] [Workarounds] finished patch_tooltip_nineslice_surface in 33.60µs
+[  1.975s] [Workarounds] starting patch_container_frame_token_tracker
+[  1.975s] [Workarounds] finished patch_container_frame_token_tracker in 30.11µs
+[  1.975s] [Workarounds] starting patch_achievement_display_set_achievements
+[  1.975s] [Workarounds] finished patch_achievement_display_set_achievements in 6.30µs
+[  1.975s] [Workarounds] starting patch_housing_dashboard_preload
+[  1.975s] [Workarounds] finished patch_housing_dashboard_preload in 120.23µs
+[  1.975s] [Workarounds] starting patch_lfg_lock_list
+[  1.975s] [Workarounds] finished patch_lfg_lock_list in 24.32µs
+[  1.975s] [Workarounds] starting patch_auction_house_browse_results_event
+[  1.975s] [Workarounds] finished patch_auction_house_browse_results_event in 49.87µs
+[  1.975s] [Workarounds] starting patch_auction_house_search_context_aliases
+[  1.975s] [Workarounds] finished patch_auction_house_search_context_aliases in 23.40µs
+[  1.975s] [Workarounds] starting patch_auth_challenge_frame_parent
+[  1.975s] [Workarounds] finished patch_auth_challenge_frame_parent in 49.56µs
+[  1.975s] [Workarounds] starting patch_settings_surface_defaults
+[  1.975s] [Workarounds] finished patch_settings_surface_defaults in 260.50µs
+[  1.975s] [Workarounds] starting patch_settings_canvas_layout_visibility
+[  1.975s] [Workarounds] finished patch_settings_canvas_layout_visibility in 85.00µs
+[  1.975s] [Startup] apply_post_load_workarounds: workarounds complete
+[  2.021s] [Startup] apply_post_load_workarounds: globals restored
+[  2.022s] [Startup] apply_post_load_workarounds: patch 12.1 compatibility restored
+[  2.022s] [Startup] apply_post_load_workarounds: seterrorhandler restored
+[  2.139s] [Startup] begin login sequence
+[  2.140s] [Startup] Firing ADDON_LOADED
+[  2.140s] [Startup] Firing VARIABLES_LOADED
+[  2.213s] [Startup] Firing DISPLAY_SIZE_CHANGED
+[  2.248s] [Startup] Firing UI_SCALE_CHANGED
+[  2.249s] [Startup] Firing PLAYER_LOGIN
+[  2.249s] [Startup] end login sequence in 109.85ms
+[  2.249s] [Startup] begin world enter sequence
+[  2.249s] [Startup] Skipping EDIT_MODE_LAYOUTS_UPDATED
+[  2.249s] [Startup] Firing TIME_PLAYED_MSG via RequestTimePlayed
+[  2.249s] [Startup] Firing PLAYER_ENTERING_WORLD
+[  2.424s] [EditMode] starting setup_layout_info
+[  2.427s] [EditMode] finished setup_layout_info in 2.92ms
+[  2.427s] [EditMode] starting apply_system_anchors
+[  2.522s] [EditMode] finished apply_system_anchors in 94.30ms
+[  2.522s] [EditMode] starting finalize_action_bar_positions
+[  2.523s] [EditMode] finished finalize_action_bar_positions in 1.62ms
+[  2.523s] [EditMode] starting invoke_anchor_changed_hooks
+[  2.528s] [EditMode] finished invoke_anchor_changed_hooks in 4.32ms
+[  2.528s] [EditMode] starting fix_action_bar_nan_size
+[  2.528s] [EditMode] finished fix_action_bar_nan_size in 48.34µs
+[  2.528s] [EditMode] starting fix_action_bar_scale
+[  2.528s] [EditMode] finished fix_action_bar_scale in 3.43µs
+[  2.528s] [EditMode] starting reapply_player_frame_anchor
+[  2.529s] [EditMode] finished reapply_player_frame_anchor in 1.10ms
+[  2.536s] [Startup] end world enter sequence in 286.26ms
+[  2.536s] [Startup] begin post-login events
+[  2.536s] [Startup] Firing UNIT_AURA
+[  2.537s] [Startup] Firing PET_UI_UPDATE
+[  2.538s] [Startup] Firing BAG_UPDATE_DELAYED
+[  2.539s] [Startup] Firing QUEST_LOG_UPDATE
+[  2.540s] [Startup] Firing GROUP_ROSTER_UPDATE
+[  2.607s] [Startup] Firing ACTIONBAR_UPDATE_STATE
+[  2.607s] [Startup] Firing ACTIONBAR_UPDATE_COOLDOWN
+[  2.608s] [Startup] Firing UPDATE_BONUS_ACTIONBAR
+[  2.618s] [Startup] Firing PLAYER_CAN_GLIDE_CHANGED
+[  2.618s] [Startup] Firing PLAYER_IS_GLIDING_CHANGED
+[  2.618s] [Startup] Firing UPDATE_BINDINGS
+[  2.620s] [Startup] Firing UPDATE_CHAT_WINDOWS
+[  2.623s] [Startup] Firing LFG_UPDATE_RANDOM_INFO
+[  2.623s] [Startup] end post-login events in 87.64ms
+[  2.623s] [Startup] begin close startup special windows
+[  2.623s] [Startup] end close startup special windows in 232.46µs
+[  2.624s] [Startup] begin FIRST_FRAME_RENDERED
+[  2.624s] [Startup] Firing FIRST_FRAME_RENDERED
+[  2.624s] [Startup] end FIRST_FRAME_RENDERED in 142.10µs
+[  2.624s] [Startup] begin unblock hidden splash alerts
+[  2.624s] [Startup] end unblock hidden splash alerts in 12.38µs
+[  2.624s] [Startup] begin post-event workarounds
+[  2.624s] [Startup] end post-event workarounds in 1.07µs
+running 4 tests
+test blizzard_deprecated_sound_script_loads::blizzard_deprecated_sound_script_load_deprecation_fallbacks_cvar_is_default_on ... ok
+test blizzard_deprecated_sound_script_loads::blizzard_deprecated_sound_script_loads_without_errors ... ok
+test blizzard_deprecated_sound_script_loads::blizzard_deprecated_sound_script_play_vocal_error_sound_id_aliases_play_vocal_error_sound ... ok
+test blizzard_deprecated_sound_script_loads::blizzard_deprecated_sound_script_play_vocal_error_sound_id_calls_without_error ... ok
+
+test result: ok. 4 passed; 0 failed; 4 total

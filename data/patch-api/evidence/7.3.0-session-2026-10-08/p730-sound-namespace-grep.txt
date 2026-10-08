@@ -1,0 +1,40 @@
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/c_api/c_sound.rs:1://! `C_Sound.PlaySoundWithOptions`: the parsed `PlaySoundParams` request is
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/c_api/c_sound.rs:24:    let namespace = ensure_namespace(state, "C_Sound")?;
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/sound_driver_defaults.rs:10:if type(C_Sound) ~= "table" then
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/sound_driver_defaults.rs:11:    C_Sound = {}
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/sound_driver_defaults.rs:30:if rawget(C_Sound, "GetSoundScaledVolume") == nil then
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/sound_driver_defaults.rs:31:    function C_Sound.GetSoundScaledVolume()
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/sound_driver_defaults.rs:35:if rawget(C_Sound, "IsPlaying") == nil then
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/sound_driver_defaults.rs:36:    function C_Sound.IsPlaying()
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/sound_driver_defaults.rs:40:if rawget(C_Sound, "PlayItemSound") == nil then
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/sound_driver_defaults.rs:41:    function C_Sound.PlayItemSound() end
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/sound_driver_defaults.rs:43:if rawget(C_Sound, "PlaySound") == nil then
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/sound_driver_defaults.rs:44:    function C_Sound.PlaySound() end
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/sound_driver_defaults.rs:46:if rawget(C_Sound, "PlaySoundFile") == nil then
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/sound_driver_defaults.rs:47:    function C_Sound.PlaySoundFile() end
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/sound_driver_defaults.rs:49:if rawget(C_Sound, "PlayVocalErrorSound") == nil then
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/sound_driver_defaults.rs:50:    function C_Sound.PlayVocalErrorSound() end
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/sound_driver_defaults.rs:119:                if type(C_Sound) ~= "table" then return "sound_namespace" end
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/sound_driver_defaults.rs:120:                if C_Sound.GetSoundScaledVolume() ~= 1 then return "sound_volume" end
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/sound_driver_defaults.rs:121:                if C_Sound.IsPlaying() ~= false then return "sound_playing" end
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/sound_driver_defaults.rs:124:                C_Sound.PlayItemSound(1)
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/sound_driver_defaults.rs:125:                C_Sound.PlaySound(1)
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/sound_driver_defaults.rs:126:                C_Sound.PlaySoundFile("silent.ogg")
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/sound_driver_defaults.rs:127:                C_Sound.PlayVocalErrorSound(1)
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/sound_driver_defaults.rs:151:            C_Sound = { Existing = true, IsPlaying = function() return true end }
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/sound_driver_defaults.rs:169:                if C_Sound.Existing ~= true then return "overwrote_sound_namespace" end
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/sound_driver_defaults.rs:170:                if C_Sound.IsPlaying() ~= true then return "overwrote_sound_method" end
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/workarounds/temporary/sound_driver_defaults.rs:173:                if type(C_Sound.PlayVocalErrorSound) ~= "function" then return "missing_vocal_error" end
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/loader/tests/wow_api_globals/startup_globals.rs:849:            if C_Sound.PlaySoundWithOptions({ soundKitID = 1, volumeOverride = 0.5 }) ~= nil then return "sound" end
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/patch_12_1_0_struct_shapes.rs:646:            return select("#", C_Sound.PlaySoundWithOptions({
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/patch_12_1_0_struct_shapes.rs:666:    env.exec("C_Sound.PlaySoundWithOptions({ soundKitID = 12867, forceNoDuplicates = true })")
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/patch_12_1_0_struct_shapes.rs:674:        env.exec(r#"C_Sound.PlaySoundWithOptions({ soundKitID = 1, volumeOverride = "loud" })"#)
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/patch_12_1_0_struct_shapes.rs:677:    assert!(env.exec("C_Sound.PlaySoundWithOptions({ volumeOverride = 1 })").is_err());
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_deprecated_sound_script_loads.rs:61:         forwards to C_Sound, which is bootstrapped at env init by the explicit \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_deprecated_sound_script_loads.rs:133:         C_Sound.PlayVocalErrorSound;` — note the RENAMED right-hand side: legacy global \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_deprecated_sound_script_loads.rs:134:         `PlayVocalErrorSoundID` is bound to the new API name `C_Sound.PlayVocalErrorSound` \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_deprecated_sound_script_loads.rs:135:         (without the `ID` suffix). C_Sound.PlayVocalErrorSound is an explicit \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_deprecated_sound_script_loads.rs:140:        .eval("return PlayVocalErrorSoundID == C_Sound.PlayVocalErrorSound")
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_deprecated_sound_script_loads.rs:144:        "PlayVocalErrorSoundID must be IDENTITY-EQUAL to C_Sound.PlayVocalErrorSound — \
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/runtime_bootstrap_boundaries.rs:89:        !bootstrap.contains("C_Sound"),
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/runtime_bootstrap_boundaries.rs:90:        "C_Sound defaults must live in the explicit temporary sound workaround boundary"

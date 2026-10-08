@@ -1,0 +1,10 @@
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/c_api/c_artifact_relic_forge_ui.rs:1://! `C_ArtifactRelicForgeUI` namespace — currently exposes only
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/c_api/c_artifact_relic_forge_ui.rs:18:    let ns = ensure_namespace(state, "C_ArtifactRelicForgeUI")?;
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/lua_api/sim_substates/viewed_artifact.rs:3://! probes `C_ArtifactRelicForgeUI.IsAtForge` and
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/c_artifact_relic_forge_ui.rs:1://! Integration tests for the `C_ArtifactRelicForgeUI` namespace
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/c_artifact_relic_forge_ui.rs:12:    let kind: String = env.eval("return type(C_ArtifactRelicForgeUI)").unwrap();
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/c_artifact_relic_forge_ui.rs:14:        .eval("return type(C_ArtifactRelicForgeUI.IsAtForge)")
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/c_artifact_relic_forge_ui.rs:24:        .eval("return C_ArtifactRelicForgeUI.IsAtForge()")
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/c_artifact_relic_forge_ui.rs:34:        .eval("return C_ArtifactRelicForgeUI.IsAtForge()")
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_artifact_ui/behavior_artifact_update_when_hidden_shows_panel.rs:105:expect(not C_ArtifactRelicForgeUI.IsAtForge(), "relic forge state should be false")
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_artifact_ui/behavior_artifact_update_when_hidden_shows_panel.rs:139:expect(C_ArtifactRelicForgeUI.IsAtForge(), "relic forge state should be true")

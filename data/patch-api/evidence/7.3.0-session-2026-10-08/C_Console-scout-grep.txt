@@ -1,0 +1,36 @@
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/10.0.7-api-changes.txt:442: C_Console.GetColorFromType
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/7.3.0-api-changes.txt:6:* New API tables: C_ArtifactRelicForgeUI, C_Console
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/12.0.7-page-coverage.json:387:        "C_Console.GetAllCommands command records"
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/12.0.7-page-coverage.json:1673:      "note": "Console command record (commandType Command) published via C_Console.GetAllCommands; execution not modeled."
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/12.0.7-page-coverage.json:1778:      "note": "Console command record (commandType Command) published via C_Console.GetAllCommands; execution not modeled."
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/10.0.7-api-changes.wikitext:554: {{api|t=a|C_Console.GetColorFromType}}
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/7.3.0-wikitext-register.json:28:      "id": "wt-global-api-C_Console-6",
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/7.3.0-wikitext-register.json:31:      "symbol": "C_Console",
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/7.3.0-api-changes.wikitext:6:* New API tables: C_ArtifactRelicForgeUI, C_Console
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/10.0.7-page-coverage.json:3162:      "note": "C_Console.GetColorFromType: historical type-label/input-output contract requires a populated source-specific producer or argument validation test; publication does not prove typed value representation, nilability, precision or native acceptance."
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/10.0.7-page-coverage.json:3168:      "note": "C_Console.GetColorFromType: historical type-label/input-output contract requires a populated source-specific producer or argument validation test; publication does not prove typed value representation, nilability, precision or native acceptance."
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/10.2.0-wikitext-register.json:429:      "id": "wt-global-api-C_Console.GetAllCommands-116",
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/10.2.0-wikitext-register.json:432:      "symbol": "C_Console.GetAllCommands",
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/10.2.0-wikitext-register.json:437:      "id": "wt-global-api-C_Console.GetColorFromType-117",
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/10.2.0-wikitext-register.json:440:      "symbol": "C_Console.GetColorFromType",
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/10.2.0-wikitext-register.json:445:      "id": "wt-global-api-C_Console.GetFontHeight-118",
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/10.2.0-wikitext-register.json:448:      "symbol": "C_Console.GetFontHeight",
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/10.2.0-wikitext-register.json:453:      "id": "wt-global-api-C_Console.PrintAllMatchingCommands-119",
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/10.2.0-wikitext-register.json:456:      "symbol": "C_Console.PrintAllMatchingCommands",
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/10.2.0-wikitext-register.json:461:      "id": "wt-global-api-C_Console.SetFontHeight-120",
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/10.2.0-wikitext-register.json:464:      "symbol": "C_Console.SetFontHeight",
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/10.2.0-api-changes.wikitext:10:* The C_Console namespace has been removed, with its functions moved back to the global namespace.
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/10.2.0-api-changes.wikitext:116:: {{api|t=a|C_Console.GetAllCommands}}
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/10.2.0-api-changes.wikitext:117:: {{api|t=a|C_Console.GetColorFromType}}
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/10.2.0-api-changes.wikitext:118:: {{api|t=a|C_Console.GetFontHeight}}
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/10.2.0-api-changes.wikitext:119:: {{api|t=a|C_Console.PrintAllMatchingCommands}}
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/10.2.0-api-changes.wikitext:120:: {{api|t=a|C_Console.SetFontHeight}}
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/10.2.0-page-coverage.json:382:      "source_id": "wt-global-api-C_Console.GetAllCommands-116",
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/10.2.0-page-coverage.json:385:      "note": "Existing C_Console registration shares the live CVar/command catalog producer with ConsoleGetAllCommands. Cached qualified searches find no consumer, but shared command classifier and existing console tests explicitly use the old namespace. Retiring this real modeled entry requires that consumer migration; left as an exact historical-removal gap, not credited as a Blizzard deprecation alias."
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/10.2.0-page-coverage.json:388:      "source_id": "wt-global-api-C_Console.GetColorFromType-117",
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/10.2.0-page-coverage.json:391:      "note": "Existing explicit console-color producer is still registered under C_Console; cached bare-name matches use global ConsoleGetColorFromType. Namespace absence needs migration of the existing color producer/tests to the global successor without losing color values; no cached wrapper attribution or namespace-removal credit."
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/10.2.0-page-coverage.json:394:      "source_id": "wt-global-api-C_Console.GetFontHeight-118",
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/10.2.0-page-coverage.json:402:      "source_id": "wt-global-api-C_Console.PrintAllMatchingCommands-119",
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/10.2.0-page-coverage.json:410:      "source_id": "wt-global-api-C_Console.SetFontHeight-120",
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/10.2.0-page-coverage.json:1235:      "note": "C_Console namespace removal is partial: three unused members retired, two real existing namespace producers retained pending successor/consumer migration. No complete namespace-removal credit."
+/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/sources/10.2.0-api-changes.txt:10:* The C_Console namespace has been removed, with its functions moved back to the global namespace.

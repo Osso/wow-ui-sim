@@ -1,0 +1,2 @@
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/c_api/registration.rs:103:    super::c_sound::register(state)?;
+/home/osso/.worktrees/wow-ui-sim-p730-page/src/c_api/mod.rs:160:pub mod c_sound;

@@ -1,0 +1,61 @@
+{
+  "base_revision": "af7a101e20824f92798885f41b47b147418a5f48",
+  "runtime_revision": "c1533a3e6b29a25e4e42705233f6e014377c9913",
+  "accounting_revision": "2148ac3b15bc5c01a65dfe43b610c1456bd10ec6",
+  "accounting_sha256": "7df83a34742be654e3f20e8e248c922ab247055d0884b2e1e8eb7f650279a4be",
+  "passing_proofs": [
+    "p730-model-green",
+    "p730-all-sweeps",
+    "p730-console",
+    "p730-debug-tools",
+    "p730-deprecated-sound",
+    "p730-bare-model",
+    "p730-utility-sound",
+    "p730-soundkit",
+    "p730-options-fixed",
+    "p730-sound-defaults",
+    "p730-retail-build",
+    "p730-startup",
+    "p730-mists-final",
+    "p730-format-final",
+    "p730-extractor-fixtures",
+    "p730-generator-fixtures",
+    "p730-validator-fixtures",
+    "p730-source-reproduction",
+    "p730-prior-validators"
+  ],
+  "runtime_proofs": [
+    "p730-model-green",
+    "p730-all-sweeps",
+    "p730-console",
+    "p730-debug-tools",
+    "p730-deprecated-sound",
+    "p730-bare-model",
+    "p730-utility-sound",
+    "p730-soundkit",
+    "p730-options-fixed",
+    "p730-sound-defaults",
+    "p730-retail-build",
+    "p730-startup",
+    "p730-mists-final"
+  ],
+  "runtime_scope": [
+    "src/c_api/c_sound.rs",
+    "src/c_api/c_sound/options.rs",
+    "src/c_api/mod.rs",
+    "src/c_api/registration.rs",
+    "src/lua_api/globals/missing_surface.rs",
+    "src/lua_api/globals/stubs/global_stubs.rs",
+    "src/lua_api/workarounds/temporary/sound_driver_defaults.rs",
+    "tests/patch_7_3_0_cached_behavior.rs",
+    "tests/patch_7_3_0_publication_sweep.rs",
+    "tests/patch_7_3_0_sound_model.rs"
+  ],
+  "historical_failures": {
+    "p730-discovery": "Compile error: unsupported u32 Lua eval conversion; no runtime result.",
+    "p730-discovery-fixed": "Actual full-UI sound alias used namespace no-op; request remained None. Fixed by modeled C_Sound.PlaySound.",
+    "p730-options": "Wrong filter selected zero tests; no acceptance credit. Correct nonempty filter passes in p730-options-fixed.",
+    "p730-mists-check": "Passing baseline predates runtime fix; invalidated by C_Sound source changes; superseded by p730-mists-final.",
+    "p730-format": "Passing baseline predates runtime source edits; superseded by p730-format-final."
+  }
+}

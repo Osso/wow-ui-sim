@@ -1,0 +1,2 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Console/Blizzard_Console.toc:9:Blizzard_Console.lua
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Console/Blizzard_Console.toc:10:Blizzard_Console.xml
