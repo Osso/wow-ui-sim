@@ -1,0 +1,1064 @@
+[
+  {
+    "source_id": "wt-global-api-BNSetFriendFavoriteFlag-36",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "BNSetFriendFavoriteFlag",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_AzeriteEssence.CanDeactivateEssence-39",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "CanDeactivateEssence",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_ChatInfo.GetClubStreamIDs-57",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "GetClubStreamIDs",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_ClubFinder.CheckAllPlayerApplicantSettings-61",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "CheckAllPlayerApplicantSettings",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_ClubFinder.ClearAllFinderCache-62",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "ClearAllFinderCache",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_ClubFinder.ClearClubApplicantsCache-63",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "ClearClubApplicantsCache",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_ClubFinder.ClearClubFinderPostingsCache-64",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "ClearClubFinderPostingsCache",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_ClubFinder.ReturnCommunityApplicantList-76",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "ReturnCommunityApplicantList",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_ClubFinder.ReturnGuildApplicantList-77",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "ReturnGuildApplicantList",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_ClubFinder.ReturnPendingCommunityApplicantList-80",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "ReturnPendingCommunityApplicantList",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_ClubFinder.ReturnPendingGuildApplicantList-81",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "ReturnPendingGuildApplicantList",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_ClubFinder.ShouldShowClubFinder-84",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "ShouldShowClubFinder",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_Commentator.GetElapsedMs-85",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "GetElapsedMs",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_EncounterJournal.SetPreviewMythicPlusLevel-86",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "SetPreviewMythicPlusLevel",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_EncounterJournal.SetPreviewPvpTier-87",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "SetPreviewPvpTier",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_ItemUpgrade.GetItemHyperlink-92",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "GetItemHyperlink",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 0,
+    "stdout": "/home/osso/.worktrees/wow-ui-sim-p820-page/tests/blizzard_item_upgrade_ui_loads.rs:193:         (C_ItemUpgrade.GetItemUpgradeItemInfo / GetItemHyperlink / GetUpgradeCostInfo) and \\\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/blizzard_frame_xml_util_loads.rs:214:         panel addon: ItemUtil (ItemUtil.lua \u2014 GetItemDetails / GetItemHyperlink / \\\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/data/patch_9_0_1_sweep_known_gaps.json:217:  \"wt-global-api-C_WeeklyRewards.GetItemHyperlink-525\",\n",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_MountJournal.ApplyMountEquipment-93",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "ApplyMountEquipment",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 0,
+    "stdout": "/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/workarounds/temporary/collections_journal_namespace.rs:41:    if rawget(C_MountJournal, \"ApplyMountEquipment\") == nil then\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/workarounds/temporary/collections_journal_namespace.rs:42:        function C_MountJournal.ApplyMountEquipment(_mountID)\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/workarounds/temporary/collections_journal_namespace.rs:165:                    C_MountJournal.ApplyMountEquipment(1) == nil,\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/workarounds/temporary/collections_journal_namespace.rs:193:                ApplyMountEquipment = function()\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/workarounds/temporary/collections_journal_namespace.rs:227:                    C_MountJournal.ApplyMountEquipment(1),\n",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_PaperDollInfo.GetInspectItemLevel-100",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "GetInspectItemLevel",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.CanDisplayDeaths-104",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "CanDisplayDeaths",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.CanDisplayHonorableKills-105",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "CanDisplayHonorableKills",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.DoesMatchOutcomeAffectRating-106",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "DoesMatchOutcomeAffectRating",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetActiveMatchBracket-107",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "GetActiveMatchBracket",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetActiveMatchDuration-108",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "GetActiveMatchDuration",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetActiveMatchWinner-110",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "GetActiveMatchWinner",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetMatchPVPStatColumn-111",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "GetMatchPVPStatColumn",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetMatchPVPStatIDs-112",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "GetMatchPVPStatIDs",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetPostMatchCurrencyRewards-113",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "GetPostMatchCurrencyRewards",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetPostMatchItemRewards-114",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "GetPostMatchItemRewards",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetPVPActiveMatchPersonalRatedInfo-115",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "GetPVPActiveMatchPersonalRatedInfo",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetScoreInfo-116",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "GetScoreInfo",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 0,
+    "stdout": "/home/osso/.worktrees/wow-ui-sim-p820-page/tests/blizzard_deprecated_loads.rs:60:        \"Blizzard_Deprecated declares NO dependencies \u2014 it only redirects to C_PvP.GetScoreInfo \\\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/blizzard_deprecated_loads.rs:137:         \u2014 both unpack the new C_PvP.GetScoreInfo struct table back to the legacy 17-return / \\\n",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetScoreInfoByPlayerGuid-117",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "GetScoreInfoByPlayerGuid",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetTeamInfo-118",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "GetTeamInfo",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.IsActiveMatchRegistered-119",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "IsActiveMatchRegistered",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.IsArena-120",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "IsArena",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.IsBattleground-121",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "IsBattleground",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.IsMatchFactional-123",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "IsMatchFactional",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_SpellBook.ContainsAnyDisenchantSpell-132",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "ContainsAnyDisenchantSpell",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_UIWidgetManager.GetTextureAndTextRowVisualizationInfo-134",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "GetTextureAndTextRowVisualizationInfo",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_UIWidgetManager.GetTextureAndTextVisualizationInfo-135",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "GetTextureAndTextVisualizationInfo",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_UIWidgetManager.GetZoneControlVisualizationInfo-136",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "GetZoneControlVisualizationInfo",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-C_VoiceChat.IsChannelJoinPending-138",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "IsChannelJoinPending",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-SetMoveEnabled-142",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "SetMoveEnabled",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-SetTurnEnabled-143",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "SetTurnEnabled",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-ShouldShowIslandsWeeklyPOI-144",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "ShouldShowIslandsWeeklyPOI",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-ShouldShowSpecialSplashScreen-145",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "ShouldShowSpecialSplashScreen",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-global-api-UpdateWindow-147",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "UpdateWindow",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-widgets-Checkout:CopyExternalLink-173",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "CopyExternalLink",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 0,
+    "stdout": "/home/osso/.worktrees/wow-ui-sim-p820-page/tests/blizzard_help_frame_loads.rs:403:         system browser, OnAlt calls `data.browser:CopyExternalLink()` to copy the URL to the \\\n",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-widgets-TabardModel:GetLowerEmblemFile-178",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "GetLowerEmblemFile",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-widgets-TabardModel:GetUpperEmblemFile-179",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "GetUpperEmblemFile",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-widgets-Checkout:OnButtonUpdate-197",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "OnButtonUpdate",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 0,
+    "stdout": "/home/osso/.worktrees/wow-ui-sim-p820-page/src/event/mod.rs:166:    OnButtonUpdate,\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/event/mod.rs:267:    (\"OnButtonUpdate\", ScriptHandler::OnButtonUpdate),\n",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-widgets-Checkout:OnEditFocusGained-198",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "OnEditFocusGained",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 0,
+    "stdout": "/home/osso/.worktrees/wow-ui-sim-p820-page/src/iced_app/mouse_tests/forbidden_aspects.rs:23:        AspectClickedBox:SetScript('OnEditFocusGained', function()\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/iced_app/update_runtime.rs:583:        let _ = env.fire_script_handler(new_id, \"OnEditFocusGained\", vec![]);\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/xml/types_support.rs:232:    #[serde(rename = \"OnEditFocusGained\", default)]\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/event/mod.rs:122:    OnEditFocusGained,\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/event/mod.rs:223:    (\"OnEditFocusGained\", ScriptHandler::OnEditFocusGained),\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/frame/methods/widgets/editbox.rs:69:            fire_focus_script(state, id, \"OnEditFocusGained\")?;\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/frame/methods/text_attribute_event/events.rs:407:        | \"OnEditFocusGained\"\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/env_events.rs:519:                self.fire_script_handler(editbox_id, \"OnEditFocusGained\", vec![])?;\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/script_helpers.rs:482:        \"OnEditFocusGained\" => Some(b\"OnEditFocusGained\"),\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/globals/create_frame/template_chain.rs:699:        (\"OnEditFocusGained\", scripts.on_edit_focus_gained.last()),\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/loader/helpers.rs:673:            (\"OnEditFocusGained\", scripts.on_edit_focus_gained.last()),\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/forbidden_aspect_enforcement.rs:177:            box:SetScript('OnEditFocusGained', Record(name .. ':gained'))\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/forbidden_aspect_enforcement.rs:185:        inherited:SetScript('OnEditFocusGained', Record('AutoFocusInherited:gained'))\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/widget_methods.rs:61:        first:SetScript('OnEditFocusGained', function(self) record('first', self, 'gained') end)\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/widget_methods.rs:63:        second:SetScript('OnEditFocusGained', function(self) record('second', self, 'gained') end)\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/widget_methods.rs:90:        requested:SetScript('OnEditFocusGained', function() table.insert(calls, 'stale') end)\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/widget_methods.rs:91:        redirected:SetScript('OnEditFocusGained', function(self)\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/widget_methods.rs:146:        second:SetScript('OnEditFocusGained', function() popup:Hide() end)\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/blizzard_housing_house_finder_loads.rs:345:            \"OnEditFocusGained\",\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/blizzard_script_errors_frame_loads.rs:395:             OnUpdate/OnEditFocusGained); OnShow (calls Update); Warn (entry point \\\n",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-widgets-Checkout:OnEditFocusLost-199",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "OnEditFocusLost",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 0,
+    "stdout": "/home/osso/.worktrees/wow-ui-sim-p820-page/src/iced_app/mouse_tests/forbidden_aspects.rs:26:        AspectClickedBox:SetScript('OnEditFocusLost', function()\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/iced_app/update_runtime.rs:580:        let _ = env.fire_script_handler(old_id, \"OnEditFocusLost\", vec![]);\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/xml/types_support.rs:234:    #[serde(rename = \"OnEditFocusLost\", default)]\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/event/mod.rs:123:    OnEditFocusLost,\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/event/mod.rs:224:    (\"OnEditFocusLost\", ScriptHandler::OnEditFocusLost),\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/frame/methods/widgets/editbox.rs:66:            fire_focus_script(state, old_id, \"OnEditFocusLost\")?;\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/frame/methods/widgets/editbox.rs:125:        fire_focus_script(state, id, \"OnEditFocusLost\")?;\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/frame/methods/text_attribute_event/events.rs:408:        | \"OnEditFocusLost\"\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/env_events.rs:517:                    self.fire_script_handler(old_id, \"OnEditFocusLost\", vec![])?;\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/env_events.rs:523:            self.fire_script_handler(old_id, \"OnEditFocusLost\", vec![])?;\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/script_helpers.rs:483:        \"OnEditFocusLost\" => Some(b\"OnEditFocusLost\"),\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/globals/create_frame/template_chain.rs:700:        (\"OnEditFocusLost\", scripts.on_edit_focus_lost.last()),\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/loader/helpers.rs:674:            (\"OnEditFocusLost\", scripts.on_edit_focus_lost.last()),\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/widget_methods.rs:62:        first:HookScript('OnEditFocusLost', function(self) record('first', self, 'lost') end)\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/widget_methods.rs:64:        second:SetScript('OnEditFocusLost', function(self) record('second', self, 'lost') end)\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/widget_methods.rs:86:        first:SetScript('OnEditFocusLost', function(self)\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/widget_methods.rs:111:                <OnEditFocusLost intrinsicOrder=\"precall\">FocusBindingProbe('pre', self)</OnEditFocusLost>\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/widget_methods.rs:114:                <OnEditFocusLost intrinsicOrder=\"postcall\">FocusBindingProbe('post', self)</OnEditFocusLost>\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/widget_methods.rs:126:        assert(type(edit:GetScript('OnEditFocusLost', 0)) == 'function')\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/widget_methods.rs:127:        assert(type(edit:GetScript('OnEditFocusLost', 2)) == 'function')\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/widget_methods.rs:128:        edit:SetScript('OnEditFocusLost', function(self)\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/widget_methods.rs:145:        first:SetScript('OnEditFocusLost', function() error('focus cleanup failure') end)\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/xml_templates/inline_flow/interaction_sequences.rs:154:                <Scripts><OnEditFocusLost>\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/xml_templates/inline_flow/interaction_sequences.rs:158:                </OnEditFocusLost></Scripts>\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/xml_templates/inline_flow/interaction_sequences.rs:172:        XmlInlineEmptyTextEditBox:GetScript(\"OnEditFocusLost\")(XmlInlineEmptyTextEditBox)\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/blizzard_housing_house_finder_loads.rs:346:            \"OnEditFocusLost\",\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/blizzard_auto_complete_templates.rs:25:  OnEditFocusLost = AutoCompleteEditBox_OnEditFocusLost,\n",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-widgets-Checkout:OnError-200",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "OnError",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 0,
+    "stdout": "/home/osso/.worktrees/wow-ui-sim-p820-page/src/event/mod.rs:167:    OnError,\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/event/mod.rs:268:    (\"OnError\", ScriptHandler::OnError),\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/blizzard_help_frame_loads.rs:290:        \"OnError\",\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/blizzard_help_frame_loads.rs:307:             overlay (Set/GetInitialLoading), the browser-driven error path (OnError routes to \\\n",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-widgets-Checkout:OnExternalLink-202",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "OnExternalLink",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 0,
+    "stdout": "/home/osso/.worktrees/wow-ui-sim-p820-page/src/event/mod.rs:168:    OnExternalLink,\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/event/mod.rs:269:    (\"OnExternalLink\", ScriptHandler::OnExternalLink),\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/blizzard_help_frame_loads.rs:404:         system clipboard. Triggered by the BrowserTemplate's <OnExternalLink> script when \\\n",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-cvars-azeriteEssenceSwapTutorial-252",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "azeriteEssenceSwapTutorial",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-cvars-GxuSwapChainSize-281",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "GxuSwapChainSize",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-cvars-GxuWindowSize-282",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "GxuWindowSize",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-cvars-ToggleWindowMode-283",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "ToggleWindowMode",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  },
+  {
+    "source_id": "wt-cvars-UpdateWindow-284",
+    "scanner": "/usr/bin/grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "UpdateWindow",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "untruncated": true
+  }
+]

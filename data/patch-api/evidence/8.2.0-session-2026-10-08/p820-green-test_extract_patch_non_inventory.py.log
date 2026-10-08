@@ -1,0 +1,30 @@
+.................F..........
+======================================================================
+FAIL: test_legacy_api_caption_inventory_retains_prose_and_reference (__main__.ExtractTests.test_legacy_api_caption_inventory_retains_prose_and_reference)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p820-page/tools/test_extract_patch_non_inventory.py", line 19, in test_legacy_api_caption_inventory_retains_prose_and_reference
+    self.assertEqual(extract_text(raw, legacy_api_tables=True),
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     'Patch 8.2.0 API changes\n'
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     '* [Reference: url=https://example.test|author=Kaivax|title=UI Changes]\n'
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     '== API ==\n==== Changes ====\n* GetFileIDFromPath changed.\n'
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     '== References ==\n')
+                     ^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'Patc[124 chars] GetFileIDFromPath changed.\n== Widgets ==\n== References ==\n' != 'Patc[124 chars] GetFileIDFromPath changed.\n== References ==\n'
+  Patch 8.2.0 API changes
+  * [Reference: url=https://example.test|author=Kaivax|title=UI Changes]
+  == API ==
+  ==== Changes ====
+  * GetFileIDFromPath changed.
+- == Widgets ==
+  == References ==
+
+
+----------------------------------------------------------------------
+Ran 28 tests in 0.004s
+
+FAILED (failures=1)

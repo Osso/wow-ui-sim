@@ -1,0 +1,1418 @@
+[
+  {
+    "source_id": "wt-global-api-BNSetFriendFavoriteFlag-36",
+    "symbol": "BNSetFriendFavoriteFlag",
+    "wikitext_line": 36,
+    "literal": ": {{api|BNSetFriendFavoriteFlag}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "BNSetFriendFavoriteFlag"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "No Battle.net friend favorite mutation producer; requires friend/account identity, persisted favorite flag and friend-list notification fixtures, not a no-op.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_AzeriteEssence.CanDeactivateEssence-39",
+    "symbol": "C_AzeriteEssence.CanDeactivateEssence",
+    "wikitext_line": 39,
+    "literal": ": {{api|C_AzeriteEssence.CanDeactivateEssence}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_AzeriteEssence.CanDeactivateEssence"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Existing essence model has milestones and active IDs, but lacks a specified deactivation permission policy (forge/rest/change restrictions). Generated documentation supplies milestoneID and boolean only; do not invent eligibility from activation rules.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_ChatInfo.GetClubStreamIDs-57",
+    "symbol": "C_ChatInfo.GetClubStreamIDs",
+    "wikitext_line": 57,
+    "literal": ": {{api|C_ChatInfo.GetClubStreamIDs}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ChatInfo.GetClubStreamIDs"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw club-stream enumeration producer; needs per-club stream identity/catalog visibility fixtures rather than a fabricated empty list.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_ClubFinder.CheckAllPlayerApplicantSettings-61",
+    "symbol": "C_ClubFinder.CheckAllPlayerApplicantSettings",
+    "wikitext_line": 61,
+    "literal": ": {{api|C_ClubFinder.CheckAllPlayerApplicantSettings}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.CheckAllPlayerApplicantSettings"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No applicant-settings aggregate check producer; needs matching filter/settings policy and concrete differing applicant fixtures.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_ClubFinder.ClearAllFinderCache-62",
+    "symbol": "C_ClubFinder.ClearAllFinderCache",
+    "wikitext_line": 62,
+    "literal": ": {{api|C_ClubFinder.ClearAllFinderCache}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.ClearAllFinderCache"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No finder cache invalidation lifecycle; clearing all must distinguish postings, applicant and pending results and notifications.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_ClubFinder.ClearClubApplicantsCache-63",
+    "symbol": "C_ClubFinder.ClearClubApplicantsCache",
+    "wikitext_line": 63,
+    "literal": ": {{api|C_ClubFinder.ClearClubApplicantsCache}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.ClearClubApplicantsCache"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No per-club applicant cache eviction producer; requires keyed cached results and refresh lifecycle.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_ClubFinder.ClearClubFinderPostingsCache-64",
+    "symbol": "C_ClubFinder.ClearClubFinderPostingsCache",
+    "wikitext_line": 64,
+    "literal": ": {{api|C_ClubFinder.ClearClubFinderPostingsCache}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.ClearClubFinderPostingsCache"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No postings cache eviction producer; requires posting query results and refresh lifecycle independent of applicants.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_ClubFinder.ReturnCommunityApplicantList-76",
+    "symbol": "C_ClubFinder.ReturnCommunityApplicantList",
+    "wikitext_line": 76,
+    "literal": ": {{api|C_ClubFinder.ReturnCommunityApplicantList}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.ReturnCommunityApplicantList"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw community applicant snapshot producer; requires community-keyed applicant data, ordering and pending status.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_ClubFinder.ReturnGuildApplicantList-77",
+    "symbol": "C_ClubFinder.ReturnGuildApplicantList",
+    "wikitext_line": 77,
+    "literal": ": {{api|C_ClubFinder.ReturnGuildApplicantList}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.ReturnGuildApplicantList"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw guild applicant snapshot producer; requires guild-keyed applicant data and result ordering.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_ClubFinder.ReturnPendingCommunityApplicantList-80",
+    "symbol": "C_ClubFinder.ReturnPendingCommunityApplicantList",
+    "wikitext_line": 80,
+    "literal": ": {{api|C_ClubFinder.ReturnPendingCommunityApplicantList}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.ReturnPendingCommunityApplicantList"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No pending community applicant snapshot producer; pending request and accepted/rejected transitions are not specified by existing placeholder lookup.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_ClubFinder.ReturnPendingGuildApplicantList-81",
+    "symbol": "C_ClubFinder.ReturnPendingGuildApplicantList",
+    "wikitext_line": 81,
+    "literal": ": {{api|C_ClubFinder.ReturnPendingGuildApplicantList}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.ReturnPendingGuildApplicantList"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No pending guild applicant snapshot producer; requires pending membership lifecycle and guild identity.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_ClubFinder.ShouldShowClubFinder-84",
+    "symbol": "C_ClubFinder.ShouldShowClubFinder",
+    "wikitext_line": 84,
+    "literal": ": {{api|C_ClubFinder.ShouldShowClubFinder}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.ShouldShowClubFinder"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No modeled finder eligibility/display policy; constant true would not model account restrictions or feature availability.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_Commentator.GetElapsedMs-85",
+    "symbol": "C_Commentator.GetElapsedMs",
+    "wikitext_line": 85,
+    "literal": ": {{api|C_Commentator.GetElapsedMs}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Commentator.GetElapsedMs"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No spectator match clock producer; needs match start/pause/end state and deterministic time input.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_EncounterJournal.SetPreviewMythicPlusLevel-86",
+    "symbol": "C_EncounterJournal.SetPreviewMythicPlusLevel",
+    "wikitext_line": 86,
+    "literal": ": {{api|C_EncounterJournal.SetPreviewMythicPlusLevel}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_EncounterJournal.SetPreviewMythicPlusLevel"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No preview-level mutation backing encounter journal outputs; setting a field without scaled preview consumers would not model behavior.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_EncounterJournal.SetPreviewPvpTier-87",
+    "symbol": "C_EncounterJournal.SetPreviewPvpTier",
+    "wikitext_line": 87,
+    "literal": ": {{api|C_EncounterJournal.SetPreviewPvpTier}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_EncounterJournal.SetPreviewPvpTier"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No PvP-tier preview mutation backing journal outputs; requires tier-dependent item preview fixtures.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_ItemUpgrade.GetItemHyperlink-92",
+    "symbol": "C_ItemUpgrade.GetItemHyperlink",
+    "wikitext_line": 92,
+    "literal": ": {{api|C_ItemUpgrade.GetItemHyperlink}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ItemUpgrade.GetItemHyperlink"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No selected upgrade-item hyperlink producer; needs current upgrade session item identity and hyperlink context, not a generic item link.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_MountJournal.ApplyMountEquipment-93",
+    "symbol": "C_MountJournal.ApplyMountEquipment",
+    "wikitext_line": 93,
+    "literal": ": {{api|C_MountJournal.ApplyMountEquipment}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_MountJournal.ApplyMountEquipment"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Temporary guarded no-op exists in collections_journal_namespace.rs but is not raw-published in full-UI discovery. Requires inventory consumption, equipment eligibility and apply-result lifecycle; no shim promoted as a fix.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PaperDollInfo.GetInspectItemLevel-100",
+    "symbol": "C_PaperDollInfo.GetInspectItemLevel",
+    "wikitext_line": 100,
+    "literal": ": {{api|C_PaperDollInfo.GetInspectItemLevel}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PaperDollInfo.GetInspectItemLevel"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No inspect equipment snapshot/item-level aggregation producer for inspected unit; player average item level is not inspect state.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.CanDisplayDeaths-104",
+    "symbol": "C_PvP.CanDisplayDeaths",
+    "wikitext_line": 104,
+    "literal": ": {{api|C_PvP.CanDisplayDeaths}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.CanDisplayDeaths"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No match scoreboard visibility policy for death columns; constant flag would not distinguish map/mode.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.CanDisplayHonorableKills-105",
+    "symbol": "C_PvP.CanDisplayHonorableKills",
+    "wikitext_line": 105,
+    "literal": ": {{api|C_PvP.CanDisplayHonorableKills}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.CanDisplayHonorableKills"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No match scoreboard honorable-kill column policy; requires map/mode metadata.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.DoesMatchOutcomeAffectRating-106",
+    "symbol": "C_PvP.DoesMatchOutcomeAffectRating",
+    "wikitext_line": 106,
+    "literal": ": {{api|C_PvP.DoesMatchOutcomeAffectRating}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.DoesMatchOutcomeAffectRating"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No match-specific rating eligibility policy; existing rated predicates do not specify outcome/rating effects.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetActiveMatchBracket-107",
+    "symbol": "C_PvP.GetActiveMatchBracket",
+    "wikitext_line": 107,
+    "literal": ": {{api|C_PvP.GetActiveMatchBracket}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.GetActiveMatchBracket"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No active-match bracket producer with team size and bracket identity.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetActiveMatchDuration-108",
+    "symbol": "C_PvP.GetActiveMatchDuration",
+    "wikitext_line": 108,
+    "literal": ": {{api|C_PvP.GetActiveMatchDuration}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.GetActiveMatchDuration"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No active-match start/end clock producer; constant duration is not a match lifecycle.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetActiveMatchWinner-110",
+    "symbol": "C_PvP.GetActiveMatchWinner",
+    "wikitext_line": 110,
+    "literal": ": {{api|C_PvP.GetActiveMatchWinner}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.GetActiveMatchWinner"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No match outcome/team winner producer including draw and incomplete states.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetMatchPVPStatColumn-111",
+    "symbol": "C_PvP.GetMatchPVPStatColumn",
+    "wikitext_line": 111,
+    "literal": ": {{api|C_PvP.GetMatchPVPStatColumn}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.GetMatchPVPStatColumn"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No keyed match-stat column metadata producer; requires map-specific names/order/visibility.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetMatchPVPStatIDs-112",
+    "symbol": "C_PvP.GetMatchPVPStatIDs",
+    "wikitext_line": 112,
+    "literal": ": {{api|C_PvP.GetMatchPVPStatIDs}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.GetMatchPVPStatIDs"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No match-stat ID catalog producer; fabricated empty list would conceal missing scoreboard domain.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetPostMatchCurrencyRewards-113",
+    "symbol": "C_PvP.GetPostMatchCurrencyRewards",
+    "wikitext_line": 113,
+    "literal": ": {{api|C_PvP.GetPostMatchCurrencyRewards}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.GetPostMatchCurrencyRewards"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No post-match currency reward records or delivery state; requires populated currency-ID/quantity fixtures.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetPostMatchItemRewards-114",
+    "symbol": "C_PvP.GetPostMatchItemRewards",
+    "wikitext_line": 114,
+    "literal": ": {{api|C_PvP.GetPostMatchItemRewards}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.GetPostMatchItemRewards"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No post-match item reward records or delivery lifecycle; requires populated item identity/quantity fixtures.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetPVPActiveMatchPersonalRatedInfo-115",
+    "symbol": "C_PvP.GetPVPActiveMatchPersonalRatedInfo",
+    "wikitext_line": 115,
+    "literal": ": {{api|C_PvP.GetPVPActiveMatchPersonalRatedInfo}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.GetPVPActiveMatchPersonalRatedInfo"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No player-rated-match result/rating delta snapshot producer.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetScoreInfo-116",
+    "symbol": "C_PvP.GetScoreInfo",
+    "wikitext_line": 116,
+    "literal": ": {{api|C_PvP.GetScoreInfo}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.GetScoreInfo"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No structured indexed scoreboard producer; deprecated wrappers depend on its populated contract and cannot establish native publication.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetScoreInfoByPlayerGuid-117",
+    "symbol": "C_PvP.GetScoreInfoByPlayerGuid",
+    "wikitext_line": 117,
+    "literal": ": {{api|C_PvP.GetScoreInfoByPlayerGuid}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.GetScoreInfoByPlayerGuid"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No GUID-keyed scoreboard index producer; requires concrete player score records and unknown-GUID behavior.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetTeamInfo-118",
+    "symbol": "C_PvP.GetTeamInfo",
+    "wikitext_line": 118,
+    "literal": ": {{api|C_PvP.GetTeamInfo}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.GetTeamInfo"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No match team score/name/rating record producer; generic namespace lookup is fabricated.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.IsActiveMatchRegistered-119",
+    "symbol": "C_PvP.IsActiveMatchRegistered",
+    "wikitext_line": 119,
+    "literal": ": {{api|C_PvP.IsActiveMatchRegistered}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.IsActiveMatchRegistered"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No match registration lifecycle producer; a published active-match-state default is not registration state.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.IsArena-120",
+    "symbol": "C_PvP.IsArena",
+    "wikitext_line": 120,
+    "literal": ": {{api|C_PvP.IsArena}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.IsArena"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw arena match classifier; needs match/instance mode distinction and populated fixture, not aliasing a plausible constant.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.IsBattleground-121",
+    "symbol": "C_PvP.IsBattleground",
+    "wikitext_line": 121,
+    "literal": ": {{api|C_PvP.IsBattleground}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.IsBattleground"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw battleground match classifier; requires match/instance metadata and inactive cases.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.IsMatchFactional-123",
+    "symbol": "C_PvP.IsMatchFactional",
+    "wikitext_line": 123,
+    "literal": ": {{api|C_PvP.IsMatchFactional}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.IsMatchFactional"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No per-match factional-team policy; arena/battleground flags alone do not establish factional behavior.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_SpellBook.ContainsAnyDisenchantSpell-132",
+    "symbol": "C_SpellBook.ContainsAnyDisenchantSpell",
+    "wikitext_line": 132,
+    "literal": ": {{api|C_SpellBook.ContainsAnyDisenchantSpell}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_SpellBook.ContainsAnyDisenchantSpell"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No spellbook disenchant classification metadata/query; needs known/unknown spell membership and disenchant-tag fixtures.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_UIWidgetManager.GetTextureAndTextRowVisualizationInfo-134",
+    "symbol": "C_UIWidgetManager.GetTextureAndTextRowVisualizationInfo",
+    "wikitext_line": 134,
+    "literal": ": {{api|C_UIWidgetManager.GetTextureAndTextRowVisualizationInfo}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_UIWidgetManager.GetTextureAndTextRowVisualizationInfo"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No texture/text-row widget visualization records; requires indexed texture/text/state rows, not a nil default.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_UIWidgetManager.GetTextureAndTextVisualizationInfo-135",
+    "symbol": "C_UIWidgetManager.GetTextureAndTextVisualizationInfo",
+    "wikitext_line": 135,
+    "literal": ": {{api|C_UIWidgetManager.GetTextureAndTextVisualizationInfo}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_UIWidgetManager.GetTextureAndTextVisualizationInfo"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No texture/text widget visualization snapshot producer with concrete visibility/text/texture state.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_UIWidgetManager.GetZoneControlVisualizationInfo-136",
+    "symbol": "C_UIWidgetManager.GetZoneControlVisualizationInfo",
+    "wikitext_line": 136,
+    "literal": ": {{api|C_UIWidgetManager.GetZoneControlVisualizationInfo}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_UIWidgetManager.GetZoneControlVisualizationInfo"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No zone-control visualization producer; requires faction/control/progress widget snapshot lifecycle.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-C_VoiceChat.IsChannelJoinPending-138",
+    "symbol": "C_VoiceChat.IsChannelJoinPending",
+    "wikitext_line": 138,
+    "literal": ": {{api|C_VoiceChat.IsChannelJoinPending}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_VoiceChat.IsChannelJoinPending"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Voice connecting flag is connection-wide, not per-channel pending join requests; no channel-keyed request lifecycle.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-SetMoveEnabled-142",
+    "symbol": "SetMoveEnabled",
+    "wikitext_line": 142,
+    "literal": ": {{api|SetMoveEnabled}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "SetMoveEnabled"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "No movement-input enable gate consumed by movement commands; registering a setter without input integration is a no-op shortcut.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-SetTurnEnabled-143",
+    "symbol": "SetTurnEnabled",
+    "wikitext_line": 143,
+    "literal": ": {{api|SetTurnEnabled}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "SetTurnEnabled"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "No turn-input enable gate consumed by directional/turn commands; requires input suppression/resumption fixtures.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-ShouldShowIslandsWeeklyPOI-144",
+    "symbol": "ShouldShowIslandsWeeklyPOI",
+    "wikitext_line": 144,
+    "literal": ": {{api|ShouldShowIslandsWeeklyPOI}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "ShouldShowIslandsWeeklyPOI"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "No island weekly quest/POI eligibility producer; requires weekly completion and map context.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-ShouldShowSpecialSplashScreen-145",
+    "symbol": "ShouldShowSpecialSplashScreen",
+    "wikitext_line": 145,
+    "literal": ": {{api|ShouldShowSpecialSplashScreen}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "ShouldShowSpecialSplashScreen"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "No special splash eligibility/acknowledgment state; requires account/build-specific display lifecycle.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-global-api-UpdateWindow-147",
+    "symbol": "UpdateWindow",
+    "wikitext_line": 147,
+    "literal": ": {{api|UpdateWindow}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "UpdateWindow"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "No Lua window-update host contract; console command and Lua global are distinct identities, and host window refresh is not modeled.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-widgets-Checkout:CopyExternalLink-173",
+    "symbol": "Checkout:CopyExternalLink",
+    "wikitext_line": 173,
+    "literal": ": [[API Checkout CopyExternalLink|Checkout:CopyExternalLink]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Checkout:CopyExternalLink"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Checkout; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "reason": "No Checkout external-link/clipboard lifecycle; absent object method cannot be replaced by a no-op in the generic frame surface.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-widgets-TabardModel:GetLowerEmblemFile-178",
+    "symbol": "TabardModel:GetLowerEmblemFile",
+    "wikitext_line": 178,
+    "literal": ": [[API TabardModel GetLowerEmblemFile|TabardModel:GetLowerEmblemFile]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "TabardModel:GetLowerEmblemFile"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "TabardModel; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "reason": "TabardModel has no lower emblem asset producer. 3D model rendering is intentionally unsupported; no fabricated file ID.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-widgets-TabardModel:GetUpperEmblemFile-179",
+    "symbol": "TabardModel:GetUpperEmblemFile",
+    "wikitext_line": 179,
+    "literal": ": [[API TabardModel GetUpperEmblemFile|TabardModel:GetUpperEmblemFile]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "TabardModel:GetUpperEmblemFile"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "TabardModel; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "reason": "TabardModel has no upper emblem asset producer. 3D model rendering is intentionally unsupported; no fabricated file ID.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-widgets-Checkout:OnButtonUpdate-197",
+    "symbol": "Checkout:OnButtonUpdate",
+    "wikitext_line": 197,
+    "literal": ": [[UIHANDLER OnButtonUpdate|Checkout:OnButtonUpdate]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Checkout:OnButtonUpdate"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Checkout HasScript=false",
+      "kind": "widget-script",
+      "value": null
+    },
+    "reason": "Checkout HasScript rejects handler despite global handler enum; no embedded checkout button state/event producer.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-widgets-Checkout:OnEditFocusGained-198",
+    "symbol": "Checkout:OnEditFocusGained",
+    "wikitext_line": 198,
+    "literal": ": [[UIHANDLER OnEditFocusGained|Checkout:OnEditFocusGained]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Checkout:OnEditFocusGained"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Checkout HasScript=false",
+      "kind": "widget-script",
+      "value": null
+    },
+    "reason": "Checkout HasScript rejects handler; EditBox focus dispatch is not embedded Checkout field focus lifecycle.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-widgets-Checkout:OnEditFocusLost-199",
+    "symbol": "Checkout:OnEditFocusLost",
+    "wikitext_line": 199,
+    "literal": ": [[UIHANDLER OnEditFocusLost|Checkout:OnEditFocusLost]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Checkout:OnEditFocusLost"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Checkout HasScript=false",
+      "kind": "widget-script",
+      "value": null
+    },
+    "reason": "Checkout HasScript rejects handler; needs embedded checkout field focus transition dispatch.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-widgets-Checkout:OnError-200",
+    "symbol": "Checkout:OnError",
+    "wikitext_line": 200,
+    "literal": ": [[UIHANDLER  OnError|Checkout:OnError]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Checkout:OnError"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Checkout HasScript=false",
+      "kind": "widget-script",
+      "value": null
+    },
+    "reason": "Checkout HasScript rejects handler; needs embedded checkout error lifecycle and payload fixtures.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-widgets-Checkout:OnExternalLink-202",
+    "symbol": "Checkout:OnExternalLink",
+    "wikitext_line": 202,
+    "literal": ": [[UIHANDLER OnExternalLink|Checkout:OnExternalLink]]",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Checkout:OnExternalLink"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Checkout HasScript=false",
+      "kind": "widget-script",
+      "value": null
+    },
+    "reason": "Checkout HasScript rejects handler; requires external-link activation/callback lifecycle.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-cvars-azeriteEssenceSwapTutorial-252",
+    "symbol": "azeriteEssenceSwapTutorial",
+    "wikitext_line": 252,
+    "literal": ": {{api|t=c|azeriteEssenceSwapTutorial}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "azeriteEssenceSwapTutorial"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "reason": "CVar lacks registered value/default. Page supplies no default or tutorial lifecycle; no guessed persisted state.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-cvars-GxuSwapChainSize-281",
+    "symbol": "GxuSwapChainSize",
+    "wikitext_line": 281,
+    "literal": ": {{api|t=c|GxuSwapChainSize}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "GxuSwapChainSize"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Command record present=false",
+      "kind": "command",
+      "value": null
+    },
+    "reason": "No Command-kind console catalog entry or swap-chain sizing host operation; a CVar placeholder is not command publication.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-cvars-GxuWindowSize-282",
+    "symbol": "GxuWindowSize",
+    "wikitext_line": 282,
+    "literal": ": {{api|t=c|GxuWindowSize}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "GxuWindowSize"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Command record present=false",
+      "kind": "command",
+      "value": null
+    },
+    "reason": "No Command-kind console catalog entry or host window sizing operation.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-cvars-ToggleWindowMode-283",
+    "symbol": "ToggleWindowMode",
+    "wikitext_line": 283,
+    "literal": ": {{api|t=c|ToggleWindowMode}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ToggleWindowMode"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Command record present=false",
+      "kind": "command",
+      "value": null
+    },
+    "reason": "No Command-kind console catalog entry or host window-mode mutation contract.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  },
+  {
+    "source_id": "wt-cvars-UpdateWindow-284",
+    "symbol": "UpdateWindow",
+    "wikitext_line": 284,
+    "literal": ": {{api|t=c|UpdateWindow}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "UpdateWindow"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Command record present=false",
+      "kind": "command",
+      "value": null
+    },
+    "reason": "No Command-kind console catalog entry or host refresh operation; keep distinct from Lua global UpdateWindow.",
+    "decision": "recorded-problematic",
+    "caller_scan": "p820-gap-caller-scout.json"
+  }
+]

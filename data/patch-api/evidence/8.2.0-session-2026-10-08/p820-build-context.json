@@ -1,0 +1,32 @@
+[
+  {
+    "source_id": "caption-030",
+    "wikitext_line": 30,
+    "literal": "|+ Global API 8.1.5 (29981) &rarr; 8.2.0 (30948)"
+  },
+  {
+    "source_id": "caption-165",
+    "wikitext_line": 165,
+    "literal": "|+ Widget API 8.1.5 (29981) &rarr; 8.2.0 (30918)"
+  },
+  {
+    "source_id": "caption-192",
+    "wikitext_line": 192,
+    "literal": "|+ Widget Handlers 8.1.5 (29981) &rarr; 8.2.0 (30918)"
+  },
+  {
+    "source_id": "caption-208",
+    "wikitext_line": 208,
+    "literal": "|+ Events 8.1.5 (29981) &rarr; 8.2.0 (30918)"
+  },
+  {
+    "source_id": "caption-246",
+    "wikitext_line": 246,
+    "literal": "|+ Console variables 8.1.5 (29981) &rarr; 8.2.0 (30948)"
+  },
+  {
+    "source_id": "caption-275",
+    "wikitext_line": 275,
+    "literal": "|+ Console commands 8.1.5 (29981) &rarr; 8.2.0 (30918)"
+  }
+]

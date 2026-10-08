@@ -1,0 +1,2 @@
+Scanner: /usr/bin/grep; untruncated
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/AzeriteEssenceDocumentation.lua:39:			Name = "CanDeactivateEssence",

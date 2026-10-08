@@ -1,0 +1,53 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p820-page)
+    Finished `test` profile [optimized + debuginfo] target(s) in 1m 24s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p820-page/debug/deps/integration-1db16289b0998b2a)
+
+running 2 tests
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 1.92ms
+[  0.002s] [Startup] SimState::default complete in 1.90ms
+[  0.002s] [Startup] rilua VM created in 110.70µs
+[  0.002s] [Startup] rilua VM created in 106.69µs
+[  0.002s] [Startup] builtin frames initialized in 75.74µs
+[  0.002s] [Startup] template registry cleared in 6.91µs
+[  0.002s] [Startup] builtin frames initialized in 87.21µs
+[  0.002s] [Startup] template registry cleared in 1.91µs
+[  0.002s] [Startup] intrinsic templates registered in 8.36µs
+[  0.002s] [Startup] initial app_data lua handle installed in 311.00ns
+[  0.002s] [Startup] intrinsic templates registered in 3.64µs
+[  0.002s] [Startup] initial app_data lua handle installed in 141.00ns
+[  0.154s] [Startup] init_lua_state complete in 152.10ms
+[  0.154s] [Startup] final app_data lua handle installed in 281.00ns
+[  0.154s] [Startup] initial screen globals installed in 95.25µs
+[  0.154s] [Startup] WowLuaEnv::new complete
+
+thread 'patch_8_2_0_publication_fixes::patch_8_2_0_master_volume_round_trip' (182286) panicked at /home/osso/.worktrees/wow-ui-sim-p820-page/tests/patch_8_2_0_publication_fixes.rs:29:33:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+[  0.156s] [Startup] init_lua_state complete in 154.24ms
+[  0.156s] [Startup] final app_data lua handle installed in 330.00ns
+[  0.157s] [Startup] initial screen globals installed in 102.34µs
+[  0.157s] [Startup] WowLuaEnv::new complete
+
+thread 'patch_8_2_0_publication_fixes::patch_8_2_0_unused_widget_member_stays_absent' (182287) panicked at /home/osso/.worktrees/wow-ui-sim-p820-page/tests/patch_8_2_0_publication_fixes.rs:37:37:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "removed widget lookup", level: 0, traceback: [] }))
+test patch_8_2_0_publication_fixes::patch_8_2_0_unused_widget_member_stays_absent ... FAILED
+test patch_8_2_0_publication_fixes::patch_8_2_0_master_volume_round_trip ... FAILED
+
+failures:
+
+failures:
+    patch_8_2_0_publication_fixes::patch_8_2_0_master_volume_round_trip
+    patch_8_2_0_publication_fixes::patch_8_2_0_unused_widget_member_stays_absent
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 10815 filtered out; finished in 0.17s
+
+error: test failed, to rerun pass `--test integration`

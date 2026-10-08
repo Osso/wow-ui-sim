@@ -1,0 +1,14 @@
+......E.............
+======================================================================
+ERROR: test_legacy_caption_tables_keep_handlers_commands_and_directions (__main__.InventoryTests.test_legacy_caption_tables_keep_handlers_commands_and_directions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p820-page/tools/test_gen_patch_wikitext_register.py", line 22, in test_legacy_caption_tables_keep_handlers_commands_and_directions
+    entries, counts = generator.parse_legacy_caption_tables(raw)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'gen_patch_wikitext_register' has no attribute 'parse_legacy_caption_tables'
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.003s
+
+FAILED (errors=1)

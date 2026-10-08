@@ -1,0 +1,16 @@
+Scanner: /usr/bin/grep, untruncated stdout/stderr
+/home/osso/.worktrees/wow-ui-sim-p820-page/src/c_api/c_azerite_essence.rs:7://! - `GetEssenceInfo(essenceID) → EssenceInfo|nil`
+/home/osso/.worktrees/wow-ui-sim-p820-page/src/c_api/c_azerite_essence.rs:46:    ("GetEssenceInfo", get_essence_info),
+/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/state_types/azerite_essence.rs:6://! (`GetEssenceInfo`, `GetMilestoneInfo`, `GetMilestoneSpell`) when
+/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/state_types/azerite_essence.rs:59:    /// Essence id (lookup key for `GetEssenceInfo`).
+/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/globals/missing_surface/voice_chat.rs:10://! - `GetMasterVolumeScale()` — returns master volume scale.
+/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/globals/missing_surface/voice_chat.rs:41:    table_set_rust_fn_static(state, ns, "GetMasterVolumeScale", get_master_volume_scale)?;
+/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/globals/missing_surface/small_namespaces.rs:76:    ("GetActiveMatchState", c_pvp_get_active_match_state),
+/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/globals/stubs/namespace_stubs.rs:142:    // GetCurrentVoiceChatConnectionStatusCode / GetMasterVolumeScale /
+/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/sim_substates/mod.rs:349:    /// Master volume scale `[0.0, 1.0]`. Drives `GetMasterVolumeScale`.
+/home/osso/.worktrees/wow-ui-sim-p820-page/tests/c_azerite_essence.rs:202:        .eval("return C_AzeriteEssence.GetEssenceInfo(9999) == nil")
+/home/osso/.worktrees/wow-ui-sim-p820-page/tests/c_azerite_essence.rs:214:            local info = C_AzeriteEssence.GetEssenceInfo(201)
+/home/osso/.worktrees/wow-ui-sim-p820-page/tests/startup_api_stubs.rs:664:        .eval("return C_PvP.GetActiveMatchState()")
+/home/osso/.worktrees/wow-ui-sim-p820-page/tests/startup_api_stubs.rs:665:        .expect("C_PvP.GetActiveMatchState should be callable");
+/home/osso/.worktrees/wow-ui-sim-p820-page/tests/c_voice_chat_probes.rs:212:// ── GetMasterVolumeScale ──────────────────────────────────────────────────────
+/home/osso/.worktrees/wow-ui-sim-p820-page/tests/c_voice_chat_probes.rs:218:        .eval("return C_VoiceChat.GetMasterVolumeScale()")

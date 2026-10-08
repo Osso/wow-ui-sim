@@ -1,0 +1,218 @@
+[
+  {
+    "source_id": "source-context-001",
+    "extract_line": 1,
+    "literal": "Patch 8.2.0 API changes",
+    "wikitext_line": 1,
+    "raw_literal": "{{apichanges|8.2.0|prev=8.1.5|next=8.2.5}}",
+    "status": "metadata-only",
+    "reason": "Editorial heading/source/build/TOC or deprecated-source link; no runtime credit; linked pages not expanded."
+  },
+  {
+    "source_id": "prose-undated-003",
+    "extract_line": 3,
+    "literal": "Blizzard UI post:",
+    "wikitext_line": 3,
+    "raw_literal": "Blizzard UI post:",
+    "status": "metadata-only",
+    "reason": "Editorial heading/source/build/TOC or deprecated-source link; no runtime credit; linked pages not expanded."
+  },
+  {
+    "source_id": "prose-undated-004",
+    "extract_line": 4,
+    "literal": "* [Reference: url=https://us.forums.blizzard.com/en/wow/t/ui-changes-in-rise-of-azshara/202487|author=Kaivax|date=2019-06-19|title=UI Changes in Rise of Azshara]",
+    "wikitext_line": 4,
+    "raw_literal": "* {{ref web|url=https://us.forums.blizzard.com/en/wow/t/ui-changes-in-rise-of-azshara/202487|author=Kaivax|date=2019-06-19|title=UI Changes in Rise of Azshara}}",
+    "status": "metadata-only",
+    "reason": "Editorial heading/source/build/TOC or deprecated-source link; no runtime credit; linked pages not expanded."
+  },
+  {
+    "source_id": "prose-undated-005",
+    "extract_line": 5,
+    "literal": "* 8.2 UI patch notes: https://www.wowinterface.com/forums/showthread.php?t=57226",
+    "wikitext_line": 5,
+    "raw_literal": "* 8.2 UI patch notes: https://www.wowinterface.com/forums/showthread.php?t=57226",
+    "status": "metadata-only",
+    "reason": "Editorial heading/source/build/TOC or deprecated-source link; no runtime credit; linked pages not expanded."
+  },
+  {
+    "source_id": "prose-undated-007",
+    "extract_line": 7,
+    "literal": "Diffs:",
+    "wikitext_line": 7,
+    "raw_literal": "Diffs:",
+    "status": "metadata-only",
+    "reason": "Editorial heading/source/build/TOC or deprecated-source link; no runtime credit; linked pages not expanded."
+  },
+  {
+    "source_id": "prose-undated-008",
+    "extract_line": 8,
+    "literal": "* 8.1.5 (29981) to 8.2.0 (30920): https://github.com/Gethe/wow-ui-source/commit/f1462fb3976c275e36939507147a0fbba3a30640",
+    "wikitext_line": 8,
+    "raw_literal": "* 8.1.5 (29981) to 8.2.0 (30920): https://github.com/Gethe/wow-ui-source/commit/f1462fb3976c275e36939507147a0fbba3a30640",
+    "status": "metadata-only",
+    "reason": "Editorial heading/source/build/TOC or deprecated-source link; no runtime credit; linked pages not expanded."
+  },
+  {
+    "source_id": "prose-undated-009",
+    "extract_line": 9,
+    "literal": "* 8.2.0 (30948): https://github.com/Gethe/wow-ui-source/commit/295545e959e82b9fa43a4cdab4afb80a3b13b02b",
+    "wikitext_line": 9,
+    "raw_literal": "* 8.2.0 (30948): https://github.com/Gethe/wow-ui-source/commit/295545e959e82b9fa43a4cdab4afb80a3b13b02b",
+    "status": "metadata-only",
+    "reason": "Editorial heading/source/build/TOC or deprecated-source link; no runtime credit; linked pages not expanded."
+  },
+  {
+    "source_id": "prose-undated-010",
+    "extract_line": 10,
+    "literal": "* 8.2.0 (30993): https://github.com/Gethe/wow-ui-source/commit/9eb7d56d256e5b2e20682e4d40f72378e483ea2c",
+    "wikitext_line": 10,
+    "raw_literal": "* 8.2.0 (30993): https://github.com/Gethe/wow-ui-source/commit/9eb7d56d256e5b2e20682e4d40f72378e483ea2c",
+    "status": "metadata-only",
+    "reason": "Editorial heading/source/build/TOC or deprecated-source link; no runtime credit; linked pages not expanded."
+  },
+  {
+    "source_id": "prose-undated-011",
+    "extract_line": 11,
+    "literal": "* Resources: https://github.com/Ketho/BlizzardInterfaceResources/commit/b64b55d7917d7552dda675865210ec404e3ea848",
+    "wikitext_line": 11,
+    "raw_literal": "* Resources: https://github.com/Ketho/BlizzardInterfaceResources/commit/b64b55d7917d7552dda675865210ec404e3ea848",
+    "status": "metadata-only",
+    "reason": "Editorial heading/source/build/TOC or deprecated-source link; no runtime credit; linked pages not expanded."
+  },
+  {
+    "source_id": "source-context-013",
+    "extract_line": 13,
+    "literal": "== API ==",
+    "wikitext_line": 13,
+    "raw_literal": "==API==",
+    "status": "metadata-only",
+    "reason": "Editorial heading/source/build/TOC or deprecated-source link; no runtime credit; linked pages not expanded."
+  },
+  {
+    "source_id": "source-context-014",
+    "extract_line": 14,
+    "literal": "==== Changes ====",
+    "wikitext_line": 14,
+    "raw_literal": "====Changes====",
+    "status": "metadata-only",
+    "reason": "Editorial heading/source/build/TOC or deprecated-source link; no runtime credit; linked pages not expanded."
+  },
+  {
+    "source_id": "prose-undated-015",
+    "extract_line": 15,
+    "literal": "* The TOC version is 80200",
+    "wikitext_line": 15,
+    "raw_literal": "* The [[Getting_the_current_interface_number|TOC version]] is <code>80200</code>",
+    "status": "metadata-only",
+    "reason": "Editorial heading/source/build/TOC or deprecated-source link; no runtime credit; linked pages not expanded."
+  },
+  {
+    "source_id": "prose-undated-016",
+    "extract_line": 16,
+    "literal": "* No files outside of Interface\\ can be addressed by file path anymore",
+    "wikitext_line": 16,
+    "raw_literal": "* No files outside of <code>Interface\\</code> can be addressed by file path anymore",
+    "status": "audit-pending",
+    "reason": "File-path sandbox statement needs addon texture/sound/file lookup denial tests across Interface and non-Interface roots; no native path-security parity claim."
+  },
+  {
+    "source_id": "prose-undated-017",
+    "extract_line": 17,
+    "literal": ":* GetFileIDFromPath() will no longer work for non-interface file paths. TSquare 2019-04-23. IRC #wowuidev",
+    "wikitext_line": 17,
+    "raw_literal": ":* {{api|GetFileIDFromPath}}() will no longer work for non-interface file paths. <ref>TSquare 2019-04-23. IRC #wowuidev</ref>",
+    "status": "audit-pending",
+    "reason": "GetFileIDFromPath non-Interface restriction needs denied path resolution tests and actual asset mappings; this host has no WoW install."
+  },
+  {
+    "source_id": "prose-undated-018",
+    "extract_line": 18,
+    "literal": ":* Paths to Fonts\\ are still accessible for FontInstance:SetFont()",
+    "wikitext_line": 18,
+    "raw_literal": ":* Paths to <code>Fonts\\</code> are still accessible for [[API FontInstance SetFont|FontInstance:SetFont]]()",
+    "status": "audit-pending",
+    "reason": "Fonts path exception needs concrete native font-path resolution fixtures; asset availability and sandbox exception are not proven by publication."
+  },
+  {
+    "source_id": "prose-undated-019",
+    "extract_line": 19,
+    "literal": ":* Sounds cannot be replaced anymore by dropping a sound file in the Sound\\ folder, but they can still be (un)muted with MuteSoundFile() and UnmuteSoundFile().",
+    "wikitext_line": 19,
+    "raw_literal": ":* Sounds cannot be replaced anymore by dropping a sound file in the <code>Sound\\</code> folder, but they can still be (un)muted with {{api|MuteSoundFile}}() and {{api|UnmuteSoundFile}}().",
+    "status": "audit-pending",
+    "reason": "Sound folder override prohibition plus mute/unmute lifecycle needs real asset precedence and audio integration; no WoW install on host."
+  },
+  {
+    "source_id": "prose-undated-020",
+    "extract_line": 20,
+    "literal": "* C_ReportSystem.InitiateReportPlayer() and C_ReportSystem.SendReportPlayer() were protected to prevent automating reports, addons have to use C_ReportSystem.OpenReportPlayerDialog() now. TSquare 2019-04-24. IRC #wowuidev",
+    "wikitext_line": 20,
+    "raw_literal": "* {{api|C_ReportSystem.InitiateReportPlayer}}() and {{api|C_ReportSystem.SendReportPlayer}}() were protected to prevent automating reports, addons have to use {{api|C_ReportSystem.OpenReportPlayerDialog}}() now. <ref>TSquare 2019-04-24. IRC #wowuidev</ref>",
+    "status": "audit-pending",
+    "reason": "Protected reporting requires secure/insecure callers, reporting session state and blocked automated sends; publication of dialog is not security proof."
+  },
+  {
+    "source_id": "prose-undated-021",
+    "extract_line": 21,
+    "literal": "* Nameplates anchoring is now restricted to only those in the same anchor \"family\". This was done to disable drawing lines to nameplates. TSquare 2019-05-16. IRC #wowuidev",
+    "wikitext_line": 21,
+    "raw_literal": "* Nameplates anchoring is now restricted to only those in the same anchor \"family\". This was done to disable drawing lines to nameplates. <ref>TSquare 2019-05-16. IRC #wowuidev</ref>",
+    "status": "audit-pending",
+    "reason": "Nameplate anchor-family restriction needs family identity and rejection behavior in SetPoint; generic layout support does not prove this boundary."
+  },
+  {
+    "source_id": "prose-undated-022",
+    "extract_line": 22,
+    "literal": "* GameTooltip:AddTexture() now supports multiple customizable textures per line.",
+    "wikitext_line": 22,
+    "raw_literal": "* [[API_GameTooltip_AddTexture|GameTooltip:AddTexture]]() now supports multiple customizable textures per line.",
+    "status": "audit-pending",
+    "reason": "Multiple customizable tooltip textures per line requires concrete multi-texture line layout/output fixtures, not AddTexture publication."
+  },
+  {
+    "source_id": "prose-undated-023",
+    "extract_line": 23,
+    "literal": "* The WorldStateFrame widget functionality was replaced by the UI Widget Manager API.",
+    "wikitext_line": 23,
+    "raw_literal": "* The [https://www.townlong-yak.com/framexml/8.1.5/WorldStateFrame.lua WorldStateFrame] widget functionality was replaced by the [[World_of_Warcraft_API#UI_Widget_Manager|UI Widget Manager]] API.",
+    "status": "audit-pending",
+    "reason": "WorldStateFrame to UI Widget Manager migration is a broad replacement claim; needs historical producer/consumer fixtures rather than surface lookup."
+  },
+  {
+    "source_id": "prose-undated-024",
+    "extract_line": 24,
+    "literal": "* ShowUIPanel() and HideUIPanel() are now protected, they can no longer be called by addons while in combat.",
+    "wikitext_line": 24,
+    "raw_literal": "* {{api|ShowUIPanel}}() and {{api|HideUIPanel}}() are now protected, they can no longer be called by addons while in combat.",
+    "status": "audit-pending",
+    "reason": "ShowUIPanel/HideUIPanel combat protection requires secure/insecure dispatch and combat-state mutation tests; publication is not protection parity."
+  },
+  {
+    "source_id": "prose-undated-025",
+    "extract_line": 25,
+    "literal": "* /fstack doesn't show the global frame names anymore unless disabling the fstack_preferParentKeys CVar.",
+    "wikitext_line": 25,
+    "raw_literal": "* [[MACRO_framestack|/fstack]] doesn't show the global frame names anymore unless disabling the {{api|t=c|fstack_preferParentKeys}} CVar.",
+    "status": "audit-pending",
+    "reason": "Frame-stack display naming and fstack_preferParentKeys interaction requires concrete inspector output for both CVar settings; CVar publication alone is insufficient."
+  },
+  {
+    "source_id": "source-context-026",
+    "extract_line": 26,
+    "literal": "* Deprecated API: Blizzard_Deprecated 8.2.0",
+    "wikitext_line": 26,
+    "raw_literal": "* Deprecated API: [https://www.townlong-yak.com/framexml/8.2.0/Blizzard_Deprecated/Deprecated_8_2_0.lua Blizzard_Deprecated 8.2.0]",
+    "status": "metadata-only",
+    "reason": "Editorial heading/source/build/TOC or deprecated-source link; no runtime credit; linked pages not expanded."
+  },
+  {
+    "source_id": "source-context-030",
+    "extract_line": 30,
+    "literal": "== References ==",
+    "wikitext_line": 291,
+    "raw_literal": "==References==",
+    "status": "metadata-only",
+    "reason": "Editorial heading/source/build/TOC or deprecated-source link; no runtime credit; linked pages not expanded."
+  }
+]

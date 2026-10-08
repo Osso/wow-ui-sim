@@ -1,0 +1,39 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p820-page)
+    Finished `test` profile [optimized + debuginfo] target(s) in 1m 31s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p820-page/debug/deps/integration-1db16289b0998b2a)
+
+running 1 test
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 2.36ms
+[  0.003s] [Startup] rilua VM created in 107.66µs
+[  0.003s] [Startup] builtin frames initialized in 74.91µs
+[  0.003s] [Startup] template registry cleared in 8.06µs
+[  0.003s] [Startup] intrinsic templates registered in 9.37µs
+[  0.003s] [Startup] initial app_data lua handle installed in 400.00ns
+[  0.121s] [Startup] init_lua_state complete in 118.21ms
+[  0.121s] [Startup] final app_data lua handle installed in 180.00ns
+[  0.121s] [Startup] initial screen globals installed in 90.10µs
+[  0.121s] [Startup] WowLuaEnv::new complete
+
+thread 'patch_8_2_0_publication_fixes::patch_8_2_0_colon_handler_probe_uses_declared_owner' (199196) panicked at /home/osso/.worktrees/wow-ui-sim-p820-page/tests/patch_8_2_0_publication_fixes.rs:50:5:
+assertion `left == right` failed
+  left: "MovieFrame HasScript=false"
+ right: "Frame HasScript=true"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test patch_8_2_0_publication_fixes::patch_8_2_0_colon_handler_probe_uses_declared_owner ... FAILED
+
+failures:
+
+failures:
+    patch_8_2_0_publication_fixes::patch_8_2_0_colon_handler_probe_uses_declared_owner
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10817 filtered out; finished in 0.13s
+
+error: test failed, to rerun pass `--test integration`

@@ -1,0 +1,14 @@
+.................E..........
+======================================================================
+ERROR: test_legacy_api_caption_inventory_retains_prose_and_reference (__main__.ExtractTests.test_legacy_api_caption_inventory_retains_prose_and_reference)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p820-page/tools/test_extract_patch_non_inventory.py", line 19, in test_legacy_api_caption_inventory_retains_prose_and_reference
+    self.assertEqual(extract_text(raw, legacy_api_tables=True),
+                     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: extract_text() got an unexpected keyword argument 'legacy_api_tables'
+
+----------------------------------------------------------------------
+Ran 28 tests in 0.006s
+
+FAILED (errors=1)

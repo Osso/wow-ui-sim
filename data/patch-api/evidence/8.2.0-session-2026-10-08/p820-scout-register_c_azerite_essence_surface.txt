@@ -1,0 +1,3 @@
+Scanner: /usr/bin/grep; untruncated
+/home/osso/.worktrees/wow-ui-sim-p820-page/src/c_api/c_azerite_essence.rs:80:pub(crate) fn register_c_azerite_essence_surface(state: &mut LuaState) -> LuaResult<()> {
+/home/osso/.worktrees/wow-ui-sim-p820-page/src/c_api/registration.rs:40:    c_azerite_essence::register_c_azerite_essence_surface(state)?;

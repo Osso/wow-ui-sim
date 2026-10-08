@@ -1,0 +1,1241 @@
+[
+  {
+    "source_id": "wt-global-api-C_UIWidgetManager.GetTextureWithStateVisualizationInfo-150",
+    "symbol": "C_UIWidgetManager.GetTextureWithStateVisualizationInfo",
+    "scanner": "/usr/bin/grep",
+    "whole_word": true,
+    "untruncated": true,
+    "scans": [
+      {
+        "label": "cached-qualified",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "C_UIWidgetManager.GetTextureWithStateVisualizationInfo",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "label": "cached-bare",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "GetTextureWithStateVisualizationInfo",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "label": "callers",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "GetTextureWithStateVisualizationInfo",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-GetGuildTabardFileNames-151",
+    "symbol": "GetGuildTabardFileNames",
+    "scanner": "/usr/bin/grep",
+    "whole_word": true,
+    "untruncated": true,
+    "scans": [
+      {
+        "label": "cached-qualified",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "GetGuildTabardFileNames",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "label": "cached-bare",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "GetGuildTabardFileNames",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "label": "callers",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "GetGuildTabardFileNames",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-CanEditOfficerNote-152",
+    "symbol": "CanEditOfficerNote",
+    "scanner": "/usr/bin/grep",
+    "whole_word": true,
+    "untruncated": true,
+    "scans": [
+      {
+        "label": "cached-qualified",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "CanEditOfficerNote",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 0,
+        "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/GuildRoster.lua:156:\t\tif C_GuildInfo.CanEditOfficerNote() then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/GuildRoster.lua:164:\t\tself.OfficerNoteBackground:EnableMouse(C_GuildInfo.CanEditOfficerNote());\n",
+        "stderr": ""
+      },
+      {
+        "label": "cached-bare",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "CanEditOfficerNote",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 0,
+        "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/GuildRoster.lua:156:\t\tif C_GuildInfo.CanEditOfficerNote() then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/GuildRoster.lua:164:\t\tself.OfficerNoteBackground:EnableMouse(C_GuildInfo.CanEditOfficerNote());\n",
+        "stderr": ""
+      },
+      {
+        "label": "callers",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "CanEditOfficerNote",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+        ],
+        "exit": 0,
+        "stdout": "/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/globals/guild_info.rs:11://! - `CanViewOfficerNote()` / `CanEditOfficerNote()` \u2014 `world.guild_is_officer`.\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/globals/guild_info.rs:251:        \"CanEditOfficerNote\",\n",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-CanViewOfficerNote-153",
+    "symbol": "CanViewOfficerNote",
+    "scanner": "/usr/bin/grep",
+    "whole_word": true,
+    "untruncated": true,
+    "scans": [
+      {
+        "label": "cached-qualified",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "CanViewOfficerNote",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 0,
+        "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/GuildRoster.lua:154:\tif C_GuildInfo.CanViewOfficerNote() then\n",
+        "stderr": ""
+      },
+      {
+        "label": "cached-bare",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "CanViewOfficerNote",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 0,
+        "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/GuildRoster.lua:154:\tif C_GuildInfo.CanViewOfficerNote() then\n",
+        "stderr": ""
+      },
+      {
+        "label": "callers",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "CanViewOfficerNote",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+        ],
+        "exit": 0,
+        "stdout": "/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/globals/guild_info.rs:11://! - `CanViewOfficerNote()` / `CanEditOfficerNote()` \u2014 `world.guild_is_officer`.\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/globals/guild_info.rs:245:        \"CanViewOfficerNote\",\n",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-GetBattlefieldStatInfo-154",
+    "symbol": "GetBattlefieldStatInfo",
+    "scanner": "/usr/bin/grep",
+    "whole_word": true,
+    "untruncated": true,
+    "scans": [
+      {
+        "label": "cached-qualified",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "GetBattlefieldStatInfo",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "label": "cached-bare",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "GetBattlefieldStatInfo",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "label": "callers",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "GetBattlefieldStatInfo",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-GetGuildNewsInfo-155",
+    "symbol": "GetGuildNewsInfo",
+    "scanner": "/usr/bin/grep",
+    "whole_word": true,
+    "untruncated": true,
+    "scans": [
+      {
+        "label": "cached-qualified",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "GetGuildNewsInfo",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 0,
+        "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/GuildUtil.lua:57:\tlocal newsInfo = C_GuildInfo.GetGuildNewsInfo(news_id);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/GuildUtil.lua:82:\t\t\t\t\t-- item link is already filled out from GetGuildNewsInfo\n",
+        "stderr": ""
+      },
+      {
+        "label": "cached-bare",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "GetGuildNewsInfo",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 0,
+        "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/GuildUtil.lua:57:\tlocal newsInfo = C_GuildInfo.GetGuildNewsInfo(news_id);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/GuildUtil.lua:82:\t\t\t\t\t-- item link is already filled out from GetGuildNewsInfo\n",
+        "stderr": ""
+      },
+      {
+        "label": "callers",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "GetGuildNewsInfo",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+        ],
+        "exit": 0,
+        "stdout": "/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/globals/guild_info.rs:17://! - `GetGuildNewsInfo(index)` \u2014 nil while guild news state is unmodeled.\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/globals/guild_info.rs:221:    table_set_rust_fn_static(state, table_ref, \"GetGuildNewsInfo\", get_guild_news_info)?;\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/guild_probes.rs:89:            return ok, GetNumGuildNews(), C_GuildInfo.GetGuildNewsInfo(1) == nil\n",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-GetNumBattlefieldStats-156",
+    "symbol": "GetNumBattlefieldStats",
+    "scanner": "/usr/bin/grep",
+    "whole_word": true,
+    "untruncated": true,
+    "scans": [
+      {
+        "label": "cached-qualified",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "GetNumBattlefieldStats",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "label": "cached-bare",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "GetNumBattlefieldStats",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "label": "callers",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "GetNumBattlefieldStats",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-GuildRoster-157",
+    "symbol": "GuildRoster",
+    "scanner": "/usr/bin/grep",
+    "whole_word": true,
+    "untruncated": true,
+    "scans": [
+      {
+        "label": "cached-qualified",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "GuildRoster",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 0,
+        "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_QuickJoin/QuickJoinToast.lua:125:\t\t\tC_GuildInfo.GuildRoster();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_QuickJoin/QuickJoin.lua:108:\t\t\tC_GuildInfo.GuildRoster();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Calendar/Mainline/Blizzard_Calendar.lua:3394:\t\t\t\t\tC_GuildInfo.GuildRoster();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Calendar/Mainline/Blizzard_Calendar.lua:4154:\t\tC_GuildInfo.GuildRoster();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Calendar/Mainline/Blizzard_Calendar.lua:4177:\t\t\tC_GuildInfo.GuildRoster();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/GuildRoster.lua:67:\t\t\tC_GuildInfo.GuildRoster();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/Blizzard_Communities_Mainline.toc:32:GuildRoster.xml\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/GuildRoster.xml:3:\t<Script file=\"GuildRoster.lua\"/>\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/CommunitiesMemberList.lua:489:\t\tC_GuildInfo.GuildRoster();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/CommunitiesMemberList.lua:681:\t\t\tC_GuildInfo.GuildRoster();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/CommunitiesFrame.lua:286:\t\t\tC_GuildInfo.GuildRoster();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/CommunitiesFrame.lua:680:\t\t\tC_GuildInfo.GuildRoster();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/CommunitiesFrame.lua:1360:\t\t\t\tC_GuildInfo.GuildRoster();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/GuildInfo.lua:41:\tC_GuildInfo.GuildRoster();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AutoComplete/AutoComplete.lua:144:\t\t\tC_GuildInfo.GuildRoster();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MailFrame/MailFrame.lua:60:\t\tC_GuildInfo.GuildRoster();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:416:\t\tC_GuildInfo.GuildRoster();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:1291:\t\t\t\tC_GuildInfo.GuildRoster();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:1295:\t\tC_GuildInfo.GuildRoster();\n",
+        "stderr": ""
+      },
+      {
+        "label": "cached-bare",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "GuildRoster",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 0,
+        "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_QuickJoin/QuickJoinToast.lua:125:\t\t\tC_GuildInfo.GuildRoster();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_QuickJoin/QuickJoin.lua:108:\t\t\tC_GuildInfo.GuildRoster();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Calendar/Mainline/Blizzard_Calendar.lua:3394:\t\t\t\t\tC_GuildInfo.GuildRoster();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Calendar/Mainline/Blizzard_Calendar.lua:4154:\t\tC_GuildInfo.GuildRoster();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Calendar/Mainline/Blizzard_Calendar.lua:4177:\t\t\tC_GuildInfo.GuildRoster();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/GuildRoster.lua:67:\t\t\tC_GuildInfo.GuildRoster();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/Blizzard_Communities_Mainline.toc:32:GuildRoster.xml\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/GuildRoster.xml:3:\t<Script file=\"GuildRoster.lua\"/>\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/CommunitiesMemberList.lua:489:\t\tC_GuildInfo.GuildRoster();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/CommunitiesMemberList.lua:681:\t\t\tC_GuildInfo.GuildRoster();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/CommunitiesFrame.lua:286:\t\t\tC_GuildInfo.GuildRoster();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/CommunitiesFrame.lua:680:\t\t\tC_GuildInfo.GuildRoster();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/CommunitiesFrame.lua:1360:\t\t\t\tC_GuildInfo.GuildRoster();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/GuildInfo.lua:41:\tC_GuildInfo.GuildRoster();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AutoComplete/AutoComplete.lua:144:\t\t\tC_GuildInfo.GuildRoster();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MailFrame/MailFrame.lua:60:\t\tC_GuildInfo.GuildRoster();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:416:\t\tC_GuildInfo.GuildRoster();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:1291:\t\t\t\tC_GuildInfo.GuildRoster();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:1295:\t\tC_GuildInfo.GuildRoster();\n",
+        "stderr": ""
+      },
+      {
+        "label": "callers",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "GuildRoster",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+        ],
+        "exit": 0,
+        "stdout": "/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/globals/guild_probes.rs:18://!   `GuildRoster.lua`'s `SetupRankDropdown` calls these unconditionally; if\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/globals/guild_info.rs:220:    table_set_rust_fn_static(state, table_ref, \"GuildRoster\", guild_roster)?;\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/guild_verbs.rs:177:    env.exec(\"C_GuildInfo.GuildRoster()\").unwrap();\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/blizzard_auto_complete_guild_roster.rs:15:local originalRoster = C_GuildInfo.GuildRoster\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/blizzard_auto_complete_guild_roster.rs:19:C_GuildInfo.GuildRoster = function()\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/blizzard_auto_complete_guild_roster.rs:31:expect(rosterCalls == 1, \"GuildRoster must be called when roster requests are allowed\")\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/blizzard_auto_complete_guild_roster.rs:43:C_GuildInfo.GuildRoster = originalRoster\n",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-IsRatedBattleground-158",
+    "symbol": "IsRatedBattleground",
+    "scanner": "/usr/bin/grep",
+    "whole_word": true,
+    "untruncated": true,
+    "scans": [
+      {
+        "label": "cached-qualified",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "IsRatedBattleground",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 0,
+        "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PVPMatch/PVPMatchUtil.lua:89:\t\t\tC_PvP.IsRatedBattleground() or\n",
+        "stderr": ""
+      },
+      {
+        "label": "cached-bare",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "IsRatedBattleground",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 0,
+        "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PVPMatch/PVPMatchUtil.lua:89:\t\t\tC_PvP.IsRatedBattleground() or\n",
+        "stderr": ""
+      },
+      {
+        "label": "callers",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "IsRatedBattleground",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+        ],
+        "exit": 0,
+        "stdout": "/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/globals/missing_surface/small_namespaces.rs:112:    (\"IsRatedBattleground\", c_pvp_is_rated_battleground),\n",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "source_id": "wt-global-api-IsRatedMap-159",
+    "symbol": "IsRatedMap",
+    "scanner": "/usr/bin/grep",
+    "whole_word": true,
+    "untruncated": true,
+    "scans": [
+      {
+        "label": "cached-qualified",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "IsRatedMap",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 0,
+        "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PVPMatch/PVPMatchUtil.lua:31:\treturn C_PvP.IsRatedMap() or C_PvP.IsRatedSoloRBG();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopup/WoWLabs/UnitPopupButtons.lua:350:\tif C_PvP.IsRatedMap() then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopup/WoWHack/UnitPopupButtons.lua:291:\tif C_PvP.IsRatedMap() then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopup/Standard/UnitPopupButtons.lua:447:\tif C_PvP.IsRatedMap() then\n",
+        "stderr": ""
+      },
+      {
+        "label": "cached-bare",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "IsRatedMap",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 0,
+        "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PVPMatch/PVPMatchUtil.lua:31:\treturn C_PvP.IsRatedMap() or C_PvP.IsRatedSoloRBG();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopup/WoWLabs/UnitPopupButtons.lua:350:\tif C_PvP.IsRatedMap() then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopup/WoWHack/UnitPopupButtons.lua:291:\tif C_PvP.IsRatedMap() then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopup/Standard/UnitPopupButtons.lua:447:\tif C_PvP.IsRatedMap() then\n",
+        "stderr": ""
+      },
+      {
+        "label": "callers",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "IsRatedMap",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+        ],
+        "exit": 0,
+        "stdout": "/home/osso/.worktrees/wow-ui-sim-p820-page/src/lua_api/globals/missing_surface/small_namespaces.rs:113:    (\"IsRatedMap\", c_pvp_is_rated_map),\n",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "source_id": "wt-widgets-Browser:ClearCache-182",
+    "symbol": "Browser:ClearCache",
+    "scanner": "/usr/bin/grep",
+    "whole_word": true,
+    "untruncated": true,
+    "scans": [
+      {
+        "label": "cached-qualified",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "Browser:ClearCache",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "label": "cached-bare",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "ClearCache",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 0,
+        "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXMLBase/CvarUtil.lua:201:function CVarCallbackRegistry:ClearCache(cvar)\n",
+        "stderr": ""
+      },
+      {
+        "label": "callers",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "ClearCache",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "source_id": "wt-widgets-Browser:HasConnection-183",
+    "symbol": "Browser:HasConnection",
+    "scanner": "/usr/bin/grep",
+    "whole_word": true,
+    "untruncated": true,
+    "scans": [
+      {
+        "label": "cached-qualified",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "Browser:HasConnection",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "label": "cached-bare",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "HasConnection",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "label": "callers",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "HasConnection",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "source_id": "wt-widgets-Checkout:ClearRenderSize-184",
+    "symbol": "Checkout:ClearRenderSize",
+    "scanner": "/usr/bin/grep",
+    "whole_word": true,
+    "untruncated": true,
+    "scans": [
+      {
+        "label": "cached-qualified",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "Checkout:ClearRenderSize",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "label": "cached-bare",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "ClearRenderSize",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "label": "callers",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "ClearRenderSize",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "source_id": "wt-widgets-Checkout:SetRenderSize-185",
+    "symbol": "Checkout:SetRenderSize",
+    "scanner": "/usr/bin/grep",
+    "whole_word": true,
+    "untruncated": true,
+    "scans": [
+      {
+        "label": "cached-qualified",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "Checkout:SetRenderSize",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "label": "cached-bare",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "SetRenderSize",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "label": "callers",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "SetRenderSize",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "source_id": "wt-widgets-TabardModel:GetLowerEmblemFileName-186",
+    "symbol": "TabardModel:GetLowerEmblemFileName",
+    "scanner": "/usr/bin/grep",
+    "whole_word": true,
+    "untruncated": true,
+    "scans": [
+      {
+        "label": "cached-qualified",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "TabardModel:GetLowerEmblemFileName",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "label": "cached-bare",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "GetLowerEmblemFileName",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "label": "callers",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "GetLowerEmblemFileName",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "source_id": "wt-widgets-TabardModel:GetUpperEmblemFileName-187",
+    "symbol": "TabardModel:GetUpperEmblemFileName",
+    "scanner": "/usr/bin/grep",
+    "whole_word": true,
+    "untruncated": true,
+    "scans": [
+      {
+        "label": "cached-qualified",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "TabardModel:GetUpperEmblemFileName",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "label": "cached-bare",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "GetUpperEmblemFileName",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "label": "callers",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "GetUpperEmblemFileName",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "source_id": "wt-cvars-BrowserNavigateLog-267",
+    "symbol": "BrowserNavigateLog",
+    "scanner": "/usr/bin/grep",
+    "whole_word": true,
+    "untruncated": true,
+    "scans": [
+      {
+        "label": "cached-qualified",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "BrowserNavigateLog",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "label": "cached-bare",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "BrowserNavigateLog",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "label": "callers",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "BrowserNavigateLog",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "source_id": "wt-cvars-GxAllowSoftwareRenderer-268",
+    "symbol": "GxAllowSoftwareRenderer",
+    "scanner": "/usr/bin/grep",
+    "whole_word": true,
+    "untruncated": true,
+    "scans": [
+      {
+        "label": "cached-qualified",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "GxAllowSoftwareRenderer",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "label": "cached-bare",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "GxAllowSoftwareRenderer",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "label": "callers",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "GxAllowSoftwareRenderer",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "source_id": "wt-cvars-gxMTOpaque-269",
+    "symbol": "gxMTOpaque",
+    "scanner": "/usr/bin/grep",
+    "whole_word": true,
+    "untruncated": true,
+    "scans": [
+      {
+        "label": "cached-qualified",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "gxMTOpaque",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "label": "cached-bare",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "gxMTOpaque",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "label": "callers",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "gxMTOpaque",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "source_id": "wt-cvars-mtParticles-270",
+    "symbol": "mtParticles",
+    "scanner": "/usr/bin/grep",
+    "whole_word": true,
+    "untruncated": true,
+    "scans": [
+      {
+        "label": "cached-qualified",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "mtParticles",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "label": "cached-bare",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "mtParticles",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "label": "callers",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "mtParticles",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  {
+    "source_id": "wt-cvars-GxToggleWindowMode-287",
+    "symbol": "GxToggleWindowMode",
+    "scanner": "/usr/bin/grep",
+    "whole_word": true,
+    "untruncated": true,
+    "scans": [
+      {
+        "label": "cached-qualified",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "GxToggleWindowMode",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "label": "cached-bare",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "GxToggleWindowMode",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "label": "callers",
+        "argv": [
+          "/usr/bin/grep",
+          "-R",
+          "-n",
+          "-w",
+          "-F",
+          "GxToggleWindowMode",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+          "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+        ],
+        "exit": 1,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  }
+]

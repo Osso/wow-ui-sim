@@ -1,0 +1,4 @@
+Scanner: /usr/bin/grep; untruncated
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Shared/Audio.lua:272:				C_VoiceChat.SetMasterVolumeScale(max - value);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/VoiceChatDocumentation.lua:708:			Name = "SetMasterVolumeScale",
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Settings_Shared/Blizzard_ImplementationReadme.lua:130:	C_VoiceChat.SetMasterVolumeScale(max - value);

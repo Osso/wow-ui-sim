@@ -1,0 +1,1620 @@
+{
+  "schema": "patch-api-page-coverage/v1",
+  "patch": "8.2.0",
+  "source": "data/patch-api/sources/8.2.0-wikitext-register.json",
+  "source_sha256": "0755a978c7c9821a87431337fc2ae834f5fdfc139180f38af3bf613168b21203",
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/8.2.0-api-changes.txt",
+    "sha256": "49736eb93e74da2436d5e600e58b6ee8674927ef4b15f50e10adffa675585dd0"
+  },
+  "proof_policy": "Occurrence accounting only; publication/absence is not native signature, populated output, payload, security or historical parity. 8.2.5 unmerged register reserved for integration.",
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-BNSetFriendFavoriteFlag-36",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No Battle.net friend favorite mutation producer; requires friend/account identity, persisted favorite flag and friend-list notification fixtures, not a no-op."
+    },
+    {
+      "source_id": "wt-global-api-C_AzeriteEssence.ActivateEssence-37",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_AzeriteEssence.CanActivateEssence-38",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_AzeriteEssence.CanDeactivateEssence-39",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Existing essence model has milestones and active IDs, but lacks a specified deactivation permission policy (forge/rest/change restrictions). Generated documentation supplies milestoneID and boolean only; do not invent eligibility from activation rules."
+    },
+    {
+      "source_id": "wt-global-api-C_AzeriteEssence.CanOpenUI-40",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_AzeriteEssence.ClearPendingActivationEssence-41",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_AzeriteEssence.CloseForge-42",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_AzeriteEssence.GetEssenceHyperlink-43",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_AzeriteEssence.GetEssenceInfo-44",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_AzeriteEssence.GetEssences-45",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_AzeriteEssence.GetMilestoneEssence-46",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_AzeriteEssence.GetMilestoneInfo-47",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_AzeriteEssence.GetMilestones-48",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_AzeriteEssence.GetMilestoneSpell-49",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_AzeriteEssence.GetNumUnlockedEssences-50",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_AzeriteEssence.GetPendingActivationEssence-51",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_AzeriteEssence.HasNeverActivatedAnyEssences-52",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_AzeriteEssence.HasPendingActivationEssence-53",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_AzeriteEssence.IsAtForge-54",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_AzeriteEssence.SetPendingActivationEssence-55",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_AzeriteEssence.UnlockMilestone-56",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.GetClubStreamIDs-57",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw club-stream enumeration producer; needs per-club stream identity/catalog visibility fixtures rather than a fabricated empty list."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.ApplicantAcceptClubInvite-58",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.ApplicantDeclineClubInvite-59",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.CancelMembershipRequest-60",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.CheckAllPlayerApplicantSettings-61",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No applicant-settings aggregate check producer; needs matching filter/settings policy and concrete differing applicant fixtures."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.ClearAllFinderCache-62",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No finder cache invalidation lifecycle; clearing all must distinguish postings, applicant and pending results and notifications."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.ClearClubApplicantsCache-63",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No per-club applicant cache eviction producer; requires keyed cached results and refresh lifecycle."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.ClearClubFinderPostingsCache-64",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No postings cache eviction producer; requires posting query results and refresh lifecycle independent of applicants."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.GetClubRecruitmentSettings-65",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.GetPlayerApplicantSettings-66",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.PlayerGetClubInvitationList-67",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.PlayerRequestPendingClubsList-68",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.PlayerReturnPendingCommunitiesList-69",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.PlayerReturnPendingGuildsList-70",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.PostClub-71",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.RequestApplicantList-72",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.RequestClubsList-73",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.RequestMembershipToClub-74",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.RespondToApplicant-75",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.ReturnCommunityApplicantList-76",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw community applicant snapshot producer; requires community-keyed applicant data, ordering and pending status."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.ReturnGuildApplicantList-77",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw guild applicant snapshot producer; requires guild-keyed applicant data and result ordering."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.ReturnMatchingCommunityList-78",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.ReturnMatchingGuildList-79",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.ReturnPendingCommunityApplicantList-80",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No pending community applicant snapshot producer; pending request and accepted/rejected transitions are not specified by existing placeholder lookup."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.ReturnPendingGuildApplicantList-81",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No pending guild applicant snapshot producer; requires pending membership lifecycle and guild identity."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.SetPlayerApplicantSettings-82",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.SetRecruitmentSettings-83",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.ShouldShowClubFinder-84",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No modeled finder eligibility/display policy; constant true would not model account restrictions or feature availability."
+    },
+    {
+      "source_id": "wt-global-api-C_Commentator.GetElapsedMs-85",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No spectator match clock producer; needs match start/pause/end state and deterministic time input."
+    },
+    {
+      "source_id": "wt-global-api-C_EncounterJournal.SetPreviewMythicPlusLevel-86",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No preview-level mutation backing encounter journal outputs; setting a field without scaled preview consumers would not model behavior."
+    },
+    {
+      "source_id": "wt-global-api-C_EncounterJournal.SetPreviewPvpTier-87",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No PvP-tier preview mutation backing journal outputs; requires tier-dependent item preview fixtures."
+    },
+    {
+      "source_id": "wt-global-api-C_GuildInfo.CanEditOfficerNote-88",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_GuildInfo.CanViewOfficerNote-89",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_GuildInfo.GetGuildNewsInfo-90",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_GuildInfo.GuildRoster-91",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemUpgrade.GetItemHyperlink-92",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No selected upgrade-item hyperlink producer; needs current upgrade session item identity and hyperlink context, not a generic item link."
+    },
+    {
+      "source_id": "wt-global-api-C_MountJournal.ApplyMountEquipment-93",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Temporary guarded no-op exists in collections_journal_namespace.rs but is not raw-published in full-UI discovery. Requires inventory consumption, equipment eligibility and apply-result lifecycle; no shim promoted as a fix."
+    },
+    {
+      "source_id": "wt-global-api-C_MountJournal.AreMountEquipmentEffectsSuppressed-94",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_MountJournal.GetAppliedMountEquipmentID-95",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_MountJournal.GetMountEquipmentUnlockLevel-96",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_MountJournal.IsItemMountEquipment-97",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_MountJournal.IsMountEquipmentApplied-98",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_MountJournal.IsMountEquipmentUnlocked-99",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation/supersession only; no historical signature or behavior parity."
+    },
+    {
+      "source_id": "wt-global-api-C_PaperDollInfo.GetInspectItemLevel-100",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No inspect equipment snapshot/item-level aggregation producer for inspected unit; player average item level is not inspect state."
+    },
+    {
+      "source_id": "wt-global-api-C_PetJournal.GetPetSummonInfo-101",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_PrototypeDialog.EnsureRemoved-102",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_PrototypeDialog.SelectOption-103",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.CanDisplayDeaths-104",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No match scoreboard visibility policy for death columns; constant flag would not distinguish map/mode."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.CanDisplayHonorableKills-105",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No match scoreboard honorable-kill column policy; requires map/mode metadata."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.DoesMatchOutcomeAffectRating-106",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No match-specific rating eligibility policy; existing rated predicates do not specify outcome/rating effects."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetActiveMatchBracket-107",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No active-match bracket producer with team size and bracket identity."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetActiveMatchDuration-108",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No active-match start/end clock producer; constant duration is not a match lifecycle."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetActiveMatchState-109",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetActiveMatchWinner-110",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No match outcome/team winner producer including draw and incomplete states."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetMatchPVPStatColumn-111",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No keyed match-stat column metadata producer; requires map-specific names/order/visibility."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetMatchPVPStatIDs-112",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No match-stat ID catalog producer; fabricated empty list would conceal missing scoreboard domain."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetPostMatchCurrencyRewards-113",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No post-match currency reward records or delivery state; requires populated currency-ID/quantity fixtures."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetPostMatchItemRewards-114",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No post-match item reward records or delivery lifecycle; requires populated item identity/quantity fixtures."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetPVPActiveMatchPersonalRatedInfo-115",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No player-rated-match result/rating delta snapshot producer."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetScoreInfo-116",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No structured indexed scoreboard producer; deprecated wrappers depend on its populated contract and cannot establish native publication."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetScoreInfoByPlayerGuid-117",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No GUID-keyed scoreboard index producer; requires concrete player score records and unknown-GUID behavior."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetTeamInfo-118",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No match team score/name/rating record producer; generic namespace lookup is fabricated."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.IsActiveMatchRegistered-119",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No match registration lifecycle producer; a published active-match-state default is not registration state."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.IsArena-120",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw arena match classifier; needs match/instance mode distinction and populated fixture, not aliasing a plausible constant."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.IsBattleground-121",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw battleground match classifier; requires match/instance metadata and inactive cases."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.IsMatchConsideredArena-122",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.IsMatchFactional-123",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No per-match factional-team policy; arena/battleground flags alone do not establish factional behavior."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.IsRatedArena-124",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.IsRatedBattleground-125",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.IsRatedMap-126",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_QuestLog.GetNextWaypoint-127",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_QuestLog.GetNextWaypointForMap-128",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_QuestLog.GetNextWaypointText-129",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_RaidLocks.IsEncounterComplete-130",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_ReportSystem.OpenReportPlayerDialog-131",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation/supersession only; no historical signature or behavior parity."
+    },
+    {
+      "source_id": "wt-global-api-C_SpellBook.ContainsAnyDisenchantSpell-132",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No spellbook disenchant classification metadata/query; needs known/unknown spell membership and disenchant-tag fixtures."
+    },
+    {
+      "source_id": "wt-global-api-C_UIWidgetManager.GetObjectiveTrackerWidgetSetID-133",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_UIWidgetManager.GetTextureAndTextRowVisualizationInfo-134",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No texture/text-row widget visualization records; requires indexed texture/text/state rows, not a nil default."
+    },
+    {
+      "source_id": "wt-global-api-C_UIWidgetManager.GetTextureAndTextVisualizationInfo-135",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No texture/text widget visualization snapshot producer with concrete visibility/text/texture state."
+    },
+    {
+      "source_id": "wt-global-api-C_UIWidgetManager.GetZoneControlVisualizationInfo-136",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No zone-control visualization producer; requires faction/control/progress widget snapshot lifecycle."
+    },
+    {
+      "source_id": "wt-global-api-C_VoiceChat.GetMasterVolumeScale-137",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-C_VoiceChat.IsChannelJoinPending-138",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Voice connecting flag is connection-wide, not per-channel pending join requests; no channel-keyed request lifecycle."
+    },
+    {
+      "source_id": "wt-global-api-C_VoiceChat.SetMasterVolumeScale-139",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication",
+        "normalized-volume-round-trip"
+      ],
+      "note": "State-backed normalized voice ducking setter/getter; invalid-input rejection preserves simulator invariant, not claimed native edge/security parity."
+    },
+    {
+      "source_id": "wt-global-api-GetGuildTabardFiles-140",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-MuteSoundFile-141",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-SetMoveEnabled-142",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No movement-input enable gate consumed by movement commands; registering a setter without input integration is a no-op shortcut."
+    },
+    {
+      "source_id": "wt-global-api-SetTurnEnabled-143",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No turn-input enable gate consumed by directional/turn commands; requires input suppression/resumption fixtures."
+    },
+    {
+      "source_id": "wt-global-api-ShouldShowIslandsWeeklyPOI-144",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No island weekly quest/POI eligibility producer; requires weekly completion and map context."
+    },
+    {
+      "source_id": "wt-global-api-ShouldShowSpecialSplashScreen-145",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No special splash eligibility/acknowledgment state; requires account/build-specific display lifecycle."
+    },
+    {
+      "source_id": "wt-global-api-UnmuteSoundFile-146",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-global-api-UpdateWindow-147",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No Lua window-update host contract; console command and Lua global are distinct identities, and host window refresh is not modeled."
+    },
+    {
+      "source_id": "wt-global-api-C_UIWidgetManager.GetTextureWithStateVisualizationInfo-150",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation/supersession only; no historical signature or behavior parity."
+    },
+    {
+      "source_id": "wt-global-api-GetGuildTabardFileNames-151",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation/supersession only; no historical signature or behavior parity."
+    },
+    {
+      "source_id": "wt-global-api-CanEditOfficerNote-152",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation/supersession only; no historical signature or behavior parity."
+    },
+    {
+      "source_id": "wt-global-api-CanViewOfficerNote-153",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation/supersession only; no historical signature or behavior parity."
+    },
+    {
+      "source_id": "wt-global-api-GetBattlefieldStatInfo-154",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation/supersession only; no historical signature or behavior parity."
+    },
+    {
+      "source_id": "wt-global-api-GetGuildNewsInfo-155",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation/supersession only; no historical signature or behavior parity."
+    },
+    {
+      "source_id": "wt-global-api-GetNumBattlefieldStats-156",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation/supersession only; no historical signature or behavior parity."
+    },
+    {
+      "source_id": "wt-global-api-GuildRoster-157",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation/supersession only; no historical signature or behavior parity."
+    },
+    {
+      "source_id": "wt-global-api-IsRatedBattleground-158",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation/supersession only; no historical signature or behavior parity."
+    },
+    {
+      "source_id": "wt-global-api-IsRatedMap-159",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation/supersession only; no historical signature or behavior parity."
+    },
+    {
+      "source_id": "wt-widgets-Animation:SetPlaying-171",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-widgets-AnimationGroup:SetPlaying-172",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-widgets-Checkout:CopyExternalLink-173",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No Checkout external-link/clipboard lifecycle; absent object method cannot be replaced by a no-op in the generic frame surface."
+    },
+    {
+      "source_id": "wt-widgets-Checkout:OpenExternalLink-174",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-widgets-Frame:DesaturateHierarchy-175",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-widgets-GameTooltip:SetAzeriteEssence-176",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation/supersession only; no historical signature or behavior parity."
+    },
+    {
+      "source_id": "wt-widgets-GameTooltip:SetAzeriteEssenceSlot-177",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation/supersession only; no historical signature or behavior parity."
+    },
+    {
+      "source_id": "wt-widgets-TabardModel:GetLowerEmblemFile-178",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "TabardModel has no lower emblem asset producer. 3D model rendering is intentionally unsupported; no fabricated file ID."
+    },
+    {
+      "source_id": "wt-widgets-TabardModel:GetUpperEmblemFile-179",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "TabardModel has no upper emblem asset producer. 3D model rendering is intentionally unsupported; no fabricated file ID."
+    },
+    {
+      "source_id": "wt-widgets-Browser:ClearCache-182",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation/supersession only; no historical signature or behavior parity."
+    },
+    {
+      "source_id": "wt-widgets-Browser:HasConnection-183",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation/supersession only; no historical signature or behavior parity."
+    },
+    {
+      "source_id": "wt-widgets-Checkout:ClearRenderSize-184",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation/supersession only; no historical signature or behavior parity."
+    },
+    {
+      "source_id": "wt-widgets-Checkout:SetRenderSize-185",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation/supersession only; no historical signature or behavior parity."
+    },
+    {
+      "source_id": "wt-widgets-TabardModel:GetLowerEmblemFileName-186",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation/supersession only; no historical signature or behavior parity."
+    },
+    {
+      "source_id": "wt-widgets-TabardModel:GetUpperEmblemFileName-187",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation/supersession only; no historical signature or behavior parity."
+    },
+    {
+      "source_id": "wt-widgets-Checkout:OnButtonUpdate-197",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Checkout HasScript rejects handler despite global handler enum; no embedded checkout button state/event producer."
+    },
+    {
+      "source_id": "wt-widgets-Checkout:OnEditFocusGained-198",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Checkout HasScript rejects handler; EditBox focus dispatch is not embedded Checkout field focus lifecycle."
+    },
+    {
+      "source_id": "wt-widgets-Checkout:OnEditFocusLost-199",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Checkout HasScript rejects handler; needs embedded checkout field focus transition dispatch."
+    },
+    {
+      "source_id": "wt-widgets-Checkout:OnError-200",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Checkout HasScript rejects handler; needs embedded checkout error lifecycle and payload fixtures."
+    },
+    {
+      "source_id": "wt-widgets-Checkout:OnEscapePressed-201",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-widgets-Checkout:OnExternalLink-202",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Checkout HasScript rejects handler; requires external-link activation/callback lifecycle."
+    },
+    {
+      "source_id": "wt-events-AZERITE_ESSENCE_ACTIVATED-213",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-events-AZERITE_ESSENCE_ACTIVATION_FAILED-214",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-events-AZERITE_ESSENCE_CHANGED-215",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-events-AZERITE_ESSENCE_FORGE_CLOSE-216",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-events-AZERITE_ESSENCE_FORGE_OPEN-217",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-events-AZERITE_ESSENCE_MILESTONE_UNLOCKED-218",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-events-AZERITE_ESSENCE_UPDATE-219",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-events-CLUB_FINDER_CLUB_LIST_RETURNED-220",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-events-CLUB_FINDER_MEMBERSHIP_LIST_CHANGED-221",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-events-CLUB_FINDER_PLAYER_PENDING_LIST_RECIEVED-222",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-events-CLUB_FINDER_POST_UPDATED-223",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-events-CLUB_FINDER_RECRUIT_LIST_CHANGED-224",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-events-CLUB_FINDER_RECRUITS_UPDATED-225",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-events-MOUNT_EQUIPMENT_APPLY_RESULT-226",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-events-OPEN_REPORT_PLAYER-227",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation/supersession only; no historical signature or behavior parity."
+    },
+    {
+      "source_id": "wt-events-PENDING_AZERITE_ESSENCE_CHANGED-228",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-events-PET_BATTLE_OVERRIDE_ABILITY-229",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-events-PLAYER_STARTED_LOOKING-230",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-events-PLAYER_STARTED_TURNING-231",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-events-PLAYER_STOPPED_LOOKING-232",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-events-PLAYER_STOPPED_TURNING-233",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-events-POST_MATCH_CURRENCY_REWARD_UPDATE-234",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-events-POST_MATCH_ITEM_REWARD_UPDATE-235",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-events-PVP_MATCH_ACTIVE-236",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-events-PVP_MATCH_COMPLETE-237",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-events-PVP_MATCH_INACTIVE-238",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-events-TREASURE_PICKER_CACHE_FLUSH-239",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-events-WAYPOINT_UPDATE-240",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-cvars-azeriteEssenceSwapTutorial-252",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "CVar lacks registered value/default. Page supplies no default or tutorial lifecycle; no guessed persisted state."
+    },
+    {
+      "source_id": "wt-cvars-clubFinderCacheExpiry-253",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-cvars-clubFinderCachePendingExpiry-254",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-cvars-clubFinderPlayerSettings-255",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-cvars-ForceAllowAero-256",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation/supersession only; no historical signature or behavior parity."
+    },
+    {
+      "source_id": "wt-cvars-fstack_preferParentKeys-257",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-cvars-gxMTOpaqueM2-258",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-cvars-gxMTOpaqueM2NoReflect-259",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-cvars-gxMTOpaqueWMO-260",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-cvars-gxMTTerrain-261",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-cvars-otherRolesAzeriteEssencesHidden-262",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-cvars-PlayerSpawnTracking-263",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-cvars-showDungeonEntrancesOnMap-264",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Current-retail publication/HasScript/event registration only; no populated-output, security, callback or historical parity."
+    },
+    {
+      "source_id": "wt-cvars-BrowserNavigateLog-267",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation/supersession only; no historical signature or behavior parity."
+    },
+    {
+      "source_id": "wt-cvars-GxAllowSoftwareRenderer-268",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation/supersession only; no historical signature or behavior parity."
+    },
+    {
+      "source_id": "wt-cvars-gxMTOpaque-269",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation/supersession only; no historical signature or behavior parity."
+    },
+    {
+      "source_id": "wt-cvars-mtParticles-270",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation/supersession only; no historical signature or behavior parity."
+    },
+    {
+      "source_id": "wt-cvars-GxuSwapChainSize-281",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No Command-kind console catalog entry or swap-chain sizing host operation; a CVar placeholder is not command publication."
+    },
+    {
+      "source_id": "wt-cvars-GxuWindowSize-282",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No Command-kind console catalog entry or host window sizing operation."
+    },
+    {
+      "source_id": "wt-cvars-ToggleWindowMode-283",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No Command-kind console catalog entry or host window-mode mutation contract."
+    },
+    {
+      "source_id": "wt-cvars-UpdateWindow-284",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No Command-kind console catalog entry or host refresh operation; keep distinct from Lua global UpdateWindow."
+    },
+    {
+      "source_id": "wt-cvars-GxToggleWindowMode-287",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current-retail absence/deprecation/supersession only; no historical signature or behavior parity."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading/source/build/TOC or deprecated-source link; no runtime credit; linked pages not expanded."
+    },
+    {
+      "source_id": "prose-undated-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading/source/build/TOC or deprecated-source link; no runtime credit; linked pages not expanded."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading/source/build/TOC or deprecated-source link; no runtime credit; linked pages not expanded."
+    },
+    {
+      "source_id": "prose-undated-005",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading/source/build/TOC or deprecated-source link; no runtime credit; linked pages not expanded."
+    },
+    {
+      "source_id": "prose-undated-007",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading/source/build/TOC or deprecated-source link; no runtime credit; linked pages not expanded."
+    },
+    {
+      "source_id": "prose-undated-008",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading/source/build/TOC or deprecated-source link; no runtime credit; linked pages not expanded."
+    },
+    {
+      "source_id": "prose-undated-009",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading/source/build/TOC or deprecated-source link; no runtime credit; linked pages not expanded."
+    },
+    {
+      "source_id": "prose-undated-010",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading/source/build/TOC or deprecated-source link; no runtime credit; linked pages not expanded."
+    },
+    {
+      "source_id": "prose-undated-011",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading/source/build/TOC or deprecated-source link; no runtime credit; linked pages not expanded."
+    },
+    {
+      "source_id": "source-context-013",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading/source/build/TOC or deprecated-source link; no runtime credit; linked pages not expanded."
+    },
+    {
+      "source_id": "source-context-014",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading/source/build/TOC or deprecated-source link; no runtime credit; linked pages not expanded."
+    },
+    {
+      "source_id": "prose-undated-015",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading/source/build/TOC or deprecated-source link; no runtime credit; linked pages not expanded."
+    },
+    {
+      "source_id": "prose-undated-016",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "File-path sandbox statement needs addon texture/sound/file lookup denial tests across Interface and non-Interface roots; no native path-security parity claim."
+    },
+    {
+      "source_id": "prose-undated-017",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "GetFileIDFromPath non-Interface restriction needs denied path resolution tests and actual asset mappings; this host has no WoW install."
+    },
+    {
+      "source_id": "prose-undated-018",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Fonts path exception needs concrete native font-path resolution fixtures; asset availability and sandbox exception are not proven by publication."
+    },
+    {
+      "source_id": "prose-undated-019",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Sound folder override prohibition plus mute/unmute lifecycle needs real asset precedence and audio integration; no WoW install on host."
+    },
+    {
+      "source_id": "prose-undated-020",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Protected reporting requires secure/insecure callers, reporting session state and blocked automated sends; publication of dialog is not security proof."
+    },
+    {
+      "source_id": "prose-undated-021",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Nameplate anchor-family restriction needs family identity and rejection behavior in SetPoint; generic layout support does not prove this boundary."
+    },
+    {
+      "source_id": "prose-undated-022",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Multiple customizable tooltip textures per line requires concrete multi-texture line layout/output fixtures, not AddTexture publication."
+    },
+    {
+      "source_id": "prose-undated-023",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "WorldStateFrame to UI Widget Manager migration is a broad replacement claim; needs historical producer/consumer fixtures rather than surface lookup."
+    },
+    {
+      "source_id": "prose-undated-024",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "ShowUIPanel/HideUIPanel combat protection requires secure/insecure dispatch and combat-state mutation tests; publication is not protection parity."
+    },
+    {
+      "source_id": "prose-undated-025",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Frame-stack display naming and fstack_preferParentKeys interaction requires concrete inspector output for both CVar settings; CVar publication alone is insufficient."
+    },
+    {
+      "source_id": "source-context-026",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading/source/build/TOC or deprecated-source link; no runtime credit; linked pages not expanded."
+    },
+    {
+      "source_id": "source-context-030",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading/source/build/TOC or deprecated-source link; no runtime credit; linked pages not expanded."
+    },
+    {
+      "source_id": "caption-030",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal historical comparison caption; no runtime credit."
+    },
+    {
+      "source_id": "caption-165",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal historical comparison caption; no runtime credit."
+    },
+    {
+      "source_id": "caption-192",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal historical comparison caption; no runtime credit."
+    },
+    {
+      "source_id": "caption-208",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal historical comparison caption; no runtime credit."
+    },
+    {
+      "source_id": "caption-246",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal historical comparison caption; no runtime credit."
+    },
+    {
+      "source_id": "caption-275",
+      "status": "metadata-only",
+      "capabilities": [],
+      "note": "Literal historical comparison caption; no runtime credit."
+    }
+  ]
+}
