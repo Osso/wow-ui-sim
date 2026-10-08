@@ -1,0 +1,20 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "6.2.0",
+  "source": {
+    "path": "data/patch-api/sources/6.2.4-api-changes.wikitext",
+    "revid": 2072181,
+    "sha256": "2460bc07a61df48e31c1b8f33d264c4270c901c753583e6d1cea920531a2b6fc"
+  },
+  "header_counts": [],
+  "entries": [
+    {
+      "id": "p620-negative-global",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "P620MissingNegativeControl",
+      "annotation": "",
+      "wikitext_line": 4
+    }
+  ]
+}
