@@ -18,4 +18,4 @@ Scope: pinned newest requested BfA page, complete occurrence accounting and targ
 - [x] Account for inventory/extract IDs and preservation.
 - [x] Run requested targeted verification.
 - [x] Update wiki, spec and proof ledger.
-- [ ] Validate final artifacts and report commits/results.
+- [x] Validate final artifacts and report commits/results.

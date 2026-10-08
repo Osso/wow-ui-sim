@@ -1,0 +1,15 @@
+{
+  "command": [
+    "python3",
+    "/home/osso/.worktrees/wow-ui-sim-p83x-page/data/patch-api/evidence/8.3.7-session-2026-10-08/validate.py"
+  ],
+  "revision": "4c31a72d8c8c68907ab7a9b36fba25f808d79669",
+  "scope": "complete occurrence/source/fixture/result accounting; later documentation/receipt-only changes preserve proof",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p83x-page",
+  "target": "/home/osso/.worktrees/wow-ui-sim-p83x-page/target",
+  "exit": 0,
+  "output_sha256": {
+    "p837-artifact-validation.stdout": "8c18da9a292dbcfb5b1c392a1cfb6cdcf0822399d8d48dbe8b839060000b7ebf",
+    "p837-artifact-validation.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

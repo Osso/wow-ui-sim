@@ -284,4 +284,3 @@ Retained revision 4788278 and 80-row register; corrected unbolded Commands/HTML 
 ## [2026-10-08] evidence | 8.3.7 page audit
 
 [Audit](investigations/patch-8-3-7-api-audit.md): revision 1572710, two inventory/eight extract IDs, opt-in bullet inventory parser, one retained area-text gap and one superseded CVar absence. All 34 sweeps plus factory, exact negative control, 42 fixtures, format/default/Mists checks and startup `[]` pass. Prior 173 inputs/66 extract outcomes and all 34 register reproductions preserved; no runtime changes or predicted 9.0.1 gap supersessions.
-
