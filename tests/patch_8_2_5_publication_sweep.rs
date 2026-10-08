@@ -15,7 +15,7 @@ fn patch_8_2_5_publication_sweep(env: &WowLuaEnv) {
         register_env: "P825_SWEEP_REGISTER",
         out_env: "P825_SWEEP_OUT",
         later_registers: &[
-            // Integration: prepend 8.3.0 register after p830-page merges.
+            include_str!("../data/patch-api/sources/8.3.0-wikitext-register.json"),
             include_str!("../data/patch-api/sources/8.3.7-wikitext-register.json"),
             include_str!("../data/patch-api/sources/9.0.1-wikitext-register.json"),
             include_str!("../data/patch-api/sources/9.0.2-wikitext-register.json"),
