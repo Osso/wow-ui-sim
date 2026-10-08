@@ -7,7 +7,7 @@
     "sound,gui,casc,client-mists",
     "--tests"
   ],
-  "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+  "revision": "ca6ea29b2a5183c4ef8bb693d05fc71762fb378e",
   "scope": "p815-mists-check",
   "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
   "target": "/home/osso/.cache/wow-ui-sim-targets/p815-page",
@@ -17,7 +17,7 @@
   "exit": 0,
   "expected_exit": 0,
   "log": "p815-mists-check.txt",
-  "log_sha256": "445674563ee4847a2ccb22a2504bf12cb82c02b38b16b6b46088e516cbd0f4d0",
+  "log_sha256": "2ad0a3d0808466429fa10c78f95df306d54b3e7f5b05dc1412d10a88252acfc7",
   "invalidated": false,
-  "seconds": 90.55319326800236
+  "seconds": 33.89547245100039
 }

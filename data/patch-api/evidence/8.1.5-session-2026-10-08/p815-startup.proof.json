@@ -7,7 +7,7 @@
     "--no-saved-vars",
     "lua-errors"
   ],
-  "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+  "revision": "ca6ea29b2a5183c4ef8bb693d05fc71762fb378e",
   "scope": "p815-startup",
   "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
   "target": "/home/osso/.cache/wow-ui-sim-targets/p815-page",
@@ -17,7 +17,7 @@
   "exit": 0,
   "expected_exit": 0,
   "log": "p815-startup.txt",
-  "log_sha256": "8f47d4dff42afc94ea91594a57d3c09628b82cef40cba91e3a24b226296efe45",
+  "log_sha256": "f58f7ce90b9c8a7448684812f67729ea280865a1c2feeab201dc6b4fbf75b806",
   "invalidated": false,
-  "seconds": 3.84120815300048
+  "seconds": 5.699330100000225
 }

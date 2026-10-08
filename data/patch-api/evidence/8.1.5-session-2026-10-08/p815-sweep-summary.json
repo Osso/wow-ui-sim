@@ -189,6 +189,13 @@
     "exact_gap_identity": true
   },
   {
+    "patch": "8.2.0",
+    "rows": 193,
+    "ok": 140,
+    "gaps": 53,
+    "exact_gap_identity": true
+  },
+  {
     "patch": "8.2.5",
     "rows": 198,
     "ok": 137,
