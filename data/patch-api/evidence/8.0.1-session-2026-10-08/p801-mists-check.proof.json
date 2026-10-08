@@ -1,0 +1,21 @@
+{
+  "command": [
+    "cargo",
+    "check",
+    "--no-default-features",
+    "--features",
+    "sound,gui,casc,client-mists",
+    "--tests"
+  ],
+  "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+  "scope": "Mists all test targets compile",
+  "environment": {
+    "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p801-page"
+  },
+  "exit": 0,
+  "seconds": 65.912245315998,
+  "log": "p801-mists-check.log",
+  "log_sha256": "3d0448192d155b6ea22109b3dae822cf553535f789a453b9b052082f1950a73a",
+  "non_vendor_warnings": [],
+  "vendor_warning_count": 7
+}

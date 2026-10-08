@@ -1,0 +1,65 @@
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/c_api/c_map.rs:13://! - `C_Map.GetMapInfoAtPosition(uiMapID, normalizedX, normalizedY)`
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/c_api/c_map.rs:19://! - `C_Map.GetMapRectOnMap(uiMapID, topMapID)` — projects the rect
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/c_api/c_map.rs:37://! - `C_Map.MapHasArt(uiMapID)` — true for positive map ids.
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/c_api/c_map.rs:60:        "GetMapArtBackgroundAtlas",
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/c_api/c_map.rs:65:    ("GetMapArtLayers", c_map_get_map_art_layers),
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/c_api/c_map.rs:67:    ("GetMapInfoAtPosition", c_map_get_map_info_at_position),
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/c_api/c_map.rs:68:    ("GetMapRectOnMap", c_map_get_map_rect_on_map),
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/c_api/c_map.rs:75:    ("MapHasArt", c_map_map_has_art),
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state_types/collections.rs:355:    /// `C_Map.GetMapInfoAtPosition` to resolve a point on this parent
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state_types/collections.rs:363:    /// Drives `C_Map.GetMapRectOnMap`, which composes these rects up
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state_types/collections.rs:370:/// queried point is returned by `C_Map.GetMapInfoAtPosition`.
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state_types/collections.rs:382:/// parent; `C_Map.GetMapRectOnMap` composes these up the chain.
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/workarounds/temporary/map_canvas_scroll_container.rs:226:    and type(C_Map.GetMapArtLayers) == "function"
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/workarounds/temporary/map_canvas_scroll_container.rs:227:    and C_Map.GetMapArtLayers(mapID)
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/workarounds/temporary/map_canvas_scroll_container.rs:320:    and type(C_Map.GetMapArtLayers) == "function"
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/workarounds/temporary/map_canvas_scroll_container.rs:321:    and C_Map.GetMapArtLayers(mapID)
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/workarounds/temporary/map_canvas_scroll_container.rs:623:                GetMapArtLayers = function(mapID)
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/workarounds/temporary/map_canvas_scroll_container.rs:684:                GetMapArtLayers = function(mapID)
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/workarounds/temporary/map_group_defaults.rs:11:if rawget(C_Map, "GetMapGroupID") == nil then
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/workarounds/temporary/map_group_defaults.rs:12:    function C_Map.GetMapGroupID(_mapID)
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/workarounds/temporary/map_group_defaults.rs:40:                return select("#", C_Map.GetMapGroupID(2248)), type(members), #members
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/workarounds/temporary/map_group_defaults.rs:57:            function C_Map.GetMapGroupID(_mapID)
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/workarounds/temporary/map_group_defaults.rs:74:                return C_Map.GetMapGroupID(2248), #members
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/workarounds/temporary/map_runtime_state.rs:24:  if C_Map == nil or type(C_Map.GetMapArtLayers) ~= "function" then
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/workarounds/temporary/map_runtime_state.rs:27:  local layers = C_Map.GetMapArtLayers(mapID)
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/workarounds/temporary/map_runtime_state.rs:197:C_Map.MapHasArt = function(mapID)
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/workarounds/temporary/map_runtime_state.rs:227:  if C_Map.MapHasArt ~= nil then
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/workarounds/temporary/map_runtime_state.rs:228:    local ok, hasArt = pcall(C_Map.MapHasArt, mapID)
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/workarounds/temporary/map_runtime_state.rs:315:    if C_Map == nil or C_Map.GetMapRectOnMap == nil then
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/workarounds/temporary/map_runtime_state.rs:318:    local left, right, top, bottom = C_Map.GetMapRectOnMap(mapID, topMapID)
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/workarounds/temporary/map_runtime_state.rs:423:                if C_Map.MapHasArt(1) ~= true then
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_map_probes.rs:223:            local info = C_Map.GetMapInfoAtPosition(13, 0.475, 0.675)
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_map_probes.rs:238:        .eval("return select('#', C_Map.GetMapInfoAtPosition(13, 0.10, 0.10))")
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_map_probes.rs:247:        .eval("return select('#', C_Map.GetMapInfoAtPosition(999999, 0.5, 0.5))")
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_map_probes.rs:257:        .eval("return select('#', C_Map.GetMapInfoAtPosition(13, 0.5, 0.5))")
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_map_probes.rs:270:            return C_Map.GetMapInfoAtPosition(13, 0.40, 0.65).mapID,
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_map_probes.rs:271:                   C_Map.GetMapInfoAtPosition(13, 0.55, 0.65).mapID,
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_map_probes.rs:272:                   C_Map.GetMapInfoAtPosition(13, 0.45, 0.60).mapID,
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_map_probes.rs:273:                   C_Map.GetMapInfoAtPosition(13, 0.45, 0.75).mapID
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_map_probes.rs:308:        .eval("return C_Map.GetMapInfoAtPosition(946, 0.5, 0.5).mapID")
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_map_probes.rs:332:        .eval("return select('#', C_Map.GetMapInfoAtPosition(13, 0.5, 0.5))")
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_map_probes.rs:360:        env.eval("return C_Map.GetMapRectOnMap(84, 84)").unwrap();
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_map_probes.rs:373:        env.eval("return C_Map.GetMapRectOnMap(84, 13)").unwrap();
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_map_probes.rs:386:        env.eval("return C_Map.GetMapRectOnMap(84, 946)").unwrap();
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_map_probes.rs:417:        .eval("return select('#', C_Map.GetMapRectOnMap(84, 1))")
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_map_probes.rs:436:        .eval("return select('#', C_Map.GetMapRectOnMap(84, 946))")
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_map_probes.rs:445:        .eval("return select('#', C_Map.GetMapRectOnMap(999999, 946))")
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/test_keybindings_panels_detail.rs:45:                local groupID = C_Map.GetMapGroupID(mapID)
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/test_keybindings_panels_detail/world_map.rs:46:                local groupID = C_Map.GetMapGroupID(mapID)
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/blizzard_hybrid_minimap_loads.rs:242:             C_Map.GetMapArtLayers, GetMapID accessor, UpdateZoom computing pixels-per-yard from \
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_map_api.rs:155:        .eval("return type((C_Map.GetMapArtLayers(nil) or {})[1]) == 'table'")
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_map_api.rs:192:        local layers = C_Map.GetMapArtLayers(mapID)
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_map_api.rs:207:        "Texture count must match tile grid dimensions from GetMapArtLayers"
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_map_api.rs:249:        .eval("return C_Map.GetMapArtBackgroundAtlas(C_Map.GetCurrentMapID())")
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_map_api.rs:537:        local layer = C_Map.GetMapArtLayers(mapID)[1]
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_map_api.rs:584:        local layer = C_Map.GetMapArtLayers(mapID)[1]
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_map_api.rs:632:        local layer = C_Map.GetMapArtLayers(mapID)[1]
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_map_groups.rs:10:        return select("#", C_Map.GetMapGroupID(2248)), type(members), #members
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/recent_runtime_bootstrap_boundaries.rs:354:            "function C_Map.MapHasArt",
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/blizzard_ui/blizzard_adventuremap/behavior_zone_summary_provider_groups_quests_by_zone_and_inset.rs:14:local originalGetMapInfoAtPosition = C_Map.GetMapInfoAtPosition
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/blizzard_ui/blizzard_adventuremap/behavior_zone_summary_provider_groups_quests_by_zone_and_inset.rs:15:local originalGetMapRectOnMap = C_Map.GetMapRectOnMap
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/blizzard_ui/blizzard_adventuremap/behavior_zone_summary_provider_groups_quests_by_zone_and_inset.rs:24:C_Map.GetMapInfoAtPosition = function(mapID, normalizedX, normalizedY)
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/blizzard_ui/blizzard_adventuremap/behavior_zone_summary_provider_groups_quests_by_zone_and_inset.rs:30:C_Map.GetMapRectOnMap = function(childMapID, parentMapID)
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/blizzard_ui/blizzard_adventuremap/behavior_zone_summary_provider_groups_quests_by_zone_and_inset.rs:71:C_Map.GetMapInfoAtPosition = originalGetMapInfoAtPosition
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/blizzard_ui/blizzard_adventuremap/behavior_zone_summary_provider_groups_quests_by_zone_and_inset.rs:72:C_Map.GetMapRectOnMap = originalGetMapRectOnMap

@@ -1,0 +1,17 @@
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/c_api/c_map.rs:45:use crate::lua_api::state::MapData;
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/c_api/c_map.rs:70:    ("GetWorldPosFromMapPos", c_map_get_world_pos_from_map_pos),
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/c_api/c_map.rs:255:    maps: &std::collections::HashMap<i32, crate::lua_api::state::MapData>,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/c_api/c_map.rs:295:fn push_map_details_table(state: &mut LuaState, map: &MapData) -> Val {
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/c_api/c_map.rs:318:    maps: &std::collections::HashMap<i32, MapData>,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/c_api/c_map.rs:322:) -> Vec<MapData> {
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/c_api/c_map.rs:327:    let mut out: Vec<MapData> = Vec::new();
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/c_api/c_map.rs:374:fn c_map_get_world_pos_from_map_pos(state: &mut LuaState) -> LuaResult<u32> {
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state_types/collections.rs:338:pub struct MapData {
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state_types/collections.rs:369:/// One entry in `MapData.child_rects`. The child whose rect contains a
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state_types/collections.rs:381:/// `MapData.rect_on_parent` to position a child within its direct
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs:649:    LuaErrorRecord, MacroInfo, MapChildRect, MapData, MapRect, MirrorTimer, MissingRequirement,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state/sim_state.rs:571:    pub maps: HashMap<i32, MapData>,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state/defaults/maps.rs:450:pub(in crate::lua_api::state) fn default_maps() -> HashMap<i32, MapData> {
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state/defaults/maps.rs:454:fn default_map_entry(seed: &DefaultMapSeed) -> (i32, MapData) {
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state/defaults/maps.rs:455:    let map = MapData {
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/blizzard_shared_map_data_providers_loads.rs:133:         depends on retail-flavor map APIs (C_Map.GetMapPosFromWorldPos, \

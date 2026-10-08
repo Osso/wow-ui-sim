@@ -1,0 +1,131 @@
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-67-            #[cfg(feature = "retail-12-0-7")]
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-68-            unsupported_unit_tokens: HashSet::new(),
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-69-            #[cfg(feature = "retail-12-0-5")]
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs:70:            chat_messaging_lockdown: false,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-71-            #[cfg(feature = "retail-12-0-5")]
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-72-            chat_expression_inputs: crate::c_api::chat_expressions::ChatExpressionInputs::default(),
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-73-            #[cfg(feature = "retail-12-0-5")]
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-74-            party_ping_restriction: 0,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-75-            #[cfg(feature = "retail-12-0-5")]
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-76-            party_countdown_request: None,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-77-            quest_portrait_state: None,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-78-            tooltips: $collections.tooltips,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-79-            #[cfg(feature = "retail-12-0-5")]
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-80-            item_tooltip_levels: ::std::collections::HashMap::new(),
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-81-            blocked_auras_by_unit: $collections.blocked_auras_by_unit,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-82-            #[cfg(feature = "client-wowforever")]
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-83-            auras_secret_in_context: false,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-84-            unit_stats_restricted: false,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-85-            #[cfg(feature = "client-retail")]
+--
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-605-            xp_disabled: false,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-606-            can_teleport: true,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-607-            has_hearthstone: true,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs:608:            message_log: Vec::new(),
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-609-            keybindings: Keybindings::default(),
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-610-            debug_borders: false,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-611-            debug_anchors: false,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-612-            simulator_exit_requested: false,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-613-        }
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-614-    };
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-615-}
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-616-
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-617-#[cfg(feature = "retail-12-0-5")]
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-618-pub use crate::c_api::c_pvp::PvpBrawlInfo;
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-619-#[cfg(feature = "retail-12-0-5")]
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-620-pub use crate::c_api::c_transmog_collection::AppearanceSourceInfo;
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-621-#[cfg(feature = "retail-12-0-5")]
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-622-pub use crate::c_api::c_transmog_outfit_info::ViewedOutfitSlotInfo;
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state.rs-623-
+--
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/host_chat_events.rs-21-
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/host_chat_events.rs-22-    fn publish_host_chat_message(&self, message: &HostChatMessage) -> crate::Result<()> {
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/host_chat_events.rs-23-        validate_host_chat_classification(message)?;
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/host_chat_events.rs:24:        let lockdown = self.state.borrow().chat_messaging_lockdown;
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/host_chat_events.rs-25-        let restricted = lockdown && message.kind.secret_during_lockdown();
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/host_chat_events.rs-26-        let (saved_top, arguments) = {
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/host_chat_events.rs-27-            let mut lua = self.lua.borrow_mut();
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/host_chat_events.rs-28-            let state = lua.state_mut();
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/host_chat_events.rs-29-            let saved_top = state.top;
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/host_chat_events.rs-30-            let mut arguments = message
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/host_chat_events.rs-31-                .arguments
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/host_chat_events.rs-32-                .iter()
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/host_chat_events.rs-33-                .enumerate()
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/host_chat_events.rs-34-                .map(|(index, argument)| {
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/host_chat_events.rs-35-                    let lockdown_secret = restricted && !never_secret_argument(index);
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/host_chat_events.rs-36-                    push_host_chat_argument(state, argument, lockdown_secret)
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/host_chat_events.rs-37-                })
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/host_chat_events.rs-38-                .collect::<Vec<_>>();
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/host_chat_events.rs-39-            append_discord_info(state, &mut arguments, &message.discord_info);
+--
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-6-//! - `CancelAuction(index)` — fires `AUCTION_CANCELED` with the index
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-7-//!                             preserved on the event args.
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-8-//! - `SendAddonMessage(prefix, message, channel, target)` — append to
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs:9://!                             `message_log`, fire `CHAT_MSG_ADDON`.
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-10-//! - `SendChatMessage(message, chatType, language, target)` — append to
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs:11://!                             `message_log` with kind `"chat"`. No event
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-12-//!                             fires — retail echoes through a different
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-13-//!                             CHAT_MSG_* channel that's already stubbed.
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-14-//!
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-15-//! Registered from `register_tail_globals` after `missing_surface`.
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-16-
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-17-use crate::event::{Event, EventArg};
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-18-use crate::lua_api::globals::font_strings_collection::set_global_val;
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-19-use crate::lua_api::methods::{
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-20-    borrow_state_mut, call_function_state, create_string, create_table, table_get,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-21-};
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-22-use crate::lua_api::state::MessageLogEntry;
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-23-use crate::lua_bridge::{FromStack, stack_val, table_set_rust_fn_static};
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-24-use rilua::vm::state::LuaState;
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-25-use rilua::{LuaApiMut, LuaResult, Val};
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-26-
+--
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-54-    channel: String,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-55-    target: String,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-56-) -> LuaResult<()> {
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs:57:    borrow_state_mut(state)?.message_log.push(MessageLogEntry {
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-58-        kind: kind.to_string(),
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-59-        prefix,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-60-        message,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-61-        channel,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-62-        target,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-63-    });
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-64-    Ok(())
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-65-}
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-66-
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-67-fn append_chat_frame_message(state: &mut LuaState, text: String) -> LuaResult<()> {
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-68-    let chat_frame = table_get(state, Val::Table(state.global), "ChatFrame1");
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-69-    let add_message = table_get(state, chat_frame, "AddMessage");
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-70-    let Val::Function(_) = add_message else {
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-71-        return Ok(());
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs-72-    };
+--
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state/sim_state.rs-58-    pub unsupported_unit_tokens: HashSet<String>,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state/sim_state.rs-59-    /// Explicit chat restriction input; false default is simulator policy, not a native producer.
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state/sim_state.rs-60-    #[cfg(feature = "retail-12-0-5")]
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state/sim_state.rs:61:    pub chat_messaging_lockdown: bool,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state/sim_state.rs-62-    #[cfg(feature = "retail-12-0-5")]
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state/sim_state.rs-63-    pub chat_expression_inputs: crate::c_api::chat_expressions::ChatExpressionInputs,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state/sim_state.rs-64-    /// C_PartyInfo restriction enum input; None (0) is an inferred simulator default.
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state/sim_state.rs-65-    #[cfg(feature = "retail-12-0-5")]
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state/sim_state.rs-66-    pub party_ping_restriction: u8,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state/sim_state.rs-67-    /// Local countdown request; visual expiry does not mutate request state.
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state/sim_state.rs-68-    #[cfg(feature = "retail-12-0-5")]
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state/sim_state.rs-69-    pub(crate) party_countdown_request:
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state/sim_state.rs-70-        Option<crate::c_api::c_party_info::countdown::CountdownRequest>,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state/sim_state.rs-71-    pub quest_portrait_state: Option<QuestPortraitState>,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state/sim_state.rs-72-    pub cvars: CVarStorage,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state/sim_state.rs-73-    pub tooltips: HashMap<u64, TooltipData>,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state/sim_state.rs-74-    /// Explicit item-level overrides only; empty default, no native variant catalog.
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state/sim_state.rs-75-    #[cfg(feature = "retail-12-0-5")]
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state/sim_state.rs-76-    pub item_tooltip_levels: HashMap<crate::c_api::ItemTooltipContext, u16>,
+--
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state/sim_state.rs-686-    pub xp_disabled: bool,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state/sim_state.rs-687-    pub can_teleport: bool,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state/sim_state.rs-688-    pub has_hearthstone: bool,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state/sim_state.rs:689:    pub message_log: Vec<MessageLogEntry>,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state/sim_state.rs-690-    pub keybindings: Keybindings,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state/sim_state.rs-691-    pub debug_borders: bool,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state/sim_state.rs-692-    pub debug_anchors: bool,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state/sim_state.rs-693-    pub simulator_exit_requested: bool,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/state/sim_state.rs-694-}

@@ -1,0 +1,8 @@
+{
+  "branch": "p815-page",
+  "revision": "p815-page",
+  "entries": [],
+  "register_paths": [],
+  "source_rows_scanned": 0,
+  "scope": "All register paths at pinned revision; entries retain every match for the removal/migration candidates, without truncation"
+}

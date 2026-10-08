@@ -1,0 +1,495 @@
+{
+  "new_retirements": [],
+  "decisions": [
+    {
+      "symbol": "BATTLEFIELD_MGR_DROP_TIMER_CANCELED",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "BATTLEFIELD_MGR_DROP_TIMER_STARTED",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "BATTLEFIELD_MGR_EJECTED",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "BATTLEFIELD_MGR_EJECT_PENDING",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "BATTLEFIELD_MGR_ENTERED",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "BATTLEFIELD_MGR_ENTRY_INVITE",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "BATTLEFIELD_MGR_QUEUE_INVITE",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "BATTLEFIELD_MGR_QUEUE_REQUEST_RESPONSE",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "BATTLEFIELD_MGR_QUEUE_STATUS_UPDATE",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "BATTLEFIELD_MGR_STATE_CHANGE",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "BN_FRIEND_INVITE_SEND_RESULT",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "BN_NEW_PRESENCE",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "BN_REQUEST_FOF_FAILED",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "BN_SELF_OFFLINE",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "BN_SELF_ONLINE",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "BN_SYSTEM_MESSAGE",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "CHALLENGE_MODE_NEW_RECORD",
+      "decision": "retain-later-readdition",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "CHANNEL_VOICE_UPDATE",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "CLOSE_WORLD_MAP",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "COMMENTATOR_PARTY_INFO_REQUEST",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "C_Vignettes",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "EJ_GetCurrentInstance",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "EVENT_CLASS_TRIAL_UPGRADE_COMPLETE",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "EVENT_TUTORIAL_HIGHLIGHT_SPELL",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "EVENT_TUTORIAL_UNHIGHLIGHT_SPELL",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "FindBaseSpellNameByName",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "FindSpellOverrideNameByName",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "GARRISON_BUILDINGS_SWAPPED",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "GLYPH_ADDED",
+      "decision": "retain-modeled-simulator-consumers",
+      "reason": "No cached retail consumers, but real glyph_state producer and c_glyph_globals tests still dispatch this event. Retirement requires changing that existing glyph lifecycle; recorded mismatch, not a registration shim."
+    },
+    {
+      "symbol": "GLYPH_DISABLED",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "GLYPH_ENABLED",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "GLYPH_REMOVED",
+      "decision": "retain-modeled-simulator-consumers",
+      "reason": "No cached retail consumers, but real glyph_state producer and c_glyph_globals tests still dispatch this event. Retirement requires changing that existing glyph lifecycle; recorded mismatch, not a registration shim."
+    },
+    {
+      "symbol": "GLYPH_UPDATED",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "GMRESPONSE_RECEIVED",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "GMSURVEY_DISPLAY",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "GUILD_PERK_UPDATE",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "GUILD_REP_UPDATED",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "GUILD_XP_UPDATE",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "GetCurrentMapAreaID",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "GetCurrentMapContinent",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "GetMapContinents",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "GetPlayerMapPosition",
+      "decision": "retain-current-consumer",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "GetRegisteredAddonMessagePrefixes",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "HONOR_PRESTIGE_UPDATE",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "IsAddonMessagePrefixRegistered",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "MAP_BAR_UPDATE",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "MOVIE_COMPRESSING_PROGRESS",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "MOVIE_RECORDING_PROGRESS",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "MOVIE_UNCOMPRESSED_MOVIE",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "NEW_TITLE_EARNED",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "NPC_PVPQUEUE_ANYWHERE",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "OLD_TITLE_LOST",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "PARTY_CONVERTED_TO_RAID",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "PARTY_MEMBERS_CHANGED",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "PETITION_VENDOR_CLOSED",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "PETITION_VENDOR_SHOW",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "PETITION_VENDOR_UPDATE",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "PET_BAR_HIDE",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "PET_BATTLE_TURN_STARTED",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "PET_RENAMEABLE",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "PLAYER_AURAS_CHANGED",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "PLAYER_CHARACTER_UPGRADE_TALENT_COUNT_CHANGED",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "PRESTIGE_AND_HONOR_INVOLUNTARILY_CHANGED",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "PREVIEW_TALENT_POINTS_CHANGED",
+      "decision": "retain-current-consumer",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "PREVIEW_TALENT_PRIMARY_TREE_CHANGED",
+      "decision": "retain-current-consumer",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "QUEST_WATCH_OBJECTIVES_CHANGED",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "RESTRICTED_ACCOUNT_WARNING",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "RUNE_TYPE_UPDATE",
+      "decision": "retain-later-readdition",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "RegisterAddonMessagePrefix",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "SCRIPT_ACHIEVEMENT_PLAYER_NAME",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "STORE_CLOSE_SIMPLE_CHECKOUT",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "SYNCHRONIZE_SETTINGS",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "SearchGuildRecipes",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "SendAddonMessage",
+      "decision": "retain-current-consumer",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "TRADE_SKILL_FILTER_UPDATE",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "TRANSMOG_COLLECTION_LOADED",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "UNIT_POWER",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "UPDATE_LFG_LIST_INCREMENTAL",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "UPDATE_LFG_TYPES",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "UPDATE_TICKET",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "UPDATE_WORLD_STATES",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "VIGNETTE_ADDED",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "VIGNETTE_REMOVED",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "VOICE_CHANNEL_STATUS_UPDATE",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "VOICE_CHAT_ENABLED_UPDATE",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "VOICE_LEFT_SESSION",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "VOICE_PLATE_START",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "VOICE_PLATE_STOP",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "VOICE_PUSH_TO_TALK_START",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "VOICE_PUSH_TO_TALK_STOP",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "VOICE_SELF_MUTE",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "VOICE_SESSIONS_UPDATE",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "VOICE_START",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "VOICE_STATUS_UPDATE",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "VOICE_STOP",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "WEIGHTED_SPELL_UPDATED",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "WORLD_MAP_UPDATE",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    },
+    {
+      "symbol": "WORLD_STATE_UI_TIMER_UPDATE",
+      "decision": "no-new-retirement; already absent or source-only obsolete identity",
+      "reason": "Source inventory lookup is already absent/superseded, or the untruncated scan requires retaining current consumers. No new surface was retired."
+    }
+  ]
+}

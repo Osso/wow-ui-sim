@@ -1,3 +1,7 @@
+## [2026-10-08] investigation | Patch 8.0.1 API audit
+
+[Audit](investigations/patch-8-0-1-api-audit.md): exhaustive pinned-source accounting, explicit world-coordinate model, consumer-safe removal review and portable targeted proof.
+
 ## [2026-10-08] investigation | Historical audit validator portability
 
 [Portability](investigations/patch-audit-validator-portability.md): fixed historical register/sweep scope, exact merged 9.2.5 input replacements, checkout-independent receipts and read-only validation. Original proof artifacts remain unchanged.

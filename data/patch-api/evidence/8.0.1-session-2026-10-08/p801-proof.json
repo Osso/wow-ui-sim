@@ -1,0 +1,403 @@
+{
+  "policy": "Expected initial/behavior RED and compilation/stale-fixture failures remain explicit. Final acceptance uses integrated revision; docs/accounting edits do not invalidate runtime source scope.",
+  "receipts": [
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "publication_sweep"
+      ],
+      "revision": "f1b9a266e73c82d43c4fae627681b8bdff4466f2",
+      "scope": "all publication sweeps; stale ReportPlayer fixture after 8.1.5 integration; invalidated by known-gap correction",
+      "environment": {
+        "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p801-page",
+        "P910_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_9_1_0_publication_sweep-results.json",
+        "P1007_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_10_0_7_publication_sweep-results.json",
+        "P1200_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_12_0_0_publication_sweep-results.json",
+        "P837_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_8_3_7_publication_sweep-results.json",
+        "P905_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_9_0_5_publication_sweep-results.json",
+        "P1025_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_10_2_5_publication_sweep-results.json",
+        "P1125_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_11_2_5_publication_sweep-results.json",
+        "P1115_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_11_1_5_publication_sweep-results.json",
+        "P920_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_9_2_0_publication_sweep-results.json",
+        "P1017_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_10_1_7_publication_sweep-results.json",
+        "P1005_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_10_0_5_publication_sweep-results.json",
+        "P1010_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_10_1_0_publication_sweep-results.json",
+        "P1102_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_11_0_2_publication_sweep-results.json",
+        "P1207_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_12_0_7_publication_sweep-results.json",
+        "P830_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_8_3_0_publication_sweep-results.json",
+        "P820_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_8_2_0_publication_sweep-results.json",
+        "P1107_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_11_0_7_publication_sweep-results.json",
+        "P927_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_9_2_7_publication_sweep-results.json",
+        "P1027_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_10_2_7_publication_sweep-results.json",
+        "P1120_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_11_2_0_publication_sweep-results.json",
+        "P1201_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_12_0_1_publication_sweep-results.json",
+        "P1015_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_10_1_5_publication_sweep-results.json",
+        "P1105_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_11_0_5_publication_sweep-results.json",
+        "P1020_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_10_2_0_publication_sweep-results.json",
+        "P1117_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_11_1_7_publication_sweep-results.json",
+        "P1026_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_10_2_6_publication_sweep-results.json",
+        "P801_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_8_0_1_publication_sweep-results.json",
+        "P901_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_9_0_1_publication_sweep-results.json",
+        "P1210_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_12_1_0_publication_sweep-results.json",
+        "P1110_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_11_1_0_publication_sweep-results.json",
+        "P815_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_8_1_5_publication_sweep-results.json",
+        "P825_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_8_2_5_publication_sweep-results.json",
+        "P1100_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_11_0_0_publication_sweep-results.json",
+        "P1000_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_10_0_0_publication_sweep-results.json",
+        "P902_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_9_0_2_publication_sweep-results.json",
+        "P925_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_9_2_5_publication_sweep-results.json",
+        "P1002_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_10_0_2_publication_sweep-results.json",
+        "P1205_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_12_0_5_publication_sweep-results.json",
+        "P1127_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_11_2_7_publication_sweep-results.json",
+        "P915_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_9_1_5_publication_sweep-results.json"
+      },
+      "exit": 1,
+      "log": "p801-all-sweeps-red.log",
+      "log_sha256": "6fdeb8b448f8ba36b7f00c664b800a63dc7e928e13dacdf3828328e23b6bb702",
+      "seconds": 87.82982569700107
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "publication_sweep"
+      ],
+      "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+      "scope": "all-sweeps",
+      "environment": {
+        "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p801-page",
+        "P910_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_9_1_0_publication_sweep-results.json",
+        "P1007_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_10_0_7_publication_sweep-results.json",
+        "P1200_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_12_0_0_publication_sweep-results.json",
+        "P837_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_8_3_7_publication_sweep-results.json",
+        "P905_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_9_0_5_publication_sweep-results.json",
+        "P1025_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_10_2_5_publication_sweep-results.json",
+        "P1125_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_11_2_5_publication_sweep-results.json",
+        "P1115_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_11_1_5_publication_sweep-results.json",
+        "P920_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_9_2_0_publication_sweep-results.json",
+        "P1017_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_10_1_7_publication_sweep-results.json",
+        "P1005_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_10_0_5_publication_sweep-results.json",
+        "P1010_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_10_1_0_publication_sweep-results.json",
+        "P1102_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_11_0_2_publication_sweep-results.json",
+        "P1207_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_12_0_7_publication_sweep-results.json",
+        "P830_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_8_3_0_publication_sweep-results.json",
+        "P820_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_8_2_0_publication_sweep-results.json",
+        "P1107_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_11_0_7_publication_sweep-results.json",
+        "P927_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_9_2_7_publication_sweep-results.json",
+        "P1027_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_10_2_7_publication_sweep-results.json",
+        "P1120_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_11_2_0_publication_sweep-results.json",
+        "P1201_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_12_0_1_publication_sweep-results.json",
+        "P1015_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_10_1_5_publication_sweep-results.json",
+        "P1105_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_11_0_5_publication_sweep-results.json",
+        "P1020_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_10_2_0_publication_sweep-results.json",
+        "P1117_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_11_1_7_publication_sweep-results.json",
+        "P1026_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_10_2_6_publication_sweep-results.json",
+        "P801_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_8_0_1_publication_sweep-results.json",
+        "P901_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_9_0_1_publication_sweep-results.json",
+        "P1210_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_12_1_0_publication_sweep-results.json",
+        "P1110_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_11_1_0_publication_sweep-results.json",
+        "P815_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_8_1_5_publication_sweep-results.json",
+        "P825_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_8_2_5_publication_sweep-results.json",
+        "P1100_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_11_0_0_publication_sweep-results.json",
+        "P1000_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_10_0_0_publication_sweep-results.json",
+        "P902_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_9_0_2_publication_sweep-results.json",
+        "P925_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_9_2_5_publication_sweep-results.json",
+        "P1002_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_10_0_2_publication_sweep-results.json",
+        "P1205_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_12_0_5_publication_sweep-results.json",
+        "P1127_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_11_2_7_publication_sweep-results.json",
+        "P915_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/patch_9_1_5_publication_sweep-results.json"
+      },
+      "exit": 0,
+      "seconds": 32.750007421997,
+      "log": "p801-all-sweeps.log",
+      "log_sha256": "c3352179c2bc0c8657ffd7fb82c1c4a6f42fba42e2cd8a68c2ce0efb49596ccf"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_8_0_1_cached_"
+      ],
+      "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+      "scope": "cached-semantics",
+      "environment": {
+        "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p801-page"
+      },
+      "exit": 0,
+      "seconds": 5.157955055998173,
+      "log": "p801-cached-semantics.log",
+      "log_sha256": "90c20f120053459e11f09ac60bb4c200161a8c79c6aa87dab22eb7b7e7be4f04"
+    },
+    {
+      "command": [
+        "cargo",
+        "check"
+      ],
+      "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+      "scope": "default-check",
+      "exit": 0,
+      "seconds": 26.741067019000184,
+      "log": "p801-default-check.log",
+      "log_sha256": "93e9ab7321245fe19f98c5e0da1fe94949a0a5ffd504aa3ed4b151c8701e8427",
+      "non_vendor_warnings": []
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_8_0_1"
+      ],
+      "revision": "f90c51690c6dff189ab3693c78d124056ca11d37",
+      "scope": "initial 8.0.1 discovery",
+      "exit": 1,
+      "seconds": 316.4828715129988,
+      "log": "p801-discovery.log",
+      "log_sha256": "2132c08967df2545f640ed93a21222c4109b38faa9c6d8bec82bb1b3ada3f99a",
+      "target": "/home/osso/.cache/wow-ui-sim-targets/p801-page"
+    },
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--check"
+      ],
+      "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+      "scope": "format",
+      "exit": 0,
+      "seconds": 9.664772217001882,
+      "log": "p801-format.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "non_vendor_warnings": []
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "tools/test_gen_patch_wikitext_register.py"
+      ],
+      "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+      "scope": "generator-fixtures",
+      "exit": 0,
+      "log": "p801-generator-fixtures.log",
+      "log_sha256": "7b7dc7b80a1526f8fbd83449d2a67622138309015a7ab0ae6c04e5a3b61eb1a8"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "c_map_api::",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+      "scope": "map-api",
+      "environment": {
+        "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p801-page"
+      },
+      "exit": 0,
+      "seconds": 0.969545718999143,
+      "log": "p801-map-api.log",
+      "log_sha256": "1a6d0f6ce8be76927f4a96ed80bd312e019b9d35f4ce10211515b7a08ebdabc8"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "c_map_probes::",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+      "scope": "map-probes",
+      "environment": {
+        "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p801-page"
+      },
+      "exit": 0,
+      "seconds": 0.6910052570019616,
+      "log": "p801-map-probes.log",
+      "log_sha256": "02c45f95b9a5b8072fd8a9c31957972a179dc512a13c2046fb7e911df982b46c"
+    },
+    {
+      "command": [
+        "cargo",
+        "check",
+        "--no-default-features",
+        "--features",
+        "sound,gui,casc,client-mists",
+        "--tests"
+      ],
+      "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+      "scope": "Mists all test targets compile",
+      "environment": {
+        "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p801-page"
+      },
+      "exit": 0,
+      "seconds": 65.912245315998,
+      "log": "p801-mists-check.log",
+      "log_sha256": "3d0448192d155b6ea22109b3dae822cf553535f789a453b9b052082f1950a73a",
+      "non_vendor_warnings": [],
+      "vendor_warning_count": 7
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_8_0_1_",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+      "scope": "model-acceptance",
+      "environment": {
+        "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p801-page"
+      },
+      "exit": 0,
+      "seconds": 28.128444925998338,
+      "log": "p801-model-acceptance.log",
+      "log_sha256": "d08ef25ae20fcb264a01f560a1d4da1fef769d7760065b647fd859e6f7d18308"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_8_0_1_",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "86ffd320de008bbae515ab9d8c9e817a4d46a56c",
+      "scope": "8.0.1 projection fixture after syntax fix",
+      "exit": 0,
+      "log": "p801-model-fixed-green.log",
+      "log_sha256": "cb496d015cf628f0f510d8b206d78e319440f91eafcebd8ca038dc909642bec9",
+      "seconds": 136.49061223600074
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_8_0_1_",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "77df37e43672e8c071b4fe924f7a4c75b9cbb0a0",
+      "scope": "8.0.1 projection fixture",
+      "exit": 101,
+      "log": "p801-model-green.log",
+      "log_sha256": "9e9b95f531288fa7f5c95a0050c49b2ce4bbb97ceb359191a43e17409824a96d",
+      "seconds": 2.562768452000455
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_8_0_1_world_position",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "12033298d9f9f8f9c45c15f3cd3e03b0e81743db",
+      "scope": "raw inverse projection and missing input",
+      "exit": 101,
+      "log": "p801-model-red.log",
+      "log_sha256": "debf3644eebe5f831bc702ec13f5e8a90ab3f0c1f136b4e553253820f69feadc",
+      "seconds": 76.86546784600068
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_8_0_1_publication_sweep"
+      ],
+      "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+      "scope": "one fabricated register identity; no runtime/vendor mutation",
+      "environment": {
+        "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p801-page",
+        "P801_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/p801-negative-register.json",
+        "P801_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/p801-negative-observation.json"
+      },
+      "exit": 1,
+      "seconds": 4.7730229449989565,
+      "log": "p801-negative.log",
+      "log_sha256": "3952e8f0133e377390a320b2ae09a415a3a9d9ed52fdb0e31c9fe3717e8119a2",
+      "mutation": "wt-global-api-C_Map.GetAreaInfo-19",
+      "baseline_gaps": 18,
+      "negative_gaps": 19,
+      "new_gaps": [
+        "wt-global-api-C_Map.GetAreaInfo-19"
+      ],
+      "resolved_gaps": []
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "tools/test_extract_patch_non_inventory.py"
+      ],
+      "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+      "scope": "parser-fixtures",
+      "exit": 0,
+      "log": "p801-parser-fixtures.log",
+      "log_sha256": "21f4498d7f5feda5971791ea4028a4f60e8100008a78b0c6ba8d4bcde560d916"
+    },
+    {
+      "command": [
+        "cargo",
+        "build",
+        "--bin",
+        "wow-sim"
+      ],
+      "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+      "scope": "retail-build",
+      "exit": 0,
+      "seconds": 0.15745248700113734,
+      "log": "p801-retail-build.log",
+      "log_sha256": "90159419b7ec8553ea33a7ff018b86e715b432f625565017a582a45a2e2ba56e",
+      "non_vendor_warnings": []
+    },
+    {
+      "command": [
+        "timeout",
+        "90",
+        "/home/osso/.cache/wow-ui-sim-targets/p801-page/debug/wow-sim",
+        "--no-addons",
+        "--no-saved-vars",
+        "lua-errors"
+      ],
+      "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+      "scope": "startup",
+      "exit": 0,
+      "seconds": 3.1143168230009906,
+      "log": "p801-startup.log",
+      "log_sha256": "83ae258f445d79f7b1980fb371ef59c57d9b6c54dbbc9e0ac67eab30297de582",
+      "non_vendor_warnings": [],
+      "stdout": "[]\n"
+    }
+  ]
+}

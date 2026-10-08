@@ -1,0 +1,15 @@
+{
+  "command": [
+    "cargo",
+    "build",
+    "--bin",
+    "wow-sim"
+  ],
+  "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+  "scope": "retail-build",
+  "exit": 0,
+  "seconds": 0.15745248700113734,
+  "log": "p801-retail-build.log",
+  "log_sha256": "90159419b7ec8553ea33a7ff018b86e715b432f625565017a582a45a2e2ba56e",
+  "non_vendor_warnings": []
+}

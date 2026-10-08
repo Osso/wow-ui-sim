@@ -1,0 +1,17 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_8_0_1"
+  ],
+  "revision": "f90c51690c6dff189ab3693c78d124056ca11d37",
+  "scope": "initial 8.0.1 discovery",
+  "exit": 1,
+  "seconds": 316.4828715129988,
+  "log": "p801-discovery.log",
+  "log_sha256": "2132c08967df2545f640ed93a21222c4109b38faa9c6d8bec82bb1b3ada3f99a",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p801-page"
+}

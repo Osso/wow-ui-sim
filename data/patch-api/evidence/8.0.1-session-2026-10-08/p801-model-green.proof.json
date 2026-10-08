@@ -1,0 +1,17 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "patch_8_0_1_",
+    "--",
+    "--nocapture"
+  ],
+  "revision": "77df37e43672e8c071b4fe924f7a4c75b9cbb0a0",
+  "scope": "8.0.1 projection fixture",
+  "exit": 101,
+  "log": "p801-model-green.log",
+  "log_sha256": "9e9b95f531288fa7f5c95a0050c49b2ce4bbb97ceb359191a43e17409824a96d",
+  "seconds": 2.562768452000455
+}

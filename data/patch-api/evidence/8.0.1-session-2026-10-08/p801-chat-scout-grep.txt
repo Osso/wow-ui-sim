@@ -1,0 +1,5 @@
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/c_api/c_battle_net.rs:69:        super::addon_messages::send_game_data,
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/c_api/c_battle_net.rs:72:    super::addon_messages::register_bnet_chat(state, table_ref)?;
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/c_api/registration.rs:57:    super::addon_messages::register_chat(state)?;
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/c_api/mod.rs:14:mod addon_messages;
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/data/patch_10_2_7_sweep_known_gaps.json:4:  "wt-global-api-C_ChatInfo.RegisterAddonMessagePrefix-108",

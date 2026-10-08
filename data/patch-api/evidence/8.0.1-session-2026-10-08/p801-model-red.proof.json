@@ -1,0 +1,17 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "patch_8_0_1_world_position",
+    "--",
+    "--nocapture"
+  ],
+  "revision": "12033298d9f9f8f9c45c15f3cd3e03b0e81743db",
+  "scope": "raw inverse projection and missing input",
+  "exit": 101,
+  "log": "p801-model-red.log",
+  "log_sha256": "debf3644eebe5f831bc702ec13f5e8a90ab3f0c1f136b4e553253820f69feadc",
+  "seconds": 76.86546784600068
+}

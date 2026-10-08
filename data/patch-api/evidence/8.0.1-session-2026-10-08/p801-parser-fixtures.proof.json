@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "tools/test_extract_patch_non_inventory.py"
+  ],
+  "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+  "scope": "parser-fixtures",
+  "exit": 0,
+  "log": "p801-parser-fixtures.log",
+  "log_sha256": "21f4498d7f5feda5971791ea4028a4f60e8100008a78b0c6ba8d4bcde560d916"
+}

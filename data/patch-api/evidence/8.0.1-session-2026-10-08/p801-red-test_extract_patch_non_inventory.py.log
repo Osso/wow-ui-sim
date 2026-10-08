@@ -1,0 +1,14 @@
+..........E....................
+======================================================================
+ERROR: test_bfa_prepatch_retains_migrations_and_references_not_inventories (__main__.ExtractTests.test_bfa_prepatch_retains_migrations_and_references_not_inventories)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/test_extract_patch_non_inventory.py", line 21, in test_bfa_prepatch_retains_migrations_and_references_not_inventories
+    self.assertEqual(extract_text(raw, bfa_prepatch=True),
+                     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: extract_text() got an unexpected keyword argument 'bfa_prepatch'
+
+----------------------------------------------------------------------
+Ran 31 tests in 0.059s
+
+FAILED (errors=1)

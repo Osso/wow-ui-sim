@@ -2,6 +2,10 @@
 
 [Audit](investigations/patch-8-1-0-api-audit.md): real 8.1.5/8.2.0 registers, ReportPlayer/gxMTOpaque supersessions close two own gaps (60 → 58); later pages unchanged. Forty registers reproduce, three inherited extract failures unchanged. Forty sweeps plus factory, 58 → 59 negative control, requested provider/calendar/map regressions, Python fixtures, format and warning-clean non-vendor Mists check pass. All seventeen validators pass with pinned historical scopes and exact replacement checks; relocated validation rejects protected-input drift. Cached filter rejection split without reducing coverage; obsolete source-name ban replaced by provider-composition behavior.
 
+## [2026-10-08] ingest | Patch 8.0.1 API audit
+
+Recorded [audit](investigations/patch-8-0-1-api-audit.md), source ledger, retirement scans and targeted receipts; preserved repaired wiki index/log from ee7aebea7 before adding this entry.
+
 ## [2026-10-08] ingest | Patch 8.1.5 API audit
 
 [Audit](investigations/patch-8-1-5-api-audit.md): pinned current revision 3789732; exhaustive 85-ID accounting, one modeled toy-fanfare producer and twelve consumer-free retirements. 24 exact publication gaps retained. Integrated after 8.2.0: real 8.2.0 register in `later_registers`, no gap changes, refreshed negative control and runtime receipts; all sixteen retained validators pass.

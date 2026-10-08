@@ -1,0 +1,19 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_8_0_1_cached_"
+  ],
+  "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+  "scope": "cached-semantics",
+  "environment": {
+    "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p801-page"
+  },
+  "exit": 0,
+  "seconds": 5.157955055998173,
+  "log": "p801-cached-semantics.log",
+  "log_sha256": "90c20f120053459e11f09ac60bb4c200161a8c79c6aa87dab22eb7b7e7be4f04"
+}

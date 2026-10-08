@@ -1,0 +1,9 @@
+{
+  "schema": "patch-api-audit-context/v1",
+  "patch": "8.0.1",
+  "base_revision": "ee7aebea7",
+  "prebase_input_revision": "ea9e5995ed64140e3d9d35cc986a51dbec523c0d",
+  "runtime_revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+  "scope_policy": "Current sources are reproducible; shared mutable historical inputs are read from fixed Git snapshots. No absolute path gates. Accounting revision is pinned after the ledger commit.",
+  "shared_input_drift_at_integration": []
+}

@@ -1,0 +1,13 @@
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/event/valid_events_c.rs:199:    "SPELL_TEXT_UPDATE",
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/event/valid_events_a.rs:709:    "GLYPH_ADDED",
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/event/valid_events_a.rs:710:    "GLYPH_REMOVED",
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/real/glyph_state.rs:14://!   `GLYPH_ADDED` (or `GLYPH_REMOVED` for the removal flow) so the flyout
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/real/glyph_state.rs:80:/// pending, the spell's `attached_glyphs` entry is cleared and `GLYPH_REMOVED`
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/real/glyph_state.rs:82:/// and `GLYPH_ADDED` fires. Always clears the pending state so subsequent
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/real/glyph_state.rs:97:            "GLYPH_REMOVED"
+/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/real/glyph_state.rs:100:            "GLYPH_ADDED"
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_glyph_globals.rs:111:         f:RegisterEvent('GLYPH_ADDED')\n\
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_glyph_globals.rs:148:         f:RegisterEvent('GLYPH_REMOVED')\n\
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_glyph_globals.rs:170:         f:RegisterEvent('GLYPH_ADDED')\n\
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_glyph_globals.rs:171:         f:RegisterEvent('GLYPH_REMOVED')\n\
+/home/osso/.worktrees/wow-ui-sim-p801-page/tests/data/patch_11_0_0_sweep_known_gaps.json:6:  "wt-events-SPELL_TEXT_UPDATE-626",

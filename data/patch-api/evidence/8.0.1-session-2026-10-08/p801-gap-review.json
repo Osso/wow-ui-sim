@@ -1,0 +1,398 @@
+[
+  {
+    "source_id": "wt-global-api-C_ChatInfo.CanReportPlayer-8",
+    "symbol": "C_ChatInfo.CanReportPlayer",
+    "wikitext_line": 8,
+    "literal": "**{{api|C_ChatInfo.CanReportPlayer}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_ChatInfo.CanReportPlayer-57",
+      "symbol": "C_ChatInfo.CanReportPlayer"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No report eligibility model for report type, target identity, evidence or account restrictions. Autostub lookup is not a raw API; no constant eligibility promoted."
+  },
+  {
+    "source_id": "wt-global-api-C_ChatInfo.IsAddonMessagePrefixRegistered-9",
+    "symbol": "C_ChatInfo.IsAddonMessagePrefixRegistered",
+    "wikitext_line": 9,
+    "literal": "**{{api|C_ChatInfo.IsAddonMessagePrefixRegistered}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ChatInfo.IsAddonMessagePrefixRegistered"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No prefix-interest registry/query state. Ordinary namespace lookup synthesizes a callable; no actual membership or registration lifecycle backs it."
+  },
+  {
+    "source_id": "wt-global-api-C_ChatInfo.IsPartyChannelType-10",
+    "symbol": "C_ChatInfo.IsPartyChannelType",
+    "wikitext_line": 10,
+    "literal": "**{{api|C_ChatInfo.IsPartyChannelType}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ChatInfo.IsPartyChannelType"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No channel-type membership/classification catalog. Requires exact channel enum membership including party/raid/instance distinctions; no guessed classifier published."
+  },
+  {
+    "source_id": "wt-global-api-C_ChatInfo.GetChannelRosterInfo-11",
+    "symbol": "C_ChatInfo.GetChannelRosterInfo",
+    "wikitext_line": 11,
+    "literal": "**{{api|C_ChatInfo.GetChannelRosterInfo}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ChatInfo.GetChannelRosterInfo"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No indexed channel roster snapshot with names/ownership/moderator membership; active chat channel count does not supply roster records."
+  },
+  {
+    "source_id": "wt-global-api-C_ChatInfo.GetRegisteredAddonMessagePrefixes-13",
+    "symbol": "C_ChatInfo.GetRegisteredAddonMessagePrefixes",
+    "wikitext_line": 13,
+    "literal": "**{{api|C_ChatInfo.GetRegisteredAddonMessagePrefixes}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ChatInfo.GetRegisteredAddonMessagePrefixes"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No environment-local prefix registration catalog to enumerate. Existing fallback returns no real registered-prefix state; requires populated registration, deduplication and isolation fixtures."
+  },
+  {
+    "source_id": "wt-global-api-C_ChatInfo.RegisterAddonMessagePrefix-14",
+    "symbol": "C_ChatInfo.RegisterAddonMessagePrefix",
+    "wikitext_line": 14,
+    "literal": "**{{api|C_ChatInfo.RegisterAddonMessagePrefix}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ChatInfo.RegisterAddonMessagePrefix"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No prefix-interest registration model. Current cached documentation uses RegisterAddonMessagePrefixResult (not historical boolean); type/length/capacity/security/result transitions need a specified registry contract, not promotion of a true/no-op stub."
+  },
+  {
+    "source_id": "wt-global-api-C_ChatInfo.SendAddonMessage-16",
+    "symbol": "C_ChatInfo.SendAddonMessage",
+    "wikitext_line": 16,
+    "literal": "**{{api|C_ChatInfo.SendAddonMessage}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ChatInfo.SendAddonMessage"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Existing state-backed namespace sender in addon_messages.rs is explicitly client-wowforever-only. Retail argument security, result/routing and inbound-vs-outbound semantics are not established by the permissive legacy global sender; no alias or shim promoted."
+  },
+  {
+    "source_id": "wt-global-api-C_ChatInfo.SendAddonMessageLogged-17",
+    "symbol": "C_ChatInfo.SendAddonMessageLogged",
+    "wikitext_line": 17,
+    "literal": "**{{api|C_ChatInfo.SendAddonMessageLogged}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ChatInfo.SendAddonMessageLogged"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Existing logged outbound-intent sender is client-wowforever-only. Retail logged-message acceptance, nil result and CHAT_MSG_ADDON_LOGGED delivery/throttling lifecycle lack a backing model; no fabricated logging sender published."
+  },
+  {
+    "source_id": "wt-global-api-C_Map.GetBountySetIDForMap-21",
+    "symbol": "C_Map.GetBountySetIDForMap",
+    "wikitext_line": 21,
+    "literal": "**{{api|C_Map.GetBountySetIDForMap}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Map.GetBountySetIDForMap"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No map-keyed bounty-set association records. Existing map hierarchy/art metadata cannot produce bounty-set identity; requires concrete associated/unassociated map fixtures."
+  },
+  {
+    "source_id": "wt-global-api-C_Map.GetMapArtHelpTextPosition-24",
+    "symbol": "C_Map.GetMapArtHelpTextPosition",
+    "wikitext_line": 24,
+    "literal": "**{{api|C_Map.GetMapArtHelpTextPosition}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Map.GetMapArtHelpTextPosition"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No map-art help-text coordinate metadata. Map layer dimensions do not establish normalized help-text placement; no guessed vector returned."
+  },
+  {
+    "source_id": "wt-global-api-C_Map.GetMapDisplayInfo-30",
+    "symbol": "C_Map.GetMapDisplayInfo",
+    "wikitext_line": 30,
+    "literal": "**{{api|C_Map.GetMapDisplayInfo}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Map.GetMapDisplayInfo"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No display metadata snapshot for UiMap presentation. MapData hierarchy/name/art fields do not specify display scale/offset or associated fields; no generic fabricated record."
+  },
+  {
+    "source_id": "wt-global-api-C_Map.GetMapHighlightInfoAtPosition-33",
+    "symbol": "C_Map.GetMapHighlightInfoAtPosition",
+    "wikitext_line": 33,
+    "literal": "**{{api|C_Map.GetMapHighlightInfoAtPosition}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Map.GetMapHighlightInfoAtPosition"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No normalized-point highlight texture/atlas/geometry lookup records. Child rect map identity is not highlight visual metadata; requires populated regions and misses."
+  },
+  {
+    "source_id": "wt-global-api-C_Map.GetMapLevels-36",
+    "symbol": "C_Map.GetMapLevels",
+    "wikitext_line": 36,
+    "literal": "**{{api|C_Map.GetMapLevels}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Map.GetMapLevels"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No ordered floor/level catalog associated with maps. Hierarchy child maps are not documented dungeon levels; no guessed floor list or nil shim published."
+  },
+  {
+    "source_id": "wt-events-GLYPH_ADDED-59",
+    "symbol": "GLYPH_ADDED",
+    "wikitext_line": 59,
+    "literal": "* [[GLYPH_ADDED]], [[GLYPH_REMOVED]], and [[GLYPH_UPDATED]] have been removed.",
+    "expectation": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "GLYPH_ADDED"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "reason": "Cached retail has zero whole-word hits, but glyph_state.rs still emits this event and c_glyph_globals tests consume it. Retirement would break an existing modeled glyph application lifecycle. Historical/current mismatch retained, not solved by altering vendor Lua or silently weakening tests."
+  },
+  {
+    "source_id": "wt-events-GLYPH_REMOVED-59",
+    "symbol": "GLYPH_REMOVED",
+    "wikitext_line": 59,
+    "literal": "* [[GLYPH_ADDED]], [[GLYPH_REMOVED]], and [[GLYPH_UPDATED]] have been removed.",
+    "expectation": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "GLYPH_REMOVED"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "reason": "Cached retail has zero whole-word hits, but glyph_state.rs emits this event and c_glyph_globals tests consume it. Removing registration requires changing the existing glyph-removal lifecycle; recorded problematic instead of a destructive event gate."
+  },
+  {
+    "source_id": "wt-events-SPELL_TEXT_UPDATE-150",
+    "symbol": "SPELL_TEXT_UPDATE",
+    "wikitext_line": 150,
+    "literal": "* {{api|t=e|SPELL_TEXT_UPDATE}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": "wt-events-SPELL_TEXT_UPDATE-626",
+      "symbol": "SPELL_TEXT_UPDATE"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "reason": "Later 11.0.0 register removes this event, but the simulator still registers it (same unresolved failure as the 11.0.0 audit). No new event producer/retirement is implemented here; historical addition is superseded, not credited as modern publication."
+  },
+  {
+    "source_id": "wt-events-GLYPH_ADDED-228",
+    "symbol": "GLYPH_ADDED",
+    "wikitext_line": 228,
+    "literal": "* {{api|t=e|GLYPH_ADDED}}",
+    "expectation": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "GLYPH_ADDED"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "reason": "Cached retail has zero whole-word hits, but glyph_state.rs still emits this event and c_glyph_globals tests consume it. Retirement would break an existing modeled glyph application lifecycle. Historical/current mismatch retained, not solved by altering vendor Lua or silently weakening tests."
+  },
+  {
+    "source_id": "wt-events-GLYPH_REMOVED-231",
+    "symbol": "GLYPH_REMOVED",
+    "wikitext_line": 231,
+    "literal": "* {{api|t=e|GLYPH_REMOVED}}",
+    "expectation": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "GLYPH_REMOVED"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "reason": "Cached retail has zero whole-word hits, but glyph_state.rs emits this event and c_glyph_globals tests consume it. Removing registration requires changing the existing glyph-removal lifecycle; recorded problematic instead of a destructive event gate."
+  }
+]

@@ -1,0 +1,14 @@
+E.....................
+======================================================================
+ERROR: test_bfa_prepatch_nested_namespaces_events_and_removal_successors (__main__.InventoryTests.test_bfa_prepatch_nested_namespaces_events_and_removal_successors)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/test_gen_patch_wikitext_register.py", line 17, in test_bfa_prepatch_nested_namespaces_events_and_removal_successors
+    entries = generator.parse_bfa_prepatch(raw)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'gen_patch_wikitext_register' has no attribute 'parse_bfa_prepatch'
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.002s
+
+FAILED (errors=1)

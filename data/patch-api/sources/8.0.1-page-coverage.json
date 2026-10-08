@@ -1,0 +1,2292 @@
+{
+  "schema": "patch-api-page-coverage/v1",
+  "patch": "8.0.1",
+  "source": "data/patch-api/sources/8.0.1-wikitext-register.json",
+  "source_sha256": "df597a39c9802be51ad66720abb7dfb1b58e5c155b7735a0d9ce99a784a7ae83",
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/8.0.1-api-changes.txt",
+    "sha256": "c5408fce8e67bc856215b01e26c787e68f6ac27fcd9ad449967294d7745a03c4"
+  },
+  "proof_policy": "Complete occurrence accounting; bounded local behavior is not native parity. 8.1.5 merged; 8.1.0 integration placeholder remains. Problematic cases retain literal reasons without shims.",
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-C_ChatInfo-7",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.CanReportPlayer-8",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No report eligibility model for report type, target identity, evidence or account restrictions. Autostub lookup is not a raw API; no constant eligibility promoted."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.IsAddonMessagePrefixRegistered-9",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No prefix-interest registry/query state. Ordinary namespace lookup synthesizes a callable; no actual membership or registration lifecycle backs it."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.IsPartyChannelType-10",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No channel-type membership/classification catalog. Requires exact channel enum membership including party/raid/instance distinctions; no guessed classifier published."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.GetChannelRosterInfo-11",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No indexed channel roster snapshot with names/ownership/moderator membership; active chat channel count does not supply roster records."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.GetNumActiveChannels-12",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.GetRegisteredAddonMessagePrefixes-13",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No environment-local prefix registration catalog to enumerate. Existing fallback returns no real registered-prefix state; requires populated registration, deduplication and isolation fixtures."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.RegisterAddonMessagePrefix-14",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No prefix-interest registration model. Current cached documentation uses RegisterAddonMessagePrefixResult (not historical boolean); type/length/capacity/security/result transitions need a specified registry contract, not promotion of a true/no-op stub."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.ReportPlayer-15",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Superseded by wt-global-api-C_ChatInfo.ReportPlayer-58; Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.SendAddonMessage-16",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Existing state-backed namespace sender in addon_messages.rs is explicitly client-wowforever-only. Retail argument security, result/routing and inbound-vs-outbound semantics are not established by the permissive legacy global sender; no alias or shim promoted."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.SendAddonMessageLogged-17",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Existing logged outbound-intent sender is client-wowforever-only. Retail logged-message acceptance, nil result and CHAT_MSG_ADDON_LOGGED delivery/throttling lifecycle lack a backing model; no fabricated logging sender published."
+    },
+    {
+      "source_id": "wt-global-api-C_Map-18",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-global-api-C_Map.GetAreaInfo-19",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-global-api-C_Map.GetBestMapForUnit-20",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-global-api-C_Map.GetBountySetIDForMap-21",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No map-keyed bounty-set association records. Existing map hierarchy/art metadata cannot produce bounty-set identity; requires concrete associated/unassociated map fixtures."
+    },
+    {
+      "source_id": "wt-global-api-C_Map.GetFallbackWorldMapID-22",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-global-api-C_Map.GetMapArtBackgroundAtlas-23",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-global-api-C_Map.GetMapArtHelpTextPosition-24",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No map-art help-text coordinate metadata. Map layer dimensions do not establish normalized help-text placement; no guessed vector returned."
+    },
+    {
+      "source_id": "wt-global-api-C_Map.GetMapArtID-25",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-global-api-C_Map.GetMapArtLayerTextures-26",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-global-api-C_Map.GetMapArtLayers-27",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-global-api-C_Map.GetMapBannersForMap-28",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-global-api-C_Map.GetMapChildrenInfo-29",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-global-api-C_Map.GetMapDisplayInfo-30",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No display metadata snapshot for UiMap presentation. MapData hierarchy/name/art fields do not specify display scale/offset or associated fields; no generic fabricated record."
+    },
+    {
+      "source_id": "wt-global-api-C_Map.GetMapGroupID-31",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-global-api-C_Map.GetMapGroupMembersInfo-32",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-global-api-C_Map.GetMapHighlightInfoAtPosition-33",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No normalized-point highlight texture/atlas/geometry lookup records. Child rect map identity is not highlight visual metadata; requires populated regions and misses."
+    },
+    {
+      "source_id": "wt-global-api-C_Map.GetMapInfo-34",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-global-api-C_Map.GetMapInfoAtPosition-35",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-global-api-C_Map.GetMapLevels-36",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No ordered floor/level catalog associated with maps. Hierarchy child maps are not documented dungeon levels; no guessed floor list or nil shim published."
+    },
+    {
+      "source_id": "wt-global-api-C_Map.GetMapLinksForMap-37",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-global-api-C_Map.GetMapPosFromWorldPos-38",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication",
+        "explicit-world-rectangle-projection"
+      ],
+      "note": "Explicit known-map rectangles project finite world points into normalized coordinates; continent/override/miss/overlap/reversed-axis/degenerate/isolation fixtures. No native geography or automatic overlapping hierarchy selection."
+    },
+    {
+      "source_id": "wt-global-api-C_Map.GetMapRectOnMap-39",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-global-api-C_Map.GetPlayerMapPosition-40",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-global-api-C_Map.GetWorldPosFromMapPos-41",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-global-api-C_Map.MapHasArt-42",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-global-api-C_Map.RequestPreloadMap-43",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-global-api-GetMapContinents-55",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-global-api-GetCurrentMapContinent-55",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-global-api-GetCurrentMapAreaID-56",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-global-api-GetPlayerMapPosition-57",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-global-api-EJ_GetCurrentInstance-58",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-GLYPH_ADDED-59",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Cached retail has zero whole-word hits, but glyph_state.rs still emits this event and c_glyph_globals tests consume it. Retirement would break an existing modeled glyph application lifecycle. Historical/current mismatch retained, not solved by altering vendor Lua or silently weakening tests."
+    },
+    {
+      "source_id": "wt-events-GLYPH_REMOVED-59",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Cached retail has zero whole-word hits, but glyph_state.rs emits this event and c_glyph_globals tests consume it. Removing registration requires changing the existing glyph-removal lifecycle; recorded problematic instead of a destructive event gate."
+    },
+    {
+      "source_id": "wt-events-GLYPH_UPDATED-59",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-global-api-FindSpellOverrideNameByName-60",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-global-api-FindBaseSpellNameByName-60",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-global-api-SearchGuildRecipes-60",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-ACHIEVEMENT_PLAYER_NAME-65",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-AREA_POIS_UPDATED-66",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-AVATAR_LIST_UPDATED-67",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-AZERITE_EMPOWERED_ITEM_LOOTED-68",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-AZERITE_EMPOWERED_ITEM_SELECTION_UPDATED-69",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-AZERITE_ITEM_EXPERIENCE_CHANGED-70",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-AZERITE_ITEM_POWER_LEVEL_CHANGED-71",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CALENDAR_UPDATE_ERROR_WITH_COUNT-72",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CALENDAR_UPDATE_ERROR_WITH_PLAYER_NAME-73",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CAPTUREFRAMES_FAILED-74",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CAPTUREFRAMES_SUCCEEDED-75",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CEMETERY_PREFERENCE_UPDATED-76",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CHALLENGE_MODE_MEMBER_INFO_UPDATED-77",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CHANNEL_LEFT-78",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CHAT_MSG_ADDON_LOGGED-79",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CHAT_MSG_BN-80",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CHAT_MSG_COMMUNITIES_CHANNEL-81",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CLASS_TRIAL_TIMER_START-82",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CLASS_TRIAL_UPGRADE_COMPLETE-83",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CLUB_ADDED-84",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CLUB_ERROR-85",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CLUB_INVITATIONS_RECEIVED_FOR_CLUB-86",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CLUB_INVITATION_ADDED_FOR_SELF-87",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CLUB_INVITATION_REMOVED_FOR_SELF-88",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CLUB_MEMBER_ADDED-89",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CLUB_MEMBER_PRESENCE_UPDATED-90",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CLUB_MEMBER_REMOVED-91",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CLUB_MEMBER_ROLE_UPDATED-92",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CLUB_MEMBER_UPDATED-93",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CLUB_MESSAGE_ADDED-94",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CLUB_MESSAGE_HISTORY_RECEIVED-95",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CLUB_MESSAGE_UPDATED-96",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CLUB_REMOVED-97",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CLUB_REMOVED_MESSAGE-98",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CLUB_SELF_MEMBER_ROLE_UPDATED-99",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CLUB_STREAMS_LOADED-100",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CLUB_STREAM_ADDED-101",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CLUB_STREAM_REMOVED-102",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CLUB_STREAM_SUBSCRIBED-103",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CLUB_STREAM_UNSUBSCRIBED-104",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CLUB_STREAM_UPDATED-105",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CLUB_TICKETS_RECEIVED-106",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CLUB_TICKET_CREATED-107",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CLUB_TICKET_RECEIVED-108",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CLUB_UPDATED-109",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-COMMUNITIES_STREAM_CURSOR_CLEAR-110",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Superseded by wt-events-COMMUNITIES_STREAM_CURSOR_CLEAR-230; Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-CONSOLE_LOG-111",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CONTRIBUTION_CHANGED-112",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-DYNAMIC_GOSSIP_POI_UPDATED-113",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-FOG_OF_WAR_UPDATED-114",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-GDF_SIM_COMPLETE-115",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-GENERIC_ERROR-116",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-GLUE_CONSOLE_LOG-117",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Superseded by wt-events-GLUE_CONSOLE_LOG-167; Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-GLUE_SCREENSHOT_FAILED-118",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-GROUP_FORMED-119",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-HIDE_SUBTITLE-120",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-INITIAL_CLUBS_LOADED-121",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-INSTANCE_ENCOUNTER_ADD_TIMER-122",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-INSTANCE_ENCOUNTER_OBJECTIVE_COMPLETE-123",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-INSTANCE_ENCOUNTER_OBJECTIVE_START-124",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-INSTANCE_ENCOUNTER_OBJECTIVE_UPDATE-125",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-ISLANDS_QUEUE_CLOSE-126",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-ISLANDS_QUEUE_OPEN-127",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-ISLAND_AZERITE_GAIN-128",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-ISLAND_COMPLETED-129",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-ITEM_DATA_LOAD_RESULT-130",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-LOC_RESULT-131",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-MAP_EXPLORATION_UPDATED-132",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-NOTIFY_PVP_AFK_RESULT-133",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-OBJECT_ENTERED_AOI-134",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-OBJECT_LEFT_AOI-135",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-PLAYER_LEVEL_CHANGED-136",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-PORTRAITS_UPDATED-137",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-PVP_VEHICLE_INFO_UPDATED-138",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-QUEST_CURRENCY_LOOT_RECEIVED-139",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-RESPEC_AZERITE_EMPOWERED_ITEM_CLOSED-140",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Superseded by wt-events-RESPEC_AZERITE_EMPOWERED_ITEM_CLOSED-780; Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-RESPEC_AZERITE_EMPOWERED_ITEM_OPENED-141",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Superseded by wt-events-RESPEC_AZERITE_EMPOWERED_ITEM_OPENED-781; Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-SCENARIO_BONUS_OBJECTIVE_COMPLETE-142",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-SCENARIO_BONUS_VISIBILITY_UPDATE-143",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-SCRAPPING_MACHINE_CLOSE-144",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Superseded by wt-events-SCRAPPING_MACHINE_CLOSE-782; Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-SCRAPPING_MACHINE_ITEM_REMOVED_OR_CANCELLED-145",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Superseded by wt-events-SCRAPPING_MACHINE_ITEM_REMOVED_OR_CANCELLED-183; Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-SCRAPPING_MACHINE_PENDING_ITEM_CHANGED-146",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-SCRAPPING_MACHINE_SCRAPPING_FINISHED-147",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-SCRAPPING_MACHINE_SHOW-148",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Superseded by wt-events-SCRAPPING_MACHINE_SHOW-783; Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-SPELL_DATA_LOAD_RESULT-149",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-SPELL_TEXT_UPDATE-150",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Later 11.0.0 register removes this event, but the simulator still registers it (same unresolved failure as the 11.0.0 audit). No new event producer/retirement is implemented here; historical addition is superseded, not credited as modern publication."
+    },
+    {
+      "source_id": "wt-events-STREAM_VIEW_MARKER_UPDATED-151",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-TOKEN_CAN_VETERAN_BUY_UPDATE-152",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-TRAINER_SERVICE_INFO_NAME_UPDATE-153",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-TUTORIAL_HIGHLIGHT_SPELL-154",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-TUTORIAL_UNHIGHLIGHT_SPELL-155",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-UNIT_CHEAT_TOGGLE_EVENT-156",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-UNIT_POWER_UPDATE-157",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-UPDATE_ALL_UI_WIDGETS-158",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-UPDATE_UI_WIDGET-159",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VIGNETTES_UPDATED-160",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VIGNETTE_MINIMAP_UPDATED-161",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_ACTIVE_INPUT_DEVICE_UPDATED-162",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_ACTIVE_OUTPUT_DEVICE_UPDATED-163",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_AUDIO_CAPTURE_ENERGY-164",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_AUDIO_CAPTURE_STARTED-165",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_AUDIO_CAPTURE_STOPPED-166",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_CHANNEL_ACTIVATED-167",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_CHANNEL_DEACTIVATED-168",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_CHANNEL_DISPLAY_NAME_CHANGED-169",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_CHANNEL_JOINED-170",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_CHANNEL_MEMBER_ACTIVE_STATE_CHANGED-171",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_CHANNEL_MEMBER_ADDED-172",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_CHANNEL_MEMBER_ENERGY_CHANGED-173",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_CHANNEL_MEMBER_GUID_UPDATED-174",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_CHANNEL_MEMBER_MUTE_FOR_ALL_CHANGED-175",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_CHANNEL_MEMBER_MUTE_FOR_ME_CHANGED-176",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_CHANNEL_MEMBER_REMOVED-177",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_CHANNEL_MEMBER_SILENCED_CHANGED-178",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_CHANNEL_MEMBER_SPEAKING_STATE_CHANGED-179",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_CHANNEL_MEMBER_VOLUME_CHANGED-180",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_CHANNEL_MUTE_STATE_CHANGED-181",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_CHANNEL_PTT_CHANGED-182",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_CHANNEL_REMOVED-183",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_CHANNEL_TRANSMIT_CHANGED-184",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_CHANNEL_VOLUME_CHANGED-185",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_COMMUNICATION_MODE_CHANGED-186",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_CONNECTION_SUCCESS-187",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_DEAFENED_CHANGED-188",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_ERROR-189",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_INPUT_DEVICES_UPDATED-190",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_LOGIN-191",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_LOGOUT-192",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_MUTED_CHANGED-193",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_OUTPUT_DEVICES_UPDATED-194",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_PENDING_CHANNEL_JOIN_STATE-195",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_PTT_BUTTON_PRESSED_STATE_CHANGED-196",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_SILENCED_CHANGED-197",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-VOID_TRANSFER_SUCCESS-198",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Superseded by wt-events-VOID_TRANSFER_SUCCESS-209; Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-WARFRONT_COMPLETED-199",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-WAR_MODE_STATUS_UPDATE-200",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-BATTLEFIELD_MGR_DROP_TIMER_CANCELED-204",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-BATTLEFIELD_MGR_DROP_TIMER_STARTED-205",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-BATTLEFIELD_MGR_EJECTED-206",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-BATTLEFIELD_MGR_EJECT_PENDING-207",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-BATTLEFIELD_MGR_ENTERED-208",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-BATTLEFIELD_MGR_ENTRY_INVITE-209",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-BATTLEFIELD_MGR_QUEUE_INVITE-210",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-BATTLEFIELD_MGR_QUEUE_REQUEST_RESPONSE-211",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-BATTLEFIELD_MGR_QUEUE_STATUS_UPDATE-212",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-BATTLEFIELD_MGR_STATE_CHANGE-213",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-BN_FRIEND_INVITE_SEND_RESULT-214",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-BN_NEW_PRESENCE-215",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-BN_REQUEST_FOF_FAILED-216",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-BN_SELF_OFFLINE-217",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-BN_SELF_ONLINE-218",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-BN_SYSTEM_MESSAGE-219",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-CHALLENGE_MODE_NEW_RECORD-220",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-CHANNEL_VOICE_UPDATE-221",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-CLOSE_WORLD_MAP-222",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-COMMENTATOR_PARTY_INFO_REQUEST-223",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-EVENT_CLASS_TRIAL_UPGRADE_COMPLETE-224",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-EVENT_TUTORIAL_HIGHLIGHT_SPELL-225",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-EVENT_TUTORIAL_UNHIGHLIGHT_SPELL-226",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-GARRISON_BUILDINGS_SWAPPED-227",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-GLYPH_ADDED-228",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Cached retail has zero whole-word hits, but glyph_state.rs still emits this event and c_glyph_globals tests consume it. Retirement would break an existing modeled glyph application lifecycle. Historical/current mismatch retained, not solved by altering vendor Lua or silently weakening tests."
+    },
+    {
+      "source_id": "wt-events-GLYPH_DISABLED-229",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-GLYPH_ENABLED-230",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-GLYPH_REMOVED-231",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Cached retail has zero whole-word hits, but glyph_state.rs emits this event and c_glyph_globals tests consume it. Removing registration requires changing the existing glyph-removal lifecycle; recorded problematic instead of a destructive event gate."
+    },
+    {
+      "source_id": "wt-events-GLYPH_UPDATED-232",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-GMRESPONSE_RECEIVED-233",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-GMSURVEY_DISPLAY-234",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-GUILD_PERK_UPDATE-235",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-GUILD_REP_UPDATED-236",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-GUILD_XP_UPDATE-237",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-HONOR_PRESTIGE_UPDATE-238",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-MAP_BAR_UPDATE-239",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-MOVIE_COMPRESSING_PROGRESS-240",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-MOVIE_RECORDING_PROGRESS-241",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-MOVIE_UNCOMPRESSED_MOVIE-242",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-NEW_TITLE_EARNED-243",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-NPC_PVPQUEUE_ANYWHERE-244",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-OLD_TITLE_LOST-245",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-PARTY_CONVERTED_TO_RAID-246",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-PARTY_MEMBERS_CHANGED-247",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-PETITION_VENDOR_CLOSED-248",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-PETITION_VENDOR_SHOW-249",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-PETITION_VENDOR_UPDATE-250",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-PET_BAR_HIDE-251",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-PET_BATTLE_TURN_STARTED-252",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-PET_RENAMEABLE-253",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-PLAYER_AURAS_CHANGED-254",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-PLAYER_CHARACTER_UPGRADE_TALENT_COUNT_CHANGED-255",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-PRESTIGE_AND_HONOR_INVOLUNTARILY_CHANGED-256",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-PREVIEW_TALENT_POINTS_CHANGED-257",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-PREVIEW_TALENT_PRIMARY_TREE_CHANGED-258",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-QUEST_WATCH_OBJECTIVES_CHANGED-259",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-RESTRICTED_ACCOUNT_WARNING-260",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-RUNE_TYPE_UPDATE-261",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "note": "Full-UI publication/event registration only; no signature, payload, populated output or native security parity."
+    },
+    {
+      "source_id": "wt-events-SCRIPT_ACHIEVEMENT_PLAYER_NAME-262",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-STORE_CLOSE_SIMPLE_CHECKOUT-263",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-SYNCHRONIZE_SETTINGS-264",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-TRADE_SKILL_FILTER_UPDATE-265",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-TRANSMOG_COLLECTION_LOADED-266",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-UNIT_POWER-267",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-UPDATE_LFG_LIST_INCREMENTAL-268",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-UPDATE_LFG_TYPES-269",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-UPDATE_TICKET-270",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-UPDATE_WORLD_STATES-271",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-VIGNETTE_ADDED-272",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-VIGNETTE_REMOVED-273",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHANNEL_STATUS_UPDATE-274",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_ENABLED_UPDATE-275",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-VOICE_LEFT_SESSION-276",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-VOICE_PLATE_START-277",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-VOICE_PLATE_STOP-278",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-VOICE_PUSH_TO_TALK_START-279",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-VOICE_PUSH_TO_TALK_STOP-280",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-VOICE_SELF_MUTE-281",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-VOICE_SESSIONS_UPDATE-282",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-VOICE_START-283",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-VOICE_STATUS_UPDATE-284",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-VOICE_STOP-285",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-WEIGHTED_SPELL_UPDATED-286",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-WORLD_MAP_UPDATE-287",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "wt-events-WORLD_STATE_UI_TIMER_UPDATE-288",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current full-UI absence/deprecated fallback only; no historical behavior parity or new retirement."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading/source reference or added-vs-initially-documented qualifier; linked sources are not expanded and carry no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading/source reference or added-vs-initially-documented qualifier; linked sources are not expanded and carry no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading/source reference or added-vs-initially-documented qualifier; linked sources are not expanded and carry no runtime credit."
+    },
+    {
+      "source_id": "source-context-006",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading/source reference or added-vs-initially-documented qualifier; linked sources are not expanded and carry no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-007",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Namespace migration needs real prefix registry and retail send semantics. Old globals remain for existing simulator consumers/deprecation compatibility; the source statement is retained, not claimed as a complete native migration."
+    },
+    {
+      "source_id": "prose-undated-008",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Combat-log OnEvent no-loadout/current-event retrieval requires an actual combat producer and per-dispatch snapshot fixture; registration alone cannot prove event argument absence or snapshot timing."
+    },
+    {
+      "source_id": "prose-undated-009",
+      "capabilities": [
+        "cached-input-change"
+      ],
+      "status": "bounded-coverage",
+      "note": "Cached full UI rejects an unknown event without registering it and accepts UNIT_POWER_UPDATE. Exact native error text and all event names are not claimed."
+    },
+    {
+      "source_id": "prose-undated-010",
+      "capabilities": [
+        "cached-input-change"
+      ],
+      "status": "bounded-coverage",
+      "note": "Cached full UI rejects a string aura index; actual Blizzard AuraUtil.FindAuraByName is callable and returns nil for a missing aura. Populated name lookup/order/filter parity is not established by this bounded input test."
+    },
+    {
+      "source_id": "prose-undated-011",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "UNIT_POWER removal and UNIT_POWER_UPDATE publication are inventory-probed; actual power-change producer/payload/order across units remains unproven."
+    },
+    {
+      "source_id": "prose-undated-012",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Twenty joined-channel limit needs environment-local join/leave membership, capacity boundary and error/result fixtures. GetNumActiveChannels publication does not prove a channel-capacity model."
+    },
+    {
+      "source_id": "prose-undated-013",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Whole C_Vignettes replacement requires namespace retirement and C_VignetteInfo snapshot semantics. No full namespace migration/successor population proof is inferred from an external category link."
+    },
+    {
+      "source_id": "source-context-015",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading/source reference or added-vs-initially-documented qualifier; linked sources are not expanded and carry no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-016",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "The phrase all map API has no exhaustive member list. Explicit named removals are inventory-probed; unnamed historical map functions and total native map migration are not claimed."
+    },
+    {
+      "source_id": "prose-undated-017",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "GetCurrentMapAreaID absence and C_Map.GetBestMapForUnit publication are probed; current WorldMapFrame display identity and native uiMapID behavior across zones require a transition fixture."
+    },
+    {
+      "source_id": "prose-undated-018",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Global GetPlayerMapPosition absence is probed. Existing C_Map.GetPlayerMapPosition models player position but does not establish party-member positions or native map-coordinate behavior."
+    },
+    {
+      "source_id": "prose-undated-019",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "EJ_GetCurrentInstance absence is probed; EJ_GetInstanceForMap composition must be verified against explicit player map/instance snapshots, not a fabricated encounter-journal default."
+    },
+    {
+      "source_id": "prose-undated-020",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "GLYPH_UPDATED absence is probed, but GLYPH_ADDED/REMOVED remain registered for existing simulator glyph producers/tests. Aggregate removal sentence therefore remains unresolved."
+    },
+    {
+      "source_id": "prose-undated-021",
+      "capabilities": [
+        "named-global-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Three named globals are absent in the full-UI inventory observations. Historical removed functionality and native errors are not claimed."
+    },
+    {
+      "source_id": "source-context-023",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading/source reference or added-vs-initially-documented qualifier; linked sources are not expanded and carry no runtime credit."
+    },
+    {
+      "source_id": "source-context-024",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading/source reference or added-vs-initially-documented qualifier; linked sources are not expanded and carry no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-025",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading/source reference or added-vs-initially-documented qualifier; linked sources are not expanded and carry no runtime credit."
+    },
+    {
+      "source_id": "source-context-027",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading/source reference or added-vs-initially-documented qualifier; linked sources are not expanded and carry no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-028",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading/source reference or added-vs-initially-documented qualifier; linked sources are not expanded and carry no runtime credit."
+    },
+    {
+      "source_id": "source-context-031",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading/source reference or added-vs-initially-documented qualifier; linked sources are not expanded and carry no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-032",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading/source reference or added-vs-initially-documented qualifier; linked sources are not expanded and carry no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-033",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading/source reference or added-vs-initially-documented qualifier; linked sources are not expanded and carry no runtime credit."
+    }
+  ]
+}

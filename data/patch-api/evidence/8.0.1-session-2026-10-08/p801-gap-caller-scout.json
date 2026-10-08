@@ -1,0 +1,779 @@
+{
+  "scanner": "/usr/bin/grep -R -n -w -F",
+  "gaps": [
+    {
+      "source_id": "wt-events-GLYPH_ADDED-228",
+      "symbol": "GLYPH_ADDED",
+      "scans": [
+        {
+          "kind": "src-tests",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--",
+            "GLYPH_ADDED",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/tests"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p801-page/src/event/valid_events_a.rs:709:    \"GLYPH_ADDED\",\n/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/real/glyph_state.rs:14://!   `GLYPH_ADDED` (or `GLYPH_REMOVED` for the removal flow) so the flyout\n/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/real/glyph_state.rs:82:/// and `GLYPH_ADDED` fires. Always clears the pending state so subsequent\n/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/real/glyph_state.rs:100:            \"GLYPH_ADDED\"\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_glyph_globals.rs:111:         f:RegisterEvent('GLYPH_ADDED')\\n\\\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_glyph_globals.rs:170:         f:RegisterEvent('GLYPH_ADDED')\\n\\\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/data/patch_8_0_1_sweep_known_gaps.json:2:  \"wt-events-GLYPH_ADDED-228\",\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/data/patch_8_0_1_sweep_known_gaps.json:3:  \"wt-events-GLYPH_ADDED-59\",\n",
+          "stderr": "",
+          "untruncated": true
+        },
+        {
+          "kind": "cached",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "--",
+            "GLYPH_ADDED",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": "",
+          "untruncated": true
+        }
+      ]
+    },
+    {
+      "source_id": "wt-events-GLYPH_ADDED-59",
+      "symbol": "GLYPH_ADDED",
+      "scans": [
+        {
+          "kind": "src-tests",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--",
+            "GLYPH_ADDED",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/tests"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p801-page/src/event/valid_events_a.rs:709:    \"GLYPH_ADDED\",\n/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/real/glyph_state.rs:14://!   `GLYPH_ADDED` (or `GLYPH_REMOVED` for the removal flow) so the flyout\n/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/real/glyph_state.rs:82:/// and `GLYPH_ADDED` fires. Always clears the pending state so subsequent\n/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/real/glyph_state.rs:100:            \"GLYPH_ADDED\"\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_glyph_globals.rs:111:         f:RegisterEvent('GLYPH_ADDED')\\n\\\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_glyph_globals.rs:170:         f:RegisterEvent('GLYPH_ADDED')\\n\\\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/data/patch_8_0_1_sweep_known_gaps.json:2:  \"wt-events-GLYPH_ADDED-228\",\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/data/patch_8_0_1_sweep_known_gaps.json:3:  \"wt-events-GLYPH_ADDED-59\",\n",
+          "stderr": "",
+          "untruncated": true
+        },
+        {
+          "kind": "cached",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "--",
+            "GLYPH_ADDED",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": "",
+          "untruncated": true
+        }
+      ]
+    },
+    {
+      "source_id": "wt-events-GLYPH_REMOVED-231",
+      "symbol": "GLYPH_REMOVED",
+      "scans": [
+        {
+          "kind": "src-tests",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--",
+            "GLYPH_REMOVED",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/tests"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p801-page/src/event/valid_events_a.rs:710:    \"GLYPH_REMOVED\",\n/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/real/glyph_state.rs:14://!   `GLYPH_ADDED` (or `GLYPH_REMOVED` for the removal flow) so the flyout\n/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/real/glyph_state.rs:80:/// pending, the spell's `attached_glyphs` entry is cleared and `GLYPH_REMOVED`\n/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/real/glyph_state.rs:97:            \"GLYPH_REMOVED\"\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_glyph_globals.rs:148:         f:RegisterEvent('GLYPH_REMOVED')\\n\\\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_glyph_globals.rs:171:         f:RegisterEvent('GLYPH_REMOVED')\\n\\\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/data/patch_8_0_1_sweep_known_gaps.json:4:  \"wt-events-GLYPH_REMOVED-231\",\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/data/patch_8_0_1_sweep_known_gaps.json:5:  \"wt-events-GLYPH_REMOVED-59\",\n",
+          "stderr": "",
+          "untruncated": true
+        },
+        {
+          "kind": "cached",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "--",
+            "GLYPH_REMOVED",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": "",
+          "untruncated": true
+        }
+      ]
+    },
+    {
+      "source_id": "wt-events-GLYPH_REMOVED-59",
+      "symbol": "GLYPH_REMOVED",
+      "scans": [
+        {
+          "kind": "src-tests",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--",
+            "GLYPH_REMOVED",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/tests"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p801-page/src/event/valid_events_a.rs:710:    \"GLYPH_REMOVED\",\n/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/real/glyph_state.rs:14://!   `GLYPH_ADDED` (or `GLYPH_REMOVED` for the removal flow) so the flyout\n/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/real/glyph_state.rs:80:/// pending, the spell's `attached_glyphs` entry is cleared and `GLYPH_REMOVED`\n/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/real/glyph_state.rs:97:            \"GLYPH_REMOVED\"\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_glyph_globals.rs:148:         f:RegisterEvent('GLYPH_REMOVED')\\n\\\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/c_glyph_globals.rs:171:         f:RegisterEvent('GLYPH_REMOVED')\\n\\\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/data/patch_8_0_1_sweep_known_gaps.json:4:  \"wt-events-GLYPH_REMOVED-231\",\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/data/patch_8_0_1_sweep_known_gaps.json:5:  \"wt-events-GLYPH_REMOVED-59\",\n",
+          "stderr": "",
+          "untruncated": true
+        },
+        {
+          "kind": "cached",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "--",
+            "GLYPH_REMOVED",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": "",
+          "untruncated": true
+        }
+      ]
+    },
+    {
+      "source_id": "wt-events-SPELL_TEXT_UPDATE-150",
+      "symbol": "SPELL_TEXT_UPDATE",
+      "scans": [
+        {
+          "kind": "src-tests",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--",
+            "SPELL_TEXT_UPDATE",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/tests"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p801-page/src/event/valid_events_c.rs:199:    \"SPELL_TEXT_UPDATE\",\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/data/patch_11_0_0_sweep_known_gaps.json:6:  \"wt-events-SPELL_TEXT_UPDATE-626\",\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/data/patch_8_0_1_sweep_known_gaps.json:6:  \"wt-events-SPELL_TEXT_UPDATE-150\",\n",
+          "stderr": "",
+          "untruncated": true
+        },
+        {
+          "kind": "cached",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "--",
+            "SPELL_TEXT_UPDATE",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_OrderHallUI/Blizzard_OrderHallTalents.lua:488:\tself:RegisterEvent(\"SPELL_TEXT_UPDATE\");\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_OrderHallUI/Blizzard_OrderHallTalents.lua:521:\tself:UnregisterEvent(\"SPELL_TEXT_UPDATE\");\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_OrderHallUI/Blizzard_OrderHallTalents.lua:534:\telseif event == \"SPELL_TEXT_UPDATE\" then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Professions/Blizzard_ProfessionsSpecializationsTemplates.lua:339:\tif event == \"SPELL_TEXT_UPDATE\" then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Professions/Blizzard_ProfessionsSpecializationsTemplates.lua:363:\tself:RegisterEvent(\"SPELL_TEXT_UPDATE\");\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Professions/Blizzard_ProfessionsSpecializationsTemplates.lua:376:\tself:UnregisterEvent(\"SPELL_TEXT_UPDATE\");\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Professions/Blizzard_ProfessionsSpecializationsTemplates.lua:699:\tif event == \"SPELL_TEXT_UPDATE\" then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Professions/Blizzard_ProfessionsSpecializationsTemplates.lua:732:\tself:RegisterEvent(\"SPELL_TEXT_UPDATE\");\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Professions/Blizzard_ProfessionsSpecializationsTemplates.lua:740:\tself:UnregisterEvent(\"SPELL_TEXT_UPDATE\");\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CovenantSanctum/Blizzard_CovenantSanctumUpgrades.lua:151:\t\"SPELL_TEXT_UPDATE\",\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_EncounterJournal.lua:785:\tself:RegisterEvent(\"SPELL_TEXT_UPDATE\");\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_EncounterJournal.lua:899:\tself:UnregisterEvent(\"SPELL_TEXT_UPDATE\");\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_EncounterJournal.lua:1031:\telseif event == \"SPELL_TEXT_UPDATE\" then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Cata/Blizzard_EncounterJournal.lua:572:\tself:RegisterEvent(\"SPELL_TEXT_UPDATE\");\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Cata/Blizzard_EncounterJournal.lua:628:\tself:UnregisterEvent(\"SPELL_TEXT_UPDATE\");\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Cata/Blizzard_EncounterJournal.lua:749:\telseif event == \"SPELL_TEXT_UPDATE\" then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/CharacterFrame.lua:312:\tself:RegisterEvent(\"SPELL_TEXT_UPDATE\");\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/CharacterFrame.lua:321:\telseif event == \"SPELL_TEXT_UPDATE\" then\n",
+          "stderr": "",
+          "untruncated": true
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.CanReportPlayer-8",
+      "symbol": "C_ChatInfo.CanReportPlayer",
+      "scans": [
+        {
+          "kind": "src-tests",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--",
+            "CanReportPlayer",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/tests"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p801-page/src/c_api/patch_retired_members.rs:35:// Keep CanReportPlayer and SetCommunityID: current consumers/callers remain.\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/data/patch_8_1_5_sweep_known_gaps.json:4:  \"wt-global-api-C_ChatInfo.CanReportPlayer-57\",\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/data/patch_8_0_1_sweep_known_gaps.json:7:  \"wt-global-api-C_ChatInfo.CanReportPlayer-8\",\n",
+          "stderr": "",
+          "untruncated": true
+        },
+        {
+          "kind": "cached",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "--",
+            "C_ChatInfo.CanReportPlayer",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": "",
+          "untruncated": true
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.GetChannelRosterInfo-11",
+      "symbol": "C_ChatInfo.GetChannelRosterInfo",
+      "scans": [
+        {
+          "kind": "src-tests",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--",
+            "GetChannelRosterInfo",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/tests"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p801-page/tests/data/patch_8_0_1_sweep_known_gaps.json:8:  \"wt-global-api-C_ChatInfo.GetChannelRosterInfo-11\",\n",
+          "stderr": "",
+          "untruncated": true
+        },
+        {
+          "kind": "cached",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "--",
+            "C_ChatInfo.GetChannelRosterInfo",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Channels/ChannelRoster.lua:111:\t\tlocal name, owner, moderator, guid = C_ChatInfo.GetChannelRosterInfo(channelID, rosterIndex);\n",
+          "stderr": "",
+          "untruncated": true
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.GetRegisteredAddonMessagePrefixes-13",
+      "symbol": "C_ChatInfo.GetRegisteredAddonMessagePrefixes",
+      "scans": [
+        {
+          "kind": "src-tests",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--",
+            "GetRegisteredAddonMessagePrefixes",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/tests"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p801-page/tests/data/patch_8_0_1_sweep_known_gaps.json:9:  \"wt-global-api-C_ChatInfo.GetRegisteredAddonMessagePrefixes-13\",\n",
+          "stderr": "",
+          "untruncated": true
+        },
+        {
+          "kind": "cached",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "--",
+            "C_ChatInfo.GetRegisteredAddonMessagePrefixes",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": "",
+          "untruncated": true
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.IsAddonMessagePrefixRegistered-9",
+      "symbol": "C_ChatInfo.IsAddonMessagePrefixRegistered",
+      "scans": [
+        {
+          "kind": "src-tests",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--",
+            "IsAddonMessagePrefixRegistered",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/tests"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p801-page/tests/data/patch_8_0_1_sweep_known_gaps.json:10:  \"wt-global-api-C_ChatInfo.IsAddonMessagePrefixRegistered-9\",\n",
+          "stderr": "",
+          "untruncated": true
+        },
+        {
+          "kind": "cached",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "--",
+            "C_ChatInfo.IsAddonMessagePrefixRegistered",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": "",
+          "untruncated": true
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.IsPartyChannelType-10",
+      "symbol": "C_ChatInfo.IsPartyChannelType",
+      "scans": [
+        {
+          "kind": "src-tests",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--",
+            "IsPartyChannelType",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/tests"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p801-page/tests/data/patch_8_0_1_sweep_known_gaps.json:11:  \"wt-global-api-C_ChatInfo.IsPartyChannelType-10\",\n",
+          "stderr": "",
+          "untruncated": true
+        },
+        {
+          "kind": "cached",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "--",
+            "C_ChatInfo.IsPartyChannelType",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrame/Mainline/VoiceChatHeadsetButton.lua:255:\t\treturn C_ChatInfo.IsPartyChannelType(channelType);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Channels/VoiceChatPrompt.lua:127:\treturn C_ChatInfo.IsPartyChannelType(channel.channelType) and CountActiveChannelMembers(channel) > 0;\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Channels/ChannelFrame.lua:372:\tif channel and C_ChatInfo.IsPartyChannelType(channel:GetChannelType()) then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Channels/ChannelButton.lua:327:\treturn C_ChatInfo.IsPartyChannelType(self:GetChannelType());\n",
+          "stderr": "",
+          "untruncated": true
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.RegisterAddonMessagePrefix-14",
+      "symbol": "C_ChatInfo.RegisterAddonMessagePrefix",
+      "scans": [
+        {
+          "kind": "src-tests",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--",
+            "RegisterAddonMessagePrefix",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/tests"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p801-page/tests/data/patch_10_2_7_sweep_known_gaps.json:4:  \"wt-global-api-C_ChatInfo.RegisterAddonMessagePrefix-108\",\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/data/patch_8_0_1_sweep_known_gaps.json:12:  \"wt-global-api-C_ChatInfo.RegisterAddonMessagePrefix-14\",\n",
+          "stderr": "",
+          "untruncated": true
+        },
+        {
+          "kind": "cached",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "--",
+            "C_ChatInfo.RegisterAddonMessagePrefix",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": "",
+          "untruncated": true
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.SendAddonMessage-16",
+      "symbol": "C_ChatInfo.SendAddonMessage",
+      "scans": [
+        {
+          "kind": "src-tests",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--",
+            "SendAddonMessage",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/tests"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p801-page/src/c_api/addon_messages.rs:40:    table_set_rust_fn_static(state, table, \"SendAddonMessage\", send_addon_message)?;\n/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/workarounds/temporary/inert_global_defaults.rs:71:if rawget(C_Commentator, \"SendAddonMessage\") == nil then\n/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/workarounds/temporary/inert_global_defaults.rs:72:    function C_Commentator.SendAddonMessage(_prefix, _message, _channel)\n/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/workarounds/temporary/inert_global_defaults.rs:82:-- 12.0.5 logged variant; mirrors SendAddonMessage until commentator comms are modeled.\n/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/workarounds/temporary/inert_global_defaults.rs:86:        return C_Commentator.SendAddonMessage(_prefix, _message, _chatType)\n/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/workarounds/temporary/inert_global_defaults.rs:301:                if C_Commentator.SendAddonMessage(\"A\", \"B\", \"WHISPER\") ~= Enum.SendAddonMessageResult.Success then return \"send\" end\n/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/workarounds/temporary/inert_global_defaults.rs:385:                if type(C_Commentator.SendAddonMessage) ~= \"function\" then return \"missing_default\" end\n/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs:1://! Auction / message verbs: `CancelAuction`, `SendAddonMessage`,\n/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs:8://! - `SendAddonMessage(prefix, message, channel, target)` \u2014 append to\n/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs:112:/// `SendAddonMessage(prefix, message, channel, target)` \u2014 log + fire\n/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/globals/message_verbs.rs:159:    LuaApiMut::register_function(lua, \"SendAddonMessage\", send_addon_message)?;\n/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/sim_substates/mod.rs:292:/// `SendAddonMessage`.\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/addon_messages.rs:20:        assert(type(C_ChatInfo.SendAddonMessage) == 'function', 'missing SendAddonMessage')\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/addon_messages.rs:107:        assert(C_ChatInfo.SendAddonMessage('ACE', 'one') == 0)\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/addon_messages.rs:109:        assert(C_ChatInfo.SendAddonMessage('ACE', 'three', 'WHISPER', 'Bob-Realm') == 0)\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/addon_messages.rs:146:    env.exec(\"assert(C_ChatInfo.SendAddonMessage('ACE', 'kept', 'WHISPER', 'Bob') == 0)\")\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/addon_messages.rs:152:        for _, send in ipairs({C_ChatInfo.SendAddonMessage, C_ChatInfo.SendAddonMessageLogged}) do\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/addon_messages.rs:178:        for _, send in ipairs({C_ChatInfo.SendAddonMessage, C_ChatInfo.SendAddonMessageLogged}) do\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/addon_messages.rs:188:    env.exec(\"assert(C_ChatInfo.SendAddonMessage('ACE', 'party') == 0); assert(C_ChatInfo.SendAddonMessage('ACE', 'raid', 'RAID') == 5)\")\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/addon_messages.rs:192:    env.exec(\"assert(C_ChatInfo.SendAddonMessage('ACE', 'raid', 'RAID') == 0); assert(C_ChatInfo.SendAddonMessageLogged('ACE', 'guild', 'GUILD') == 0)\")\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/addon_messages.rs:202:    env.exec(\"assert(C_ChatInfo.SendAddonMessage('ACE', 'stale roster') == 5)\")\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/addon_messages.rs:213:        for _, send in ipairs({C_ChatInfo.SendAddonMessage, C_ChatInfo.SendAddonMessageLogged}) do\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/addon_messages.rs:236:        for _, send in ipairs({C_ChatInfo.SendAddonMessage, C_ChatInfo.SendAddonMessageLogged}) do\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/addon_messages.rs:261:        for _, send in ipairs({C_ChatInfo.SendAddonMessage, C_ChatInfo.SendAddonMessageLogged}) do\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/addon_messages.rs:338:        assert(C_ChatInfo.SendAddonMessage('ACE', '', 'WHISPER', 'Bob') == 0)\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/addon_messages.rs:447:    first.exec(\"assert(C_ChatInfo.SendAddonMessage('ACE', 'first') == 0); assert(C_BattleNet.SendGameData(200001, 'ACE', 'first bnet') == 0)\")\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/addon_messages.rs:449:    second.exec(\"assert(C_ChatInfo.SendAddonMessage('ACE', 'second') == 5); assert(C_BattleNet.SendGameData(200001, 'ACE', 'second bnet') == 12)\")\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/addon_messages.rs:464:        .eval(\"return select('#', SendAddonMessage('LEGACY', 'payload', 'WHISPER', 'Bob'))\")\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/addon_messages.rs:483:    env.exec(\"assert(SendAddonMessage(nil, nil, nil, nil) == nil)\")\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/commentator_api.rs:13:            local explicit = C_Commentator.SendAddonMessage(\"COOLDOWNBROADCASTER\", \"1,2,3\", \"RAID\")\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/commentator_api.rs:18:            local implicit = C_Commentator.SendAddonMessage(\"COOLDOWNBROADCASTER\", \"1,2,3\")\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/commentator_api.rs:30:        \"C_Commentator.SendAddonMessage should return SendAddonMessageResult.Success\"\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/message_verbs.rs:41:// \u2500\u2500 SendAddonMessage \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/message_verbs.rs:46:    env.exec(r#\"SendAddonMessage(\"MYADDON\", \"hello\", \"PARTY\", \"\")\"#)\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/message_verbs.rs:74:    env.exec(r#\"SendAddonMessage(\"MYADDON\", \"ping\", \"WHISPER\", \"Bob\")\"#)\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/message_verbs.rs:119:           SendAddonMessage(\"X\", \"three\", \"PARTY\")\"#,\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/data/patch_10_2_7_sweep_known_gaps.json:5:  \"wt-global-api-C_ChatInfo.SendAddonMessage-110\",\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/data/patch_8_0_1_sweep_known_gaps.json:13:  \"wt-global-api-C_ChatInfo.SendAddonMessage-16\",\n",
+          "stderr": "",
+          "untruncated": true
+        },
+        {
+          "kind": "cached",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "--",
+            "C_ChatInfo.SendAddonMessage",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": "",
+          "untruncated": true
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.SendAddonMessageLogged-17",
+      "symbol": "C_ChatInfo.SendAddonMessageLogged",
+      "scans": [
+        {
+          "kind": "src-tests",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--",
+            "SendAddonMessageLogged",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/tests"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p801-page/src/c_api/addon_messages.rs:44:        \"SendAddonMessageLogged\",\n/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/workarounds/temporary/inert_global_defaults.rs:84:        and rawget(C_Commentator, \"SendAddonMessageLogged\") == nil then\n/home/osso/.worktrees/wow-ui-sim-p801-page/src/lua_api/workarounds/temporary/inert_global_defaults.rs:85:    function C_Commentator.SendAddonMessageLogged(_prefix, _message, _chatType, _target)\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/addon_messages.rs:21:        assert(type(C_ChatInfo.SendAddonMessageLogged) == 'function', 'missing SendAddonMessageLogged')\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/addon_messages.rs:108:        assert(C_ChatInfo.SendAddonMessageLogged('BUG', 'plain text', nil, nil) == 0)\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/addon_messages.rs:152:        for _, send in ipairs({C_ChatInfo.SendAddonMessage, C_ChatInfo.SendAddonMessageLogged}) do\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/addon_messages.rs:178:        for _, send in ipairs({C_ChatInfo.SendAddonMessage, C_ChatInfo.SendAddonMessageLogged}) do\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/addon_messages.rs:192:    env.exec(\"assert(C_ChatInfo.SendAddonMessage('ACE', 'raid', 'RAID') == 0); assert(C_ChatInfo.SendAddonMessageLogged('ACE', 'guild', 'GUILD') == 0)\")\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/addon_messages.rs:213:        for _, send in ipairs({C_ChatInfo.SendAddonMessage, C_ChatInfo.SendAddonMessageLogged}) do\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/addon_messages.rs:236:        for _, send in ipairs({C_ChatInfo.SendAddonMessage, C_ChatInfo.SendAddonMessageLogged}) do\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/addon_messages.rs:261:        for _, send in ipairs({C_ChatInfo.SendAddonMessage, C_ChatInfo.SendAddonMessageLogged}) do\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/addon_messages.rs:339:        assert(C_ChatInfo.SendAddonMessageLogged('ACE', '', 'WHISPER', 'Bob') == 0)\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/addon_messages.rs:453:    second.exec(\"assert(C_ChatInfo.SendAddonMessageLogged('ACE', 'second whisper', 'WHISPER', 'Bob') == 0)\")\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/patch_12_0_5_sweep_globals.rs:169:            local result = C_Commentator.SendAddonMessageLogged('Prefix', 'message', 'PARTY')\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/data/patch_10_2_7_sweep_known_gaps.json:6:  \"wt-global-api-C_ChatInfo.SendAddonMessageLogged-112\",\n/home/osso/.worktrees/wow-ui-sim-p801-page/tests/data/patch_8_0_1_sweep_known_gaps.json:14:  \"wt-global-api-C_ChatInfo.SendAddonMessageLogged-17\",\n",
+          "stderr": "",
+          "untruncated": true
+        },
+        {
+          "kind": "cached",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "--",
+            "C_ChatInfo.SendAddonMessageLogged",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": "",
+          "untruncated": true
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Map.GetBountySetIDForMap-21",
+      "symbol": "C_Map.GetBountySetIDForMap",
+      "scans": [
+        {
+          "kind": "src-tests",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--",
+            "GetBountySetIDForMap",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/tests"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p801-page/tests/data/patch_8_0_1_sweep_known_gaps.json:15:  \"wt-global-api-C_Map.GetBountySetIDForMap-21\",\n",
+          "stderr": "",
+          "untruncated": true
+        },
+        {
+          "kind": "cached",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "--",
+            "C_Map.GetBountySetIDForMap",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": "",
+          "untruncated": true
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Map.GetMapArtHelpTextPosition-24",
+      "symbol": "C_Map.GetMapArtHelpTextPosition",
+      "scans": [
+        {
+          "kind": "src-tests",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--",
+            "GetMapArtHelpTextPosition",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/tests"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p801-page/tests/data/patch_8_0_1_sweep_known_gaps.json:16:  \"wt-global-api-C_Map.GetMapArtHelpTextPosition-24\",\n",
+          "stderr": "",
+          "untruncated": true
+        },
+        {
+          "kind": "cached",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "--",
+            "C_Map.GetMapArtHelpTextPosition",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedMapDataProviders/ClickToZoomDataProvider.lua:112:\t\treturn C_Map.GetMapArtHelpTextPosition(mapID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedMapDataProviders/ZoneLabelDataProvider.lua:132:\tlocal helpTextPosition = C_Map.GetMapArtHelpTextPosition(mapID);\n",
+          "stderr": "",
+          "untruncated": true
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Map.GetMapDisplayInfo-30",
+      "symbol": "C_Map.GetMapDisplayInfo",
+      "scans": [
+        {
+          "kind": "src-tests",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--",
+            "GetMapDisplayInfo",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/tests"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p801-page/tests/data/patch_8_0_1_sweep_known_gaps.json:17:  \"wt-global-api-C_Map.GetMapDisplayInfo-30\",\n",
+          "stderr": "",
+          "untruncated": true
+        },
+        {
+          "kind": "cached",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "--",
+            "C_Map.GetMapDisplayInfo",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedMapDataProviders/GroupMembersDataProvider.lua:114:\tlocal hideMapIcons = C_Map.GetMapDisplayInfo(mapID);\n",
+          "stderr": "",
+          "untruncated": true
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Map.GetMapHighlightInfoAtPosition-33",
+      "symbol": "C_Map.GetMapHighlightInfoAtPosition",
+      "scans": [
+        {
+          "kind": "src-tests",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--",
+            "GetMapHighlightInfoAtPosition",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/tests"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p801-page/tests/data/patch_8_0_1_sweep_known_gaps.json:18:  \"wt-global-api-C_Map.GetMapHighlightInfoAtPosition-33\",\n",
+          "stderr": "",
+          "untruncated": true
+        },
+        {
+          "kind": "cached",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "--",
+            "C_Map.GetMapHighlightInfoAtPosition",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedMapDataProviders/MapHighlightDataProvider.lua:52:\tlocal fileDataID, atlasID, texPercentageX, texPercentageY, textureX, textureY, scrollChildX, scrollChildY = C_Map.GetMapHighlightInfoAtPosition(mapID, normalizedCursorX, normalizedCursorY);\n",
+          "stderr": "",
+          "untruncated": true
+        }
+      ]
+    },
+    {
+      "source_id": "wt-global-api-C_Map.GetMapLevels-36",
+      "symbol": "C_Map.GetMapLevels",
+      "scans": [
+        {
+          "kind": "src-tests",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--",
+            "GetMapLevels",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p801-page/tests"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p801-page/tests/data/patch_8_0_1_sweep_known_gaps.json:19:  \"wt-global-api-C_Map.GetMapLevels-36\"\n",
+          "stderr": "",
+          "untruncated": true
+        },
+        {
+          "kind": "cached",
+          "command": [
+            "/usr/bin/grep",
+            "-R",
+            "-n",
+            "-w",
+            "-F",
+            "--exclude=*Documentation*",
+            "--exclude-dir=*Documentation*",
+            "--",
+            "C_Map.GetMapLevels",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedMapDataProviders/AreaLabelDataProvider.lua:81:\t\t\tlocal playerMinLevel, playerMaxLevel, petMinLevel, petMaxLevel = C_Map.GetMapLevels(positionMapInfo.mapID);\n",
+          "stderr": "",
+          "untruncated": true
+        }
+      ]
+    }
+  ]
+}

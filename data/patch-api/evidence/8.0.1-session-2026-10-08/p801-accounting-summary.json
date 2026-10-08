@@ -1,0 +1,14 @@
+{
+  "inventory_rows": 269,
+  "inventory_ok": 251,
+  "inventory_gaps": 18,
+  "extract_rows": 26,
+  "ledger_rows": 295,
+  "ledger_statuses": {
+    "partial-development-green": 151,
+    "audit-pending": 28,
+    "bounded-coverage": 103,
+    "metadata-only": 13
+  },
+  "pending_prose": 10
+}

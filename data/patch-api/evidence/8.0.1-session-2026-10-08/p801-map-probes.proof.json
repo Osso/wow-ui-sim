@@ -1,0 +1,20 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "c_map_probes::",
+    "--",
+    "--nocapture"
+  ],
+  "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+  "scope": "map-probes",
+  "environment": {
+    "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p801-page"
+  },
+  "exit": 0,
+  "seconds": 0.6910052570019616,
+  "log": "p801-map-probes.log",
+  "log_sha256": "02c45f95b9a5b8072fd8a9c31957972a179dc512a13c2046fb7e911df982b46c"
+}
