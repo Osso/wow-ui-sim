@@ -1,0 +1,19 @@
+{
+  "pageid": 109654,
+  "title": "Patch 8.3.0/API changes",
+  "revid": 6471393,
+  "timestamp": "2025-09-13T10:01:45Z",
+  "retrieved": "2026-10-08",
+  "method": "MediaWiki revisions API via browser-cli; pinned response in evidence/8.3.0-session-2026-10-08/p830-fetch.json",
+  "wikitext_sha256": "01f5ca887f8dbe81b64ed25d5691bd2634e3367def22d8a713b892e2b01694f2",
+  "generator_flags": [
+    "--legacy-column-headers"
+  ],
+  "extractor_flags": [
+    "--preserve-examples",
+    "--normalize-inventory-headings",
+    "--retain-reference-notes"
+  ],
+  "register_generator": "tools/gen_patch_wikitext_register.py",
+  "extract_generator": "tools/extract_patch_non_inventory.py"
+}

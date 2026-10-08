@@ -8,6 +8,17 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 class ExtractTests(unittest.TestCase):
+    def test_reference_note_preserves_publication_prose_and_citation(self):
+        raw = ('* The [[Auction House]] was revamped <ref>{{ref web|'
+               'url=https://example.test/source|author=[[Kaivax]]|date=2019-10-07|'
+               'title=Feedback – Auction House Revamp}}</ref>\n')
+        with self.assertRaises(ValueError):
+            extract_text(raw)
+        self.assertEqual(extract_text(raw, retain_reference_notes=True),
+                         '* The Auction House was revamped [Reference: '
+                         'url=https://example.test/source|author=Kaivax|date=2019-10-07|'
+                         'title=Feedback – Auction House Revamp]\n')
+
     def test_spaced_inventory_headings_retain_deprecated_table(self):
         raw = ('==Deprecated API==\n{| class="wikitable"\n'
                ': {{api|Old}} → {{api|C_New.Call}}\n|}\n'

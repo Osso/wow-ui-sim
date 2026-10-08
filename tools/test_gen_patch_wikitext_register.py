@@ -5,6 +5,23 @@ from gen_patch_wikitext_register import parse_section, split_sections
 
 
 class InventoryTests(unittest.TestCase):
+    def test_legacy_headers_retain_counts_and_removed_command_kind(self):
+        lines = [(1, '! style="width:50%"| 1 new cvars'),
+                 (2, '! style="width:50%"| 1 removed command'),
+                 (3, '| valign="top" | <div>'),
+                 (4, ': {{api|t=c|Collision}}'),
+                 (5, '</div>'),
+                 (6, '| valign="top" | <div>'),
+                 (7, ': {{api|t=c|DumpSoundKits}}')]
+        entries, counts = parse_section('cvars', lines, legacy_column_headers=True)
+        self.assertEqual([(e['symbol'], e.get('kind')) for e in entries],
+                         [('Collision', None), ('DumpSoundKits', 'command')])
+        self.assertEqual([(c['direction'], c['header_count'], c['parsed_count']) for c in counts],
+                         [('added', 1, 1), ('removed', 1, 1)])
+        legacy, old_counts = parse_section('cvars', lines)
+        self.assertNotIn('kind', legacy[1])
+        self.assertEqual(old_counts, [])
+
     def test_simple_api_list_retains_function_and_cvar_source_lines(self):
         import gen_patch_wikitext_register as generator
         raw = ('== Changes ==\n* TOC: <code>80300</code>\n'

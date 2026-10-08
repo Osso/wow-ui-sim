@@ -55,7 +55,11 @@ def render_line(line):
     return html.unescape(line).rstrip()
 
 
-def extract_text(raw, *, preserve_examples=False, normalize_inventory_headings=False):
+def extract_text(raw, *, preserve_examples=False, normalize_inventory_headings=False,
+                 retain_reference_notes=False):
+    if retain_reference_notes:
+        raw = re.sub(r'<ref>\{\{ref web\|([^{}]+)\}\}</ref>',
+                     r'[Reference: \1]', raw)
     if normalize_inventory_headings:
         raw = re.sub(r'^==\s*(Global API|Widgets|Events|CVars)\s*==$',
                      r'==\1==', raw, flags=re.M)
@@ -240,6 +244,8 @@ def main():
                         help='Retain Lua/XML syntaxhighlight contents verbatim in fenced blocks')
     parser.add_argument('--normalize-inventory-headings', action='store_true',
                         help='Recognize spaced inventory headings without swallowing earlier deprecated tables')
+    parser.add_argument('--retain-reference-notes', action='store_true',
+                        help='Retain inline ref web citation fields alongside publication prose')
     parser.add_argument('--text-only', action='store_true',
                         help='Write/check plaintext only; never read or modify a coverage ledger')
     args = parser.parse_args()
@@ -252,7 +258,8 @@ def main():
     text_path = base / f'{args.patch}-api-changes.txt'
     coverage_path = base / f'{args.patch}-page-coverage.json'
     text = extract_text(raw_path.read_text(), preserve_examples=args.preserve_examples,
-                        normalize_inventory_headings=args.normalize_inventory_headings)
+                        normalize_inventory_headings=args.normalize_inventory_headings,
+                        retain_reference_notes=args.retain_reference_notes)
     rows = seed_rows(text, args.patch)
     if args.text_only:
         if args.check:

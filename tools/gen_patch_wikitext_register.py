@@ -74,19 +74,26 @@ def make_entry(section, direction, line_no, text):
 
 
 def parse_section(section, lines, *, expand_shared_changes=False, capture_span_defaults=False,
-                  skip_plain_scripts_label=False):
+                  skip_plain_scripts_label=False, legacy_column_headers=False):
     """lines: [(line_no, text)] between this heading and the next."""
     entries, headers, columns = [], [], 0
     mode = None
     inline_commands = False
+    command_columns = set()
     for line_no, text in lines:
         if text.startswith("! "):
-            headers += [int(n) for n in COUNT.findall(text)]
+            legacy_header = re.search(r'\|\s*(\d+)\s+(?:new|removed(?:/renamed)?)\s+(\w+)', text)
+            if legacy_column_headers and legacy_header:
+                headers.append(int(legacy_header[1]))
+                if legacy_header[2] in ('command', 'commands'):
+                    command_columns.add(len(headers))
+            else:
+                headers += [int(n) for n in COUNT.findall(text)]
         elif text.startswith('| <font') and FONT.sub('', text).strip('| ').lower() in ('added', 'removed'):
             mode = FONT.sub('', text).strip('| ').lower()
         elif text.startswith('| valign="top"'):
-            inline_commands = False
             columns += 1
+            inline_commands = columns in command_columns
             mode = "added" if columns == 1 else "removed"
         elif text.startswith("</div>"):
             mode = None
@@ -189,6 +196,8 @@ def main():
                         help='Skip the plain widget Scripts label; opt-in preserves prior registers')
     parser.add_argument('--simple-api-list', action='store_true',
                         help='Retain API/New bullet additions; opt-in preserves prior registers')
+    parser.add_argument('--legacy-column-headers', action='store_true',
+                        help='Retain prose numerical headers and command-column kinds; opt-in preserves prior registers')
     args = parser.parse_args()
     patch, path, revid, out = args.patch, args.path, args.revid, args.out
     raw = Path(path).read_bytes()
@@ -201,7 +210,8 @@ def main():
             entry_section, buckets.get(section, []),
             expand_shared_changes=args.expand_shared_changes,
             capture_span_defaults=args.capture_span_defaults,
-            skip_plain_scripts_label=args.skip_plain_scripts_label)
+            skip_plain_scripts_label=args.skip_plain_scripts_label,
+            legacy_column_headers=args.legacy_column_headers)
         if section == "commands":
             for count in section_counts:
                 count["section"] = "commands"

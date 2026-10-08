@@ -1,3 +1,7 @@
+## [2026-10-08] investigation | 8.3.0 API page audit
+
+[Audit](investigations/patch-8-3-0-api-audit.md): pinned revision 6471393, 220 inventory rows and opt-in source retention; discovery and acceptance pending.
+
 ## [2026-10-08] evidence | 9.0.1 page audit
 
 [Audit](investigations/patch-9-0-1-api-audit.md): revision 6471353, 755 inventory / 135 extract / four caption occurrences; eleven bounded retail retirements, 273 exact publication gaps and 113 substantive extract targets pending. All 33 sweeps plus factory, exact negative control, bare/cached/Mists behavior, non-vendor warning boundary and startup `[]` pass. All 168 earlier inputs / 64 extraction-mode outcomes preserved; 33 registers reproduce. Eleven possible 9.0.2 gap supersessions reserved for integration.
