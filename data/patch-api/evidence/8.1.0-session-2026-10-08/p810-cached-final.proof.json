@@ -1,0 +1,22 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_8_1_0"
+  ],
+  "revision": "71ad73fbc07d2605f747768174d34746712ba570",
+  "scope": "p810-cached-final",
+  "cwd": ".",
+  "target": "dedicated p810-page target (external to repository)",
+  "environment": {
+    "P810_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/evidence/8.1.0-session-2026-10-08/patch_8_1_0_publication_sweep-results.json"
+  },
+  "exit": 0,
+  "log": "p810-cached-final.txt",
+  "log_sha256": "5ccfc63f7d19a6172dfe85ce724e848e6e85a5e5145ac47bb5b0dc2cafc857c7",
+  "seconds": 41.952245247000974,
+  "invalidated": false
+}

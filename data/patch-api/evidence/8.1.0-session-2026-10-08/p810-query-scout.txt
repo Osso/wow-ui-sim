@@ -1,0 +1,31 @@
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/lfg_categories.rs:194:            if not C_LFGList.HasSearchResultInfo(1) then return "1_missing" end
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/lfg_categories.rs:195:            if C_LFGList.HasSearchResultInfo(9999) then return "9999_found" end
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/lfg_categories.rs:200:    assert_eq!(result, "ok", "HasSearchResultInfo: {result}");
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/patch_12_0_0_lfg_playstyle.rs:77:        "return C_LFGList.GetSearchResultInfo(1)",
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/patch_12_0_0_lfg_playstyle.rs:80:        local first = C_LFGList.GetSearchResultInfo(1)
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/patch_12_0_0_lfg_playstyle.rs:81:        local second = C_LFGList.GetSearchResultInfo(2)
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/patch_12_0_0_lfg_playstyle.rs:93:        assert(C_LFGList.GetSearchResultInfo(1).leaderDungeonScoreInfo[1].mapName == 'Fixture dungeon')
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/patch_12_0_0_lfg_playstyle.rs:97:        assert(C_LFGList.GetSearchResultInfo(1).generalPlaystyle == 1)
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/patch_12_0_0_lfg_playstyle.rs:99:        assert(C_LFGList.GetSearchResultInfo(3).generalPlaystyle == nil)
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/patch_12_0_0_lfg_playstyle.rs:100:        assert(C_LFGList.GetSearchResultInfo(99999) == nil)
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/patch_12_1_0_struct_shapes.rs:350:        getter: "return C_LFGList.GetSearchResultInfo(7)",
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/test_premade_groups.rs:13:            local info = C_LFGList.GetSearchResultInfo(1)
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/test_premade_groups.rs:24:    assert_eq!(result, "ok", "GetSearchResultInfo: {result}");
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/test_premade_groups.rs:33:            local info = C_LFGList.GetSearchResultInfo(9999)
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/test_premade_groups.rs:131:            local info = C_LFGList.GetSearchResultInfo(1)
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/test_premade_groups.rs:134:            local info2 = C_LFGList.GetSearchResultInfo(1)
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/test_premade_groups.rs:185:            local info = C_LFGList.GetSearchResultInfo(1)
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/test_premade_groups.rs:223:                local info = C_LFGList.GetSearchResultInfo(resultID)
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/test_premade_groups.rs:243:                local info = C_LFGList.GetSearchResultInfo(resultID)
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/patch_12_0_0_struct_shapes.rs:72:        assert(C_LFGList.GetSearchResultInfo(1).name == '+15 Mists chill run')
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/blizzard_ui/blizzard_achievementui/behavior_search_filter.rs:217:                local search_results = AchievementFrame.SearchResults
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/blizzard_ui/blizzard_achievementui/behavior_search_filter.rs:235:                local original_set_provider = search_results.ScrollBox.SetDataProvider
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/blizzard_ui/blizzard_achievementui/behavior_search_filter.rs:236:                search_results.ScrollBox.SetDataProvider = function(self, provider)
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/blizzard_ui/blizzard_achievementui/behavior_search_filter.rs:241:                local original_title_set = search_results.TitleText.SetText
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/blizzard_ui/blizzard_achievementui/behavior_search_filter.rs:242:                search_results.TitleText.SetText = function(self, text)
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/blizzard_ui/blizzard_achievementui/behavior_search_filter.rs:289:                search_results.ScrollBox.SetDataProvider = original_set_provider
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/blizzard_ui/blizzard_achievementui/behavior_search_filter.rs:290:                search_results.TitleText.SetText = original_title_set
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/c_achievement_info_probes.rs:39:            local tabard = C_AchievementInfo.GetRewardItemID(558)
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/c_achievement_info_probes.rs:41:                   C_AchievementInfo.GetRewardItemID(6) == nil,
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/c_achievement_info_probes.rs:42:                   C_AchievementInfo.GetRewardItemID(999999) == nil
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/c_achievement_info_probes.rs:141:                   C_AchievementInfo.GetRewardItemID(777),

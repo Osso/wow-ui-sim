@@ -1,0 +1,213 @@
+{
+  "code_revision": "c5e0f15ab6fcfa3397aa5a02df7df0c94a513e49",
+  "required": [
+    {
+      "receipt": "p810-behavior-final.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src/c_api/c_date_and_time.rs",
+        "src/c_api/mod.rs",
+        "src/c_api/patch_retired_members.rs",
+        "tests/patch_8_1_0_calendar_compare.rs",
+        "tests/patch_8_1_0_publication_fixes.rs",
+        "tests/patch_8_1_0_cached_surfaces.rs",
+        "tests/patch_8_1_0_publication_sweep.rs",
+        "tests/data/patch_8_1_0_sweep_known_gaps.json"
+      ]
+    },
+    {
+      "receipt": "p810-cached-final.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src/c_api/c_date_and_time.rs",
+        "src/c_api/mod.rs",
+        "src/c_api/patch_retired_members.rs",
+        "tests/patch_8_1_0_calendar_compare.rs",
+        "tests/patch_8_1_0_publication_fixes.rs",
+        "tests/patch_8_1_0_cached_surfaces.rs",
+        "tests/patch_8_1_0_publication_sweep.rs",
+        "tests/data/patch_8_1_0_sweep_known_gaps.json"
+      ]
+    },
+    {
+      "receipt": "p810-all-sweeps.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src/c_api/c_date_and_time.rs",
+        "src/c_api/mod.rs",
+        "src/c_api/patch_retired_members.rs",
+        "tests/patch_8_1_0_calendar_compare.rs",
+        "tests/patch_8_1_0_publication_fixes.rs",
+        "tests/patch_8_1_0_cached_surfaces.rs",
+        "tests/patch_8_1_0_publication_sweep.rs",
+        "tests/data/patch_8_1_0_sweep_known_gaps.json"
+      ]
+    },
+    {
+      "receipt": "p810-negative.proof.json",
+      "expected_exit": 1,
+      "source_scope": [
+        "src/c_api/c_date_and_time.rs",
+        "src/c_api/mod.rs",
+        "src/c_api/patch_retired_members.rs",
+        "tests/patch_8_1_0_calendar_compare.rs",
+        "tests/patch_8_1_0_publication_fixes.rs",
+        "tests/patch_8_1_0_cached_surfaces.rs",
+        "tests/patch_8_1_0_publication_sweep.rs",
+        "tests/data/patch_8_1_0_sweep_known_gaps.json"
+      ]
+    },
+    {
+      "receipt": "p810-regression-c_calendar_defaults_probes.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src/c_api/c_date_and_time.rs",
+        "src/c_api/mod.rs",
+        "src/c_api/patch_retired_members.rs",
+        "tests/patch_8_1_0_calendar_compare.rs",
+        "tests/patch_8_1_0_publication_fixes.rs",
+        "tests/patch_8_1_0_cached_surfaces.rs",
+        "tests/patch_8_1_0_publication_sweep.rs",
+        "tests/data/patch_8_1_0_sweep_known_gaps.json"
+      ]
+    },
+    {
+      "receipt": "p810-regression-c_map_probes.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src/c_api/c_date_and_time.rs",
+        "src/c_api/mod.rs",
+        "src/c_api/patch_retired_members.rs",
+        "tests/patch_8_1_0_calendar_compare.rs",
+        "tests/patch_8_1_0_publication_fixes.rs",
+        "tests/patch_8_1_0_cached_surfaces.rs",
+        "tests/patch_8_1_0_publication_sweep.rs",
+        "tests/data/patch_8_1_0_sweep_known_gaps.json"
+      ]
+    },
+    {
+      "receipt": "p810-regression-date_and_time_defaults.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src/c_api/c_date_and_time.rs",
+        "src/c_api/mod.rs",
+        "src/c_api/patch_retired_members.rs",
+        "tests/patch_8_1_0_calendar_compare.rs",
+        "tests/patch_8_1_0_publication_fixes.rs",
+        "tests/patch_8_1_0_cached_surfaces.rs",
+        "tests/patch_8_1_0_publication_sweep.rs",
+        "tests/data/patch_8_1_0_sweep_known_gaps.json"
+      ]
+    },
+    {
+      "receipt": "p810-regression-configuration_warnings_defaults.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src/c_api/c_date_and_time.rs",
+        "src/c_api/mod.rs",
+        "src/c_api/patch_retired_members.rs",
+        "tests/patch_8_1_0_calendar_compare.rs",
+        "tests/patch_8_1_0_publication_fixes.rs",
+        "tests/patch_8_1_0_cached_surfaces.rs",
+        "tests/patch_8_1_0_publication_sweep.rs",
+        "tests/data/patch_8_1_0_sweep_known_gaps.json"
+      ]
+    },
+    {
+      "receipt": "p810-regression-blizzard_calendar_loads.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src/c_api/c_date_and_time.rs",
+        "src/c_api/mod.rs",
+        "src/c_api/patch_retired_members.rs",
+        "tests/patch_8_1_0_calendar_compare.rs",
+        "tests/patch_8_1_0_publication_fixes.rs",
+        "tests/patch_8_1_0_cached_surfaces.rs",
+        "tests/patch_8_1_0_publication_sweep.rs",
+        "tests/data/patch_8_1_0_sweep_known_gaps.json"
+      ]
+    },
+    {
+      "receipt": "p810-regression-blizzard_world_map_loads.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src/c_api/c_date_and_time.rs",
+        "src/c_api/mod.rs",
+        "src/c_api/patch_retired_members.rs",
+        "tests/patch_8_1_0_calendar_compare.rs",
+        "tests/patch_8_1_0_publication_fixes.rs",
+        "tests/patch_8_1_0_cached_surfaces.rs",
+        "tests/patch_8_1_0_publication_sweep.rs",
+        "tests/data/patch_8_1_0_sweep_known_gaps.json"
+      ]
+    },
+    {
+      "receipt": "p810-extract-fixtures.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "tools/extract_patch_non_inventory.py",
+        "tools/gen_patch_wikitext_register.py"
+      ]
+    },
+    {
+      "receipt": "p810-gen-fixtures.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "tools/extract_patch_non_inventory.py",
+        "tools/gen_patch_wikitext_register.py"
+      ]
+    },
+    {
+      "receipt": "p810-source-reproduction-final.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "tools/extract_patch_non_inventory.py",
+        "tools/gen_patch_wikitext_register.py"
+      ]
+    },
+    {
+      "receipt": "p810-format.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "tools/extract_patch_non_inventory.py",
+        "tools/gen_patch_wikitext_register.py"
+      ]
+    },
+    {
+      "receipt": "p810-mists-check.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src/c_api/c_date_and_time.rs",
+        "src/c_api/mod.rs",
+        "src/c_api/patch_retired_members.rs",
+        "tests/patch_8_1_0_calendar_compare.rs",
+        "tests/patch_8_1_0_publication_fixes.rs",
+        "tests/patch_8_1_0_cached_surfaces.rs",
+        "tests/patch_8_1_0_publication_sweep.rs",
+        "tests/data/patch_8_1_0_sweep_known_gaps.json"
+      ]
+    },
+    {
+      "receipt": "p810-mists-behavior.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src/c_api/c_date_and_time.rs",
+        "src/c_api/mod.rs",
+        "src/c_api/patch_retired_members.rs",
+        "tests/patch_8_1_0_calendar_compare.rs",
+        "tests/patch_8_1_0_publication_fixes.rs",
+        "tests/patch_8_1_0_cached_surfaces.rs",
+        "tests/patch_8_1_0_publication_sweep.rs",
+        "tests/data/patch_8_1_0_sweep_known_gaps.json"
+      ]
+    }
+  ],
+  "historical_failures": {
+    "p810-discovery.proof.json": "Unreviewed exact gaps: discovery RED, expected exit 1.",
+    "p810-behavior-red.proof.json": "Missing calendar producer and namespace lookup fabrication RED.",
+    "p810-behavior-green.proof.json": "Calendar passes; configuration getter raw republication exposes live provider, retirement withdrawn.",
+    "p810-cached-green.proof.json": "Same retained provider boundary under cached startup.",
+    "p810-source-reproduction.proof.json": "Recipe script initially assumed every historical provenance had revid; corrected to read register revision."
+  },
+  "invalidation_policy": "Docs/evidence-only updates do not invalidate Rust proof. Scope equality checked between command revision and pinned code revision, not moving HEAD. No full integration suite."
+}

@@ -1,0 +1,148 @@
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/c_api/patch_retired_members.rs:173:    ("C_Calendar", &["ContextMenuEventComplain"]),
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/state_types/collections.rs:232:/// `C_AchievementInfo.GetAchievementInfo`, `GetRewardItemID`, and
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/hot_literals.rs:132:    b"C_DateAndTime",
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/game_time_calendar_invites.rs:65:        if C_DateAndTime and type(C_DateAndTime.GetSecondsUntilDailyReset) == "function" then
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/game_time_calendar_invites.rs:66:            return C_DateAndTime.GetSecondsUntilDailyReset()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/game_time_calendar_invites.rs:126:                if GetQuestResetTime() ~= C_DateAndTime.GetSecondsUntilDailyReset() then return "quest_reset" end
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:9:C_Calendar = C_Calendar or __wow_namespace()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:22:if rawget(C_Calendar, "GetMonthInfo") == nil then
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:23:    function C_Calendar.GetMonthInfo(_offset)
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:32:if rawget(C_Calendar, "GetDefaultGuildFilter") == nil then
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:33:    function C_Calendar.GetDefaultGuildFilter()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:41:if rawget(C_Calendar, "GetMaxCreateDate") == nil then
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:42:    function C_Calendar.GetMaxCreateDate()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:46:if rawget(C_Calendar, "GetMinDate") == nil then
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:47:    function C_Calendar.GetMinDate()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:51:if rawget(C_Calendar, "EventGetTypesDisplayOrdered") == nil then
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:52:    function C_Calendar.EventGetTypesDisplayOrdered()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:56:if rawget(C_Calendar, "GetClubCalendarEvents") == nil then
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:57:    function C_Calendar.GetClubCalendarEvents()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:61:if rawget(C_Calendar, "GetNumDayEvents") == nil then
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:62:    function C_Calendar.GetNumDayEvents(_monthOffset, _monthDay)
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:66:if rawget(C_Calendar, "GetNumGuildEvents") == nil then
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:67:    function C_Calendar.GetNumGuildEvents()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:71:if rawget(C_Calendar, "GetNumInvites") == nil then
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:72:    function C_Calendar.GetNumInvites()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:76:if rawget(C_Calendar, "GetNumPendingInvites") == nil then
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:77:    function C_Calendar.GetNumPendingInvites()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:81:if rawget(C_Calendar, "AreNamesReady") == nil then
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:82:    function C_Calendar.AreNamesReady()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:86:if rawget(C_Calendar, "IsActionPending") == nil then
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:87:    function C_Calendar.IsActionPending()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:91:if rawget(C_Calendar, "CanAddEvent") == nil then
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:92:    function C_Calendar.CanAddEvent()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:96:if rawget(C_Calendar, "CanSendInvite") == nil then
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:97:    function C_Calendar.CanSendInvite()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:101:if rawget(C_Calendar, "OpenCalendar") == nil then
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:102:    function C_Calendar.OpenCalendar()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:105:if rawget(C_Calendar, "CloseEvent") == nil then
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:106:    function C_Calendar.CloseEvent()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:127:                local month = C_Calendar.GetMonthInfo(0)
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:129:                local filter = C_Calendar.GetDefaultGuildFilter()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:133:                if #C_Calendar.EventGetTypesDisplayOrdered() ~= 0 then return "event-types" end
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:134:                if #C_Calendar.GetClubCalendarEvents() ~= 0 then return "club-events" end
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:135:                if C_Calendar.GetNumDayEvents(0, 1) ~= 0 then return "day-events" end
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:136:                if C_Calendar.GetNumGuildEvents() ~= 0 then return "guild-events" end
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:137:                if C_Calendar.GetNumInvites() ~= 0 then return "invites" end
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:138:                if C_Calendar.GetNumPendingInvites() ~= 0 then return "pending" end
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:139:                if C_Calendar.AreNamesReady() ~= true then return "names-ready" end
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:140:                if C_Calendar.IsActionPending() ~= false then return "action-pending" end
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:141:                if C_Calendar.CanAddEvent() ~= false then return "add-event" end
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:142:                if C_Calendar.CanSendInvite() ~= false then return "send-invite" end
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:143:                C_Calendar.OpenCalendar()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:144:                C_Calendar.CloseEvent()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:158:            function C_Calendar.GetNumInvites()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:161:            function C_Calendar.AreNamesReady()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/calendar_defaults.rs:172:                "return C_Calendar.GetNumInvites() .. ':' .. tostring(C_Calendar.AreNamesReady())",
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/date_and_time_defaults.rs:1://! Temporary `C_DateAndTime` deterministic calendar/server-time defaults.
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/date_and_time_defaults.rs:7:C_DateAndTime = C_DateAndTime or __wow_namespace()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/date_and_time_defaults.rs:54:if rawget(C_DateAndTime, "GetCurrentCalendarTime") == nil then
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/date_and_time_defaults.rs:55:    function C_DateAndTime.GetCurrentCalendarTime()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/date_and_time_defaults.rs:60:if rawget(C_DateAndTime, "GetServerTimeLocal") == nil then
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/date_and_time_defaults.rs:61:    function C_DateAndTime.GetServerTimeLocal()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/date_and_time_defaults.rs:66:if rawget(C_DateAndTime, "AdjustTimeByDays") == nil then
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/date_and_time_defaults.rs:67:    function C_DateAndTime.AdjustTimeByDays(calendarTime, deltaDays)
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/date_and_time_defaults.rs:77:if rawget(C_DateAndTime, "AdjustTimeByMinutes") == nil then
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/date_and_time_defaults.rs:78:    function C_DateAndTime.AdjustTimeByMinutes(calendarTime, deltaMinutes)
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/date_and_time_defaults.rs:91:if rawget(C_DateAndTime, "GetCalendarTimeFromEpoch") == nil then
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/date_and_time_defaults.rs:92:    function C_DateAndTime.GetCalendarTimeFromEpoch(epoch)
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/date_and_time_defaults.rs:106:if rawget(C_DateAndTime, "GetWeeklyResetStartTime") == nil then
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/date_and_time_defaults.rs:107:    function C_DateAndTime.GetWeeklyResetStartTime()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/date_and_time_defaults.rs:112:if rawget(C_DateAndTime, "GetSecondsUntilDailyReset") == nil then
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/date_and_time_defaults.rs:113:    function C_DateAndTime.GetSecondsUntilDailyReset()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/date_and_time_defaults.rs:118:if rawget(C_DateAndTime, "GetSecondsUntilWeeklyReset") == nil then
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/date_and_time_defaults.rs:119:    function C_DateAndTime.GetSecondsUntilWeeklyReset()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/date_and_time_defaults.rs:141:                local current = C_DateAndTime.GetCurrentCalendarTime()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/date_and_time_defaults.rs:142:                local serverTime = C_DateAndTime.GetServerTimeLocal()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/date_and_time_defaults.rs:143:                local weeklyStart = C_DateAndTime.GetWeeklyResetStartTime()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/date_and_time_defaults.rs:166:                local base = C_DateAndTime.GetCurrentCalendarTime()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/date_and_time_defaults.rs:167:                local previous = C_DateAndTime.AdjustTimeByMinutes(base, -13 * 60)
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/date_and_time_defaults.rs:168:                local next = C_DateAndTime.AdjustTimeByMinutes(base, 13 * 60)
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/date_and_time_defaults.rs:169:                local tomorrow = C_DateAndTime.AdjustTimeByDays(base, 1)
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/date_and_time_defaults.rs:189:            C_DateAndTime = C_DateAndTime or __wow_namespace()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/date_and_time_defaults.rs:191:            function C_DateAndTime.GetServerTimeLocal()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/date_and_time_defaults.rs:195:            function C_DateAndTime.GetSecondsUntilDailyReset()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/date_and_time_defaults.rs:207:                return C_DateAndTime.GetServerTimeLocal(),
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/date_and_time_defaults.rs:208:                       C_DateAndTime.GetSecondsUntilDailyReset()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:1://! Temporary `C_ConfigurationWarnings` defaults.
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:8:C_ConfigurationWarnings = C_ConfigurationWarnings or __wow_namespace()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:9:if type(rawget(C_ConfigurationWarnings, "__wow_seen_warnings")) ~= "table" then
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:10:    C_ConfigurationWarnings.__wow_seen_warnings = {}
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:14:    if rawget(C_ConfigurationWarnings, name) == nil then
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:15:        C_ConfigurationWarnings[name] = fn
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:28:    local seenWarnings = rawget(C_ConfigurationWarnings, "__wow_seen_warnings")
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:43:        local seenWarnings = rawget(C_ConfigurationWarnings, "__wow_seen_warnings")
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:68:            if type(C_ConfigurationWarnings.GetConfigurationWarnings) ~= "function" then
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:72:            local warnings = C_ConfigurationWarnings.GetConfigurationWarnings(includeSeenWarnings)
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:83:                if type(C_ConfigurationWarnings.GetConfigurationWarningString) == "function" then
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:84:                    text = C_ConfigurationWarnings.GetConfigurationWarningString(warning)
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:111:                local warnings = C_ConfigurationWarnings.GetConfigurationWarnings(false)
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:113:                    C_ConfigurationWarnings.GetConfigurationWarningString("warning"),
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:114:                    C_ConfigurationWarnings.GetConfigurationWarningSeen("warning")
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:129:                C_ConfigurationWarnings.SetConfigurationWarningSeen("warning")
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:130:                return C_ConfigurationWarnings.GetConfigurationWarningSeen("warning")
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:143:            function C_ConfigurationWarnings.GetConfigurationWarnings()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:153:            .eval("return C_ConfigurationWarnings.GetConfigurationWarnings()[1]")
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:184:            C_ConfigurationWarnings.GetConfigurationWarnings = function(includeSeenWarnings)
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/configuration_warnings_defaults.rs:188:            C_ConfigurationWarnings.GetConfigurationWarningString = function(warning)
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/globals/missing_surface/achievement_info.rs:6://! `C_AchievementInfo.GetRewardItemID`, and
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/globals/missing_surface/achievement_info.rs:54:        "GetRewardItemID",
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/globals/stubs/namespace_stubs.rs:22:    // C_AchievementInfo GetRewardItemID / GetAchievementInfo are
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/globals/lfg_list.rs:646:            ("HasSearchResultInfo", has_search_result_info),
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/globals/font_strings_collection/mount_journal.rs:283:        .set_function("GetMountUsabilityByID", |state| {
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/loader/tests/wow_api_globals/startup_namespaces.rs:139:            local now = C_DateAndTime.GetCurrentCalendarTime()
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/loader/tests/wow_api_globals/startup_namespaces.rs:140:            local tomorrow = C_DateAndTime.AdjustTimeByDays(now, 1)
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/loader/tests/wow_api_globals/startup_namespaces.rs:148:                type(C_DateAndTime.GetWeeklyResetStartTime),
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/loader/tests/wow_api_globals/startup_namespaces.rs:149:                C_DateAndTime.GetWeeklyResetStartTime()
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/lfg_categories.rs:194:            if not C_LFGList.HasSearchResultInfo(1) then return "1_missing" end
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/lfg_categories.rs:195:            if C_LFGList.HasSearchResultInfo(9999) then return "9999_found" end
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/lfg_categories.rs:200:    assert_eq!(result, "ok", "HasSearchResultInfo: {result}");
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/glue_character_select.rs:287:            .eval("return type(C_ConfigurationWarnings.GetConfigurationWarnings(false))")
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/c_api_surface.rs:525:        "unmodeled C_ConfigurationWarnings defaults belong in lua_api::workarounds::temporary"
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/c_api_surface.rs:529:        "C_ConfigurationWarnings should not be wired through c_api registration"
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/c_api_surface.rs:724:        "unmodeled C_DateAndTime deterministic calendar defaults belong in lua_api::workarounds::temporary"
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/c_api_surface.rs:728:        "C_DateAndTime deterministic defaults should not be wired through c_api registration"
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/patch_9_2_5_classic_surfaces.rs:9:    {'C_Calendar', 'ContextMenuEventComplain'},
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/c_map_api.rs:1://! Tests for c_map_api.rs: C_Map, zone text, UiMapPoint, C_DateAndTime, C_Minimap, etc.
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/c_map_api.rs:320:// C_DateAndTime
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/c_map_api.rs:327:        .eval("return type(C_DateAndTime.GetCurrentCalendarTime()) == 'table'")
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/c_map_api.rs:338:            local time = C_DateAndTime.GetCalendarTimeFromEpoch(1700000360000000)
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/c_map_api.rs:364:            local base = C_DateAndTime.GetCurrentCalendarTime()
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/c_map_api.rs:365:            local previous = C_DateAndTime.AdjustTimeByMinutes(base, -13 * 60)
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/c_map_api.rs:366:            local next = C_DateAndTime.AdjustTimeByMinutes(base, 13 * 60)
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/c_map_api.rs:387:            local events = C_Calendar.GetClubCalendarEvents(
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/c_map_api.rs:389:                C_DateAndTime.GetCurrentCalendarTime(),
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/c_map_api.rs:390:                C_DateAndTime.GetCurrentCalendarTime()
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/c_map_api.rs:404:        .eval("return C_DateAndTime.GetServerTimeLocal()")
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/c_map_api.rs:413:        .eval("return C_DateAndTime.GetSecondsUntilDailyReset()")
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/c_map_api.rs:422:        .eval("return C_DateAndTime.GetSecondsUntilWeeklyReset()")
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/patch_9_2_5_publication_fixes.rs:6:    {'C_Calendar', 'ContextMenuEventComplain'},
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/c_calendar_defaults_probes.rs:13:            local filter = C_Calendar.GetDefaultGuildFilter()
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/mists_achievements_calendar_panel.rs:54:            local monthInfo = C_Calendar.GetMonthInfo()
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/c_achievement_info_probes.rs:39:            local tabard = C_AchievementInfo.GetRewardItemID(558)
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/c_achievement_info_probes.rs:41:                   C_AchievementInfo.GetRewardItemID(6) == nil,
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/c_achievement_info_probes.rs:42:                   C_AchievementInfo.GetRewardItemID(999999) == nil
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/c_achievement_info_probes.rs:141:                   C_AchievementInfo.GetRewardItemID(777),
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/data/patch_10_1_0_sweep_known_gaps.json:6:  "wt-global-api-C_DateAndTime.AdjustTimeByMonths-246",
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/data/patch_8_2_5_sweep_known_gaps.json:8:  "wt-global-api-C_Calendar.EventRemoveInviteByGuid-32",
+/home/osso/.worktrees/wow-ui-sim-p810-page/tests/data/patch_8_3_0_sweep_known_gaps.json:10:  "wt-global-api-C_Calendar.IsEventOpen-105",

@@ -1,0 +1,15 @@
+p810-all-sweeps 0
+p810-regression-c_calendar_defaults_probes 0
+p810-regression-c_map_probes 0
+p810-regression-date_and_time_defaults 0
+p810-regression-configuration_warnings_defaults 0
+p810-regression-blizzard_calendar_loads 0
+p810-regression-blizzard_world_map_loads 0
+p810-negative 1
+p810-extract-fixtures 0
+p810-gen-fixtures 0
+p810-source-reproduction-final 0
+p810-format 0
+p810-mists-check 0
+p810-mists-behavior 0
+PASS: ordered targeted verification

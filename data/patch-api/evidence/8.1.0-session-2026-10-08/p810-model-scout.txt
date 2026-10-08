@@ -1,0 +1,12 @@
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/player_location_defaults.rs:54:          and type(C_PlayerInfo.GUIDIsPlayer) == "function"
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/player_location_defaults.rs:55:          and C_PlayerInfo.GUIDIsPlayer(self.payload.guid)
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/player_location_defaults.rs:126:                C_PlayerInfo.GUIDIsPlayer = function(guid)
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/c_chat_info_defaults.rs:23:installChatInfoDefault("IsValidChatLine", function(_chatLine)
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/c_chat_info_defaults.rs:90:                if C_ChatInfo.IsValidChatLine(1) ~= false then return "valid" end
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/date_and_time_defaults.rs:66:if rawget(C_DateAndTime, "AdjustTimeByDays") == nil then
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/date_and_time_defaults.rs:67:    function C_DateAndTime.AdjustTimeByDays(calendarTime, deltaDays)
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/workarounds/temporary/date_and_time_defaults.rs:169:                local tomorrow = C_DateAndTime.AdjustTimeByDays(base, 1)
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/globals/missing_surface/quest_log.rs:56:    ("GetNumQuestObjectives", get_num_quest_objectives),
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/lua_api/globals/lfg_list.rs:733:            ("HasActiveEntryInfo", active_entry::has_active_entry_info),
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/loader/tests/wow_api_globals/startup_namespaces.rs:140:            local tomorrow = C_DateAndTime.AdjustTimeByDays(now, 1)
+/home/osso/.worktrees/wow-ui-sim-p810-page/src/loader/tests/wow_api_globals/startup_globals.rs:1253:                C_LFGList.HasActiveEntryInfo(),

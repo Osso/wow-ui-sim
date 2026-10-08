@@ -1,0 +1,21 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "patch_8_1_0",
+    "--",
+    "--nocapture"
+  ],
+  "revision": "437516a58b7aba0ac523e1cd22c31c7ab8a388f3",
+  "scope": "p810-behavior-red",
+  "cwd": ".",
+  "target": "dedicated p810-page target (external to repository)",
+  "environment": {},
+  "exit": 101,
+  "log": "p810-behavior-red.txt",
+  "log_sha256": "5c1fb3898d78a27e048d68c8702819be09c142352f055d9cd641ad60e157d786",
+  "seconds": 95.30471575699994,
+  "invalidated": false
+}

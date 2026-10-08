@@ -10,8 +10,13 @@ Audit pinned Warcraft Wiki page 464337, revision 4462737 against current retail,
 - [x] Implement supplied civil calendar comparison with documented rhs-relative sign, chronological component ordering, weekday independence and no mutation/clock defaults.
 - [x] Retire only proven unused retail members; retain current cached consumers and live simulator provider callers. Preserve Mists paths and unmodified Blizzard Lua.
 - [x] Retain complete whole-word qualified/bare cached and source/test scans plus later re-addition checks, including unmerged 8.1.5/8.2.0 snapshots.
-- [ ] Record passing targeted sweep/area/parser/reproduction/Mists/format gates and artifact acceptance, without a full integration suite.
+- [x] Record passing targeted sweep/area/parser/reproduction/Mists/format gates and artifact acceptance, without a full integration suite.
 - [x] Validator must work after merge and later audits: no absolute checkout assertions; original shared-input checks compare pinned git revisions; counts derive from files.
+
+## How it works
+
+- [Page audit, coverage matrix and proof boundaries](../wiki/investigations/patch-8-1-0-api-audit.md).
+- [Exact gap review](../../data/patch-api/evidence/8.1.0-session-2026-10-08/p810-gap-review.json).
 
 ## Implementation inventory
 
@@ -29,7 +34,7 @@ Audit pinned Warcraft Wiki page 464337, revision 4462737 against current retail,
 - `tools/test_extract_patch_non_inventory.py`, `tools/test_gen_patch_wikitext_register.py`.
 - Evidence `validate.py` and recorded scoped calendar/map/date-provider/configuration-provider/Mists gates.
 
-## Known gaps
+## Known gaps (current cycle)
 
 - [ ] 60 exact publication gaps retain per-ID model, identity, metadata, policy, request-lifecycle or protected-provider reasons.
 - [ ] Two literal `?` source statements specify no implementable contract; retained as uncertainty, never behavioral credit.

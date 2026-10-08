@@ -1,0 +1,33 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua-51-			},
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua-52-
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua-53-			Returns =
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua-54-			{
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua-55-				{ Name = "newDate", Type = "CalendarTime", Nilable = false },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua-56-			},
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua-57-		},
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua-58-		{
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua:59:			Name = "CompareCalendarTime",
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua-60-			Type = "Function",
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua-61-			SecretArguments = "AllowedWhenUntainted",
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua-62-
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua-63-			Arguments =
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua-64-			{
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua-65-				{ Name = "lhsCalendarTime", Type = "CalendarTime", Nilable = false },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua-66-				{ Name = "rhsCalendarTime", Type = "CalendarTime", Nilable = false },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua-67-			},
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua-68-
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua-69-			Returns =
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua-70-			{
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua-71-				{ Name = "comparison", Type = "number", Nilable = false, Documentation = { "-1 if rhsCalendarTime < lhsCalendarTime, 0 if rhsCalendarTime == lhsCalendarTime, 1 if rhsCalendarTime > lhsCalendarTime" } },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua-72-			},
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua-73-		},
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua-74-		{
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua-75-			Name = "GetCalendarTimeFromEpoch",
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua-76-			Type = "Function",
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua-77-			SecretArguments = "AllowedWhenUntainted",
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua-78-
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua-79-			Arguments =
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua-80-			{
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua-81-				{ Name = "epoch", Type = "BigUInteger", Nilable = false },
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua-82-			},
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua-83-

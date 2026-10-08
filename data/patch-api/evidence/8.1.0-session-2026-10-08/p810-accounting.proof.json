@@ -1,0 +1,16 @@
+{
+  "command": [
+    "python3",
+    "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/evidence/8.1.0-session-2026-10-08/build_accounting.py"
+  ],
+  "revision": "7113b19e905c11c05b4ceacc77d313743c5f2e2d",
+  "scope": "p810-accounting",
+  "cwd": ".",
+  "target": "dedicated p810-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p810-accounting.txt",
+  "log_sha256": "39dfbd5fce4b34df9b4d6118abf571382a6a52ef79e6b5610771acb1f6549bc1",
+  "seconds": 0.026242217998515116,
+  "invalidated": false
+}

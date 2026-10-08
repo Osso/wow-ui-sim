@@ -1,0 +1,230 @@
+[
+  {
+    "file": "patch_10_0_0_publication_sweep-results.json",
+    "rows": 639,
+    "ok": 466,
+    "gaps": 173
+  },
+  {
+    "file": "patch_10_0_2_publication_sweep-results.json",
+    "rows": 416,
+    "ok": 267,
+    "gaps": 149
+  },
+  {
+    "file": "patch_10_0_5_publication_sweep-results.json",
+    "rows": 93,
+    "ok": 66,
+    "gaps": 27
+  },
+  {
+    "file": "patch_10_0_7_publication_sweep-results.json",
+    "rows": 70,
+    "ok": 44,
+    "gaps": 26
+  },
+  {
+    "file": "patch_10_1_0_publication_sweep-results.json",
+    "rows": 129,
+    "ok": 93,
+    "gaps": 36
+  },
+  {
+    "file": "patch_10_1_5_publication_sweep-results.json",
+    "rows": 101,
+    "ok": 69,
+    "gaps": 32
+  },
+  {
+    "file": "patch_10_1_7_publication_sweep-results.json",
+    "rows": 48,
+    "ok": 34,
+    "gaps": 14
+  },
+  {
+    "file": "patch_10_2_0_publication_sweep-results.json",
+    "rows": 150,
+    "ok": 120,
+    "gaps": 30
+  },
+  {
+    "file": "patch_10_2_5_publication_sweep-results.json",
+    "rows": 59,
+    "ok": 45,
+    "gaps": 14
+  },
+  {
+    "file": "patch_10_2_6_publication_sweep-results.json",
+    "rows": 220,
+    "ok": 200,
+    "gaps": 20
+  },
+  {
+    "file": "patch_10_2_7_publication_sweep-results.json",
+    "rows": 104,
+    "ok": 68,
+    "gaps": 36
+  },
+  {
+    "file": "patch_11_0_0_publication_sweep-results.json",
+    "rows": 495,
+    "ok": 329,
+    "gaps": 166
+  },
+  {
+    "file": "patch_11_0_2_publication_sweep-results.json",
+    "rows": 34,
+    "ok": 22,
+    "gaps": 12
+  },
+  {
+    "file": "patch_11_0_5_publication_sweep-results.json",
+    "rows": 48,
+    "ok": 38,
+    "gaps": 10
+  },
+  {
+    "file": "patch_11_0_7_publication_sweep-results.json",
+    "rows": 98,
+    "ok": 70,
+    "gaps": 28
+  },
+  {
+    "file": "patch_11_1_0_publication_sweep-results.json",
+    "rows": 116,
+    "ok": 97,
+    "gaps": 19
+  },
+  {
+    "file": "patch_11_1_5_publication_sweep-results.json",
+    "rows": 125,
+    "ok": 89,
+    "gaps": 36
+  },
+  {
+    "file": "patch_11_1_7_publication_sweep-results.json",
+    "rows": 48,
+    "ok": 40,
+    "gaps": 8
+  },
+  {
+    "file": "patch_11_2_0_publication_sweep-results.json",
+    "rows": 162,
+    "ok": 135,
+    "gaps": 27
+  },
+  {
+    "file": "patch_11_2_5_publication_sweep-results.json",
+    "rows": 163,
+    "ok": 118,
+    "gaps": 45
+  },
+  {
+    "file": "patch_11_2_7_publication_sweep-results.json",
+    "rows": 508,
+    "ok": 414,
+    "gaps": 94
+  },
+  {
+    "file": "patch_12_0_0_publication_sweep-results.json",
+    "rows": 1010,
+    "ok": 989,
+    "gaps": 21
+  },
+  {
+    "file": "patch_12_0_1_publication_sweep-results.json",
+    "rows": 225,
+    "ok": 222,
+    "gaps": 3
+  },
+  {
+    "file": "patch_12_0_5_publication_sweep-results.json",
+    "rows": 363,
+    "ok": 352,
+    "gaps": 11
+  },
+  {
+    "file": "patch_12_0_7_publication_sweep-results.json",
+    "rows": 174,
+    "ok": 171,
+    "gaps": 3
+  },
+  {
+    "file": "patch_12_1_0_publication_sweep-results.json",
+    "rows": 778,
+    "ok": 773,
+    "gaps": 5
+  },
+  {
+    "file": "patch_8_1_0_publication_sweep-results.json",
+    "rows": 145,
+    "ok": 85,
+    "gaps": 60
+  },
+  {
+    "file": "patch_8_2_5_publication_sweep-results.json",
+    "rows": 198,
+    "ok": 137,
+    "gaps": 61
+  },
+  {
+    "file": "patch_8_3_0_publication_sweep-results.json",
+    "rows": 224,
+    "ok": 183,
+    "gaps": 41
+  },
+  {
+    "file": "patch_8_3_7_publication_sweep-results.json",
+    "rows": 2,
+    "ok": 1,
+    "gaps": 1
+  },
+  {
+    "file": "patch_9_0_1_publication_sweep-results.json",
+    "rows": 755,
+    "ok": 492,
+    "gaps": 263
+  },
+  {
+    "file": "patch_9_0_2_publication_sweep-results.json",
+    "rows": 77,
+    "ok": 51,
+    "gaps": 26
+  },
+  {
+    "file": "patch_9_0_5_publication_sweep-results.json",
+    "rows": 28,
+    "ok": 15,
+    "gaps": 13
+  },
+  {
+    "file": "patch_9_1_0_publication_sweep-results.json",
+    "rows": 179,
+    "ok": 128,
+    "gaps": 51
+  },
+  {
+    "file": "patch_9_1_5_publication_sweep-results.json",
+    "rows": 169,
+    "ok": 122,
+    "gaps": 47
+  },
+  {
+    "file": "patch_9_2_0_publication_sweep-results.json",
+    "rows": 80,
+    "ok": 54,
+    "gaps": 26
+  },
+  {
+    "file": "patch_9_2_5_publication_sweep-results.json",
+    "rows": 84,
+    "ok": 51,
+    "gaps": 33
+  },
+  {
+    "file": "patch_9_2_7_publication_sweep-results.json",
+    "rows": 3,
+    "ok": 3,
+    "gaps": 0
+  }
+]

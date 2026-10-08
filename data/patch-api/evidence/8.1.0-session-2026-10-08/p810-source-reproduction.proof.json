@@ -1,0 +1,16 @@
+{
+  "command": [
+    "python3",
+    "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/evidence/8.1.0-session-2026-10-08/reproduce_sources.py"
+  ],
+  "revision": "8269b8efcb6a9808e1428fa929845a0c64c353c9",
+  "scope": "p810-source-reproduction",
+  "cwd": ".",
+  "target": "dedicated p810-page target (external to repository)",
+  "environment": {},
+  "exit": 1,
+  "log": "p810-source-reproduction.txt",
+  "log_sha256": "3122c360f02b6952e217e3f7196d33c83ea440169d7a2c36a40c8c3b5072d522",
+  "seconds": 0.06601224499900127,
+  "invalidated": false
+}

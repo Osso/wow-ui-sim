@@ -1,0 +1,54 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Blocking waiting for file lock on build directory
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p810-page)
+    Finished `test` profile [optimized + debuginfo] target(s) in 1m 35s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p810-page/debug/deps/integration-1db16289b0998b2a)
+
+running 2 tests
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 1.94ms
+[  0.002s] [Startup] SimState::default complete in 1.96ms
+[  0.002s] [Startup] rilua VM created in 102.84µs
+[  0.002s] [Startup] rilua VM created in 98.01µs
+[  0.002s] [Startup] builtin frames initialized in 68.74µs
+[  0.002s] [Startup] template registry cleared in 5.36µs
+[  0.002s] [Startup] intrinsic templates registered in 7.28µs
+[  0.002s] [Startup] builtin frames initialized in 87.77µs
+[  0.002s] [Startup] initial app_data lua handle installed in 321.00ns
+[  0.002s] [Startup] template registry cleared in 1.88µs
+[  0.002s] [Startup] intrinsic templates registered in 3.26µs
+[  0.002s] [Startup] initial app_data lua handle installed in 121.00ns
+[  0.126s] [Startup] init_lua_state complete in 124.19ms
+[  0.126s] [Startup] final app_data lua handle installed in 380.00ns
+[  0.127s] [Startup] initial screen globals installed in 83.78µs
+[  0.127s] [Startup] WowLuaEnv::new complete
+
+thread 'patch_8_1_0_calendar_compare::patch_8_1_0_calendar_ordering' (484657) panicked at /home/osso/.worktrees/wow-ui-sim-p810-page/tests/patch_8_1_0_calendar_compare.rs:35:6:
+compare supplied calendar fields without changing inputs: Lua(Runtime(RuntimeError { message: "raw calendar comparison producer missing", level: 0, traceback: [] }))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+[  0.128s] [Startup] init_lua_state complete in 125.45ms
+[  0.128s] [Startup] final app_data lua handle installed in 180.00ns
+[  0.128s] [Startup] initial screen globals installed in 91.88µs
+[  0.128s] [Startup] WowLuaEnv::new complete
+
+thread 'patch_8_1_0_publication_fixes::patch_8_1_0_unused_members_stay_absent' (484658) panicked at /home/osso/.worktrees/wow-ui-sim-p810-page/tests/patch_8_1_0_publication_fixes.rs:22:10:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "C_Map.GetBountySetIDForMap lookup", level: 0, traceback: [] }))
+test patch_8_1_0_calendar_compare::patch_8_1_0_calendar_ordering ... FAILED
+test patch_8_1_0_publication_fixes::patch_8_1_0_unused_members_stay_absent ... FAILED
+
+failures:
+
+failures:
+    patch_8_1_0_calendar_compare::patch_8_1_0_calendar_ordering
+    patch_8_1_0_publication_fixes::patch_8_1_0_unused_members_stay_absent
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 10656 filtered out; finished in 0.14s
+
+error: test failed, to rerun pass `--test integration`

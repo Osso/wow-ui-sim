@@ -1,0 +1,1 @@
+{"inventory": 145, "extract": 28, "gaps": 60, "ledger": 173}
