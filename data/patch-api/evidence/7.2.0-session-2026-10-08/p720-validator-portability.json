@@ -1,0 +1,43 @@
+{
+  "snapshot_revision": "e30b3e395f7883e75d85ef09b050de410b777576",
+  "cases": [
+    {
+      "case": "relocated-complete-checkout",
+      "revision": "e30b3e395f7883e75d85ef09b050de410b777576",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.cache/wow-ui-sim-targets/p720-page/validator-relocated-e30b3e395/data/patch-api/evidence/7.2.0-session-2026-10-08/validate.py"
+      ],
+      "exit": 0,
+      "stdout": "{\n  \"status\": \"PASS\",\n  \"registers\": 44,\n  \"sweeps_with_factory\": 45,\n  \"inventory_rows\": 3,\n  \"inventory_ok\": 3,\n  \"inventory_gaps\": 0,\n  \"extract_rows\": 12,\n  \"ledger_rows\": 15,\n  \"ledger_statuses\": {\n    \"bounded-coverage\": 5,\n    \"metadata-only\": 6,\n    \"audit-pending\": 4\n  },\n  \"pending_prose\": 4\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "additional-later-audit-register-and-sweep",
+      "revision": "e30b3e395f7883e75d85ef09b050de410b777576",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.cache/wow-ui-sim-targets/p720-page/validator-relocated-e30b3e395/data/patch-api/evidence/7.2.0-session-2026-10-08/validate.py"
+      ],
+      "exit": 0,
+      "stdout": "{\n  \"status\": \"PASS\",\n  \"registers\": 44,\n  \"sweeps_with_factory\": 45,\n  \"inventory_rows\": 3,\n  \"inventory_ok\": 3,\n  \"inventory_gaps\": 0,\n  \"extract_rows\": 12,\n  \"ledger_rows\": 15,\n  \"ledger_statuses\": {\n    \"bounded-coverage\": 5,\n    \"metadata-only\": 6,\n    \"audit-pending\": 4\n  },\n  \"pending_prose\": 4\n}\n",
+      "stderr": ""
+    },
+    {
+      "case": "tampered-own-ledger-rejected",
+      "revision": "e30b3e395f7883e75d85ef09b050de410b777576",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.cache/wow-ui-sim-targets/p720-page/validator-relocated-e30b3e395/data/patch-api/evidence/7.2.0-session-2026-10-08/validate.py"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.cache/wow-ui-sim-targets/p720-page/validator-relocated-e30b3e395/data/patch-api/evidence/7.2.0-session-2026-10-08/validate.py\", line 195, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.cache/wow-ui-sim-targets/p720-page/validator-relocated-e30b3e395/data/patch-api/evidence/7.2.0-session-2026-10-08/validate.py\", line 168, in main\n    assert digest((ROOT / path).read_bytes()) == sha, path\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: data/patch-api/sources/7.2.0-page-coverage.json\n"
+    }
+  ],
+  "sealed_artifacts_read_only": true,
+  "note": "Relocated Git-archive snapshot in owned target, using read-only Git metadata. No other worktree touched. Additional hypothetical earlier-page register/sweep are isolated proof fixtures, never integrated."
+}

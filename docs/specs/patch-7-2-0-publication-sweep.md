@@ -10,7 +10,7 @@ Audit the pinned [source](../../data/patch-api/sources/7.2.0-api-changes.provena
 - [x] Prove cached equipment-set creation, rename, specialization assignment and deletion.
 - [x] Prove all three named current-retail addons load, without claiming historical implementations.
 - [x] Preserve every source occurrence and exact problematic-contract reason; do not infer member retirements from domain removal summaries.
-- [ ] Validate complete historical register scope, source reproduction and receipt hashes without absolute checkout-path equality.
+- [x] Validate complete historical register scope, source reproduction and receipt hashes without absolute checkout-path equality.
 
 ## How it works
 
@@ -35,7 +35,8 @@ Audit the pinned [source](../../data/patch-api/sources/7.2.0-api-changes.provena
 
 - [ ] Vertex offsets are stored but currently have no rendering consumer; visual deformation is not proved.
 - [ ] Page supplies neither an old equipment API member catalog nor exact deprecated-wrapper behavior; complete historical migration parity is not proved.
-- [ ] Voice chat and Mac movie recording removals name domains without member lists; no API retirement can safely be derived.
+- [ ] Voice chat removal names a domain without a member list; no API retirement can safely be derived.
+- [ ] Mac movie recording removal has no member/platform contract; no macOS recording model/native probe is available.
 
 ## Out of scope
 

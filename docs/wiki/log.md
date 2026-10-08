@@ -373,4 +373,4 @@ Second temporary clone: all nineteen validators pass from the original cwd. Futu
 
 ## [2026-10-08] investigation | Patch 7.2.0 API audit
 
-[Audit](investigations/patch-7-2-0-api-audit.md): pinned revision 6767100; three explicit identities, source domain removals retained without invented retirements. Discovery reproduces a MaskTexture probe-factory defect; region-factory correction and cached backing-state behavior cases added. Targeted acceptance/evidence sealing pending.
+[Audit](investigations/patch-7-2-0-api-audit.md): pinned revision 6767100; fifteen IDs accounted, zero publication gaps and four precise prose limits. MaskTexture probe-factory correction; cached mask/vertex/equipment/addon behavior passes. All 45 sweeps, scoped regressions, 34/28/8 Python fixtures, Mists warning boundary, format and separate addons-enabled branch/master startup `[]` pass. 44 registers reproduce; three inherited extract failures unchanged. All 21 validators pass, including relocated/additional-register/tamper proof. No retirements; 7.2.5 integration placeholder remains.
