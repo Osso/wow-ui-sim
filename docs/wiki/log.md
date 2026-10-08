@@ -412,3 +412,7 @@ Pinned Legion revision 5295335; all 178 IDs accounted. Modeled recipe search and
 ## [2026-10-08] investigation | Fresh patch-validator gate
 
 [Portability](investigations/patch-audit-validator-portability.md): clean detached checkout and committed unrelated later-audit phases reproduce ignored scratch/shared-input dependencies. Integrated 6.2.4 pins shared source/runtime/tool/prior-validator proofs; only two uncommitted PLAN seals removed, historical execution evidence retained. Handoff requires the gate before merging.
+
+## 2026-10-08 — Patch 6.2.2 API stub audit
+
+Pinned pageid 122147/revision 6209268; exact navigation template only, no redirect. [Audit](investigations/patch-6-2-2-api-audit.md) records zero inventory/gaps/retirements and one metadata-only extract row. Prefork 1/1 and all sweeps/factory 49/49; fixtures 31/35/8, 48 register/45 extract reproductions (three inherited failures), Mists/format pass. All 25 prior validators plus own gate and relocated/future-file/tamper/restoration proof pass. No runtime/tool changes, full suite, push, merge, agents, or other-worktree mutation.

@@ -1,0 +1,1 @@
+{"pid": 1729818, "argv": ["/usr/bin/python3", "-B", "/home/osso/.worktrees/wow-ui-sim-p622-page/data/patch-api/evidence/6.2.2-session-2026-10-08/run_proof.py", "p622-extractor-fixtures", "python3", "-B", "tools/test_extract_patch_non_inventory.py"]}

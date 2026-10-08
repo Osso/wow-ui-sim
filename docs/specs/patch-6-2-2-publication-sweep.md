@@ -4,11 +4,11 @@ Audit the pinned Warcraft Wiki pageid 122147, revision 6209268. Source contains 
 
 ## What it must do
 
-- [ ] Preserve the complete pinned wikitext and revision provenance.
-- [ ] Reproduce an empty register and a navigation-only extract with existing tool defaults.
-- [ ] Account for the single extract context row as metadata-only, without runtime credit.
-- [ ] Execute the zero-row prefork publication sweep with an empty known-gap set.
-- [ ] Keep validator register and prior-validator scopes fixed at recorded Git revisions, independent of checkout location and later audits.
+- [x] Preserve the complete pinned wikitext and revision provenance.
+- [x] Reproduce an empty register and a navigation-only extract with existing tool defaults.
+- [x] Account for the single extract context row as metadata-only, without runtime credit.
+- [x] Execute the zero-row prefork publication sweep with an empty known-gap set.
+- [x] Keep validator register and prior-validator scopes fixed at recorded Git revisions, independent of checkout location and later audits.
 
 ## How it works
 

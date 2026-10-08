@@ -1,0 +1,14 @@
+{"label": "p622-all-sweeps", "exit": 0}
+{"label": "p622-negative", "exit": 1}
+{"label": "p622-mists-check", "exit": 0}
+{"label": "p622-format-check", "exit": 0}
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p622-page/data/patch-api/evidence/6.2.2-session-2026-10-08/run_acceptance.py", line 49, in <module>
+    main()
+    ~~~~^^
+  File "/home/osso/.worktrees/wow-ui-sim-p622-page/data/patch-api/evidence/6.2.2-session-2026-10-08/run_acceptance.py", line 44, in main
+    assert all(row['exit'] == (101 if row['label'] == 'p622-negative' else 0)
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+               for row in outcomes), outcomes
+               ^^^^^^^^^^^^^^^^^^^^
+AssertionError: [{'label': 'p622-all-sweeps', 'exit': 0}, {'label': 'p622-negative', 'exit': 1}, {'label': 'p622-mists-check', 'exit': 0}, {'label': 'p622-format-check', 'exit': 0}]

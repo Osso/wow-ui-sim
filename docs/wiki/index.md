@@ -2,6 +2,10 @@
 
 [Audit](investigations/patch-6-2-4-api-audit.md): merged 7.0.1/7.0.3 registers integrated on master 846a30663; own zero gaps and seven pending historical contracts unchanged. All 50 sweep/factory cases pass; all 48 other pages match exact master observations. 49 registers / 46 extracts reproduce, three inherited failures retained. Negative 0 → 1, identity/BN regressions, 32/36/8 fixtures and format/Mists checks pass; 32 historical/integrated validators pass. Historical artifacts preserved. Rebase onto 15b417367 supersedes the four-file 7.0.3 allowlist; durable ten-commit mapping and 30 pinned-master validators pass. Fresh sweeps 50/50 and 1/1, fixtures 32/36/8 and format pass.
 
+## [2026-10-08] investigation | Patch 6.2.2 API stub audit
+
+[Audit](investigations/patch-6-2-2-api-audit.md): revision 6209268, navigation-only stub (not redirect), zero inventory/one metadata ID. Own sweep 1/1, all sweeps/factory 49/49, fixtures 31/35/8, 48 registers/45 extracts with three inherited failures, warning-clean non-vendor Mists and format pass. All 25 prior gates plus own historical validator and relocated/future-file/tamper proof pass. No runtime changes or retirements; 6.2.4 then 7.0.1 placeholders remain.
+
 ## [2026-10-08] integration | Patch 7.0.3 API audit
 
 [Audit](investigations/patch-7-0-3-api-audit.md): merged 7.1.0 register, explicit seven-commit rebase mapping and 243 preserved historical artifacts. Own 52 gaps unchanged; 48 sweep/factory cases pass and every other page is unchanged versus exact master. 47 registers / 44 extracts reproduce with three inherited failures. Requested professions/crafting/mount regressions, Mists, 31/35/8 fixtures, format and both addons-enabled startups `[]` pass; 29 historical/integrated gates validated.

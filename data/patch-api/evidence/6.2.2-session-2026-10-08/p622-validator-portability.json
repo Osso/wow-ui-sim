@@ -1,0 +1,31 @@
+{
+  "snapshot": "/home/osso/.cache/wow-ui-sim-targets/p622-page/validator-relocation",
+  "outcomes": [
+    {
+      "label": "p622-relocated",
+      "exit": 0,
+      "log": "p622-relocated.log",
+      "log_sha256": "a9587eefe156093fc4c43e642a9d4d88ab3710b82b5345a18a36496b1da0b68a"
+    },
+    {
+      "label": "p622-relocated-future-audit",
+      "exit": 0,
+      "log": "p622-relocated-future-audit.log",
+      "log_sha256": "a9587eefe156093fc4c43e642a9d4d88ab3710b82b5345a18a36496b1da0b68a"
+    },
+    {
+      "label": "p622-relocated-tamper",
+      "exit": 1,
+      "log": "p622-relocated-tamper.log",
+      "log_sha256": "c87155b40a350a5459254fd3a364e25e7c7a4ae8351b9b05466d301efad6694c"
+    },
+    {
+      "label": "p622-relocated-restored",
+      "exit": 0,
+      "log": "p622-relocated-restored.log",
+      "log_sha256": "a9587eefe156093fc4c43e642a9d4d88ab3710b82b5345a18a36496b1da0b68a"
+    }
+  ],
+  "original_restored": true,
+  "scope_policy": "Register, sweep and validator scopes come from recorded Git objects; future files do not expand them."
+}

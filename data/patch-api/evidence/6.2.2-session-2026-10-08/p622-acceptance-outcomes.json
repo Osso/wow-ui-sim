@@ -1,0 +1,18 @@
+[
+  {
+    "label": "p622-all-sweeps",
+    "exit": 0
+  },
+  {
+    "label": "p622-negative",
+    "exit": 1
+  },
+  {
+    "label": "p622-mists-check",
+    "exit": 0
+  },
+  {
+    "label": "p622-format-check",
+    "exit": 0
+  }
+]
