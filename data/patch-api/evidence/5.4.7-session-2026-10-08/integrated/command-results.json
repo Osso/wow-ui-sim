@@ -1,0 +1,122 @@
+[
+  {
+    "receipt": "own-sweep",
+    "revision": "b14af5446ad916207e8d0a7c04469b658dfec64b",
+    "exit": 0,
+    "result_lines": [
+      "test result: ok. 1 passed; 0 failed; 1 total"
+    ]
+  },
+  {
+    "receipt": "all-sweeps",
+    "revision": "b14af5446ad916207e8d0a7c04469b658dfec64b",
+    "exit": 0,
+    "result_lines": [
+      "test result: ok. 57 passed; 0 failed; 57 total"
+    ]
+  },
+  {
+    "receipt": "prefork-patch_5_4_7",
+    "revision": "b14af5446ad916207e8d0a7c04469b658dfec64b",
+    "exit": 0,
+    "result_lines": [
+      "test result: ok. 2 passed; 0 failed; 2 total"
+    ]
+  },
+  {
+    "receipt": "integration-patch_5_4_7",
+    "revision": "b14af5446ad916207e8d0a7c04469b658dfec64b",
+    "exit": 0,
+    "result_lines": [
+      "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 10678 filtered out; finished in 0.00s"
+    ]
+  },
+  {
+    "receipt": "negative",
+    "revision": "b14af5446ad916207e8d0a7c04469b658dfec64b",
+    "exit": 1,
+    "result_lines": [
+      "test result: FAILED. 0 passed; 1 failed; 1 total"
+    ]
+  },
+  {
+    "receipt": "reproduction",
+    "revision": "b14af5446ad916207e8d0a7c04469b658dfec64b",
+    "exit": 0,
+    "result_lines": []
+  },
+  {
+    "receipt": "prior-validators",
+    "revision": "43c108a28b6b80ec2922b7a9310d4c3693e8a3bf",
+    "exit": 0,
+    "result_lines": [
+      "{\"validators\": 38, \"passed\": 38, \"failed\": 0}"
+    ]
+  },
+  {
+    "receipt": "checks",
+    "revision": "b14af5446ad916207e8d0a7c04469b658dfec64b",
+    "exit": 0,
+    "result_lines": []
+  },
+  {
+    "receipt": "master-all-sweeps",
+    "revision": "bebcc5830dcb21e768a2e3c365105351a400fccb",
+    "exit": 0,
+    "result_lines": [
+      "test result: ok. 56 passed; 0 failed; 56 total"
+    ]
+  },
+  {
+    "receipt": "format",
+    "revision": "b14af5446ad916207e8d0a7c04469b658dfec64b",
+    "exit": 0,
+    "result_lines": []
+  },
+  {
+    "receipt": "mists-check",
+    "revision": "b14af5446ad916207e8d0a7c04469b658dfec64b",
+    "exit": 0,
+    "result_lines": []
+  },
+  {
+    "receipt": "test_check_patch_validators",
+    "revision": "b14af5446ad916207e8d0a7c04469b658dfec64b",
+    "exit": 0,
+    "result_lines": [
+      "Ran 4 tests in 0.923s"
+    ]
+  },
+  {
+    "receipt": "test_extract_patch_non_inventory",
+    "revision": "b14af5446ad916207e8d0a7c04469b658dfec64b",
+    "exit": 0,
+    "result_lines": [
+      "Ran 36 tests in 0.107s"
+    ]
+  },
+  {
+    "receipt": "test_gen_patch_wikitext_register",
+    "revision": "b14af5446ad916207e8d0a7c04469b658dfec64b",
+    "exit": 0,
+    "result_lines": [
+      "Ran 34 tests in 0.005s"
+    ]
+  },
+  {
+    "receipt": "test_patch_audit_validation",
+    "revision": "b14af5446ad916207e8d0a7c04469b658dfec64b",
+    "exit": 0,
+    "result_lines": [
+      "Ran 8 tests in 0.509s"
+    ]
+  },
+  {
+    "receipt": "test_patch_warlords_register",
+    "revision": "b14af5446ad916207e8d0a7c04469b658dfec64b",
+    "exit": 0,
+    "result_lines": [
+      "Ran 3 tests in 0.001s"
+    ]
+  }
+]
