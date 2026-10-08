@@ -5,6 +5,24 @@ from gen_patch_wikitext_register import parse_section, split_sections
 
 
 class InventoryTests(unittest.TestCase):
+    def test_legacy_widget_summaries_keep_type_and_method_identities(self):
+        import gen_patch_wikitext_register as generator
+        raw = ('==New==\n* New widget type: [[UIOBJECT MaskTexture|MaskTexture]]\n'
+               '* New texture method: [[API_Texture_SetVertexOffset|texture:SetVertexOffset(vertexIndex, xOffset, yOffset)]]\n'
+               '==Changes==\n* New widget type: [[UIOBJECT Ignored|Ignored]]\n')
+        rows = generator.parse_legacy_widget_summaries(raw)
+        self.assertEqual([(r['section'], r['symbol'], r['direction'], r['wikitext_line'])
+                          for r in rows], [('widgets', 'MaskTexture', 'added', 2),
+                                           ('widgets', 'Texture:SetVertexOffset', 'added', 3)])
+
+    def test_prose_namespace_migrations_do_not_invent_old_member_removals(self):
+        import gen_patch_wikitext_register as generator
+        statement = ('* All equipment set related API have been moved to the new C_EquipmentSet table. '
+                     'The old API will still be available via Lua versions implemented in Blizzard_Deprecated.')
+        rows = generator.parse_prose_namespace_migrations('==Changes==\n' + statement + '\n')
+        self.assertEqual([(r['section'], r['symbol'], r['direction'], r['annotation']) for r in rows],
+                         [('global-api', 'C_EquipmentSet', 'changed', statement)])
+
     def test_legacy_summary_tables_keep_names_not_prose_or_addons(self):
         import gen_patch_wikitext_register as generator
         raw = ('==New==\n* New AddOns: Blizzard_Console\n'

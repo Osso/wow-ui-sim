@@ -332,6 +332,40 @@ def parse_legacy_summary_tables(text):
     return entries
 
 
+def parse_legacy_widget_summaries(text):
+    """Keep explicit New widget links; normalize instance names to API owners."""
+    entries = []
+    in_new = False
+    for number, line in enumerate(text.splitlines(), 1):
+        heading = re.fullmatch(r'==\s*([^=]+?)\s*==', line)
+        if heading:
+            in_new = heading[1] == 'New'
+        elif in_new:
+            kind = re.fullmatch(r'\* New widget type: \[\[UIOBJECT ([^|\]]+)(?:\|[^\]]+)?\]\]', line)
+            method = re.fullmatch(r'\* New texture method: \[\[API_Texture_([A-Za-z_][A-Za-z0-9_]*)\|[^\]]+\]\]', line)
+            symbol = kind[1] if kind else ('Texture:' + method[1] if method else None)
+            if symbol:
+                entries.append(make_entry('widgets', 'added', number, '{{api|' + symbol + '}}'))
+    return entries
+
+
+def parse_prose_namespace_migrations(text):
+    """Publish the named destination table, never infer unnamed member retirements."""
+    entries = []
+    in_changes = False
+    for number, line in enumerate(text.splitlines(), 1):
+        heading = re.fullmatch(r'==\s*([^=]+?)\s*==', line)
+        if heading:
+            in_changes = heading[1] == 'Changes'
+        elif in_changes:
+            match = re.search(r'API have been moved to the new (C_[A-Za-z0-9_]+) table\.', line)
+            if match:
+                entry = make_entry('global-api', 'changed', number, '{{api|' + match[1] + '}}')
+                entry['annotation'] = line
+                entries.append(entry)
+    return entries
+
+
 def parse_diff_api_additions(text):
     """Retain each explicit late-build addition outside consolidated inventories."""
     entries = []
@@ -430,6 +464,10 @@ def main():
                         help='Retain bare New global/API table summary names; opt-in')
     parser.add_argument('--top-level-api-bullets', action='store_true',
                         help='Retain top-level New/Changes summary identities and rename pairs; opt-in')
+    parser.add_argument('--legacy-widget-summaries', action='store_true',
+                        help='Retain explicit New widget type/texture method links; opt-in')
+    parser.add_argument('--prose-namespace-migrations', action='store_true',
+                        help='Retain named Changes destination tables without inferring removals; opt-in')
     args = parser.parse_args()
     patch, path, revid, out = args.patch, args.path, args.revid, args.out
     raw = Path(path).read_bytes()
@@ -468,6 +506,10 @@ def main():
         entries.extend(parse_legacy_summary_tables(raw.decode('utf-8')))
     if args.top_level_api_bullets:
         entries.extend(parse_top_level_api_bullets(raw.decode('utf-8')))
+    if args.legacy_widget_summaries:
+        entries.extend(parse_legacy_widget_summaries(raw.decode('utf-8')))
+    if args.prose_namespace_migrations:
+        entries.extend(parse_prose_namespace_migrations(raw.decode('utf-8')))
     if args.inventory_only:
         for entry in entries:
             for key in ("kind", "page_default", "test_inline"):
