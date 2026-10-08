@@ -5,6 +5,32 @@ from gen_patch_wikitext_register import parse_section, split_sections
 
 
 class InventoryTests(unittest.TestCase):
+    def test_legion_prepatch_keeps_nested_methods_renames_and_bare_removals(self):
+        import gen_patch_wikitext_register as generator
+        raw = ('==New==\n* New Widget types: [[UIOBJECT Line|Line]] - derived from Texture\n'
+               '* New [[UIOBJECT Frame|Frame]] methods: [[API Frame CreateLine|Frame:CreateLine]]()\n'
+               '* Artifacts - AddOns/Blizzard_ArtifactUI, C_ArtifactUI\n'
+               '* New C_TradeSkillUI table.\n**{{api|C_TradeSkillUI.GetRecipeInfo}},\n'
+               '==Changes==\n** {{api|C_MountJournal.Summon}} has been renamed to {{api|C_MountJournal.SummonByID}}\n'
+               '* [[API GetInboxItem|GetInboxItem]] now returns ID = [[API GetInboxItem|GetInboxItem]](index)\n'
+               '==Removals==\n* Glyph handling: CastGlyph, SetGlyph, GetGlyphInfo, etc.\n'
+               '* Event UNIT_COMBO_POINTS (streamlined into UNIT_POWER)\n'
+               '* CVar [[CVar floatingCombatTextComboPoints|floatingCombatTextComboPoints]] (streamlined into [[CVar floatingCombatTextEnergyGains]])\n'
+               '* [[API Model GetModel|Model:GetModel()]] has been replaced by [[API Model GetModelFileID|Model:GetModelFileID()]]\n')
+        rows = generator.parse_legion_prepatch(raw)
+        self.assertEqual([(r['section'], r['symbol'], r['direction']) for r in rows], [
+            ('widgets', 'Line', 'added'), ('widgets', 'Frame:CreateLine', 'added'),
+            ('global-api', 'C_ArtifactUI', 'added'), ('global-api', 'C_TradeSkillUI', 'added'),
+            ('global-api', 'C_TradeSkillUI.GetRecipeInfo', 'added'),
+            ('global-api', 'C_MountJournal.Summon', 'removed'),
+            ('global-api', 'C_MountJournal.SummonByID', 'added'),
+            ('global-api', 'GetInboxItem', 'changed'),
+            ('global-api', 'CastGlyph', 'removed'), ('global-api', 'SetGlyph', 'removed'),
+            ('global-api', 'GetGlyphInfo', 'removed'), ('events', 'UNIT_COMBO_POINTS', 'removed'),
+            ('cvars', 'floatingCombatTextComboPoints', 'removed'),
+            ('widgets', 'Model:GetModel', 'removed'), ('widgets', 'Model:GetModelFileID', 'added')])
+        self.assertEqual(len(rows), len({r['id'] for r in rows}))
+
     def test_legacy_widget_summaries_keep_type_and_method_identities(self):
         import gen_patch_wikitext_register as generator
         raw = ('==New==\n* New widget type: [[UIOBJECT MaskTexture|MaskTexture]]\n'

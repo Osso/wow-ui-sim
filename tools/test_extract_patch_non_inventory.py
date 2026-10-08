@@ -10,6 +10,15 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 class ExtractTests(unittest.TestCase):
+    def test_legion_prepatch_strips_only_pure_nested_inventory(self):
+        raw = ('==New==\n* New C_TradeSkillUI table.\n**{{api|C_TradeSkillUI.GetRecipeInfo}},\n'
+               '==Changes==\n***{{api|C_NamePlate.GetNamePlates}},\n'
+               '** {{api|C_MountJournal.Summon}} has been renamed to {{api|C_MountJournal.SummonByID}}\n')
+        self.assertEqual(extract_text(raw, legion_prepatch=True),
+                         '== New ==\n* New C_TradeSkillUI table.\n== Changes ==\n'
+                         '** C_MountJournal.Summon has been renamed to C_MountJournal.SummonByID\n')
+        self.assertIn('**C_TradeSkillUI.GetRecipeInfo,', extract_text(raw))
+
     def test_reference_note_accepts_capitalized_template_without_default_change(self):
         raw = ('*[[API Logout|Logout]] and [[API Quit|Quit]] are protected.'
                '<ref>{{Ref web|url=https://example.test|date=2017-10-25}}</ref>\n')

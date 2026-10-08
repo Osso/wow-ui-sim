@@ -454,6 +454,75 @@ def parse_prose_api_links(text):
     return entries
 
 
+def legion_reference_entries(number, line, section):
+    """Normalize canonical API owners; replacement links are not retirements."""
+    references = []
+    for match in TEMPLATE.finditer(line):
+        parts = match[2].split('|')
+        symbol = next(part for part in parts if '=' not in part)
+        category = 'events' if 't=e' in parts else 'global-api'
+        references.append((match.start(), category, symbol))
+    for match in re.finditer(r'\[\[API ([^|\]]+)(?:\|[^\]]+)?\]\]', line):
+        words = match[1].replace('_', ' ').split()
+        symbol = ':'.join(words) if len(words) == 2 else words[0]
+        references.append((match.start(), 'widgets' if ':' in symbol else 'global-api', symbol))
+    renamed = ' renamed to ' in line
+    replaced = ' replaced by ' in line
+    removed = ' has been removed' in line
+    entries = []
+    seen = set()
+    for index, (_, category, symbol) in enumerate(sorted(references)):
+        if symbol in seen:
+            continue
+        seen.add(symbol)
+        direction = 'added' if section == 'New' else 'changed'
+        if renamed or replaced or removed or section == 'Removals':
+            direction = 'removed' if index == 0 or (section == 'Removals' and not replaced) else 'added'
+        entry = make_entry(category, direction, number, '{{api|' + symbol + '}}')
+        entry['annotation'] = line
+        entries.append(entry)
+    return entries
+
+
+def legion_summary_entries(number, line, section):
+    """Retain explicitly named bare inventories, never expand etc. or domains."""
+    symbols = []
+    category, direction = 'global-api', 'added' if section == 'New' else 'changed'
+    if line.startswith('* New Widget types:'):
+        category = 'widgets'
+        symbols = re.findall(r'\[\[UIOBJECT ([^|\]]+)', line)
+    elif section == 'New' and line.startswith('* '):
+        symbols = re.findall(r'\bC_[A-Za-z0-9_]+\b', line)
+    elif section == 'Removals':
+        direction = 'removed'
+        if line.startswith('* Event '):
+            category, symbols = 'events', [line.split()[2]]
+        elif line.startswith('* CVar '):
+            category = 'cvars'
+            symbols = re.findall(r'\[\[CVar ([^|\]]+)', line)[:1]
+        else:
+            prefix = line.split(' (', 1)[0]
+            symbols = re.findall(r'\b(?:CastGlyph|SetGlyph|GetGlyphInfo|GetInventoryItemGems|GetContainerItemGems|GetQuestLogRewardTalents|ShowHelm|ShowCloak|ShowingHelm|ShowingCloak)\b', prefix)
+    elif 'Functions like ' in line:
+        symbols = re.findall(r'\b(?:GetNumNamePlateMotionTypes|GetNameplateFrames)\b', line)
+    return [dict(make_entry(category, direction, number, '{{api|' + symbol + '}}'), annotation=line)
+            for symbol in dict.fromkeys(symbols)]
+
+
+def parse_legion_prepatch(text):
+    """Retain 7.0.3 nested inventories, widget owners and explicit removals."""
+    entries, section = [], None
+    for number, line in enumerate(text.splitlines(), 1):
+        heading = re.fullmatch(r'==\s*([^=]+?)\s*==', line)
+        if heading:
+            section = heading[1]
+        elif section in ('New', 'Changes', 'Removals') and line.startswith('*'):
+            rows = legion_reference_entries(number, line, section)
+            rows.extend(legion_summary_entries(number, line, section))
+            entries.extend({row['id']: row for row in rows}.values())
+    return entries
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("patch", "path", "revid", "out"):
@@ -497,6 +566,8 @@ def main():
                         help='Retain named Changes destination tables without inferring removals; opt-in')
     parser.add_argument('--legacy-widget-cvar-bullets', action='store_true',
                         help='Retain frame-method/CVar summaries and underscore API links; opt-in')
+    parser.add_argument('--legion-prepatch', action='store_true',
+                        help='Parse Legion nested inventories, canonical widget owners and explicit removals; opt-in')
     args = parser.parse_args()
     patch, path, revid, out = args.patch, args.path, args.revid, args.out
     raw = Path(path).read_bytes()
@@ -541,6 +612,8 @@ def main():
         entries.extend(parse_prose_namespace_migrations(raw.decode('utf-8')))
     if args.legacy_widget_cvar_bullets:
         entries.extend(parse_legacy_widget_cvar_bullets(raw.decode('utf-8')))
+    if args.legion_prepatch:
+        entries, counts = parse_legion_prepatch(raw.decode('utf-8')), []
     if args.inventory_only:
         for entry in entries:
             for key in ("kind", "page_default", "test_inline"):

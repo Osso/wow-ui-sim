@@ -88,10 +88,18 @@ def strip_bfa_inventories(raw):
     return '\n'.join(lines) + '\n'
 
 
+def strip_legion_inventories(raw):
+    """Keep prose/renames; omit only pure nested API inventory lines."""
+    return '\n'.join(line for line in raw.splitlines()
+                     if not re.fullmatch(r'\*{2,3}\s*\{\{api\|[^{}]+\}\},?', line)) + '\n'
+
+
 def extract_text(raw, *, preserve_examples=False, normalize_inventory_headings=False,
                  retain_reference_notes=False, legacy_api_tables=False,
                  legacy_api_bullets=False, legacy_cvar_tables=False,
-                 bfa_prepatch=False):
+                 bfa_prepatch=False, legion_prepatch=False):
+    if legion_prepatch:
+        raw = strip_legion_inventories(raw)
     if bfa_prepatch:
         raw = strip_bfa_inventories(raw)
         raw = re.sub(r'\{\{ref web\|([^{}]+)\}\}', r'[Reference: \1]', raw)
@@ -309,6 +317,8 @@ def main():
                         help='Strip CVar inventory tables, retaining captions/citations; opt-in')
     parser.add_argument('--bfa-prepatch', action='store_true',
                         help='Strip 8.0.1 nested additions/events, retaining prose and reference fields; opt-in')
+    parser.add_argument('--legion-prepatch', action='store_true',
+                        help='Strip pure nested Legion inventories, retaining summaries and renames; opt-in')
     args = parser.parse_args()
     if args.self_test:
         check_examples()
@@ -324,7 +334,8 @@ def main():
                         legacy_api_tables=args.legacy_api_tables,
                         legacy_api_bullets=args.legacy_api_bullets,
                         legacy_cvar_tables=args.legacy_cvar_tables,
-                        bfa_prepatch=args.bfa_prepatch)
+                        bfa_prepatch=args.bfa_prepatch,
+                        legion_prepatch=args.legion_prepatch)
     rows = seed_rows(text, args.patch)
     if args.text_only:
         if args.check:

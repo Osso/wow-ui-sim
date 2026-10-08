@@ -1,0 +1,552 @@
+## [2026-10-08] investigation | Patch 7.3.0 API audit
+## [2026-10-08] investigation | 7.2.5 API page audit
+## [2026-10-08] investigation | Patch 8.0.1 API audit
+## [2026-10-08] investigation | Historical audit validator portability
+## [2026-10-08] investigation | 7.3.2 API audit
+## [2026-10-08] evidence | 8.1.5 API page audit
+## [2026-10-08] evidence | 8.1.0 page audit
+## [2026-10-08] evidence | 8.2.5 API page audit
+## [2026-10-08] evidence | 8.2.0 API page audit
+## [2026-10-08] evidence | 8.3.0 API page audit
+## [2026-10-08] investigation | Slow integration prefork migration
+## [2026-10-08] evidence | 9.0.1 page audit
+## [2026-10-08] evidence | 8.3.7 page audit
+## [2026-10-08] evidence | 9.0.5 page audit
+## [2026-10-08] evidence | 9.0.2 page audit
+## [2026-10-07] evidence | 9.1.5 page audit
+## [2026-10-07] evidence | 9.1.0 API audit
+## [2026-10-07] evidence | 9.2.5 page audit
+## [2026-10-07] investigation | 9.2.0 page audit
+## [2026-10-07] evidence | 9.2.7 page audit
+## [2026-10-07] evidence | 10.0.0 page audit
+## [2026-10-07] investigation | Test-suite performance
+## [2026-10-07] evidence | 10.0.2 page audit
+## [2026-10-07] evidence | 10.1.0 page audit
+## [2026-10-07] evidence | 10.0.7 page audit
+## [2026-10-07] evidence | 10.1.5 page audit
+## [2026-10-07] evidence | 10.2.0 page audit
+## [2026-10-07] evidence | 10.2.6 page audit
+## [2026-10-07] evidence | 10.1.7 page audit
+## [2026-10-07] evidence | 10.2.5 page audit
+## [2026-10-07] evidence | 10.2.7 page audit
+## [2026-10-07] evidence | 11.0.0 page audit
+## [2026-10-07] evidence | 11.0.2 page audit
+## [2026-10-07] evidence | 11.0.5 page audit
+## [2026-10-07] evidence | 11.0.7 page audit
+## [2026-10-07] evidence | 11.1.0 page audit
+## [2026-10-07] evidence | 11.1.5 page audit
+## [2026-10-07] evidence | 11.1.7 page audit
+## [2026-10-06] investigation | Prefork catalog contract drift
+## [2026-10-06] investigation | Prefork catalog contract drift
+## [2026-10-06] investigation | DamageMeter panel fixture
+## [2026-10-06] evidence | 11.2.0 page audit
+## [2026-10-07] evidence | Rilua capability rows
+## [2026-10-06] evidence | 11.2.5 page audit
+## [2026-10-06] investigation | Catalog ScrollBox regression
+## [2026-10-06] evidence | 11.2.7 page audit
+## [2026-10-06] evidence | Remaining 12.0.1 extract
+## [2026-10-06] investigation | Branch reconciliation
+## evidence | 12.0.1 producer closure
+## [2026-10-06] evidence | 12.0.1 extract B01–B04
+## [2026-10-06] evidence | 12.0.1 page audit
+## [2026-10-06] system | Crafting reagent contracts
+## [2026-10-05] investigation | Retirement successor fallout
+## [2026-10-06] evidence | 12.0.0 DTO extract producer proof
+## [2026-10-05] investigation | Cast duration precision
+## [2026-10-05] evidence | 12.0.0 non-inventory extract
+## [2026-10-06] system | Retail publication input queries
+## [2026-10-05] system | Neighborhood initiatives
+## [2026-10-05] system | C_Secrets publication queries
+## [2026-10-05] investigation | Tooltip GC regression
+## [2026-10-05] system | Console command registry
+## [2026-10-05] investigation | Plain-global deprecation attribution
+## [2026-10-05] evidence | 12.0.0 wikitext supplement
+## [2026-10-05] investigation | Host Lua GC rooting
+## [2026-10-04] system | Club membership
+## [2026-10-05] implementation | Retail transmog outfit state
+## [2026-10-04] evidence | 12.0.5 pending non-sweep follow-up
+## [2026-10-04] evidence | 12.1.0 page audit started
+## [2026-10-04] evidence | Party roles, solo formation and conditional markers
+## [2026-10-03] evidence | Round 101 accounted
+## [2026-10-03] evidence | 12.0.7 page audit started
+## [2026-10-03] evidence | Round 100 follow-ups accounted
+## [2026-10-03] evidence | B99 and Classic accounted; table.freeze epoch proven
+## [2026-10-03] evidence | B98 nine capabilities accounted, blocked rows annotated
+## [2026-10-03] evidence | Ten held 12.0.5 rows reconciled
+## [2026-10-03] evidence | B97 equipset, tooltip line secrecy, identity GUID suppression
+## [2026-10-03] evidence | B95/B96 eight explicit-state slices accepted
+## [2026-10-03] evidence | B94 GetSpellBookItemCastCount registered and accepted
+## [2026-10-03] evidence | B93 GetAuraDuration registered and accepted
+## [2026-10-03] evidence | B91/B92 SetFont shape, housing ID fields, UnitAttackSpeed inputs
+## [2026-10-03] evidence | B90 four already-implemented rows accepted
+## [2026-10-03] evidence | B88 explicit stat inputs
+## [2026-10-03] evidence | B89 prose classification
+## [2026-10-03] evidence | B86 aura expiration query argument policy accepted
+## [2026-10-03] evidence | B87 eight existing stat models accepted
+## [2026-10-03] evidence | B85 attack power and spell haste output annotations accepted
+## [2026-10-03] evidence | B84 ranged crit and haste output annotations accepted
+## [2026-10-03] evidence | B83 spell crit output annotation accepted
+## [2026-10-03] evidence | B82 independent bounded acceptance
+## [2026-10-03] docs | B82 producer checkpoint, proof pending
+## [2026-10-03] docs | B82 spell bonus authored-input checkpoint
+## [2026-10-03] evidence | B81 bounded Debuff acceptance
+## [2026-10-03] docs | B81 producer checkpoint, proof pending
+## [2026-10-03] docs | B81 exact347 authored-input checkpoint
+## [2026-10-03] evidence | B80 bounded unit comparison acceptance
+## [2026-10-03] evidence | B79 bounded GetUnitBuff acceptance
+## [2026-10-03] evidence | Mount capability and qualified desktop saved proof accepted
+## [2026-10-03] evidence | B78 public direct-spell membership accepted
+## [2026-10-03] evidence | B76 retained accounting, B77 bounded proof and power acceptance
+## [2026-10-03] evidence | B75 existing-model annotations accepted
+## [2026-10-03] docs | B74 producer and fixture-repair checkpoint
+## [2026-10-03] evidence | B73 bounded removal acceptance
+## [2026-10-03] evidence | Accept B71 bounded pending/input proof
+## [2026-10-03] implementation | Historical B71 compiled ## [2026-10-03] evidence | B72 DestroyEntry bounded acceptance
+## [2026-10-03] docs | Reconcile B70 bounded acceptance
+## [2026-10-03] source accounting | Accept six metadata classifications
+## [2026-10-03] evidence | Accept exact313/326 LoC outputs
+## [2026-10-02] implementation | Record EXACT313/326 LoC outputs pending proof
+## [2026-10-02] evidence | Accept exact301/309 spell count outputs
+## [2026-10-02] evidence | Accept exact305/322 cooldown outputs
+## [2026-10-02] implementation | Bound EXACT305/322 spell and spellbook cooldown outputs
+## [2026-10-01] evidence | Accept action display/use-count outputs
+## [2026-10-01] implementation | Bound EXACT237/241 action count outputs
+## [2026-10-02] evidence | Accept cooldown and action LoC output predicates
+## [2026-10-02] implementation | Bound EXACT239 action loss-of-control snapshot
+## [2026-10-02] evidence | Accept exact base-spell specialization boundary
+## [2026-10-02] implementation | Bound exact233 action cooldown outputs
+## [2026-10-02] evidence | Accept two item-context additions
+## [2026-10-02] implementation | Bound exact330/331 item tooltip contexts
+## [2026-10-02] implementation | Bound base-spell specialization publication
+## [2026-10-02] evidence | Accept six aura-instance tooltip input deltas
+## [2026-10-02] implementation | Bound tooltip aura-instance argument security
+## [2026-10-02] evidence | Accept exact pending-cost modifier return
+## [2026-10-02] evidence | Accept exact illusion category queries
+## [2026-10-02] implementation | Bound batch59 illusion category queries
+## [2026-10-02] evidence | Accept glyph boundary and classify return-label metadata
+## [2026-10-02] audit | Bound row311 spell-link glyph security
+## [2026-10-02] evidence | Accept exact tooltip spell/mount boundaries
+## [2026-10-02] evidence | Reconcile batch56 saved parent GREEN
+## [2026-10-02] evidence | Accept exact tertiary stat inputs
+## [2026-10-02] evidence | Reconcile batch55 saved parent GREEN
+## [2026-10-02] evidence | Accept exact formatter and eight stat annotations
+## [2026-10-02] evidence | Reconcile batch53 saved corrected GREEN
+## [2026-10-02] evidence | Accept exact batch51/52 bounded rows
+## [2026-10-02] evidence | Reconcile combined batch51/52 saved parent GREEN
+## [2026-10-02] evidence | Accept exact batch48 classification and Add restriction rows
+## [2026-10-02] evidence | Accept exact sound-removal and space-limit rows
+## [2026-10-02] evidence | Reconcile batch48 saved parent GREEN
+## [2026-10-02] evidence | Reconcile combined batch49/50 saved GREEN
+## [2026-10-02] implementation | Add bounded batch49 sound removal callback
+## [2026-10-02] implementation | Add bounded batch48 spell classification getters
+## [2026-10-02] evidence | Accept exact batch47 cooldown association row
+## [2026-10-02] evidence | Reconcile batch47 saved parent GREEN
+## [2026-10-02] implementation | Add bounded row387 cooldown association getter
+## [2026-10-02] evidence | Accept exact combined batch45/46 bounded rows
+## [2026-10-02] evidence | Reconcile combined batch45/46 saved parent GREEN
+## [2026-10-01] implementation | Add bounded row382 aura enumeration boundary
+## [2026-10-02] evidence | Accept exact batch44 aura slot row
+## [2026-10-02] evidence | Reconcile batch44 aura slot parent GREEN
+## [2026-10-01] implementation | Add bounded aura slot argument producer
+## [2026-10-02] evidence | Accept exact batch43 display-count rows
+## [2026-10-01] evidence | Reconcile batch43 display-count parent GREEN
+## [2026-10-01] evidence | Accept exact indexed aura argument rows
+## [2026-10-01] evidence | Reconcile batch42 indexed aura parent GREEN
+## [2026-10-01] implementation | Add bounded aura application display count producer
+## [2026-10-01] implementation | Add bounded indexed aura argument producers
+## [2026-10-01] implementation | Add bounded aura instance filter producer
+## [2026-10-01] evidence | Accept exact private-aura restriction-removal rows
+## [2026-10-01] evidence | Reconcile batch39 altered-form parent GREEN
+## [2026-10-01] evidence | Reconcile batch38 aura duration parent GREEN
+## [2026-10-01] implementation | Add bounded aura refresh duration producers
+## [2026-10-01] evidence | Reconcile batch37 aura spell parent GREEN
+## [2026-10-01] evidence | Accept exact outfit stored-index DTO row
+## [2026-10-01] evidence | Accept exact bounded aura spell identifiers
+## [2026-10-01] correction | Accept row169 bounded predicate coverage
+## [2026-10-01] implementation | Add bounded aura spell query producers
+## [2026-10-01] evidence | Accept exact bounded cooldown slices
+## [2026-10-01] evidence | Reconcile bounded cooldown parent GREEN
+## [2026-10-01] implementation | Add bounded party countdown producer
+## [2026-10-01] evidence | Accept bounded countdown; retain row169 pending
+## [2026-10-01] evidence | Accept loot bounded proof; reconcile countdown parent GREEN
+## [2026-10-01] implementation | Add bounded party loot producer
+## [2026-10-01] evidence | Accept bounded independent warning placement proof
+## [2026-10-01] evidence | Accept bounded independent ping proof
+## [2026-10-01] implementation | Add bounded party ping producer
+## [2026-10-01] evidence | Accept bounded ready-check proof
+## [2026-10-01] evidence | Accept bounded chat predicate proof
+## [2026-10-01] evidence | Accept bounded private-anchor field proof
+## [2026-10-01] evidence | Reconcile batch28 aura classification partial proof
+## [2026-10-01] evidence | Reconcile bounded batch26 search and batch27 raw DTO
+## [2026-10-01] evidence | Accept bounded batch25 category DTO rename
+## [2026-10-01] evidence | Reconcile bounded batch24 aggregates
+## [2026-10-01] evidence | Accept bounded batch23 base selectors
+## [2026-10-01] evidence | Reconcile bounded batch22 pending decor
+## [2026-10-01] evidence | Reconcile bounded batch21 DestroyEntry
+## [2026-10-01] evidence | Reconcile bounded batch20 storage event
+## [2026-10-01] evidence | Reconcile bounded batch19 count
+## [2026-10-01] evidence | Reconcile bounded DamageMeter acceptance
+## [2026-10-01] evidence | Reconcile bounded quest confirmation acceptance
+## [2026-10-01] implementation | Publish empty-backed housing variants
+## [2026-10-01] implementation | Publish bounded DamageMeter snapshots
+## [2026-10-01] input/spec | Prepare empty housing catalog variants
+## [2026-10-01] evidence | Reconcile bounded spell prompt acceptance
+## [2026-10-01] evidence | Account for bounded UNIT_CONNECTION transitions
+## [2026-10-01] implementation | Add bounded shared party connectivity
+## [2026-10-01] implementation | Add bounded pending spell confirmations
+## [2026-10-01] evidence | Record partial cast-target snapshot GREEN
+## [2026-10-01] evidence | Bounded charge policy and XML acceptance
+## [2026-10-01] audit | Record bounded batch8/9 cooldown and query proof
+## [2026-10-01] implementation | Add bounded Recent Allies snapshots
+## [2026-10-01] implementation | Add bounded Forever mapped-stick queries
+## [2026-10-01] audit | Record pending renown reward input
+## [2026-09-30] evidence | Reconcile main GREEN without inventory credit
+## [2026-09-30] implementation | Attach and consume typed Cooldown formatters
+## [2026-10-01] scaffolding | Add explicit cooldown restriction input
+## [2026-10-01] implementation | Add explicit spell charge producers
+## [2026-09-30] implementation | Add bounded Forever outbound messaging
+## [2026-09-30] implementation | Add bounded cooldown ignoreGCD selection
+## [2026-09-30] audit | Extend common duration NumericFormatter consumption
+## [2026-09-30] audit | Record bounded abbreviated formatter implementation
+## [2026-09-27] investigation | Extend XML empty-function clearing coverage
+## [2026-09-30] investigation | Record BugCapture selected-TOC correction
+## [2026-09-30] investigation | Record bounded Forever RestrictedExecution coverage
+## [2026-09-27] audit | Record pending XML `OnDoubleClick` registration proof
+## [2026-09-27] audit | Finalize ScrollFrame XML binding dispatch
+## [2026-09-27] audit | Record pending Button enabled-state callback dispatch
+## [2026-09-27] audit | Finalize bounded programmatic EditBox MaxLetters proof
+## [2026-09-26] audit | Record pending EditBox XML-limit proof
+## [2026-09-27] audit | Record pending EditBox keyboard-limit proof
+## [2026-09-26] audit | Record pending scripted Button click lifecycle
+## [2026-09-27] audit | Record pending ScrollFrame child-ownership boundary
+## [2026-09-27] audit | Finalize bounded EditBox selected-keyboard proof
+## [2026-09-26] audit | Record UnitIsUnit modeled-identity boundary
+## [2026-09-26] audit | Record ScrollFrame presentation boundary
+## [2026-09-26] audit | Record UnitGUID modeled-identity boundary
+## [2026-09-26] audit | Record explicit macro action texture resolution
+## [2026-09-26] audit | Verify Slider/StatusBar range validation
+## [2026-09-26] audit | Record ScrollFrame requested-offset boundary
+## [2026-09-26] audit | Record public SetParent effective-visibility callbacks
+## [2026-09-26] audit | Record locked standard Button highlight boundary
+## [2026-09-26] audit | Record bounded C_Item ItemLocation resolution
+## [2026-09-26] audit | Record bounded SetParent cycle-rejection boundary
+## [2026-09-26] audit | Record bounded C_Item.GetStackCount location counts
+## [2026-09-26] audit | Record bounded EditBox SetText lifecycle
+## [2026-09-26] audit | Record protected anchor-offset mutation boundary
+## [2026-09-26] audit | Record bounded FontString spacing and AnimationGroup Stop behavior
+## [2026-09-26] audit | Record bounded EditBox byte-offset selection boundary
+## [2026-09-26] audit | Record EditBox Lua focus callback boundary
+## [2026-09-26] audit | Record shared unit-vitals lookup boundary
+## [2026-09-26] audit | Record Wrath tooltip content lifecycle source boundary
+## [2026-09-26] audit | Record runtime StatusBar template orientation source boundary
+## [2026-09-26] audit | Record Wrath StatusBar vertical source boundary
+## [2026-09-26] audit | Record Wrath StatusBar XML rotation boundary
+## [2026-09-26] investigation | Record default build linker-cache boundary
+## [2026-09-26] audit | Correct wrapped-click fixture and application-input boundary
+## [2026-09-25] audit | Record retail secret-origin geometry RED boundary
+## [2026-09-25] audit | Record `OnLoad` creation-origin RED boundary
+## [2026-09-25] audit | Preserve private projection method-origin RED boundary
+## [2026-09-25] audit | Preserve retail template and hook origin RED boundary
+## [2026-09-25] audit | Record retail protected-visibility and latest taint boundaries
+## [2026-09-25] audit | Record retail secrecy and closure-taint correction limits
+## [2026-09-25] audit | Preserve retail residual-correction verification boundary
+## [2026-09-25] investigation | Select XML file locale before resolution
+## [2026-09-25] investigation | Correct table.freeze recursive GC cascade
+## [2026-09-25] investigation | Finalize bounded unit-frame click and aura evidence
+## [2026-09-25] investigation | Publish target aura Count to private XML scope
+## [2026-09-25] investigation | Bound bootstrap-only dependency selection
+## [2026-09-25] investigation | Verify default installed-product startup
+## [2026-09-25] investigation | Keep XML-hidden animated status-bar textures hidden on atlas changes
+## [2026-09-25] maintenance | Document installed-product discovery
+## [2026-09-25] investigation | Correct isolated Forever cold-fixture mapping diagnosis
+## [2026-09-25] investigation | Finalize Forever release-fixture character/backpack proof
+## [2026-09-24] audit | Record pending Forever remaining-stat coverage
+## [2026-09-24] investigation | Model Camelot primary-stat contributions
+## [2026-09-24] investigation | Record Forever character-panel blocker
+## [2026-09-22] investigation | Preserve CVarsBackup scoreboard blocker
+## [2026-09-22] investigation | Exercise BigWigs Create Test Bar
+## [2026-09-22] investigation | Model script-object context access
+## [2026-09-22] investigation | Preserve lexical `self` in XML child OnLoad
+## [2026-09-22] investigation | Compare Forever Classic expansion upper bounds
+## [2026-09-22] investigation | Count merchant junk in modeled bags
+## [2026-09-22] investigation | Exercise Accountant and BagMeter workflows
+## [2026-09-22] investigation | Model Forever guild invite preference
+## [2026-09-22] investigation | Model Forever neighborhood invite preference
+## [2026-09-22] investigation | Model Forever recent-allies location preference
+## [2026-09-22] investigation | Model Camelot stable reads
+## [2026-09-22] investigation | Restore Slider value callbacks
+## [2026-09-22] investigation | Preserve explicit empty CVar registration
+## [2026-09-22] investigation | Verify DinoUnitFrames normalized curve evaluation
+## [2026-09-22] investigation | Register bounded Forever swing events
+## [2026-09-22] investigation | Verify registered template existence
+## [2026-09-22] investigation | Publish Lua 5.1 unknown-escape parser fix
+## [2026-09-22] investigation | Stage Forever event, spell-base, and expansion producers
+## [2026-09-22] investigation | Model Forever target-bound combo points
+## [2026-09-22] investigation | Isolate cached addon runtime CVar state
+## [2026-09-22] coverage | Track runtime acceptance for cached Forever addons
+## [2026-09-21] investigation | Intrinsic event and visibility dispatch routes
+## [2026-09-21] investigation | EllesmereUI Forever producer defects
+## [2026-09-21] investigation | Freeze Forever addon comparison to cached archives
+## [2026-09-20] investigation | Test Mainline SpellBook lifecycle across profiles
+## [2026-09-20] acceptance | Clean Forever 1.60.1 sustained runtime
+## [2026-09-20] investigation | Fix Forever chat overflow button-slot animations
+## [2026-09-20] system | Extend documented Forever event registration
+## [2026-09-19] investigation | Correct recipe-quality final guard ordering
+## [2026-09-19] investigation | Prepare bounded recipe-quality input recorder
+## [2026-09-19] investigation | Prepare bounded unit-fed heal-calculator recorder
+## [2026-09-19] investigation | Prepare bounded timeline Edit Mode preview recorder
+## [2026-09-19] investigation | Prepare bounded recraft limit recorder
+## [2026-09-19] investigation | Prepare bounded recraft reagent input recorder
+## [2026-09-19] audit | Reconcile existing same-size scale-event capture
+## [2026-09-19] investigation | Prepare bounded crafting enchant-item recorder
+## [2026-09-19] investigation | Prepare bounded timeline track-query recorder
+## [2026-09-19] investigation | Prepare bounded timeline track-information recorder
+## [2026-09-19] investigation | Prepare bounded LFG title-match recorder
+## [2026-09-19] investigation | Prepare bounded LFG playstyle-format recorder
+## [2026-09-19] investigation | Prepare bounded crafting schematic recorder
+## [2026-09-19] investigation | Record omitted quest-favor arguments
+## [2026-09-19] investigation | Record omitted and nil unit role-predicate arguments
+## [2026-09-17] investigation | Prepare bounded transmog source-validity recorder
+## [2026-09-17] investigation | Prepare bounded transmog slot visual recorder
+## [2026-09-17] investigation | Prepare bounded error-code publication recorder
+## [2026-09-17] investigation | Prepare bounded resource color-curve input recorder
+## [2026-09-17] investigation | Prepare bounded timeline source-count recorder
+## [2026-09-17] investigation | Prepare bounded timeline lifecycle-read recorder
+## [2026-09-16] investigation | Prepare bounded current timeline-events recorder
+## [2026-09-16] audit | Record concrete preparation blockers
+## [2026-09-16] investigation | Prepare bounded cloak/helm transition recorder
+## [2026-09-16] investigation | Prepare bounded threat-lead recorder
+## [2026-09-16] audit | Correct retained security probe deferral
+## [2026-09-16] investigation | Prepare bounded item-interaction flags recorder
+## [2026-09-16] investigation | Prepare bounded house-exterior options recorder
+## [2026-09-16] investigation | Prepare bounded expansion-audio field recorder
+## [2026-09-16] investigation | Prepare bounded Perks criteria recorder
+## [2026-09-16] investigation | Prepare equipped transmog eligibility recorder
+## [2026-09-16] investigation | Prepare equipped item-info recorder
+## [2026-09-16] investigation | Prepare selected-slot action loss-of-control duration recorder
+## [2026-09-16] investigation | Prepare selected-slot action-state recorder
+## [2026-09-16] investigation | Prepare duplicate callback registration recorder
+## [2026-09-16] audit | Reconcile shared recorder target routing
+## [2026-09-16] investigation | Prepare bounded combat-audio settings recorder
+## [2026-09-16] investigation | Prepare bounded encounter-warning-state recorder
+## [2026-09-16] investigation | Prepare bounded ping-enabled recorder
+## [2026-09-16] investigation | Prepare explicit-power recorder
+## [2026-09-16] investigation | Prepare residual hyperlink matrix recorder
+## [2026-09-16] investigation | Prepare bounded GUID-identity recorder
+## [2026-09-16] investigation | Prepare bounded full-name recorder
+## [2026-09-16] investigation | Prepare bounded player-state recorder
+## [2026-09-16] investigation | Prepare bounded outfit-tooltip recorder
+## [2026-09-16] investigation | Prepare bounded tradeskill item-quality recorder
+## [2026-09-16] investigation | Prepare bounded nameplate-metrics recorder
+## [2026-09-16] investigation | Prepare bounded death-recap recorder
+## [2026-09-16] investigation | Prepare bounded quest-favor recorder
+## [2026-09-16] investigation | Prepare bounded empowered-stage recorder
+## [2026-09-16] investigation | Prepare bounded unit role-predicate recorder
+## [2026-09-16] investigation | Prepare bounded stable bonus-slot recorder
+## [2026-09-16] investigation | Prepare bounded cooldown-viewer recorder
+## [2026-09-16] investigation | Prepare bounded prey-quest widget recorder
+## [2026-09-16] investigation | Prepare bounded major-faction renown-reward recorder
+## [2026-09-16] investigation | Prepare bounded major-faction journey recorder
+## [2026-09-16] investigation | Prepare bounded training-grounds structures recorder
+## [2026-09-16] investigation | Prepare bounded training-grounds state recorder
+## [2026-09-16] investigation | Extend housing-catalog currency recorder
+## [2026-09-16] investigation | Extend bounded housing-catalog recorder
+## [2026-09-16] investigation | Prepare bounded neighborhood-structures recorder
+## [2026-09-16] investigation | Prepare bounded neighborhood-state recorder
+## [2026-09-16] investigation | Prepare bounded sets-catalog recorder
+## [2026-09-16] investigation | Prepare bounded custom-set name recorder
+## [2026-09-16] investigation | Prepare bounded outfit-state recorder
+## [2026-09-16] investigation | Prepare bounded outfit-slot recorder
+## [2026-09-16] investigation | Prepare bounded outfit-catalog recorder
+## [2026-09-16] investigation | Prepare spell-diminish category recorder
+## [2026-09-16] investigation | Extend bounded public-query recorder
+## [2026-09-16] investigation | Prepare weekly progress recorder
+## [2026-09-16] investigation | Prepare housing preview-mode recorder
+## [2026-09-16] investigation | Prepare selected-slot spellbook-duration recorder
+## [2026-09-16] investigation | Prepare selected-slot spellbook metadata recorder
+## [2026-09-16] investigation | Prepare bounded unit target-display recorder
+## [2026-09-16] investigation | Prepare current unit-aura recorder
+## [2026-09-15] investigation | Extend current-only aura-time recorder
+## [2026-09-15] investigation | Prepare current-only aura-time recorder
+## [2026-09-15] investigation | Prepare first-page aura display-count recorder
+## [2026-09-15] investigation | Prepare selected-slot spell-duration recorder
+## [2026-09-15] investigation | Prepare selected-slot spell-metadata recorder
+## [2026-09-15] investigation | Prepare bounded public-query recorder
+## [2026-09-15] investigation | Prepare equipped-item account-binding recorder
+## [2026-09-15] investigation | Prepare bounded StatusBar fill-style recorder
+## [2026-09-15] investigation | Prepare bounded raid-marker recorder
+## [2026-09-15] investigation | Prepare bounded abbreviation recorder
+## [2026-09-15] investigation | Prepare bounded heal-calculator recorder
+## [2026-09-15] investigation | Prepare pure mapvalues recorder
+## [2026-09-15] investigation | Record independent UnitSex controls
+## [2026-09-15] investigation | Prepare producer duration recorder
+## [2026-09-15] investigation | Prepare producer duration recorder
+## [2026-09-15] investigation | Prepare guarded color-curve state recorder
+## [2026-09-15] investigation | Prepare manual scalar curve point mutation recorder
+## [2026-09-15] investigation | Prepare manual scalar curve state recorder
+## [2026-09-15] audit | Prepare residual plain callback recorder
+## [2026-09-15] audit | Prepare residual scalar resource scale recorder
+## [2026-09-15] audit | Record residual StripHyperlinks native observations
+## [2026-09-15] audit | Prepare selected action-slot recorder
+## [2026-09-14] audit | Expand preparation beyond the three initial probes
+## [2026-09-15] audit | Prepare bounded cast/channel identity recorder
+## [2026-09-14] audit | Prepare remaining native contract probes
+## [2026-09-14] audit | Credit bounded unit-filtered global callbacks
+## [2026-09-14] audit | Credit bounded StripHyperlinks markup flags
+## [2026-09-14] audit | Credit bounded global event callback lifecycle
+## [2026-09-14] investigation | Prepare native AuraDispelCurveProbe
+## [2026-09-14] audit | Credit bounded UnitPowerPercent curve evaluation
+## [2026-09-14] audit | Credit bounded UnitHealthPercent curve evaluation
+## [2026-09-14] audit | Credit historical aura-instance enumeration publication
+## [2026-09-14] audit | Credit bounded global outfit-situations setting
+## [2026-09-14] audit | Credit bounded transmog-set filter state
+## [2026-09-14] audit | Credit bounded CombatText active-unit selection
+## [2026-09-14] audit | Credit bounded neighborhood tracked-task membership
+## [2026-09-14] audit | Credit bounded custom-set CRUD state
+## [2026-09-14] audit | Credit bounded combat-audio format-setting state
+## [2026-09-14] audit | Credit bounded speaker-volume state
+## [2026-09-14] audit | Credit bounded speaker-speed state
+## [2026-09-14] audit | Credit bounded C_CombatLog setting state
+## [2026-09-13] audit | Credit bounded housing free-place state
+## [2026-09-14] audit | Credit bounded combat-log message-limit query
+## [2026-09-13] audit | Remaining evidence inventory
+## [2026-09-13] audit | Bounded Cooldown.SetPaused proof
+## [2026-09-13] audit | Credit bounded FontString scale-mode state
+## [2026-09-13] audit | Credit ordinary boolean vertex-color state
+## [2026-09-13] audit | Correct default string trimming bytes
+## [2026-09-13] audit | Model numeric StatusBar fill-style state
+## [2026-09-13] audit | Model missing unit power
+## [2026-09-13] audit | Model missing unit health
+## [2026-09-13] audit | Bound TruncateWhenZero formatting
+## [2026-09-13] audit | Correct 12.0.0 inventory notes
+## [2026-09-13] audit | Implement contiguous ASCII-space truncation
+## [2026-09-13] system | Share creature GUID identifier parsing
+## [2026-09-13] audit | Credit existing C_StringUtil byte transformations
+## [2026-09-13] audit | Store predicted heal values
+## [2026-09-13] audit | Characterize remaining heal configuration
+## [2026-09-12] audit | Bound heal-absorb clamp configuration
+## [2026-09-12] audit | Unpack modeled color-curve evaluation
+## [2026-09-12] audit | Replace stored color-curve points
+## [2026-09-12] audit | Remove stored color-curve points
+## [2026-09-12] audit | Retrieve color-curve point collections
+## [2026-09-12] audit | Retrieve stored color-curve points
+## [2026-09-12] audit | Bound existing bonus-bar offset fixture
+## [2026-09-12] audit | Expose scalar/color curve mode getter
+## [2026-09-12] audit | Bound self-buff classifier evidence
+## [2026-09-12] audit | Test namespace current-action cast transitions
+## [2026-09-12] audit | Credit existing action cooldown info assertions
+## [2026-09-12] investigation | Build spell cooldown duration objects from modeled state
+## [2026-09-12] investigation | Build action cooldown duration objects from modeled state
+## [2026-09-12] investigation | Separate After and ticker callback arguments
+## [2026-09-12] audit | Add ordinary CurveUtil boolean selectors
+## [2026-09-12] audit | Reconcile unsafe retail 12.0.0 source context
+## [2026-09-12] system | Prove bounded unit raid-target icons and sprite cells
+## [2026-09-12] audit | Renew tested retail 12.0.0 evidence
+## [2026-09-12] audit | Model bounded retail 12.0.0 paragon and specialization inputs
+## [2026-09-12] audit | Credit modeled 12.1 event and input restrictions
+## [2026-09-12] audit | Preserve patch 12.1 historical cache input
+## [2026-09-12] audit | Credit bounded patch 12.1 binding and removal policies
+## [2026-09-12] audit | Record PTR remaining structure controls
+## [2026-09-11] audit | Credit PTR channel and empower spellcast events
+## [2026-09-11] audit | Credit PTR timed-cast delay and failure inputs
+## [2026-09-11] audit | Credit PTR script-bucket throttle mock output
+## [2026-09-11] audit | Credit PTR EncounterWarnings Edit Mode preview rows
+## [2026-09-11] audit | Credit PTR animation factory
+## [2026-09-11] audit | Credit PTR ICU4C string matches
+## [2026-09-11] audit | Credit PTR ICU4C display names and transliteration
+## [2026-09-11] audit | Credit PTR ICU4C date/time formatting
+## [2026-09-11] audit | Credit PTR ICU4C currency metadata
+## [2026-09-10] audit | Credit PTR ICU4C number and currency APIs
+## [2026-09-10] audit | Credit SecondsFormatter evaluators
+## [2026-09-10] audit | Credit cooldown numeric methods and shared `Clear`
+## [2026-09-10] audit | Credit PTR animation query lifecycle
+## [2026-09-11] audit | Credit PTR SecondsFormatter.Format
+## [2026-09-10] audit | SecondsFormatter configuration
+## Table-freeze audit
+## [2026-09-10] audit | Credit PTR spellcast producer payloads
+## [2026-09-10] audit | Credit PTR active LFG dungeon name
+## [2026-09-09] audit | Credit PTR ICU collation
+## [2026-09-09] system | Model PTR ICU collation
+## [2026-09-09] audit | Credit PTR ICU locale transforms
+## [2026-09-09] system | Model PTR locale transforms
+## [2026-09-09] audit | Credit PTR ICU titlecasing
+## [2026-09-09] system | Model PTR ICU titlecasing
+## [2026-09-09] audit | Credit PTR locale scalar length
+## [2026-09-09] system | Model PTR locale scalar length
+## [2026-09-09] audit | Credit PTR ICU normalization
+## [2026-09-09] system | Model PTR ICU normalization
+## [2026-09-09] audit | Credit PTR locale-context storage
+## [2026-09-09] system | Model opaque PTR locale contexts
+## [2026-09-09] audit | Credit PTR duration core simulator behavior
+## [2026-09-09] system | Model bounded duration core
+## [2026-09-09] audit | Credit PTR duration core behavior
+## [2026-09-09] audit | Credit PTR region rounding controls
+## [2026-09-09] audit | Credit PTR string extension simulator behavior
+## [2026-09-09] audit | Credit PTR macro action tooltip query
+## [2026-09-09] system | Model bounded PTR weather state
+## [2026-09-09] audit | Credit PTR TimedSignalMap behavior
+## [2026-09-09] audit | Credit PTR FindBreaks behavior
+## [2026-09-09] audit | Credit PTR HousingResult publication
+## [2026-09-08] audit | Freeze PTR 12.1.5 API occurrence inventory
+## [2026-09-08] investigation | Explain BetterBlizzFrames no-portrait SpellBook overlay
+## [2026-09-08] acceptance | Actual addon startup and accepted PlayerSpells interaction
+## [2026-09-08] system | Complete bounded aura compatibility surfaces
+## [2026-09-07] system | Enumerate modeled aura instances
+## [2026-09-07] investigation | Restore retail Encounter Journal bootstrap publication
+## [2026-09-07] acceptance | Bound PTR 12.1.5 source, loader, rounding, and panel coverage
+## [2026-09-07] system | Model ordered PTR LoD bootstrap loading
+## [2026-09-07] investigation | Capture PTR LoD bootstrap lifecycle
+## [2026-09-06] system | Model bounded PTR pixel-layout rounding
+## [2026-09-06] investigation | Receive PTR pixel-rounding capture
+## [2026-09-05] investigation | Stage PTR pixel-rounding evidence probe
+## [2026-09-05] audit | Publish 12.1 compatibility strings on PTR
+## [2026-09-05] system | Pin PTR 12.1.5 Blizzard UI source
+## [2026-09-04] investigation | Retire ObjectiveTracker geometry repairs
+## [2026-09-04] system | Separate physical display from base canvas
+## [2026-09-04] investigation | Add read-only live frame-position probe
+## [2026-09-04] investigation | Record current retail frame-position baseline drift
+## [2026-09-04] maintenance | Split prefork workload locking and refresh CASC dependency lock
+## [2026-09-04] audit | Document C_StringUtil escaping helpers
+## [2026-09-01] audit | Document retail 12.1 housing blueprint content-type enum
+## [2026-09-01] audit | Document retail 12.1 housing blueprint requirement flags
+## [2026-09-01] audit | Document retail 12.1 HousingBlueprintType enum
+## [2026-09-01] audit | Document retail 12.1 HouseSettingFlags enum
+## [2026-09-01] audit | Document retail 12.1 HousingResult enum
+## [2026-09-01] audit | Document Recent Allies preload enums
+## [2026-09-01] audit | Document retail 12.1 custom AuraButton texture-style enum
+## [2026-09-01] audit | Document raid dispel overlay enum
+## [2026-09-01] audit | Document ChatFrame combat-audio command names
+## [2026-09-01] audit | Document ChatFrame combat-audio format strings
+## [2026-09-01] audit | Document retail 12.1 Cooldown Viewer sound enum
+## [2026-09-01] audit | Document retail 12.1 Social UI preload surface
+## [2026-08-31] audit | Document retail 12.1 housing Settings strings
+## [2026-08-31] investigation | Store model widget state lazily
+## [2026-08-30] investigation | Separate top-level show ordering from explicit Raise
+## [2026-08-30] investigation | Document Blizzard_TransmogShared inventory-slot scope
+## [2026-08-30] audit | Document idempotent SettingsPanel reconciliation
+## [2026-08-30] audit | Document retail Guild toggle ownership
+## [2026-08-29] audit | Document state-backed C_GuildInfo management methods
+## [2026-08-29] audit | Document CVar-backed spell queue window
+## [2026-08-29] system | Promote default retail to API epoch 12.1
+## [2026-08-28] audit | Document live retail 12.1 GlobalStrings slice
+## [2026-08-13] investigation | Resolve retail 12.0.0 EventScheduler display-info slice
+## [2026-08-13] investigation | Resolve retail 12.0.0 DamageMeter field/reset slice
+## [2026-08-13] investigation | Resolve retail 12.0.0 ColorUtil proof slice
+## [2026-08-13] investigation | Resolve retail 12.0.0 combat-log producer slice
+## [2026-08-12] investigation | Classify 76 removed retail 12.0.0 CVars
+## [2026-08-12] investigation | Classify final 11 retail 12.0.0 occurrences
+## [2026-08-12] investigation | Classify removed 12.0.0 global constants
+## [2026-08-12] investigation | Classify changed raid, StatusBar, scrub, and string.trim rows
+## [2026-08-12] investigation | Classify removed floating-combat-text CVars
+## [2026-08-12] investigation | Classify Pet Journal, spell-overlay, and tracker CVar formatting
+# Wiki Index
+## [2026-09-27] audit | Record pending inline XML ScrollFrame arguments
+## [2026-09-05] API | PTR 12.1.5 Lua math extensions
+## design/
+## reference/
+## systems/
+## investigations/
+## [2026-10-01] audit | Record bounded batch7 observed proof
+## [2026-10-01] evidence | Reconcile 30 current-Retail enum contracts
+## [2026-10-07] evidence | 10.0.5 page audit
+## [2026-10-08] investigation | Patch 7.2.0 API audit
