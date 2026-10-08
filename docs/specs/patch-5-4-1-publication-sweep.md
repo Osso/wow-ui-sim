@@ -4,11 +4,11 @@ Audit the pinned [2013 retail source](../../data/patch-api/sources/5.4.1-api-cha
 
 ## What it must do
 
-- [ ] Probe every registered inventory occurrence in the prefork Game environment and compare the exact non-ok ID set with reviewed gaps.
-- [ ] Apply later retail registers in order; keep queued 5.4.2, 5.4.7, 5.4.8 comments before 6.0.1/6.0.2. Never include Classic 5.5.x.
-- [ ] Preserve both prose statements and all editorial context in the supplemental ledger.
-- [ ] Assert only default Game-state absence of the `realmName` CVar through global and namespace reads; do not claim realm identity parity.
-- [ ] Reproduce saved registers/extracts without changing previously recorded behavior and pass historical-validator portability.
+- [x] Probe every registered inventory occurrence in the prefork Game environment and compare the exact non-ok ID set with reviewed gaps.
+- [x] Apply later retail registers in order; keep queued 5.4.2, 5.4.7, 5.4.8 comments before 6.0.1/6.0.2. Never include Classic 5.5.x.
+- [x] Preserve both prose statements and all editorial context in the supplemental ledger.
+- [x] Assert only default Game-state absence of the `realmName` CVar through global and namespace reads; do not claim realm identity parity.
+- [x] Reproduce saved registers/extracts without changing previously recorded behavior and pass historical-validator portability.
 
 ## How it works
 

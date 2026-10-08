@@ -1,0 +1,14 @@
+{
+  "inventory_rows": 15,
+  "extract_rows": 10,
+  "ledger_statuses": {
+    "audit-pending": 4,
+    "bounded-coverage": 13,
+    "metadata-only": 8
+  },
+  "publication_gaps": 2,
+  "new_modeled_gaps": 0,
+  "new_retirements": 0,
+  "registers_reproduced": 55,
+  "extracts_reproduced": 52
+}

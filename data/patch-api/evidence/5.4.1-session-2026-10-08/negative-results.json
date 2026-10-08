@@ -1,0 +1,272 @@
+{
+  "wt-events-PRODUCT_ASSIGN_TO_TARGET_FAILED-35": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "PRODUCT_ASSIGN_TO_TARGET_FAILED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-PRODUCT_CHOICE_UPDATE-36": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "PRODUCT_CHOICE_UPDATE"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"PRODUCT_CHOICE_UPDATE\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-events-RECRUIT_A_FRIEND_CAN_EMAIL-37": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": "wt-events-RECRUIT_A_FRIEND_CAN_EMAIL-235",
+      "symbol": "RECRUIT_A_FRIEND_CAN_EMAIL"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"RECRUIT_A_FRIEND_CAN_EMAIL\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-RECRUIT_A_FRIEND_INVITATION_FAILED-38": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": "wt-events-RECRUIT_A_FRIEND_INVITATION_FAILED-236",
+      "symbol": "RECRUIT_A_FRIEND_INVITATION_FAILED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"RECRUIT_A_FRIEND_INVITATION_FAILED\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-RECRUIT_A_FRIEND_INVITER_FRIEND_ADDED-39": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": "wt-events-RECRUIT_A_FRIEND_INVITER_FRIEND_ADDED-237",
+      "symbol": "RECRUIT_A_FRIEND_INVITER_FRIEND_ADDED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"RECRUIT_A_FRIEND_INVITER_FRIEND_ADDED\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-RECRUIT_A_FRIEND_SYSTEM_STATUS-40": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": "wt-events-RECRUIT_A_FRIEND_SYSTEM_STATUS-238",
+      "symbol": "RECRUIT_A_FRIEND_SYSTEM_STATUS"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"RECRUIT_A_FRIEND_SYSTEM_STATUS\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_ProductChoice.GetChoices-17": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "P541_MissingNegativeControl"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_ProductChoice.GetProducts-18": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_ProductChoice.GetProducts-155",
+      "symbol": "C_ProductChoice.GetProducts"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_ProductChoice.MakeSelection-19": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_ProductChoice.MakeSelection-156",
+      "symbol": "C_ProductChoice.MakeSelection"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_RecruitAFriend.CheckEmailEnabled-20": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_RecruitAFriend.CheckEmailEnabled-146",
+      "symbol": "C_RecruitAFriend.CheckEmailEnabled"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_RecruitAFriend.GetRecruitInfo-21": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_RecruitAFriend.GetRecruitInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_RecruitAFriend.IsSendingEnabled-22": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_RecruitAFriend.IsSendingEnabled-147",
+      "symbol": "C_RecruitAFriend.IsSendingEnabled"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_RecruitAFriend.SendRecruit-23": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_RecruitAFriend.SendRecruit-148",
+      "symbol": "C_RecruitAFriend.SendRecruit"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_StorePublic.IsDisabledByParentalControls-24": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_StorePublic.IsDisabledByParentalControls-515",
+      "symbol": "C_StorePublic.IsDisabledByParentalControls"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-SelectedRealmName-25": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "SelectedRealmName"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": false
+  }
+}

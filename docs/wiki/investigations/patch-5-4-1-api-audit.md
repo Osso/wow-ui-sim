@@ -32,6 +32,10 @@ The initial discovery launch preceded its commit and is explicitly invalidated a
 
 Final targeted receipts and clean/later-audit gate results are retained in the [session](../../../data/patch-api/evidence/5.4.1-session-2026-10-08/). No full integration suite. Runtime caller/lib/startup comparisons are conditional on src changes; none are introduced by this audit. Validator seals only own session bytes, proves shared files at pinned revisions and derives historical sets/counts from Git/files.
 
+## Targeted results
+
+At committed source revision `8462a4c89`: 2/2 own prefork cases, 56/56 publication/factory cases, 86/86 Python fixtures and format pass. Mists `cargo check --no-default-features --features sound,gui,casc,client-mists --tests` passes with zero non-vendor warnings (six unchanged vendor manifest deprecations). All 55 registers and 52 extracts reproduce; three inherited extract failures remain unchanged. Negative control changes publication gaps from 2 to 3 and fails as required. No src changes trigger caller/lib/startup comparison gates. Clean/later-audit validator gate is recorded separately after sealing.
+
 ## Sources
 
 - [API source](../../../data/patch-api/sources/5.4.1-api-changes.wikitext) and [provenance](../../../data/patch-api/sources/5.4.1-api-changes.provenance.json).
