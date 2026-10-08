@@ -40,6 +40,14 @@ def check_mapping():
     mapping = read(HERE / 'rebase-mapping.json')
     assert mapping['rebased_base'].startswith('8dd11c1b9')
     assert len(mapping['commits']) == 8
+    for inventory in mapping['referenced_inventories'].values():
+        revision = inventory['replacement_revision']
+        assert set(inventory['paths']) == set(inventory['blobs'])
+        after = set(names(revision, 'data/patch-api/sources'))
+        assert set(inventory['paths']) <= after
+        assert all(Path(path).name.startswith('6.2.2-') for path in after - set(inventory['paths']))
+        for path, expected in inventory['blobs'].items():
+            assert git('rev-parse', revision + ':' + path).decode().strip() == expected
     for row in mapping['commits']:
         revision = row.get('rebased_revision', row.get('superseded_by'))
         if 'rebased_revision' in row:
@@ -188,7 +196,10 @@ def check_commands(context):
     paths = {path for path in names(context['master_revision'], 'data/patch-api/evidence')
              if Path(path).name in ('validate.py', 'validate_integrated.py')}
     assert {row['path'] for row in matrix} == paths
-    assert all(row['exit'] == 0 and digest((HERE / row['log']).read_bytes()) == row['log_sha256'] for row in matrix)
+    for row in matrix:
+        assert row['exit'] == 0
+        assert digest((HERE / row['log']).read_bytes()) == row['log_sha256']
+        assert digest(blob(context['master_revision'], row['path'])) == row['code_sha256']
     return len(matrix)
 
 

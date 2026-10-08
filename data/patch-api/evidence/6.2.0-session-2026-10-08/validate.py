@@ -13,7 +13,8 @@ ROOT = Path(__file__).resolve().parents[4]
 HERE = Path(__file__).resolve().parent
 SOURCES = ROOT / 'data/patch-api/sources'
 PIN = 'ddd76addc3bd451894316ab8c3575ff9e8ec0f35'
-MAPPING = json.loads((HERE / 'integrated/rebase-mapping.json').read_text())['commits']
+REBASE = json.loads((HERE / 'integrated/rebase-mapping.json').read_text())
+MAPPING = REBASE['commits']
 
 
 def mapped_row(revision):
@@ -76,6 +77,9 @@ def blob(revision, path):
 
 
 def paths_at(revision, directory):
+    inventory = REBASE.get('referenced_inventories', {}).get(revision)
+    if inventory and directory == 'data/patch-api/sources':
+        return inventory['paths']
     row = mapped_row(revision)
     if row and directory in ('data/patch-api/sources', 'tests'):
         key = 'recorded_registers' if directory == 'data/patch-api/sources' else 'recorded_sweeps'
