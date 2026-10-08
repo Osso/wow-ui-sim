@@ -239,7 +239,8 @@ end
 local function classify()
     if entryKind == 'widget-script' then
         -- Older handler links include an owner; unqualified movie handlers retain their owner.
-        local owner, script = string.match(symbol, '^(%S+)%s+(%S+)$')
+        local owner, script = string.match(symbol, '^([^:]+):([^:]+)$')
+        if not owner then owner, script = string.match(symbol, '^(%S+)%s+(%S+)$') end
         owner, script = owner or 'MovieFrame', script or symbol
         local object = create_object(owner)
         local supported = object:HasScript(script)

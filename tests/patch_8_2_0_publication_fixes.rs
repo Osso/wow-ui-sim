@@ -1,6 +1,9 @@
 //! Concrete modeled volume state and retail retirement boundaries.
 #![cfg(feature = "client-retail")]
 
+#[path = "common/publication_sweep.rs"]
+mod sweep;
+
 use wow_ui_sim::lua_api::WowLuaEnv;
 
 pub(crate) const RETIREMENT_ASSERTIONS: &str = r#"
@@ -29,6 +32,23 @@ fn patch_8_2_0_master_volume_round_trip() {
     env.exec(VOLUME_ASSERTIONS).unwrap();
     assert_eq!(env.state().borrow().voice_chat.master_volume_scale, 0.62);
     assert_eq!(env.state().borrow().voice_chat.output_volume, output_before);
+}
+
+#[test]
+fn patch_8_2_0_colon_handler_probe_uses_declared_owner() {
+    let env = WowLuaEnv::new().unwrap();
+    let entry = sweep::Entry {
+        id: "Frame:OnShow".into(),
+        section: "widgets".into(),
+        direction: "added".into(),
+        symbol: "Frame:OnShow".into(),
+        page_default: None,
+        kind: Some("widget-script".into()),
+    };
+    let result = sweep::probe_entry(&env, &entry, false, &std::collections::BTreeMap::new());
+    assert_eq!(result.0, "widget-script");
+    assert_eq!(result.1, "Frame HasScript=true");
+    assert!(result.2);
 }
 
 #[test]
