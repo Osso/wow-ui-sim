@@ -1,0 +1,14 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/test_extract_patch_non_inventory.py"
+  ],
+  "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
+  "scope": "Integrated p801-page command; evidence-only updates do not change Rust scope",
+  "exit": 0,
+  "log": "p801-integration-extract_patch_non_inventory-fixtures.log",
+  "log_sha256": "b208457237043ee7c51bcc0b890f8cb2f1fdd0ff8ff944bd39ba9e53dc249480",
+  "elapsed_seconds": 0.16,
+  "invalidated": false
+}

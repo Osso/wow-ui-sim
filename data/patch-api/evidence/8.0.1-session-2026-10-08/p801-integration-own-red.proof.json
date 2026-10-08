@@ -1,0 +1,17 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_8_0_1_publication_sweep"
+  ],
+  "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
+  "scope": "Integrated p801-page command; evidence-only updates do not change Rust scope",
+  "exit": 1,
+  "log": "p801-integration-own-red.log",
+  "log_sha256": "f9c0261cfc48f166ad21beb99774b7fb5f039dd2abcb8770217e1f74fe2ca0d1",
+  "elapsed_seconds": 69.41,
+  "invalidated": false
+}

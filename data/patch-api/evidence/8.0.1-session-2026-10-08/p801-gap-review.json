@@ -176,28 +176,6 @@
     "reason": "Existing logged outbound-intent sender is client-wowforever-only. Retail logged-message acceptance, nil result and CHAT_MSG_ADDON_LOGGED delivery/throttling lifecycle lack a backing model; no fabricated logging sender published."
   },
   {
-    "source_id": "wt-global-api-C_Map.GetBountySetIDForMap-21",
-    "symbol": "C_Map.GetBountySetIDForMap",
-    "wikitext_line": 21,
-    "literal": "**{{api|C_Map.GetBountySetIDForMap}}",
-    "expectation": {
-      "direction": "added",
-      "page_default": null,
-      "publication": "published",
-      "section": "global-api",
-      "superseded_by": null,
-      "symbol": "C_Map.GetBountySetIDForMap"
-    },
-    "observation": {
-      "default": null,
-      "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
-      "kind": "member",
-      "value": null
-    },
-    "reason": "No map-keyed bounty-set association records. Existing map hierarchy/art metadata cannot produce bounty-set identity; requires concrete associated/unassociated map fixtures."
-  },
-  {
     "source_id": "wt-global-api-C_Map.GetMapArtHelpTextPosition-24",
     "symbol": "C_Map.GetMapArtHelpTextPosition",
     "wikitext_line": 24,

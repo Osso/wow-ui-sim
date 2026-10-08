@@ -107,9 +107,11 @@
     },
     {
       "source_id": "wt-global-api-C_Map.GetBountySetIDForMap-21",
-      "status": "audit-pending",
-      "capabilities": [],
-      "note": "No map-keyed bounty-set association records. Existing map hierarchy/art metadata cannot produce bounty-set identity; requires concrete associated/unassociated map fixtures."
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Superseded by 8.1.0 removal wt-global-api-C_Map.GetBountySetIDForMap-124; current full-UI raw/lookup absence only, no historical bounty behavior parity."
     },
     {
       "source_id": "wt-global-api-C_Map.GetFallbackWorldMapID-22",

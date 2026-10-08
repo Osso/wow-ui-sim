@@ -1,0 +1,18 @@
+[
+  {
+    "patch": "8.0.1",
+    "prior_revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
+    "resolved": [
+      "wt-global-api-C_Map.GetBountySetIDForMap-21"
+    ],
+    "closures": [
+      {
+        "source_id": "wt-global-api-C_Map.GetBountySetIDForMap-21",
+        "symbol": "C_Map.GetBountySetIDForMap",
+        "superseded_by_patch": "8.1.0",
+        "superseded_by": "wt-global-api-C_Map.GetBountySetIDForMap-124",
+        "kind": "removal"
+      }
+    ]
+  }
+]

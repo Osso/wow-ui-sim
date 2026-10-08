@@ -1,0 +1,11 @@
+{
+  "scope": "All 41 publication sweeps plus factory regression at 4759562bc; dedicated p801 target",
+  "model": "C_Map.GetMapPosFromWorldPos",
+  "later_resolved_gaps": [],
+  "later_new_gaps": [],
+  "own_resolved_gaps": [
+    "wt-global-api-C_Map.GetBountySetIDForMap-21"
+  ],
+  "later_audit_replacements_required": [],
+  "evidence": "p801-integration-all-sweeps-red.proof.json"
+}
