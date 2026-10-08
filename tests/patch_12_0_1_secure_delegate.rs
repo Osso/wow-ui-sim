@@ -2,9 +2,6 @@
 #![cfg(feature = "client-retail")]
 use wow_ui_sim::lua_api::WowLuaEnv;
 
-#[path = "common/prefork_full_ui_preload.rs"]
-mod full_ui;
-
 fn assert_secret_setter_boundary(env: &WowLuaEnv) {
     env.exec(r#"
         assert(type(ActionButton_ApplyCooldown) == 'function')
@@ -42,7 +39,9 @@ fn assert_secret_setter_boundary(env: &WowLuaEnv) {
         addon()
     "#).unwrap();
     // Separate secure host entry: taint propagates back to the calling Lua chunk.
-    let duration: f64 = env.eval("return ProbeNormal:GetCooldownDisplayDuration()").unwrap();
+    let duration: f64 = env
+        .eval("return ProbeNormal:GetCooldownDisplayDuration()")
+        .unwrap();
     assert_eq!(duration, 300000.0);
 }
 
@@ -52,7 +51,8 @@ fn assert_secret_setter_boundary(env: &WowLuaEnv) {
 #[ignore = "pending opaque consumption of secret-bearing duration timing; see prose-2026-03-21-174"]
 fn patch_12_0_1_tainted_secret_duration_object() {
     let env = WowLuaEnv::new().unwrap();
-    env.exec(r#"
+    env.exec(
+        r#"
         local duration = C_DurationUtil.CreateDuration()
         duration:SetTimeFromStart(secretwrap(10, 20, 1))
         local frame = CreateFrame('Cooldown')
@@ -62,15 +62,17 @@ fn patch_12_0_1_tainted_secret_duration_object() {
         end
         debug.setobjecttaint(addon, 'SecretDurationExtractProbe')
         addon()
-    "#).unwrap();
+    "#,
+    )
+    .unwrap();
 }
 
-#[test]
-fn patch_12_0_1_cached_secure_delegate_removed() {
-    crate::common::with_exclusive_workload(|| {
-        let env = full_ui::preload_full_game_ui().expect("cached Game preload");
+prefork_full_ui_case! {
+fn patch_12_0_1_cached_secure_delegate_removed(env: &WowLuaEnv) {
+    {
         env.exec("CastSpellByID(642)").unwrap();
         env.state().borrow_mut().cooldowns_restricted = true;
         assert_secret_setter_boundary(&env);
-    });
+    };
+}
 }
