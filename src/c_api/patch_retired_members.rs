@@ -41,8 +41,6 @@ const RETIRED_9_1_5_MEMBERS: &[(&str, &[&str])] = &[
 
 // Qualified and bare-name scans find no consumers of these nine members.
 // Live reporting entry points and Blizzard deprecation wrappers remain.
-// Qualified and bare-name cached retail scans find no consumers of these nine
-// members. Live reporting entry points and Blizzard deprecation wrappers remain.
 // Qualified and bare-name cached retail scans find no consumers; keep deprecation wrappers.
 const RETIRED_9_1_0_MEMBERS: &[(&str, &[&str])] = &[
     ("C_BarberShop", &["OldBarberShopLoaded"]),
@@ -78,6 +76,8 @@ const RETIRED_9_1_0_MEMBERS: &[(&str, &[&str])] = &[
     ),
 ];
 
+// Qualified and bare-name cached retail scans find no consumers of these nine
+// members. Live reporting entry points and Blizzard deprecation wrappers remain.
 const RETIRED_9_2_5_MEMBERS: &[(&str, &[&str])] = &[
     ("C_Calendar", &["ContextMenuEventComplain"]),
     (

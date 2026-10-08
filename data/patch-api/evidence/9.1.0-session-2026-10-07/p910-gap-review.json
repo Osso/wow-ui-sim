@@ -1,0 +1,744 @@
+[
+  {
+    "source_id": "wt-global-api-AcknowledgeAADCAlert-23",
+    "symbol": "AcknowledgeAADCAlert",
+    "literal": ": {{api|t=a|AcknowledgeAADCAlert}}",
+    "wikitext_line": 23,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "AADC alert acknowledgement needs alert eligibility/lifecycle state; no registered acknowledgement producer. No fabricated acknowledgement success added."
+  },
+  {
+    "source_id": "wt-global-api-C_ChallengeMode.GetDungeonScoreRarityColor-25",
+    "symbol": "C_ChallengeMode.GetDungeonScoreRarityColor",
+    "literal": ": {{api|t=a|C_ChallengeMode.GetDungeonScoreRarityColor}}",
+    "wikitext_line": 25,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs dungeon-score thresholds and populated rarity-color lookup; lookup-only autostub is not a score-color model."
+  },
+  {
+    "source_id": "wt-global-api-C_ChallengeMode.GetKeystoneLevelRarityColor-26",
+    "symbol": "C_ChallengeMode.GetKeystoneLevelRarityColor",
+    "literal": ": {{api|t=a|C_ChallengeMode.GetKeystoneLevelRarityColor}}",
+    "wikitext_line": 26,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs keystone-level rarity thresholds and color output; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_ChallengeMode.GetOverallDungeonScore-27",
+    "symbol": "C_ChallengeMode.GetOverallDungeonScore",
+    "literal": ": {{api|t=a|C_ChallengeMode.GetOverallDungeonScore}}",
+    "wikitext_line": 27,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs player dungeon-score aggregate and defined eligibility/data inputs; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_ChallengeMode.GetSpecificDungeonOverallScoreRarityColor-28",
+    "symbol": "C_ChallengeMode.GetSpecificDungeonOverallScoreRarityColor",
+    "literal": ": {{api|t=a|C_ChallengeMode.GetSpecificDungeonOverallScoreRarityColor}}",
+    "wikitext_line": 28,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs dungeon-specific aggregate thresholds and color output; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_ChallengeMode.GetSpecificDungeonScoreRarityColor-29",
+    "symbol": "C_ChallengeMode.GetSpecificDungeonScoreRarityColor",
+    "literal": ": {{api|t=a|C_ChallengeMode.GetSpecificDungeonScoreRarityColor}}",
+    "wikitext_line": 29,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs map/score-specific color policy; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_ChatInfo.GetChatTypeName-31",
+    "symbol": "C_ChatInfo.GetChatTypeName",
+    "literal": ": {{api|t=a|C_ChatInfo.GetChatTypeName}}",
+    "wikitext_line": 31,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs chat-type identifier/name mapping with invalid-input behavior; no registered producer. Existing channel queries do not establish this mapping."
+  },
+  {
+    "source_id": "wt-global-api-C_EventToastManager.GetLevelUpDisplayToastsFromLevel-33",
+    "symbol": "C_EventToastManager.GetLevelUpDisplayToastsFromLevel",
+    "literal": ": {{api|t=a|C_EventToastManager.GetLevelUpDisplayToastsFromLevel}}",
+    "wikitext_line": 33,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "parent raw-absent; raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs level-driven toast records, not an empty list placeholder; namespace/member raw-absent at observation."
+  },
+  {
+    "source_id": "wt-global-api-C_EventToastManager.GetNextToastToDisplay-34",
+    "symbol": "C_EventToastManager.GetNextToastToDisplay",
+    "literal": ": {{api|t=a|C_EventToastManager.GetNextToastToDisplay}}",
+    "wikitext_line": 34,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs ordered toast queue and next-item DTO; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_EventToastManager.RemoveCurrentToast-35",
+    "symbol": "C_EventToastManager.RemoveCurrentToast",
+    "literal": ": {{api|t=a|C_EventToastManager.RemoveCurrentToast}}",
+    "wikitext_line": 35,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs current-toast selection/removal and queue transitions; no explicit mutation producer."
+  },
+  {
+    "source_id": "wt-global-api-C_Garrison.GetAutoMissionTargetingInfoForSpell-37",
+    "symbol": "C_Garrison.GetAutoMissionTargetingInfoForSpell",
+    "literal": ": {{api|t=a|C_Garrison.GetAutoMissionTargetingInfoForSpell}}",
+    "wikitext_line": 37,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs mission spell targeting data and targeting output contract; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_Item.GetAppliedItemTransmogInfo-39",
+    "symbol": "C_Item.GetAppliedItemTransmogInfo",
+    "literal": ": {{api|t=a|C_Item.GetAppliedItemTransmogInfo}}",
+    "wikitext_line": 39,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs applied item transmog DTO derived from item/appearance state; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_Item.GetBaseItemTransmogInfo-40",
+    "symbol": "C_Item.GetBaseItemTransmogInfo",
+    "literal": ": {{api|t=a|C_Item.GetBaseItemTransmogInfo}}",
+    "wikitext_line": 40,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs base item appearance DTO; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_Item.IsDressableItemByID-41",
+    "symbol": "C_Item.IsDressableItemByID",
+    "literal": ": {{api|t=a|C_Item.IsDressableItemByID}}",
+    "wikitext_line": 41,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs item dressability metadata/eligibility; no explicit item-ID predicate."
+  },
+  {
+    "source_id": "wt-global-api-C_ItemUpgrade.GetItemLevelIncrement-42",
+    "symbol": "C_ItemUpgrade.GetItemLevelIncrement",
+    "literal": ": {{api|t=a|C_ItemUpgrade.GetItemLevelIncrement}}",
+    "wikitext_line": 42,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs item-upgrade progression data and level-increment lookup; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_ItemUpgrade.GetItemUpgradeEffect-43",
+    "symbol": "C_ItemUpgrade.GetItemUpgradeEffect",
+    "literal": ": {{api|t=a|C_ItemUpgrade.GetItemUpgradeEffect}}",
+    "wikitext_line": 43,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs populated upgrade-effect data and lookup contract; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_ItemUpgrade.GetNumItemUpgradeEffects-44",
+    "symbol": "C_ItemUpgrade.GetNumItemUpgradeEffects",
+    "literal": ": {{api|t=a|C_ItemUpgrade.GetNumItemUpgradeEffects}}",
+    "wikitext_line": 44,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs item-upgrade effect catalog/count derived from modeled effects; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_LegendaryCrafting.GetRuneforgePowersByClassSpecAndCovenant-45",
+    "symbol": "C_LegendaryCrafting.GetRuneforgePowersByClassSpecAndCovenant",
+    "literal": ": {{api|t=a|C_LegendaryCrafting.GetRuneforgePowersByClassSpecAndCovenant}}",
+    "wikitext_line": 45,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs class/spec/covenant-to-runeforge-power catalog; namespace/member raw-absent. No empty-list credit."
+  },
+  {
+    "source_id": "wt-global-api-C_LFGList.GetApplicantDungeonScoreForListing-47",
+    "symbol": "C_LFGList.GetApplicantDungeonScoreForListing",
+    "literal": ": {{api|t=a|C_LFGList.GetApplicantDungeonScoreForListing}}",
+    "wikitext_line": 47,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs applicant identity/map/listing score state; no explicit query producer."
+  },
+  {
+    "source_id": "wt-global-api-C_PlayerInfo.GetInstancesUnlockedAtLevel-57",
+    "symbol": "C_PlayerInfo.GetInstancesUnlockedAtLevel",
+    "literal": ": {{api|t=a|C_PlayerInfo.GetInstancesUnlockedAtLevel}}",
+    "wikitext_line": 57,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs instance-level access metadata and unlock policy; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_QuestLog.GetQuestLogPortraitGiver-59",
+    "symbol": "C_QuestLog.GetQuestLogPortraitGiver",
+    "literal": ": {{api|t=a|C_QuestLog.GetQuestLogPortraitGiver}}",
+    "wikitext_line": 59,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs portrait-giver identity/texture metadata on quest records; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_QuestLog.GetQuestType-60",
+    "symbol": "C_QuestLog.GetQuestType",
+    "literal": ": {{api|t=a|C_QuestLog.GetQuestType}}",
+    "wikitext_line": 60,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs quest-type metadata/query; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_Soulbinds.GetConduitRank-63",
+    "symbol": "C_Soulbinds.GetConduitRank",
+    "literal": ": {{api|t=a|C_Soulbinds.GetConduitRank}}",
+    "wikitext_line": 63,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs conduit/rank state and query contract; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_Soulbinds.GetSpecsAssignedToSoulbind-64",
+    "symbol": "C_Soulbinds.GetSpecsAssignedToSoulbind",
+    "literal": ": {{api|t=a|C_Soulbinds.GetSpecsAssignedToSoulbind}}",
+    "wikitext_line": 64,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs spec-to-soulbind assignments and populated query; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_SpellBook.GetCurrentLevelSpells-65",
+    "symbol": "C_SpellBook.GetCurrentLevelSpells",
+    "literal": ": {{api|t=a|C_SpellBook.GetCurrentLevelSpells}}",
+    "wikitext_line": 65,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs current-level spellbook membership/progression query; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_SpellBook.GetSpellInfo-66",
+    "symbol": "C_SpellBook.GetSpellInfo",
+    "literal": ": {{api|t=a|C_SpellBook.GetSpellInfo}}",
+    "wikitext_line": 66,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs historical spellbook-index/type query contract; raw member absent. Later C_Spell.GetSpellInfo is a different identity, not publication credit."
+  },
+  {
+    "source_id": "wt-global-api-C_SpellBook.GetSpellLinkFromSpellID-67",
+    "symbol": "C_SpellBook.GetSpellLinkFromSpellID",
+    "literal": ": {{api|t=a|C_SpellBook.GetSpellLinkFromSpellID}}",
+    "wikitext_line": 67,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs spell-ID link producer for this namespace identity; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_Transmog.CanHaveSecondaryAppearanceForSlotID-68",
+    "symbol": "C_Transmog.CanHaveSecondaryAppearanceForSlotID",
+    "literal": ": {{api|t=a|C_Transmog.CanHaveSecondaryAppearanceForSlotID}}",
+    "wikitext_line": 68,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs slot-specific secondary appearance eligibility; no explicit predicate."
+  },
+  {
+    "source_id": "wt-global-api-C_TransmogCollection.CanAppearanceHaveIllusion-75",
+    "symbol": "C_TransmogCollection.CanAppearanceHaveIllusion",
+    "literal": ": {{api|t=a|C_TransmogCollection.CanAppearanceHaveIllusion}}",
+    "wikitext_line": 75,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs appearance/illusion eligibility metadata; no explicit predicate."
+  },
+  {
+    "source_id": "wt-global-api-C_TransmogCollection.GetArtifactAppearanceStrings-76",
+    "symbol": "C_TransmogCollection.GetArtifactAppearanceStrings",
+    "literal": ": {{api|t=a|C_TransmogCollection.GetArtifactAppearanceStrings}}",
+    "wikitext_line": 76,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs artifact appearance strings and localization data; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_TransmogCollection.GetFallbackWeaponAppearance-77",
+    "symbol": "C_TransmogCollection.GetFallbackWeaponAppearance",
+    "literal": ": {{api|t=a|C_TransmogCollection.GetFallbackWeaponAppearance}}",
+    "wikitext_line": 77,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs fallback weapon appearance mappings; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_TransmogCollection.GetIllusionInfo-78",
+    "symbol": "C_TransmogCollection.GetIllusionInfo",
+    "literal": ": {{api|t=a|C_TransmogCollection.GetIllusionInfo}}",
+    "wikitext_line": 78,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs populated illusion information catalog; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_TransmogCollection.GetIllusionStrings-79",
+    "symbol": "C_TransmogCollection.GetIllusionStrings",
+    "literal": ": {{api|t=a|C_TransmogCollection.GetIllusionStrings}}",
+    "wikitext_line": 79,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs localized illusion strings; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_TransmogCollection.GetInspectItemTransmogInfoList-80",
+    "symbol": "C_TransmogCollection.GetInspectItemTransmogInfoList",
+    "literal": ": {{api|t=a|C_TransmogCollection.GetInspectItemTransmogInfoList}}",
+    "wikitext_line": 80,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs inspected-unit applied item transmog records; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_TransmogCollection.GetPairedArtifactAppearance-83",
+    "symbol": "C_TransmogCollection.GetPairedArtifactAppearance",
+    "literal": ": {{api|t=a|C_TransmogCollection.GetPairedArtifactAppearance}}",
+    "wikitext_line": 83,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs paired artifact appearance mapping; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_UIWidgetManager.GetSpacerVisualizationInfo-88",
+    "symbol": "C_UIWidgetManager.GetSpacerVisualizationInfo",
+    "literal": ": {{api|t=a|C_UIWidgetManager.GetSpacerVisualizationInfo}}",
+    "wikitext_line": 88,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs spacer widget visualization DTO from widget state; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_UIWidgetManager.GetTextColumnRowVisualizationInfo-89",
+    "symbol": "C_UIWidgetManager.GetTextColumnRowVisualizationInfo",
+    "literal": ": {{api|t=a|C_UIWidgetManager.GetTextColumnRowVisualizationInfo}}",
+    "wikitext_line": 89,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs populated text-column-row widget visualization DTO; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_VoiceChat.ActivateChannelTranscription-90",
+    "symbol": "C_VoiceChat.ActivateChannelTranscription",
+    "literal": ": {{api|t=a|C_VoiceChat.ActivateChannelTranscription}}",
+    "wikitext_line": 90,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs voice-channel transcription activation lifecycle; no explicit mutation producer."
+  },
+  {
+    "source_id": "wt-global-api-C_VoiceChat.DeactivateChannelTranscription-91",
+    "symbol": "C_VoiceChat.DeactivateChannelTranscription",
+    "literal": ": {{api|t=a|C_VoiceChat.DeactivateChannelTranscription}}",
+    "wikitext_line": 91,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs transcription deactivation state/events; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_VoiceChat.GetRemoteTtsVoices-92",
+    "symbol": "C_VoiceChat.GetRemoteTtsVoices",
+    "literal": ": {{api|t=a|C_VoiceChat.GetRemoteTtsVoices}}",
+    "wikitext_line": 92,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs remote TTS voice catalog and output contract; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_VoiceChat.IsSpeakForMeAllowed-95",
+    "symbol": "C_VoiceChat.IsSpeakForMeAllowed",
+    "literal": ": {{api|t=a|C_VoiceChat.IsSpeakForMeAllowed}}",
+    "wikitext_line": 95,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs account/channel speak-for-me eligibility policy; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_VoiceChat.SpeakRemoteTextSample-97",
+    "symbol": "C_VoiceChat.SpeakRemoteTextSample",
+    "literal": ": {{api|t=a|C_VoiceChat.SpeakRemoteTextSample}}",
+    "wikitext_line": 97,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs remote voice selection and sample playback lifecycle; no explicit producer. Hardware/services untouched."
+  },
+  {
+    "source_id": "wt-global-api-C_VoiceChat.StopSpeakingText-99",
+    "symbol": "C_VoiceChat.StopSpeakingText",
+    "literal": ": {{api|t=a|C_VoiceChat.StopSpeakingText}}",
+    "wikitext_line": 99,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Needs active TTS playback cancellation state/event contract; no explicit producer."
+  },
+  {
+    "source_id": "wt-global-api-C_Transmog.GetCost-111",
+    "symbol": "C_Transmog.GetCost",
+    "literal": ": {{api|t=a|C_Transmog.GetCost}}",
+    "wikitext_line": 111,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Removed namespace identity still fabricates a lookup function. Qualified scan has no matches; bare-name scan has current cached references: /home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ItemInteractionUI/Blizzard_ItemInteractionUI.lua:139:function ItemInteractionMixin:GetCost(). Conservatively retained per task; this is not proof that the old namespace API is used."
+  },
+  {
+    "source_id": "wt-global-api-C_Transmog.GetItemInfo-112",
+    "symbol": "C_Transmog.GetItemInfo",
+    "literal": ": {{api|t=a|C_Transmog.GetItemInfo}}",
+    "wikitext_line": 112,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Removed namespace identity still fabricates a lookup function. Qualified scan has no matches; bare-name scan has current cached references: /home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ActionBar/WoWLabs/ActionButtonOverrides.lua:473:\t\t\tUIErrorsFrame:AddMessage(format(ERR_SPELL_ALREADY_KNOWN_S, select(1, C_Item.GetItemInfo(itemID))), 1.0, 0.1, 0.1, 1.0);. Conservatively retained per task; this is not proof that the old namespace API is used."
+  },
+  {
+    "source_id": "wt-widgets-DressUpModel:GetItemTransmogInfo-162",
+    "symbol": "DressUpModel:GetItemTransmogInfo",
+    "literal": ": {{api|t=w|DressUpModel:GetItemTransmogInfo}}",
+    "wikitext_line": 162,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "DressUpModel; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "reason": "Missing DressUpModel item-transmog method. 3D model display is intentionally unsupported by project scope; adding placeholder methods would not prove populated appearance state or model application."
+  },
+  {
+    "source_id": "wt-widgets-DressUpModel:GetItemTransmogInfoList-163",
+    "symbol": "DressUpModel:GetItemTransmogInfoList",
+    "literal": ": {{api|t=w|DressUpModel:GetItemTransmogInfoList}}",
+    "wikitext_line": 163,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "DressUpModel; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "reason": "Missing DressUpModel item-transmog method. 3D model display is intentionally unsupported by project scope; adding placeholder methods would not prove populated appearance state or model application."
+  },
+  {
+    "source_id": "wt-widgets-DressUpModel:SetItemTransmogInfo-164",
+    "symbol": "DressUpModel:SetItemTransmogInfo",
+    "literal": ": {{api|t=w|DressUpModel:SetItemTransmogInfo}}",
+    "wikitext_line": 164,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "DressUpModel; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "reason": "Missing DressUpModel item-transmog method. 3D model display is intentionally unsupported by project scope; adding placeholder methods would not prove populated appearance state or model application."
+  },
+  {
+    "source_id": "wt-widgets-ModelSceneActor:GetItemTransmogInfo-165",
+    "symbol": "ModelSceneActor:GetItemTransmogInfo",
+    "literal": ": {{api|t=w|ModelSceneActor:GetItemTransmogInfo}}",
+    "wikitext_line": 165,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "ModelSceneActor; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "reason": "Missing ModelSceneActor item-transmog method. 3D model display is intentionally unsupported by project scope; adding placeholder methods would not prove populated appearance state or model application."
+  },
+  {
+    "source_id": "wt-widgets-ModelSceneActor:GetItemTransmogInfoList-166",
+    "symbol": "ModelSceneActor:GetItemTransmogInfoList",
+    "literal": ": {{api|t=w|ModelSceneActor:GetItemTransmogInfoList}}",
+    "wikitext_line": 166,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "ModelSceneActor; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "reason": "Missing ModelSceneActor item-transmog method. 3D model display is intentionally unsupported by project scope; adding placeholder methods would not prove populated appearance state or model application."
+  },
+  {
+    "source_id": "wt-widgets-ModelSceneActor:SetItemTransmogInfo-167",
+    "symbol": "ModelSceneActor:SetItemTransmogInfo",
+    "literal": ": {{api|t=w|ModelSceneActor:SetItemTransmogInfo}}",
+    "wikitext_line": 167,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "ModelSceneActor; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "reason": "Missing ModelSceneActor item-transmog method. 3D model display is intentionally unsupported by project scope; adding placeholder methods would not prove populated appearance state or model application."
+  },
+  {
+    "source_id": "wt-cvars-D3D11-234",
+    "symbol": "D3D11",
+    "literal": ": [[CVar D3D11|D3D11]]",
+    "wikitext_line": 234,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Command record present=false",
+      "kind": "command",
+      "value": null
+    },
+    "reason": "Published page entry is a Command, not a CVar. Current console registry has no D3D11 Command record; rendering backend selection is not modeled by this command."
+  },
+  {
+    "source_id": "wt-cvars-D3D12-236",
+    "symbol": "D3D12",
+    "literal": ": [[CVar D3D12|D3D12]]",
+    "wikitext_line": 236,
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Command record present=false",
+      "kind": "command",
+      "value": null
+    },
+    "reason": "Published page entry is a Command, not a CVar. Current console registry has no D3D12 Command record; no fabricated graphics backend command added."
+  }
+]

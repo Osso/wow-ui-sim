@@ -1,0 +1,9 @@
+[
+  {
+    "source_id": "source-context-wikitext-016",
+    "wikitext_line": 16,
+    "literal": "{| class=\"wikitable\" style=\"min-width: 600px\"",
+    "status": "metadata-only",
+    "reason": "Historical build/date caption; no runtime credit."
+  }
+]

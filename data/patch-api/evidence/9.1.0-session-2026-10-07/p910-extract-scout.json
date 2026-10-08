@@ -1,0 +1,122 @@
+[
+  {
+    "source_id": "source-context-001",
+    "extract_line": 1,
+    "literal": "Patch 9.1.0 API changes",
+    "wikitext_lines": [
+      1
+    ],
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-003",
+    "extract_line": 3,
+    "literal": "== Summary ==",
+    "wikitext_lines": [
+      3
+    ],
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-004",
+    "extract_line": 4,
+    "literal": "* The client now supports loading a MyAddOn_Mainline.toc file and otherwise fall back to MyAddOn.toc.[https://github.com/Stanzilla/WoWUIBugs/issues/68#issuecomment-889431675]",
+    "wikitext_lines": [
+      4
+    ],
+    "status": "audit-pending",
+    "reason": "Mainline TOC selection/fallback statement requires loader behavior proof. No test invoked for this source statement in this audit; existing general loader tests receive no credit."
+  },
+  {
+    "source_id": "prose-undated-005",
+    "extract_line": 5,
+    "literal": "* The event trace debug tool been rewritten.",
+    "wikitext_lines": [
+      5
+    ],
+    "status": "audit-pending",
+    "reason": "Rewritten event-trace debug tool requires cached UI/tool behavior proof. Registration does not prove trace capture, display or controls."
+  },
+  {
+    "source_id": "prose-undated-006",
+    "extract_line": 6,
+    "literal": "* Transmogrification APIs have been reworked.",
+    "wikitext_lines": [
+      6
+    ],
+    "status": "audit-pending",
+    "reason": "Transmogrification rework summary requires item/source/illusion/outfit and model behavior proof. Inventory publication alone does not prove the rework."
+  },
+  {
+    "source_id": "source-context-008",
+    "extract_line": 8,
+    "literal": "== Resources ==",
+    "wikitext_lines": [
+      8
+    ],
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "source-context-009",
+    "extract_line": 9,
+    "literal": "* TOC: 90100",
+    "wikitext_lines": [
+      9
+    ],
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-010",
+    "extract_line": 10,
+    "literal": "* Diffs: wow-ui-source, BlizzardInterfaceResources",
+    "wikitext_lines": [
+      10
+    ],
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-011",
+    "extract_line": 11,
+    "literal": "* Deprecated API: Deprecated_9_1_0.lua",
+    "wikitext_lines": [
+      11
+    ],
+    "status": "metadata-only",
+    "reason": "External deprecated API source link; not expanded, no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-012",
+    "extract_line": 12,
+    "literal": "* Community patch notes: 9.1.0 Consolidated UI Changes",
+    "wikitext_lines": [
+      12
+    ],
+    "status": "metadata-only",
+    "reason": "External community resource/source-generator comment; not expanded, no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-013",
+    "extract_line": 13,
+    "literal": "<!-- https://github.com/Ketho/WowpediaApiDoc/blob/master/Projects/WikitextDiff/WikitextDiff.lua -->",
+    "wikitext_lines": [
+      13
+    ],
+    "status": "metadata-only",
+    "reason": "Source-generator HTML comment; no runtime credit."
+  },
+  {
+    "source_id": "source-context-015",
+    "extract_line": 15,
+    "literal": "== References ==",
+    "wikitext_lines": [
+      247
+    ],
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  }
+]

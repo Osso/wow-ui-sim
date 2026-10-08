@@ -1,0 +1,1609 @@
+{
+  "schema": "patch-page-coverage/v1",
+  "patch": "9.1.0",
+  "source_register": "data/patch-api/sources/9.1.0-wikitext-register.json",
+  "source_sha256": "deeaaed02589405b31b89341c48081a72890118cce878e802bd01df8cef1abdb",
+  "audit_status": "in-progress",
+  "proof_policy": "Complete publication accounting, not complete compatibility. Current retail 12.1.0; 29 chronological later registers, concurrent 9.1.5 pending integration. Publication and registration do not prove native signatures, populated outputs or behavior. Every retained gap and summary boundary is explicit.",
+  "capabilities": [
+    {
+      "id": "publication-sweep-9-1-0",
+      "symbols": [
+        "AcknowledgeAADCAlert",
+        "C_BarberShop.RandomizeCustomizationChoices",
+        "C_ChallengeMode.GetDungeonScoreRarityColor",
+        "C_ChallengeMode.GetKeystoneLevelRarityColor",
+        "C_ChallengeMode.GetOverallDungeonScore",
+        "C_ChallengeMode.GetSpecificDungeonOverallScoreRarityColor",
+        "C_ChallengeMode.GetSpecificDungeonScoreRarityColor",
+        "C_ChatInfo.GetChannelInfoFromIdentifier",
+        "C_ChatInfo.GetChatTypeName",
+        "C_ChatInfo.GetNumReservedChatWindows",
+        "C_EventToastManager.GetLevelUpDisplayToastsFromLevel",
+        "C_EventToastManager.GetNextToastToDisplay",
+        "C_EventToastManager.RemoveCurrentToast",
+        "C_FrameManager.GetFrameVisibilityState",
+        "C_Garrison.GetAutoMissionTargetingInfoForSpell",
+        "C_Item.CanItemTransmogAppearance",
+        "C_Item.GetAppliedItemTransmogInfo",
+        "C_Item.GetBaseItemTransmogInfo",
+        "C_Item.IsDressableItemByID",
+        "C_ItemUpgrade.GetItemLevelIncrement",
+        "C_ItemUpgrade.GetItemUpgradeEffect",
+        "C_ItemUpgrade.GetNumItemUpgradeEffects",
+        "C_LegendaryCrafting.GetRuneforgePowersByClassSpecAndCovenant",
+        "C_LFGInfo.GetDungeonInfo",
+        "C_LFGList.GetApplicantDungeonScoreForListing",
+        "C_MythicPlus.GetSeasonBestAffixScoreInfoForMap",
+        "C_PetJournal.GetPetAbilityListTable",
+        "C_PetJournal.GetPetInfoTableByPetID",
+        "C_PlayerChoice.GetCurrentPlayerChoiceInfo",
+        "C_PlayerChoice.GetNumRerolls",
+        "C_PlayerChoice.OnUIClosed",
+        "C_PlayerChoice.RequestRerollPlayerChoice",
+        "C_PlayerChoice.SendPlayerChoiceResponse",
+        "C_PlayerInfo.GetAlternateFormInfo",
+        "C_PlayerInfo.GetInstancesUnlockedAtLevel",
+        "C_PlayerInfo.GetPlayerMythicPlusRatingSummary",
+        "C_QuestLog.GetQuestLogPortraitGiver",
+        "C_QuestLog.GetQuestType",
+        "C_ScenarioInfo.GetScenarioInfo",
+        "C_ScenarioInfo.GetScenarioStepInfo",
+        "C_Soulbinds.GetConduitRank",
+        "C_Soulbinds.GetSpecsAssignedToSoulbind",
+        "C_SpellBook.GetCurrentLevelSpells",
+        "C_SpellBook.GetSpellInfo",
+        "C_SpellBook.GetSpellLinkFromSpellID",
+        "C_Transmog.CanHaveSecondaryAppearanceForSlotID",
+        "C_Transmog.CanTransmogItem",
+        "C_Transmog.GetApplyCost",
+        "C_Transmog.GetPending",
+        "C_Transmog.GetSlotEffectiveCategory",
+        "C_Transmog.IsAtTransmogNPC",
+        "C_Transmog.IsSlotBeingCollapsed",
+        "C_TransmogCollection.CanAppearanceHaveIllusion",
+        "C_TransmogCollection.GetArtifactAppearanceStrings",
+        "C_TransmogCollection.GetFallbackWeaponAppearance",
+        "C_TransmogCollection.GetIllusionInfo",
+        "C_TransmogCollection.GetIllusionStrings",
+        "C_TransmogCollection.GetInspectItemTransmogInfoList",
+        "C_TransmogCollection.GetOutfitInfo",
+        "C_TransmogCollection.GetOutfitItemTransmogInfoList",
+        "C_TransmogCollection.GetPairedArtifactAppearance",
+        "C_TransmogCollection.IsAppearanceHiddenVisual",
+        "C_TransmogCollection.NewOutfit",
+        "C_TransmogCollection.RenameOutfit",
+        "C_TransmogSets.GetSetPrimaryAppearances",
+        "C_UIWidgetManager.GetSpacerVisualizationInfo",
+        "C_UIWidgetManager.GetTextColumnRowVisualizationInfo",
+        "C_VoiceChat.ActivateChannelTranscription",
+        "C_VoiceChat.DeactivateChannelTranscription",
+        "C_VoiceChat.GetRemoteTtsVoices",
+        "C_VoiceChat.GetTtsVoices",
+        "C_VoiceChat.IsSpeakForMeActive",
+        "C_VoiceChat.IsSpeakForMeAllowed",
+        "C_VoiceChat.IsTranscriptionAllowed",
+        "C_VoiceChat.SpeakRemoteTextSample",
+        "C_VoiceChat.SpeakText",
+        "C_VoiceChat.StopSpeakingText",
+        "ApplyBarberShopStyle",
+        "BarberShopReset",
+        "C_BarberShop.OldBarberShopLoaded",
+        "C_LegendaryCrafting.GetRuneforgePowersByClassAndSpec",
+        "C_PetJournal.GetNumMaxPets",
+        "C_PlayerChoice.GetPlayerChoiceInfo",
+        "C_PlayerChoice.GetPlayerChoiceOptionInfo",
+        "C_PlayerChoice.GetPlayerChoiceRewardInfo",
+        "C_Soulbinds.GetConduitRankFromCollection",
+        "C_Transmog.GetCost",
+        "C_Transmog.GetItemInfo",
+        "C_Transmog.LoadSources",
+        "C_Transmog.ValidateAllPending",
+        "C_TransmogCollection.CanSetFavoriteInCategory",
+        "C_TransmogCollection.GetIllusionFallbackWeaponSource",
+        "C_TransmogCollection.GetIllusionSourceInfo",
+        "C_TransmogCollection.GetInspectSources",
+        "C_TransmogCollection.GetOutfitName",
+        "C_TransmogCollection.GetOutfitSources",
+        "C_TransmogCollection.GetShowMissingSourceInItemTooltips",
+        "C_TransmogCollection.SaveOutfit",
+        "C_TransmogCollection.SetShowMissingSourceInItemTooltips",
+        "C_TransmogSets.GetSetSources",
+        "C_TransmogSets.IsSetCollected",
+        "C_TransmogSets.IsSetUsable",
+        "CancelBarberShop",
+        "ClosePlayerChoice",
+        "GetBarberShopStyleInfo",
+        "GetBarberShopTotalCost",
+        "GetCurrentLevelSpells",
+        "GetCustomizationDetails",
+        "GetDungeonInfo",
+        "GetItemLevelIncrement",
+        "GetItemUpgradeEffect",
+        "GetLevelUpInstances",
+        "GetNumItemUpgradeEffects",
+        "GetQuestLogPortraitGiver",
+        "HasAlternateForm",
+        "IsBarberShopStyleValid",
+        "IsDressableItem",
+        "SendPlayerChoiceResponse",
+        "SetBarberShopAlternateFormFrame",
+        "SetNextBarberShopStyle",
+        "Region:ClearPointsOffset",
+        "AnimationGroup:RemoveAnimations",
+        "Frame:SetFrameBuffer",
+        "EditBox:ClearHighlightText",
+        "GameTooltip:GetCustomLineSpacing",
+        "GameTooltip:SetCustomLineSpacing",
+        "GameTooltip:SetEnhancedConduit",
+        "DressUpModel:GetItemTransmogInfo",
+        "DressUpModel:GetItemTransmogInfoList",
+        "DressUpModel:SetItemTransmogInfo",
+        "ModelSceneActor:GetItemTransmogInfo",
+        "ModelSceneActor:GetItemTransmogInfoList",
+        "ModelSceneActor:SetItemTransmogInfo",
+        "ModelScene OnDressModel",
+        "DressUpModel:GetSlotTransmogSources",
+        "ModelSceneActor:GetSlotTransmogSources",
+        "CHAT_MSG_VOICE_TEXT",
+        "DISPLAY_EVENT_TOAST_LINK",
+        "DISPLAY_EVENT_TOASTS",
+        "FRAME_MANAGER_UPDATE_ALL",
+        "FRAME_MANAGER_UPDATE_FRAME",
+        "GARRISON_SPEC_GROUP_UPDATED",
+        "GARRISON_SPEC_GROUPS_CLEARED",
+        "SCRIPTED_ANIMATIONS_UPDATE",
+        "UI_ERROR_POPUP",
+        "VOICE_CHAT_CHANNEL_MEMBER_STT_MESSAGE",
+        "VOICE_CHAT_CHANNEL_TRANSCRIBING_CHANGED",
+        "VOICE_CHAT_SPEAK_FOR_ME_ACTIVE_STATUS_UPDATED",
+        "VOICE_CHAT_SPEAK_FOR_ME_FEATURE_STATUS_UPDATED",
+        "VOICE_CHAT_TTS_PLAYBACK_FAILED",
+        "VOICE_CHAT_TTS_PLAYBACK_FINISHED",
+        "VOICE_CHAT_TTS_PLAYBACK_STARTED",
+        "VOICE_CHAT_TTS_SPEAK_TEXT_UPDATE",
+        "VOICE_CHAT_TTS_VOICES_UPDATE",
+        "MYTHIC_PLUS_NEW_SEASON_RECORD",
+        "GamePadAnalogMovement",
+        "GamePadCursorPushCamera",
+        "GamePadTurnWithCamera",
+        "graphicsComputeEffects",
+        "lastCharacterGuid",
+        "lodObjectSizeScale",
+        "questTextContrast",
+        "raidGraphicsComputeEffects",
+        "RAIDVolumeFog",
+        "remoteTextToSpeech",
+        "remoteTextToSpeechVoice",
+        "showLoadingScreenTips",
+        "specular",
+        "speechToText",
+        "SpellCooldownDebugger",
+        "textToSpeech",
+        "D3D11",
+        "D3D11_LEGACY",
+        "D3D12",
+        "GamePadSmoothFacing",
+        "graphicsSunshafts",
+        "raidGraphicsSunshafts",
+        "spamFilter",
+        "transmogShouldersSeparately"
+      ],
+      "proof": "data/patch-api/evidence/9.1.0-session-2026-10-07/p910_sweep_out-results.json",
+      "scope": "Publication/absence only."
+    }
+  ],
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-AcknowledgeAADCAlert-23",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "AADC alert acknowledgement needs alert eligibility/lifecycle state; no registered acknowledgement producer. No fabricated acknowledgement success added."
+    },
+    {
+      "source_id": "wt-global-api-C_BarberShop.RandomizeCustomizationChoices-24",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-global-api-C_ChallengeMode.GetDungeonScoreRarityColor-25",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs dungeon-score thresholds and populated rarity-color lookup; lookup-only autostub is not a score-color model."
+    },
+    {
+      "source_id": "wt-global-api-C_ChallengeMode.GetKeystoneLevelRarityColor-26",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs keystone-level rarity thresholds and color output; no explicit producer."
+    },
+    {
+      "source_id": "wt-global-api-C_ChallengeMode.GetOverallDungeonScore-27",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs player dungeon-score aggregate and defined eligibility/data inputs; no explicit producer."
+    },
+    {
+      "source_id": "wt-global-api-C_ChallengeMode.GetSpecificDungeonOverallScoreRarityColor-28",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs dungeon-specific aggregate thresholds and color output; no explicit producer."
+    },
+    {
+      "source_id": "wt-global-api-C_ChallengeMode.GetSpecificDungeonScoreRarityColor-29",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs map/score-specific color policy; no explicit producer."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.GetChannelInfoFromIdentifier-30",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.GetChatTypeName-31",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs chat-type identifier/name mapping with invalid-input behavior; no registered producer. Existing channel queries do not establish this mapping."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.GetNumReservedChatWindows-32",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-global-api-C_EventToastManager.GetLevelUpDisplayToastsFromLevel-33",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs level-driven toast records, not an empty list placeholder; namespace/member raw-absent at observation."
+    },
+    {
+      "source_id": "wt-global-api-C_EventToastManager.GetNextToastToDisplay-34",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs ordered toast queue and next-item DTO; no explicit producer."
+    },
+    {
+      "source_id": "wt-global-api-C_EventToastManager.RemoveCurrentToast-35",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs current-toast selection/removal and queue transitions; no explicit mutation producer."
+    },
+    {
+      "source_id": "wt-global-api-C_FrameManager.GetFrameVisibilityState-36",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-global-api-C_Garrison.GetAutoMissionTargetingInfoForSpell-37",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs mission spell targeting data and targeting output contract; no explicit producer."
+    },
+    {
+      "source_id": "wt-global-api-C_Item.CanItemTransmogAppearance-38",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-global-api-C_Item.GetAppliedItemTransmogInfo-39",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs applied item transmog DTO derived from item/appearance state; no explicit producer."
+    },
+    {
+      "source_id": "wt-global-api-C_Item.GetBaseItemTransmogInfo-40",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs base item appearance DTO; no explicit producer."
+    },
+    {
+      "source_id": "wt-global-api-C_Item.IsDressableItemByID-41",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs item dressability metadata/eligibility; no explicit item-ID predicate."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemUpgrade.GetItemLevelIncrement-42",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs item-upgrade progression data and level-increment lookup; no explicit producer."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemUpgrade.GetItemUpgradeEffect-43",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs populated upgrade-effect data and lookup contract; no explicit producer."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemUpgrade.GetNumItemUpgradeEffects-44",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs item-upgrade effect catalog/count derived from modeled effects; no explicit producer."
+    },
+    {
+      "source_id": "wt-global-api-C_LegendaryCrafting.GetRuneforgePowersByClassSpecAndCovenant-45",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs class/spec/covenant-to-runeforge-power catalog; namespace/member raw-absent. No empty-list credit."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGInfo.GetDungeonInfo-46",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.GetApplicantDungeonScoreForListing-47",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs applicant identity/map/listing score state; no explicit query producer."
+    },
+    {
+      "source_id": "wt-global-api-C_MythicPlus.GetSeasonBestAffixScoreInfoForMap-48",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-global-api-C_PetJournal.GetPetAbilityListTable-49",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-global-api-C_PetJournal.GetPetInfoTableByPetID-50",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerChoice.GetCurrentPlayerChoiceInfo-51",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerChoice.GetNumRerolls-52",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerChoice.OnUIClosed-53",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerChoice.RequestRerollPlayerChoice-54",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerChoice.SendPlayerChoiceResponse-55",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerInfo.GetAlternateFormInfo-56",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerInfo.GetInstancesUnlockedAtLevel-57",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs instance-level access metadata and unlock policy; no explicit producer."
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerInfo.GetPlayerMythicPlusRatingSummary-58",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-global-api-C_QuestLog.GetQuestLogPortraitGiver-59",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs portrait-giver identity/texture metadata on quest records; no explicit producer."
+    },
+    {
+      "source_id": "wt-global-api-C_QuestLog.GetQuestType-60",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs quest-type metadata/query; no explicit producer."
+    },
+    {
+      "source_id": "wt-global-api-C_ScenarioInfo.GetScenarioInfo-61",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-global-api-C_ScenarioInfo.GetScenarioStepInfo-62",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-global-api-C_Soulbinds.GetConduitRank-63",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs conduit/rank state and query contract; no explicit producer."
+    },
+    {
+      "source_id": "wt-global-api-C_Soulbinds.GetSpecsAssignedToSoulbind-64",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs spec-to-soulbind assignments and populated query; no explicit producer."
+    },
+    {
+      "source_id": "wt-global-api-C_SpellBook.GetCurrentLevelSpells-65",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs current-level spellbook membership/progression query; no explicit producer."
+    },
+    {
+      "source_id": "wt-global-api-C_SpellBook.GetSpellInfo-66",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs historical spellbook-index/type query contract; raw member absent. Later C_Spell.GetSpellInfo is a different identity, not publication credit."
+    },
+    {
+      "source_id": "wt-global-api-C_SpellBook.GetSpellLinkFromSpellID-67",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs spell-ID link producer for this namespace identity; no explicit producer."
+    },
+    {
+      "source_id": "wt-global-api-C_Transmog.CanHaveSecondaryAppearanceForSlotID-68",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs slot-specific secondary appearance eligibility; no explicit predicate."
+    },
+    {
+      "source_id": "wt-global-api-C_Transmog.CanTransmogItem-69",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Transmog.GetApplyCost-70",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Transmog.GetPending-71",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Transmog.GetSlotEffectiveCategory-72",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Transmog.IsAtTransmogNPC-73",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-global-api-C_Transmog.IsSlotBeingCollapsed-74",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.CanAppearanceHaveIllusion-75",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs appearance/illusion eligibility metadata; no explicit predicate."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.GetArtifactAppearanceStrings-76",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs artifact appearance strings and localization data; no explicit producer."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.GetFallbackWeaponAppearance-77",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs fallback weapon appearance mappings; no explicit producer."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.GetIllusionInfo-78",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs populated illusion information catalog; no explicit producer."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.GetIllusionStrings-79",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs localized illusion strings; no explicit producer."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.GetInspectItemTransmogInfoList-80",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs inspected-unit applied item transmog records; no explicit producer."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.GetOutfitInfo-81",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.GetOutfitItemTransmogInfoList-82",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.GetPairedArtifactAppearance-83",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs paired artifact appearance mapping; no explicit producer."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.IsAppearanceHiddenVisual-84",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.NewOutfit-85",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.RenameOutfit-86",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogSets.GetSetPrimaryAppearances-87",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-global-api-C_UIWidgetManager.GetSpacerVisualizationInfo-88",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs spacer widget visualization DTO from widget state; no explicit producer."
+    },
+    {
+      "source_id": "wt-global-api-C_UIWidgetManager.GetTextColumnRowVisualizationInfo-89",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs populated text-column-row widget visualization DTO; no explicit producer."
+    },
+    {
+      "source_id": "wt-global-api-C_VoiceChat.ActivateChannelTranscription-90",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs voice-channel transcription activation lifecycle; no explicit mutation producer."
+    },
+    {
+      "source_id": "wt-global-api-C_VoiceChat.DeactivateChannelTranscription-91",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs transcription deactivation state/events; no explicit producer."
+    },
+    {
+      "source_id": "wt-global-api-C_VoiceChat.GetRemoteTtsVoices-92",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs remote TTS voice catalog and output contract; no explicit producer."
+    },
+    {
+      "source_id": "wt-global-api-C_VoiceChat.GetTtsVoices-93",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-global-api-C_VoiceChat.IsSpeakForMeActive-94",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-global-api-C_VoiceChat.IsSpeakForMeAllowed-95",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs account/channel speak-for-me eligibility policy; no explicit producer."
+    },
+    {
+      "source_id": "wt-global-api-C_VoiceChat.IsTranscriptionAllowed-96",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-global-api-C_VoiceChat.SpeakRemoteTextSample-97",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs remote voice selection and sample playback lifecycle; no explicit producer. Hardware/services untouched."
+    },
+    {
+      "source_id": "wt-global-api-C_VoiceChat.SpeakText-98",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-global-api-C_VoiceChat.StopSpeakingText-99",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Needs active TTS playback cancellation state/event contract; no explicit producer."
+    },
+    {
+      "source_id": "wt-global-api-ApplyBarberShopStyle-102",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-BarberShopReset-103",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_BarberShop.OldBarberShopLoaded-104",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_LegendaryCrafting.GetRuneforgePowersByClassAndSpec-105",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PetJournal.GetNumMaxPets-106",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerChoice.GetPlayerChoiceInfo-107",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerChoice.GetPlayerChoiceOptionInfo-108",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerChoice.GetPlayerChoiceRewardInfo-109",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Soulbinds.GetConduitRankFromCollection-110",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Transmog.GetCost-111",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Removed namespace identity still fabricates a lookup function. Qualified scan has no matches; bare-name scan has current cached references: /home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ItemInteractionUI/Blizzard_ItemInteractionUI.lua:139:function ItemInteractionMixin:GetCost(). Conservatively retained per task; this is not proof that the old namespace API is used."
+    },
+    {
+      "source_id": "wt-global-api-C_Transmog.GetItemInfo-112",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Removed namespace identity still fabricates a lookup function. Qualified scan has no matches; bare-name scan has current cached references: /home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ActionBar/WoWLabs/ActionButtonOverrides.lua:473:\t\t\tUIErrorsFrame:AddMessage(format(ERR_SPELL_ALREADY_KNOWN_S, select(1, C_Item.GetItemInfo(itemID))), 1.0, 0.1, 0.1, 1.0);. Conservatively retained per task; this is not proof that the old namespace API is used."
+    },
+    {
+      "source_id": "wt-global-api-C_Transmog.LoadSources-113",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Transmog.ValidateAllPending-114",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.CanSetFavoriteInCategory-115",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.GetIllusionFallbackWeaponSource-116",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.GetIllusionSourceInfo-117",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.GetInspectSources-118",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.GetOutfitName-119",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.GetOutfitSources-120",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.GetShowMissingSourceInItemTooltips-121",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.SaveOutfit-122",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.SetShowMissingSourceInItemTooltips-123",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogSets.GetSetSources-124",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogSets.IsSetCollected-125",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogSets.IsSetUsable-126",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-CancelBarberShop-127",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-ClosePlayerChoice-128",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetBarberShopStyleInfo-129",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetBarberShopTotalCost-130",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetCurrentLevelSpells-131",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetCustomizationDetails-132",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetDungeonInfo-133",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetItemLevelIncrement-134",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetItemUpgradeEffect-135",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetLevelUpInstances-136",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetNumItemUpgradeEffects-137",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-GetQuestLogPortraitGiver-138",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-HasAlternateForm-139",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-IsBarberShopStyleValid-140",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-IsDressableItem-141",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Cached unmodified Blizzard deprecation wrapper/alias publication retained: raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedItemScript/Deprecated_ItemScript.lua; alias=C_Item.IsDressableItem. Not native absence or successor behavior parity."
+    },
+    {
+      "source_id": "wt-global-api-SendPlayerChoiceResponse-142",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-SetBarberShopAlternateFormFrame-143",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-global-api-SetNextBarberShopStyle-144",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-widgets-Region:ClearPointsOffset-155",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-widgets-AnimationGroup:RemoveAnimations-156",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-widgets-Frame:SetFrameBuffer-157",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-widgets-EditBox:ClearHighlightText-158",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-widgets-GameTooltip:GetCustomLineSpacing-159",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-widgets-GameTooltip:SetCustomLineSpacing-160",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-widgets-GameTooltip:SetEnhancedConduit-161",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-widgets-DressUpModel:GetItemTransmogInfo-162",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing DressUpModel item-transmog method. 3D model display is intentionally unsupported by project scope; adding placeholder methods would not prove populated appearance state or model application."
+    },
+    {
+      "source_id": "wt-widgets-DressUpModel:GetItemTransmogInfoList-163",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing DressUpModel item-transmog method. 3D model display is intentionally unsupported by project scope; adding placeholder methods would not prove populated appearance state or model application."
+    },
+    {
+      "source_id": "wt-widgets-DressUpModel:SetItemTransmogInfo-164",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing DressUpModel item-transmog method. 3D model display is intentionally unsupported by project scope; adding placeholder methods would not prove populated appearance state or model application."
+    },
+    {
+      "source_id": "wt-widgets-ModelSceneActor:GetItemTransmogInfo-165",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing ModelSceneActor item-transmog method. 3D model display is intentionally unsupported by project scope; adding placeholder methods would not prove populated appearance state or model application."
+    },
+    {
+      "source_id": "wt-widgets-ModelSceneActor:GetItemTransmogInfoList-166",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing ModelSceneActor item-transmog method. 3D model display is intentionally unsupported by project scope; adding placeholder methods would not prove populated appearance state or model application."
+    },
+    {
+      "source_id": "wt-widgets-ModelSceneActor:SetItemTransmogInfo-167",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Missing ModelSceneActor item-transmog method. 3D model display is intentionally unsupported by project scope; adding placeholder methods would not prove populated appearance state or model application."
+    },
+    {
+      "source_id": "wt-widgets-ModelScene OnDressModel-170",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-widgets-DressUpModel:GetSlotTransmogSources-173",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-widgets-ModelSceneActor:GetSlotTransmogSources-174",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-events-CHAT_MSG_VOICE_TEXT-185",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-events-DISPLAY_EVENT_TOAST_LINK-186",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-events-DISPLAY_EVENT_TOASTS-187",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-events-FRAME_MANAGER_UPDATE_ALL-188",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-events-FRAME_MANAGER_UPDATE_FRAME-189",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-events-GARRISON_SPEC_GROUP_UPDATED-190",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-events-GARRISON_SPEC_GROUPS_CLEARED-191",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-events-SCRIPTED_ANIMATIONS_UPDATE-192",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-events-UI_ERROR_POPUP-193",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_CHANNEL_MEMBER_STT_MESSAGE-194",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_CHANNEL_TRANSCRIBING_CHANGED-195",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_SPEAK_FOR_ME_ACTIVE_STATUS_UPDATED-196",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_SPEAK_FOR_ME_FEATURE_STATUS_UPDATED-197",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_TTS_PLAYBACK_FAILED-198",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_TTS_PLAYBACK_FINISHED-199",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_TTS_PLAYBACK_STARTED-200",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_TTS_SPEAK_TEXT_UPDATE-201",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-events-VOICE_CHAT_TTS_VOICES_UPDATE-202",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-events-MYTHIC_PLUS_NEW_SEASON_RECORD-205",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-GamePadAnalogMovement-216",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-cvars-GamePadCursorPushCamera-217",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-cvars-GamePadTurnWithCamera-218",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-cvars-graphicsComputeEffects-219",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-cvars-lastCharacterGuid-220",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-lodObjectSizeScale-221",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-cvars-questTextContrast-222",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-cvars-raidGraphicsComputeEffects-223",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-cvars-RAIDVolumeFog-224",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-cvars-remoteTextToSpeech-225",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-cvars-remoteTextToSpeechVoice-226",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-cvars-showLoadingScreenTips-227",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-cvars-specular-228",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-cvars-speechToText-229",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-cvars-SpellCooldownDebugger-230",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-cvars-textToSpeech-231",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/registration only; signatures, outputs, event producers, state transitions and native behavior parity remain unproven."
+    },
+    {
+      "source_id": "wt-cvars-D3D11-234",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Published page entry is a Command, not a CVar. Current console registry has no D3D11 Command record; rendering backend selection is not modeled by this command."
+    },
+    {
+      "source_id": "wt-cvars-D3D11_LEGACY-235",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-D3D12-236",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Published page entry is a Command, not a CVar. Current console registry has no D3D12 Command record; no fabricated graphics backend command added."
+    },
+    {
+      "source_id": "wt-cvars-GamePadSmoothFacing-239",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-graphicsSunshafts-240",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-raidGraphicsSunshafts-241",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-spamFilter-242",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "wt-cvars-transmogShouldersSeparately-243",
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current absence only, including ordinary namespace lookup where applicable; no successor behavior credit."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Mainline TOC selection/fallback statement requires loader behavior proof. No test invoked for this source statement in this audit; existing general loader tests receive no credit."
+    },
+    {
+      "source_id": "prose-undated-005",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Rewritten event-trace debug tool requires cached UI/tool behavior proof. Registration does not prove trace capture, display or controls."
+    },
+    {
+      "source_id": "prose-undated-006",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Transmogrification rework summary requires item/source/illusion/outfit and model behavior proof. Inventory publication alone does not prove the rework."
+    },
+    {
+      "source_id": "source-context-008",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-009",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-010",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-011",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "External deprecated API source link; not expanded, no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-012",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "External community resource/source-generator comment; not expanded, no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-013",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source-generator HTML comment; no runtime credit."
+    },
+    {
+      "source_id": "source-context-015",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-wikitext-016",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Historical build/date caption; no runtime credit."
+    }
+  ],
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/9.1.0-api-changes.txt",
+    "sha256": "961a8cd7dff7cf67ab13b4112ff18520a074f369a8201df3f192a5694c942783",
+    "wikitext_revid": 167980,
+    "wikitext_sha256": "29871f1e6e2c9796399140cf0dc396c76c69d083fffb6a60b05172893301ce8c",
+    "extract_tool": "tools/extract_patch_non_inventory.py"
+  }
+}
