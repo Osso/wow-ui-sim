@@ -1,0 +1,10 @@
+14:    pub row_count: usize,
+325:fn parse_register(source: &str, row_count: Option<usize>) -> Register {
+328:    assert_eq!(ids.len(), register.entries.len(), "duplicate source IDs");
+329:    if let Some(row_count) = row_count {
+331:            register.entries.len(),
+332:            row_count,
+337:        assert!(matches!(
+341:        assert!(matches!(
+356:    parse_register(&source, Some(spec.row_count))
+462:        !value.is_empty()

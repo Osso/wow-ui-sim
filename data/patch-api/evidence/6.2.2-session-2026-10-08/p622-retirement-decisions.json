@@ -1,0 +1,8 @@
+{
+  "source_revision": 6209268,
+  "removed_entries": [],
+  "new_retirements": [],
+  "scans": [],
+  "reason": "Pinned raw source is solely an apichanges navigation template; no API member is named. No retirement scan targets exist. No retirement or runtime change made.",
+  "scan_tool": "/usr/bin/grep whole-word scans required for any member; none on this page."
+}

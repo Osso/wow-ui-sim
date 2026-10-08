@@ -1,0 +1,19 @@
+{
+  "schema": "patch-api-page-coverage/v1",
+  "patch": "6.2.2",
+  "source": "data/patch-api/sources/6.2.2-wikitext-register.json",
+  "source_sha256": "4eee04950b20e3bd79f4fd3b724b5c0d4d531c796534e810c090c168f6cbd6f0",
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/6.2.2-api-changes.txt",
+    "sha256": "66ba9602ace39aa500e39afd7ab11a83ab62e084c6e7369e8855e0fc4feea0e9"
+  },
+  "proof_policy": "Navigation-only stub; zero inventory entries. Retained navigation context is metadata-only, with no runtime or historical parity credit.",
+  "source_rows": [
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+32:def parse_symbol(text):
+76:def parse_section(section, lines, *, expand_shared_changes=False, capture_span_defaults=False,
+192:def parse_legacy_caption_tables(text):
+221:def parse_simple_api_list(text):
+238:def parse_legacy_api_bullets(text):
+256:def parse_legacy_api_renames(text):
+290:def parse_bfa_prepatch(text):
+315:def parse_legacy_summary_tables(text):
+335:def parse_legacy_widget_summaries(text):
+352:def parse_prose_namespace_migrations(text):
+369:def parse_diff_api_additions(text):
+384:def parse_top_level_api_bullets(text):
+413:def parse_legacy_widget_cvar_bullets(text):
+440:def parse_prose_api_links(text):
+512:def parse_legion_prepatch(text):
+526:def main():
+622:    register = {

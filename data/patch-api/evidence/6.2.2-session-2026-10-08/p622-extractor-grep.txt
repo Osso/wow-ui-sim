@@ -1,0 +1,10 @@
+6:The 12.0.0 capture has no Notes/Blue posts; 12.0.1 retains Blue posts.
+73:        raise ValueError('unterminated legacy CVar inventory table')
+194:            raise ValueError(f"unhandled template: {line}")
+232:def seed_rows(text, patch='12.0.0'):
+241:        reason = 'Editorial heading; no runtime credit.'
+261:                reason = 'Deprecated-source heading/context; no runtime credit.'
+266:            reason = 'Editorial/source/build context or external resource link; no runtime credit.'
+299:def main():
+349:        raise ValueError('Use --text-only for other patches; coverage credit is audit-owned')
+356:        raise ValueError('Supplemental rows already audited; refusing to reset proof')
