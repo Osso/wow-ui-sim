@@ -1,0 +1,14 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p624-page/tools/test_extract_patch_non_inventory.py"
+  ],
+  "revision": "1dbc6204c0e09437e50585212b389727c9bbe758",
+  "source_revision": "1dbc6204c0e09437e50585212b389727c9bbe758",
+  "exit": 0,
+  "log": "extract_patch_non_inventory-fixtures.txt",
+  "log_sha256": "0bc266e3409a4509828639c370e8f289ea0a36c540427cf868cf2ecfa35acfdf",
+  "seconds": 0.06400377800309798,
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p624-page"
+}

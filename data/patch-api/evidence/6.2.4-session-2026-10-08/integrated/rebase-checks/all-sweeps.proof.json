@@ -1,0 +1,17 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "publication_sweep"
+  ],
+  "revision": "1dbc6204c0e09437e50585212b389727c9bbe758",
+  "source_revision": "1dbc6204c0e09437e50585212b389727c9bbe758",
+  "exit": 0,
+  "log": "all-sweeps.txt",
+  "log_sha256": "2d7d61330498bed02d3865e4569f222747987c23517025583edba1784fcfe5a8",
+  "seconds": 108.14862748899759,
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p624-page"
+}

@@ -22,8 +22,42 @@ def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def mapped_revision(revision):
+    for row in read(HERE / 'rebase-mapping.json')['commits']:
+        if row['recorded_revision'].startswith(revision):
+            return row['rebased_revision']
+    return revision
+
+
 def git(*args):
-    return subprocess.check_output(['git', *args], cwd=ROOT)
+    arguments = []
+    for argument in args:
+        revision, separator, suffix = argument.partition(':')
+        if revision.endswith('^{commit}'):
+            revision = mapped_revision(revision.removesuffix('^{commit}')) + '^{commit}'
+        else:
+            revision = mapped_revision(revision)
+        arguments.append(revision + separator + suffix)
+    return subprocess.check_output(['git', *arguments], cwd=ROOT)
+
+
+def check_rebase():
+    mapping = read(HERE / 'rebase-mapping.json')
+    assert mapping['original_base'].startswith('846a30663')
+    assert mapping['rebased_base'].startswith('15b417367')
+    assert len(mapping['commits']) == 10
+    for row in mapping['commits']:
+        revision = row['rebased_revision']
+        assert git('show', '-s', '--format=%s', revision).decode().strip() == row['subject']
+        patch = git('show', '--format=', '--binary', revision)
+        patch_id = subprocess.check_output(['git', 'patch-id', '--stable'], input=patch, cwd=ROOT).decode().split()[0]
+        assert patch_id == row['rebased_patch_id']
+        assert git('rev-parse', revision + '^{tree}').decode().strip() == row['rebased_tree']
+        assert git('diff-tree', '--no-commit-id', '--raw', '--no-abbrev', '-r', revision).decode().splitlines() == row['rebased_changed_blobs']
+        assert row['patch_identical'] == (row['recorded_patch_id'] == patch_id)
+        if not row['patch_identical']:
+            assert row['recorded_revision'].startswith('c37c5e635')
+            assert row['superseded_by'].startswith('15b417367:')
 
 
 def blob(revision, path):
@@ -59,8 +93,8 @@ def check_preservation(context):
     assert git_scope(context['runtime_revision'], context['input_scope']) == context['input_scope']
     for name, expected in context['input_scope'].items():
         assert blob_oid(ROOT / name) == expected, 'proof invalidated: ' + name
-    # Retain the original 7.0.3 validator and seal table; only its own validator
-    # hash changes to admit four exact, committed opt-in tool replacements.
+    # Historical allowlist RED/GREEN artifacts remain sealed. Master 15b417367
+    # supersedes that approach by proving runtime files only at pinned revisions.
     before = read(HERE / 'p703-before-artifact-hashes.json.txt')
     directory = ROOT / 'data/patch-api/evidence/7.0.3-session-2026-10-08/integrated'
     after = read(directory / 'artifact-hashes.json')
@@ -72,6 +106,9 @@ def check_preservation(context):
     assert original == (HERE / 'p703-before-validate.py.txt').read_bytes()
     assert before[own] == hashlib.sha256(original).hexdigest()
     assert blob(context['master_revision'], (directory / 'artifact-hashes.json').relative_to(ROOT).as_posix()) == (HERE / 'p703-before-artifact-hashes.json.txt').read_bytes()
+    for filename in ('validate.py', 'artifact-hashes.json'):
+        name = (directory / filename).relative_to(ROOT).as_posix()
+        assert blob('15b417367', name) == (ROOT / name).read_bytes()
     replacements = read(HERE / 'tool-replacements.json')
     for name, pair in replacements['replacements'].items():
         assert pair == [hashlib.sha256(blob(replacements[revision], name)).hexdigest()
@@ -202,12 +239,38 @@ def check_receipts(context):
     return len(expected) + 1
 
 
+def check_rebased_receipts(context):
+    directory = HERE / 'rebase-checks'
+    labels = {'all-sweeps', 'own-sweep', 'format'}
+    fixtures = {'gen_patch_wikitext_register': 32, 'extract_patch_non_inventory': 36,
+                'patch_audit_validation': 8}
+    labels.update(tool + '-fixtures' for tool in fixtures)
+    assert read(directory / 'finished.json') == {label: 0 for label in labels}
+    for label in labels:
+        receipt = read(directory / (label + '.proof.json'))
+        assert receipt['exit'] == 0
+        assert receipt['target'] == '/home/osso/.cache/wow-ui-sim-targets/p624-page'
+        assert git_scope(receipt['source_revision'], context['input_scope']) == context['input_scope']
+        log = directory / receipt['log']
+        assert digest(log) == receipt['log_sha256']
+        contents = log.read_text()
+        if label in ('all-sweeps', 'own-sweep'):
+            expected = 50 if label == 'all-sweeps' else 1
+            assert len(passed_cases(log)) == expected
+            assert re.search(r'test result: ok\. ' + str(expected) + r' passed; 0 failed;', contents)
+        elif label.endswith('-fixtures'):
+            assert 'Ran ' + str(fixtures[label.removesuffix('-fixtures')]) + ' tests' in contents
+            assert '\nOK\n' in contents
+    return len(labels)
+
+
 def check_matrix(context):
     names = git('ls-tree', '-r', '--name-only', context['validator_scope_revision'], 'data/patch-api/evidence').decode().splitlines()
     expected = {name for name in names if Path(name).name in ('validate.py', 'validate_integrated.py')}
     matrix = read(HERE / 'prior-validator-matrix.json')
     assert set(matrix) == expected and all(row['exit'] == 0 for row in matrix.values())
     for name, row in matrix.items():
+        assert hashlib.sha256(blob(context['validator_scope_revision'], name)).hexdigest() == row['validator_sha256']
         assert digest(ROOT / name) == row['validator_sha256']
         assert digest(HERE / row['log']) == row['log_sha256']
     return len(matrix)
@@ -217,13 +280,15 @@ def main():
     for name, expected in read(HERE / 'artifact-hashes.json').items():
         assert digest(ROOT / name) == expected, 'integrated artifact changed: ' + name
     context = read(HERE / 'context.json')
+    check_rebase()
     preserved = check_preservation(context)
     registers, extracts = check_reproduction(context)
     result = comparison(context)
     assert result == read(HERE / 'gap-comparison.json')
     commands = check_receipts(context)
     validators = check_matrix(context)
-    print(json.dumps({'status': 'PASS', 'registers': registers, 'extracts': extracts,
+    rebased_commands = check_rebased_receipts(context)
+    print(json.dumps({'status': 'PASS', 'rebased_commands': rebased_commands, 'registers': registers, 'extracts': extracts,
                       'preserved_master_sources': preserved, 'pages': len(result['pages']),
                       'cases': result['branch_cases'], 'observations': result['observations'],
                       'gaps': 0, 'negative_gaps': 1, 'commands': commands, 'prior_validators': validators}, sort_keys=True))

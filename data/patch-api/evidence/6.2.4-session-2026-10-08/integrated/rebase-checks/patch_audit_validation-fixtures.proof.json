@@ -1,0 +1,14 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p624-page/tools/test_patch_audit_validation.py"
+  ],
+  "revision": "1dbc6204c0e09437e50585212b389727c9bbe758",
+  "source_revision": "1dbc6204c0e09437e50585212b389727c9bbe758",
+  "exit": 0,
+  "log": "patch_audit_validation-fixtures.txt",
+  "log_sha256": "395c23e373411c4ad37976750247165d0e77b9f66c61b3d6555b772a2be0177f",
+  "seconds": 0.17000827100127935,
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p624-page"
+}

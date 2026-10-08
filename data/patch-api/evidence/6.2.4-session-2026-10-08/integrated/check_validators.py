@@ -7,7 +7,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[5]
 HERE = Path(__file__).resolve().parent
-SCOPE_REVISION = 'f260499ee'
+SCOPE_REVISION = '15b417367'
 
 
 def main():
@@ -16,12 +16,14 @@ def main():
     paths = [name for name in names if Path(name).name in ('validate.py', 'validate_integrated.py')]
     matrix = {}
     for number, name in enumerate(paths):
-        log = HERE / 'validators' / (str(number) + '.txt')
+        log = HERE / 'rebase-validators' / (str(number) + '.txt')
         log.parent.mkdir(exist_ok=True)
         with log.open('w') as output:
             result = subprocess.run([sys.executable, '-B', str(ROOT / name)], cwd=ROOT,
                                     stdout=output, stderr=subprocess.STDOUT)
-        matrix[name] = {'exit': result.returncode, 'validator_sha256': hashlib.sha256((ROOT / name).read_bytes()).hexdigest(),
+        pinned = subprocess.check_output(['git', 'show', SCOPE_REVISION + ':' + name], cwd=ROOT)
+        assert pinned == (ROOT / name).read_bytes(), 'validator differs from pinned master: ' + name
+        matrix[name] = {'exit': result.returncode, 'validator_sha256': hashlib.sha256(pinned).hexdigest(),
                         'log': log.relative_to(HERE).as_posix(), 'log_sha256': hashlib.sha256(log.read_bytes()).hexdigest()}
         print(name, result.returncode, flush=True)
     (HERE / 'prior-validator-matrix.json').write_text(json.dumps(matrix, indent=2) + '\n')

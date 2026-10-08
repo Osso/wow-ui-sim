@@ -1,0 +1,14 @@
+{
+  "command": [
+    "cargo",
+    "fmt",
+    "--check"
+  ],
+  "revision": "1dbc6204c0e09437e50585212b389727c9bbe758",
+  "source_revision": "1dbc6204c0e09437e50585212b389727c9bbe758",
+  "exit": 0,
+  "log": "format.txt",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "seconds": 9.99971667600039,
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p624-page"
+}
