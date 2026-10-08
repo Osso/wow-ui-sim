@@ -216,6 +216,7 @@ pub mod url_texture_inputs;
 pub use c_transmog_collection::IllusionInfo;
 #[cfg(feature = "retail-12-0-5")]
 pub mod c_spell_maw_powers;
+pub mod c_toy_box_info;
 #[cfg(feature = "retail-12-0-0")]
 pub mod c_transmog_outfit_info;
 #[cfg(feature = "retail-12-0-0")]

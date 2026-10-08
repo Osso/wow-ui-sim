@@ -307,9 +307,17 @@ pub(super) fn collect_toy(state: &mut LuaState) -> LuaResult<u32> {
     let item_id = u32::from_stack(state, 1)?;
     let mut st = borrow_state_mut(state)?;
     st.world.collected_toys.insert(item_id as i32);
-    if let Some(toy) = st.world.toys.iter_mut().find(|t| t.item_id == item_id) {
+    let newly_acquired = if let Some(toy) = st.world.toys.iter_mut().find(|t| t.item_id == item_id)
+    {
+        let newly_acquired = !toy.is_collected;
         toy.is_collected = true;
         toy.is_usable = true;
+        newly_acquired
+    } else {
+        false
+    };
+    if newly_acquired {
+        st.world.toy_fanfare.mark_acquired(item_id);
     }
     Ok(0)
 }
@@ -318,6 +326,7 @@ pub(super) fn uncollect_toy(state: &mut LuaState) -> LuaResult<u32> {
     let item_id = u32::from_stack(state, 1)?;
     let mut st = borrow_state_mut(state)?;
     st.world.collected_toys.remove(&(item_id as i32));
+    st.world.toy_fanfare.clear(item_id);
     if let Some(toy) = st.world.toys.iter_mut().find(|t| t.item_id == item_id) {
         toy.is_collected = false;
         toy.is_usable = false;

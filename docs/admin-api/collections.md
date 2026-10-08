@@ -52,7 +52,7 @@ Toggles whether a toy is in the toy box.
 
 - **toyId** `number` -- Item ID for the toy
 - **collected** `boolean`
-- **Affects:** `PlayerHasToy(toyId)`
+- **Affects:** `PlayerHasToy(toyId)`. Newly collecting a known catalog toy sets `C_ToyBoxInfo.NeedsFanfare(toyId)` and the fifth `C_ToyBox.GetToyInfo` result; clearing fanfare preserves ownership. Uncollecting clears fanfare. Repeating collection does not rewrap a toy.
 - **Example:**
 ```lua
 A_Admin.SetToyCollected(37710, true)    -- Paper Flying Machine Kit

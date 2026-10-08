@@ -520,6 +520,7 @@ pub struct WorldState {
     pub pets: Vec<PetData>,
     pub collected_toys: HashSet<i32>,
     pub toys: Vec<ToyData>,
+    pub toy_fanfare: crate::c_api::c_toy_box_info::ToyFanfare,
     pub warband_scenes: Vec<WarbandSceneData>,
     pub favorite_toys: HashSet<u32>,
     pub heirlooms: Vec<HeirloomData>,

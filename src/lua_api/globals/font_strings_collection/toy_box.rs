@@ -9,13 +9,13 @@ use rilua::{LuaApiMut, LuaResult, Val};
 
 use super::set_global_val;
 
-fn push_toy_info(state: &mut LuaState, tid: f64, name: &str, icon: f64) -> u32 {
+fn push_toy_info(state: &mut LuaState, tid: f64, name: &str, icon: f64, fanfare: bool) -> u32 {
     let name_val = create_string(state, name);
     state.push(Val::Num(tid));
     state.push(name_val);
     state.push(Val::Num(icon));
     state.push(Val::Bool(false));
-    state.push(Val::Bool(false));
+    state.push(Val::Bool(fanfare));
     state.push(Val::Num(1.0));
     6
 }
@@ -66,9 +66,16 @@ fn toy_get_info(state: &mut LuaState) -> LuaResult<u32> {
             .toys
             .iter()
             .find(|t| t.item_id == item_id)
-            .map(|toy| (toy.item_id as f64, toy.name.clone(), toy.icon as f64))
+            .map(|toy| {
+                (
+                    toy.item_id as f64,
+                    toy.name.clone(),
+                    toy.icon as f64,
+                    st.world.toy_fanfare.needs_fanfare(item_id),
+                )
+            })
     };
-    let Some((tid, name, icon)) = info else {
+    let Some((tid, name, icon, fanfare)) = info else {
         let empty_name = create_string_static(state, "");
         state.push(Val::Num(0.0));
         state.push(empty_name);
@@ -78,7 +85,7 @@ fn toy_get_info(state: &mut LuaState) -> LuaResult<u32> {
         state.push(Val::Num(0.0));
         return Ok(6);
     };
-    Ok(push_toy_info(state, tid, &name, icon))
+    Ok(push_toy_info(state, tid, &name, icon, fanfare))
 }
 
 fn toy_is_usable(state: &mut LuaState) -> LuaResult<u32> {
@@ -211,9 +218,8 @@ fn register_toy_box_info(lua: &mut rilua::Lua) -> LuaResult<()> {
         .set_function("IsToySourceValid", |state| {
             let source_index = i32::from_stack(state, 1)?;
             (source_index > 0).into_stack(state)
-        })?
-        .set_function("ClearFanfare", |_state| Ok(0))?
-        .build();
+        })?;
+    let table = crate::c_api::c_toy_box_info::register_fanfare(table)?.build();
     set_global_val(lua.state_mut(), "C_ToyBoxInfo", table);
     Ok(())
 }
