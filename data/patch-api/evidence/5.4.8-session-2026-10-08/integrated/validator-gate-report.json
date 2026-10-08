@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "revision": "588a365435d450a6f8a812c6445afd7239c59d40",
+  "summary": {
+    "clean": {
+      "failed": 0,
+      "passed": 38
+    },
+    "later_audit": {
+      "failed": 0,
+      "passed": 39
+    }
+  },
+  "report_log": "validator-gate.txt",
+  "receipt": "validator-gate.proof.json",
+  "tamper": "rejected; original bytes restored"
+}

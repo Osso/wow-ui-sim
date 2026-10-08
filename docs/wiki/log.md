@@ -461,3 +461,7 @@ Pinned pageid 3058 revision 31159 without following redirect to 6.0.2; empty reg
 ## [2026-10-08] gate | Patch 5.4.8 API audit
 
 [Audit](investigations/patch-5-4-8-api-audit.md): sealed historical proof PASS; portability clean 34/34 and synthetic later 35/35 at e9b815c8d. Own-log tamper rejected/restored. All requested targeted checks complete; seven publication gaps, 14 inactive historical rows, three inherited extract failures and ordered 6.0.1/6.0.2 integration placeholders remain documented. No push or merge.
+
+## [2026-10-08] integration | Patch 5.4.8 API audit
+
+[Audit](investigations/patch-5-4-8-api-audit.md): real 6.0.1/6.0.2 registers integrated on pinned master a9d7c9566. Seven own gaps unchanged; every observation on 54 other pages unchanged. Sweeps 56/55, prefork 250/248 unique cases, source-unit 68 retail/64 Mists, 85 Python fixtures, format and warning-clean non-vendor Mists pass. Retail three/Mists seven failures reproduce exact master assertions; addons-enabled startup [] on both. 55 registers/52 extracts reproduce with three inherited failures; nine audit/one external mappings preserve 226 original artifacts and all historical invariants. All 36 prior validators pass; clean/later gate 38/38 and 39/39 at 588a36543, with own-log tampering rejected. No simulator/vendor changes during integration; no push, merge or full suite.

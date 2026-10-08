@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p548-page/data/patch-api/evidence/5.4.8-session-2026-10-08/integrated/check_tamper.py"
+  ],
+  "revision": "588a365435d450a6f8a812c6445afd7239c59d40",
+  "scope": "tamper-check",
+  "cwd": ".",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p548-page",
+  "environment": {},
+  "exit": 0,
+  "log": "tamper-check.txt",
+  "log_sha256": "23c46c2daf6198de8e981e549832b4d2613916488d024e1ca7faf37cf5cfb742",
+  "seconds": 0.20649845199659467,
+  "invalidated": false
+}

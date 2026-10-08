@@ -2,9 +2,9 @@
 
 [Audit](investigations/patch-6-0-2-api-audit.md): real 6.1.0/6.2.0/6.2.2 supersession registers; own 275 gaps/657 observations unchanged, all 52 other pages equal pinned master d0fabed03. Branch/master sweeps 54/53 pass; scoped bonus, tracker and vignette consumers pass; broader scenario assertion fails identically on master and remains untouched. 53 registers/50 extracts reproduce with three inherited failures; 84 Python fixtures, format, warning-clean non-vendor Mists and 37 prior validators pass. Twelve original/rebased commit identities and all historical validator invariants preserved. Both addons-enabled startups []; negative 275 → 276; sealed portability PASS clean 35/35 and later 36/36, own-log tampering rejected.
 
-## [2026-10-08] investigation | Patch 5.4.8 API audit
+## [2026-10-08] integration | Patch 5.4.8 API audit
 
-[Audit](investigations/patch-5-4-8-api-audit.md): page 177816 revision 1736772; linked parent TOC 50400 confirms 2014 retail Mists. 28 inventory/32 supplemental occurrences; 13 current CVar models plus UI visibility, seven publication gaps and 14 inactive behavioral limits, no retirements. All 54 publication/factory cases and targeted checks pass; 53 registers/50 extracts reproduce with three inherited failures. Portable gate PASS: clean 34/34, synthetic later 35/35; own-log tamper rejected. Real 6.0.1/6.0.2 retail registers now integrated; fresh 54-page master comparison unchanged. Expanded regression proof in progress.
+[Audit](investigations/patch-5-4-8-api-audit.md): real 6.0.1/6.0.2 registers integrated on a9d7c9566; seven gaps unchanged and all 9,712 observations on 54 other pages equal master. Branch/master sweeps 56/55 pass; expanded retail and Mists failures match exact master assertions, prefork 250/248 unique cases and source-unit 68/64 pass. Both startups []; 55 registers/52 extracts reproduce with three inherited failures. All 85 Python fixtures, format, warning-clean non-vendor Mists and 36 prior validators pass. Nine audit/one external rebase mappings preserve 226 original artifacts. Portable gate PASS 38/38 clean, 39/39 later; own-log tampering rejected.
 
 ## [2026-10-08] integration | Patch 6.1.0 API audit
 
