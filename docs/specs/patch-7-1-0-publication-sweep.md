@@ -7,9 +7,9 @@ Audit the [pinned Warcraft Wiki page](../../data/patch-api/sources/7.1.0-api-cha
 - [x] Account for every registered identity and retained plaintext statement without dropping XML or qualified mouse-bug prose.
 - [x] Probe raw publication/lookup and current superseded absences after unmodified cached retail startup; require the exact known-gap set.
 - [x] Preserve existing source inputs and extraction outcomes; reproduce every register with its recorded/inherited flags.
-- [ ] Bound independent clipping state, inherited `clipChildren` before OnLoad and explicit false overrides; do not credit custom intrinsic factories or pixel rendering from flag queries.
+- [x] Bound independent clipping state, inherited `clipChildren` before OnLoad and explicit false overrides; do not credit custom intrinsic factories or pixel rendering from flag queries.
 - [x] Bound physical screen dimensions and existing item catalog queries through current successor APIs, without crediting constant item-set/reagent defaults as modeled metadata.
-- [ ] Compile Mists tests with zero non-vendor warnings and validate portable, revision-scoped evidence.
+- [x] Compile Mists tests with zero non-vendor warnings and validate portable, revision-scoped evidence.
 
 ## How it works
 

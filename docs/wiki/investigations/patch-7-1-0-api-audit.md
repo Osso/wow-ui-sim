@@ -37,7 +37,13 @@ Evidence directory: [7.1.0-session-2026-10-08](../../../data/patch-api/evidence/
 
 Initial publication discovery passes; custom-intrinsic experiment fails exactly as retained above. All 45 registers and 42 of 45 extracts reproduce. Inherited 12.0.5/12.0.7 mismatches and 12.1.0 unsupported-template error remain unchanged; no all-green extract claim. All 229 original source inputs and old extraction-mode outcomes remain protected. Parser/extractor/validator fixtures pass 28/34/8. All 21 prior validators pass.
 
-Final targeted receipts and own portable-validator seal are pending while scoped Cargo gates run. No full integration suite, CASC texture tests, agents/model CLIs, other-worktree edits, push or merge. No __pycache__ retained.
+Final targeted commands pass: **45 publication sweeps plus factory (46/46)** across **8,879 observations**; final own bounded scope **3/3**, screen mode **9/9**, C_Item **100/100**, known intrinsic **1/1**. One-row Frame:SetClipsChildren negative control changes exact publication gaps **0 → 1**, expected exit 1. Failed custom-intrinsic experiment and the original driver exit 1 remain retained, not relabeled green.
+
+Python fixtures **28/34/8**, final `cargo fmt --check`, and requested Mists tests-check pass. Mists has **zero non-vendor warnings**; six inherited iced manifest deprecations remain unsuppressed. All **96 old extraction-mode outcomes**, **229 inputs**, **45 registers**, and the exact three inherited extract failures are preserved. Own read-only validator passes; combined prior/own status **22/22**. [Command ledger](../../../data/patch-api/evidence/7.1.0-session-2026-10-08/p710-command-ledger.md) retains exact commands, code revisions, exits and log hashes. Publication/regression scopes are unchanged by the final test-only clipping correction; final bounded and format receipts separately cover it. Mists excludes the retail-only corrected probe.
+
+Historical register/sweep scope is fixed at `7778521e8`, not current globs or receipt-derived subsets. Counts come from retained files. No cwd/target equality gate. Alternate-checkout and later-page scope portability proof follows the evidence seal. Original wiki index/log text is preserved intact, growing 2655 → 2659 and 372 → 376 lines.
+
+No full integration suite, CASC texture tests, agents/model CLIs, other-worktree edits, push or merge. No __pycache__ retained. No `src/` changes against master: no widely-used runtime callers or registrations changed, so a separate addons-enabled master/branch startup comparison was not required or claimed.
 
 ## Integration boundary
 

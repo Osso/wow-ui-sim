@@ -4,13 +4,13 @@
     "before_lines": 2655,
     "after_lines": 2659,
     "before_sha256": "72e9b8cccce6d8014011f183b434218410c4def71409540ba259b1b86e980294",
-    "after_sha256": "b7e069eea4fd50b21642ed0accf39ccc08ff8f44f44601d0ccb4a454a77c235d"
+    "after_sha256": "f1d9674d60e11053e62fc0dbf4d1b3251159e7abb6199d1257d52ef9891f1788"
   },
   {
     "path": "docs/wiki/log.md",
     "before_lines": 372,
     "after_lines": 376,
     "before_sha256": "071defea8a8dc52f2fb467b3f3ecd60703a05a6b3f720f1c7fb7261515061691",
-    "after_sha256": "296c4282f0aaa7313267467e5c22107351d7713f6ad2c838943217e40c2e81df"
+    "after_sha256": "e25ceaa64201d9ce0fc6841b030585d314111963bfa051632ce0a446b5137ee8"
   }
 ]

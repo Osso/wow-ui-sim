@@ -1,0 +1,8 @@
+p710-own-green 1
+p710-all-sweeps 0
+p710-screen 0
+p710-items 0
+p710-intrinsic 0
+p710-format 0
+p710-mists-check 0
+p710-negative 1

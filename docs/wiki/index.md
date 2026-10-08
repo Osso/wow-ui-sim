@@ -1,6 +1,6 @@
 ## [2026-10-08] investigation | Patch 7.1.0 API audit
 
-[Audit](investigations/patch-7-1-0-api-audit.md): revision 3742660; 31 IDs, zero publication gaps after later supersession, five pending prose contracts. Existing clipping/item/display models bounded; custom intrinsic failure retained. No runtime retirements or shims; targeted seal pending.
+[Audit](investigations/patch-7-1-0-api-audit.md): revision 3742660; 31 IDs, zero publication gaps after later supersession, five pending prose contracts. Existing clipping/item/display models bounded; custom intrinsic failure retained. All 45 sweeps plus factory, scoped tests, fixtures, format/Mists and 22 validators pass. 45 registers/42 extracts reproduce with three inherited failures. No runtime retirements or shims.
 
 ## [2026-10-08] investigation | Patch 7.3.0 API audit
 

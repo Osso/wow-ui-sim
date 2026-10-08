@@ -1,0 +1,195 @@
+{
+  "base_revision": "8b6131f3645bb02d83f4c608cb7181139901cc93",
+  "runtime_revision": "7778521e8",
+  "receipts": {
+    "p710-all-sweeps": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "publication_sweep"
+      ],
+      "revision": "16154a1e5551f8a179910a871f0b2eebbd914bf5",
+      "exit": 0
+    },
+    "p710-behavior-discovery": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_7_1_0"
+      ],
+      "revision": "16154a1e5551f8a179910a871f0b2eebbd914bf5",
+      "exit": 1
+    },
+    "p710-discovery": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_7_1_0"
+      ],
+      "revision": "68b72c56105efe1d5d74242759fdc4f8165393e8",
+      "exit": 0
+    },
+    "p710-extractor-fixtures": {
+      "command": [
+        "python3",
+        "-B",
+        "tools/test_extract_patch_non_inventory.py"
+      ],
+      "revision": "16154a1e5551f8a179910a871f0b2eebbd914bf5",
+      "exit": 0
+    },
+    "p710-final-format": {
+      "command": [
+        "cargo",
+        "fmt",
+        "--check"
+      ],
+      "revision": "084021fba43411e0ac7909f5e53525c579325db6",
+      "exit": 0
+    },
+    "p710-format": {
+      "command": [
+        "cargo",
+        "fmt",
+        "--check"
+      ],
+      "revision": "16154a1e5551f8a179910a871f0b2eebbd914bf5",
+      "exit": 0
+    },
+    "p710-generator-fixtures": {
+      "command": [
+        "python3",
+        "-B",
+        "tools/test_gen_patch_wikitext_register.py"
+      ],
+      "revision": "16154a1e5551f8a179910a871f0b2eebbd914bf5",
+      "exit": 0
+    },
+    "p710-intrinsic": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "intrinsic_types::"
+      ],
+      "revision": "16154a1e5551f8a179910a871f0b2eebbd914bf5",
+      "exit": 0
+    },
+    "p710-items": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "c_item_api::"
+      ],
+      "revision": "16154a1e5551f8a179910a871f0b2eebbd914bf5",
+      "exit": 0
+    },
+    "p710-mists-check": {
+      "command": [
+        "cargo",
+        "check",
+        "--no-default-features",
+        "--features",
+        "sound,gui,casc,client-mists",
+        "--tests"
+      ],
+      "revision": "16154a1e5551f8a179910a871f0b2eebbd914bf5",
+      "exit": 0
+    },
+    "p710-negative": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_7_1_0_publication_sweep"
+      ],
+      "revision": "7778521e8aa4c47d6324cf72a288555f8f61ecdd",
+      "exit": 1
+    },
+    "p710-other-validators": {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p710-page/data/patch-api/evidence/7.1.0-session-2026-10-08/check_other_validators.py"
+      ],
+      "revision": "16154a1e5551f8a179910a871f0b2eebbd914bf5",
+      "exit": 0
+    },
+    "p710-own-bounded": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_7_1_0"
+      ],
+      "revision": "084021fba43411e0ac7909f5e53525c579325db6",
+      "exit": 0
+    },
+    "p710-own-green": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_7_1_0"
+      ],
+      "revision": "16154a1e5551f8a179910a871f0b2eebbd914bf5",
+      "exit": 1
+    },
+    "p710-screen": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "screen_mode::"
+      ],
+      "revision": "16154a1e5551f8a179910a871f0b2eebbd914bf5",
+      "exit": 0
+    },
+    "p710-source-reproduction": {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p710-page/data/patch-api/evidence/7.1.0-session-2026-10-08/reproduce_sources.py"
+      ],
+      "revision": "68b72c56105efe1d5d74242759fdc4f8165393e8",
+      "exit": 0
+    },
+    "p710-targeted-driver": {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p710-page/data/patch-api/evidence/7.1.0-session-2026-10-08/verify_targeted.py"
+      ],
+      "revision": "16154a1e5551f8a179910a871f0b2eebbd914bf5",
+      "exit": 1
+    },
+    "p710-validator-fixtures": {
+      "command": [
+        "python3",
+        "-B",
+        "tools/test_patch_audit_validation.py"
+      ],
+      "revision": "16154a1e5551f8a179910a871f0b2eebbd914bf5",
+      "exit": 0
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_7_1_0"
+  ],
+  "revision": "084021fba43411e0ac7909f5e53525c579325db6",
+  "scope": "p710-own-bounded",
+  "cwd": ".",
+  "target": "dedicated p710-page target (external to repository)",
+  "environment": {
+    "P710_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p710-page/data/patch-api/evidence/7.1.0-session-2026-10-08/p710-bounded-results.json"
+  },
+  "exit": 0,
+  "log": "p710-own-bounded.txt",
+  "log_sha256": "c80e6b3ffbe72947757286adcf58168a277a7b2e62e268d9f0dc2eea6da1bd76",
+  "seconds": 11.095720006000192,
+  "invalidated": false
+}

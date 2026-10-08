@@ -1,6 +1,6 @@
 ## [2026-10-08] investigation | Patch 7.1.0 API audit
 
-Pinned 3742660; ten inventory/twenty-one extract IDs. Publication discovery passes; custom intrinsic gap retained, no retirement. Added [audit](investigations/patch-7-1-0-api-audit.md), bounded probes and opt-in generator; targeted seal pending.
+Pinned 3742660; ten inventory/twenty-one extract IDs. Publication discovery passes; custom intrinsic gap retained, no retirement. Added [audit](investigations/patch-7-1-0-api-audit.md), bounded probes and opt-in generator. Forty-five sweeps plus factory, scoped tests, fixtures, format/Mists and 22 validators pass; 45 registers/42 extracts reproduce, three inherited failures unchanged.
 
 ## [2026-10-08] investigation | Patch 7.2.5
 

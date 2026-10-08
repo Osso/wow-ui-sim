@@ -1,0 +1,17 @@
+{
+  "command": [
+    "cargo",
+    "fmt",
+    "--check"
+  ],
+  "revision": "084021fba43411e0ac7909f5e53525c579325db6",
+  "scope": "p710-final-format",
+  "cwd": ".",
+  "target": "dedicated p710-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p710-final-format.txt",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "seconds": 16.547304891999374,
+  "invalidated": false
+}

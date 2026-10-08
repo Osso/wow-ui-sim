@@ -1,0 +1,24 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p710-page)
+    Finished `test` profile [optimized + debuginfo] target(s) in 57.79s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p710-page/debug/deps/integration-1db16289b0998b2a)
+
+running 9 tests
+test screen_mode::invalid_physical_display_dimensions_leave_screen_state_unchanged ... ok
+test screen_mode::physical_display_input_matches_captured_wow_ui_dimensions ... ok
+test screen_mode::screen_size_globals_report_ui_units_after_ui_parent_scale ... ok
+test screen_mode::default_screen_size_matches_screen_globals_and_ui_parent ... ok
+test screen_mode::glue_login_permanent_defaults_remain_registered ... ok
+test screen_mode::login_screen_updates_glue_login_state ... ok
+test screen_mode::character_select_screen_updates_glue_login_state ... ok
+test screen_mode::screen_size_globals_follow_canvas_dimensions ... ok
+test screen_mode::character_create_screen_updates_glue_login_state ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 10661 filtered out; finished in 0.16s
+

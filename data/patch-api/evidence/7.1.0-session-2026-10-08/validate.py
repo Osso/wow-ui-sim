@@ -56,6 +56,14 @@ def source_accounting():
     coverage = read(SOURCES / '7.1.0-page-coverage.json')
     assert coverage['source_sha256'] == sha(register_path)
     assert coverage['non_inventory_source']['sha256'] == sha(text_path)
+    references = []
+    for number, line in enumerate(raw.splitlines(), 1):
+        references.extend((number, match[1]) for match in re.finditer(r'\{\{api\|([^}|]+)\}\}', line))
+        references.extend((number, 'Frame:' + match[1]) for match in re.finditer(
+            r'\[\[API_Frame_\w+\|frame:(\w+)\([^]]*\)\]\]', line))
+        references.extend((number, match[1]) for match in re.finditer(r'\[\[API_(Get\w+)\|', line))
+        references.extend((number, match[1]) for match in re.finditer(r"^\*\* '''(Nameplate\w+)'''", line))
+    assert Counter(references) == Counter((r['wikitext_line'], r['symbol']) for r in register['entries'])
     inventory = {r['id']: r for r in register['entries']}
     seeded = extractor.seed_rows(text, '7.1.0')
     rows = {r['source_id']: r for r in coverage['source_rows']}
@@ -151,7 +159,7 @@ def proof(context):
     positives = ['p710-discovery', 'p710-own-bounded', 'p710-all-sweeps', 'p710-screen',
                  'p710-items', 'p710-intrinsic', 'p710-generator-fixtures',
                  'p710-extractor-fixtures', 'p710-validator-fixtures',
-                 'p710-source-reproduction', 'p710-format', 'p710-mists-check', 'p710-other-validators']
+                 'p710-source-reproduction', 'p710-final-format', 'p710-mists-check', 'p710-other-validators']
     assert all(context['receipts'][name]['exit'] == 0 for name in positives)
     for name in ['p710-own-bounded', 'p710-all-sweeps', 'p710-screen', 'p710-items', 'p710-intrinsic']:
         log = (HERE / f'{name}.txt').read_text()
