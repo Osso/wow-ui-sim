@@ -43,6 +43,10 @@ def worker(group):
         run('mists-pages', ['cargo', 'test', *args, '--test', 'integration', 'patch_5_5_', '--', '--nocapture'], 'mists')
         run('mists-check', ['cargo', 'check', *args, '--tests'], 'mists')
         run('negative', ['cargo', 'test', *args, '--test', 'integration', 'patch_5_5_3_publication_sweep', '--', '--nocapture'], 'mists', extra={'P553_SWEEP_REGISTER': str(HERE / 'negative-register.json'), 'P553_SWEEP_OUT': str(HERE / 'negative-results.json')}, expected=101)
+    elif group == 'mists-refresh':
+        args = ['--no-default-features', '--features', 'sound,gui,casc,client-mists']
+        run('mists-pages-final', ['cargo', 'test', *args, '--test', 'integration', 'patch_5_5_', '--', '--nocapture'], 'mists')
+        run('format-final', ['cargo', 'fmt', '--check'])
     elif group == 'tools':
         run('tools-tests', ['python3', '-B', '-m', 'unittest', 'discover', '-s', 'tools', '-p', 'test_*.py'])
         run('format', ['cargo', 'fmt', '--check'])

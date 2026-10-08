@@ -74,7 +74,9 @@ def verify_accounting(revision):
 
 def verify_reproduction(revision, base):
     report = read('p553-reproduction.json')
-    assert report['revision'] == revision and report['historical_flags_revision'] == base
+    assert report['historical_flags_revision'] == base
+    assert not git('diff', report['revision'], revision, '--', 'data/patch-api/sources',
+                   'tools/gen_patch_wikitext_register.py', 'tools/extract_patch_non_inventory.py')
     registers = historical_registers(ROOT, revision)
     expected = {path.name.removesuffix('-wikitext-register.json') for path in registers}
     assert {row['patch'] for row in report['records']} == expected
@@ -125,6 +127,11 @@ def verify_retail(revision, base):
         assert gaps == sorted(pinned_json(revision, f'tests/data/patch_{patch.replace(".", "_")}_sweep_known_gaps.json'))
         comparison.append({'patch': patch, 'observations': len(after), 'gaps': gaps, 'identical': True})
     assert read('gap-comparison.json') == comparison
+    passed = set(re.findall(r'^test (\S+) \.\.\. ok$', (HERE / 'all-sweeps.txt').read_text(), re.M))
+    for patch in expected:
+        case = 'patch_' + patch.replace('.', '_') + '_publication_sweep'
+        assert any(name.endswith('::' + case) for name in passed), case
+    assert any(name.endswith('::patch_10_0_0_animation_probe_factories') for name in passed), passed
     for path in historical_registers(ROOT, base):
         relative = path.relative_to(ROOT).as_posix()
         assert blob(base, relative) == blob(revision, relative), relative
@@ -138,8 +145,14 @@ def verify_receipts(context):
         receipt = read(label + '.proof.json')
         assert receipt['command'] == policy['command']
         assert receipt['exit'] == receipt['expected_exit'] == policy['exit'], label
-        assert not git('diff', receipt['revision'], context['runtime_revision'], '--',
-                       'src', 'tests', 'tools', 'Cargo.toml', 'Cargo.lock', 'build.rs'), label
+        scope = ['src', 'tests', 'tools', 'Cargo.toml', 'Cargo.lock', 'build.rs']
+        if receipt['profile'] == 'retail' and not label.startswith('format'):
+            # Retail compiles neither version of this Mists-only module.
+            mists_test = 'tests/patch_5_5_3_publication_sweep.rs'
+            for revision in [receipt['revision'], context['runtime_revision']]:
+                assert '#![cfg(feature = "client-mists")]' in blob(revision, mists_test).decode()
+            scope = [*scope, ':!tests/patch_5_5_3_publication_sweep.rs']
+        assert not git('diff', receipt['revision'], context['runtime_revision'], '--', *scope), label
         content = (HERE / receipt['log']).read_bytes()
         assert digest(content) == receipt['log_sha256'], label
         if 'passed_cases' in policy:
