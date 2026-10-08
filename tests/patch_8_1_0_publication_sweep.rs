@@ -17,8 +17,8 @@ fn patch_8_1_0_publication_sweep(env: &WowLuaEnv) {
         register_env: "P810_SWEEP_REGISTER",
         out_env: "P810_SWEEP_OUT",
         later_registers: &[
-            // 8.1.5 register: main-thread integration placeholder (p815-page).
-            // 8.2.0 register: main-thread integration placeholder (p820-page).
+            include_str!("../data/patch-api/sources/8.1.5-wikitext-register.json"),
+            include_str!("../data/patch-api/sources/8.2.0-wikitext-register.json"),
             include_str!("../data/patch-api/sources/8.2.5-wikitext-register.json"),
             include_str!("../data/patch-api/sources/8.3.0-wikitext-register.json"),
             include_str!("../data/patch-api/sources/8.3.7-wikitext-register.json"),
