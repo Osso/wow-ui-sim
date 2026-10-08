@@ -105,7 +105,7 @@ def extract_text(raw, *, preserve_examples=False, normalize_inventory_headings=F
         raw = strip_legacy_cvar_tables(raw)
     if retain_reference_notes:
         raw = re.sub(r'<ref>\{\{ref web\|([^{}]+)\}\}</ref>',
-                     r'[Reference: \1]', raw)
+                     r'[Reference: \1]', raw, flags=re.I)
     if normalize_inventory_headings:
         raw = re.sub(r'^==\s*(Global API|Widgets|Events|CVars)\s*==$',
                      r'==\1==', raw, flags=re.M)

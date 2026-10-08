@@ -327,6 +327,23 @@ def parse_diff_api_additions(text):
     return entries
 
 
+def parse_prose_api_links(text):
+    """Retain each API-linked identity in Changes prose, without inventing an addition."""
+    entries = []
+    in_changes = False
+    for line_no, line in enumerate(text.splitlines(), 1):
+        heading = re.fullmatch(r'=+\s*([^=]+?)\s*=+', line)
+        if heading:
+            in_changes = heading[1] == 'Changes'
+        elif in_changes:
+            for match in re.finditer(r'\[\[API ([^|\]]+)(?:\|[^\]]+)?\]\]', line):
+                symbol = match[1]
+                entry = make_entry('global-api', 'changed', line_no, f'{{{{api|{symbol}}}}}')
+                entry['annotation'] = line
+                entries.append(entry)
+    return entries
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("patch", "path", "revid", "out"):
@@ -358,6 +375,8 @@ def main():
 
     parser.add_argument('--bfa-prepatch', action='store_true',
                         help='Parse 8.0.1 nested namespaces, prose removals and event lists; opt-in')
+    parser.add_argument('--prose-api-links', action='store_true',
+                        help='Retain API-linked identities in Changes prose; opt-in')
     args = parser.parse_args()
     patch, path, revid, out = args.patch, args.path, args.revid, args.out
     raw = Path(path).read_bytes()
@@ -390,6 +409,8 @@ def main():
         entries.extend(parse_simple_api_list(raw.decode('utf-8')))
     if args.diff_api_additions:
         entries.extend(parse_diff_api_additions(raw.decode('utf-8')))
+    if args.prose_api_links:
+        entries.extend(parse_prose_api_links(raw.decode('utf-8')))
     if args.inventory_only:
         for entry in entries:
             for key in ("kind", "page_default", "test_inline"):

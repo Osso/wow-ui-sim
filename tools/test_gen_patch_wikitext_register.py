@@ -25,6 +25,18 @@ class InventoryTests(unittest.TestCase):
             ('events', 'NEW_EVENT', 'added'), ('events', 'OLD_EVENT', 'removed')])
         self.assertEqual(len(entries), len({e['id'] for e in entries}))
 
+    def test_prose_api_links_retain_each_changed_identity_and_literal(self):
+        import gen_patch_wikitext_register as generator
+        statement = '*[[API Logout|Logout]] and [[API Quit|Quit]] lua functions are now protected.'
+        raw = ('==Changes==\n' + statement + '\n==References==\n'
+               '* [[API Ignore|Ignore]]\n')
+        rows = generator.parse_prose_api_links(raw)
+        self.assertEqual([(r['symbol'], r['direction'], r['wikitext_line'], r['annotation'])
+                          for r in rows], [('Logout', 'changed', 2, statement),
+                                          ('Quit', 'changed', 2, statement)])
+        self.assertEqual(len({r['id'] for r in rows}), 2)
+        self.assertEqual(generator.split_sections(raw), {})
+
     def test_legacy_caption_tables_keep_handlers_commands_and_directions(self):
         import gen_patch_wikitext_register as generator
         raw = ('==API==\n====Changes====\n* {{api|NotInventory}}\n'

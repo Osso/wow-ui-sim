@@ -10,6 +10,15 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 class ExtractTests(unittest.TestCase):
+    def test_reference_note_accepts_capitalized_template_without_default_change(self):
+        raw = ('*[[API Logout|Logout]] and [[API Quit|Quit]] are protected.'
+               '<ref>{{Ref web|url=https://example.test|date=2017-10-25}}</ref>\n')
+        with self.assertRaises(ValueError):
+            extract_text(raw)
+        self.assertEqual(extract_text(raw, retain_reference_notes=True),
+                         '*Logout and Quit are protected.[Reference: '
+                         'url=https://example.test|date=2017-10-25]\n')
+
     def test_legacy_cvar_table_keeps_caption_not_inventory_markup(self):
         raw = ('==API==\n====New====\n* {{api|C_Test.Call}}\n==CVars==\n'
                '{| class="wikitable"\n|+ 8.0.1 to 8.1.0\n|-\n'
