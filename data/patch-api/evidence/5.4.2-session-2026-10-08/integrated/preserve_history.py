@@ -132,7 +132,7 @@ if __name__ == '__main__':
             name = 'historical-patch-' + row['recorded_revision'] + '.txt'
             (HERE / name).write_bytes(git('show', '--format=', '--binary', row['recorded_revision']))
             row['historical_patch'] = name
-            row['conflict_reason'] = 'Rebase reconciled wiki/runner registration context and preserved opt-in parser flags alongside master flags; original inputs replay from exact blob identities.'
+            row['conflict_reason'] = {'Account 5.4.2 gaps and prove bounded current roster and enum behavior': 'Wiki index/log insertions moved below newly merged 5.4.7/5.5.x headings; historical wiki blobs preserve original ordering. No behavior change.', 'Pin retail 5.4.2 source and parse Mists automated inventories': 'Opt-in Mists extractor argument and CLI forwarding coexist with canonical-patch-navigation; generator insertion context includes combat-restriction-bullets and client-line. Original parser blobs are preserved for historical replay.'}[row['subject']]
     dump('rebase-mapping.json', {'original_base': git('rev-parse', OLD_BASE).decode().strip(),
                                'rebased_base': git('rev-parse', MASTER).decode().strip(),
                                'commits': rows, 'external_commits': external, 'pinned_inputs': scopes})
