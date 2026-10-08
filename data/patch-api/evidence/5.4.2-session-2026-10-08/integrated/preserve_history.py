@@ -127,6 +127,12 @@ if __name__ == '__main__':
             inputs[name] = row
         scopes.append({'recorded_revision': original, 'rebased_revision': revision,
                        'inventories': inventories, 'tree_blobs': {name: metadata.split()[2] for name, metadata in old_tree.items()}, 'inputs': inputs})
+    for row in rows + external:
+        if row['recorded_patch_id'] != row['rebased_patch_id']:
+            name = 'historical-patch-' + row['recorded_revision'] + '.txt'
+            (HERE / name).write_bytes(git('show', '--format=', '--binary', row['recorded_revision']))
+            row['historical_patch'] = name
+            row['conflict_reason'] = 'Rebase reconciled wiki/runner registration context and preserved opt-in parser flags alongside master flags; original inputs replay from exact blob identities.'
     dump('rebase-mapping.json', {'original_base': git('rev-parse', OLD_BASE).decode().strip(),
                                'rebased_base': git('rev-parse', MASTER).decode().strip(),
                                'commits': rows, 'external_commits': external, 'pinned_inputs': scopes})

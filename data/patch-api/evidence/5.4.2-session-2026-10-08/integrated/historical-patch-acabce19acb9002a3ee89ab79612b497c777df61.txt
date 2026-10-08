@@ -1,0 +1,950 @@
+diff --git a/data/patch-api/evidence/5.4.2-session-2026-10-08/p542-fetch.json b/data/patch-api/evidence/5.4.2-session-2026-10-08/p542-fetch.json
+new file mode 100644
+index 000000000..09296c85d
+--- /dev/null
++++ b/data/patch-api/evidence/5.4.2-session-2026-10-08/p542-fetch.json
+@@ -0,0 +1 @@
++{"batchcomplete":"","query":{"pages":{"262849":{"pageid":262849,"ns":0,"title":"Patch 5.4.2/API changes","revisions":[{"revid":2543251,"parentid":2543247,"timestamp":"2014-02-20T12:32:21Z","slots":{"main":{"contentmodel":"wikitext","contentformat":"text/x-wiki","*":"{{apichanges|5.4.2|prev=5.4.1|next=5.4.7}}\n\n== Changes ==\n*{{api|random}}() and Math.random() now point to {{api|securerandom}}(), which is significantly slower. To explicitly use the pre-5.4.2 random, use {{api|fastrandom}}() instead.\n**Fastrandom is no longer accessible in the secure environment\n\n*{{api|GetGuildRosterInfo}}()'s first return value now returns player name - realm name instead of just the player name (e.g. \"Arthas-Silvermoon\")\n\n== Automated diff ==\n=== Global API ===\n{| class=\"wikitable\" style=\"min-width: 600px\"\n|+ Global API (5.4.1.17538 &rarr; 5.4.2.17688)\n|- class=\"mw-customtoggle-global-c\" style=\"cursor: pointer\" \n! style=\"width: 50%; padding-right: 1em;\"| 7 new functions\n! style=\"width: 50%; padding-right: 1em;\"| 2 removed functions\n|- class=\"mw-collapsible\" id=\"mw-customcollapsible-global-c\"\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n: {{api|Ambiguate}}\n: {{api|C_ProductChoice.GetNumSuppressed}}\n: {{api|GetDefaultVideoQualityOption}}\n: {{api|GetSpecializationNameForClassID}}\n: {{api|IsOnGlueScreen}}\n: {{api|UnitFullName}}\n: {{api|fastrandom}}\n</div>\n| valign=\"top\" | <div style=\"margin-left:-1.5em; font-family: monospace\">\n: StartUnratedArena\n: securerandom\n</div>\n|}\n=== FrameXML ===\n{| class=\"wikitable\" style=\"min-width: 600px\"\n|+ FrameXML (5.4.1.17538 &rarr; 5.4.2.17688)\n|- class=\"mw-customtoggle-global-fxml\" style=\"cursor: pointer\" \n! style=\"padding: 0 1em;\"| 2 new functions\n|- class=\"mw-collapsible\" id=\"mw-customcollapsible-global-fxml\"\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n: {{api|RGBTableToColorCode}}\n: {{api|RGBToColorCode}}\n</div>\n|}\n=== Events ===\n{| class=\"wikitable\" style=\"min-width: 600px\"\n|+ Events (5.4.1.17538 &rarr; 5.4.2.17688)\n|- class=\"mw-customtoggle-events\" style=\"cursor: pointer\" \n! style=\"padding: 0 1em;\"| 55 new events\n|- class=\"mw-collapsible\" id=\"mw-customcollapsible-events\"\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n: {{api|t=e|ACCOUNT_DATA_INITIALIZED}}\n: {{api|t=e|ACCOUNT_MESSAGES_AVAILABLE}}\n: {{api|t=e|ACCOUNT_MESSAGES_BODY_LOADED}}\n: {{api|t=e|ACCOUNT_MESSAGES_HEADERS_LOADED}}\n: {{api|t=e|ADDON_LIST_UPDATE}}\n: {{api|t=e|AUTH_CHALLENGE_UI_INVALID}}\n: {{api|t=e|CHARACTER_LIST_UPDATE}}\n: {{api|t=e|CLIENT_ACCOUNT_MISMATCH}}\n: {{api|t=e|CLIENT_CONVERTED}}\n: {{api|t=e|CLIENT_TRIAL}}\n: {{api|t=e|CLOSE_STATUS_DIALOG}}\n: {{api|t=e|DISCONNECTED_FROM_SERVER}}\n: {{api|t=e|DISPLAY_PROMOTION}}\n: {{api|t=e|ENCOUNTER_END}}\n: {{api|t=e|ENCOUNTER_START}}\n: {{api|t=e|FORCE_DECLINE_CHARACTER}}\n: {{api|t=e|FORCE_RENAME_CHARACTER}}\n: {{api|t=e|FRAMES_LOADED}}\n: {{api|t=e|GAME_ACCOUNTS_UPDATED}}\n: {{api|t=e|GET_PREFERRED_REALM_INFO}}\n: {{api|t=e|GLUE_SCREENSHOT_FAILED}}\n: {{api|t=e|GLUE_SCREENSHOT_SUCCEEDED}}\n: {{api|t=e|GLUE_UPDATE_EXPANSION_LEVEL}}\n: {{api|t=e|LAUNCHER_LOGIN_STATUS_CHANGED}}\n: {{api|t=e|LOGIN_STARTED}}\n: {{api|t=e|LOGIN_STOPPED}}\n: {{api|t=e|LUA_WARNING}}\n: {{api|t=e|OPEN_REALM_LIST}}\n: {{api|t=e|OPEN_STATUS_DIALOG}}\n: {{api|t=e|PATCH_DOWNLOADED}}\n: {{api|t=e|PATCH_UPDATE_PROGRESS}}\n: {{api|t=e|PET_JOURNAL_PET_RESTORED}}\n: {{api|t=e|PET_JOURNAL_PET_REVOKED}}\n: {{api|t=e|PLAYER_ENTER_MATRIX}}\n: {{api|t=e|PLAYER_ENTER_PIN}}\n: {{api|t=e|PLAYER_ENTER_TOKEN}}\n: {{api|t=e|RANDOM_CHARACTER_NAME_RESULT}}\n: {{api|t=e|SCANDLL_DOWNLOADING}}\n: {{api|t=e|SCANDLL_ERROR}}\n: {{api|t=e|SCANDLL_FINISHED}}\n: {{api|t=e|SCREEN_FIRST_DISPLAYED}}\n: {{api|t=e|SELECT_FIRST_CHARACTER}}\n: {{api|t=e|SELECT_LAST_CHARACTER}}\n: {{api|t=e|SERVER_SPLIT_NOTICE}}\n: {{api|t=e|SET_GLUE_SCREEN}}\n: {{api|t=e|SHOW_SERVER_ALERT}}\n: {{api|t=e|SHOW_SURVEY_NOTIFICATION}}\n: {{api|t=e|START_GLUE_MUSIC}}\n: {{api|t=e|SUGGEST_REALM}}\n: {{api|t=e|SUGGEST_REALM_WRONG_CATEGORY}}\n: {{api|t=e|SUGGEST_REALM_WRONG_PVP}}\n: {{api|t=e|TIMER_ALERT}}\n: {{api|t=e|UPDATE_SELECTED_CHARACTER}}\n: {{api|t=e|UPDATE_SELECTED_RACE}}\n: {{api|t=e|UPDATE_STATUS_DIALOG}}\n</div>\n|}\n=== Widget API ===\n{| class=\"wikitable\" style=\"min-width: 600px\"\n|+ Widget API (5.4.1.17538 &rarr; 5.4.2.17688)\n|- class=\"mw-customtoggle-widgets\" style=\"cursor: pointer\" \n! style=\"padding: 0 1em;\"| 2 new methods\n|- class=\"mw-collapsible\" id=\"mw-customcollapsible-widgets\"\n| valign=\"top\" | <div style=\"margin-left:-1.5em\">\n: {{api|t=w|Slider:GetObeyStepOnDrag}}\n: {{api|t=w|Slider:SetObeyStepOnDrag}}\n</div>\n|}\n=== Lua Enums ===\n{| class=\"wikitable\" style=\"min-width: 600px\"\n|+ Lua Enums (5.4.1.17538 &rarr; 5.4.2.17688)\n|- class=\"mw-customtoggle-lua-enums\" style=\"cursor: pointer\" \n! style=\"padding: 0 1em;\"| New\n|- class=\"mw-collapsible\" id=\"mw-customcollapsible-lua-enums\"\n| valign=\"top\" | <div style=\"margin-left:-1.5em; font-family: monospace\">\n: [[LE_AUTOCOMPLETE_PRIORITY]] (new)\n:: _OTHER = 1\n:: _INTERACTED = 2\n:: _IN_GROUP = 3\n:: _GUILD = 4\n:: _FRIEND = 5\n</div>\n|}"}}}]}}}}
+\ No newline at end of file
+diff --git a/data/patch-api/evidence/5.4.2-session-2026-10-08/p542-parent-fetch.json b/data/patch-api/evidence/5.4.2-session-2026-10-08/p542-parent-fetch.json
+new file mode 100644
+index 000000000..1fc4db20c
+--- /dev/null
++++ b/data/patch-api/evidence/5.4.2-session-2026-10-08/p542-parent-fetch.json
+@@ -0,0 +1 @@
++{"batchcomplete":"","query":{"pages":{"151415":{"pageid":151415,"ns":0,"title":"Patch 5.4.2","revisions":[{"revid":6441253,"parentid":6401401,"timestamp":"2025-08-17T07:56:06Z","slots":{"main":{"contentmodel":"wikitext","contentformat":"text/x-wiki","*":"{{Patchbox\n|Patchname = \n|Image = \n|Caption = \n|Release = December 10, 2013\n|Latest = December 18, 2013\n|Version = 17658\n|Latestv = 17688\n|toc = 50400\n|api = 1\n|Highlights = \n* [[Raid Browser|Cross-realm raid browser]]\n* Cross-realm mail\n|Related = \n* [http://us.battle.net/wow/en/blog/10788364/#patch542 Official patch notes]\n* [http://us.battle.net/wow/en/blog/11944164/ Post-patch hotfixes]\n|Prev = 5.4.1\n|Current = 5.4.2\n|Next = 5.4.7\n}}{{tocright}}\n\n'''Patch 5.4.2''' is the second minor patch for [[patch 5.4.0]]. It introduced cross-realm mail (for heirlooms) and upgraded the raid browser (not the raid finder) to work cross-realm as well in preparation for ''[[Warlords of Draenor|Warlords]]''.\n\n''Last patch notes update: 2013-12-09''\n\n==Shop Now Available==\n*You can now browse and purchase a bevy of mounts and pets directly from within World of Warcraft through our newly added [[In-Game Store|Shop interface]].\n*We've made it possible for you to receive your new pal right in your inventory (or via mail if your inventory is full). Just click the Shop icon on the [[Micro Menu|menu bar]] once you've logged in to a character, and you'll be able to pick out a new friend to add to your collection and start your adventures together right away.\n\n==Classes==\n===Hunters===\n*General\n**[[Dismiss Pet]] can no longer be used while in an Arena match.\n===Mage===\n*Talents\n**[[Temporal Shield]]'s healing should now be correctly modified by effects that affect healing ([[Battle Fatigue]], [[Mortal Strike]], [[Dampening]]).\n*Glyphs\n**[[Glyph of Remove Curse]] now increases the Mage's damage by 5% for 10 seconds after successfully removing a curse (down from a 15% increase to damage).\n===Warrior===\n*General\n**[[Intervene]] no longer removes movement-impairing effects on use. The talent [[Safeguard]] will continue to remove movement-impairing effects.\n**Improved checks on pathing for [[Intervene]] and Safeguard to address situations where Warriors may wind up under the terrain.\n\n==Quests==\n*[[Catch and Carry]]: Druids can no longer attempt to catch [[Sack of Grain (Valley of the Four Winds)|Sacks of Grain]] while in flight form.\n*[[Noodle Time]]: Resolved a situation that may cause players to be immediately removed from the scenario.\n*[[Lost Treasure]]: Resolved an issue where players may be unable to open [[Cache of the Legion]].\n*[[The Secret Ingredient Is...]]: Resolved a situation that may cause players to be immediately removed from the scenario.\n\n==Raids, Dungeons, and Scenarios==\n*[[Raid Browser|Cross-Realm raid browser]] now has new categories for [[World boss#Pandaria|Mists of Pandaria World Bosses]] (Celestials and [[Ordos]]) and [[Flexible Raid|Flexible raid]] difficulty for [[Siege of Orgrimmar (instance)|Siege of Orgrimmar]].\n**The cross-realm raid browser is accessed through the '[[Socials|Social Pane]]' (bound to the O key by default) and look for the '[[Raid list|Raid]]' tab on the bottom right.\n**From there you can set the character as looking to join a raid or browse players that are forming up for a raid.\n*Players are now able to place [[raid marker]]s in the world even while dead.\n*[[Siege of Orgrimmar (instance)|Siege of Orgrimmar]]\n**[[Norushen (tactics)|Norushen]]\n***Resolved a situation where Quarantine Measures may sometimes fail to destroy all life within the Quarantine Zone. \n**[[Galakras]]\n***Resolved a situation that may cause demolition NPCs to stop opening the door to one of the towers. \n**[[Paragons of the Klaxxi]]\n***Resolved an issue where players may fail to gain Hisek the Swarmkeeper's special ability if they were in the middle of casting a spell while interacting with his corpse.\n\n==Items==\n*Players are now able to mail [[Bind to Account|account-bound]] items to other characters that reside on a different realm on the same account. To send cross-realm mail: enter the character's name, followed by a hyphen \"-\", followed by the realm name. Note that cross-realm mail can only send account-bound items, not other items or gold.\n*[[MiniZep Controller|MiniZeps]] should now be able to damage each other while in a sanctuary area. \n\n==UI==\n*The [[Customer Support]] button has moved. Customer support can now be reached in-game by selecting Help option through the [[Game Menu]] (Game Menu is bound to the Escape key by default).\n\n==Achievements==\n*[[You Don't Have an Eternity - Guild Edition]] no longer has a timed requirement. The guild achievement now only requires that players defeat Malygos while in a guild group.\n*Resolved an issue that caused players to not receive credit towards the [[Drop It!]] and [[Drop It Now!]] achievements. \n\n==Client patches==\n{|class=darktable\n!Build !! Date !! Notes\n|-\n| 17688 || 2013-12-18 || Add 'Shop' option to Game Menu\n|-\n| 17658 || 2013-12-12 || Initial release\n|}\n\n{{Patches}}\n\n[[Category:World of Warcraft patches|5.4.2]]\n\n[[es:Parche 5.4.2]]\n[[pl:Patch 5.4.2]]"}}}]}}}}
+\ No newline at end of file
+diff --git a/data/patch-api/sources/5.4.2-api-changes.provenance.json b/data/patch-api/sources/5.4.2-api-changes.provenance.json
+new file mode 100644
+index 000000000..b2dd714a7
+--- /dev/null
++++ b/data/patch-api/sources/5.4.2-api-changes.provenance.json
+@@ -0,0 +1,18 @@
++{
++  "pageid": 262849,
++  "title": "Patch 5.4.2/API changes",
++  "revid": 2543251,
++  "timestamp": "2014-02-20T12:32:21Z",
++  "sha256": "0aa82c13e17c30d54797b45ffa769b65b01723e455174f6f2dfa39148671f773",
++  "fetch_url": "https://warcraft.wiki.gg/api.php",
++  "fetched": "2026-10-08",
++  "extractor_flags": [
++    "--mists-automated-diff"
++  ],
++  "generator_flags": [
++    "--mists-automated-diff"
++  ],
++  "classification": "retail-api-change-page",
++  "client_line": "2013 retail Mists of Pandaria",
++  "build": "5.4.2.17688"
++}
+diff --git a/data/patch-api/sources/5.4.2-api-changes.txt b/data/patch-api/sources/5.4.2-api-changes.txt
+new file mode 100644
+index 000000000..c1804ea06
+--- /dev/null
++++ b/data/patch-api/sources/5.4.2-api-changes.txt
+@@ -0,0 +1,20 @@
++Patch 5.4.2 API changes
++
++== Changes ==
++*random() and Math.random() now point to securerandom(), which is significantly slower. To explicitly use the pre-5.4.2 random, use fastrandom() instead.
++**Fastrandom is no longer accessible in the secure environment
++
++*GetGuildRosterInfo()'s first return value now returns player name - realm name instead of just the player name (e.g. "Arthas-Silvermoon")
++
++== Automated diff ==
++=== Global API ===
++=== FrameXML ===
++=== Events ===
++=== Widget API ===
++=== Lua Enums ===
++: LE_AUTOCOMPLETE_PRIORITY (new)
++:: _OTHER = 1
++:: _INTERACTED = 2
++:: _IN_GROUP = 3
++:: _GUILD = 4
++:: _FRIEND = 5
+diff --git a/data/patch-api/sources/5.4.2-api-changes.wikitext b/data/patch-api/sources/5.4.2-api-changes.wikitext
+new file mode 100644
+index 000000000..46c85f9fb
+--- /dev/null
++++ b/data/patch-api/sources/5.4.2-api-changes.wikitext
+@@ -0,0 +1,131 @@
++{{apichanges|5.4.2|prev=5.4.1|next=5.4.7}}
++
++== Changes ==
++*{{api|random}}() and Math.random() now point to {{api|securerandom}}(), which is significantly slower. To explicitly use the pre-5.4.2 random, use {{api|fastrandom}}() instead.
++**Fastrandom is no longer accessible in the secure environment
++
++*{{api|GetGuildRosterInfo}}()'s first return value now returns player name - realm name instead of just the player name (e.g. "Arthas-Silvermoon")
++
++== Automated diff ==
++=== Global API ===
++{| class="wikitable" style="min-width: 600px"
++|+ Global API (5.4.1.17538 &rarr; 5.4.2.17688)
++|- class="mw-customtoggle-global-c" style="cursor: pointer" 
++! style="width: 50%; padding-right: 1em;"| 7 new functions
++! style="width: 50%; padding-right: 1em;"| 2 removed functions
++|- class="mw-collapsible" id="mw-customcollapsible-global-c"
++| valign="top" | <div style="margin-left:-1.5em">
++: {{api|Ambiguate}}
++: {{api|C_ProductChoice.GetNumSuppressed}}
++: {{api|GetDefaultVideoQualityOption}}
++: {{api|GetSpecializationNameForClassID}}
++: {{api|IsOnGlueScreen}}
++: {{api|UnitFullName}}
++: {{api|fastrandom}}
++</div>
++| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
++: StartUnratedArena
++: securerandom
++</div>
++|}
++=== FrameXML ===
++{| class="wikitable" style="min-width: 600px"
++|+ FrameXML (5.4.1.17538 &rarr; 5.4.2.17688)
++|- class="mw-customtoggle-global-fxml" style="cursor: pointer" 
++! style="padding: 0 1em;"| 2 new functions
++|- class="mw-collapsible" id="mw-customcollapsible-global-fxml"
++| valign="top" | <div style="margin-left:-1.5em">
++: {{api|RGBTableToColorCode}}
++: {{api|RGBToColorCode}}
++</div>
++|}
++=== Events ===
++{| class="wikitable" style="min-width: 600px"
++|+ Events (5.4.1.17538 &rarr; 5.4.2.17688)
++|- class="mw-customtoggle-events" style="cursor: pointer" 
++! style="padding: 0 1em;"| 55 new events
++|- class="mw-collapsible" id="mw-customcollapsible-events"
++| valign="top" | <div style="margin-left:-1.5em">
++: {{api|t=e|ACCOUNT_DATA_INITIALIZED}}
++: {{api|t=e|ACCOUNT_MESSAGES_AVAILABLE}}
++: {{api|t=e|ACCOUNT_MESSAGES_BODY_LOADED}}
++: {{api|t=e|ACCOUNT_MESSAGES_HEADERS_LOADED}}
++: {{api|t=e|ADDON_LIST_UPDATE}}
++: {{api|t=e|AUTH_CHALLENGE_UI_INVALID}}
++: {{api|t=e|CHARACTER_LIST_UPDATE}}
++: {{api|t=e|CLIENT_ACCOUNT_MISMATCH}}
++: {{api|t=e|CLIENT_CONVERTED}}
++: {{api|t=e|CLIENT_TRIAL}}
++: {{api|t=e|CLOSE_STATUS_DIALOG}}
++: {{api|t=e|DISCONNECTED_FROM_SERVER}}
++: {{api|t=e|DISPLAY_PROMOTION}}
++: {{api|t=e|ENCOUNTER_END}}
++: {{api|t=e|ENCOUNTER_START}}
++: {{api|t=e|FORCE_DECLINE_CHARACTER}}
++: {{api|t=e|FORCE_RENAME_CHARACTER}}
++: {{api|t=e|FRAMES_LOADED}}
++: {{api|t=e|GAME_ACCOUNTS_UPDATED}}
++: {{api|t=e|GET_PREFERRED_REALM_INFO}}
++: {{api|t=e|GLUE_SCREENSHOT_FAILED}}
++: {{api|t=e|GLUE_SCREENSHOT_SUCCEEDED}}
++: {{api|t=e|GLUE_UPDATE_EXPANSION_LEVEL}}
++: {{api|t=e|LAUNCHER_LOGIN_STATUS_CHANGED}}
++: {{api|t=e|LOGIN_STARTED}}
++: {{api|t=e|LOGIN_STOPPED}}
++: {{api|t=e|LUA_WARNING}}
++: {{api|t=e|OPEN_REALM_LIST}}
++: {{api|t=e|OPEN_STATUS_DIALOG}}
++: {{api|t=e|PATCH_DOWNLOADED}}
++: {{api|t=e|PATCH_UPDATE_PROGRESS}}
++: {{api|t=e|PET_JOURNAL_PET_RESTORED}}
++: {{api|t=e|PET_JOURNAL_PET_REVOKED}}
++: {{api|t=e|PLAYER_ENTER_MATRIX}}
++: {{api|t=e|PLAYER_ENTER_PIN}}
++: {{api|t=e|PLAYER_ENTER_TOKEN}}
++: {{api|t=e|RANDOM_CHARACTER_NAME_RESULT}}
++: {{api|t=e|SCANDLL_DOWNLOADING}}
++: {{api|t=e|SCANDLL_ERROR}}
++: {{api|t=e|SCANDLL_FINISHED}}
++: {{api|t=e|SCREEN_FIRST_DISPLAYED}}
++: {{api|t=e|SELECT_FIRST_CHARACTER}}
++: {{api|t=e|SELECT_LAST_CHARACTER}}
++: {{api|t=e|SERVER_SPLIT_NOTICE}}
++: {{api|t=e|SET_GLUE_SCREEN}}
++: {{api|t=e|SHOW_SERVER_ALERT}}
++: {{api|t=e|SHOW_SURVEY_NOTIFICATION}}
++: {{api|t=e|START_GLUE_MUSIC}}
++: {{api|t=e|SUGGEST_REALM}}
++: {{api|t=e|SUGGEST_REALM_WRONG_CATEGORY}}
++: {{api|t=e|SUGGEST_REALM_WRONG_PVP}}
++: {{api|t=e|TIMER_ALERT}}
++: {{api|t=e|UPDATE_SELECTED_CHARACTER}}
++: {{api|t=e|UPDATE_SELECTED_RACE}}
++: {{api|t=e|UPDATE_STATUS_DIALOG}}
++</div>
++|}
++=== Widget API ===
++{| class="wikitable" style="min-width: 600px"
++|+ Widget API (5.4.1.17538 &rarr; 5.4.2.17688)
++|- class="mw-customtoggle-widgets" style="cursor: pointer" 
++! style="padding: 0 1em;"| 2 new methods
++|- class="mw-collapsible" id="mw-customcollapsible-widgets"
++| valign="top" | <div style="margin-left:-1.5em">
++: {{api|t=w|Slider:GetObeyStepOnDrag}}
++: {{api|t=w|Slider:SetObeyStepOnDrag}}
++</div>
++|}
++=== Lua Enums ===
++{| class="wikitable" style="min-width: 600px"
++|+ Lua Enums (5.4.1.17538 &rarr; 5.4.2.17688)
++|- class="mw-customtoggle-lua-enums" style="cursor: pointer" 
++! style="padding: 0 1em;"| New
++|- class="mw-collapsible" id="mw-customcollapsible-lua-enums"
++| valign="top" | <div style="margin-left:-1.5em; font-family: monospace">
++: [[LE_AUTOCOMPLETE_PRIORITY]] (new)
++:: _OTHER = 1
++:: _INTERACTED = 2
++:: _IN_GROUP = 3
++:: _GUILD = 4
++:: _FRIEND = 5
++</div>
++|}
+\ No newline at end of file
+diff --git a/data/patch-api/sources/5.4.2-wikitext-register.json b/data/patch-api/sources/5.4.2-wikitext-register.json
+new file mode 100644
+index 000000000..6b199c35f
+--- /dev/null
++++ b/data/patch-api/sources/5.4.2-wikitext-register.json
+@@ -0,0 +1,587 @@
++{
++  "schema": "patch-api-wikitext-register/v1",
++  "patch": "5.4.2",
++  "source": {
++    "path": "data/patch-api/sources/5.4.2-api-changes.wikitext",
++    "revid": 2543251,
++    "sha256": "0aa82c13e17c30d54797b45ffa769b65b01723e455174f6f2dfa39148671f773"
++  },
++  "header_counts": [
++    {
++      "section": "global-api",
++      "direction": "added",
++      "header_count": 7,
++      "parsed_count": 7
++    },
++    {
++      "section": "global-api",
++      "direction": "removed",
++      "header_count": 2,
++      "parsed_count": 2
++    },
++    {
++      "section": "framexml",
++      "direction": "added",
++      "header_count": 2,
++      "parsed_count": 2
++    },
++    {
++      "section": "events",
++      "direction": "added",
++      "header_count": 55,
++      "parsed_count": 55
++    },
++    {
++      "section": "widgets",
++      "direction": "added",
++      "header_count": 2,
++      "parsed_count": 2
++    }
++  ],
++  "entries": [
++    {
++      "id": "wt-global-api-Ambiguate-18",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "Ambiguate",
++      "annotation": "",
++      "wikitext_line": 18
++    },
++    {
++      "id": "wt-global-api-C_ProductChoice.GetNumSuppressed-19",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "C_ProductChoice.GetNumSuppressed",
++      "annotation": "",
++      "wikitext_line": 19
++    },
++    {
++      "id": "wt-global-api-GetDefaultVideoQualityOption-20",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "GetDefaultVideoQualityOption",
++      "annotation": "",
++      "wikitext_line": 20
++    },
++    {
++      "id": "wt-global-api-GetSpecializationNameForClassID-21",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "GetSpecializationNameForClassID",
++      "annotation": "",
++      "wikitext_line": 21
++    },
++    {
++      "id": "wt-global-api-IsOnGlueScreen-22",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "IsOnGlueScreen",
++      "annotation": "",
++      "wikitext_line": 22
++    },
++    {
++      "id": "wt-global-api-UnitFullName-23",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "UnitFullName",
++      "annotation": "",
++      "wikitext_line": 23
++    },
++    {
++      "id": "wt-global-api-fastrandom-24",
++      "section": "global-api",
++      "direction": "added",
++      "symbol": "fastrandom",
++      "annotation": "",
++      "wikitext_line": 24
++    },
++    {
++      "id": "wt-global-api-StartUnratedArena-27",
++      "section": "global-api",
++      "direction": "removed",
++      "symbol": "StartUnratedArena",
++      "annotation": "",
++      "wikitext_line": 27
++    },
++    {
++      "id": "wt-global-api-securerandom-28",
++      "section": "global-api",
++      "direction": "removed",
++      "symbol": "securerandom",
++      "annotation": "",
++      "wikitext_line": 28
++    },
++    {
++      "id": "wt-framexml-RGBTableToColorCode-38",
++      "section": "framexml",
++      "direction": "added",
++      "symbol": "RGBTableToColorCode",
++      "annotation": "",
++      "wikitext_line": 38
++    },
++    {
++      "id": "wt-framexml-RGBToColorCode-39",
++      "section": "framexml",
++      "direction": "added",
++      "symbol": "RGBToColorCode",
++      "annotation": "",
++      "wikitext_line": 39
++    },
++    {
++      "id": "wt-events-ACCOUNT_DATA_INITIALIZED-49",
++      "section": "events",
++      "direction": "added",
++      "symbol": "ACCOUNT_DATA_INITIALIZED",
++      "annotation": "",
++      "wikitext_line": 49
++    },
++    {
++      "id": "wt-events-ACCOUNT_MESSAGES_AVAILABLE-50",
++      "section": "events",
++      "direction": "added",
++      "symbol": "ACCOUNT_MESSAGES_AVAILABLE",
++      "annotation": "",
++      "wikitext_line": 50
++    },
++    {
++      "id": "wt-events-ACCOUNT_MESSAGES_BODY_LOADED-51",
++      "section": "events",
++      "direction": "added",
++      "symbol": "ACCOUNT_MESSAGES_BODY_LOADED",
++      "annotation": "",
++      "wikitext_line": 51
++    },
++    {
++      "id": "wt-events-ACCOUNT_MESSAGES_HEADERS_LOADED-52",
++      "section": "events",
++      "direction": "added",
++      "symbol": "ACCOUNT_MESSAGES_HEADERS_LOADED",
++      "annotation": "",
++      "wikitext_line": 52
++    },
++    {
++      "id": "wt-events-ADDON_LIST_UPDATE-53",
++      "section": "events",
++      "direction": "added",
++      "symbol": "ADDON_LIST_UPDATE",
++      "annotation": "",
++      "wikitext_line": 53
++    },
++    {
++      "id": "wt-events-AUTH_CHALLENGE_UI_INVALID-54",
++      "section": "events",
++      "direction": "added",
++      "symbol": "AUTH_CHALLENGE_UI_INVALID",
++      "annotation": "",
++      "wikitext_line": 54
++    },
++    {
++      "id": "wt-events-CHARACTER_LIST_UPDATE-55",
++      "section": "events",
++      "direction": "added",
++      "symbol": "CHARACTER_LIST_UPDATE",
++      "annotation": "",
++      "wikitext_line": 55
++    },
++    {
++      "id": "wt-events-CLIENT_ACCOUNT_MISMATCH-56",
++      "section": "events",
++      "direction": "added",
++      "symbol": "CLIENT_ACCOUNT_MISMATCH",
++      "annotation": "",
++      "wikitext_line": 56
++    },
++    {
++      "id": "wt-events-CLIENT_CONVERTED-57",
++      "section": "events",
++      "direction": "added",
++      "symbol": "CLIENT_CONVERTED",
++      "annotation": "",
++      "wikitext_line": 57
++    },
++    {
++      "id": "wt-events-CLIENT_TRIAL-58",
++      "section": "events",
++      "direction": "added",
++      "symbol": "CLIENT_TRIAL",
++      "annotation": "",
++      "wikitext_line": 58
++    },
++    {
++      "id": "wt-events-CLOSE_STATUS_DIALOG-59",
++      "section": "events",
++      "direction": "added",
++      "symbol": "CLOSE_STATUS_DIALOG",
++      "annotation": "",
++      "wikitext_line": 59
++    },
++    {
++      "id": "wt-events-DISCONNECTED_FROM_SERVER-60",
++      "section": "events",
++      "direction": "added",
++      "symbol": "DISCONNECTED_FROM_SERVER",
++      "annotation": "",
++      "wikitext_line": 60
++    },
++    {
++      "id": "wt-events-DISPLAY_PROMOTION-61",
++      "section": "events",
++      "direction": "added",
++      "symbol": "DISPLAY_PROMOTION",
++      "annotation": "",
++      "wikitext_line": 61
++    },
++    {
++      "id": "wt-events-ENCOUNTER_END-62",
++      "section": "events",
++      "direction": "added",
++      "symbol": "ENCOUNTER_END",
++      "annotation": "",
++      "wikitext_line": 62
++    },
++    {
++      "id": "wt-events-ENCOUNTER_START-63",
++      "section": "events",
++      "direction": "added",
++      "symbol": "ENCOUNTER_START",
++      "annotation": "",
++      "wikitext_line": 63
++    },
++    {
++      "id": "wt-events-FORCE_DECLINE_CHARACTER-64",
++      "section": "events",
++      "direction": "added",
++      "symbol": "FORCE_DECLINE_CHARACTER",
++      "annotation": "",
++      "wikitext_line": 64
++    },
++    {
++      "id": "wt-events-FORCE_RENAME_CHARACTER-65",
++      "section": "events",
++      "direction": "added",
++      "symbol": "FORCE_RENAME_CHARACTER",
++      "annotation": "",
++      "wikitext_line": 65
++    },
++    {
++      "id": "wt-events-FRAMES_LOADED-66",
++      "section": "events",
++      "direction": "added",
++      "symbol": "FRAMES_LOADED",
++      "annotation": "",
++      "wikitext_line": 66
++    },
++    {
++      "id": "wt-events-GAME_ACCOUNTS_UPDATED-67",
++      "section": "events",
++      "direction": "added",
++      "symbol": "GAME_ACCOUNTS_UPDATED",
++      "annotation": "",
++      "wikitext_line": 67
++    },
++    {
++      "id": "wt-events-GET_PREFERRED_REALM_INFO-68",
++      "section": "events",
++      "direction": "added",
++      "symbol": "GET_PREFERRED_REALM_INFO",
++      "annotation": "",
++      "wikitext_line": 68
++    },
++    {
++      "id": "wt-events-GLUE_SCREENSHOT_FAILED-69",
++      "section": "events",
++      "direction": "added",
++      "symbol": "GLUE_SCREENSHOT_FAILED",
++      "annotation": "",
++      "wikitext_line": 69
++    },
++    {
++      "id": "wt-events-GLUE_SCREENSHOT_SUCCEEDED-70",
++      "section": "events",
++      "direction": "added",
++      "symbol": "GLUE_SCREENSHOT_SUCCEEDED",
++      "annotation": "",
++      "wikitext_line": 70
++    },
++    {
++      "id": "wt-events-GLUE_UPDATE_EXPANSION_LEVEL-71",
++      "section": "events",
++      "direction": "added",
++      "symbol": "GLUE_UPDATE_EXPANSION_LEVEL",
++      "annotation": "",
++      "wikitext_line": 71
++    },
++    {
++      "id": "wt-events-LAUNCHER_LOGIN_STATUS_CHANGED-72",
++      "section": "events",
++      "direction": "added",
++      "symbol": "LAUNCHER_LOGIN_STATUS_CHANGED",
++      "annotation": "",
++      "wikitext_line": 72
++    },
++    {
++      "id": "wt-events-LOGIN_STARTED-73",
++      "section": "events",
++      "direction": "added",
++      "symbol": "LOGIN_STARTED",
++      "annotation": "",
++      "wikitext_line": 73
++    },
++    {
++      "id": "wt-events-LOGIN_STOPPED-74",
++      "section": "events",
++      "direction": "added",
++      "symbol": "LOGIN_STOPPED",
++      "annotation": "",
++      "wikitext_line": 74
++    },
++    {
++      "id": "wt-events-LUA_WARNING-75",
++      "section": "events",
++      "direction": "added",
++      "symbol": "LUA_WARNING",
++      "annotation": "",
++      "wikitext_line": 75
++    },
++    {
++      "id": "wt-events-OPEN_REALM_LIST-76",
++      "section": "events",
++      "direction": "added",
++      "symbol": "OPEN_REALM_LIST",
++      "annotation": "",
++      "wikitext_line": 76
++    },
++    {
++      "id": "wt-events-OPEN_STATUS_DIALOG-77",
++      "section": "events",
++      "direction": "added",
++      "symbol": "OPEN_STATUS_DIALOG",
++      "annotation": "",
++      "wikitext_line": 77
++    },
++    {
++      "id": "wt-events-PATCH_DOWNLOADED-78",
++      "section": "events",
++      "direction": "added",
++      "symbol": "PATCH_DOWNLOADED",
++      "annotation": "",
++      "wikitext_line": 78
++    },
++    {
++      "id": "wt-events-PATCH_UPDATE_PROGRESS-79",
++      "section": "events",
++      "direction": "added",
++      "symbol": "PATCH_UPDATE_PROGRESS",
++      "annotation": "",
++      "wikitext_line": 79
++    },
++    {
++      "id": "wt-events-PET_JOURNAL_PET_RESTORED-80",
++      "section": "events",
++      "direction": "added",
++      "symbol": "PET_JOURNAL_PET_RESTORED",
++      "annotation": "",
++      "wikitext_line": 80
++    },
++    {
++      "id": "wt-events-PET_JOURNAL_PET_REVOKED-81",
++      "section": "events",
++      "direction": "added",
++      "symbol": "PET_JOURNAL_PET_REVOKED",
++      "annotation": "",
++      "wikitext_line": 81
++    },
++    {
++      "id": "wt-events-PLAYER_ENTER_MATRIX-82",
++      "section": "events",
++      "direction": "added",
++      "symbol": "PLAYER_ENTER_MATRIX",
++      "annotation": "",
++      "wikitext_line": 82
++    },
++    {
++      "id": "wt-events-PLAYER_ENTER_PIN-83",
++      "section": "events",
++      "direction": "added",
++      "symbol": "PLAYER_ENTER_PIN",
++      "annotation": "",
++      "wikitext_line": 83
++    },
++    {
++      "id": "wt-events-PLAYER_ENTER_TOKEN-84",
++      "section": "events",
++      "direction": "added",
++      "symbol": "PLAYER_ENTER_TOKEN",
++      "annotation": "",
++      "wikitext_line": 84
++    },
++    {
++      "id": "wt-events-RANDOM_CHARACTER_NAME_RESULT-85",
++      "section": "events",
++      "direction": "added",
++      "symbol": "RANDOM_CHARACTER_NAME_RESULT",
++      "annotation": "",
++      "wikitext_line": 85
++    },
++    {
++      "id": "wt-events-SCANDLL_DOWNLOADING-86",
++      "section": "events",
++      "direction": "added",
++      "symbol": "SCANDLL_DOWNLOADING",
++      "annotation": "",
++      "wikitext_line": 86
++    },
++    {
++      "id": "wt-events-SCANDLL_ERROR-87",
++      "section": "events",
++      "direction": "added",
++      "symbol": "SCANDLL_ERROR",
++      "annotation": "",
++      "wikitext_line": 87
++    },
++    {
++      "id": "wt-events-SCANDLL_FINISHED-88",
++      "section": "events",
++      "direction": "added",
++      "symbol": "SCANDLL_FINISHED",
++      "annotation": "",
++      "wikitext_line": 88
++    },
++    {
++      "id": "wt-events-SCREEN_FIRST_DISPLAYED-89",
++      "section": "events",
++      "direction": "added",
++      "symbol": "SCREEN_FIRST_DISPLAYED",
++      "annotation": "",
++      "wikitext_line": 89
++    },
++    {
++      "id": "wt-events-SELECT_FIRST_CHARACTER-90",
++      "section": "events",
++      "direction": "added",
++      "symbol": "SELECT_FIRST_CHARACTER",
++      "annotation": "",
++      "wikitext_line": 90
++    },
++    {
++      "id": "wt-events-SELECT_LAST_CHARACTER-91",
++      "section": "events",
++      "direction": "added",
++      "symbol": "SELECT_LAST_CHARACTER",
++      "annotation": "",
++      "wikitext_line": 91
++    },
++    {
++      "id": "wt-events-SERVER_SPLIT_NOTICE-92",
++      "section": "events",
++      "direction": "added",
++      "symbol": "SERVER_SPLIT_NOTICE",
++      "annotation": "",
++      "wikitext_line": 92
++    },
++    {
++      "id": "wt-events-SET_GLUE_SCREEN-93",
++      "section": "events",
++      "direction": "added",
++      "symbol": "SET_GLUE_SCREEN",
++      "annotation": "",
++      "wikitext_line": 93
++    },
++    {
++      "id": "wt-events-SHOW_SERVER_ALERT-94",
++      "section": "events",
++      "direction": "added",
++      "symbol": "SHOW_SERVER_ALERT",
++      "annotation": "",
++      "wikitext_line": 94
++    },
++    {
++      "id": "wt-events-SHOW_SURVEY_NOTIFICATION-95",
++      "section": "events",
++      "direction": "added",
++      "symbol": "SHOW_SURVEY_NOTIFICATION",
++      "annotation": "",
++      "wikitext_line": 95
++    },
++    {
++      "id": "wt-events-START_GLUE_MUSIC-96",
++      "section": "events",
++      "direction": "added",
++      "symbol": "START_GLUE_MUSIC",
++      "annotation": "",
++      "wikitext_line": 96
++    },
++    {
++      "id": "wt-events-SUGGEST_REALM-97",
++      "section": "events",
++      "direction": "added",
++      "symbol": "SUGGEST_REALM",
++      "annotation": "",
++      "wikitext_line": 97
++    },
++    {
++      "id": "wt-events-SUGGEST_REALM_WRONG_CATEGORY-98",
++      "section": "events",
++      "direction": "added",
++      "symbol": "SUGGEST_REALM_WRONG_CATEGORY",
++      "annotation": "",
++      "wikitext_line": 98
++    },
++    {
++      "id": "wt-events-SUGGEST_REALM_WRONG_PVP-99",
++      "section": "events",
++      "direction": "added",
++      "symbol": "SUGGEST_REALM_WRONG_PVP",
++      "annotation": "",
++      "wikitext_line": 99
++    },
++    {
++      "id": "wt-events-TIMER_ALERT-100",
++      "section": "events",
++      "direction": "added",
++      "symbol": "TIMER_ALERT",
++      "annotation": "",
++      "wikitext_line": 100
++    },
++    {
++      "id": "wt-events-UPDATE_SELECTED_CHARACTER-101",
++      "section": "events",
++      "direction": "added",
++      "symbol": "UPDATE_SELECTED_CHARACTER",
++      "annotation": "",
++      "wikitext_line": 101
++    },
++    {
++      "id": "wt-events-UPDATE_SELECTED_RACE-102",
++      "section": "events",
++      "direction": "added",
++      "symbol": "UPDATE_SELECTED_RACE",
++      "annotation": "",
++      "wikitext_line": 102
++    },
++    {
++      "id": "wt-events-UPDATE_STATUS_DIALOG-103",
++      "section": "events",
++      "direction": "added",
++      "symbol": "UPDATE_STATUS_DIALOG",
++      "annotation": "",
++      "wikitext_line": 103
++    },
++    {
++      "id": "wt-widgets-Slider:GetObeyStepOnDrag-113",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "Slider:GetObeyStepOnDrag",
++      "annotation": "",
++      "wikitext_line": 113
++    },
++    {
++      "id": "wt-widgets-Slider:SetObeyStepOnDrag-114",
++      "section": "widgets",
++      "direction": "added",
++      "symbol": "Slider:SetObeyStepOnDrag",
++      "annotation": "",
++      "wikitext_line": 114
++    }
++  ]
++}
+diff --git a/tools/extract_patch_non_inventory.py b/tools/extract_patch_non_inventory.py
+index 8644661c9..fbffe7366 100644
+--- a/tools/extract_patch_non_inventory.py
++++ b/tools/extract_patch_non_inventory.py
+@@ -100,11 +100,21 @@ def render_patch_diff_reference(raw):
+                   r'[Transcluded source: Patch \1/API changes/diff; not expanded]', raw)
+ 
+ 
++def strip_mists_automated_inventories(raw):
++    """Keep 2013 prose and enum values; omit API tables already in the register."""
++    raw = re.sub(r'^\{\|[^\n]*\n\|\+ (?:Global API|FrameXML|Widget API|Events) [\s\S]*?^\|\}\n?',
++                 '', raw, flags=re.M)
++    return '\n'.join(line for line in raw.splitlines()
++                     if not line.startswith(('{|', '|+', '|-', '!', '| valign', '</div>', '|}'))) + '\n'
++
++
+ def extract_text(raw, *, preserve_examples=False, normalize_inventory_headings=False,
+                  retain_reference_notes=False, legacy_api_tables=False,
+                  legacy_api_bullets=False, legacy_cvar_tables=False,
+                  bfa_prepatch=False, legion_prepatch=False,
+-                 retain_patch_diff_reference=False):
++                 retain_patch_diff_reference=False, mists_automated_diff=False):
++    if mists_automated_diff:
++        raw = strip_mists_automated_inventories(raw)
+     if retain_patch_diff_reference:
+         raw = render_patch_diff_reference(raw)
+     if legion_prepatch:
+@@ -330,6 +340,8 @@ def main():
+                         help='Strip pure nested Legion inventories, retaining summaries and renames; opt-in')
+     parser.add_argument('--retain-patch-diff-reference', action='store_true',
+                         help='Retain transcluded patch diffs as unexpanded source references; opt-in')
++    parser.add_argument('--mists-automated-diff', action='store_true',
++                        help='Strip 2013 Mists API tables while retaining prose and enums; opt-in')
+     args = parser.parse_args()
+     if args.self_test:
+         check_examples()
+@@ -347,7 +359,8 @@ def main():
+                         legacy_cvar_tables=args.legacy_cvar_tables,
+                         bfa_prepatch=args.bfa_prepatch,
+                         legion_prepatch=args.legion_prepatch,
+-                        retain_patch_diff_reference=args.retain_patch_diff_reference)
++                        retain_patch_diff_reference=args.retain_patch_diff_reference,
++                        mists_automated_diff=args.mists_automated_diff)
+     rows = seed_rows(text, args.patch)
+     if args.text_only:
+         if args.check:
+diff --git a/tools/gen_patch_wikitext_register.py b/tools/gen_patch_wikitext_register.py
+index 600b325b9..8f62f5549 100644
+--- a/tools/gen_patch_wikitext_register.py
++++ b/tools/gen_patch_wikitext_register.py
+@@ -617,6 +617,29 @@ def parse_colon_api_bullets(text):
+     return entries
+ 
+ 
++def parse_mists_automated_diff(text):
++    """Parse 2013 captioned inventories; enum values stay in the prose extract."""
++    sections = {'Global API': 'global-api', 'FrameXML': 'framexml',
++                'Events': 'events', 'Widget API': 'widgets'}
++    entries, counts = [], []
++    for table in re.finditer(r'^\{\|[^\n]*\n([\s\S]*?)^\|\}', text, re.M):
++        lines = table[1].splitlines()
++        caption = next((line for line in lines if line.startswith('|+ ')), '')
++        section = next((value for name, value in sections.items()
++                        if caption.startswith('|+ ' + name + ' ')), None)
++        if section is None:
++            continue
++        first_line = text[:table.start(1)].count('\n') + 1
++        normalized = [(first_line + offset, ': {{api|' + line[2:] + '}}')
++                      if re.fullmatch(r': [A-Za-z_][A-Za-z0-9_:.]*', line)
++                      else (first_line + offset, line)
++                      for offset, line in enumerate(lines)]
++        rows, headers = parse_section(section, normalized, legacy_column_headers=True)
++        entries.extend(rows)
++        counts.extend(headers)
++    return entries, counts
++
++
+ def main():
+     parser = argparse.ArgumentParser(description=__doc__)
+     for name in ("patch", "path", "revid", "out"):
+@@ -669,11 +692,15 @@ def main():
+     parser.add_argument('--warlords-prepatch', action='store_true',
+                         help='Retain compact Warlords summary references and canonical widget owners; opt-in')
+     parser.add_argument('--warlords-diff', help='Separately pinned Warlords transcluded inventory; opt-in')
++    parser.add_argument('--mists-automated-diff', action='store_true',
++                        help='Parse 2013 Mists captioned APIs and bare removals; opt-in')
+     args = parser.parse_args()
+     patch, path, revid, out = args.patch, args.path, args.revid, args.out
+     raw = Path(path).read_bytes()
+     buckets = split_sections(raw.decode("utf-8"),
+                              separate_inline_structures=args.separate_inline_structures)
++    if args.mists_automated_diff:
++        buckets = {}
+     entries, counts = [], []
+     for section in SECTIONS.values():
+         entry_section = "cvars" if section == "commands" else section
+@@ -725,6 +752,8 @@ def main():
+         diff_entries, diff_counts = parse_warlords_diff(Path(args.warlords_diff).read_text())
+         entries.extend(diff_entries)
+         counts.extend(diff_counts)
++    if args.mists_automated_diff:
++        entries, counts = parse_mists_automated_diff(raw.decode('utf-8'))
+     if args.inventory_only:
+         for entry in entries:
+             for key in ("kind", "page_default", "test_inline"):
+diff --git a/tools/test_patch_mists_register.py b/tools/test_patch_mists_register.py
+new file mode 100644
+index 000000000..2323ea82a
+--- /dev/null
++++ b/tools/test_patch_mists_register.py
+@@ -0,0 +1,42 @@
++"""Behavioral fixtures for the 2013 Mists automated-diff syntax."""
++import unittest
++
++import gen_patch_wikitext_register as generator
++import extract_patch_non_inventory as extractor
++
++
++class MistsDiffTests(unittest.TestCase):
++    def test_inventory_keeps_bare_removals_widget_owners_and_counts(self):
++        raw = ('== Changes ==\n*{{api|random}}() changed.\n'
++               '{| class="wikitable"\n|+ Global API (5.4.1.17538 &rarr; 5.4.2.17688)\n'
++               '! style="width: 50%;"| 1 new functions\n! style="width: 50%;"| 1 removed functions\n'
++               '| valign="top" | <div>\n: {{api|fastrandom}}\n</div>\n'
++               '| valign="top" | <div>\n: securerandom\n</div>\n|}\n'
++               '{| class="wikitable"\n|+ Widget API (old &rarr; new)\n'
++               '! style="padding: 0;"| 1 new methods\n'
++               '| valign="top" | <div>\n: {{api|t=w|Slider:SetObeyStepOnDrag}}\n</div>\n|}\n')
++        rows, counts = generator.parse_mists_automated_diff(raw)
++        self.assertEqual([(r['section'], r['symbol'], r['direction']) for r in rows], [
++            ('global-api', 'fastrandom', 'added'), ('global-api', 'securerandom', 'removed'),
++            ('widgets', 'Slider:SetObeyStepOnDrag', 'added')])
++        self.assertEqual([(c['header_count'], c['parsed_count']) for c in counts],
++                         [(1, 1), (1, 1), (1, 1)])
++        self.assertEqual(len(rows), len({r['id'] for r in rows}))
++
++    def test_extract_keeps_prose_enum_values_and_framexml_heading_not_api_rows(self):
++        raw = ('{{apichanges|5.4.2|prev=5.4.1|next=5.4.7}}\n== Changes ==\n'
++               '*{{api|GetGuildRosterInfo}}() returns name-realm.\n'
++               '=== FrameXML ===\n{| class="wikitable"\n|+ FrameXML (old &rarr; new)\n'
++               '| valign="top" | <div>\n: {{api|RGBToColorCode}}\n</div>\n|}\n'
++               '=== Lua Enums ===\n{| class="wikitable"\n|+ Lua Enums (old &rarr; new)\n'
++               '! style="padding: 0;"| New\n| valign="top" | <div>\n'
++               ': [[LE_AUTOCOMPLETE_PRIORITY]] (new)\n:: _OTHER = 1\n:: _FRIEND = 5\n</div>\n|}')
++        rendered = extractor.extract_text(raw, mists_automated_diff=True)
++        self.assertIn('GetGuildRosterInfo() returns name-realm.', rendered)
++        self.assertIn('=== FrameXML ===', rendered)
++        self.assertNotIn('RGBToColorCode', rendered)
++        self.assertIn(': LE_AUTOCOMPLETE_PRIORITY (new)\n:: _OTHER = 1\n:: _FRIEND = 5', rendered)
++
++
++if __name__ == '__main__':
++    unittest.main()

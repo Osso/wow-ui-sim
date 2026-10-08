@@ -71,14 +71,16 @@ def main():
     def mapped_git(*args):
         if args[:2] == ('diff', '--name-only'):
             left, right = args[2:4]
-            directories = args[5:]
+            includes = [name for name in args[5:] if not name.startswith(':!')]
+            excludes = [name[2:] for name in args[5:] if name.startswith(':!')]
+            def selected(path):
+                return any(path == directory or path.startswith(directory + '/') for directory in includes) and not any(path == directory or path.startswith(directory + '/') for directory in excludes)
             def entries(revision):
                 pin = canonical(revision)
                 if pin in scopes:
-                    return {path: oid for path, oid in scopes[pin]['tree_blobs'].items()
-                            if any(path == directory or path.startswith(directory + '/') for directory in directories)}
+                    return {path: oid for path, oid in scopes[pin]['tree_blobs'].items() if selected(path)}
                 return {line.split('\t', 1)[1]: line.split('\t', 1)[0].split()[2]
-                        for line in git('ls-tree', '-r', pin, *directories).decode().splitlines()}
+                        for line in git('ls-tree', '-r', pin).decode().splitlines() if selected(line.split('\t', 1)[1])}
             before, after = entries(left), entries(right)
             changed = sorted(path for path in set(before) | set(after) if before.get(path) != after.get(path))
             return ('\n'.join(changed) + ('\n' if changed else '')).encode()
