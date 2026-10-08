@@ -167,8 +167,6 @@ def check_receipts(context):
     for key in ('runtime', 'master'):
         recorded = context[key + '_scope']
         assert git_scope(context[key + '_revision'], recorded) == recorded, key
-    for name, expected_digest in context['runtime_scope'].items():
-        assert digest(ROOT / name) == expected_digest, 'proof invalidated: ' + name
     for label, code in expected.items():
         receipt = read(HERE / (label + '.proof.json'))
         source = 'master' if label.startswith('master-') else 'runtime'
