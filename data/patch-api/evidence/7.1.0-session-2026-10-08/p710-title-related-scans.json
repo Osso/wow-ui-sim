@@ -1,0 +1,29 @@
+[
+  {
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "--exclude=*Documentation*",
+      "--exclude-dir=*Documentation*",
+      "\\b(CreateTitleRegion|GetTitleRegion)\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 0,
+    "file": "p710-title-related-retail.txt",
+    "matches": 9
+  },
+  {
+    "tool": "/usr/bin/grep",
+    "command": [
+      "/usr/bin/grep",
+      "-rnE",
+      "\\b(CreateTitleRegion|GetTitleRegion)\\b",
+      "/home/osso/.worktrees/wow-ui-sim-p710-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p710-page/tests"
+    ],
+    "exit": 1,
+    "file": "p710-title-related-callers.txt",
+    "matches": 0
+  }
+]

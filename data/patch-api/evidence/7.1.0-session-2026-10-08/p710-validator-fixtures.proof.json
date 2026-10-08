@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "tools/test_patch_audit_validation.py"
+  ],
+  "revision": "16154a1e5551f8a179910a871f0b2eebbd914bf5",
+  "scope": "p710-validator-fixtures",
+  "cwd": ".",
+  "target": "dedicated p710-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p710-validator-fixtures.txt",
+  "log_sha256": "771dcb69cad7d0fb2ff1f9f4ec638c5fda9e3b7e7d22095934b5942b2463e021",
+  "seconds": 0.24543313299727743,
+  "invalidated": false
+}

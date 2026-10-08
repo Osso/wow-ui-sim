@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "tools/test_gen_patch_wikitext_register.py"
+  ],
+  "revision": "16154a1e5551f8a179910a871f0b2eebbd914bf5",
+  "scope": "p710-generator-fixtures",
+  "cwd": ".",
+  "target": "dedicated p710-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p710-generator-fixtures.txt",
+  "log_sha256": "7f8256f6e9cf13fa6c48232a6ec38db795c57e47d3f329b0ed60458cee4f737f",
+  "seconds": 0.049033683997549815,
+  "invalidated": false
+}

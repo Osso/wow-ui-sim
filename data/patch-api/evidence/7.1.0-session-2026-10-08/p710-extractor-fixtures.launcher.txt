@@ -1,0 +1,1 @@
+p710-extractor-fixtures 0

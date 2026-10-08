@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "tools/test_extract_patch_non_inventory.py"
+  ],
+  "revision": "16154a1e5551f8a179910a871f0b2eebbd914bf5",
+  "scope": "p710-extractor-fixtures",
+  "cwd": ".",
+  "target": "dedicated p710-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p710-extractor-fixtures.txt",
+  "log_sha256": "3b7301c8e4728e8952b1fea0a0e570ffbd0b8e49776bffa0de3c54c6a04adebd",
+  "seconds": 0.09761096500005806,
+  "invalidated": false
+}

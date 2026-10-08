@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p710-page/data/patch-api/evidence/7.1.0-session-2026-10-08/check_other_validators.py"
+  ],
+  "revision": "16154a1e5551f8a179910a871f0b2eebbd914bf5",
+  "scope": "p710-other-validators",
+  "cwd": ".",
+  "target": "dedicated p710-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p710-other-validators.txt",
+  "log_sha256": "966053716dce1c9b0ef9d24b26c4da20316d2862326f823d03883e5926c587ec",
+  "seconds": 5.741695803000766,
+  "invalidated": false
+}

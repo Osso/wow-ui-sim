@@ -1,0 +1,1151 @@
+{
+  "base_revision": "8b6131f3645bb02d83f4c608cb7181139901cc93",
+  "audit_revision": "68b72c56105efe1d5d74242759fdc4f8165393e8",
+  "rows": [
+    {
+      "path": "data/patch-api/sources/10.0.0-api-changes.provenance.json",
+      "before_sha256": "21a910d436bb72f58253dbd849cb86ad33020aef71fcc8b4a72ec2051d02946e",
+      "after_sha256": "21a910d436bb72f58253dbd849cb86ad33020aef71fcc8b4a72ec2051d02946e"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.0-api-changes.txt",
+      "before_sha256": "17a3a97fba53aad8c84b08c5e625211e5351ec8ce1fe190a05f9b3aa176fb6a2",
+      "after_sha256": "17a3a97fba53aad8c84b08c5e625211e5351ec8ce1fe190a05f9b3aa176fb6a2"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.0-api-changes.wikitext",
+      "before_sha256": "511e12f2dc5ffa02b49dbfec8132cdeffc3f5ea4e8f2ac11d2cf4c338d357f9c",
+      "after_sha256": "511e12f2dc5ffa02b49dbfec8132cdeffc3f5ea4e8f2ac11d2cf4c338d357f9c"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.0-page-coverage.json",
+      "before_sha256": "35b16d8f67d68bd85e484bdcd76a58fb537fcdcece1d5c151bbab98fdad9bded",
+      "after_sha256": "35b16d8f67d68bd85e484bdcd76a58fb537fcdcece1d5c151bbab98fdad9bded"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.0-wikitext-register.json",
+      "before_sha256": "c093335505ec54e96dda556f6011facd7c7616d80636843413fc193a25b7a1ca",
+      "after_sha256": "c093335505ec54e96dda556f6011facd7c7616d80636843413fc193a25b7a1ca"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.2-api-changes.provenance.json",
+      "before_sha256": "e1f96a5d4b46370398a16837f69c21b7c94304e650eed04d47440c7660506aa7",
+      "after_sha256": "e1f96a5d4b46370398a16837f69c21b7c94304e650eed04d47440c7660506aa7"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.2-api-changes.txt",
+      "before_sha256": "1f43010bba50fcfc6c323ab7d75c7984e87a8e588ab1693f641111fa0f249feb",
+      "after_sha256": "1f43010bba50fcfc6c323ab7d75c7984e87a8e588ab1693f641111fa0f249feb"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.2-api-changes.wikitext",
+      "before_sha256": "2c166624469ef741392de16f972a89f8ca9b4b71fa3f087fb9919954be4ae716",
+      "after_sha256": "2c166624469ef741392de16f972a89f8ca9b4b71fa3f087fb9919954be4ae716"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.2-page-coverage.json",
+      "before_sha256": "061bcf0d44d5fb24579c55adb443980b2d61de9670f1eb450bd1a5f18a7d2842",
+      "after_sha256": "061bcf0d44d5fb24579c55adb443980b2d61de9670f1eb450bd1a5f18a7d2842"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.2-wikitext-register.json",
+      "before_sha256": "84941b2b96c7c3a20e972045487ff66c5ede5845be7e453c5806669a18c85059",
+      "after_sha256": "84941b2b96c7c3a20e972045487ff66c5ede5845be7e453c5806669a18c85059"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.5-api-changes.provenance.json",
+      "before_sha256": "25ffadf070e5ea83857670e085e72082d123b6d3dcfdb0318c747514b273753c",
+      "after_sha256": "25ffadf070e5ea83857670e085e72082d123b6d3dcfdb0318c747514b273753c"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.5-api-changes.txt",
+      "before_sha256": "60f99c9d781367178a5a2220c4bb71cb59b8dd91b02a48959e8e2237a8119a20",
+      "after_sha256": "60f99c9d781367178a5a2220c4bb71cb59b8dd91b02a48959e8e2237a8119a20"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.5-api-changes.wikitext",
+      "before_sha256": "1a87bf3e9a5d52171e3ce04565c648a22b5ec9c791126ff42e0a4d659470c687",
+      "after_sha256": "1a87bf3e9a5d52171e3ce04565c648a22b5ec9c791126ff42e0a4d659470c687"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.5-page-coverage.json",
+      "before_sha256": "98391910a850cda58dc12012309e620dc2aa765603646f670ae1abce0185a62b",
+      "after_sha256": "98391910a850cda58dc12012309e620dc2aa765603646f670ae1abce0185a62b"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.5-wikitext-register.json",
+      "before_sha256": "336973622327eddaf6d21111354402b4b1faf424a0701e34a99c3a56640be0b1",
+      "after_sha256": "336973622327eddaf6d21111354402b4b1faf424a0701e34a99c3a56640be0b1"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.7-api-changes.provenance.json",
+      "before_sha256": "dbea7ebcfe05e767e12669247d3e17af33f386c91fe3ef708351ac6810c93a0a",
+      "after_sha256": "dbea7ebcfe05e767e12669247d3e17af33f386c91fe3ef708351ac6810c93a0a"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.7-api-changes.txt",
+      "before_sha256": "879577e70ea3990e65b4044f07e1928e3ba9bf509f13400147016c483c9729a5",
+      "after_sha256": "879577e70ea3990e65b4044f07e1928e3ba9bf509f13400147016c483c9729a5"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.7-api-changes.wikitext",
+      "before_sha256": "b4175ca8755de168ade2800555c5576f452111b8de2b48be81a639516d584689",
+      "after_sha256": "b4175ca8755de168ade2800555c5576f452111b8de2b48be81a639516d584689"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.7-page-coverage.json",
+      "before_sha256": "a41b3e3ff34b199d006c024380bd48ba2579d79146e9677ede29c6a1fdce9d92",
+      "after_sha256": "a41b3e3ff34b199d006c024380bd48ba2579d79146e9677ede29c6a1fdce9d92"
+    },
+    {
+      "path": "data/patch-api/sources/10.0.7-wikitext-register.json",
+      "before_sha256": "64ef0166fa31a83460312cb97ac2d0f4b65113779b4d6904c43283dc0854ad1e",
+      "after_sha256": "64ef0166fa31a83460312cb97ac2d0f4b65113779b4d6904c43283dc0854ad1e"
+    },
+    {
+      "path": "data/patch-api/sources/10.1.0-api-changes.provenance.json",
+      "before_sha256": "3d110b1b733d947a3b70cfb8c560a1f2ee9c9c431f107a238de4d5acc49dec4b",
+      "after_sha256": "3d110b1b733d947a3b70cfb8c560a1f2ee9c9c431f107a238de4d5acc49dec4b"
+    },
+    {
+      "path": "data/patch-api/sources/10.1.0-api-changes.txt",
+      "before_sha256": "50ab412824b136929589560a58d933c2cf68ebccea09ad2dc4c3870d40a7c069",
+      "after_sha256": "50ab412824b136929589560a58d933c2cf68ebccea09ad2dc4c3870d40a7c069"
+    },
+    {
+      "path": "data/patch-api/sources/10.1.0-api-changes.wikitext",
+      "before_sha256": "9b22cad6805e68ffbdb9c723c8e23ff208bd644fd5b94fadcf0493f96241c8d2",
+      "after_sha256": "9b22cad6805e68ffbdb9c723c8e23ff208bd644fd5b94fadcf0493f96241c8d2"
+    },
+    {
+      "path": "data/patch-api/sources/10.1.0-page-coverage.json",
+      "before_sha256": "8aa9015ee0518fc8b6ea4073a01eb25da3f8f09ee04f4380110651d192e6c8d1",
+      "after_sha256": "8aa9015ee0518fc8b6ea4073a01eb25da3f8f09ee04f4380110651d192e6c8d1"
+    },
+    {
+      "path": "data/patch-api/sources/10.1.0-wikitext-register.json",
+      "before_sha256": "9ef8625ab492bdc51b1a010b859044987e63f72dd89c65c878f447948edacd76",
+      "after_sha256": "9ef8625ab492bdc51b1a010b859044987e63f72dd89c65c878f447948edacd76"
+    },
+    {
+      "path": "data/patch-api/sources/10.1.5-api-changes.provenance.json",
+      "before_sha256": "1132fd8e1c794e577695b3f54990885a1af11db73060b4ab86b469a967fbeb14",
+      "after_sha256": "1132fd8e1c794e577695b3f54990885a1af11db73060b4ab86b469a967fbeb14"
+    },
+    {
+      "path": "data/patch-api/sources/10.1.5-api-changes.txt",
+      "before_sha256": "d871bfe9ac485926da1fb380b1a7f1e7eb9aa18025b9f7b09354e43f4f66b1f1",
+      "after_sha256": "d871bfe9ac485926da1fb380b1a7f1e7eb9aa18025b9f7b09354e43f4f66b1f1"
+    },
+    {
+      "path": "data/patch-api/sources/10.1.5-api-changes.wikitext",
+      "before_sha256": "9a0f1759634bf56323e005271e909439905662d6411f01768641a59114c4ed08",
+      "after_sha256": "9a0f1759634bf56323e005271e909439905662d6411f01768641a59114c4ed08"
+    },
+    {
+      "path": "data/patch-api/sources/10.1.5-page-coverage.json",
+      "before_sha256": "0a5e8de5456787e79caf715334c5624c96053fa2c784fb864aea8954cbbea6c7",
+      "after_sha256": "0a5e8de5456787e79caf715334c5624c96053fa2c784fb864aea8954cbbea6c7"
+    },
+    {
+      "path": "data/patch-api/sources/10.1.5-wikitext-register.json",
+      "before_sha256": "cbd9a9de7fff6b6e8d77e352dccbe96b21caed7650577d432eaa24673fb8746f",
+      "after_sha256": "cbd9a9de7fff6b6e8d77e352dccbe96b21caed7650577d432eaa24673fb8746f"
+    },
+    {
+      "path": "data/patch-api/sources/10.1.7-api-changes.provenance.json",
+      "before_sha256": "8fecb6e6134d79d283739bbedfbad22cf13609ee9ef442632507a7d0f355a494",
+      "after_sha256": "8fecb6e6134d79d283739bbedfbad22cf13609ee9ef442632507a7d0f355a494"
+    },
+    {
+      "path": "data/patch-api/sources/10.1.7-api-changes.txt",
+      "before_sha256": "e2d9c557e865b7b9e9e2133064ddc229587001edf91ea08a3deaba65059bfc2a",
+      "after_sha256": "e2d9c557e865b7b9e9e2133064ddc229587001edf91ea08a3deaba65059bfc2a"
+    },
+    {
+      "path": "data/patch-api/sources/10.1.7-api-changes.wikitext",
+      "before_sha256": "065658e2e89ae0f2055c03c9e890a42321c1983165f1a33898747d7b0719b76a",
+      "after_sha256": "065658e2e89ae0f2055c03c9e890a42321c1983165f1a33898747d7b0719b76a"
+    },
+    {
+      "path": "data/patch-api/sources/10.1.7-page-coverage.json",
+      "before_sha256": "d168e6c05e83e831df9d0800db54bacc83428a427baa65d0aa2ebe21c418fc85",
+      "after_sha256": "d168e6c05e83e831df9d0800db54bacc83428a427baa65d0aa2ebe21c418fc85"
+    },
+    {
+      "path": "data/patch-api/sources/10.1.7-wikitext-register.json",
+      "before_sha256": "d0db70aa76a3aa2b01e39227420f3fb5c3874b8c3b2457847ae4fa913299c01c",
+      "after_sha256": "d0db70aa76a3aa2b01e39227420f3fb5c3874b8c3b2457847ae4fa913299c01c"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.0-api-changes.provenance.json",
+      "before_sha256": "9f30bf8cfae8dd58beea49f05484895ea2a6d935bac8c18db8dde23e63ecc04f",
+      "after_sha256": "9f30bf8cfae8dd58beea49f05484895ea2a6d935bac8c18db8dde23e63ecc04f"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.0-api-changes.txt",
+      "before_sha256": "9354b5bfd77b78079a216766945da4ad04c979c2bb3b723cc5fd86adc73af5fd",
+      "after_sha256": "9354b5bfd77b78079a216766945da4ad04c979c2bb3b723cc5fd86adc73af5fd"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.0-api-changes.wikitext",
+      "before_sha256": "11c35f322614c8645658d9a601df1b3b60eb44e559a38bc8dfa48bf5a8f4d0a5",
+      "after_sha256": "11c35f322614c8645658d9a601df1b3b60eb44e559a38bc8dfa48bf5a8f4d0a5"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.0-page-coverage.json",
+      "before_sha256": "d960b0ac6a0edbce5fc9bf927201ab2a774117a53bfde93071ea5e938135c241",
+      "after_sha256": "d960b0ac6a0edbce5fc9bf927201ab2a774117a53bfde93071ea5e938135c241"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.0-wikitext-register.json",
+      "before_sha256": "beaf8a6dd57229712abf3366b8ffc29163e75aa827533e108d59b89f6c56b979",
+      "after_sha256": "beaf8a6dd57229712abf3366b8ffc29163e75aa827533e108d59b89f6c56b979"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.5-api-changes.provenance.json",
+      "before_sha256": "17cf725dcad8449d8ab07c4d1a8de81b222ad5dee771ba230d9a1f20ae4c7e56",
+      "after_sha256": "17cf725dcad8449d8ab07c4d1a8de81b222ad5dee771ba230d9a1f20ae4c7e56"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.5-api-changes.txt",
+      "before_sha256": "cbeca6db214446a0cd8ea8acd939e2764d73bfb8e0a027398403afbcbb764fb0",
+      "after_sha256": "cbeca6db214446a0cd8ea8acd939e2764d73bfb8e0a027398403afbcbb764fb0"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.5-api-changes.wikitext",
+      "before_sha256": "c2becc09182863ffce8ad75c3209159afdecea6223f4985d0bf3c6f6e89ef9db",
+      "after_sha256": "c2becc09182863ffce8ad75c3209159afdecea6223f4985d0bf3c6f6e89ef9db"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.5-page-coverage.json",
+      "before_sha256": "175e5022750738a6a43ad414f889a378db5b7ba8fdb1c8ee46c372058a672d4b",
+      "after_sha256": "175e5022750738a6a43ad414f889a378db5b7ba8fdb1c8ee46c372058a672d4b"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.5-wikitext-register.json",
+      "before_sha256": "38bf561f25edb63ab3f34e17aef9e088471cc85844c3ca9d5c269c3b206723b8",
+      "after_sha256": "38bf561f25edb63ab3f34e17aef9e088471cc85844c3ca9d5c269c3b206723b8"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.6-api-changes.provenance.json",
+      "before_sha256": "5b019c053d33d0fa468c3bce941d0971a3fa238d6bae588ce6a13ba3bb46abba",
+      "after_sha256": "5b019c053d33d0fa468c3bce941d0971a3fa238d6bae588ce6a13ba3bb46abba"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.6-api-changes.txt",
+      "before_sha256": "037da4f0fbbc43bc8cdee6545be687d07c083c3cdc334fc4284567abe22502b1",
+      "after_sha256": "037da4f0fbbc43bc8cdee6545be687d07c083c3cdc334fc4284567abe22502b1"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.6-api-changes.wikitext",
+      "before_sha256": "a02ddeeb6bb50ce02a5c84de9b9848c54c3ad25784a58853249231caee1769d4",
+      "after_sha256": "a02ddeeb6bb50ce02a5c84de9b9848c54c3ad25784a58853249231caee1769d4"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.6-page-coverage.json",
+      "before_sha256": "8d1e994b5c445da4815e83ee46e33a6672de56928351f8d82139d33978ba15d6",
+      "after_sha256": "8d1e994b5c445da4815e83ee46e33a6672de56928351f8d82139d33978ba15d6"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.6-wikitext-register.json",
+      "before_sha256": "922d9173720213392dc4c228881539cf59a45fd7b3f0a3155176c36d68deb772",
+      "after_sha256": "922d9173720213392dc4c228881539cf59a45fd7b3f0a3155176c36d68deb772"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.7-api-changes.provenance.json",
+      "before_sha256": "1d4d9d086af8b69dda1cedc44560f54946884f8799837c7ae56745d2ad057b34",
+      "after_sha256": "1d4d9d086af8b69dda1cedc44560f54946884f8799837c7ae56745d2ad057b34"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.7-api-changes.txt",
+      "before_sha256": "3456a7aa752cca63eba2758ea0583b764826b808f04c6a8dd6752b19b7e6b832",
+      "after_sha256": "3456a7aa752cca63eba2758ea0583b764826b808f04c6a8dd6752b19b7e6b832"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.7-api-changes.wikitext",
+      "before_sha256": "ccc82e24d9752949029abe27a38138463b304ef7f9ecfaf3b2767481bdf53182",
+      "after_sha256": "ccc82e24d9752949029abe27a38138463b304ef7f9ecfaf3b2767481bdf53182"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.7-page-coverage.json",
+      "before_sha256": "1fd7d0a1e5e701512ae7dd08915808c5bde88ef5a71abe6a91a850ecd37bb82c",
+      "after_sha256": "1fd7d0a1e5e701512ae7dd08915808c5bde88ef5a71abe6a91a850ecd37bb82c"
+    },
+    {
+      "path": "data/patch-api/sources/10.2.7-wikitext-register.json",
+      "before_sha256": "f5415c7991f08f5cf958648d0b2aa8f62f43647be819b44156963c0f9a2ad045",
+      "after_sha256": "f5415c7991f08f5cf958648d0b2aa8f62f43647be819b44156963c0f9a2ad045"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.0-api-changes.provenance.json",
+      "before_sha256": "ba3fe3417708d791d3994cb332cac4e2539d5249bdb4b11c863977aef4a99fb4",
+      "after_sha256": "ba3fe3417708d791d3994cb332cac4e2539d5249bdb4b11c863977aef4a99fb4"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.0-api-changes.txt",
+      "before_sha256": "f74031387786890b33d9c1b2bb49691c165e8720976db662cfddb3d9353f6826",
+      "after_sha256": "f74031387786890b33d9c1b2bb49691c165e8720976db662cfddb3d9353f6826"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.0-api-changes.wikitext",
+      "before_sha256": "777f9c6031b93bc7070eeef547762da2869aa191b5ebf1e75a0282a7633ad347",
+      "after_sha256": "777f9c6031b93bc7070eeef547762da2869aa191b5ebf1e75a0282a7633ad347"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.0-page-coverage.json",
+      "before_sha256": "3a71321fe8277e2686050be03062b6765b0661776852723e64faf9bc0f169d63",
+      "after_sha256": "3a71321fe8277e2686050be03062b6765b0661776852723e64faf9bc0f169d63"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.0-wikitext-register.json",
+      "before_sha256": "628e96cf4efca59242d3a6c093f5d7fa09657b47c2d71e39563ea62ea56a0186",
+      "after_sha256": "628e96cf4efca59242d3a6c093f5d7fa09657b47c2d71e39563ea62ea56a0186"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.2-api-changes.provenance.json",
+      "before_sha256": "d78e66ee362fe92443ee93b21e9c1a89c1af25dedd981da7fcb8f6480663a3d1",
+      "after_sha256": "d78e66ee362fe92443ee93b21e9c1a89c1af25dedd981da7fcb8f6480663a3d1"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.2-api-changes.txt",
+      "before_sha256": "5df4b79162d245df301779c781bd8496143bc4e86fd7a882f0d77f40ed5c3b18",
+      "after_sha256": "5df4b79162d245df301779c781bd8496143bc4e86fd7a882f0d77f40ed5c3b18"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.2-api-changes.wikitext",
+      "before_sha256": "d37630145361a8be11a668f10d0da5256eb0f8999cff424c4a3e84ea13e50ec4",
+      "after_sha256": "d37630145361a8be11a668f10d0da5256eb0f8999cff424c4a3e84ea13e50ec4"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.2-page-coverage.json",
+      "before_sha256": "5aecdf0cde52791550463daad2bb4053d01ae0049feb8a40741c698fcbff4e19",
+      "after_sha256": "5aecdf0cde52791550463daad2bb4053d01ae0049feb8a40741c698fcbff4e19"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.2-wikitext-register.json",
+      "before_sha256": "a5edb6c195e1ccc9722aa1358fc0a392b772563a43bf5c4abf4d45446e6bf9ca",
+      "after_sha256": "a5edb6c195e1ccc9722aa1358fc0a392b772563a43bf5c4abf4d45446e6bf9ca"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.5-api-changes.provenance.json",
+      "before_sha256": "61a76366cae7f15e6f4fd8d31bb3401103fc522351fc5ac1dca358cf91d34c74",
+      "after_sha256": "61a76366cae7f15e6f4fd8d31bb3401103fc522351fc5ac1dca358cf91d34c74"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.5-api-changes.txt",
+      "before_sha256": "c91cb989e635c029c6eabbc86523d68cbf33d16590af5f043614b667caeb87d4",
+      "after_sha256": "c91cb989e635c029c6eabbc86523d68cbf33d16590af5f043614b667caeb87d4"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.5-api-changes.wikitext",
+      "before_sha256": "185e5cc92ca97494d00d7bdad8b770ceed22c075e4eacbbd30a4f1e7a3579f6c",
+      "after_sha256": "185e5cc92ca97494d00d7bdad8b770ceed22c075e4eacbbd30a4f1e7a3579f6c"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.5-page-coverage.json",
+      "before_sha256": "0024c3ef57b871835f41d1f329a653f859396dc558b2c693845b0e0beff96782",
+      "after_sha256": "0024c3ef57b871835f41d1f329a653f859396dc558b2c693845b0e0beff96782"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.5-wikitext-register.json",
+      "before_sha256": "ba4d8add87e00805279188fc091f2b4dc3ded5b12a436d2d579768943280c4fd",
+      "after_sha256": "ba4d8add87e00805279188fc091f2b4dc3ded5b12a436d2d579768943280c4fd"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.7-api-changes.provenance.json",
+      "before_sha256": "489eb61c6c1b6f6a1b43fd1f98d8fe0d99405101fa324116e74b4a5c0af68868",
+      "after_sha256": "489eb61c6c1b6f6a1b43fd1f98d8fe0d99405101fa324116e74b4a5c0af68868"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.7-api-changes.txt",
+      "before_sha256": "581f98e5dcb3d350df424725839f281dda7c90e015870d05c92e25a55d931cb1",
+      "after_sha256": "581f98e5dcb3d350df424725839f281dda7c90e015870d05c92e25a55d931cb1"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.7-api-changes.wikitext",
+      "before_sha256": "7452477854beac6fe0155caaf283801f15eb46acf20b69e90c8b8eb589ccb061",
+      "after_sha256": "7452477854beac6fe0155caaf283801f15eb46acf20b69e90c8b8eb589ccb061"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.7-page-coverage.json",
+      "before_sha256": "c60e29517a1d199c389a10fe3a38faae71b5eb9116a8c161e2f9bc29382f121b",
+      "after_sha256": "c60e29517a1d199c389a10fe3a38faae71b5eb9116a8c161e2f9bc29382f121b"
+    },
+    {
+      "path": "data/patch-api/sources/11.0.7-wikitext-register.json",
+      "before_sha256": "0e3807e89614ed0cca38ba8d80c803a5cbab8df45d6213255512f952f03071ae",
+      "after_sha256": "0e3807e89614ed0cca38ba8d80c803a5cbab8df45d6213255512f952f03071ae"
+    },
+    {
+      "path": "data/patch-api/sources/11.1.0-api-changes.provenance.json",
+      "before_sha256": "29850951754acd8c065ba68459c87541e4c91181c0cddb528ae4701a284db2ec",
+      "after_sha256": "29850951754acd8c065ba68459c87541e4c91181c0cddb528ae4701a284db2ec"
+    },
+    {
+      "path": "data/patch-api/sources/11.1.0-api-changes.txt",
+      "before_sha256": "e954712fd44a0e153427bc18ac686523860753b4e04ede52dae715342f5c3aa6",
+      "after_sha256": "e954712fd44a0e153427bc18ac686523860753b4e04ede52dae715342f5c3aa6"
+    },
+    {
+      "path": "data/patch-api/sources/11.1.0-api-changes.wikitext",
+      "before_sha256": "1a802cad91a6b79b9ad5c8038627ba54c93ef963f0640494da7dfc3fd0eb6c99",
+      "after_sha256": "1a802cad91a6b79b9ad5c8038627ba54c93ef963f0640494da7dfc3fd0eb6c99"
+    },
+    {
+      "path": "data/patch-api/sources/11.1.0-page-coverage.json",
+      "before_sha256": "46715e660bb909c4ee3e9a48c5dbab075f36f8b5f3b7d30e35dceff04c4c3406",
+      "after_sha256": "46715e660bb909c4ee3e9a48c5dbab075f36f8b5f3b7d30e35dceff04c4c3406"
+    },
+    {
+      "path": "data/patch-api/sources/11.1.0-wikitext-register.json",
+      "before_sha256": "97a4d016518760cdbd1ff671c7f566747d9601d19785e84486eed2fdd84d9280",
+      "after_sha256": "97a4d016518760cdbd1ff671c7f566747d9601d19785e84486eed2fdd84d9280"
+    },
+    {
+      "path": "data/patch-api/sources/11.1.5-api-changes.provenance.json",
+      "before_sha256": "8cbc4a2d49a66e8abbb51404a4cf686a0ad8a186a03abb389243c4e7f0e37fec",
+      "after_sha256": "8cbc4a2d49a66e8abbb51404a4cf686a0ad8a186a03abb389243c4e7f0e37fec"
+    },
+    {
+      "path": "data/patch-api/sources/11.1.5-api-changes.txt",
+      "before_sha256": "947ccdfae886c48429354ed3aea7af15a5901fcffb2ee8cabb8904b1c1ae734b",
+      "after_sha256": "947ccdfae886c48429354ed3aea7af15a5901fcffb2ee8cabb8904b1c1ae734b"
+    },
+    {
+      "path": "data/patch-api/sources/11.1.5-api-changes.wikitext",
+      "before_sha256": "c77d271d67c0080d17f3e1610a7e0d11eb9ec64863cf75545d264f441582707e",
+      "after_sha256": "c77d271d67c0080d17f3e1610a7e0d11eb9ec64863cf75545d264f441582707e"
+    },
+    {
+      "path": "data/patch-api/sources/11.1.5-page-coverage.json",
+      "before_sha256": "f302d94b9195f994de49e1cb1deffd5c062742bd24ab6e59a6918e4a2a0c7357",
+      "after_sha256": "f302d94b9195f994de49e1cb1deffd5c062742bd24ab6e59a6918e4a2a0c7357"
+    },
+    {
+      "path": "data/patch-api/sources/11.1.5-wikitext-register.json",
+      "before_sha256": "3d2d199167a33cb25baa1e83f4003897f271e06645b78bc636c83fcaf5c6b703",
+      "after_sha256": "3d2d199167a33cb25baa1e83f4003897f271e06645b78bc636c83fcaf5c6b703"
+    },
+    {
+      "path": "data/patch-api/sources/11.1.7-api-changes.provenance.json",
+      "before_sha256": "8445fa731c1782f277581a2c67b86b101510d34de94a8e4766edcc344d521b5a",
+      "after_sha256": "8445fa731c1782f277581a2c67b86b101510d34de94a8e4766edcc344d521b5a"
+    },
+    {
+      "path": "data/patch-api/sources/11.1.7-api-changes.txt",
+      "before_sha256": "0f48983a93e1a1cf060f9bebc387ecc00d8a7a7d942efc7c94a0bea98801601b",
+      "after_sha256": "0f48983a93e1a1cf060f9bebc387ecc00d8a7a7d942efc7c94a0bea98801601b"
+    },
+    {
+      "path": "data/patch-api/sources/11.1.7-api-changes.wikitext",
+      "before_sha256": "c934013da17b5072d32f4b0ce0427572d6b26835d7abc1da4ab16c8dcae05ee7",
+      "after_sha256": "c934013da17b5072d32f4b0ce0427572d6b26835d7abc1da4ab16c8dcae05ee7"
+    },
+    {
+      "path": "data/patch-api/sources/11.1.7-page-coverage.json",
+      "before_sha256": "70a05a425da0c36d458abe2a785409d9c74548eb79ae3787a07c7d1c00490931",
+      "after_sha256": "70a05a425da0c36d458abe2a785409d9c74548eb79ae3787a07c7d1c00490931"
+    },
+    {
+      "path": "data/patch-api/sources/11.1.7-wikitext-register.json",
+      "before_sha256": "966516954a173cbbbfb3ad982982b1af4165535284b5f842837970fd964f7439",
+      "after_sha256": "966516954a173cbbbfb3ad982982b1af4165535284b5f842837970fd964f7439"
+    },
+    {
+      "path": "data/patch-api/sources/11.2.0-api-changes.provenance.json",
+      "before_sha256": "bf1b8129a9a930552ca52b5aba78465f6c7a2461594f7f529f0d2ec754b32e1e",
+      "after_sha256": "bf1b8129a9a930552ca52b5aba78465f6c7a2461594f7f529f0d2ec754b32e1e"
+    },
+    {
+      "path": "data/patch-api/sources/11.2.0-api-changes.txt",
+      "before_sha256": "eb11e8cf5ce088bf2d6442578d3663c62f3963ce34ee1403d4a302cc2636952f",
+      "after_sha256": "eb11e8cf5ce088bf2d6442578d3663c62f3963ce34ee1403d4a302cc2636952f"
+    },
+    {
+      "path": "data/patch-api/sources/11.2.0-api-changes.wikitext",
+      "before_sha256": "eea31d2692950b42d6e2395b0fc2d031757a41fb5f9acd63a082e540127b1af2",
+      "after_sha256": "eea31d2692950b42d6e2395b0fc2d031757a41fb5f9acd63a082e540127b1af2"
+    },
+    {
+      "path": "data/patch-api/sources/11.2.0-page-coverage.json",
+      "before_sha256": "0672fbab61824d15901ae612b94b0ade5029d85da41bb418cf14c8217564ff66",
+      "after_sha256": "0672fbab61824d15901ae612b94b0ade5029d85da41bb418cf14c8217564ff66"
+    },
+    {
+      "path": "data/patch-api/sources/11.2.0-wikitext-register.json",
+      "before_sha256": "2a147afc5d7940f5d02c28817e224b504cd710277cc0a934f1bffef4a9c691e8",
+      "after_sha256": "2a147afc5d7940f5d02c28817e224b504cd710277cc0a934f1bffef4a9c691e8"
+    },
+    {
+      "path": "data/patch-api/sources/11.2.5-api-changes.provenance.json",
+      "before_sha256": "da0afd750971017252067365d2dd833457c246a140a1e355b20fab95e27f6b45",
+      "after_sha256": "da0afd750971017252067365d2dd833457c246a140a1e355b20fab95e27f6b45"
+    },
+    {
+      "path": "data/patch-api/sources/11.2.5-api-changes.txt",
+      "before_sha256": "f3d3e3bf435d6129ce031bbbf5aa8be0f14c424c51802a590fc6d424813e8be4",
+      "after_sha256": "f3d3e3bf435d6129ce031bbbf5aa8be0f14c424c51802a590fc6d424813e8be4"
+    },
+    {
+      "path": "data/patch-api/sources/11.2.5-api-changes.wikitext",
+      "before_sha256": "c729365457a32afff2af1020cac832504358c11e9e59aaad2987cada06c4950b",
+      "after_sha256": "c729365457a32afff2af1020cac832504358c11e9e59aaad2987cada06c4950b"
+    },
+    {
+      "path": "data/patch-api/sources/11.2.5-page-coverage.json",
+      "before_sha256": "396d9a9eb576615cf9d2ae67ab94026ab7984afdb89952686109908339a1fe2c",
+      "after_sha256": "396d9a9eb576615cf9d2ae67ab94026ab7984afdb89952686109908339a1fe2c"
+    },
+    {
+      "path": "data/patch-api/sources/11.2.5-wikitext-register.json",
+      "before_sha256": "6d12d274d66f73fb8dedc45ba40f9036ac74a99a5721f3dab1bb9bd3dc10c46a",
+      "after_sha256": "6d12d274d66f73fb8dedc45ba40f9036ac74a99a5721f3dab1bb9bd3dc10c46a"
+    },
+    {
+      "path": "data/patch-api/sources/11.2.7-api-changes.provenance.json",
+      "before_sha256": "7521d6e89f7db31b817f0c94769640bde208c39951c20757567dbbc40e15d223",
+      "after_sha256": "7521d6e89f7db31b817f0c94769640bde208c39951c20757567dbbc40e15d223"
+    },
+    {
+      "path": "data/patch-api/sources/11.2.7-api-changes.txt",
+      "before_sha256": "9e53fa2661695fe940d744cd93754929ea9f84573d8033a97e52352b5345b53b",
+      "after_sha256": "9e53fa2661695fe940d744cd93754929ea9f84573d8033a97e52352b5345b53b"
+    },
+    {
+      "path": "data/patch-api/sources/11.2.7-api-changes.wikitext",
+      "before_sha256": "1538a9bdf49a0e09102b4f9c3905aada48e9e1aafdf9c4b9c780a1127179e324",
+      "after_sha256": "1538a9bdf49a0e09102b4f9c3905aada48e9e1aafdf9c4b9c780a1127179e324"
+    },
+    {
+      "path": "data/patch-api/sources/11.2.7-page-coverage.json",
+      "before_sha256": "5782d918f80b149a557ac0ba3a1689971d5569af3967ec9f92699632551878fb",
+      "after_sha256": "5782d918f80b149a557ac0ba3a1689971d5569af3967ec9f92699632551878fb"
+    },
+    {
+      "path": "data/patch-api/sources/11.2.7-wikitext-register.json",
+      "before_sha256": "a45643efaf16dfeb58006019535ed43c304bb504d14697f7460f180ab8eb1986",
+      "after_sha256": "a45643efaf16dfeb58006019535ed43c304bb504d14697f7460f180ab8eb1986"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.0-api-changes.provenance.json",
+      "before_sha256": "070cb9cf466e09e62f51cdf70012202a9b015cf6893e4d4446ed827e3b531bef",
+      "after_sha256": "070cb9cf466e09e62f51cdf70012202a9b015cf6893e4d4446ed827e3b531bef"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.0-api-changes.txt",
+      "before_sha256": "c8bb5d03f47cc3ca31d43bb0a0f973804790fbe430d962ffa2403a9364e5adeb",
+      "after_sha256": "c8bb5d03f47cc3ca31d43bb0a0f973804790fbe430d962ffa2403a9364e5adeb"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.0-api-changes.wikitext",
+      "before_sha256": "74e0dee19960d40c551759c94b06f8393d445781200182b9c5971a64e57b9a19",
+      "after_sha256": "74e0dee19960d40c551759c94b06f8393d445781200182b9c5971a64e57b9a19"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.0-page-coverage.json",
+      "before_sha256": "e758634432a644fd7230cfafce6020e7f6fc5cf4ba94a8f651d70a77c0b91de3",
+      "after_sha256": "e758634432a644fd7230cfafce6020e7f6fc5cf4ba94a8f651d70a77c0b91de3"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.0-register.json",
+      "before_sha256": "6f26d194d0c3f721b3a071217cf69714f1278950512369272298735bdf44c863",
+      "after_sha256": "6f26d194d0c3f721b3a071217cf69714f1278950512369272298735bdf44c863"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.0-wikitext-register.json",
+      "before_sha256": "2149b28b9165ecaa346b03a7192b775b77bd6bf9921851acc920bfefe412cf5d",
+      "after_sha256": "2149b28b9165ecaa346b03a7192b775b77bd6bf9921851acc920bfefe412cf5d"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.1-api-changes.provenance.json",
+      "before_sha256": "3c8d9ced0b366c076984e54254eb641864812c0bbf8ebd86a1fa71a4a3365728",
+      "after_sha256": "3c8d9ced0b366c076984e54254eb641864812c0bbf8ebd86a1fa71a4a3365728"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.1-api-changes.txt",
+      "before_sha256": "6178cf0702bf7c1b79d39c8e3345b2aee15ee7c1cea2756c343b0918cab9906d",
+      "after_sha256": "6178cf0702bf7c1b79d39c8e3345b2aee15ee7c1cea2756c343b0918cab9906d"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.1-api-changes.wikitext",
+      "before_sha256": "cc4585de4c3d3600d8beacb5af7a278d9e9ee52d7c6e2aeb483b3baa259a465e",
+      "after_sha256": "cc4585de4c3d3600d8beacb5af7a278d9e9ee52d7c6e2aeb483b3baa259a465e"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.1-page-coverage.json",
+      "before_sha256": "a303140c42574cd5a5ad5b4afb0fc7e0b3912ee3c3f515364aef727415f7ef0e",
+      "after_sha256": "a303140c42574cd5a5ad5b4afb0fc7e0b3912ee3c3f515364aef727415f7ef0e"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.1-wikitext-register.json",
+      "before_sha256": "3ae13ba41a6583c1d05c00552aa444501386fcf5484884d2395aa77cecd9a8cb",
+      "after_sha256": "3ae13ba41a6583c1d05c00552aa444501386fcf5484884d2395aa77cecd9a8cb"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.5-api-changes.provenance.json",
+      "before_sha256": "dcd524b1195af553f990cb78d9b0467e9bf1ff416e85f3ea24ae11da91c9d01e",
+      "after_sha256": "dcd524b1195af553f990cb78d9b0467e9bf1ff416e85f3ea24ae11da91c9d01e"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.5-api-changes.txt",
+      "before_sha256": "4da3872aa566695f46e2dacd4e79992f5b06be9541f0d19cf0e8dba45cea8329",
+      "after_sha256": "4da3872aa566695f46e2dacd4e79992f5b06be9541f0d19cf0e8dba45cea8329"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.5-api-changes.wikitext",
+      "before_sha256": "2fd339ed0c93d26fc7b8e14743bc0430aa5169153e793bc68f85224e510dafd4",
+      "after_sha256": "2fd339ed0c93d26fc7b8e14743bc0430aa5169153e793bc68f85224e510dafd4"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.5-page-coverage.json",
+      "before_sha256": "ae104353faa54bf77ec93eb3e3c2ad4762ceaaf462c46796e5d24478fbf12c9e",
+      "after_sha256": "ae104353faa54bf77ec93eb3e3c2ad4762ceaaf462c46796e5d24478fbf12c9e"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.5-probes.json",
+      "before_sha256": "2d7671b7702eed71c5d8a3ae4e92595771f6c04bb58fe98bd771647ac26cddca",
+      "after_sha256": "2d7671b7702eed71c5d8a3ae4e92595771f6c04bb58fe98bd771647ac26cddca"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.5-register.json",
+      "before_sha256": "eaea58ae8adf215587cea6de12349b3586fcb2520a4c8aefd4d7cee5406046ed",
+      "after_sha256": "eaea58ae8adf215587cea6de12349b3586fcb2520a4c8aefd4d7cee5406046ed"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.5-wikitext-register.json",
+      "before_sha256": "a87c2c978086e8b6c62fb560aa764556213c6b19735a4be35e12311ec42d6e23",
+      "after_sha256": "a87c2c978086e8b6c62fb560aa764556213c6b19735a4be35e12311ec42d6e23"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.7-api-changes.provenance.json",
+      "before_sha256": "f137413d236b2ae85f6855834c10e18580a83f1ede01a0cc5bd3497dc6169925",
+      "after_sha256": "f137413d236b2ae85f6855834c10e18580a83f1ede01a0cc5bd3497dc6169925"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.7-api-changes.txt",
+      "before_sha256": "014f7d51eca1b2fc5d76071978e09c537efd66d14069e21d163e58ccd04a561e",
+      "after_sha256": "014f7d51eca1b2fc5d76071978e09c537efd66d14069e21d163e58ccd04a561e"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.7-api-changes.wikitext",
+      "before_sha256": "6e1b87d7bfc7b6356ee8ad5371ad6739b67b76e12ab9d967269c8bad865a540c",
+      "after_sha256": "6e1b87d7bfc7b6356ee8ad5371ad6739b67b76e12ab9d967269c8bad865a540c"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.7-page-coverage.json",
+      "before_sha256": "ebed23da005c1dcb0d7355b48fd8b9b8524bb956194c65722a5d6c77ca14b26f",
+      "after_sha256": "ebed23da005c1dcb0d7355b48fd8b9b8524bb956194c65722a5d6c77ca14b26f"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.7-register.json",
+      "before_sha256": "389e3b19174bf77c3646028f764cf186ccfe1b7dddaca2a3b3fcba75e3bdec60",
+      "after_sha256": "389e3b19174bf77c3646028f764cf186ccfe1b7dddaca2a3b3fcba75e3bdec60"
+    },
+    {
+      "path": "data/patch-api/sources/12.0.7-wikitext-register.json",
+      "before_sha256": "aad4af3207d4585ed8494c837f253a23607bf1f8e752e0b52d39dd7e533189e7",
+      "after_sha256": "aad4af3207d4585ed8494c837f253a23607bf1f8e752e0b52d39dd7e533189e7"
+    },
+    {
+      "path": "data/patch-api/sources/12.1-behaviors.json",
+      "before_sha256": "9e3ad69306c0e3d377e3aba6f5b928a21cd868ff98e5e9e43763385cdcecc83f",
+      "after_sha256": "9e3ad69306c0e3d377e3aba6f5b928a21cd868ff98e5e9e43763385cdcecc83f"
+    },
+    {
+      "path": "data/patch-api/sources/12.1-framexml.json",
+      "before_sha256": "3b186f1a0618b1f9ad7f399c4ad56705b1511b08ac3bc67b2780a98a0b63c70d",
+      "after_sha256": "3b186f1a0618b1f9ad7f399c4ad56705b1511b08ac3bc67b2780a98a0b63c70d"
+    },
+    {
+      "path": "data/patch-api/sources/12.1.0-api-changes.provenance.json",
+      "before_sha256": "5f1d673088772fd3272f8d2028681c42c9d4f8499894398b946c53601945f58b",
+      "after_sha256": "5f1d673088772fd3272f8d2028681c42c9d4f8499894398b946c53601945f58b"
+    },
+    {
+      "path": "data/patch-api/sources/12.1.0-api-changes.txt",
+      "before_sha256": "c051a68b442b2e69d602650d1c5ec07c1d0262dd1aea01fe73d3f60cd5f29c3b",
+      "after_sha256": "c051a68b442b2e69d602650d1c5ec07c1d0262dd1aea01fe73d3f60cd5f29c3b"
+    },
+    {
+      "path": "data/patch-api/sources/12.1.0-api-changes.wikitext",
+      "before_sha256": "de9e45f6e43c66c78be2d9e9c6a6e7945cd91676448bbe502a6a4db0d75d8bde",
+      "after_sha256": "de9e45f6e43c66c78be2d9e9c6a6e7945cd91676448bbe502a6a4db0d75d8bde"
+    },
+    {
+      "path": "data/patch-api/sources/12.1.0-page-coverage.json",
+      "before_sha256": "328bbb571f06940dc4af61809d99115f1967ddf5bde2ecc1b1e326000b88c5a2",
+      "after_sha256": "328bbb571f06940dc4af61809d99115f1967ddf5bde2ecc1b1e326000b88c5a2"
+    },
+    {
+      "path": "data/patch-api/sources/12.1.0-ptr-cache-manifest.txt",
+      "before_sha256": "fa104a0f58bb1f86949aeec78fd82388b8d1cb8da39a1f3b51b4e3bd89e4ac66",
+      "after_sha256": "fa104a0f58bb1f86949aeec78fd82388b8d1cb8da39a1f3b51b4e3bd89e4ac66"
+    },
+    {
+      "path": "data/patch-api/sources/12.1.0-wikitext-register.json",
+      "before_sha256": "924774ddea912d58af87211b41549d550a12594cc2b5de0b8b3de7574e9e8311",
+      "after_sha256": "924774ddea912d58af87211b41549d550a12594cc2b5de0b8b3de7574e9e8311"
+    },
+    {
+      "path": "data/patch-api/sources/12.1.5-register.json",
+      "before_sha256": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb",
+      "after_sha256": "89e58d77b6f02cd7d8f08b5ac7d434573a2cc035253026bac5bfc2f03b691ddb"
+    },
+    {
+      "path": "data/patch-api/sources/7.2.5-api-changes.provenance.json",
+      "before_sha256": "efead6a854169a6526812fca5b5c15dec8b714deab5ef9b22a6ad25e64e9f6ff",
+      "after_sha256": "efead6a854169a6526812fca5b5c15dec8b714deab5ef9b22a6ad25e64e9f6ff"
+    },
+    {
+      "path": "data/patch-api/sources/7.2.5-api-changes.txt",
+      "before_sha256": "083f32ee619a4537ed1751345cc801a981d69dbd5b65e859d066f13cc53790cf",
+      "after_sha256": "083f32ee619a4537ed1751345cc801a981d69dbd5b65e859d066f13cc53790cf"
+    },
+    {
+      "path": "data/patch-api/sources/7.2.5-api-changes.wikitext",
+      "before_sha256": "93081583da31739e03d087b525787d5e7aafdaeac23ea9ec8480be624c03803e",
+      "after_sha256": "93081583da31739e03d087b525787d5e7aafdaeac23ea9ec8480be624c03803e"
+    },
+    {
+      "path": "data/patch-api/sources/7.2.5-page-coverage.json",
+      "before_sha256": "bf6a90d4826f984017dd9ca43d6b05a4293dc778898cfd3db2ffd3976bb4ac59",
+      "after_sha256": "bf6a90d4826f984017dd9ca43d6b05a4293dc778898cfd3db2ffd3976bb4ac59"
+    },
+    {
+      "path": "data/patch-api/sources/7.2.5-wikitext-register.json",
+      "before_sha256": "753351c0b4616c5259fd9ec2ef3980248c83f0e3de88ae5c40a88b4ad8399bdd",
+      "after_sha256": "753351c0b4616c5259fd9ec2ef3980248c83f0e3de88ae5c40a88b4ad8399bdd"
+    },
+    {
+      "path": "data/patch-api/sources/7.3.0-api-changes.provenance.json",
+      "before_sha256": "27a9ee1e1a9bb2ef8fae7bb290e015d86da0d8eee0e6d5d6f2f0bbd4748df7ec",
+      "after_sha256": "27a9ee1e1a9bb2ef8fae7bb290e015d86da0d8eee0e6d5d6f2f0bbd4748df7ec"
+    },
+    {
+      "path": "data/patch-api/sources/7.3.0-api-changes.txt",
+      "before_sha256": "0fce01e22d2750a479d65e8604900f331598c169bee2beee12e7dc89fce5e8f8",
+      "after_sha256": "0fce01e22d2750a479d65e8604900f331598c169bee2beee12e7dc89fce5e8f8"
+    },
+    {
+      "path": "data/patch-api/sources/7.3.0-api-changes.wikitext",
+      "before_sha256": "4fa82825b87c700d8fb0ab6d4d7c51061ed045675b644682a36f0eb495a1a082",
+      "after_sha256": "4fa82825b87c700d8fb0ab6d4d7c51061ed045675b644682a36f0eb495a1a082"
+    },
+    {
+      "path": "data/patch-api/sources/7.3.0-page-coverage.json",
+      "before_sha256": "7df83a34742be654e3f20e8e248c922ab247055d0884b2e1e8eb7f650279a4be",
+      "after_sha256": "7df83a34742be654e3f20e8e248c922ab247055d0884b2e1e8eb7f650279a4be"
+    },
+    {
+      "path": "data/patch-api/sources/7.3.0-wikitext-register.json",
+      "before_sha256": "b0f06f6e0f8ce4fd8be89845fce0fa0ef5ac2ddf71de7885b8adcd49af3daa10",
+      "after_sha256": "b0f06f6e0f8ce4fd8be89845fce0fa0ef5ac2ddf71de7885b8adcd49af3daa10"
+    },
+    {
+      "path": "data/patch-api/sources/7.3.2-api-changes.provenance.json",
+      "before_sha256": "fc2d326fca7c57f8321969ea3bc853352d69d2ffdfdd97f85069ff9ad256502a",
+      "after_sha256": "fc2d326fca7c57f8321969ea3bc853352d69d2ffdfdd97f85069ff9ad256502a"
+    },
+    {
+      "path": "data/patch-api/sources/7.3.2-api-changes.txt",
+      "before_sha256": "7522a20ff388b43514565be6b56e858cd10362f7e72d7f03ec09e853d55b187e",
+      "after_sha256": "7522a20ff388b43514565be6b56e858cd10362f7e72d7f03ec09e853d55b187e"
+    },
+    {
+      "path": "data/patch-api/sources/7.3.2-api-changes.wikitext",
+      "before_sha256": "a510a7538a0925f0059bdb95a9ac696c9f4215444e3e65032784e78a3e6fb6d1",
+      "after_sha256": "a510a7538a0925f0059bdb95a9ac696c9f4215444e3e65032784e78a3e6fb6d1"
+    },
+    {
+      "path": "data/patch-api/sources/7.3.2-page-coverage.json",
+      "before_sha256": "621afa93aa91eca6035eb7b80170bd41200ac03b4465298a8896dd2f930fb796",
+      "after_sha256": "621afa93aa91eca6035eb7b80170bd41200ac03b4465298a8896dd2f930fb796"
+    },
+    {
+      "path": "data/patch-api/sources/7.3.2-wikitext-register.json",
+      "before_sha256": "32b35ec0157db219051eeddc58d5e8d0ab34afe0f7d99690c1c3e112bfac1a35",
+      "after_sha256": "32b35ec0157db219051eeddc58d5e8d0ab34afe0f7d99690c1c3e112bfac1a35"
+    },
+    {
+      "path": "data/patch-api/sources/8.0.1-api-changes.provenance.json",
+      "before_sha256": "2b3898470e4716286bed474e2846a956f2ad7f9f9ed47bb458e1e0e93a6b654d",
+      "after_sha256": "2b3898470e4716286bed474e2846a956f2ad7f9f9ed47bb458e1e0e93a6b654d"
+    },
+    {
+      "path": "data/patch-api/sources/8.0.1-api-changes.txt",
+      "before_sha256": "c5408fce8e67bc856215b01e26c787e68f6ac27fcd9ad449967294d7745a03c4",
+      "after_sha256": "c5408fce8e67bc856215b01e26c787e68f6ac27fcd9ad449967294d7745a03c4"
+    },
+    {
+      "path": "data/patch-api/sources/8.0.1-api-changes.wikitext",
+      "before_sha256": "7fb0d6ed76e37632e306fb464dadaf33e151c8ec5346793366df6d4eef3641d4",
+      "after_sha256": "7fb0d6ed76e37632e306fb464dadaf33e151c8ec5346793366df6d4eef3641d4"
+    },
+    {
+      "path": "data/patch-api/sources/8.0.1-page-coverage.json",
+      "before_sha256": "3d5dba616f000aa37f971248461f84968ddf7a15bc6ffb01536abcf6ce03198f",
+      "after_sha256": "3d5dba616f000aa37f971248461f84968ddf7a15bc6ffb01536abcf6ce03198f"
+    },
+    {
+      "path": "data/patch-api/sources/8.0.1-wikitext-register.json",
+      "before_sha256": "df597a39c9802be51ad66720abb7dfb1b58e5c155b7735a0d9ce99a784a7ae83",
+      "after_sha256": "df597a39c9802be51ad66720abb7dfb1b58e5c155b7735a0d9ce99a784a7ae83"
+    },
+    {
+      "path": "data/patch-api/sources/8.1.0-api-changes.provenance.json",
+      "before_sha256": "5a1290d7775ed8ccbc3d3393a9372b227e5e7f94297cef41b8dc57b8b099b0ea",
+      "after_sha256": "5a1290d7775ed8ccbc3d3393a9372b227e5e7f94297cef41b8dc57b8b099b0ea"
+    },
+    {
+      "path": "data/patch-api/sources/8.1.0-api-changes.txt",
+      "before_sha256": "3ebb449f9291e15c4df3341cee40daee03fa6299a986d3ca5a15f2d5c8403812",
+      "after_sha256": "3ebb449f9291e15c4df3341cee40daee03fa6299a986d3ca5a15f2d5c8403812"
+    },
+    {
+      "path": "data/patch-api/sources/8.1.0-api-changes.wikitext",
+      "before_sha256": "9cc26872abfdc3de1b9708ea9eeb79287d114bd1aa2b652e0fef0e20ee592832",
+      "after_sha256": "9cc26872abfdc3de1b9708ea9eeb79287d114bd1aa2b652e0fef0e20ee592832"
+    },
+    {
+      "path": "data/patch-api/sources/8.1.0-page-coverage.json",
+      "before_sha256": "3cfb9a8b4d1e35bb0538563165c0ba21a12a82d46abc4c56b25694d95675ae01",
+      "after_sha256": "3cfb9a8b4d1e35bb0538563165c0ba21a12a82d46abc4c56b25694d95675ae01"
+    },
+    {
+      "path": "data/patch-api/sources/8.1.0-wikitext-register.json",
+      "before_sha256": "2b14287b5e8eba20cfc674184f2838ba87c551382eed782dfe39661c2807e147",
+      "after_sha256": "2b14287b5e8eba20cfc674184f2838ba87c551382eed782dfe39661c2807e147"
+    },
+    {
+      "path": "data/patch-api/sources/8.1.5-api-changes.provenance.json",
+      "before_sha256": "972aaec312a90f90b5ed0d521d994a63e277605ea463068e755de3186cf56076",
+      "after_sha256": "972aaec312a90f90b5ed0d521d994a63e277605ea463068e755de3186cf56076"
+    },
+    {
+      "path": "data/patch-api/sources/8.1.5-api-changes.txt",
+      "before_sha256": "37a8a38a0fa152908db96ce70242e705ec1284c7c1bff599a8eccf4da1a05a53",
+      "after_sha256": "37a8a38a0fa152908db96ce70242e705ec1284c7c1bff599a8eccf4da1a05a53"
+    },
+    {
+      "path": "data/patch-api/sources/8.1.5-api-changes.wikitext",
+      "before_sha256": "fc40dccee6ebfd304bce361e9251bcaab39e79e6fe2c6e3406c55fa4d6f5d8e4",
+      "after_sha256": "fc40dccee6ebfd304bce361e9251bcaab39e79e6fe2c6e3406c55fa4d6f5d8e4"
+    },
+    {
+      "path": "data/patch-api/sources/8.1.5-page-coverage.json",
+      "before_sha256": "c2ef6ea13f309b9d2b29a5f929625bfd6bdb48cc01da3d563e44afca04d145f5",
+      "after_sha256": "c2ef6ea13f309b9d2b29a5f929625bfd6bdb48cc01da3d563e44afca04d145f5"
+    },
+    {
+      "path": "data/patch-api/sources/8.1.5-wikitext-register.json",
+      "before_sha256": "8eacfb4ecb374f539aecc39bc64cfe5d117e243d19f89f45600289cae72a33fb",
+      "after_sha256": "8eacfb4ecb374f539aecc39bc64cfe5d117e243d19f89f45600289cae72a33fb"
+    },
+    {
+      "path": "data/patch-api/sources/8.2.0-api-changes.provenance.json",
+      "before_sha256": "1d5df891c1cc6aab2f5928bd9a820a5fbdd60281cbe441b953b2b12e5c1c2123",
+      "after_sha256": "1d5df891c1cc6aab2f5928bd9a820a5fbdd60281cbe441b953b2b12e5c1c2123"
+    },
+    {
+      "path": "data/patch-api/sources/8.2.0-api-changes.txt",
+      "before_sha256": "49736eb93e74da2436d5e600e58b6ee8674927ef4b15f50e10adffa675585dd0",
+      "after_sha256": "49736eb93e74da2436d5e600e58b6ee8674927ef4b15f50e10adffa675585dd0"
+    },
+    {
+      "path": "data/patch-api/sources/8.2.0-api-changes.wikitext",
+      "before_sha256": "35a296d3044d68b92286a0d3ec653283a7dc0beba2b4b64d3c9e9410f129e41f",
+      "after_sha256": "35a296d3044d68b92286a0d3ec653283a7dc0beba2b4b64d3c9e9410f129e41f"
+    },
+    {
+      "path": "data/patch-api/sources/8.2.0-page-coverage.json",
+      "before_sha256": "9ee55ede08f2af0de1e6d94e4722be461614a9ed8136454d6a1e86f9d571ed68",
+      "after_sha256": "9ee55ede08f2af0de1e6d94e4722be461614a9ed8136454d6a1e86f9d571ed68"
+    },
+    {
+      "path": "data/patch-api/sources/8.2.0-wikitext-register.json",
+      "before_sha256": "0755a978c7c9821a87431337fc2ae834f5fdfc139180f38af3bf613168b21203",
+      "after_sha256": "0755a978c7c9821a87431337fc2ae834f5fdfc139180f38af3bf613168b21203"
+    },
+    {
+      "path": "data/patch-api/sources/8.2.5-api-changes.provenance.json",
+      "before_sha256": "9dfac01fd2047b2d3620938678766cdffd58149ce6ab70fc367dbceb127bf7d5",
+      "after_sha256": "9dfac01fd2047b2d3620938678766cdffd58149ce6ab70fc367dbceb127bf7d5"
+    },
+    {
+      "path": "data/patch-api/sources/8.2.5-api-changes.txt",
+      "before_sha256": "acee4aa6cb4716ce55ea115b277924d234c2142bf635236d40d62072a12f939e",
+      "after_sha256": "acee4aa6cb4716ce55ea115b277924d234c2142bf635236d40d62072a12f939e"
+    },
+    {
+      "path": "data/patch-api/sources/8.2.5-api-changes.wikitext",
+      "before_sha256": "f8d21b89e4551b6b1478247f2ce5e6859a0a0ac8ea3b8a25b35b48da160059a8",
+      "after_sha256": "f8d21b89e4551b6b1478247f2ce5e6859a0a0ac8ea3b8a25b35b48da160059a8"
+    },
+    {
+      "path": "data/patch-api/sources/8.2.5-page-coverage.json",
+      "before_sha256": "c4cbc96838f936f540d76871f07ae3b436f74b8a12649c4f77caabe961d3ac1e",
+      "after_sha256": "c4cbc96838f936f540d76871f07ae3b436f74b8a12649c4f77caabe961d3ac1e"
+    },
+    {
+      "path": "data/patch-api/sources/8.2.5-wikitext-register.json",
+      "before_sha256": "9068d2c59c69fa49a3bc0a257707597d4a9d98a971187e374fc92c20f46f9f4c",
+      "after_sha256": "9068d2c59c69fa49a3bc0a257707597d4a9d98a971187e374fc92c20f46f9f4c"
+    },
+    {
+      "path": "data/patch-api/sources/8.3.0-api-changes.provenance.json",
+      "before_sha256": "a99b7d45c9837f0717f978ea0169823f4b85a1c2f121ee2b91b7f54fc642f906",
+      "after_sha256": "a99b7d45c9837f0717f978ea0169823f4b85a1c2f121ee2b91b7f54fc642f906"
+    },
+    {
+      "path": "data/patch-api/sources/8.3.0-api-changes.txt",
+      "before_sha256": "5de022982639c186f36ba05a3a1c6e6140d0dd79e0da356cbfafc3f46b57a1d3",
+      "after_sha256": "5de022982639c186f36ba05a3a1c6e6140d0dd79e0da356cbfafc3f46b57a1d3"
+    },
+    {
+      "path": "data/patch-api/sources/8.3.0-api-changes.wikitext",
+      "before_sha256": "01f5ca887f8dbe81b64ed25d5691bd2634e3367def22d8a713b892e2b01694f2",
+      "after_sha256": "01f5ca887f8dbe81b64ed25d5691bd2634e3367def22d8a713b892e2b01694f2"
+    },
+    {
+      "path": "data/patch-api/sources/8.3.0-page-coverage.json",
+      "before_sha256": "e8c34cb7bc29595266f59c7615d598f1b83f6686b269d0e77c17914868d933fd",
+      "after_sha256": "e8c34cb7bc29595266f59c7615d598f1b83f6686b269d0e77c17914868d933fd"
+    },
+    {
+      "path": "data/patch-api/sources/8.3.0-wikitext-register.json",
+      "before_sha256": "372ee6b18ee3a47ec80c7886621a7686cf90381f113e50caed4594b6d18dcbef",
+      "after_sha256": "372ee6b18ee3a47ec80c7886621a7686cf90381f113e50caed4594b6d18dcbef"
+    },
+    {
+      "path": "data/patch-api/sources/8.3.7-api-changes.provenance.json",
+      "before_sha256": "dcc42f935a6d32dbe875e4e952ff2257073c1fa573db0bc0e76621ce92e08f61",
+      "after_sha256": "dcc42f935a6d32dbe875e4e952ff2257073c1fa573db0bc0e76621ce92e08f61"
+    },
+    {
+      "path": "data/patch-api/sources/8.3.7-api-changes.txt",
+      "before_sha256": "78f1f7c357923c589ba34c865cf3309c444d8493b788b17c105809e6dc35efc2",
+      "after_sha256": "78f1f7c357923c589ba34c865cf3309c444d8493b788b17c105809e6dc35efc2"
+    },
+    {
+      "path": "data/patch-api/sources/8.3.7-api-changes.wikitext",
+      "before_sha256": "0fae3d8d22e456e84eb0082b729586429c9151d7ec32ecd851f8d3c8b1575784",
+      "after_sha256": "0fae3d8d22e456e84eb0082b729586429c9151d7ec32ecd851f8d3c8b1575784"
+    },
+    {
+      "path": "data/patch-api/sources/8.3.7-page-coverage.json",
+      "before_sha256": "24d8b245aad861315a387e3bfe0882a2c485e2d23579a98abe0e67c51eca43ae",
+      "after_sha256": "24d8b245aad861315a387e3bfe0882a2c485e2d23579a98abe0e67c51eca43ae"
+    },
+    {
+      "path": "data/patch-api/sources/8.3.7-wikitext-register.json",
+      "before_sha256": "12c1c3a4d678b3a4ba2c1ae808fc3831a672375eebb2158b0e25261bb0a7e175",
+      "after_sha256": "12c1c3a4d678b3a4ba2c1ae808fc3831a672375eebb2158b0e25261bb0a7e175"
+    },
+    {
+      "path": "data/patch-api/sources/9.0.1-api-changes.provenance.json",
+      "before_sha256": "cc9a201526d56dd7cd4961ee77fff04a4e48693a9674a41d0e0d24d5a1ea896e",
+      "after_sha256": "cc9a201526d56dd7cd4961ee77fff04a4e48693a9674a41d0e0d24d5a1ea896e"
+    },
+    {
+      "path": "data/patch-api/sources/9.0.1-api-changes.txt",
+      "before_sha256": "b4bfffbdad9981f0156a5ed21e7ce9ecef236c033c04c749a4f3100fce2f80c0",
+      "after_sha256": "b4bfffbdad9981f0156a5ed21e7ce9ecef236c033c04c749a4f3100fce2f80c0"
+    },
+    {
+      "path": "data/patch-api/sources/9.0.1-api-changes.wikitext",
+      "before_sha256": "51c3ecf32ee65f178aaae7c711ff7af7bd9f243aea27712bf98261d78682d236",
+      "after_sha256": "51c3ecf32ee65f178aaae7c711ff7af7bd9f243aea27712bf98261d78682d236"
+    },
+    {
+      "path": "data/patch-api/sources/9.0.1-page-coverage.json",
+      "before_sha256": "519f9c49c5aaf3f1c6f219760cb8acd5282e23ae556107735214708d5402a199",
+      "after_sha256": "519f9c49c5aaf3f1c6f219760cb8acd5282e23ae556107735214708d5402a199"
+    },
+    {
+      "path": "data/patch-api/sources/9.0.1-wikitext-register.json",
+      "before_sha256": "b61d5965061e199bd4149093e5fd2b5b03ee82a2bdabd18070a7b449454fa665",
+      "after_sha256": "b61d5965061e199bd4149093e5fd2b5b03ee82a2bdabd18070a7b449454fa665"
+    },
+    {
+      "path": "data/patch-api/sources/9.0.2-api-changes.provenance.json",
+      "before_sha256": "8186d7361ee145fa9a9fa17e381373c9eb7c1ffaf26f5fc1cb3725452e87f056",
+      "after_sha256": "8186d7361ee145fa9a9fa17e381373c9eb7c1ffaf26f5fc1cb3725452e87f056"
+    },
+    {
+      "path": "data/patch-api/sources/9.0.2-api-changes.txt",
+      "before_sha256": "9a193fe2a9b927d74db45a14a7fbe774eea57583235d8f1113d97fe8c86b50f6",
+      "after_sha256": "9a193fe2a9b927d74db45a14a7fbe774eea57583235d8f1113d97fe8c86b50f6"
+    },
+    {
+      "path": "data/patch-api/sources/9.0.2-api-changes.wikitext",
+      "before_sha256": "9a75f475bb5db0d455aaa03260717a480af2f32008c9947e2ae59b3aeb62262e",
+      "after_sha256": "9a75f475bb5db0d455aaa03260717a480af2f32008c9947e2ae59b3aeb62262e"
+    },
+    {
+      "path": "data/patch-api/sources/9.0.2-page-coverage.json",
+      "before_sha256": "36e7451d3faf0ff5aa5e2e2745ab7d968aa45fb4939cb0ed56d82c430e4fe7d3",
+      "after_sha256": "36e7451d3faf0ff5aa5e2e2745ab7d968aa45fb4939cb0ed56d82c430e4fe7d3"
+    },
+    {
+      "path": "data/patch-api/sources/9.0.2-wikitext-register.json",
+      "before_sha256": "e9c69d02cbd34aab19236d82b52a6ae574312ef8e4f6ee9c07896a8dddef8e6b",
+      "after_sha256": "e9c69d02cbd34aab19236d82b52a6ae574312ef8e4f6ee9c07896a8dddef8e6b"
+    },
+    {
+      "path": "data/patch-api/sources/9.0.5-api-changes.provenance.json",
+      "before_sha256": "9405359118ccbc3f618530933c507f4f65f473c123a0f62644b3a2eac6b88fed",
+      "after_sha256": "9405359118ccbc3f618530933c507f4f65f473c123a0f62644b3a2eac6b88fed"
+    },
+    {
+      "path": "data/patch-api/sources/9.0.5-api-changes.txt",
+      "before_sha256": "7a7ca87f3b1973400a79c0458a35e76442cc2529050df94b6b84af2abb5cd4ce",
+      "after_sha256": "7a7ca87f3b1973400a79c0458a35e76442cc2529050df94b6b84af2abb5cd4ce"
+    },
+    {
+      "path": "data/patch-api/sources/9.0.5-api-changes.wikitext",
+      "before_sha256": "9c62ac72650f7c6b90761a9640555508e0deb3b07321f863d2a9cfe0dfc95673",
+      "after_sha256": "9c62ac72650f7c6b90761a9640555508e0deb3b07321f863d2a9cfe0dfc95673"
+    },
+    {
+      "path": "data/patch-api/sources/9.0.5-page-coverage.json",
+      "before_sha256": "09539ca21fd3ec98e0135c79b0f6190e2d9570110ea8e9444cef8c141f1041db",
+      "after_sha256": "09539ca21fd3ec98e0135c79b0f6190e2d9570110ea8e9444cef8c141f1041db"
+    },
+    {
+      "path": "data/patch-api/sources/9.0.5-wikitext-register.json",
+      "before_sha256": "c9852dbae8b4cf0ccfa46810e571fe4bfe8f3435d9680855845a70979c819b13",
+      "after_sha256": "c9852dbae8b4cf0ccfa46810e571fe4bfe8f3435d9680855845a70979c819b13"
+    },
+    {
+      "path": "data/patch-api/sources/9.1.0-api-changes.provenance.json",
+      "before_sha256": "cc52cea2597d6daafefe08780aebdba8149a4697c4e8c22e7d72f8e39051a973",
+      "after_sha256": "cc52cea2597d6daafefe08780aebdba8149a4697c4e8c22e7d72f8e39051a973"
+    },
+    {
+      "path": "data/patch-api/sources/9.1.0-api-changes.txt",
+      "before_sha256": "961a8cd7dff7cf67ab13b4112ff18520a074f369a8201df3f192a5694c942783",
+      "after_sha256": "961a8cd7dff7cf67ab13b4112ff18520a074f369a8201df3f192a5694c942783"
+    },
+    {
+      "path": "data/patch-api/sources/9.1.0-api-changes.wikitext",
+      "before_sha256": "29871f1e6e2c9796399140cf0dc396c76c69d083fffb6a60b05172893301ce8c",
+      "after_sha256": "29871f1e6e2c9796399140cf0dc396c76c69d083fffb6a60b05172893301ce8c"
+    },
+    {
+      "path": "data/patch-api/sources/9.1.0-page-coverage.json",
+      "before_sha256": "a6c52a530ea481193f2ece3dee2cadd9b6d0408b8ce4569b16edeba50a752401",
+      "after_sha256": "a6c52a530ea481193f2ece3dee2cadd9b6d0408b8ce4569b16edeba50a752401"
+    },
+    {
+      "path": "data/patch-api/sources/9.1.0-wikitext-register.json",
+      "before_sha256": "deeaaed02589405b31b89341c48081a72890118cce878e802bd01df8cef1abdb",
+      "after_sha256": "deeaaed02589405b31b89341c48081a72890118cce878e802bd01df8cef1abdb"
+    },
+    {
+      "path": "data/patch-api/sources/9.1.5-api-changes.provenance.json",
+      "before_sha256": "2be15b8fac2c01d8145197b0b8d7cd29983d486f42ffcf1148a7c56876efc0db",
+      "after_sha256": "2be15b8fac2c01d8145197b0b8d7cd29983d486f42ffcf1148a7c56876efc0db"
+    },
+    {
+      "path": "data/patch-api/sources/9.1.5-api-changes.txt",
+      "before_sha256": "e9e3b40f6d63639f224a0297b82dfe62bcc0d07f61931e2c1c9354bcdb822eba",
+      "after_sha256": "e9e3b40f6d63639f224a0297b82dfe62bcc0d07f61931e2c1c9354bcdb822eba"
+    },
+    {
+      "path": "data/patch-api/sources/9.1.5-api-changes.wikitext",
+      "before_sha256": "1af11608f2f057faf74f95cfefdfad43c282a4153357dc8900c64e870f438476",
+      "after_sha256": "1af11608f2f057faf74f95cfefdfad43c282a4153357dc8900c64e870f438476"
+    },
+    {
+      "path": "data/patch-api/sources/9.1.5-page-coverage.json",
+      "before_sha256": "d16fc5171d0177f16049fcd753308c612a3f6fa57f1a49d4bb648558860451fd",
+      "after_sha256": "d16fc5171d0177f16049fcd753308c612a3f6fa57f1a49d4bb648558860451fd"
+    },
+    {
+      "path": "data/patch-api/sources/9.1.5-wikitext-register.json",
+      "before_sha256": "f47c868a2a650f6119ade3f755c02c1c6d352330ed0cef1e7c5cb067e4df6f6f",
+      "after_sha256": "f47c868a2a650f6119ade3f755c02c1c6d352330ed0cef1e7c5cb067e4df6f6f"
+    },
+    {
+      "path": "data/patch-api/sources/9.2.0-api-changes.provenance.json",
+      "before_sha256": "e08a78723f968381c66bf88d4ce55337dd1f6bbd54488378fa0df22785878278",
+      "after_sha256": "e08a78723f968381c66bf88d4ce55337dd1f6bbd54488378fa0df22785878278"
+    },
+    {
+      "path": "data/patch-api/sources/9.2.0-api-changes.txt",
+      "before_sha256": "4946812493aa7bbf9cf4ddc3b18857ee603e0bb4577533a8860759fa9bb0e43e",
+      "after_sha256": "4946812493aa7bbf9cf4ddc3b18857ee603e0bb4577533a8860759fa9bb0e43e"
+    },
+    {
+      "path": "data/patch-api/sources/9.2.0-api-changes.wikitext",
+      "before_sha256": "2592e6464c46add082bdf18b7310c3ad6aa640c53b4a8a58552b15658d3467ae",
+      "after_sha256": "2592e6464c46add082bdf18b7310c3ad6aa640c53b4a8a58552b15658d3467ae"
+    },
+    {
+      "path": "data/patch-api/sources/9.2.0-page-coverage.json",
+      "before_sha256": "f2edcdb933d7df5075c6ee1ef1c4059c1befa0b769b8b789a789e60044d51e31",
+      "after_sha256": "f2edcdb933d7df5075c6ee1ef1c4059c1befa0b769b8b789a789e60044d51e31"
+    },
+    {
+      "path": "data/patch-api/sources/9.2.0-wikitext-register.json",
+      "before_sha256": "69dd92fb3a392bb6c73917fa4c7917a787a57299bf5eb584061d0de542b48191",
+      "after_sha256": "69dd92fb3a392bb6c73917fa4c7917a787a57299bf5eb584061d0de542b48191"
+    },
+    {
+      "path": "data/patch-api/sources/9.2.5-api-changes.provenance.json",
+      "before_sha256": "ba9ad839781d395344b3881a48f2a8e1ac07138a7aabe869c546e10abe19fef9",
+      "after_sha256": "ba9ad839781d395344b3881a48f2a8e1ac07138a7aabe869c546e10abe19fef9"
+    },
+    {
+      "path": "data/patch-api/sources/9.2.5-api-changes.txt",
+      "before_sha256": "e1b3b6e79876aa416513d622bc823e5a1f372096d7c0f9c7054c4c4a0c1a9518",
+      "after_sha256": "e1b3b6e79876aa416513d622bc823e5a1f372096d7c0f9c7054c4c4a0c1a9518"
+    },
+    {
+      "path": "data/patch-api/sources/9.2.5-api-changes.wikitext",
+      "before_sha256": "f0c554edcdce15afe3cfa3a2dfaf3c723d11864d377613640538d43596cb12e3",
+      "after_sha256": "f0c554edcdce15afe3cfa3a2dfaf3c723d11864d377613640538d43596cb12e3"
+    },
+    {
+      "path": "data/patch-api/sources/9.2.5-page-coverage.json",
+      "before_sha256": "64896487daebe0b4710259a861edd9fe17a2114a8822e00e4363f0aa4c284e97",
+      "after_sha256": "64896487daebe0b4710259a861edd9fe17a2114a8822e00e4363f0aa4c284e97"
+    },
+    {
+      "path": "data/patch-api/sources/9.2.5-wikitext-register.json",
+      "before_sha256": "de6a6208e1989a5a811e6706c6a8d42e5c2f730e96be75293b48c43741e1a0b0",
+      "after_sha256": "de6a6208e1989a5a811e6706c6a8d42e5c2f730e96be75293b48c43741e1a0b0"
+    },
+    {
+      "path": "data/patch-api/sources/9.2.7-api-changes.provenance.json",
+      "before_sha256": "215b9bb070a19470a6806735e4f865a6e37bd193aeff1710cb58d49f4a7fe46c",
+      "after_sha256": "215b9bb070a19470a6806735e4f865a6e37bd193aeff1710cb58d49f4a7fe46c"
+    },
+    {
+      "path": "data/patch-api/sources/9.2.7-api-changes.txt",
+      "before_sha256": "6528a2aadae856784b4a8530cc3fbe592ab8eb5097a65f5e62789de9c6c3e86b",
+      "after_sha256": "6528a2aadae856784b4a8530cc3fbe592ab8eb5097a65f5e62789de9c6c3e86b"
+    },
+    {
+      "path": "data/patch-api/sources/9.2.7-api-changes.wikitext",
+      "before_sha256": "882bb3907d301a9213b6aefa636ae7b2daa0818ed5f14013845d3e09626f5157",
+      "after_sha256": "882bb3907d301a9213b6aefa636ae7b2daa0818ed5f14013845d3e09626f5157"
+    },
+    {
+      "path": "data/patch-api/sources/9.2.7-page-coverage.json",
+      "before_sha256": "2ad3a668b96a6afb6ba2813153ec5859d50665a878178d4222f5761c7e96c22a",
+      "after_sha256": "2ad3a668b96a6afb6ba2813153ec5859d50665a878178d4222f5761c7e96c22a"
+    },
+    {
+      "path": "data/patch-api/sources/9.2.7-wikitext-register.json",
+      "before_sha256": "c349d4a3d3f5dba40f60e2a9739a7467322effc7111188aab5bb15b040b39fc7",
+      "after_sha256": "c349d4a3d3f5dba40f60e2a9739a7467322effc7111188aab5bb15b040b39fc7"
+    },
+    {
+      "path": "data/patch-api/sources/api-change-pages-remaining.json",
+      "before_sha256": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c",
+      "after_sha256": "e357f60af2c745b7797ab8f9e7ac151345cddb6bf43de7786ee25785ee92e91c"
+    }
+  ]
+}

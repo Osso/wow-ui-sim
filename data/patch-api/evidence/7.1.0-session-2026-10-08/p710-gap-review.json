@@ -1,0 +1,30 @@
+{
+  "publication_gaps": [],
+  "unmodeled_source_contracts": [
+    {
+      "source_id": "prose-undated-005",
+      "literal": "* New XML frame attributes: intrinsic, clipChildren",
+      "reason": "clipChildren state/inheritance is bounded by tests/patch_7_1_0_behavior.rs. Custom intrinsic declarations enter the registry, but CreateFrame uses a finite widget_type_for_tag alias map and rejects P710ClipIntrinsic. Failed cached probe and exact harness retained; no special-case factory shim. Generalized dynamic tag/loading/security contract remains missing."
+    },
+    {
+      "source_id": "prose-undated-016",
+      "literal": "* ScrollingMessageFrame is now implemented in Lua.",
+      "reason": "Page describes a native-to-Lua implementation migration, not new named methods. Current runtime maps ScrollingMessageFrame to a MessageFrame plus the ScrollingMessageFrame Lua template; no pinned 7.1.0 implementation or historical migration parity proof. Linked source is not expanded."
+    },
+    {
+      "source_id": "prose-undated-017",
+      "literal": "* 'OnEnter' and 'OnLeave' scripts are no longer triggered unless ':EnableMouse(true)' has been set on the frame in question.",
+      "reason": "Mouse-entry eligibility statement is explicitly qualified as a confirmed pre-release bug expected to be fixed. No final 7.1.0 client capture establishes the intended policy; do not change shared hover dispatch based on a withdrawn/uncertain rule."
+    },
+    {
+      "source_id": "prose-undated-019",
+      "literal": "* GetItemInfo has four new returns: 14: bindType, 15: expacID, 16: itemSetID, 17: isCraftingReagent",
+      "reason": "Legacy global superseded by 10.2.6 removal. Current C_Item successor reads binding and expansion from real item catalog; bounded Hearthstone/link/base-level test. itemSetID is constant 0 and isCraftingReagent constant false, not backed by a set/reagent metadata model; four-return semantic parity remains incomplete. Do not add guessed metadata/shims."
+    },
+    {
+      "source_id": "prose-undated-022",
+      "literal": "* TitleRegion",
+      "reason": "Bare removal gives no factory/method/signature contract. No exact TitleRegion retail/src/tests consumer or later master/p720 re-addition. WidgetType has no TitleRegion and unknown runtime CreateFrame kinds are rejected; neither fact establishes the old native region factory/method contract. Related GetTitleRegion names occur in current Lua mixins, not a native TitleRegion factory; no methods or widget fallback retired."
+    }
+  ]
+}

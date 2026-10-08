@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p710-page/data/patch-api/evidence/7.1.0-session-2026-10-08/reproduce_sources.py"
+  ],
+  "revision": "68b72c56105efe1d5d74242759fdc4f8165393e8",
+  "scope": "p710-source-reproduction",
+  "cwd": ".",
+  "target": "dedicated p710-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p710-source-reproduction.txt",
+  "log_sha256": "9d651b9ed3626f23fc3613730640c8758bf19b3a652a830c7c68ec901b10f102",
+  "seconds": 5.040092543000355,
+  "invalidated": false
+}

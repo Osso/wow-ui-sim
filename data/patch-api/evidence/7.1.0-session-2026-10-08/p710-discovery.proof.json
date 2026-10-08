@@ -1,0 +1,22 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_7_1_0"
+  ],
+  "revision": "68b72c56105efe1d5d74242759fdc4f8165393e8",
+  "scope": "p710-discovery",
+  "cwd": ".",
+  "target": "dedicated p710-page target (external to repository)",
+  "environment": {
+    "P710_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p710-page/data/patch-api/evidence/7.1.0-session-2026-10-08/p710-discovery-results.json"
+  },
+  "exit": 0,
+  "log": "p710-discovery.txt",
+  "log_sha256": "0e6eae4a1ee3e4e16310c35161f04a66efb4bd8320e217094ea485085a201986",
+  "seconds": 337.3118469760011,
+  "invalidated": false
+}

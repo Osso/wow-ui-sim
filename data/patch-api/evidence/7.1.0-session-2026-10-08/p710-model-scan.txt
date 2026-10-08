@@ -1,0 +1,15 @@
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/c_api/c_merchant_frame.rs:25:    table_set_rust_fn_static(state, merchant, "GetItemInfo", get_item_info)?;
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/c_api/c_merchant_frame.rs:40:fn get_item_info(state: &mut LuaState) -> LuaResult<u32> {
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/c_api/item_spell/c_item.rs:137:                c_item_get_detailed_item_level_info,
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/c_api/item_spell/c_item.rs:576:fn c_item_get_detailed_item_level_info(state: &mut LuaState) -> LuaResult<u32> {
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/frame/methods/text_attribute_event/mod.rs:535:        attributes::set_clips_children,
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/frame/methods/text_attribute_event/mod.rs:541:        attributes::does_clip_children,
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/frame/methods/text_attribute_event/attributes.rs:569:pub(super) fn set_clips_children(state: &mut LuaState) -> LuaResult<u32> {
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/frame/methods/text_attribute_event/attributes.rs:579:pub(super) fn does_clip_children(state: &mut LuaState) -> LuaResult<u32> {
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/globals/missing_surface/account_store.rs:40:    table_set_rust_fn_static(state, table_ref, "GetItemInfo", get_item_info)?;
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/lua_api/globals/missing_surface/account_store.rs:181:fn get_item_info(state: &mut LuaState) -> LuaResult<u32> {
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/tests/wow_api_globals/patch_12_0_0_cvar_removals.rs:38:                    "NameplatePersonalHideDelayAlpha",
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/tests/wow_api_globals/patch_12_0_0_cvar_removals.rs:39:                    "NameplatePersonalHideDelaySeconds",
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/tests/wow_api_globals/patch_12_0_0_cvar_removals.rs:40:                    "NameplatePersonalShowAlways",
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/tests/wow_api_globals/patch_12_0_0_cvar_removals.rs:41:                    "NameplatePersonalShowInCombat",
+/home/osso/.worktrees/wow-ui-sim-p710-page/src/loader/tests/wow_api_globals/patch_12_0_0_cvar_removals.rs:42:                    "NameplatePersonalShowWithTarget",

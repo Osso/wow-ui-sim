@@ -1,0 +1,191 @@
+[
+  {
+    "source_id": "source-context-001",
+    "extract_line": 1,
+    "literal": "Patch 7.1.0 API changes",
+    "wikitext_line": 1,
+    "raw_literal": "{{apichanges|7.1.0|prev=7.0.3|next=7.2.0}}",
+    "status": "metadata-only",
+    "reason": "Source title/heading; no runtime credit."
+  },
+  {
+    "source_id": "source-context-003",
+    "extract_line": 3,
+    "literal": "== New ==",
+    "wikitext_line": 3,
+    "raw_literal": "==New==",
+    "status": "metadata-only",
+    "reason": "Source title/heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-004",
+    "extract_line": 4,
+    "literal": "* New API: GetPhysicalScreenSize, GetDetailedItemLevelInfo",
+    "wikitext_line": 4,
+    "raw_literal": "* New API: {{api|GetPhysicalScreenSize}}, {{api|GetDetailedItemLevelInfo}}",
+    "status": "bounded-coverage",
+    "reason": "Physical display publication and existing screen_mode tests; legacy item-level API superseded by 10.2.6 removal, current C_Item base-level/link query tested. No bonus/scaling/native coercion parity claim."
+  },
+  {
+    "source_id": "prose-undated-005",
+    "extract_line": 5,
+    "literal": "* New XML frame attributes: intrinsic, clipChildren",
+    "wikitext_line": 5,
+    "raw_literal": "* New XML frame attributes: [[Intrinsic frame|intrinsic]], [[XML schema#Frame|clipChildren]]",
+    "status": "audit-pending",
+    "reason": "clipChildren state/inheritance is bounded by tests/patch_7_1_0_behavior.rs. Custom intrinsic declarations enter the registry, but CreateFrame uses a finite widget_type_for_tag alias map and rejects P710ClipIntrinsic. Failed cached probe and exact harness retained; no special-case factory shim. Generalized dynamic tag/loading/security contract remains missing."
+  },
+  {
+    "source_id": "prose-undated-006",
+    "extract_line": 6,
+    "literal": "* New frame methods: frame:SetClipsChildren(boolean), frame:DoesClipChildren()",
+    "wikitext_line": 6,
+    "raw_literal": "* New frame methods: [[API_Frame_SetClipsChildren|frame:SetClipsChildren(boolean)]], [[API_Frame_DoesClipChildren|frame:DoesClipChildren()]]",
+    "status": "bounded-coverage",
+    "reason": "Inherited clipChildren before OnLoad, false override and independent SetClipsChildren/DoesClipChildren state tested. Pixel clipping, hit testing and custom intrinsic factories are not credited by this test."
+  },
+  {
+    "source_id": "prose-undated-007",
+    "extract_line": 7,
+    "literal": "* New CVars:",
+    "wikitext_line": 7,
+    "raw_literal": "* New CVars:",
+    "status": "bounded-coverage",
+    "reason": "Five named CVars superseded by explicit 12.0.0 removals; current absence observed. Historical personal-nameplate visibility/delay/alpha behavior is not implemented or credited."
+  },
+  {
+    "source_id": "prose-undated-008",
+    "extract_line": 8,
+    "literal": "** NameplatePersonalShowAlways - Determines if the the personal nameplate is always shown.",
+    "wikitext_line": 8,
+    "raw_literal": "** '''NameplatePersonalShowAlways''' - Determines if the the personal nameplate is always shown.",
+    "status": "bounded-coverage",
+    "reason": "Five named CVars superseded by explicit 12.0.0 removals; current absence observed. Historical personal-nameplate visibility/delay/alpha behavior is not implemented or credited."
+  },
+  {
+    "source_id": "prose-undated-009",
+    "extract_line": 9,
+    "literal": "** NameplatePersonalShowInCombat - Determines if the the personal nameplate is shown when you enter combat.",
+    "wikitext_line": 9,
+    "raw_literal": "** '''NameplatePersonalShowInCombat''' - Determines if the the personal nameplate is shown when you enter combat.",
+    "status": "bounded-coverage",
+    "reason": "Five named CVars superseded by explicit 12.0.0 removals; current absence observed. Historical personal-nameplate visibility/delay/alpha behavior is not implemented or credited."
+  },
+  {
+    "source_id": "prose-undated-010",
+    "extract_line": 10,
+    "literal": "** NameplatePersonalShowWithTarget - Determines if the personal nameplate is shown when selecting a target.",
+    "wikitext_line": 10,
+    "raw_literal": "** '''NameplatePersonalShowWithTarget''' - Determines if the personal nameplate is shown when selecting a target.",
+    "status": "bounded-coverage",
+    "reason": "Five named CVars superseded by explicit 12.0.0 removals; current absence observed. Historical personal-nameplate visibility/delay/alpha behavior is not implemented or credited."
+  },
+  {
+    "source_id": "prose-undated-011",
+    "extract_line": 11,
+    "literal": "*** 0 = targeting has no effect, 1 = show on hostile target, 2 = show on any target",
+    "wikitext_line": 11,
+    "raw_literal": "*** 0 = targeting has no effect, 1 = show on hostile target, 2 = show on any target",
+    "status": "bounded-coverage",
+    "reason": "Five named CVars superseded by explicit 12.0.0 removals; current absence observed. Historical personal-nameplate visibility/delay/alpha behavior is not implemented or credited."
+  },
+  {
+    "source_id": "prose-undated-012",
+    "extract_line": 12,
+    "literal": "** NameplatePersonalHideDelaySeconds - Determines the length of time in seconds that the personal nameplate will be visible after no visibility conditions are met.",
+    "wikitext_line": 12,
+    "raw_literal": "** '''NameplatePersonalHideDelaySeconds''' - Determines the length of time in seconds that the personal nameplate will be visible after no visibility conditions are met.",
+    "status": "bounded-coverage",
+    "reason": "Five named CVars superseded by explicit 12.0.0 removals; current absence observed. Historical personal-nameplate visibility/delay/alpha behavior is not implemented or credited."
+  },
+  {
+    "source_id": "prose-undated-013",
+    "extract_line": 13,
+    "literal": "** NameplatePersonalHideDelayAlpha - Determines the alpha of the personal nameplate after no visibility conditions are met (during the period of time specified by NameplatePersonalHideDelaySeconds).",
+    "wikitext_line": 13,
+    "raw_literal": "** '''NameplatePersonalHideDelayAlpha''' - Determines the alpha of the personal nameplate after no visibility conditions are met (during the period of time specified by NameplatePersonalHideDelaySeconds).",
+    "status": "bounded-coverage",
+    "reason": "Five named CVars superseded by explicit 12.0.0 removals; current absence observed. Historical personal-nameplate visibility/delay/alpha behavior is not implemented or credited."
+  },
+  {
+    "source_id": "source-context-015",
+    "extract_line": 15,
+    "literal": "== Changes ==",
+    "wikitext_line": 15,
+    "raw_literal": "==Changes==",
+    "status": "metadata-only",
+    "reason": "Source title/heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-016",
+    "extract_line": 16,
+    "literal": "* ScrollingMessageFrame is now implemented in Lua.",
+    "wikitext_line": 16,
+    "raw_literal": "* [[XML/ScrollingMessageFrame|ScrollingMessageFrame]] is now [https://github.com/Gethe/wow-ui-source/blob/ptr/SharedXML/ScrollingMessageFrame.xml implemented in Lua].",
+    "status": "audit-pending",
+    "reason": "Page describes a native-to-Lua implementation migration, not new named methods. Current runtime maps ScrollingMessageFrame to a MessageFrame plus the ScrollingMessageFrame Lua template; no pinned 7.1.0 implementation or historical migration parity proof. Linked source is not expanded."
+  },
+  {
+    "source_id": "prose-undated-017",
+    "extract_line": 17,
+    "literal": "* 'OnEnter' and 'OnLeave' scripts are no longer triggered unless ':EnableMouse(true)' has been set on the frame in question.",
+    "wikitext_line": 17,
+    "raw_literal": "* 'OnEnter' and 'OnLeave' scripts are no longer triggered unless ':EnableMouse(true)' has been set on the frame in question.",
+    "status": "audit-pending",
+    "reason": "Mouse-entry eligibility statement is explicitly qualified as a confirmed pre-release bug expected to be fixed. No final 7.1.0 client capture establishes the intended policy; do not change shared hover dispatch based on a withdrawn/uncertain rule."
+  },
+  {
+    "source_id": "prose-undated-018",
+    "extract_line": 18,
+    "literal": "** This has been confirmed as a bug and should be fixed before the patch is released.@TheDanW on #wowuidev",
+    "wikitext_line": 18,
+    "raw_literal": "** This has been confirmed as a bug and should be fixed before the patch is released.<ref>@TheDanW on #wowuidev</ref>",
+    "status": "metadata-only",
+    "reason": "Qualification of preceding mouse bug, including author attribution; not evidence of final client behavior."
+  },
+  {
+    "source_id": "prose-undated-019",
+    "extract_line": 19,
+    "literal": "* GetItemInfo has four new returns: 14: bindType, 15: expacID, 16: itemSetID, 17: isCraftingReagent",
+    "wikitext_line": 19,
+    "raw_literal": "* [[API_GetItemInfo|GetItemInfo]] has four new returns: 14: bindType, 15: expacID, 16: itemSetID, 17: isCraftingReagent",
+    "status": "audit-pending",
+    "reason": "Legacy global superseded by 10.2.6 removal. Current C_Item successor reads binding and expansion from real item catalog; bounded Hearthstone/link/base-level test. itemSetID is constant 0 and isCraftingReagent constant false, not backed by a set/reagent metadata model; four-return semantic parity remains incomplete. Do not add guessed metadata/shims."
+  },
+  {
+    "source_id": "source-context-021",
+    "extract_line": 21,
+    "literal": "== Removals ==",
+    "wikitext_line": 21,
+    "raw_literal": "==Removals==",
+    "status": "metadata-only",
+    "reason": "Source title/heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-022",
+    "extract_line": 22,
+    "literal": "* TitleRegion",
+    "wikitext_line": 22,
+    "raw_literal": "* TitleRegion",
+    "status": "audit-pending",
+    "reason": "Bare removal gives no factory/method/signature contract. No exact TitleRegion retail/src/tests consumer or later master/p720 re-addition. WidgetType has no TitleRegion and unknown runtime CreateFrame kinds are rejected; neither fact establishes the old native region factory/method contract. Related GetTitleRegion names occur in current Lua mixins, not a native TitleRegion factory; no methods or widget fallback retired."
+  },
+  {
+    "source_id": "source-context-024",
+    "extract_line": 24,
+    "literal": "== References ==",
+    "wikitext_line": 24,
+    "raw_literal": "==References==",
+    "status": "metadata-only",
+    "reason": "Source title/heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-025",
+    "extract_line": 25,
+    "literal": "[References list; not expanded]",
+    "wikitext_line": 25,
+    "raw_literal": "{{Reflist}}",
+    "status": "metadata-only",
+    "reason": "Reference expansion is outside this pinned page; no runtime credit."
+  }
+]

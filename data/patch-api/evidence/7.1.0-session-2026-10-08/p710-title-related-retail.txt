@@ -1,0 +1,9 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_TokenUI/Blizzard_TokenUI.lua:19:	self:GetTitleRegion():SetText(self.elementData.name or "");
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/ListTemplates.lua:20:function ListHeaderVisualMixin:GetTitleRegion()
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/ListTemplates.lua:25:	local title = self:GetTitleRegion();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/ListTemplates.lua:54:	self:GetTitleRegion():SetTextColor(color:GetRGB());
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/ListTemplates.lua:58:	self:GetTitleRegion():SetText(text);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/ListTemplates.lua:63:	return self:GetTitleRegion():IsTruncated();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/ListTemplates.lua:116:		GameTooltip_SetTitle(tooltip, self:GetTitleRegion():GetText(), nil, true);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/ListTemplates.lua:156:function ListHeaderThreeSliceMixin:GetTitleRegion()
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CooldownViewer/CooldownViewerSettings.lua:1843:		newOptionFrame:SetPoint("LEFT", self:GetTitleRegion(), "LEFT", self:GetTitleRegion():GetStringWidth() + 10, -2);

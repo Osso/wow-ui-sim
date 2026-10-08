@@ -1,3 +1,7 @@
+## [2026-10-08] investigation | Patch 7.1.0 API audit
+
+Pinned 3742660; ten inventory/twenty-one extract IDs. Publication discovery passes; custom intrinsic gap retained, no retirement. Added [audit](investigations/patch-7-1-0-api-audit.md), bounded probes and opt-in generator; targeted seal pending.
+
 ## [2026-10-08] investigation | Patch 7.2.5
 
 [Audit](investigations/patch-7-2-5-api-audit.md): page 448509 revision 4311256; all 28 IDs accounted. Three real garrison queries; three exact gaps, no retirements. 43 sweeps plus factory, own bare/cached and garrison/anima callers, Python fixtures, format/Mists check and startup pass; cached explicit-load failure reproduced on base and retained. Reproduction preserves 219 inputs/92 modes; three inherited extract failures. All twenty validators and own checkout/later-scope/tamper proof pass. Index/log preserved.

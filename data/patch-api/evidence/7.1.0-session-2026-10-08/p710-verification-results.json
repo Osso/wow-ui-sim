@@ -1,0 +1,35 @@
+[
+  {
+    "name": "p710-own-green",
+    "exit": 1
+  },
+  {
+    "name": "p710-all-sweeps",
+    "exit": 0
+  },
+  {
+    "name": "p710-screen",
+    "exit": 0
+  },
+  {
+    "name": "p710-items",
+    "exit": 0
+  },
+  {
+    "name": "p710-intrinsic",
+    "exit": 0
+  },
+  {
+    "name": "p710-format",
+    "exit": 0
+  },
+  {
+    "name": "p710-mists-check",
+    "exit": 0
+  },
+  {
+    "name": "p710-negative",
+    "exit": 1,
+    "expected": 1
+  }
+]
