@@ -489,6 +489,7 @@ macro_rules! build_empty_sim_state {
             currency_info: super::globals::currency_data::seeded_currency_info_map(),
             equipment_manager: EquipmentManagerState::new(),
             maps: default_maps(),
+            map_world_rects: HashMap::new(),
             achievements: default_achievements(),
             achievement_guild_rep: ::std::collections::HashMap::new(),
             achievement_statistics: ::std::collections::HashMap::new(),

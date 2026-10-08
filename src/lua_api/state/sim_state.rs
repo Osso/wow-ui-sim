@@ -569,6 +569,8 @@ pub struct SimState {
     pub currency_info: HashMap<i32, CurrencyInfo>,
     pub equipment_manager: EquipmentManagerState,
     pub maps: HashMap<i32, MapData>,
+    /// Explicit continent/world rectangles; never guessed from map art pixels.
+    pub map_world_rects: HashMap<i32, crate::c_api::map_world_coordinates::MapWorldRect>,
     pub achievements: HashMap<i32, AchievementInfo>,
     pub achievement_guild_rep: HashMap<i32, AchievementGuildRep>,
     pub achievement_statistics: HashMap<i32, AchievementStatistic>,

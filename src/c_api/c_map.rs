@@ -79,7 +79,7 @@ const C_MAP_METHODS: &[(&str, RustLuaFn)] = &[
 pub(crate) fn register_c_map_surface(state: &mut LuaState) -> LuaResult<()> {
     let table_ref = ensure_namespace(state, "C_Map")?;
     register_c_map_methods(state, table_ref)?;
-    Ok(())
+    super::map_world_coordinates::register(state)
 }
 
 fn register_c_map_methods(state: &mut LuaState, table_ref: LuaTableRef) -> LuaResult<()> {
@@ -405,7 +405,7 @@ fn normalized_coordinate(state: &mut LuaState, position: Val, key: &str) -> f64 
     }
 }
 
-fn create_world_position_vector(state: &mut LuaState, x: f64, y: f64) -> LuaResult<Val> {
+pub(super) fn create_world_position_vector(state: &mut LuaState, x: f64, y: f64) -> LuaResult<Val> {
     let vector = create_table(state);
     table_set_static(state, vector, "x", Val::Num(x));
     table_set_static(state, vector, "y", Val::Num(y));

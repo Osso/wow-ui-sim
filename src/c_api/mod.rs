@@ -205,6 +205,7 @@ pub mod crafting_reagents;
 pub(crate) mod crafting_tables;
 #[cfg(feature = "retail-12-0-5")]
 pub mod equipment_set_command;
+pub mod map_world_coordinates;
 #[cfg(feature = "retail-12-0-7")]
 pub(crate) mod patch_12_0_7_inputs;
 mod spell_cooldown_output;
