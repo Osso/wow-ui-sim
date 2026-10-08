@@ -228,7 +228,7 @@ def check_proofs(context):
     assert original[changed]['ok'] and not negative[changed]['ok']
     assert negative[changed]['expected']['symbol'] == control['modified_entry']['symbol']
     assert read('p542-negative.proof.json')['exit'] == control['expected_exit'] != 0
-    assert 'new/unaccounted gaps' in logs['p542-negative']
+    assert f'new gaps: ["{changed}"]' in logs['p542-negative']
     return len(passed), fixtures
 
 
