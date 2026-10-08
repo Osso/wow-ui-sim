@@ -6,9 +6,6 @@ use serde::Deserialize;
 use std::collections::BTreeMap;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
-#[path = "common/prefork_full_ui_preload.rs"]
-mod full_ui;
-
 #[derive(Deserialize)]
 struct Data {
     enums: BTreeMap<String, DocEnum>,
@@ -86,13 +83,12 @@ fn check_parent(env: &WowLuaEnv, name: &str, doc: &DocEnum) -> Vec<String> {
     failures
 }
 
-#[test]
-fn patch_12_0_0_enum_publication() {
+prefork_full_ui_case! {
+fn patch_12_0_0_enum_publication(env: &WowLuaEnv) {
     let data: Data = serde_json::from_str(include_str!("data/patch_12_0_0_enums.json")).unwrap();
     assert_eq!(data.rows.len(), 32);
     assert_eq!(data.enums.len(), 12);
-    let failures = crate::common::with_exclusive_workload(|| {
-        let env = full_ui::preload_full_game_ui().expect("load full cached Game UI");
+    let failures = {
         let mut failures = Vec::new();
         for (id, row) in &data.rows {
             let doc = &data.enums[&row.name];
@@ -119,6 +115,7 @@ fn patch_12_0_0_enum_publication() {
             }
         }
         failures
-    });
+    };
     assert!(failures.is_empty(), "enum gaps:\n{}", failures.join("\n"));
+}
 }
