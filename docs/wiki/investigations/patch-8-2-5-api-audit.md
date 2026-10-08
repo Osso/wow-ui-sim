@@ -69,5 +69,7 @@ Audit accounting and requested targeted gates are complete. The **61 publication
 
 ## See Also
 
+- [[patch-audit-validator-portability]] — validates the exact later closure without rewriting historical evidence.
+
 - [[patch-8-3-0-api-audit]] — pinned source, reproduction and retirement proof boundaries.
 - [[patch-9-2-5-api-audit]] — older ReportPosting gap closed by this retirement.

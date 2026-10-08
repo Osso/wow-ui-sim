@@ -12,7 +12,6 @@ sys.dont_write_bytecode = True
 sys.path.insert(0, str(ROOT / 'tools'))
 from patch_audit_validation import preserved_input_matches
 
-AUDIT_REVISION = 'cf5bd7b47887625d2846be400e47e559bd0a4ddb'
 EVIDENCE = Path(__file__).resolve().parent
 SOURCES = ROOT / 'data/patch-api/sources'
 

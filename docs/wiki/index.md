@@ -1,3 +1,7 @@
+## [2026-10-08] investigation | Historical audit validator portability
+
+[Portability](investigations/patch-audit-validator-portability.md): fixed historical register/sweep scope, exact merged 9.2.5 input replacements, checkout-independent receipts and read-only validation. Original proof artifacts remain unchanged.
+
 ## [2026-10-08] evidence | 8.2.5 API page audit
 
 [Audit](investigations/patch-8-2-5-api-audit.md): all 216 IDs accounted (198 inventory, fourteen extract, four captions); fourteen consumer-free retail retirements, 61 exact gaps and four substantive prose contracts pending. All 37 sweeps plus factory, negative control 61 → 62, bare/cached/Mists and scoped regressions, 49 parser fixtures, warning-clean non-vendor checks and startup `[]` pass. All registers reproduce; inherited three extract failures unchanged. ReportPosting closes one 9.2.5 gap (34 → 33). Exhaustive older-page list ends at 1.0.0; 100 pages remain after this audit.

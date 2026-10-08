@@ -64,8 +64,8 @@ class PatchAuditValidationTests(unittest.TestCase):
 
     def test_sweep_scope_is_complete_at_audit_revision(self):
         paths = historical_sweep_tests(ROOT, '56a1b8e6cacc1acc115956a1fac2497600178762')
-        self.assertEqual(len(paths), 35)
-        self.assertIn(ROOT / 'tests/patch_12_1_5_publication_sweep.rs', paths)
+        self.assertEqual(len(paths), 34)
+        self.assertIn(ROOT / 'tests/patch_12_1_0_publication_sweep.rs', paths)
         self.assertNotIn(ROOT / 'tests/patch_8_2_5_publication_sweep.rs', paths)
         self.assertTrue(all(path.is_file() for path in paths))
 

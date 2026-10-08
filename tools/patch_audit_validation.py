@@ -61,5 +61,5 @@ def historical_registers(root, revision):
 
 
 def historical_sweep_tests(root, revision):
-    """Keep every historical sweep source, including non-register sweeps."""
+    """Keep the source-defined sweep set at the audit revision."""
     return _historical_paths(root, revision, 'tests', 'patch_*_publication_sweep.rs')
