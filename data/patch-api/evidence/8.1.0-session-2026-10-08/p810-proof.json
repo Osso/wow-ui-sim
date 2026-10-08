@@ -200,6 +200,11 @@
         "tests/patch_8_1_0_publication_sweep.rs",
         "tests/data/patch_8_1_0_sweep_known_gaps.json"
       ]
+    },
+    {
+      "receipt": "p810-validator-portability.proof.json",
+      "expected_exit": 0,
+      "source_scope": []
     }
   ],
   "historical_failures": {

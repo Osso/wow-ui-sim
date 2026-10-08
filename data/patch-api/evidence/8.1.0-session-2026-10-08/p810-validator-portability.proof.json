@@ -1,0 +1,16 @@
+{
+  "command": [
+    "python3",
+    "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/evidence/8.1.0-session-2026-10-08/test_validator_portability.py"
+  ],
+  "revision": "fbc051693aba5d773b15806992c78d311edbb93c",
+  "scope": "p810-validator-portability",
+  "cwd": ".",
+  "target": "dedicated p810-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p810-validator-portability.txt",
+  "log_sha256": "17b552826bf563493146175d6c7dc42ed2420c5ae209159813ee3d9eb424bede",
+  "seconds": 0.5699303860019427,
+  "invalidated": false
+}

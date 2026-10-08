@@ -84,7 +84,7 @@ def reason(result):
                     'Retirement test exposed raw republication; candidate removed from retirement list, complete caller evidence retained.')
         if symbol.startswith('C_ConfigurationWarnings.'):
             return ('Retirement prohibited: current cached Blizzard Lua consumes this member. '
-                    'Keep modeled configuration warning state and report historical absence mismatch; '
+                    'Preserve existing temporary providers/consumers and report historical absence mismatch; '
                     'complete qualified/bare/caller scans retained.')
         return ('Later register expects absence, but ordinary namespace lookup still fabricates this member. '
                 'That later-page removal has a retained gap; this audit does not silently implement another '

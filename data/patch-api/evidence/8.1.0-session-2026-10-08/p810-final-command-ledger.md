@@ -20,3 +20,4 @@ All commands execute from p810-page with its dedicated target. Full logs and rev
 | p810-format.proof.json | 7113b19e9 | `cargo fmt --check` | 0 | exit only |
 | p810-mists-check.proof.json | 7113b19e9 | `cargo check --no-default-features --features sound,gui,casc,client-mists --tests` | 0 | Finished `dev` profile [optimized + debuginfo] target(s) in 52.98s |
 | p810-mists-behavior.proof.json | c5e0f15ab | `cargo test --no-default-features --features sound,gui,casc,client-mists --test integration patch_8_1_0` | 0 | test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 8164 filtered out; finished in 0.11s |
+| p810-validator-portability.proof.json | fbc051693 | `python3 data/patch-api/evidence/8.1.0-session-2026-10-08/test_validator_portability.py` | 0 | one relocated/shared-drift acceptance test passes |

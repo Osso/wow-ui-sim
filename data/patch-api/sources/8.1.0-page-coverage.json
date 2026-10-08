@@ -1310,21 +1310,21 @@
       "source": "C_ConfigurationWarnings.GetConfigurationWarningString",
       "status": "audit-pending",
       "capabilities": [],
-      "note": "Retirement prohibited: current cached Blizzard Lua consumes this member. Keep modeled configuration warning state and report historical absence mismatch; complete qualified/bare/caller scans retained."
+      "note": "Retirement prohibited: current cached Blizzard Lua consumes this member. Preserve existing temporary providers/consumers and report historical absence mismatch; complete qualified/bare/caller scans retained."
     },
     {
       "source_id": "wt-global-api-C_ConfigurationWarnings.GetConfigurationWarnings-128",
       "source": "C_ConfigurationWarnings.GetConfigurationWarnings",
       "status": "audit-pending",
       "capabilities": [],
-      "note": "Retirement prohibited: current cached Blizzard Lua consumes this member. Keep modeled configuration warning state and report historical absence mismatch; complete qualified/bare/caller scans retained."
+      "note": "Retirement prohibited: current cached Blizzard Lua consumes this member. Preserve existing temporary providers/consumers and report historical absence mismatch; complete qualified/bare/caller scans retained."
     },
     {
       "source_id": "wt-global-api-C_ConfigurationWarnings.SetConfigurationWarningSeen-129",
       "source": "C_ConfigurationWarnings.SetConfigurationWarningSeen",
       "status": "audit-pending",
       "capabilities": [],
-      "note": "Retirement prohibited: current cached Blizzard Lua consumes this member. Keep modeled configuration warning state and report historical absence mismatch; complete qualified/bare/caller scans retained."
+      "note": "Retirement prohibited: current cached Blizzard Lua consumes this member. Preserve existing temporary providers/consumers and report historical absence mismatch; complete qualified/bare/caller scans retained."
     },
     {
       "source_id": "wt-events-AUCTION_HOUSE_SCRIPT_DEPRECATED-136",

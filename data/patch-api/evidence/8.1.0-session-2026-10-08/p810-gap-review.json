@@ -1229,7 +1229,7 @@
       "kind": "member",
       "value": null
     },
-    "reason": "Retirement prohibited: current cached Blizzard Lua consumes this member. Keep modeled configuration warning state and report historical absence mismatch; complete qualified/bare/caller scans retained."
+    "reason": "Retirement prohibited: current cached Blizzard Lua consumes this member. Preserve existing temporary providers/consumers and report historical absence mismatch; complete qualified/bare/caller scans retained."
   },
   {
     "source_id": "wt-global-api-C_ConfigurationWarnings.GetConfigurationWarnings-128",
@@ -1251,7 +1251,7 @@
       "kind": "member",
       "value": null
     },
-    "reason": "Retirement prohibited: current cached Blizzard Lua consumes this member. Keep modeled configuration warning state and report historical absence mismatch; complete qualified/bare/caller scans retained."
+    "reason": "Retirement prohibited: current cached Blizzard Lua consumes this member. Preserve existing temporary providers/consumers and report historical absence mismatch; complete qualified/bare/caller scans retained."
   },
   {
     "source_id": "wt-global-api-C_ConfigurationWarnings.SetConfigurationWarningSeen-129",
@@ -1273,7 +1273,7 @@
       "kind": "member",
       "value": null
     },
-    "reason": "Retirement prohibited: current cached Blizzard Lua consumes this member. Keep modeled configuration warning state and report historical absence mismatch; complete qualified/bare/caller scans retained."
+    "reason": "Retirement prohibited: current cached Blizzard Lua consumes this member. Preserve existing temporary providers/consumers and report historical absence mismatch; complete qualified/bare/caller scans retained."
   },
   {
     "source_id": "wt-global-api-C_Calendar.EventGetClubId-120",
