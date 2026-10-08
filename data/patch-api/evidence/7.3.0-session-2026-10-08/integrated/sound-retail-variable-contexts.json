@@ -1,0 +1,961 @@
+[
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PlayerSpells/ClassTalents/Blizzard_HeroTalentsContainer.lua",
+    "line": 716,
+    "snippet": "\tPlaySound(sound);",
+    "sha256": "999ea3e266fcef8802f737b57a4002e6b43de1d7df61a5e28f7ba54d338d8d11",
+    "context": "HeroTalentCollapseButtonMixin = {};\n\nfunction HeroTalentCollapseButtonMixin:SetCollapsed(isCollapsed)\n\tself.isCollapsed = isCollapsed;\n\tlocal atlasToUse = isCollapsed and self.collapsedAtlas or self.expandedAtlas;\n\tself.Texture:SetAtlas(atlasToUse);\n\tself.TextureHover:SetAtlas(atlasToUse);\n\n\tif self:IsMouseMotionFocus() then\n\t\tself:OnEnter();\n\tend\nend\n\nfunction HeroTalentCollapseButtonMixin:OnClick()\n\tlocal sound = self.isCollapsed and SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_OFF or SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON;\n\tPlaySound(sound);\n\tself:GetParent():OnCollapseClicked();\nend\n\nfunction HeroTalentCollapseButtonMixin:OnEnter()\n\tself.TextureHover:Show();\n\n\tlocal tooltipText = self.isCollapsed and HERO_TALENTS_EXPAND or HERO_TALENTS_COLLAPSE;\n\tGameTooltip:SetOwner(self, \"ANCHOR_RIGHT\", -10, -10);\n\tGameTooltip_AddHighlightLine(GameTooltip, tooltipText);\n\tSharedTooltip_SetBackdropStyle(GameTooltip, GAME_TOOLTIP_BACKDROP_STYLE_CLASS_TALENT);\n\tGameTooltip:Show();\nend"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ScrappingMachineUI/Blizzard_ScrappingMachineUI.lua",
+    "line": 114,
+    "snippet": "\t\tPlaySound(itemAdded and soundKits.onItemAdded or soundKits.onItemRemoved);",
+    "sha256": "f2d01789abbb423bc2d9db6dbc7e1c71540749feffe79c48b16762b503ced697",
+    "context": "\telseif (event == \"UNIT_SPELLCAST_SUCCEEDED\") then\n\t\tlocal unitTag, lineID, spellID = ...;\n\t\tif self.scrapCastLineID and self.scrapCastLineID == lineID then\n\t\t\tC_ScrappingMachineUI.RemoveCurrentScrappingItem();\n\t\tend\n\tend\nend\n\nlocal itemChangeSoundsByTimerunningID = {\n\t[1] = { onItemAdded = SOUNDKIT.UNRAVELING_SANDS_ITEM_ADDED, onItemRemoved = SOUNDKIT.UNRAVELING_SANDS_ITEM_REMOVED},\n};\n\nfunction ScrappingMachineMixin:PlayItemChangeSounds(itemAdded)\n\tlocal soundKits = itemChangeSoundsByTimerunningID[PlayerGetTimerunningSeasonID()];\n\tif soundKits then\n\t\tPlaySound(itemAdded and soundKits.onItemAdded or soundKits.onItemRemoved);\n\tend\nend\n\nfunction ScrappingMachineMixin:CloseScrappingMachine()\n\tself.scrapCastLineID = nil;\n\tself:ClearAllScrapButtons();\n\tC_ScrappingMachineUI.CloseScrappingMachine();\nend\n\nfunction ScrappingMachineMixin:OnHide()\n\tself:UnregisterEvent(\"UNIT_SPELLCAST_START\");\n\tself:UnregisterEvent(\"UNIT_SPELLCAST_INTERRUPTED\");"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonMissionUI.lua",
+    "line": 359,
+    "snippet": "\t\tPlaySound(info.slotSoundKitID);",
+    "sha256": "5578065218d2d6e13afb014580c456c4313930f71f64975222eb45e0de57aec9",
+    "context": "\t\tbuttonStyle = HelpTip.ButtonStyle.Close,\n\t\tcvarBitfield = \"closedInfoFrames\",\n\t\tbitfieldFlag = LE_FRAME_TUTORIAL_GARRISON_LANDING,\n\t\ttargetPoint = HelpTip.Point.LeftEdgeCenter,\n\t\toffsetX = -5,\n\t\tcheckCVars = true,\n\t};\nend\n\nfunction GarrisonFollowerMission:AssignFollowerToMission(frame, info)\n\tif (not GarrisonMission.AssignFollowerToMission(self, frame, info)) then\n\t\treturn;\n\tend\n\n\tif info.slotSoundKitID then\n\t\tPlaySound(info.slotSoundKitID);\n\tend\n\n\tlocal soundToPlay;\n\tif (info.isTroop) then\n\t\tsoundToPlay = GarrisonFollowerOptions[info.followerTypeID].missionPageAssignTroopSound;\n\telse\n\t\tsoundToPlay = GarrisonFollowerOptions[info.followerTypeID].missionPageAssignFollowerSound;\n\tend\n\tif (soundToPlay) then\n\t\tPlaySound(soundToPlay);\n\tend\n"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonMissionUI.lua",
+    "line": 369,
+    "snippet": "\t\tPlaySound(soundToPlay);",
+    "sha256": "5578065218d2d6e13afb014580c456c4313930f71f64975222eb45e0de57aec9",
+    "context": "\tif (not GarrisonMission.AssignFollowerToMission(self, frame, info)) then\n\t\treturn;\n\tend\n\n\tif info.slotSoundKitID then\n\t\tPlaySound(info.slotSoundKitID);\n\tend\n\n\tlocal soundToPlay;\n\tif (info.isTroop) then\n\t\tsoundToPlay = GarrisonFollowerOptions[info.followerTypeID].missionPageAssignTroopSound;\n\telse\n\t\tsoundToPlay = GarrisonFollowerOptions[info.followerTypeID].missionPageAssignFollowerSound;\n\tend\n\tif (soundToPlay) then\n\t\tPlaySound(soundToPlay);\n\tend\n\n\tframe.Name:Show();\n\tframe.Name:SetText(info.name);\n\tif (frame.Class) then\n\t\tframe.Class:Show();\n\t\tframe.Class:SetAtlas(info.classAtlas);\n\tend\n\tframe.PortraitFrame.Empty:Hide();\n\n\tself:GetMissionPage():UpdateFollowerModel(info);\n"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_CovenantMissionUI.lua",
+    "line": 528,
+    "snippet": "\t\tPlaySound(soundKitToPlay);",
+    "sha256": "cc6792d9be542d6c396d6b017bd10d592a0fba5020d86b0cbe12b622b4c07001",
+    "context": "\treturn CovenantFollowerPlacer;\nend\n\nfunction CovenantMission:OnClickFollowerPlacerFrame(button, info)\n\tlocal soundKitToPlay = SOUNDKIT.UI_ADVENTURES_ADVENTURER_UNSLOTTED;\n\tif button == \"LeftButton\" then\n\t\tfor followerFrame in self:GetMissionPage().Board:EnumerateFollowers() do\n\t\t\tif followerFrame:IsShown() and followerFrame:IsMouseOver() then\n\t\t\t\tself:AssignFollowerToMission(followerFrame, info);\n\t\t\t\tsoundKitToPlay = nil;\n\t\t\tend\n\t\tend\n\tend\n\t\n\tif soundKitToPlay then\n\t\tPlaySound(soundKitToPlay);\n\tend\n\tself:ClearMouse();\nend\n\nfunction CovenantMission:SetPlacerFrame(placer, info, yOffset, soundKit)\n\tplacer:SetFollowerGUID(info.followerID, info);\n\tself:LockPlacerToMouse(placer);\n\n\tif soundKit then\n\t\tPlaySound(soundKit);\n\telse\n\t\tPlaySound(SOUNDKIT.UI_ADVENTURES_ADVENTURER_SELECTED);"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_CovenantMissionUI.lua",
+    "line": 538,
+    "snippet": "\t\tPlaySound(soundKit);",
+    "sha256": "cc6792d9be542d6c396d6b017bd10d592a0fba5020d86b0cbe12b622b4c07001",
+    "context": "\t\t\tend\n\t\tend\n\tend\n\t\n\tif soundKitToPlay then\n\t\tPlaySound(soundKitToPlay);\n\tend\n\tself:ClearMouse();\nend\n\nfunction CovenantMission:SetPlacerFrame(placer, info, yOffset, soundKit)\n\tplacer:SetFollowerGUID(info.followerID, info);\n\tself:LockPlacerToMouse(placer);\n\n\tif soundKit then\n\t\tPlaySound(soundKit);\n\telse\n\t\tPlaySound(SOUNDKIT.UI_ADVENTURES_ADVENTURER_SELECTED);\n\tend\nend\n\nfunction CovenantMission:OnFollowerFrameDragStart(followerFrame)\n\tlocal info = followerFrame:GetInfo();\n\tif not info then\n\t\treturn;\n\tend\n\n\tlocal covenantPlacer = self:GetPlacerFrame();"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonShipyardUI.lua",
+    "line": 671,
+    "snippet": "\tPlaySound(self.surviveSound);",
+    "sha256": "cd1c7cceb77fb3f8270358e3d2907d068c3279bbc973c0daded9af0e8ac6db2a",
+    "context": "\t\t\tGarrisonFollowerOptions[self:GetParent().followerTypeID].showSingleMissionCompleteAnimation);\n\tend\n\n\tif ( entry ) then\n\t\tif ( self.skipAnimations ) then\n\t\t\tentry.duration = 0;\n\t\telse\n\t\t\tentry.duration = 0.5;\n\t\tend\n\tend\nend\n\nfunction GarrisonShipyardMissionComplete:PlaySplashAnim(followerFrame)\n\tfollowerFrame.BoatDeathAnimations:SetCameraPosition(self.boatDeathCamPos[1], self.boatDeathCamPos[2], self.boatDeathCamPos[3]);\n\tfollowerFrame.BoatDeathAnimations:SetSpellVisualKit(self.surviveAnim);\n\tPlaySound(self.surviveSound);\nend\n\nfunction GarrisonShipyardMissionComplete:PlayExplosionAnim(followerFrame)\n\tfollowerFrame.BoatDeathAnimations:SetCameraPosition(self.boatDeathCamPos[1], self.boatDeathCamPos[2], self.boatDeathCamPos[3]);\n\tfollowerFrame.BoatDeathAnimations:SetSpellVisualKit(self.destroyAnim);\n\tPlaySound(self.destroySound);\nend\n\nfunction GarrisonShipyardMissionComplete:PlaySavedAnim(followerFrame)\n\tfollowerFrame.BoatDeathAnimations:SetCameraPosition(self.boatDeathCamPos[1], self.boatDeathCamPos[2], self.boatDeathCamPos[3]);\n\tfollowerFrame.BoatDeathAnimations:SetSpellVisualKit(self.saveAnim);\n\tPlaySound(self.saveSound);"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonShipyardUI.lua",
+    "line": 677,
+    "snippet": "\tPlaySound(self.destroySound);",
+    "sha256": "cd1c7cceb77fb3f8270358e3d2907d068c3279bbc973c0daded9af0e8ac6db2a",
+    "context": "\t\telse\n\t\t\tentry.duration = 0.5;\n\t\tend\n\tend\nend\n\nfunction GarrisonShipyardMissionComplete:PlaySplashAnim(followerFrame)\n\tfollowerFrame.BoatDeathAnimations:SetCameraPosition(self.boatDeathCamPos[1], self.boatDeathCamPos[2], self.boatDeathCamPos[3]);\n\tfollowerFrame.BoatDeathAnimations:SetSpellVisualKit(self.surviveAnim);\n\tPlaySound(self.surviveSound);\nend\n\nfunction GarrisonShipyardMissionComplete:PlayExplosionAnim(followerFrame)\n\tfollowerFrame.BoatDeathAnimations:SetCameraPosition(self.boatDeathCamPos[1], self.boatDeathCamPos[2], self.boatDeathCamPos[3]);\n\tfollowerFrame.BoatDeathAnimations:SetSpellVisualKit(self.destroyAnim);\n\tPlaySound(self.destroySound);\nend\n\nfunction GarrisonShipyardMissionComplete:PlaySavedAnim(followerFrame)\n\tfollowerFrame.BoatDeathAnimations:SetCameraPosition(self.boatDeathCamPos[1], self.boatDeathCamPos[2], self.boatDeathCamPos[3]);\n\tfollowerFrame.BoatDeathAnimations:SetSpellVisualKit(self.saveAnim);\n\tPlaySound(self.saveSound);\nend\n\nfunction GarrisonShipyardMissionComplete:AnimBoatDeath(entry)\n\tif (self.currentMission.succeeded) then\n\t\tentry.duration = 0;\n\t\tself:AnimXP(entry);"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonShipyardUI.lua",
+    "line": 683,
+    "snippet": "\tPlaySound(self.saveSound);",
+    "sha256": "cd1c7cceb77fb3f8270358e3d2907d068c3279bbc973c0daded9af0e8ac6db2a",
+    "context": "function GarrisonShipyardMissionComplete:PlaySplashAnim(followerFrame)\n\tfollowerFrame.BoatDeathAnimations:SetCameraPosition(self.boatDeathCamPos[1], self.boatDeathCamPos[2], self.boatDeathCamPos[3]);\n\tfollowerFrame.BoatDeathAnimations:SetSpellVisualKit(self.surviveAnim);\n\tPlaySound(self.surviveSound);\nend\n\nfunction GarrisonShipyardMissionComplete:PlayExplosionAnim(followerFrame)\n\tfollowerFrame.BoatDeathAnimations:SetCameraPosition(self.boatDeathCamPos[1], self.boatDeathCamPos[2], self.boatDeathCamPos[3]);\n\tfollowerFrame.BoatDeathAnimations:SetSpellVisualKit(self.destroyAnim);\n\tPlaySound(self.destroySound);\nend\n\nfunction GarrisonShipyardMissionComplete:PlaySavedAnim(followerFrame)\n\tfollowerFrame.BoatDeathAnimations:SetCameraPosition(self.boatDeathCamPos[1], self.boatDeathCamPos[2], self.boatDeathCamPos[3]);\n\tfollowerFrame.BoatDeathAnimations:SetSpellVisualKit(self.saveAnim);\n\tPlaySound(self.saveSound);\nend\n\nfunction GarrisonShipyardMissionComplete:AnimBoatDeath(entry)\n\tif (self.currentMission.succeeded) then\n\t\tentry.duration = 0;\n\t\tself:AnimXP(entry);\n\telseif (self.boatDeathIndex <= #self.currentMission.followers) then\n\t\tlocal followerFrame = self.Stage.FollowersFrame.Followers[self.boatDeathIndex];\n\t\tif (followerFrame.state == LE_FOLLOWER_MISSION_COMPLETE_STATE_ALIVE or followerFrame.state == LE_FOLLOWER_MISSION_COMPLETE_STATE_SAVED) then\n\t\t\tif (followerFrame.state == LE_FOLLOWER_MISSION_COMPLETE_STATE_ALIVE) then\n\t\t\t\tself:PlaySplashAnim(followerFrame);\n\t\t\telse"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_AdventuresPuck.lua",
+    "line": 184,
+    "snippet": "\t\tPlaySound(self.deathSound);",
+    "sha256": "41db87eb163044075eda51ef111c9a330296c14b78d0b082c58873e6139de0bd",
+    "context": "\n\tDesaturateRegions(self:GetRegions());\n\n\tself.DeathAnimationFrame.CrossRight:SetDesaturation(desaturation);\n\tself.DeathAnimationFrame.CrossLeft:SetDesaturation(desaturation);\n\n\tself.AbilityOne:SetPuckDesaturation(desaturation);\n\tself.AbilityTwo:SetPuckDesaturation(desaturation);\n\tself.HealthBar:SetPuckDesaturation(desaturation);\nend\n\nfunction AdventuresPuckMixin:PlayDeathAnimation()\n\tself.DeathAnimationFrame.DeathAnimation:Play();\n\t\n\tif self.deathSound then\t\n\t\tPlaySound(self.deathSound);\n\tend\nend\n\nfunction AdventuresPuckMixin:OnEnter()\n\tlocal name = self:GetName();\n\tif name then\n\t\tGameTooltip:SetOwner(self, \"ANCHOR_RIGHT\");\n\t\tGameTooltip_SetTitle(GameTooltip, name);\n\n\t\tlocal autoCombatSpells = self:GetAutoCombatSpells();\n\t\tif autoCombatSpells then \n\t\t\tfor i = 1, #autoCombatSpells do"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_AdventuresCompleteScreen.lua",
+    "line": 190,
+    "snippet": "\tPlaySound(self.replaySpeed > SlowSpeed and SOUNDKIT.UI_ADVENTURES_FAST_FORWARD_ACTIVATED or SOUNDKIT.UI_ADVENTURES_FAST_FORWARD_DEACTIVATED );",
+    "sha256": "bf83949cabd062f9b8617b040c8e970ecbce696da53035a104937c92fd49462e",
+    "context": "\tlocal roundIndex = 1;\n\tself:StartReplayRound(roundIndex);\nend\n\nfunction AdventuresCompleteScreenMixin:GetReplaySpeed()\n\treturn self.replaySpeed;\nend\n\nfunction AdventuresCompleteScreenMixin:ToggleReplaySpeed()\n\tif self.replaySpeed > SlowSpeed then\n\t\tself:SetReplaySpeed(SlowSpeed);\n\telse\n\t\tself:SetReplaySpeed(FastSpeed);\n\tend\n\n\tPlaySound(self.replaySpeed > SlowSpeed and SOUNDKIT.UI_ADVENTURES_FAST_FORWARD_ACTIVATED or SOUNDKIT.UI_ADVENTURES_FAST_FORWARD_DEACTIVATED );\nend\n\nfunction AdventuresCompleteScreenMixin:SetReplaySpeed(replaySpeed)\n\tself.replaySpeed = replaySpeed;\n\n\tself.ModelScene:SetEffectSpeed(replaySpeed);\n\n\tself.CompleteFrame.SpeedButton:SetSpeedUpShown(self:IsReplaySpeedFast());\n\tC_Garrison.SetAutoCombatSpellFastForward(self:IsReplaySpeedFast());\nend\n\nfunction AdventuresCompleteScreenMixin:IsReplaySpeedFast()"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_AdventuresRewardsScreen.lua",
+    "line": 33,
+    "snippet": "\t\tPlaySound(CovenantVictorySoundKits[kit]);",
+    "sha256": "43ac7a7fb3f9ebf6a074e8a352c05afdc32baa326121a4505b30d50a0e458d3b",
+    "context": "function AdventuresRewardsScreenMixin:Reset() \n\tself:Hide();\n\tself:HideAllPanels();\nend\n\nfunction AdventuresRewardsScreenMixin:ShowAdventureVictoryStateScreen(combatWon)\n\tlocal adventuresEmblemFormat = \"Adventures-EndCombat-%s\";\n\tlocal successFrame = self.CombatCompleteSuccessFrame;\n\n\tif combatWon then\n\t\tlocal covenantData = C_Covenants.GetCovenantData(C_Covenants.GetActiveCovenantID());\n\t\tlocal kit = covenantData and covenantData.textureKit or \"Kyrian\";\n\t\tsuccessFrame.CovenantCrest:SetAtlas(adventuresEmblemFormat:format(kit), true);\n\t\tsuccessFrame.CovenantCrest:ClearAllPoints();\n\t\tsuccessFrame.CovenantCrest:SetPoint(\"BOTTOM\", successFrame.CombatCompleteLineTop, \"TOP\", 0, -71);\n\t\tPlaySound(CovenantVictorySoundKits[kit]);\n\t\tself:ShowCombatCompleteSuccessPanel();\n\n\t\tlocal successColor = WHITE_FONT_COLOR;\n\t\tsuccessFrame.CombatCompleteLineTop:SetVertexColor(successColor:GetRGBA());\n\t\tsuccessFrame.CombatCompleteLineBottom:SetVertexColor(successColor:GetRGBA());\n\t\tsuccessFrame.TextCenter:SetTextColor(DARKYELLOW_FONT_COLOR:GetRGBA());\n\telse\n\t\tsuccessFrame.CovenantCrest:SetAtlas(adventuresEmblemFormat:format(\"Fail\"), true);\n\t\tsuccessFrame.CovenantCrest:ClearAllPoints();\n\t\tsuccessFrame.CovenantCrest:SetPoint(\"BOTTOM\", successFrame.CombatCompleteLineTop, \"TOP\", 0, -5);\n\t\tPlaySound(self:HasExperienceRewards() and SOUNDKIT.UI_ADVENTURES_ADVENTURE_FAILURE_PARTIAL or SOUNDKIT.UI_ADVENTURES_ADVENTURE_FAILURE_COMPLETE);\n\t\tself:ShowCombatCompleteSuccessPanel();"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_AdventuresRewardsScreen.lua",
+    "line": 44,
+    "snippet": "\t\tPlaySound(self:HasExperienceRewards() and SOUNDKIT.UI_ADVENTURES_ADVENTURE_FAILURE_PARTIAL or SOUNDKIT.UI_ADVENTURES_ADVENTURE_FAILURE_COMPLETE);",
+    "sha256": "43ac7a7fb3f9ebf6a074e8a352c05afdc32baa326121a4505b30d50a0e458d3b",
+    "context": "\t\tlocal kit = covenantData and covenantData.textureKit or \"Kyrian\";\n\t\tsuccessFrame.CovenantCrest:SetAtlas(adventuresEmblemFormat:format(kit), true);\n\t\tsuccessFrame.CovenantCrest:ClearAllPoints();\n\t\tsuccessFrame.CovenantCrest:SetPoint(\"BOTTOM\", successFrame.CombatCompleteLineTop, \"TOP\", 0, -71);\n\t\tPlaySound(CovenantVictorySoundKits[kit]);\n\t\tself:ShowCombatCompleteSuccessPanel();\n\n\t\tlocal successColor = WHITE_FONT_COLOR;\n\t\tsuccessFrame.CombatCompleteLineTop:SetVertexColor(successColor:GetRGBA());\n\t\tsuccessFrame.CombatCompleteLineBottom:SetVertexColor(successColor:GetRGBA());\n\t\tsuccessFrame.TextCenter:SetTextColor(DARKYELLOW_FONT_COLOR:GetRGBA());\n\telse\n\t\tsuccessFrame.CovenantCrest:SetAtlas(adventuresEmblemFormat:format(\"Fail\"), true);\n\t\tsuccessFrame.CovenantCrest:ClearAllPoints();\n\t\tsuccessFrame.CovenantCrest:SetPoint(\"BOTTOM\", successFrame.CombatCompleteLineTop, \"TOP\", 0, -5);\n\t\tPlaySound(self:HasExperienceRewards() and SOUNDKIT.UI_ADVENTURES_ADVENTURE_FAILURE_PARTIAL or SOUNDKIT.UI_ADVENTURES_ADVENTURE_FAILURE_COMPLETE);\n\t\tself:ShowCombatCompleteSuccessPanel();\n\n\t\tlocal failureColor = RED_FONT_COLOR;\n\t\tsuccessFrame.CombatCompleteLineTop:SetVertexColor(failureColor:GetRGBA());\n\t\tsuccessFrame.CombatCompleteLineBottom:SetVertexColor(failureColor:GetRGBA());\n\t\tsuccessFrame.TextCenter:SetTextColor(failureColor:GetRGBA());\n\tend\n\n\tself:Show();\nend\n\nfunction AdventuresRewardsScreenMixin:ShowRewardsScreen(missionInfo, victoryState)"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_BuffFrame/BuffFrame.lua",
+    "line": 1201,
+    "snippet": "\t\tPlaySound(deadlyDebuffInfo.soundKitID);",
+    "sha256": "13201e0f62457d5fa086808ed6cbc7a964d115db518fcadd7bd4e53b4a904ef1",
+    "context": "function DeadlyDebuffFrameMixin:OnShow()\n\tRaidWarningUtil.UpdateCenterScreenAnchors();\nend\n\nfunction DeadlyDebuffFrameMixin:OnHide()\n\tself.lastSpellID = nil;\n\tRaidWarningUtil.UpdateCenterScreenAnchors();\nend\n\nfunction DeadlyDebuffFrameMixin:Setup(deadlyDebuffInfo)\n\tself.Debuff.deadlyInstanceID = deadlyDebuffInfo.auraInstanceID;\n\tself.Debuff:Update(deadlyDebuffInfo);\n\tself.WarningText:SetText(deadlyDebuffInfo.warningText)\n\n\tif deadlyDebuffInfo.soundKitID and deadlyDebuffInfo.spellID ~= self.lastSpellID then\n\t\tPlaySound(deadlyDebuffInfo.soundKitID);\n\tend\n\n\tself.lastSpellID = deadlyDebuffInfo.spellID;\n\n\tself:Show();\nend\n\nBuffFramePrivateAuraAnchorMixin = {};\n\nfunction BuffFramePrivateAuraAnchorMixin:SetUnit(unit, showDispelType)\n\tself.unit = unit; -- This is really just for debugging now.\n"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ReforgingUI/Classic/Blizzard_ReforgingUI.xml",
+    "line": 136,
+    "snippet": "\t\t\t\t--PlaySound(\"igMainMenuOptionCheckBoxOn\");",
+    "sha256": "1c80504da8379d780ff14369dd8986832983d1e9c68cff6da49f9e94a6ddc8eb",
+    "context": "\t\t\t\tend\n\t\t\t\tif ( not self.button.disableTex:IsShown() ) then\n\t\t\t\t\tself.button.highlightTex:Show();\n\t\t\t\tend\n\t\t\t</OnEnter>\n\t\t\t<OnLeave>\n\t\t\t\tif ( GameTooltip:GetOwner() == self ) then\n\t\t\t\t\tGameTooltip:Hide();\n\t\t\t\tend\n\t\t\t\tself.button.highlightTex:Hide();\n\t\t\t</OnLeave>\n\t\t\t<OnClick>\n\t\t\t\tStat_OnClick(self);\n\t\t\t\tStat_SetButtonChecked(self, self:GetChecked());\n\t\t\t\tPlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON);\n\t\t\t\t--PlaySound(\"igMainMenuOptionCheckBoxOn\");\n\t\t\t</OnClick>\n\t\t\t<OnShow>\n\t\t\t\tif ( self:IsMouseOver() ) then\n\t\t\t\t\tself.button.highlightTex:Show();\n\t\t\t\telse\n\t\t\t\t\tself.button.highlightTex:Hide();\n\t\t\t\tend\n\t\t\t</OnShow>\n\t\t\t<OnHide>\n\t\t\t\tStat_SetButtonChecked(self, false);\n\t\t\t</OnHide>\n\t\t\t<OnEnable>"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ItemInteractionUI/Blizzard_ItemInteractionUI.lua",
+    "line": 218,
+    "snippet": "\tPlaySound(self.openSoundKitID)",
+    "sha256": "f8fd6a8999d840dd6a7eb101b92bc0e47820c32fd5a21b52046384c2e38aa827",
+    "context": "\t\t\tlocal flyoutSelected = not isRightButton and DoesAncestryIncludeAny(EquipmentFlyout_GetFrame(), GetMouseFoci());\n\t\t\tif not flyoutSelected then\n\t\t\t\tEquipmentFlyout_Hide();\n\t\t\tend\n\t\tend\n\tend\nend\n\nfunction ItemInteractionMixin:OnShow()\n\tFrameUtil.RegisterFrameForEvents(self, ITEM_INTERACTION_FRAME_EVENTS);\n\tFrameUtil.RegisterFrameForUnitEvents(self, ITEM_INTERACTION_UNIT_EVENTS, \"player\");\n\n\tlocal frameInfo = C_ItemInteraction.GetItemInteractionInfo();\n\tself:LoadInteractionFrameData(frameInfo);\n\n\tPlaySound(self.openSoundKitID)\n\tif (self.tutorialBitFlag) then\n\t\tif (not GetCVarBitfield(\"closedInfoFrames\", self.tutorialBitFlag)) then\n\t\t\tlocal helpTipInfo = {\n\t\t\t\ttext = self.tutorialText,\n\t\t\t\tbuttonStyle = HelpTip.ButtonStyle.Close,\n\t\t\t\tcvarBitfield = \"closedInfoFrames\",\n\t\t\t\tbitfieldFlag = self.tutorialBitFlag,\n\t\t\t};\n\t\t\tif (self.conversionMode) then\n\t\t\t\thelpTipInfo.alignment = HelpTip.Alignment.Left;\n\t\t\t\thelpTipInfo.targetPoint = HelpTip.Point.BottomEdgeCenter;\n\t\t\t\thelpTipInfo.offsetY = -10;"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ItemInteractionUI/Blizzard_ItemInteractionUI.lua",
+    "line": 249,
+    "snippet": "\tPlaySound(self.closeSoundKitID)",
+    "sha256": "f8fd6a8999d840dd6a7eb101b92bc0e47820c32fd5a21b52046384c2e38aa827",
+    "context": "\t\t\t\thelpTipInfo.offsetX = 80;\n\t\t\t\tHelpTip:Show(self, helpTipInfo, self.ItemSlot);\n\t\t\tend\n\t\tend\n\tend\n\n\tself:UpdateCostFrame();\n\tOpenAllBags(self);\n\n\tC_ItemInteraction.InitializeFrame();\n\tC_ItemInteraction.ClearPendingItem();\n\tItemButtonUtil.TriggerEvent(ItemButtonUtil.Event.ItemContextChanged);\nend\n\nfunction ItemInteractionMixin:OnHide()\n\tPlaySound(self.closeSoundKitID)\n\tFrameUtil.UnregisterFrameForEvents(self, ITEM_INTERACTION_FRAME_EVENTS);\n\tFrameUtil.UnregisterFrameForEvents(self, ITEM_INTERACTION_UNIT_EVENTS);\n\n\tCloseAllBags(self);\n\tEquipmentFlyout_Hide();\n\tC_ItemInteraction.CloseUI();\n\n\t-- Greys out the items in your bag that don't match. If you need  to add a new item interaction frame\n\t-- Add a new type to ItemUtil.lua ItemButtonUtil.ItemContextEnum\n\tItemButtonUtil.TriggerEvent(ItemButtonUtil.Event.ItemContextChanged);\nend\n"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ItemInteractionUI/Blizzard_ItemInteractionUI.lua",
+    "line": 643,
+    "snippet": "\tPlaySound(self.dropInSlotSoundKitId);",
+    "sha256": "f8fd6a8999d840dd6a7eb101b92bc0e47820c32fd5a21b52046384c2e38aa827",
+    "context": "\t\tend\n\n\t\tif (self.interactionType == Enum.UIItemInteractionType.RunecarverScrapping) then\n\t\t\tlocal costs = C_LegendaryCrafting.GetRuneforgeLegendaryCost(itemLocation);\n\t\t\tRuneforgeUtil.SetCurrencyCosts(self.DescriptionCurrencies, costs);\n\t\t\tself.DescriptionCurrencies:Show();\n\t\tend\n\tend\n\n\tif (self:HasExtendedCurrencyCost()) then\n\t\tself:SetItemConversionExtendedCurrencyCost(itemLocation);\n\tend\n\n\tself:UpdateDescriptionColor();\n\n\tPlaySound(self.dropInSlotSoundKitId);\n\tif (self.conversionMode) then\n\t\tself.ItemConversionFrame.ItemConversionInputSlot:RefreshIcon();\n\t\tself.ItemConversionFrame.ItemConversionInputSlot:RefreshTooltip();\n\t\tself.ItemConversionFrame:UpdateArrow(itemLocation and itemLocation:IsValid());\n\t\tself.ItemConversionFrame.ItemConversionOutputSlot:RefreshIcon();\n\telse\n\t\tself.ItemSlot:RefreshIcon();\n\t\tself.ItemSlot:RefreshTooltip();\n\tend\n\tself:UpdateActionButtonState();\n\n\tfor _, staticPopupName in pairs(staticPopupNames) do"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CovenantToasts/Blizzard_CovenantRenownToast.lua",
+    "line": 129,
+    "snippet": "\tPlaySound(soundID);",
+    "sha256": "2555092e8b25519e3430c29ef1eacf40ee90aa02d72a141d471a38ffa4c9fe23",
+    "context": "\tself.RewardIcon:SetAlpha(0);\n\tself.RewardIconRing:SetAlpha(0);\n\tself.RewardDescription:SetAlpha(0);\n\n\tself:SetupRewardVisuals(data.covenantID, data.renownLevel);\n\n\tlocal soundKitData = SOUND_KIT_BY_TEXTURE_KIT[data.textureKit]\n\tlocal levels = C_CovenantSanctumUI.GetRenownLevels(data.covenantID);\n\tlocal levelInfo = levels[data.renownLevel];\n\tlocal soundID = soundKitData.default;\n\tif data.renownLevel == #levels then\n\t\tsoundID = soundKitData.final;\n\telseif levelInfo.isMilestone then\n\t\tsoundID = soundKitData.milestone;\n\tend\n\tPlaySound(soundID);\n\n\tself.bannerData = data;\n\n\tself:SetAlpha(1);\n\tself:Show();\n\tself.ShowAnim:Stop();\n\tself.ShowAnim:Play();\nend\n\nfunction CovenantRenownToastMixin:OnMouseEnter()\n\tGameTooltip:SetOwner(self.RewardIconMouseOver, \"ANCHOR_NONE\");\n\tGameTooltip:SetPoint(\"LEFT\", self.RewardIconMouseOver, \"RIGHT\", 10, 0);"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CovenantToasts/Blizzard_CovenantChoiceToast.lua",
+    "line": 40,
+    "snippet": "\tPlaySound(data.celebrationSoundKit);",
+    "sha256": "149a463206f9dc7f6a9318517806edf0fa3112803eebc9aac5653ce0edfbe5b2",
+    "context": "\tlocal covenantData = C_Covenants.GetCovenantData(covenantID);\n\tif covenantData then\n\t\tTopBannerManager_Show(self, { \n\t\t\tname = covenantData.name, \n\t\t\tcovenantColor = COVENANT_COLORS[covenantData.textureKit],\n\t\t\ttextureKit = covenantData.textureKit,\n\t\t\tcelebrationSoundKit = covenantData.celebrationSoundKit,\n\t\t});\n\tend\nend\n\nfunction CovenantChoiceToastMixin:PlayBanner(data)\n\tself.CovenantName:SetText(data.name);\n\tself.CovenantName:SetTextColor(data.covenantColor:GetRGB());\n\tself:SetCovenantTextureKit(data.textureKit);\n\tPlaySound(data.celebrationSoundKit);\n\n\tself.ToastBG:SetAlpha(0);\n\tself.GlowLineTop:SetAlpha(0);\n\tself.GlowLineTopAdditive:SetAlpha(0);\n\tself.Stars1:SetAlpha(0);\n\tself.Stars2:SetAlpha(0);\n\tself.IconSwirlModelScene:SetAlpha(0);\n\tself.Icon:SetAlpha(0);\n\tself.CovenantName:SetAlpha(0);\n\tself.HeaderText:SetAlpha(0);\n\n\tself:SetAlpha(1);"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIWidgets/Blizzard_UIWidgetTemplateFillUpFrames.lua",
+    "line": 257,
+    "snippet": "\t\t\tPlaySound(flashFameSound[textureKit]);",
+    "sha256": "074577c1446dbdf7c9842f1aa1ecedae39ccc4c562838b0c87879dc3dbace40c",
+    "context": "\tself.Bar:SetMinMaxValues(min, max);\n\n\tif isFull then\n\t\tself.Bar:SetValue(max);\n\telseif isFilling then\n\t\tself.Bar:SetValue(value);\n\telse\n\t\tself.Bar:SetValue(min);\n\tend\n\n\tif flashFrame then\n\t\tself.Bar.Flipbook:Hide();\n\t\tself.Flash.PulseAnim:Stop();\n\t\tself.Flash.FlashAnim:Restart();\n\t\tif flashFameSound[textureKit] then\n\t\t\tPlaySound(flashFameSound[textureKit]);\n\t\tend\n\n\t\tif filledFlipbookAtlasInfo then\n\t\t\tself.Bar.FilledFlipbook:Show();\n\t\t\tself.Bar.FilledFlipbookAnim:Restart();\t\n\t\telse\n\t\t\tself.Bar.FilledFlipbook:Hide();\n\t\t\tself.Bar.FilledFlipbookAnim:Stop();\n\t\tend\n\telse\n\t\tif pulseFrame then\n\t\t\tself.Flash.PulseAnim:Play();"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_OrderHallUI/Blizzard_OrderHallTalents.lua",
+    "line": 1239,
+    "snippet": "\tPlaySound(soundKitID);",
+    "sha256": "957a084c7dbed25e14f528c1d05c68a59f990d0f2c1349d562f58b2ff109bc16",
+    "context": "\telse\n\t\tlocal errorCallback = self.customUnavailableTalentErrorCallback;\n\t\tlocal customError = (errorCallback ~= nil) and errorCallback(self.talent) or nil;\n\t\tif (customError ~= nil) then\n\t\t\tUIErrorsFrame:AddMessage(customError, RED_FONT_COLOR:GetRGBA());\n\t\tend\n\tend\nend\n\nfunction GarrisonTalentButtonMixin:HasResearchTime()\n\treturn self.talent.researchDuration and self.talent.researchDuration > 0;\nend\n\nfunction GarrisonTalentButtonMixin:ActivateTalent()\n\tlocal soundKitID = GetResearchSoundForTalentType(self.talent.type);\n\tPlaySound(soundKitID);\n\n\tif (self.talentSelectedEffect ~= nil) then\n\t\tself:StartSelectedAnimation();\n\tend\n\n\tC_Garrison.ResearchTalent(self.talent.id, self.talent.talentRank + 1);\n\n\tif (not self:HasResearchTime()) then\n\t\tself:GetTalentFrame():SetResearchingTalentID(self.talent.id);\n\tend\nend\n"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedTalentUI/Blizzard_TalentButtonBase.lua",
+    "line": 380,
+    "snippet": "\t\tPlaySound(self.selectSound);",
+    "sha256": "6adba15ac04fde9c274e5936633e7215a57fadc0b7c1dd185dd5ef18d11b4869",
+    "context": "\tself:UpdateMouseOverInfo();\nend\n\nfunction TalentButtonBaseMixin:ClearCascadeRepurchaseHistory()\n\tif not TalentButtonUtil.IsCascadeRepurchaseHistoryEnabled() then\n\t\treturn;\n\tend\n\n\tself:PlayDeselectSound();\n\tself:GetTalentFrame():ClearCascadeRepurchaseHistory();\n\tself:UpdateMouseOverInfo();\nend\n\nfunction TalentButtonBaseMixin:PlaySelectSound()\n\tif self.selectSound then\n\t\tPlaySound(self.selectSound);\n\telse\n\t\tself:GetTalentFrame():PlaySelectSoundForButton(self);\n\tend\nend\n\nfunction TalentButtonBaseMixin:PlayDeselectSound()\n\tif self.deselectSound then\n\t\tPlaySound(self.deselectSound);\n\telse\n\t\tself:GetTalentFrame():PlayDeselectSoundForButton(self);\n\tend\nend"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedTalentUI/Blizzard_TalentButtonBase.lua",
+    "line": 388,
+    "snippet": "\t\tPlaySound(self.deselectSound);",
+    "sha256": "6adba15ac04fde9c274e5936633e7215a57fadc0b7c1dd185dd5ef18d11b4869",
+    "context": "\tself:PlayDeselectSound();\n\tself:GetTalentFrame():ClearCascadeRepurchaseHistory();\n\tself:UpdateMouseOverInfo();\nend\n\nfunction TalentButtonBaseMixin:PlaySelectSound()\n\tif self.selectSound then\n\t\tPlaySound(self.selectSound);\n\telse\n\t\tself:GetTalentFrame():PlaySelectSoundForButton(self);\n\tend\nend\n\nfunction TalentButtonBaseMixin:PlayDeselectSound()\n\tif self.deselectSound then\n\t\tPlaySound(self.deselectSound);\n\telse\n\t\tself:GetTalentFrame():PlayDeselectSoundForButton(self);\n\tend\nend\n\nfunction TalentButtonBaseMixin:StartGlow()\n\tlocal entryInfo = self:GetEntryInfo();\n\tlocal isCircular = entryInfo and (entryInfo.type == Enum.TraitNodeEntryType.SpendCircle);\n\tif isCircular then\n\t\tif not self.circularGlowTexture then\n\t\t\tself.circularGlowTexture = CreateFrame(\"FRAME\", nil, self, \"TalentButtonCircularGlowTemplate\");\n\t\tend"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedTalentUI/Blizzard_SharedTalentFrame.lua",
+    "line": 571,
+    "snippet": "\t\tPlaySound(self.defaultSelectSound);",
+    "sha256": "7c0bb9a597536a217957880df6addb2f21db66182881c2a40ecae9e5adb13f12",
+    "context": "\n\treturn self:GetTalentButtonByNodeID(self.talentTreeInfo.rootNodeID);\nend\n\nfunction TalentFrameBaseMixin:InvokeTalentButtonMethodByNodeID(methodName, nodeID, ...)\n\tlocal button = self:GetTalentButtonByNodeID(nodeID);\n\tif button then\n\t\treturn true, button[methodName](button, ...);\n\tend\n\n\treturn false;\nend\n\nfunction TalentFrameBaseMixin:PlaySelectSoundForButton(_button)\n\tif self.defaultSelectSound then\n\t\tPlaySound(self.defaultSelectSound);\n\tend\nend\n\nfunction TalentFrameBaseMixin:PlayDeselectSoundForButton(_button)\n\tif self.defaultDeselectSound then\n\t\tPlaySound(self.defaultDeselectSound);\n\tend\nend\n\nfunction TalentFrameBaseMixin:SetCardTemplateCallback(cardTemplateCallback)\n\tself.getCardTemplate = cardTemplateCallback;\nend"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedTalentUI/Blizzard_SharedTalentFrame.lua",
+    "line": 577,
+    "snippet": "\t\tPlaySound(self.defaultDeselectSound);",
+    "sha256": "7c0bb9a597536a217957880df6addb2f21db66182881c2a40ecae9e5adb13f12",
+    "context": "\tif button then\n\t\treturn true, button[methodName](button, ...);\n\tend\n\n\treturn false;\nend\n\nfunction TalentFrameBaseMixin:PlaySelectSoundForButton(_button)\n\tif self.defaultSelectSound then\n\t\tPlaySound(self.defaultSelectSound);\n\tend\nend\n\nfunction TalentFrameBaseMixin:PlayDeselectSoundForButton(_button)\n\tif self.defaultDeselectSound then\n\t\tPlaySound(self.defaultDeselectSound);\n\tend\nend\n\nfunction TalentFrameBaseMixin:SetCardTemplateCallback(cardTemplateCallback)\n\tself.getCardTemplate = cardTemplateCallback;\nend\n\nfunction TalentFrameBaseMixin:AcquireTalentButton(nodeInfo, talentType, offsetX, offsetY, initFunction)\n\toffsetX = (offsetX or 0);\n\toffsetY = (offsetY or 0);\n\n\tlocal templateType = self.getTemplateType(nodeInfo, talentType);"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedTalentUI/Blizzard_SharedTalentFrame.lua",
+    "line": 1690,
+    "snippet": "\t\tPlaySound(soundKit);",
+    "sha256": "7c0bb9a597536a217957880df6addb2f21db66182881c2a40ecae9e5adb13f12",
+    "context": "end\n\nfunction TalentFrameBaseMixin:HasAnyPurchasedRanks()\n\tfor button in self:EnumerateAllTalentButtons() do\n\t\tlocal nodeInfo = button:GetNodeInfo();\n\t\tif nodeInfo and (nodeInfo.ranksPurchased > 0) then\n\t\t\treturn true;\n\t\tend\n\tend\n\n\treturn false;\nend\n\nfunction TalentFrameBaseMixin:TryPlaySound(soundKit)\n\tif not self.suppressedSounds or not tContains(self.suppressedSounds, soundKit) then\n\t\tPlaySound(soundKit);\n\tend\nend\n\nfunction TalentFrameBaseMixin:SetSuppressedSounds(suppressedSounds)\n\tself.suppressedSounds = suppressedSounds;\nend\n\nfunction TalentFrameBaseMixin:ClearSuppressedSounds()\n\tself.suppressedSounds = nil;\nend\n\nfunction TalentFrameBaseMixin:PlayCommitConfigSound()"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedTalentUI/Blizzard_SharedTalentFrame.lua",
+    "line": 1710,
+    "snippet": "\t\tPlaySound(self.rollbackSound);",
+    "sha256": "7c0bb9a597536a217957880df6addb2f21db66182881c2a40ecae9e5adb13f12",
+    "context": "\tself.suppressedSounds = suppressedSounds;\nend\n\nfunction TalentFrameBaseMixin:ClearSuppressedSounds()\n\tself.suppressedSounds = nil;\nend\n\nfunction TalentFrameBaseMixin:PlayCommitConfigSound()\n\tif self.commitSound then\n\t\tself:TryPlaySound(self.commitSound);\n\tend\nend\n\nfunction TalentFrameBaseMixin:PlayRollbackConfigSound()\n\tif self.rollbackSound then\n\t\tPlaySound(self.rollbackSound);\n\tend\nend\n\nfunction TalentFrameBaseMixin:IsCommitInProgress()\n\treturn self.commitedConfigID ~= nil;\nend\n\nfunction TalentFrameBaseMixin:CheckAndReportCommitOperation()\n\tif self:IsCommitInProgress() then\n\t\tself:ReportConfigCommitError();\n\t\treturn false;\n\tend"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/TalkingHeadUI.lua",
+    "line": 212,
+    "snippet": "\t\tlocal success, voHandle = PlaySound(vo, \"Talking Head\", true, true);",
+    "sha256": "9af603a6a7c1474662d838be15414e632fd96219bdc8aa84aafdc1f8a012090f",
+    "context": "\t\t\tend\n\n\t\t\tif ( textFormatted ~= self.TextFrame.Text:GetText() ) then\n\t\t\t\t-- Fade out the old text and fade in the new text\n\t\t\t\tself.TextFrame.Fadeout:Play();\n\t\t\t\tC_Timer.After(0.25, function()\n\t\t\t\t\tself.TextFrame.Text:SetText(textFormatted);\n\t\t\t\tend);\n\t\t\t\tC_Timer.After(0.5, function()\n\t\t\t\t\tself.TextFrame.Fadein:Play();\n\t\t\t\tend);\n\t\t\tend\n\t\tend\n\n\n\t\tlocal success, voHandle = PlaySound(vo, \"Talking Head\", true, true);\n\t\tif ( success ) then\n\t\t\tself.voHandle = voHandle;\n\t\tend\n\tend\nend\n\nfunction TalkingHeadFrameMixin:Close()\n\tself.MainFrame.Model:VOComplete();\n\tself.MainFrame.Model:IdleAnim();\n\tif( self.voHandle ) then\n\t\tif( self.finishTimer ) then\n\t\t\tself.finishTimer:Cancel();"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/QuestSession.lua",
+    "line": 316,
+    "snippet": "\t\tPlaySound(sound);",
+    "sha256": "85ab47d70af498787c91a30de19729a41c3732d9853fb80c9f10f5399e0fdc0a",
+    "context": "function QuestSessionDialogMixin:StartHideDialog(delay, optError)\n\tQuestSessionManager:CheckClearMinimizedDialog(self);\n\n\tif self:IsShown() then\n\t\tC_Timer.After(delay or 2, function()\n\t\t\tif optError then\n\t\t\t\tUIErrorsFrame:AddMessage(optError, RED_FONT_COLOR:GetRGBA());\n\t\t\tend\n\t\t\tself:HideImmediate();\n\t\tend);\n\tend\nend\n\nlocal function PlayDialogSound(sound)\n\tif sound and sound ~= 0 then\n\t\tPlaySound(sound);\n\tend\nend\n\nfunction QuestSessionDialogMixin:HideImmediate()\n\tself:ResetPlayerContainer();\n\tself:PlayHideSound();\n\tStaticPopupSpecial_Hide(self);\n\tQuestSessionManager:NotifyDialogHide(self);\nend\n\nfunction QuestSessionDialogMixin:Minimize()\n\tStaticPopupSpecial_Hide(self);"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/QuestSession.lua",
+    "line": 766,
+    "snippet": "\t\tPlaySound(sound);",
+    "sha256": "85ab47d70af498787c91a30de19729a41c3732d9853fb80c9f10f5399e0fdc0a",
+    "context": "\tresultCode = resultCode or Enum.QuestSessionResult.Unknown;\n\tlocal notification = notifications[resultCode];\n\n\tif notification then\n\t\treturn FormatNotificationMessage(notification, guid), notification.sound;\n\tend\nend\n\nlocal function CheckDisplayMessageForNotification(resultCode, guid)\n\tlocal message, sound = GetNotification(resultCode, guid);\n\tif message then\n\t\tChatFrameUtil.DisplaySystemMessageInPrimary(message);\n\tend\n\n\tif sound then\n\t\tPlaySound(sound);\n\tend\nend\n\n-- NOTE: If the enum isn't here, then we don't want to display a message for it.\nAddNotification(Enum.QuestSessionResult.NotInParty, ERR_QUEST_SESSION_RESULT_NOT_IN_PARTY);\nAddNotification(Enum.QuestSessionResult.InvalidOwner, ERR_QUEST_SESSION_RESULT_INVALID_OWNER_S, nil, NOTIFICATION_USES_PLAYER_NAME);\nAddNotification(Enum.QuestSessionResult.AlreadyActive, ERR_QUEST_SESSION_RESULT_ALREADY_ACTIVE);\nAddNotification(Enum.QuestSessionResult.InRaid, ERR_QUEST_SESSION_RESULT_IN_RAID);\nAddNotification(Enum.QuestSessionResult.OwnerRefused, ERR_QUEST_SESSION_RESULT_OWNER_REFUSED_S, nil, NOTIFICATION_USES_PLAYER_NAME);\nAddNotification(Enum.QuestSessionResult.Timeout, ERR_QUEST_SESSION_RESULT_TIMEOUT, SOUNDKIT.QUEST_SESSION_DECLINE);\nAddNotification(Enum.QuestSessionResult.Disabled, ERR_QUEST_SESSION_RESULT_DISABLED);\nAddNotification(Enum.QuestSessionResult.Started, ERR_QUEST_SESSION_RESULT_STARTED, SOUNDKIT.QUEST_SESSION_ACTIVATE);"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Mainline/AlertFrameSystems.lua",
+    "line": 563,
+    "snippet": "\tPlaySound(soundKit);",
+    "sha256": "7f1f60e88ffded5226899a080953a716054d1f67912acc914de45b567cbb9c2c",
+    "context": "\t\tself.RollValue:SetText(roll);\n\t\tself.RollTypeIcon:Show();\n\t\tself.RollValue:Show();\n\telseif ( rollType == LOOT_ROLL_TYPE_GREED ) then\n\t\tself.RollTypeIcon:SetTexture(\"Interface\\\\Buttons\\\\UI-GroupLoot-Coin-Up\");\n\t\tself.RollValue:SetText(roll);\n\t\tself.RollTypeIcon:Show();\n\t\tself.RollValue:Show();\n\telse\n\t\tself.RollTypeIcon:Hide();\n\t\tself.RollValue:Hide();\n\tend\n\n\tself.hyperlink = itemLink;\n\tlocal soundKit = windowInfo.soundKit or SOUNDKIT.UI_EPICLOOT_TOAST;\n\tPlaySound(soundKit);\nend\n\nfunction LootWonAlertFrame_OnClick(self, button, down)\n\tif( AlertFrame_OnClick(self, button, down) ) then\n\t\treturn;\n\tend\n\tif (self.isCurrency) then\n\t\treturn;\n\tend\n\tlocal itemID = GetItemInfoFromHyperlink(self.hyperlink);\n\tlocal slot = SearchBagsForItem(itemID);\n\tif (slot >= 0) then"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Timer.lua",
+    "line": 240,
+    "snippet": "\t\t\t\tPlaySound(timerData.barHideSoundKitID); ",
+    "sha256": "18d51af933b3ec61d512b8a1d1bd611d0373a918bcba9cd43c3d78775ff14f31",
+    "context": "\tend\n\n\tself.updateTime = self.updateTime - elapsed;\n\tlocal minutes, seconds = floor(self.time/60), floor(mod(self.time, 60)); \n\n\tif ( self.time < timerData.mediumMarker ) then\n\t\tself.anchorCenter = false;\n\t\tif self.time < timerData.largeMarker then\n\t\t\tStartTimer_SwitchToLargeDisplay(self);\n\t\tend\n\t\tself:SetScript(\"OnUpdate\", nil);\n\t\tif ( self.barShowing ) then\n\t\t\tself.barShowing = false;\n\t\t\tself.fadeBarOut:Play();\n\t\t\tif (timerData.barHideSoundKitID) then \n\t\t\t\tPlaySound(timerData.barHideSoundKitID); \n\t\t\tend \n\t\telse\n\t\t\tself.startNumbers:Play();\n\t\tend\n\telseif not self.barShowing then\n\t\tself.fadeBarIn:Play();\n\t\tself.barShowing = true;\n\t\tif (timerData.barShowSoundKitID) then \n\t\t\tPlaySound(timerData.barShowSoundKitID); \n\t\tend \n\telseif self.updateTime <= 0 then\n\t\tself.updateTime = timerData.updateInterval;"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Timer.lua",
+    "line": 249,
+    "snippet": "\t\t\tPlaySound(timerData.barShowSoundKitID); ",
+    "sha256": "18d51af933b3ec61d512b8a1d1bd611d0373a918bcba9cd43c3d78775ff14f31",
+    "context": "\t\tend\n\t\tself:SetScript(\"OnUpdate\", nil);\n\t\tif ( self.barShowing ) then\n\t\t\tself.barShowing = false;\n\t\t\tself.fadeBarOut:Play();\n\t\t\tif (timerData.barHideSoundKitID) then \n\t\t\t\tPlaySound(timerData.barHideSoundKitID); \n\t\t\tend \n\t\telse\n\t\t\tself.startNumbers:Play();\n\t\tend\n\telseif not self.barShowing then\n\t\tself.fadeBarIn:Play();\n\t\tself.barShowing = true;\n\t\tif (timerData.barShowSoundKitID) then \n\t\t\tPlaySound(timerData.barShowSoundKitID); \n\t\tend \n\telseif self.updateTime <= 0 then\n\t\tself.updateTime = timerData.updateInterval;\n\tend\n\n\tself.bar:SetValue(self.time);\n\tself.bar.timeText:SetText(string.format(TIMER_MINUTES_DISPLAY, minutes, seconds));\nend\n\n\nfunction StartTimer_BarOnlyOnUpdate(self, elapsed)\n\tself.time = self.endTime - GetTime();"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Timer.lua",
+    "line": 290,
+    "snippet": "\t\t\tPlaySound(soundKitID);",
+    "sha256": "18d51af933b3ec61d512b8a1d1bd611d0373a918bcba9cd43c3d78775ff14f31",
+    "context": "\tend\nend\n\n\nfunction StartTimer_SetTexNumbers(self, ...)\n\tlocal digits = {...}\n\tlocal timeDigits = floor(self.time);\n\tlocal digit;\n\tlocal style = self.style;\n\tlocal i = 1;\n\n\tlocal timerData = GetTimerData(self.type);\n\tlocal customSoundKits = timerData.customSoundKits and timerData.customSoundKits[timeDigits] or nil;\n\tif customSoundKits then\n\t\tfor _, soundKitID in ipairs(customSoundKits) do\n\t\t\tPlaySound(soundKitID);\n\t\tend\n\tend\n\n\tlocal texCoW = style.w/style.texW;\n\tlocal texCoH = style.h/style.texH;\n\tlocal l,r,t,b;\n\tlocal columns = floor(style.texW/style.w);\n\tlocal numberOffset = 0;\n\tlocal numShown = 0;\n\n\twhile digits[i] do -- THIS WILL DISPLAY SECOND AS A NUMBER 2:34 would be 154\n\t\tif timeDigits > 0 then"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Timer.lua",
+    "line": 326,
+    "snippet": "\t\t\tPlaySound(timerData.bigNumberSoundKitID); ",
+    "sha256": "18d51af933b3ec61d512b8a1d1bd611d0373a918bcba9cd43c3d78775ff14f31",
+    "context": "\t\t\tb = t + texCoH;\n\t\t\tdigits[i]:SetTexCoord(l,r,t,b);\n\t\t\tdigits[i].glow:SetTexCoord(l,r,t,b);\n\t\t\t\n\t\t\ttimeDigits = floor(timeDigits/10);\t\n\t\t\tnumShown = numShown + 1;\t\t\t\n\t\telse\n\t\t\tdigits[i]:SetTexCoord(0,0,0,0);\n\t\t\tdigits[i].glow:SetTexCoord(0,0,0,0);\n\t\tend\n\t\ti = i + 1;\n\tend\n\t\n\tif numberOffset > 0 then\n\t\tif(timerData.bigNumberSoundKitID and numShown < timerData.largeMarker ) then \n\t\t\tPlaySound(timerData.bigNumberSoundKitID); \n\t\telse \n\t\t\tPlaySound(SOUNDKIT.UI_BATTLEGROUND_COUNTDOWN_TIMER, \"SFX\");\n\t\tend \n\t\tdigits[1]:ClearAllPoints();\n\t\tif self.anchorCenter or C_Commentator.IsSpectating() then\n\t\t\tdigits[1]:SetPoint(\"CENTER\", TimerTracker, \"CENTER\", numberOffset - digits[1].hw, 0);\n\t\telse\n\t\t\tdigits[1]:SetPoint(\"CENTER\", self, \"CENTER\", numberOffset - digits[1].hw, 0);\n\t\tend\n\t\t\n\t\tfor j=2,numShown do\n\t\t\tdigits[j]:ClearAllPoints();"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Timer.lua",
+    "line": 378,
+    "snippet": "\t\t\tPlaySound(timerData.finishedSoundKitID); ",
+    "sha256": "18d51af933b3ec61d512b8a1d1bd611d0373a918bcba9cd43c3d78775ff14f31",
+    "context": "\t\ttimer.GoTexture:SetTexture(\"\")\n\t\ttimer.GoTextureGlow:SetTexture(\"\")\n\tend \nend\n\nfunction StartTimer_NumberAnimOnFinished(self)\n\tself.time = self.time - 1;\n\tlocal timerData = GetTimerData(self.type);\n\tif self.time > 0 then\n\t\tif self.time < timerData.largeMarker then\n\t\t\tStartTimer_SwitchToLargeDisplay(self);\n\t\tend\t\n\t\tself.startNumbers:Play();\n\telse\n\t\tif(timerData.finishedSoundKitID) then\n\t\t\tPlaySound(timerData.finishedSoundKitID); \n\t\telse\n\t\t\tPlaySound(SOUNDKIT.UI_BATTLEGROUND_COUNTDOWN_FINISHED);\n\t\tend\n\n\t\tif timerData.finishedCallback then\n\t\t\ttimerData.finishedCallback();\n\t\tend\n\n\t\tFreeTimerTrackerTimer(self);\n\t\tself.GoTextureAnim:Play();\n\tend\nend"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Timer.lua",
+    "line": 402,
+    "snippet": "\t\t\tPlaySound(timerData.mediumNumberFinishedSoundKitID);",
+    "sha256": "18d51af933b3ec61d512b8a1d1bd611d0373a918bcba9cd43c3d78775ff14f31",
+    "context": "\t\tFreeTimerTrackerTimer(self);\n\t\tself.GoTextureAnim:Play();\n\tend\nend\n\nfunction StartTimer_SwitchToLargeDisplay(self)\n\tif not self.anchorCenter then\n\t\tself.anchorCenter = true;\n\t\t--This is to compensate texture size not affecting GetWidth() right away.\n\t\tself.digit1.width, self.digit2.width = self.style.w, self.style.w;\n\t\tself.digit1:SetSize(self.style.w, self.style.h);\n\t\tself.digit2:SetSize(self.style.w, self.style.h);\n\n\t\tlocal timerData = GetTimerData(self.type);\n\t\tif(timerData.mediumNumberFinishedSoundKitID) then \n\t\t\tPlaySound(timerData.mediumNumberFinishedSoundKitID);\n\t\tend \n\tend\nend"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/RewardTrackTemplates.lua",
+    "line": 141,
+    "snippet": "\t\t\tself.loopingSoundHandle = select(2, PlaySound(self.scrollLoopSound));",
+    "sha256": "10e833cd43c4c1611032d4d698a1a7ba4218d4d92e82d52ddbdab77eb83a5a9b",
+    "context": "\t\t\tspeed = speedData.speed;\n\t\telse\n\t\t\tbreak;\n\t\tend\n\tend\n\n\tself.moving = speed > 0;\n\tif self.moving then\n\t\tlocal offset = self.offset + speed * self.direction * self.scrollTime;\n\t\toffset = Clamp(offset, 0, self:GetMaxOffset());\n\t\tself.offset = offset;\n\t\tself.headElement:SetPoint(\"CENTER\", -offset, 0);\n\t\tself:RefreshView();\n\n\t\tif not self.loopingSoundHandle and self.scrollLoopSound then\n\t\t\tself.loopingSoundHandle = select(2, PlaySound(self.scrollLoopSound));\n\t\tend\n\tend\nend\n\nfunction RewardTrackFrameMixin:SetSelection(index, forceRefresh, skipSound, overrideStopSound)\n\t-- stops other sources (like parent's mousewheel) from interfering during movement\n\tif self.scrollTime then\n\t\treturn;\n\tend\n\n\tindex = index or self.numElements;\n\tindex = Clamp(index, 1, self.numElements);"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/RewardTrackTemplates.lua",
+    "line": 155,
+    "snippet": "\t\tPlaySound(self.scrollStopSound);",
+    "sha256": "10e833cd43c4c1611032d4d698a1a7ba4218d4d92e82d52ddbdab77eb83a5a9b",
+    "context": "\t\tif not self.loopingSoundHandle and self.scrollLoopSound then\n\t\t\tself.loopingSoundHandle = select(2, PlaySound(self.scrollLoopSound));\n\t\tend\n\tend\nend\n\nfunction RewardTrackFrameMixin:SetSelection(index, forceRefresh, skipSound, overrideStopSound)\n\t-- stops other sources (like parent's mousewheel) from interfering during movement\n\tif self.scrollTime then\n\t\treturn;\n\tend\n\n\tindex = index or self.numElements;\n\tindex = Clamp(index, 1, self.numElements);\n\tif self.selectedIndex ~= index and not skipSound and self.scrollStopSound then\n\t\tPlaySound(self.scrollStopSound);\n\tend\n\tself.selectedIndex = index;\n\tlocal offset = self:GetAbsoluteOffsetForIndex(index);\n\tself.headElement:SetPoint(\"CENTER\", -offset, 0);\n\tself.offset = offset;\n\tif forceRefresh then\n\t\tself.centerIndex = nil;\n\tend\n\tself:RefreshView();\nend\n\nfunction RewardTrackFrameMixin:RefreshView(forceRefresh)"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/RewardTrackTemplates.lua",
+    "line": 175,
+    "snippet": "\t\t\tPlaySound(self.scrollCenterChangeSound);",
+    "sha256": "10e833cd43c4c1611032d4d698a1a7ba4218d4d92e82d52ddbdab77eb83a5a9b",
+    "context": "\tself.offset = offset;\n\tif forceRefresh then\n\t\tself.centerIndex = nil;\n\tend\n\tself:RefreshView();\nend\n\nfunction RewardTrackFrameMixin:RefreshView(forceRefresh)\n\tlocal centerIndex = self:GetClosestIndexToCenter();\n\tif forceRefresh or (self.centerIndex ~= centerIndex) then\n\t\tself.centerIndex = centerIndex;\n\t\tlocal leftIndex = math.max(1, centerIndex - self.numElementsPerHalf);\n\t\tlocal rightIndex = math.min(centerIndex + self.numElementsPerHalf, self.numElements);\n\t\tself:GetParent():OnTrackUpdate(leftIndex, centerIndex, rightIndex, self.moving);\n\t\tif self.moving and self.scrollCenterChangeSound then\n\t\t\tPlaySound(self.scrollCenterChangeSound);\n\t\tend\n\tend\n\n\tself.LeftButton:SetEnabled(self.offset > 0);\n\tself.RightButton:SetEnabled(self.offset < self:GetMaxOffset());\n\tself.JumpLeftButton:SetEnabled(self.selectedIndex > 1);\n\tself.JumpRightButton:SetEnabled(self.selectedIndex < self.numElements);\nend\n\nfunction RewardTrackFrameMixin:GetCenterIndex()\n\treturn self.centerIndex;\nend"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/RewardTrackTemplates.lua",
+    "line": 271,
+    "snippet": "\t\t\tPlaySound(track.scrollStartSound);",
+    "sha256": "10e833cd43c4c1611032d4d698a1a7ba4218d4d92e82d52ddbdab77eb83a5a9b",
+    "context": "\tif self.direction == 1 then\n\t\tself:GetNormalTexture():SetTexCoord(1, 0, 0, 1);\n\t\tself:GetHighlightTexture():SetTexCoord(1, 0, 0, 1);\n\t\tself:GetPushedTexture():SetTexCoord(1, 0, 0, 1);\n\t\tself:GetDisabledTexture():SetTexCoord(1, 0, 0, 1);\n\tend\nend\n\nRewardTrackButtonMixin = { };\n\nfunction RewardTrackButtonMixin:OnMouseDown()\n\tif self:IsEnabled() then\n\t\tlocal track = self:GetParent();\n\t\ttrack:StartScroll(self.direction);\n\t\tif track.scrollStartSound then\n\t\t\tPlaySound(track.scrollStartSound);\n\t\tend\n\tend\nend\n\nfunction RewardTrackButtonMixin:OnMouseUp()\n\tif self:IsEnabled() then\n\t\tlocal track = self:GetParent();\n\t\ttrack:StopScroll();\n\tend\nend\n\nfunction RewardTrackButtonMixin:OnDisable()"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/RewardTrackTemplates.lua",
+    "line": 318,
+    "snippet": "\t\t\tPlaySound(track.scrollStartSound);",
+    "sha256": "10e833cd43c4c1611032d4d698a1a7ba4218d4d92e82d52ddbdab77eb83a5a9b",
+    "context": "\t\tlocal elements = track:GetElements();\n\t\tlocal selectedElement = elements[track.selectedIndex];\n\n\t\tlocal jumpLevel;\n\t\tlocal selectedLevel = selectedElement:GetLevel();\n\t\tlocal nextUnlock = math.min(rewardFrame.actualLevel + 1, rewardFrame.maxLevel);\n\t\tif self.direction == 1 then\n\t\t\tjumpLevel = selectedLevel < nextUnlock and nextUnlock or rewardFrame.maxLevel;\n\t\telse\n\t\t\tjumpLevel = selectedLevel > nextUnlock and nextUnlock or 1;\n\t\tend\n\t\trewardFrame:CancelLevelEffect();\n\t\tlocal fromOnShow, forceRefresh = false, true;\n\t\trewardFrame:SelectLevel(jumpLevel, fromOnShow, forceRefresh);\n\t\tif track.scrollStartSound then\n\t\t\tPlaySound(track.scrollStartSound);\n\t\tend\n\tend\nend\n\nRewardTrackSkipLevelUpButtonMixin = { };\n\nfunction RewardTrackSkipLevelUpButtonMixin:OnClick()\n\tlocal rewardFrame = self:GetParent();\n\n\trewardFrame:CancelLevelEffect();\n\tlocal nextUnlock = math.min(rewardFrame.actualLevel + 1, rewardFrame.maxLevel);\n\tlocal fromOnShow, forceRefresh = false, true;"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/EventToastManager.lua",
+    "line": 648,
+    "snippet": "\t\tPlaySound(expandClickSoundkit);",
+    "sha256": "a1e55403f4844bc12f14491bae571272a4e4a39290dd441a833db5a2c954e903",
+    "context": "\t\tself.SubTitle:SetPoint(\"TOP\", self.Title, \"BOTTOM\", 0, -10);\n\t\tself.expanded = false;\n\t\tself.ExpandWidgetContainer:UnregisterForWidgetSet();\n\tend\n\n\tif(not self.expanded) then\n\t\tself.Description:SetText(EVENT_TOAST_NOT_EXPANDED_DESCRIPTION);\n\telse\n\t\tself.Description:SetText(EVENT_TOAST_EXPANDED_DESCRIPTION)\n\tend\n\tself.ExpandWidgetContainer:SetShown(self.expanded);\n\tself:GetParent():Layout();\n\tself:SetupTextureKitOffsets(toastInfo.uiTextureKit);\n\tlocal expandClickSoundkit = scenarioExpandSoundKitIDs[toastInfo.uiTextureKit];\n\tif (expandClickSoundkit) then\n\t\tPlaySound(expandClickSoundkit);\n\tend\nend\n\nEventToastWeeklyRewardToastMixin = {};\n\nfunction EventToastWeeklyRewardToastMixin:Setup(toastInfo)\n\tself.Contents.Title:SetText(toastInfo.title);\n\tself.Contents.SubTitle:SetText(toastInfo.subtitle);\n\tself.flipbook = self.Contents.GVUnlockAnim;\n\tself:ShowToast();\nend\n"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/EventToastManager.lua",
+    "line": 1176,
+    "snippet": "\t\t\tPlaySound(self.toastInfo.showSoundKitID);",
+    "sha256": "a1e55403f4844bc12f14491bae571272a4e4a39290dd441a833db5a2c954e903",
+    "context": "\t\tself:GetParent():SetupBlackBGAtlas();\n\tend\n\n\tself:SetAnimInStartDelay(self.animInStartDelay or defaultAnimInStartDelay);\n\tself:GetParent():SetAnimStartDelay(self.animInStartDelay or defaultAnimInStartDelay);\n\n\tself:SetAnimInEndDelay(self.animInEndDelay or 0);\n\n\tself:SetAnimOutStartDelay(defaultAnimOutStartDelay);\n\n\tself:SetAnimOutDuration(self.animOutDuration or defaultAnimOutDuration)\n\n\tC_Timer.After(self.animInStartDelay or 0,\n\tfunction()\n\t\tif (self.toastInfo and self.toastInfo.showSoundKitID) then\n\t\t\tPlaySound(self.toastInfo.showSoundKitID);\n\t\tend\n\tend);\n\n\tself.showAnim:Play();\n\n\tif not self.skipParentAnim then\n\t\tself:GetParent():PlayAnim();\n\tend\n\n\tif (self.flipbook) then\n\t\tself.flipbook:Restart();\n\tend"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/EventToastManager.lua",
+    "line": 1221,
+    "snippet": "\t\t\t\tPlaySound(self.toastInfo.hideSoundKitID);",
+    "sha256": "a1e55403f4844bc12f14491bae571272a4e4a39290dd441a833db5a2c954e903",
+    "context": "\nfunction EventToastAnimationsMixin:OnAnimatedIn()\n\tif self.isSideDisplayToast then\n\t\tself:GetParent():DisplayNextToast();\n\telse\n\t\tself:AnimOut();\n\tend\nend\n\nfunction EventToastAnimationsMixin:AnimOut()\n\tif (not self:ShouldSuppressAnimOut() and not self:GetParent():AreAnimationsPaused() and self.hideAutomatically) then\n\t\tself.hideAnim:Play();\n\t\tC_Timer.After(self.hideAnim.anim1:GetStartDelay(),\n\t\tfunction()\n\t\t\tif (self.toastInfo and self.toastInfo.hideSoundKitID) then\n\t\t\t\tPlaySound(self.toastInfo.hideSoundKitID);\n\t\t\tend\n\t\tend);\n\tend\nend\n\nfunction EventToastAnimationsMixin:OnAnimatedOut()\n\tTopBannerManager_BannerFinished();\n\tself:GetParent():DisplayNextToast();\n\tself:OnAnimFinished();\n\tself:Hide();\nend\n"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_HousingControls/Blizzard_HousingControlButton.lua",
+    "line": 54,
+    "snippet": "\t\tPlaySound(self.clickSoundKit);",
+    "sha256": "f47c9c95ae9f9fc8501a3bdd1a53801f197d8262df5b92b464b62ec622916acf",
+    "context": "\tend\n\n\tif self.notYetImplemented then\n\t\treturn false, self.nyiLabel;\n\tend\n\t-- If implemented, this should be overriden\n\tassert(false);\nend\n\nfunction BaseHousingControlButtonMixin:OnClick()\n\tif self.notYetImplemented then\n\t\treturn;\n\tend\n\n\tif self:IsEnabled() and self.clickSoundKit then\n\t\tPlaySound(self.clickSoundKit);\n\tend\n\n\tBaseHousingModeButtonMixin.OnClick(self);\nend\n\n-- Inherits BaseHousingControlButtonMixin\nHouseEditorButtonMixin = {};\n\nfunction HouseEditorButtonMixin:CheckEnabled()\n\tlocal availabilityResult = C_HouseEditor.GetHouseEditorAvailability();\n\tif availabilityResult == Enum.HousingResult.Success then\n\t\treturn true;"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_HousingControls/Blizzard_HousingControlButton.lua",
+    "line": 106,
+    "snippet": "\t\tPlaySound(self.clickSoundKit);",
+    "sha256": "f47c9c95ae9f9fc8501a3bdd1a53801f197d8262df5b92b464b62ec622916acf",
+    "context": "end\n\nfunction HouseEditorButtonMixin:LeaveMode()\n\tHousingFramesUtil.LeaveHouseEditor();\nend\n\n-- Inherits BaseHousingControlButtonMixin\nHouseExitButtonMixin = {};\n\nfunction HouseExitButtonMixin:OnClick()\n\tif Kiosk.IsEnabled() then\n\t\treturn;\n\tend\n\n\tif self:IsEnabled() and self.clickSoundKit then\n\t\tPlaySound(self.clickSoundKit);\n\tend\n\n\tC_Housing.LeaveHouse();\nend\n\nfunction HouseExitButtonMixin:IsActive()\n\treturn false;\nend\n\nfunction HouseExitButtonMixin:CheckEnabled()\n\tif Kiosk.IsEnabled() then\n\t\treturn false, ERR_SYSTEM_DISABLED;"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_HousingControls/Blizzard_HousingControlButton.lua",
+    "line": 129,
+    "snippet": "\t\tPlaySound(self.clickSoundKit);",
+    "sha256": "f47c9c95ae9f9fc8501a3bdd1a53801f197d8262df5b92b464b62ec622916acf",
+    "context": "end\n\nfunction HouseExitButtonMixin:CheckEnabled()\n\tif Kiosk.IsEnabled() then\n\t\treturn false, ERR_SYSTEM_DISABLED;\n\tend\n\n\treturn C_Housing.IsInsideHouse() and not C_HouseEditor.IsHouseEditorActive();\nend\n\n-- Inherits BaseHousingControlButtonMixin\nHousingBlueprintActionButtonMixin = {};\n\nfunction HousingBlueprintActionButtonMixin:OnClick()\n\tif self:IsEnabled() and self.clickSoundKit then\n\t\tPlaySound(self.clickSoundKit);\n\tend\n\n\tMenuUtil.CreateContextMenu(self, function(owner, rootDescription)\n\t\trootDescription:SetTag(\"MENU_HOUSING_BLUEPRINT_ACTION\");\n\t\trootDescription:AddMenuAcquiredCallback(function(menuFrame)\n\t\t\tself.contextMenuIsOpen = true;\n\t\t\t-- Reevaluate tooltip so it's hidden\n\t\t\tif self:IsMouseMotionFocus() then\n\t\t\t\tself:OnEnter();\n\t\t\tend\n\t\tend);\n\t\trootDescription:AddMenuReleasedCallback(function(menuFrame, closeReason)"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_HousingControls/Blizzard_HousingControlButton.lua",
+    "line": 211,
+    "snippet": "\t\tPlaySound(self.clickSoundKit);",
+    "sha256": "f47c9c95ae9f9fc8501a3bdd1a53801f197d8262df5b92b464b62ec622916acf",
+    "context": "\tif C_HousingBlueprint.GetExportAvailability() ~= Enum.HousingResult.Success and C_HousingBlueprint.GetImportAvailability() ~= Enum.HousingResult.Success then\n\t\treturn false, HOUSING_CONTROLS_BLUEPRINT_UNAVAILABLE_PERMISSION;\n\tend\n\n\treturn true;\nend\n\n\n-- Inherits BaseHousingControlButtonMixin\nHouseInfoButtonMixin = {};\n\nfunction HouseInfoButtonMixin:OnClick()\n\tC_AddOns.LoadAddOn(\"Blizzard_HousingCornerstone\");\n\n\tif self:IsEnabled() and self.clickSoundKit then\n\t\tPlaySound(self.clickSoundKit);\n\tend\n\n\tToggleUIPanel(HousingCornerstoneHouseInfoFrame);\nend\n\nfunction HouseInfoButtonMixin:CheckEnabled()\n\treturn true;\nend\n\nfunction HouseInfoButtonMixin:IsActive()\n\treturn HousingCornerstoneHouseInfoFrame and HousingCornerstoneHouseInfoFrame:IsShown();\nend"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GroupFinder/Shared/LFGFrame.lua",
+    "line": 2164,
+    "snippet": "\tPlaySound(isChecked and SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON or SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_OFF);",
+    "sha256": "0862ce9e4b7260b6ec7b446afec675dc96ed9fd519fe035b8502fecf8d5bde84",
+    "context": "\t\t\tend\n\t\telse\n\t\t\tself:Hide();\n\t\tend\n\telse\n\t\tself:Hide();\n\tend\n\tLFGCooldownCover_Update(self:GetParent().CooldownFrame); --The cooldown frame won't show if the backfill is shown, so we need to update it.\nend\n\nfunction LFGDungeonListCheckButton_OnClick(button, category, dungeonList, hiddenByCollapseList)\n\tlocal parent = button:GetParent();\n\tlocal dungeonID = parent.id;\n\tlocal isChecked = button:GetChecked();\n\n\tPlaySound(isChecked and SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON or SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_OFF);\n\tif ( LFGIsIDHeader(dungeonID) ) then\n\t\tLFGDungeonList_SetHeaderEnabled(category, dungeonID, isChecked, dungeonList, hiddenByCollapseList);\n\telse\n\t\tLFGDungeonList_SetDungeonEnabled(dungeonID, isChecked);\n\t\tLFGListUpdateHeaderEnabledAndLockedStates(dungeonList, LFGEnabledList, hiddenByCollapseList);\n\tend\nend\n\nfunction LFG_IsRandomDungeonDisplayable(id)\n\tlocal name, typeID, subtypeID, minLevel, maxLevel, _, targetMinLevel, targetMaxLevel, expansionLevel, _, _, _, _, _, _, _, _, isTimewalker = GetLFGDungeonInfo(id);\n\tlocal myLevel = UnitLevel(\"player\");\n\treturn ((myLevel >= targetMinLevel and myLevel <= targetMaxLevel and EXPANSION_LEVEL >= expansionLevel) or isTimewalker);"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup/StaticPopup.lua",
+    "line": 417,
+    "snippet": "\t\tPlaySound(dialogInfo.sound);",
+    "sha256": "2d3a761180637a21d4c057df78a9ec742365835917482b405d26fdc5f4873299",
+    "context": "\tdialog.enterClicksFirstButton = dialogInfo.enterClicksFirstButton;\n\tdialog.insertedFrame = insertedFrame;\n\tdialog.customOnHideScript = customOnHideScript;\n\tdialog.progressBarDuration = nil;\n\n\tdialog:SetParent(GetAppropriateTopLevelParent());\n\tdialog:Init(which, text_arg1, text_arg2, data, insertedFrame);\n\tdialog:SetWindow(nil);\n\n\t-- Finally size and show the dialog\n\tStaticPopup_SetUpPosition(dialog);\n\tdialog:Show();\n\tdialog:Resize();\n\n\tif dialogInfo.sound then\n\t\tPlaySound(dialogInfo.sound);\n\tend\n\n\treturn dialog;\nend\n\nfunction StaticPopup_SetTimeLeft(dialog, timeleft)\n\tdialog.timeleft = timeleft;\nend\n\nfunction StaticPopup_SetProgressBarTime(dialog, duration, timeleft)\n\tif dialog.dialogInfo and dialog.dialogInfo.progressBar then\n\t\tdialog.progressBarDuration = duration;"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup/StaticPopup.lua",
+    "line": 771,
+    "snippet": "\t\tPlaySound(dialogInfo.hideSound);",
+    "sha256": "2d3a761180637a21d4c057df78a9ec742365835917482b405d26fdc5f4873299",
+    "context": "\nlocal function CallOnFirstmostButton(dialog, dialogInfo, startIndex, func)\n\tlocal forward = true;\n\tCallOnButton(dialog, dialogInfo, startIndex, forward, func);\nend\n\nlocal function CallOnLastmostButton(dialog, dialogInfo, startIndex, func)\n\tlocal forward = false;\n\tCallOnButton(dialog, dialogInfo, startIndex, forward, func);\nend\n\nlocal function OnKeyDownClickHandler(dialog, dialogInfo, index)\n\tStaticPopup_OnClick(dialog, index);\n\n\tif dialogInfo.hideSound then\n\t\tPlaySound(dialogInfo.hideSound);\n\tend\nend\n\nlocal function StaticPopup_OnEscapeKeyDown(dialog)\n\tlocal dialogInfo = StaticPopupDialogs[dialog.which];\n\tif not dialogInfo or dialogInfo.ignoreKeys then\n\t\treturn;\n\tend\n\n\tif dialogInfo.escapeHides then\n\t\tdialog:Hide();\n\tend"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Menu/MenuTemplates.lua",
+    "line": 134,
+    "snippet": "\t\tPlaySound(description:GetSoundKit());",
+    "sha256": "d0652abb1342716477922694891fde3fa4c7fa523a699e8dfe4c3e436749d447",
+    "context": "\tbutton.NarrationGetContext = MenuButtonNarrationGetContext;\n\tbutton.NarrationGetIndexInfo = MenuButtonNarrationGetIndexInfo;\nend\n\nlocal function OnButtonEnable(button)\n\tMenuTemplates.SetHierarchyEnabled(button, true);\nend\n\nlocal function OnButtonDisable(button)\n\tMenuTemplates.SetHierarchyEnabled(button, false);\nend\n\nlocal function OnButtonClick(button, buttonName)\n\tlocal description = button:GetElementDescription();\n\tif not description:CanOpenSubmenu() or description:ShouldPlaySoundOnSubmenuClick() then\n\t\tPlaySound(description:GetSoundKit());\n\tend\n\n\tdescription:Pick(MenuInputContext.MouseButton, buttonName);\n\n\t--securecallfunction(DebugPrintSecure);\nend\n\nlocal function ShowHighlight(button, description)\n\tbutton.highlight:Show();\n\tbutton.highlight:SetAlpha(description:IsEnabled() and 1 or MenuVariants.DisabledHighlightOpacity);\nend\n"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Menu/DropdownButton.lua",
+    "line": 315,
+    "snippet": "\tPlaySound(MenuVariants.GetDropdownOpenSoundKit());",
+    "sha256": "3700afff438469414654a0293c0f18aef52f5e4bca11e0c12ee1d9a4a8dc55d6",
+    "context": "end\n\nfunction DropdownButtonMixin:EnableRegenerateOnResponse()\n\tself.shouldRegenerateOnResponse = true;\nend\n\nfunction DropdownButtonMixin:OnMenuAssigned()\n\tself:SignalUpdate();\nend\n\nfunction DropdownButtonMixin:OnMenuChanged()\n\tself:SignalUpdate();\nend\n\nfunction DropdownButtonMixin:OnMenuOpened(menu)\n\tPlaySound(MenuVariants.GetDropdownOpenSoundKit());\n\n\tself:TriggerEvent(DropdownButtonMixin.Event.OnMenuOpen, self);\nend\n\nfunction DropdownButtonMixin:OnMenuClosed(menu, closeReason)\n\tPlaySound(MenuVariants.GetDropdownCloseSoundKit());\n\n\tself:TriggerEvent(DropdownButtonMixin.Event.OnMenuClose, self, menu, closeReason);\nend\n\nfunction DropdownButtonMixin:UpdateSelections(selections)\n\tself:UpdateToMenuSelections(self:GetMenuDescription(), selections);"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Menu/DropdownButton.lua",
+    "line": 321,
+    "snippet": "\tPlaySound(MenuVariants.GetDropdownCloseSoundKit());",
+    "sha256": "3700afff438469414654a0293c0f18aef52f5e4bca11e0c12ee1d9a4a8dc55d6",
+    "context": "function DropdownButtonMixin:OnMenuAssigned()\n\tself:SignalUpdate();\nend\n\nfunction DropdownButtonMixin:OnMenuChanged()\n\tself:SignalUpdate();\nend\n\nfunction DropdownButtonMixin:OnMenuOpened(menu)\n\tPlaySound(MenuVariants.GetDropdownOpenSoundKit());\n\n\tself:TriggerEvent(DropdownButtonMixin.Event.OnMenuOpen, self);\nend\n\nfunction DropdownButtonMixin:OnMenuClosed(menu, closeReason)\n\tPlaySound(MenuVariants.GetDropdownCloseSoundKit());\n\n\tself:TriggerEvent(DropdownButtonMixin.Event.OnMenuClose, self, menu, closeReason);\nend\n\nfunction DropdownButtonMixin:UpdateSelections(selections)\n\tself:UpdateToMenuSelections(self:GetMenuDescription(), selections);\nend\n\nfunction DropdownButtonMixin:Update()\n\tself:SignalUpdate();\nend\n"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_BehavioralMessaging/Blizzard_BehavioralMessaging.lua",
+    "line": 140,
+    "snippet": "\t\t\t\tPlaySound(displayData.notification.soundKit);",
+    "sha256": "fae3b542ee97a77fc684c3eecf2811b6f654a63c9f2ef4a2b99dc803b288a7a9",
+    "context": "\t\t\t\tPlaySound(SOUNDKIT.IG_MAINMENU_OPEN);\n\t\t\t\tBehavioralMessagingDetails:DisplayNotification(displayData.details, button);\n\t\t\tend\n\n\t\t\tlocal notification = self:FindNotification(notificationType);\n\t\t\tif not notification then\n\t\t\t\tnotification = self.pool:Acquire();\n\t\t\t\tnotification:SetFrameLevel(10);\n\t\t\t\tnotification:Init(displayData.notification, notificationType);\n\t\t\t\tnotification:Show();\n\t\t\t\tnotification:SetScript(\"OnClick\", OnClick);\n\t\t\tend\n\n\t\t\tlocal success = notification:PushInstance(id);\n\t\t\tif success then\n\t\t\t\tPlaySound(displayData.notification.soundKit);\n\t\t\tend\n\t\tend\n\tend\n\n\tself:EvaluateLayout();\nend\n\nfunction BehavioralMessagingTrayMixin:EvaluateLayout()\n\tlocal index = 0;\n\tfor notification in self.pool:EnumerateActive() do\n\t\tnotification.layoutIndex = index;\n\t\tindex = index + 1;"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AzeriteEssenceUI/Blizzard_AzeriteEssenceUI.lua",
+    "line": 323,
+    "snippet": "\t\tPlaySound(soundID);",
+    "sha256": "487ccc96b623718f7a42acda47dea4e79b5966bf85a45d94a04141e9286ee600",
+    "context": "\t\tslotFrame:PlayRevealEffect();\n\t\tScriptAnimationUtil.ShakeFrame(self:GetParent(), REVEAL_SHAKE, REVEAL_SHAKE_DURATION, REVEAL_SHAKE_FREQUENCY);\n\t\tC_Timer.After(REVEAL_START_DELAY,\n\t\t\tfunction()\n\t\t\t\tself:PlayReveal();\n\t\t\tend\n\t\t);\n\telse\n\t\tlocal soundID = SOUNDKIT.UI_82_HEARTOFAZEROTH_SLOTESSENCE;\n\t\tif slotFrame:IsMajorSlot() then\n\t\t\tlocal essenceInfo = C_AzeriteEssence.GetEssenceInfo(essenceID);\n\t\t\tif essenceInfo.rank == MAX_ESSENCE_RANK  then\n\t\t\t\tsoundID = SOUNDKIT.UI_82_HEARTOFAZEROTH_SLOTMAJORESSENCE_RANK4;\n\t\t\tend\n\t\tend\n\t\tPlaySound(soundID);\n\tend\n\n\tself:RefreshSlots();\n\tC_AzeriteEssence.ClearPendingActivationEssence();\nend\n\nfunction AzeriteEssenceUIMixin:RefreshPowerLevel()\n\tlocal azeriteItemLocation = C_AzeriteItem.FindActiveAzeriteItem();\n\tif azeriteItemLocation then\n\t\tlocal level = C_AzeriteItem.GetPowerLevel(azeriteItemLocation);\n\t\tself.PowerLevelBadgeFrame.Label:SetText(level);\n\t\tself.PowerLevelBadgeFrame:Show();"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIErrorsFrame/Mainline/UIErrorsFrame.lua",
+    "line": 154,
+    "snippet": "\t\t\tPlaySound(soundKitID);",
+    "sha256": "cddaa24c6c352613a01ba9c3e9b500b7148cd9e697ea19f7c14ded095bb08b2d",
+    "context": "\t\t\treturn false;\n\t\tend\n\tend\n\t\n\treturn true;\nend\n\nfunction UIErrorsMixin:TryDisplayMessage(messageType, message, r, g, b)\n\tif not self:GetMessagesSuppressed() and self:ShouldDisplayMessageType(messageType, message) then\n\t\tself:AddMessage(message, r, g, b, 1.0, messageType);\n\n\t\tlocal errorStringId, soundKitID, voiceID = GetGameMessageInfo(messageType);\n\t\tif voiceID then\n\t\t\tC_Sound.PlayVocalErrorSound(voiceID);\n\t\telseif soundKitID then\n\t\t\tPlaySound(soundKitID);\n\t\tend\n\tend\nend\n\nlocal function AddExternalMessage(self, message, color)\n\tif not self:TryFlashingExistingMessage(LE_GAME_ERR_SYSTEM, message) then\n\t\tlocal r, g, b = color:GetRGB();\n\t\tself:CheckAddMessage(message, r, g, b, 1.0, LE_GAME_ERR_SYSTEM);\n\tend\nend\n\nfunction UIErrorsMixin:AddExternalErrorMessage(message)"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CovenantSanctum/Blizzard_CovenantSanctumUpgrades.lua",
+    "line": 75,
+    "snippet": "\t\tPlaySound(covenantData.beginResearchSoundKitID);",
+    "sha256": "965954745b473b176752844c521407bef7f80ed768cc25e34d7611617fc3d22d",
+    "context": "\t[\"Border\"] = \"CovenantSanctum-Upgrade-Border-%s\",\n\t[\"IconBorder\"] = \"CovenantSanctum-Upgrade-Icon-Border-%s\",\n\t[\"IntroBoxBackground\"] = \"CovenantSanctum-Text-Border-%s\",\n}\nlocal bagsGlowTextureKitRegions = {\n\t[\"Glow\"] = \"CovenantSanctum-Bag-Glow-%s\",\n}\n\nStaticPopupDialogs[\"CONFIRM_SANCTUM_UPGRADE\"] = {\n\ttext = \"\",\n\tbutton1 = YES,\n\tbutton2 = NO,\n\tOnAccept = function(dialog, data)\n\t\tdata.owner:Upgrade();\n\t\tlocal covenantData = GetCovenantData();\n\t\tPlaySound(covenantData.beginResearchSoundKitID);\n\tend,\n\tOnShow = function(dialog, data)\n\t\tif data then\n\t\t\tlocal costString = GetGarrisonTalentCostString(data.talent);\n\t\t\tdialog:SetText(SANCTUM_UPGRADE_CONFIRMATION:format(data.talent.name, data.talent.tier + 1, costString));\n\t\tend\n\tend,\n\thideOnEscape = 1,\n\ttimeout = 0,\n\texclusive = 1,\n\twhileDead = 1,\n"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CovenantSanctum/Blizzard_CovenantSanctumUpgrades.lua",
+    "line": 797,
+    "snippet": "\t\tPlaySound(covenantData.upgradeTabSelectSoundKitID);",
+    "sha256": "965954745b473b176752844c521407bef7f80ed768cc25e34d7611617fc3d22d",
+    "context": "function CovenantSanctumUpgradeBaseMixin:GetDescriptionText()\n\tlocal covenantID = GetCovenantID();\n\tif self.featureType and covenantSanctumFeatureDescription[self.featureType] and covenantSanctumFeatureDescription[self.featureType][covenantID] then\n\t\treturn covenantSanctumFeatureDescription[self.featureType][covenantID];\n\tend\n\treturn \"\";\nend\n\nfunction CovenantSanctumUpgradeBaseMixin:OnMouseDown()\n\tlocal parent = self:GetParent();\n\tif parent:GetSelectedTree() ~= self.treeID then\n\t\tHelpTip:Acknowledge(parent, COVENANT_SANCTUM_TUTORIAL5);\n\t\tparent:SetSelectedTree(self.treeID);\n\n\t\tlocal covenantData = GetCovenantData();\n\t\tPlaySound(covenantData.upgradeTabSelectSoundKitID);\n\tend\nend\n\nfunction CovenantSanctumUpgradeBaseMixin:OnEnter()\n\tself.HighlightTexture:Show();\n\tself:RefreshTooltip();\nend\n\nfunction CovenantSanctumUpgradeBaseMixin:RefreshTooltip()\n\tlocal treeInfo = C_Garrison.GetTalentTreeInfo(self.treeID);\n\tif treeInfo then\n\t\tlocal timeRemaining;"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CovenantSanctum/Blizzard_CovenantSanctumUpgrades.lua",
+    "line": 1074,
+    "snippet": "\t\tself.fullAnimaSoundHandle = select(2, PlaySound(covenantData.reservoirFullSoundKitID));",
+    "sha256": "965954745b473b176752844c521407bef7f80ed768cc25e34d7611617fc3d22d",
+    "context": "\t\t\t-- player switched covenants\n\t\t\tmodelScene.effect:CancelEffect();\n\t\t\tmodelScene.effect = nil;\n\t\tend\n\t\tif not modelScene.effect then\n\t\t\tmodelScene.effect = modelScene:AddEffect(effectID, self);\n\t\tend\n\tend\n\n\tself:UpdateFullSound(isFull);\nend\n\nfunction CovenantSanctumUpgradeReservoirMixin:UpdateFullSound(isFull)\n\tlocal covenantData = GetCovenantData();\n\tif isFull and not self.fullAnimaSoundHandle then\n\t\tself.fullAnimaSoundHandle = select(2, PlaySound(covenantData.reservoirFullSoundKitID));\n\telseif not isFull and self.fullAnimaSoundHandle then\n\t\tStopSound(self.fullAnimaSoundHandle);\n\t\tself.fullAnimaSoundHandle = nil;\n\tend\nend\n\n\nfunction CovenantSanctumUpgradeReservoirMixin:GetAnimaAmount()\n\treturn self.value;\nend\n\nfunction CovenantSanctumUpgradeReservoirMixin:StartAnimaGainEffect()"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueParent/Mainline/GlueParent.lua",
+    "line": 521,
+    "snippet": "\t\t\tPlaySound(screenInfo.showSound);",
+    "sha256": "0f4b4e033c257f7b64daff8d05b3bbc6f0fb84800ff333308303b620ba41e00c",
+    "context": "\t\tGlueParent_SetSecondaryScreen(screen, contextKey);\n\t\tif ( screenInfo.fullScreen ) then\n\t\t\tGlueParent.ScreenFrame:Hide();\n\n\t\t\t--If it's full-screen, hide the main screen\n\t\t\tif ( GlueParent.currentScreen ) then\n\t\t\t\tlocal mainScreenInfo = GLUE_SCREENS[GlueParent.currentScreen];\n\t\t\t\tif ( mainScreenInfo ) then\n\t\t\t\t\t_G[mainScreenInfo.frame]:Hide();\n\t\t\t\tend\n\t\t\tend\n\t\telse\n\t\t\tGlueParent.ScreenFrame:Show();\n\t\tend\n\t\tif ( screenInfo.showSound ) then\n\t\t\tPlaySound(screenInfo.showSound);\n\t\tend\n\t\tGlueParent_ChangeScreen(screenInfo, GLUE_SECONDARY_SCREENS, oldSecondaryScreen);\n\t\tGlueParent_CheckFitSecondaryScreen(screenInfo);\n\tend\nend\n\nfunction GlueParent_CheckFitSecondaryScreen(screenInfo)\n\tif ( screenInfo.checkFit ) then\n\t\tlocal frame = _G[screenInfo.frame];\n\t\tlocal extraSpacing = 10;\n\t\tFrameUtil.UpdateScaleForFit(frame, extraSpacing, extraSpacing);\n\tend"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PagedContent/Blizzard_PagingControls.lua",
+    "line": 67,
+    "snippet": "\t\tPlaySound(self.nextPageSound);",
+    "sha256": "6414e7cad9109eca0bd2f8381e3cb1fc161f664e38c0be8b4d0646519541efff",
+    "context": "\n\tself.currentPage = page;\n\tself:UpdateControls();\n\n\tlocal pagedContentFrame = self.overridePagedContentFrame or self:GetParent();\n\tif pagedContentFrame and pagedContentFrame.OnPageChanged then\n\t\tpagedContentFrame:OnPageChanged();\n\tend\n\n\treturn true;\nend\n\nfunction PagingControlsMixin:NextPage()\n\tlocal pageChanged = self:SetCurrentPage(self.currentPage + self:GetPageDelta());\n\tif pageChanged and self.nextPageSound then\n\t\tPlaySound(self.nextPageSound);\n\tend\nend\n\nfunction PagingControlsMixin:PreviousPage()\n\tlocal pageChanged = self:SetCurrentPage(self.currentPage - self:GetPageDelta());\n\tif pageChanged and self.prevPageSound then\n\t\tPlaySound(self.prevPageSound);\n\tend\nend\n\nfunction PagingControlsMixin:GetPageDelta()\n\tlocal delta = 1;"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PagedContent/Blizzard_PagingControls.lua",
+    "line": 74,
+    "snippet": "\t\tPlaySound(self.prevPageSound);",
+    "sha256": "6414e7cad9109eca0bd2f8381e3cb1fc161f664e38c0be8b4d0646519541efff",
+    "context": "\tend\n\n\treturn true;\nend\n\nfunction PagingControlsMixin:NextPage()\n\tlocal pageChanged = self:SetCurrentPage(self.currentPage + self:GetPageDelta());\n\tif pageChanged and self.nextPageSound then\n\t\tPlaySound(self.nextPageSound);\n\tend\nend\n\nfunction PagingControlsMixin:PreviousPage()\n\tlocal pageChanged = self:SetCurrentPage(self.currentPage - self:GetPageDelta());\n\tif pageChanged and self.prevPageSound then\n\t\tPlaySound(self.prevPageSound);\n\tend\nend\n\nfunction PagingControlsMixin:GetPageDelta()\n\tlocal delta = 1;\n\tif self.canUseShiftKey and IsShiftKeyDown() then\n\t\tdelta = 10;\n\tend\n\tif self.canUseControlKey and IsControlKeyDown() then\n\t\tdelta = 100;\n\tend\n\treturn delta;"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_Journeys.lua",
+    "line": 554,
+    "snippet": "\t\tPlaySound(fanfareSound);",
+    "sha256": "f6510d3099d1861dba6ff5f3c4730b220cb936710f93222b9ea2f947a6a74481",
+    "context": "\tlocal target, onEffectFinish = nil, nil;\n\tlocal onEffectResolution = GenerateClosure(self.OnLevelEffectFinished, self);\n\tself.levelEffect = self.LevelModelScene:AddEffect(self.majorFactionData.renownTrackLevelEffectID, self.track, self.track, onEffectFinish, onEffectResolution);\n\n\tlocal centerIndex = self.track:GetCenterIndex();\n\tlocal elements = self.track:GetElements();\n\tlocal frame = elements[centerIndex];\n\tlocal selected = true;\n\tif frame.EarnedAnim then\n\t\tframe.EarnedAnim:Play();\n\tend\n\tframe:Refresh(self.actualLevel, self.displayLevel + 1, selected);\n\n\tlocal fanfareSound = self.majorFactionData.renownFanfareSoundKitID;\n\tif fanfareSound then\n\t\tPlaySound(fanfareSound);\n\tend\nend\n\nfunction JourneyProgressFrameMixin:CancelLevelEffect()\n\tself.LevelSkipButton:Hide();\n\tif self.displayLevel ~= self.actualLevel then\n\t\tself.displayLevel = self.actualLevel;\n\t\tif self.levelEffect then\n\t\t\tself.levelEffect:CancelEffect();\n\t\t\tself.levelEffect = nil;\n\t\tend\n\t\tif self.levelEffectTimer then"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_Journeys.lua",
+    "line": 937,
+    "snippet": "\tPlaySound(clickSound);",
+    "sha256": "f6510d3099d1861dba6ff5f3c4730b220cb936710f93222b9ea2f947a6a74481",
+    "context": "\tself.renownCard = self:GetParent():GetParent();\n\tlocal majorFactionData = self.renownCard.majorFactionData;\n\n\tself.factionID = majorFactionData and majorFactionData.factionID or 0;\n\n\tlocal factionData = C_Reputation.GetFactionDataByID(self.factionID);\n\tself:SetChecked(factionData and factionData.isWatched or false);\nend\n\nfunction WatchedFactionToggleFrameMixin:OnClick()\n\tC_Reputation.SetWatchedFactionByID(self:GetChecked() and self.factionID or 0);\n\n\tStatusTrackingBarManager:UpdateBarsShown();\n\n\tlocal clickSound = self:GetChecked() and SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON or SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_OFF;\n\tPlaySound(clickSound);\nend\n\nfunction WatchedFactionToggleFrameMixin:OnEnter()\n\tself:SetPropagateMouseClicks(false);\n\tself.renownCard:OnEnter();\nend\n\nfunction WatchedFactionToggleFrameMixin:OnLeave()\n\tself.renownCard:OnLeave();\nend\n\n-------------------------------------[[ Progress Bar ]]-------------------------------------------------------"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GameMenu/Shared/GameMenuFrame.lua",
+    "line": 118,
+    "snippet": "\t\t\tPlaySound(customSoundEffect or SOUNDKIT.IG_MAINMENU_OPTION);",
+    "sha256": "4f2ab779291a09cd5b825047e83674b57bf8d143a87f6a1d8f7076b69408bd65",
+    "context": "function GameMenuFrameMixin:ExternalEventClickCallback()\n\tif C_ExternalEventURL.HasURL() then\n\t\tC_ExternalEventURL.LaunchURL();\n\tend\nend\n\nfunction GameMenuFrameMixin:OnExternalEventLaunchUrlFailed()\n\tStaticPopup_Show(\"GAMEMENU_EXTERNALEVENT_FAILURE\");\nend\n\nfunction GameMenuFrameMixin:InitButtons()\n\tself:Reset();\n\n\tlocal function GenerateMenuCallback(callback, customSoundEffect)\n\t\treturn function()\n\t\t\tPlaySound(customSoundEffect or SOUNDKIT.IG_MAINMENU_OPTION);\n\t\t\tHideUIPanel(self);\n\t\t\tcallback();\n\t\tend;\n\tend\n\n\tself.NewExternalEventFrame:Hide();\n\tif C_ExternalEventURL.HasURL() then\n\t\tlocal isNew = C_ExternalEventURL.IsNew();\n\t\tlocal useGoldRedButton = true;\n\t\tlocal externalEventButton = self:AddButton(GAMEMENU_EXTERNALEVENT, GenerateMenuCallback(function() self:ExternalEventClickCallback() end), nil, nil, useGoldRedButton);\n\t\tif isNew then\n\t\t\tself.NewExternalEventFrame:SetPoint(\"BOTTOMRIGHT\", externalEventButton:GetFontString(), \"LEFT\", 16, -10);"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ProfessionsTemplates/Blizzard_ProfessionsRecipeCrafterDetails.lua",
+    "line": 320,
+    "snippet": "\t\t\t\t\tPlaySound(soundKit);",
+    "sha256": "c5d419d624e69c720378da1db8e4539a5d9f300d8b13548a798125b2e6405224",
+    "context": "end\n\nfunction ProfessionsRecipeCrafterDetailsMixin:SetStats(operationInfo, supportsQualities, isGatheringRecipe)\n\tif self.recipeInfo == nil or operationInfo == nil then\n\t\treturn;\n\tend\n\n\tif isGatheringRecipe then\n\t\tself.craftingQualityInfo = C_TradeSkillUI.GetItemReagentQualityInfo(operationInfo.spellID);\n\telse\n\t\tlocal nextCraftingQuality = operationInfo.craftingQuality;\n\t\tif self.craftingQualityInfo ~= nil then\n\t\t\tif nextCraftingQuality > self.craftingQualityInfo.quality then\n\t\t\t\tlocal soundKit = nextQualitySoundKits[nextCraftingQuality];\n\t\t\t\tif soundKit then\n\t\t\t\t\tPlaySound(soundKit);\n\t\t\t\tend\n\t\t\telseif nextCraftingQuality < self.craftingQualityInfo.quality then\n\t\t\t\tPlaySound(SOUNDKIT.UI_PROFESSION_CRAFTING_PREVIOUS_QUALITY);\n\t\t\tend\n\t\tend\n\n\t\tself.craftingQualityInfo = C_TradeSkillUI.GetRecipeItemQualityInfo(operationInfo.recipeID, nextCraftingQuality);\n\tend\n\t\n\tself.operationInfo = operationInfo;\n\tself.QualityMeter.operationInfo = operationInfo;\n"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ProfessionsTemplates/Blizzard_ProfessionsRecipeCrafterDetails.lua",
+    "line": 738,
+    "snippet": "\t\t\tPlaySound(soundKit);",
+    "sha256": "c5d419d624e69c720378da1db8e4539a5d9f300d8b13548a798125b2e6405224",
+    "context": "\t\tend\n\n\t\tif self.onAnimationsFinished then\n\t\t\tself.onAnimationsFinished();\n\t\tend\n\tend\n\t\n\tlocal function OnFxFinished()\n\t\tself.flareEffect = nil;\n\tend\n\n\tlocal function PlayEndAnimation()\n\t\tlocal craftingQuality = resultData.craftingQuality;\n\t\tlocal soundKit = craftingQuality and craftCompleteSoundKits[craftingQuality];\n\t\tif soundKit then\n\t\t\tPlaySound(soundKit);\n\t\tend\n\n\t\tif not self.atMaxTier then\n\t\t\tself.Flare.FlareTransitionIn:Restart();\n\t\t\tself.DividerGlow.TransitionOut:Restart();\n\n\t\t\tif resultData.isCrit then\n\t\t\t\tlocal modifier = Clamp(tonumber(GetCVar(\"ShakeStrengthUI\")) or 0, 0, 1);\n\t\t\t\tlocal magnitude = 10 * modifier;\n\t\t\t\tif magnitude > 0 then\n\t\t\t\t\tScriptAnimationUtil.ShakeFrameRandom(self, magnitude, .25, .05);\n\t\t\t\tend"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_IslandsQueueUI/Blizzard_IslandsQueueUI.xml",
+    "line": 188,
+    "snippet": "\t\t\t\tPlaySound(self.soundkitID);",
+    "sha256": "61b01d99ec8ea63fd05a9dc96a9466e97dd29767f75fa35adcd9255cd974b1b0",
+    "context": "\t\t\t<Layer level=\"OVERLAY\">\n\t\t\t\t<Texture parentKey=\"SelectedTexture\" atlas=\"islands-queue-difficultyselector-ring\" hidden=\"true\">\n\t\t\t\t\t<Size x=\"45\" y=\"47\"/>\n\t\t\t\t\t<Anchors>\n\t\t\t\t\t\t<Anchor point=\"CENTER\" y=\"-1\"/>\n\t\t\t\t\t</Anchors>\n\t\t\t\t</Texture>\n\t\t\t</Layer>\n\t\t</Layers>\n\t\t<Scripts>\n\t\t\t<OnLoad>\n\t\t\t\tself.UpdateTooltip = self:GetScript(\"OnEnter\");\n\t\t\t</OnLoad>\n\t\t\t<OnClick>\n\t\t\t\tself:GetParent():SetActiveDifficulty(self);\n\t\t\t\tPlaySound(self.soundkitID);\n\t\t\t</OnClick>\n\t\t\t<OnEnter>\n\t\t\t\tif (self.tooltipText) then\n\t\t\t\t\tEmbeddedItemTooltip:SetOwner(self, \"ANCHOR_RIGHT\");\n\t\t\t\t\tGameTooltip_SetTitle(EmbeddedItemTooltip, self.tooltipText, HIGHLIGHT_FONT_COLOR);\n\t\t\t\t\tif (self.notAvailableText) then\n\t\t\t\t\t\tGameTooltip_AddColoredLine(EmbeddedItemTooltip, self.notAvailableText, RED_FONT_COLOR, true);\n\t\t\t\t\tend\n\t\t\t\t\tif (HaveQuestData(self.questID) and HaveQuestRewardData(self.questID)) then\n\t\t\t\t\t\tGameTooltip_AddQuestRewardsToTooltip(EmbeddedItemTooltip, self.questID, TOOLTIP_QUEST_REWARDS_STYLE_ISLANDS_QUEUE);\n\t\t\t\t\t\tGameTooltip_SetTooltipWaitingForData(EmbeddedItemTooltip, false);\n\t\t\t\t\telse"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/LoopingSoundEffect.lua",
+    "line": 23,
+    "snippet": "\t\tPlaySound(self.loopStartSoundEffect);",
+    "sha256": "c6739f59323677e2a212eb42ca2cd059ab3ab2857cb4f04eebf465e52f873542",
+    "context": "end\n\nfunction LoopingSoundEffectMixin:OnLoad(startingSound, loopingSound, endingSound, loopStartDelay, loopEndDelay, loopFadeTime)\n\tself.loopStartSoundEffect = startingSound;\n\tself.loopingSoundEffect = loopingSound;\n\tself.loopFinishSoundEffect = endingSound;\n\tself.loopingSoundEffectStartDelay = loopStartDelay;\n\tself.loopingSoundEffectFinishDelay = loopEndDelay;\n\tself.loopingSoundEffectFadeTime = loopFadeTime;\nend\n\nfunction LoopingSoundEffectMixin:StartLoopingSound()\n\tself:CancelLoopingSound();\n\n\tif self.loopStartSoundEffect then\n\t\tPlaySound(self.loopStartSoundEffect);\n\tend\n\t\n\tself.loopingSoundEffectStartTicker = C_Timer.NewTicker(self.loopingSoundEffectStartDelay, function ()\n\t\tself.loopingSoundEffectHandle = select(2, PlaySound(self.loopingSoundEffect));\n\t\tself.loopingSoundEffectStartTicker = nil;\n\tend, 1);\nend\n\nfunction LoopingSoundEffectMixin:FinishLoopingSound()\n\tif self.loopFinishSoundEffect then\n\t\tPlaySound(self.loopFinishSoundEffect);\n\tend"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/LoopingSoundEffect.lua",
+    "line": 27,
+    "snippet": "\t\tself.loopingSoundEffectHandle = select(2, PlaySound(self.loopingSoundEffect));",
+    "sha256": "c6739f59323677e2a212eb42ca2cd059ab3ab2857cb4f04eebf465e52f873542",
+    "context": "\tself.loopingSoundEffect = loopingSound;\n\tself.loopFinishSoundEffect = endingSound;\n\tself.loopingSoundEffectStartDelay = loopStartDelay;\n\tself.loopingSoundEffectFinishDelay = loopEndDelay;\n\tself.loopingSoundEffectFadeTime = loopFadeTime;\nend\n\nfunction LoopingSoundEffectMixin:StartLoopingSound()\n\tself:CancelLoopingSound();\n\n\tif self.loopStartSoundEffect then\n\t\tPlaySound(self.loopStartSoundEffect);\n\tend\n\t\n\tself.loopingSoundEffectStartTicker = C_Timer.NewTicker(self.loopingSoundEffectStartDelay, function ()\n\t\tself.loopingSoundEffectHandle = select(2, PlaySound(self.loopingSoundEffect));\n\t\tself.loopingSoundEffectStartTicker = nil;\n\tend, 1);\nend\n\nfunction LoopingSoundEffectMixin:FinishLoopingSound()\n\tif self.loopFinishSoundEffect then\n\t\tPlaySound(self.loopFinishSoundEffect);\n\tend\n\t\n\tself.loopingSoundEffectEndTicker = C_Timer.NewTicker(self.loopingSoundEffectFinishDelay, function ()\n\t\tif self.loopingSoundEffectHandle then\n\t\t\tStopSound(self.loopingSoundEffectHandle, self.loopingSoundEffectFadeTime);"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/LoopingSoundEffect.lua",
+    "line": 34,
+    "snippet": "\t\tPlaySound(self.loopFinishSoundEffect);",
+    "sha256": "c6739f59323677e2a212eb42ca2cd059ab3ab2857cb4f04eebf465e52f873542",
+    "context": "function LoopingSoundEffectMixin:StartLoopingSound()\n\tself:CancelLoopingSound();\n\n\tif self.loopStartSoundEffect then\n\t\tPlaySound(self.loopStartSoundEffect);\n\tend\n\t\n\tself.loopingSoundEffectStartTicker = C_Timer.NewTicker(self.loopingSoundEffectStartDelay, function ()\n\t\tself.loopingSoundEffectHandle = select(2, PlaySound(self.loopingSoundEffect));\n\t\tself.loopingSoundEffectStartTicker = nil;\n\tend, 1);\nend\n\nfunction LoopingSoundEffectMixin:FinishLoopingSound()\n\tif self.loopFinishSoundEffect then\n\t\tPlaySound(self.loopFinishSoundEffect);\n\tend\n\t\n\tself.loopingSoundEffectEndTicker = C_Timer.NewTicker(self.loopingSoundEffectFinishDelay, function ()\n\t\tif self.loopingSoundEffectHandle then\n\t\t\tStopSound(self.loopingSoundEffectHandle, self.loopingSoundEffectFadeTime);\n\t\t\tself.loopingSoundEffectHandle = nil;\n\t\tend\n\t\tself.loopingSoundEffectEndTicker = nil;\n\tend, 1);\nend\n\nfunction LoopingSoundEffectMixin:CancelLoopingSound()"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Mainline/SharedUIPanelTemplates.lua",
+    "line": 2272,
+    "snippet": "\t\tPlaySound(self.ExpandButton:GetOnClickSoundKit());",
+    "sha256": "c8dc54e0e9dd78f37380bb7a984b36ee77f8e8b521ce3844d99a552d9abadc34",
+    "context": "\t-- A callback from the expand button is always from user input.\n\tlocal isUserInput = true;\n\tself.ExpandButton:SetToggleCallback(GenerateFlatClosure(self.Toggle, self, isUserInput));\nend\n\nfunction ExpandBarMixin:OnEnter()\n\tself.ExpandButton:LockHighlight();\nend\n\nfunction ExpandBarMixin:OnLeave()\n\tself.ExpandButton:UnlockHighlight();\nend\n\nfunction ExpandBarMixin:OnClick()\n\tif not self:IsLocked() then\n\t\tPlaySound(self.ExpandButton:GetOnClickSoundKit());\n\n\t\tlocal isUserInput = true;\n\t\tself:Toggle(isUserInput);\n\tend\nend\n\nfunction ExpandBarMixin:Toggle(isUserInput)\n\tlocal shouldBeShown = not self.target:IsShown();\n\tself:SetExpandedState(shouldBeShown);\n\n\tif self.onToggleCallback then\n\t\tself.onToggleCallback(shouldBeShown, isUserInput);"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Shared/Button/UIButtonTemplate.lua",
+    "line": 13,
+    "snippet": "\tPlaySound(self.onClickSoundKit or SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON);",
+    "sha256": "71ff9788c0a493e1d5084dec168942a0b9a633ffcda308c8279cb177765f49e5",
+    "context": "\nUIButtonMixin = {}\n\nfunction UIButtonMixin:InitButton()\n\tif self.buttonArtKit then\n\t\tself:SetButtonArtKit(self.buttonArtKit);\n\tend\n\n\tself:SetDisabledTooltip(self.disabledTooltip);\nend\n\nfunction UIButtonMixin:OnClick(...)\n\tPlaySound(self.onClickSoundKit or SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON);\n\n\tif self.onClickHandler then\n\t\tself.onClickHandler(self, ...);\n\tend\nend\n\nfunction UIButtonMixin:OnEnter()\n\tself:RunCustomTextFormatter();\n\n\tif self.onEnterHandler and self.onEnterHandler(self) then\n\t\treturn;\n\tend"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Shared/TabSystem/TabSystemTemplates.lua",
+    "line": 274,
+    "snippet": "\t\tPlaySound(self.tabSelectSound);",
+    "sha256": "abca5fa0b609a78bd2ba89f8543298ccd7eefdc52c2c6d075e7c28ae65f8a646",
+    "context": "\nfunction TabSystemMixin:IsTabEnabled(tabID)\n\treturn not self.tabs[tabID]:IsForceDisabled();\nend\n\nfunction TabSystemMixin:GetTabWidthConstraints()\n\treturn self.minTabWidth, self.maxTabWidth;\nend\n\nfunction TabSystemMixin:GetTabButton(tabID)\n\treturn self.tabs[tabID];\nend\n\nfunction TabSystemMixin:PlayTabSelectSound()\n\tif self.tabSelectSound then\n\t\tPlaySound(self.tabSelectSound);\n\tend\nend"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Shared/Frame/EventButton.lua",
+    "line": 17,
+    "snippet": "\t\tPlaySound(soundKitID);",
+    "sha256": "f7f058a5c5b40358168b9cf1e9963019176ce577535a0317ab72b3cc215e4d3a",
+    "context": "EventButtonMixin = CreateFromMixins(CallbackRegistryMixin);\n\nEventButtonMixin:GenerateCallbackEvents(\n\t{\n\t\t\"OnMouseUp\",\n\t\t\"OnMouseDown\",\n\t\t\"OnClick\",\n\t\t\"OnEnter\",\n\t\t\"OnLeave\",\n\t\t\"OnSizeChanged\",\n\t}\n);\n\nlocal function PlaySoundKit(button, soundKitID)\n\tif soundKitID and button:IsEnabled() then\n\t\tPlaySound(soundKitID);\n\tend\nend\n\nfunction EventButtonMixin:OnLoad_Intrinsic()\n\tCallbackRegistryMixin.OnLoad(self);\nend\n\nfunction EventButtonMixin:OnMouseUp_Intrinsic(buttonName, upInside)\n\tself:TriggerEvent(\"OnMouseUp\", buttonName, upInside);\n\tPlaySoundKit(self, self.mouseUpSoundKitID);\nend\n"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/ScriptedAnimations/ScriptAnimatedEffectController.lua",
+    "line": 72,
+    "snippet": "\t\t\tPlaySound(effect.startSoundKitID);",
+    "sha256": "a707092c0cdbae0408b860dee7d5a89ac7a74f87bfe846968c71403d13ccf8dd",
+    "context": "\t\tend\n\n\t\tif self:IsSoundEnabled() and effect.loopingSoundKitID then\n\t\t\tlocal startingSound = nil;\n\t\t\tlocal loopingSound = effect.loopingSoundKitID;\n\n\t\t\tlocal endingSound = nil;\n\t\t\tlocal loopStartDelay = 0;\n\t\t\tlocal loopEndDelay = 0;\n\t\t\tlocal loopFadeTime = 0;\n\t\t\tself.loopingSoundEmitter = CreateLoopingSoundEffectEmitter(startingSound, loopingSound, endingSound, loopStartDelay, loopEndDelay, loopFadeTime);\n\t\t\tself.loopingSoundEmitter:StartLoopingSound();\n\t\tend\n\t\n\t\tif self:IsSoundEnabled() and effect.startSoundKitID then\n\t\t\tPlaySound(effect.startSoundKitID);\n\t\tend\n\tend\n\n\t-- Actor doesn't exist until after InternalAddEffect is called, so we have to wait until now to set the dynamic offsets\n\tself:UpdateActorDynamicOffsets();\nend\n\nfunction ScriptAnimatedEffectControllerMixin:DeltaUpdate(elapsedTime)\n\tif self.actor then\n\t\tif self.actor:IsActive() then\n\t\t\tself.actor:DeltaUpdate(elapsedTime);\n\t\tend"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/ScriptedAnimations/ScriptAnimatedEffectController.lua",
+    "line": 133,
+    "snippet": "\t\tPlaySound(effect.finishSoundKitID);",
+    "sha256": "a707092c0cdbae0408b860dee7d5a89ac7a74f87bfe846968c71403d13ccf8dd",
+    "context": "end\n\nfunction ScriptAnimatedEffectControllerMixin:FinishLoopingSound()\n\tif self.loopingSoundEmitter then\n\t\tself.loopingSoundEmitter:FinishLoopingSound();\n\tend\nend\n\nfunction ScriptAnimatedEffectControllerMixin:FinishEffect()\n\tlocal effect = self:GetEffect();\n\tif effect.finishBehavior then\n\t\tself:BeginBehavior(effect.finishBehavior);\n\tend\n\n\tif self:IsSoundEnabled() and effect.finishSoundKitID then\n\t\tPlaySound(effect.finishSoundKitID);\n\tend\n\n\tself:RunEffectFinish();\n\n\tif self.actor then\n\t\tself.modelScene:ReleaseActor(self.actor);\n\t\tself.actor = nil;\n\tend\n\n\tself:FinishLoopingSound();\n\n\tif effect.finishEffectID then"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SplashFrame/Mainline/SplashFrame.lua",
+    "line": 55,
+    "snippet": "\t\tPlaySound(screenInfo.soundKitID);",
+    "sha256": "6ab072050e5729312a931d11dd1af46100aae21196f301430a07b230babad16f",
+    "context": "\t\tself:SetupFrame(...);\n\telseif event == \"QUEST_LOG_UPDATE\" then\n\t\tif( self:IsShown() and self.screenInfo)then\n\t\t\tself.RightFeature:SetStartQuestButtonDisplay(self.screenInfo);\n\t\tend\n\tend\nend\n\nfunction SplashFrameMixin:SetupFrame(screenInfo)\n\tif(not screenInfo) then\n\t\tAlertFrame:SetAlertsEnabled(true, \"splashFrame\");\n\t\treturn;\n\tend\n\n\tif(screenInfo.soundKitID > 0) then\n\t\tPlaySound(screenInfo.soundKitID);\n\tend\n\n\tSetupTextureKitOnRegions(screenInfo.textureKit, self, splashFrameTextureRegions, TextureKitConstants.SetVisibility, TextureKitConstants.UseAtlasSize);\n\tself.BottomTexture:SetSize(371, 137);\n\n\tif (screenInfo.screenType == Enum.SplashScreenType.WhatsNew) then\n\t\tself.Header:SetText(SPLASH_BASE_HEADER);\n\telseif(screenInfo.screenType == Enum.SplashScreenType.SeasonRollOver) then\n\t\tself.Header:SetText(SPLASH_NEW_HEADER_SEASON);\n\tend\n\n\tself.Label:SetText(screenInfo.header);"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PlayerChoice/Blizzard_PlayerChoice.lua",
+    "line": 243,
+    "snippet": "\t\tPlaySound(self.choiceInfo.soundKitID);",
+    "sha256": "94a92b23a4d6de2fdc3406338844cbb5c15e81b0e782e34ffd5dc89d2a10a8d6",
+    "context": "\t\"PLAYER_ENTERING_WORLD\",\n\t\"PLAYER_DEAD\",\n\t\"PLAYER_CHOICE_CLOSE\",\n};\n\nlocal function GetActiveMawBuffContainer()\n\tif ScenarioBlocksFrame and ScenarioBlocksFrame.MawBuffsBlock:IsShown() then\n\t\treturn ScenarioBlocksFrame.MawBuffsBlock.Container;\n\tend\nend\n\nfunction PlayerChoiceFrameMixin:OnShow()\n\tFrameUtil.RegisterFrameForEvents(self, PLAYER_CHOICE_FRAME_EVENTS);\n\n\tif self.choiceInfo and self.choiceInfo.soundKitID then\n\t\tPlaySound(self.choiceInfo.soundKitID);\n\telse\n\t\tPlaySound(SOUNDKIT.IG_QUEST_LIST_OPEN);\n\tend\n\n\tlocal activeMawBuffContainer = GetActiveMawBuffContainer();\n\tif activeMawBuffContainer then\n\t\tactiveMawBuffContainer:UpdateListState(true);\n\tend\n\n\tlocal toggleButton = PlayerChoiceToggle_GetActiveToggle();\n\tif toggleButton then\n\t\ttoggleButton:ClearAllPoints();"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PlayerChoice/Blizzard_PlayerChoice.lua",
+    "line": 267,
+    "snippet": "\t\tPlaySound(self.choiceInfo.closeUISoundKitID);",
+    "sha256": "94a92b23a4d6de2fdc3406338844cbb5c15e81b0e782e34ffd5dc89d2a10a8d6",
+    "context": "\n\tlocal toggleButton = PlayerChoiceToggle_GetActiveToggle();\n\tif toggleButton then\n\t\ttoggleButton:ClearAllPoints();\n\t\ttoggleButton:SetPoint(\"TOP\", self, \"BOTTOM\", self.textureKitInfo.toggleXOffset or 0, self.textureKitInfo.toggleYOffset or 0);\n\tend\n\tPlayerChoiceToggle_TryShow();\n\n\tPlayerChoiceTimeRemaining:TryShow();\nend\n\nfunction PlayerChoiceFrameMixin:OnHide()\n\tFrameUtil.UnregisterFrameForEvents(self, PLAYER_CHOICE_FRAME_EVENTS);\n\n\tif self.choiceInfo and self.choiceInfo.closeUISoundKitID then\n\t\tPlaySound(self.choiceInfo.closeUISoundKitID);\n\telse\n\t\tPlaySound(SOUNDKIT.IG_QUEST_LIST_CLOSE);\n\tend\n\n\tC_PlayerChoice.OnUIClosed();\n\n\tif CovenantPreviewFrame and CovenantPreviewFrame:IsShown() then\n\t\tCovenantPreviewFrame:Hide();\n\tend\n\n\tlocal activeMawBuffContainer = GetActiveMawBuffContainer();\n\tif activeMawBuffContainer then"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PlayerChoice/Blizzard_PlayerChoice.lua",
+    "line": 307,
+    "snippet": "\t\tPlaySound(self.textureKitInfo.exitButtonSoundKit);",
+    "sha256": "94a92b23a4d6de2fdc3406338844cbb5c15e81b0e782e34ffd5dc89d2a10a8d6",
+    "context": "\tend\nend\n\nfunction PlayerChoiceFrameMixin:OnSelectionMade()\n\tif not self.choiceInfo.keepOpenAfterChoice then\n\t\tHideUIPanel(self);\n\tend\nend\n\nfunction PlayerChoiceFrameMixin:OnCloseUIFromExitButton()\n\tif self.choiceInfo.requiresSelection then\n\t\treturn;\n\tend\n\n\tif self.textureKitInfo.exitButtonSoundKit then\n\t\tPlaySound(self.textureKitInfo.exitButtonSoundKit);\n\tend\n\t\n\tHideUIPanel(self);\nend\n\nlocal titleTextureKitRegions = {\n\tLeft = \"UI-Frame-%s-TitleLeft\",\n\tRight = \"UI-Frame-%s-TitleRight\",\n\tMiddle = \"_UI-Frame-%s-TitleMiddle\",\n};\n\nlocal backgroundTextureKitRegions = {"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PlayerChoice/Blizzard_PlayerChoicePowerChoiceTemplate.lua",
+    "line": 89,
+    "snippet": "\t\t\tPlaySound(self.choiceSelectedSound);",
+    "sha256": "a7571282472bc7271437149898e62b0a6e79752e30fad92da28297f31e0db9eb",
+    "context": "\t\tif self.selectedEffects ~= nil then\n\t\t\tself.selectedEffectControllers = {};\n\t\t\tfor _, effect in ipairs(self.selectedEffects) do\n\t\t\t\ttable.insert(self.selectedEffectControllers, GlobalFXDialogModelScene:AddEffect(effect.id, self.Artwork, self.Artwork, nil, nil, effect.scaleMultiplier or 1));\n\t\t\tend\n\t\tend\n\n\t\tlocal toggleButton = PlayerChoiceToggle_GetActiveToggle();\n\t\tif toggleButton then\n\t\t\ttoggleButton:Hide();\n\t\tend\n\t\tC_Timer.After(1.25, function() self:CancelEffects(); self:EnableMouse(false); end);\n\t\tself:SetAlpha(1);\n\t\tself.FadeoutSelected:Restart();\n\t\tif self.choiceSelectedSound then\n\t\t\tPlaySound(self.choiceSelectedSound);\n\t\tend\n\telse\n\t\tself:CancelEffects();\n\t\tself:SetAlpha(1);\n\t\tself:EnableMouse(false);\n\t\tself.FadeoutUnselected:Restart();\n\tend\n\n\tself.OptionButtonsContainer:DisableButtons();\nend\n\nfunction PlayerChoicePowerChoiceTemplateMixin:OnSelected()"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PlayerChoice/Blizzard_PlayerChoiceOptionBase.lua",
+    "line": 529,
+    "snippet": "\t\tPlaySound(self.soundKitID);",
+    "sha256": "6f72c5a31222b25d63a435e8b1cdb5d44ab96a217561b2d249cbd0300a09344e",
+    "context": "\nlocal THREADS_OF_FATE_OPTION_ID = 3272;\n\nfunction PlayerChoiceBaseOptionButtonTemplateMixin:OnClick()\n\tif self.confirmation then\n\t\tif self.optionID == THREADS_OF_FATE_OPTION_ID then\n\t\t\tStaticPopup_Show(\"CONFIRM_PLAYER_CHOICE_WITH_CONFIRMATION_STRING\", self.confirmation, nil, { owner = self, confirmationString = SHADOWLANDS_EXPERIENCE_THREADS_OF_FATE_CONFIRMATION_STRING });\n\t\telse\n\t\t\tStaticPopup_Show(\"CONFIRM_PLAYER_CHOICE\", self.confirmation, nil, { owner = self });\n\t\tend\n\telse\n\t\tself:OnConfirm();\n\tend\n\n\tif self.soundKitID then\n\t\tPlaySound(self.soundKitID);\n\tend\nend\n\nfunction PlayerChoiceBaseOptionButtonTemplateMixin:OnEnter()\n\tif self.tooltip or self.rewardQuestID or self.Text:IsTruncated() then\n\t\tEmbeddedItemTooltip:SetOwner(self, \"ANCHOR_RIGHT\");\n\n\t\tif self.rewardQuestID and not HaveQuestRewardData(self.rewardQuestID) then\n\t\t\tGameTooltip_SetTitle(EmbeddedItemTooltip, RETRIEVING_DATA, RED_FONT_COLOR);\n\t\t\tGameTooltip_SetTooltipWaitingForData(EmbeddedItemTooltip, true);\n\t\telse\n\t\t\tif self.Text:IsTruncated() then"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PlayerChoice/Blizzard_PlayerChoiceToggleButton.lua",
+    "line": 82,
+    "snippet": "\t\t\tPlaySound(self.hidePowersSound);",
+    "sha256": "4f52be0c563c40ff7454ec9d17aabf1a70d59b2306c9c016fb0bb6d96ab0eff5",
+    "context": "\t\tlocal highlightAtlas = GetFinalNameFromTextureKit(buttonInfo.highlightAtlas, textureKit);\n\t\tif C_Texture.GetAtlasInfo(highlightAtlas) then\n\t\t\tself:SetHighlightAtlas(highlightAtlas);\n\t\tend\n\tend\n\n\tself.Text:SetText(choiceFrameShown and HIDE or choiceInfo.pendingChoiceText);\n\tself.Text:SetPoint(\"CENTER\", self, \"CENTER\", buttonInfo.xOffset or 0, buttonInfo.yOffset or 0);\n\tlocal effectID = (not choiceFrameShown) and textureKitEffectIDs[textureKit] or nil;\n\tself:UpdateEffect(effectID);\nend\n\nfunction PlayerChoiceToggleButtonMixin:OnClick()\n\tif PlayerChoiceFrame:IsShown() then\n\t\tif self.hidePowersSound then\n\t\t\tPlaySound(self.hidePowersSound);\n\t\tend\n\t\tHideUIPanel(PlayerChoiceFrame);\n\telse\n\t\tif self.showPowersSound then\n\t\t\tPlaySound(self.showPowersSound);\n\t\tend\n\t\tPlayerChoiceFrame:TryShow();\n\tend\n\n\tif not self.noFade then\n\t\tself.FadeIn:Restart();\n\tend"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PlayerChoice/Blizzard_PlayerChoiceToggleButton.lua",
+    "line": 87,
+    "snippet": "\t\t\tPlaySound(self.showPowersSound);",
+    "sha256": "4f52be0c563c40ff7454ec9d17aabf1a70d59b2306c9c016fb0bb6d96ab0eff5",
+    "context": "\n\tself.Text:SetText(choiceFrameShown and HIDE or choiceInfo.pendingChoiceText);\n\tself.Text:SetPoint(\"CENTER\", self, \"CENTER\", buttonInfo.xOffset or 0, buttonInfo.yOffset or 0);\n\tlocal effectID = (not choiceFrameShown) and textureKitEffectIDs[textureKit] or nil;\n\tself:UpdateEffect(effectID);\nend\n\nfunction PlayerChoiceToggleButtonMixin:OnClick()\n\tif PlayerChoiceFrame:IsShown() then\n\t\tif self.hidePowersSound then\n\t\t\tPlaySound(self.hidePowersSound);\n\t\tend\n\t\tHideUIPanel(PlayerChoiceFrame);\n\telse\n\t\tif self.showPowersSound then\n\t\t\tPlaySound(self.showPowersSound);\n\t\tend\n\t\tPlayerChoiceFrame:TryShow();\n\tend\n\n\tif not self.noFade then\n\t\tself.FadeIn:Restart();\n\tend\nend\n\n\nTorghastPlayerChoiceToggleButtonMixin = {};\n"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Soulbinds/Blizzard_SoulbindsViewer.lua",
+    "line": 233,
+    "snippet": "\t\tPlaySound(soulbindData.activationSoundKitID);",
+    "sha256": "16c35cf0ac3bfaed2ed35903ae2243629f300883fb0019c5dd2a6d98cfb48d1c",
+    "context": "\tself:UpdateButtons();\n\tself:CheckTutorials();\n\n\tself:TriggerEvent(SoulbindViewerMixin.Event.OnSoulbindChanged, self.covenantData, soulbindData);\n\n\tPlaySound(SOUNDKIT.SOULBINDS_SOULBIND_SELECTED);\nend\n\nfunction SoulbindViewerMixin:OnSoulbindActivated(soulbindID)\n\tlocal soulbindData = C_Soulbinds.GetSoulbindData(soulbindID);\n\tself.Tree:Init(soulbindData);\n\tself.SelectGroup:Init(self.covenantData, soulbindID);\n\tself:UpdateButtons();\n\n\tif soulbindData.activationSoundKitID then\n\t\tPlaySound(soulbindData.activationSoundKitID);\n\tend\nend\n\nfunction SoulbindViewerMixin:GetCovenantData()\n\treturn self.covenantData;\nend\n\nfunction SoulbindViewerMixin:GetSoulbindData()\n\treturn self.soulbindData;\nend\n\nfunction SoulbindViewerMixin:UpdateActivateSoulbindButton()"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Kiosk/Kiosk.lua",
+    "line": 139,
+    "snippet": "\t\tPlaySound(Kiosk.ExpirationWarningSoundKit);",
+    "sha256": "99051d5ceba3e4425dc47dbaca6c86edf2c4e70f4a3efb10cac2daf0a08bdad3",
+    "context": "\t\tif UIErrorsFrame then\n\t\t\tUIErrorsFrame:AddExternalWarningMessage(KIOSK_SESSION_TIMER_CHANGED);\n\t\tend\n\n\t\tStaticPopup_Show(\"OKAY\", KIOSK_SESSION_TIMER_CHANGED);\n\telseif event == \"KIOSK_SESSION_EXPIRATION_WARNING\" then\n\t\tlocal secondsRemaining = ...;\n\t\tlocal msg = string.format(KIOSK_SESSION_EXPIRE_WARNING, secondsRemaining / 60);\n\n\t\tif UIErrorsFrame and secondsRemaining > 60 then\n\t\t\tUIErrorsFrame:AddExternalWarningMessage(msg);\n\t\tend\n\n\t\tChatFrameUtil.DisplaySystemMessageInCurrent(msg);\n\n\t\tPlaySound(Kiosk.ExpirationWarningSoundKit);\n\telseif event == \"KIOSK_SESSION_SHUTDOWN\" then\n\t\tSettingsPanel:SetAllSettingsToDefaults();\n\tend\nend\n\nfunction KioskFrameMixin:HasAllowedMaps()\n\treturn #Kiosk.AllowedMapIDs > 0;\nend\n\nfunction KioskFrameMixin:GetAllowedMapIDs()\n\treturn Kiosk.AllowedMapIDs;\nend"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ClassTrial/Blizzard_ClassTrial.lua",
+    "line": 183,
+    "snippet": "\tPlaySound(self.soundKit or SOUNDKIT.UI_70_BOOST_THANKSFORPLAYING_SMALLER);",
+    "sha256": "976aed169253d9c2c30f2ce0c044e054b29d5249c196418ba0a4257102da66db",
+    "context": "\t\t-- This means that the player has just purchased the expansion but is sitting on their logout dialog...so do nothing\n\t\treturn;\n\tend\n\n\tif event == \"CLASS_TRIAL_TIMER_START\" then\n\t\tif not CanUpgradeToCurrentExpansion() then\n\t\t\tself:ShowThanks(SOUNDKIT.UI_70_BOOST_THANKSFORPLAYING);\n\t\tend\n\telseif event == \"CLASS_TRIAL_UPGRADE_COMPLETE\" then\n\t\tself:OnUpgradeComplete();\n\tend\nend\n\nfunction ClassTrialDialogMixin:OnShow()\n\tClassTrialTimerDisplay:Hide();\n\tPlaySound(self.soundKit or SOUNDKIT.UI_70_BOOST_THANKSFORPLAYING_SMALLER);\nend\n\nfunction ClassTrialDialogMixin:OnLoad()\n\tClassTrialSecureFrame:SetAttribute(\"updateboostpurchasebutton\");\n\n\tself:RegisterEvent(\"CLASS_TRIAL_TIMER_START\");\n\tself:RegisterEvent(\"CLASS_TRIAL_UPGRADE_COMPLETE\");\nend\n\nExpansionTrialDialogMixin = CreateFromMixins(BaseExpandableDialogMixin);\n\nlocal textureKitRegionInfo = {"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_HousingBlueprint/Blizzard_HousingBlueprintFrameTemplates.lua",
+    "line": 43,
+    "snippet": "\t\t\tPlaySound(self.openSoundKit);",
+    "sha256": "1a3c53aebf30ff97eab1cb8264be8587b08f1fddc221001351412646237d2be9",
+    "context": "end\n\nfunction HousingBlueprintBaseFrameMixin:IsOperationInProgress()\n\t-- Must be overriden\n\tassert(false);\nend\n\nfunction HousingBlueprintBaseFrameMixin:GetNonPanelAnchor()\n\t-- Optional override\n\treturn \"BOTTOM\", nil, \"CENTER\", 0, 0;\nend\n\nfunction HousingBlueprintBaseFrameMixin:ShowSelf()\n\tif not self:IsShown() then\n\t\tif self.openSoundKit then\n\t\t\tPlaySound(self.openSoundKit);\n\t\tend\n\t\tEventRegistry:TriggerEvent(\"HousingBlueprint.FrameShown\", self);\n\tend\n\n\t-- Extra handling required to support either showing as a normal UI Panel OR on top of the House Editor\n\t-- If we ever refactor how the entire \"top level parent\" handling works this should be able to be drastically simplified\n\tlocal topLevelParent = GetAppropriateTopLevelParent();\n\tself:SetParent(topLevelParent);\n\tif topLevelParent == UIParent then\n\t\tself:SetFullInputBlockerEnabled(false);\n\t\tShowUIPanel(self);\n\telse"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_HousingBlueprint/Blizzard_HousingBlueprintFrameTemplates.lua",
+    "line": 106,
+    "snippet": "\t\tPlaySound(self.closeSoundKit);",
+    "sha256": "1a3c53aebf30ff97eab1cb8264be8587b08f1fddc221001351412646237d2be9",
+    "context": "\t\tself.FullscreenInputBlocker:Hide();\n\tend\nend\n\nfunction HousingBlueprintBaseFrameMixin:TryHandleEscape()\n\treturn self:TryHandleCloseInput();\nend\n\nfunction HousingBlueprintBaseFrameMixin:TryHandleCloseInput()\n\tif not self:IsShown() then\n\t\treturn false;\n\tend\n\n\t-- If a loading state is shown, consume the Escape key input but don't close\n\tif not self:IsOperationInProgress() then\n\t\tPlaySound(self.closeSoundKit);\n\t\tself:HideSelf();\n\tend\n\treturn true;\nend"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_HousingEventHandler/Blizzard_HousingEventHandler.lua",
+    "line": 151,
+    "snippet": "\t\tPlaySound(zoom and SOUNDKIT.HOUSING_LAYOUT_ZOOM_IN or SOUNDKIT.HOUSING_LAYOUT_ZOOM_OUT);",
+    "sha256": "b0eb7b3cd4bc1ec9beb1f5c4de350fbea2066f656c2449c5deee94580dab2b2b",
+    "context": "\nfunction HousingFramesUtil.SetGridSnapEnabled(gridSnapEnabled)\n\tPlaySound(SOUNDKIT.HOUSING_PRIMARY_SUB_MENU_BUTTON_TOGGLE_SHORTCUT);\n\tC_HousingBasicMode.SetGridSnapEnabled(gridSnapEnabled);\nend\n\nfunction HousingFramesUtil.SetFreePlaceEnabled(freeplaceEnabled)\n\tPlaySound(SOUNDKIT.HOUSING_PRIMARY_SUB_MENU_BUTTON_TOGGLE_SHORTCUT);\n\tC_HousingBasicMode.SetFreePlaceEnabled(freeplaceEnabled);\nend\n\nfunction HousingFramesUtil.ZoomLayoutCamera(zoom)\n\tlocal zoomChanged = C_HousingLayout.ZoomLayoutCamera(zoom);\n\n\tif zoomChanged then\n\t\tPlaySound(zoom and SOUNDKIT.HOUSING_LAYOUT_ZOOM_IN or SOUNDKIT.HOUSING_LAYOUT_ZOOM_OUT);\n\tend\nend\n\nfunction HousingFramesUtil.RotateBasicDecorSelection(direction)\n\tif C_HousingBasicMode.IsDecorSelected() then\n\t\tC_HousingBasicMode.RotateDecor(direction);\n\telseif C_HousingBasicMode.IsHouseExteriorSelected() then\n\t\tC_HousingBasicMode.RotateHouseExterior(direction);\n\telse\n\t\t-- Nothing selected, early out & avoid playing sound\n\t\treturn;\n\tend"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CooldownViewer/GroupBuffFilter.lua",
+    "line": 122,
+    "snippet": "\tPlaySound(self:GetPickupSound());",
+    "sha256": "e3d44e3f232d8d1873696a613c925ed924e0d2b71fece430c55b2de1bc9c81cc",
+    "context": "end\n\nfunction GroupBuffFilterItemMixin:GetVisualAlert()\n\treturn GetCurrentVisualAlerts()[self.groupBuffItem.spellID];\nend\n\nfunction GroupBuffFilterItemMixin:GetAllAlertTypes()\n\tlocal hasVisualAlert = self:GetVisualAlert() ~= nil;\n\tif hasVisualAlert then\n\t\tlocal alertTypes = {Enum.CooldownViewerAlertType.Visual};\n\t\treturn alertTypes;\n\tend\nend\n\nfunction GroupBuffFilterItemMixin:OnDragStart()\n\tPlaySound(self:GetPickupSound());\n\tself.section:GetFilter():BeginGroupBuffItemDrag(self);\nend\n\nfunction GroupBuffFilterItemMixin:OnMouseUp(button, upInside)\n\tif not upInside then\n\t\treturn;\n\tend\n\n\tif button == \"LeftButton\" then\n\t\tPlaySound(self:GetPickupSound());\n\t\tlocal eatNextGlobalMouseUp = true;\n\t\tself.section:GetFilter():BeginGroupBuffItemDrag(self, eatNextGlobalMouseUp);"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CooldownViewer/GroupBuffFilter.lua",
+    "line": 132,
+    "snippet": "\t\tPlaySound(self:GetPickupSound());",
+    "sha256": "e3d44e3f232d8d1873696a613c925ed924e0d2b71fece430c55b2de1bc9c81cc",
+    "context": "\t\treturn alertTypes;\n\tend\nend\n\nfunction GroupBuffFilterItemMixin:OnDragStart()\n\tPlaySound(self:GetPickupSound());\n\tself.section:GetFilter():BeginGroupBuffItemDrag(self);\nend\n\nfunction GroupBuffFilterItemMixin:OnMouseUp(button, upInside)\n\tif not upInside then\n\t\treturn;\n\tend\n\n\tif button == \"LeftButton\" then\n\t\tPlaySound(self:GetPickupSound());\n\t\tlocal eatNextGlobalMouseUp = true;\n\t\tself.section:GetFilter():BeginGroupBuffItemDrag(self, eatNextGlobalMouseUp);\n\telseif button == \"RightButton\" then\n\t\tself.section:GetFilter():DisplayContextMenu(self);\n\tend\nend\n\nfunction GroupBuffFilterItemMixin:OnEnter()\n\tGameTooltip:SetOwner(self, \"ANCHOR_RIGHT\");\n\tGameTooltip:SetSpellByID(self.groupBuffItem.spellID);\n\tGameTooltip:Show();\nend"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CooldownViewer/GroupBuffFilter.lua",
+    "line": 306,
+    "snippet": "\t\tPlaySound(self:GetDropSound());",
+    "sha256": "e3d44e3f232d8d1873696a613c925ed924e0d2b71fece430c55b2de1bc9c81cc",
+    "context": "\tself.shownSection:Show();\n\n\tself.hiddenSection = CreateFrame(\"Frame\", nil, self.Scroll.Content, \"GroupBuffFilterSectionTemplate\");\n\tself.hiddenSection:Init(GROUP_BUFF_FILTER_SECTION_HIDDEN, false, self);\n\tself.hiddenSection:SetPoint(\"TOPLEFT\", self.shownSection, \"BOTTOMLEFT\", 0, -18);\n\tself.hiddenSection:Show();\nend\n\nfunction GroupBuffFilterMixin:OnEvent(event)\n\tif event == \"GLOBAL_MOUSE_UP\" then\n\t\tif self.eatNextGlobalMouseUp then\n\t\t\tself.eatNextGlobalMouseUp = nil;\n\t\t\treturn;\n\t\tend\n\n\t\tPlaySound(self:GetDropSound());\n\n\t\tself:EndGroupBuffItemDrag();\n\tend\nend\n\nfunction GroupBuffFilterMixin:GetDropSound()\n\treturn SOUNDKIT.UI_CURSOR_DROP_OBJECT;\nend\n\nfunction GroupBuffFilterMixin:Refresh()\n\tlocal shownBuffItems, hiddenBuffItems = BuildGroupBuffItemLists();\n\tself.shownSection:RefreshLayout(shownBuffItems);"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ArtifactUI/Blizzard_ArtifactPowerButton.lua",
+    "line": 25,
+    "snippet": "\tlocal soundPlayed, handle = PlaySound(sound, \"SFX\");",
+    "sha256": "a198279b1d0b7d0f3e4ec486f9c26a9a522219efbbeece7f46c043aa6a1e30dd",
+    "context": "ARTIFACT_POWER_STYLE_PURCHASED = 4;\nARTIFACT_POWER_STYLE_UNPURCHASED = 5;\nARTIFACT_POWER_STYLE_UNPURCHASED_LOCKED = 6;\n\nARTIFACT_POWER_STYLE_PURCHASED_READ_ONLY = 7;\nARTIFACT_POWER_STYLE_UNPURCHASED_READ_ONLY = 8;\n\nlocal ARTIFACT_TRAIT_SOUND_HANDLE;\n\nlocal function PlayArtifactTraitSound(sound)\n\tif ARTIFACT_TRAIT_SOUND_HANDLE ~= nil then\n\t\tStopSound(ARTIFACT_TRAIT_SOUND_HANDLE);\n\t\tARTIFACT_TRAIT_SOUND_HANDLE = nil;\n\tend\n\t\n\tlocal soundPlayed, handle = PlaySound(sound, \"SFX\");\n\tif soundPlayed then\n\t\tARTIFACT_TRAIT_SOUND_HANDLE = handle;\n\tend\nend\n\nfunction ArtifactPowerButtonMixin:OnLoad()\n\tself:RegisterForClicks(\"LeftButtonUp\", \"RightButtonUp\");\n\tself:RegisterForDrag(\"LeftButton\");\n\t\n\tself.LightRune:SetAtlas(self:GenerateRune(), true);\nend\n"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ClickBindingUI/Blizzard_ClickBindingUI.lua",
+    "line": 846,
+    "snippet": "\tPlaySound(soundFile);",
+    "sha256": "918f02d9fb8657499a87e9a97d03e2391015aa17d2d84f344c13c1e51bfd84fb",
+    "context": "\tGameTooltip:SetOwner(self, \"ANCHOR_RIGHT\");\n\tGameTooltip:SetText(OPTION_TOOLTIP_ENABLE_MOUSEOVER_CAST, nil, nil, nil, nil, true);\nend\n\nfunction ClickableBindingsEnableMouseoverCastCheckboxMixin:OnLeave()\n\tGameTooltip:Hide();\nend\n\nfunction ClickableBindingsEnableMouseoverCastCheckboxMixin:OnClick()\n\tlocal isNowEnabled = not GetCVarBool(\"enableMouseoverCast\");\n\n\tlocal newValue = isNowEnabled and \"1\" or \"0\";\n\tSetCVar(\"enableMouseoverCast\", newValue, \"ENABLE_MOUSEOVER_CAST\");\n\n\tlocal soundFile = isNowEnabled and SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON or SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_OFF;\n\tPlaySound(soundFile);\nend\n\nfunction ClickableBindingsEnableMouseoverCastCheckboxMixin:UpdateCheckbox()\n\tself:SetChecked(GetCVarBool(\"enableMouseoverCast\"));\nend"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ItemUpgradeUI/Mainline/Blizzard_ItemUpgradeUI.lua",
+    "line": 655,
+    "snippet": "\tPlaySound(soundKit);",
+    "sha256": "386fb0e9dd8347ab6e5e414fd6a9ba029f19391618092a2e2df0abf728b0c337",
+    "context": "local tooltipReappearWaitTime = 1.5;\n\nfunction ItemUpgradeMixin:PlayUpgradedCelebration()\n\tself.upgradeAnimationsInProgress = true;\n\n\tself.LeftItemPreviewFrame:GeneratePreviewTooltip(true, nil);\n\tself.ItemInfo.ItemName:SetText(self.upgradeInfo.targetQualityColor:WrapTextInColorCode(self.upgradeInfo.name));\n\tSetItemButtonQuality(self.UpgradeItemButton, self.targetUpgradeLevelInfo.displayQuality);\n\n\tself.LeftItemPreviewFrame.UpgradedAnim:Restart();\n\tself.RightItemPreviewFrame:SetAlpha(0);\n\tself.Arrow:Hide();\n\tself.AnimationHolder.UpgradedFlash:Restart();\n\n\tlocal soundKit = upgradedSoundKits[self.targetUpgradeLevelInfo.displayQuality] or SOUNDKIT.UI_ITEM_UPGRADE_UI_ITEM_UPGRADED;\n\tPlaySound(soundKit);\n\n\tself.tooltipReappearTimerInProgress = true;\n\tC_Timer.After(tooltipReappearWaitTime, GenerateClosure(self.OnTooltipReappearTimerComplete, self));\nend\n\nfunction ItemUpgradeMixin:OnTooltipReappearTimerComplete()\n\tself.tooltipReappearTimerInProgress = false;\n\tself:UpdateIfTargetReached();\nend\n\nfunction ItemUpgradeMixin:OnTooltipReappearComplete()\n\tself.Arrow.Anim:Restart();"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ZoneAbility/ZoneAbility.lua",
+    "line": 143,
+    "snippet": "\t\t\t\t\tPlaySound(previousZoneAbility.placedSoundEffect);",
+    "sha256": "3725946070cb3b92d4b9b30035bc8a1bdac60ef7a4c77014f71d7fbfaa756c55",
+    "context": "\t\t\t\t\tbreak;\n\t\t\t\tend\n\n\t\t\t\tdisplayedTextureKit = zoneAbilityInfo.textureKit;\n\t\t\telseif displayedTextureKit and zoneAbilityInfo.textureKit == displayedTextureKit then\n\t\t\t\ttable.insert(displayedZoneAbilities, zoneAbilityInfo);\n\t\t\tend\n\t\tend\n\tend\n\n\tif self.previousZoneAbilities then\n\t\tfor i, previousZoneAbility in ipairs(self.previousZoneAbilities) do\n\t\t\tif previousZoneAbility.placedSoundEffect then\n\t\t\t\tlocal spellID = previousZoneAbility.spellID;\n\t\t\t\tif activeAbilityIsDisplayedOnBar[spellID] and not DoZoneAbilitiesIncludeSpellID(displayedZoneAbilities, spellID) then\n\t\t\t\t\tPlaySound(previousZoneAbility.placedSoundEffect);\n\t\t\t\tend\n\t\t\tend\n\t\tend\n\tend\n\n\tfor i, displayZoneAbility in ipairs(displayedZoneAbilities) do\n\t\tif displayZoneAbility.shownSoundEffect then\n\t\t\tlocal spellID = displayZoneAbility.spellID;\n\t\t\tif not self.previousZoneAbilities or not DoZoneAbilitiesIncludeSpellID(self.previousZoneAbilities, spellID) then\n\t\t\t\tPlaySound(displayZoneAbility.shownSoundEffect);\n\t\t\tend\n\t\tend"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ZoneAbility/ZoneAbility.lua",
+    "line": 153,
+    "snippet": "\t\t\t\tPlaySound(displayZoneAbility.shownSoundEffect);",
+    "sha256": "3725946070cb3b92d4b9b30035bc8a1bdac60ef7a4c77014f71d7fbfaa756c55",
+    "context": "\tif self.previousZoneAbilities then\n\t\tfor i, previousZoneAbility in ipairs(self.previousZoneAbilities) do\n\t\t\tif previousZoneAbility.placedSoundEffect then\n\t\t\t\tlocal spellID = previousZoneAbility.spellID;\n\t\t\t\tif activeAbilityIsDisplayedOnBar[spellID] and not DoZoneAbilitiesIncludeSpellID(displayedZoneAbilities, spellID) then\n\t\t\t\t\tPlaySound(previousZoneAbility.placedSoundEffect);\n\t\t\t\tend\n\t\t\tend\n\t\tend\n\tend\n\n\tfor i, displayZoneAbility in ipairs(displayedZoneAbilities) do\n\t\tif displayZoneAbility.shownSoundEffect then\n\t\t\tlocal spellID = displayZoneAbility.spellID;\n\t\t\tif not self.previousZoneAbilities or not DoZoneAbilitiesIncludeSpellID(self.previousZoneAbilities, spellID) then\n\t\t\t\tPlaySound(displayZoneAbility.shownSoundEffect);\n\t\t\tend\n\t\tend\n\tend\n\n\t-- don't update if nothing's changed, could screw up OnClick\n\tlocal depth = 3;\n\tif self.previousZoneAbilities and tCompare(self.previousZoneAbilities, displayedZoneAbilities, depth) then\n\t\treturn;\n\tend\n\n\tHideZoneAbilityTutorial();\n"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/GroupLootFrame.lua",
+    "line": 262,
+    "snippet": "\tPlaySound(isWinning and SOUNDKIT.UI_NEED_ROLL_POSITIVE or SOUNDKIT.UI_NEED_ROLL_NEGATIVE);",
+    "sha256": "cec53504599c538502e6afcf5807078a266db57d0ff802a7890ec691b426624b",
+    "context": "\n\tlocal left = GetLootRollTimeLeft(self.rollID);\n\tlocal min, max = self.Timer:GetMinMaxValues();\n\tif ( (left < min) or (left > max) ) then\n\t\tleft = min;\n\tend\n\tself.Timer:SetValue(left);\nend\n\nfunction GroupLootFrame_StartNeedAnimation(self, roll, isWinning)\n\tself.Timer:SetValue(0);\n\tfor _, button in ipairs(self.LootButtons) do\n\t\tbutton:Hide();\n\tend\n\n\tPlaySound(isWinning and SOUNDKIT.UI_NEED_ROLL_POSITIVE or SOUNDKIT.UI_NEED_ROLL_NEGATIVE);\n\n\tself.NeedRollAnim:Show();\n\tlocal color = isWinning and GREEN_FONT_COLOR or RED_FONT_COLOR;\n\tself.NeedRollAnim.RollNumber:SetText(color:WrapTextInColorCode(roll));\n\tself.NeedRollAnim.Animation:Restart();\n\n\tself.NeedRollAnimFinishedCallback = C_FunctionContainers.CreateCallback(function() GroupLootFrame_Remove(self); end);\n\tC_Timer.After(5, self.NeedRollAnimFinishedCallback);\nend\n\nfunction GroupLootFrame_StopNeedAnimation(self)\n\tfor _, button in ipairs(self.LootButtons) do"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/ReputationFrame.lua",
+    "line": 792,
+    "snippet": "\tPlaySound(clickSound);",
+    "sha256": "ee3b69c33d0aea814098de8665e8d5e89c23e56e609a89b5d4fbdd7368be275b",
+    "context": "\n\tif not EncounterJournal:IsShown() then\n\t\tShowUIPanel(EncounterJournal);\n\tend\n\n\tEJ_ContentTab_Select(EncounterJournal.JourneysTab:GetID());\n\tEncounterJournalJourneysFrame:ResetView(nil, self.factionID);\nend\n\nReputationDetailAtWarCheckboxMixin = {};\n\nfunction ReputationDetailAtWarCheckboxMixin:OnClick()\n\tC_Reputation.ToggleFactionAtWar(C_Reputation.GetSelectedFaction());\n\n\tlocal clickSound = self:GetChecked() and SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON or SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_OFF;\n\tPlaySound(clickSound);\n\n\tReputationFrame:Update();\nend\n\nfunction ReputationDetailAtWarCheckboxMixin:OnEnter()\n\tGameTooltip:SetOwner(self, \"ANCHOR_RIGHT\");\n\tlocal wrapText = true;\n\tGameTooltip_AddNormalLine(GameTooltip, REPUTATION_AT_WAR_DESCRIPTION, wrapText);\n\tGameTooltip:Show();\nend\n\nfunction ReputationDetailAtWarCheckboxMixin:OnLeave()"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/ReputationFrame.lua",
+    "line": 815,
+    "snippet": "\tPlaySound(clickSound);",
+    "sha256": "ee3b69c33d0aea814098de8665e8d5e89c23e56e609a89b5d4fbdd7368be275b",
+    "context": "\tGameTooltip_AddNormalLine(GameTooltip, REPUTATION_AT_WAR_DESCRIPTION, wrapText);\n\tGameTooltip:Show();\nend\n\nfunction ReputationDetailAtWarCheckboxMixin:OnLeave()\n\tGameTooltip_Hide();\nend\n\nReputationDetailInactiveCheckboxMixin = {};\n\nfunction ReputationDetailInactiveCheckboxMixin:OnClick()\n\tlocal shouldBeActive = not self:GetChecked();\n\tC_Reputation.SetFactionActive(C_Reputation.GetSelectedFaction(), shouldBeActive);\n\n\tlocal clickSound = self:GetChecked() and SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON or SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_OFF;\n\tPlaySound(clickSound);\nend\n\nfunction ReputationDetailInactiveCheckboxMixin:OnEnter()\n\tGameTooltip:SetOwner(self, \"ANCHOR_RIGHT\");\n\tlocal wrapText = true;\n\tGameTooltip_AddNormalLine(GameTooltip, REPUTATION_MOVE_TO_INACTIVE, wrapText);\n\tGameTooltip:Show();\nend\n\nfunction ReputationDetailInactiveCheckboxMixin:OnLeave()\n\tGameTooltip_Hide();\nend"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/ReputationFrame.lua",
+    "line": 837,
+    "snippet": "\tPlaySound(clickSound);",
+    "sha256": "ee3b69c33d0aea814098de8665e8d5e89c23e56e609a89b5d4fbdd7368be275b",
+    "context": "\tGameTooltip:Show();\nend\n\nfunction ReputationDetailInactiveCheckboxMixin:OnLeave()\n\tGameTooltip_Hide();\nend\n\nReputationDetailWatchFactionCheckboxMixin = {};\n\nfunction ReputationDetailWatchFactionCheckboxMixin:OnClick()\n\tC_Reputation.SetWatchedFactionByIndex(self:GetChecked() and C_Reputation.GetSelectedFaction() or 0);\n\n\tStatusTrackingBarManager:UpdateBarsShown();\n\n\tlocal clickSound = self:GetChecked() and SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON or SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_OFF;\n\tPlaySound(clickSound);\nend\n\nfunction ReputationDetailWatchFactionCheckboxMixin:OnEnter()\n\tGameTooltip:SetOwner(self, \"ANCHOR_RIGHT\");\n\tlocal wrapText = true;\n\tGameTooltip_AddNormalLine(GameTooltip, REPUTATION_SHOW_AS_XP, wrapText);\n\tGameTooltip:Show();\nend\n\nfunction ReputationDetailWatchFactionCheckboxMixin:OnLeave()\n\tGameTooltip_Hide();\nend"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/BankFrame.lua",
+    "line": 1588,
+    "snippet": "\tPlaySound(clickSound);",
+    "sha256": "09511a987aee1e666eae0c8c293279de8b68c7cb414c320f984663f73597cf50",
+    "context": "\treturn self.selectedValue;\nend\n\nfunction BankPanelTabSettingsExpansionFilterDropdownMixin:SetFilterValue(value)\n\tself.selectedValue = value;\nend\n\nBankPanelCheckboxMixin = {};\n\nfunction BankPanelCheckboxMixin:OnShow()\n\tself:Init();\nend\n\nfunction BankPanelCheckboxMixin:OnClick()\n\tlocal clickSound = self:GetChecked() and SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_OFF or SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON;\n\tPlaySound(clickSound);\nend\n\nfunction BankPanelCheckboxMixin:Init()\n\tif self.fontObject then\n\t\tself.Text:SetFontObject(self.fontObject);\n\tend\n\n\tif self.textWidth then\n\t\tself.Text:SetWidth(self.textWidth);\n\tend\n\n\tif self.maxTextLines then"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_RaidFrame/Mainline/RaidFrameSocialView.lua",
+    "line": 11,
+    "snippet": "\tPlaySound(self:GetChecked() and SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON or SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_OFF);",
+    "sha256": "46a6a710c69a8920746ed11670012545a975cb26b865161f1b42ac802855e542",
+    "context": "\nRaidFrameSocialClassTypeMixin = {}\n\nfunction RaidFrameSocialClassTypeMixin:OnLoad()\n\tself.Icon:SetAtlas(self.iconAtlas);\nend\n\nRaidFrameSocialAllAssistMixin = {};\n\nfunction RaidFrameSocialAllAssistMixin:OnClick()\n\tPlaySound(self:GetChecked() and SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON or SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_OFF);\n\tC_PartyInfo.SetEveryoneIsAssistant(self:GetChecked());\nend\n\nlocal RaidFrameSocialAllAssistButtonEvents =\n{\n\t\"GROUP_ROSTER_UPDATE\",\n\t\"PARTY_LEADER_CHANGED\",\n};\n\nfunction RaidFrameSocialAllAssistMixin:OnShow()\n\tFrameUtil.RegisterFrameForEvents(self, RaidFrameSocialAllAssistButtonEvents);\n\tself:UpdateAvailable();"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua",
+    "line": 3617,
+    "snippet": "\tPlaySound(sound);",
+    "sha256": "436d20d4c4b533aaf00c4ec13861fc11ea9fe4c3d767d7c592160fc90b85ea65",
+    "context": "\tif (VAS_AUTO_COMPLETE_SELECTION) then\n\t\tlocal info = VAS_AUTO_COMPLETE_ENTRIES[VAS_AUTO_COMPLETE_SELECTION + VAS_AUTO_COMPLETE_OFFSET];\n\t\tVAS_AUTO_COMPLETE_SELECTION = nil;\n\t\tVAS_AUTO_COMPLETE_OFFSET = 0;\n\n\t\tself:SetText(info.value);\n\t\tself.AutoCompleteBox:Hide();\n\tend\nend\n\nlocal function PlayCheckboxSound(self)\n\tlocal sound = SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON;\n\tif (not self:GetChecked()) then\n\t\tsound = SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_OFF;\n\tend\n\tPlaySound(sound);\nend\n\nfunction VASCharacterSelection_NewCharacterName_OnTextChanged(self)\n\tself:GetParent().ValidationDescription:Hide();\n\n\tlocal character = CharacterList[SelectedCharacter];\n\n\tlocal newNameText = self:GetText();\n\tlocal enabled = newNameText ~= \"\" and newNameText ~= character.name;\n\n\tself:GetParent().ContinueButton:SetEnabled(enabled);\nend"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CovenantRenown/Blizzard_CovenantRenown.lua",
+    "line": 227,
+    "snippet": "\t\tPlaySound(fanfareSound);",
+    "sha256": "a46b4e37504755f4fe195f81ece3d6335c9c5f08b72112be59fb05f73b407bcc",
+    "context": "\nfunction CovenantRenownMixin:PlayLevelEffect()\n\tlocal effectID = levelEffects[g_covenantID];\n\tlocal target, onEffectFinish = nil, nil;\n\tlocal onEffectResolution = GenerateClosure(self.OnLevelEffectFinished, self);\n\tself.levelEffect = self.LevelModelScene:AddEffect(effectID, self.TrackFrame, self.TrackFrame, onEffectFinish, onEffectResolution);\n\n\tlocal centerIndex = self.TrackFrame:GetCenterIndex();\n\tlocal elements = self.TrackFrame:GetElements();\n\tlocal frame = elements[centerIndex];\n\tlocal selected = true;\n\tframe:Refresh(self.actualLevel, self.displayLevel + 1, selected);\n\n\tlocal fanfareSound = g_covenantData.renownFanfareSoundKitID;\n\tif fanfareSound then\n\t\tPlaySound(fanfareSound);\n\tend\nend\n\nfunction CovenantRenownMixin:CancelLevelEffect()\n\tself.LevelSkipButton:Hide();\n\tif self.displayLevel ~= self.actualLevel then\n\t\tself.displayLevel = self.actualLevel;\n\t\tif self.levelEffect then\n\t\t\tself.levelEffect:CancelEffect();\n\t\t\tself.levelEffect = nil;\n\t\tend\n\t\tif self.levelEffectTimer then"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PartyPoseUI/Blizzard_PartyPoseUI.lua",
+    "line": 293,
+    "snippet": "\t\tPlaySound(self.partyPoseData.partyPoseInfo.victorySoundKitID);",
+    "sha256": "3586261f5b753bf52d6eb8b33b3294fead184dfff9defe655cc6833059c42b10",
+    "context": "\tif (actor) then\n\t\tif (actor:SetModelByCreatureDisplayID(displayID)) then\n\t\t\tself:SetupShadow(actor);\n\t\tend\n\tend\nend\n\nfunction PartyPoseMixin:AddModelSceneActors(actors)\n\tfor scriptTag, displayID in pairs(actors) do\n\t\tself:AddCreatureActor(displayID, scriptTag);\n\tend\nend\n\nfunction PartyPoseMixin:PlaySounds()\n\tif (self.partyPoseData.playerWon) then\n\t\tPlaySound(self.partyPoseData.partyPoseInfo.victorySoundKitID);\n\telse\n\t\tPlaySound(self.partyPoseData.partyPoseInfo.defeatSoundKitID);\n\tend\nend\n\ndo\n\tfunction PartyPoseMixin:SetupTheme()\n\t\tif self.OverlayElements.Topper then\n\t\t\tself.OverlayElements.Topper:SetPoint(\"BOTTOM\", self.Border, \"TOP\", 0, self.partyPoseData.themeData.topperOffset);\n\t\t\tself.OverlayElements.Topper:SetAtlas(self.partyPoseData.themeData.Topper, true);\n\t\tend\n"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PartyPoseUI/Blizzard_PartyPoseUI.lua",
+    "line": 295,
+    "snippet": "\t\tPlaySound(self.partyPoseData.partyPoseInfo.defeatSoundKitID);",
+    "sha256": "3586261f5b753bf52d6eb8b33b3294fead184dfff9defe655cc6833059c42b10",
+    "context": "\t\t\tself:SetupShadow(actor);\n\t\tend\n\tend\nend\n\nfunction PartyPoseMixin:AddModelSceneActors(actors)\n\tfor scriptTag, displayID in pairs(actors) do\n\t\tself:AddCreatureActor(displayID, scriptTag);\n\tend\nend\n\nfunction PartyPoseMixin:PlaySounds()\n\tif (self.partyPoseData.playerWon) then\n\t\tPlaySound(self.partyPoseData.partyPoseInfo.victorySoundKitID);\n\telse\n\t\tPlaySound(self.partyPoseData.partyPoseInfo.defeatSoundKitID);\n\tend\nend\n\ndo\n\tfunction PartyPoseMixin:SetupTheme()\n\t\tif self.OverlayElements.Topper then\n\t\t\tself.OverlayElements.Topper:SetPoint(\"BOTTOM\", self.Border, \"TOP\", 0, self.partyPoseData.themeData.topperOffset);\n\t\t\tself.OverlayElements.Topper:SetAtlas(self.partyPoseData.themeData.Topper, true);\n\t\tend\n\n\t\tself.TitleBg:ClearAllPoints();\n\t\tself.TitleBg:SetPoint(\"CENTER\", self.ModelScene, \"TOP\", 0, 25);"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterWarnings/EncounterWarningsView.lua",
+    "line": 98,
+    "snippet": "\t\tC_EncounterWarnings.PlaySound(encounterWarningInfo.severity);",
+    "sha256": "35e70a04a71592a6aa99c4af10cdebf49b2214159442fbe860a398434e60e0c0",
+    "context": "\tself:ResetWarning();\n\tself.currentWarningInfo = encounterWarningInfo;\n\n\tfor _, element in ipairs(self:GetWarningElements()) do\n\t\telement:Init(encounterWarningInfo, self);\n\tend\n\n\tself:StartExpirationTimer(encounterWarningInfo.duration);\n\tself:PlayShowAnimation();  -- Implicitly calls Show().\n\n\t-- The following logic _could_ be moved to the OnShow handler, but as\n\t-- it needs access to the encounter warning info which we know for sure\n\t-- isn't nil here, we'll do it inline.\n\n\tif encounterWarningInfo.shouldPlaySound then\n\t\tC_EncounterWarnings.PlaySound(encounterWarningInfo.severity);\n\tend\n\n\tif encounterWarningInfo.shouldShowChatMessage then\n\t\tEncounterWarningsUtil.ShowChatMessageForWarning(encounterWarningInfo);\n\tend\nend\n\nfunction EncounterWarningsViewMixin:HideWarning()\n\tif not self:HasCurrentWarning() then\n\t\treturn;\n\tend\n"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_HouseEditor/Blizzard_HouseEditorLayoutMode.lua",
+    "line": 232,
+    "snippet": "\tPlaySound(soundKit);",
+    "sha256": "557759448b7d2cd889171797ce4c13109a4c2b1d78875da7fc9fd28392c4de28",
+    "context": "\nHouseEditorLayoutFloorLineMixin = {};\n\nfunction HouseEditorLayoutFloorLineMixin:OnEnter()\n\tself.FloorText:SetTextColor(HIGHLIGHT_FONT_COLOR:GetRGBA());\nend\n\nfunction HouseEditorLayoutFloorLineMixin:OnLeave()\n\tlocal isActive = self.floorIndex == C_HousingLayout.GetViewedFloor();\n\tlocal color = isActive and HIGHLIGHT_FONT_COLOR or HOUSING_STORAGE_HEADER_COLOR;\n\tself.FloorText:SetTextColor(color:GetRGBA());\nend\n\nfunction HouseEditorLayoutFloorLineMixin:OnClick()\n\tlocal soundKit = (self.floorIndex < C_HousingLayout.GetViewedFloor()) and SOUNDKIT.HOUSING_VIEW_FLOOR_DOWN or SOUNDKIT.HOUSING_VIEW_FLOOR_UP;\n\tPlaySound(soundKit);\n\tC_HousingLayout.SetViewedFloor(self.floorIndex);\nend\n\nfunction HouseEditorLayoutFloorLineMixin:Init(floorIndex)\n\tself.floorIndex = floorIndex;\n\tself.FloorText:SetText(HOUSING_LAYOUT_FLOOR_DISPLAY:format(floorIndex + 1));\n\n\tlocal isTopFloor = floorIndex == C_HousingLayout.GetHighestOccupiedFloorIndex();\n\tself.TopDivider:SetShown(isTopFloor);\n\n\tlocal isBaseRoomFloor = floorIndex == C_HousingLayout.GetBaseRoomFloor();\n\tself.DoorIcon:SetShown(isBaseRoomFloor);"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_HouseEditor/Blizzard_HouseEditorExteriorOptionTemplates.lua",
+    "line": 346,
+    "snippet": "\t\tPlaySound(soundKit);",
+    "sha256": "ca547e7cc694ce592e50edbb6968153ac0071676f69ad07c861a9ef0260fb333",
+    "context": "\t[Enum.HousingFixtureType.Tower] = SOUNDKIT.HOUSING_EXTERIOR_CUSTOMIZATION_DROPDOWN_SELECT_OPTION_TOWER,\n\t[Enum.HousingFixtureType.Chimney] = SOUNDKIT.HOUSING_EXTERIOR_CUSTOMIZATION_DROPDOWN_SELECT_OPTION_CHIMNEY,\n};\n\nfunction HouseExteriorOptionElementMixin:OnClick()\n\tif not self.choiceData or self.isSelected or self.choiceData.isInvalid or self.choiceData.isLocked then\n\t\treturn;\n\tend\n\n\tlocal doSelectFunction;\n\n\tif self.choiceData.isNoneOption then\n\t\tPlaySound(SOUNDKIT.HOUSING_EXTERIOR_CUSTOMIZATION_DROPDOWN_SELECT_OPTION_NONE);\n\telse\n\t\tlocal soundKit = FixtureTypeToSoundKit[self.choiceData.typeID] or SOUNDKIT.HOUSING_EXTERIOR_CUSTOMIZATION_DROPDOWN_SELECT_OPTION;\n\t\tPlaySound(soundKit);\n\tend\n\n\t-- First check whether any decor is attached to this fixture point\n\tlocal anyAttachedDecor = C_HouseExterior.IsAnyDecorAttachedToSelectedFixturePoint();\n\tif not anyAttachedDecor and self.choiceData.typeID == Enum.HousingFixtureType.Door then\n\t\t-- Otherwise, if this selection is a door (meaning selection will move the existing door), check that there's no decor attached to the existing door\n\t\tanyAttachedDecor = C_HouseExterior.IsAnyDecorAttachedToDoor();\n\tend\n\n\t-- If any decor is attached to an affected fixture, give the player a confirmation dialog to check what they want to do with it\n\tif anyAttachedDecor then\n\t\tHousingFramesUtil.ShowFixtureDecorActionConfirmation(function(fixtureDecorAction) self:OnSelectionChoiceCallback(fixtureDecorAction); end);"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_HouseEditor/Blizzard_HouseEditorExteriorOptionTemplates.lua",
+    "line": 525,
+    "snippet": "\t\tPlaySound(isChecked and SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON or SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_OFF);",
+    "sha256": "ca547e7cc694ce592e50edbb6968153ac0071676f69ad07c861a9ef0260fb333",
+    "context": "end\n\nfunction HouseExteriorFixtureOptionListMixin:ClearAndHide()\n\tself:ClearData();\n\tself:Hide();\nend\n\n----------------- Checkbox Option Mixin -----------------\nHouseExteriorCheckboxOptionMixin = {};\n\nfunction HouseExteriorCheckboxOptionMixin:OnLoad()\n\tself.Label:SetText(self.label);\n\n\tself.Button:SetScript(\"OnClick\", function(button, buttonName, down)\n\t\tlocal isChecked = button:GetChecked();\n\t\tPlaySound(isChecked and SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON or SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_OFF);\n\t\tif self.onClickCallback then\n\t\t\tself.onClickCallback(isChecked);\n\t\tend\n\tend);\nend\n\nfunction HouseExteriorCheckboxOptionMixin:SetChecked(checked)\n\tself.Button:SetChecked(checked);\nend\n\nfunction HouseExteriorCheckboxOptionMixin:SetOnClickCallback(onClickCallback)\n\tself.onClickCallback = onClickCallback;"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_HouseEditor/Blizzard_HouseEditorTemplates.lua",
+    "line": 74,
+    "snippet": "\tPlaySound(sound);",
+    "sha256": "e9bf51f3fb547007ba1792d6e45ff6dc389d0992f85c006a3140b111e0c0d431",
+    "context": "\nfunction BaseHouseEditorModeMixin:PlayPlacementSoundForHouse()\n\tlocal houseExteriorSize = C_HouseExterior.GetCurrentHouseExteriorSize();\n\tself:PlayPlacedHouseSoundForSize(houseExteriorSize);\nend\n\nfunction BaseHouseEditorModeMixin:PlaySoundForSize(size, small, medium, large)\n\tlocal sound;\n\tif size == Enum.HousingCatalogEntrySize.Tiny or size == Enum.HousingCatalogEntrySize.Small then\n\t\tsound = small;\n\telseif size == Enum.HousingCatalogEntrySize.Medium or size == Enum.HousingCatalogEntrySize.None then\n\t\tsound = medium;\n\telse\n\t\tsound = large;\n\tend\n\tPlaySound(sound);\nend\n\nfunction BaseHouseEditorModeMixin:PlaySoundForHouseSize(size, small, medium, large)\n\tlocal sound;\n\tif size == Enum.HousingFixtureSize.Small or size == Enum.HousingFixtureSize.Any then\n\t\tsound = small;\n\telseif size == Enum.HousingFixtureSize.Medium or size == Enum.HousingFixtureSize.None then\n\t\tsound = medium;\n\telse\n\t\tsound = large;\n\tend\n\tPlaySound(sound);"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_HouseEditor/Blizzard_HouseEditorTemplates.lua",
+    "line": 86,
+    "snippet": "\tPlaySound(sound);",
+    "sha256": "e9bf51f3fb547007ba1792d6e45ff6dc389d0992f85c006a3140b111e0c0d431",
+    "context": "\telse\n\t\tsound = large;\n\tend\n\tPlaySound(sound);\nend\n\nfunction BaseHouseEditorModeMixin:PlaySoundForHouseSize(size, small, medium, large)\n\tlocal sound;\n\tif size == Enum.HousingFixtureSize.Small or size == Enum.HousingFixtureSize.Any then\n\t\tsound = small;\n\telseif size == Enum.HousingFixtureSize.Medium or size == Enum.HousingFixtureSize.None then\n\t\tsound = medium;\n\telse\n\t\tsound = large;\n\tend\n\tPlaySound(sound);\nend\n\nfunction BaseHouseEditorModeMixin:PlaySelectedSoundForSize(size, isPreview)\n\tif isPreview then\n\t\tself:PlaySoundForSize(size,\n\t\t\tSOUNDKIT.HOUSING_MARKET_SELECT_ITEM_SMALL,\n\t\t\tSOUNDKIT.HOUSING_MARKET_SELECT_ITEM_MEDIUM,\n\t\t\tSOUNDKIT.HOUSING_MARKET_SELECT_ITEM_LARGE\n\t\t);\n\telse\n\t\tself:PlaySoundForSize(size,\n\t\t\tSOUNDKIT.HOUSING_SELECT_ITEM_SMALL,"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_HousingTemplates/Blizzard_HousingCatalogCategories.lua",
+    "line": 525,
+    "snippet": "\tPlaySound(soundToPlay);",
+    "sha256": "430841c12d4ed9fced5bf4fc325b9a218a288b8a10a3ad92d311ffb9045b27ac",
+    "context": "\t\tif self:IsInManualFocusState() then\n\t\t\tself:SetManualFocusState(false);\n\t\telse\n\t\t\tself:ClearFocus(forceRebuild);\n\t\tend\n\t\tsoundToPlay = SOUNDKIT.HOUSING_CATALOG_CATEGORY_DESELECT;\n\t-- Clicked subcategory -> focus subcategory\n\telseif categoryFrame.isSubcategory then\n\t\tself:SetFocus(self.focusedCategoryID, categoryFrame.ID, forceRebuild);\n\t\tsoundToPlay = SOUNDKIT.HOUSING_CATALOG_SUBCATEGORY_SELECT;\n\t-- Clicked category while viewing top-level categories -> focus category\n\telse\n\t\tself:SetFocus(categoryFrame.ID, nil, forceRebuild);\n\t\tsoundToPlay = SOUNDKIT.HOUSING_CATALOG_CATEGORY_SELECT;\n\tend\n\tPlaySound(soundToPlay);\nend\n\n----------------- Back Button Mixin -----------------\n\nHousingCategoryBackButtonMixin = {};\n\nfunction HousingCategoryBackButtonMixin:OnClick()\n\tself:GetParent():OnCategoryClicked(self);\nend\n\n\n----------------- Base Category Mixin -----------------"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_HousingTemplates/Blizzard_HousingMarketProductDisplay.lua",
+    "line": 13,
+    "snippet": "\tPlaySound(self.hoverSound or SOUNDKIT.HOUSING_MARKET_CATALOG_BUNDLE_HOVER);",
+    "sha256": "51748de7e3d48b2845b32f9c75d818bc9a58866f3464c5d0a2eb36088c6aad00",
+    "context": "\n-- Shared behavior for product displays that have a \"Contents\" child based on a CatalogShop template.\nHousingMarketProductDisplayMixin = {};\n\nfunction HousingMarketProductDisplayMixin:OnLoad()\n\t-- In the housing market, products never display as selected.\n\tself.Contents:SetSelected(false);\nend\n\nfunction HousingMarketProductDisplayMixin:OnEnter()\n\tself.Contents:OnEnter();\n\n\tPlaySound(self.hoverSound or SOUNDKIT.HOUSING_MARKET_CATALOG_BUNDLE_HOVER);\n\n\tlocal tooltip = GameTooltip;\n\ttooltip:SetOwner(self, \"ANCHOR_RIGHT\");\n\tself:AddTooltipTitle(tooltip);\n\tself:AddTooltipLines(tooltip);\n\n\tlocal instructionText = (self.elementData.canPreview and self.instructionText) or HOUSING_BUNDLE_CLICK_TO_VIEW_IN_SHOP;\n\tGameTooltip_AddInstructionLine(tooltip, instructionText);\n\n\ttooltip:Show();\nend\n"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonTemplates/Blizzard_GarrisonMissionTemplates.lua",
+    "line": 1555,
+    "snippet": "\t\t\tPlaySound(currentAnim.castSoundID);",
+    "sha256": "a318043e2c282785859116fb64f99626a56540fefd197bc694e657abc5fbbb93",
+    "context": "\tif ( modelLeft.state == \"loaded\" ) then\n\t\t-- play models\n\t\tmodelLeft:InitializePanCamera(currentAnim.scale or 1)\n\t\tmodelLeft:SetHeightFactor(currentAnim.height or 0.5);\n\t\tif ( self.currentMission.failedEncounter == self.encounterIndex ) then\n\t\t\t-- always same pose on fail\n\t\t\tmodelLeft:StartPan(failPanType, GARRISON_ANIMATION_LENGTH, true, currentAnim.castID, startPositionScale, speedMultiplier);\n\t\telse\n\t\t\tmodelLeft:StartPan(successPanType, GARRISON_ANIMATION_LENGTH, true, currentAnim.castID, startPositionScale, speedMultiplier);\n\t\t\tif ( currentAnim.impactSoundID ) then\n\t\t\t\tcurrentAnim.playImpactSound = true;\n\t\t\tend\n\t\tend\n\t\tPlaySound(SOUNDKIT.UI_GARRISON_MISSION_ENCOUNTER_ANIMATION_GENERIC);\n\t\tif ( currentAnim.castSoundID ) then\n\t\t\tPlaySound(currentAnim.castSoundID);\n\t\tend\n\t\t-- enemy model is optional\n\t\tif ( modelRight.state == \"loaded\" ) then\n\t\t\tmodelRight:InitializePanCamera(currentAnim.enemyScale or 1);\n\t\t\tmodelRight:SetHeightFactor(currentAnim.enemyHeight or 0.5);\n\t\t\tmodelRight:SetAnimOffset(currentAnim.impactDelay  or 0);\n\t\t\tif ( self.currentMission.failedEncounter == self.encounterIndex ) then\n\t\t\t\t-- play the targetImpactID animation on fail if it exists; otherwise skip the impact animation\n\t\t\t\tif (currentAnim.targetImpactID and currentAnim.targetImpactID ~= 0) then\n\t\t\t\t\tmodelRight:StartPan(LE_PAN_NONE, GARRISON_ANIMATION_LENGTH, true, currentAnim.targetImpactID);\n\t\t\t\t\tif (currentAnim.targetImpactSoundID) then\n\t\t\t\t\t\tcurrentAnim.playTargetImpactSound = true;"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonTemplates/Blizzard_GarrisonMissionTemplates.lua",
+    "line": 1593,
+    "snippet": "\t\tPlaySound(currentAnim.impactSoundID);",
+    "sha256": "a318043e2c282785859116fb64f99626a56540fefd197bc694e657abc5fbbb93",
+    "context": "\t\tend\n\t\tif ( currentAnim.playImpactSound or currentAnim.playTargetImpactSound ) then\n\t\t\tentry.duration = currentAnim.impactDelay;\n\t\telse\n\t\t\tentry.duration = 0.9;\n\t\tend\n\telse\n\t\t-- no models, skip\n\t\tentry.duration = 0;\n\tend\nend\n\nfunction GarrisonMissionComplete:AnimPlayImpactSound(entry)\n\tlocal currentAnim = self.animInfo[self.encounterIndex];\n\tif ( currentAnim.playImpactSound ) then\n\t\tPlaySound(currentAnim.impactSoundID);\n\t\tentry.duration = 0.9 - currentAnim.impactDelay;\n\telseif ( currentAnim.playTargetImpactSound ) then\n\t\tPlaySound(currentAnim.targetImpactSoundID);\n\t\tentry.duration = 0.9 - currentAnim.impactDelay;\n\telse\n\t\tentry.duration = 0;\n\tend\nend\n\nfunction GarrisonMissionComplete:AnimRewards(entry)\n\tself.BonusRewards.Saturated:Show();\n\tself.BonusRewards.Saturated.FadeIn:Play();"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonTemplates/Blizzard_GarrisonMissionTemplates.lua",
+    "line": 1596,
+    "snippet": "\t\tPlaySound(currentAnim.targetImpactSoundID);",
+    "sha256": "a318043e2c282785859116fb64f99626a56540fefd197bc694e657abc5fbbb93",
+    "context": "\t\telse\n\t\t\tentry.duration = 0.9;\n\t\tend\n\telse\n\t\t-- no models, skip\n\t\tentry.duration = 0;\n\tend\nend\n\nfunction GarrisonMissionComplete:AnimPlayImpactSound(entry)\n\tlocal currentAnim = self.animInfo[self.encounterIndex];\n\tif ( currentAnim.playImpactSound ) then\n\t\tPlaySound(currentAnim.impactSoundID);\n\t\tentry.duration = 0.9 - currentAnim.impactDelay;\n\telseif ( currentAnim.playTargetImpactSound ) then\n\t\tPlaySound(currentAnim.targetImpactSoundID);\n\t\tentry.duration = 0.9 - currentAnim.impactDelay;\n\telse\n\t\tentry.duration = 0;\n\tend\nend\n\nfunction GarrisonMissionComplete:AnimRewards(entry)\n\tself.BonusRewards.Saturated:Show();\n\tself.BonusRewards.Saturated.FadeIn:Play();\n\n\tif ( self.currentMission.succeeded ) then\n\t\tself.ChanceFrame.ResultText:SetText(GARRISON_MISSION_SUCCESS);"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CustomizationUI/Blizzard_CustomizationAudioInterface.lua",
+    "line": 37,
+    "snippet": "\tlocal _, soundHandle = PlaySound(self.soundKit, nil, nil, runFinishCallback);",
+    "sha256": "d7457907135e4171973a549a4de9e10b746d069bb549d364c90eb2ec3c40aa88",
+    "context": "\tself.previousSFXSetting = GetCVar(\"Sound_EnableSFX\");\n\tself.previousAllSoundSetting = GetCVar(\"Sound_EnableAllSound\");\n\tself.soundKit = soundKit;\n\tself.PlayWaveform.Waveform:SetValue(0);\n\tself.PlayButton:Show();\n\tself.MuteButton:SetShown(isMuted);\n\tself.PlayButton:SetEnabled(soundKit ~= nil);\nend\n\nfunction CustomizationAudioInterfaceMixin:IsPlaying()\n\treturn self.isPlaying;\nend\n\nfunction CustomizationAudioInterfaceMixin:PlayAudioInternal()\n\tlocal runFinishCallback = true;\n\tlocal _, soundHandle = PlaySound(self.soundKit, nil, nil, runFinishCallback);\n\tself.soundHandle = soundHandle;\n\treturn self.soundHandle ~= nil;\nend\n\nfunction CustomizationAudioInterfaceMixin:PlayAudio(soundKit)\n\tif IsSoundMuted() then\n\t\tself.MuteButton.PulseAnim:Play();\n\telse\n\t\tself:StopAudio();\n\n\t\tif soundKit then\n\t\t\tself:RegisterEvent(\"SOUNDKIT_FINISHED\");"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MajorFactions/Blizzard_MajorFactionRenownToast.lua",
+    "line": 105,
+    "snippet": "\t\tPlaySound(data.celebrationSoundKit);",
+    "sha256": "9293d3fff42a9bc7eae857f9518138493f333f4f421c4cc2f722dd66deea4b26",
+    "context": "\nfunction MajorFactionsRenownToastMixin:PlayBanner(data)\n\tself.RenownLabel:SetFormattedText(MAJOR_FACTION_RENOWN_LEVEL_TOAST, data.renownLevel);\n\tself.RenownLabel:SetTextColor(data.factionColor:GetRGB());\n\tself:SetMajorFactionTextureKit(data.textureKit);\n\n\tself.ToastBG:SetAlpha(0);\n\tself.RenownLabel:SetAlpha(0);\n\tself.RewardIcon:SetAlpha(0);\n\tself.RewardIconRing:SetAlpha(0);\n\tself.RewardDescription:SetAlpha(0);\n\n\tself:SetupRewardVisuals(data.majorFactionID, data.renownLevel);\n\n\tif data.celebrationSoundKit then\n\t\tPlaySound(data.celebrationSoundKit);\n\tend\n\n\tself.bannerData = data;\n\n\tself:SetAlpha(1);\n\tself:Show();\n\tself.ShowAnim:Stop();\n\tself.ShowAnim:Play();\nend\n\nfunction MajorFactionsRenownToastMixin:OnMouseEnter()\n\tGameTooltip:SetOwner(self.RewardIconMouseOver, \"ANCHOR_NONE\");"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MajorFactions/Blizzard_MajorFactionsLandingTemplates.lua",
+    "line": 462,
+    "snippet": "\tPlaySound(clickSound);",
+    "sha256": "ba9a4d2503db22ed4763eb58b00172ec72697bd8edd7ba293992eff868209761",
+    "context": "function MajorFactionWatchFactionButtonMixin:OnEvent(event)\n\tif event == \"UPDATE_FACTION\" then\n\t\tself:UpdateState();\n\tend\nend\n\nfunction MajorFactionWatchFactionButtonMixin:UpdateState()\n\tlocal watchedfactionData = C_Reputation.GetWatchedFactionData();\n\n\tlocal baseButton = self:GetParent():GetParent();\n\tself:SetChecked(watchedfactionData and watchedfactionData.factionID == baseButton.factionID);\nend\n\nfunction MajorFactionWatchFactionButtonMixin:OnClick()\n\tlocal clickSound = self:GetChecked() and SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_OFF or SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON;\n\tPlaySound(clickSound);\n\n\tlocal baseButton = self:GetParent():GetParent();\n\tlocal factionID = self:GetChecked() and baseButton.factionID or 0;\n\tC_Reputation.SetWatchedFactionByID(factionID);\n\tStatusTrackingBarManager:UpdateBarsShown();\nend"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MajorFactions/Blizzard_MajorFactionUnlockToast.lua",
+    "line": 51,
+    "snippet": "\tPlaySound(data.celebrationSoundKit);",
+    "sha256": "24776692a73eb4ad6242b409cb3d7445bfbbd0c20e41ea0934768b5615d68b8b",
+    "context": "\t\t});\n\tend\nend\n\nfunction MajorFactionUnlockToastMixin:PlayBanner(data)\n\tself.FactionName:SetText(data.name);\n\tself.FactionName:SetTextColor(data.factionColor:GetRGB());\n\tself:SetMajorFactionTextureKit(data.textureKit);\n\n\tif data.useJourneyUnlockToast then\n\t\tself.HeaderText:SetText(JOURNEY_UNLOCKED_TOAST);\n\telse\n\t\tself.HeaderText:SetText(WAR_WITHIN_LANDING_PAGE_ALERT_MAJOR_FACTION_UNLOCKED);\n\tend\n\n\tPlaySound(data.celebrationSoundKit);\n\n\tself.ToastBG:SetAlpha(0);\n\tself.FactionName:SetAlpha(0);\n\tself.HeaderText:SetAlpha(0);\n\n\tself:SetAlpha(1);\n\tself:Show();\n\tself.ShowAnim:Stop();\n\tself.ShowAnim:Play();\nend\n\nfunction MajorFactionUnlockToastMixin:StopBanner()"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DelvesCompanionConfiguration/Blizzard_DelvesCompanionConfiguration.lua",
+    "line": 646,
+    "snippet": "    PlaySound(MenuVariants.GetDropdownOpenSoundKit());",
+    "sha256": "e257071c41004bcedd8a5654356cd9a095410972632632fc32c7ce400bce69ae",
+    "context": "                local spell = C_Spell.GetSpellInfo(spellID);\n\n                self.selectionNodeOptions[entryID] = {\n                    name = spell.name,\n                    textureID = spell.iconID,\n                    spellID = spellID,\n                };\n            end\n        end\n    end\nend\n\nCompanionConfigSlotOptionsListMixin = {};\n\nfunction CompanionConfigSlotOptionsListMixin:OnShow()\n    PlaySound(MenuVariants.GetDropdownOpenSoundKit());\nend\n\nfunction CompanionConfigSlotOptionsListMixin:OnHide()\n    local slot = self:GetParent();\n\n    if slot.NewLabel:IsShown() then\n        slot.NewLabel:Hide();\n        slot.NewGlowHighlight:Hide();\n    end\n    PlaySound(MenuVariants.GetDropdownCloseSoundKit());\nend\n"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DelvesCompanionConfiguration/Blizzard_DelvesCompanionConfiguration.lua",
+    "line": 656,
+    "snippet": "    PlaySound(MenuVariants.GetDropdownCloseSoundKit());",
+    "sha256": "e257071c41004bcedd8a5654356cd9a095410972632632fc32c7ce400bce69ae",
+    "context": "end\n\nCompanionConfigSlotOptionsListMixin = {};\n\nfunction CompanionConfigSlotOptionsListMixin:OnShow()\n    PlaySound(MenuVariants.GetDropdownOpenSoundKit());\nend\n\nfunction CompanionConfigSlotOptionsListMixin:OnHide()\n    local slot = self:GetParent();\n\n    if slot.NewLabel:IsShown() then\n        slot.NewLabel:Hide();\n        slot.NewGlowHighlight:Hide();\n    end\n    PlaySound(MenuVariants.GetDropdownCloseSoundKit());\nend\n\n--[[ Config List Button ]]\nCompanionConfigListButtonMixin = {};\n\nfunction CompanionConfigListButtonMixin:OnClick()\n    local optionsList = self:GetParent():GetParent():GetParent();\n\n    if not ConfigChangeAllowed() then\n        optionsList:Hide();\n        return;\n    end"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DelvesCompanionConfiguration/Blizzard_DelvesCompanionAbilityList.lua",
+    "line": 270,
+    "snippet": "\tPlaySound(MenuVariants.GetDropdownOpenSoundKit());",
+    "sha256": "0134d3470d72116294c31d2a743562e9f1ec91d234fbbcebdd2c02cfe64f35b1",
+    "context": "\tlocal pagingControls = self.DelvesCompanionAbilityListPagingControls;\n\n\tif not pagingControls:IsShown() then\n\t\treturn;\n\tend\n\n\tlocal currentPage = pagingControls.currentPage or 1;\n\tlocal maxPages = pagingControls.maxPages or 1;\n\n\tif direction > 0 and currentPage > 1 then\n\t\tself.DelvesCompanionAbilityListPagingControls:SetCurrentPage(currentPage - 1);\n\telseif direction < 0 and currentPage < maxPages then\n\t\tself.DelvesCompanionAbilityListPagingControls:SetCurrentPage(currentPage + 1);\n\tend\n\n\tPlaySound(MenuVariants.GetDropdownOpenSoundKit());\n\tself:Refresh(true, true);\nend\n\n--[[ Ability Template ]]\nDelvesCompanionAbilityMixin = CreateFromMixins(TalentDisplayMixin);\n\nfunction DelvesCompanionAbilityMixin:InitAdditionalElements()\n\tself.Name:SetText(self:GetName());\n\n\tif not self:HasProgress() then\n\t\tself.locked = true;\n\t\tlocal conditionText = \"\";"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DelvesCompanionConfiguration/Blizzard_DelvesCompanionAbilityList.lua",
+    "line": 426,
+    "snippet": "\t\tPlaySound(MenuVariants.GetDropdownOpenSoundKit());",
+    "sha256": "0134d3470d72116294c31d2a743562e9f1ec91d234fbbcebdd2c02cfe64f35b1",
+    "context": "\t\t\tlocal text = GetRoleOptionText(option);\n\t\t\trootDescription:CreateRadio(text, IsSelected, SetSelected, option);\n\t\tend\n\tend);\nend\n\nDelvesCompanionAbilityListPagingControlsMixin = {};\n\nfunction DelvesCompanionAbilityListPagingControlsMixin:Init()\n\tself.maxPages = 1;\n\tself.currentPage = 1;\n\n\tself.NextPageButton:SetScript(\"OnClick\", function()\n\t\tself.currentPage = Clamp(self.currentPage + 1, 1, self.maxPages);\n\t\tself:GetParent():Refresh(true, true);\n\t\tPlaySound(MenuVariants.GetDropdownOpenSoundKit());\n\tend);\n\n\tself.PrevPageButton:SetScript(\"OnClick\", function()\n\t\tself.currentPage = Clamp(self.currentPage - 1, 1, self.maxPages);\n\t\tself:GetParent():Refresh(true, true);\n\t\tPlaySound(MenuVariants.GetDropdownOpenSoundKit());\n\tend);\nend\n\nfunction DelvesCompanionAbilityListPagingControlsMixin:SetMaxPages(maxPages)\n\tself.maxPages = maxPages;\nend"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DelvesCompanionConfiguration/Blizzard_DelvesCompanionAbilityList.lua",
+    "line": 432,
+    "snippet": "\t\tPlaySound(MenuVariants.GetDropdownOpenSoundKit());",
+    "sha256": "0134d3470d72116294c31d2a743562e9f1ec91d234fbbcebdd2c02cfe64f35b1",
+    "context": "DelvesCompanionAbilityListPagingControlsMixin = {};\n\nfunction DelvesCompanionAbilityListPagingControlsMixin:Init()\n\tself.maxPages = 1;\n\tself.currentPage = 1;\n\n\tself.NextPageButton:SetScript(\"OnClick\", function()\n\t\tself.currentPage = Clamp(self.currentPage + 1, 1, self.maxPages);\n\t\tself:GetParent():Refresh(true, true);\n\t\tPlaySound(MenuVariants.GetDropdownOpenSoundKit());\n\tend);\n\n\tself.PrevPageButton:SetScript(\"OnClick\", function()\n\t\tself.currentPage = Clamp(self.currentPage - 1, 1, self.maxPages);\n\t\tself:GetParent():Refresh(true, true);\n\t\tPlaySound(MenuVariants.GetDropdownOpenSoundKit());\n\tend);\nend\n\nfunction DelvesCompanionAbilityListPagingControlsMixin:SetMaxPages(maxPages)\n\tself.maxPages = maxPages;\nend\n\nfunction DelvesCompanionAbilityListPagingControlsMixin:SetCurrentPage(page)\n\tself.currentPage = page;\nend\n\nfunction DelvesCompanionAbilityListPagingControlsMixin:Refresh()"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AnimaDiversionUI/Blizzard_AnimaDiversionUI.lua",
+    "line": 51,
+    "snippet": "\t\tPlaySound(textureKitToConfirmSound[selectedNode.textureKit]);",
+    "sha256": "cb1423b3c10615253f237915a862ecdb82ea9380f7dc6d601b3cc29670e23071",
+    "context": "\t\"ANIMA_DIVERSION_CLOSE\",\n\t\"CURRENCY_DISPLAY_UPDATE\",\n};\n\nStaticPopupDialogs[\"ANIMA_DIVERSION_CONFIRM_CHANNEL\"] = {\n\ttext = ANIMA_DIVERSION_CONFIRM_CHANNEL,\n\tGetExpirationText = function(dialog, data, timeleft)\n\t\tlocal dialogInfo = dialog.dialogInfo;\n\t\tlocal formatterOutput = WorldQuestsSecondsFormatter:Format(timeleft);\n\t\tlocal formattedTime = BONUS_OBJECTIVE_TIME_LEFT:format(formatterOutput);\n\t\treturn string.format(dialogInfo.text, dialog:GetTextFontString().text_arg1, formattedTime);\n\tend,\n\tbutton1 = YES,\n\tbutton2 = CANCEL,\n\tOnAccept =\tfunction(dialog, selectedNode)\n\t\tPlaySound(textureKitToConfirmSound[selectedNode.textureKit]);\n\t\tC_AnimaDiversion.SelectAnimaNode(selectedNode.nodeData.talentID, true);\n\t\tHelpTip:Acknowledge(AnimaDiversionFrame, ANIMA_DIVERSION_TUTORIAL_SELECT_LOCATION);\n\t\tHelpTip:Acknowledge(AnimaDiversionFrame.ReinforceProgressFrame, ANIMA_DIVERSION_TUTORIAL_FILL_BAR);\n\tend,\n\tOnShow = function(dialog, selectedNode)\n\t\tAnimaDiversionFrame:SetExclusiveSelectionNode(selectedNode);\n\t\tdialog.timeleft = C_DateAndTime.GetSecondsUntilDailyReset();\n\tend,\n\tOnHide = function(dialog, selectedNode)\n\t\tAnimaDiversionFrame:ClearExclusiveSelectionNode();\n\tend,\n\thideOnEscape = 1,"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AnimaDiversionUI/Blizzard_AnimaDiversionUI.lua",
+    "line": 108,
+    "snippet": "\t\tPlaySound(self.covenantData.animaChannelActiveSoundKit);",
+    "sha256": "cb1423b3c10615253f237915a862ecdb82ea9380f7dc6d601b3cc29670e23071",
+    "context": "\tUIPanelCloseButton_SetBorderAtlas(self.CloseButton, \"UI-Frame-Oribos-ExitButtonBorder\", -1, 1);\nend \n\nfunction AnimaDiversionFrameMixin:OnShow()\n\tself:UpdateTutorialTips();\n\n\tself:SetMapID(self.mapID);\n\tMapCanvasMixin.OnShow(self);\n\n\tself:ResetZoom();\n\tFrameUtil.RegisterFrameForEvents(self, ANIMA_DIVERSION_FRAME_EVENTS);\n\n\tPlaySound(SOUNDKIT.UI_COVENANT_ANIMA_DIVERSION_OPEN);\n\n\tif AnimaDiversionUtil.IsAnyNodeActive() then\n\t\tPlaySound(self.covenantData.animaChannelActiveSoundKit);\n\tend\nend\n\nfunction AnimaDiversionFrameMixin:OnHide()\n\tMapCanvasMixin.OnHide(self);\n\tFrameUtil.UnregisterFrameForEvents(self, ANIMA_DIVERSION_FRAME_EVENTS);\n\tself.ReinforceInfoFrame:Hide();\n\tself:StopGemsFullSound();\n\tPlaySound(SOUNDKIT.UI_COVENANT_ANIMA_DIVERSION_CLOSE);\nend \n\nfunction AnimaDiversionFrameMixin:OnEvent(event, ...) "
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AnimaDiversionUI/Blizzard_AnimaDiversionUI.lua",
+    "line": 249,
+    "snippet": "\t\t\tlocal _, soundHandle = PlaySound(self.covenantData.animaGemsFullSoundKit);",
+    "sha256": "cb1423b3c10615253f237915a862ecdb82ea9380f7dc6d601b3cc29670e23071",
+    "context": "\n\tlocal gemsFullEffectID = fullGemsTextureKitAnimationEffectId[self.uiTextureKit];\n\tlocal newGemEffectID = newGemTextureKitAnimationEffectId[self.uiTextureKit];\n\t\n\tlocal newBolsterProgress =  math.min(MAX_ANIMA_GEM_COUNT, C_AnimaDiversion.GetReinforceProgress());\n\tlocal numNewGems =  0;\n\tif self.bolsterProgress and newBolsterProgress > self.bolsterProgress then\n\t\tnumNewGems = newBolsterProgress - self.bolsterProgress;\n\tend\n\tself.bolsterProgress = newBolsterProgress; \n\n\tlocal isReinforceReady = self:CanReinforceNode();\n\n\tif isReinforceReady then\n\t\tif not self.gemsFullSoundHandle then\n\t\t\tlocal _, soundHandle = PlaySound(self.covenantData.animaGemsFullSoundKit);\n\t\t\tself.gemsFullSoundHandle = soundHandle;\n\t\tend\n\telse\n\t\tself:StopGemsFullSound();\n\tend\n\n\tlocal firstNewGem = (newBolsterProgress - numNewGems) + 1;\n\n\tfor i=1, newBolsterProgress do\n\t\tlocal isNewGem = i >= firstNewGem;\n\n\t\tself.lastGem = self:SetupBolsterGem(i, isNewGem);"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AnimaDiversionUI/Blizzard_AnimaDiversionUI.lua",
+    "line": 267,
+    "snippet": "\t\t\t\tPlaySound(self.covenantData.animaNewGemSoundKit);",
+    "sha256": "cb1423b3c10615253f237915a862ecdb82ea9380f7dc6d601b3cc29670e23071",
+    "context": "\telse\n\t\tself:StopGemsFullSound();\n\tend\n\n\tlocal firstNewGem = (newBolsterProgress - numNewGems) + 1;\n\n\tfor i=1, newBolsterProgress do\n\t\tlocal isNewGem = i >= firstNewGem;\n\n\t\tself.lastGem = self:SetupBolsterGem(i, isNewGem);\n\n\t\tif isNewGem then\n\t\t\tself:AddBolsterEffectToGem(self.lastGem, newGemEffectID, true);\n\n\t\t\tif not isReinforceReady then\n\t\t\t\tPlaySound(self.covenantData.animaNewGemSoundKit);\n\t\t\tend\n\t\tend\n\n\t\tif isReinforceReady then\n\t\t\tif numNewGems > 0 then\n\t\t\t\tC_Timer.After(0.5, GenerateClosure(self.AddBolsterEffectToGem, self, self.lastGem, gemsFullEffectID));\n\t\t\telse\n\t\t\t\tself:AddBolsterEffectToGem(self.lastGem, gemsFullEffectID);\n\t\t\tend\n\t\tend \n\tend\n"
+  },
+  {
+    "path": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AnimaDiversionUI/Blizzard_AnimaDiversionUI.lua",
+    "line": 421,
+    "snippet": "\tPlaySound(AnimaDiversionFrame.covenantData.animaReinforceSelectSoundKit);",
+    "sha256": "cb1423b3c10615253f237915a862ecdb82ea9380f7dc6d601b3cc29670e23071",
+    "context": "\nfunction ReinforceInfoFrameMixin:SelectNodeToReinforce(node) \n\tif not self.canReinforce or self.selectedNode == node or node.UnavailableState then \n\t\treturn; \n\tend \n\n\tif self.selectedNode then \n\t\tself.selectedNode:SetSelectedState(false); \n\tend\n\n\tself.selectedNode = node;\n\tnode:SetReinforceState(true);\n\tnode:SetSelectedState(true);\n\tself.Title:SetText(self.selectedNode.nodeData.name);\n\tself.AnimaNodeReinforceButton:Enable(); \n\tPlaySound(AnimaDiversionFrame.covenantData.animaReinforceSelectSoundKit);\nend \n\nAnimaNodeReinforceButtonMixin = { };\nfunction AnimaNodeReinforceButtonMixin:OnClick()\n\tlocal selectedNode = self:GetParent():GetSelectedNode();\n\tif selectedNode then\n\t\tPlaySound(SOUNDKIT.UI_COVENANT_ANIMA_DIVERSION_CLICK_REINFORCE_BUTTON);\n\t\tStaticPopup_Show(\"ANIMA_DIVERSION_CONFIRM_REINFORCE\", selectedNode.nodeData.name, nil, selectedNode);\n\tend\nend\n\nfunction AnimaNodeReinforceButtonMixin:OnEnter()"
+  }
+]

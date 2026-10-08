@@ -1,0 +1,19 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p730-page/tools/extend_patch_audit_receipts.py",
+    "/home/osso/.worktrees/wow-ui-sim-p730-page",
+    "/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/evidence/7.3.0-session-2026-10-08/integrated/extension",
+    "p730",
+    "Merged 7.3.2 at 85c2acb2d; integrated runtime 045259220"
+  ],
+  "revision": "b13975944e9b8a6d3fd25a8eb78084ad7b2a1536",
+  "environment": {},
+  "exit": 0,
+  "log": "extend-receipts.log",
+  "log_sha256": "dc1b48adcd927e1b4eecd0e53ff2a161185b621a394aabdb9e10f222e71c55e0",
+  "source_revision": "b13975944e9b8a6d3fd25a8eb78084ad7b2a1536",
+  "source_root": "/home/osso/.worktrees/wow-ui-sim-p730-page",
+  "source_revision_basis": "driver and source share the recorded checkout"
+}

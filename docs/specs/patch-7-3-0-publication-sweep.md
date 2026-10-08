@@ -5,7 +5,7 @@ Audit the pinned [page source](../../data/patch-api/sources/7.3.0-api-changes.wi
 ## What it must do
 
 - [x] Probe all three named table additions through raw and ordinary lookup in a cached retail environment; require exact reviewed failure IDs after later-register supersession.
-- [x] Keep the 7.3.2 integration placeholder first, then 8.0.1 and all newer registers in chronological order.
+- [x] Keep the merged 7.3.2 register first, then 8.0.1 and all newer registers in chronological order.
 - [x] Account for every retained nonblank prose line, separately from table publication.
 - [x] Both `C_Sound.PlaySound` and the legacy global must use the same simulator request model; cached Blizzard aliasing must retain numeric validation and recording.
 - [x] Verify a concrete SOUNDKIT numeric ID reaches the existing sound-request state; reject the old string name without replacing the accepted request.

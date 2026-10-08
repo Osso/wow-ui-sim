@@ -1,0 +1,16 @@
+{
+  "command": [
+    "cargo",
+    "build",
+    "--bin",
+    "wow-sim"
+  ],
+  "revision": "b9ac694a683d54683399cbc472e15c3e9ecfdcdf",
+  "environment": {},
+  "exit": 0,
+  "log": "retail-build.log",
+  "log_sha256": "0cac322fa3ac0eb112cc5d93ca420e53b28fefaac967db9c33e86faa43af50b1",
+  "source_revision": "b9ac694a683d54683399cbc472e15c3e9ecfdcdf",
+  "source_root": "/home/osso/.worktrees/wow-ui-sim-p730-page",
+  "source_revision_basis": "driver and source share the recorded checkout"
+}

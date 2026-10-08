@@ -1,0 +1,18 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "game_menu"
+  ],
+  "revision": "b13975944e9b8a6d3fd25a8eb78084ad7b2a1536",
+  "environment": {},
+  "exit": 0,
+  "log": "prefork_full_ui-game_menu.log",
+  "log_sha256": "03442d19ad036fffcb775f1a9dd92675526d87af5c381146d713b0130215fe88",
+  "source_revision": "b13975944e9b8a6d3fd25a8eb78084ad7b2a1536",
+  "source_root": "/home/osso/.worktrees/wow-ui-sim-p730-page",
+  "source_revision_basis": "driver and source share the recorded checkout"
+}

@@ -40,13 +40,20 @@ def check_sources(revision):
     registers = read(FRESH / 'p730-register-reproduction.json')
     extracts = read(FRESH / 'p730-saved-extract-reproduction.json')
     assert {r['patch'] for r in registers} == {r['patch'] for r in extracts} == expected
+    assert len(registers) == len(extracts) == len(expected)
     inherited = {r['patch']: r for r in read(HERE / 'p730-saved-extract-reproduction.json')}
     for row in registers:
         path = ROOT / 'data/patch-api/sources' / (row['patch'] + '-wikitext-register.json')
         assert row['exit'] == 0 and row['byte_identical'] and digest(path) == row['sha256']
+        provenance = read(path.with_name(row['patch'] + '-api-changes.provenance.json'))
+        if provenance.get('generator_flags') is not None:
+            assert row['verified_flags'] == provenance['generator_flags']
     for row in extracts:
         path = ROOT / 'data/patch-api/sources' / (row['patch'] + '-api-changes.txt')
         assert digest(path) == row['sha256']
+        provenance = read(path.with_name(row['patch'] + '-api-changes.provenance.json'))
+        if provenance.get('extractor_flags') is not None:
+            assert row['verified_flags'] == provenance['extractor_flags']
         if not row['byte_identical']:
             old = inherited[row['patch']]
             assert not old['byte_identical'] and (row['exit'], row['error']) == (old['exit'], old['error'])
@@ -94,9 +101,13 @@ def check_receipts(context):
         if receipt['command'][:2] == ['cargo', 'test']:
             matches = re.findall(r'test result: ok\. (\d+) passed; 0 failed;', log)
             assert matches and any(int(n) > 0 for n in matches), 'empty test selection: ' + label
-        for name, expected in context['runtime_scope'].items():
-            data = subprocess.check_output(['git', 'show', f"{receipt['revision']}:{name}"], cwd=ROOT)
-            assert hashlib.sha256(data).hexdigest() == expected, (label, name)
+        if label.startswith('master-'):
+            assert receipt['source_revision'] == context['master_revision']
+        else:
+            assert receipt['source_revision'] == receipt['revision']
+            for name, expected in context['runtime_scope'].items():
+                data = subprocess.check_output(['git', 'show', f"{receipt['source_revision']}:{name}"], cwd=ROOT)
+                assert hashlib.sha256(data).hexdigest() == expected, (label, name)
         if label == 'mists-check':
             assert receipt['command'] == ['cargo', 'check', '--no-default-features', '--features',
                                           'sound,gui,casc,client-mists', '--tests']
@@ -111,6 +122,8 @@ def check_receipts(context):
     branch = errors((FRESH / 'startup-addons.log').read_text())
     master = errors((FRESH / 'master-startup-addons.log').read_text())
     assert branch == master, 'addon Lua errors differ from master'
+    source = read(FRESH / 'master-source-verification.json')
+    assert source['exit'] == 0 and source['source_revision'] == context['master_revision']
     comparison = read(FRESH / 'lua-errors-comparison.json')
     assert comparison['branch'] == branch and comparison['master'] == master
     assert comparison['master_revision'] == context['master_revision']
@@ -118,6 +131,8 @@ def check_receipts(context):
 
 
 def main():
+    for name, expected in read(FRESH / 'artifact-hashes.json').items():
+        assert digest(ROOT / name) == expected, 'changed integrated artifact: ' + name
     context = read(FRESH / 'context.json')
     registers, extracts = check_sources(context['runtime_revision'])
     pages, cases, observations = check_sweeps(context['runtime_revision'])

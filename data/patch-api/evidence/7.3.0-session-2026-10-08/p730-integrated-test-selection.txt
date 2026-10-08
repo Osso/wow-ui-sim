@@ -1,0 +1,136 @@
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/common/game_menu_fixture.rs:63:pub fn setup_game_menu_env() -> WowLuaEnv {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_obliterum_ui_loads.rs:288:    fn blizzard_obliterum_registers_ui_panel_window_entry(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/wowforever_finite_constants.rs:186:fn forever_aura_sound_trigger_values_survive_cleanup() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_subscription_interstitial_ui_loads.rs:394:fn ui_panel_window_entry_seeds_for_subscription_interstitial_frame(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/encounter_events.rs:61:fn encounter_events_sound_override_and_playback_handle() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_item_interaction_ui_loads.rs:529:fn blizzard_item_interaction_registers_ui_panel_window_entry(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/patch_12_0_1_models.rs:24:fn patch_12_0_1_warning_visibility_and_sound_settings_roundtrip() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/key_dispatch.rs:94:fn esc_dispatches_blizzard_toggle_game_menu_binding() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/soundkit_ig_inventory_rotate_character.rs:16:fn soundkit_ig_inventory_rotate_character_resolves_to_canonical_id() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/soundkit_ig_inventory_rotate_character.rs:28:fn play_sound_with_ig_inventory_rotate_character_does_not_error() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/patch_12_1_0_struct_shapes.rs:634:fn patch_12_1_0_play_sound_params_record_volume_override() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_item_upgrade_ui_loads.rs:611:fn blizzard_item_upgrade_registers_ui_panel_window_entry(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_settings_shared_loads.rs:634:fn settings_panel_registers_as_ui_panel_only_in_game_screen(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_housing_cornerstone_loads.rs:621:fn blizzard_housing_cornerstone_registers_four_named_panels_via_register_ui_panel(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/c_api_surface.rs:119:    fn forever_shared_enums_populate_sound_alert_data() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_game_menu_loads.rs:15:fn game_menu_dir() -> PathBuf {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_game_menu_loads.rs:19:fn game_menu_mainline_toc() -> PathBuf {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_game_menu_loads.rs:48:fn blizzard_game_menu_picks_mainline_toc_variant() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_game_menu_loads.rs:67:fn blizzard_game_menu_mainline_toc_declares_current_dependencies() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_game_menu_loads.rs:139:fn blizzard_game_menu_defaults_to_game_screen_only() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_game_menu_loads.rs:161:fn blizzard_game_menu_auto_loads_on_game_and_skips_login() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_game_menu_loads.rs:184:fn blizzard_game_menu_loads_via_full_game_ui_without_errors(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_game_menu_loads.rs:208:fn blizzard_game_menu_exit_button_requests_quit_after_full_game_load(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_game_menu_loads.rs:246:fn blizzard_game_menu_is_addon_loaded_returns_true_after_full_game_ui_load(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_game_menu_loads.rs:261:fn blizzard_game_menu_publishes_top_level_frame_and_mixin(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_game_menu_loads.rs:285:fn blizzard_game_menu_publishes_named_subframes(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_game_menu_loads.rs:310:fn blizzard_game_menu_uses_dialog_strata_and_main_menu_template(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_game_menu_loads.rs:332:fn blizzard_game_menu_starts_hidden_at_load_time(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_game_menu_loads.rs:352:fn blizzard_game_menu_publishes_lifecycle_methods_via_mixin(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_game_menu_loads.rs:379:fn blizzard_game_menu_publishes_button_init_and_callback_methods(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_game_menu_loads.rs:405:fn blizzard_game_menu_publishes_ratings_and_logout_helpers(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/test_keybindings_world_map_events.rs:133:fn keybind_escape_opens_game_menu(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/test_keybindings_world_map_events.rs:143:fn keybind_escape_closes_game_menu(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_azerite_respec_ui_on_show_plays_sound.rs:9:fn blizzard_azerite_respec_ui_show_and_hide_play_reforge_window_sounds() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_azerite_respec_ui_on_show_plays_sound.rs:76:fn played_sound_at(env: &wow_ui_sim::lua_api::WowLuaEnv, index: i64) -> Option<i64> {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_order_hall_ui_loads.rs:81:fn blizzard_order_hall_toc_declares_load_on_demand_with_game_menu_dependency() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/xml_templates/inline_flow/interaction_sequences.rs:343:fn test_create_frame_from_xml_inline_play_sound_then_copy_club_ticket_runs() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/xml_templates/inline_advanced/advanced_branching.rs:45:fn test_create_frame_from_xml_inline_hide_then_conditional_then_sound_runs() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/private_aura_sound_removal.rs:154:fn empty_default_has_no_acquired_sound_ids() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_housing_house_finder_loads.rs:554:fn blizzard_housing_house_finder_registers_ui_panel_with_left_area_and_pushable_zero(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_housing_create_neighborhood_loads.rs:605:fn blizzard_housing_create_neighborhood_registers_three_named_panels_via_register_ui_panel(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/patch_12_0_7_b23_b28.rs:170:fn b24_out_of_combat_permission_does_not_declassify_secret_sound_or_extras() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/ace3.rs:196:fn test_load_game_menu() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/keyboard.rs:11:fn test_escape_shows_game_menu() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/keyboard.rs:24:fn test_escape_hides_game_menu_when_shown() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/keyboard.rs:39:fn test_escape_toggles_game_menu_twice() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/keyboard.rs:52:fn test_escape_without_game_menu_frame() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/keyboard.rs:661:fn test_escape_no_target_opens_game_menu() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/micro_menu.rs:289:fn micro_menu_game_menu_button_opens_game_menu(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/micro_menu.rs:701:fn game_menu_buttons_display_text(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/test_showuipanel_reputation.rs:107:fn show_ui_panel_locks_reputation_frame_layout() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/patch_12_1_0_aura_sounds.rs:43:fn aura_sound_triggers_play_on_add_application_and_removal() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_professions_customer_orders_loads.rs:489:fn blizzard_professions_customer_orders_registers_one_ui_panel_with_uiparent(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_reinforce_button_click_shows_static_popup.rs:90:fn assert_sound_call(state: (i64, bool)) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_confirm_reinforce_popup_calls_select_anima_node_permanent.rs:75:fn assert_sound_call(state: (i64, bool)) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_onhide_unregisters_events_and_plays_close_sound.rs:86:fn onhide_unregisters_events_stops_gems_and_plays_close_sound() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_onhide_unregisters_events_and_plays_close_sound.rs:169:fn assert_gems_full_sound_stopped(stopped_sound_handle: i64, handle_cleared: bool) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_confirm_channel_popup_plays_covenant_sound.rs:90:fn confirm_channel_popup_accept_plays_covenant_sound_and_selects_node() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_confirm_channel_popup_plays_covenant_sound.rs:108:fn assert_sound_calls(state: (i64, bool)) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_onshow_registers_events_and_plays_open_sound.rs:98:fn onshow_registers_events_and_plays_expected_sounds() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_onshow_registers_events_and_plays_open_sound.rs:173:fn assert_open_sound_branch(open_sound_kit: i64, sound_count: i64, open_sound: i64) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_onshow_registers_events_and_plays_open_sound.rs:184:fn assert_active_node_sound_branch(open_sound_kit: i64, open_sound: i64, channel_sound: i64) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_reinforce_info_select_node_updates_title_and_button.rs:173:fn assert_title_button_and_sound(state: (String, bool, i64, bool)) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_animadiversionui/behavior_setup_bolster_progress_caps_at_max_and_records_new_gems.rs:221:fn assert_full_gems_sound(sound_kit_seen: i64, gems_full_sound_handle: i64) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountsaveui/surface_frames.rs:137:fn account_save_frame_save_button_inherits_ui_panel_button_template() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_archaeology_ui/behavior_show_opens_the_panel.rs:8:fn archaeology_frame_show_and_hide_route_through_ui_panel_system() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_show_sound.rs:76:fn on_show_calls_play_sound_with_account_store_open_sound_kit_constant_value() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:389:fn select_card_refund_branch_does_not_call_purchase_path_play_sound_or_begin_purchase() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_refund.rs:544:fn seed_refund_play_sound_silent_stub(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_on_hide_sound.rs:96:fn on_hide_calls_play_sound_with_account_store_close_sound_kit_constant_value() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui/blizzard_accountstore/behavior_card_select_purchase.rs:560:fn seed_play_sound_silent_stub(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_housing_house_settings_loads.rs:398:fn blizzard_housing_house_settings_registers_ui_panel_with_center_area_and_pushable_zero(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_deprecated_sound_script_loads.rs:16:fn deprecated_sound_script_toc() -> PathBuf {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_deprecated_sound_script_loads.rs:45:fn blizzard_deprecated_sound_script_toc_is_minimal_with_no_flags_or_deps() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_deprecated_sound_script_loads.rs:81:fn blizzard_deprecated_sound_script_appears_in_game_discovery_only() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_deprecated_sound_script_loads.rs:104:fn blizzard_deprecated_sound_script_loads_without_errors(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_deprecated_sound_script_loads.rs:125:fn blizzard_deprecated_sound_script_play_vocal_error_sound_id_aliases_play_vocal_error_sound(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_deprecated_sound_script_loads.rs:151:fn blizzard_deprecated_sound_script_play_vocal_error_sound_id_calls_without_error(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_deprecated_sound_script_loads.rs:165:fn blizzard_deprecated_sound_script_load_deprecation_fallbacks_cvar_is_default_on(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_deprecated_sound_script_loads.rs:182:fn blizzard_deprecated_sound_script_has_no_xml_or_other_assets() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/mists_interface_options_panel.rs:18:fn mists_game_menu_options_drives_settings_help_and_addons() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/patch_7_3_0_cached_behavior.rs:8:fn patch_7_3_0_cached_sound_ids_reject_names_and_preserve_request(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_macro_ui_loads.rs:513:fn blizzard_macro_ui_registers_ui_panel_window_entry_for_macro_frame(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_item_socketing_ui_loads.rs:442:fn blizzard_item_socketing_registers_ui_panel_window_entry(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/c_artifact_ui_panel.rs:82:fn c_artifact_ui_panel_methods_are_registered() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/game_menu.rs:14:fn test_game_menu_frame_exists() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/game_menu.rs:31:fn test_game_menu_buttons_created_on_show() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/game_menu.rs:103:fn test_game_menu_exit_button_requests_simulator_quit() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/game_menu.rs:143:fn test_game_menu_all_enabled_buttons_have_callable_callbacks() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/game_menu.rs:177:fn test_game_menu_macro_button_callback_is_callable() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/game_menu.rs:217:fn test_game_menu_options_button_hitbox_matches_visual_center() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/game_menu.rs:283:fn test_game_menu_button_positions_vertical_layout() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/game_menu.rs:370:fn test_game_menu_frame_strata() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/game_menu.rs:383:fn test_game_menu_hide() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/game_menu.rs:404:fn test_game_menu_shop_button_opens_store_and_menu_can_reopen_after_store_closes() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/aura_instance_ids.rs:175:fn aura_instance_ids_sound_trigger_enum_exists_before_secure_copy() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/system_api_seeded.rs:81:fn test_sound_system_driver_functions_return_seeded_devices() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_transmog_loads.rs:491:fn explicit_load_registers_ui_panel_via_registration_lua(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/test_showuipanel.rs:213:fn show_ui_panel_shows_frame(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/test_showuipanel.rs:226:fn show_ui_panel_anchors_character_frame_to_ui_parent(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/test_showuipanel.rs:275:fn show_ui_panel_positions_character_frame_at_expected_rect(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/test_showuipanel.rs:318:fn show_ui_panel_locks_character_frame_layout(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/test_showuipanel.rs:494:fn show_ui_panel_reanchors_character_frame_after_reopen(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/test_showuipanel.rs:547:fn hide_ui_panel_hides_frame(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/test_showuipanel.rs:560:fn show_and_hide_ui_panel_toggle_registered_frame_visibility() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/test_showuipanel.rs:594:fn repeated_show_ui_panel_pulse_closes_active_panel_stack() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/test_showuipanel.rs:633:fn show_ui_panel_is_function() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/test_showuipanel.rs:644:fn register_ui_panel_populates_uipanel_windows_without_overwriting() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/test_showuipanel.rs:679:fn registered_ui_panel_closes_with_escape_stack() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/test_showuipanel.rs:709:fn escape_key_closes_character_frame_before_game_menu() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/test_showuipanel.rs:755:fn sequential_registered_ui_panels_reenter_close_stack() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_housing_model_preview_loads.rs:341:fn blizzard_housing_model_preview_registers_ui_panel_with_left_area_and_pushable_two(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_torghast_level_picker_loads.rs:329:fn ui_panel_windows_entry_registered_at_boot(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui_parent_panel_manager_loads.rs:365:fn ui_panel_skip_set_point_paired_with_nil_do_set_point(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui_parent_panel_manager_loads.rs:407:fn full_game_load_populates_ui_panel_windows_with_expected_areas(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/global_frames.rs:558:fn test_ui_panel_windows_exists() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/runtime_bootstrap_boundaries.rs:560:fn catalog_shop_soundkit_defaults_are_not_runtime_bootstrap_fallbacks() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_professions_loads.rs:450:fn blizzard_professions_registers_two_ui_panels_with_uiparent(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/utility_api.rs:520:fn test_sound_stubs_exist() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/utility_api.rs:531:fn test_sound_shims_record_latest_requests() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui_panel_templates_loads.rs:14:fn ui_panel_templates_dir() -> PathBuf {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui_panel_templates_loads.rs:18:fn ui_panel_templates_toc() -> PathBuf {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_soulbinds_loads.rs:272:fn soulbinds_xml_is_last_so_register_ui_panel_runs_after_viewer_exists() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/ui_file_assets.rs:26:fn loose_sound_is_known_during_load_and_afterward_without_synthetic_id() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_flight_map_loads.rs:296:fn blizzard_flight_map_registers_with_ui_panel_windows(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_photo_sharing_loads.rs:96:fn blizzard_photo_sharing_toc_declares_eager_mainline_only_with_game_menu_dependency() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_trainer_ui_loads.rs:305:fn explicit_load_registers_ui_panel_windows_entry(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/patch_7_3_0_sound_model.rs:5:fn patch_7_3_0_sound_namespace_and_global_share_request_state() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_weekly_rewards_loads.rs:357:fn weekly_rewards_frame_publishes_with_register_ui_panel(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/encounter_event_sound_no_error.rs:25:fn configured_event_sound_returns_stored_fields_and_one_result() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/encounter_event_sound_no_error.rs:46:fn missing_sound_overrides_return_no_values_without_error() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/encounter_event_sound_no_error.rs:66:fn returned_sound_table_mutation_does_not_change_stored_override() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/encounter_event_sound_no_error.rs:86:fn addon_sound_lookup_does_not_error_or_change_stack_taint() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/test_showuipanel_toggles.rs:133:fn show_ui_panel_displaces_previous_occupant() {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui_panels_game_loads.rs:15:fn ui_panels_game_dir() -> PathBuf {
+/home/osso/.worktrees/wow-ui-sim-p730-page/tests/blizzard_ui_panels_game_loads.rs:19:fn ui_panels_game_mainline_toc() -> PathBuf {

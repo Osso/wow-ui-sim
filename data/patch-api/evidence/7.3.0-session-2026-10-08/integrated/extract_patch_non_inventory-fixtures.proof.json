@@ -1,0 +1,15 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p730-page/tools/test_extract_patch_non_inventory.py"
+  ],
+  "revision": "b9ac694a683d54683399cbc472e15c3e9ecfdcdf",
+  "environment": {},
+  "exit": 0,
+  "log": "extract_patch_non_inventory-fixtures.log",
+  "log_sha256": "cf73e1b8b777fe18fa1b1fc9e54c433fa187700f219704038fb8feb3393b954f",
+  "source_revision": "b9ac694a683d54683399cbc472e15c3e9ecfdcdf",
+  "source_root": "/home/osso/.worktrees/wow-ui-sim-p730-page",
+  "source_revision_basis": "driver and source share the recorded checkout"
+}

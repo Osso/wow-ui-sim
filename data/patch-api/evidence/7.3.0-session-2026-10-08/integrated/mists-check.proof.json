@@ -1,0 +1,18 @@
+{
+  "command": [
+    "cargo",
+    "check",
+    "--no-default-features",
+    "--features",
+    "sound,gui,casc,client-mists",
+    "--tests"
+  ],
+  "revision": "b9ac694a683d54683399cbc472e15c3e9ecfdcdf",
+  "environment": {},
+  "exit": 0,
+  "log": "mists-check.log",
+  "log_sha256": "c7b1e3776ef84c9c90d9b0d42abc715d289ff131c8fb80a7a84a4e79195a0552",
+  "source_revision": "b9ac694a683d54683399cbc472e15c3e9ecfdcdf",
+  "source_root": "/home/osso/.worktrees/wow-ui-sim-p730-page",
+  "source_revision_basis": "driver and source share the recorded checkout"
+}

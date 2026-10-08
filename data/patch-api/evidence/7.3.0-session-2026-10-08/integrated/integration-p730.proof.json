@@ -1,0 +1,18 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "--",
+    "patch_7_3_0"
+  ],
+  "revision": "b13975944e9b8a6d3fd25a8eb78084ad7b2a1536",
+  "environment": {},
+  "exit": 0,
+  "log": "integration-p730.log",
+  "log_sha256": "af350e84ba6d89be648034eb6398c859964bd56011a917657c307fc669268e9f",
+  "source_revision": "b13975944e9b8a6d3fd25a8eb78084ad7b2a1536",
+  "source_root": "/home/osso/.worktrees/wow-ui-sim-p730-page",
+  "source_revision_basis": "driver and source share the recorded checkout"
+}

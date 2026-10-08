@@ -1,0 +1,18 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_7_3_0"
+  ],
+  "revision": "b13975944e9b8a6d3fd25a8eb78084ad7b2a1536",
+  "environment": {},
+  "exit": 0,
+  "log": "prefork-p730.log",
+  "log_sha256": "81dde963cdd2c59d21abf63c0d7e0ec9857db237597c3080064c7261382f4ea7",
+  "source_revision": "b13975944e9b8a6d3fd25a8eb78084ad7b2a1536",
+  "source_root": "/home/osso/.worktrees/wow-ui-sim-p730-page",
+  "source_revision_basis": "driver and source share the recorded checkout"
+}

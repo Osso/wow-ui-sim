@@ -1,0 +1,85 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.31s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p730-page/debug/deps/integration-1db16289b0998b2a)
+
+running 71 tests
+test blizzard_soulbinds_loads::soulbinds_xml_is_last_so_register_ui_panel_runs_after_viewer_exists ... ok
+test blizzard_ui_panel_templates_loads::allow_load_game_restricts_to_in_world ... ok
+test blizzard_ui_panel_templates_loads::allow_load_game_type_mainline_is_not_restricted ... ok
+test blizzard_ui_panel_templates_loads::find_toc_file_resolves_mainline_variant ... ok
+test blizzard_ui_panel_templates_loads::toc_is_eager_with_one_dependency ... ok
+test blizzard_ui_panel_templates_loads::dep_directories_exist_on_disk ... ok
+test blizzard_ui_panel_templates_loads::toc_raw_bytes_pin_six_directives_and_six_body_files ... ok
+test blizzard_ui_panels_game_loads::find_toc_file_resolves_mainline_variant ... ok
+test blizzard_ui_panels_game_loads::allow_load_game_type_mainline_is_not_restricted ... ok
+test blizzard_ui_panels_game_loads::allow_load_game_restricts_to_in_world ... ok
+test blizzard_ui_panels_game_loads::classic_toc_uses_load_first_directive ... ok
+test blizzard_ui_panels_game_loads::toc_raw_bytes_pin_six_directives_and_localization_trailer ... ok
+test blizzard_ui_panels_game_loads::toc_is_eager_with_thirteen_dependencies ... ok
+test blizzard_ui_panels_game_loads::dep_directories_exist_on_disk ... ok
+test blizzard_ui_panels_game_loads::appears_in_game_eager_discovery ... ok
+test blizzard_ui_panel_templates_loads::appears_in_game_eager_discovery ... ok
+test blizzard_ui_panels_game_loads::absent_from_glue_screens_eager_discovery ... ok
+test blizzard_ui_panel_templates_loads::absent_from_glue_screens_eager_discovery ... ok
+test c_artifact_ui_panel::c_artifact_ui_panel_methods_are_registered ... ok
+test c_artifact_ui_panel::get_artifact_art_info_returns_titled_table ... ok
+test c_artifact_ui_panel::get_artifact_info_returns_nothing_when_no_artifact_viewed ... ok
+test c_artifact_ui_panel::appearance_sets_count_and_info_round_trip ... ok
+test c_artifact_ui_panel::flag_getters_read_viewed_artifact_state ... ok
+test c_artifact_ui_panel::get_artifact_art_info_returns_nothing_when_no_artifact ... ok
+test c_artifact_ui_panel::appearance_set_info_returns_nothing_for_missing_index ... ok
+test c_artifact_ui_panel::appearance_info_returns_thirteen_values_when_present ... ok
+test c_artifact_ui_panel::appearance_info_by_id_prefixes_with_set_id ... ok
+test c_artifact_ui_panel::artifact_art_survives_collection_in_each_color_callback ... ok
+test c_artifact_ui_panel::get_artifact_item_id_returns_nothing_when_no_artifact ... ok
+test c_artifact_ui_panel::get_artifact_info_returns_thirteen_values_when_viewed ... ok
+test c_artifact_ui_panel::get_meta_power_info_returns_stride_of_three ... ok
+test c_artifact_ui_panel::get_artifact_tier_returns_nil_when_no_artifact ... ok
+test c_artifact_ui_panel::get_power_links_returns_state_neighbours ... ok
+test c_artifact_ui_panel::get_artifact_tier_reads_state_when_viewed ... ok
+test c_artifact_ui_panel::get_power_hyperlink_formats_artifactpower_link ... ok
+test c_artifact_ui_panel::get_power_info_returns_table_for_known_id ... ok
+test c_artifact_ui_panel::get_power_info_returns_nothing_when_unknown_id ... ok
+test c_artifact_ui_panel::get_powers_affected_by_relic_item_link_returns_multireturn_ids ... ok
+test c_artifact_ui_panel::get_powers_returns_sorted_id_array ... ok
+test c_artifact_ui_panel::get_powers_affected_by_relic_returns_multireturn_ids ... ok
+test c_artifact_ui_panel::is_power_known_reflects_known_set ... ok
+test c_artifact_ui_panel::get_total_power_cost_returns_state_value_or_zero ... ok
+test c_artifact_ui_panel::points_and_ranks_and_obtained_count_read_state ... ok
+test c_artifact_ui_panel::relics_and_mutators::add_power_marks_known_and_fires_artifact_update ... ok
+test c_artifact_ui_panel::relics_and_mutators::can_apply_cursor_relic_to_slot_requires_known_relic_and_unlocked_slot ... ok
+test c_artifact_ui_panel::get_preview_appearance_reflects_state ... ok
+test c_artifact_ui_panel::relics_and_mutators::can_apply_cursor_relic_to_slot_rejects_unknown_relic ... ok
+test c_artifact_ui_panel::relics_and_mutators::apply_cursor_relic_to_slot_writes_into_slot ... ok
+test c_artifact_ui_panel::relics_and_mutators::clear_resets_state_and_fires_artifact_close_when_present ... ok
+test c_artifact_ui_panel::relics_and_mutators::forge_rotation_round_trips_through_state ... ok
+test c_artifact_ui_panel::relics_and_mutators::relic_slot_count_and_info_read_state ... ok
+test c_artifact_ui_panel::relics_and_mutators::get_relic_info_returns_four_values_for_socketed_slot ... ok
+test c_artifact_ui_panel::relics_and_mutators::confirm_respec_refunds_points_and_clears_known_powers ... ok
+test c_artifact_ui_panel::relics_and_mutators::get_relic_info_returns_nothing_for_unsocketed_slot ... ok
+test c_artifact_ui_panel::relics_and_mutators::can_apply_relic_item_id_to_slot_checks_lock_state ... ok
+test c_artifact_ui_panel::relics_and_mutators::get_relic_info_by_item_id_reads_state ... ok
+test c_artifact_ui_panel::relics_and_mutators::clear_is_silent_when_no_artifact_present ... ok
+test blizzard_ui_blizzard_accountsaveui::surface_frames::account_save_frame_save_button_inherits_ui_panel_button_template ... ok
+test c_artifact_ui_panel::relics_and_mutators::set_appearance_writes_appearance_id_to_info ... ok
+test c_artifact_ui_panel::relics_and_mutators::should_suppress_forge_rotation_reads_state ... ok
+test c_artifact_ui_panel::relics_and_mutators::set_preview_appearance_clears_when_passed_nil_or_zero ... ok
+test global_frames::test_ui_panel_windows_exists ... ok
+test test_showuipanel::repeated_show_ui_panel_pulse_closes_active_panel_stack ... ok
+test blizzard_ui_blizzard_archaeology_ui::behavior_show_opens_the_panel::archaeology_frame_show_and_hide_route_through_ui_panel_system ... ok
+test test_showuipanel_toggles::show_ui_panel_displaces_previous_occupant ... ok
+test test_showuipanel::registered_ui_panel_closes_with_escape_stack ... ok
+test test_showuipanel_reputation::show_ui_panel_locks_reputation_frame_layout ... ok
+test test_showuipanel::show_ui_panel_is_function ... ok
+test test_showuipanel::sequential_registered_ui_panels_reenter_close_stack ... ok
+test test_showuipanel::show_and_hide_ui_panel_toggle_registered_frame_visibility ... ok
+test test_showuipanel::register_ui_panel_populates_uipanel_windows_without_overwriting ... ok
+
+test result: ok. 71 passed; 0 failed; 0 ignored; 0 measured; 10597 filtered out; finished in 12.41s
+

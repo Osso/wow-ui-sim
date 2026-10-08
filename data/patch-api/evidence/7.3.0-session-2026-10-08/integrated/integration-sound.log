@@ -1,0 +1,69 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.31s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p730-page/debug/deps/integration-1db16289b0998b2a)
+
+running 55 tests
+test blizzard_deprecated_sound_script_loads::blizzard_deprecated_sound_script_has_no_xml_or_other_assets ... ok
+test blizzard_deprecated_sound_script_loads::blizzard_deprecated_sound_script_toc_is_minimal_with_no_flags_or_deps ... ok
+test blizzard_deprecated_sound_script_loads::blizzard_deprecated_sound_script_appears_in_game_discovery_only ... ok
+test aura_instance_ids::aura_instance_ids_sound_trigger_enum_exists_before_secure_copy ... ok
+test blizzard_azerite_respec_ui_on_show_plays_sound::blizzard_azerite_respec_ui_show_and_hide_play_reforge_window_sounds ... ok
+test blizzard_ui_blizzard_accountstore::behavior_on_show_sound::on_show_calls_play_sound_with_account_store_open_sound_kit_constant_value ... ok
+test blizzard_ui_blizzard_accountstore::behavior_on_show_sound::on_show_does_not_fire_event_registry_callbacks_for_plan_named_show_event_aliases ... ok
+test encounter_event_sound_no_error::addon_sound_lookup_does_not_error_or_change_stack_taint ... ok
+test blizzard_ui_blizzard_accountstore::behavior_on_hide_sound::on_hide_calls_play_sound_with_account_store_close_sound_kit_constant_value ... ok
+test blizzard_ui_blizzard_accountstore::behavior_on_hide_sound::on_hide_invokes_account_store_util_close_static_popups_plan_omitted_side_effect ... ok
+test blizzard_ui_blizzard_accountstore::behavior_on_hide_sound::on_hide_fires_account_store_shown_state_event_registry_with_false_payload ... ok
+test blizzard_ui_blizzard_accountstore::behavior_card_select_refund::select_card_refund_branch_does_not_call_purchase_path_play_sound_or_begin_purchase ... ok
+test blizzard_ui_blizzard_accountstore::behavior_on_show_sound::on_show_fires_account_store_shown_state_event_registry_with_true_payload ... ok
+test blizzard_ui_blizzard_accountstore::behavior_on_hide_sound::on_hide_does_not_fire_event_registry_callbacks_for_plan_named_hide_event_aliases ... ok
+test encounter_event_sound_no_error::configured_event_sound_returns_stored_fields_and_one_result ... ok
+test encounter_event_sound_no_error::missing_sound_overrides_return_no_values_without_error ... ok
+test encounter_event_sound_no_error::returned_sound_table_mutation_does_not_change_stored_override ... ok
+test encounter_events::encounter_events_sound_override_and_playback_handle ... ok
+test patch_12_1_0_aura_sounds::aura_sound_triggers_play_on_add_application_and_removal ... ok
+test patch_12_0_1_models::patch_12_0_1_warning_visibility_and_sound_settings_roundtrip ... ok
+test patch_12_0_7_b23_b28::b24_out_of_combat_permission_does_not_declassify_secret_sound_or_extras ... ok
+test patch_7_3_0_sound_model::patch_7_3_0_sound_namespace_and_global_share_request_state ... ok
+test private_aura_sound_add_context::actual_full_deprecated_chunk_preserves_add_context_and_removal ... ok
+test patch_12_1_0_struct_shapes::patch_12_1_0_play_sound_params_record_volume_override ... ok
+test private_aura_sound_add_context::allocator_avoids_host_ids_and_exhaustion_returns_one_nil ... ok
+test private_aura_sound_add_context::modern_authenticates_both_arguments_before_trigger_validation ... ok
+test private_aura_sound_add_context::ordinary_tainted_combat_add_copies_real_payload_and_removes_it ... ok
+test private_aura_sound_add_context::malformed_inputs_leave_host_registration_and_allocator_unchanged ... ok
+test private_aura_sound_add_context::real_secret_table_and_field_authenticate_securely_but_deny_addon ... ok
+test private_aura_sound_removal::empty_default_has_no_acquired_sound_ids ... ok
+test private_aura_sound_removal::actual_cached_deprecated_file_keeps_legacy_removal_durable_after_bootstrap ... ok
+test private_aura_sound_removal::public_numeric_u32_endpoints_remove_only_their_ids ... ok
+test private_aura_sound_add_context::secure_caller_registers_in_all_contexts_and_environments_are_isolated ... ok
+test private_aura_sound_removal::public_tainted_closure_removes_live_id_without_caller_or_combat_gate ... ok
+test private_aura_sound_removal::direct_modern_and_legacy_removers_share_real_state ... ok
+test private_aura_sound_removal::real_rooted_vm_secrets_reject_secure_without_mutation_or_declassification ... ok
+test runtime_bootstrap_boundaries::catalog_shop_soundkit_defaults_are_not_runtime_bootstrap_fallbacks ... ok
+test private_aura_sound_removal::host_replacement_changes_the_current_removal_set ... ok
+test private_aura_sound_removal::real_rooted_vm_secrets_reject_tainted_without_mutation_or_declassification ... ok
+test private_aura_sound_add_context::each_context_denies_addon_without_consuming_id_then_recovers ... ok
+test blizzard_ui_blizzard_animadiversionui::behavior_onshow_registers_events_and_plays_open_sound::onshow_registers_events_and_plays_expected_sounds ... ok
+test private_aura_sound_removal::seeded_removal_is_immediate_and_returns_zero_values ... ok
+test blizzard_ui_blizzard_animadiversionui::behavior_onhide_unregisters_events_and_plays_close_sound::onhide_unregisters_events_stops_gems_and_plays_close_sound ... ok
+test private_aura_sound_removal::repeated_removal_is_a_valid_zero_result_noop ... ok
+test private_aura_sound_removal::unknown_valid_id_preserves_all_live_ids ... ok
+test private_aura_sound_removal::strict_invalid_arguments_reject_without_mutation_then_allow_public_recovery ... ok
+test blizzard_ui_blizzard_animadiversionui::behavior_confirm_channel_popup_plays_covenant_sound::confirm_channel_popup_accept_plays_covenant_sound_and_selects_node ... ok
+test soundkit_ig_inventory_rotate_character::play_sound_with_ig_inventory_rotate_character_does_not_error ... ok
+test soundkit_ig_inventory_rotate_character::soundkit_ig_inventory_rotate_character_resolves_to_canonical_id ... ok
+test private_aura_sound_removal::removal_is_environment_local_and_leaves_other_maps_unchanged ... ok
+test system_api_seeded::test_sound_system_driver_functions_return_seeded_devices ... ok
+test utility_api::test_sound_shims_record_latest_requests ... ok
+test xml_templates::inline_advanced::advanced_branching::test_create_frame_from_xml_inline_hide_then_conditional_then_sound_runs ... ok
+test utility_api::test_sound_stubs_exist ... ok
+test xml_templates::inline_flow::interaction_sequences::test_create_frame_from_xml_inline_play_sound_then_copy_club_ticket_runs ... ok
+
+test result: ok. 55 passed; 0 failed; 0 ignored; 0 measured; 10613 filtered out; finished in 15.34s
+

@@ -27,11 +27,14 @@ def run(label, command, overrides=None):
             env[match[1]] = str(HERE / (path.stem + '-results.json'))
     env.update(overrides or {})
     revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
+    source_root = Path(MASTER) if label.startswith('master-') else ROOT
+    source_revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=source_root, text=True).strip()
     log = HERE / (label + '.log')
     with log.open('wb') as output:
         result = subprocess.run(command, cwd=ROOT, env=env, stdout=output, stderr=subprocess.STDOUT)
     dump(HERE / (label + '.proof.json'), {
-        'command': command, 'revision': revision, 'environment': overrides or {},
+        'command': command, 'revision': revision, 'source_revision': source_revision,
+        'source_root': str(source_root), 'environment': overrides or {},
         'exit': result.returncode, 'log': log.name,
         'log_sha256': hashlib.sha256(log.read_bytes()).hexdigest(),
     })

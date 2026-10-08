@@ -1,0 +1,21 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_7_3_0_publication_sweep"
+  ],
+  "revision": "b9ac694a683d54683399cbc472e15c3e9ecfdcdf",
+  "environment": {
+    "P730_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/evidence/7.3.0-session-2026-10-08/p730-negative-register.json",
+    "P730_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p730-page/data/patch-api/evidence/7.3.0-session-2026-10-08/integrated/negative-results.json"
+  },
+  "exit": 1,
+  "log": "negative.log",
+  "log_sha256": "d8a2dd2b4d373ec39584b11517832776445c3c7bec844817b424e36bc91c6ad6",
+  "source_revision": "b9ac694a683d54683399cbc472e15c3e9ecfdcdf",
+  "source_root": "/home/osso/.worktrees/wow-ui-sim-p730-page",
+  "source_revision_basis": "driver and source share the recorded checkout"
+}

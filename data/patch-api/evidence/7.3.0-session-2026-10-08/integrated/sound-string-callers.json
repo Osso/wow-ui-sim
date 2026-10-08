@@ -1,0 +1,16 @@
+{
+  "argv": [
+    "/usr/bin/grep",
+    "-rnE",
+    "--exclude-dir=Wowless*",
+    "--exclude-dir=*Documentation*",
+    "PlaySound[[:space:]]*\\([[:space:]]*['\\\"]|(pcall|securecall)[[:space:]]*\\([[:space:]]*PlaySound",
+    "/home/osso/.worktrees/wow-ui-sim-p730-page/src",
+    "/home/osso/.worktrees/wow-ui-sim-p730-page/tests",
+    "/home/osso/.worktrees/wow-ui-sim-p730-page/Interface/AddOns",
+    "/home/osso/.cache/wow-ui-sim/blizzard-ui"
+  ],
+  "exit": 0,
+  "stdout": "/home/osso/.worktrees/wow-ui-sim-p730-page/tests/patch_7_3_0_cached_behavior.rs:19:        .eval(\"return not pcall(PlaySound, 'igInventoryRotateCharacter')\")\n/home/osso/.cache/wow-ui-sim/blizzard-ui/Blizzard_ReforgingUI/Classic/Blizzard_ReforgingUI.xml:136:\t\t\t\t--PlaySound(\"igMainMenuOptionCheckBoxOn\");\n/home/osso/.cache/wow-ui-sim/blizzard-ui/Blizzard_WorldMap/Cata/Blizzard_WorldMap.lua:690:\t--PlaySound(\"UChatScrollButton\");\n/home/osso/.cache/wow-ui-sim/blizzard-ui/ptr/AddOns/Blizzard_ReforgingUI/Classic/Blizzard_ReforgingUI.xml:136:\t\t\t\t--PlaySound(\"igMainMenuOptionCheckBoxOn\");\n/home/osso/.cache/wow-ui-sim/blizzard-ui/mists/AddOns/Blizzard_ReforgingUI/Classic/Blizzard_ReforgingUI.xml:136:\t\t\t\t--PlaySound(\"igMainMenuOptionCheckBoxOn\");\n/home/osso/.cache/wow-ui-sim/blizzard-ui/mists/AddOns/Blizzard_WorldMap/Cata/Blizzard_WorldMap.lua:690:\t--PlaySound(\"UChatScrollButton\");\n/home/osso/.cache/wow-ui-sim/blizzard-ui/mists/AddOns/Blizzard_UIPanels_Game/Mists/WatchFrame.lua:1247:\t\t-- PlaySound(\"igMiniMapOpen\");\n/home/osso/.cache/wow-ui-sim/blizzard-ui/mists/AddOns/Blizzard_UIPanels_Game/Mists/WatchFrame.lua:1252:\t\t-- PlaySound(\"igMiniMapClose\");\n/home/osso/.cache/wow-ui-sim/blizzard-ui/mists/AddOns/Blizzard_UIPanels_Game/Mists/WatchFrame.lua:1865:\t\t\t\tPlaySound(\"UI_Scenario_BonusObjective_Success\");\n/home/osso/.cache/wow-ui-sim/blizzard-ui/mists/AddOns/Blizzard_UIPanels_Game/Cata/PVPFrame.lua:1006:\tPlaySound(\"ReadyCheck\");\n/home/osso/.cache/wow-ui-sim/blizzard-ui/Blizzard_UIPanels_Game/Mists/WatchFrame.lua:1247:\t\t-- PlaySound(\"igMiniMapOpen\");\n/home/osso/.cache/wow-ui-sim/blizzard-ui/Blizzard_UIPanels_Game/Mists/WatchFrame.lua:1252:\t\t-- PlaySound(\"igMiniMapClose\");\n/home/osso/.cache/wow-ui-sim/blizzard-ui/Blizzard_UIPanels_Game/Mists/WatchFrame.lua:1865:\t\t\t\tPlaySound(\"UI_Scenario_BonusObjective_Success\");\n/home/osso/.cache/wow-ui-sim/blizzard-ui/Blizzard_UIPanels_Game/Cata/PVPFrame.lua:1006:\tPlaySound(\"ReadyCheck\");\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ReforgingUI/Classic/Blizzard_ReforgingUI.xml:136:\t\t\t\t--PlaySound(\"igMainMenuOptionCheckBoxOn\");\n/home/osso/.cache/wow-ui-sim/blizzard-ui/wowforever/AddOns/Blizzard_UIPanels_Game/Cata/PVPFrame.lua:1006:\tPlaySound(\"ReadyCheck\");\n",
+  "stderr": ""
+}

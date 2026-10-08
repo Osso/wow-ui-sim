@@ -1,0 +1,15 @@
+{
+  "command": [
+    "cargo",
+    "fmt",
+    "--check"
+  ],
+  "revision": "b9ac694a683d54683399cbc472e15c3e9ecfdcdf",
+  "environment": {},
+  "exit": 0,
+  "log": "format.log",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "source_revision": "b9ac694a683d54683399cbc472e15c3e9ecfdcdf",
+  "source_root": "/home/osso/.worktrees/wow-ui-sim-p730-page",
+  "source_revision_basis": "driver and source share the recorded checkout"
+}
