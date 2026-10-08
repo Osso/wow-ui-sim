@@ -23,6 +23,20 @@ Queued retail placeholders start `later_registers` in order: 5.4.0, 5.4.1, 5.4.2
 
 No runtime source changed. No Blizzard/vendor/Wowless/WowlessData modifications or monkey-patches. Existing temporary defaults are labeled publication-only, never credited as modeled domain behavior.
 
+## Row accounting
+
+All 60 IDs are accounted for: 44 inventory occurrences, 11 main-page extract rows and 5 diff captions. Current discovery has 29 bounded publication/absence rows, 21 pending rows (15 publication gaps plus 6 prose contracts), and 10 metadata-only rows. [Ledger](../../../data/patch-api/sources/5.3.0-page-coverage.json) separates publication from modeled behavior.
+
+| Publication gaps | Precise missing backing |
+|---|---|
+| AcknowledgeSurvey; HideKnowledgeBase; ShowKnowledgeBase | Historical support/survey/knowledge-base service and embedded-browser integration |
+| GetBattlegroundPoints; GetLFGRoleUpdateBattlegroundInfo | Historical team-score/objective producer and role-update invitation metadata |
+| SetLootSpecialization | Loot-selection state/award policy; constant-zero getter is not that system |
+| Browser CopyExternalLink, DeleteCookies, NavigateBack/Forward/Reload/Stop, OpenTicket | Native browser history, cookies, clipboard/external-link and ticket integration |
+| Browser OnEditFocusGained / OnEditFocusLost | Browser focus lifecycle is unsupported; shared callable focus methods do not provide these scripts |
+
+The six prose limits are loot award policy, historical five-page/fifty-slot stable layout, support website integration, Browser domain, trade-link/Cooking field encoding and the old InterfaceOptions list-ordering bug. The transclusion pointer is metadata because the actual diff is separately inventoried. No missing historical contract is claimed resolved by a plausible default.
+
 ## Retirement evidence
 
 GNU `/usr/bin/grep -RInwF` scans retain untruncated qualified and bare-name results. Cached retail AddOns scans exclude `*Documentation*` files/directories. Both removed identities had zero cached consumers and zero prior src/tests references. Final caller scans include only this audit's explicit absence assertions. The bare-name scan includes direct calls, `pcall(Name, ...)` and conditional references.
