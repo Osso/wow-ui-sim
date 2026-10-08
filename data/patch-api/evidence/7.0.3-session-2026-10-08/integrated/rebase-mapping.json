@@ -1,0 +1,65 @@
+{
+  "original_base": "aa57dd8f8",
+  "rebased_base": "25fbde058",
+  "policy": "Original receipts and Git objects remain mandatory; mapping does not substitute rebased bytes for historical scope. Equal patch IDs establish equivalence; conflicts are explicitly recorded.",
+  "commits": [
+    {
+      "recorded_revision": "5168fb2d4fcdaadcdc4a05a662fbad6e82379ab8",
+      "rebased_revision": "1cdc800c6b4b28924c533a37719b2c34c741d344",
+      "subject": "Keep recipe search cross-profile and quality API retail-gated",
+      "recorded_patch_id": "221bff908a9db00a6fb844d7625a2dfb4b62e34b",
+      "rebased_patch_id": "221bff908a9db00a6fb844d7625a2dfb4b62e34b",
+      "patch_identical": true
+    },
+    {
+      "recorded_revision": "fcb63eeb178e7a1b03bbb1e8a295d4baccf3825c",
+      "rebased_revision": "c0cb35fe6f77219fbe2ca2ab947555a890a88e0b",
+      "subject": "Account Legion source contracts and retain complete retirement evidence",
+      "recorded_patch_id": "799984fd2bc1ff86ce0002eaac58133eed71ce98",
+      "rebased_patch_id": "799984fd2bc1ff86ce0002eaac58133eed71ce98",
+      "patch_identical": true
+    },
+    {
+      "recorded_revision": "69625973bb92aa95e194a8b9c9c4b8c8f79de9f7",
+      "rebased_revision": "53826a12797deb25c1dc2a09456417d8f5b36ff7",
+      "subject": "Encode filtered recipe IDs with existing Lua array helper",
+      "recorded_patch_id": "31034b8cf8fc697911fea155e32f71906852ff2f",
+      "rebased_patch_id": "31034b8cf8fc697911fea155e32f71906852ff2f",
+      "patch_identical": true
+    },
+    {
+      "recorded_revision": "21cf3430e9d9d22d62393a75d3ab17f0888b90d5",
+      "rebased_revision": "f93b3a572c0cc8eaee064cbe9c6402bced89a2df",
+      "subject": "Use Legion animation factory and retain exact publication gaps",
+      "recorded_patch_id": "892e0a0928fee6a370d81e5173b4e66d428b2f81",
+      "rebased_patch_id": "892e0a0928fee6a370d81e5173b4e66d428b2f81",
+      "patch_identical": true
+    },
+    {
+      "recorded_revision": "7554b0eaff7a09a2ec282db68592d455320441a8",
+      "rebased_revision": "0637a9ea6b482eac5d207b5e1f01091301a04ed2",
+      "subject": "Model profession name filtering and retire unused Legion mount aliases",
+      "recorded_patch_id": "aaee5c83a37f30106fbe73375ffbdf3587a70279",
+      "rebased_patch_id": "04fc3610dca3c13a71d1a2c604280abd1f602df2",
+      "patch_identical": false
+    },
+    {
+      "recorded_revision": "ffe934adf48376d5e763a74ca89e103a0b58eac8",
+      "rebased_revision": "d8e26c601215d64d529ddb21fbd52932a467548f",
+      "subject": "Add Legion prefork publication discovery sweep",
+      "recorded_patch_id": "90006980a60c6ae02a095357cfb6bff184fd3843",
+      "rebased_patch_id": "90006980a60c6ae02a095357cfb6bff184fd3843",
+      "patch_identical": true
+    },
+    {
+      "recorded_revision": "d4316cf2e8ebd7f08200ef5e7d063defe942dc1c",
+      "rebased_revision": "96e96844da1883a256fed82667e32cdb2245389c",
+      "subject": "Pin Legion API page and parse opt-in nested inventories",
+      "recorded_patch_id": "26b6aaf4b4080ea94f9afcc2eaf52b047716e408",
+      "rebased_patch_id": "d7c238579019b7d91cf96c4414135208c5c3f9b6",
+      "patch_identical": false
+    }
+  ],
+  "original_history_required": true,
+  "conflict_context": "Both nonidentical patch IDs retain the same runtime source bytes at their mapped endpoints; the base adds the 7.1.0 tests/register and 31 additive parser lines. No original receipt or history check is rewritten."
+}
