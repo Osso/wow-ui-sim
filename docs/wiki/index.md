@@ -1,6 +1,6 @@
 ## [2026-10-08] investigation | Patch 5.5.2 Mists Classic API audit
 
-[Audit](investigations/patch-5-5-2-api-audit.md): pinned revision 6778080, ancestor TOC 50502 in the 505xx client line. Zero inventory/four metadata rows; no positive API credit, gaps or retirements. Only 5.5.3/5.5.4 in the Classic chain. Verification pending.
+[Audit](investigations/patch-5-5-2-api-audit.md): pinned revision 6778080, ancestor TOC 50502 in the 505xx client line. Zero inventory/four metadata rows; no positive API credit, gaps or retirements. Only 5.5.3/5.5.4 in the Classic chain. Python 87/87, formatting and all 59 register reproductions pass; three inherited extract failures unchanged. Pinned-master validator gate passes 43/43 clean and 44/44 later, not covering the new validator. Rust acceptance and branch gate pending.
 
 ## [2026-10-08] investigation | Patch 5.5.3 Mists Classic API audit
 

@@ -16,13 +16,23 @@ Goal: pin page 686956, account for every source row under Mists Classic, preserv
 | MediaWiki query pageid 686956, current main-slot revision | Captured response; revision 6778080 | TOC 50502; resources-only stub | New fetch/revision requires new audit |
 | `python3 -B .../reproduce_sources.py 39bb21f41` | All Git-pinned sources and tools | 59 registers identical; 56 extracts identical; three inherited failures exact | Source/tool changes |
 | `/usr/bin/grep -RInw ...` | 39bb21f41 src/tests and Mists cache, Documentation excluded | Complete outputs and hashes in scan-receipts.json; no retirement candidates | New retirement candidates or cache changes |
-| `python3 -B -m unittest discover -s tools -p test_*.py` | Receipt revision; tools | PASS (count from tools-tests.txt) | Tool changes |
+| `python3 -B -m unittest discover -s tools -p test_*.py` | Receipt revision; tools | PASS: 87 tests | Tool changes |
 | `cargo fmt --check` | Receipt revision; Rust | PASS | Rust changes |
 | `cargo test --test prefork_full_ui -- publication_sweep` | Branch plus pinned master; separate outputs | Pending asynchronous jobs | Relevant runtime/test changes |
 | `cargo test --test integration publication_sweep_client_lines -- --nocapture` | Retail; receipt revision | Pending asynchronous job | Classifier/control changes |
 | `cargo test --no-default-features --features sound,gui,casc,client-mists --test integration patch_5_5_ -- --nocapture` | Mists; receipt revision | Pending asynchronous job | Mists/test changes |
 | `cargo check --no-default-features --features sound,gui,casc,client-mists --tests` | Mists; receipt revision | Pending asynchronous job | Source/config changes |
 | Own Mists test with P552_SWEEP_REGISTER=negative-register.json | One injected row; expected exit 101 | Pending asynchronous job | Sweep/test changes |
-| `python3 -B tools/check_patch_validators.py REVISION` | Final committed proof | Pending | Validator/evidence changes |
+| `python3 -B tools/check_patch_validators.py 896086537a2b3c1ead5886d5ae3e430d56e7ef20` | Pinned master only; master-gate-report.json | PASS: clean 43/43, later 44/44; does not cover own new validator | Pinned historical scope remains fixed |
+| `python3 -B tools/check_patch_validators.py REVISION` | Final committed branch proof | Pending | Validator/evidence changes |
 
 Complete command vectors, revisions, exit codes, target paths and log SHA-256 values live in each `*.proof.json`. No cargo command is rerun just to recover output; asynchronous workers retain complete logs. Later evidence/docs commits do not invalidate unchanged runtime proof.
+
+## Remaining integration steps
+
+1. Consume completed worker receipts without rerunning cargo; reject any unexpected exit or non-vendor Mists check warning.
+2. Run `seal_proof.py` only once every receipt and master result exists; run the own validator and its sealed-log tamper control.
+3. Commit complete proof inputs, checking index/log lengths first; run `tools/check_patch_validators.py` at that committed revision.
+4. Record branch gate results and update spec/wiki verification status from actual receipts; commit final documentation with the same length checks.
+
+Workers remain active. No poll-wait, push, merge, model CLI or agent delegation is authorized.

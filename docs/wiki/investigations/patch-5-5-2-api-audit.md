@@ -24,7 +24,9 @@ Only later Classic registers 5.5.3 and 5.5.4 belong in this page's `later_regist
 
 ## Verification
 
-Requested Rust checks run asynchronously with complete logs under the own [evidence directory](../../../data/patch-api/evidence/5.5.2-session-2026-10-08/). Acceptance and the portable validator gate remain pending; no passing Rust claim yet. Reproduction already regenerates all 59 registers byte-identically; 56/59 extracts reproduce. The inherited 12.0.5, 12.0.7 and 12.1.0 extract failures remain unchanged. Shared sources are copied from pinned Git revisions into reproduction scratch, including transclusions.
+Requested Rust checks run asynchronously with complete logs under the own [evidence directory](../../../data/patch-api/evidence/5.5.2-session-2026-10-08/). Rust acceptance, proof sealing and the branch's portable validator gate remain pending; no passing Rust claim yet. All 87 Python fixtures and formatting pass. Reproduction regenerates all 59 registers byte-identically; 56/59 extracts reproduce. The inherited 12.0.5, 12.0.7 and 12.1.0 extract failures remain unchanged. Shared sources are copied from pinned Git revisions into reproduction scratch, including transclusions.
+
+The separate pinned-master portability control at `896086537` passes 43/43 clean validators and 44/44 with the synthetic later audit. [Master gate report](../../../data/patch-api/evidence/5.5.2-session-2026-10-08/master-gate-report.json) does **not** cover this branch's new validator. Own-source response tampering is rejected against Git-pinned provenance before exact restoration. Wiki index/log length checks preserve at least the original 2,739/491 lines before every commit.
 
 ## Sources
 

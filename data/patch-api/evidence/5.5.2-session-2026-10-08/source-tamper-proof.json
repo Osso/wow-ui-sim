@@ -1,0 +1,7 @@
+{
+  "scope": "Own response bytes versus provenance at 39bb21f41",
+  "injected": "One trailing newline",
+  "rejected": true,
+  "restored_byte_identical": true,
+  "sha256": "43926be3b23df17f53e8e6c241a994ee9e2842fc9f80453bb904de8b8148328d"
+}

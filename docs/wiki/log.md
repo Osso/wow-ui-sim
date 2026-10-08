@@ -1,7 +1,3 @@
-## [2026-10-08] investigation | Patch 5.5.2 Mists Classic API audit
-
-[Audit](investigations/patch-5-5-2-api-audit.md): pinned revision 6778080, ancestor TOC 50502 in the 505xx client line. Zero inventory/four metadata rows; no positive API credit, gaps or retirements. Only 5.5.3/5.5.4 in the Classic chain. Verification pending.
-
 ## [2026-10-08] integration | Patch 5.5.4 Mists Classic API audit
 
 [Audit](investigations/patch-5-5-4-api-audit.md): rebased onto bebcc5830; nine commit mappings and 188 historical artifacts preserved. All 9,740 observations on 55 retail pages equal master; both sweeps 56/56, Mists 2/2 and retail line controls 3/3 pass. Mists check has zero non-vendor warnings; format and 87 Python fixtures pass. All 56 registers/53 extracts reproduce with three exact inherited failures. Rerun negative rejects 1 → 0 rows; 38 pinned prior validators pass. SharedXML-only/empty-inventory coverage limits retained. Portable gate passes 40/40 clean and 41/41 later; both validators pass with all nine original commits absent, and both own-log tamper controls fail as required.
@@ -493,3 +489,8 @@ Pinned pageid 3058 revision 31159 without following redirect to 6.0.2; empty reg
 ## 2026-10-08 — Patch 5.5.3 acceptance proof complete
 
 - [[patch-5-5-3-api-audit]]: all requested proof retained; clean/later validator gate 41/41 and 42/42 PASS at 1882e7c99, own-log tamper rejected/restored. Retail observations unchanged; no runtime changes, API coverage credit, push or merge.
+
+## [2026-10-08] investigation | Patch 5.5.2 Mists Classic API audit
+
+[Audit](investigations/patch-5-5-2-api-audit.md): pinned revision 6778080, ancestor TOC 50502 in the 505xx client line. Zero inventory/four metadata rows; no positive API credit, gaps or retirements. Only 5.5.3/5.5.4 in the Classic chain. Python 87/87, formatting and all 59 register reproductions pass; three inherited extract failures unchanged. Pinned-master validator gate passes 43/43 clean and 44/44 later, not covering the new validator. Rust acceptance and branch gate pending.
+

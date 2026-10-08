@@ -45,7 +45,8 @@ def verify_accounting(revision):
     assert provenance['generator_flags'] == ['--client-line', 'mists-classic']
     assert provenance['extractor_flags'] == ['--canonical-patch-navigation']
     assert register['entries'] == register['header_counts'] == []
-    assert pinned_json(revision, 'tests/data/patch_5_5_2_sweep_known_gaps.json') == []
+    known_gaps = pinned_json(revision, 'tests/data/patch_5_5_2_sweep_known_gaps.json')
+    assert known_gaps == []
     extractor = {'__file__': str(ROOT / 'tools/extract_patch_non_inventory.py'), '__name__': 'pinned_extractor'}
     exec(compile(blob(revision, 'tools/extract_patch_non_inventory.py'), 'pinned_extractor', 'exec'), extractor)
     text = extractor['extract_text'](raw.decode(), canonical_patch_navigation=True)
@@ -74,7 +75,7 @@ def verify_accounting(revision):
         assert '-RInw' in receipt['command'] and receipt['untruncated']
         assert receipt['exit'] in (0, 1) and digest(content) == receipt['log_sha256']
         assert len(content.decode().splitlines()) == receipt['line_count']
-    return {'inventory': len(register['entries']), 'metadata': len(ledger['source_rows']), 'gaps': 0}
+    return {'inventory': len(register['entries']), 'metadata': len(ledger['source_rows']), 'gaps': len(known_gaps)}
 
 
 def verify_reproduction(revision, base):
@@ -176,7 +177,10 @@ def verify_receipts(context):
     tools = (HERE / 'tools-tests.txt').read_text()
     assert re.search(r'Ran \d+ tests', tools) and tools.rstrip().endswith('OK')
     negative = (HERE / 'negative.txt').read_text()
-    assert 'register row count changed' in negative and 'left: 1' in negative and 'right: 0' in negative
+    injected_rows = len(read('negative-register.json')['entries'])
+    original_rows = len(pinned_json(context['runtime_revision'], 'data/patch-api/sources/5.5.2-wikitext-register.json')['entries'])
+    assert 'register row count changed' in negative
+    assert f'left: {injected_rows}' in negative and f'right: {original_rows}' in negative
     assert context['proofs']['negative']['exit'] == 101
     assert read('results/patch_5_5_4_publication_sweep-MISTS_LINE_CONTROL_OUT-results.json')['own']['ok'] is False
 
