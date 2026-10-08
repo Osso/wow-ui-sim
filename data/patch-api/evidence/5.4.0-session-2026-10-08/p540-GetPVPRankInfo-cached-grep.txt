@@ -1,0 +1,2 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_InspectUI/Vanilla/InspectHonorFrame.lua:41:	local rankName, rankNumber = GetPVPRankInfo(lifetimeRank);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_InspectUI/Vanilla/InspectHonorFrame.lua:48:	rankName, rankNumber = GetPVPRankInfo(UnitPVPRank("target"));

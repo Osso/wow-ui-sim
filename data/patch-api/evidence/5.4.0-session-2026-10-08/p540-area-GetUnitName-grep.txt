@@ -1,0 +1,49 @@
+src/lua_api/state_types/character_world.rs:460:    /// Drives the 4th return of `GetInstanceInfo`. Empty outside instances.
+src/lua_api/state_types/character_world.rs:462:    /// `dynamicDifficulty` from `GetInstanceInfo` (6th return). `0` when
+src/lua_api/state_types/character_world.rs:466:    /// of `GetInstanceInfo`.
+src/lua_api/state_types/character_world.rs:468:    /// Instance map id (mapID). 8th return of `GetInstanceInfo`.
+src/lua_api/state_types/character_world.rs:471:    /// `GetInstanceInfo`. Usually matches `instance_max_players` or 0.
+src/lua_api/state_types/character_world.rs:474:    /// Finder. 10th return of `GetInstanceInfo` (nilable).
+src/lua_api/state_types/character_world.rs:477:    /// return of Retail 12.0.7+ `GetInstanceInfo` (`hasWorldTier`).
+src/lua_api/globals/missing_surface/encounter_journal.rs:11://! - `C_EncounterJournal.GetInstanceInfo` — 9-tuple: `(name, description,
+src/lua_api/globals/missing_surface/encounter_journal.rs:50:    ("GetInstanceInfo", get_instance_info),
+src/lua_api/globals/stubs/namespace_stubs.rs:50:    // C_EncounterJournal GetEncounterInfo / GetInstanceInfo are
+src/lua_api/globals/stubs/global_stubs.rs:178:    // GetInstanceInfo is SimState-backed in instance_info.rs, not a stub.
+src/lua_api/globals/group_queries.rs:110:        "UnitRealmRelationship",
+src/lua_api/globals/group_queries_relationships.rs:83:/// `UnitRealmRelationship(unit)` — all simulated unit tokens are same-realm.
+src/lua_api/globals/unit_misc.rs:447:    LuaApiMut::register_function(lua, "GetUnitName", get_unit_name)?;
+src/lua_api/globals/utility_system_spell/spell_api.rs:569:    LuaApiMut::register_function(lua, "UnitGetTotalHealAbsorbs", unit_get_total_heal_absorbs)?;
+src/lua_api/globals/instance_info.rs:5://! - `GetInstanceInfo()`          → 10 values (11 with Retail 12.0.7's
+src/lua_api/globals/instance_info.rs:218:    LuaApiMut::register_function(lua, "GetInstanceInfo", get_instance_info)?;
+tests/forever_auto_roll.rs:161:        .eval("return GetInstanceInfo()")
+tests/admin_zone_api.rs:101:            local n = GetInstanceInfo()
+tests/admin_zone_api.rs:116:            local name, itype = GetInstanceInfo()
+tests/admin_zone_api.rs:146:            local name, itype, diffId = GetInstanceInfo()
+tests/p1207_world_tier.rs:2://! Retail 12.0.7 world tier: `GetInstanceInfo` ret11 and the active player's tier.
+tests/p1207_world_tier.rs:10:        assert(select('#', GetInstanceInfo()) == 11)
+tests/p1207_world_tier.rs:11:        assert(select(11, GetInstanceInfo()) == false)
+tests/p1207_world_tier.rs:24:        assert(select('#', GetInstanceInfo()) == 11)
+tests/p1207_world_tier.rs:25:        assert(select(10, GetInstanceInfo()) == nil)
+tests/p1207_world_tier.rs:26:        assert(select(11, GetInstanceInfo()) == true)
+tests/load_autoroll.rs:49:        function GetInstanceInfo()
+tests/load_autoroll.rs:124:        function GetInstanceInfo()
+tests/recent_runtime_bootstrap_boundaries.rs:328:            "function UnitRealmRelationship",
+tests/missing_apis.rs:220:              dynamicDifficulty, isDynamic, instanceID = GetInstanceInfo()
+tests/missing_apis.rs:223:        assert(name ~= nil, "GetInstanceInfo should return name")
+tests/blizzard_ui/blizzard_achievementui/behavior_comparison_set.rs:33://!     AchievementFrameComparisonHeaderName:SetText(GetUnitName(unit));
+tests/blizzard_ui/blizzard_achievementui/behavior_comparison_set.rs:235:             one of these intermediate calls is missing or errored (e.g. `GetUnitName`, \
+tests/unit_relationship_defaults.rs:10:            if UnitRealmRelationship("player") ~= LE_REALM_RELATION_SAME then return "realm" end
+tests/instanced_identity.rs:27:        local getters = {{UnitName, UnitNameUnmodified, GetUnitName, UnitPVPName, UnitGUID}}
+tests/c_encounter_journal_probes.rs:1://! Integration tests for C_EncounterJournal.GetEncounterInfo / GetInstanceInfo.
+tests/c_encounter_journal_probes.rs:93:// GetInstanceInfo
+tests/c_encounter_journal_probes.rs:102:            local name = C_EncounterJournal.GetInstanceInfo(1302)
+tests/c_encounter_journal_probes.rs:116:            local name = C_EncounterJournal.GetInstanceInfo(99999)
+tests/c_encounter_journal_probes.rs:130:            local _, _, _, _, _, _, _, _, linkDungeonID = C_EncounterJournal.GetInstanceInfo(1271)
+tests/c_encounter_journal_probes.rs:158:            local name, _, bg = C_EncounterJournal.GetInstanceInfo(1207)
+tests/unit_api.rs:258:// GetUnitName
+tests/unit_api.rs:264:    let name: String = env.eval("return GetUnitName('player')").unwrap();
+tests/unit_api.rs:272:    let name: String = env.eval("return GetUnitName('target', true)").unwrap();
+tests/unit_api.rs:838:        .eval("return UnitGetTotalHealAbsorbs('player')")
+tests/instance_info.rs:26:                GetInstanceInfo()
+tests/instance_info.rs:73:            return GetInstanceInfo()
+tests/instance_info.rs:94:        .eval("return select(10, GetInstanceInfo()) == nil")

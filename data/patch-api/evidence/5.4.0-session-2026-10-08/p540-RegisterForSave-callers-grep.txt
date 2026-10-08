@@ -1,0 +1,2 @@
+src/wrath/compat_bootstrap.lua:256:if RegisterForSave == nil then
+src/wrath/compat_bootstrap.lua:257:  function RegisterForSave()

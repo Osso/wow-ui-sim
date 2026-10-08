@@ -1,0 +1,23 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tools",
+    "-p",
+    "test_*.py"
+  ],
+  "revision": "d0b490a60474103748e10f6d33cdcc217f538c1b",
+  "scope": "p540-python-fixtures",
+  "cwd": ".",
+  "target": "dedicated p540-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p540-python-fixtures.txt",
+  "log_sha256": "00a4f0a09c95e6ccbdd0ed8da4ef134f7829e8e29e687a29d318fb0842296287",
+  "seconds": 2.7292290530022,
+  "invalidated": false
+}

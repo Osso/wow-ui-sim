@@ -1,0 +1,26 @@
+src/lua_api/globals/strings/string_data/more_strings.rs:780:    ("LE_LFG_CATEGORY_FLEXRAID", 5),
+src/lua_api/globals/group_queries.rs:93:        "LE_REALM_RELATION_SAME",
+src/lua_api/globals/enum_data/missing_constants.lua:43:if LE_WORLD_ELAPSED_TIMER_TYPE_CHALLENGE_MODE == nil then LE_WORLD_ELAPSED_TIMER_TYPE_CHALLENGE_MODE = 1 end
+src/lua_api/globals/enum_data/missing_constants.lua:44:if LE_WORLD_ELAPSED_TIMER_TYPE_PROVING_GROUND == nil then LE_WORLD_ELAPSED_TIMER_TYPE_PROVING_GROUND = 2 end
+src/lua_api/globals/enum_data/missing_constants.lua:1279:if LE_LFG_CATEGORY_FLEXRAID == nil then LE_LFG_CATEGORY_FLEXRAID = 5 end
+src/lua_api/globals/enum_data/missing_constants.lua:1325:if LE_REALM_RELATION_COALESCED == nil then LE_REALM_RELATION_COALESCED = 2 end
+src/lua_api/globals/enum_data/missing_constants.lua:1326:if LE_REALM_RELATION_SAME == nil then LE_REALM_RELATION_SAME = 1 end
+src/lua_api/globals/enum_data/missing_constants.lua:1327:if LE_REALM_RELATION_VIRTUAL == nil then LE_REALM_RELATION_VIRTUAL = 3 end
+src/lua_api/globals/enum_data/missing_constants.lua:1381:if LE_WORLD_ELAPSED_TIMER_TYPE_NONE == nil then LE_WORLD_ELAPSED_TIMER_TYPE_NONE = 0 end
+src/lua_api/env_init/enums.rs:209:LE_WORLD_ELAPSED_TIMER_TYPE_CHALLENGE_MODE = nil
+src/lua_api/env_init/enums.rs:210:LE_WORLD_ELAPSED_TIMER_TYPE_NONE = nil
+src/lua_api/env_init/enums.rs:211:LE_WORLD_ELAPSED_TIMER_TYPE_PROVING_GROUND = nil
+src/loader/tests/wow_api_globals/patch_12_0_0_removed_global_constants.rs:14:                    "LE_WORLD_ELAPSED_TIMER_TYPE_CHALLENGE_MODE",
+src/loader/tests/wow_api_globals/patch_12_0_0_removed_global_constants.rs:15:                    "LE_WORLD_ELAPSED_TIMER_TYPE_NONE",
+src/loader/tests/wow_api_globals/patch_12_0_0_removed_global_constants.rs:16:                    "LE_WORLD_ELAPSED_TIMER_TYPE_PROVING_GROUND",
+tests/blizzard_deprecated_world_elapsed_timer_types_loads.rs:137:            "return type(LE_WORLD_ELAPSED_TIMER_TYPE_NONE), \
+tests/blizzard_deprecated_world_elapsed_timer_types_loads.rs:138:                    type(LE_WORLD_ELAPSED_TIMER_TYPE_CHALLENGE_MODE), \
+tests/blizzard_deprecated_world_elapsed_timer_types_loads.rs:139:                    type(LE_WORLD_ELAPSED_TIMER_TYPE_PROVING_GROUND)",
+tests/blizzard_deprecated_world_elapsed_timer_types_loads.rs:163:            "return LE_WORLD_ELAPSED_TIMER_TYPE_NONE, \
+tests/blizzard_deprecated_world_elapsed_timer_types_loads.rs:164:                    LE_WORLD_ELAPSED_TIMER_TYPE_CHALLENGE_MODE, \
+tests/blizzard_deprecated_world_elapsed_timer_types_loads.rs:165:                    LE_WORLD_ELAPSED_TIMER_TYPE_PROVING_GROUND",
+tests/blizzard_deprecated_world_elapsed_timer_types_loads.rs:184:            "return LE_WORLD_ELAPSED_TIMER_TYPE_NONE == Enum.WorldElapsedTimerTypes.None \
+tests/blizzard_deprecated_world_elapsed_timer_types_loads.rs:185:                and LE_WORLD_ELAPSED_TIMER_TYPE_CHALLENGE_MODE == Enum.WorldElapsedTimerTypes.ChallengeMode \
+tests/blizzard_deprecated_world_elapsed_timer_types_loads.rs:186:                and LE_WORLD_ELAPSED_TIMER_TYPE_PROVING_GROUND == Enum.WorldElapsedTimerTypes.ProvingGround",
+tests/recent_runtime_bootstrap_boundaries.rs:326:        ("LE_REALM_RELATION_SAME", "Rust unit relationship owner"),
+tests/unit_relationship_defaults.rs:10:            if UnitRealmRelationship("player") ~= LE_REALM_RELATION_SAME then return "realm" end

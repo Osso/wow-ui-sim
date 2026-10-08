@@ -1,0 +1,5 @@
+src/wrath/compat_bootstrap.lua:458:if rawget(_G, "GetPVPRankInfo") == nil then
+src/wrath/compat_bootstrap.lua:459:  function GetPVPRankInfo(rank, faction)
+src/lua_api/globals/pvp_probes.rs:544:    LuaApiMut::register_function(lua, "GetPVPRankInfo", get_pvp_rank_info)?;
+tests/mists_compat_bootstrap.rs:445:            local rankName, rankNumber = GetPVPRankInfo(UnitPVPRank("player"))
+tests/mists_compat_bootstrap.rs:611:            local rankName, rankNumber = GetPVPRankInfo(0)

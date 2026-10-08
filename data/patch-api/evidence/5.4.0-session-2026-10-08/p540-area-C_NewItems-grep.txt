@@ -1,0 +1,95 @@
+src/c_api/patch_retired_members.rs:33:    ("C_Scenario", &["GetBonusCriteriaInfo", "GetBonusStepInfo"]),
+src/c_api/patch_retired_members.rs:357:    ("C_Scenario", &["GetCriteriaInfo", "GetCriteriaInfoByStep"]),
+src/c_api/patch_retired_members.rs:560:    ("C_Scenario", &["GetScenarioIconInfo"]),
+src/c_api/c_scenario_bonus.rs:10:    let namespace = ensure_namespace(state, "C_Scenario")?;
+src/lua_api/frame/methods/widgets/slider.rs:669:    table_set_rust_fn_static(state, metatable, "GetStepsPerPage", get_steps_per_page)?;
+src/lua_api/frame/methods/text_attribute_event/mod.rs:478:    table_set_rust_fn_static(state, table, "IsForbidden", attributes::is_forbidden)?;
+src/lua_api/hot_literals.rs:165:    b"C_NewItems",
+src/lua_api/methods.rs:43:/// that report access state to any caller (`IsForbidden`,
+src/lua_api/workarounds/temporary/scenario_defaults.rs:1://! Temporary `C_Scenario` not-in-scenario defaults.
+src/lua_api/workarounds/temporary/scenario_defaults.rs:8:C_Scenario = C_Scenario or __wow_namespace()
+src/lua_api/workarounds/temporary/scenario_defaults.rs:11:    if rawget(C_Scenario, name) == nil then
+src/lua_api/workarounds/temporary/scenario_defaults.rs:12:        C_Scenario[name] = fn
+src/lua_api/workarounds/temporary/scenario_defaults.rs:45:                local scenarioName, currentStage, numStages, flags, _, _, _, xp, money, scenarioType, _, textureKit, scenarioID = C_Scenario.GetInfo()
+src/lua_api/workarounds/temporary/scenario_defaults.rs:46:                local title, currentCriteria, numCriteria, _, _, _, _, _, _, _, _ = C_Scenario.GetStepInfo()
+src/lua_api/workarounds/temporary/scenario_defaults.rs:57:                if C_Scenario.IsInScenario() ~= false then return "isInScenario" end
+src/lua_api/workarounds/temporary/scenario_defaults.rs:75:            C_Scenario = C_Scenario or __wow_namespace()
+src/lua_api/workarounds/temporary/scenario_defaults.rs:77:            function C_Scenario.IsInScenario()
+src/lua_api/workarounds/temporary/scenario_defaults.rs:80:            function C_Scenario.GetInfo()
+src/lua_api/workarounds/temporary/scenario_defaults.rs:85:        .expect("fixture should install existing C_Scenario providers");
+src/lua_api/workarounds/temporary/scenario_defaults.rs:92:                local name, stage = C_Scenario.GetInfo()
+src/lua_api/workarounds/temporary/scenario_defaults.rs:93:                return C_Scenario.IsInScenario(), name, stage
+src/lua_api/workarounds/temporary/scenario_defaults.rs:96:            .expect("existing C_Scenario providers should remain callable");
+src/lua_api/globals/missing_surface/small_namespaces.rs:13://! - `C_NewItems.*` — permissive empty/default probes
+src/lua_api/globals/missing_surface/small_namespaces.rs:32:    register_flat_namespace(state, "C_NewItems", C_NEW_ITEMS_METHODS)?;
+src/lua_api/globals/create_frame/mod.rs:526:                return sawForbidden, sawVisible, forbidden:IsForbidden()
+src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs:12:            table.insert(OptionsTrace, "load:" .. tostring(self:IsShown()) .. ":" .. tostring(self:IsForbidden()))
+src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs:49:            assert(f:IsShown() and not f:IsForbidden())
+src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs:79:        assert(not hidden:IsShown() and hidden:IsForbidden())
+src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs:96:        assert(f:IsShown() and not f:IsForbidden())
+src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs:132:        assert(valid:IsShown() and not valid:IsForbidden())
+src/loader/tests/wow_api_globals/patch_12_1_5_create_frame_options.rs:147:            assert(f:GetID() == 27 and f:IsShown() and not f:IsForbidden())
+src/loader/tests/wow_api.rs:488:// C_NewItems API
+src/loader/tests/wow_api.rs:494:    let result: bool = env.eval("return C_NewItems.IsNewItem(0, 1)").unwrap();
+src/loader/tests/wow_api.rs:498:        let expr = format!("return type(C_NewItems.{})", f);
+src/bin/wow_cli/audit_api/gap/gap_tests.rs:206:    assert_eq!(snake_to_c_namespace("new_items"), "C_NewItems");
+tests/protected_frame_enforcement.rs:24:            local before = frame:IsForbidden()
+tests/protected_frame_enforcement.rs:27:            local afterTrue = frame:IsForbidden()
+tests/protected_frame_enforcement.rs:29:            local afterFalse = frame:IsForbidden()
+tests/protected_frame_enforcement.rs:57:            local forbidden = frame:IsForbidden()
+tests/protected_frame_enforcement.rs:131:            local before = frame:IsForbidden()
+tests/protected_frame_enforcement.rs:133:            local afterTrue = frame:IsForbidden()
+tests/protected_frame_enforcement.rs:135:            local afterFalse = frame:IsForbidden()
+tests/blizzard_auth_challenge_ui_lockdown.rs:9:local forbiddenBefore = AuthChallengeFrame:IsForbidden()
+tests/blizzard_auth_challenge_ui_lockdown.rs:22:local forbiddenAfter = AuthChallengeFrame:IsForbidden()
+tests/blizzard_auth_challenge_ui_lockdown.rs:23:local childMarkedForbidden = child ~= nil and child:IsForbidden()
+tests/blizzard_wow_token_ui_loads.rs:545:            .eval(&format!("return {frame_name}:IsForbidden()"))
+tests/blizzard_wow_token_ui_loads.rs:546:            .unwrap_or_else(|err| panic!("{frame_name}:IsForbidden probe failed: {err}"));
+tests/blizzard_wow_token_ui_loads.rs:549:            "{frame_name} must report IsForbidden=true — Blizzard_WowTokenUI.xml wraps both \
+tests/blizzard_wow_token_ui_loads.rs:555:             `IsForbidden()` returning true here proves the ScopedModifier propagation \
+tests/c_api_surface.rs:853:        "unmodeled C_Scenario not-in-scenario defaults belong in lua_api::workarounds::temporary"
+tests/c_api_surface.rs:857:        "C_Scenario not-in-scenario defaults should not be wired through c_api registration"
+tests/c_scenario_probes.rs:13:            local scenarioName, currentStage, numStages, flags, _, _, _, xp, money, scenarioType, _, textureKit, scenarioID = C_Scenario.GetInfo()
+tests/c_scenario_probes.rs:14:            local title, currentCriteria, numCriteria, _, _, _, _, _, _, _, _ = C_Scenario.GetStepInfo()
+tests/c_scenario_probes.rs:25:            if C_Scenario.IsInScenario() ~= false then return "isInScenario" end
+tests/c_scenario_probes.rs:33:        .expect("C_Scenario default surface should be callable");
+tests/tooltip_hover.rs:29:            if tooltip:IsForbidden() or tooltip.GetSpell == nil then return end
+tests/secret_value_security.rs:145:        assert(forbidden:HasSecretValues() and forbidden:IsForbidden())
+tests/patch_6_0_2_behavior.rs:42:        local steps = C_Scenario.GetBonusSteps()
+tests/patch_6_0_2_behavior.rs:45:        assert(C_Scenario.GetBonusStepRewardQuestID(4) == 35001)
+tests/patch_6_0_2_behavior.rs:46:        assert(C_Scenario.GetBonusStepRewardQuestID(1) == nil)
+tests/patch_6_0_2_behavior.rs:47:        assert(C_Scenario.GetBonusStepRewardQuestID(9) == nil)
+tests/patch_6_0_2_behavior.rs:48:        assert(C_Scenario.GetBonusStepRewardQuestID(999) == nil)
+tests/patch_6_0_2_behavior.rs:50:        assert(C_Scenario.GetBonusSteps()[1] == 4)
+tests/patch_6_0_2_behavior.rs:57:        local steps = C_Scenario.GetBonusSteps()
+tests/patch_6_0_2_behavior.rs:59:        assert(C_Scenario.GetBonusStepRewardQuestID(4) == nil)
+tests/patch_6_0_2_behavior.rs:66:        assert(#C_Scenario.GetBonusSteps() == 0)
+tests/patch_6_0_2_behavior.rs:67:        assert(C_Scenario.GetBonusStepRewardQuestID(9) == nil)
+tests/patch_6_0_2_behavior.rs:68:        assert(not pcall(C_Scenario.GetBonusStepRewardQuestID, {}))
+tests/patch_6_0_2_behavior.rs:77:            {C_Scenario, 'GetBonusCriteriaInfo'},
+tests/patch_6_0_2_behavior.rs:78:            {C_Scenario, 'GetBonusStepInfo'},
+tests/script_object_context_access.rs:91:        assert(not ContextRestricted:IsForbidden())
+tests/blizzard_secure_transfer_ui_loads.rs:255:         `IsForbidden` flag at frame creation time. Forbidden frames cannot be \
+tests/c_function_diff_coverage.rs:129:        "C_Scenario.GetCriteriaInfo",
+tests/forbidden_frames.rs:138:        assert(not frame:IsForbidden(), 'conditional restrictions do not mark the frame forbidden')
+tests/forbidden_frames.rs:158:        assert(child:IsForbidden() and child:HasAccessConstraints())
+tests/forbidden_frames.rs:162:        assert(child:IsForbidden() and child:HasAccessConstraints())
+tests/forbidden_frames.rs:219:        assert(not RestrictionDeferred:IsForbidden())
+tests/patch_11_0_0_publication_fixes.rs:13:        {C_Scenario, 'GetCriteriaInfo'},
+tests/patch_11_0_0_publication_fixes.rs:14:        {C_Scenario, 'GetCriteriaInfoByStep'},
+tests/mists_forbidden_frames.rs:28:            return sawForbidden, sawVisible, forbidden:IsForbidden()
+tests/patch_12_1_0_aura_access_restrictions.rs:17:///   `HasAccessConstraints`, `IsForbidden` and the aura restriction bit as seen
+tests/patch_12_1_0_aura_access_restrictions.rs:35:            tostring(AuditPlain(frame:IsForbidden())),
+tests/era_compat_bootstrap.rs:13:            return frame:GetObjectType(), frame:GetName(), frame:IsForbidden()
+tests/mists_compat_bootstrap.rs:735:            return frame:GetObjectType(), frame:GetName(), frame:IsForbidden()
+tests/xml_frame_strata.rs:94:            local forbidden = frame:IsForbidden()
+tests/blizzard_objective_tracker_loads.rs:306:             tracker references C_QuestLog / C_Map / C_Scenario from OnLoad / OnEvent, none \
+tests/blizzard_tiered_entrance_traits_loads.rs:144:             challenge traits exist only during in-world C_Scenario \
+tests/blizzard_ping_ui_loads.rs:445:             IsForbidden() probes, it does NOT remove the frame from globals"
+tests/blizzard_ping_ui_loads.rs:466:            .eval(&format!("return _G.{frame}:IsForbidden()"))
+tests/blizzard_ping_ui_loads.rs:467:            .unwrap_or_else(|err| panic!("_G.{frame}:IsForbidden() probe failed: {err}"));
+tests/blizzard_ping_ui_loads.rs:470:            "_G.{frame}:IsForbidden() must return true — Blizzard_PingUI.xml wraps every \
+tests/blizzard_ping_ui_loads.rs:476:             IsForbidden Lua method (registered at \
+tests/data/patch_6_0_2_sweep_known_gaps.json:186:  "diff-wt-global-api-C_Scenario.GetSupersededObjectives-215",
+tests/data/patch_6_0_2_sweep_known_gaps.json:187:  "diff-wt-global-api-C_Scenario.TreatScenarioAsDungeon-216",
+tests/blizzard_private_auras_ui_loads.rs:415:         forbidden (secure-restricted, IsForbidden() returns true) AND keeps them out of \

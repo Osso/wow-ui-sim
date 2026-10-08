@@ -1,0 +1,1180 @@
+[
+  {
+    "symbol": "AcceptArenaTeam",
+    "tool": "/usr/bin/grep",
+    "whole_word": true,
+    "bare_name_covers_pcall_and_and_then": true,
+    "scans": {
+      "cached": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "AcceptArenaTeam",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "log": "p540-AcceptArenaTeam-cached-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      },
+      "callers": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "AcceptArenaTeam",
+          "src",
+          "tests"
+        ],
+        "exit": 1,
+        "log": "p540-AcceptArenaTeam-callers-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      }
+    },
+    "later_readditions": []
+  },
+  {
+    "symbol": "ArenaTeamDisband",
+    "tool": "/usr/bin/grep",
+    "whole_word": true,
+    "bare_name_covers_pcall_and_and_then": true,
+    "scans": {
+      "cached": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "ArenaTeamDisband",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "log": "p540-ArenaTeamDisband-cached-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      },
+      "callers": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "ArenaTeamDisband",
+          "src",
+          "tests"
+        ],
+        "exit": 1,
+        "log": "p540-ArenaTeamDisband-callers-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      }
+    },
+    "later_readditions": []
+  },
+  {
+    "symbol": "ArenaTeamInviteByName",
+    "tool": "/usr/bin/grep",
+    "whole_word": true,
+    "bare_name_covers_pcall_and_and_then": true,
+    "scans": {
+      "cached": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "ArenaTeamInviteByName",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "log": "p540-ArenaTeamInviteByName-cached-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      },
+      "callers": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "ArenaTeamInviteByName",
+          "src",
+          "tests"
+        ],
+        "exit": 1,
+        "log": "p540-ArenaTeamInviteByName-callers-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      }
+    },
+    "later_readditions": []
+  },
+  {
+    "symbol": "ArenaTeamLeave",
+    "tool": "/usr/bin/grep",
+    "whole_word": true,
+    "bare_name_covers_pcall_and_and_then": true,
+    "scans": {
+      "cached": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "ArenaTeamLeave",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "log": "p540-ArenaTeamLeave-cached-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      },
+      "callers": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "ArenaTeamLeave",
+          "src",
+          "tests"
+        ],
+        "exit": 1,
+        "log": "p540-ArenaTeamLeave-callers-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      }
+    },
+    "later_readditions": []
+  },
+  {
+    "symbol": "ArenaTeamRoster",
+    "tool": "/usr/bin/grep",
+    "whole_word": true,
+    "bare_name_covers_pcall_and_and_then": true,
+    "scans": {
+      "cached": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "ArenaTeamRoster",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "log": "p540-ArenaTeamRoster-cached-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      },
+      "callers": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "ArenaTeamRoster",
+          "src",
+          "tests"
+        ],
+        "exit": 1,
+        "log": "p540-ArenaTeamRoster-callers-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      }
+    },
+    "later_readditions": []
+  },
+  {
+    "symbol": "ArenaTeamSetLeaderByName",
+    "tool": "/usr/bin/grep",
+    "whole_word": true,
+    "bare_name_covers_pcall_and_and_then": true,
+    "scans": {
+      "cached": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "ArenaTeamSetLeaderByName",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "log": "p540-ArenaTeamSetLeaderByName-cached-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      },
+      "callers": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "ArenaTeamSetLeaderByName",
+          "src",
+          "tests"
+        ],
+        "exit": 1,
+        "log": "p540-ArenaTeamSetLeaderByName-callers-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      }
+    },
+    "later_readditions": []
+  },
+  {
+    "symbol": "ArenaTeamUninviteByName",
+    "tool": "/usr/bin/grep",
+    "whole_word": true,
+    "bare_name_covers_pcall_and_and_then": true,
+    "scans": {
+      "cached": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "ArenaTeamUninviteByName",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "log": "p540-ArenaTeamUninviteByName-cached-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      },
+      "callers": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "ArenaTeamUninviteByName",
+          "src",
+          "tests"
+        ],
+        "exit": 1,
+        "log": "p540-ArenaTeamUninviteByName-callers-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      }
+    },
+    "later_readditions": []
+  },
+  {
+    "symbol": "CalendarMassInviteArenaTeam",
+    "tool": "/usr/bin/grep",
+    "whole_word": true,
+    "bare_name_covers_pcall_and_and_then": true,
+    "scans": {
+      "cached": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "CalendarMassInviteArenaTeam",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "log": "p540-CalendarMassInviteArenaTeam-cached-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      },
+      "callers": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "CalendarMassInviteArenaTeam",
+          "src",
+          "tests"
+        ],
+        "exit": 1,
+        "log": "p540-CalendarMassInviteArenaTeam-callers-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      }
+    },
+    "later_readditions": []
+  },
+  {
+    "symbol": "CloseArenaTeamRoster",
+    "tool": "/usr/bin/grep",
+    "whole_word": true,
+    "bare_name_covers_pcall_and_and_then": true,
+    "scans": {
+      "cached": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "CloseArenaTeamRoster",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "log": "p540-CloseArenaTeamRoster-cached-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      },
+      "callers": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "CloseArenaTeamRoster",
+          "src",
+          "tests"
+        ],
+        "exit": 1,
+        "log": "p540-CloseArenaTeamRoster-callers-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      }
+    },
+    "later_readditions": []
+  },
+  {
+    "symbol": "DeclineArenaTeam",
+    "tool": "/usr/bin/grep",
+    "whole_word": true,
+    "bare_name_covers_pcall_and_and_then": true,
+    "scans": {
+      "cached": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "DeclineArenaTeam",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "log": "p540-DeclineArenaTeam-cached-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      },
+      "callers": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "DeclineArenaTeam",
+          "src",
+          "tests"
+        ],
+        "exit": 1,
+        "log": "p540-DeclineArenaTeam-callers-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      }
+    },
+    "later_readditions": []
+  },
+  {
+    "symbol": "GetArenaTeam",
+    "tool": "/usr/bin/grep",
+    "whole_word": true,
+    "bare_name_covers_pcall_and_and_then": true,
+    "scans": {
+      "cached": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "GetArenaTeam",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "log": "p540-GetArenaTeam-cached-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      },
+      "callers": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "GetArenaTeam",
+          "src",
+          "tests"
+        ],
+        "exit": 0,
+        "log": "p540-GetArenaTeam-callers-grep.txt",
+        "sha256": "19d86d4688185ce7f9e4734c33475fcaf6c71eb8199dc47534c4b84afb316ad3",
+        "lines": 2
+      }
+    },
+    "later_readditions": []
+  },
+  {
+    "symbol": "GetArenaTeamGdfInfo",
+    "tool": "/usr/bin/grep",
+    "whole_word": true,
+    "bare_name_covers_pcall_and_and_then": true,
+    "scans": {
+      "cached": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "GetArenaTeamGdfInfo",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "log": "p540-GetArenaTeamGdfInfo-cached-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      },
+      "callers": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "GetArenaTeamGdfInfo",
+          "src",
+          "tests"
+        ],
+        "exit": 1,
+        "log": "p540-GetArenaTeamGdfInfo-callers-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      }
+    },
+    "later_readditions": []
+  },
+  {
+    "symbol": "GetArenaTeamIndexBySize",
+    "tool": "/usr/bin/grep",
+    "whole_word": true,
+    "bare_name_covers_pcall_and_and_then": true,
+    "scans": {
+      "cached": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "GetArenaTeamIndexBySize",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "log": "p540-GetArenaTeamIndexBySize-cached-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      },
+      "callers": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "GetArenaTeamIndexBySize",
+          "src",
+          "tests"
+        ],
+        "exit": 1,
+        "log": "p540-GetArenaTeamIndexBySize-callers-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      }
+    },
+    "later_readditions": []
+  },
+  {
+    "symbol": "GetArenaTeamRosterInfo",
+    "tool": "/usr/bin/grep",
+    "whole_word": true,
+    "bare_name_covers_pcall_and_and_then": true,
+    "scans": {
+      "cached": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "GetArenaTeamRosterInfo",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "log": "p540-GetArenaTeamRosterInfo-cached-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      },
+      "callers": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "GetArenaTeamRosterInfo",
+          "src",
+          "tests"
+        ],
+        "exit": 1,
+        "log": "p540-GetArenaTeamRosterInfo-callers-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      }
+    },
+    "later_readditions": []
+  },
+  {
+    "symbol": "GetArenaTeamRosterSelection",
+    "tool": "/usr/bin/grep",
+    "whole_word": true,
+    "bare_name_covers_pcall_and_and_then": true,
+    "scans": {
+      "cached": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "GetArenaTeamRosterSelection",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "log": "p540-GetArenaTeamRosterSelection-cached-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      },
+      "callers": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "GetArenaTeamRosterSelection",
+          "src",
+          "tests"
+        ],
+        "exit": 1,
+        "log": "p540-GetArenaTeamRosterSelection-callers-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      }
+    },
+    "later_readditions": []
+  },
+  {
+    "symbol": "GetArenaTeamRosterShowOffline",
+    "tool": "/usr/bin/grep",
+    "whole_word": true,
+    "bare_name_covers_pcall_and_and_then": true,
+    "scans": {
+      "cached": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "GetArenaTeamRosterShowOffline",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "log": "p540-GetArenaTeamRosterShowOffline-cached-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      },
+      "callers": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "GetArenaTeamRosterShowOffline",
+          "src",
+          "tests"
+        ],
+        "exit": 1,
+        "log": "p540-GetArenaTeamRosterShowOffline-callers-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      }
+    },
+    "later_readditions": []
+  },
+  {
+    "symbol": "GetInspectArenaTeamData",
+    "tool": "/usr/bin/grep",
+    "whole_word": true,
+    "bare_name_covers_pcall_and_and_then": true,
+    "scans": {
+      "cached": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "GetInspectArenaTeamData",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "log": "p540-GetInspectArenaTeamData-cached-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      },
+      "callers": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "GetInspectArenaTeamData",
+          "src",
+          "tests"
+        ],
+        "exit": 1,
+        "log": "p540-GetInspectArenaTeamData-callers-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      }
+    },
+    "later_readditions": []
+  },
+  {
+    "symbol": "GetNumArenaTeamMembers",
+    "tool": "/usr/bin/grep",
+    "whole_word": true,
+    "bare_name_covers_pcall_and_and_then": true,
+    "scans": {
+      "cached": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "GetNumArenaTeamMembers",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "log": "p540-GetNumArenaTeamMembers-cached-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      },
+      "callers": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "GetNumArenaTeamMembers",
+          "src",
+          "tests"
+        ],
+        "exit": 1,
+        "log": "p540-GetNumArenaTeamMembers-callers-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      }
+    },
+    "later_readditions": []
+  },
+  {
+    "symbol": "GetPVPRankInfo",
+    "tool": "/usr/bin/grep",
+    "whole_word": true,
+    "bare_name_covers_pcall_and_and_then": true,
+    "scans": {
+      "cached": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "GetPVPRankInfo",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 0,
+        "log": "p540-GetPVPRankInfo-cached-grep.txt",
+        "sha256": "830a0cc85f4b1101d34a4175971cd2570d687c444fdfb707810eff41b005e02e",
+        "lines": 2
+      },
+      "callers": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "GetPVPRankInfo",
+          "src",
+          "tests"
+        ],
+        "exit": 0,
+        "log": "p540-GetPVPRankInfo-callers-grep.txt",
+        "sha256": "a94d3f8e4c7699424dd3f08538a041bf5e20bc78a6c9ca8f72a60f0a47136c04",
+        "lines": 5
+      }
+    },
+    "later_readditions": []
+  },
+  {
+    "symbol": "GetPVPRankProgress",
+    "tool": "/usr/bin/grep",
+    "whole_word": true,
+    "bare_name_covers_pcall_and_and_then": true,
+    "scans": {
+      "cached": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "GetPVPRankProgress",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "log": "p540-GetPVPRankProgress-cached-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      },
+      "callers": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "GetPVPRankProgress",
+          "src",
+          "tests"
+        ],
+        "exit": 0,
+        "log": "p540-GetPVPRankProgress-callers-grep.txt",
+        "sha256": "83ab75f794453d28b9f5071ea8e130b7e13c117aee8212a51137f1dce7ed5cad",
+        "lines": 5
+      }
+    },
+    "later_readditions": []
+  },
+  {
+    "symbol": "GetPersonalRatedArenaInfo",
+    "tool": "/usr/bin/grep",
+    "whole_word": true,
+    "bare_name_covers_pcall_and_and_then": true,
+    "scans": {
+      "cached": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "GetPersonalRatedArenaInfo",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "log": "p540-GetPersonalRatedArenaInfo-cached-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      },
+      "callers": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "GetPersonalRatedArenaInfo",
+          "src",
+          "tests"
+        ],
+        "exit": 1,
+        "log": "p540-GetPersonalRatedArenaInfo-callers-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      }
+    },
+    "later_readditions": []
+  },
+  {
+    "symbol": "GetPersonalRatedBGInfo",
+    "tool": "/usr/bin/grep",
+    "whole_word": true,
+    "bare_name_covers_pcall_and_and_then": true,
+    "scans": {
+      "cached": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "GetPersonalRatedBGInfo",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "log": "p540-GetPersonalRatedBGInfo-cached-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      },
+      "callers": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "GetPersonalRatedBGInfo",
+          "src",
+          "tests"
+        ],
+        "exit": 1,
+        "log": "p540-GetPersonalRatedBGInfo-callers-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      }
+    },
+    "later_readditions": []
+  },
+  {
+    "symbol": "GuildUIEnabled",
+    "tool": "/usr/bin/grep",
+    "whole_word": true,
+    "bare_name_covers_pcall_and_and_then": true,
+    "scans": {
+      "cached": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "GuildUIEnabled",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "log": "p540-GuildUIEnabled-cached-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      },
+      "callers": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "GuildUIEnabled",
+          "src",
+          "tests"
+        ],
+        "exit": 1,
+        "log": "p540-GuildUIEnabled-callers-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      }
+    },
+    "later_readditions": []
+  },
+  {
+    "symbol": "RegisterForSave",
+    "tool": "/usr/bin/grep",
+    "whole_word": true,
+    "bare_name_covers_pcall_and_and_then": true,
+    "scans": {
+      "cached": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "RegisterForSave",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "log": "p540-RegisterForSave-cached-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      },
+      "callers": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "RegisterForSave",
+          "src",
+          "tests"
+        ],
+        "exit": 0,
+        "log": "p540-RegisterForSave-callers-grep.txt",
+        "sha256": "a691421f86d2c27f22f2cf1c0abe0ac28a430925706aa2006ffa6804a9e457d6",
+        "lines": 2
+      }
+    },
+    "later_readditions": []
+  },
+  {
+    "symbol": "RegisterForSavePerCharacter",
+    "tool": "/usr/bin/grep",
+    "whole_word": true,
+    "bare_name_covers_pcall_and_and_then": true,
+    "scans": {
+      "cached": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "RegisterForSavePerCharacter",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "log": "p540-RegisterForSavePerCharacter-cached-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      },
+      "callers": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "RegisterForSavePerCharacter",
+          "src",
+          "tests"
+        ],
+        "exit": 1,
+        "log": "p540-RegisterForSavePerCharacter-callers-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      }
+    },
+    "later_readditions": []
+  },
+  {
+    "symbol": "RequestRatedArenaInfo",
+    "tool": "/usr/bin/grep",
+    "whole_word": true,
+    "bare_name_covers_pcall_and_and_then": true,
+    "scans": {
+      "cached": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "RequestRatedArenaInfo",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "log": "p540-RequestRatedArenaInfo-cached-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      },
+      "callers": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "RequestRatedArenaInfo",
+          "src",
+          "tests"
+        ],
+        "exit": 1,
+        "log": "p540-RequestRatedArenaInfo-callers-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      }
+    },
+    "later_readditions": []
+  },
+  {
+    "symbol": "RequestRatedBattlegroundInfo",
+    "tool": "/usr/bin/grep",
+    "whole_word": true,
+    "bare_name_covers_pcall_and_and_then": true,
+    "scans": {
+      "cached": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "RequestRatedBattlegroundInfo",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "log": "p540-RequestRatedBattlegroundInfo-cached-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      },
+      "callers": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "RequestRatedBattlegroundInfo",
+          "src",
+          "tests"
+        ],
+        "exit": 1,
+        "log": "p540-RequestRatedBattlegroundInfo-callers-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      }
+    },
+    "later_readditions": []
+  },
+  {
+    "symbol": "SetArenaTeamRosterSelection",
+    "tool": "/usr/bin/grep",
+    "whole_word": true,
+    "bare_name_covers_pcall_and_and_then": true,
+    "scans": {
+      "cached": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "SetArenaTeamRosterSelection",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "log": "p540-SetArenaTeamRosterSelection-cached-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      },
+      "callers": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "SetArenaTeamRosterSelection",
+          "src",
+          "tests"
+        ],
+        "exit": 1,
+        "log": "p540-SetArenaTeamRosterSelection-callers-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      }
+    },
+    "later_readditions": []
+  },
+  {
+    "symbol": "SetArenaTeamRosterShowOffline",
+    "tool": "/usr/bin/grep",
+    "whole_word": true,
+    "bare_name_covers_pcall_and_and_then": true,
+    "scans": {
+      "cached": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "SetArenaTeamRosterShowOffline",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "log": "p540-SetArenaTeamRosterShowOffline-cached-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      },
+      "callers": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "SetArenaTeamRosterShowOffline",
+          "src",
+          "tests"
+        ],
+        "exit": 1,
+        "log": "p540-SetArenaTeamRosterShowOffline-callers-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      }
+    },
+    "later_readditions": []
+  },
+  {
+    "symbol": "SortArenaTeamRoster",
+    "tool": "/usr/bin/grep",
+    "whole_word": true,
+    "bare_name_covers_pcall_and_and_then": true,
+    "scans": {
+      "cached": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "SortArenaTeamRoster",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 1,
+        "log": "p540-SortArenaTeamRoster-cached-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      },
+      "callers": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "SortArenaTeamRoster",
+          "src",
+          "tests"
+        ],
+        "exit": 1,
+        "log": "p540-SortArenaTeamRoster-callers-grep.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "lines": 0
+      }
+    },
+    "later_readditions": []
+  },
+  {
+    "symbol": "UnitPVPRank",
+    "tool": "/usr/bin/grep",
+    "whole_word": true,
+    "bare_name_covers_pcall_and_and_then": true,
+    "scans": {
+      "cached": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "UnitPVPRank",
+          "--exclude-dir=*Documentation*",
+          "--exclude=*Documentation*",
+          "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+        ],
+        "exit": 0,
+        "log": "p540-UnitPVPRank-cached-grep.txt",
+        "sha256": "e2f6f97b54bddb444e5828053eb7a4c408f08654fe06a2a1b71c883a5f40a3ff",
+        "lines": 1
+      },
+      "callers": {
+        "command": [
+          "/usr/bin/grep",
+          "-RInw",
+          "-F",
+          "UnitPVPRank",
+          "src",
+          "tests"
+        ],
+        "exit": 0,
+        "log": "p540-UnitPVPRank-callers-grep.txt",
+        "sha256": "1f47ba32cc63e143aee3beeb46e1ef51c1008fb3720e27bf8661b2434e1838ec",
+        "lines": 5
+      }
+    },
+    "later_readditions": []
+  }
+]

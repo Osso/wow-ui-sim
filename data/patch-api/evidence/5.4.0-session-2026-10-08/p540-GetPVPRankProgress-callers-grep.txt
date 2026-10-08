@@ -1,0 +1,5 @@
+src/wrath/compat_bootstrap.lua:570:if rawget(_G, "GetPVPRankProgress") == nil then
+src/wrath/compat_bootstrap.lua:571:  function GetPVPRankProgress()
+src/lua_api/state_types/pvp.rs:28:    /// `GetPVPRankProgress()` — fractional progress toward the next rank.
+src/lua_api/globals/pvp_probes.rs:546:    LuaApiMut::register_function(lua, "GetPVPRankProgress", get_pvp_rank_progress)?;
+tests/mists_compat_bootstrap.rs:457:                GetPVPRankProgress()

@@ -1,0 +1,2 @@
+src/wrath/compat_bootstrap.lua:66:if GetArenaTeam == nil then
+src/wrath/compat_bootstrap.lua:67:  function GetArenaTeam()
