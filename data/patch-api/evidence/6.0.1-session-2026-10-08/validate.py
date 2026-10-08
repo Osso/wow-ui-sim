@@ -106,9 +106,8 @@ def check_proofs(context):
         assert receipt['command'] == policy['command'] and receipt['exit'] == policy['exit'], label
         log = (HERE / receipt['log']).read_bytes()
         assert digest(log) == receipt['log_sha256'], label
-        assert not git('diff', '--name-only', context['source_revision'], receipt['revision'], '--',
-                       'src', 'tests', 'tools', 'Cargo.toml', 'Cargo.lock', 'build.rs',
-                       'data/patch-api/sources'), label
+        assert not git('diff', '--name-only', context['source_revision'], receipt['revision'],
+                       '--', *policy['paths']), label
         for name in context['proof_scope']:
             assert receipt['scope'][name] == digest(blob(receipt['revision'], name)), (label, name)
         if label in ('p601-discovery', 'p601-all-sweeps'):
