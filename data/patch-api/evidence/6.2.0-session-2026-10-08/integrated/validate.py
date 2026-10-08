@@ -166,7 +166,9 @@ def check_sweeps(context):
 
 def check_commands(context):
     required = {'own-sweep', 'all-sweeps', 'integration-patch', 'prefork-patch',
-                'integration-tooltip', 'prefork-tooltip', 'build-startup', 'startup',
+                'tooltip_item_spell', 'tooltip_basic', 'tooltip_spell_mount_identifiers',
+                'tooltip_gc_rooting', 'tooltip_item_sources', 'tooltip_talent',
+                'prefork-tooltip', 'build-startup', 'startup',
                 'format', 'mists-check', 'negative', 'master-all-sweeps',
                 'test_check_patch_validators', 'test_extract_patch_non_inventory',
                 'test_gen_patch_wikitext_register', 'test_patch_audit_validation'}
@@ -187,6 +189,16 @@ def check_commands(context):
     log = (HERE / 'integration-tooltip.txt').read_text()
     for module in ('tooltip_item_spell::', 'tooltip_basic::', 'tooltip_spell_mount_identifiers::'):
         assert module in log and re.search(r'^test ' + re.escape(module) + r'\S+ \.\.\. ok$', log, re.M)
+    for label, expected in context['diagnostics'].items():
+        receipt = read(HERE / (label + '.proof.json'))
+        assert receipt == expected and receipt['exit'] == 101
+        assert digest((HERE / receipt['log']).read_bytes()) == receipt['log_sha256']
+    branch = (HERE / 'integration-tooltip.txt').read_text()
+    master = (HERE / 'master-tooltip-clamp.txt').read_text()
+    failed = lambda log: set(re.findall(r'^test (\S+) \.\.\. FAILED$', log, re.M))
+    assert failed(branch) == failed(master) == {'tooltip_text_layout::test_tooltip_layout_is_clamped_to_viewport_edges'}
+    assert 'assertion failed: rect.x + rect.width <= state.screen_width + 0.1' in branch
+    assert 'assertion failed: rect.x + rect.width <= state.screen_width + 0.1' in master
     assert (HERE / 'startup.txt').read_text().rstrip().endswith('[]')
     assert '--no-addons' not in context['receipts']['startup']['command']
     warnings = [line for line in (HERE / 'mists-check.txt').read_text().splitlines() if line.startswith('warning:')]

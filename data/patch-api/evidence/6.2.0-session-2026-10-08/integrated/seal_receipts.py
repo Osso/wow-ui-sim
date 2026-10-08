@@ -25,8 +25,10 @@ def dump(path, value):
 def main():
     assert 'FINISHED' in (HERE / 'launcher.txt').read_text()
     assert 'FINISHED' in (HERE / 'prior-launcher.txt').read_text()
+    assert 'FINISHED' in (HERE / 'tooltip-launcher.txt').read_text()
     results = read(HERE / 'command-results.json')
-    assert all(value != 0 if name == 'negative' else value == 0 for name, value in results.items()), results
+    assert all(value != 0 if name in ('negative', 'integration-tooltip') else value == 0
+               for name, value in results.items()), results
     assert all(row['exit'] == 0 for row in read(HERE / 'prior-validator-matrix.json'))
     pages = []
     for name in git('ls-tree', '-r', '--name-only', RUNTIME, 'tests').splitlines():
@@ -46,15 +48,17 @@ def main():
           'pending_item_link_contracts': 2})
     receipts = {path.name.removesuffix('.proof.json'): read(path)
                 for path in sorted(HERE.glob('*.proof.json'))}
+    diagnostics = {name: receipts.pop(name) for name in ('integration-tooltip', 'master-tooltip-clamp')}
+    assert all(row['exit'] == 0 for name, row in receipts.items() if name != 'negative')
     trees = {name: git('rev-parse', RUNTIME + ':' + name)
              for name in ('src', 'tests', 'tools', 'data/patch-api/sources', 'Cargo.toml', 'Cargo.lock')}
     dump(HERE / 'context.json', {'runtime_revision': RUNTIME, 'master_revision': MASTER,
-                                'input_trees': trees, 'receipts': receipts})
+                                'input_trees': trees, 'receipts': receipts, 'diagnostics': diagnostics})
     ledger = ['# Integrated 6.2.0 proof ledger', '',
               'Runtime scope: `' + RUNTIME + '`. Master: `' + MASTER + '`.',
               'All logs retained; docs/evidence-only commits do not invalidate src/tests/tools proof.', '',
               '| Command | Revision | Exit | Log |', '|---|---|---|---|']
-    for label, row in receipts.items():
+    for label, row in {**receipts, **diagnostics}.items():
         ledger.append('| `' + ' '.join(row['command']) + '` | `' + row['revision'] + '` | ' +
                       str(row['exit']) + ' | [' + row['log'] + '](' + row['log'] + ') |')
     ledger.extend(['', '51 saved registers / 48 extracts reproduced; three inherited failures unchanged.',
