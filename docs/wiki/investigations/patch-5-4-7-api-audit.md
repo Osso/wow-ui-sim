@@ -31,7 +31,7 @@ Ledger: **19 unique IDs** = nine inventory + eight retained extract lines + two 
 
 **No removals on this page; no retirement candidates or runtime retirements.** Existing BNGetFriendInviteInfoByAddon and CHARACTER_UPGRADE_COMPLETE absences follow pinned 6.0.2 removals; no new deletion. BNSendGameData's cached fallback remains untouched.
 
-Own sweep starts with one-line **5.4.8**, then **6.0.1** placeholders, followed by 6.0.2, 6.1.0 and the remaining retail registers. No 5.5.x Classic registers. Queued branch inventories and overlapping function entries are recorded using `git ls-tree` at pinned master/p548/p601 revisions; queued files are read from Git, not modified or used as live inputs.
+Own sweep now uses the merged **5.4.8** and **6.0.1** registers, followed by 6.0.2, 6.1.0 and the remaining retail registers. Integration refresh targets master `bebcc5830`; historical receipts stay preserved, with refreshed proof under the session's `integrated/` directory. No 5.5.x Classic registers. Queued branch inventories and overlapping function entries are recorded using `git ls-tree` at pinned master/p548/p601 revisions; queued files are read from Git, not modified or used as live inputs.
 
 Discovery/backing/caller scans use untruncated whole-word **`/usr/bin/grep -RnwE`** outputs saved in the session directory. Bare symbols include callback uses (`pcall(Name, ...)`) and guards (`and Name then`). These are discovery evidence, not clearance to retire anything. No retirement scan exemptions are granted.
 

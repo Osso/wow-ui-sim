@@ -1,0 +1,97 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "5.4.7",
+  "source": {
+    "path": "data/patch-api/sources/5.4.7-api-changes.wikitext",
+    "revid": 5298169,
+    "sha256": "9f0be17f51e16801f94e7306862184e3e4ad80c4025d9c751d39ff64bae99b89"
+  },
+  "header_counts": [
+    {
+      "section": "global-api",
+      "direction": "added",
+      "header_count": 3,
+      "parsed_count": 3
+    },
+    {
+      "section": "events",
+      "direction": "added",
+      "header_count": 6,
+      "parsed_count": 6
+    }
+  ],
+  "entries": [
+    {
+      "id": "wt-global-api-BNGetFriendInviteInfoByAddon-16",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "P547MissingNegativeControl",
+      "annotation": "",
+      "wikitext_line": 16
+    },
+    {
+      "id": "wt-global-api-BNSendGameData-17",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNSendGameData",
+      "annotation": "",
+      "wikitext_line": 17
+    },
+    {
+      "id": "wt-global-api-GetSpecializationNameForSpecID-18",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetSpecializationNameForSpecID",
+      "annotation": "",
+      "wikitext_line": 18
+    },
+    {
+      "id": "wt-events-AUTH_CHALLENGE_FINISHED-29",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AUTH_CHALLENGE_FINISHED",
+      "annotation": "",
+      "wikitext_line": 29
+    },
+    {
+      "id": "wt-events-BN_CHAT_MSG_ADDON-30",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BN_CHAT_MSG_ADDON",
+      "annotation": "",
+      "wikitext_line": 30
+    },
+    {
+      "id": "wt-events-CHARACTER_UPGRADE_ABORTED-31",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CHARACTER_UPGRADE_ABORTED",
+      "annotation": "",
+      "wikitext_line": 31
+    },
+    {
+      "id": "wt-events-CHARACTER_UPGRADE_COMPLETE-32",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CHARACTER_UPGRADE_COMPLETE",
+      "annotation": "",
+      "wikitext_line": 32
+    },
+    {
+      "id": "wt-events-CHARACTER_UPGRADE_STARTED-33",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CHARACTER_UPGRADE_STARTED",
+      "annotation": "",
+      "wikitext_line": 33
+    },
+    {
+      "id": "wt-events-PRODUCT_DISTRIBUTIONS_UPDATED-34",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PRODUCT_DISTRIBUTIONS_UPDATED",
+      "annotation": "",
+      "wikitext_line": 34
+    }
+  ]
+}
