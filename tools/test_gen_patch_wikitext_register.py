@@ -5,6 +5,20 @@ from gen_patch_wikitext_register import parse_section, split_sections
 
 
 class InventoryTests(unittest.TestCase):
+    def test_plain_command_label_marks_commands_and_resets_at_removed_column(self):
+        lines = [(1, '| valign="top" | <div>'),
+                 (2, ': [[CVar GameplayContext|GameplayContext]]'),
+                 (3, ': Commands'),
+                 (4, ': [[CVar GxFrameStats|GxFrameStats]]'),
+                 (5, '</div>'),
+                 (6, '| valign="top" | <div>'),
+                 (7, ': [[CVar GamePadForceXInput|GamePadForceXInput]]')]
+        entries, _ = parse_section('cvars', lines)
+        self.assertEqual([(e['symbol'], e['direction'], e.get('kind')) for e in entries],
+                         [('GameplayContext', 'added', None),
+                          ('GxFrameStats', 'added', 'command'),
+                          ('GamePadForceXInput', 'removed', None)])
+
     def test_span_cvar_defaults_are_opt_in_and_keep_literal_values(self):
         lines = [(1, '| valign="top" | <div>'),
                  (2, ': <span>[[CVar cameraFov|cameraFov]]</span>'
