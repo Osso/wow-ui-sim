@@ -10,17 +10,9 @@ import sys
 
 sys.dont_write_bytecode = True
 ROOT = Path(__file__).resolve().parents[4]
-
-import sys
-sys.dont_write_bytecode = True
-sys.path.insert(0, str(ROOT / 'tools'))
-from patch_audit_validation import historical_json, historical_registers, preserved_input_matches
-
-AUDIT_REVISION = 'a63653163221085dae86fb8a977d5cf5db5ff985'
 EVIDENCE = Path(__file__).resolve().parent
 SOURCES = ROOT / 'data/patch-api/sources'
 PATCH = '8.2.5'
-TARGET = '/home/osso/.cache/wow-ui-sim-targets/p825-page'
 
 
 def read(path):

@@ -6,7 +6,13 @@ import subprocess
 import tempfile
 import unittest
 
-from patch_audit_validation import historical_json, historical_registers, preserved_input_matches
+from patch_audit_validation import (
+    historical_json,
+    historical_registers,
+    historical_sweep_tests,
+    preserved_input_matches,
+    read_audit_json,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 LEDGER = 'data/patch-api/sources/9.2.5-page-coverage.json'
@@ -44,7 +50,8 @@ class PatchAuditValidationTests(unittest.TestCase):
         revision = 'b3f5906c0dc1432c8e5123b6748bed10f086d271'
         ledger = historical_json(ROOT, LEDGER, revision)
         gaps = historical_json(ROOT, GAPS, revision)
-        self.assertEqual(sum(row['status'] == 'bounded-coverage' for row in ledger['source_rows']), 33)
+        bounded = sum(row['status'] == 'bounded-coverage' for row in ledger['source_rows'])
+        self.assertEqual(bounded, 33)
         self.assertEqual(len(gaps), 34)
         self.assertIn('wt-global-api-C_ClubFinder.ReportPosting-117', gaps)
 
@@ -54,6 +61,30 @@ class PatchAuditValidationTests(unittest.TestCase):
         self.assertIn(ROOT / 'data/patch-api/sources/10.0.0-wikitext-register.json', paths)
         self.assertNotIn(ROOT / 'data/patch-api/sources/8.2.5-wikitext-register.json', paths)
         self.assertTrue(all(path.is_file() for path in paths))
+
+    def test_sweep_scope_is_complete_at_audit_revision(self):
+        paths = historical_sweep_tests(ROOT, '56a1b8e6cacc1acc115956a1fac2497600178762')
+        self.assertEqual(len(paths), 35)
+        self.assertIn(ROOT / 'tests/patch_12_1_5_publication_sweep.rs', paths)
+        self.assertNotIn(ROOT / 'tests/patch_8_2_5_publication_sweep.rs', paths)
+        self.assertTrue(all(path.is_file() for path in paths))
+
+    def test_read_audit_json_preserves_later_closure_provenance(self):
+        revision = 'b3f5906c0dc1432c8e5123b6748bed10f086d271'
+        self.assertEqual(len(read_audit_json(ROOT, ROOT / GAPS, revision)), 34)
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            path = root / 'unrelated.json'
+            path.write_text(json.dumps({'current': 2}))
+            self.assertEqual(read_audit_json(root, path, revision), {'current': 2})
+
+    def test_1000_validator_does_not_rewrite_historical_result(self):
+        directory = ROOT / 'data/patch-api/evidence/10.0.0-session-2026-10-07'
+        result = directory / 'p1000-validation-result.json'
+        before = result.read_bytes()
+        subprocess.run(['python3', '-B', str(directory / 'validate.py')],
+                       cwd=ROOT, check=True, capture_output=True)
+        self.assertEqual(result.read_bytes(), before)
 
     def test_unrecorded_json_change_is_rejected(self):
         with tempfile.TemporaryDirectory() as directory:

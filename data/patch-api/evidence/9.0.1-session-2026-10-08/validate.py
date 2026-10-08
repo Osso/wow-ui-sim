@@ -3,15 +3,20 @@ from collections import Counter
 import hashlib
 import importlib.util
 import json
+import sys
 from pathlib import Path
 import re
 
 ROOT = Path(__file__).resolve().parents[4]
 
-import sys
 sys.dont_write_bytecode = True
 sys.path.insert(0, str(ROOT / 'tools'))
-from patch_audit_validation import historical_json, historical_registers, preserved_input_matches
+from patch_audit_validation import (
+    historical_registers,
+    historical_sweep_tests,
+    preserved_input_matches,
+    read_audit_json,
+)
 
 AUDIT_REVISION = '56a1b8e6cacc1acc115956a1fac2497600178762'
 EVIDENCE = Path(__file__).resolve().parent
@@ -20,13 +25,7 @@ PATCH = '9.0.1'
 
 
 def read_json(path):
-    relative = path.relative_to(ROOT).as_posix()
-    if relative in {
-        'tests/data/patch_9_2_5_sweep_known_gaps.json',
-        'data/patch-api/sources/9.2.5-page-coverage.json',
-    }:
-        return historical_json(ROOT, relative, AUDIT_REVISION)
-    return json.loads(path.read_text())
+    return read_audit_json(ROOT, path, AUDIT_REVISION)
 
 
 def sha256(path):
@@ -191,9 +190,9 @@ def check_proofs():
     assert all('iced-wgpu-patched/Cargo.toml' in line or '`iced_wgpu` (manifest)' in line
                for line in warnings)
     summary = read_json(EVIDENCE / 'p901-sweep-summary.json')
-    # The source files, not a fixed patch list or receipt, define the sweep set.
+    # Source files at the audit revision define the complete historical sweep set.
     source_tests = set()
-    for path in (ROOT / 'tests').glob('patch_*_publication_sweep.rs'):
+    for path in historical_sweep_tests(ROOT, AUDIT_REVISION):
         if re.search(r'fn patch_[0-9_]+_publication_sweep\(', path.read_text()):
             source_tests.add(path.stem.removeprefix('patch_').removesuffix('_publication_sweep').replace('_', '.'))
     assert {row['patch'] for row in summary} == source_tests

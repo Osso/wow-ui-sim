@@ -1,7 +1,6 @@
 """Validate historical audit scope without accepting unrecorded input drift."""
 import hashlib
 import json
-from pathlib import Path
 import subprocess
 
 # The merged 8.2.5 audit (ending 127aa3724035d9e668143d9b28aaa4cf6e176fa1)
@@ -36,14 +35,31 @@ def historical_json(root, path, revision):
     return json.loads(original)
 
 
-def historical_registers(root, revision):
-    """Keep the complete register set at the audit revision, not today's set."""
+def read_audit_json(root, path, revision):
+    """Use historical accounting only for explicitly recorded later closures."""
+    relative = path.relative_to(root).as_posix()
+    if relative in LATER_AUDIT_REPLACEMENTS:
+        return historical_json(root, relative, revision)
+    return json.loads(path.read_text())
+
+
+def _historical_paths(root, revision, directory, pattern):
     names = subprocess.check_output(
-        ['git', 'ls-tree', '-r', '--name-only', revision, 'data/patch-api/sources'],
+        ['git', 'ls-tree', '-r', '--name-only', revision, directory],
         cwd=root, text=True,
     ).splitlines()
-    paths = [root / name for name in names if name.endswith('-wikitext-register.json')]
-    assert paths, f'no registers at {revision}'
+    paths = [root / name for name in names if (root / name).match(pattern)]
+    assert paths, f'no {pattern} at {revision}'
     for path in paths:
-        assert path.is_file(), f'missing historical register: {path.relative_to(root)}'
+        assert path.is_file(), f'missing historical input: {path.relative_to(root)}'
     return paths
+
+
+def historical_registers(root, revision):
+    """Keep the complete register set at the audit revision, not today's set."""
+    return _historical_paths(root, revision, 'data/patch-api/sources', '*-wikitext-register.json')
+
+
+def historical_sweep_tests(root, revision):
+    """Keep every historical sweep source, including non-register sweeps."""
+    return _historical_paths(root, revision, 'tests', 'patch_*_publication_sweep.rs')

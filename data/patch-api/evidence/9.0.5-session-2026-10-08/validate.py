@@ -3,14 +3,14 @@ from collections import Counter
 import hashlib
 import importlib.util
 import json
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[4]
 
-import sys
 sys.dont_write_bytecode = True
 sys.path.insert(0, str(ROOT / 'tools'))
-from patch_audit_validation import historical_json, historical_registers, preserved_input_matches
+from patch_audit_validation import read_audit_json, historical_registers, preserved_input_matches
 
 AUDIT_REVISION = 'e648db9f99bb32dd4ac87b8d8eb9e2cf2518c0fb'
 EVIDENCE = Path(__file__).resolve().parent
@@ -18,13 +18,7 @@ SOURCES = ROOT / 'data/patch-api/sources'
 
 
 def read_json(path):
-    relative = path.relative_to(ROOT).as_posix()
-    if relative in {
-        'tests/data/patch_9_2_5_sweep_known_gaps.json',
-        'data/patch-api/sources/9.2.5-page-coverage.json',
-    }:
-        return historical_json(ROOT, relative, AUDIT_REVISION)
-    return json.loads(path.read_text())
+    return read_audit_json(ROOT, path, AUDIT_REVISION)
 
 
 def sha256(path):
