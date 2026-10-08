@@ -251,9 +251,8 @@ fn appears_in_eager_discovery_on_all_four_screens() {
     }
 }
 
-#[test]
-fn full_game_load_emits_no_addon_specific_lua_errors() {
-    let env = load_full_ui_for(ScreenKind::Game);
+prefork_full_ui_case! {
+fn full_game_load_emits_no_addon_specific_lua_errors(env: &WowLuaEnv) {
 
     let errors = env.state().borrow().lua_errors.clone();
     let needles = [
@@ -277,6 +276,14 @@ fn full_game_load_emits_no_addon_specific_lua_errors() {
         matched.len(),
         matched
     );
+}
+}
+
+#[cfg(not(feature = "client-retail"))]
+#[test]
+fn full_game_load_emits_no_addon_specific_lua_errors() {
+    let env = load_full_ui_for(ScreenKind::Game);
+    full_game_load_emits_no_addon_specific_lua_errors::run(&env);
 }
 
 #[test]
@@ -309,9 +316,8 @@ fn full_login_load_emits_no_addon_specific_lua_errors() {
     );
 }
 
-#[test]
-fn is_addon_loaded_reports_true_after_eager_sweep() {
-    let env = load_full_ui_for(ScreenKind::Game);
+prefork_full_ui_case! {
+fn is_addon_loaded_reports_true_after_eager_sweep(env: &WowLuaEnv) {
 
     let loaded: bool = env
         .eval("return C_AddOns.IsAddOnLoaded('Blizzard_SimpleCheckout')")
@@ -324,10 +330,17 @@ fn is_addon_loaded_reports_true_after_eager_sweep() {
          addon is part of the auto-loaded set"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn publishes_two_mixin_tables_in_secure_env_only() {
+fn is_addon_loaded_reports_true_after_eager_sweep() {
     let env = load_full_ui_for(ScreenKind::Game);
+    is_addon_loaded_reports_true_after_eager_sweep::run(&env);
+}
+
+prefork_full_ui_case! {
+fn publishes_two_mixin_tables_in_secure_env_only(env: &WowLuaEnv) {
 
     let probe = "local se = __secureenv \
                  return type(se) == 'table' and \
@@ -369,10 +382,17 @@ fn publishes_two_mixin_tables_in_secure_env_only() {
          explicitly designed to keep these writes private to the addon"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn publishes_inbound_interface_in_global_env_via_swap() {
+fn publishes_two_mixin_tables_in_secure_env_only() {
     let env = load_full_ui_for(ScreenKind::Game);
+    publishes_two_mixin_tables_in_secure_env_only::run(&env);
+}
+
+prefork_full_ui_case! {
+fn publishes_inbound_interface_in_global_env_via_swap(env: &WowLuaEnv) {
 
     let probe = "return type(SimpleCheckoutInboundInterface) == 'table' and \
                  type(SimpleCheckoutInboundInterface.IsShown) == 'function' and \
@@ -390,10 +410,17 @@ fn publishes_inbound_interface_in_global_env_via_swap() {
          Checkout frame), never by direct table reference"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn publishes_outbound_table_via_simulator_stub_back_reference() {
+fn publishes_inbound_interface_in_global_env_via_swap() {
     let env = load_full_ui_for(ScreenKind::Game);
+    publishes_inbound_interface_in_global_env_via_swap::run(&env);
+}
+
+prefork_full_ui_case! {
+fn publishes_outbound_table_via_simulator_stub_back_reference(env: &WowLuaEnv) {
 
     let probe = "local se = __secureenv \
                  local in_secure = se and rawget(se, 'SimpleCheckoutOutbound') \
@@ -426,10 +453,17 @@ fn publishes_outbound_table_via_simulator_stub_back_reference() {
          securecall('GetAppropriateTopLevelParent')"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn xml_publishes_three_virtual_line_templates_via_create_frame() {
+fn publishes_outbound_table_via_simulator_stub_back_reference() {
     let env = load_full_ui_for(ScreenKind::Game);
+    publishes_outbound_table_via_simulator_stub_back_reference::run(&env);
+}
+
+prefork_full_ui_case! {
+fn xml_publishes_three_virtual_line_templates_via_create_frame(env: &WowLuaEnv) {
 
     for template in VIRTUAL_LINE_TEMPLATES {
         let probe = format!(
@@ -472,10 +506,17 @@ fn xml_publishes_three_virtual_line_templates_via_create_frame() {
          SetStartPoint / SetEndPoint on each pixel-boundary update"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn xml_publishes_simple_checkout_frame_with_close_button_and_background() {
+fn xml_publishes_three_virtual_line_templates_via_create_frame() {
     let env = load_full_ui_for(ScreenKind::Game);
+    xml_publishes_three_virtual_line_templates_via_create_frame::run(&env);
+}
+
+prefork_full_ui_case! {
+fn xml_publishes_simple_checkout_frame_with_close_button_and_background(env: &WowLuaEnv) {
 
     let probe = "return type(SimpleCheckout) == 'table' and \
                  type(SimpleCheckout.CloseButton) == 'table' and \
@@ -496,10 +537,17 @@ fn xml_publishes_simple_checkout_frame_with_close_button_and_background() {
          honors taint isolation"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn check_cancel_open_checkout_method_present_on_simple_checkout_frame() {
+fn xml_publishes_simple_checkout_frame_with_close_button_and_background() {
     let env = load_full_ui_for(ScreenKind::Game);
+    xml_publishes_simple_checkout_frame_with_close_button_and_background::run(&env);
+}
+
+prefork_full_ui_case! {
+fn check_cancel_open_checkout_method_present_on_simple_checkout_frame(env: &WowLuaEnv) {
 
     let probe = "return type(SimpleCheckout.CancelOpenCheckout) == 'function' or \
                  type(SimpleCheckout.OpenCheckout) == 'function' or \
@@ -519,10 +567,17 @@ fn check_cancel_open_checkout_method_present_on_simple_checkout_frame() {
          load-error sweep"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn close_button_is_named_global_via_parent_key_synthesis() {
+fn check_cancel_open_checkout_method_present_on_simple_checkout_frame() {
     let env = load_full_ui_for(ScreenKind::Game);
+    check_cancel_open_checkout_method_present_on_simple_checkout_frame::run(&env);
+}
+
+prefork_full_ui_case! {
+fn close_button_is_named_global_via_parent_key_synthesis(env: &WowLuaEnv) {
 
     let probe = "return type(SimpleCheckout) == 'table' and \
                  type(SimpleCheckout.CloseButton) == 'table' and \
@@ -538,4 +593,12 @@ fn close_button_is_named_global_via_parent_key_synthesis() {
          in Lua) wires through correctly. The OnClick handler calls \
          `self:GetParent():Hide()` which depends on this back-reference"
     );
+}
+}
+
+#[cfg(not(feature = "client-retail"))]
+#[test]
+fn close_button_is_named_global_via_parent_key_synthesis() {
+    let env = load_full_ui_for(ScreenKind::Game);
+    close_button_is_named_global_via_parent_key_synthesis::run(&env);
 }
