@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p547-page/data/patch-api/evidence/5.4.7-session-2026-10-08/verify_targeted.py"
+  ],
+  "revision": "7ba500c07d5b52e7aed21195de0c355b99ce4082",
+  "scope": "p547-targeted-driver",
+  "cwd": ".",
+  "target": "dedicated p547-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p547-targeted-driver.txt",
+  "log_sha256": "5579fcd0da17a4ec86abb633430313974dbcc218ca7337602a8e790aa0484089",
+  "seconds": 298.51040400000056,
+  "invalidated": false
+}

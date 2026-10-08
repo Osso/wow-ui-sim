@@ -1,0 +1,4052 @@
+{
+  "wt-cvars-CAADebuffSelfAlert-421": {
+    "expected": {
+      "direction": "added",
+      "page_default": "0",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "CAADebuffSelfAlert"
+    },
+    "observed": {
+      "default": "0",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "0"
+    },
+    "ok": true
+  },
+  "wt-cvars-CAAPartyHealthVoice-422": {
+    "expected": {
+      "direction": "added",
+      "page_default": "0",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "CAAPartyHealthVoice"
+    },
+    "observed": {
+      "default": "0",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "0"
+    },
+    "ok": true
+  },
+  "wt-cvars-CAAPartyHealthVolume-423": {
+    "expected": {
+      "direction": "added",
+      "page_default": "100",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "CAAPartyHealthVolume"
+    },
+    "observed": {
+      "default": "100",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "100"
+    },
+    "ok": true
+  },
+  "wt-cvars-CAAPlayerCastVoice-424": {
+    "expected": {
+      "direction": "added",
+      "page_default": "0",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "CAAPlayerCastVoice"
+    },
+    "observed": {
+      "default": "0",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "0"
+    },
+    "ok": true
+  },
+  "wt-cvars-CAAPlayerCastVolume-425": {
+    "expected": {
+      "direction": "added",
+      "page_default": "100",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "CAAPlayerCastVolume"
+    },
+    "observed": {
+      "default": "100",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "100"
+    },
+    "ok": true
+  },
+  "wt-cvars-CAAPlayerHealthVoice-426": {
+    "expected": {
+      "direction": "added",
+      "page_default": "0",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "CAAPlayerHealthVoice"
+    },
+    "observed": {
+      "default": "0",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "0"
+    },
+    "ok": true
+  },
+  "wt-cvars-CAAPlayerHealthVolume-427": {
+    "expected": {
+      "direction": "added",
+      "page_default": "100",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "CAAPlayerHealthVolume"
+    },
+    "observed": {
+      "default": "100",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "100"
+    },
+    "ok": true
+  },
+  "wt-cvars-CAAResource1Voice-428": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "CAAResource1Voice"
+    },
+    "observed": {
+      "default": "",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": ""
+    },
+    "ok": true
+  },
+  "wt-cvars-CAAResource1Volume-429": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "CAAResource1Volume"
+    },
+    "observed": {
+      "default": "",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": ""
+    },
+    "ok": true
+  },
+  "wt-cvars-CAAResource2Voice-430": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "CAAResource2Voice"
+    },
+    "observed": {
+      "default": "",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": ""
+    },
+    "ok": true
+  },
+  "wt-cvars-CAAResource2Volume-431": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "CAAResource2Volume"
+    },
+    "observed": {
+      "default": "",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": ""
+    },
+    "ok": true
+  },
+  "wt-cvars-CAASayYourDebuffs-436": {
+    "expected": {
+      "direction": "added",
+      "page_default": "1",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "CAASayYourDebuffs"
+    },
+    "observed": {
+      "default": "1",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "1"
+    },
+    "ok": true
+  },
+  "wt-cvars-CAASayYourDebuffsFormat-432": {
+    "expected": {
+      "direction": "added",
+      "page_default": "0",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "CAASayYourDebuffsFormat"
+    },
+    "observed": {
+      "default": "0",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "0"
+    },
+    "ok": true
+  },
+  "wt-cvars-CAASayYourDebuffsMinDuration-433": {
+    "expected": {
+      "direction": "added",
+      "page_default": "1.500000",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "CAASayYourDebuffsMinDuration"
+    },
+    "observed": {
+      "default": "1.500000",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "1.500000"
+    },
+    "ok": true
+  },
+  "wt-cvars-CAASayYourDebuffsVoice-434": {
+    "expected": {
+      "direction": "added",
+      "page_default": "0",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "CAASayYourDebuffsVoice"
+    },
+    "observed": {
+      "default": "0",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "0"
+    },
+    "ok": true
+  },
+  "wt-cvars-CAASayYourDebuffsVolume-435": {
+    "expected": {
+      "direction": "added",
+      "page_default": "100",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "CAASayYourDebuffsVolume"
+    },
+    "observed": {
+      "default": "100",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "100"
+    },
+    "ok": true
+  },
+  "wt-cvars-CAATargetCastVoice-437": {
+    "expected": {
+      "direction": "added",
+      "page_default": "0",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "CAATargetCastVoice"
+    },
+    "observed": {
+      "default": "0",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "0"
+    },
+    "ok": true
+  },
+  "wt-cvars-CAATargetCastVolume-438": {
+    "expected": {
+      "direction": "added",
+      "page_default": "100",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "CAATargetCastVolume"
+    },
+    "observed": {
+      "default": "100",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "100"
+    },
+    "ok": true
+  },
+  "wt-cvars-CAATargetHealthVoice-439": {
+    "expected": {
+      "direction": "added",
+      "page_default": "0",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "CAATargetHealthVoice"
+    },
+    "observed": {
+      "default": "0",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "0"
+    },
+    "ok": true
+  },
+  "wt-cvars-CAATargetHealthVolume-440": {
+    "expected": {
+      "direction": "added",
+      "page_default": "100",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "CAATargetHealthVolume"
+    },
+    "observed": {
+      "default": "100",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "100"
+    },
+    "ok": true
+  },
+  "wt-cvars-ClientSettings_AFTERMATH-477": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ClientSettings_AFTERMATH"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-ClientSettings_AFTERMATH_BY_API_MASK-441": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ClientSettings_AFTERMATH_BY_API_MASK"
+    },
+    "observed": {
+      "default": "",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": ""
+    },
+    "ok": true
+  },
+  "wt-cvars-ClientSettings_AFTERMATH_BY_GPU_CATEGORY-442": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ClientSettings_AFTERMATH_BY_GPU_CATEGORY"
+    },
+    "observed": {
+      "default": "",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": ""
+    },
+    "ok": true
+  },
+  "wt-cvars-ClientSettings_ASYNC_COMPUTE-478": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ClientSettings_ASYNC_COMPUTE"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-ClientSettings_ASYNC_COMPUTE_BY_API_MASK-443": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ClientSettings_ASYNC_COMPUTE_BY_API_MASK"
+    },
+    "observed": {
+      "default": "",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": ""
+    },
+    "ok": true
+  },
+  "wt-cvars-ClientSettings_ASYNC_COMPUTE_BY_GPU_CATEGORY-444": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ClientSettings_ASYNC_COMPUTE_BY_GPU_CATEGORY"
+    },
+    "observed": {
+      "default": "",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": ""
+    },
+    "ok": true
+  },
+  "wt-cvars-ClientSettings_CMD_LIST_MT-479": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ClientSettings_CMD_LIST_MT"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-ClientSettings_CMD_LIST_MT_BY_API_MASK-445": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ClientSettings_CMD_LIST_MT_BY_API_MASK"
+    },
+    "observed": {
+      "default": "",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": ""
+    },
+    "ok": true
+  },
+  "wt-cvars-ClientSettings_CMD_LIST_MT_BY_GPU_CATEGORY-446": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ClientSettings_CMD_LIST_MT_BY_GPU_CATEGORY"
+    },
+    "observed": {
+      "default": "",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": ""
+    },
+    "ok": true
+  },
+  "wt-cvars-ClientSettings_COPY_QUEUE-480": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ClientSettings_COPY_QUEUE"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-ClientSettings_COPY_QUEUE_BY_API_MASK-447": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ClientSettings_COPY_QUEUE_BY_API_MASK"
+    },
+    "observed": {
+      "default": "",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": ""
+    },
+    "ok": true
+  },
+  "wt-cvars-ClientSettings_COPY_QUEUE_BY_GPU_CATEGORY-448": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ClientSettings_COPY_QUEUE_BY_GPU_CATEGORY"
+    },
+    "observed": {
+      "default": "",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": ""
+    },
+    "ok": true
+  },
+  "wt-cvars-ClientSettings_HIGH_MEM_FEATURES-481": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ClientSettings_HIGH_MEM_FEATURES"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-ClientSettings_HIGH_MEM_FEATURES_BY_API_MASK-449": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ClientSettings_HIGH_MEM_FEATURES_BY_API_MASK"
+    },
+    "observed": {
+      "default": "",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": ""
+    },
+    "ok": true
+  },
+  "wt-cvars-ClientSettings_HIGH_MEM_FEATURES_BY_GPU_CATEGORY-450": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ClientSettings_HIGH_MEM_FEATURES_BY_GPU_CATEGORY"
+    },
+    "observed": {
+      "default": "",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": ""
+    },
+    "ok": true
+  },
+  "wt-cvars-ClientSettings_OPT_FEATURES-482": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ClientSettings_OPT_FEATURES"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-ClientSettings_OPT_FEATURES_BY_API_MASK-451": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ClientSettings_OPT_FEATURES_BY_API_MASK"
+    },
+    "observed": {
+      "default": "",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": ""
+    },
+    "ok": true
+  },
+  "wt-cvars-ClientSettings_OPT_FEATURES_BY_GPU_CATEGORY-452": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ClientSettings_OPT_FEATURES_BY_GPU_CATEGORY"
+    },
+    "observed": {
+      "default": "",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": ""
+    },
+    "ok": true
+  },
+  "wt-cvars-ClientSettings_RAY_TRACING-483": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ClientSettings_RAY_TRACING"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-ClientSettings_RAY_TRACING_BY_API_MASK-453": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ClientSettings_RAY_TRACING_BY_API_MASK"
+    },
+    "observed": {
+      "default": "",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": ""
+    },
+    "ok": true
+  },
+  "wt-cvars-ClientSettings_RAY_TRACING_BY_GPU_CATEGORY-454": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ClientSettings_RAY_TRACING_BY_GPU_CATEGORY"
+    },
+    "observed": {
+      "default": "",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": ""
+    },
+    "ok": true
+  },
+  "wt-cvars-ClientSettings_SHADER_MT-484": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ClientSettings_SHADER_MT"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-ClientSettings_SHADER_MT_BY_API_MASK-455": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ClientSettings_SHADER_MT_BY_API_MASK"
+    },
+    "observed": {
+      "default": "",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": ""
+    },
+    "ok": true
+  },
+  "wt-cvars-ClientSettings_SHADER_MT_BY_GPU_CATEGORY-456": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ClientSettings_SHADER_MT_BY_GPU_CATEGORY"
+    },
+    "observed": {
+      "default": "",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": ""
+    },
+    "ok": true
+  },
+  "wt-cvars-ClientSettings_SM6-485": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ClientSettings_SM6"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-ClientSettings_SM6_BY_API_MASK-457": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ClientSettings_SM6_BY_API_MASK"
+    },
+    "observed": {
+      "default": "",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": ""
+    },
+    "ok": true
+  },
+  "wt-cvars-ClientSettings_SM6_BY_GPU_CATEGORY-458": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ClientSettings_SM6_BY_GPU_CATEGORY"
+    },
+    "observed": {
+      "default": "",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": ""
+    },
+    "ok": true
+  },
+  "wt-cvars-ClientSettings_WORK_OPTIMS-486": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ClientSettings_WORK_OPTIMS"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-ClientSettings_WORK_OPTIMS_BY_API_MASK-459": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ClientSettings_WORK_OPTIMS_BY_API_MASK"
+    },
+    "observed": {
+      "default": "",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": ""
+    },
+    "ok": true
+  },
+  "wt-cvars-ClientSettings_WORK_OPTIMS_BY_GPU_CATEGORY-460": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ClientSettings_WORK_OPTIMS_BY_GPU_CATEGORY"
+    },
+    "observed": {
+      "default": "",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": ""
+    },
+    "ok": true
+  },
+  "wt-cvars-NamePlateClassificationScale-492": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "NamePlateClassificationScale"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-currencyTokensBackpack1-461": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": "wt-cvars-currencyTokensBackpack1-823",
+      "symbol": "currencyTokensBackpack1"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-damageMeterResetOnNewInstance-462": {
+    "expected": {
+      "direction": "added",
+      "page_default": "0",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "damageMeterResetOnNewInstance"
+    },
+    "observed": {
+      "default": "0",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "0"
+    },
+    "ok": true
+  },
+  "wt-cvars-enableConnectToPhotoSharing-463": {
+    "expected": {
+      "direction": "added",
+      "page_default": "0",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "enableConnectToPhotoSharing"
+    },
+    "observed": {
+      "default": "0",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "0"
+    },
+    "ok": true
+  },
+  "wt-cvars-encounterTimelineHighlightDuration-464": {
+    "expected": {
+      "direction": "added",
+      "page_default": "5000",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "encounterTimelineHighlightDuration"
+    },
+    "observed": {
+      "default": "5000",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "5000"
+    },
+    "ok": true
+  },
+  "wt-cvars-encounterTimelineShowSequenceCount-465": {
+    "expected": {
+      "direction": "added",
+      "page_default": "0",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "encounterTimelineShowSequenceCount"
+    },
+    "observed": {
+      "default": "0",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "0"
+    },
+    "ok": true
+  },
+  "wt-cvars-highestUnlockedDelvesTier-487": {
+    "expected": {
+      "direction": "removed",
+      "page_default": "1",
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "highestUnlockedDelvesTier"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-highestUnlockedTieredEntranceTier-466": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "highestUnlockedTieredEntranceTier"
+    },
+    "observed": {
+      "default": "",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": ""
+    },
+    "ok": true
+  },
+  "wt-cvars-imageSharingPublishCooldown-467": {
+    "expected": {
+      "direction": "added",
+      "page_default": "5000",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "imageSharingPublishCooldown"
+    },
+    "observed": {
+      "default": "5000",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "5000"
+    },
+    "ok": true
+  },
+  "wt-cvars-lastLockedDelvesCompanionAbilities-488": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "lastLockedDelvesCompanionAbilities"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-lastLockedTieredEntranceCompanionAbilities-468": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "lastLockedTieredEntranceCompanionAbilities"
+    },
+    "observed": {
+      "default": "",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": ""
+    },
+    "ok": true
+  },
+  "wt-cvars-lastSelectedDelvesTier-489": {
+    "expected": {
+      "direction": "removed",
+      "page_default": "0",
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "lastSelectedDelvesTier"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-lastSelectedTieredEntranceTier-469": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "lastSelectedTieredEntranceTier"
+    },
+    "observed": {
+      "default": "",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": ""
+    },
+    "ok": true
+  },
+  "wt-cvars-lastVoidStorageTutorial-490": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "lastVoidStorageTutorial"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-minimapTrackedInfov2-491": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "minimapTrackedInfov2"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-nameplateLargerScale-493": {
+    "expected": {
+      "direction": "removed",
+      "page_default": "1.200000",
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "nameplateLargerScale"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-nameplateOtherBottomInset-494": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "nameplateOtherBottomInset"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-nameplateOtherTopInset-495": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "nameplateOtherTopInset"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-nameplatePlayerLargerScale-496": {
+    "expected": {
+      "direction": "removed",
+      "page_default": "1.800000",
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "nameplatePlayerLargerScale"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-nameplateSelfAlpha-497": {
+    "expected": {
+      "direction": "removed",
+      "page_default": "0.750000",
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "nameplateSelfAlpha"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-nameplateSimplifiedScale-470": {
+    "expected": {
+      "direction": "added",
+      "page_default": "0.300000",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "nameplateSimplifiedScale"
+    },
+    "observed": {
+      "default": "0.300000",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "0.300000"
+    },
+    "ok": true
+  },
+  "wt-cvars-nameplateUseClassColorForFriendlyPlayerUnitNames-471": {
+    "expected": {
+      "direction": "added",
+      "page_default": "0",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "nameplateUseClassColorForFriendlyPlayerUnitNames"
+    },
+    "observed": {
+      "default": "0",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "0"
+    },
+    "ok": true
+  },
+  "wt-cvars-raidFramesHealthBarColorBG-472": {
+    "expected": {
+      "direction": "added",
+      "page_default": "FF141414",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "raidFramesHealthBarColorBG"
+    },
+    "observed": {
+      "default": "FF141414",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "FF141414"
+    },
+    "ok": true
+  },
+  "wt-cvars-seenCharacterSelectAddGroupHelpTip-498": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "seenCharacterSelectAddGroupHelpTip"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-seenCharacterSelectNavBarCampsHelpTip-499": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "seenCharacterSelectNavBarCampsHelpTip"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-seenCharacterSelectWarbandHelpTip-500": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "seenCharacterSelectWarbandHelpTip"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-seenPurchasableClassCapstone-473": {
+    "expected": {
+      "direction": "added",
+      "page_default": "0",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "seenPurchasableClassCapstone"
+    },
+    "observed": {
+      "default": "0",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "0"
+    },
+    "ok": true
+  },
+  "wt-cvars-showTokenFrameHonor-474": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": "wt-cvars-showTokenFrameHonor-837",
+      "symbol": "showTokenFrameHonor"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-useCompactPartyFrames-501": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "useCompactPartyFrames"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-BULK_PURCHASE_RESULT_RECEIVED-408": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "BULK_PURCHASE_RESULT_RECEIVED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-BULK_REFUND_RESULT_RECEIVED-391": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "BULK_REFUND_RESULT_RECEIVED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-CHAT_MSG_ENCOUNTER_EVENT-405": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "CHAT_MSG_ENCOUNTER_EVENT"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"CHAT_MSG_ENCOUNTER_EVENT\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-ENCOUNTER_TIMELINE_VIEW_ACTIVATED-392": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "ENCOUNTER_TIMELINE_VIEW_ACTIVATED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-ENCOUNTER_TIMELINE_VIEW_DEACTIVATED-393": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "ENCOUNTER_TIMELINE_VIEW_DEACTIVATED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-HOUSING_CLEANUP_MODE_HOVERED_TARGET_CHANGED-411": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "HOUSING_CLEANUP_MODE_HOVERED_TARGET_CHANGED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-PHOTO_SHARING_AUTHORIZATION_NEEDED-394": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "PHOTO_SHARING_AUTHORIZATION_NEEDED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-PHOTO_SHARING_AUTHORIZATION_UPDATED-395": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "PHOTO_SHARING_AUTHORIZATION_UPDATED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-PHOTO_SHARING_PHOTO_UPLOAD_STATUS-396": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "PHOTO_SHARING_PHOTO_UPLOAD_STATUS"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-PHOTO_SHARING_SCREENSHOT_READY-397": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "PHOTO_SHARING_SCREENSHOT_READY"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-PHOTO_SHARING_THIRD_PARTY_AUTHORIZATION_NEEDED-398": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "PHOTO_SHARING_THIRD_PARTY_AUTHORIZATION_NEEDED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-PLAYER_MAX_LEVEL_UPDATE-399": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "PLAYER_MAX_LEVEL_UPDATE"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-SIMPLE_BROWSER_POPUP-400": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "SIMPLE_BROWSER_POPUP"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-SIMPLE_BROWSER_SOCIAL_CALLBACK_INVOKED-401": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "SIMPLE_BROWSER_SOCIAL_CALLBACK_INVOKED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-UNIT_ARENA_COOLDOWNS_UPDATE-402": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "UNIT_ARENA_COOLDOWNS_UPDATE"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-BNSetAFK-303": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "BNSetAFK"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-BNSetDND-304": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "BNSetDND"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_ActionBar.GetActionLossOfControlCooldown-305": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ActionBar.GetActionLossOfControlCooldown"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function; deprecated-fallback=@Interface/AddOns/Blizzard_DeprecatedActionBar/Deprecated_ActionBar.lua",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_ActionBar.GetActionLossOfControlCooldownInfo-221": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ActionBar.GetActionLossOfControlCooldownInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_BattleNet.SetAFK-222": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_BattleNet.SetAFK"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_BattleNet.SetDND-223": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_BattleNet.SetDND"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_CatalogShop.BulkRefundDecors-224": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_CatalogShop.BulkRefundDecors"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_CatalogShop.FindBestCurrencyProductForNeededAmount-225": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_CatalogShop.FindBestCurrencyProductForNeededAmount"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_CatalogShop.GetVCProductInfos-226": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_CatalogShop.GetVCProductInfos"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_CatalogShop.OnLegalPersonalizedOptOutClicked-227": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_CatalogShop.OnLegalPersonalizedOptOutClicked"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_CatalogShop.ShouldShowHousingWarning-228": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_CatalogShop.ShouldShowHousingWarning"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_CombatAudioAlert.AddToKnownTargetingList-229": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_CombatAudioAlert.AddToKnownTargetingList"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_CombatAudioAlert.GetCategoryVoice-230": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_CombatAudioAlert.GetCategoryVoice"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_CombatAudioAlert.GetCategoryVolume-231": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_CombatAudioAlert.GetCategoryVolume"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_CombatAudioAlert.GetSpeakerVolume-306": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_CombatAudioAlert.GetSpeakerVolume"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_CombatAudioAlert.RemoveFromKnownTargetingList-232": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_CombatAudioAlert.RemoveFromKnownTargetingList"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_CombatAudioAlert.SetCategoryVoice-233": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_CombatAudioAlert.SetCategoryVoice"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_CombatAudioAlert.SetCategoryVolume-234": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_CombatAudioAlert.SetCategoryVolume"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_CombatAudioAlert.SetSpeakerVolume-307": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_CombatAudioAlert.SetSpeakerVolume"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_CombatAudioAlert.SpeakText-323": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_CombatAudioAlert.SpeakText"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_DamageMeter.GetCombatSessionSourceFromID-325": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_DamageMeter.GetCombatSessionSourceFromID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_DamageMeter.GetCombatSessionSourceFromType-328": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_DamageMeter.GetCombatSessionSourceFromType"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_DamageMeter.GetSessionDurationSeconds-235": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_DamageMeter.GetSessionDurationSeconds"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_DeathRecap.GetRecapMaxHealth-236": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_DeathRecap.GetRecapMaxHealth"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_DelvesUI.GetPlayerCompanionPDEID-237": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_DelvesUI.GetPlayerCompanionPDEID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_DelvesUI.GetTieredEntrancePDEID-238": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_DelvesUI.GetTieredEntrancePDEID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_EncounterEvents.GetEventColor-239": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_EncounterEvents.GetEventColor"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_EncounterEvents.GetEventInfo-240": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_EncounterEvents.GetEventInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_EncounterEvents.GetEventList-241": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_EncounterEvents.GetEventList"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_EncounterEvents.GetEventSound-242": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_EncounterEvents.GetEventSound"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_EncounterEvents.HasEventInfo-243": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_EncounterEvents.HasEventInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_EncounterEvents.PlayEventSound-244": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_EncounterEvents.PlayEventSound"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_EncounterEvents.SetEventColor-245": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_EncounterEvents.SetEventColor"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_EncounterEvents.SetEventSound-246": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_EncounterEvents.SetEventSound"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_EncounterTimeline.GetEventHighlightTime-247": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_EncounterTimeline.GetEventHighlightTime"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_EncounterTimeline.GetEventTimer-248": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_EncounterTimeline.GetEventTimer"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_EncounterTimeline.GetSortedEventList-249": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_EncounterTimeline.GetSortedEventList"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_EncounterTimeline.GetTrackMaxEventDuration-250": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_EncounterTimeline.GetTrackMaxEventDuration"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_EncounterTimeline.GetTrackType-251": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_EncounterTimeline.GetTrackType"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_EncounterTimeline.GetViewType-252": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_EncounterTimeline.GetViewType"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_EncounterTimeline.SetViewType-253": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_EncounterTimeline.SetViewType"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_EncounterWarnings.GetColorForSeverity-254": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_EncounterWarnings.GetColorForSeverity"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_EncounterWarnings.GetPlayCustomSoundsWhenHidden-255": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_EncounterWarnings.GetPlayCustomSoundsWhenHidden"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_EncounterWarnings.GetWarningsShown-256": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_EncounterWarnings.GetWarningsShown"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_EncounterWarnings.SetPlayCustomSoundsWhenHidden-257": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_EncounterWarnings.SetPlayCustomSoundsWhenHidden"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_EncounterWarnings.SetWarningsShown-258": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_EncounterWarnings.SetWarningsShown"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_GuildInfo.GetInfoText-259": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_GuildInfo.GetInfoText"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_GuildInfo.GetMOTD-260": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_GuildInfo.GetMOTD"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_GuildInfo.SetInfoText-261": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_GuildInfo.SetInfoText"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_Housing.IsHousingMarketCartFullRemoveEnabled-262": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Housing.IsHousingMarketCartFullRemoveEnabled"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_HousingCatalog.CanDestroyEntry-308": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_HousingCatalog.CanDestroyEntry"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function; deprecated-fallback=@Interface/AddOns/Blizzard_Deprecated/Mainline/Deprecated_12_0_5.lua",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_HousingCatalog.GetDestroyableInstanceCount-263": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_HousingCatalog.GetDestroyableInstanceCount"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_HousingCatalog.GetMarketInfoForDecor-264": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_HousingCatalog.GetMarketInfoForDecor"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_HousingCatalog.HousingMarketActionAddToCart-265": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_HousingCatalog.HousingMarketActionAddToCart"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_HousingCatalog.HousingMarketActionClearCart-266": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_HousingCatalog.HousingMarketActionClearCart"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_HousingCatalog.HousingMarketActionRemoveFromCart-267": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_HousingCatalog.HousingMarketActionRemoveFromCart"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_HousingCatalog.HousingMarketActionViewBundle-268": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_HousingCatalog.HousingMarketActionViewBundle"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_HousingCatalog.HousingMarketActionViewInStore-269": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_HousingCatalog.HousingMarketActionViewInStore"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_HousingLayout.GetNumFloors-270": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_HousingLayout.GetNumFloors-568",
+      "symbol": "C_HousingLayout.GetNumFloors"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function; deprecated-fallback=@Interface/AddOns/Blizzard_Deprecated/Mainline/Deprecated_12_1_0.lua",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_HousingPhotoSharing.BeginAuthorizationFlow-271": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_HousingPhotoSharing.BeginAuthorizationFlow-334",
+      "symbol": "C_HousingPhotoSharing.BeginAuthorizationFlow"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "parent raw-absent; raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_HousingPhotoSharing.ClearAuthorization-272": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_HousingPhotoSharing.ClearAuthorization-335",
+      "symbol": "C_HousingPhotoSharing.ClearAuthorization"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "parent raw-absent; raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_HousingPhotoSharing.CompleteAuthorizationFlow-273": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_HousingPhotoSharing.CompleteAuthorizationFlow-336",
+      "symbol": "C_HousingPhotoSharing.CompleteAuthorizationFlow"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "parent raw-absent; raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_HousingPhotoSharing.GetCropRatio-274": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_HousingPhotoSharing.GetCropRatio-337",
+      "symbol": "C_HousingPhotoSharing.GetCropRatio"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "parent raw-absent; raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_HousingPhotoSharing.GetPhotoSharingAuthURL-275": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_HousingPhotoSharing.GetPhotoSharingAuthURL-338",
+      "symbol": "C_HousingPhotoSharing.GetPhotoSharingAuthURL"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "parent raw-absent; raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_HousingPhotoSharing.IsAuthorized-276": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_HousingPhotoSharing.IsAuthorized-339",
+      "symbol": "C_HousingPhotoSharing.IsAuthorized"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "parent raw-absent; raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_HousingPhotoSharing.IsEnabled-277": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_HousingPhotoSharing.IsEnabled-340",
+      "symbol": "C_HousingPhotoSharing.IsEnabled"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "parent raw-absent; raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_HousingPhotoSharing.SetScreenshotPreviewTexture-278": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_HousingPhotoSharing.SetScreenshotPreviewTexture-341",
+      "symbol": "C_HousingPhotoSharing.SetScreenshotPreviewTexture"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "parent raw-absent; raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_HousingPhotoSharing.TakePhoto-279": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_HousingPhotoSharing.TakePhoto-342",
+      "symbol": "C_HousingPhotoSharing.TakePhoto"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "parent raw-absent; raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_HousingPhotoSharing.UploadPhotoToService-280": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_HousingPhotoSharing.UploadPhotoToService-343",
+      "symbol": "C_HousingPhotoSharing.UploadPhotoToService"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "parent raw-absent; raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_LFGList.IsPlayerValidForEndgameFieldEdits-281": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_LFGList.IsPlayerValidForEndgameFieldEdits"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_LFGList.ListingUsesEndgameEditRestrictions-282": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_LFGList.ListingUsesEndgameEditRestrictions"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_LossOfControl.GetActiveLossOfControlDuration-283": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_LossOfControl.GetActiveLossOfControlDuration"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_NamePlate.GetTargetClampingInsets-309": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_NamePlate.GetTargetClampingInsets"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_NamePlate.SetTargetClampingInsets-310": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_NamePlate.SetTargetClampingInsets"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_PvP.GetArenaCrowdControlDuration-284": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.GetArenaCrowdControlDuration"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_Secrets.CanCompareUnitTokens-285": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Secrets.CanCompareUnitTokens"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_Secrets.ShouldUnitThreatStateBeSecret-286": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Secrets.ShouldUnitThreatStateBeSecret"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_Secrets.ShouldUnitThreatValuesBeSecret-287": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Secrets.ShouldUnitThreatValuesBeSecret"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_Spell.GetSpellLossOfControlCooldown-311": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Spell.GetSpellLossOfControlCooldown"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function; deprecated-fallback=@Interface/AddOns/Blizzard_DeprecatedSpellScript/Deprecated_SpellScript.lua",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_Spell.GetSpellLossOfControlCooldownInfo-288": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Spell.GetSpellLossOfControlCooldownInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_SpellBook.GetSpellBookItemLossOfControlCooldown-312": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_SpellBook.GetSpellBookItemLossOfControlCooldown"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function; deprecated-fallback=@Interface/AddOns/Blizzard_Deprecated/Mainline/Deprecated_12_0_1.lua",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo-289": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_SpellBook.GetSpellBookItemLossOfControlCooldownInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_StringUtil.StripHyperlinks-331": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_StringUtil.StripHyperlinks"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_StringUtil.StripTextureMarkupForLooseFiles-290": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_StringUtil.StripTextureMarkupForLooseFiles"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TableUtil.FindIndexedMismatch-291": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TableUtil.FindIndexedMismatch"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TransmogCollection.IsSpellItemEnchantmentHiddenVisual-292": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TransmogCollection.IsSpellItemEnchantmentHiddenVisual"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TransmogOutfitInfo.InTransmogEvent-293": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TransmogOutfitInfo.InTransmogEvent"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TransmogOutfitInfo.IsUsableDiscountAvailable-294": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TransmogOutfitInfo.IsUsableDiscountAvailable"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TransmogOutfitInfo.SetOutfitToOutfit-295": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TransmogOutfitInfo.SetOutfitToOutfit"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_TransmogOutfitInfo.TransmogEventActive-296": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TransmogOutfitInfo.TransmogEventActive"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_VoiceChat.GetChannel-333": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_VoiceChat.GetChannel"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_VoiceChat.GetChannelForChannelType-335": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_VoiceChat.GetChannelForChannelType"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_VoiceChat.GetChannelForCommunityStream-337": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_VoiceChat.GetChannelForCommunityStream"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-GetBattlefieldScore-313": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetBattlefieldScore"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function; deprecated-fallback=@Interface/AddOns/Blizzard_Deprecated/Mainline/Deprecated_12_0_1.lua",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-GetBattlefieldStatData-314": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetBattlefieldStatData"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function; deprecated-fallback=@Interface/AddOns/Blizzard_Deprecated/Mainline/Deprecated_12_0_1.lua",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-GetGuildInfoText-315": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetGuildInfoText"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedGuildScript/Deprecated_GuildScript.lua; alias=C_GuildInfo.GetInfoText",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-GetGuildRosterMOTD-316": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetGuildRosterMOTD"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedGuildScript/Deprecated_GuildScript.lua; alias=C_GuildInfo.GetMOTD",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-GetNumTotemSlots-297": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetNumTotemSlots"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-GetTotemDuration-298": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetTotemDuration"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-GuildRosterSetOfficerNote-317": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GuildRosterSetOfficerNote"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-GuildRosterSetPublicNote-318": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GuildRosterSetPublicNote"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-PlayerIsSpellTarget-299": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "PlayerIsSpellTarget"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-SetGuildInfoText-319": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "SetGuildInfoText"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedGuildScript/Deprecated_GuildScript.lua; alias=C_GuildInfo.SetInfoText",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-UnitCastingInfo-339": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "UnitCastingInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-UnitIsSpellTarget-320": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "UnitIsSpellTarget"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function; deprecated-fallback=@Interface/AddOns/Blizzard_Deprecated/Mainline/Deprecated_12_0_1.lua",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-dumpobject-300": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "dumpobject"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-scriptobjects-DurationObject:GetClockTime-345": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "scriptobjects",
+      "superseded_by": null,
+      "symbol": "DurationObject:GetClockTime"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "DurationObject; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-scriptobjects-HousingCatalogSearcher:IsDistinctPerRecordIDActive-346": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "scriptobjects",
+      "superseded_by": "wt-scriptobjects-HousingCatalogSearcher:IsDistinctPerRecordIDActive-711",
+      "symbol": "HousingCatalogSearcher:IsDistinctPerRecordIDActive"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "HousingCatalogSearcher; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-scriptobjects-HousingCatalogSearcher:SetDistinctPerRecordID-347": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "scriptobjects",
+      "superseded_by": "wt-scriptobjects-HousingCatalogSearcher:SetDistinctPerRecordID-713",
+      "symbol": "HousingCatalogSearcher:SetDistinctPerRecordID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "HousingCatalogSearcher; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-scriptobjects-HousingCatalogSearcher:ToggleDistinctPerRecordID-348": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "scriptobjects",
+      "superseded_by": "wt-scriptobjects-HousingCatalogSearcher:ToggleDistinctPerRecordID-715",
+      "symbol": "HousingCatalogSearcher:ToggleDistinctPerRecordID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "HousingCatalogSearcher; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-scriptobjects-NamePlate:SetStackingBoundsFrame-349": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "scriptobjects",
+      "superseded_by": null,
+      "symbol": "NamePlate:SetStackingBoundsFrame"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "factory: unknown frame type 'NamePlate'",
+      "kind": "unprobeable",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-scriptobjects-UnitHealPredictionCalculator:EvaluateCurrentHealthPercent-350": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "scriptobjects",
+      "superseded_by": null,
+      "symbol": "UnitHealPredictionCalculator:EvaluateCurrentHealthPercent"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-scriptobjects-UnitHealPredictionCalculator:EvaluateMissingHealthPercent-351": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "scriptobjects",
+      "superseded_by": null,
+      "symbol": "UnitHealPredictionCalculator:EvaluateMissingHealthPercent"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-scriptobjects-UnitHealPredictionCalculator:GetCurrentHealth-352": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "scriptobjects",
+      "superseded_by": null,
+      "symbol": "UnitHealPredictionCalculator:GetCurrentHealth"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-scriptobjects-UnitHealPredictionCalculator:GetCurrentHealthPercent-353": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "scriptobjects",
+      "superseded_by": null,
+      "symbol": "UnitHealPredictionCalculator:GetCurrentHealthPercent"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-scriptobjects-UnitHealPredictionCalculator:GetMaximumDamageAbsorbs-354": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "scriptobjects",
+      "superseded_by": null,
+      "symbol": "UnitHealPredictionCalculator:GetMaximumDamageAbsorbs"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-scriptobjects-UnitHealPredictionCalculator:GetMaximumHealAbsorbs-355": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "scriptobjects",
+      "superseded_by": null,
+      "symbol": "UnitHealPredictionCalculator:GetMaximumHealAbsorbs"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-scriptobjects-UnitHealPredictionCalculator:GetMaximumHealth-356": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "scriptobjects",
+      "superseded_by": null,
+      "symbol": "UnitHealPredictionCalculator:GetMaximumHealth"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-scriptobjects-UnitHealPredictionCalculator:GetMaximumHealthMode-357": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "scriptobjects",
+      "superseded_by": null,
+      "symbol": "UnitHealPredictionCalculator:GetMaximumHealthMode"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-scriptobjects-UnitHealPredictionCalculator:GetMaximumIncomingHeals-358": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "scriptobjects",
+      "superseded_by": null,
+      "symbol": "UnitHealPredictionCalculator:GetMaximumIncomingHeals"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-scriptobjects-UnitHealPredictionCalculator:GetMissingHealth-359": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "scriptobjects",
+      "superseded_by": null,
+      "symbol": "UnitHealPredictionCalculator:GetMissingHealth"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-scriptobjects-UnitHealPredictionCalculator:GetMissingHealthPercent-360": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "scriptobjects",
+      "superseded_by": null,
+      "symbol": "UnitHealPredictionCalculator:GetMissingHealthPercent"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-scriptobjects-UnitHealPredictionCalculator:GetTotalDamageAbsorbs-361": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "scriptobjects",
+      "superseded_by": null,
+      "symbol": "UnitHealPredictionCalculator:GetTotalDamageAbsorbs"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-scriptobjects-UnitHealPredictionCalculator:GetTotalHealAbsorbs-362": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "scriptobjects",
+      "superseded_by": null,
+      "symbol": "UnitHealPredictionCalculator:GetTotalHealAbsorbs"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-scriptobjects-UnitHealPredictionCalculator:GetTotalIncomingHeals-363": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "scriptobjects",
+      "superseded_by": null,
+      "symbol": "UnitHealPredictionCalculator:GetTotalIncomingHeals"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-scriptobjects-UnitHealPredictionCalculator:GetTotalIncomingHealsFromHealer-364": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "scriptobjects",
+      "superseded_by": null,
+      "symbol": "UnitHealPredictionCalculator:GetTotalIncomingHealsFromHealer"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-scriptobjects-UnitHealPredictionCalculator:ResetPredictedValues-365": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "scriptobjects",
+      "superseded_by": null,
+      "symbol": "UnitHealPredictionCalculator:ResetPredictedValues"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-scriptobjects-UnitHealPredictionCalculator:SetMaximumHealthMode-366": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "scriptobjects",
+      "superseded_by": null,
+      "symbol": "UnitHealPredictionCalculator:SetMaximumHealthMode"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "UnitHealPredictionCalculator; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-FontString:ClearText-376": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "FontString:ClearText"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "FontString; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-FrameScriptObject:SetPreventSecretValues-380": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "FrameScriptObject:SetPreventSecretValues"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "FrameScriptObject; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-GameTooltip:ClearPadding-377": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "GameTooltip:ClearPadding"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "GameTooltip; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  }
+}

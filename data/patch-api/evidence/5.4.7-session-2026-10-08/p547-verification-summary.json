@@ -1,0 +1,296 @@
+{
+  "proofs": {
+    "p547-negative": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_5_4_7_publication_sweep"
+      ],
+      "revision": "500543bd7b220fc884ba78e2724b71e6196536a6",
+      "exit": 1,
+      "log": "p547-negative.txt",
+      "invalidated": false
+    },
+    "p547-format": {
+      "command": [
+        "cargo",
+        "fmt",
+        "--all",
+        "--check"
+      ],
+      "revision": "84db5bf2b72f9741126dcb30d34e180144c44197",
+      "exit": 0,
+      "log": "p547-format.txt",
+      "invalidated": false
+    },
+    "p547-cached-bnet": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "blizzard_deprecated_battle_net"
+      ],
+      "revision": "7ba500c07d5b52e7aed21195de0c355b99ce4082",
+      "exit": 0,
+      "log": "p547-cached-bnet.txt",
+      "invalidated": false
+    },
+    "p547-all-sweeps": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "publication_sweep"
+      ],
+      "revision": "7ba500c07d5b52e7aed21195de0c355b99ce4082",
+      "exit": 0,
+      "log": "p547-all-sweeps.txt",
+      "invalidated": false
+    },
+    "test_patch_audit_validation": {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p547-page/tools/test_patch_audit_validation.py"
+      ],
+      "revision": "13f6e9f8f26087a7c79c7cf13ae749474536e0ba",
+      "exit": 0,
+      "log": "test_patch_audit_validation.txt",
+      "invalidated": false
+    },
+    "test_gen_patch_wikitext_register": {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p547-page/tools/test_gen_patch_wikitext_register.py"
+      ],
+      "revision": "13f6e9f8f26087a7c79c7cf13ae749474536e0ba",
+      "exit": 0,
+      "log": "test_gen_patch_wikitext_register.txt",
+      "invalidated": false
+    },
+    "p547-discovery": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_5_4_7"
+      ],
+      "revision": "13f6e9f8f26087a7c79c7cf13ae749474536e0ba",
+      "exit": 1,
+      "log": "p547-discovery.txt",
+      "invalidated": false
+    },
+    "p547-reproduction": {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p547-page/data/patch-api/evidence/5.4.7-session-2026-10-08/reproduce_sources.py"
+      ],
+      "revision": "13f6e9f8f26087a7c79c7cf13ae749474536e0ba",
+      "exit": 0,
+      "log": "p547-reproduction.txt",
+      "invalidated": false
+    },
+    "p547-mists": {
+      "command": [
+        "cargo",
+        "check",
+        "--no-default-features",
+        "--features",
+        "sound,gui,casc,client-mists",
+        "--tests"
+      ],
+      "revision": "7ba500c07d5b52e7aed21195de0c355b99ce4082",
+      "exit": 0,
+      "log": "p547-mists.txt",
+      "invalidated": false
+    },
+    "p547-targeted-driver": {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p547-page/data/patch-api/evidence/5.4.7-session-2026-10-08/verify_targeted.py"
+      ],
+      "revision": "7ba500c07d5b52e7aed21195de0c355b99ce4082",
+      "exit": 0,
+      "log": "p547-targeted-driver.txt",
+      "invalidated": false
+    },
+    "test_extract_patch_non_inventory": {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p547-page/tools/test_extract_patch_non_inventory.py"
+      ],
+      "revision": "13f6e9f8f26087a7c79c7cf13ae749474536e0ba",
+      "exit": 0,
+      "log": "test_extract_patch_non_inventory.txt",
+      "invalidated": false
+    },
+    "test_check_patch_validators": {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p547-page/tools/test_check_patch_validators.py"
+      ],
+      "revision": "13f6e9f8f26087a7c79c7cf13ae749474536e0ba",
+      "exit": 0,
+      "log": "test_check_patch_validators.txt",
+      "invalidated": false
+    },
+    "test_patch_warlords_register": {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p547-page/tools/test_patch_warlords_register.py"
+      ],
+      "revision": "13f6e9f8f26087a7c79c7cf13ae749474536e0ba",
+      "exit": 0,
+      "log": "test_patch_warlords_register.txt",
+      "invalidated": false
+    },
+    "p547-own-behavior": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_5_4_7"
+      ],
+      "revision": "7ba500c07d5b52e7aed21195de0c355b99ce4082",
+      "exit": 0,
+      "log": "p547-own-behavior.txt",
+      "invalidated": false
+    },
+    "p547-bnet-namespace": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "p1200_rest_battle_net_outbound"
+      ],
+      "revision": "7ba500c07d5b52e7aed21195de0c355b99ce4082",
+      "exit": 0,
+      "log": "p547-bnet-namespace.txt",
+      "invalidated": false
+    },
+    "p547-specialization": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_11_1_0_specialization_names_use_catalog_identity"
+      ],
+      "revision": "7ba500c07d5b52e7aed21195de0c355b99ce4082",
+      "exit": 0,
+      "log": "p547-specialization.txt",
+      "invalidated": false
+    }
+  },
+  "tests": {
+    "p547-negative": {
+      "passed": 0,
+      "failed": 1
+    },
+    "p547-cached-bnet": {
+      "passed": 3,
+      "failed": 0
+    },
+    "p547-all-sweeps": {
+      "passed": 55,
+      "failed": 0
+    },
+    "test_patch_audit_validation": {
+      "passed": 8,
+      "failed": 0
+    },
+    "test_gen_patch_wikitext_register": {
+      "passed": 33,
+      "failed": 0
+    },
+    "p547-discovery": {
+      "passed": 0,
+      "failed": 1
+    },
+    "test_extract_patch_non_inventory": {
+      "passed": 36,
+      "failed": 0
+    },
+    "test_check_patch_validators": {
+      "passed": 4,
+      "failed": 0
+    },
+    "test_patch_warlords_register": {
+      "passed": 3,
+      "failed": 0
+    },
+    "p547-own-behavior": {
+      "passed": 2,
+      "failed": 0
+    },
+    "p547-bnet-namespace": {
+      "passed": 1,
+      "failed": 0
+    },
+    "p547-specialization": {
+      "passed": 1,
+      "failed": 0
+    }
+  },
+  "warnings": {
+    "mists": [
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition",
+      "warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition",
+      "warning: `iced_wgpu` (manifest) generated 6 warnings"
+    ],
+    "non_vendor": []
+  },
+  "accounting": {
+    "inventory": 9,
+    "total_ids": 19,
+    "publication_gaps": 2,
+    "statuses": {
+      "audit-pending": 5,
+      "bounded-coverage": 7,
+      "metadata-only": 7
+    },
+    "pending_prose": [
+      "prose-undated-004",
+      "prose-undated-005",
+      "prose-undated-006"
+    ]
+  },
+  "negative": {
+    "original_gaps": 2,
+    "negative_gaps": 3,
+    "changed_ids": [
+      "wt-global-api-BNGetFriendInviteInfoByAddon-16"
+    ]
+  },
+  "reproduction": {
+    "registers": 54,
+    "extracts": 51,
+    "inherited_failures": [
+      "12.0.5",
+      "12.0.7",
+      "12.1.0"
+    ]
+  }
+}

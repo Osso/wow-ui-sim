@@ -1,0 +1,8 @@
+p547-all-sweeps 0
+p547-own-behavior 0
+p547-cached-bnet 0
+p547-specialization 0
+p547-bnet-namespace 0
+p547-mists 0
+p547-format 0
+p547-negative 1
