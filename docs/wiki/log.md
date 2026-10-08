@@ -408,3 +408,7 @@ Pinned Legion revision 5295335; all 178 IDs accounted. Modeled recipe search and
 ## [2026-10-08] integration | Patch 7.0.3 API audit
 
 [Audit](investigations/patch-7-0-3-api-audit.md): merged 7.1.0 register after rebase to 25fbde058. Fresh proof: 48/48 sweep/factory cases, own 52 gaps unchanged, all 46 existing pages unchanged; exact 52→53 negative control. 47 registers/44 extracts reproduce with three inherited failures. Professions/crafting/trade/mount integration and prefork coverage, Mists regressions/check, 31/35/8 fixtures and format pass; separately built addons-enabled startups both []. Original 243 artifacts and recorded Git history retained with seven explicit patch-ID mappings; 28 existing validators plus the new integrated gate pass.
+
+## [2026-10-08] investigation | Fresh patch-validator gate
+
+[Portability](investigations/patch-audit-validator-portability.md): clean detached checkout and committed unrelated later-audit phases reproduce ignored scratch/shared-input dependencies. Integrated 6.2.4 pins shared source/runtime/tool/prior-validator proofs; only two uncommitted PLAN seals removed, historical execution evidence retained. Handoff requires the gate before merging.

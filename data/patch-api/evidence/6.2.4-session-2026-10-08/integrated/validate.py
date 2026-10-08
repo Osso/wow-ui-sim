@@ -74,46 +74,48 @@ def git_scope(revision, names):
     return tree
 
 
-def blob_oid(path):
-    contents = path.read_bytes()
-    return hashlib.sha1(b'blob ' + str(len(contents)).encode() + b'\0' + contents).hexdigest()
+def historical_digest(revision, path):
+    return hashlib.sha256(blob(revision, path)).hexdigest()
+
+
+def historical_read(revision, path):
+    return json.loads(blob(revision, path))
 
 
 def check_preservation(context):
     for name, expected in read(HERE / 'historical-preservation.json').items():
-        assert digest(ROOT / name) == expected, 'historical artifact changed: ' + name
+        assert historical_digest(context['runtime_revision'], name) == expected, 'historical artifact changed: ' + name
+        assert digest(ROOT / name) == expected, 'own historical artifact changed: ' + name
     preserved = read(HERE / 'p624-input-preservation.json')
     names = git('ls-tree', '-r', '--name-only', context['master_revision'],
                 'data/patch-api/sources').decode().splitlines()
     assert {row['path'] for row in preserved['rows']} == set(names)
     for row in preserved['rows']:
         original = hashlib.sha256(blob(context['master_revision'], row['path'])).hexdigest()
-        assert original == row['before_sha256'] == row['after_sha256'] == digest(ROOT / row['path'])
+        assert original == row['before_sha256'] == row['after_sha256'] == historical_digest(context['runtime_revision'], row['path'])
     assert all(row['before'] == row['after'] for row in read(HERE / 'p624-extract-preservation.json'))
     assert git_scope(context['runtime_revision'], context['input_scope']) == context['input_scope']
-    for name, expected in context['input_scope'].items():
-        assert blob_oid(ROOT / name) == expected, 'proof invalidated: ' + name
     # Historical allowlist RED/GREEN artifacts remain sealed. Master 15b417367
     # supersedes that approach by proving runtime files only at pinned revisions.
     before = read(HERE / 'p703-before-artifact-hashes.json.txt')
     directory = ROOT / 'data/patch-api/evidence/7.0.3-session-2026-10-08/integrated'
-    after = read(directory / 'artifact-hashes.json')
+    after = historical_read(context['validator_scope_revision'], (directory / 'artifact-hashes.json').relative_to(ROOT).as_posix())
     own = (directory / 'validate.py').relative_to(ROOT).as_posix()
     assert set(before) == set(after)
     assert {name for name in before if before[name] != after[name]} == {own}
-    assert after[own] == digest(ROOT / own)
+    assert after[own] == historical_digest(context['validator_scope_revision'], own)
     original = blob(context['master_revision'], own)
     assert original == (HERE / 'p703-before-validate.py.txt').read_bytes()
     assert before[own] == hashlib.sha256(original).hexdigest()
     assert blob(context['master_revision'], (directory / 'artifact-hashes.json').relative_to(ROOT).as_posix()) == (HERE / 'p703-before-artifact-hashes.json.txt').read_bytes()
     for filename in ('validate.py', 'artifact-hashes.json'):
         name = (directory / filename).relative_to(ROOT).as_posix()
-        assert blob('15b417367', name) == (ROOT / name).read_bytes()
+        assert blob('15b417367', name) == blob(context['validator_scope_revision'], name)
     replacements = read(HERE / 'tool-replacements.json')
     for name, pair in replacements['replacements'].items():
         assert pair == [hashlib.sha256(blob(replacements[revision], name)).hexdigest()
                         for revision in ('before_revision', 'after_revision')]
-        assert pair[1] == digest(ROOT / name)
+        assert pair[1] == historical_digest(context['runtime_revision'], name)
     assert not git('diff', '--name-only', context['master_revision'], context['runtime_revision'], '--', 'src')
     return len(names)
 
@@ -130,24 +132,24 @@ def check_reproduction(context):
         assert len(rows) == len(patches) and {row['patch'] for row in rows} == patches
     for row in registers + extension:
         path = ROOT / 'data/patch-api/sources' / (row['patch'] + '-wikitext-register.json')
-        provenance = read(path.with_name(row['patch'] + '-api-changes.provenance.json'))
+        provenance = historical_read(context['runtime_revision'], path.with_name(row['patch'] + '-api-changes.provenance.json').relative_to(ROOT).as_posix())
         flags = provenance.get('generator_flags', prior_registers.get(row['patch'], {}).get('verified_flags', []))
         assert row['verified_flags'] == flags
-        assert row['exit'] == 0 and row['byte_identical'] and row['sha256'] == digest(path)
+        assert row['exit'] == 0 and row['byte_identical'] and row['sha256'] == historical_digest(context['runtime_revision'], path.relative_to(ROOT).as_posix())
     for row in extracts:
         path = ROOT / 'data/patch-api/sources' / (row['patch'] + '-api-changes.txt')
-        provenance = read(path.with_name(row['patch'] + '-api-changes.provenance.json'))
+        provenance = historical_read(context['runtime_revision'], path.with_name(row['patch'] + '-api-changes.provenance.json').relative_to(ROOT).as_posix())
         flags = provenance.get('extractor_flags', inherited.get(row['patch'], {}).get('verified_flags', []))
-        assert row['verified_flags'] == flags and row['saved_sha256'] == digest(path)
+        assert row['verified_flags'] == flags and row['saved_sha256'] == historical_digest(context['runtime_revision'], path.relative_to(ROOT).as_posix())
         if row['patch'] in inherited:
             previous = inherited[row['patch']]
             assert all(row[key] == previous[key] for key in ('byte_identical', 'sha256', 'saved_sha256', 'error'))
         else:
             assert row['byte_identical'] and row['error'] is None
     review = read(HERE / 'supersession-review.json')
-    own = read(ROOT / 'data/patch-api/sources/6.2.4-wikitext-register.json')['entries']
+    own = historical_read(context['runtime_revision'], 'data/patch-api/sources/6.2.4-wikitext-register.json')['entries']
     for patch in ('7.0.1', '7.0.3'):
-        later = read(ROOT / 'data/patch-api/sources' / (patch + '-wikitext-register.json'))['entries']
+        later = historical_read(context['runtime_revision'], 'data/patch-api/sources/' + patch + '-wikitext-register.json')['entries']
         intersection = [row for row in later if row['symbol'] in {entry['symbol'] for entry in own}]
         assert intersection == review['later_intersections'][patch] == []
     assert review['before_gaps'] == review['after_gaps'] == 0 and review['replacements'] == []
@@ -220,7 +222,7 @@ def check_receipts(context):
     baseline = read(HERE / 'patch_6_2_4_publication_sweep-results.json')
     negative = read(HERE / 'negative-results.json')
     control = read(HERE / 'negative-control.json')
-    original = read(ROOT / 'data/patch-api/sources/6.2.4-wikitext-register.json')
+    original = historical_read(context['runtime_revision'], 'data/patch-api/sources/6.2.4-wikitext-register.json')
     mutated = read(HISTORICAL / 'p624-negative-register.json')
     assert len(original['entries']) == len(mutated['entries'])
     changes = [(before, after) for before, after in zip(original['entries'], mutated['entries']) if before != after]
@@ -271,15 +273,23 @@ def check_matrix(context):
     assert set(matrix) == expected and all(row['exit'] == 0 for row in matrix.values())
     for name, row in matrix.items():
         assert hashlib.sha256(blob(context['validator_scope_revision'], name)).hexdigest() == row['validator_sha256']
-        assert digest(ROOT / name) == row['validator_sha256']
         assert digest(HERE / row['log']) == row['log_sha256']
     return len(matrix)
 
 
 def main():
-    for name, expected in read(HERE / 'artifact-hashes.json').items():
-        assert digest(ROOT / name) == expected, 'integrated artifact changed: ' + name
     context = read(HERE / 'context.json')
+    preservation = (HERE / 'historical-preservation.json').relative_to(ROOT).as_posix()
+    scratch = (HISTORICAL / 'PLAN.md').relative_to(ROOT).as_posix()
+    for name, expected in read(HERE / 'artifact-hashes.json').items():
+        if name == preservation:
+            # Keep the original seal; only the uncommitted scratch entry was removed.
+            original = historical_read(context['runtime_revision'], name)
+            assert historical_digest(context['runtime_revision'], name) == expected
+            del original[scratch]
+            assert read(ROOT / name) == original, 'historical preservation record changed'
+        else:
+            assert digest(ROOT / name) == expected, 'integrated artifact changed: ' + name
     check_rebase()
     preserved = check_preservation(context)
     registers, extracts = check_reproduction(context)

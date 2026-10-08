@@ -86,6 +86,7 @@ Create local worktrees from these branches
    register regenerates byte-identically with its recorded `generator_flags`; Mists
    `cargo check --no-default-features --features sound,gui,casc,client-mists --tests`
    with zero non-vendor warnings.
+   Run `python3 tools/check_patch_validators.py` before merging.
 6. Fast-forward master, push with explicit refspec, then check CI by commit:
    `gh api "repos/Osso/wow-ui-sim/actions/runs?head_sha=<sha>"` (`gh run list` returned
    stale results). Remove the worktree and branch.

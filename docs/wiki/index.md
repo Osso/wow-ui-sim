@@ -45,7 +45,7 @@
 [Audit](investigations/patch-7-3-2-api-audit.md): integrated merged 8.0.1 register; seven identities, bounded active-stack Logout/Quit protection, no retirements or gap changes. Historical register/sweep scope and fresh caller/validator/check receipts retained; inherited extract failures, default slash-registration gap and native policy/countdown boundaries remain explicit.
 
 
-[Portability](investigations/patch-audit-validator-portability.md): fixed historical register/sweep scope, exact merged 9.2.5 input replacements, checkout-independent receipts and read-only validation. Original proof artifacts remain unchanged.
+[Portability](investigations/patch-audit-validator-portability.md): fixed historical register/sweep scope, exact merged 9.2.5 input replacements, checkout-independent receipts and read-only validation. Fresh-checkout/later-audit gate detects ignored scratch and live shared-input dependencies; integrated 6.2.4 now pins shared proofs. Historical execution artifacts remain unchanged.
 ## [2026-10-08] evidence | 8.1.5 API page audit
 
 [Audit](investigations/patch-8-1-5-api-audit.md): revision 3789732, all 85 IDs accounted (66 inventory / 19 extract). Toy acquisition/fanfare model, twelve consumer-free retail retirements, 24 exact gaps. All 38 sweeps plus factory, 24 → 25 negative control, bare/cached/Mists behavior, scoped regressions, 51 parser fixtures, warning-clean non-vendor checks and startup `[]` pass. Dynamic validator passes; 38 registers, 194 prior inputs and 74 mode outcomes preserved. Three inherited extract failures unchanged; 8.2.0 integration placeholder remains.

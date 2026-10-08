@@ -38,6 +38,14 @@ Only absolute cwd/target equality assertions were removed. Receipt commands, rev
 
 Run `python3 -B tools/test_patch_audit_validation.py` for original/replacement bytes, tamper rejection, historical accounting, complete snapshot scope and read-only result regression. Final acceptance runs all fourteen local validator copies in both the implementation checkout and a second detached checkout of the same branch revision; protected-input tampering must fail before restoration. Neither validation path writes retained evidence.
 
+## Fresh-checkout and later-audit gate
+
+Run `python3 tools/check_patch_validators.py [revision]` (default `HEAD`) before merging. The [gate](../../../tools/check_patch_validators.py) creates a clean detached temporary worktree, runs every retained `validate.py`, commits unrelated changes to a C API source, generator, new `9.9.9` register/evidence and wiki log, then reruns every validator. It removes the worktree, prints per-validator JSON and fails if either phase fails. Existing source registers are never reformatted or mutated. [Fixture tests](../../../tools/test_check_patch_validators.py) cover ignored scratch dependencies, moving shared inputs, pinned proof success and cleanup.
+
+Rule: no live-file comparisons outside the audit's own session directory; prove shared files at recorded Git revisions. Historical register sets use `historical_registers`, not today's global glob. Own immutable session records retain their seals; missing history remains an error.
+
+At `45a64bef3`, 27 of 28 validators passed both phases. Integrated 6.2.4 failed on ignored scratch `PLAN.md` and also compared shared runtime/tool/source files and prior validators with live bytes. The repair pins those checks to recorded revisions, removes the two uncommitted scratch entries, and preserves counts, gap sets, negative control, receipts/log hashes and rebase mapping. Its [note](../../../data/patch-api/evidence/6.2.4-session-2026-10-08/integrated/validator-portability-note.md) explains preservation of the original historical-manifest seal.
+
 ## Sources
 
 - [Shared helper and tests](../../../tools/test_patch_audit_validation.py).
