@@ -40,9 +40,6 @@ end
 if rawget(C_Sound, "PlayItemSound") == nil then
     function C_Sound.PlayItemSound() end
 end
-if rawget(C_Sound, "PlaySound") == nil then
-    function C_Sound.PlaySound() end
-end
 if rawget(C_Sound, "PlaySoundFile") == nil then
     function C_Sound.PlaySoundFile() end
 end

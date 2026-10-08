@@ -7,6 +7,7 @@ Audit the pinned [page source](../../data/patch-api/sources/7.3.0-api-changes.wi
 - [ ] Probe all three named table additions through raw and ordinary lookup in a cached retail environment; require exact reviewed failure IDs after later-register supersession.
 - [ ] Keep the 7.3.2 integration placeholder first, then 8.0.1 and all newer registers in chronological order.
 - [ ] Account for every retained nonblank prose line, separately from table publication.
+- [ ] Both `C_Sound.PlaySound` and the legacy global must use the same simulator request model; cached Blizzard aliasing must retain numeric validation and recording.
 - [ ] Verify a concrete SOUNDKIT numeric ID reaches the existing sound-request state; reject the old string name without replacing the accepted request.
 - [ ] Exercise the actual Table Inspector window with concrete root/child tables, navigation and close lifecycle, without vendor overrides.
 - [ ] Preserve every earlier source and reproduce registers using recorded flags; inherited extract failures remain explicitly distinguished.
@@ -21,6 +22,8 @@ Audit the pinned [page source](../../data/patch-api/sources/7.3.0-api-changes.wi
 
 - `tools/gen_patch_wikitext_register.py`: opt-in bare table-summary parser.
 - `tests/patch_7_3_0_publication_sweep.rs`: prefork publication observations.
+- `src/c_api/c_sound.rs`: shared numeric sound-kit request model; existing options retain their feature gate.
+- `tests/patch_7_3_0_sound_model.rs`: bare namespace/global request and rejection behavior.
 - `tests/patch_7_3_0_cached_behavior.rs`: actual sound input/request-state boundary.
 - `tests/data/patch_7_3_0_sweep_known_gaps.json`: reviewed exact gap IDs.
 - `data/patch-api/evidence/7.3.0-session-2026-10-08/`: source, scans and proof receipts.

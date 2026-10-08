@@ -94,7 +94,7 @@ fn register_legacy_global_shims(lua: &mut rilua::Lua) -> LuaResult<()> {
 }
 
 fn register_audio_and_utility_globals(lua: &mut rilua::Lua) -> LuaResult<()> {
-    LuaApiMut::register_function(lua, "PlaySound", play_sound)?;
+    LuaApiMut::register_function(lua, "PlaySound", c_api::c_sound::play_sound)?;
     LuaApiMut::register_function(lua, "PlaySoundFile", play_sound_file)?;
     LuaApiMut::register_function(lua, "StopSound", stop_sound)?;
     LuaApiMut::register_function(lua, "LaunchURL", launch_url)?;
@@ -367,16 +367,6 @@ fn get_repair_all_cost(state: &mut LuaState) -> LuaResult<u32> {
     state.push(Val::Num(0.0));
     state.push(Val::Bool(false));
     Ok(2)
-}
-
-fn play_sound(state: &mut LuaState) -> LuaResult<u32> {
-    let sound_kit_id = u32::from_stack(state, 1)?;
-    let mut sim = borrow_state_mut(state)?;
-    sim.last_sound_kit_requested = Some(sound_kit_id);
-    if let Some(manager) = sim.sound_manager.as_mut() {
-        let _ = manager.play_sound(sound_kit_id);
-    }
-    Ok(0)
 }
 
 fn play_sound_file(state: &mut LuaState) -> LuaResult<u32> {

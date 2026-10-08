@@ -40,7 +40,6 @@ static GLOBAL_NIL_STUBS: &[&str] = &[
     "MacroFrameTab_OnClick",
     "OpenWorldMap",
     "PlayMusic",
-    "PlaySound",
     "PlaySoundFile",
     "RaidGroupSetRole",
     "RepairAllItems",

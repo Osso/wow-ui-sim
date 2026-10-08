@@ -24,3 +24,9 @@ No removal statements occur on this page; no retirement is authorized. Complete 
 
 - [[patch-8-0-1-api-audit]] — prior-page template and source reproduction recipes.
 - [[patch-audit-validator-portability]] — fixed historical scope, no checkout path gates.
+
+## Sound alias root cause
+
+Cached Blizzard `Blizzard_SharedXML/Mainline/Sound.lua` assigns `PlaySound = C_Sound.PlaySound`. The global previously recorded numeric requests, but `sound_driver_defaults.rs` supplied a no-op namespace member. Full UI therefore lost both request recording and old-name rejection. The prefork sound assertion reproduced `None` instead of `Some(861)`; the inspector and three publications already passed.
+
+Moved the existing numeric request implementation to `src/c_api/c_sound.rs`, registered it on the namespace and reused it from the legacy global. Removed only the replaced PlaySound stubs. Existing 12.1 options code moved unchanged into `c_sound/options.rs` and retains its epoch gate; basic sound requests are shared across profiles. No Blizzard Lua changed. Bare namespace/global and actual cached alias tests cover the distinct lifetime boundaries. Acceptance remains pending.

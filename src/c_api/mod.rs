@@ -156,7 +156,6 @@ pub mod c_scenario_info;
 pub mod c_secrets;
 pub mod c_settings_util;
 pub mod c_social;
-#[cfg(feature = "retail-12-1-0")]
 pub mod c_sound;
 pub mod c_spec;
 pub mod c_spell;
