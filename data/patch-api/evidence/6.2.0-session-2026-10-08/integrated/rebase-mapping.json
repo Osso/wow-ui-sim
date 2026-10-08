@@ -1865,9 +1865,9 @@
         "data/patch-api/evidence/7.0.3-session-2026-10-08/integrated/validate.py": "81872c9df8ae7f9a3131f40d79221970336123cc"
       },
       "recorded_src_tree": "9dd60bab10042f35bb08102bdc323861ad61b37c",
-      "rebased_src_tree": "38c93a1b3dbd05f25efecde211628bf742f12066",
+      "rebased_src_tree": "9dd60bab10042f35bb08102bdc323861ad61b37c",
       "recorded_tests_tree": "5612d259408f10fb87181f66887201dc51e2c2f8",
-      "rebased_tests_tree": "d8b3b8ec127d9c5d693c9efac637cfa2163ad6a7",
+      "rebased_tests_tree": "d9f57630148877f1ce81df33bbbb890d3ff09945",
       "recorded_registers": [
         "data/patch-api/sources/10.0.0-api-changes.provenance.json",
         "data/patch-api/sources/10.0.0-api-changes.txt",
@@ -2174,7 +2174,8 @@
         "tests/patch_9_2_0_publication_sweep.rs",
         "tests/patch_9_2_5_publication_sweep.rs",
         "tests/patch_9_2_7_publication_sweep.rs"
-      ]
+      ],
+      "scope_revision": "11220f55a0ec5dcd50b214a20685320d12eadac0"
     },
     {
       "recorded_revision": "c4cded5a2f761feed61a5a3bca6135e11cca127e",

@@ -1,0 +1,13 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "tooltip_gc_rooting::"
+  ],
+  "revision": "a91019f6eedbf54df533efdb7c57b39ea9e72b46",
+  "exit": 0,
+  "log": "tooltip_gc_rooting.txt",
+  "log_sha256": "b61fc442c9a5d753e8c60e326ea25a14b040fe5d76547359bbbec66be0f0aa7c"
+}

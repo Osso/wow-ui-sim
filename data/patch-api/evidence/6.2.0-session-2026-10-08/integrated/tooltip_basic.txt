@@ -1,0 +1,76 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.34s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p620-page/debug/deps/integration-1db16289b0998b2a)
+
+running 62 tests
+test tooltip::tooltip_basic::test_adddoubleline_and_numlines ... ok
+test tooltip::tooltip_basic::test_getanchortype_after_setowner ... ok
+test tooltip::tooltip_basic::test_appendtext ... ok
+test tooltip::tooltip_basic::test_addline_and_numlines ... ok
+test tooltip::tooltip_basic::test_fadeout_hides_and_clears_owner ... ok
+test tooltip::tooltip_basic::test_isobjecttype_for_other_types ... ok
+test tooltip::tooltip_basic::test_isobjecttype_frame_returns_true_for_gametooltip ... ok
+test tooltip::tooltip_basic::test_gametooltip_exists_and_has_correct_type ... ok
+test tooltip::tooltip_basic::test_copy_tooltip_copies_lines_and_spell_data_without_reowning ... ok
+test tooltip::tooltip_basic::test_gametooltip_strata_is_tooltip ... ok
+test tooltip::tooltip_basic::test_clearlines_resets_count ... ok
+test tooltip::tooltip_basic::test_createframe_gametooltip_type ... ok
+test tooltip::tooltip_basic::test_other_tooltip_frames_exist ... ok
+test tooltip::tooltip_basic::test_set_frame_stack_populates_lines_returns_frame_and_fires_script ... ok
+test tooltip::tooltip_basic::test_setpadding_and_getpadding ... ok
+test tooltip::tooltip_basic::test_on_tooltip_cleared_fires_on_setowner ... ok
+test tooltip::tooltip_basic::test_set_shapeshift_populates_spell_tooltip ... ok
+test tooltip::tooltip_basic::test_setowner_and_isowned_and_getowner ... ok
+test tooltip::tooltip_basic::test_repeated_identical_tooltip_refresh_keeps_cached_strata_buckets ... ok
+test tooltip::tooltip_basic::test_setminimumwidth_and_getminimumwidth ... ok
+test tooltip::tooltip_basic::tooltip_content_lifecycle_appends_remain_hidden_until_show ... ok
+test tooltip::tooltip_basic::test_settext_clears_and_sets_first_line ... ok
+test tooltip::tooltip_basic::test_on_tooltip_cleared_fires_on_clearlines ... ok
+test tooltip::tooltip_basic::tooltip_content_lifecycle_setowner_hides_clears_and_retains_new_owner ... ok
+test tooltip::tooltip_basic::tooltip_owner_hide_releases_owner_without_clearing_lines ... ok
+test tooltip::tooltip_basic::tooltip_content_lifecycle_settext_shows_owned_populated_tooltip ... ok
+test tooltip::tooltip_basic::tooltip_owner_clear_lines_retains_owner ... ok
+test tooltip::tooltip_basic::tooltip_owner_set_shown_false_releases_owner ... ok
+test tooltip::tooltip_basic::tooltip_owner_normal_frame_hide_does_not_change_tooltip_owner ... ok
+test tooltip_basic::test_clearlines_resets_count ... ok
+test tooltip_basic::test_adddoubleline_and_numlines ... ok
+test tooltip::tooltip_basic::tooltip_content_lifecycle_spell_payload_still_shows_after_setowner ... ok
+test tooltip_basic::test_addline_and_numlines ... ok
+test tooltip_basic::test_appendtext ... ok
+test tooltip_basic::test_gametooltip_exists_and_has_correct_type ... ok
+test tooltip_basic::test_createframe_gametooltip_type ... ok
+test tooltip_basic::test_fadeout_hides_and_clears_owner ... ok
+test tooltip_basic::test_copy_tooltip_copies_lines_and_spell_data_without_reowning ... ok
+test tooltip_basic::test_getanchortype_after_setowner ... ok
+test tooltip_basic::test_isobjecttype_for_other_types ... ok
+test tooltip_basic::test_gametooltip_strata_is_tooltip ... ok
+test tooltip_basic::test_isobjecttype_frame_returns_true_for_gametooltip ... ok
+test tooltip::tooltip_basic::tooltip_content_lifecycle_explicit_hide_releases_owner_when_already_hidden ... ok
+test tooltip_basic::test_on_tooltip_cleared_fires_on_clearlines ... ok
+test tooltip_basic::test_on_tooltip_cleared_fires_on_setowner ... ok
+test tooltip_basic::test_other_tooltip_frames_exist ... ok
+test tooltip_basic::test_set_frame_stack_populates_lines_returns_frame_and_fires_script ... ok
+test tooltip_basic::test_repeated_identical_tooltip_refresh_keeps_cached_strata_buckets ... ok
+test tooltip_basic::test_setminimumwidth_and_getminimumwidth ... ok
+test tooltip_basic::test_settext_clears_and_sets_first_line ... ok
+test tooltip_basic::tooltip_content_lifecycle_appends_remain_hidden_until_show ... ok
+test tooltip_basic::test_set_shapeshift_populates_spell_tooltip ... ok
+test tooltip_basic::test_setowner_and_isowned_and_getowner ... ok
+test tooltip_basic::test_setpadding_and_getpadding ... ok
+test tooltip_basic::tooltip_content_lifecycle_setowner_hides_clears_and_retains_new_owner ... ok
+test tooltip_basic::tooltip_content_lifecycle_settext_shows_owned_populated_tooltip ... ok
+test tooltip_basic::tooltip_content_lifecycle_spell_payload_still_shows_after_setowner ... ok
+test tooltip_basic::tooltip_owner_clear_lines_retains_owner ... ok
+test tooltip_basic::tooltip_owner_hide_releases_owner_without_clearing_lines ... ok
+test tooltip_basic::tooltip_owner_set_shown_false_releases_owner ... ok
+test tooltip_basic::tooltip_owner_normal_frame_hide_does_not_change_tooltip_owner ... ok
+test tooltip_basic::tooltip_content_lifecycle_explicit_hide_releases_owner_when_already_hidden ... ok
+
+test result: ok. 62 passed; 0 failed; 0 ignored; 0 measured; 10613 filtered out; finished in 1.18s
+

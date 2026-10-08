@@ -23,7 +23,7 @@ def mapped_row(revision):
 
 def mapped_revision(revision):
     row = mapped_row(revision)
-    return row.get('rebased_revision', row.get('superseded_by')) if row else revision
+    return row.get('rebased_revision', row.get('scope_revision', row.get('superseded_by'))) if row else revision
 
 
 def historical_registers(root, revision):

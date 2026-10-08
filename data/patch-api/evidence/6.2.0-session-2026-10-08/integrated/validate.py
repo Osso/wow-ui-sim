@@ -49,7 +49,7 @@ def check_mapping():
         for path, expected in inventory['blobs'].items():
             assert git('rev-parse', revision + ':' + path).decode().strip() == expected
     for row in mapping['commits']:
-        revision = row.get('rebased_revision', row.get('superseded_by'))
+        revision = row.get('rebased_revision', row.get('scope_revision', row.get('superseded_by')))
         if 'rebased_revision' in row:
             assert git('show', '-s', '--format=%s', revision).decode().strip() == row['subject']
             patch = git('show', '--format=', '--binary', revision)
@@ -62,7 +62,7 @@ def check_mapping():
         else:
             assert row['subject'] == 'Use master 7.0.3 validator portability repair'
             for path, expected in row['upstream_blobs'].items():
-                assert git('rev-parse', revision + ':' + path).decode().strip() == expected
+                assert git('rev-parse', row['superseded_by'] + ':' + path).decode().strip() == expected
         for directory in ('src', 'tests'):
             assert git('rev-parse', revision + ':' + directory).decode().strip() == row['rebased_' + directory + '_tree']
         # The rebase adds only the already-merged 6.2.2/6.2.4 inventory files.

@@ -1,0 +1,36 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.19s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p620-page/debug/deps/integration-1db16289b0998b2a)
+
+running 22 tests
+test tooltip_spell_mount_identifiers::mount_number_name_and_colored_link_aliases_have_equivalent_dtos ... ok
+test tooltip_spell_mount_identifiers::full_link_alias_wins_over_its_embedded_spell_number ... ok
+test tooltip_spell_mount_identifiers::mount_never_secret_optional_rejects_all_vm_kinds_before_known_or_missing_payload ... ok
+test tooltip_spell_mount_identifiers::documented_public_optional_combinations_keep_current_ignored_payloads ... ok
+test tooltip_spell_mount_identifiers::numeric_unknowns_preserve_identified_line_empty_spell_tooltips ... ok
+test tooltip_spell_mount_identifiers::live_alias_changes_are_visible_without_cached_query_results ... ok
+test tooltip_spell_mount_identifiers::frame_secret_inputs_fail_without_mutating_prior_actual_tooltip_payload ... ok
+test tooltip_spell_mount_identifiers::numeric_alias_precedes_identity_and_returns_resolved_payload_id ... ok
+test tooltip_spell_mount_identifiers::known_spell_numeric_keeps_generated_title_and_nonempty_lines ... ok
+test tooltip_spell_mount_identifiers::known_mount_numeric_uses_existing_declared_host_mount ... ok
+test tooltip_spell_mount_identifiers::ordinary_tainted_public_calls_preserve_stack_taint_and_payload ... ok
+test tooltip_spell_mount_identifiers::forced_gc_preserves_stack_global_list_roots_and_caller_properties ... ok
+test tooltip_spell_mount_identifiers::unseeded_public_strings_return_one_unidentified_empty_spell_tooltip ... ok
+test tooltip_spell_mount_identifiers::result_mutation_and_repeated_queries_leave_payload_sources_read_only ... ok
+test tooltip_spell_mount_identifiers::spell_number_name_and_colored_link_aliases_have_equivalent_dtos ... ok
+test tooltip_spell_mount_identifiers::original_frame_identifier_routes_match_direct_dto_and_actual_rendered_lines ... ok
+test tooltip_spell_mount_identifiers::secret_identifiers_conservatively_reject_all_actual_vm_representations ... ok
+test tooltip_spell_mount_identifiers::spell_never_secret_all_five_positions_reject_host_number_and_string ... ok
+test tooltip_spell_mount_identifiers::strict_public_identifiers_reject_invalid_representations_in_both_contexts ... ok
+test tooltip_spell_mount_identifiers::spell_never_secret_all_five_positions_reject_host_true_and_false ... ok
+test tooltip_spell_mount_identifiers::spell_never_secret_all_five_positions_reject_wrapped_real_frame_and_table ... ok
+test tooltip_spell_mount_identifiers::separate_environments_do_not_share_alias_updates ... ok
+
+test result: ok. 22 passed; 0 failed; 0 ignored; 0 measured; 10653 filtered out; finished in 0.51s
+

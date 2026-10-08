@@ -1,0 +1,13 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "tooltip_spell_mount_identifiers::"
+  ],
+  "revision": "a91019f6eedbf54df533efdb7c57b39ea9e72b46",
+  "exit": 0,
+  "log": "tooltip_spell_mount_identifiers.txt",
+  "log_sha256": "b5cb99e07f90e3e521c593c848d285a9516364045dd322dae8967c32b6a5fa81"
+}

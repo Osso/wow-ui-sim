@@ -1,0 +1,13 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "tooltip_item_sources::"
+  ],
+  "revision": "a91019f6eedbf54df533efdb7c57b39ea9e72b46",
+  "exit": 0,
+  "log": "tooltip_item_sources.txt",
+  "log_sha256": "4a6f181c2b3cca21f9eae2b6fc3c8c8847f48ab12b385e81bc602d9549b41dea"
+}

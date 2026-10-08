@@ -1,0 +1,14 @@
+{
+  "own-sweep": 0,
+  "all-sweeps": 0,
+  "integration-patch": 0,
+  "prefork-patch": 0,
+  "integration-tooltip": 101,
+  "prefork-tooltip": 0,
+  "build-startup": 0,
+  "startup": 0,
+  "format": 0,
+  "mists-check": 0,
+  "negative": 1,
+  "master-all-sweeps": 0
+}

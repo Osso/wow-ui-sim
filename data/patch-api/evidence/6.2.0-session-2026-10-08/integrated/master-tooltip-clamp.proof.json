@@ -1,0 +1,17 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--manifest-path",
+    "/tmp/p620-master-tooltip-hz1etng_/Cargo.toml",
+    "--test",
+    "integration",
+    "tooltip_text_layout::test_tooltip_layout_is_clamped_to_viewport_edges",
+    "--",
+    "--exact"
+  ],
+  "revision": "8dd11c1b90fb1f5ca925de62054a671179652f15",
+  "exit": 101,
+  "log": "master-tooltip-clamp.txt",
+  "log_sha256": "cb5db35d7e2d384c53111a9d2719334bc67062dd0d7603103c35608ba5c8c233"
+}

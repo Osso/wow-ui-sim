@@ -1,0 +1,8 @@
+tooltip_item_spell 0
+tooltip_basic 0
+tooltip_spell_mount_identifiers 0
+tooltip_gc_rooting 0
+tooltip_item_sources 0
+tooltip_talent 0
+master-tooltip-clamp 101
+FINISHED

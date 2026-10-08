@@ -1,0 +1,103 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p620-page)
+    Finished `test` profile [optimized + debuginfo] target(s) in 3m 11s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p620-page/debug/deps/integration-1db16289b0998b2a)
+
+running 88 tests
+test tooltip::tooltip_item_spell::spell_lines::test_get_spell_returns_spell_data_after_set ... ok
+test tooltip::tooltip_item_spell::inventory::test_set_bag_item_populates_tooltip ... ok
+test tooltip::tooltip_item_spell::inventory::test_set_inventory_item_tooltip_content ... ok
+test tooltip::tooltip_item_spell::spell_lines::test_clear_lines_clears_spell_id ... ok
+test tooltip::tooltip_item_spell::spell_lines::test_get_spell_returns_nil_when_no_spell ... ok
+test tooltip::tooltip_item_spell::spell_lines::test_add_line_preserves_explicit_processing_info_inline_color_segments ... ok
+test tooltip::tooltip_item_spell::inventory::test_set_inventory_item_shows_tooltip ... ok
+test tooltip::tooltip_item_spell::spell_lines::test_set_spell_by_id_applies_named_inline_color_markup ... ok
+test tooltip::tooltip_item_spell::spell_lines::test_set_spell_by_id_applies_full_line_inline_color_markup ... ok
+test tooltip::tooltip_item_spell::inventory::test_set_inventory_item_empty_slot ... ok
+test tooltip::tooltip_item_spell::spell_lines::test_add_line_does_not_invent_processing_info_value_color_segments ... ok
+test tooltip::tooltip_item_spell::spell_lines::test_set_spell_by_id_fires_on_tooltip_set_spell ... ok
+test tooltip::tooltip_item_spell::test_get_num_lines_returns_actual_count ... ok
+test tooltip::tooltip_item_spell::test_get_action_adds_colored_binding_line ... ok
+test tooltip::tooltip_item_spell::spell_lines::test_set_spell_by_id_get_left_line_uses_tooltip_line_color ... ok
+test tooltip::tooltip_item_spell::spell_lines::test_set_spell_by_id_unknown_spell_is_noop ... ok
+test tooltip::tooltip_item_spell::test_set_hyperlink_short_format ... ok
+test tooltip::tooltip_item_spell::spell_lines::test_set_spell_by_id_preserves_partial_inline_color_segments ... ok
+test tooltip::tooltip_item_spell::test_set_hyperlink_spell_link_populates_spell_tooltip ... ok
+test tooltip::tooltip_item_spell::spell_lines::test_set_spell_by_id_makes_tooltip_visible ... ok
+test tooltip::tooltip_item_spell::test_set_hyperlink_populates_lines ... ok
+test tooltip::tooltip_item_spell::test_set_item_by_id_6948_contains_hearthstone_line ... ok
+test tooltip::tooltip_item_spell::spell_lines::test_set_spell_by_id_get_left_line_does_not_invent_value_color_segments ... ok
+test tooltip::tooltip_item_spell::test_set_item_by_id_makes_tooltip_visible ... ok
+test tooltip::tooltip_item_spell::test_set_item_by_id_populates_lines ... ok
+test tooltip::tooltip_item_spell::test_set_spell_by_id_colors_title_and_metadata_lines ... ok
+test tooltip::tooltip_item_spell::test_set_spell_by_id_colors_cooldown_line ... ok
+test tooltip::tooltip_item_spell::test_set_spell_by_id_replaces_armor_placeholder_for_shield_of_the_righteous ... ok
+test tooltip::tooltip_item_spell::test_set_spell_by_id_instant_cast ... ok
+test tooltip::tooltip_item_spell::test_set_spell_by_id_shows_cast_time ... ok
+test tooltip::tooltip_item_spell::test_set_unit_aura_colors_like_spell_tooltip ... ok
+test tooltip::tooltip_item_spell::test_set_spell_by_id_populates_lines ... ok
+test tooltip::tooltip_item_spell::test_set_spell_by_id_replaces_shield_placeholders_from_player_health ... ok
+test tooltip::tooltip_item_spell::test_set_unit_aura_by_aura_instance_id_populates_lines ... ok
+test tooltip::tooltip_item_spell::test_set_spell_by_id_uses_wrapped_description_for_tooltip_width ... ok
+test tooltip::tooltip_item_spell::test_set_spell_by_id_replaces_damage_placeholders_in_description ... ok
+test tooltip::tooltip_item_spell::test_set_unit_player_populates_tooltip ... ok
+test tooltip::tooltip_item_spell::test_set_unit_buff_by_aura_instance_id_respects_unit ... ok
+test tooltip::tooltip_item_spell::test_set_unit_aura_invalid_index_no_crash ... ok
+test tooltip::tooltip_item_spell::test_set_unit_aura_populates_lines ... ok
+test tooltip::tooltip_item_spell::test_set_unit_party_member_populates_tooltip_and_fires_event ... ok
+test tooltip::tooltip_item_spell::test_set_unit_debuff_by_aura_instance_id_does_not_show_helpful_buffs ... ok
+test tooltip_item_spell::inventory::test_set_bag_item_populates_tooltip ... ok
+test tooltip::tooltip_item_spell::test_set_unit_buff_populates_lines ... ok
+test tooltip::tooltip_item_spell::test_set_unit_invalid_returns_false ... ok
+test tooltip_item_spell::inventory::test_set_inventory_item_empty_slot ... ok
+test tooltip_item_spell::inventory::test_set_inventory_item_shows_tooltip ... ok
+test tooltip_item_spell::inventory::test_set_inventory_item_tooltip_content ... ok
+test tooltip_item_spell::spell_lines::test_add_line_preserves_explicit_processing_info_inline_color_segments ... ok
+test tooltip_item_spell::spell_lines::test_set_spell_by_id_applies_full_line_inline_color_markup ... ok
+test tooltip_item_spell::spell_lines::test_add_line_does_not_invent_processing_info_value_color_segments ... ok
+test tooltip_item_spell::spell_lines::test_set_spell_by_id_applies_named_inline_color_markup ... ok
+test tooltip_item_spell::spell_lines::test_set_spell_by_id_fires_on_tooltip_set_spell ... ok
+test tooltip_item_spell::spell_lines::test_get_spell_returns_spell_data_after_set ... ok
+test tooltip_item_spell::spell_lines::test_get_spell_returns_nil_when_no_spell ... ok
+test tooltip_item_spell::spell_lines::test_set_spell_by_id_preserves_partial_inline_color_segments ... ok
+test tooltip_item_spell::spell_lines::test_clear_lines_clears_spell_id ... ok
+test tooltip_item_spell::spell_lines::test_set_spell_by_id_get_left_line_does_not_invent_value_color_segments ... ok
+test tooltip_item_spell::spell_lines::test_set_spell_by_id_get_left_line_uses_tooltip_line_color ... ok
+test tooltip_item_spell::spell_lines::test_set_spell_by_id_makes_tooltip_visible ... ok
+test tooltip_item_spell::test_set_hyperlink_spell_link_populates_spell_tooltip ... ok
+test tooltip_item_spell::test_set_hyperlink_populates_lines ... ok
+test tooltip_item_spell::test_get_num_lines_returns_actual_count ... ok
+test tooltip_item_spell::test_set_hyperlink_short_format ... ok
+test tooltip_item_spell::spell_lines::test_set_spell_by_id_unknown_spell_is_noop ... ok
+test tooltip_item_spell::test_get_action_adds_colored_binding_line ... ok
+test tooltip_item_spell::test_set_item_by_id_makes_tooltip_visible ... ok
+test tooltip_item_spell::test_set_spell_by_id_colors_cooldown_line ... ok
+test tooltip_item_spell::test_set_item_by_id_6948_contains_hearthstone_line ... ok
+test tooltip_item_spell::test_set_spell_by_id_colors_title_and_metadata_lines ... ok
+test tooltip_item_spell::test_set_spell_by_id_instant_cast ... ok
+test tooltip_item_spell::test_set_item_by_id_populates_lines ... ok
+test tooltip_item_spell::test_set_spell_by_id_replaces_armor_placeholder_for_shield_of_the_righteous ... ok
+test tooltip_item_spell::test_set_spell_by_id_replaces_damage_placeholders_in_description ... ok
+test tooltip_item_spell::test_set_spell_by_id_populates_lines ... ok
+test tooltip_item_spell::test_set_spell_by_id_shows_cast_time ... ok
+test tooltip_item_spell::test_set_unit_aura_by_aura_instance_id_populates_lines ... ok
+test tooltip_item_spell::test_set_spell_by_id_replaces_shield_placeholders_from_player_health ... ok
+test tooltip_item_spell::test_set_spell_by_id_uses_wrapped_description_for_tooltip_width ... ok
+test tooltip_item_spell::test_set_unit_buff_populates_lines ... ok
+test tooltip_item_spell::test_set_unit_aura_invalid_index_no_crash ... ok
+test tooltip_item_spell::test_set_unit_aura_populates_lines ... ok
+test tooltip_item_spell::test_set_unit_aura_colors_like_spell_tooltip ... ok
+test tooltip_item_spell::test_set_unit_buff_by_aura_instance_id_respects_unit ... ok
+test tooltip_item_spell::test_set_unit_debuff_by_aura_instance_id_does_not_show_helpful_buffs ... ok
+test tooltip_item_spell::test_set_unit_party_member_populates_tooltip_and_fires_event ... ok
+test tooltip_item_spell::test_set_unit_invalid_returns_false ... ok
+test tooltip_item_spell::test_set_unit_player_populates_tooltip ... ok
+
+test result: ok. 88 passed; 0 failed; 0 ignored; 0 measured; 10587 filtered out; finished in 1.51s
+
