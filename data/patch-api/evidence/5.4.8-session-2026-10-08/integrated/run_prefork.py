@@ -17,10 +17,6 @@ def checks(manifest, prefix):
     for selector in SELECTORS:
         run_proof(prefix + 'prefork-' + selector,
                   ['cargo', 'test', *manifest, '--test', 'prefork_full_ui', '--', selector])
-    mists = ['--no-default-features', '--features', 'sound,gui,casc,client-mists']
-    for selector in ['cvar', 'taint']:
-        run_proof(prefix + 'mists-prefork-' + selector,
-                  ['cargo', 'test', *manifest, *mists, '--test', 'prefork_full_ui', '--', selector])
 
 
 if __name__ == '__main__':

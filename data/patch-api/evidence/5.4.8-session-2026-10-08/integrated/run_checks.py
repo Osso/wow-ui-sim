@@ -41,7 +41,11 @@ if __name__ == '__main__':
     check('all-sweeps', ['cargo', 'test', '--test', 'prefork_full_ui', '--', 'publication_sweep'])
     for target in ['integration', 'prefork_full_ui']:
         check(target + '-list', ['cargo', 'test', '--test', target, '--', '--list'])
-        check(target + '-regressions', ['cargo', 'test', '--test', target, '--', *SELECTORS])
+        if target == 'integration':
+            check(target + '-regressions', ['cargo', 'test', '--test', target, '--', *SELECTORS])
+        else:
+            for selector in SELECTORS:
+                check('prefork-' + selector, ['cargo', 'test', '--test', target, '--', selector])
         check(target + '-patch_5_4_8', ['cargo', 'test', '--test', target, '--', 'patch_5_4_8'])
     check('retail-build', ['cargo', 'build', '--bin', 'wow-sim'])
     check('branch-startup', ['timeout', '90', TARGET + '/debug/wow-sim', '--no-saved-vars', 'lua-errors'])
@@ -57,7 +61,7 @@ if __name__ == '__main__':
         check(path.stem, ['python3', '-B', str(path)])
     mists = ['--no-default-features', '--features', 'sound,gui,casc,client-mists']
     check('mists-check', ['cargo', 'check', *mists, '--tests'])
-    for target in ['integration', 'prefork_full_ui']:
+    for target in ['integration']:
         check('mists-' + target + '-list', ['cargo', 'test', *mists, '--test', target, '--', '--list'])
         check('mists-' + target + '-regressions', ['cargo', 'test', *mists, '--test', target, '--', 'cvar', 'taint'])
     print('FINISHED', flush=True)

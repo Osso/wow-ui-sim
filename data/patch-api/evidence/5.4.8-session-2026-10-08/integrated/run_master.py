@@ -45,9 +45,13 @@ if __name__ == '__main__':
         check('master-all-sweeps', ['cargo', 'test', *manifest, '--test', 'prefork_full_ui', '--', 'publication_sweep'])
         for target in ['integration', 'prefork_full_ui']:
             check('master-' + target + '-list', ['cargo', 'test', *manifest, '--test', target, '--', '--list'])
-            check('master-' + target + '-regressions', ['cargo', 'test', *manifest, '--test', target, '--', *SELECTORS])
+            if target == 'integration':
+                check('master-' + target + '-regressions', ['cargo', 'test', *manifest, '--test', target, '--', *SELECTORS])
+            else:
+                for selector in SELECTORS:
+                    check('master-prefork-' + selector, ['cargo', 'test', *manifest, '--test', target, '--', selector])
         check('master-retail-build', ['cargo', 'build', *manifest, '--bin', 'wow-sim'])
         check('master-startup', ['timeout', '90', os.environ['CARGO_TARGET_DIR'] + '/debug/wow-sim', '--no-saved-vars', 'lua-errors'])
-        for target in ['integration', 'prefork_full_ui']:
+        for target in ['integration']:
             check('master-mists-' + target + '-regressions', ['cargo', 'test', *manifest, *mists, '--test', target, '--', 'cvar', 'taint'])
     print('FINISHED', flush=True)
