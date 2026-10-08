@@ -1,0 +1,11 @@
+{
+  "rows": 169,
+  "before_gaps": 47,
+  "after_gaps": 48,
+  "new_failures": [
+    "wt-events-GAME_PAD_ACTIVE_CHANGED-183"
+  ],
+  "resolved_failures": [],
+  "expected_exit": 1,
+  "actual_exit": 1
+}

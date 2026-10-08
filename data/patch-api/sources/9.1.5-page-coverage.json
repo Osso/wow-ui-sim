@@ -1,0 +1,1406 @@
+{
+  "schema": "patch-page-coverage/v1",
+  "patch": "9.1.5",
+  "source_register": "data/patch-api/sources/9.1.5-wikitext-register.json",
+  "source_sha256": "f47c868a2a650f6119ade3f755c02c1c6d352330ed0cef1e7c5cb067e4df6f6f",
+  "audit_status": "in-progress",
+  "proof_policy": "Complete publication accounting, not complete compatibility. Current retail 12.1.0 with 28 later registers; 9.2.0 integration placeholder. Forty-seven exact gaps and eight substantive extract contracts pending. No static/unrelated proof credit.",
+  "capabilities": [
+    {
+      "id": "publication-sweep-9-1-5",
+      "scope": "169 current cached publication/absence probes and eleven retail-only repeated lookup retirements; not native behavior parity",
+      "spec": "docs/specs/patch-9-1-5-publication-sweep.md",
+      "tests": [
+        "tests/patch_9_1_5_publication_sweep.rs",
+        "tests/patch_9_1_5_publication_fixes.rs",
+        "tests/patch_9_1_5_cached_surfaces.rs",
+        "tests/patch_9_1_5_classic_surfaces.rs"
+      ],
+      "compiled_revision": "7d4d2588db2c91d0d220de54b4bbbda4da8f304e",
+      "ledger": "data/patch-api/evidence/9.1.5-session-2026-10-07/p915-proof.json"
+    }
+  ],
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/9.1.5-api-changes.txt",
+    "sha256": "e9e3b40f6d63639f224a0297b82dfe62bcc0d07f61931e2c1c9354bcdb822eba",
+    "wikitext_revid": 5920444,
+    "wikitext_sha256": "1af11608f2f057faf74f95cfefdfad43c282a4153357dc8900c64e870f438476",
+    "extract_tool": "tools/extract_patch_non_inventory.py",
+    "preserve_examples": true
+  },
+  "inventory_context_source": "data/patch-api/evidence/9.1.5-session-2026-10-07/p915-inventory-context.json",
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-C_BarberShop.MarkCustomizationChoiceAsSeen-31",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_BarberShop.MarkCustomizationOptionAsSeen-32",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_BarberShop.SaveSeenChoices-33",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_BehavioralMessaging.SendNotificationReceipt-34",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_ChallengeMode.GetMapScoreInfo-35",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Map score query absent; needs map-indexed current/best season score data, not fabricated score tuples."
+    },
+    {
+      "source_id": "wt-global-api-C_Club.FocusCommunityStreams-36",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Community stream focus transition absent; requires focused stream identity and subscription lifecycle state."
+    },
+    {
+      "source_id": "wt-global-api-C_Club.UnfocusAllStreams-37",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Unfocus-all transition absent; requires clearing actual focused community streams and subscription state."
+    },
+    {
+      "source_id": "wt-global-api-C_Commentator.SetBlocklistedAuras-38",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Aura blocklist setter absent; requires commentator aura identity/filter state rather than a no-op."
+    },
+    {
+      "source_id": "wt-global-api-C_Commentator.SetBlocklistedCooldowns-39",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cooldown blocklist setter absent; requires commentator cooldown identity/filter state rather than a no-op."
+    },
+    {
+      "source_id": "wt-global-api-C_GamePad.SetVibration-40",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Vibration endpoint absent; needs motor/effect strength and device lifecycle model, not hardware activation or placeholder publication."
+    },
+    {
+      "source_id": "wt-global-api-C_GamePad.StopVibration-41",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Vibration stop endpoint absent; needs modeled active device effects and motor reset semantics."
+    },
+    {
+      "source_id": "wt-global-api-C_Item.GetCurrentItemTransmogInfo-42",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Current item transmog DTO endpoint absent; needs item-location appearance/illusion state and native field shape."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemUpgrade.ClearItemUpgrade-43",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_ItemUpgrade.CloseItemUpgrade-44",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Close transition absent; requires item upgrade interaction lifetime and event/selection cleanup."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemUpgrade.GetItemUpgradeCurrentLevel-45",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Upgrade current-level query absent; existing selected-item location is not an upgrade track/level model."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemUpgrade.GetItemUpgradeItemInfo-46",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Upgrade item DTO query absent; requires populated selected-item info and eligibility/cost catalog."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemUpgrade.GetItemUpgradePvpItemLevelDeltaValues-47",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "PvP item-level delta query absent; requires upgrade-track/PvP scaling data, not fixed deltas."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemUpgrade.SetItemUpgradeFromCursorItem-48",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Cursor selection transition absent; requires cursor item identity transfer into selected upgrade interaction state."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemUpgrade.SetItemUpgradeFromLocation-49",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_ItemUpgrade.UpgradeItem-50",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Upgrade transaction absent; requires cost validation, item level mutation and success/failure events."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.GetActivityFullName-51",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.GetActivityInfoTable-52",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.GetApplicantPvpRatingInfoForListing-53",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Applicant PvP rating DTO absent; needs applicant/listing identity and populated bracket/rating data."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.GetKeystoneForActivity-54",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Activity-to-keystone query absent; needs matching owned keystone map and activity identity."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.GetLfgCategoryInfo-55",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.GetOwnedKeystoneActivityAndGroupAndLevel-56",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Owned keystone activity/group/level query absent; requires one coherent inventory/keystone record and catalog mapping."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.GetPlaystyleString-57",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.IsPlayerAuthenticatedForLFG-58",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Authentication predicate absent; needs explicit account/LFG eligibility state, not an unconditional boolean."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.SetEntryTitle-59",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Listing title setter absent; requires listing edit state and policy/validation rather than unrelated listing input fields."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.ValidateRequiredDungeonScore-60",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Dungeon score validator absent; requires category/activity policy and allowed score ranges."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.ValidateRequiredPvpRatingForActivity-61",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "PvP rating validator absent; requires activity bracket/rating policy and invalid input handling."
+    },
+    {
+      "source_id": "wt-global-api-C_MountJournal.IsTypeChecked-62",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_MountJournal.IsValidTypeFilter-63",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_MountJournal.SetAllTypeFilters-64",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Bulk mount type-filter mutation absent; existing SetTypeFilter is a no-op, so adding a bulk no-op would not close modeled behavior."
+    },
+    {
+      "source_id": "wt-global-api-C_MountJournal.SetTypeFilter-65",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_MythicPlus.GetCurrentSeasonValues-66",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Season values query absent; requires current season score thresholds/scaling catalog."
+    },
+    {
+      "source_id": "wt-global-api-C_MythicPlus.GetOwnedKeystoneMapID-67",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Owned keystone map identity query absent; needs host/inventory-owned keystone state."
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerMentorship.GetMentorRequirements-68",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Mentor requirement query absent; needs exact achievement/level/eligibility catalog, not a constant fabricated DTO."
+    },
+    {
+      "source_id": "wt-global-api-C_SocialRestrictions.AcknowledgeRegionalChatDisabled-69",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Regional disabled-chat acknowledgment absent; needs account/regional acknowledgment state tied to restrictions."
+    },
+    {
+      "source_id": "wt-global-api-C_SocialRestrictions.IsChatDisabled-70",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_SocialRestrictions.SetChatDisabled-71",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Chat-disabled mutation absent; existing IsChatDisabled compatibility default is not restriction state/event behavior."
+    },
+    {
+      "source_id": "wt-global-api-C_Transmog.ExtractTransmogIDList-72",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Outfit transmog ID extraction absent; requires validated outfit hyperlink parsing and exact identity/order contract."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.AccountCanCollectSource-73",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Account collection eligibility predicate absent; needs source ownership/account/class eligibility state."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.GetItemTransmogInfoListFromOutfitHyperlink-74",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.GetOutfitHyperlinkFromItemTransmogInfoList-75",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.GetSourceItemID-76",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source-to-item identity query absent; requires populated source catalog mapping, not an invented item ID."
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogCollection.PlayerHasTransmogByItemInfo-77",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TransmogSets.IsSetVisible-78",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Transmog set visibility predicate absent; requires set catalog and visibility/filter eligibility state."
+    },
+    {
+      "source_id": "wt-global-api-C_TTSSettings.GetChannelEnabled-79",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TTSSettings.GetCharacterSettingsSaved-80",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Character-saved preference query absent; needs character/account settings persistence and saved-state distinction."
+    },
+    {
+      "source_id": "wt-global-api-C_TTSSettings.GetChatTypeEnabled-81",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TTSSettings.GetSetting-82",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TTSSettings.GetSpeechRate-83",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TTSSettings.GetSpeechVolume-84",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TTSSettings.GetVoiceOptionID-85",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TTSSettings.GetVoiceOptionName-86",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Voice-name lookup absent; needs voice catalog and selected voice preference identity."
+    },
+    {
+      "source_id": "wt-global-api-C_TTSSettings.MarkCharacterSettingsSaved-87",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TTSSettings.SetChannelEnabled-88",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TTSSettings.SetChannelKeyEnabled-89",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Channel-key preference mutation absent; existing channel-level TTS model does not establish channel-key mapping/settings."
+    },
+    {
+      "source_id": "wt-global-api-C_TTSSettings.SetChatTypeEnabled-90",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Chat-type preference mutation absent; requires per-chat-type enabled preferences and readback, not channel defaults."
+    },
+    {
+      "source_id": "wt-global-api-C_TTSSettings.SetDefaultSettings-91",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Default reset absent; requires authoritative defaults and character/account preference lifecycle."
+    },
+    {
+      "source_id": "wt-global-api-C_TTSSettings.SetSetting-92",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Generic setting mutation absent; requires setting-ID mapping, typed value validation and readback state."
+    },
+    {
+      "source_id": "wt-global-api-C_TTSSettings.SetSpeechRate-93",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TTSSettings.SetSpeechVolume-94",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_TTSSettings.SetVoiceOptionName-95",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Voice-name mutation absent; requires validated voice catalog lookup and stored preference identity."
+    },
+    {
+      "source_id": "wt-global-api-C_TTSSettings.SetVoiceOption-96",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-C_UIWidgetManager.SetProcessingUnitGuid-97",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Processing-unit GUID setter absent; requires widget evaluation context/identity mutation rather than unused storage."
+    },
+    {
+      "source_id": "wt-global-api-securecallfunction-98",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-secureexecuterange-99",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-strsplittable-100",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=function; lookup=function"
+    },
+    {
+      "source_id": "wt-global-api-AcknowledgeAADCAlert-103",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-C_Commentator.SetBlacklistedAuras-104",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-C_Commentator.SetBlacklistedCooldowns-105",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-C_ItemUpgrade.GetItemLevelIncrement-106",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.GetActivityInfo-107",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.GetCategoryInfo-108",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-C_LFGuildInfo.GetRecruitingGuildTabardInfo-109",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerMentorship.GetMentorOptionalAchievementIDs-110",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-C_Soulbinds.GetConduitChargesCapacity-111",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-C_Soulbinds.GetConduitCharges-112",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-C_Soulbinds.GetTotalConduitChargesPendingInSoulbind-113",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-C_Soulbinds.GetTotalConduitChargesPending-114",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-CancelGuildMembershipRequest-115",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-ClearItemUpgrade-116",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-CloseItemUpgrade-117",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-DeclineGuildApplicant-118",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-GetGuildApplicantInfo-119",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-GetGuildApplicantSelection-120",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-GetGuildMembershipRequestInfo-121",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-GetGuildMembershipRequestSettings-122",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-GetGuildRecruitmentComment-123",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-GetGuildRecruitmentSettings-124",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-GetItemUpdateLevel-125",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-GetItemUpgradeItemInfo-126",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-GetItemUpgradeStats-127",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-GetLookingForGuildComment-128",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-GetLookingForGuildSettings-129",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-GetNumGuildApplicants-130",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-GetNumGuildMembershipRequests-131",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-GetNumRecruitingGuilds-132",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-GetRecruitingGuildInfo-133",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-GetRecruitingGuildSelection-134",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-GetRecruitingGuildSettings-135",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-RequestGuildApplicantsList-136",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-RequestGuildMembershipList-137",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-RequestGuildMembership-138",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-RequestGuildRecruitmentSettings-139",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-RequestRecruitingGuildsList-140",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-SetGuildApplicantSelection-141",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-SetGuildRecruitmentComment-142",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-SetGuildRecruitmentSettings-143",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-SetItemUpgradeFromCursorItem-144",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-SetLookingForGuildComment-145",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-SetLookingForGuildSettings-146",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-SetRecruitingGuildSelection-147",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-global-api-UpgradeItem-148",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: raw=nil; lookup=nil"
+    },
+    {
+      "source_id": "wt-widgets-DressUpModel:GetObeyHideInTransmogFlag-159",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Getter absent; 3D model rendering/transmog choices are intentionally unsupported. Existing setters are stubs, not modeled getter state; publication-only gap retained, no 3D behavior credit."
+    },
+    {
+      "source_id": "wt-widgets-DressUpModel:GetUseTransmogChoices-160",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Getter absent; 3D model rendering/transmog choices are intentionally unsupported. Existing setters are stubs, not modeled getter state; publication-only gap retained, no 3D behavior credit."
+    },
+    {
+      "source_id": "wt-widgets-DressUpModel:SetObeyHideInTransmogFlag-161",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: DressUpModel; lookup=function"
+    },
+    {
+      "source_id": "wt-widgets-DressUpModel:SetUseTransmogChoices-162",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: DressUpModel; lookup=function"
+    },
+    {
+      "source_id": "wt-widgets-ModelSceneActor:GetObeyHideInTransmogFlag-163",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Getter absent; 3D model rendering/transmog choices are intentionally unsupported. Existing setters are stubs, not modeled getter state; publication-only gap retained, no 3D behavior credit."
+    },
+    {
+      "source_id": "wt-widgets-ModelSceneActor:GetUseTransmogChoices-164",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Getter absent; 3D model rendering/transmog choices are intentionally unsupported. Existing setters are stubs, not modeled getter state; publication-only gap retained, no 3D behavior credit."
+    },
+    {
+      "source_id": "wt-widgets-ModelSceneActor:SetObeyHideInTransmogFlag-165",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: ModelSceneActor; lookup=function"
+    },
+    {
+      "source_id": "wt-widgets-ModelSceneActor:SetUseTransmogChoices-166",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: ModelSceneActor; lookup=function"
+    },
+    {
+      "source_id": "wt-events-ALERT_REGIONAL_CHAT_DISABLED-179",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: pcall=true; return=true; registered=true Event payload/producer or serialized historical-default boundary remains pending."
+    },
+    {
+      "source_id": "wt-events-BEHAVIORAL_NOTIFICATION-180",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: pcall=true; return=true; registered=true Event payload/producer or serialized historical-default boundary remains pending."
+    },
+    {
+      "source_id": "wt-events-CHAT_DISABLED_CHANGE_FAILED-181",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: pcall=true; return=true; registered=true Event payload/producer or serialized historical-default boundary remains pending."
+    },
+    {
+      "source_id": "wt-events-CHAT_DISABLED_CHANGED-182",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: pcall=true; return=true; registered=true Event payload/producer or serialized historical-default boundary remains pending."
+    },
+    {
+      "source_id": "wt-events-GAME_PAD_ACTIVE_CHANGED-183",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: pcall=true; return=true; registered=true Event payload/producer or serialized historical-default boundary remains pending."
+    },
+    {
+      "source_id": "wt-events-ITEM_UPGRADE_FAILED-184",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: pcall=true; return=true; registered=true Event payload/producer or serialized historical-default boundary remains pending."
+    },
+    {
+      "source_id": "wt-events-NOTIFY_CHAT_SUPPRESSED-185",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: pcall=true; return=true; registered=true Event payload/producer or serialized historical-default boundary remains pending."
+    },
+    {
+      "source_id": "wt-events-TRANSMOG_COSMETIC_COLLECTION_SOURCE_ADDED-186",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: pcall=true; return=true; registered=true Event payload/producer or serialized historical-default boundary remains pending."
+    },
+    {
+      "source_id": "wt-events-ITEM_UPGRADE_MASTER_UPDATE-189",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: pcall=true; return=true; registered=true Event payload/producer or serialized historical-default boundary remains pending."
+    },
+    {
+      "source_id": "wt-events-LF_GUILD_BROWSE_UPDATED-190",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"LF_GUILD_BROWSE_UPDATED\"; registered=false"
+    },
+    {
+      "source_id": "wt-events-LF_GUILD_MEMBERSHIP_LIST_CHANGED-191",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"LF_GUILD_MEMBERSHIP_LIST_CHANGED\"; registered=false"
+    },
+    {
+      "source_id": "wt-events-LF_GUILD_MEMBERSHIP_LIST_UPDATED-192",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"LF_GUILD_MEMBERSHIP_LIST_UPDATED\"; registered=false"
+    },
+    {
+      "source_id": "wt-events-LF_GUILD_POST_UPDATED-193",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"LF_GUILD_POST_UPDATED\"; registered=false"
+    },
+    {
+      "source_id": "wt-events-LF_GUILD_RECRUIT_LIST_CHANGED-194",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"LF_GUILD_RECRUIT_LIST_CHANGED\"; registered=false"
+    },
+    {
+      "source_id": "wt-events-LF_GUILD_RECRUITS_UPDATED-195",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"LF_GUILD_RECRUITS_UPDATED\"; registered=false"
+    },
+    {
+      "source_id": "wt-events-SHOW_AADC_ALERT-196",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"SHOW_AADC_ALERT\"; registered=false"
+    },
+    {
+      "source_id": "wt-events-SOULBIND_CONDUIT_CHARGES_UPDATED-197",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"SOULBIND_CONDUIT_CHARGES_UPDATED\"; registered=false"
+    },
+    {
+      "source_id": "wt-cvars-CameraFollowGamepadAdjustDelay-208",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: value/default queried Event payload/producer or serialized historical-default boundary remains pending."
+    },
+    {
+      "source_id": "wt-cvars-CameraFollowGamepadAdjustEaseIn-209",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "partial-development-green",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: value/default queried Event payload/producer or serialized historical-default boundary remains pending."
+    },
+    {
+      "source_id": "wt-cvars-DynamicRenderScaleMin-210",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-DynamicRenderScale-211",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-engineSurveyPatch-212",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-FrameBufferCacheForceNoHeaps-213",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-GamePadCameraLookMaxPitch-214",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-GamePadCameraLookMaxYaw-215",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-GamePadCursorForTargeting-216",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-GamePadFaceMovementMaxAngleCombat-217",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-GamePadFaceMovementMaxAngle-218",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-GamePadTouchCursorEnable-219",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-GamePadVibrationStrength-220",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-GameplayContext-221",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-mountJournalTypeFilter-222",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-ResampleAlwaysSharpen-223",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-ResampleSharpness-224",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-seenRegionalChatDisabled-225",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-showOutfitDetails-226",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-TTSUseCharacterSettings-227",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "CVar value/default absent (page default 1); requires character/account TTS preference backend, not speculative historical defaults."
+    },
+    {
+      "source_id": "wt-cvars-clearSeenCustomizationChoices-230",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Console command not in current command records; requires clearing real customization-seen choice state."
+    },
+    {
+      "source_id": "wt-cvars-FrameBufferCacheGpuFootprint-231",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Console command not published; requires GPU frame-buffer cache telemetry, absent from simulator model."
+    },
+    {
+      "source_id": "wt-cvars-GxFrameStats-232",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Console command not published; requires renderer frame-stat telemetry and command contract."
+    },
+    {
+      "source_id": "wt-cvars-AIProcessDebugger-235",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-GamePadFaceMovementThreshold-236",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-GamePadForceXInput-237",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-raidOrBattleCount-238",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: value/default queried"
+    },
+    {
+      "source_id": "wt-cvars-seenAADCAlert-239",
+      "capabilities": [
+        "publication-sweep-9-1-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current cached publication/absence only after later supersession; no signature, DTO, native, policy or historical behavior credit. Observed: value/default queried"
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source link, heading, image marker or comment; linked resources are not expanded and no runtime credit assigned."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source link, heading, image marker or comment; linked resources are not expanded and no runtime credit assigned."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Template inheritance statement needs cached instantiation and absence of inherited backdrop behavior; no occurrence-specific runtime test credited."
+    },
+    {
+      "source_id": "prose-undated-005",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Guild bank mixin migration needs cached guild-bank behavior against populated bank state; source synchronization is not publication proof."
+    },
+    {
+      "source_id": "prose-undated-006",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Legacy guild APIs are absent in current sweep where listed, but complete removal of their UIs and unrelated legacy identities is not proven by publication alone."
+    },
+    {
+      "source_id": "prose-undated-007",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Communities guild finder continued behavior requires populated communities recruitment state and UI interaction, not removal-list absence."
+    },
+    {
+      "source_id": "prose-undated-008",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Event trace hidden-frame logging and disabled-by-default toggle require cached event-trace lifecycle/configuration test; no such proof credited."
+    },
+    {
+      "source_id": "prose-undated-009",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source link, heading, image marker or comment; linked resources are not expanded and no runtime credit assigned."
+    },
+    {
+      "source_id": "prose-undated-011",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Item upgrade namespace endpoints are only partly published; cost/selection/upgrade behavior and migration parity remain pending."
+    },
+    {
+      "source_id": "prose-undated-012",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DeleteCursorItem one-item-per-hardware-event policy needs two deletes in one hardware event plus a second event; no scoped hardware-event budget proof credited."
+    },
+    {
+      "source_id": "prose-undated-013",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Auction and other API /run NOSCRIPT protection requires exact protected endpoint list and script-origin enforcement; callable publication is insufficient."
+    },
+    {
+      "source_id": "source-context-015",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source link, heading, image marker or comment; linked resources are not expanded and no runtime credit assigned."
+    },
+    {
+      "source_id": "source-context-016",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source link, heading, image marker or comment; linked resources are not expanded and no runtime credit assigned."
+    },
+    {
+      "source_id": "source-context-017",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source link, heading, image marker or comment; linked resources are not expanded and no runtime credit assigned."
+    },
+    {
+      "source_id": "source-context-018",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source link, heading, image marker or comment; linked resources are not expanded and no runtime credit assigned."
+    },
+    {
+      "source_id": "source-context-019",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source link, heading, image marker or comment; linked resources are not expanded and no runtime credit assigned."
+    },
+    {
+      "source_id": "prose-undated-020",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source link, heading, image marker or comment; linked resources are not expanded and no runtime credit assigned."
+    },
+    {
+      "source_id": "prose-undated-021",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source link, heading, image marker or comment; linked resources are not expanded and no runtime credit assigned."
+    },
+    {
+      "source_id": "inventory-context-build-025",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Historical build/date caption only; no runtime credit."
+    }
+  ]
+}

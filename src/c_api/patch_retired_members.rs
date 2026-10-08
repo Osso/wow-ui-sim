@@ -17,8 +17,8 @@ use rilua::vm::state::LuaState;
 // Qualified cached retail searches find no consumers; bare matches are unrelated APIs.
 // Qualified and bare-name cached retail scans find no consumers. Classic profiles
 // do not load this module; Blizzard deprecation wrappers remain untouched.
-// Qualified and bare-name cached retail scans find no consumers of these nine
-// members. Live reporting entry points and Blizzard deprecation wrappers remain.
+// Exact qualified scans find no 9.1.5 consumers; bare GetCategoryInfo hits
+// belong to other namespaces. Blizzard deprecation wrappers remain untouched.
 const RETIRED_9_1_5_MEMBERS: &[(&str, &[&str])] = &[
     (
         "C_Commentator",
@@ -39,6 +39,8 @@ const RETIRED_9_1_5_MEMBERS: &[(&str, &[&str])] = &[
     ),
 ];
 
+// Qualified and bare-name scans find no consumers of these nine members.
+// Live reporting entry points and Blizzard deprecation wrappers remain.
 const RETIRED_9_2_5_MEMBERS: &[(&str, &[&str])] = &[
     ("C_Calendar", &["ContextMenuEventComplain"]),
     (

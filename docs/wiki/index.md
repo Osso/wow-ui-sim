@@ -1,3 +1,7 @@
+## [2026-10-07] evidence | 9.1.5 page audit
+
+[Audit](investigations/patch-9-1-5-api-audit.md) accounts for revision 5920444: 169 inventory + 18 extract + one context ID. Eleven bounded retail retirements close publication gaps; 47 exact gaps and eight substantive extract statements remain. All 29 publication sweeps, negative control, bare/cached/Mists proof, checks and exit-0 startup `[]` pass; 148 prior inputs and 56 extraction outcomes preserved. No 9.2.0 retained-gap intersection; integration placeholder remains.
+
 ## [2026-10-07] evidence | 9.2.5 page audit
 
 [Audit](investigations/patch-9-2-5-api-audit.md) accounts for revision 2301036: 84 inventory, 135 extract and one context ID. Nine retail-only retirements, 34 exact publication gaps, 120 substantive extract targets pending. All 28 sweeps, exact negative control, behavior/cached/Mists/report regressions, 38 fixtures, format/default/Mists checks and startup `[]` pass. All 143 prior inputs and 54 extraction-mode outcomes preserved; restored temporary canonical artifact-write violation documented.

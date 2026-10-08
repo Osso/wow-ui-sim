@@ -1,0 +1,164 @@
+[
+  {
+    "source_id": "source-context-001",
+    "extract_line": 1,
+    "literal": "Patch 9.1.5 API changes",
+    "wikitext_line": 1,
+    "raw_literal": "{{apichanges|9.1.5|prev=9.1.0|next=9.2.0}}",
+    "status": "metadata-only",
+    "reason": "Editorial/source link, heading, image marker or comment; linked resources are not expanded and no runtime credit assigned."
+  },
+  {
+    "source_id": "source-context-003",
+    "extract_line": 3,
+    "literal": "== Summary ==",
+    "wikitext_line": 3,
+    "raw_literal": "==Summary==",
+    "status": "metadata-only",
+    "reason": "Editorial/source link, heading, image marker or comment; linked resources are not expanded and no runtime credit assigned."
+  },
+  {
+    "source_id": "prose-undated-004",
+    "extract_line": 4,
+    "literal": "* SharedTooltipTemplate and GameTooltipTemplate no longer inherit BackdropTemplate.",
+    "wikitext_line": 4,
+    "raw_literal": "* SharedTooltipTemplate and GameTooltipTemplate no longer inherit BackdropTemplate.",
+    "status": "audit-pending",
+    "reason": "Template inheritance statement needs cached instantiation and absence of inherited backdrop behavior; no occurrence-specific runtime test credited."
+  },
+  {
+    "source_id": "prose-undated-005",
+    "extract_line": 5,
+    "literal": "* The guild bank UI has been synchronized with changes made in patch 2.5.2 to use a mixin-based approach.",
+    "wikitext_line": 5,
+    "raw_literal": "* The guild bank UI has been synchronized with changes made in patch 2.5.2 to use a mixin-based approach.",
+    "status": "audit-pending",
+    "reason": "Guild bank mixin migration needs cached guild-bank behavior against populated bank state; source synchronization is not publication proof."
+  },
+  {
+    "source_id": "prose-undated-006",
+    "extract_line": 6,
+    "literal": "* The legacy Looking For Guild and Guild Recruitment APIs and UIs have been removed.",
+    "wikitext_line": 6,
+    "raw_literal": "* The legacy Looking For Guild and Guild Recruitment APIs and UIs have been removed.",
+    "status": "audit-pending",
+    "reason": "Legacy guild APIs are absent in current sweep where listed, but complete removal of their UIs and unrelated legacy identities is not proven by publication alone."
+  },
+  {
+    "source_id": "prose-undated-007",
+    "extract_line": 7,
+    "literal": "** The guild finder embedded into the Communities UI still exists.",
+    "wikitext_line": 7,
+    "raw_literal": "** The guild finder embedded into the Communities UI still exists.",
+    "status": "audit-pending",
+    "reason": "Communities guild finder continued behavior requires populated communities recruitment state and UI interaction, not removal-list absence."
+  },
+  {
+    "source_id": "prose-undated-008",
+    "extract_line": 8,
+    "literal": "* The event trace tool now supports logging events while the frame is hidden. This option is disabled by default.",
+    "wikitext_line": 8,
+    "raw_literal": "* The [[MACRO_eventtrace|event trace]] tool now supports logging events while the frame is hidden. This option is disabled by default.",
+    "status": "audit-pending",
+    "reason": "Event trace hidden-frame logging and disabled-by-default toggle require cached event-trace lifecycle/configuration test; no such proof credited."
+  },
+  {
+    "source_id": "prose-undated-009",
+    "extract_line": 9,
+    "literal": "::",
+    "wikitext_line": 9,
+    "raw_literal": ":: [[File:EventTrace_logwhilehidden.png|325px]]",
+    "status": "metadata-only",
+    "reason": "Editorial/source link, heading, image marker or comment; linked resources are not expanded and no runtime credit assigned."
+  },
+  {
+    "source_id": "prose-undated-011",
+    "extract_line": 11,
+    "literal": "* Item upgrade API has been moved to the C_ItemUpgrade namespace.",
+    "wikitext_line": 11,
+    "raw_literal": "* Item upgrade API has been moved to the [[:Category:API namespaces/C_ItemUpgrade|C_ItemUpgrade]] namespace.",
+    "status": "audit-pending",
+    "reason": "Item upgrade namespace endpoints are only partly published; cost/selection/upgrade behavior and migration parity remain pending."
+  },
+  {
+    "source_id": "prose-undated-012",
+    "extract_line": 12,
+    "literal": "* DeleteCursorItem() is limited to deleting a single item per hardware event.",
+    "wikitext_line": 12,
+    "raw_literal": "* {{api|DeleteCursorItem}}() is limited to deleting a single item per hardware event.",
+    "status": "audit-pending",
+    "reason": "DeleteCursorItem one-item-per-hardware-event policy needs two deletes in one hardware event plus a second event; no scoped hardware-event budget proof credited."
+  },
+  {
+    "source_id": "prose-undated-013",
+    "extract_line": 13,
+    "literal": "* Several APIs, for instance the Auction House API have been /run script protected.",
+    "wikitext_line": 13,
+    "raw_literal": "* Several APIs, for instance the Auction House API have been /run script [[:Category:API_functions/Protected#NOSCRIPT|protected]].",
+    "status": "audit-pending",
+    "reason": "Auction and other API /run NOSCRIPT protection requires exact protected endpoint list and script-origin enforcement; callable publication is insufficient."
+  },
+  {
+    "source_id": "source-context-015",
+    "extract_line": 15,
+    "literal": "== Resources ==",
+    "wikitext_line": 15,
+    "raw_literal": "==Resources==",
+    "status": "metadata-only",
+    "reason": "Editorial/source link, heading, image marker or comment; linked resources are not expanded and no runtime credit assigned."
+  },
+  {
+    "source_id": "source-context-016",
+    "extract_line": 16,
+    "literal": "* TOC: 90105",
+    "wikitext_line": 16,
+    "raw_literal": "* TOC: <code>90105</code>",
+    "status": "metadata-only",
+    "reason": "Editorial/source link, heading, image marker or comment; linked resources are not expanded and no runtime credit assigned."
+  },
+  {
+    "source_id": "source-context-017",
+    "extract_line": 17,
+    "literal": "* Diffs: wow-ui-source, BlizzardInterfaceResources",
+    "wikitext_line": 17,
+    "raw_literal": "* Diffs: [https://github.com/Gethe/wow-ui-source/commit/4b8a0a911090d4679db954d61291a852db9542fe wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/commit/197b4317e7e09b825b09173f24d7a008599812be BlizzardInterfaceResources]",
+    "status": "metadata-only",
+    "reason": "Editorial/source link, heading, image marker or comment; linked resources are not expanded and no runtime credit assigned."
+  },
+  {
+    "source_id": "source-context-018",
+    "extract_line": 18,
+    "literal": "* Deprecated API: Deprecated_9_1_5.lua",
+    "wikitext_line": 18,
+    "raw_literal": "* Deprecated API: [https://github.com/Gethe/wow-ui-source/blob/9.1.5/Interface/AddOns/Blizzard_Deprecated/Deprecated_9_1_5.lua Deprecated_9_1_5.lua]",
+    "status": "metadata-only",
+    "reason": "Editorial/source link, heading, image marker or comment; linked resources are not expanded and no runtime credit assigned."
+  },
+  {
+    "source_id": "source-context-019",
+    "extract_line": 19,
+    "literal": "* Official patch notes: User Interface and Accessibility",
+    "wikitext_line": 19,
+    "raw_literal": "* Official patch notes: [https://worldofwarcraft.com/en-us/news/23731242/updated-november-1-915-content-update-notes#item17 User Interface and Accessibility]",
+    "status": "metadata-only",
+    "reason": "Editorial/source link, heading, image marker or comment; linked resources are not expanded and no runtime credit assigned."
+  },
+  {
+    "source_id": "prose-undated-020",
+    "extract_line": 20,
+    "literal": "* Community patch notes: 9.1.5 Consolidated UI Changes",
+    "wikitext_line": 20,
+    "raw_literal": "* Community patch notes: [https://github.com/Stanzilla/WoWUIBugs/wiki/9.1.5-Consolidated-UI-Changes 9.1.5 Consolidated UI Changes]",
+    "status": "metadata-only",
+    "reason": "Editorial/source link, heading, image marker or comment; linked resources are not expanded and no runtime credit assigned."
+  },
+  {
+    "source_id": "prose-undated-021",
+    "extract_line": 21,
+    "literal": "<!-- https://github.com/Ketho/WowpediaApiDoc/blob/master/Projects/WikitextDiff/WikitextDiff.lua -->",
+    "wikitext_line": 21,
+    "raw_literal": "<!-- https://github.com/Ketho/WowpediaApiDoc/blob/master/Projects/WikitextDiff/WikitextDiff.lua -->",
+    "status": "metadata-only",
+    "reason": "Editorial/source link, heading, image marker or comment; linked resources are not expanded and no runtime credit assigned."
+  }
+]

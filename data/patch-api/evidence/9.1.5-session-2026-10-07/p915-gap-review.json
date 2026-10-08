@@ -1,0 +1,660 @@
+[
+  {
+    "source_id": "wt-global-api-C_ChallengeMode.GetMapScoreInfo-35",
+    "symbol": "C_ChallengeMode.GetMapScoreInfo",
+    "reason": "Map score query absent; needs map-indexed current/best season score data, not fabricated score tuples.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_ChallengeMode.GetMapScoreInfo}}",
+    "wikitext_line": 35
+  },
+  {
+    "source_id": "wt-global-api-C_Club.FocusCommunityStreams-36",
+    "symbol": "C_Club.FocusCommunityStreams",
+    "reason": "Community stream focus transition absent; requires focused stream identity and subscription lifecycle state.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_Club.FocusCommunityStreams}}",
+    "wikitext_line": 36
+  },
+  {
+    "source_id": "wt-global-api-C_Club.UnfocusAllStreams-37",
+    "symbol": "C_Club.UnfocusAllStreams",
+    "reason": "Unfocus-all transition absent; requires clearing actual focused community streams and subscription state.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_Club.UnfocusAllStreams}}",
+    "wikitext_line": 37
+  },
+  {
+    "source_id": "wt-global-api-C_Commentator.SetBlocklistedAuras-38",
+    "symbol": "C_Commentator.SetBlocklistedAuras",
+    "reason": "Aura blocklist setter absent; requires commentator aura identity/filter state rather than a no-op.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_Commentator.SetBlocklistedAuras}}",
+    "wikitext_line": 38
+  },
+  {
+    "source_id": "wt-global-api-C_Commentator.SetBlocklistedCooldowns-39",
+    "symbol": "C_Commentator.SetBlocklistedCooldowns",
+    "reason": "Cooldown blocklist setter absent; requires commentator cooldown identity/filter state rather than a no-op.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_Commentator.SetBlocklistedCooldowns}}",
+    "wikitext_line": 39
+  },
+  {
+    "source_id": "wt-global-api-C_GamePad.SetVibration-40",
+    "symbol": "C_GamePad.SetVibration",
+    "reason": "Vibration endpoint absent; needs motor/effect strength and device lifecycle model, not hardware activation or placeholder publication.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "parent raw-absent; raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_GamePad.SetVibration}}",
+    "wikitext_line": 40
+  },
+  {
+    "source_id": "wt-global-api-C_GamePad.StopVibration-41",
+    "symbol": "C_GamePad.StopVibration",
+    "reason": "Vibration stop endpoint absent; needs modeled active device effects and motor reset semantics.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_GamePad.StopVibration}}",
+    "wikitext_line": 41
+  },
+  {
+    "source_id": "wt-global-api-C_Item.GetCurrentItemTransmogInfo-42",
+    "symbol": "C_Item.GetCurrentItemTransmogInfo",
+    "reason": "Current item transmog DTO endpoint absent; needs item-location appearance/illusion state and native field shape.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_Item.GetCurrentItemTransmogInfo}}",
+    "wikitext_line": 42
+  },
+  {
+    "source_id": "wt-global-api-C_ItemUpgrade.CloseItemUpgrade-44",
+    "symbol": "C_ItemUpgrade.CloseItemUpgrade",
+    "reason": "Close transition absent; requires item upgrade interaction lifetime and event/selection cleanup.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_ItemUpgrade.CloseItemUpgrade}}",
+    "wikitext_line": 44
+  },
+  {
+    "source_id": "wt-global-api-C_ItemUpgrade.GetItemUpgradeCurrentLevel-45",
+    "symbol": "C_ItemUpgrade.GetItemUpgradeCurrentLevel",
+    "reason": "Upgrade current-level query absent; existing selected-item location is not an upgrade track/level model.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_ItemUpgrade.GetItemUpgradeCurrentLevel}}",
+    "wikitext_line": 45
+  },
+  {
+    "source_id": "wt-global-api-C_ItemUpgrade.GetItemUpgradeItemInfo-46",
+    "symbol": "C_ItemUpgrade.GetItemUpgradeItemInfo",
+    "reason": "Upgrade item DTO query absent; requires populated selected-item info and eligibility/cost catalog.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_ItemUpgrade.GetItemUpgradeItemInfo}}",
+    "wikitext_line": 46
+  },
+  {
+    "source_id": "wt-global-api-C_ItemUpgrade.GetItemUpgradePvpItemLevelDeltaValues-47",
+    "symbol": "C_ItemUpgrade.GetItemUpgradePvpItemLevelDeltaValues",
+    "reason": "PvP item-level delta query absent; requires upgrade-track/PvP scaling data, not fixed deltas.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_ItemUpgrade.GetItemUpgradePvpItemLevelDeltaValues}}",
+    "wikitext_line": 47
+  },
+  {
+    "source_id": "wt-global-api-C_ItemUpgrade.SetItemUpgradeFromCursorItem-48",
+    "symbol": "C_ItemUpgrade.SetItemUpgradeFromCursorItem",
+    "reason": "Cursor selection transition absent; requires cursor item identity transfer into selected upgrade interaction state.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_ItemUpgrade.SetItemUpgradeFromCursorItem}}",
+    "wikitext_line": 48
+  },
+  {
+    "source_id": "wt-global-api-C_ItemUpgrade.UpgradeItem-50",
+    "symbol": "C_ItemUpgrade.UpgradeItem",
+    "reason": "Upgrade transaction absent; requires cost validation, item level mutation and success/failure events.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_ItemUpgrade.UpgradeItem}}",
+    "wikitext_line": 50
+  },
+  {
+    "source_id": "wt-global-api-C_LFGList.GetApplicantPvpRatingInfoForListing-53",
+    "symbol": "C_LFGList.GetApplicantPvpRatingInfoForListing",
+    "reason": "Applicant PvP rating DTO absent; needs applicant/listing identity and populated bracket/rating data.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_LFGList.GetApplicantPvpRatingInfoForListing}}",
+    "wikitext_line": 53
+  },
+  {
+    "source_id": "wt-global-api-C_LFGList.GetKeystoneForActivity-54",
+    "symbol": "C_LFGList.GetKeystoneForActivity",
+    "reason": "Activity-to-keystone query absent; needs matching owned keystone map and activity identity.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_LFGList.GetKeystoneForActivity}}",
+    "wikitext_line": 54
+  },
+  {
+    "source_id": "wt-global-api-C_LFGList.GetOwnedKeystoneActivityAndGroupAndLevel-56",
+    "symbol": "C_LFGList.GetOwnedKeystoneActivityAndGroupAndLevel",
+    "reason": "Owned keystone activity/group/level query absent; requires one coherent inventory/keystone record and catalog mapping.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_LFGList.GetOwnedKeystoneActivityAndGroupAndLevel}}",
+    "wikitext_line": 56
+  },
+  {
+    "source_id": "wt-global-api-C_LFGList.IsPlayerAuthenticatedForLFG-58",
+    "symbol": "C_LFGList.IsPlayerAuthenticatedForLFG",
+    "reason": "Authentication predicate absent; needs explicit account/LFG eligibility state, not an unconditional boolean.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_LFGList.IsPlayerAuthenticatedForLFG}}",
+    "wikitext_line": 58
+  },
+  {
+    "source_id": "wt-global-api-C_LFGList.SetEntryTitle-59",
+    "symbol": "C_LFGList.SetEntryTitle",
+    "reason": "Listing title setter absent; requires listing edit state and policy/validation rather than unrelated listing input fields.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_LFGList.SetEntryTitle}}",
+    "wikitext_line": 59
+  },
+  {
+    "source_id": "wt-global-api-C_LFGList.ValidateRequiredDungeonScore-60",
+    "symbol": "C_LFGList.ValidateRequiredDungeonScore",
+    "reason": "Dungeon score validator absent; requires category/activity policy and allowed score ranges.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_LFGList.ValidateRequiredDungeonScore}}",
+    "wikitext_line": 60
+  },
+  {
+    "source_id": "wt-global-api-C_LFGList.ValidateRequiredPvpRatingForActivity-61",
+    "symbol": "C_LFGList.ValidateRequiredPvpRatingForActivity",
+    "reason": "PvP rating validator absent; requires activity bracket/rating policy and invalid input handling.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_LFGList.ValidateRequiredPvpRatingForActivity}}",
+    "wikitext_line": 61
+  },
+  {
+    "source_id": "wt-global-api-C_MountJournal.SetAllTypeFilters-64",
+    "symbol": "C_MountJournal.SetAllTypeFilters",
+    "reason": "Bulk mount type-filter mutation absent; existing SetTypeFilter is a no-op, so adding a bulk no-op would not close modeled behavior.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_MountJournal.SetAllTypeFilters}}",
+    "wikitext_line": 64
+  },
+  {
+    "source_id": "wt-global-api-C_MythicPlus.GetCurrentSeasonValues-66",
+    "symbol": "C_MythicPlus.GetCurrentSeasonValues",
+    "reason": "Season values query absent; requires current season score thresholds/scaling catalog.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_MythicPlus.GetCurrentSeasonValues}}",
+    "wikitext_line": 66
+  },
+  {
+    "source_id": "wt-global-api-C_MythicPlus.GetOwnedKeystoneMapID-67",
+    "symbol": "C_MythicPlus.GetOwnedKeystoneMapID",
+    "reason": "Owned keystone map identity query absent; needs host/inventory-owned keystone state.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_MythicPlus.GetOwnedKeystoneMapID}}",
+    "wikitext_line": 67
+  },
+  {
+    "source_id": "wt-global-api-C_PlayerMentorship.GetMentorRequirements-68",
+    "symbol": "C_PlayerMentorship.GetMentorRequirements",
+    "reason": "Mentor requirement query absent; needs exact achievement/level/eligibility catalog, not a constant fabricated DTO.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_PlayerMentorship.GetMentorRequirements}}",
+    "wikitext_line": 68
+  },
+  {
+    "source_id": "wt-global-api-C_SocialRestrictions.AcknowledgeRegionalChatDisabled-69",
+    "symbol": "C_SocialRestrictions.AcknowledgeRegionalChatDisabled",
+    "reason": "Regional disabled-chat acknowledgment absent; needs account/regional acknowledgment state tied to restrictions.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_SocialRestrictions.AcknowledgeRegionalChatDisabled}}",
+    "wikitext_line": 69
+  },
+  {
+    "source_id": "wt-global-api-C_SocialRestrictions.SetChatDisabled-71",
+    "symbol": "C_SocialRestrictions.SetChatDisabled",
+    "reason": "Chat-disabled mutation absent; existing IsChatDisabled compatibility default is not restriction state/event behavior.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_SocialRestrictions.SetChatDisabled}}",
+    "wikitext_line": 71
+  },
+  {
+    "source_id": "wt-global-api-C_Transmog.ExtractTransmogIDList-72",
+    "symbol": "C_Transmog.ExtractTransmogIDList",
+    "reason": "Outfit transmog ID extraction absent; requires validated outfit hyperlink parsing and exact identity/order contract.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_Transmog.ExtractTransmogIDList}}",
+    "wikitext_line": 72
+  },
+  {
+    "source_id": "wt-global-api-C_TransmogCollection.AccountCanCollectSource-73",
+    "symbol": "C_TransmogCollection.AccountCanCollectSource",
+    "reason": "Account collection eligibility predicate absent; needs source ownership/account/class eligibility state.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_TransmogCollection.AccountCanCollectSource}}",
+    "wikitext_line": 73
+  },
+  {
+    "source_id": "wt-global-api-C_TransmogCollection.GetSourceItemID-76",
+    "symbol": "C_TransmogCollection.GetSourceItemID",
+    "reason": "Source-to-item identity query absent; requires populated source catalog mapping, not an invented item ID.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_TransmogCollection.GetSourceItemID}}",
+    "wikitext_line": 76
+  },
+  {
+    "source_id": "wt-global-api-C_TransmogSets.IsSetVisible-78",
+    "symbol": "C_TransmogSets.IsSetVisible",
+    "reason": "Transmog set visibility predicate absent; requires set catalog and visibility/filter eligibility state.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_TransmogSets.IsSetVisible}}",
+    "wikitext_line": 78
+  },
+  {
+    "source_id": "wt-global-api-C_TTSSettings.GetCharacterSettingsSaved-80",
+    "symbol": "C_TTSSettings.GetCharacterSettingsSaved",
+    "reason": "Character-saved preference query absent; needs character/account settings persistence and saved-state distinction.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_TTSSettings.GetCharacterSettingsSaved}}",
+    "wikitext_line": 80
+  },
+  {
+    "source_id": "wt-global-api-C_TTSSettings.GetVoiceOptionName-86",
+    "symbol": "C_TTSSettings.GetVoiceOptionName",
+    "reason": "Voice-name lookup absent; needs voice catalog and selected voice preference identity.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_TTSSettings.GetVoiceOptionName}}",
+    "wikitext_line": 86
+  },
+  {
+    "source_id": "wt-global-api-C_TTSSettings.SetChannelKeyEnabled-89",
+    "symbol": "C_TTSSettings.SetChannelKeyEnabled",
+    "reason": "Channel-key preference mutation absent; existing channel-level TTS model does not establish channel-key mapping/settings.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_TTSSettings.SetChannelKeyEnabled}}",
+    "wikitext_line": 89
+  },
+  {
+    "source_id": "wt-global-api-C_TTSSettings.SetChatTypeEnabled-90",
+    "symbol": "C_TTSSettings.SetChatTypeEnabled",
+    "reason": "Chat-type preference mutation absent; requires per-chat-type enabled preferences and readback, not channel defaults.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_TTSSettings.SetChatTypeEnabled}}",
+    "wikitext_line": 90
+  },
+  {
+    "source_id": "wt-global-api-C_TTSSettings.SetDefaultSettings-91",
+    "symbol": "C_TTSSettings.SetDefaultSettings",
+    "reason": "Default reset absent; requires authoritative defaults and character/account preference lifecycle.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_TTSSettings.SetDefaultSettings}}",
+    "wikitext_line": 91
+  },
+  {
+    "source_id": "wt-global-api-C_TTSSettings.SetSetting-92",
+    "symbol": "C_TTSSettings.SetSetting",
+    "reason": "Generic setting mutation absent; requires setting-ID mapping, typed value validation and readback state.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_TTSSettings.SetSetting}}",
+    "wikitext_line": 92
+  },
+  {
+    "source_id": "wt-global-api-C_TTSSettings.SetVoiceOptionName-95",
+    "symbol": "C_TTSSettings.SetVoiceOptionName",
+    "reason": "Voice-name mutation absent; requires validated voice catalog lookup and stored preference identity.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_TTSSettings.SetVoiceOptionName}}",
+    "wikitext_line": 95
+  },
+  {
+    "source_id": "wt-global-api-C_UIWidgetManager.SetProcessingUnitGuid-97",
+    "symbol": "C_UIWidgetManager.SetProcessingUnitGuid",
+    "reason": "Processing-unit GUID setter absent; requires widget evaluation context/identity mutation rather than unused storage.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "literal": ": {{api|t=a|C_UIWidgetManager.SetProcessingUnitGuid}}",
+    "wikitext_line": 97
+  },
+  {
+    "source_id": "wt-widgets-DressUpModel:GetObeyHideInTransmogFlag-159",
+    "symbol": "DressUpModel:GetObeyHideInTransmogFlag",
+    "reason": "Getter absent; 3D model rendering/transmog choices are intentionally unsupported. Existing setters are stubs, not modeled getter state; publication-only gap retained, no 3D behavior credit.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "DressUpModel; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "literal": ": {{api|t=w|DressUpModel:GetObeyHideInTransmogFlag}}",
+    "wikitext_line": 159
+  },
+  {
+    "source_id": "wt-widgets-DressUpModel:GetUseTransmogChoices-160",
+    "symbol": "DressUpModel:GetUseTransmogChoices",
+    "reason": "Getter absent; 3D model rendering/transmog choices are intentionally unsupported. Existing setters are stubs, not modeled getter state; publication-only gap retained, no 3D behavior credit.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "DressUpModel; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "literal": ": {{api|t=w|DressUpModel:GetUseTransmogChoices}}",
+    "wikitext_line": 160
+  },
+  {
+    "source_id": "wt-widgets-ModelSceneActor:GetObeyHideInTransmogFlag-163",
+    "symbol": "ModelSceneActor:GetObeyHideInTransmogFlag",
+    "reason": "Getter absent; 3D model rendering/transmog choices are intentionally unsupported. Existing setters are stubs, not modeled getter state; publication-only gap retained, no 3D behavior credit.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "ModelSceneActor; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "literal": ": {{api|t=w|ModelSceneActor:GetObeyHideInTransmogFlag}}",
+    "wikitext_line": 163
+  },
+  {
+    "source_id": "wt-widgets-ModelSceneActor:GetUseTransmogChoices-164",
+    "symbol": "ModelSceneActor:GetUseTransmogChoices",
+    "reason": "Getter absent; 3D model rendering/transmog choices are intentionally unsupported. Existing setters are stubs, not modeled getter state; publication-only gap retained, no 3D behavior credit.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "ModelSceneActor; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "literal": ": {{api|t=w|ModelSceneActor:GetUseTransmogChoices}}",
+    "wikitext_line": 164
+  },
+  {
+    "source_id": "wt-cvars-TTSUseCharacterSettings-227",
+    "symbol": "TTSUseCharacterSettings",
+    "reason": "CVar value/default absent (page default 1); requires character/account TTS preference backend, not speculative historical defaults.",
+    "observed": {
+      "default": null,
+      "default_mismatch": true,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "literal": ": <span class=\"tttemplatelink\">[[CVar TTSUseCharacterSettings|TTSUseCharacterSettings]]</span><span style=\"display:none\">Default: <code><span class=\"apitype\">1</span></code>, Scope: <span class=\"apitype\">Character</span><br><small>If character-specific TTS settings are being used.</small></span>",
+    "wikitext_line": 227
+  },
+  {
+    "source_id": "wt-cvars-clearSeenCustomizationChoices-230",
+    "symbol": "clearSeenCustomizationChoices",
+    "reason": "Console command not in current command records; requires clearing real customization-seen choice state.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Command record present=false",
+      "kind": "command",
+      "value": null
+    },
+    "literal": ": [[CVar clearSeenCustomizationChoices|clearSeenCustomizationChoices]]",
+    "wikitext_line": 230
+  },
+  {
+    "source_id": "wt-cvars-FrameBufferCacheGpuFootprint-231",
+    "symbol": "FrameBufferCacheGpuFootprint",
+    "reason": "Console command not published; requires GPU frame-buffer cache telemetry, absent from simulator model.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Command record present=false",
+      "kind": "command",
+      "value": null
+    },
+    "literal": ": [[CVar FrameBufferCacheGpuFootprint|FrameBufferCacheGpuFootprint]]",
+    "wikitext_line": 231
+  },
+  {
+    "source_id": "wt-cvars-GxFrameStats-232",
+    "symbol": "GxFrameStats",
+    "reason": "Console command not published; requires renderer frame-stat telemetry and command contract.",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Command record present=false",
+      "kind": "command",
+      "value": null
+    },
+    "literal": ": <span class=\"tttemplatelink\">[[CVar GxFrameStats|GxFrameStats]]</span><span style=\"display:none\"><small>Get Engine Frame Stats</small></span>",
+    "wikitext_line": 232
+  }
+]

@@ -1,0 +1,9 @@
+[
+  {
+    "source_id": "inventory-context-build-025",
+    "literal": "|+ 9.1.0 (40000) &rarr; 9.1.5 (41031) Nov 10 2021",
+    "wikitext_line": 25,
+    "status": "metadata-only",
+    "reason": "Historical build/date caption only; no runtime credit."
+  }
+]

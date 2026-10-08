@@ -1,0 +1,14 @@
+......E.......
+======================================================================
+ERROR: test_plain_command_label_is_opt_in_and_resets_at_removed_column (test_gen_patch_wikitext_register.InventoryTests.test_plain_command_label_is_opt_in_and_resets_at_removed_column)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p915-page/tools/test_gen_patch_wikitext_register.py", line 16, in test_plain_command_label_is_opt_in_and_resets_at_removed_column
+    entries, _ = parse_section('cvars', lines, plain_command_labels=True)
+                 ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: parse_section() got an unexpected keyword argument 'plain_command_labels'
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.003s
+
+FAILED (errors=1)

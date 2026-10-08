@@ -1,0 +1,5 @@
+{
+  "source": "master:data/patch-api/sources/9.2.0-wikitext-register.json",
+  "sha256": "69dd92fb3a392bb6c73917fa4c7917a787a57299bf5eb584061d0de542b48191",
+  "matches": []
+}

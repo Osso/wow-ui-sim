@@ -1,0 +1,234 @@
+[
+  {
+    "patch": "9.1.5",
+    "rows": 169,
+    "ok": 122,
+    "gaps": 47,
+    "observation": "patch_9_1_5_publication_sweep-results.json",
+    "result": "pass"
+  },
+  {
+    "patch": "9.2.5",
+    "rows": 84,
+    "ok": 50,
+    "gaps": 34,
+    "observation": "patch_9_2_5_publication_sweep-results.json",
+    "result": "pass"
+  },
+  {
+    "patch": "9.2.7",
+    "rows": 3,
+    "ok": 3,
+    "gaps": 0,
+    "observation": "patch_9_2_7_publication_sweep-results.json",
+    "result": "pass"
+  },
+  {
+    "patch": "10.0.0",
+    "rows": 639,
+    "ok": 466,
+    "gaps": 173,
+    "observation": "patch_10_0_0_publication_sweep-results.json",
+    "result": "pass"
+  },
+  {
+    "patch": "10.0.2",
+    "rows": 416,
+    "ok": 267,
+    "gaps": 149,
+    "observation": "patch_10_0_2_publication_sweep-results.json",
+    "result": "pass"
+  },
+  {
+    "patch": "10.0.5",
+    "rows": 93,
+    "ok": 66,
+    "gaps": 27,
+    "observation": "patch_10_0_5_publication_sweep-results.json",
+    "result": "pass"
+  },
+  {
+    "patch": "10.0.7",
+    "rows": 70,
+    "ok": 44,
+    "gaps": 26,
+    "observation": "patch_10_0_7_publication_sweep-results.json",
+    "result": "pass"
+  },
+  {
+    "patch": "10.1.0",
+    "rows": 129,
+    "ok": 93,
+    "gaps": 36,
+    "observation": "patch_10_1_0_publication_sweep-results.json",
+    "result": "pass"
+  },
+  {
+    "patch": "10.1.5",
+    "rows": 101,
+    "ok": 69,
+    "gaps": 32,
+    "observation": "patch_10_1_5_publication_sweep-results.json",
+    "result": "pass"
+  },
+  {
+    "patch": "10.1.7",
+    "rows": 48,
+    "ok": 34,
+    "gaps": 14,
+    "observation": "patch_10_1_7_publication_sweep-results.json",
+    "result": "pass"
+  },
+  {
+    "patch": "10.2.0",
+    "rows": 150,
+    "ok": 120,
+    "gaps": 30,
+    "observation": "patch_10_2_0_publication_sweep-results.json",
+    "result": "pass"
+  },
+  {
+    "patch": "10.2.5",
+    "rows": 59,
+    "ok": 45,
+    "gaps": 14,
+    "observation": "patch_10_2_5_publication_sweep-results.json",
+    "result": "pass"
+  },
+  {
+    "patch": "10.2.6",
+    "rows": 220,
+    "ok": 200,
+    "gaps": 20,
+    "observation": "patch_10_2_6_publication_sweep-results.json",
+    "result": "pass"
+  },
+  {
+    "patch": "10.2.7",
+    "rows": 104,
+    "ok": 68,
+    "gaps": 36,
+    "observation": "patch_10_2_7_publication_sweep-results.json",
+    "result": "pass"
+  },
+  {
+    "patch": "11.0.0",
+    "rows": 495,
+    "ok": 329,
+    "gaps": 166,
+    "observation": "patch_11_0_0_publication_sweep-results.json",
+    "result": "pass"
+  },
+  {
+    "patch": "11.0.2",
+    "rows": 34,
+    "ok": 22,
+    "gaps": 12,
+    "observation": "patch_11_0_2_publication_sweep-results.json",
+    "result": "pass"
+  },
+  {
+    "patch": "11.0.5",
+    "rows": 48,
+    "ok": 38,
+    "gaps": 10,
+    "observation": "patch_11_0_5_publication_sweep-results.json",
+    "result": "pass"
+  },
+  {
+    "patch": "11.0.7",
+    "rows": 98,
+    "ok": 70,
+    "gaps": 28,
+    "observation": "patch_11_0_7_publication_sweep-results.json",
+    "result": "pass"
+  },
+  {
+    "patch": "11.1.0",
+    "rows": 116,
+    "ok": 97,
+    "gaps": 19,
+    "observation": "patch_11_1_0_publication_sweep-results.json",
+    "result": "pass"
+  },
+  {
+    "patch": "11.1.5",
+    "rows": 125,
+    "ok": 89,
+    "gaps": 36,
+    "observation": "patch_11_1_5_publication_sweep-results.json",
+    "result": "pass"
+  },
+  {
+    "patch": "11.1.7",
+    "rows": 48,
+    "ok": 40,
+    "gaps": 8,
+    "observation": "patch_11_1_7_publication_sweep-results.json",
+    "result": "pass"
+  },
+  {
+    "patch": "11.2.0",
+    "rows": 162,
+    "ok": 135,
+    "gaps": 27,
+    "observation": "patch_11_2_0_publication_sweep-results.json",
+    "result": "pass"
+  },
+  {
+    "patch": "11.2.5",
+    "rows": 163,
+    "ok": 118,
+    "gaps": 45,
+    "observation": "patch_11_2_5_publication_sweep-results.json",
+    "result": "pass"
+  },
+  {
+    "patch": "11.2.7",
+    "rows": 508,
+    "ok": 414,
+    "gaps": 94,
+    "observation": "patch_11_2_7_publication_sweep-results.json",
+    "result": "pass"
+  },
+  {
+    "patch": "12.0.0",
+    "rows": 1010,
+    "ok": 989,
+    "gaps": 21,
+    "observation": "patch_12_0_0_publication_sweep-results.json",
+    "result": "pass"
+  },
+  {
+    "patch": "12.0.1",
+    "rows": 225,
+    "ok": 222,
+    "gaps": 3,
+    "observation": "patch_12_0_1_publication_sweep-results.json",
+    "result": "pass"
+  },
+  {
+    "patch": "12.0.5",
+    "rows": 363,
+    "ok": 352,
+    "gaps": 11,
+    "observation": "patch_12_0_5_publication_sweep-results.json",
+    "result": "pass"
+  },
+  {
+    "patch": "12.0.7",
+    "rows": 174,
+    "ok": 171,
+    "gaps": 3,
+    "observation": "patch_12_0_7_publication_sweep-results.json",
+    "result": "pass"
+  },
+  {
+    "patch": "12.1.0",
+    "rows": 778,
+    "ok": 773,
+    "gaps": 5,
+    "observation": "patch_12_1_0_publication_sweep-results.json",
+    "result": "pass"
+  }
+]
