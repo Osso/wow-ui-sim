@@ -1,0 +1,39 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.16s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p720-page/debug/deps/integration-1db16289b0998b2a)
+
+running 25 tests
+test texture_methods_port::set_texture_empty_string_clears_texture_path ... ok
+test texture_methods_port::test_get_texture_slice_margins_default ... ok
+test texture_methods_port::test_is_blocking_load_requested_default_false ... ok
+test texture_methods_port::test_set_blocking_loads_requested_toggle ... ok
+test texture_methods_port::test_get_vertex_offset_default_zero ... ok
+test texture_methods_port::test_get_rotation_default ... ok
+test texture_methods_port::test_reset_tex_coord_restores_defaults ... ok
+test texture_methods_port::test_set_center_color_no_op ... ok
+test texture_methods_port::test_clear_vertex_offsets_resets_to_zero ... ok
+test texture_methods_port::test_set_blocking_loads_requested_roundtrip ... ok
+test texture_methods_port::test_get_texture_slice_mode_default ... ok
+test texture_methods_port::test_clear_texture_slice_resets_margins_and_mode ... ok
+test texture_methods_port::test_set_gradient_horizontal_no_error ... ok
+test texture_methods_port::test_set_radians_alias_roundtrip ... ok
+test texture_methods_port::test_sprite_sheet_cell_rejects_invalid_inputs_atomically ... ok
+test texture_methods_port::test_set_gradient_vertical_no_error ... ok
+test texture_methods_port::test_set_mask_no_op ... ok
+test texture_methods_port::test_set_texture_slice_mode_roundtrip ... ok
+test texture_methods_port::test_set_rotation_roundtrip ... ok
+test texture_methods_port::test_set_visuals_no_op ... ok
+test texture_methods_port::test_sprite_sheet_cell_maps_and_replaces_coordinates ... ok
+test texture_methods_port::test_set_get_vertex_offset_roundtrip ... ok
+test texture_methods_port::test_set_texture_slice_margins_roundtrip ... ok
+test texture_methods_port::test_sprite_sheet_cell_rejects_unmodeled_optional_dimensions ... ok
+test texture_methods_port::test_vertex_offset_all_four_corners ... ok
+
+test result: ok. 25 passed; 0 failed; 0 ignored; 0 measured; 10645 filtered out; finished in 0.37s
+

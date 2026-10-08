@@ -1,0 +1,20 @@
+{
+  "command": [
+    "git",
+    "diff",
+    "--name-only",
+    "8b6131f3645bb02d83f4c608cb7181139901cc93",
+    "0d92f4dbb76f1f85b8bee4b8573135c95316d0de",
+    "--",
+    "src",
+    "Cargo.toml",
+    "Cargo.lock",
+    "build.rs",
+    "Interface",
+    "data/blizzard-ui-files"
+  ],
+  "exit": 0,
+  "changed_paths": [],
+  "master_revision": "8b6131f3645bb02d83f4c608cb7181139901cc93",
+  "runtime_revision": "0d92f4dbb76f1f85b8bee4b8573135c95316d0de"
+}

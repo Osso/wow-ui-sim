@@ -98,7 +98,7 @@ def main():
     rows = read(extension / 'p720-register-reproduction.json')
     added = next(row for row in rows if row['patch'] == '7.2.5')
     added['template_revision'] = added['revision']
-    added['revision'] = revision
+    added['revision'] = read(FRESH / 'extend-receipts.proof.json')['revision']
     dump(extension / 'p720-register-reproduction.json', rows)
 
     # Exact master sources, never the moving canonical checkout or another worktree.

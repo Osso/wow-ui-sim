@@ -1,0 +1,266 @@
+{
+  "data/patch-api/evidence/10.0.0-session-2026-10-07/validate.py": {
+    "revision": "1aeeb9f0cbadc823196ea50776d2ef339dae05fc",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/data/patch-api/evidence/10.0.0-session-2026-10-07/validate.py"
+    ],
+    "exit": 0,
+    "log": "10.0.0-session-2026-10-07-validator.txt",
+    "log_sha256": "02719d9b18584d9151cfb79a95219fcb1ef1ee3517531d8e59fb1b3fee4140ba",
+    "validator_sha256": "46a4283d5ea4c1b33352fc3c7122277605db5986d55752e6ddddb75e8f1ea7ef"
+  },
+  "data/patch-api/evidence/10.0.2-session-2026-10-07/validate.py": {
+    "revision": "1aeeb9f0cbadc823196ea50776d2ef339dae05fc",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/data/patch-api/evidence/10.0.2-session-2026-10-07/validate.py"
+    ],
+    "exit": 0,
+    "log": "10.0.2-session-2026-10-07-validator.txt",
+    "log_sha256": "a75d4c47989b478e4c270c61cd67719c1a755014e9d83117d847eeb21c872a00",
+    "validator_sha256": "73be1e31b335318f89937fb06c9e87f07fb3530e1ee5c90704ffbc61ec521c71"
+  },
+  "data/patch-api/evidence/10.0.5-session-2026-10-07/validate.py": {
+    "revision": "1aeeb9f0cbadc823196ea50776d2ef339dae05fc",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/data/patch-api/evidence/10.0.5-session-2026-10-07/validate.py"
+    ],
+    "exit": 0,
+    "log": "10.0.5-session-2026-10-07-validator.txt",
+    "log_sha256": "9624dc0ecd63092ab2a5ba3583bc5d1b1a6b3ddc1976813232c19492407a6678",
+    "validator_sha256": "4ce935c001d712259ac2749f5b8a4214231f3b8e6f7b7e3649c8f5a0acc2d1b2"
+  },
+  "data/patch-api/evidence/7.2.0-session-2026-10-08/validate.py": {
+    "revision": "1aeeb9f0cbadc823196ea50776d2ef339dae05fc",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/data/patch-api/evidence/7.2.0-session-2026-10-08/validate.py"
+    ],
+    "exit": 0,
+    "log": "7.2.0-session-2026-10-08-validator.txt",
+    "log_sha256": "02040aa405e1695312cfcf706bbeb1444d67560c85a71a2f0c16cc09864750e6",
+    "validator_sha256": "e4cb7b22f7fc6e8b62f6a414c2b54cce4bd423974f2a27a419e86fe4d482589c"
+  },
+  "data/patch-api/evidence/7.2.5-session-2026-10-08/validate.py": {
+    "revision": "1aeeb9f0cbadc823196ea50776d2ef339dae05fc",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/data/patch-api/evidence/7.2.5-session-2026-10-08/validate.py"
+    ],
+    "exit": 0,
+    "log": "7.2.5-session-2026-10-08-validator.txt",
+    "log_sha256": "1a0246be35d42093e1ef274f03e86c1011ce869770d0a165a94b0f09497c8054",
+    "validator_sha256": "63cfe8b4f46146f793f0af2ffc8518f5ada86cfb1f24635d074efca95fc1e5c4"
+  },
+  "data/patch-api/evidence/7.3.0-session-2026-10-08/validate.py": {
+    "revision": "1aeeb9f0cbadc823196ea50776d2ef339dae05fc",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/data/patch-api/evidence/7.3.0-session-2026-10-08/validate.py"
+    ],
+    "exit": 0,
+    "log": "7.3.0-session-2026-10-08-validator.txt",
+    "log_sha256": "7efb3feea66565f2f1be77017d36be7fd487d22ef82b0107a8cfb85c0a996f52",
+    "validator_sha256": "5819b4d1bbec4e08de84784bea227de53a5ec8a0db7366057ebacc5f9f863643"
+  },
+  "data/patch-api/evidence/7.3.2-session-2026-10-08/validate.py": {
+    "revision": "1aeeb9f0cbadc823196ea50776d2ef339dae05fc",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/data/patch-api/evidence/7.3.2-session-2026-10-08/validate.py"
+    ],
+    "exit": 0,
+    "log": "7.3.2-session-2026-10-08-validator.txt",
+    "log_sha256": "f268ca84f570953827495f17e26ef4dc4f31141fe17cd1eee8eeb09bf7b99a92",
+    "validator_sha256": "ad9d0b9941bb8bf728eb3d21ce791910c6ba92836d9de437d1a5c5524c008817"
+  },
+  "data/patch-api/evidence/8.0.1-session-2026-10-08/validate.py": {
+    "revision": "1aeeb9f0cbadc823196ea50776d2ef339dae05fc",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/data/patch-api/evidence/8.0.1-session-2026-10-08/validate.py"
+    ],
+    "exit": 0,
+    "log": "8.0.1-session-2026-10-08-validator.txt",
+    "log_sha256": "68a3cbed73487cea5d5b53c5cf063189d8c2b65ee3e413709f1a9b4b3d447ac4",
+    "validator_sha256": "6d5cf002b9430c02cc7ac7962afd95b1ca28ad9bb72c6f3d4f46265f11ef8819"
+  },
+  "data/patch-api/evidence/8.1.0-session-2026-10-08/validate.py": {
+    "revision": "1aeeb9f0cbadc823196ea50776d2ef339dae05fc",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/data/patch-api/evidence/8.1.0-session-2026-10-08/validate.py"
+    ],
+    "exit": 0,
+    "log": "8.1.0-session-2026-10-08-validator.txt",
+    "log_sha256": "4c5ba94b1779a7b0c76f8f977e969413dd0dc62972412966276d9ba0d2f8268c",
+    "validator_sha256": "fb5516df9aebfcb54e6c3f27cfa7ea1486fda8f233337f647d05067777e2218a"
+  },
+  "data/patch-api/evidence/8.1.5-session-2026-10-08/validate.py": {
+    "revision": "1aeeb9f0cbadc823196ea50776d2ef339dae05fc",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/data/patch-api/evidence/8.1.5-session-2026-10-08/validate.py"
+    ],
+    "exit": 0,
+    "log": "8.1.5-session-2026-10-08-validator.txt",
+    "log_sha256": "9de776512053007fbc5f253942be06fca4a5d6f7a21b88be01d9d66607a7b779",
+    "validator_sha256": "4f8f9dbf45eb5a0a8ddd21329ecfd4ded562b9b66e9f8ebceeba10c711392c47"
+  },
+  "data/patch-api/evidence/8.2.0-session-2026-10-08/validate.py": {
+    "revision": "1aeeb9f0cbadc823196ea50776d2ef339dae05fc",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/data/patch-api/evidence/8.2.0-session-2026-10-08/validate.py"
+    ],
+    "exit": 0,
+    "log": "8.2.0-session-2026-10-08-validator.txt",
+    "log_sha256": "9c37a5955e1b37a5b259c1d99647a6f5098b59b0bba23c03dfe0e7a07a023d79",
+    "validator_sha256": "a80033d2f7433844775ba683dc85c17e33844ddf800374bb6766e5eb05462fc4"
+  },
+  "data/patch-api/evidence/8.2.5-session-2026-10-08/validate.py": {
+    "revision": "1aeeb9f0cbadc823196ea50776d2ef339dae05fc",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/data/patch-api/evidence/8.2.5-session-2026-10-08/validate.py"
+    ],
+    "exit": 0,
+    "log": "8.2.5-session-2026-10-08-validator.txt",
+    "log_sha256": "85f5c2e591e8fbe129243c3d4605dcd8eaf7ba085cf0bdfcf7dc0c34e29324fa",
+    "validator_sha256": "7abca9dadf8702eceef729cd9e6dcccabdd92ed4f6d8f6523e6f72c66f447423"
+  },
+  "data/patch-api/evidence/8.3.0-session-2026-10-08/validate.py": {
+    "revision": "1aeeb9f0cbadc823196ea50776d2ef339dae05fc",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/data/patch-api/evidence/8.3.0-session-2026-10-08/validate.py"
+    ],
+    "exit": 0,
+    "log": "8.3.0-session-2026-10-08-validator.txt",
+    "log_sha256": "171a3bb1d4478a1ee6f96c690772f529294e8e883ff124602f454f9152b2307e",
+    "validator_sha256": "38fb3f088784fc3c91ff798667833fd88c9c023b7ee0b74dcc9d37090756fdce"
+  },
+  "data/patch-api/evidence/8.3.7-session-2026-10-08/validate.py": {
+    "revision": "1aeeb9f0cbadc823196ea50776d2ef339dae05fc",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/data/patch-api/evidence/8.3.7-session-2026-10-08/validate.py"
+    ],
+    "exit": 0,
+    "log": "8.3.7-session-2026-10-08-validator.txt",
+    "log_sha256": "7ce1e2ca96cddb502e4ed8723b679745c890127b222b9947cd99ba5851ac017d",
+    "validator_sha256": "7ccc9cfe748aa05ebedd62bd5e95ee09a9d40564cf483340697b2e137aae3ffc"
+  },
+  "data/patch-api/evidence/9.0.1-session-2026-10-08/validate.py": {
+    "revision": "1aeeb9f0cbadc823196ea50776d2ef339dae05fc",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/data/patch-api/evidence/9.0.1-session-2026-10-08/validate.py"
+    ],
+    "exit": 0,
+    "log": "9.0.1-session-2026-10-08-validator.txt",
+    "log_sha256": "4305826ca4bbb64981eeac6766c120314002474c23fa33230a3398c46286ae39",
+    "validator_sha256": "2daa5e6851fbabf4303bfaf33d98802514c3e85340a3d3d2b2f0bd89e36b1a6a"
+  },
+  "data/patch-api/evidence/9.0.2-session-2026-10-08/validate.py": {
+    "revision": "1aeeb9f0cbadc823196ea50776d2ef339dae05fc",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/data/patch-api/evidence/9.0.2-session-2026-10-08/validate.py"
+    ],
+    "exit": 0,
+    "log": "9.0.2-session-2026-10-08-validator.txt",
+    "log_sha256": "21e197c8f556d1bbb55c8e7adf1b4dda36b76ae5ff014d5267d051bdfb626bcb",
+    "validator_sha256": "f1e9e54da4aeb147f998bdf69a3a351e7de091813be8265884f5a0ec2f36add5"
+  },
+  "data/patch-api/evidence/9.0.5-session-2026-10-08/validate.py": {
+    "revision": "1aeeb9f0cbadc823196ea50776d2ef339dae05fc",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/data/patch-api/evidence/9.0.5-session-2026-10-08/validate.py"
+    ],
+    "exit": 0,
+    "log": "9.0.5-session-2026-10-08-validator.txt",
+    "log_sha256": "067769fafb5b05de8a957337872f11b8f01c8384c560b0229596b4453b4f094d",
+    "validator_sha256": "24d44afc05bbcd92992882b3c639c7f91f71d2d7968844033cda6f4862bd5df9"
+  },
+  "data/patch-api/evidence/9.1.0-session-2026-10-07/validate.py": {
+    "revision": "1aeeb9f0cbadc823196ea50776d2ef339dae05fc",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/data/patch-api/evidence/9.1.0-session-2026-10-07/validate.py"
+    ],
+    "exit": 0,
+    "log": "9.1.0-session-2026-10-07-validator.txt",
+    "log_sha256": "567d932853569bb43d98ae4ba7bdb96e04d5763632f82b94a186597e741adad8",
+    "validator_sha256": "8788c857e84bd6eaf76f847956bd3bbb4880d2b24d9a96b8362c8fc0289b3b13"
+  },
+  "data/patch-api/evidence/9.1.5-session-2026-10-07/validate.py": {
+    "revision": "1aeeb9f0cbadc823196ea50776d2ef339dae05fc",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/data/patch-api/evidence/9.1.5-session-2026-10-07/validate.py"
+    ],
+    "exit": 0,
+    "log": "9.1.5-session-2026-10-07-validator.txt",
+    "log_sha256": "7ecba1601b629b5e384ea2180087a2671a0d39de1bc5d25879964ab782c69c7c",
+    "validator_sha256": "5589974210edda5c7ff84993758b2b50e26d931e4bc6f959a78ed8a3b8e92203"
+  },
+  "data/patch-api/evidence/9.2.0-session-2026-10-07/validate.py": {
+    "revision": "1aeeb9f0cbadc823196ea50776d2ef339dae05fc",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/data/patch-api/evidence/9.2.0-session-2026-10-07/validate.py"
+    ],
+    "exit": 0,
+    "log": "9.2.0-session-2026-10-07-validator.txt",
+    "log_sha256": "5eeea25834f3fe1ed7cf52fd897ae873a18ef5f06f9a5aa0ec6b06ca56e177a1",
+    "validator_sha256": "a5ff5c05bd495fb3fcab34947ec58da23fa2cdd816b22d9e4bd1674d8e00223e"
+  },
+  "data/patch-api/evidence/9.2.5-session-2026-10-07/validate.py": {
+    "revision": "1aeeb9f0cbadc823196ea50776d2ef339dae05fc",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/data/patch-api/evidence/9.2.5-session-2026-10-07/validate.py"
+    ],
+    "exit": 0,
+    "log": "9.2.5-session-2026-10-07-validator.txt",
+    "log_sha256": "cbb0011ca6d9d6dc4f63d4520303138e24f3d52d5625592ca9a4ac72409d406b",
+    "validator_sha256": "0ef6d65c08ab4d9d2c7ba7edd8d37ad271580552254ca114c48cc48581fb9325"
+  },
+  "data/patch-api/evidence/9.2.7-session-2026-10-07/validate.py": {
+    "revision": "1aeeb9f0cbadc823196ea50776d2ef339dae05fc",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/data/patch-api/evidence/9.2.7-session-2026-10-07/validate.py"
+    ],
+    "exit": 0,
+    "log": "9.2.7-session-2026-10-07-validator.txt",
+    "log_sha256": "5e32c82c9a233afca2c86ee7f19b6b31da563df53d811ea65f37e1a7d82fa320",
+    "validator_sha256": "efbd478aab7fd7d9543f505cbc7d6f7fcf9c604d277110a9ff5d25701ad4ab2c"
+  }
+}

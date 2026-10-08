@@ -49,6 +49,26 @@ Targeted acceptance passes. No full integration suite, agents/model CLIs, push o
 
 All twenty prior validators pass; together with this page, 21/21 pass. [Relocation proof](../../../data/patch-api/evidence/7.2.0-session-2026-10-08/p720-validator-portability.json) validates a complete Git-archive snapshot at a different root, then adds a hypothetical later-audit register/sweep: historical counts remain 44/45 and validation still passes. Tampered own ledger bytes fail. Original sealed artifacts remain byte-identical after validation/restoration. [All twenty prior validators also pass in that augmented relocated snapshot](../../../data/patch-api/evidence/7.2.0-session-2026-10-08/p720-relocated-prior-validator-matrix.json). Full Git history is required; no fallback or missing-history bypass was added.
 
+## Integration onto merged 7.2.5
+
+[Integrated ledger](../../../data/patch-api/evidence/7.2.0-session-2026-10-08/integrated/p720-final-command-ledger.md) pins runtime/register/sweep scope to `0d92f4dbb` and compares an exact archived master `8b6131f36`. Later driver commits modify evidence/docs only. The additive parser retains all three opt-in modes, including 7.2.5's `--top-level-api-bullets`.
+
+| Boundary | Result | Evidence |
+|---|---|---|
+| Retained source reproduction | 45/45 registers; 42/45 extracts | Recorded/inherited flags and exact unchanged 12.0.5, 12.0.7, 12.1.0 failures |
+| Exact master / branch sweeps | 45/45 and 46/46 cases; 8,869 / 8,872 observations | [Every-page comparison](../../../data/patch-api/evidence/7.2.0-session-2026-10-08/integrated/gap-comparison.json): all 44 existing pages have unchanged known gaps and every row's `ok` status |
+| Own publication / cached behavior | 1/1 sweep; 4/4 prefork cases; zero gaps | Real 7.2.5 register first, then later pages |
+| Requested bare `patch_7_2_0` filter | Zero cases; no coverage credited | Page defines cached cases only; scoped bare integration below supplies real coverage |
+| Texture / mask / equipment integration; equipment library | 25/25, 10/10, 6/6; 7/7 | Complete logs and scoped receipts |
+| Python fixtures; format; Mists tests check | 29/34/8; exit 0; exit 0 | Zero non-vendor warnings; six inherited iced manifest deprecations unsuppressed |
+| Negative namespace control | Expected exit 1, exactly 0 → 1 gap | Only `wt-global-api-C_EquipmentSet-10` changes; no resolved/stale IDs |
+
+No own or existing-page gap changes, new supersession closures, `LATER_AUDIT_REPLACEMENTS` changes or weakened checks. Four substantive prose limits remain. Shared extender refreshes the real 7.2.5 register/sweep rows and records the actual extension revision separately from its copied template revision; saved-extract receipts cover all 45 registers.
+
+Historical scope remains fixed at `8ae333df4` (44 registers, 45 cases), with all 155 sealed artifacts byte-identical. Fresh [integrated validator](../../../data/patch-api/evidence/7.2.0-session-2026-10-08/validate_integrated.py) independently fixes the new 45-register scope. All 22 required historical validators pass; the separate final integrated gate and command receipts are recorded in [validator matrix](../../../data/patch-api/evidence/7.2.0-session-2026-10-08/integrated/validator-matrix.json).
+
+No runtime/vendor/profile changes versus master, no new startup or deployment claim, and no agents, push, merge, directory switching or `__pycache__`.
+
 ## Sources
 
 - [Pinned provenance](../../../data/patch-api/sources/7.2.0-api-changes.provenance.json).

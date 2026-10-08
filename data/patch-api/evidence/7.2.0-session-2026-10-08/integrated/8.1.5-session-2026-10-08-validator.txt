@@ -1,0 +1,41 @@
+{
+  "inventory_rows": 66,
+  "extract_rows": 19,
+  "ledger_rows": 85,
+  "gaps": 24,
+  "publication_ok": 42,
+  "statuses": {
+    "audit-pending": 24,
+    "partial-development-green": 21,
+    "bounded-coverage": 21,
+    "metadata-only": 19
+  },
+  "retired_members": 12,
+  "removal_scan_candidates": 28,
+  "behaviorally_modeled_missing_members": 1,
+  "negative_baseline_gaps": 24,
+  "negative_gaps": 25,
+  "registers_reproduced": 39,
+  "saved_extracts_checked": 39,
+  "inherited_extract_failures": [
+    "12.0.5",
+    "12.0.7",
+    "12.1.0"
+  ],
+  "prior_inputs_preserved": 194,
+  "prior_mode_outcomes_preserved": 76,
+  "publication_sweeps": 39,
+  "inventory_rows_all_sweeps": 8434,
+  "required_proofs": 24,
+  "warnings": {
+    "p815-default-check": {
+      "vendor_warnings": 7,
+      "non_vendor_warnings": 0
+    },
+    "p815-mists-check": {
+      "vendor_warnings": 7,
+      "non_vendor_warnings": 0
+    }
+  },
+  "validator": "PASS"
+}

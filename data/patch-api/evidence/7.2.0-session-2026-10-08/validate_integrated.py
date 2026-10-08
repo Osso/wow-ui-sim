@@ -44,7 +44,7 @@ def check_sources(revision):
             assert row['verified_flags'] == provenance['generator_flags']
     added = next(row for row in extension if row['patch'] == '7.2.5')
     assert added['verified_flags'] == ['--top-level-api-bullets']
-    assert added['revision'] == read(FRESH / 'extend-receipts.proof.json')['source_revision']
+    assert added['revision'] == read(FRESH / 'extend-receipts.proof.json')['revision']
     for row in extracts:
         path = ROOT / 'data/patch-api/sources' / (row['patch'] + '-api-changes.txt')
         assert digest(path) == row['sha256']
@@ -125,7 +125,7 @@ def check_receipts(context):
         for name, expected_digest in scope.items():
             assert hashlib.sha256(blob(source, name)).hexdigest() == expected_digest, (label, name)
             if label != 'master-all-sweeps':
-                assert digest(ROOT / name) == expected_digest, (label, name)
+                assert hashlib.sha256(blob(receipt['revision'], name)).hexdigest() == expected_digest, (label, name)
         if receipt['command'][:2] == ['cargo', 'test'] and code == 0:
             counts = re.findall(r'test result: ok\. (\d+) passed; 0 failed;', log.read_text())
             if label == 'integration-p720':

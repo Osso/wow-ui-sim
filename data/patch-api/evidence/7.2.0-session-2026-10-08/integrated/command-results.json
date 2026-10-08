@@ -1,0 +1,18 @@
+{
+  "own-sweep": 0,
+  "extend-receipts": 0,
+  "master-all-sweeps": 0,
+  "all-sweeps": 0,
+  "integration-p720": 0,
+  "prefork-p720": 0,
+  "texture-regression": 0,
+  "mask-regression": 0,
+  "equipment-regression": 0,
+  "equipment-lib": 0,
+  "gen_patch_wikitext_register-fixtures": 0,
+  "extract_patch_non_inventory-fixtures": 0,
+  "patch_audit_validation-fixtures": 0,
+  "format": 0,
+  "mists-check": 0,
+  "negative": 1
+}
