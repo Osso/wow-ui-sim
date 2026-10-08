@@ -1,0 +1,18 @@
+{
+  "revision": "39bb21f41",
+  "source_pageid": 686956,
+  "source_revision": 6778080,
+  "source_toc": 50502,
+  "active_mists_interface": 50504,
+  "inventory_rows": 0,
+  "metadata_rows": 4,
+  "positive_api_coverage": false,
+  "retirements": [],
+  "runtime_changes": [],
+  "tools_changed": [],
+  "client_line": "mists-classic",
+  "later_registers": [
+    "5.5.3",
+    "5.5.4"
+  ]
+}
