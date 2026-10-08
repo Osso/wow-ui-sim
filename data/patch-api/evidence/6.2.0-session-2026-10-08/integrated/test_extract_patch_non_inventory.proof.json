@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p620-page/tools/test_extract_patch_non_inventory.py"
+  ],
+  "revision": "73c8261c268af2e477e2e9ee46bbee591de00d4f",
+  "exit": 0,
+  "log": "test_extract_patch_non_inventory.txt",
+  "log_sha256": "f26a75bf94818628cb0af94c4c9781eaee6f9a92c306f1f2d15b92a164ddd8de"
+}

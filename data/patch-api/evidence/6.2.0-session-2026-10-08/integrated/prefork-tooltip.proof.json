@@ -1,0 +1,14 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "tooltip"
+  ],
+  "revision": "ddd76addc3bd451894316ab8c3575ff9e8ec0f35",
+  "exit": 0,
+  "log": "prefork-tooltip.txt",
+  "log_sha256": "630e5e160eb6e76bd326c1804bf7dffb90cbede364b6617869c6f9fd22ed40b0"
+}

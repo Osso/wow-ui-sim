@@ -1,0 +1,10 @@
+{
+  "before_gaps": [],
+  "after_gaps": [],
+  "replacements": [],
+  "later_intersections": {
+    "6.2.2": [],
+    "6.2.4": []
+  },
+  "pending_item_link_contracts": 2
+}

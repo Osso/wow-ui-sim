@@ -1,0 +1,14 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_6_2_0"
+  ],
+  "revision": "ddd76addc3bd451894316ab8c3575ff9e8ec0f35",
+  "exit": 0,
+  "log": "prefork-patch.txt",
+  "log_sha256": "3c8ab6e27ab857dee7550efc2ad40bec3fe41def6cb3fa020bb942ef839e8f22"
+}

@@ -1,0 +1,12 @@
+{
+  "command": [
+    "cargo",
+    "build",
+    "--bin",
+    "wow-sim"
+  ],
+  "revision": "ddd76addc3bd451894316ab8c3575ff9e8ec0f35",
+  "exit": 0,
+  "log": "build-startup.txt",
+  "log_sha256": "c49a0a1b01ab54741df628b857524b49518b0c153c50b8c9c51784b68573e4d0"
+}

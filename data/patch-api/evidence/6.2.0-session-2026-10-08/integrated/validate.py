@@ -165,6 +165,11 @@ def check_sweeps(context):
     original = json.loads((HISTORY / 'p620-fetch.json').read_text())
     original['query']['pages'][0]['title'] += ' tampered'
     assert read(HERE / 'negative-fetch.json') == original
+    control = read(HERE / 'negative-control.json')
+    assert control['publication_gaps'] == {'before': 0, 'after': 0}
+    assert control['row_count']['expected'] == 0 and control['row_count']['injected'] == 1
+    assert control['source_provenance']['changed_field'] == 'query.pages[0].title'
+    assert control['invariants_weakened'] == []
     return len(pages), len(passed)
 
 
@@ -197,6 +202,9 @@ def check_commands(context):
         receipt = read(HERE / (label + '.proof.json'))
         assert receipt == expected and receipt['exit'] == 101
         assert digest((HERE / receipt['log']).read_bytes()) == receipt['log_sha256']
+        revision = context['master_revision'] if label == 'master-tooltip-clamp' else context['runtime_revision']
+        for directory in ('src', 'tests'):
+            assert git('rev-parse', receipt['revision'] + ':' + directory) == git('rev-parse', revision + ':' + directory)
     branch = (HERE / 'integration-tooltip.txt').read_text()
     master = (HERE / 'master-tooltip-clamp.txt').read_text()
     failed = lambda log: set(re.findall(r'^test (\S+) \.\.\. FAILED$', log, re.M))

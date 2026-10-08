@@ -1,0 +1,13 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "patch_6_2_0"
+  ],
+  "revision": "ddd76addc3bd451894316ab8c3575ff9e8ec0f35",
+  "exit": 0,
+  "log": "integration-patch.txt",
+  "log_sha256": "e38d54eda4861cf7548c87119fc95f4dfcd951254b42d3702bf08b13e114752d"
+}

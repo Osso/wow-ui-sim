@@ -1,0 +1,19 @@
+{
+  "publication_gaps": {
+    "before": 0,
+    "after": 0
+  },
+  "row_count": {
+    "expected": 0,
+    "injected": 1,
+    "rejection": "register row count changed",
+    "log": "negative.txt"
+  },
+  "source_provenance": {
+    "changed_field": "query.pages[0].title",
+    "log": "negative-source.txt",
+    "exit": 1,
+    "rejection": "page title must equal pinned provenance"
+  },
+  "invariants_weakened": []
+}

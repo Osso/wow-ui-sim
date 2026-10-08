@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p620-page/tools/test_check_patch_validators.py"
+  ],
+  "revision": "73c8261c268af2e477e2e9ee46bbee591de00d4f",
+  "exit": 0,
+  "log": "test_check_patch_validators.txt",
+  "log_sha256": "904e6992404cf037a3613bda2b1913fd39b97327dec40eac01e76d54fee805ca"
+}

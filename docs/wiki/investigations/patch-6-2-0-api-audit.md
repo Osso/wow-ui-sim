@@ -46,6 +46,24 @@ Initial captured Cargo execution orphaned after Pyrun returned no result; its ow
 
 Changed Rust readability review found no new suppressions, deep nesting or duplicated bodies. No full suite, agents/model CLIs, push, merge, working-directory tool call, vendor/Wowless/WowlessData edit or protected host-state change. No WoW install: CASC/native visual tests are not claimed.
 
+## Integrated proof on master 8dd11c1b9
+
+Runtime receipt scope is `ddd76addc`; subsequent changes are evidence/docs only. [Integrated receipts](../../../data/patch-api/evidence/6.2.0-session-2026-10-08/integrated/) preserve the historical session and add:
+
+| Boundary | Result |
+|---|---|
+| Own prefork sweep; integration/prefork `patch_6_2_0` | 1/1; 1/1 and 3/3 |
+| All publication sweeps | Branch 52/52; pinned master 51/51; 51 pages, 9,051 observations |
+| Other-page comparison | Every observation on all 50 other pages equals pinned master; [gap comparison](../../../data/patch-api/evidence/6.2.0-session-2026-10-08/integrated/gap-comparison.json) |
+| Register/extract reproduction | 51/51 registers, 48/51 extracts; exact three inherited failures unchanged |
+| Prefork tooltip cases | 34/34 |
+| Addons-enabled `timeout 90 … --no-saved-vars lua-errors` | Exit 0, `[]` |
+| All `tools/test_*.py` | 80/80: validator gate 4, extractor 36, generator 32, preservation helper 8 |
+| Format/Mists check | Exit 0; zero non-vendor warnings, six inherited iced manifest deprecations |
+| Prior historical/integrated validator matrix | 33/33, set derived from `git ls-tree` at pinned master |
+
+Zero parent inventory means no later-register intersection or gap replacement. Both pending item-link contracts remain unmodeled; merged 6.2.2/6.2.4 audits introduced no backing-model changes. Negative controls preserve the zero-row count invariant (injection rejected before probing) and independently reject a one-field retained-source title tamper. Neither invents a publication observation or weakens an invariant.
+
 ## Recorded limits
 
 Two item-link contracts remain pending because static item IDs/context clones lack historical specialization, variable bonus-ID, upgrade and cross-level scaling relationships. Difficulty checks prove identifiers only; native five-player metadata remains unmodeled. Automated diff is explicitly not expanded. Cost policy has only the existing Flash of Light fixture. Integrated sweep now uses the real merged 6.2.2 and 6.2.4 registers; neither intersects this zero-entry parent inventory, so no supersession or retirement invariant changed.

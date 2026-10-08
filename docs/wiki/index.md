@@ -1,3 +1,7 @@
+## [2026-10-08] integration | Patch 6.2.0 API audit
+
+[Audit](investigations/patch-6-2-0-api-audit.md): integrated on master 8dd11c1b9 with real 6.2.2/6.2.4 registers. Own zero gaps and two pending item-link contracts unchanged. Branch 52/52 sweep cases; every observation on all 50 other pages equals pinned master. 51 registers/48 extracts reproduce with three inherited failures; explicit rebase mapping and historical records preserved.
+
 ## [2026-10-08] integration | Patch 6.2.4 API audit
 
 [Audit](investigations/patch-6-2-4-api-audit.md): merged 7.0.1/7.0.3 registers integrated on master 846a30663; own zero gaps and seven pending historical contracts unchanged. All 50 sweep/factory cases pass; all 48 other pages match exact master observations. 49 registers / 46 extracts reproduce, three inherited failures retained. Negative 0 → 1, identity/BN regressions, 32/36/8 fixtures and format/Mists checks pass; 32 historical/integrated validators pass. Historical artifacts preserved. Rebase onto 15b417367 supersedes the four-file 7.0.3 allowlist; durable ten-commit mapping and 30 pinned-master validators pass. Fresh sweeps 50/50 and 1/1, fixtures 32/36/8 and format pass.

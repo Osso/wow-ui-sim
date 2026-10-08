@@ -1,0 +1,16 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--manifest-path",
+    "/tmp/p620-master-c6eamwb2/Cargo.toml",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "publication_sweep"
+  ],
+  "revision": "8dd11c1b90fb1f5ca925de62054a671179652f15",
+  "exit": 0,
+  "log": "master-all-sweeps.txt",
+  "log_sha256": "391e769af4dd598132548e4d5c53ea1e791acea76af81072df60f4e4793a12be"
+}

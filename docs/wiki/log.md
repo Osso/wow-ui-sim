@@ -420,3 +420,7 @@ Pinned Legion revision 5295335; all 178 IDs accounted. Modeled recipe search and
 ## 2026-10-08 — Patch 6.2.2 API stub audit
 
 Pinned pageid 122147/revision 6209268; exact navigation template only, no redirect. [Audit](investigations/patch-6-2-2-api-audit.md) records zero inventory/gaps/retirements and one metadata-only extract row. Prefork 1/1 and all sweeps/factory 49/49; fixtures 31/35/8, 48 register/45 extract reproductions (three inherited failures), Mists/format pass. All 25 prior validators plus own gate and relocated/future-file/tamper/restoration proof pass. No runtime/tool changes, full suite, push, merge, agents, or other-worktree mutation.
+
+## 2026-10-08 — Patch 6.2.0 integration
+
+Integrated merged 6.2.2/6.2.4 registers; retained zero publication gaps and two pending item-link contracts. Fresh 52/52 sweeps and exact 50-page master comparison, 51/48 register/extract reproduction, 33 prior validators, 80 Python fixtures, format/Mists and addons-enabled startup `[]` verified. Rebase identities and historical records preserved; negative controls retain zero-row/source provenance invariants. See [[patch-6-2-0-api-audit]].

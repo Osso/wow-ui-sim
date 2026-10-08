@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p620-page/data/patch-api/evidence/6.2.0-session-2026-10-08/integrated/negative_source.py"
+  ],
+  "revision": "a91019f6eedbf54df533efdb7c57b39ea9e72b46",
+  "exit": 1,
+  "log": "negative-source.txt",
+  "log_sha256": "5e61a9fd3d2f7d6915c6c6e43d8d36a2e8ad34e751052f321d5acc4452fcfdbd"
+}
