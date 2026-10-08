@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p601-page/data/patch-api/evidence/6.0.1-session-2026-10-08/validate.py", line 173, in <module>
+    main()
+    ~~~~^^
+  File "/home/osso/.worktrees/wow-ui-sim-p601-page/data/patch-api/evidence/6.0.1-session-2026-10-08/validate.py", line 165, in main
+    sweeps = check_proofs(context)
+  File "/home/osso/.worktrees/wow-ui-sim-p601-page/data/patch-api/evidence/6.0.1-session-2026-10-08/validate.py", line 112, in check_proofs
+    assert receipt['scope'][name] == digest(blob(receipt['revision'], name)), (label, name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('p601-format-check', 'tests/data/patch_6_0_1_sweep_known_gaps.json')

@@ -108,7 +108,7 @@ def check_proofs(context):
         assert digest(log) == receipt['log_sha256'], label
         assert not git('diff', '--name-only', context['source_revision'], receipt['revision'],
                        '--', *policy['paths']), label
-        for name in context['proof_scope']:
+        for name in policy['proof_scope']:
             assert receipt['scope'][name] == digest(blob(receipt['revision'], name)), (label, name)
         if label in ('p601-discovery', 'p601-all-sweeps'):
             assert re.search(r'test result: ok\. [1-9]\d* passed; 0 failed;', log.decode()), label

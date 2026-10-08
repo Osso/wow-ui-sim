@@ -1,6 +1,8 @@
 """Run one argv command with complete logs and a revision/scope receipt."""
 import hashlib
+import io
 import json
+import tarfile
 import os
 from pathlib import Path
 import subprocess
@@ -12,6 +14,19 @@ HERE = Path(__file__).resolve().parent
 
 def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def read_committed_scope(revision):
+    """Seal Git blobs, never ignored scratch or work-in-progress files."""
+    paths = ['src', 'tests', 'tools', 'Cargo.toml', 'Cargo.lock', 'build.rs']
+    dirty = subprocess.check_output(['git', 'diff', '--name-only', revision, '--', *paths],
+                                    cwd=ROOT, text=True)
+    if dirty:
+        raise ValueError('uncommitted proof inputs: ' + dirty)
+    data = subprocess.check_output(['git', 'archive', revision, *paths], cwd=ROOT)
+    with tarfile.open(fileobj=io.BytesIO(data)) as archive:
+        return {member.name: hashlib.sha256(archive.extractfile(member).read()).hexdigest()
+                for member in archive.getmembers() if member.isfile()}
 
 
 def main():
@@ -34,10 +49,8 @@ def main():
         match = re.search(r'out_env: "([^"]+)"', path.read_text())
         if match and match[1] != 'P601_SWEEP_OUT':
             env[match[1]] = str(HERE / (path.stem + '-results.json'))
-    names = subprocess.check_output(['git', 'ls-files', 'src', 'tests', 'tools', 'Cargo.toml', 'Cargo.lock', 'build.rs'], cwd=ROOT, text=True).splitlines()
-    names.extend(str(p.relative_to(ROOT)) for p in (ROOT / 'tests').glob('patch_6_0_1*'))
-    scope = {name: digest(ROOT / name) for name in sorted(set(names)) if (ROOT / name).is_file()}
     revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
+    scope = read_committed_scope(revision)
     log = HERE / (label + '.log')
     with log.open('wb') as handle:
         result = subprocess.run(command, cwd=ROOT, env=env, stdout=handle, stderr=subprocess.STDOUT)
