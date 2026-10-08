@@ -1,0 +1,16 @@
+{
+  "command": [
+    "python3",
+    "/home/osso/.worktrees/wow-ui-sim-p810-page/data/patch-api/evidence/8.1.0-session-2026-10-08/validate.py"
+  ],
+  "revision": "b9a8f7f7a4d5917a0d2fc4376e50206f5bbdbd68",
+  "scope": "p810-artifact-validation-final",
+  "cwd": ".",
+  "target": "dedicated p810-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p810-artifact-validation-final.txt",
+  "log_sha256": "542ab41175001c7556259f1aa1f09e29b51eb6603283c456420ea44b1429e9d0",
+  "seconds": 0.5133770020001975,
+  "invalidated": false
+}
