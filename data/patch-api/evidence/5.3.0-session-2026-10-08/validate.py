@@ -1,6 +1,7 @@
 """Read-only historical retail 5.3.0 proof, portable to later audits."""
 import hashlib
 import json
+import re
 from pathlib import Path
 import subprocess
 import sys
@@ -46,12 +47,23 @@ def main():
     assert all(row['header_count'] == row['parsed_count'] for row in register['header_counts'])
     observations = read(HERE / 'patch_5_3_0_publication_sweep-results.json')
     entries = {row['id']: row for row in register['entries']}
+    assert observations == read(HERE / 'p530-discovery-results.json')
     assert set(observations) == set(entries)
     known = json.loads(blob(revision, 'tests/data/patch_5_3_0_sweep_known_gaps.json'))
     assert set(known) == {name for name, row in observations.items() if not row['ok']}
     coverage = json.loads(blob(revision, 'data/patch-api/sources/5.3.0-page-coverage.json'))['source_rows']
     ids = [row['source_id'] for row in coverage]
-    assert len(ids) == len(set(ids)) and set(entries) <= set(ids)
+    namespace = {'__name__': 'historical_extractor', '__file__': str(ROOT / 'tools/extract_patch_non_inventory.py')}
+    exec(compile(blob(revision, 'tools/extract_patch_non_inventory.py'), 'historical_extractor', 'exec'), namespace)
+    plaintext = blob(revision, 'data/patch-api/sources/5.3.0-api-changes.txt').decode()
+    supplemental = {row['source_id'] for row in namespace['seed_rows'](plaintext, '5.3.0')}
+    diff_lines = blob(revision, 'data/patch-api/sources/5.3.0-api-changes.diff.wikitext').decode().splitlines()
+    supplemental |= {f'diff-caption-{number:03}' for number, line in enumerate(diff_lines, 1)
+                     if line.startswith('|+')}
+    assert len(ids) == len(set(ids)) and set(ids) == set(entries) | supplemental
+    by_id = {row['source_id']: row for row in coverage}
+    for name, result in observations.items():
+        assert by_id[name]['status'] == ('bounded-coverage' if result['ok'] else 'audit-pending')
     assert all(row['note'] and row['status'] in ('bounded-coverage', 'audit-pending', 'metadata-only')
                for row in coverage)
     assert {row['source_id'] for row in read(HERE / 'p530-gap-review.json')} == set(known)
@@ -62,17 +74,40 @@ def main():
         assert receipt['command'], name
         for path, expected in seal['proof_inputs'][name].items():
             assert digest(blob(receipt['revision'], path)) == expected, (name, path)
+        changed = subprocess.check_output(
+            ['git', 'diff', '--name-only', receipt['revision'], revision, '--',
+             *seal['proof_scopes'][name]], cwd=ROOT, text=True)
+        assert not changed, ('proof scope changed', name, changed)
     negative = read(HERE / 'p530-negative-results.json')
     assert {name for name, row in negative.items() if not row['ok']} == set(known) | {seal['negative_id']}
     assert set(negative) == set(observations)
+    assert all(negative[name] == row for name, row in observations.items()
+               if name != seal['negative_id'])
+    for name in ('p530-all-sweeps', 'p530-own-behavior', 'p530-bare-behavior', 'p530-pvp-lib'):
+        match = re.search(r'test result: ok\. (\d+) passed', (HERE / (name + '.txt')).read_text())
+        assert match and int(match[1]) > 0, ('empty proof scope', name)
     for row in read(HERE / 'p530-scan-receipts.json'):
         assert row['tool'].startswith('/usr/bin/grep') and row['exit'] in (0, 1)
         assert row['matches'] == len((HERE / row['log']).read_text().splitlines())
+    removals = {entry['symbol'] for entry in entries.values() if entry['direction'] == 'removed'}
+    assert removals == {row['symbol'] for row in read(HERE / 'p530-retirement-decisions.json')}
+    for symbol in removals:
+        scans = [row for row in read(HERE / 'p530-scan-receipts.json') if row['symbol'] == symbol]
+        assert {row['scope'] for row in scans} >= {'cache', 'callers', 'final-callers'}
+        assert all(row['matches'] == 0 for row in scans if row['scope'] in ('cache', 'callers'))
     later = read(HERE / 'p530-later-retirement-check.json')
     for row in later:
         data = blob(row['revision'], row['path'])
         assert digest(data) == row['sha256']
         assert not any(hit['direction'] == 'added' for hit in row['hits'])
+    mists_warnings = [line for line in (HERE / 'p530-mists.txt').read_text().splitlines()
+                      if line.startswith('warning:')]
+    assert all(line.startswith('warning: iced-wgpu-patched/Cargo.toml:') or
+               line == 'warning: `iced_wgpu` (manifest) generated 6 warnings'
+               for line in mists_warnings), mists_warnings
+    assert not subprocess.check_output(
+        ['git', 'diff', '--name-only', seal['base_revision'], revision, '--', 'src', 'Interface'],
+        cwd=ROOT, text=True), 'runtime/vendor changes require additional caller proof'
     # Shared snapshots only, never live wiki/source comparisons.
     for path, count in read(HERE / 'wiki-baseline.json').items():
         assert len(blob(revision, path).decode().splitlines()) >= count
