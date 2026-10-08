@@ -1,0 +1,14 @@
+{
+  "inventory": 114,
+  "extract": 45,
+  "ledger": 159,
+  "publication_gaps": 22,
+  "extract_statuses": {
+    "metadata-only": 17,
+    "audit-pending": 27,
+    "bounded-coverage": 1
+  },
+  "new_runtime_models": 0,
+  "new_retirements": 0,
+  "existing_absences": 31
+}

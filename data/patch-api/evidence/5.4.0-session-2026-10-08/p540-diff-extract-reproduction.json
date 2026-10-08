@@ -1,0 +1,9 @@
+{
+  "revision": "5d09d3ffc0e717ef42f5f8b922a2f5a4a956d461",
+  "flags": [
+    "--mists-automated-diff",
+    "--mists-source-markup"
+  ],
+  "sha256": "d01c7b4c11d9c1d1c7b9f8fab6e9a1ebf435ae91f7f8f44a8a8eb7affa39ee2f",
+  "byte_identical": true
+}

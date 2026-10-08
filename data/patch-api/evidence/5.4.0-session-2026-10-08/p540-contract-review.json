@@ -1,0 +1,409 @@
+[
+  {
+    "source_id": "source-context-001",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial/source/build context or external resource link; no runtime credit.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes.txt",
+    "source_line": 1,
+    "statement": "Patch 5.4.0 API changes"
+  },
+  {
+    "source_id": "source-context-003",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial heading; no runtime credit.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes.txt",
+    "source_line": 3,
+    "statement": "== Breaking changes =="
+  },
+  {
+    "source_id": "prose-undated-004",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Auction bidder/owner full-name positions require legacy auction listings with realm identity; no verified 18-return listing fixture.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes.txt",
+    "source_line": 4,
+    "statement": "* Two new returns (bidderFullName at #13 and ownerFullName at #15) have been added to GetAuctionItemInfo. Owner, previously #13, has been pushed to #14. Returns previously after owner (saleStatus, itemId, hasAllInfo) have been pushed forward by two places."
+  },
+  {
+    "source_id": "prose-undated-005",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Same auction signature contract as preceding statement; positional behavior not inferred from publication.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes.txt",
+    "source_line": 5,
+    "statement": "** The full call signature is now name, texture, count, quality, canUse, level, levelColHeader, minBid, minIncrement, buyoutPrice, bidAmount, highBidder, bidderFullName, owner, ownerFullName, saleStatus, itemId, hasAllInfo =  GetAuctionItemInfo(\"list\", offset)"
+  },
+  {
+    "source_id": "prose-undated-006",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Page prose calls bgQueue #5 but the printed signature places it #6; internally inconsistent historical return numbering.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes.txt",
+    "source_line": 6,
+    "statement": "*  One new return (bgQueue pushed from #4 to #5) have been added to GetLFGRoleUpdate."
+  },
+  {
+    "source_id": "prose-undated-007",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Printed six-return LFG role-update signature conflicts with preceding bgQueue numbering; historical fixture absent.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes.txt",
+    "source_line": 7,
+    "statement": "** The full call signature is now inProgress, slots, members, category, lfgID, bgQueue = GetLFGRoleUpdate()"
+  },
+  {
+    "source_id": "prose-undated-008",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "War-game target-unit transition needs invitation/session backing, not a noop StartWarGame.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes.txt",
+    "source_line": 8,
+    "statement": "* StartWarGame(\"target\"[, area]) \"target\" unitid was unitName previously"
+  },
+  {
+    "source_id": "source-context-010",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial heading; no runtime credit.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes.txt",
+    "source_line": 10,
+    "statement": "== Modified API =="
+  },
+  {
+    "source_id": "prose-undated-011",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "GetUnitName delegates to the single unit-name getter and ignores showServer; connected-realm identity and command routing are not modeled.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes.txt",
+    "source_line": 11,
+    "statement": "* GetUnitName(unitid[,showServer]) returns 'name-realm' instead of 'name - realm' (spaces removed) and most commands that accept a unitname now, work with 'name-server' format (/invite, /ginvite, /trade etc"
+  },
+  {
+    "source_id": "prose-undated-012",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Modified listing names UnitIsSameServer but describes no concrete delta; connected realm identity is absent.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes.txt",
+    "source_line": 12,
+    "statement": "* UnitIsSameServer(\"otherUnit\")"
+  },
+  {
+    "source_id": "prose-undated-013",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Modified listing names GetInstanceInfo without a delta; the explicit #9 statement is assessed separately.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes.txt",
+    "source_line": 13,
+    "statement": "* GetInstanceInfo()"
+  },
+  {
+    "source_id": "prose-undated-014",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Modified listing provides only GetLFGDungeonInfo(dungeonID), not the changed returns or dataset.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes.txt",
+    "source_line": 14,
+    "statement": "* GetLFGDungeonInfo(dungeonID)"
+  },
+  {
+    "source_id": "prose-undated-015",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Modified listing provides GetLFGMode(category,lfgID), without a specified state transition.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes.txt",
+    "source_line": 15,
+    "statement": "* GetLFGMode(category, lfgID)"
+  },
+  {
+    "source_id": "prose-undated-016",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Modified listing provides GetLFGQueueStats(category[,activeID]), without the output delta or queue fixture.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes.txt",
+    "source_line": 16,
+    "statement": "* GetLFGQueueStats(category[, activeID])"
+  },
+  {
+    "source_id": "prose-undated-017",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Modified listing provides GetPVPRewards(), without a defined reward-state delta.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes.txt",
+    "source_line": 17,
+    "statement": "* GetPVPRewards()"
+  },
+  {
+    "source_id": "prose-undated-018",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Modified listing provides GetWorldElapsedTime(timerID), without a described output change.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes.txt",
+    "source_line": 18,
+    "statement": "* GetWorldElapsedTime(timerID)"
+  },
+  {
+    "source_id": "prose-undated-019",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Modified listing provides smoothing parameters, but no algorithm/delta to implement from this page.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes.txt",
+    "source_line": 19,
+    "statement": "* GetSmoothProgressChange(value, displayedValue, range, elapsed, minPerSecond, maxPerSecond)"
+  },
+  {
+    "source_id": "prose-undated-020",
+    "capabilities": [
+      "current-instance-group-size-at-return-9"
+    ],
+    "status": "bounded-coverage",
+    "note": "Current SimState.world.instance_group_size independently backs return #9; two concrete tuning values are tested. Flexible-raid automatic tuning and all historical returns remain unproved.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes.txt",
+    "source_line": 20,
+    "statement": "* A new return has been added to GetInstanceInfo - instanceGroupSize at #9 which gives the number of players that the raid's difficulty is tuned for (either the max players for normal raids, or the current number of players for flex raids)"
+  },
+  {
+    "source_id": "source-context-022",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial heading; no runtime credit.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes.txt",
+    "source_line": 22,
+    "statement": "== Bugs =="
+  },
+  {
+    "source_id": "prose-undated-023",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Describes a historical Slider defect; intentionally reproducing ignored valueStep would regress the current slider contract. No claim of historical bug emulation.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes.txt",
+    "source_line": 23,
+    "statement": "* Slider widgets ignore the Slider:SetValueStep property when Slider:SetStepsPerPage is not set."
+  },
+  {
+    "source_id": "source-context-025",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial heading; no runtime credit.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes.txt",
+    "source_line": 25,
+    "statement": "== New features =="
+  },
+  {
+    "source_id": "prose-undated-026",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "UnitRealmRelationship returns a constant and has no connected/coalesced-realm backing or trade eligibility model.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes.txt",
+    "source_line": 26,
+    "statement": "* Players from Connected Realms (5.4 feature) can be interacted with in more ways (e.g. trading) than players from Coalesced Realms (old cross-realm zone functionality). UnitRealmRelationship returns information about another player's realm."
+  },
+  {
+    "source_id": "prose-undated-027",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Registerability does not prove SavedVariables OOM/drop reporting. There is no bounded out-of-memory saved-variable ingestion fixture.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes.txt",
+    "source_line": 27,
+    "statement": "* A new error condition event, SAVED_VARIABLES_TOO_LARGE, was added which indicates that some, or all, of an AddOn's SavedVariables were not loaded due to the player's machine being out-of-memory. http://us.battle.net/wow/en/forum/topic/9362996672"
+  },
+  {
+    "source_id": "source-context-029",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial heading; no runtime credit.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes.txt",
+    "source_line": 29,
+    "statement": "== Automated diff =="
+  },
+  {
+    "source_id": "prose-undated-030",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Table expand/collapse editorial instruction; no API contract.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes.txt",
+    "source_line": 30,
+    "statement": "Click on the headers to expand the tables below."
+  },
+  {
+    "source_id": "prose-undated-032",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Transcluded diff is separately pinned and inventoried. This extract intentionally preserves the boundary, not expanded text.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes.txt",
+    "source_line": 32,
+    "statement": "[Transcluded source: Patch 5.4.0/API changes/diff; not expanded]"
+  },
+  {
+    "source_id": "source-context-034",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial heading; no runtime credit.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes.txt",
+    "source_line": 34,
+    "statement": "== References =="
+  },
+  {
+    "source_id": "prose-undated-035",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Reference list is not expanded; no runtime claim.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes.txt",
+    "source_line": 35,
+    "statement": "[References list; not expanded]"
+  },
+  {
+    "source_id": "source-context-037",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial heading; no runtime credit.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes.txt",
+    "source_line": 37,
+    "statement": "== External links =="
+  },
+  {
+    "source_id": "prose-undated-038",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "External forum link retained with all fields, not fetched as normative behavior.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes.txt",
+    "source_line": 38,
+    "statement": "[External link: WoWInterface; http://www.wowinterface.com/forums/showthread.php?t=46657; Assorted 5.4.0 API changes]"
+  },
+  {
+    "source_id": "diff-source-context-002",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial heading; no runtime credit.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes-diff.txt",
+    "source_line": 2,
+    "statement": "=== Global API ==="
+  },
+  {
+    "source_id": "diff-source-context-003",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial heading; no runtime credit.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes-diff.txt",
+    "source_line": 3,
+    "statement": "=== FrameXML ==="
+  },
+  {
+    "source_id": "diff-source-context-004",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial heading; no runtime credit.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes-diff.txt",
+    "source_line": 4,
+    "statement": "=== Events ==="
+  },
+  {
+    "source_id": "diff-source-context-005",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial heading; no runtime credit.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes-diff.txt",
+    "source_line": 5,
+    "statement": "=== Widget API ==="
+  },
+  {
+    "source_id": "diff-source-context-006",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial heading; no runtime credit.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes-diff.txt",
+    "source_line": 6,
+    "statement": "=== Lua Enums ==="
+  },
+  {
+    "source_id": "diff-prose-undated-007",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical enum grouping/value is retained literally; modern retail realm constants have different defaults and world-elapsed globals are retired by 12.0.0. No renumbering of current enums is inferred from this 2013 table.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes-diff.txt",
+    "source_line": 7,
+    "statement": ": LE_LFG_CATEGORY"
+  },
+  {
+    "source_id": "diff-prose-undated-008",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical enum grouping/value is retained literally; modern retail realm constants have different defaults and world-elapsed globals are retired by 12.0.0. No renumbering of current enums is inferred from this 2013 table.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes-diff.txt",
+    "source_line": 8,
+    "statement": ":: _FLEXRAID = 5 (new)"
+  },
+  {
+    "source_id": "diff-prose-undated-009",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical enum grouping/value is retained literally; modern retail realm constants have different defaults and world-elapsed globals are retired by 12.0.0. No renumbering of current enums is inferred from this 2013 table.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes-diff.txt",
+    "source_line": 9,
+    "statement": ": LE_REALM_RELATION (new)"
+  },
+  {
+    "source_id": "diff-prose-undated-010",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical enum grouping/value is retained literally; modern retail realm constants have different defaults and world-elapsed globals are retired by 12.0.0. No renumbering of current enums is inferred from this 2013 table.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes-diff.txt",
+    "source_line": 10,
+    "statement": ":: _SAME = 1"
+  },
+  {
+    "source_id": "diff-prose-undated-011",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical enum grouping/value is retained literally; modern retail realm constants have different defaults and world-elapsed globals are retired by 12.0.0. No renumbering of current enums is inferred from this 2013 table.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes-diff.txt",
+    "source_line": 11,
+    "statement": ":: _COALESCED = 2"
+  },
+  {
+    "source_id": "diff-prose-undated-012",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical enum grouping/value is retained literally; modern retail realm constants have different defaults and world-elapsed globals are retired by 12.0.0. No renumbering of current enums is inferred from this 2013 table.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes-diff.txt",
+    "source_line": 12,
+    "statement": ":: _VIRTUAL = 3"
+  },
+  {
+    "source_id": "diff-prose-undated-013",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical enum grouping/value is retained literally; modern retail realm constants have different defaults and world-elapsed globals are retired by 12.0.0. No renumbering of current enums is inferred from this 2013 table.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes-diff.txt",
+    "source_line": 13,
+    "statement": ": LE_WORLD_ELAPSED_TIMER_TYPE (new)"
+  },
+  {
+    "source_id": "diff-prose-undated-014",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical enum grouping/value is retained literally; modern retail realm constants have different defaults and world-elapsed globals are retired by 12.0.0. No renumbering of current enums is inferred from this 2013 table.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes-diff.txt",
+    "source_line": 14,
+    "statement": ":: _NONE = 1"
+  },
+  {
+    "source_id": "diff-prose-undated-015",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical enum grouping/value is retained literally; modern retail realm constants have different defaults and world-elapsed globals are retired by 12.0.0. No renumbering of current enums is inferred from this 2013 table.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes-diff.txt",
+    "source_line": 15,
+    "statement": ":: _CHALLENGE_MODE = 2"
+  },
+  {
+    "source_id": "diff-prose-undated-016",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical enum grouping/value is retained literally; modern retail realm constants have different defaults and world-elapsed globals are retired by 12.0.0. No renumbering of current enums is inferred from this 2013 table.",
+    "source_path": "data/patch-api/sources/5.4.0-api-changes-diff.txt",
+    "source_line": 16,
+    "statement": ":: _PROVING_GROUND = 3"
+  }
+]

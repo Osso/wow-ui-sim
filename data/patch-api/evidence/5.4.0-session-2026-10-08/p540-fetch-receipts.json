@@ -1,0 +1,20 @@
+[
+  {
+    "file": "p540-fetch.json",
+    "url": "https://warcraft.wiki.gg/api.php?action=query&pageids=414879&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&format=json",
+    "sha256": "319f6ba8ecbd1e7f7bda3f088d708df323443b97802cfe26eab894c0609ad367",
+    "saved": "2026-10-08T22:46:30.376564+00:00"
+  },
+  {
+    "file": "p540-parent-fetch.json",
+    "url": "https://warcraft.wiki.gg/api.php?action=query&titles=Patch_5.4.0&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&format=json",
+    "sha256": "c8a27ebe34cd5d1bae1d94e20aca560f0c02779a0321850a6bd5dc83cbff614f",
+    "saved": "2026-10-08T22:46:39.087127+00:00"
+  },
+  {
+    "file": "p540-diff-fetch.json",
+    "url": "https://warcraft.wiki.gg/api.php?action=query&titles=Patch_5.4.0/API_changes/diff&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&format=json",
+    "sha256": "181ef6b0b2eea800127952f93f57d0899c7211ba0305623f38f45e491e03696c",
+    "saved": "2026-10-08T22:46:48.840706+00:00"
+  }
+]

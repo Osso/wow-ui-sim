@@ -1,0 +1,486 @@
+[
+  {
+    "source_id": "wt-global-api-StartWarGame-8",
+    "status": "audit-pending",
+    "capabilities": [],
+    "note": "Target-unit war-game invitation/session model absent; no noop.",
+    "symbol": "StartWarGame",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "StartWarGame"
+    }
+  },
+  {
+    "source_id": "wt-global-api-UnitIsSameServer-12",
+    "status": "audit-pending",
+    "capabilities": [],
+    "note": "No same/connected/coalesced realm identity model; no constant boolean shortcut.",
+    "symbol": "UnitIsSameServer",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "UnitIsSameServer"
+    }
+  },
+  {
+    "source_id": "wt-global-api-GetPVPRewards-17",
+    "status": "audit-pending",
+    "capabilities": [],
+    "note": "Rated reward catalog/calculation/state absent; modified listing gives no output delta.",
+    "symbol": "GetPVPRewards",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetPVPRewards"
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Scenario.GetProvingGroundsInfo-14",
+    "status": "audit-pending",
+    "capabilities": [],
+    "note": "Only namespace fallback lookup exists; no explicit member or proving-ground medal/wave/duration state.",
+    "symbol": "C_Scenario.GetProvingGroundsInfo",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Scenario.GetProvingGroundsInfo"
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Vignettes.GetNumVignettes-16",
+    "status": "audit-pending",
+    "capabilities": [],
+    "note": "Legacy C_Vignettes member only resolves through fallback; current vignette IDs/data do not prove the old count contract.",
+    "symbol": "C_Vignettes.GetNumVignettes",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Vignettes.GetNumVignettes"
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Vignettes.GetVignetteInfoFromInstanceID-17",
+    "status": "audit-pending",
+    "capabilities": [],
+    "note": "No explicit old-namespace member. Historical vignette-instance identity and tuple mapping need a real backing model.",
+    "symbol": "C_Vignettes.GetVignetteInfoFromInstanceID",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Vignettes.GetVignetteInfoFromInstanceID"
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-CanScanResearchSite-19",
+    "status": "audit-pending",
+    "capabilities": [],
+    "note": "Research-site scan eligibility and active digsite state are not modeled.",
+    "symbol": "CanScanResearchSite",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "CanScanResearchSite"
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetArchaeologyRaceInfoByID-20",
+    "status": "audit-pending",
+    "capabilities": [],
+    "note": "Archaeology race dataset/metadata is not pinned or modeled; no fabricated rows.",
+    "symbol": "GetArchaeologyRaceInfoByID",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetArchaeologyRaceInfoByID"
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetBestFlexRaidChoice-22",
+    "status": "audit-pending",
+    "capabilities": [],
+    "note": "Historical flexible-raid queue choice/eligibility is not modeled.",
+    "symbol": "GetBestFlexRaidChoice",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetBestFlexRaidChoice"
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetFlexRaidDungeonInfo-23",
+    "status": "audit-pending",
+    "capabilities": [],
+    "note": "Historical flexible-raid dungeon catalog and tuple contract are absent.",
+    "symbol": "GetFlexRaidDungeonInfo",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetFlexRaidDungeonInfo"
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetInspectArenaData-24",
+    "status": "audit-pending",
+    "capabilities": [],
+    "note": "Inspected arena ratings/season state and inspection completion are not modeled.",
+    "symbol": "GetInspectArenaData",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetInspectArenaData"
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetLFGSuspendedPlayers-26",
+    "status": "audit-pending",
+    "capabilities": [],
+    "note": "Suspended LFG member set and queue lifecycle are not modeled.",
+    "symbol": "GetLFGSuspendedPlayers",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetLFGSuspendedPlayers"
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetNumFlexRaidDungeons-27",
+    "status": "audit-pending",
+    "capabilities": [],
+    "note": "No historical flexible-raid catalog backing a count.",
+    "symbol": "GetNumFlexRaidDungeons",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetNumFlexRaidDungeons"
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-IsWargame-35",
+    "status": "audit-pending",
+    "capabilities": [],
+    "note": "War-game session state is absent.",
+    "symbol": "IsWargame",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "IsWargame"
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-JoinSingleLFG-36",
+    "status": "audit-pending",
+    "capabilities": [],
+    "note": "Historical single-dungeon LFG join, role/eligibility and event transitions are absent.",
+    "symbol": "JoinSingleLFG",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "JoinSingleLFG"
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-LeaveSingleLFG-37",
+    "status": "audit-pending",
+    "capabilities": [],
+    "note": "Historical single-dungeon LFG leave and queue state/events are absent.",
+    "symbol": "LeaveSingleLFG",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "LeaveSingleLFG"
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-TimeoutResurrect-39",
+    "status": "audit-pending",
+    "capabilities": [],
+    "note": "Resurrection request/timeout lifecycle is not modeled.",
+    "symbol": "TimeoutResurrect",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "TimeoutResurrect"
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-securerandom-43",
+    "status": "audit-pending",
+    "capabilities": [],
+    "note": "Page gives no RNG bounds, errors or security contract; no math.random alias or speculative taint policy.",
+    "symbol": "securerandom",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "securerandom"
+    }
+  },
+  {
+    "source_id": "diff-wt-framexml-SecureCapsuleGet-87",
+    "status": "audit-pending",
+    "capabilities": [],
+    "note": "FrameXML helper absent from loaded retail environment. Page provides no arguments/secure-capsule behavior; no inferred securecall alias.",
+    "symbol": "SecureCapsuleGet",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "framexml",
+      "superseded_by": null,
+      "symbol": "SecureCapsuleGet"
+    }
+  },
+  {
+    "source_id": "diff-wt-framexml-escapePatternSymbols-90",
+    "status": "audit-pending",
+    "capabilities": [],
+    "note": "Historical case-sensitive FrameXML helper is absent. No old-name alias added without a source contract or later-register rename.",
+    "symbol": "escapePatternSymbols",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "framexml",
+      "superseded_by": null,
+      "symbol": "escapePatternSymbols"
+    }
+  },
+  {
+    "source_id": "diff-wt-events-STORE_PRODUCT_DELIVERED-112",
+    "status": "audit-pending",
+    "capabilities": [],
+    "note": "Unknown in current strict event catalog. Page supplies no delivery payload or store fulfillment lifecycle; registerability is not a product-delivery model.",
+    "symbol": "STORE_PRODUCT_DELIVERED",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"STORE_PRODUCT_DELIVERED\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "STORE_PRODUCT_DELIVERED"
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-GameTooltip:SetUnitConsolidatedBuff-132",
+    "status": "audit-pending",
+    "capabilities": [],
+    "note": "Historical consolidated-buff groups and tooltip source selection are not modeled.",
+    "symbol": "GameTooltip:SetUnitConsolidatedBuff",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "GameTooltip; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "GameTooltip:SetUnitConsolidatedBuff"
+    }
+  }
+]

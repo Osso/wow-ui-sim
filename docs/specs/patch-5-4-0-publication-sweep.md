@@ -6,7 +6,7 @@ Audit the pinned 2013 retail Mists API page and separately pinned automated diff
 
 - [ ] Probe every register occurrence under the retail prefork fixture and compare the exact retained gap set.
 - [ ] Apply later retail registers in chronological order; retain queued 5.4.1, 5.4.2 and 5.4.7 placeholders before 5.4.8.
-- [ ] Reproduce pinned sources without changing older extracts/registers.
+- [x] Reproduce pinned sources without changing older extracts/registers.
 - [ ] Preserve all removal consumer scans and account for every prose/enum occurrence without claiming publication proves semantics.
 
 ## How it works
@@ -28,7 +28,8 @@ Audit the pinned 2013 retail Mists API page and separately pinned automated diff
 
 ## Known gaps (current cycle)
 
-- [ ] Discovery and contract accounting pending.
+- [ ] 22 publication gaps and 27 substantive extract contracts retained with precise reasons in the audit ledger.
+- [ ] Queued 5.4.1/5.4.2/5.4.7 integration remains future main-thread work.
 
 ## Out of scope
 

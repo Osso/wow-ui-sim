@@ -1,0 +1,16 @@
+[
+  {
+    "path": "tools/gen_patch_wikitext_register.py",
+    "function": "def parse_mists_automated_diff(",
+    "origin_revision": "8691fe460bebf2b1db12237e728a97e321e1c766",
+    "sha256": "9ab994b69103356e421d7b6a93b5e20e21d409e80a3761650a87642a4db988e1",
+    "byte_identical": true
+  },
+  {
+    "path": "tools/extract_patch_non_inventory.py",
+    "function": "def strip_mists_automated_inventories(",
+    "origin_revision": "8691fe460bebf2b1db12237e728a97e321e1c766",
+    "sha256": "0d5aa9531e5d0c4be5f1cdb23fa1fcf30f85e2aba5e250083991a5d8283f4b51",
+    "byte_identical": true
+  }
+]
