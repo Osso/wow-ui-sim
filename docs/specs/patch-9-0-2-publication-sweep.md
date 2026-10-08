@@ -16,3 +16,5 @@ No vendor/cache edits, placeholders, historical reconstruction, broad suites, ag
 ## Proof boundary
 
 77 inventory plus eleven extract and four caption IDs. Nine bounded retirements; 26 exact publication gaps and three summary contracts remain pending. Ledger: 24 current absences, 27 publication/registration-only, 29 pending and twelve metadata rows. All 32 sweeps, negative control, bare/cached/Mists behavior, source reproduction, formatting/default/Mists checks and exit-zero startup `[]` pass. See [audit](../wiki/investigations/patch-9-0-2-api-audit.md) for source-level reasons and exact proof.
+
+Integration (2026-10-08): after 9.0.5 merged, its register was prepended to the later-register list. The 26 exact gaps are unchanged (no predicted supersessions). The validator's register-reproduction receipt and sweep summary now include 9.0.5.

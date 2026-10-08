@@ -92,3 +92,5 @@ Publication/absence only. Passing cases require exact fixture identities, not ze
 
 - [[patch-9-1-0-api-audit]] — publication-only accounting and conservative retirement.
 - [[patch-9-1-5-api-audit]] — chronological supersession and classic preservation.
+
+**Integration (2026-10-08):** the 9.0.5 register was prepended at integration; gaps unchanged at 26. Validation receipts were extended to cover 9.0.5 and the validator passes over 33 sweeps.
