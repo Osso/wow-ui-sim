@@ -1,0 +1,14 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "death_recap"
+  ],
+  "revision": "59ccbbc6a480f9e85d16e1007df760a8902c9fe0",
+  "exit": 0,
+  "log": "prefork-recap.txt",
+  "log_sha256": "2131cc5ccfcc5a3222847314917f81d85d2458fb23b765e4f2bd95622b9ae3b2"
+}

@@ -1,0 +1,1 @@
+{"patch": "6.2.2", "classification": "navigation-only-stub", "registers": 48, "extracts": 45, "sweep_cases": 49, "prior_validators": 25, "result": "PASS"}

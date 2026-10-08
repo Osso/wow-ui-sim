@@ -1,0 +1,24 @@
+{
+  "source": {
+    "inventory": 0,
+    "extract": 1,
+    "statuses": {
+      "metadata-only": 1
+    }
+  },
+  "reproduction": {
+    "inputs": 239,
+    "extract_modes": 100,
+    "registers": 47,
+    "extracts_reproduced": 44,
+    "inherited_extract_failures": [
+      "12.0.5",
+      "12.0.7",
+      "12.1.0"
+    ]
+  },
+  "proof": {
+    "sweeps": 47,
+    "validators": 27
+  }
+}

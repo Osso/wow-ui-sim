@@ -1,0 +1,2702 @@
+{
+  "wt-cvars-ThreadPoolLimitHP-256": {
+    "expected": {
+      "direction": "added",
+      "page_default": "6",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ThreadPoolLimitHP"
+    },
+    "observed": {
+      "default": "6",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "6"
+    },
+    "ok": true
+  },
+  "wt-cvars-ThreadPoolLimitLP-257": {
+    "expected": {
+      "direction": "added",
+      "page_default": "6",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ThreadPoolLimitLP"
+    },
+    "observed": {
+      "default": "6",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "6"
+    },
+    "ok": true
+  },
+  "wt-cvars-ThreadPoolLimitMP-258": {
+    "expected": {
+      "direction": "added",
+      "page_default": "6",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "ThreadPoolLimitMP"
+    },
+    "observed": {
+      "default": "6",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "6"
+    },
+    "ok": true
+  },
+  "wt-cvars-advFlyKeyboardMaxPitchFactor-245": {
+    "expected": {
+      "direction": "added",
+      "page_default": "5.0",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "advFlyKeyboardMaxPitchFactor"
+    },
+    "observed": {
+      "default": "5.000000",
+      "default_mismatch": true,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "5.000000"
+    },
+    "ok": true
+  },
+  "wt-cvars-advFlyKeyboardMaxTurnFactor-246": {
+    "expected": {
+      "direction": "added",
+      "page_default": "8.0",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "advFlyKeyboardMaxTurnFactor"
+    },
+    "observed": {
+      "default": "8.000000",
+      "default_mismatch": true,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "8.000000"
+    },
+    "ok": true
+  },
+  "wt-cvars-advFlyKeyboardMinPitchFactor-247": {
+    "expected": {
+      "direction": "added",
+      "page_default": "2.5",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "advFlyKeyboardMinPitchFactor"
+    },
+    "observed": {
+      "default": "2.500000",
+      "default_mismatch": true,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "2.500000"
+    },
+    "ok": true
+  },
+  "wt-cvars-advFlyKeyboardMinTurnFactor-248": {
+    "expected": {
+      "direction": "added",
+      "page_default": "5.0",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "advFlyKeyboardMinTurnFactor"
+    },
+    "observed": {
+      "default": "5.000000",
+      "default_mismatch": true,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "5.000000"
+    },
+    "ok": true
+  },
+  "wt-cvars-advFlyPitchControl-251": {
+    "expected": {
+      "direction": "added",
+      "page_default": "3",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "advFlyPitchControl"
+    },
+    "observed": {
+      "default": "3",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "3"
+    },
+    "ok": true
+  },
+  "wt-cvars-advFlyPitchControlCameraChase-249": {
+    "expected": {
+      "direction": "added",
+      "page_default": "20.0",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "advFlyPitchControlCameraChase"
+    },
+    "observed": {
+      "default": "20.000000",
+      "default_mismatch": true,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "20.000000"
+    },
+    "ok": true
+  },
+  "wt-cvars-advFlyPitchControlGroundDebounce-250": {
+    "expected": {
+      "direction": "added",
+      "page_default": "0",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "advFlyPitchControlGroundDebounce"
+    },
+    "observed": {
+      "default": "0",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "0"
+    },
+    "ok": true
+  },
+  "wt-cvars-dragonRidingPitchSensitivity-261": {
+    "expected": {
+      "direction": "removed",
+      "page_default": "2.5",
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "dragonRidingPitchSensitivity"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-dragonRidingTurnSensitivity-262": {
+    "expected": {
+      "direction": "removed",
+      "page_default": "5",
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "dragonRidingTurnSensitivity"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-gxMTAlphaPass-252": {
+    "expected": {
+      "direction": "added",
+      "page_default": "1",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "gxMTAlphaPass"
+    },
+    "observed": {
+      "default": "1",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "1"
+    },
+    "ok": true
+  },
+  "wt-cvars-gxMTAlphaWater-263": {
+    "expected": {
+      "direction": "removed",
+      "page_default": "1",
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "gxMTAlphaWater"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-gxMTParticulateVolumes-264": {
+    "expected": {
+      "direction": "removed",
+      "page_default": "0",
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "gxMTParticulateVolumes"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-gxMTRefraction-253": {
+    "expected": {
+      "direction": "added",
+      "page_default": "1",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "gxMTRefraction"
+    },
+    "observed": {
+      "default": "1",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "1"
+    },
+    "ok": true
+  },
+  "wt-cvars-gxMTVolFog-254": {
+    "expected": {
+      "direction": "added",
+      "page_default": "1",
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "gxMTVolFog"
+    },
+    "observed": {
+      "default": "1",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "1"
+    },
+    "ok": true
+  },
+  "wt-cvars-lastRenownForMajorFaction2574-255": {
+    "expected": {
+      "direction": "added",
+      "page_default": "0",
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": "wt-cvars-lastRenownForMajorFaction2574-1055",
+      "symbol": "lastRenownForMajorFaction2574"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-ACTION_USABLE_CHANGED-216": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "ACTION_USABLE_CHANGED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-EXECUTE_CHAT_LINE-222": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "EXECUTE_CHAT_LINE"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"EXECUTE_CHAT_LINE\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-GLUE_SCREENSHOT_STARTED-217": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "GLUE_SCREENSHOT_STARTED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-GLUE_SCREENSHOT_SUCCEEDED-218": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "GLUE_SCREENSHOT_SUCCEEDED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-GOSSIP_CLOSED-233": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "GOSSIP_CLOSED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-KNOWLEDGE_BASE_ARTICLE_LOAD_FAILURE-223": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "KNOWLEDGE_BASE_ARTICLE_LOAD_FAILURE"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"KNOWLEDGE_BASE_ARTICLE_LOAD_FAILURE\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-KNOWLEDGE_BASE_ARTICLE_LOAD_SUCCESS-224": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "KNOWLEDGE_BASE_ARTICLE_LOAD_SUCCESS"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"KNOWLEDGE_BASE_ARTICLE_LOAD_SUCCESS\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-KNOWLEDGE_BASE_QUERY_LOAD_FAILURE-225": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "KNOWLEDGE_BASE_QUERY_LOAD_FAILURE"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"KNOWLEDGE_BASE_QUERY_LOAD_FAILURE\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-KNOWLEDGE_BASE_QUERY_LOAD_SUCCESS-226": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "KNOWLEDGE_BASE_QUERY_LOAD_SUCCESS"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"KNOWLEDGE_BASE_QUERY_LOAD_SUCCESS\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-KNOWLEDGE_BASE_SERVER_MESSAGE-227": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "KNOWLEDGE_BASE_SERVER_MESSAGE"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"KNOWLEDGE_BASE_SERVER_MESSAGE\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-KNOWLEDGE_BASE_SETUP_LOAD_FAILURE-228": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "KNOWLEDGE_BASE_SETUP_LOAD_FAILURE"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"KNOWLEDGE_BASE_SETUP_LOAD_FAILURE\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-KNOWLEDGE_BASE_SETUP_LOAD_SUCCESS-229": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "KNOWLEDGE_BASE_SETUP_LOAD_SUCCESS"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"KNOWLEDGE_BASE_SETUP_LOAD_SUCCESS\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-KNOWLEDGE_BASE_SYSTEM_MOTD_UPDATED-230": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "KNOWLEDGE_BASE_SYSTEM_MOTD_UPDATED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"KNOWLEDGE_BASE_SYSTEM_MOTD_UPDATED\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-PVP_ROLE_POPUP_HIDE-235": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "PVP_ROLE_POPUP_HIDE"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-SHOW_SUBTITLE-219": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "SHOW_SUBTITLE"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_AddOns.DisableAddOn-68": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_AddOns.DisableAddOn"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_AddOns.DisableAllAddOns-69": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_AddOns.DisableAllAddOns"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_AddOns.EnableAddOn-70": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_AddOns.EnableAddOn"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_AddOns.EnableAllAddOns-71": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_AddOns.EnableAllAddOns"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_AddOns.GetAddOnDependencies-72": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_AddOns.GetAddOnDependencies"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_AddOns.GetAddOnEnableState-73": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_AddOns.GetAddOnEnableState"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_AddOns.GetAddOnInfo-74": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_AddOns.GetAddOnInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_AddOns.GetAddOnOptionalDependencies-75": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_AddOns.GetAddOnOptionalDependencies"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_AddOns.GetNumAddOns-76": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_AddOns.GetNumAddOns"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_AddOns.IsAddOnLoadOnDemand-79": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_AddOns.IsAddOnLoadOnDemand"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_AddOns.IsAddOnLoadable-77": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_AddOns.IsAddOnLoadable"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_AddOns.IsAddOnLoaded-78": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_AddOns.IsAddOnLoaded"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_AddOns.IsAddonVersionCheckEnabled-80": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_AddOns.IsAddonVersionCheckEnabled"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_AddOns.LoadAddOn-81": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_AddOns.LoadAddOn"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_AddOns.ResetAddOns-82": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_AddOns.ResetAddOns"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_AddOns.ResetDisabledAddOns-83": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_AddOns.ResetDisabledAddOns"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_AddOns.SaveAddOns-84": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_AddOns.SaveAddOns"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_AddOns.SetAddonVersionCheck-85": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_AddOns.SetAddonVersionCheck"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_CVar.GetCVarInfo-87": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_CVar.GetCVarInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_Console.GetAllCommands-116": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Console.GetAllCommands"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_Console.GetColorFromType-117": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Console.GetColorFromType"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_Console.GetFontHeight-118": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Console.GetFontHeight"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_Console.PrintAllMatchingCommands-119": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Console.PrintAllMatchingCommands"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_Console.SetFontHeight-120": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Console.SetFontHeight"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_CurrencyInfo.GetDragonIslesSuppliesCurrencyID-86": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_CurrencyInfo.GetDragonIslesSuppliesCurrencyID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_FriendList.SendWho-164": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_FriendList.SendWho"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_LFGInfo.IsGroupFinderEnabled-88": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_LFGInfo.IsGroupFinderEnabled"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_LFGInfo.IsLFDEnabled-89": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_LFGInfo.IsLFDEnabled"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_LFGInfo.IsLFREnabled-90": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_LFGInfo.IsLFREnabled"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_LFGInfo.IsPremadeGroupEnabled-91": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_LFGInfo.IsPremadeGroupEnabled-105",
+      "symbol": "C_LFGInfo.IsPremadeGroupEnabled"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function; deprecated-fallback=/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedLFG/Deprecated_LFG.lua; alias=C_LFGList.IsPremadeGroupFinderEnabled",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_PartyInfo.GetMinItemLevel-92": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PartyInfo.GetMinItemLevel"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PerksActivities.GetPerksUIThemePrefix-93": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PerksActivities.GetPerksUIThemePrefix"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_PerksProgram.IsFrozenPerksVendorItem-94": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PerksProgram.IsFrozenPerksVendorItem"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PlayerInfo.GetNativeDisplayID-95": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PlayerInfo.GetNativeDisplayID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_PlayerInfo.IsDisplayRaceNative-96": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PlayerInfo.IsDisplayRaceNative"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PlayerInfo.IsMirrorImage-97": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PlayerInfo.IsMirrorImage"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PvP.GetSoloRBGMinItemLevel-98": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_PvP.GetSoloRBGMinItemLevel-402",
+      "symbol": "C_PvP.GetSoloRBGMinItemLevel"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_PvP.IsBrawlSoloRBG-99": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.IsBrawlSoloRBG"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PvP.IsSoloRBG-100": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.IsSoloRBG"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_Texture.GetAtlasElementID-101": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Texture.GetAtlasElementID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_Texture.GetAtlasID-102": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Texture.GetAtlasID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_Traits.CascadeRepurchaseRanks-166": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Traits.CascadeRepurchaseRanks"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_Traits.RefundRank-168": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Traits.RefundRank"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_Traits.SetSelection-170": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Traits.SetSelection"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_WeeklyRewards.GetDifficultyIDForActivityTier-103": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_WeeklyRewards.GetDifficultyIDForActivityTier"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_WeeklyRewards.GetNextActivitiesIncrease-104": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_WeeklyRewards.GetNextActivitiesIncrease"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_WeeklyRewards.GetNumCompletedDungeonRuns-105": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_WeeklyRewards.GetNumCompletedDungeonRuns"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-ConsoleGetAllCommands-106": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "ConsoleGetAllCommands"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-ConsoleGetColorFromType-107": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "ConsoleGetColorFromType"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-ConsoleGetFontHeight-108": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "ConsoleGetFontHeight"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-ConsoleIsActive-109": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "ConsoleIsActive"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-ConsolePrintAllMatchingCommands-110": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "ConsolePrintAllMatchingCommands"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-ConsoleSetFontHeight-111": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "ConsoleSetFontHeight"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-CreateWindow-112": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "CreateWindow"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-DisableAddOn-121": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "DisableAddOn"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-DisableAllAddOns-122": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "DisableAllAddOns"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-EnableAddOn-123": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "EnableAddOn"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-EnableAllAddOns-124": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "EnableAllAddOns"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-GetAddOnDependencies-125": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetAddOnDependencies"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-GetAddOnEnableState-126": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetAddOnEnableState"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-GetAddOnInfo-127": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetAddOnInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-GetAddOnOptionalDependencies-128": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetAddOnOptionalDependencies"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-GetCVarInfo-129": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetCVarInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-GetNumAddOns-130": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetNumAddOns"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-IsAddOnLoadOnDemand-132": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "IsAddOnLoadOnDemand"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-IsAddOnLoaded-131": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "IsAddOnLoaded"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-IsAddonVersionCheckEnabled-133": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "IsAddonVersionCheckEnabled"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-IsCompetitiveModeEnabled-134": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "IsCompetitiveModeEnabled"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-KBArticle_BeginLoading-135": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "KBArticle_BeginLoading"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-KBArticle_GetData-136": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "KBArticle_GetData"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-KBArticle_IsLoaded-137": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "KBArticle_IsLoaded"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-KBQuery_BeginLoading-138": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "KBQuery_BeginLoading"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-KBQuery_GetArticleHeaderCount-139": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "KBQuery_GetArticleHeaderCount"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-KBQuery_GetArticleHeaderData-140": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "KBQuery_GetArticleHeaderData"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-KBQuery_GetTotalArticleCount-141": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "KBQuery_GetTotalArticleCount"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-KBQuery_IsLoaded-142": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "KBQuery_IsLoaded"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-KBSetup_BeginLoading-143": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "KBSetup_BeginLoading"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-KBSetup_GetArticleHeaderCount-144": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "KBSetup_GetArticleHeaderCount"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-KBSetup_GetArticleHeaderData-145": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "KBSetup_GetArticleHeaderData"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-KBSetup_GetCategoryCount-146": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "KBSetup_GetCategoryCount"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-KBSetup_GetCategoryData-147": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "KBSetup_GetCategoryData"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-KBSetup_GetLanguageCount-148": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "KBSetup_GetLanguageCount"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-KBSetup_GetLanguageData-149": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "KBSetup_GetLanguageData"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-KBSetup_GetSubCategoryCount-150": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "KBSetup_GetSubCategoryCount"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-KBSetup_GetSubCategoryData-151": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "KBSetup_GetSubCategoryData"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-KBSetup_GetTotalArticleCount-152": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "KBSetup_GetTotalArticleCount"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-KBSetup_IsLoaded-153": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "KBSetup_IsLoaded"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-KBSystem_GetMOTD-154": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "KBSystem_GetMOTD"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-KBSystem_GetServerNotice-155": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "KBSystem_GetServerNotice"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-KBSystem_GetServerStatus-156": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "KBSystem_GetServerStatus"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-LaunchURL-113": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "LaunchURL"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-LoadAddOn-157": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "LoadAddOn"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-ResetAddOns-158": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "ResetAddOns"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-ResetDisabledAddOns-159": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "ResetDisabledAddOns"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-SaveAddOns-160": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "SaveAddOns"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-SetAddonVersionCheck-161": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "SetAddonVersionCheck"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-Button:LockHighlight-197": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Button:LockHighlight"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Button; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-widgets-Button:SetHighlightLocked-198": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Button:SetHighlightLocked"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Button; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-widgets-Button:UnlockHighlight-199": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Button:UnlockHighlight"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Button; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-widgets-Frame:GetWindow-188": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Frame:GetWindow"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Frame; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-Frame:LockHighlight-189": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Frame:LockHighlight"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Frame; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-Frame:SetHighlightLocked-190": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Frame:SetHighlightLocked"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Frame; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-Frame:SetWindow-191": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Frame:SetWindow"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Frame; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-Frame:UnlockHighlight-192": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Frame:UnlockHighlight"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Frame; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-Line:GetHitRectThickness-186": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Line:GetHitRectThickness"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Line; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-widgets-Line:SetHitRectThickness-187": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Line:SetHitRectThickness"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Line; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-widgets-ModelSceneActor:ResetNextHandSlot-194": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "ModelSceneActor:ResetNextHandSlot"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "ModelSceneActor; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-widgets-Object:ClearParentKey-180": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Object:ClearParentKey"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Object; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-Object:SetParentKey-206": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Object:SetParentKey"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Object; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-OnMovieHideSubtitle-202": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "OnMovieHideSubtitle"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "MovieFrame HasScript=false",
+      "kind": "widget-script",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-OnMovieShowSubtitle-203": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "OnMovieShowSubtitle"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "MovieFrame HasScript=false",
+      "kind": "widget-script",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-TabardModel:IsGuildTabard-193": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "TabardModel:IsGuildTabard"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "TabardModel; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-widgets-TextureBase:ClearTextureSlice-181": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "TextureBase:ClearTextureSlice"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "TextureBase; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-TextureBase:GetTextureSliceMargins-182": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "TextureBase:GetTextureSliceMargins"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "TextureBase; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-TextureBase:GetTextureSliceMode-183": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "TextureBase:GetTextureSliceMode"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "TextureBase; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-TextureBase:SetTextureSliceMargins-184": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "TextureBase:SetTextureSliceMargins"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "TextureBase; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-TextureBase:SetTextureSliceMode-185": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "TextureBase:SetTextureSliceMode"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "TextureBase; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  }
+}

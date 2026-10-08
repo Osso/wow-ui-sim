@@ -1,0 +1,6 @@
+{
+  "exit": 1,
+  "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p610-page/data/patch-api/evidence/6.1.0-session-2026-10-08/validate.py\", line 241, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p610-page/data/patch-api/evidence/6.1.0-session-2026-10-08/validate.py\", line 235, in main\n    'verification': command_proof(context)}\n                    ~~~~~~~~~~~~~^^^^^^^^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p610-page/data/patch-api/evidence/6.1.0-session-2026-10-08/validate.py\", line 164, in command_proof\n    assert sha((HERE / receipt['log']).read_bytes()) == receipt['log_sha256']\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+  "restored_sha256": "2120d076310c561b3a0f9d5475c2eb4a63974a9382f4ecbc16541b7b5364d214",
+  "tampered_path": "data/patch-api/evidence/6.1.0-session-2026-10-08/p610-discovery.txt"
+}

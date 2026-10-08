@@ -1,0 +1,13 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "p1200_removed_plain_globals"
+  ],
+  "revision": "59ccbbc6a480f9e85d16e1007df760a8902c9fe0",
+  "exit": 0,
+  "log": "integration-absence.txt",
+  "log_sha256": "6e25dae77150676e73e0a18da11773f8390dc4a2a9d13c9d20e435ccfc694c97"
+}

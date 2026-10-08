@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p610-page/tools/test_gen_patch_wikitext_register.py"
+  ],
+  "revision": "59ccbbc6a480f9e85d16e1007df760a8902c9fe0",
+  "exit": 0,
+  "log": "test_gen_patch_wikitext_register.txt",
+  "log_sha256": "4d7f4bd50d780d569bd5e57916b16147661d6ae516b6f582cdce5e7a021a13ac"
+}

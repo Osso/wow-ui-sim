@@ -1,0 +1,28 @@
+{
+  "status": "PASS",
+  "inventory_rows": 2,
+  "extract_rows": 5,
+  "ledger_rows": 7,
+  "publication_gaps": 0,
+  "statuses": {
+    "bounded-coverage": 3,
+    "metadata-only": 4
+  },
+  "preserved_inputs": 209,
+  "preserved_extract_modes": 86,
+  "reproduced_registers": 42,
+  "inherited_extract_failures": [
+    "12.0.5",
+    "12.0.7",
+    "12.1.0"
+  ],
+  "retired": [],
+  "negative_baseline": 0,
+  "negative_gaps": 1,
+  "required_receipts": 16,
+  "publication_sweeps": 42,
+  "non_vendor_mists_warnings": 0,
+  "integrated_required_receipts": 20,
+  "integrated_non_vendor_mists_warnings": 0,
+  "integrated_scope_revision": "e5ed4121d6fa3964e7af3e664b7e4f6f86e7a3de"
+}

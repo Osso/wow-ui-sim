@@ -1,0 +1,14 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "publication_sweep"
+  ],
+  "revision": "59ccbbc6a480f9e85d16e1007df760a8902c9fe0",
+  "exit": 0,
+  "log": "all-sweeps.txt",
+  "log_sha256": "dd46077c9fbb8ce73e0b6c74cefa12dd68296d38350e2eb0f891ff1a7949ec70"
+}

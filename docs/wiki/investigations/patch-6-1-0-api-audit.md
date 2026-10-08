@@ -14,7 +14,7 @@ Pinned pageid **123523**, revision **1216027** (`2015-05-01T23:34:38Z`), refetch
 
 The ledger has **18 IDs: 3 bounded publication rows, 9 audit-pending rows, 6 metadata-only rows**. Pending includes the SendChatMessage inventory gap and eight substantive extract rows. No newly modeled runtime APIs, shims, Blizzard patches or retirements were added. Existing state-backed GetKillingBlows/GetMostRecentDeathRecap tests are adjacent regression evidence, not implementations of the named legacy event/link APIs.
 
-## Extraction and integration
+## Historical extraction and integration
 
 - `--colon-api-bullets` separately parses standalone `::* {{api|...}}` additions under New. Existing `--prose-api-links` captures SendChatMessage as changed, not added.
 - `--retain-patch-diff-reference` implementation and argparse/call hunks are byte-identical to p624-page commit `1687abf9b`. Its borrowed fixture initially failed because the current extractor normalizes headings; only that expected heading was corrected. The historical failure is retained.
@@ -25,7 +25,7 @@ The ledger has **18 IDs: 3 bounded publication rows, 9 audit-pending rows, 6 met
 
 No source removal members; no retirement candidate or removal code. Required per-member retirement scans are therefore vacuous. Supplemental scans of all four named APIs use `/usr/bin/grep -R -n -w`, exclude `*Documentation*` in the retail cache, and retain untruncated outputs. The caller scan includes all src/tests references, including indirect pcall/guard references. The retirement receipt records the complete master/p620/p622/p624 register sets at fixed revisions.
 
-## Verification
+## Historical verification
 
 Discovery exposed exactly one SendChatMessage absence mismatch; it is retained in the known-gap fixture, not hidden behind a shim. Targeted proof passes:
 
@@ -58,4 +58,6 @@ No full integration suite. No runtime source changed, so addons-enabled startup 
 
 Master `787b47591` supplies the merged 6.2.0/6.2.2/6.2.4 registers. Commit `59ccbbc6a` replaces the ordered placeholders with those real registers; no runtime source changed. The extractor and its fixture follow master byte-for-byte. The generator retains both `--colon-api-bullets` (6.1.0) and `--indented-api-lists` (6.2.4).
 
-[Integrated evidence](../../../data/patch-api/evidence/6.1.0-session-2026-10-08/integrated/) preserves historical receipts separately. Six rewritten commits have stable patch IDs and blob mappings; eight changed historical blobs are retained within this session rather than requiring unreachable pre-rebase commits. Historical inventory scopes remain frozen. All 52 registers reproduce; 49 extracts reproduce with the same inherited 12.0.5/12.0.7/12.1.0 failures. Final sweep, negative-control, comparison and portability receipts follow in this directory.
+[Integrated evidence](../../../data/patch-api/evidence/6.1.0-session-2026-10-08/integrated/) preserves historical receipts separately. Six rewritten commits have stable patch IDs and blob mappings; eight changed historical blobs are retained within this session rather than requiring unreachable pre-rebase commits. Historical inventory scopes remain frozen. All 52 registers reproduce; 49 extracts reproduce with the same inherited 12.0.5/12.0.7/12.1.0 failures. Fresh integrated proof: 53/53 publication cases, own sweep 1/1, prefork `patch_6_1_0` 1/1 and `death_recap` 8/8, integration `c_death_recap_probes` 6/6 and `p1200_removed_plain_globals` 1/1. All four `tools/test_*.py` scripts pass (4/36/33/8 cases). Format and Mists checks pass with zero non-vendor warnings; six vendor manifest warnings remain unchanged. All 35 validators selected by `git ls-tree` at master pass. Missing-API control fails as intended, increasing gaps 1 → 2; own historical-log tampering is rejected and bytes restored.
+
+No new or resolved 6.1.0 gaps: all four observations equal historical evidence, and none of its API symbols intersect the three newly merged 6.2.x inventories. SendChatMessage remains a gap; eight extract contracts remain pending. No invariant, known-gap fixture, coverage ledger or runtime behavior changed. Pinned-master comparison and two-phase portability receipts complete the final integration gate.
