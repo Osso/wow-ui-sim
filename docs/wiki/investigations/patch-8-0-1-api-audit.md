@@ -62,6 +62,8 @@ Cargo target: `/home/osso/.cache/wow-ui-sim-targets/p801-page`. All commands exe
 
 [Validator](../../../data/patch-api/evidence/8.0.1-session-2026-10-08/validate.py) is read-only, derives counts and historical register scope from pinned Git/artifact inputs, and imposes no absolute cwd/target equality. Mutable shared inputs use Git snapshots; later earlier-page additions do not retroactively enlarge this proof. Rebase onto repaired master `ee7aebea7` retained both opt-in parsers and restored the already-truncated base wiki before updates. Full repaired index/log contents were preserved and checked before commits.
 
+Validator **PASS** locally and in a separate temporary clone, invoked from the original checkout. [Portability receipt](../../../data/patch-api/evidence/8.0.1-session-2026-10-08/p801-validator-portability.json) also proves a simulated later register/known-gap closure does not expand historical scope, and protected source tampering fails. Temporary clone was removed. The original p815-page ref disappeared after its merge; its failed lookup is retained as invalid intermediate evidence, and the accepted register scan pins merged endpoint `4f21aa7dade78c22accac3e703dd3ef4e5ae8831`.
+
 8.1.5 is now a real `later_registers` input; 8.1.0's first-position integration placeholder remains. Integrator must add its register, reconcile any exact superseded gaps, and refresh affected proof without treating later events/fields as native historical parity. Host has no WoW install; no CASC-dependent visual proof is claimed. Remaining 18 inventory gaps, ten prose contracts, real geography/secret parity and three inherited extract failures are explicit unfinished boundaries.
 
 ## Sources
