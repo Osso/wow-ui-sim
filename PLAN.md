@@ -6,4 +6,4 @@ Active goal: complete publication accounting against retail 12.1.0, preserve pri
 - [x] Retire eleven unused retail namespace members after exact consumer/caller scans.
 - [x] Review all 47 gaps and account for all 188 source IDs without behavior inflation.
 - [x] Verify all publication sweeps, negative control, bare/cached/Mists behavior, formatting/checks and startup `[]`.
-- [ ] Commit accounting/docs and validate retained artifacts; report 9.2.0 intersection.
+- [x] Commit accounting/docs and validate retained artifacts; report 9.2.0 intersection.

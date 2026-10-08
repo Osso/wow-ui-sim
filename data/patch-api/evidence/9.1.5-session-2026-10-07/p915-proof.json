@@ -250,5 +250,22 @@
     "output_sha256": {
       "p915-retirement-red.log": "eeaa363503ac5212ff229906935d1ac46dd6dc939c8b6488cb7bbc93472d7c43"
     }
+  },
+  {
+    "command": [
+      "cargo",
+      "fmt",
+      "--check"
+    ],
+    "revision": "5502b8939b44b609ed733162dac140616b4d0c74",
+    "exit": 0,
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p915-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p915-page/target",
+    "scope": "final changed Rust including retirement rationale comments",
+    "invalidated": false,
+    "log": "p915-format-final.log",
+    "output_sha256": {
+      "p915-format-final.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
   }
 ]

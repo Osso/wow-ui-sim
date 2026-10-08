@@ -78,6 +78,8 @@ Publication/absence only; exact known-gap fixtures match each passing case.
 | 12.1.0 | 778 | 773 | 5 | pass |
 
 
+[Artifact validator](../../../data/patch-api/evidence/9.1.5-session-2026-10-07/validate.py) passes: all 188 unique IDs, exact literals/defaults/provenance, eleven closures, 47 precise gaps, negative control, preserved hashes/modes/registers, 29 sweep receipts and non-vendor warning boundary. [Acceptance receipt](../../../data/patch-api/evidence/9.1.5-session-2026-10-07/p915-artifact-acceptance.json).
+
 ## Sources
 
 - [Pinned API response](../../../data/patch-api/evidence/9.1.5-session-2026-10-07/p915-fetch.json).
