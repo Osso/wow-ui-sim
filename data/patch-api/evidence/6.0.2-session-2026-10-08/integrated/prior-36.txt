@@ -1,0 +1,12 @@
+{
+  "ledger_rows": 27,
+  "statuses": {
+    "partial-development-green": 2,
+    "bounded-coverage": 1,
+    "metadata-only": 10,
+    "audit-pending": 14
+  },
+  "preserved_inputs": 138,
+  "preserved_mode_outcomes": 52,
+  "passing_publication_sweeps": 27
+}

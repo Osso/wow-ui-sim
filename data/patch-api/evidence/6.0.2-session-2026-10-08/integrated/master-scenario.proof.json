@@ -1,0 +1,26 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--manifest-path",
+    "/tmp/p602-master-scenario-ftxzz2u8/Cargo.toml",
+    "--test",
+    "integration",
+    "--",
+    "scenario",
+    "--skip",
+    "c_scenario_info_probes"
+  ],
+  "revision": "d0fabed03cd6534b73341fbf569e09c6c388202e",
+  "scope": "master-scenario",
+  "cwd": ".",
+  "target": "dedicated p602-page target (external to repository)",
+  "environment": {
+    "PATCH_PROOF_REVISION": "d0fabed03"
+  },
+  "exit": 101,
+  "log": "master-scenario.txt",
+  "log_sha256": "f325a6a98bd719d1509142882f3508b0626f377a1727594076dc1dcc1f4fc7cb",
+  "seconds": 258.7506304619965,
+  "invalidated": false
+}

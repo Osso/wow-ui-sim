@@ -1,0 +1,33 @@
+{
+  "status": "PASS",
+  "inventory_rows": 145,
+  "extract_rows": 28,
+  "ledger_rows": 173,
+  "gaps": 58,
+  "statuses": {
+    "partial-development-green": 59,
+    "bounded-coverage": 28,
+    "audit-pending": 60,
+    "metadata-only": 26
+  },
+  "preserved_inputs": 194,
+  "preserved_extract_modes": 74,
+  "reproduced_registers": 40,
+  "inherited_extract_failures": [
+    "12.0.5",
+    "12.0.7",
+    "12.1.0"
+  ],
+  "retirement_candidates": 21,
+  "retired": [
+    "C_Calendar.EventGetClubID",
+    "C_Calendar.EventSetClubID",
+    "C_Map.GetBountySetIDForMap"
+  ],
+  "negative_baseline": 58,
+  "negative_gaps": 59,
+  "required_receipts": 12,
+  "publication_sweeps": 40,
+  "non_vendor_mists_warnings": 0,
+  "integrated_gap_closures": 2
+}

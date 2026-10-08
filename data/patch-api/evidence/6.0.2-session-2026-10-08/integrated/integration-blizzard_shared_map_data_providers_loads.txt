@@ -1,0 +1,32 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.18s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p602-page/debug/deps/integration-1db16289b0998b2a)
+
+running 18 tests
+test blizzard_shared_map_data_providers_loads::find_toc_file_resolves_mainline_variant ... ok
+test blizzard_shared_map_data_providers_loads::toc_body_count_breakdown_matches_filesystem_layout ... ok
+test blizzard_shared_map_data_providers_loads::toc_body_lists_initialization_files_before_data_provider_xml_pairs ... ok
+test blizzard_shared_map_data_providers_loads::toc_declares_account_saved_variable_for_glow_hub_quest_acknowledgements ... ok
+test blizzard_shared_map_data_providers_loads::toc_declares_load_on_demand_with_no_dependencies ... ok
+test blizzard_shared_map_data_providers_loads::toc_lacks_screen_loads_only_in_game_screen ... ok
+test blizzard_shared_map_data_providers_loads::toc_raw_bytes_pin_lod_with_account_sv_and_mainline_game_type ... ok
+test blizzard_shared_map_data_providers_loads::lod_addon_dragged_into_game_eager_discovery_via_worldmap_required_dep ... ok
+test blizzard_shared_map_data_providers_loads::is_addon_loaded_transitions_false_to_true_after_explicit_load ... ok
+test blizzard_shared_map_data_providers_loads::map_pin_tags_enum_published_with_six_canonical_keys ... ok
+test blizzard_shared_map_data_providers_loads::quest_data_provider_mixin_inherits_map_canvas_data_provider_mixin ... ok
+test blizzard_shared_map_data_providers_loads::publishes_pin_mixin_tables_for_per_widget_pins ... ok
+test blizzard_shared_map_data_providers_loads::publishes_38_data_provider_mixin_tables_for_widget_families ... ok
+test blizzard_shared_map_data_providers_loads::shared_map_poi_templates_register_in_template_registry_not_global_frames ... ok
+test blizzard_shared_map_data_providers_loads::glow_hub_quests_acknowledged_saved_var_resolves_after_load ... ok
+test blizzard_shared_map_data_providers_loads::frame_clone_manager_published_as_table_with_init_method ... ok
+test blizzard_shared_map_data_providers_loads::explicit_load_emits_no_addon_specific_lua_errors ... ok
+test blizzard_shared_map_data_providers_loads::base_map_poi_pin_mixin_create_subpin_helper_returns_table ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 10659 filtered out; finished in 1.45s
+

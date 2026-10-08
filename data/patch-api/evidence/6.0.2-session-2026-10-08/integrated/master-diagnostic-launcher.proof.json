@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p602-page/data/patch-api/evidence/6.0.2-session-2026-10-08/integrated/check_master_scenario.py"
+  ],
+  "revision": "6bb40276833be33cf2ccafb2afe9e5145bdeb999",
+  "scope": "master-diagnostic-launcher",
+  "cwd": ".",
+  "target": "dedicated p602-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "master-diagnostic-launcher.txt",
+  "log_sha256": "65cb11ebe8e50751d1b0077a520257a1836ba71d62ab163441d3c58fa79aa764",
+  "seconds": 262.49794118100544,
+  "invalidated": false
+}

@@ -1,0 +1,21 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.19s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p602-page/debug/deps/integration-1db16289b0998b2a)
+
+running 7 tests
+test blizzard_poi_button_loads::blizzard_poi_button_toc_lists_six_files_in_canonical_order ... ok
+test blizzard_poi_button_loads::blizzard_poi_button_toc_declares_eager_in_game ... ok
+test blizzard_poi_button_loads::blizzard_poi_button_toc_declares_metadata_in_raw_bytes ... ok
+test blizzard_poi_button_loads::blizzard_poi_button_find_toc_resolves_bare_variant ... ok
+test blizzard_poi_button_loads::blizzard_poi_button_appears_in_game_screen_eager_discovery ... ok
+test blizzard_poi_button_loads::blizzard_poi_button_appears_in_full_addon_inventory ... ok
+test blizzard_poi_button_loads::blizzard_poi_button_does_not_appear_in_glue_screen_eager_discovery ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 10670 filtered out; finished in 0.02s
+

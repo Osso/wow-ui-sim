@@ -1,0 +1,1 @@
+{"extract": 46, "extract_modes": 100, "extracts_reproduced": 44, "inventory": 35, "ledger": 81, "members_scanned": 26, "observations": 8917, "preserved_inputs": 239, "prior_validators": 27, "publication_gaps": 0, "registers": 47, "runtime_retirements": 0, "scans": 52, "statuses": {"audit-pending": 7, "bounded-coverage": 67, "metadata-only": 7}, "sweeps": 47}

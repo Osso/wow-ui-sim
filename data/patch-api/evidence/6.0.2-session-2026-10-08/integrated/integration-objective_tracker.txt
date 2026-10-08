@@ -1,0 +1,24 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.20s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p602-page/debug/deps/integration-1db16289b0998b2a)
+
+running 10 tests
+test blizzard_objective_tracker_loads::blizzard_objective_tracker_toc_lists_forty_files_with_per_file_annotation_stripped ... ok
+test blizzard_objective_tracker_loads::blizzard_objective_tracker_toc_declares_dependencies_in_raw_bytes ... ok
+test blizzard_tiered_entrance_traits_loads::objective_tracker_declares_tiered_entrance_traits_as_required_dep ... ok
+test blizzard_objective_tracker_loads::blizzard_objective_tracker_toc_declares_eager_game_only_with_five_required_deps ... ok
+test blizzard_objective_tracker_loads::blizzard_objective_tracker_find_toc_resolves_bare_variant ... ok
+test objective_tracker_bootstrap_boundaries::objective_tracker_frame_defaults_are_not_runtime_bootstrap_fallbacks ... ok
+test blizzard_objective_tracker_loads::blizzard_objective_tracker_appears_in_game_screen_eager_discovery_only ... ok
+test global_frames::test_objective_tracker_frame_header ... ok
+test objective_tracker_titles::quest_objective_tracker_populates_titles_via_normal_async_load_path ... ok
+test objective_tracker_titles::quest_objective_tracker_measures_objective_line_text_height ... ok
+
+test result: ok. 10 passed; 0 failed; 0 ignored; 0 measured; 10667 filtered out; finished in 4.09s
+

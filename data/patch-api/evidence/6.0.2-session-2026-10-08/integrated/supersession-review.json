@@ -1,0 +1,13 @@
+{
+  "before_gaps": 275,
+  "after_gaps": 275,
+  "observation_changes": {},
+  "replacements": [],
+  "integrated_registers": [
+    "6.1.0",
+    "6.2.0",
+    "6.2.2"
+  ],
+  "pending_prose": 95,
+  "pending_enum_members": 79
+}

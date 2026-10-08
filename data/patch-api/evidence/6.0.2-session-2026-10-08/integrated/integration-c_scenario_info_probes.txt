@@ -1,0 +1,25 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.21s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p602-page/debug/deps/integration-1db16289b0998b2a)
+
+running 11 tests
+test c_scenario_info_probes::get_scenario_bonus_step_reward_returns_quest_id_for_bonus ... ok
+test c_scenario_info_probes::is_tiered_entrance_false_by_default ... ok
+test c_scenario_info_probes::get_scenario_step_info_by_explicit_step_id ... ok
+test c_scenario_info_probes::get_scenario_bonus_step_reward_returns_nil_for_non_bonus ... ok
+test c_scenario_info_probes::get_scenario_step_info_returns_current_step ... ok
+test c_scenario_info_probes::get_scenario_bonus_step_reward_returns_nil_when_not_in_scenario ... ok
+test c_scenario_info_probes::get_scenario_info_returns_seeded_scenario ... ok
+test c_scenario_info_probes::is_tiered_entrance_reflects_state ... ok
+test c_scenario_info_probes::is_bonus_step_field_populated_in_step_info ... ok
+test c_scenario_info_probes::get_scenario_info_returns_nothing_when_not_in_scenario ... ok
+test c_scenario_info_probes::get_scenario_step_info_returns_nothing_when_not_in_scenario ... ok
+
+test result: ok. 11 passed; 0 failed; 0 ignored; 0 measured; 10666 filtered out; finished in 0.24s
+

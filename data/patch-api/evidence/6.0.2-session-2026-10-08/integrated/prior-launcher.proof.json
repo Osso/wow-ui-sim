@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p602-page/data/patch-api/evidence/6.0.2-session-2026-10-08/integrated/check_prior.py"
+  ],
+  "revision": "89d359e658859b82bc6681dd74437d2ba61a5934",
+  "scope": "prior-launcher",
+  "cwd": ".",
+  "target": "dedicated p602-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "prior-launcher.txt",
+  "log_sha256": "c40d0927683282421909ee43b2bef1516e443384bad228694bb14daf3f70c9ac",
+  "seconds": 151.61808120099886,
+  "invalidated": false
+}
