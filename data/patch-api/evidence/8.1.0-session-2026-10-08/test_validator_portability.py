@@ -19,6 +19,9 @@ class PortabilityTest(unittest.TestCase):
             for relative in ('data/patch-api/sources', str(RELATIVE), 'tools', 'tests'):
                 shutil.copytree(ROOT / relative, destination / relative,
                                 ignore=shutil.ignore_patterns('__pycache__'))
+            inherited = Path('data/patch-api/evidence/8.1.5-session-2026-10-08/p815-saved-extract-reproduction.json')
+            (destination / inherited).parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(ROOT / inherited, destination / inherited)
             # A later page must not expand the complete pinned register/sweep set.
             (destination / 'data/patch-api/sources/1.0.0-wikitext-register.json').write_text('{}\n')
             validator = destination / RELATIVE / 'validate.py'

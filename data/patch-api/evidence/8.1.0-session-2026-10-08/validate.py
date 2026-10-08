@@ -169,7 +169,7 @@ def check_negative(register):
     old = {key for key, row in baseline.items() if not row['ok']}
     new = {key for key, row in negative.items() if not row['ok']}
     assert new - old == {before['id']} and not old - new
-    assert read(EVIDENCE / 'p810-negative.proof.json')['exit'] == 1
+    assert read(EVIDENCE / 'p810-integration-negative.proof.json')['exit'] == 1
     return {'negative_baseline': len(old), 'negative_gaps': len(new)}
 
 
@@ -182,7 +182,7 @@ def check_proof():
         # Source scope, not HEAD equality: later docs/other audits do not invalidate proof.
         for scope in row.get('source_scope', []):
             assert git_blob(receipt['revision'], scope) == git_blob(proof['code_revision'], scope)
-    check = read(EVIDENCE / 'p810-mists-check.proof.json')
+    check = read(EVIDENCE / 'p810-integration-mists-check.proof.json')
     lines = (EVIDENCE / check['log']).read_text().splitlines()
     non_vendor = [line for line in lines if line.startswith('warning:')
                   and not line.startswith(('warning: iced-wgpu-patched/', 'warning: `iced_wgpu`'))]
@@ -195,13 +195,43 @@ def check_proof():
         results = read(EVIDENCE / row['file'])
         assert row['rows'] == len(results)
         assert row['gaps'] == sum(not value['ok'] for value in results.values())
+        fixture = ROOT / f"tests/data/patch_{row['patch'].replace('.', '_')}_sweep_known_gaps.json"
+        assert {key for key, value in results.items() if not value['ok']} == set(read(fixture))
+    receipt = read(EVIDENCE / 'p810-integration-all-sweeps.proof.json')
+    log = (EVIDENCE / receipt['log']).read_text()
+    passing = set(re.findall(r'test patch_([\d_]+)_publication_sweep::patch_[\d_]+_publication_sweep \.\.\. ok', log))
+    assert passing == {patch.replace('.', '_') for patch in audit_patches()}
+    assert '0 failed' in log
     return {'required_receipts': len(proof['required']), 'publication_sweeps': len(summary),
             'non_vendor_mists_warnings': len(non_vendor)}
+
+
+def check_supersessions():
+    fixture = 'tests/data/patch_8_1_0_sweep_known_gaps.json'
+    previous = set(json.loads(git_blob(AUDIT_REVISION, fixture)))
+    current = set(read(ROOT / fixture))
+    closures = read(EVIDENCE / 'p810-later-gap-closures.json')
+    assert len(closures) == 1 and closures[0]['patch'] == PATCH
+    assert set(closures[0]['resolved']) == previous - current
+    assert not current - previous
+    results = read(EVIDENCE / 'patch_8_1_0_publication_sweep-results.json')
+    rows = {row['source_id']: row for row in read(SOURCES / f'{PATCH}-page-coverage.json')['source_rows']}
+    for closure in closures[0]['closures']:
+        identifier = closure['source_id']
+        assert results[identifier]['ok']
+        assert results[identifier]['expected']['superseded_by'] == closure['superseded_by']
+        register = read(SOURCES / (closure['superseded_by_patch'] + '-wikitext-register.json'))
+        assert any(row['id'] == closure['superseded_by'] and row['symbol'] == closure['symbol']
+                   and row['direction'] == 'removed' for row in register['entries'])
+        assert rows[identifier]['status'] == 'bounded-coverage'
+        assert rows[identifier]['note'].startswith('Superseded by ' + closure['superseded_by_patch'] + ' removal')
+    assert {row['source_id'] for row in closures[0]['closures']} == previous - current
+    return {'integrated_gap_closures': len(previous - current)}
 
 
 if __name__ == '__main__':
     register, extractor, lines, text = check_source()
     summary = {**check_accounting(register, extractor, lines, text),
                **check_preservation(), **check_scans(register),
-               **check_negative(register), **check_proof()}
+               **check_negative(register), **check_proof(), **check_supersessions()}
     print(json.dumps({'status': 'PASS', **summary}, indent=2))
