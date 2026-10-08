@@ -424,6 +424,7 @@ fn test_transmog_collection_is_source_type_filter_checked() {
     assert!(checked);
 }
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
 fn test_transmog_collection_get_show_missing_source_in_item_tooltips() {
     let env = env();
