@@ -18,7 +18,7 @@
       "--expand-shared-changes"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -39,7 +39,7 @@
       "/home/osso/.cache/wow-ui-sim-targets/p815-page/audit-reproduction/10.0.2-wikitext-register.json"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -60,7 +60,7 @@
       "/home/osso/.cache/wow-ui-sim-targets/p815-page/audit-reproduction/10.0.5-wikitext-register.json"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -81,7 +81,7 @@
       "/home/osso/.cache/wow-ui-sim-targets/p815-page/audit-reproduction/10.0.7-wikitext-register.json"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -102,7 +102,7 @@
       "/home/osso/.cache/wow-ui-sim-targets/p815-page/audit-reproduction/10.1.0-wikitext-register.json"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -123,7 +123,7 @@
       "/home/osso/.cache/wow-ui-sim-targets/p815-page/audit-reproduction/10.1.5-wikitext-register.json"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -144,7 +144,7 @@
       "/home/osso/.cache/wow-ui-sim-targets/p815-page/audit-reproduction/10.1.7-wikitext-register.json"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -165,7 +165,7 @@
       "/home/osso/.cache/wow-ui-sim-targets/p815-page/audit-reproduction/10.2.0-wikitext-register.json"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -186,7 +186,7 @@
       "/home/osso/.cache/wow-ui-sim-targets/p815-page/audit-reproduction/10.2.5-wikitext-register.json"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -207,7 +207,7 @@
       "/home/osso/.cache/wow-ui-sim-targets/p815-page/audit-reproduction/10.2.6-wikitext-register.json"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -228,7 +228,7 @@
       "/home/osso/.cache/wow-ui-sim-targets/p815-page/audit-reproduction/10.2.7-wikitext-register.json"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -249,7 +249,7 @@
       "/home/osso/.cache/wow-ui-sim-targets/p815-page/audit-reproduction/11.0.0-wikitext-register.json"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -270,7 +270,7 @@
       "/home/osso/.cache/wow-ui-sim-targets/p815-page/audit-reproduction/11.0.2-wikitext-register.json"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -291,7 +291,7 @@
       "/home/osso/.cache/wow-ui-sim-targets/p815-page/audit-reproduction/11.0.5-wikitext-register.json"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -312,7 +312,7 @@
       "/home/osso/.cache/wow-ui-sim-targets/p815-page/audit-reproduction/11.0.7-wikitext-register.json"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -333,7 +333,7 @@
       "/home/osso/.cache/wow-ui-sim-targets/p815-page/audit-reproduction/11.1.0-wikitext-register.json"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -354,7 +354,7 @@
       "/home/osso/.cache/wow-ui-sim-targets/p815-page/audit-reproduction/11.1.5-wikitext-register.json"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -375,7 +375,7 @@
       "/home/osso/.cache/wow-ui-sim-targets/p815-page/audit-reproduction/11.1.7-wikitext-register.json"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -396,7 +396,7 @@
       "/home/osso/.cache/wow-ui-sim-targets/p815-page/audit-reproduction/11.2.0-wikitext-register.json"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -417,7 +417,7 @@
       "/home/osso/.cache/wow-ui-sim-targets/p815-page/audit-reproduction/11.2.5-wikitext-register.json"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -438,7 +438,7 @@
       "/home/osso/.cache/wow-ui-sim-targets/p815-page/audit-reproduction/11.2.7-wikitext-register.json"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -459,7 +459,7 @@
       "/home/osso/.cache/wow-ui-sim-targets/p815-page/audit-reproduction/12.0.0-wikitext-register.json"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -480,7 +480,7 @@
       "/home/osso/.cache/wow-ui-sim-targets/p815-page/audit-reproduction/12.0.1-wikitext-register.json"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -501,7 +501,7 @@
       "/home/osso/.cache/wow-ui-sim-targets/p815-page/audit-reproduction/12.0.5-wikitext-register.json"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -522,7 +522,7 @@
       "/home/osso/.cache/wow-ui-sim-targets/p815-page/audit-reproduction/12.0.7-wikitext-register.json"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -546,7 +546,7 @@
       "--inventory-only"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -572,7 +572,33 @@
       "--legacy-api-bullets"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "patch": "8.2.0",
+    "recorded_flags": [
+      "--legacy-api-tables"
+    ],
+    "verified_flags": [
+      "--legacy-api-tables"
+    ],
+    "inferred_historical_flags": false,
+    "byte_identical": true,
+    "sha256": "0755a978c7c9821a87431337fc2ae834f5fdfc139180f38af3bf613168b21203",
+    "command": [
+      "python3",
+      "tools/gen_patch_wikitext_register.py",
+      "8.2.0",
+      "/home/osso/.worktrees/wow-ui-sim-p815-page/data/patch-api/sources/8.2.0-api-changes.wikitext",
+      "5142162",
+      "/home/osso/.cache/wow-ui-sim-targets/p815-page/audit-reproduction/8.2.0-wikitext-register.json",
+      "--legacy-api-tables"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -598,7 +624,7 @@
       "--legacy-inventory-labels"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -627,7 +653,7 @@
       "--diff-api-additions"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -653,7 +679,7 @@
       "--simple-api-list"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -679,7 +705,7 @@
       "--skip-plain-scripts-label"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -700,7 +726,7 @@
       "/home/osso/.cache/wow-ui-sim-targets/p815-page/audit-reproduction/9.0.2-wikitext-register.json"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -721,7 +747,7 @@
       "/home/osso/.cache/wow-ui-sim-targets/p815-page/audit-reproduction/9.0.5-wikitext-register.json"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -750,7 +776,7 @@
       "--skip-plain-scripts-label"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -779,7 +805,7 @@
       "--capture-span-defaults"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -800,7 +826,7 @@
       "/home/osso/.cache/wow-ui-sim-targets/p815-page/audit-reproduction/9.2.0-wikitext-register.json"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -832,7 +858,7 @@
       "--capture-span-defaults"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""
@@ -853,7 +879,7 @@
       "/home/osso/.cache/wow-ui-sim-targets/p815-page/audit-reproduction/9.2.7-wikitext-register.json"
     ],
     "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
-    "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+    "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
     "exit": 0,
     "stdout": "",
     "stderr": ""

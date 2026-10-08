@@ -728,6 +728,34 @@
     "unchanged": true
   },
   {
+    "patch": "8.2.0",
+    "flags": [],
+    "before": {
+      "sha256": null,
+      "error": "unhandled template: * {{ref web|url=https://us.forums.blizzard.com/en/wow/t/ui-changes-in-rise-of-azshara/202487|author=Kaivax|date=2019-06-19|title=UI Changes in Rise of Azshara}}"
+    },
+    "after": {
+      "sha256": null,
+      "error": "unhandled template: * {{ref web|url=https://us.forums.blizzard.com/en/wow/t/ui-changes-in-rise-of-azshara/202487|author=Kaivax|date=2019-06-19|title=UI Changes in Rise of Azshara}}"
+    },
+    "unchanged": true
+  },
+  {
+    "patch": "8.2.0",
+    "flags": [
+      "--preserve-examples"
+    ],
+    "before": {
+      "sha256": null,
+      "error": "unhandled template: * {{ref web|url=https://us.forums.blizzard.com/en/wow/t/ui-changes-in-rise-of-azshara/202487|author=Kaivax|date=2019-06-19|title=UI Changes in Rise of Azshara}}"
+    },
+    "after": {
+      "sha256": null,
+      "error": "unhandled template: * {{ref web|url=https://us.forums.blizzard.com/en/wow/t/ui-changes-in-rise-of-azshara/202487|author=Kaivax|date=2019-06-19|title=UI Changes in Rise of Azshara}}"
+    },
+    "unchanged": true
+  },
+  {
     "patch": "8.2.5",
     "flags": [],
     "before": {

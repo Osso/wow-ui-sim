@@ -257,6 +257,19 @@
     "error": null
   },
   {
+    "patch": "8.2.0",
+    "recorded_flags": [
+      "--legacy-api-tables"
+    ],
+    "verified_flags": [
+      "--legacy-api-tables"
+    ],
+    "inferred_historical_flags": false,
+    "byte_identical": true,
+    "sha256": "49736eb93e74da2436d5e600e58b6ee8674927ef4b15f50e10adffa675585dd0",
+    "error": null
+  },
+  {
     "patch": "8.2.5",
     "recorded_flags": [
       "--preserve-examples",

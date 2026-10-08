@@ -18,7 +18,7 @@ Extract notes naming new C_CVar, C_ClassColor, C_ItemSocketInfo and C_Texture ta
 | Toy fanfare | Acquire, repeat, clear, uncollect, unknown ID, fifth GetToyInfo result | Native acquisition events, persistence, live-client parity | Lua API integration through existing admin producer; retail and Mists |
 | Namespace retirement | Twelve consumer-free removals | Current consumers, later re-addition, legacy-global policy | Bare/repeated lookup, cached full UI; Mists remains reachable |
 | Extract accounting | All 19 occurrences | Three unspecified source markers cannot define behavior | Literal raw/extract mapping, no runtime credit |
-| Reproduction | 38 registers; 35 saved extracts | Three inherited 12.x extract failures unchanged | Recorded flags or explicitly inherited recipes; 194 prior files / 74 mode outcomes preserved |
+| Reproduction | 39 registers; 36 saved extracts | Three inherited 12.x extract failures unchanged | Recorded flags or explicitly inherited recipes; 194 prior files / 76 mode outcomes preserved |
 
 ## Meaningful model
 
@@ -61,9 +61,9 @@ Parser fixtures pass **30 extractor / 21 generator**. Format, default and Mists 
 
 Negative control changes only NEW_TOY_ADDED added → removed: **24 → 25 gaps**, exactly one new ID, zero resolved IDs, unchanged inventory identity and expected exit one. Discovery, behavioral RED and trial-retirement RED receipts remain explicitly historical; not acceptance evidence.
 
-[Dynamic validator](../../../data/patch-api/evidence/8.1.5-session-2026-10-08/validate.py) **PASS**. Counts derive from retained files and observations. All 38 registers regenerate byte-identically; all formerly reproducible extracts remain identical. Inherited **12.0.5 / 12.0.7 / 12.1.0** extract failures remain unchanged, not hidden or fixed by this page. All 194 earlier source files and 74 default/example outcomes are preserved.
+[Dynamic validator](../../../data/patch-api/evidence/8.1.5-session-2026-10-08/validate.py) **PASS**. Counts derive from retained files and observations. All 39 registers regenerate byte-identically; 36 saved extracts reproduce, including 8.2.0 with its recorded `--legacy-api-tables` flags. Inherited **12.0.5 / 12.0.7 / 12.1.0** extract failures remain unchanged, not hidden or fixed by this page. All 194 earlier source files and 76 default/example outcomes are preserved.
 
-The sweep starts with a one-line **8.2.0 register placeholder**, then 8.2.5 and the remaining later master registers. Main thread must integrate the newer page first, substitute its register, reconcile any exact gap supersession, and refresh affected receipts. No 8.2.0 behavior is inferred from the unmerged branch.
+The sweep now uses the real merged **8.2.0 register** (`ee2315426`), then 8.2.5 and the remaining later registers. Integrated 8.1.5 sweep passes with the same 42 OK / 24 exact gaps: no attributable later closures or new gaps, so the original ledger, gap fixture and review remain unchanged and later-gap closures remain `[]`. Both parser opt-ins coexist; 8.2.0 saved register and extract reproduce with their recorded `--legacy-api-tables` flags.
 
 ## Sources
 

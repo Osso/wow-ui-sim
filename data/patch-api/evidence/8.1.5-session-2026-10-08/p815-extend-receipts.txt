@@ -1,0 +1,3 @@
+receipt 8.2.0 True
+summary 8.1.5 {'patch': '8.1.5', 'rows': 66, 'ok': 42, 'gaps': 24, 'result': 'pass'}
+summary 8.2.0 {'patch': '8.2.0', 'rows': 193, 'ok': 140, 'gaps': 53, 'result': 'pass'}
