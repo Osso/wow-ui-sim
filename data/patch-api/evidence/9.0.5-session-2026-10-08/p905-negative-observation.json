@@ -75,9 +75,9 @@
     "expected": {
       "direction": "added",
       "page_default": null,
-      "publication": "published",
+      "publication": "absent",
       "section": "cvars",
-      "superseded_by": null,
+      "superseded_by": "wt-cvars-GamePadSmoothFacing-239",
       "symbol": "GamePadSmoothFacing"
     },
     "observed": {
@@ -87,7 +87,7 @@
       "kind": "cvar",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-cvars-GamePadStickAxisButtons-69": {
     "expected": {

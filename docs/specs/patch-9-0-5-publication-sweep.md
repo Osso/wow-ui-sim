@@ -21,6 +21,6 @@ Historical reconstruction, placeholders, vendor/cache edits, canonical/sibling w
 
 ## Retained boundaries
 
-Fourteen exact publication gaps remain; per-ID reasons live in the linked audit. Added functions, widget method and event registration carry publication-only credit, not behavior parity. Main integration prepends 9.1.0; GamePadSmoothFacing should then leave the gap fixture.
+Thirteen exact publication gaps remain after 9.1.0 integration; per-ID reasons live in the linked audit. Added functions, widget method and event registration carry publication-only credit, not behavior parity. Integration prepended 9.1.0; GamePadSmoothFacing left the gap fixture as predicted.
 
 - [Audit and sweep table](../wiki/investigations/patch-9-0-5-api-audit.md).

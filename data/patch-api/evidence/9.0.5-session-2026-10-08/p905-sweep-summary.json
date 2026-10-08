@@ -184,8 +184,8 @@
   {
     "patch": "9.0.5",
     "rows": 28,
-    "ok": 14,
-    "gaps": 14,
+    "ok": 15,
+    "gaps": 13,
     "result": "pass"
   },
   {

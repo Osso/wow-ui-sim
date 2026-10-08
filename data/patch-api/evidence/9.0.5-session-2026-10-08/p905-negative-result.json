@@ -1,7 +1,7 @@
 {
   "exit": 1,
-  "baseline_gaps": 14,
-  "negative_gaps": 15,
+  "baseline_gaps": 13,
+  "negative_gaps": 14,
   "new_ids": [
     "wt-events-COVENANT_RENOWN_CATCH_UP_STATE_UPDATE-53"
   ],

@@ -85,3 +85,5 @@ Publication/absence only; passing cases require exact fixture identities, not ze
 
 - [[patch-9-1-5-api-audit]] — occurrence accounting and publication-only proof conventions.
 - [[patch-9-2-0-api-audit]] — conservative retirement and classic preservation.
+
+**Integration (2026-10-08):** after p910-page merged, the 9.1.0 register was prepended to the later-register list. As predicted, `wt-cvars-GamePadSmoothFacing-68` is now superseded by its 9.1.0 removal: the exact-gap fixture drops to **13**, the ledger row moves to bounded-coverage (current absence only), and results, negative control (13 → 14), sweep summary and the register-reproduction receipt (now including 9.1.0) were regenerated. The artifact validator passes.

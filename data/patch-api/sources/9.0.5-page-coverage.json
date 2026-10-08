@@ -206,9 +206,11 @@
     },
     {
       "source_id": "wt-cvars-GamePadSmoothFacing-68",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Both CVar value and default are absent. Page supplies no default/persistence/behavior policy; do not invent a default solely for publication. A later removal can supersede this historical addition at integration."
+      "capabilities": [
+        "publication-sweep-9-0-5"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence is superseded by the 9.1.0 removal (applied at integration); historical behavior is not reconstructed."
     },
     {
       "source_id": "wt-cvars-GamePadStickAxisButtons-69",

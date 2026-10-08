@@ -180,19 +180,5 @@
       "value": null
     },
     "reason": "Weekly vault interaction/availability state producer is missing; opening a frame or providing progress rows is not equivalent to modeled interaction eligibility."
-  },
-  {
-    "source_id": "wt-cvars-GamePadSmoothFacing-68",
-    "symbol": "GamePadSmoothFacing",
-    "literal": ": {{api|t=c|GamePadSmoothFacing}}",
-    "wikitext_line": 68,
-    "observation": {
-      "default": null,
-      "default_mismatch": false,
-      "detail": "value/default queried",
-      "kind": "cvar",
-      "value": null
-    },
-    "reason": "Both CVar value and default are absent. Page supplies no default/persistence/behavior policy; do not invent a default solely for publication. A later removal can supersede this historical addition at integration."
   }
 ]
