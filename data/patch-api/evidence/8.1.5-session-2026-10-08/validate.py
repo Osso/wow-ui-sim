@@ -191,7 +191,7 @@ def check_proof():
         assert receipt['exit'] == receipt['expected_exit'] == (1 if name == 'p815-negative' else 0), name
         assert not receipt['invalidated']
         if receipt['command'][0] == 'cargo':
-            changed = subprocess.run(['git', 'diff', '--name-only', receipt['revision'], 'HEAD', '--',
+            changed = subprocess.run(['git', 'diff', '--name-only', receipt['revision'], AUDIT_REVISION, '--',
                                       'src', 'tests', 'build', 'build.rs', 'Cargo.toml', 'Cargo.lock'],
                                      cwd=ROOT, capture_output=True, text=True)
             assert changed.returncode == 0 and not changed.stdout, (name, changed.stdout)
