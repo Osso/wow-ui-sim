@@ -1,0 +1,50 @@
+{
+  "revision": "0eb615b5c38af1003243098eaa31e41d01d76faf",
+  "checks": [
+    {
+      "check": "alternate-checkout-final-validator",
+      "command": [
+        "python3",
+        "-B",
+        "<alternate-checkout>/data/patch-api/evidence/7.1.0-session-2026-10-08/validate.py"
+      ],
+      "exit": 0,
+      "stdout": "{\"extract\": 21, \"extract_modes\": 96, \"extracts_reproduced\": 42, \"gaps\": 0, \"inventory\": 10, \"ledger\": 31, \"negative_control\": [0, 1], \"observations\": 8879, \"preserved_inputs\": 229, \"prior_validators\": 21, \"publication_sweeps\": 45, \"registers\": 45, \"status\": \"pass\", \"statuses\": {\"audit-pending\": 5, \"bounded-coverage\": 19, \"metadata-only\": 7}}\n",
+      "stderr": ""
+    },
+    {
+      "check": "later-audit-files-and-legitimate-old-wiki-entry-update",
+      "command": [
+        "python3",
+        "-B",
+        "<alternate-checkout>/data/patch-api/evidence/7.1.0-session-2026-10-08/validate.py"
+      ],
+      "exit": 0,
+      "stdout": "{\"extract\": 21, \"extract_modes\": 96, \"extracts_reproduced\": 42, \"gaps\": 0, \"inventory\": 10, \"ledger\": 31, \"negative_control\": [0, 1], \"observations\": 8879, \"preserved_inputs\": 229, \"prior_validators\": 21, \"publication_sweeps\": 45, \"registers\": 45, \"status\": \"pass\", \"statuses\": {\"audit-pending\": 5, \"bounded-coverage\": 19, \"metadata-only\": 7}}\n",
+      "stderr": ""
+    },
+    {
+      "check": "protected-source-tamper-rejected",
+      "command": [
+        "python3",
+        "-B",
+        "<alternate-checkout>/data/patch-api/evidence/7.1.0-session-2026-10-08/validate.py"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/tmp/p710-wiki-scope-proof-3ip_7m7f/checkout/data/patch-api/evidence/7.1.0-session-2026-10-08/validate.py\", line 221, in <module>\n    main()\n    ~~~~^^\n  File \"/tmp/p710-wiki-scope-proof-3ip_7m7f/checkout/data/patch-api/evidence/7.1.0-session-2026-10-08/validate.py\", line 215, in main\n    result = {**source_accounting(), **reproduction(context), **proof(context)}\n                                       ~~~~~~~~~~~~^^^^^^^^^\n  File \"/tmp/p710-wiki-scope-proof-3ip_7m7f/checkout/data/patch-api/evidence/7.1.0-session-2026-10-08/validate.py\", line 103, in reproduction\n    assert preserved_input_matches(ROOT, row['path'], original), row['path']\n           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: data/patch-api/sources/7.2.5-api-changes.txt\n"
+    },
+    {
+      "check": "restored",
+      "command": [
+        "python3",
+        "-B",
+        "<alternate-checkout>/data/patch-api/evidence/7.1.0-session-2026-10-08/validate.py"
+      ],
+      "exit": 0,
+      "stdout": "{\"extract\": 21, \"extract_modes\": 96, \"extracts_reproduced\": 42, \"gaps\": 0, \"inventory\": 10, \"ledger\": 31, \"negative_control\": [0, 1], \"observations\": 8879, \"preserved_inputs\": 229, \"prior_validators\": 21, \"publication_sweeps\": 45, \"registers\": 45, \"status\": \"pass\", \"statuses\": {\"audit-pending\": 5, \"bounded-coverage\": 19, \"metadata-only\": 7}}\n",
+      "stderr": ""
+    }
+  ],
+  "current_wiki_edit_does_not_rewrite_sealed_wiki_proof": true
+}

@@ -170,14 +170,9 @@
     },
     {
       "source_id": "prose-undated-007",
-      "capabilities": [
-        {
-          "kind": "publication",
-          "proof": "tests/patch_7_1_0_publication_sweep.rs"
-        }
-      ],
-      "status": "bounded-coverage",
-      "note": "Five named CVars superseded by explicit 12.0.0 removals; current absence observed. Historical personal-nameplate visibility/delay/alpha behavior is not implemented or credited."
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Category heading; named CVar rows are accounted separately, no runtime credit."
     },
     {
       "source_id": "prose-undated-008",

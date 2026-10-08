@@ -27,7 +27,9 @@ def classify_prose(literal):
         return 'audit-pending', [], 'clipChildren state/inheritance is bounded by tests/patch_7_1_0_behavior.rs. Custom intrinsic declarations enter the registry, but CreateFrame uses a finite widget_type_for_tag alias map and rejects P710ClipIntrinsic. Failed cached probe and exact harness retained; no special-case factory shim. Generalized dynamic tag/loading/security contract remains missing.'
     if literal.startswith('* New frame methods:'):
         return 'bounded-coverage', [{'kind': 'clipping-state', 'proof': 'tests/patch_7_1_0_behavior.rs'}], 'Inherited clipChildren before OnLoad, false override and independent SetClipsChildren/DoesClipChildren state tested. Pixel clipping, hit testing and custom intrinsic factories are not credited by this test.'
-    if literal.startswith(('* New CVars:', '** NameplatePersonal', '*** 0 =')):
+    if literal == '* New CVars:':
+        return 'metadata-only', [], 'Category heading; named CVar rows are accounted separately, no runtime credit.'
+    if literal.startswith(('** NameplatePersonal', '*** 0 =')):
         return 'bounded-coverage', publication, 'Five named CVars superseded by explicit 12.0.0 removals; current absence observed. Historical personal-nameplate visibility/delay/alpha behavior is not implemented or credited.'
     if literal.startswith('* ScrollingMessageFrame'):
         return 'audit-pending', [], 'Page describes a native-to-Lua implementation migration, not new named methods. Current runtime maps ScrollingMessageFrame to a MessageFrame plus the ScrollingMessageFrame Lua template; no pinned 7.1.0 implementation or historical migration parity proof. Linked source is not expanded.'
