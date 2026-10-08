@@ -6,7 +6,7 @@
 
 ## [2026-10-08] investigation | 7.3.2 API audit
 
-[Audit](investigations/patch-7-3-2-api-audit.md): revision 6200179; seven identities, bounded active-stack protection for Logout/Quit, no retirements. All 41 sweeps plus factory, targeted session/key/menu/Mists proof and 18 validators pass; 209 inputs/86 extract outcomes preserved. Native policy/countdown and inherited three extract failures remain recorded; 8.0.1 integration placeholder retained.
+[Audit](investigations/patch-7-3-2-api-audit.md): integrated merged 8.0.1 register; seven identities, bounded active-stack Logout/Quit protection, no retirements or gap changes. Historical register/sweep scope and fresh caller/validator/check receipts retained; inherited extract failures, default slash-registration gap and native policy/countdown boundaries remain explicit.
 
 
 [Portability](investigations/patch-audit-validator-portability.md): fixed historical register/sweep scope, exact merged 9.2.5 input replacements, checkout-independent receipts and read-only validation. Original proof artifacts remain unchanged.

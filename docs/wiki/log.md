@@ -340,3 +340,7 @@ Pinned page 109654 revision 6471393; 220 inventory rows, command-column identity
 ## [2026-10-08] Patch 8.0.1 integration
 
 Integrated merged 8.1.0/8.1.5/8.2.0 extraction modes; 41 registers and 38 extracts reproduce, three inherited failures unchanged. Bounty removal closes one own gap (18 → 17); no later closures. Forty-one sweeps plus factory, exact negative control (17 → 18), cached/model/map checks and warning-clean non-vendor Mists check pass. [Audit](investigations/patch-8-0-1-api-audit.md).
+
+## [2026-10-08] Patch 7.3.2 integration
+
+[Audit](investigations/patch-7-3-2-api-audit.md): real 8.0.1 supersession register, complete revision-scoped receipts, unchanged publication gaps, fresh live logout/quit/camp caller proof and validator matrix. Inherited extract failures and default-mode slash-registration gap remain explicit; no vendor edits, preservation exceptions, push or merge.
