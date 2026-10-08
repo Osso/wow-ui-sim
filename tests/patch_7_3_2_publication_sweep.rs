@@ -17,7 +17,7 @@ fn patch_7_3_2_publication_sweep(env: &WowLuaEnv) {
         register_env: "P732_SWEEP_REGISTER",
         out_env: "P732_SWEEP_OUT",
         later_registers: &[
-            // 8.0.1 register placeholder: p801-page awaits integration.
+            include_str!("../data/patch-api/sources/8.0.1-wikitext-register.json"),
             include_str!("../data/patch-api/sources/8.1.0-wikitext-register.json"),
             include_str!("../data/patch-api/sources/8.1.5-wikitext-register.json"),
             include_str!("../data/patch-api/sources/8.2.0-wikitext-register.json"),
