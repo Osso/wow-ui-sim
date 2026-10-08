@@ -29,7 +29,7 @@ Audit the pinned [5.5.4 source](../../data/patch-api/sources/5.5.4-api-changes.w
 
 - `tools/test_gen_patch_wikitext_register.py`.
 - `tools/test_extract_patch_non_inventory.py`.
-- `tests/patch_5_5_4_publication_sweep.rs`: Mists cached-UI discovery and same-line controls.
+- `tests/patch_5_5_4_publication_sweep.rs`: Mists cached SharedXML discovery and same-line controls.
 - `tests/publication_sweep_client_lines.rs`: retail cross-line, ordering and wrong-profile controls.
 
 ## Known gaps (current cycle)
@@ -38,4 +38,4 @@ Audit the pinned [5.5.4 source](../../data/patch-api/sources/5.5.4-api-changes.w
 
 ## Out of scope
 
-Linked GitHub diffs are pointers, not an enumerated API contract. No native-client signature/output/behavior parity follows from an empty publication inventory. No runtime API implementation or retirement is justified by this source revision.
+Linked GitHub diffs are pointers, not an enumerated API contract. No native-client signature/output/behavior parity follows from an empty publication inventory. No runtime API implementation or retirement is justified by this source revision. Full-Game preload is blocked at a retained self-anchor error and is not a completion claim for this empty inventory.

@@ -6,7 +6,8 @@ mod sweep;
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
-const OWN: &str = r#"{"entries":[{"id":"own","section":"global-api","direction":"added","symbol":"GetTime"}]}"#;
+const OWN: &str =
+    r#"{"entries":[{"id":"own","section":"global-api","direction":"added","symbol":"GetTime"}]}"#;
 const MISTS_REMOVAL: &str = r#"{"client_line":"mists-classic","entries":[{"id":"mists","section":"global-api","direction":"removed","symbol":"GetTime"}]}"#;
 const ERA_REMOVAL: &str = r#"{"client_line":"classic-era","entries":[{"id":"era","section":"global-api","direction":"removed","symbol":"GetTime"}]}"#;
 const RETAIL_REMOVAL: &str = r#"{"entries":[{"id":"retail","section":"global-api","direction":"removed","symbol":"GetTime"}]}"#;

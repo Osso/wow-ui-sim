@@ -36,7 +36,10 @@ impl ClientLine {
             (self, profile),
             (Self::Retail, ClientProfile::Retail | ClientProfile::Ptr)
                 | (Self::MistsClassic, ClientProfile::Mists)
-                | (Self::ClassicEra, ClientProfile::Era | ClientProfile::Anniversary)
+                | (
+                    Self::ClassicEra,
+                    ClientProfile::Era | ClientProfile::Anniversary
+                )
         )
     }
 }
@@ -509,7 +512,9 @@ fn parse_deprecated_alias(line: &str, source: &str) -> Option<(String, (String, 
 pub(crate) fn run_publication_sweep(env: &WowLuaEnv, spec: &SweepSpec) {
     let register = read_register(spec);
     assert!(
-        register.client_line.matches_profile(wow_ui_sim::client_profile::ACTIVE),
+        register
+            .client_line
+            .matches_profile(wow_ui_sim::client_profile::ACTIVE),
         "register client line does not match active profile"
     );
     let later = later_publication(spec, register.client_line);
