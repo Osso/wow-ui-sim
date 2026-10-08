@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p701-page/tools/test_gen_patch_wikitext_register.py"
+  ],
+  "revision": "2c43df7ea924009562b906689d9b1c5c85fd8e2f",
+  "scope": "p701-generator-fixtures",
+  "cwd": ".",
+  "target": "dedicated p701-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p701-generator-fixtures.txt",
+  "log_sha256": "172019ae7b5319b3ef5cc3a75594922082ec53c4b66573b92209c867ce210574",
+  "seconds": 0.11206804899848066,
+  "invalidated": false
+}

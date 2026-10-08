@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p701-page/tools/test_patch_audit_validation.py"
+  ],
+  "revision": "2c43df7ea924009562b906689d9b1c5c85fd8e2f",
+  "scope": "p701-validator-fixtures",
+  "cwd": ".",
+  "target": "dedicated p701-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p701-validator-fixtures.txt",
+  "log_sha256": "507f371f8e037ea497fc2c22cdb5e657197d994648cfcdfa64c7990d1c62d241",
+  "seconds": 0.8075272109999787,
+  "invalidated": false
+}
