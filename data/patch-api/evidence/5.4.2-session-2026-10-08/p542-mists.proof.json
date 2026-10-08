@@ -1,0 +1,26 @@
+{
+  "command": [
+    "cargo",
+    "check",
+    "--no-default-features",
+    "--features",
+    "sound,gui,casc,client-mists",
+    "--tests"
+  ],
+  "revision": "8668ec5de8cdeba98ad9ac43853f969ad080c47b",
+  "exit": 0,
+  "log": "p542-mists.log",
+  "log_sha256": "31902856695595a7505c6f71f834f7144320b73341770c055de9bc1c831a196b",
+  "env": {
+    "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p542-page"
+  },
+  "scope": [
+    "tests",
+    "src",
+    "data/patch-api/sources",
+    "Cargo.toml",
+    "Cargo.lock",
+    "build.rs",
+    "build"
+  ]
+}

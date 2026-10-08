@@ -1,0 +1,74 @@
+[
+  {
+    "command": [
+      "python3",
+      "-B",
+      "tools/test_check_patch_validators.py"
+    ],
+    "revision": "8668ec5de8cdeba98ad9ac43853f969ad080c47b",
+    "exit": 0,
+    "log": "test_check_patch_validators.log",
+    "log_sha256": "302115ca5b76524947831194d63c98298d1e63c867d3dfbeb365c62f1818606a",
+    "tests": 4
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "tools/test_extract_patch_non_inventory.py"
+    ],
+    "revision": "8668ec5de8cdeba98ad9ac43853f969ad080c47b",
+    "exit": 0,
+    "log": "test_extract_patch_non_inventory.log",
+    "log_sha256": "f10083a6bf7e85226c6a23757983faf76fac739a6ed9546e1d0ad914ed1334c1",
+    "tests": 36
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "tools/test_gen_patch_wikitext_register.py"
+    ],
+    "revision": "8668ec5de8cdeba98ad9ac43853f969ad080c47b",
+    "exit": 0,
+    "log": "test_gen_patch_wikitext_register.log",
+    "log_sha256": "33ed0ae26c3bd801774b42d6e4585c0706e8f8f4959bc5ee50469cdbd07e403f",
+    "tests": 33
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "tools/test_patch_audit_validation.py"
+    ],
+    "revision": "8668ec5de8cdeba98ad9ac43853f969ad080c47b",
+    "exit": 0,
+    "log": "test_patch_audit_validation.log",
+    "log_sha256": "5ed69caffb92c3a6e36295c70069b2a105fd747355e208e87967c713b737f6ab",
+    "tests": 8
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "tools/test_patch_mists_register.py"
+    ],
+    "revision": "8668ec5de8cdeba98ad9ac43853f969ad080c47b",
+    "exit": 0,
+    "log": "test_patch_mists_register.log",
+    "log_sha256": "fe008aab760eb03ccac7578e2b84665b1b50b0d7f855b17a0c7a8d039435b658",
+    "tests": 2
+  },
+  {
+    "command": [
+      "python3",
+      "-B",
+      "tools/test_patch_warlords_register.py"
+    ],
+    "revision": "8668ec5de8cdeba98ad9ac43853f969ad080c47b",
+    "exit": 0,
+    "log": "test_patch_warlords_register.log",
+    "log_sha256": "921b60a7fd52e978fbb551cacd29df2d6708879400278e1fcc70fceeb0c6f8e0",
+    "tests": 3
+  }
+]

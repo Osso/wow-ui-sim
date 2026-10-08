@@ -1,0 +1,16 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "data/patch-api/evidence/5.4.2-session-2026-10-08/reproduce_sources.py"
+  ],
+  "revision": "8668ec5de8cdeba98ad9ac43853f969ad080c47b",
+  "exit": 0,
+  "log": "p542-reproduction.log",
+  "log_sha256": "1c0288c591392da66e310ff1b639a86acbbe7c7a3149f1b249dc57912fa7ebdb",
+  "scope": [
+    "tools",
+    "data/patch-api/sources",
+    "data/patch-api/evidence/5.4.2-session-2026-10-08/reproduce_sources.py"
+  ]
+}

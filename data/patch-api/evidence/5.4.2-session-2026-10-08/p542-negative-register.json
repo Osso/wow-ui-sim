@@ -1,0 +1,587 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "5.4.2",
+  "source": {
+    "path": "data/patch-api/sources/5.4.2-api-changes.wikitext",
+    "revid": 2543251,
+    "sha256": "0aa82c13e17c30d54797b45ffa769b65b01723e455174f6f2dfa39148671f773"
+  },
+  "header_counts": [
+    {
+      "section": "global-api",
+      "direction": "added",
+      "header_count": 7,
+      "parsed_count": 7
+    },
+    {
+      "section": "global-api",
+      "direction": "removed",
+      "header_count": 2,
+      "parsed_count": 2
+    },
+    {
+      "section": "framexml",
+      "direction": "added",
+      "header_count": 2,
+      "parsed_count": 2
+    },
+    {
+      "section": "events",
+      "direction": "added",
+      "header_count": 55,
+      "parsed_count": 55
+    },
+    {
+      "section": "widgets",
+      "direction": "added",
+      "header_count": 2,
+      "parsed_count": 2
+    }
+  ],
+  "entries": [
+    {
+      "id": "wt-global-api-Ambiguate-18",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "P542MissingNegativeControl",
+      "annotation": "",
+      "wikitext_line": 18
+    },
+    {
+      "id": "wt-global-api-C_ProductChoice.GetNumSuppressed-19",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ProductChoice.GetNumSuppressed",
+      "annotation": "",
+      "wikitext_line": 19
+    },
+    {
+      "id": "wt-global-api-GetDefaultVideoQualityOption-20",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetDefaultVideoQualityOption",
+      "annotation": "",
+      "wikitext_line": 20
+    },
+    {
+      "id": "wt-global-api-GetSpecializationNameForClassID-21",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetSpecializationNameForClassID",
+      "annotation": "",
+      "wikitext_line": 21
+    },
+    {
+      "id": "wt-global-api-IsOnGlueScreen-22",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsOnGlueScreen",
+      "annotation": "",
+      "wikitext_line": 22
+    },
+    {
+      "id": "wt-global-api-UnitFullName-23",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitFullName",
+      "annotation": "",
+      "wikitext_line": 23
+    },
+    {
+      "id": "wt-global-api-fastrandom-24",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "fastrandom",
+      "annotation": "",
+      "wikitext_line": 24
+    },
+    {
+      "id": "wt-global-api-StartUnratedArena-27",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "StartUnratedArena",
+      "annotation": "",
+      "wikitext_line": 27
+    },
+    {
+      "id": "wt-global-api-securerandom-28",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "securerandom",
+      "annotation": "",
+      "wikitext_line": 28
+    },
+    {
+      "id": "wt-framexml-RGBTableToColorCode-38",
+      "section": "framexml",
+      "direction": "added",
+      "symbol": "RGBTableToColorCode",
+      "annotation": "",
+      "wikitext_line": 38
+    },
+    {
+      "id": "wt-framexml-RGBToColorCode-39",
+      "section": "framexml",
+      "direction": "added",
+      "symbol": "RGBToColorCode",
+      "annotation": "",
+      "wikitext_line": 39
+    },
+    {
+      "id": "wt-events-ACCOUNT_DATA_INITIALIZED-49",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ACCOUNT_DATA_INITIALIZED",
+      "annotation": "",
+      "wikitext_line": 49
+    },
+    {
+      "id": "wt-events-ACCOUNT_MESSAGES_AVAILABLE-50",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ACCOUNT_MESSAGES_AVAILABLE",
+      "annotation": "",
+      "wikitext_line": 50
+    },
+    {
+      "id": "wt-events-ACCOUNT_MESSAGES_BODY_LOADED-51",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ACCOUNT_MESSAGES_BODY_LOADED",
+      "annotation": "",
+      "wikitext_line": 51
+    },
+    {
+      "id": "wt-events-ACCOUNT_MESSAGES_HEADERS_LOADED-52",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ACCOUNT_MESSAGES_HEADERS_LOADED",
+      "annotation": "",
+      "wikitext_line": 52
+    },
+    {
+      "id": "wt-events-ADDON_LIST_UPDATE-53",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ADDON_LIST_UPDATE",
+      "annotation": "",
+      "wikitext_line": 53
+    },
+    {
+      "id": "wt-events-AUTH_CHALLENGE_UI_INVALID-54",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AUTH_CHALLENGE_UI_INVALID",
+      "annotation": "",
+      "wikitext_line": 54
+    },
+    {
+      "id": "wt-events-CHARACTER_LIST_UPDATE-55",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CHARACTER_LIST_UPDATE",
+      "annotation": "",
+      "wikitext_line": 55
+    },
+    {
+      "id": "wt-events-CLIENT_ACCOUNT_MISMATCH-56",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLIENT_ACCOUNT_MISMATCH",
+      "annotation": "",
+      "wikitext_line": 56
+    },
+    {
+      "id": "wt-events-CLIENT_CONVERTED-57",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLIENT_CONVERTED",
+      "annotation": "",
+      "wikitext_line": 57
+    },
+    {
+      "id": "wt-events-CLIENT_TRIAL-58",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLIENT_TRIAL",
+      "annotation": "",
+      "wikitext_line": 58
+    },
+    {
+      "id": "wt-events-CLOSE_STATUS_DIALOG-59",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLOSE_STATUS_DIALOG",
+      "annotation": "",
+      "wikitext_line": 59
+    },
+    {
+      "id": "wt-events-DISCONNECTED_FROM_SERVER-60",
+      "section": "events",
+      "direction": "added",
+      "symbol": "DISCONNECTED_FROM_SERVER",
+      "annotation": "",
+      "wikitext_line": 60
+    },
+    {
+      "id": "wt-events-DISPLAY_PROMOTION-61",
+      "section": "events",
+      "direction": "added",
+      "symbol": "DISPLAY_PROMOTION",
+      "annotation": "",
+      "wikitext_line": 61
+    },
+    {
+      "id": "wt-events-ENCOUNTER_END-62",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ENCOUNTER_END",
+      "annotation": "",
+      "wikitext_line": 62
+    },
+    {
+      "id": "wt-events-ENCOUNTER_START-63",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ENCOUNTER_START",
+      "annotation": "",
+      "wikitext_line": 63
+    },
+    {
+      "id": "wt-events-FORCE_DECLINE_CHARACTER-64",
+      "section": "events",
+      "direction": "added",
+      "symbol": "FORCE_DECLINE_CHARACTER",
+      "annotation": "",
+      "wikitext_line": 64
+    },
+    {
+      "id": "wt-events-FORCE_RENAME_CHARACTER-65",
+      "section": "events",
+      "direction": "added",
+      "symbol": "FORCE_RENAME_CHARACTER",
+      "annotation": "",
+      "wikitext_line": 65
+    },
+    {
+      "id": "wt-events-FRAMES_LOADED-66",
+      "section": "events",
+      "direction": "added",
+      "symbol": "FRAMES_LOADED",
+      "annotation": "",
+      "wikitext_line": 66
+    },
+    {
+      "id": "wt-events-GAME_ACCOUNTS_UPDATED-67",
+      "section": "events",
+      "direction": "added",
+      "symbol": "GAME_ACCOUNTS_UPDATED",
+      "annotation": "",
+      "wikitext_line": 67
+    },
+    {
+      "id": "wt-events-GET_PREFERRED_REALM_INFO-68",
+      "section": "events",
+      "direction": "added",
+      "symbol": "GET_PREFERRED_REALM_INFO",
+      "annotation": "",
+      "wikitext_line": 68
+    },
+    {
+      "id": "wt-events-GLUE_SCREENSHOT_FAILED-69",
+      "section": "events",
+      "direction": "added",
+      "symbol": "GLUE_SCREENSHOT_FAILED",
+      "annotation": "",
+      "wikitext_line": 69
+    },
+    {
+      "id": "wt-events-GLUE_SCREENSHOT_SUCCEEDED-70",
+      "section": "events",
+      "direction": "added",
+      "symbol": "GLUE_SCREENSHOT_SUCCEEDED",
+      "annotation": "",
+      "wikitext_line": 70
+    },
+    {
+      "id": "wt-events-GLUE_UPDATE_EXPANSION_LEVEL-71",
+      "section": "events",
+      "direction": "added",
+      "symbol": "GLUE_UPDATE_EXPANSION_LEVEL",
+      "annotation": "",
+      "wikitext_line": 71
+    },
+    {
+      "id": "wt-events-LAUNCHER_LOGIN_STATUS_CHANGED-72",
+      "section": "events",
+      "direction": "added",
+      "symbol": "LAUNCHER_LOGIN_STATUS_CHANGED",
+      "annotation": "",
+      "wikitext_line": 72
+    },
+    {
+      "id": "wt-events-LOGIN_STARTED-73",
+      "section": "events",
+      "direction": "added",
+      "symbol": "LOGIN_STARTED",
+      "annotation": "",
+      "wikitext_line": 73
+    },
+    {
+      "id": "wt-events-LOGIN_STOPPED-74",
+      "section": "events",
+      "direction": "added",
+      "symbol": "LOGIN_STOPPED",
+      "annotation": "",
+      "wikitext_line": 74
+    },
+    {
+      "id": "wt-events-LUA_WARNING-75",
+      "section": "events",
+      "direction": "added",
+      "symbol": "LUA_WARNING",
+      "annotation": "",
+      "wikitext_line": 75
+    },
+    {
+      "id": "wt-events-OPEN_REALM_LIST-76",
+      "section": "events",
+      "direction": "added",
+      "symbol": "OPEN_REALM_LIST",
+      "annotation": "",
+      "wikitext_line": 76
+    },
+    {
+      "id": "wt-events-OPEN_STATUS_DIALOG-77",
+      "section": "events",
+      "direction": "added",
+      "symbol": "OPEN_STATUS_DIALOG",
+      "annotation": "",
+      "wikitext_line": 77
+    },
+    {
+      "id": "wt-events-PATCH_DOWNLOADED-78",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PATCH_DOWNLOADED",
+      "annotation": "",
+      "wikitext_line": 78
+    },
+    {
+      "id": "wt-events-PATCH_UPDATE_PROGRESS-79",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PATCH_UPDATE_PROGRESS",
+      "annotation": "",
+      "wikitext_line": 79
+    },
+    {
+      "id": "wt-events-PET_JOURNAL_PET_RESTORED-80",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PET_JOURNAL_PET_RESTORED",
+      "annotation": "",
+      "wikitext_line": 80
+    },
+    {
+      "id": "wt-events-PET_JOURNAL_PET_REVOKED-81",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PET_JOURNAL_PET_REVOKED",
+      "annotation": "",
+      "wikitext_line": 81
+    },
+    {
+      "id": "wt-events-PLAYER_ENTER_MATRIX-82",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PLAYER_ENTER_MATRIX",
+      "annotation": "",
+      "wikitext_line": 82
+    },
+    {
+      "id": "wt-events-PLAYER_ENTER_PIN-83",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PLAYER_ENTER_PIN",
+      "annotation": "",
+      "wikitext_line": 83
+    },
+    {
+      "id": "wt-events-PLAYER_ENTER_TOKEN-84",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PLAYER_ENTER_TOKEN",
+      "annotation": "",
+      "wikitext_line": 84
+    },
+    {
+      "id": "wt-events-RANDOM_CHARACTER_NAME_RESULT-85",
+      "section": "events",
+      "direction": "added",
+      "symbol": "RANDOM_CHARACTER_NAME_RESULT",
+      "annotation": "",
+      "wikitext_line": 85
+    },
+    {
+      "id": "wt-events-SCANDLL_DOWNLOADING-86",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SCANDLL_DOWNLOADING",
+      "annotation": "",
+      "wikitext_line": 86
+    },
+    {
+      "id": "wt-events-SCANDLL_ERROR-87",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SCANDLL_ERROR",
+      "annotation": "",
+      "wikitext_line": 87
+    },
+    {
+      "id": "wt-events-SCANDLL_FINISHED-88",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SCANDLL_FINISHED",
+      "annotation": "",
+      "wikitext_line": 88
+    },
+    {
+      "id": "wt-events-SCREEN_FIRST_DISPLAYED-89",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SCREEN_FIRST_DISPLAYED",
+      "annotation": "",
+      "wikitext_line": 89
+    },
+    {
+      "id": "wt-events-SELECT_FIRST_CHARACTER-90",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SELECT_FIRST_CHARACTER",
+      "annotation": "",
+      "wikitext_line": 90
+    },
+    {
+      "id": "wt-events-SELECT_LAST_CHARACTER-91",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SELECT_LAST_CHARACTER",
+      "annotation": "",
+      "wikitext_line": 91
+    },
+    {
+      "id": "wt-events-SERVER_SPLIT_NOTICE-92",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SERVER_SPLIT_NOTICE",
+      "annotation": "",
+      "wikitext_line": 92
+    },
+    {
+      "id": "wt-events-SET_GLUE_SCREEN-93",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SET_GLUE_SCREEN",
+      "annotation": "",
+      "wikitext_line": 93
+    },
+    {
+      "id": "wt-events-SHOW_SERVER_ALERT-94",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SHOW_SERVER_ALERT",
+      "annotation": "",
+      "wikitext_line": 94
+    },
+    {
+      "id": "wt-events-SHOW_SURVEY_NOTIFICATION-95",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SHOW_SURVEY_NOTIFICATION",
+      "annotation": "",
+      "wikitext_line": 95
+    },
+    {
+      "id": "wt-events-START_GLUE_MUSIC-96",
+      "section": "events",
+      "direction": "added",
+      "symbol": "START_GLUE_MUSIC",
+      "annotation": "",
+      "wikitext_line": 96
+    },
+    {
+      "id": "wt-events-SUGGEST_REALM-97",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SUGGEST_REALM",
+      "annotation": "",
+      "wikitext_line": 97
+    },
+    {
+      "id": "wt-events-SUGGEST_REALM_WRONG_CATEGORY-98",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SUGGEST_REALM_WRONG_CATEGORY",
+      "annotation": "",
+      "wikitext_line": 98
+    },
+    {
+      "id": "wt-events-SUGGEST_REALM_WRONG_PVP-99",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SUGGEST_REALM_WRONG_PVP",
+      "annotation": "",
+      "wikitext_line": 99
+    },
+    {
+      "id": "wt-events-TIMER_ALERT-100",
+      "section": "events",
+      "direction": "added",
+      "symbol": "TIMER_ALERT",
+      "annotation": "",
+      "wikitext_line": 100
+    },
+    {
+      "id": "wt-events-UPDATE_SELECTED_CHARACTER-101",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UPDATE_SELECTED_CHARACTER",
+      "annotation": "",
+      "wikitext_line": 101
+    },
+    {
+      "id": "wt-events-UPDATE_SELECTED_RACE-102",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UPDATE_SELECTED_RACE",
+      "annotation": "",
+      "wikitext_line": 102
+    },
+    {
+      "id": "wt-events-UPDATE_STATUS_DIALOG-103",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UPDATE_STATUS_DIALOG",
+      "annotation": "",
+      "wikitext_line": 103
+    },
+    {
+      "id": "wt-widgets-Slider:GetObeyStepOnDrag-113",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Slider:GetObeyStepOnDrag",
+      "annotation": "",
+      "wikitext_line": 113
+    },
+    {
+      "id": "wt-widgets-Slider:SetObeyStepOnDrag-114",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Slider:SetObeyStepOnDrag",
+      "annotation": "",
+      "wikitext_line": 114
+    }
+  ]
+}

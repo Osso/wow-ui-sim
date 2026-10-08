@@ -1,0 +1,22 @@
+{
+  "original_entry": {
+    "id": "wt-global-api-Ambiguate-18",
+    "section": "global-api",
+    "direction": "added",
+    "symbol": "Ambiguate",
+    "annotation": "",
+    "wikitext_line": 18
+  },
+  "modified_entry": {
+    "id": "wt-global-api-Ambiguate-18",
+    "section": "global-api",
+    "direction": "added",
+    "symbol": "P542MissingNegativeControl",
+    "annotation": "",
+    "wikitext_line": 18
+  },
+  "expected_added_gaps": [
+    "wt-global-api-Ambiguate-18"
+  ],
+  "expected_exit": 101
+}
