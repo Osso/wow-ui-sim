@@ -2,22 +2,28 @@
 
 use crate::common;
 
+#[cfg(not(feature = "client-retail"))]
 use std::path::PathBuf;
 
 use wow_ui_sim::iced_app::{
     RegistryQuadBatchParams, build_quad_batch_for_registry, compute_frame_rect,
 };
+#[cfg(not(feature = "client-retail"))]
 use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
+#[cfg(not(feature = "client-retail"))]
 use wow_ui_sim::screen::ScreenKind;
+#[cfg(not(feature = "client-retail"))]
 use wow_ui_sim::startup::settle_headless_startup;
 
+#[cfg(not(feature = "client-retail"))]
 fn blizzard_ui_dir() -> PathBuf {
     wow_ui_sim::client_profile::blizzard_ui_addons_dir_under(std::path::Path::new(env!(
         "CARGO_MANIFEST_DIR"
     )))
 }
 
+#[cfg(not(feature = "client-retail"))]
 fn load_settled_game_ui() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
@@ -119,10 +125,11 @@ fn is_compact_raid_manager_texture(path: &str) -> bool {
     )
 }
 
-#[test]
-fn compact_raid_manager_emits_background_and_forward_toggle_quad_bounds() {
-    test_timeout! {
-        let env = load_settled_game_ui();
+prefork_full_ui_case! {
+fn compact_raid_manager_emits_background_and_forward_toggle_quad_bounds(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    super::objective_tracker_tree::settle_prefork_game_ui(env);
+
         env.exec(
             r#"
             A_Admin.SetPartySize(4)
@@ -251,5 +258,13 @@ fn compact_raid_manager_emits_background_and_forward_toggle_quad_bounds() {
 
         dump_request("Background", &batch, background_request);
         dump_request("Forward-toggle", &batch, toggle_request);
-    }
+
+}
+}
+
+#[cfg(not(feature = "client-retail"))]
+#[test]
+fn compact_raid_manager_emits_background_and_forward_toggle_quad_bounds() {
+    let env = load_settled_game_ui();
+    compact_raid_manager_emits_background_and_forward_toggle_quad_bounds::run(&env);
 }
