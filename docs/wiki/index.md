@@ -1,3 +1,7 @@
+## [2026-10-08] investigation | Patch 5.5.2 Mists Classic API audit
+
+[Audit](investigations/patch-5-5-2-api-audit.md): pinned revision 6778080, ancestor TOC 50502 in the 505xx client line. Zero inventory/four metadata rows; no positive API credit, gaps or retirements. Only 5.5.3/5.5.4 in the Classic chain. Verification pending.
+
 ## [2026-10-08] investigation | Patch 5.5.3 Mists Classic API audit
 
 [Audit](investigations/patch-5-5-3-api-audit.md): ancestor TOC 50503 resolved against current 50504 profile; blocker history retained. Zero inventory, four metadata rows, no positive API credit. Retail 56/56 and both control groups 3/3 pass; all 9,740 observations across 55 retail pages equal pinned master. Mists warning check, 87 Python fixtures, format and 1 → 0 negative control pass. All 57 registers/54 extracts reproduce, with three exact inherited failures. Portable gate passes 41/41 clean and 42/42 later; own-log tampering is rejected and restored.
