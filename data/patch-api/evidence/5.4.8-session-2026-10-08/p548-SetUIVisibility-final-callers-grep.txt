@@ -1,0 +1,18 @@
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/lua_api/globals/ui_visibility.rs:1://! UI visibility globals (`SetUIVisibility`, `SetInWorldUIVisibility`).
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/lua_api/globals/ui_visibility.rs:3://! Blizzard panel manager calls `SetUIVisibility(true)` when returning from a
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/lua_api/globals/ui_visibility.rs:25:/// `SetUIVisibility(visible)` — toggles UIParent visibility.
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/lua_api/globals/ui_visibility.rs:32:            "SetUIVisibility(false) is protected from insecure code in combat",
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/lua_api/globals/ui_visibility.rs:47:    table_set_rust_fn_static(state, state.global, "SetUIVisibility", set_ui_visibility)?;
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/ui_visibility_globals.rs:1://! Integration tests for `SetUIVisibility` / `SetInWorldUIVisibility`.
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/ui_visibility_globals.rs:13:        .eval("return type(SetUIVisibility), type(SetInWorldUIVisibility)")
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/ui_visibility_globals.rs:23:    env.exec("SetUIVisibility(false)").unwrap();
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/ui_visibility_globals.rs:27:        "UIParent should be hidden after SetUIVisibility(false)"
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/ui_visibility_globals.rs:30:    env.exec("SetUIVisibility(true)").unwrap();
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/ui_visibility_globals.rs:34:        "UIParent should be shown after SetUIVisibility(true)"
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/ui_visibility_globals.rs:43:        .expect("OpenWorldMap maximize path should not error on SetUIVisibility");
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_5_4_8_combat_restrictions.rs:94:    env.exec("SetUIVisibility(true)").unwrap();
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_5_4_8_combat_restrictions.rs:101:                SetUIVisibility(value)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_5_4_8_combat_restrictions.rs:112:    env.exec("assert(issecure()); SetUIVisibility(false); assert(not UIParent:IsShown())")
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_5_4_8_combat_restrictions.rs:117:        SetUIVisibility(true)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_5_4_8_combat_restrictions.rs:118:        local hide = function() SetUIVisibility(false) end
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_5_4_8_combat_restrictions.rs:122:        SetUIVisibility(true)

@@ -1,0 +1,152 @@
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/ui_visibility_globals.rs:39:fn open_world_map_maximized_does_not_error_on_set_ui_visibility() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/key_dispatch.rs:172:fn default_keybindings_dispatch_on_init() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/wowforever_profile.rs:392:fn wowforever_profile_loads_pinned_world_map_filename() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_deprecated_spell_book_loads.rs:260:fn blizzard_deprecated_spell_book_load_deprecation_fallbacks_cvar_is_default_on(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/world_map_voice_button_order.rs:61:fn open_world_map(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/world_map_voice_button_order.rs:69:fn chat_frame_voice_button_renders_below_overlapping_world_map_widgets() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_azerite_respec_ui_help_tip_dismisses_on_drop.rs:165:fn assert_drop_hides_tutorial_and_sets_cvar(env: &wow_ui_sim::lua_api::WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_deprecated_instance_encounter_loads.rs:156:fn blizzard_deprecated_instance_encounter_load_deprecation_fallbacks_cvar_is_default_on(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/widget_slider.rs:253:fn set_value_updates_castbar_style_scale_and_cvar_consumer() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_deprecated_spell_script_loads.rs:325:fn blizzard_deprecated_spell_script_load_deprecation_fallbacks_cvar_is_default_on(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/startup_api_stubs.rs:540:fn startup_world_map_provider_list_apis_are_iterable() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/startup_api_stubs.rs:574:fn startup_world_map_auxiliary_globals_are_callable() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/p1200_mixed.rs:63:fn p1200_mixed_cvar_publication() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/wowforever_gamepad_constants.rs:49:fn forever_gamepad_cvar_defaults_drive_vendor_mapping_and_events() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/wowforever_gamepad_constants.rs:180:fn forever_gamepad_cvar_defaults_are_profile_scoped() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_deprecated_world_elapsed_timer_types_loads.rs:199:fn blizzard_deprecated_world_elapsed_timer_types_load_deprecation_fallbacks_cvar_is_default_on(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_11_1_7_publication_fixes.rs:25:fn patch_11_1_7_graphics_commands_are_catalog_records_not_cvars() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:52:fn set_cvar_stores_string_value() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:63:fn set_cvar_accepts_numeric_value() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:71:fn set_cvar_accepts_fractional_numeric_value() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:79:fn set_cvar_accepts_boolean_as_one_zero() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:92:fn set_cvar_fires_cvar_update_after_storing_value() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:116:fn set_cvar_empty_name_returns_false() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:123:fn c_cvar_get_reads_back_the_value_set_via_global() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:133:fn register_cvar_exposes_runtime_default_through_global_and_namespace() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:151:fn register_cvar_accepts_finite_numeric_defaults_from_both_surfaces() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:179:fn register_cvar_numeric_default_preserves_existing_override_and_first_default() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:199:fn register_cvar_rejects_nonfinite_and_unsupported_defaults() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:217:fn register_cvar_makes_unknown_cvar_visible_with_zero_default() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:233:fn register_cvar_preserves_explicit_empty_default_lifecycle() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:258:fn register_cvar_nil_default_retains_zero_policy() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:273:fn empty_cvar_registration_preserves_classic_castbar_scale_default() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:316:fn c_cvar_register_cvar_sets_default_without_overwriting_existing_value() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:332:fn legacy_cvar_compat_globals_exist_before_framexml_loads() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_deprecated_item_script_loads.rs:261:fn blizzard_deprecated_item_script_load_deprecation_fallbacks_cvar_is_default_on(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_deprecated_lfg_loads.rs:215:fn blizzard_deprecated_lfg_load_deprecation_fallbacks_cvar_is_default_on(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/cvar_bitfields.rs:20:fn cvar_bitfields_can_be_set_and_cleared() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/cvar_bitfields.rs:34:fn c_cvar_bitfields_share_the_same_storage() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/map_canvas_pins.rs:52:fn world_map_zone_map_shows_seeded_quest_pins() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_11_0_5_publication_fixes.rs:29:fn patch_11_0_5_chroma_cvars_have_mutable_values_and_immutable_defaults() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_deprecated_glue_loads.rs:150:fn blizzard_deprecated_glue_load_deprecation_fallbacks_cvar_is_default_on(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_deprecated_chat_info_loads.rs:282:fn blizzard_deprecated_chat_info_load_deprecation_fallbacks_cvar_is_default_on(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/render_order_support.rs:298:pub(crate) fn env_with_isolated_world_map_ui() -> WowLuaEnv {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/render_order_support.rs:311:pub(crate) fn env_with_isolated_world_map() -> WowLuaEnv {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/render_order_support.rs:317:pub(crate) fn open_world_map(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_deprecated_guild_script_loads.rs:279:fn blizzard_deprecated_guild_script_load_deprecation_fallbacks_cvar_is_default_on(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/c_map_probes.rs:97:fn get_map_info_exposes_cosmic_parent_for_seeded_world_maps() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_keybindings_panels_detail.rs:11:pub(crate) fn keybind_m_opens_world_map(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_keybindings_panels_detail.rs:19:pub(crate) fn world_map_floor_dropdown_hidden_without_subzone_or_map_group(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_keybindings_panels_detail.rs:83:pub(crate) fn keybind_m_toggles_world_map_without_errors(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_keybindings_panels_detail.rs:117:pub(crate) fn world_map_title_text_is_non_empty_after_opening(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_keybindings_panels_detail.rs:163:pub(crate) fn world_map_exploration_pin_has_visible_overlay_textures_after_opening(
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_keybindings_panels_detail.rs:251:pub(crate) fn world_map_exploration_pin_converges_visible_after_onupdate_ticks(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_keybindings_panels_detail.rs:350:pub(crate) fn world_map_exploration_pin_first_open_settles_without_reopen(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_keybindings_panels_detail.rs:410:pub(crate) fn world_map_exploration_pin_recovers_when_first_overlay_fetch_is_empty(
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_keybindings_panels_detail.rs:490:pub(crate) fn world_map_registers_fog_of_war_pin_template_as_fog_of_war_frame(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_shared_map_data_providers_loads.rs:309:fn lod_addon_dragged_into_game_eager_discovery_via_worldmap_required_dep() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_1_0_surface_closures.rs:22:fn removed_auction_cvars_have_no_value_or_default() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_1_0_surface_closures.rs:38:fn added_display_cvars_default_off_and_round_trip() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_keybindings_panels_detail/world_map.rs:6:fn keybind_m_opens_world_map() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_keybindings_panels_detail/world_map.rs:18:fn world_map_floor_dropdown_hidden_without_subzone_or_map_group() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_keybindings_panels_detail/world_map.rs:87:fn keybind_m_toggles_world_map_without_errors() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_keybindings_panels_detail/world_map.rs:123:fn world_map_title_text_is_non_empty_after_opening() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_keybindings_panels_detail/world_map.rs:171:fn world_map_exploration_pin_has_visible_overlay_textures_after_opening() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_keybindings_panels_detail/world_map.rs:267:fn world_map_current_map_keeps_fog_of_war_pin_hidden_without_fog_data() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_keybindings_panels_detail/world_map.rs:325:fn world_map_fog_of_war_pin_matches_canvas_size_on_first_open() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_keybindings_panels_detail/world_map.rs:375:fn world_map_fog_of_war_pin_resizes_on_canvas_size_changed() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_keybindings_panels_detail/world_map.rs:415:fn world_map_registers_fog_of_war_pin_template_as_fog_of_war_frame() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_keybindings_panels_detail/world_map.rs:445:fn world_map_events_tab_click_and_zone_switch_without_errors() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_keybindings_world_map_events.rs:13:fn world_map_events_tab_click_and_zone_switch_without_errors(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/template_child_anchor_override.rs:105:fn child_inline_anchors_keep_expected_world_map_scroll_layout() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_5_4_8_combat_restrictions.rs:6:fn assert_cvar_combat_restrictions(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_0_7_cvars.rs:91:fn named_cvars_coerce_boolean_numeric_and_string_values() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_0_7_cvars.rs:117:fn named_cvars_do_not_share_overrides_or_defaults_between_environments() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_0_7_cvars.rs:173:fn named_cvar_writes_do_not_change_sibling_cvars() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_0_7_cvars.rs:195:fn unknown_cvar_is_not_a_builtin_default() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/world_map_onupdate_inventory.rs:34:fn world_map_open_visible_onupdate_handlers_stay_within_initial_inventory_ceiling() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_deprecated_combat_log_loads.rs:377:fn blizzard_deprecated_combat_log_load_deprecation_fallbacks_cvar_is_default_on(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_encounter_warnings_loads.rs:390:fn blizzard_encounter_warnings_publishes_visibility_cvars_array(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_deprecated_specialization_loads.rs:323:fn blizzard_deprecated_specialization_load_deprecation_fallbacks_cvar_is_default_on(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/p1207_gap_closures.rs:81:fn patch_12_0_7_cvars_publish_page_defaults() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_11_2_0_publication_fixes.rs:77:fn patch_11_2_0_fog_cvars_publish_documented_defaults() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/c_arrow_callout_manager.rs:160:fn acknowledge_callout_marks_id_clears_active_and_writes_cvar() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/c_arrow_callout_manager.rs:182:fn acknowledged_cvar_is_comma_separated_in_ascending_order() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_deprecated_housing_catalog_loads.rs:320:fn blizzard_deprecated_housing_catalog_load_deprecation_fallbacks_cvar_is_default_on(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_deprecated_unit_script_loads.rs:234:fn blizzard_deprecated_unit_script_load_deprecation_fallbacks_cvar_is_default_on(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_cvar_display_settings.rs:16:fn brightness_default_visible_via_get_cvar() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_cvar_display_settings.rs:23:fn contrast_default_visible_via_get_cvar() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_cvar_display_settings.rs:30:fn gamma_default_visible_via_get_cvar() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_cvar_display_settings.rs:69:fn cvar_lookup_is_case_insensitive_on_read() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_cvar_display_settings.rs:80:fn get_cvar_default_returns_yaml_value_after_override() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_cvar_display_settings.rs:96:fn c_cvar_namespace_mirrors_global_get_set() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_cvar_display_settings.rs:112:fn unknown_cvar_returns_nil_not_empty_string() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/battle_net_api.rs:8:fn battle_net_high_res_texture_state_tracks_cvar_and_install_action() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/c_map_api.rs:246:fn test_get_map_art_background_atlas_returns_world_map_tile_background() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_deprecated_pet_info_loads.rs:169:fn blizzard_deprecated_pet_info_load_deprecation_fallbacks_cvar_is_default_on(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_map_canvas_loads.rs:41:fn forever_world_map_show_and_sustained_updates_are_error_free() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_map_canvas_loads.rs:180:fn blizzard_map_canvas_pulled_into_game_screen_via_world_map_dep_edge() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_map_canvas_loads.rs:477:fn blizzard_map_canvas_publishes_cvar_data_provider_mixin_inheriting_base(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_map_canvas_loads.rs:650:fn blizzard_map_canvas_world_map_frame_inherits_canvas_template(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/mists_macro_keybindings_panel.rs:18:fn mists_macro_selection_and_keybindings_mutate_state() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_deprecated_pvp_script_loads.rs:219:fn blizzard_deprecated_pvp_script_load_deprecation_fallbacks_cvar_is_default_on(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/c_system_api.rs:55:fn test_c_console_get_all_commands_live_cvars() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_deprecated_action_bar_loads.rs:237:fn blizzard_deprecated_action_bar_load_deprecation_fallbacks_cvar_is_default_on(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_ui/blizzard_arrow_callout_frame/behavior_acknowledged_callouts_persist_across_load.rs:36:fn acknowledged_callouts_persist_through_cvar_across_fresh_load() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_ui/blizzard_arrow_callout_frame/behavior_acknowledged_callouts_persist_across_load.rs:70:fn load_arrow_callout_env(acknowledged_cvar: Option<&str>) -> wow_ui_sim::lua_api::WowLuaEnv {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_ui/blizzard_accessibilitytemplates/behavior_text_size_manager.rs:89:fn init_registers_user_font_scale_cvar_callback() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/combo_points.rs:133:fn combo_points_native_frame_updates_with_the_cvar_enabled() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_deprecated_sound_script_loads.rs:165:fn blizzard_deprecated_sound_script_load_deprecation_fallbacks_cvar_is_default_on(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_deprecated_trade_info_loads.rs:202:fn blizzard_deprecated_trade_info_load_deprecation_fallbacks_cvar_is_default_on(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_deprecated_loads.rs:196:fn blizzard_deprecated_load_deprecation_fallbacks_cvar_is_default_on(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_deprecated_currency_script_loads.rs:186:fn blizzard_deprecated_currency_script_load_deprecation_fallbacks_cvar_is_default_on(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/panel_toggle_verbs.rs:48:fn toggle_world_map_roundtrips() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_deprecated_battle_net_loads.rs:146:fn blizzard_deprecated_battle_net_load_deprecation_fallbacks_cvar_is_default_on(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_showuipanel.rs:794:fn startup_without_world_map_does_not_error_in_quest_map_refresh() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/render_order_world_map.rs:15:fn opening_world_map_does_not_darken_the_strip_above_the_panel() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/render_order_world_map.rs:90:fn world_map_quest_track_checkboxes_use_high_res_checkbox_atlas() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/render_order_world_map.rs:140:fn world_map_quest_track_checkbox_quads_match_texture_layout_bounds() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/render_order_world_map.rs:205:fn isolated_world_map_dependency_closure_loads_declared_dependencies() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/render_order_world_map.rs:218:fn voice_chat_prompt_renders_below_world_map_panel_in_combined_stack() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/render_order_world_map.rs:274:fn chat_frame_voice_button_overlaps_world_map_but_renders_below_panel_border() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_deprecated_auto_complete_loads.rs:208:fn blizzard_deprecated_auto_complete_load_deprecation_fallbacks_cvar_is_default_on(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/mists_world_map_panel.rs:6:fn mists_world_map_opens_with_zone_art_and_quest_pins() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/mists_compat_bootstrap.rs:271:fn mists_world_map_set_opacity_reproduces_nil_opacity_arithmetic() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/mists_compat_bootstrap.rs:511:fn mists_bootstrap_registers_startup_cvar_defaults() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/mists_world_map_opacity.rs:5:fn world_map_cata_lua() -> String {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/mists_world_map_opacity.rs:16:fn world_map_opacity_default_feeds_set_opacity() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_deprecated_item_socket_info_loads.rs:194:fn blizzard_deprecated_item_socket_info_load_deprecation_fallbacks_cvar_is_default_on(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_map_lane.rs:252:fn world_map_ships_only_a_mainline_toc_so_classic_clients_could_not_load_it() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_map_lane.rs:307:fn world_map_is_eager_anchor_not_load_on_demand() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_map_lane.rs:402:fn world_map_dependency_closure_pulls_in_canvas_secure_util_and_data_providers() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_map_lane.rs:457:fn full_game_ui_load_publishes_world_map_globals(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_map_lane.rs:498:fn world_map_frame_is_parented_to_ui_parent_after_full_load(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/global_frames.rs:182:fn test_world_map_data_providers_are_tracked() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/runtime_bootstrap_boundaries.rs:410:fn c_cvar_surface_is_not_runtime_bootstrap_fallback() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/render_order.rs:463:fn isolated_world_map_stack_opens_and_populates_world_quest_pins() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/render_order.rs:505:fn isolated_world_map_current_map_does_not_render_fog_of_war_without_db_entry() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/render_order.rs:647:fn isolated_world_map_seeded_world_quests_do_not_show_expiration_clock() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/render_order.rs:692:fn isolated_world_map_world_quest_circle_keeps_atlas_size() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/startup_warnings/late.rs:210:fn test_blizzard_framexml_load_registers_boss_banner_cvar_without_warning() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/startup_warnings/late.rs:466:fn test_housing_tutorials_load_without_cvar_bitfield_warning() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/startup_warnings/late.rs:607:fn test_world_map_loads_without_maputil_warning() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/keybindings.rs:316:fn c_keybindings_index_resolves_registry_rows() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/console_commands.rs:6:fn console_catalog_lists_supported_cvars_with_bounded_metadata() {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_encounter_timeline_loads.rs:411:fn blizzard_encounter_timeline_publishes_visibility_cvars_array(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_world_map_loads.rs:13:fn world_map_dir() -> PathBuf {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_world_map_loads.rs:17:fn world_map_toc() -> PathBuf {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_world_map_loads.rs:385:fn template_mixins_publish_from_world_map_templates_lua(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_world_map_loads.rs:418:fn world_map_frame_publishes_with_dual_mixin_and_parent_uiparent(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_world_map_loads.rs:441:fn world_map_frame_carries_blackout_and_border_children(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_world_map_loads.rs:469:fn world_map_frame_template_carries_scroll_container(env: &WowLuaEnv) {
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_ui_panels_game_loads.rs:372:fn world_map_frame_has_expected_methods(env: &WowLuaEnv) {

@@ -1,0 +1,27 @@
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/lua_api/workarounds/editmode/setup_layout_info.lua:448:    if SetCVarBitfield and Enum and Enum.FrameTutorialAccount
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/lua_api/workarounds/editmode/setup_layout_info.lua:451:            SetCVarBitfield,
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/lua_api/globals/set_cvar_verb.rs:39:    ("SetCVarBitfield", set_cvar_bitfield),
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/lua_api/globals/set_cvar_verb.rs:263:/// `SetCVarBitfield(name, index, enabled)` — mutate the same printable
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/lua_api/globals/set_cvar_verb.rs:350:    LuaApiMut::register_function(lua, "SetCVarBitfield", set_cvar_bitfield)?;
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_azerite_respec_ui_help_tip_shows_first_open.rs:22:                    SetCVarBitfield("closedInfoFrames", LE_FRAME_TUTORIAL_AZERITE_RESPEC, false)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_azerite_respec_ui_help_tip_shows_first_open.rs:77:                    SetCVarBitfield("closedInfoFrames", LE_FRAME_TUTORIAL_AZERITE_RESPEC, true)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_azerite_respec_ui_help_tip_dismisses_on_drop.rs:10:local originalSetCVarBitfield = mixinEnv.SetCVarBitfield or SetCVarBitfield
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_azerite_respec_ui_help_tip_dismisses_on_drop.rs:50:mixinEnv.SetCVarBitfield = function(name, bit, enabled)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_azerite_respec_ui_help_tip_dismisses_on_drop.rs:118:        SetCVarBitfield("closedInfoFrames", LE_FRAME_TUTORIAL_AZERITE_RESPEC, false)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_azerite_respec_ui_on_hide_clears_interaction.rs:30:                    if SetCVarBitfield and LE_FRAME_TUTORIAL_AZERITE_RESPEC then
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_azerite_respec_ui_on_hide_clears_interaction.rs:31:                        SetCVarBitfield("closedInfoFrames", LE_FRAME_TUTORIAL_AZERITE_RESPEC, true)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:339:                   type(SetCVarBitfield),
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/cvar_bitfields.rs:9:        SetCVarBitfield("{0}", 3, true)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/cvar_bitfields.rs:11:        SetCVarBitfield("{0}", 3, false)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/cvar_bitfields.rs:29:    assert!(after_set, "bit 3 should be set after SetCVarBitfield");
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/cvar_bitfields.rs:38:            C_CVar.SetCVarBitfield("{0}", 3, true)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/cvar_bitfields.rs:40:            SetCVarBitfield("{0}", 3, false)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_azerite_respec_ui_on_show_plays_sound.rs:31:                    if SetCVarBitfield and LE_FRAME_TUTORIAL_AZERITE_RESPEC then
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_azerite_respec_ui_on_show_plays_sound.rs:32:                        SetCVarBitfield("closedInfoFrames", LE_FRAME_TUTORIAL_AZERITE_RESPEC, true)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_5_4_8_combat_restrictions.rs:48:                C_CVar.SetCVarBitfield(name, 1, true)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_ui/blizzard_artifact_ui/load.rs:137:             GetCVarBitfield/SetCVarBitfield gates"
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_ui/blizzard_artifact_ui/behavior_appearance_tutorial_helptip.rs:133:SetCVarBitfield("closedInfoFrames", LE_FRAME_TUTORIAL_ARTIFACT_APPEARANCE_TAB, false)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_ui/blizzard_artifact_ui/behavior_appearance_tutorial_helptip.rs:145:SetCVarBitfield("closedInfoFrames", LE_FRAME_TUTORIAL_ARTIFACT_APPEARANCE_TAB, true)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/render_order_world_map.rs:23:        "SetCVarBitfield('closedInfoFrames', LE_FRAME_TUTORIAL_WORLD_MAP_FRAME, true)",
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_remix_artifact_tutorial_ui_loads.rs:110:         persists via SetCVarBitfield(\"closedRemixArtifactTutorialFrames\", specIndex) instead \
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/data/patch_8_1_5_sweep_known_gaps.json:21:  "wt-global-api-SetCVarBitfield-81",
