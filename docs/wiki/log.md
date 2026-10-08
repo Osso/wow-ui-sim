@@ -437,3 +437,5 @@ Final integration proof: spell-line modules 190/190, prefork tooltip cases 34/34
 ## [2026-10-08] investigation | Patch 6.0.2 API audit
 
 [Audit](investigations/patch-6-0-2-api-audit.md): 657 API occurrences, 100 prose rows and 79 enum members; two scenario-backed queries and three consumer-free retirements. 382 bounded/275 API gaps; 51 sweeps, 3 cached/2 bare cases and 11 scenario regressions pass; 50 registers/47 extracts reproduce with three inherited failures. Both addons-enabled startups []; Mists warning-clean outside vendor; portability gate clean 29/29, later 30/30.
+
+- 2026-10-08 integration: [[patch-6-0-2-api-audit]] — real 6.1.0/6.2.x registers, unchanged 275 own gaps and all 52 other pages, 54/53 branch/master sweep cases, 53/50 reproduced registers/extracts, 84 Python fixtures and scoped scenario/tracker/vignette proof. Broader scenario source assertion fails identically on master; preserved without weakening. Historical receipts/invariants and 12-commit rebase identities retained.
