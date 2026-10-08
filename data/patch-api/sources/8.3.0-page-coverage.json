@@ -1,0 +1,1843 @@
+{
+  "schema": "patch-api-page-coverage/v1",
+  "patch": "8.3.0",
+  "source": "data/patch-api/sources/8.3.0-wikitext-register.json",
+  "source_sha256": "372ee6b18ee3a47ec80c7886621a7686cf90381f113e50caed4594b6d18dcbef",
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/8.3.0-api-changes.txt",
+    "sha256": "5de022982639c186f36ba05a3a1c6e6140d0dd79e0da356cbfafc3f46b57a1d3"
+  },
+  "proof_policy": "Occurrence accounting only. Current-retail publication/absence is not signature, payload, populated-output, security or historical behavior parity. Extract duplicates carry no independent credit; retained Auction House revamp summary remains pending.",
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.CalculateCommodityDeposit-28",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.CalculateItemDeposit-29",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.CanCancelAuction-30",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No raw producer for auction-ID cancellation eligibility. Existing cancellation mutations do not specify per-row owner/status/cancelability policy; closure needs concrete eligible, sold and foreign-owner auction fixtures, not a constant predicate."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.CancelAuction-31",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.CancelCommoditiesPurchase-32",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.CancelSell-33",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.CloseAuctionHouse-34",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.ConfirmCommoditiesPurchase-35",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.FavoritesAreAvailable-36",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetAuctionItemSubClasses-37",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetAvailablePostCount-38",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetBidInfo-39",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetBidType-40",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetBrowseResults-41",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetCancelCost-42",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetCommoditySearchResultInfo-43",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetCommoditySearchResultsQuantity-44",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetExtraBrowseInfo-45",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetFilterGroups-46",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetItemCommodityStatus-47",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetItemKeyFromItem-48",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetItemKeyInfo-49",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetItemSearchResultInfo-50",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetItemSearchResultsQuantity-51",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetMaxBidItemBid-52",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetMaxBidItemBuyout-53",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetMaxCommoditySearchResultPrice-54",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetMaxItemSearchResultBid-55",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetMaxItemSearchResultBuyout-56",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetMaxOwnedAuctionBid-57",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetMaxOwnedAuctionBuyout-58",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetNumBidTypes-59",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetNumBids-60",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetNumCommoditySearchResults-61",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetNumItemSearchResults-62",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetNumOwnedAuctionTypes-63",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetNumOwnedAuctions-64",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetNumReplicateItems-65",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No raw producer for replicated-list count. Browse/search rows are not a replication snapshot; closure needs replication request/completion state and populated replicate rows."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetOwnedAuctionInfo-66",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetOwnedAuctionType-67",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetQuoteDurationRemaining-68",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetReplicateItemBattlePetInfo-69",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No raw producer for battle-pet fields of a replicated auction. Requires populated replicate-index battle-pet DTOs and missing-index behavior, not search-row aliases."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetReplicateItemInfo-70",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetReplicateItemLink-71",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No raw producer for replication-index item links. Requires replicated auction snapshots and exact link/index semantics independent of browse/search result keys."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetReplicateItemTimeLeft-72",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No raw producer for replication-index remaining-time bands. Requires auction expiration timestamps/bands in completed replicate snapshots."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.GetTimeLeftBandInfo-73",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.HasFavorites-74",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.HasFullBidResults-75",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.HasFullBrowseResults-76",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.HasFullCommoditySearchResults-77",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.HasFullItemSearchResults-78",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.HasFullOwnedAuctionResults-79",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.HasMaxFavorites-80",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.HasSearchResults-81",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.IsFavoriteItem-82",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.IsSellItemValid-83",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.IsThrottledMessageSystemReady-84",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.MakeItemKey-85",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.PlaceBid-86",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.PostCommodity-87",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.PostItem-88",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.QueryBids-89",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.QueryOwnedAuctions-90",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.RefreshCommoditySearchResults-91",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.RefreshItemSearchResults-92",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.ReplicateItems-93",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No raw producer for requesting full auction replication. Closure requires a request/completion lifecycle, REPLICATE_ITEM_LIST_UPDATE dispatch and snapshot data, not a no-op."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.RequestMoreBrowseResults-94",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.RequestMoreCommoditySearchResults-95",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.RequestMoreItemSearchResults-96",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.SearchForFavorites-97",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.SearchForItemKeys-98",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No raw producer for favorite/item-key batch search. Requires key-list input validation, search aggregation and completion events; existing single-key search publication alone does not prove that contract."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.SendBrowseQuery-99",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.SendSearchQuery-100",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.SendSellSearchQuery-101",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.SetFavoriteItem-102",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AuctionHouse.StartCommoditiesPurchase-103",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AzeriteItem.GetUnlimitedPowerLevel-104",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_Calendar.IsEventOpen-105",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No raw producer for calendar event-editor open state. Requires a selected/open-event lifecycle with open/close behavioral fixtures; a false default would not model the editor."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.GetPostingIDFromClubFinderGUID-106",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No raw producer for service GUID to posting-ID conversion. Requires an authoritative ClubFinder GUID/posting mapping and invalid/missing GUID contract, not a guessed string parse."
+    },
+    {
+      "source_id": "wt-global-api-C_Garrison.GetGarrisonTalentTreeCurrencyTypes-107",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No raw producer for per-tree currency-type enumeration. Requires concrete talent-tree currency records and invalid-tree behavior, not an empty-table placeholder."
+    },
+    {
+      "source_id": "wt-global-api-C_Garrison.GetGarrisonTalentTreeType-108",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No raw producer for talent-tree type selection. Requires typed tree-ID data and missing-tree contract, not a fabricated enum."
+    },
+    {
+      "source_id": "wt-global-api-C_Garrison.GetTalentPointsSpentInTalentTree-109",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No raw producer for spent-point totals. Requires tree talent research/rank state and aggregate accounting with populated fixtures."
+    },
+    {
+      "source_id": "wt-global-api-C_Garrison.GetTalentTreeTalentPointResearchInfo-110",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No raw producer for per-tree talent-point research information. Requires research-progress records, rank/cost/timing DTOs and authoritative output shape."
+    },
+    {
+      "source_id": "wt-global-api-C_GuildInfo.GetGuildTabardInfo-111",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_Item.GetStackCount-112",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_Item.IsItemCorrupted-113",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No raw producer for corruption status on an ItemLocation. Requires item corruption metadata and valid/invalid location fixtures; returning false for every item is not a modeled predicate."
+    },
+    {
+      "source_id": "wt-global-api-C_Item.IsItemCorruptionRelated-114",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No raw producer for corruption-related item classification. Requires explicit item metadata and its distinction from corrupted/resistant items."
+    },
+    {
+      "source_id": "wt-global-api-C_Item.IsItemCorruptionResistant-115",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No raw producer for item corruption-resistance classification. Requires resistance metadata and populated item/location fixtures, not false defaults."
+    },
+    {
+      "source_id": "wt-global-api-C_Item.LockItemByGUID-116",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No raw producer for GUID-addressed item locks. Requires GUID resolution and lock ownership/lifecycle; aliasing index-based inventory locks would invent semantics."
+    },
+    {
+      "source_id": "wt-global-api-C_Item.UnlockItemByGUID-117",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No raw producer for GUID-addressed unlock. Requires matching GUID lock state and observable lock/unlock transitions; a no-op would conceal missing behavior."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemInteraction.ClearPendingItem-118",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No raw producer for clearing the pending interaction item. Requires a modeled pending-slot state and selection-change event semantics."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemInteraction.CloseUI-119",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No raw producer for closing the item-interaction session. Requires session ownership, pending-item cleanup and ITEM_INTERACTION_CLOSE dispatch."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemInteraction.GetItemInteractionInfo-120",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemInteraction.GetItemInteractionSpellId-121",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No raw producer for the active interaction spell ID. Requires configured interaction/session spell data and inactive-session return semantics."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemInteraction.InitializeFrame-122",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No raw producer for initializing an interaction frame from interaction metadata. Requires session data and frame initialization contract, not a dummy frame callback."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemInteraction.PerformItemInteraction-123",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No raw producer for committing an interaction. Requires pending-item validation, operation/resource mutation and completion/selection events."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemInteraction.Reset-124",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No raw producer for resetting the item-interaction session. Requires pending-item/session state and explicit reset lifecycle separate from close."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemInteraction.SetCorruptionReforgerItemTooltip-125",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim. Superseded by wt-global-api-C_ItemInteraction.SetCorruptionReforgerItemTooltip-323."
+    },
+    {
+      "source_id": "wt-global-api-C_ItemInteraction.SetPendingItem-126",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No raw producer for selecting an interaction item. Requires ItemLocation validation, pending selection state and selection-change dispatch."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGuildInfo.GetRecruitingGuildTabardInfo-127",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim. Superseded by wt-global-api-C_LFGuildInfo.GetRecruitingGuildTabardInfo-109."
+    },
+    {
+      "source_id": "wt-global-api-C_Mail.CanCheckInbox-128",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_Map.CloseWorldMapInteraction-129",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No raw producer for closing a world-map interaction. Requires active interaction state and closure event/lifecycle; map-data queries do not model that transition."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.GetMinLevel-130",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_QuestLog.GetActiveThreatMaps-131",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No raw producer for active threat-map IDs. Requires a threat/activity provider and populated map-to-quest linkage, not empty lists."
+    },
+    {
+      "source_id": "wt-global-api-C_QuestLog.HasActiveThreats-132",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No raw producer for active-threat existence. Requires the same threat/activity state and true/false transitions, not a constant predicate."
+    },
+    {
+      "source_id": "wt-global-api-C_QuestLog.IsThreatQuest-133",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_TaskQuest.GetThreatQuests-134",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "No raw producer for per-map threat quest enumeration. Requires map-indexed threat quest data and missing/empty/populated fixtures."
+    },
+    {
+      "source_id": "wt-global-api-C_UIWidgetManager.GetPowerBarWidgetSetID-135",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_WowTokenUI.StartTokenSell-136",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Namespace/member lookup fabricates a function without a raw producer. Requires token-sale intent, pricing/confirmation state and service completion/failure lifecycle; no-op publication would not implement a sale."
+    },
+    {
+      "source_id": "wt-global-api-GetCorruption-137",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetCorruptionResistance-138",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetNegativeCorruptionEffectInfo-139",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetUnitPowerBarInfo-140",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetUnitPowerBarInfoByID-141",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Global producer absent. Requires a power-bar-ID metadata provider and exact info return shape; current unit timer/ID queries do not supply those records."
+    },
+    {
+      "source_id": "wt-global-api-GetUnitPowerBarStrings-142",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Global producer absent. Requires unit-to-bar resolution and localized name/tooltip/cost strings from power-bar metadata."
+    },
+    {
+      "source_id": "wt-global-api-GetUnitPowerBarStringsByID-143",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Global producer absent. Requires ID-indexed localized power-bar strings and invalid-ID behavior."
+    },
+    {
+      "source_id": "wt-global-api-GetUnitPowerBarTextureInfo-144",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Global producer absent. Requires unit/bar/texture-index metadata including texture coordinates/colors; no texture constant can stand in for populated records."
+    },
+    {
+      "source_id": "wt-global-api-GetUnitPowerBarTextureInfoByID-145",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Global producer absent. Requires ID-indexed power-bar texture records and index/missing-record behavior."
+    },
+    {
+      "source_id": "wt-global-api-IsCorruptedItem-146",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim. Superseded by wt-global-api-IsCorruptedItem-197. Cached Blizzard deprecation fallback attribution retained; wrapper is not deleted or claimed natively absent."
+    },
+    {
+      "source_id": "wt-global-api-IsUnitModelReadyForUI-147",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-IsUsingFixedTimeStep-148",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Global producer absent. Simulator elapsed/timer state does not define a client fixed-step configuration contract; requires an explicit timing-mode source and true/false tests."
+    },
+    {
+      "source_id": "wt-global-api-PetDefensiveAssistMode-149",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Global producer absent. Requires pet defensive/assist mode state, command transitions and relevant events; an empty function would not implement mode selection."
+    },
+    {
+      "source_id": "wt-global-api-UnitPowerBarID-150",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_ProductChoice.GetChoices-153",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_ProductChoice.GetNumSuppressed-154",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_ProductChoice.GetProducts-155",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_ProductChoice.MakeSelection-156",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_WowTokenPublic.SellToken-157",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-CalculateAuctionDeposit-158",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-CanCancelAuction-159",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-CanSendAuctionQuery-160",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Legacy global remains raw-published by auction_verbs.rs:602 and listed in global_stubs.rs:105. No cached retail consumer found. Retirement requires profile-safe cleanup of both registration paths and preserving the legacy throttle/query contract; not a namespace-only absence fix."
+    },
+    {
+      "source_id": "wt-global-api-CancelAuction-161",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Legacy global remains registered in auction_verbs.rs:641 and message_verbs.rs:158. Cached bare-name hits are current C_AuctionHouse.CancelAuction consumers (Blizzard_AuctionHouseFrame.lua:82), not proof of the old global. Existing modeled event/mutation paths and callers require a separate classic-safe migration; retained rather than delete a modeled legacy verb."
+    },
+    {
+      "source_id": "wt-global-api-CancelSell-162",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-ClickAuctionSellItemButton-163",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-CloseAuctionHouse-164",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-ConfirmPostAuction-165",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetAlternatePowerInfoByID-166",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetAuctionDeposit-167",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetAuctionHouseDepositRate-168",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetAuctionItemBattlePetInfo-169",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetAuctionItemInfo-170",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetAuctionItemLink-171",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetAuctionItemSubClasses-172",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetAuctionItemTimeLeft-173",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetAuctionSellItemInfo-174",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetAuctionSort-175",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetBidderAuctionItems-176",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetNumAuctionItems-177",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Legacy global remains modeled by inventory_counts.rs:46 and auction_verbs.rs:615; tests/inventory_counts.rs:313,323,325,334,342 exercise legacy list/owner/bidder behavior. No cached retail consumer found. Retirement requires profile-gating both registration paths and migrating retail callers/tests while preserving classic state-backed behavior."
+    },
+    {
+      "source_id": "wt-global-api-GetOwnerAuctionItems-178",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetRecruitingGuildTabardInfo-179",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-GetSelectedAuctionItem-180",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-IsAuctionSortReversed-181",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-PlaceAuctionBid-182",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-PostAuction-183",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-QueryAuctionItems-184",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-SetAuctionsTabShowing-185",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-SetSelectedAuctionItem-186",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-SortAuctionApplySort-187",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-SortAuctionClearSort-188",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-SortAuctionItems-189",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-SortAuctionSetSort-190",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-StartAuction-191",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-UnitAlternatePowerCounterInfo-192",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-UnitAlternatePowerInfo-193",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-UnitAlternatePowerTextureInfo-194",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-widgets-Button:RegisterForMouse-206",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-widgets-GameTooltip:SetItemKey-207",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim. Superseded by wt-widgets-GameTooltip:SetItemKey-470."
+    },
+    {
+      "source_id": "wt-widgets-GameTooltip:SetAuctionItem-210",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-widgets-GameTooltip:SetAuctionSellItem-211",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-AUCTION_CANCELED-223",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-AUCTION_HOUSE_AUCTION_CREATED-224",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-AUCTION_HOUSE_BROWSE_FAILURE-225",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-AUCTION_HOUSE_BROWSE_RESULTS_ADDED-226",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-AUCTION_HOUSE_BROWSE_RESULTS_UPDATED-227",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-AUCTION_HOUSE_FAVORITES_UPDATED-228",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-AUCTION_HOUSE_NEW_BID_RECEIVED-229",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-AUCTION_HOUSE_NEW_RESULTS_RECEIVED-230",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-AUCTION_HOUSE_THROTTLED_MESSAGE_DROPPED-231",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-AUCTION_HOUSE_THROTTLED_MESSAGE_QUEUED-232",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-AUCTION_HOUSE_THROTTLED_MESSAGE_RESPONSE_RECEIVED-233",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-AUCTION_HOUSE_THROTTLED_MESSAGE_SENT-234",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-AUCTION_HOUSE_THROTTLED_SPECIFIC_SEARCH_READY-235",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim. Superseded by wt-events-AUCTION_HOUSE_THROTTLED_SPECIFIC_SEARCH_READY-830."
+    },
+    {
+      "source_id": "wt-events-AUCTION_HOUSE_THROTTLED_SYSTEM_READY-236",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-BIDS_UPDATED-237",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-BID_ADDED-238",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-COMMENTATOR_IMMEDIATE_FOV_UPDATE-239",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-COMMODITY_PRICE_UNAVAILABLE-240",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-COMMODITY_PRICE_UPDATED-241",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-COMMODITY_PURCHASED-242",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-COMMODITY_PURCHASE_FAILED-243",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-COMMODITY_PURCHASE_SUCCEEDED-244",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-COMMODITY_SEARCH_RESULTS_ADDED-245",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-COMMODITY_SEARCH_RESULTS_UPDATED-246",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-EXTRA_BROWSE_INFO_RECEIVED-247",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-GLOBAL_MOUSE_DOWN-248",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-GLOBAL_MOUSE_UP-249",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-ITEM_INTERACTION_CLOSE-250",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim. Superseded by wt-events-ITEM_INTERACTION_CLOSE-774."
+    },
+    {
+      "source_id": "wt-events-ITEM_INTERACTION_ITEM_SELECTION_UPDATED-251",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-ITEM_INTERACTION_OPEN-252",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim. Superseded by wt-events-ITEM_INTERACTION_OPEN-775."
+    },
+    {
+      "source_id": "wt-events-ITEM_KEY_ITEM_INFO_RECEIVED-253",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-ITEM_PURCHASED-254",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-ITEM_SEARCH_RESULTS_ADDED-255",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-ITEM_SEARCH_RESULTS_UPDATED-256",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-OWNED_AUCTIONS_UPDATED-257",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-REPLICATE_ITEM_LIST_UPDATE-258",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-TOKEN_SELL_CONFIRMED-259",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-WORLD_MAP_CLOSE-260",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim. Superseded by wt-events-WORLD_MAP_CLOSE-789."
+    },
+    {
+      "source_id": "wt-events-WORLD_MAP_OPEN-261",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-AUCTION_BIDDER_LIST_UPDATE-264",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-AUCTION_HOUSE_POST_ERROR-265",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim. Superseded by wt-events-AUCTION_HOUSE_POST_ERROR-226."
+    },
+    {
+      "source_id": "wt-events-AUCTION_HOUSE_POST_WARNING-266",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim. Superseded by wt-events-AUCTION_HOUSE_POST_WARNING-227."
+    },
+    {
+      "source_id": "wt-events-AUCTION_ITEM_LIST_UPDATE-267",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-AUCTION_OWNED_LIST_UPDATE-268",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-events-NEW_AUCTION_UPDATE-269",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-cvars-calendarShowHolidays-281",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-cvars-Collision-282",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-cvars-NamePlateClassificationScale-283",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim. Superseded by wt-cvars-NamePlateClassificationScale-492."
+    },
+    {
+      "source_id": "wt-cvars-NamePlateMaximumClassificationScale-284",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim. Superseded by wt-cvars-NamePlateMaximumClassificationScale-1084."
+    },
+    {
+      "source_id": "wt-cvars-PreventOsIdleSleep-285",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-cvars-DumpSoundKits-288",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_AzeriteEssence.GetNumUsableEssences-14",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Late-build addition has no raw producer. Requires unlocked/usable essence eligibility state and populated counts by the API contract; an empty/default count would hide the missing progression producer."
+    },
+    {
+      "source_id": "wt-global-api-C_Item.IsItemCorruptable-14",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim. Superseded by wt-global-api-C_Item.IsItemCorruptable-583."
+    },
+    {
+      "source_id": "wt-global-api-TargetSpellHasApplyCorruption-14",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current-retail absence only; no signature, populated-output, security, payload or historical behavior parity claim. Superseded by wt-global-api-TargetSpellHasApplyCorruption-688."
+    },
+    {
+      "source_id": "wt-events-LFG_GROUP_DELISTED_LEADERSHIP_CHANGE-18",
+      "capabilities": [
+        "current-retail-publication"
+      ],
+      "status": "partial-development-green",
+      "note": "Current-retail publication/event registration only; no signature, populated-output, security, payload or historical behavior parity claim."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-004",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-005",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Auction House revamp is a broad behavioral summary. Inventory publication and existing auction UI tests do not prove full historical revamp parity; complete service/search/bid/replication lifecycle audit remains outside this bounded publication sweep."
+    },
+    {
+      "source_id": "source-context-006",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-008",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-009",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-010",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "External build/reference resource context; linked source not expanded, no runtime credit."
+    },
+    {
+      "source_id": "source-context-012",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-013",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "External build/reference resource context; linked source not expanded, no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-014",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Duplicate rendering of inventoried late-build additions: wt-global-api-C_AzeriteEssence.GetNumUsableEssences-14, wt-global-api-C_Item.IsItemCorruptable-14, wt-global-api-TargetSpellHasApplyCorruption-14. No independent runtime credit."
+    },
+    {
+      "source_id": "source-context-016",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-017",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "External build/reference resource context; linked source not expanded, no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-018",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Duplicate rendering of inventoried late-build additions: wt-events-LFG_GROUP_DELISTED_LEADERSHIP_CHANGE-18. No independent runtime credit."
+    },
+    {
+      "source_id": "source-context-020",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-021",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "External build/reference resource context; linked source not expanded, no runtime credit."
+    },
+    {
+      "source_id": "source-context-wikitext-022",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Historical comparison/build caption; numerical inventory headers are retained in register.header_counts and checked separately. No runtime credit."
+    },
+    {
+      "source_id": "source-context-wikitext-200",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Historical comparison/build caption; numerical inventory headers are retained in register.header_counts and checked separately. No runtime credit."
+    },
+    {
+      "source_id": "source-context-wikitext-217",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Historical comparison/build caption; numerical inventory headers are retained in register.header_counts and checked separately. No runtime credit."
+    },
+    {
+      "source_id": "source-context-wikitext-275",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Historical comparison/build caption; numerical inventory headers are retained in register.header_counts and checked separately. No runtime credit."
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+[
+  {
+    "source_id": "source-context-001",
+    "extract_line": 1,
+    "literal": "Patch 8.3.0 API changes",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-003",
+    "extract_line": 3,
+    "literal": "== Changes ==",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "source-context-004",
+    "extract_line": 4,
+    "literal": "* TOC: 80300",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-005",
+    "extract_line": 5,
+    "literal": "* The Auction House was revamped [Reference: url=https://us.forums.blizzard.com/en/wow/t/feedback-auction-house-revamp/324822|author=Kaivax|date=2019-10-07|title=Feedback – Auction House Revamp]",
+    "status": "audit-pending",
+    "reason": "Auction House revamp is a broad behavioral summary. Inventory publication and existing auction UI tests do not prove full historical revamp parity; complete service/search/bid/replication lifecycle audit remains outside this bounded publication sweep."
+  },
+  {
+    "source_id": "source-context-006",
+    "extract_line": 6,
+    "literal": "* Deprecated API: Deprecated_8_3_0.lua",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-008",
+    "extract_line": 8,
+    "literal": "== Diffs ==",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "source-context-009",
+    "extract_line": 9,
+    "literal": "=== 8.2.5 (32978) to 8.3.0 (33062) Jan 14 2020 ===",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-010",
+    "extract_line": 10,
+    "literal": ": FrameXML, InterfaceResources",
+    "status": "metadata-only",
+    "reason": "External build/reference resource context; linked source not expanded, no runtime credit."
+  },
+  {
+    "source_id": "source-context-012",
+    "extract_line": 12,
+    "literal": "=== 8.3.0 (34601) May 29 2020 ===",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-013",
+    "extract_line": 13,
+    "literal": ": FrameXML, InterfaceResources",
+    "status": "metadata-only",
+    "reason": "External build/reference resource context; linked source not expanded, no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-014",
+    "extract_line": 14,
+    "literal": "* New functions: C_AzeriteEssence.GetNumUsableEssences, C_Item.IsItemCorruptable, TargetSpellHasApplyCorruption",
+    "status": "metadata-only",
+    "reason": "Duplicate rendering of inventoried late-build additions: wt-global-api-C_AzeriteEssence.GetNumUsableEssences-14, wt-global-api-C_Item.IsItemCorruptable-14, wt-global-api-TargetSpellHasApplyCorruption-14. No independent runtime credit."
+  },
+  {
+    "source_id": "source-context-016",
+    "extract_line": 16,
+    "literal": "=== 8.3.0 (34769) Jun 11 2020 ===",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-017",
+    "extract_line": 17,
+    "literal": ": FrameXML, InterfaceResources",
+    "status": "metadata-only",
+    "reason": "External build/reference resource context; linked source not expanded, no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-018",
+    "extract_line": 18,
+    "literal": "* New event: LFG_GROUP_DELISTED_LEADERSHIP_CHANGE",
+    "status": "metadata-only",
+    "reason": "Duplicate rendering of inventoried late-build additions: wt-events-LFG_GROUP_DELISTED_LEADERSHIP_CHANGE-18. No independent runtime credit."
+  },
+  {
+    "source_id": "source-context-020",
+    "extract_line": 20,
+    "literal": "== References ==",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-021",
+    "extract_line": 21,
+    "literal": "[References list; not expanded]",
+    "status": "metadata-only",
+    "reason": "External build/reference resource context; linked source not expanded, no runtime credit."
+  }
+]

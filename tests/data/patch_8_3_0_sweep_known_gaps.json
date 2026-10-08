@@ -6,6 +6,7 @@
   "wt-global-api-C_AuctionHouse.GetReplicateItemTimeLeft-72",
   "wt-global-api-C_AuctionHouse.ReplicateItems-93",
   "wt-global-api-C_AuctionHouse.SearchForItemKeys-98",
+  "wt-global-api-C_AzeriteEssence.GetNumUsableEssences-14",
   "wt-global-api-C_Calendar.IsEventOpen-105",
   "wt-global-api-C_ClubFinder.GetPostingIDFromClubFinderGUID-106",
   "wt-global-api-C_Garrison.GetGarrisonTalentTreeCurrencyTypes-107",

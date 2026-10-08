@@ -1,0 +1,904 @@
+[
+  {
+    "source_id": "wt-global-api-C_AuctionHouse.CanCancelAuction-30",
+    "symbol": "C_AuctionHouse.CanCancelAuction",
+    "wikitext_line": 30,
+    "literal": ": {{api|C_AuctionHouse.CanCancelAuction}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_AuctionHouse.CanCancelAuction"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw producer for auction-ID cancellation eligibility. Existing cancellation mutations do not specify per-row owner/status/cancelability policy; closure needs concrete eligible, sold and foreign-owner auction fixtures, not a constant predicate."
+  },
+  {
+    "source_id": "wt-global-api-C_AuctionHouse.GetNumReplicateItems-65",
+    "symbol": "C_AuctionHouse.GetNumReplicateItems",
+    "wikitext_line": 65,
+    "literal": ": {{api|C_AuctionHouse.GetNumReplicateItems}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_AuctionHouse.GetNumReplicateItems"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw producer for replicated-list count. Browse/search rows are not a replication snapshot; closure needs replication request/completion state and populated replicate rows."
+  },
+  {
+    "source_id": "wt-global-api-C_AuctionHouse.GetReplicateItemBattlePetInfo-69",
+    "symbol": "C_AuctionHouse.GetReplicateItemBattlePetInfo",
+    "wikitext_line": 69,
+    "literal": ": {{api|C_AuctionHouse.GetReplicateItemBattlePetInfo}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_AuctionHouse.GetReplicateItemBattlePetInfo"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw producer for battle-pet fields of a replicated auction. Requires populated replicate-index battle-pet DTOs and missing-index behavior, not search-row aliases."
+  },
+  {
+    "source_id": "wt-global-api-C_AuctionHouse.GetReplicateItemLink-71",
+    "symbol": "C_AuctionHouse.GetReplicateItemLink",
+    "wikitext_line": 71,
+    "literal": ": {{api|C_AuctionHouse.GetReplicateItemLink}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_AuctionHouse.GetReplicateItemLink"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw producer for replication-index item links. Requires replicated auction snapshots and exact link/index semantics independent of browse/search result keys."
+  },
+  {
+    "source_id": "wt-global-api-C_AuctionHouse.GetReplicateItemTimeLeft-72",
+    "symbol": "C_AuctionHouse.GetReplicateItemTimeLeft",
+    "wikitext_line": 72,
+    "literal": ": {{api|C_AuctionHouse.GetReplicateItemTimeLeft}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_AuctionHouse.GetReplicateItemTimeLeft"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw producer for replication-index remaining-time bands. Requires auction expiration timestamps/bands in completed replicate snapshots."
+  },
+  {
+    "source_id": "wt-global-api-C_AuctionHouse.ReplicateItems-93",
+    "symbol": "C_AuctionHouse.ReplicateItems",
+    "wikitext_line": 93,
+    "literal": ": {{api|C_AuctionHouse.ReplicateItems}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_AuctionHouse.ReplicateItems"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw producer for requesting full auction replication. Closure requires a request/completion lifecycle, REPLICATE_ITEM_LIST_UPDATE dispatch and snapshot data, not a no-op."
+  },
+  {
+    "source_id": "wt-global-api-C_AuctionHouse.SearchForItemKeys-98",
+    "symbol": "C_AuctionHouse.SearchForItemKeys",
+    "wikitext_line": 98,
+    "literal": ": {{api|C_AuctionHouse.SearchForItemKeys}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_AuctionHouse.SearchForItemKeys"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw producer for favorite/item-key batch search. Requires key-list input validation, search aggregation and completion events; existing single-key search publication alone does not prove that contract."
+  },
+  {
+    "source_id": "wt-global-api-C_Calendar.IsEventOpen-105",
+    "symbol": "C_Calendar.IsEventOpen",
+    "wikitext_line": 105,
+    "literal": ": {{api|C_Calendar.IsEventOpen}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Calendar.IsEventOpen"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw producer for calendar event-editor open state. Requires a selected/open-event lifecycle with open/close behavioral fixtures; a false default would not model the editor."
+  },
+  {
+    "source_id": "wt-global-api-C_ClubFinder.GetPostingIDFromClubFinderGUID-106",
+    "symbol": "C_ClubFinder.GetPostingIDFromClubFinderGUID",
+    "wikitext_line": 106,
+    "literal": ": {{api|C_ClubFinder.GetPostingIDFromClubFinderGUID}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.GetPostingIDFromClubFinderGUID"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw producer for service GUID to posting-ID conversion. Requires an authoritative ClubFinder GUID/posting mapping and invalid/missing GUID contract, not a guessed string parse."
+  },
+  {
+    "source_id": "wt-global-api-C_Garrison.GetGarrisonTalentTreeCurrencyTypes-107",
+    "symbol": "C_Garrison.GetGarrisonTalentTreeCurrencyTypes",
+    "wikitext_line": 107,
+    "literal": ": {{api|C_Garrison.GetGarrisonTalentTreeCurrencyTypes}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Garrison.GetGarrisonTalentTreeCurrencyTypes"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw producer for per-tree currency-type enumeration. Requires concrete talent-tree currency records and invalid-tree behavior, not an empty-table placeholder."
+  },
+  {
+    "source_id": "wt-global-api-C_Garrison.GetGarrisonTalentTreeType-108",
+    "symbol": "C_Garrison.GetGarrisonTalentTreeType",
+    "wikitext_line": 108,
+    "literal": ": {{api|C_Garrison.GetGarrisonTalentTreeType}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Garrison.GetGarrisonTalentTreeType"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw producer for talent-tree type selection. Requires typed tree-ID data and missing-tree contract, not a fabricated enum."
+  },
+  {
+    "source_id": "wt-global-api-C_Garrison.GetTalentPointsSpentInTalentTree-109",
+    "symbol": "C_Garrison.GetTalentPointsSpentInTalentTree",
+    "wikitext_line": 109,
+    "literal": ": {{api|C_Garrison.GetTalentPointsSpentInTalentTree}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Garrison.GetTalentPointsSpentInTalentTree"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw producer for spent-point totals. Requires tree talent research/rank state and aggregate accounting with populated fixtures."
+  },
+  {
+    "source_id": "wt-global-api-C_Garrison.GetTalentTreeTalentPointResearchInfo-110",
+    "symbol": "C_Garrison.GetTalentTreeTalentPointResearchInfo",
+    "wikitext_line": 110,
+    "literal": ": {{api|C_Garrison.GetTalentTreeTalentPointResearchInfo}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Garrison.GetTalentTreeTalentPointResearchInfo"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw producer for per-tree talent-point research information. Requires research-progress records, rank/cost/timing DTOs and authoritative output shape."
+  },
+  {
+    "source_id": "wt-global-api-C_Item.IsItemCorrupted-113",
+    "symbol": "C_Item.IsItemCorrupted",
+    "wikitext_line": 113,
+    "literal": ": {{api|C_Item.IsItemCorrupted}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Item.IsItemCorrupted"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw producer for corruption status on an ItemLocation. Requires item corruption metadata and valid/invalid location fixtures; returning false for every item is not a modeled predicate."
+  },
+  {
+    "source_id": "wt-global-api-C_Item.IsItemCorruptionRelated-114",
+    "symbol": "C_Item.IsItemCorruptionRelated",
+    "wikitext_line": 114,
+    "literal": ": {{api|C_Item.IsItemCorruptionRelated}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Item.IsItemCorruptionRelated"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw producer for corruption-related item classification. Requires explicit item metadata and its distinction from corrupted/resistant items."
+  },
+  {
+    "source_id": "wt-global-api-C_Item.IsItemCorruptionResistant-115",
+    "symbol": "C_Item.IsItemCorruptionResistant",
+    "wikitext_line": 115,
+    "literal": ": {{api|C_Item.IsItemCorruptionResistant}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Item.IsItemCorruptionResistant"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw producer for item corruption-resistance classification. Requires resistance metadata and populated item/location fixtures, not false defaults."
+  },
+  {
+    "source_id": "wt-global-api-C_Item.LockItemByGUID-116",
+    "symbol": "C_Item.LockItemByGUID",
+    "wikitext_line": 116,
+    "literal": ": {{api|C_Item.LockItemByGUID}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Item.LockItemByGUID"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw producer for GUID-addressed item locks. Requires GUID resolution and lock ownership/lifecycle; aliasing index-based inventory locks would invent semantics."
+  },
+  {
+    "source_id": "wt-global-api-C_Item.UnlockItemByGUID-117",
+    "symbol": "C_Item.UnlockItemByGUID",
+    "wikitext_line": 117,
+    "literal": ": {{api|C_Item.UnlockItemByGUID}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Item.UnlockItemByGUID"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw producer for GUID-addressed unlock. Requires matching GUID lock state and observable lock/unlock transitions; a no-op would conceal missing behavior."
+  },
+  {
+    "source_id": "wt-global-api-C_ItemInteraction.ClearPendingItem-118",
+    "symbol": "C_ItemInteraction.ClearPendingItem",
+    "wikitext_line": 118,
+    "literal": ": {{api|C_ItemInteraction.ClearPendingItem}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ItemInteraction.ClearPendingItem"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw producer for clearing the pending interaction item. Requires a modeled pending-slot state and selection-change event semantics."
+  },
+  {
+    "source_id": "wt-global-api-C_ItemInteraction.CloseUI-119",
+    "symbol": "C_ItemInteraction.CloseUI",
+    "wikitext_line": 119,
+    "literal": ": {{api|C_ItemInteraction.CloseUI}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ItemInteraction.CloseUI"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw producer for closing the item-interaction session. Requires session ownership, pending-item cleanup and ITEM_INTERACTION_CLOSE dispatch."
+  },
+  {
+    "source_id": "wt-global-api-C_ItemInteraction.GetItemInteractionSpellId-121",
+    "symbol": "C_ItemInteraction.GetItemInteractionSpellId",
+    "wikitext_line": 121,
+    "literal": ": {{api|C_ItemInteraction.GetItemInteractionSpellId}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ItemInteraction.GetItemInteractionSpellId"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw producer for the active interaction spell ID. Requires configured interaction/session spell data and inactive-session return semantics."
+  },
+  {
+    "source_id": "wt-global-api-C_ItemInteraction.InitializeFrame-122",
+    "symbol": "C_ItemInteraction.InitializeFrame",
+    "wikitext_line": 122,
+    "literal": ": {{api|C_ItemInteraction.InitializeFrame}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ItemInteraction.InitializeFrame"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw producer for initializing an interaction frame from interaction metadata. Requires session data and frame initialization contract, not a dummy frame callback."
+  },
+  {
+    "source_id": "wt-global-api-C_ItemInteraction.PerformItemInteraction-123",
+    "symbol": "C_ItemInteraction.PerformItemInteraction",
+    "wikitext_line": 123,
+    "literal": ": {{api|C_ItemInteraction.PerformItemInteraction}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ItemInteraction.PerformItemInteraction"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw producer for committing an interaction. Requires pending-item validation, operation/resource mutation and completion/selection events."
+  },
+  {
+    "source_id": "wt-global-api-C_ItemInteraction.Reset-124",
+    "symbol": "C_ItemInteraction.Reset",
+    "wikitext_line": 124,
+    "literal": ": {{api|C_ItemInteraction.Reset}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ItemInteraction.Reset"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw producer for resetting the item-interaction session. Requires pending-item/session state and explicit reset lifecycle separate from close."
+  },
+  {
+    "source_id": "wt-global-api-C_ItemInteraction.SetPendingItem-126",
+    "symbol": "C_ItemInteraction.SetPendingItem",
+    "wikitext_line": 126,
+    "literal": ": {{api|C_ItemInteraction.SetPendingItem}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ItemInteraction.SetPendingItem"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw producer for selecting an interaction item. Requires ItemLocation validation, pending selection state and selection-change dispatch."
+  },
+  {
+    "source_id": "wt-global-api-C_Map.CloseWorldMapInteraction-129",
+    "symbol": "C_Map.CloseWorldMapInteraction",
+    "wikitext_line": 129,
+    "literal": ": {{api|C_Map.CloseWorldMapInteraction}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Map.CloseWorldMapInteraction"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw producer for closing a world-map interaction. Requires active interaction state and closure event/lifecycle; map-data queries do not model that transition."
+  },
+  {
+    "source_id": "wt-global-api-C_QuestLog.GetActiveThreatMaps-131",
+    "symbol": "C_QuestLog.GetActiveThreatMaps",
+    "wikitext_line": 131,
+    "literal": ": {{api|C_QuestLog.GetActiveThreatMaps}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestLog.GetActiveThreatMaps"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw producer for active threat-map IDs. Requires a threat/activity provider and populated map-to-quest linkage, not empty lists."
+  },
+  {
+    "source_id": "wt-global-api-C_QuestLog.HasActiveThreats-132",
+    "symbol": "C_QuestLog.HasActiveThreats",
+    "wikitext_line": 132,
+    "literal": ": {{api|C_QuestLog.HasActiveThreats}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestLog.HasActiveThreats"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw producer for active-threat existence. Requires the same threat/activity state and true/false transitions, not a constant predicate."
+  },
+  {
+    "source_id": "wt-global-api-C_TaskQuest.GetThreatQuests-134",
+    "symbol": "C_TaskQuest.GetThreatQuests",
+    "wikitext_line": 134,
+    "literal": ": {{api|C_TaskQuest.GetThreatQuests}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_TaskQuest.GetThreatQuests"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw producer for per-map threat quest enumeration. Requires map-indexed threat quest data and missing/empty/populated fixtures."
+  },
+  {
+    "source_id": "wt-global-api-C_WowTokenUI.StartTokenSell-136",
+    "symbol": "C_WowTokenUI.StartTokenSell",
+    "wikitext_line": 136,
+    "literal": ": {{api|C_WowTokenUI.StartTokenSell}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_WowTokenUI.StartTokenSell"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "parent raw-absent; raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Namespace/member lookup fabricates a function without a raw producer. Requires token-sale intent, pricing/confirmation state and service completion/failure lifecycle; no-op publication would not implement a sale."
+  },
+  {
+    "source_id": "wt-global-api-GetUnitPowerBarInfoByID-141",
+    "symbol": "GetUnitPowerBarInfoByID",
+    "wikitext_line": 141,
+    "literal": ": {{api|GetUnitPowerBarInfoByID}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetUnitPowerBarInfoByID"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "Global producer absent. Requires a power-bar-ID metadata provider and exact info return shape; current unit timer/ID queries do not supply those records."
+  },
+  {
+    "source_id": "wt-global-api-GetUnitPowerBarStrings-142",
+    "symbol": "GetUnitPowerBarStrings",
+    "wikitext_line": 142,
+    "literal": ": {{api|GetUnitPowerBarStrings}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetUnitPowerBarStrings"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "Global producer absent. Requires unit-to-bar resolution and localized name/tooltip/cost strings from power-bar metadata."
+  },
+  {
+    "source_id": "wt-global-api-GetUnitPowerBarStringsByID-143",
+    "symbol": "GetUnitPowerBarStringsByID",
+    "wikitext_line": 143,
+    "literal": ": {{api|GetUnitPowerBarStringsByID}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetUnitPowerBarStringsByID"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "Global producer absent. Requires ID-indexed localized power-bar strings and invalid-ID behavior."
+  },
+  {
+    "source_id": "wt-global-api-GetUnitPowerBarTextureInfo-144",
+    "symbol": "GetUnitPowerBarTextureInfo",
+    "wikitext_line": 144,
+    "literal": ": {{api|GetUnitPowerBarTextureInfo}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetUnitPowerBarTextureInfo"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "Global producer absent. Requires unit/bar/texture-index metadata including texture coordinates/colors; no texture constant can stand in for populated records."
+  },
+  {
+    "source_id": "wt-global-api-GetUnitPowerBarTextureInfoByID-145",
+    "symbol": "GetUnitPowerBarTextureInfoByID",
+    "wikitext_line": 145,
+    "literal": ": {{api|GetUnitPowerBarTextureInfoByID}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetUnitPowerBarTextureInfoByID"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "Global producer absent. Requires ID-indexed power-bar texture records and index/missing-record behavior."
+  },
+  {
+    "source_id": "wt-global-api-IsUsingFixedTimeStep-148",
+    "symbol": "IsUsingFixedTimeStep",
+    "wikitext_line": 148,
+    "literal": ": {{api|IsUsingFixedTimeStep}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "IsUsingFixedTimeStep"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "Global producer absent. Simulator elapsed/timer state does not define a client fixed-step configuration contract; requires an explicit timing-mode source and true/false tests."
+  },
+  {
+    "source_id": "wt-global-api-PetDefensiveAssistMode-149",
+    "symbol": "PetDefensiveAssistMode",
+    "wikitext_line": 149,
+    "literal": ": {{api|PetDefensiveAssistMode}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "PetDefensiveAssistMode"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "Global producer absent. Requires pet defensive/assist mode state, command transitions and relevant events; an empty function would not implement mode selection."
+  },
+  {
+    "source_id": "wt-global-api-CanSendAuctionQuery-160",
+    "symbol": "CanSendAuctionQuery",
+    "wikitext_line": 160,
+    "literal": ": {{api|CanSendAuctionQuery}}",
+    "expectation": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "CanSendAuctionQuery"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "Legacy global remains raw-published by auction_verbs.rs:602 and listed in global_stubs.rs:105. No cached retail consumer found. Retirement requires profile-safe cleanup of both registration paths and preserving the legacy throttle/query contract; not a namespace-only absence fix."
+  },
+  {
+    "source_id": "wt-global-api-CancelAuction-161",
+    "symbol": "CancelAuction",
+    "wikitext_line": 161,
+    "literal": ": {{api|CancelAuction}}",
+    "expectation": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "CancelAuction"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "Legacy global remains registered in auction_verbs.rs:641 and message_verbs.rs:158. Cached bare-name hits are current C_AuctionHouse.CancelAuction consumers (Blizzard_AuctionHouseFrame.lua:82), not proof of the old global. Existing modeled event/mutation paths and callers require a separate classic-safe migration; retained rather than delete a modeled legacy verb."
+  },
+  {
+    "source_id": "wt-global-api-GetNumAuctionItems-177",
+    "symbol": "GetNumAuctionItems",
+    "wikitext_line": 177,
+    "literal": ": {{api|GetNumAuctionItems}}",
+    "expectation": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetNumAuctionItems"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "Legacy global remains modeled by inventory_counts.rs:46 and auction_verbs.rs:615; tests/inventory_counts.rs:313,323,325,334,342 exercise legacy list/owner/bidder behavior. No cached retail consumer found. Retirement requires profile-gating both registration paths and migrating retail callers/tests while preserving classic state-backed behavior."
+  },
+  {
+    "source_id": "wt-global-api-C_AzeriteEssence.GetNumUsableEssences-14",
+    "symbol": "C_AzeriteEssence.GetNumUsableEssences",
+    "wikitext_line": 14,
+    "literal": "* New functions: {{api|C_AzeriteEssence.GetNumUsableEssences}}, {{api|C_Item.IsItemCorruptable}}, {{api|TargetSpellHasApplyCorruption}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_AzeriteEssence.GetNumUsableEssences"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Late-build addition has no raw producer. Requires unlocked/usable essence eligibility state and populated counts by the API contract; an empty/default count would hide the missing progression producer."
+  }
+]

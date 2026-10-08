@@ -1,0 +1,34 @@
+[
+  {
+    "source_id": "source-context-wikitext-022",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Historical comparison/build caption; numerical inventory headers are retained in register.header_counts and checked separately. No runtime credit.",
+    "wikitext_line": 22,
+    "literal": "|+ Global API 8.2.5 (32978) &rarr; 8.3.0 (33237)"
+  },
+  {
+    "source_id": "source-context-wikitext-200",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Historical comparison/build caption; numerical inventory headers are retained in register.header_counts and checked separately. No runtime credit.",
+    "wikitext_line": 200,
+    "literal": "|+ Widget API 8.2.5 (32978) &rarr; 8.3.0 (33062)"
+  },
+  {
+    "source_id": "source-context-wikitext-217",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Historical comparison/build caption; numerical inventory headers are retained in register.header_counts and checked separately. No runtime credit.",
+    "wikitext_line": 217,
+    "literal": "|+ Events 8.2.5 (32978) &rarr; 8.3.0 ([https://github.com/Ketho/BlizzardInterfaceResources/commit/44a019b8fd0b745fe8d973a7a5c346c09f719b0b 33237])"
+  },
+  {
+    "source_id": "source-context-wikitext-275",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Historical comparison/build caption; numerical inventory headers are retained in register.header_counts and checked separately. No runtime credit.",
+    "wikitext_line": 275,
+    "literal": "|+ CVars 8.2.5 (32978) &rarr; 8.3.0 (33062)"
+  }
+]
