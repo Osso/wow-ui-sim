@@ -1,0 +1,36 @@
+{{apichanges|5.4.7|prev=5.4.2|next=5.4.8}}
+
+== Changes ==
+*{{api|t=e|CHAT_MSG_ADDON}} arg4's value for sender now returns player name - realm name instead of just the player name (e.g. "Arthas-Silvermoon")
+*{{api|t=e|CHAT_MSG_WHISPER}} arg2's value for author now returns player name - realm name instead of just the player name (e.g. "Arthas-Silvermoon")
+* I haven't checked all other CHAT_MSG_* events but its not unlikely they will also include realm names
+
+== Automated diff ==
+=== Global API ===
+{| class="wikitable" style="min-width: 600px"
+|+ Global API (5.4.2.17688 &rarr; 5.4.7.17956)
+|- class="mw-customtoggle-global-c" style="cursor: pointer" 
+! style="padding: 0 1em;"| 3 new functions
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|BNGetFriendInviteInfoByAddon}}
+: {{api|BNSendGameData}}
+: {{api|GetSpecializationNameForSpecID}}
+</div>
+|}
+
+=== Events ===
+{| class="wikitable" style="min-width: 600px"
+|+ Events (5.4.2.17688 &rarr; 5.4.7.17956)
+|- class="mw-customtoggle-events" style="cursor: pointer" 
+! style="padding: 0 1em;"| 6 new events
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|AUTH_CHALLENGE_FINISHED}}
+: {{api|t=e|BN_CHAT_MSG_ADDON}}
+: {{api|t=e|CHARACTER_UPGRADE_ABORTED}}
+: {{api|t=e|CHARACTER_UPGRADE_COMPLETE}}
+: {{api|t=e|CHARACTER_UPGRADE_STARTED}}
+: {{api|t=e|PRODUCT_DISTRIBUTIONS_UPDATED}}
+</div>
+|}
