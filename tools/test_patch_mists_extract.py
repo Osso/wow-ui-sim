@@ -8,7 +8,7 @@ class MistsExtractTests(unittest.TestCase):
         raw = ('<noinclude>{{Transclude|}}</noinclude>\n==External links==\n'
                '{{Elink|site=WoWInterface|link=http://example.test/thread|desc=Assorted changes}}\n')
         self.assertEqual(extract_text(raw, mists_source_markup=True),
-                         '\n==External links==\n[External link: WoWInterface; http://example.test/thread; Assorted changes]\n')
+                         '\n== External links ==\n[External link: WoWInterface; http://example.test/thread; Assorted changes]\n')
 
 
 if __name__ == '__main__':

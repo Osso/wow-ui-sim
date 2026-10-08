@@ -1,0 +1,35 @@
+# Patch 5.4.0 publication sweep
+
+Audit the pinned 2013 retail Mists API page and separately pinned automated diff. [Audit](../wiki/investigations/patch-5-4-0-api-audit.md) describes evidence and limits.
+
+## What it must do
+
+- [ ] Probe every register occurrence under the retail prefork fixture and compare the exact retained gap set.
+- [ ] Apply later retail registers in chronological order; retain queued 5.4.1, 5.4.2 and 5.4.7 placeholders before 5.4.8.
+- [ ] Reproduce pinned sources without changing older extracts/registers.
+- [ ] Preserve all removal consumer scans and account for every prose/enum occurrence without claiming publication proves semantics.
+
+## How it works
+
+- [Shared sweep](../../tests/common/publication_sweep.rs).
+- [Validator portability](../wiki/investigations/patch-audit-validator-portability.md).
+
+## Implementation inventory
+
+- `tests/patch_5_4_0_publication_sweep.rs`: occurrence probes and later retail registers.
+- `tests/data/patch_5_4_0_sweep_known_gaps.json`: exact known gap identities.
+- `tools/gen_patch_wikitext_register.py`: opt-in reused Mists inventory parser and summary/diff flags.
+- `tools/extract_patch_non_inventory.py`: opt-in source markup and copied Mists inventory stripping.
+
+## Tests asserting this spec
+
+- `tests/patch_5_4_0_publication_sweep.rs`.
+- `tools/test_patch_mists_register.py`, `tools/test_patch_mists_extract.py`.
+
+## Known gaps (current cycle)
+
+- [ ] Discovery and contract accounting pending.
+
+## Out of scope
+
+Classic 5.5.x; inferred historical behavior; full integration suite; vendor changes; shims to manufacture publication.
