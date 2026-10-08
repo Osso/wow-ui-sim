@@ -1,0 +1,14 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p703-page/data/patch-api/evidence/7.0.3-session-2026-10-08/integrated/validate.py"
+  ],
+  "revision": "98bce04c171e4fc2d45b342c4013cf555b87fc8d",
+  "exit": 0,
+  "log": "final-validation.txt",
+  "log_sha256": "f29a16d7a6a3bf4e8aa1215aa9931705325c2f28db2279bfbb59640916ef765b",
+  "validator_sha256": "b426e66dc6682d26e2d0767b0952ba5317eda297ca4d66c8333509909a6f56f2",
+  "artifact_manifest_sha256": "f71fb031d9380164a1fd31b32a12c4b68a7cd45390eecf02aa334dc259e91748",
+  "coverage": "28 prior validators plus integrated gate; unchanged source proof from 771a7d7cc"
+}
