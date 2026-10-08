@@ -17447,8 +17447,8 @@
       "sources": [
         "tests/spell_casting.rs"
       ],
-      "remaining_count": 0,
-      "remaining_seconds": 0
+      "remaining_count": 1,
+      "remaining_seconds": 3.519
     },
     {
       "module": "spellbook",
@@ -19258,6 +19258,15 @@
       "seconds": 6.654,
       "files": [
         "tests/blizzard_player_spells_loads.rs"
+      ],
+      "shared_helpers": []
+    },
+    {
+      "module": "spell_casting",
+      "count": 1,
+      "seconds": 3.519,
+      "files": [
+        "tests/spell_casting.rs"
       ],
       "shared_helpers": []
     }
@@ -48411,7 +48420,7 @@
       "result": "passed",
       "failure": null,
       "class": "ADAPT",
-      "status": "prefork",
+      "status": "integration",
       "reason": "Standard full Game UI; retain only post-event workarounds/timer-tick settlement after fork. Preserve shared helper for bare and remaining integration users.",
       "fixture_sources": [
         "tests/spell_casting.rs"
@@ -48427,7 +48436,8 @@
           "function": "env_with_blizzard_ui_from",
           "line": 144
         }
-      ]
+      ],
+      "deferred_reason": "Original master 102fb5088 passes with the manual spell_casting startup fixture. Completed preload_full_game_ui fails the unchanged unlocked-parent assertion (expected BottomManagedFrameContainer). This case observes the partial login/edit-mode startup boundary, not just Game publication; retain the original addon/event/workaround sequence rather than resetting the parent after fork."
     },
     {
       "name": "spell_casting::cast_bar_times_are_in_milliseconds",
@@ -56918,11 +56928,12 @@
         "spell_casting",
         "unit_cast_durations"
       ],
-      "migrated_count": 28,
-      "migrated_seconds": 208.954,
+      "migrated_count": 27,
+      "migrated_seconds": 205.435,
       "prefork_result": "Pending targeted verification; commands and logs in /tmp/prefork-batch3-jobs.json.",
       "deferred": [
-        "blizzard_player_spells_loads::mainline_spellbook_keybind_opens_and_closes_without_runtime_errors"
+        "blizzard_player_spells_loads::mainline_spellbook_keybind_opens_and_closes_without_runtime_errors",
+        "spell_casting::cast_bar_respects_edit_mode_lock_setting_after_startup_fix"
       ]
     }
   ]

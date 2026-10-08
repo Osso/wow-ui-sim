@@ -135,14 +135,12 @@ fn instant_spell_does_not_show_cast_bar() {
 }
 
 /// Load all Blizzard addons and fire startup events.
-#[cfg(not(feature = "client-retail"))]
 pub(crate) fn env_with_full_blizzard_ui() -> WowLuaEnv {
     let ui = wow_ui_sim::paths::default_blizzard_ui_addons_path()
         .expect("Blizzard UI cache should be available for cached full UI tests");
     env_with_blizzard_ui_from(ui)
 }
 
-#[cfg(not(feature = "client-retail"))]
 fn env_with_blizzard_ui_from(ui: std::path::PathBuf) -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("create env");
     env.set_screen_size(1024.0, 768.0);
@@ -161,7 +159,6 @@ fn env_with_blizzard_ui_from(ui: std::path::PathBuf) -> WowLuaEnv {
     env
 }
 
-#[cfg(not(feature = "client-retail"))]
 fn fire_startup_events(env: &WowLuaEnv) {
     common::fire_addon_loaded(env, "WoWUISim");
     for ev in ["VARIABLES_LOADED", "PLAYER_LOGIN"] {
@@ -390,9 +387,10 @@ fn cast_bar_visible_during_cast() {
     cast_bar_visible_during_cast::run(&env);
 }
 
-prefork_full_ui_case! {
-fn cast_bar_respects_edit_mode_lock_setting_after_startup_fix(env: &WowLuaEnv) {
-
+#[test]
+fn cast_bar_respects_edit_mode_lock_setting_after_startup_fix() {
+    test_timeout! {
+        let env = env_with_full_blizzard_ui();
 
         let (lock_value, attached_after_post_event, parent_after_post_event): (i64, bool, String) = env
             .eval(
@@ -471,15 +469,7 @@ fn cast_bar_respects_edit_mode_lock_setting_after_startup_fix(env: &WowLuaEnv) {
             "locked cast-bar edit-mode anchor path should attach to PlayerFrame"
         );
         assert_eq!(parent_after_cast_anchor, "PlayerFrame");
-
-}
-}
-
-#[cfg(not(feature = "client-retail"))]
-#[test]
-fn cast_bar_respects_edit_mode_lock_setting_after_startup_fix() {
-    let env = env_with_full_blizzard_ui();
-    cast_bar_respects_edit_mode_lock_setting_after_startup_fix::run(&env);
+    }
 }
 
 #[test]
