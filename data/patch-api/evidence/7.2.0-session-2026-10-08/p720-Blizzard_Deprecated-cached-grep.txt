@@ -1,0 +1,24 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedLFG/Blizzard_DeprecatedLFG.toc:1:## Title: Blizzard_Deprecated LFG
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedSoundScript/Blizzard_DeprecatedSoundScript.toc:1:## Title: Blizzard_Deprecated Sound Script
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedTradeInfo/Blizzard_DeprecatedTradeInfo.toc:1:## Title: Blizzard_Deprecated Trade Info
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedItemSocketInfo/Blizzard_DeprecatedItemSocketInfo.toc:1:## Title: Blizzard_Deprecated Item Socket Info
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedChatInfo/Blizzard_DeprecatedChatInfo.toc:1:## Title: Blizzard_Deprecated Chat Info
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedAutoComplete/Blizzard_DeprecatedAutoComplete.toc:1:## Title: Blizzard_Deprecated Auto Complete
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedPvpScript/Blizzard_DeprecatedPvpScript.toc:1:## Title: Blizzard_Deprecated Pvp Script
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedPetInfo/Blizzard_DeprecatedPetInfo.toc:1:## Title: Blizzard_Deprecated PetInfo
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedActionBar/Blizzard_DeprecatedActionBar.toc:1:## Title: Blizzard_Deprecated Action Bar APIs
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedSpellBook/Blizzard_DeprecatedSpellBook.toc:1:## Title: Blizzard_Deprecated Spell Book
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedSpellScript/Blizzard_DeprecatedSpellScript.toc:1:## Title: Blizzard_Deprecated Spell Script
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Settings_Shared/Blizzard_Settings_Shared.toc:25:Blizzard_Deprecated.lua
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/Blizzard_Deprecated.toc:1:## Title: Blizzard_Deprecated
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedInstanceEncounter/Blizzard_DeprecatedInstanceEncounter.toc:1:## Title: Blizzard_Deprecated Instance Encounter APIs
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedItemScript/Blizzard_DeprecatedItemScript.toc:1:## Title: Blizzard_Deprecated Item Script
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedGlue/Blizzard_DeprecatedGlue.toc:1:## Title: Blizzard_Deprecated Glue
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedGuildScript/Blizzard_DeprecatedGuildScript.toc:1:## Title: Blizzard_Deprecated Guild Script
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedWorldElapsedTimerTypes/Blizzard_DeprecatedWorldElapsedTimerTypes.toc:1:## Title: Blizzard_Deprecated World elapsed timer types
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedBattleNet/Blizzard_DeprecatedBattleNet.toc:1:## Title: Blizzard_Deprecated Battle.net APIs
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedCurrencyScript/Blizzard_DeprecatedCurrencyScript.toc:1:## Title: Blizzard_Deprecated Currency Script
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedAuraFilters/Blizzard_DeprecatedAuraFilters.toc:1:## Title: Blizzard_Deprecated AuraFilters
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedUnitScript/Blizzard_DeprecatedUnitScript.toc:1:## Title: Blizzard_Deprecated Unit Script
+
+STDERR:

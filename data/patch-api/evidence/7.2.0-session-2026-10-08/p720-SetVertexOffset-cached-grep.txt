@@ -1,0 +1,15 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXMLBase/PowerDependencyLine.lua:200:function PowerDependencyLineMixin:SetVertexOffset(vertexIndex, x, y)
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXMLBase/PowerDependencyLine.lua:201:	self.Fill:SetVertexOffset(vertexIndex, x, y);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXMLBase/PowerDependencyLine.lua:202:	self.Background:SetVertexOffset(vertexIndex, x, y);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXMLBase/PowerDependencyLine.lua:203:	self.FillScroll1:SetVertexOffset(vertexIndex, x, y);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXMLBase/PowerDependencyLine.lua:205:		self.FillScroll2:SetVertexOffset(vertexIndex, x, y);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ArtifactUI/Blizzard_ArtifactPerks.lua:568:			previousLineContainer:SetVertexOffset(UPPER_LEFT_VERTEX, fromPoint.x + thickness.x + 1, -1 - (fromPoint.y + thickness.y));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ArtifactUI/Blizzard_ArtifactPerks.lua:569:			previousLineContainer:SetVertexOffset(LOWER_LEFT_VERTEX, fromPoint.x - thickness.x + 1, 1 - (fromPoint.y - thickness.y));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ArtifactUI/Blizzard_ArtifactPerks.lua:571:			lineContainer:SetVertexOffset(UPPER_RIGHT_VERTEX, fromPoint.x + thickness.x - 1, -1 - (fromPoint.y + thickness.y));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ArtifactUI/Blizzard_ArtifactPerks.lua:572:			lineContainer:SetVertexOffset(LOWER_RIGHT_VERTEX, fromPoint.x - thickness.x - 1, 1 - (fromPoint.y - thickness.y));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ArtifactUI/Blizzard_ArtifactPerks.lua:576:				lineContainer:SetVertexOffset(UPPER_LEFT_VERTEX, toPoint.x + thickness.x + 1, -1 - (toPoint.y + thickness.y));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ArtifactUI/Blizzard_ArtifactPerks.lua:577:				lineContainer:SetVertexOffset(LOWER_LEFT_VERTEX, toPoint.x - thickness.x + 1, 1 - (toPoint.y - thickness.y));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ArtifactUI/Blizzard_ArtifactPerks.lua:581:			lineContainer:SetVertexOffset(UPPER_RIGHT_VERTEX, fromPoint.x + thickness.x - 1, -1 - (fromPoint.y + thickness.y));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ArtifactUI/Blizzard_ArtifactPerks.lua:582:			lineContainer:SetVertexOffset(LOWER_RIGHT_VERTEX, fromPoint.x - thickness.x - 1, 1 - (fromPoint.y - thickness.y));
+
+STDERR:

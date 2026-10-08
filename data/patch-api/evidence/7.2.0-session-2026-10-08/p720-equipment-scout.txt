@@ -1,0 +1,70 @@
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/c_api/item_spell/c_equipment_set.rs:1://! `C_EquipmentSet` namespace — the saved-loadout API consumed by
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/c_api/item_spell/c_equipment_set.rs:61:    let table_ref = ensure_namespace(state, "C_EquipmentSet")?;
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/lua_api/state_types/character_world.rs:729:/// A saved equipment ("gear") set surfaced through `C_EquipmentSet`.
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/lua_api/state_types/character_world.rs:763:/// Equipment-manager scratchpad backing the full `C_EquipmentSet`
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/lua_api/hot_literals.rs:137:    b"C_EquipmentSet",
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/lua_api/workarounds/temporary/equipment_set_lock_defaults.rs:8:C_EquipmentSet = C_EquipmentSet or __wow_namespace()
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/lua_api/workarounds/temporary/equipment_set_lock_defaults.rs:9:if rawget(C_EquipmentSet, "EquipmentSetContainsLockedItems") == nil then
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/lua_api/workarounds/temporary/equipment_set_lock_defaults.rs:10:    function C_EquipmentSet.EquipmentSetContainsLockedItems(_setID)
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/lua_api/workarounds/temporary/equipment_set_lock_defaults.rs:30:            .eval("return C_EquipmentSet.EquipmentSetContainsLockedItems(1)")
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/lua_api/workarounds/temporary/equipment_set_lock_defaults.rs:41:            function C_EquipmentSet.EquipmentSetContainsLockedItems()
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/lua_api/workarounds/temporary/equipment_set_lock_defaults.rs:51:            .eval("return C_EquipmentSet.EquipmentSetContainsLockedItems(1)")
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:1://! C_EquipmentSet coverage extracted from `wow_api.rs`.
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:9:        .eval("return type(C_EquipmentSet.GetEquipmentSetIDs())")
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:36:        let expr = format!("return type(C_EquipmentSet.{fn_name})");
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:38:        assert_eq!(ty, "function", "C_EquipmentSet.{fn_name} should exist");
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:46:        .eval("return C_EquipmentSet.GetNumEquipmentSets()")
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:53:            C_EquipmentSet.CreateEquipmentSet("Tank", "Interface\\Icons\\INV_Misc_QuestionMark")
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:54:            return C_EquipmentSet.GetEquipmentSetID("Tank")
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:61:        .eval("return C_EquipmentSet.GetNumEquipmentSets()")
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:66:        .eval("return #C_EquipmentSet.GetEquipmentSetIDs()")
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:72:            "return (C_EquipmentSet.GetEquipmentSetInfo(C_EquipmentSet.GetEquipmentSetID('Tank')))",
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:84:        C_EquipmentSet.CreateEquipmentSet("Heal", "Interface\\Icons\\Spell_Holy_Heal")
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:85:        local id = C_EquipmentSet.GetEquipmentSetID("Heal")
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:86:        C_EquipmentSet.ModifyEquipmentSet(id, "Holy", "Interface\\Icons\\Spell_Holy_HolyBolt")
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:92:        .eval("return C_EquipmentSet.GetEquipmentSetID('Heal') == nil and C_EquipmentSet.GetEquipmentSetID('Holy') ~= nil")
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:99:        local id = C_EquipmentSet.GetEquipmentSetID("Holy")
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:100:        C_EquipmentSet.DeleteEquipmentSet(id)
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:106:        .eval("return C_EquipmentSet.GetNumEquipmentSets()")
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:117:            C_EquipmentSet.CreateEquipmentSet("DPS", nil)
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:118:            local id = C_EquipmentSet.GetEquipmentSetID("DPS")
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:119:            C_EquipmentSet.AssignSpecToEquipmentSet(id, 2)
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:120:            return C_EquipmentSet.GetEquipmentSetAssignedSpec(id) or -1
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:127:        .eval("return C_EquipmentSet.GetEquipmentSetForSpec(2) or -1")
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:134:            local id = C_EquipmentSet.GetEquipmentSetID("DPS")
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:135:            C_EquipmentSet.UnassignEquipmentSetSpec(id)
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:136:            return C_EquipmentSet.GetEquipmentSetAssignedSpec(id) or -1
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:149:            C_EquipmentSet.ClearIgnoredSlotsForSave()
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:150:            C_EquipmentSet.IgnoreSlotForSave(5)
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:151:            return C_EquipmentSet.IsSlotIgnoredForSave(5)
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:160:            C_EquipmentSet.UnignoreSlotForSave(5)
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:161:            return C_EquipmentSet.IsSlotIgnoredForSave(5)
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:170:            C_EquipmentSet.CreateEquipmentSet("Mixed", nil)
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:171:            local id = C_EquipmentSet.GetEquipmentSetID("Mixed")
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:172:            C_EquipmentSet.IgnoreSlotForSave(7)
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:173:            C_EquipmentSet.SaveEquipmentSet(id)
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:174:            local t = C_EquipmentSet.GetIgnoredSlots(id)
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:191:            C_EquipmentSet.CreateEquipmentSet("Active", nil)
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:192:            local id = C_EquipmentSet.GetEquipmentSetID("Active")
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:193:            C_EquipmentSet.UseEquipmentSet(id)
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:194:            local _, _, _, isEquipped = C_EquipmentSet.GetEquipmentSetInfo(id)
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_equipment_set.rs:212:            C_EquipmentSet.CreateEquipmentSet("EventTest", nil)
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/equipment_set_command.rs:105:        C_EquipmentSet.ModifyEquipmentSet(71, 'New Gear')
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/equipment_set_command.rs:110:        C_EquipmentSet.DeleteEquipmentSet(71)
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/mists_character_panel.rs:365:            C_EquipmentSet.CreateEquipmentSet(setName, "Interface\\Icons\\INV_Misc_QuestionMark")
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/mists_character_panel.rs:366:            local setID = C_EquipmentSet.GetEquipmentSetID(setName)
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/mists_character_panel.rs:388:            local _, _, _, isEquipped = C_EquipmentSet.GetEquipmentSetInfo(setID)
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/mists_character_panel.rs:393:            C_EquipmentSet.IgnoreSlotForSave(1)
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/mists_character_panel.rs:394:            if not C_EquipmentSet.IsSlotIgnoredForSave(1) then
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/c_item_api.rs:16:        .eval("return C_EquipmentSet.GetNumEquipmentSets()")
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/c_item_api.rs:26:            "C_EquipmentSet.CreateEquipmentSet('Default Gear', '12345'); \
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/c_item_api.rs:27:             local setID = C_EquipmentSet.GetEquipmentSetID('Default Gear'); \
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/c_item_api.rs:28:             return C_EquipmentSet.GetEquipmentSetInfo(setID)",
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/c_item_api.rs:43:            "C_EquipmentSet.CreateEquipmentSet('Default Gear', ''); \
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/c_item_api.rs:44:             local setID = C_EquipmentSet.GetEquipmentSetID('Default Gear'); \
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/c_item_api.rs:46:             C_EquipmentSet.UseEquipmentSet(setID); \
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/c_item_api.rs:58:            "C_EquipmentSet.CreateEquipmentSet('Default Gear', ''); \
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/c_item_api.rs:59:             local setID = C_EquipmentSet.GetEquipmentSetID('Default Gear'); \
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/c_item_api.rs:60:             return C_EquipmentSet.EquipmentSetContainsLockedItems(setID)",
+
+STDERR:

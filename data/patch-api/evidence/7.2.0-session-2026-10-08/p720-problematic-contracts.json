@@ -1,0 +1,18 @@
+[
+  {
+    "source_id": "prose-undated-006",
+    "reason": "SetVertexOffset stores independent concrete corner offsets with readback; complete grep finds only setters/getters/default storage, no renderer consumer. Visual quad deformation remains unimplemented; no shim or vendor override added."
+  },
+  {
+    "source_id": "prose-undated-010",
+    "reason": "Existing C_EquipmentSet backing state supports create, rename, specialization assignment and delete in cached UI. Page gives no old-member catalog or exact deprecated-wrapper contract; historical Lua migration compatibility cannot be exhaustively established from this source. Current namespace presence is not full migration parity."
+  },
+  {
+    "source_id": "prose-undated-014",
+    "reason": "Voice chat is a domain-level removal summary without any named API member, signature or scope. Current voice systems also appear in later registers; no unspecified member retirement inferred or current consumer disabled."
+  },
+  {
+    "source_id": "prose-undated-015",
+    "reason": "Mac movie recording is a domain-level removal summary without any named API member or platform contract. No macOS recording backing system/native probe is available; no guessed member retirement or fake implementation added."
+  }
+]

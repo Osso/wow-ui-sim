@@ -1,0 +1,34 @@
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/xml/types_elements.rs:35:            LayerElement::MaskTexture(t) => Some((t, true, false)),
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/xml/types_elements.rs:56:    MaskTexture(TextureXml),
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/xml/types_elements.rs:184:/// Container for MaskedTexture entries inside a MaskTexture element.
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/xml/mod.rs:210:                            <MaskTexture parentKey="CircleMask">
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/xml/mod.rs:216:                            </MaskTexture>
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/xml/mod.rs:230:            LayerElement::MaskTexture(mask) => mask,
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/self_test.rs:397:        MaskTexture = function() return augment_parent:CreateMaskTexture() end,
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/lua_api/frame/methods/button_anchor_hierarchy/hierarchy.rs:544:    texture.object_type_name = Some("MaskTexture".to_string());
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/lua_api/frame/methods/widgets/texture/rotation_mask.rs:70:    mask.object_type_name = Some("MaskTexture".to_string());
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/lua_api/frame/methods/widgets/texture/mod.rs:157:    ("SetVertexOffset", coords::set_vertex_offset),
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/lua_api/globals/create_frame/template_chain/runtime.rs:294:        | crate::xml::LayerElement::MaskTexture(texture) => {
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/lua_api/globals/template/elements/texture.rs:164:        child.object_type_name = Some("MaskTexture".to_string());
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/lua_api/globals/template/elements/texture/codegen.rs:386:            crate::xml::LayerElement::MaskTexture(t) => Some(t),
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/lua_api/globals/template/elements/texture/codegen.rs:448:                            <MaskTexture name="ParentFrameMask" hidden="true">
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/lua_api/globals/template/elements/texture/codegen.rs:452:                            </MaskTexture>
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/lua_api/globals/template/elements/texture/codegen.rs:463:                    crate::xml::LayerElement::MaskTexture(texture) => texture.clone(),
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/lua_api/globals/template/layers.rs:96:        LayerElement::MaskTexture(texture) => create_texture_layer(ctx, texture, true, false),
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/xml_layer_batch.rs:58:        xml::LayerElement::MaskTexture(t) => (t, true, false),
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/widget/frame.rs:343:    /// Whether this texture is a MaskTexture (should not render).
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/widget/frame.rs:583:    /// Per-vertex offset overrides set by SetVertexOffset.
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_hybrid_minimap_loads.rs:309:        "HybridMinimap.CircleMask must publish as a parentKey MaskTexture (OVERLAY layer, \
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/methods_texture/masks_and_misc.rs:59:        "named MaskTexture regions should publish globals"
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_ui/blizzard_ardenweald_gardening/surface_frames.rs:240:        "the XML MaskTexture has no `parentKey`, so `button.Mask` must stay nil"
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_ui/blizzard_ardenweald_gardening/surface_frames.rs:251:        mask_type, "MaskTexture",
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_ui/blizzard_ardenweald_gardening/surface_frames.rs:252:        "attached mask must be a MaskTexture"
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/texture_methods_port.rs:355:// 10 + 11 + 12. SetVertexOffset / GetVertexOffset / ClearVertexOffsets
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/texture_methods_port.rs:365:            tex:SetVertexOffset(1, 3.5, -2.0)
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/texture_methods_port.rs:395:            tex:SetVertexOffset(3, 10.0, 20.0)
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/texture_methods_port.rs:411:            tex:SetVertexOffset(1,  1,  2)
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/texture_methods_port.rs:412:            tex:SetVertexOffset(2,  3,  4)
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/texture_methods_port.rs:413:            tex:SetVertexOffset(3,  5,  6)
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/texture_methods_port.rs:414:            tex:SetVertexOffset(4,  7,  8)
+
+STDERR:

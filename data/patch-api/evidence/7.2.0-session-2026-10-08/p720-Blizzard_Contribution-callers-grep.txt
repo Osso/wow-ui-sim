@@ -1,0 +1,23 @@
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_contribution_loads.rs:18:    blizzard_ui_dir().join("Blizzard_Contribution/Blizzard_Contribution.toc")
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_contribution_loads.rs:48:        TocFile::from_file(&contribution_toc()).expect("Blizzard_Contribution TOC should parse");
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_contribution_loads.rs:51:        "Blizzard_Contribution declares `## LoadOnDemand: 1` (the contribution-table panel is \
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_contribution_loads.rs:57:        "Blizzard_Contribution does not declare UseSecureEnvironment"
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_contribution_loads.rs:66:        .any(|(name, _)| name == "Blizzard_Contribution");
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_contribution_loads.rs:69:        "Blizzard_Contribution is `## LoadOnDemand: 1`, so it must NOT appear in Game-screen \
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_contribution_loads.rs:86:        .expect("Blizzard_Contribution should load via Rust loader");
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_contribution_loads.rs:91:        "Blizzard_Contribution emitted Lua errors during explicit load:\n  {}",
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_contribution_loads.rs:100:        .expect("Blizzard_Contribution should load via Rust loader");
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_contribution_loads.rs:112:        "Blizzard_Contribution should define both top-level frames after load: \
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_contribution_loads.rs:124:        .expect("Blizzard_Contribution should load via Rust loader");
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_contribution_loads.rs:137:        "Blizzard_Contribution.lua line 1 sets `UIPanelWindows['ContributionCollectionFrame'] = \
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_contribution_loads.rs:147:        .expect("Blizzard_Contribution should load via Rust loader");
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_contribution_loads.rs:181:        .expect("Blizzard_Contribution should load via Rust loader");
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_contribution_loads.rs:222:        "Blizzard_Contribution.lua should define its 5 secondary mixins: ContributionMixin (13 \
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_contribution_loads.rs:235:        .expect("Blizzard_Contribution should load via Rust loader");
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_contribution_loads.rs:245:            "{template_name} (`<Frame virtual=\"true\">` from Blizzard_Contribution.xml) should \
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_contribution_loads.rs:246:             be registered in the template registry after Blizzard_Contribution loads"
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/addon_coverage_lod.rs:576:                    .eval("return C_AddOns.LoadAddOn(\"Blizzard_Contribution\")")
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/addon_coverage_lod.rs:577:                    .expect("Blizzard_Contribution load should return");
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/addon_coverage_lod.rs:583:                    "Blizzard_Contribution should load after startup; collector_type={collector_type}, close_type={close_type}, reason={reason:?}, errors=\n{}",
+
+STDERR:

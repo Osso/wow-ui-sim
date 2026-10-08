@@ -1,0 +1,7 @@
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/lua_api/frame/methods/widgets/texture/coords.rs:342:        let offsets = frame.vertex_offsets.get_or_insert([(0.0, 0.0); 4]);
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/lua_api/frame/methods/widgets/texture/coords.rs:366:        .and_then(|frame| frame.vertex_offsets)
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/lua_api/frame/methods/widgets/texture/coords.rs:378:        frame.vertex_offsets = None;
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/widget/frame.rs:586:    pub vertex_offsets: Option<[(f32, f32); 4]>,
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/widget/frame_defaults.rs:297:            vertex_offsets: None,
+
+STDERR:

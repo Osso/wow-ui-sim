@@ -1,0 +1,4 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Contribution/Blizzard_Contribution.toc:4:Blizzard_Contribution.xml
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Contribution/Blizzard_Contribution.xml:3:	<Script file="Blizzard_Contribution.lua"/>
+
+STDERR:

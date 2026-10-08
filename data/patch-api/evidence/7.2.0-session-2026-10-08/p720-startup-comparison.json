@@ -1,0 +1,13 @@
+{
+  "branch_errors": [],
+  "branch_log": "data/patch-api/evidence/7.2.0-session-2026-10-08/p720-startup.log",
+  "branch_log_sha256": "adffa083ac6bed72e427001ad1e4e22c90930a09a8b9eebc2410c7f4e43cca12",
+  "master_errors": [],
+  "master_log": "data/patch-api/evidence/7.2.0-session-2026-10-08/p720-master-startup.log",
+  "master_log_sha256": "578cda9877cfab88041eadfaefb26be790904c51f2be9a5f78b3d0a594c20715",
+  "master_revision": "1ade15b526f897e33c588409b64d8799d6942fa1",
+  "branch_revision": "8ae333df454e4f0d5d4bf08cd9e6b9d90f270da7",
+  "addons_enabled": true,
+  "ambient_addon_disable": null,
+  "note": "Both separately built binaries executed with addons enabled and --no-saved-vars. Master built from fixed Git archive in owned target; error arrays exactly match. Runtime src/Cargo/build/Interface/manifests unchanged."
+}

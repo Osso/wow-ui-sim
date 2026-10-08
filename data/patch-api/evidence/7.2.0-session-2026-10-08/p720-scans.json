@@ -1,0 +1,212 @@
+[
+  {
+    "scanner": "grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "--exclude-dir=*Documentation*",
+      "MaskTexture",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 0,
+    "output": "p720-MaskTexture-cached-grep.txt",
+    "sha256": "b9812108c617889413ba77055ce48131a395b19ce4420c0ec6772d729bae6a76",
+    "matches": 535
+  },
+  {
+    "scanner": "grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "--exclude-dir=*Documentation*",
+      "MaskTexture",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/tests"
+    ],
+    "exit": 0,
+    "output": "p720-MaskTexture-callers-grep.txt",
+    "sha256": "bfcc1250166bdd72d379a182f2bf698194b9405ee697bb5e4e94bb90a3fe1169",
+    "matches": 23
+  },
+  {
+    "scanner": "grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "--exclude-dir=*Documentation*",
+      "SetVertexOffset",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 0,
+    "output": "p720-SetVertexOffset-cached-grep.txt",
+    "sha256": "9d983029c74459c9c1964ea191e3ccf909e72d0a3552552b371ad9a0ab73cb6d",
+    "matches": 13
+  },
+  {
+    "scanner": "grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "--exclude-dir=*Documentation*",
+      "SetVertexOffset",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/tests"
+    ],
+    "exit": 0,
+    "output": "p720-SetVertexOffset-callers-grep.txt",
+    "sha256": "030faabed18ac53a03c676f9202a9549fb35cec77f1b551396916c1a4cf5bcc4",
+    "matches": 9
+  },
+  {
+    "scanner": "grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "--exclude-dir=*Documentation*",
+      "C_EquipmentSet",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 0,
+    "output": "p720-C_EquipmentSet-cached-grep.txt",
+    "sha256": "0c91cd5654e61cbaeba2661102b5f76759dcf28310cbb02c0587ffec961e7514",
+    "matches": 36
+  },
+  {
+    "scanner": "grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "--exclude-dir=*Documentation*",
+      "C_EquipmentSet",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/tests"
+    ],
+    "exit": 0,
+    "output": "p720-C_EquipmentSet-callers-grep.txt",
+    "sha256": "a410e7ad5411d615b5796a81fb7bae861858be545e4d021e2c6731c899df39fd",
+    "matches": 68
+  },
+  {
+    "scanner": "grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "--exclude-dir=*Documentation*",
+      "Blizzard_APIDocumentation",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 1,
+    "output": "p720-Blizzard_APIDocumentation-cached-grep.txt",
+    "sha256": "abc30023955fb1415cb6df613a2f287897377fa4b0a607d322483e2bd51a91d1",
+    "matches": 0
+  },
+  {
+    "scanner": "grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "--exclude-dir=*Documentation*",
+      "Blizzard_APIDocumentation",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/tests"
+    ],
+    "exit": 0,
+    "output": "p720-Blizzard_APIDocumentation-callers-grep.txt",
+    "sha256": "018fb41c1203e99447e2014878e21685cacf3eadcace9dbadbf84d08b1f58eca",
+    "matches": 31
+  },
+  {
+    "scanner": "grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "--exclude-dir=*Documentation*",
+      "Blizzard_Contribution",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 0,
+    "output": "p720-Blizzard_Contribution-cached-grep.txt",
+    "sha256": "3a51e29cb0ffc9c968f55ddf9e871ad41aec886c5859344d3a104d1cd3339936",
+    "matches": 2
+  },
+  {
+    "scanner": "grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "--exclude-dir=*Documentation*",
+      "Blizzard_Contribution",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/tests"
+    ],
+    "exit": 0,
+    "output": "p720-Blizzard_Contribution-callers-grep.txt",
+    "sha256": "8deff2d0547c31d183b165f6b14678d1ff6bcc5d9897d5334ae2f93caf2b7921",
+    "matches": 21
+  },
+  {
+    "scanner": "grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "--exclude-dir=*Documentation*",
+      "Blizzard_Deprecated",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 0,
+    "output": "p720-Blizzard_Deprecated-cached-grep.txt",
+    "sha256": "30df257414415181e3391788a8445fee83b61e86c351b4bd95e06f6247797bd4",
+    "matches": 22
+  },
+  {
+    "scanner": "grep",
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "--exclude-dir=*Documentation*",
+      "Blizzard_Deprecated",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/tests"
+    ],
+    "exit": 0,
+    "output": "p720-Blizzard_Deprecated-callers-grep.txt",
+    "sha256": "36a7af2d070627553fee20bcc8b8e5364124f5f43e18df7f0dad41ea846fc539",
+    "matches": 38
+  }
+]

@@ -1,0 +1,66 @@
+# WoW UI Simulator
+## Important Rules
+## Development build/run
+## Debugging Priorities
+## Wiki
+### Wiki Maintenance
+## Architecture Docs
+## C API Boundary
+## Docker
+### GitHub Action
+### Docker
+# Run addon tests
+# Run with all Blizzard addons loaded
+### Building Locally
+## Addon Directories
+## WoW Game Files
+## Reference Implementations
+## Rendering Order
+### Method/Property Lookup on UserData
+### UserData vs Table: rawset/rawget
+## Lua + Rust Architecture
+### Rust Side (rendering)
+### Lua Side (WoW API)
+### How They Connect
+### Automatic Sync via `__newindex`
+### XML Script Inheritance (`inherit="prepend"` / `inherit="append"`)
+## Taint System
+### What rilua provides (native, in `/home/osso/Repos/rilua/src/stdlib/taint.rs`)
+### What the simulator provides
+### Per-addon taint stamping
+### What is NOT enforced
+## Intentional Gaps
+## Client Profiles
+### Where stubs go
+### The cfg(any) refactor signal
+### When NOT to add per-profile code
+### Vendor pinning
+## Performance
+### Rilua Hot Paths
+### Running the Simulator
+# Step 1: Build (no timeout — let it finish)
+# Step 2: Run (with timeout — prevents hung processes)
+### Release Builds
+### CLI Arguments
+### Environment Variables
+### Timing Breakdown
+### Bilinear Atlas Bleed
+### Frame Re-creation and Orphaned Children
+### Button Texture Rendering
+### ThreeSliceButtonTemplate
+### Dump Limitations
+## CLI Tools
+### Lua Errors
+### Self-Test (Wowless Suite)
+### Rust Tests
+### Run Tests (Addon Test Runner)
+### Screenshot
+### Dump Frame Tree
+### Lua REPL
+### Dump Frame Tree (Connected)
+### Audit API Gaps → PLAN.md
+## Textures
+### Texture Sources (in order of priority)
+### Texture Path Resolution
+### Verifying CASC lookups
+### Button Textures

@@ -1,0 +1,8 @@
+{
+  "removed_inventory_members": [],
+  "new_retirements": [],
+  "reason": "The source contains only domain-level Voice chat / Mac movie recording removals, no named members. Equipment migration explicitly keeps old APIs through Blizzard_Deprecated; no member retirement inferred. Named identities remain in current consumers.",
+  "scans": "p720-scans.json",
+  "caller_scan_note": "Untruncated /usr/bin/grep -R -n -w -F; bare-name matches include pcall(Name, ...) and and Name then without syntax filtering. Cached scans exclude *Documentation*.",
+  "later_registers": "p720-later-register-scan.json"
+}

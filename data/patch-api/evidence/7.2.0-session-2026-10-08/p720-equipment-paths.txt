@@ -1,0 +1,10 @@
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/c_api/equipment_set_command.rs:1://! Bounded /equipset name dispatch into the existing equipment manager.
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/c_api/c_transmog_outfit_info/visuals.rs:1://! Retail visual-table and item-eligibility successors backed by outfit/equipment state.
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/c_api/c_cursor.rs:44:/// resolves to an `ItemLocation` (bag-slot or equipment-slot). Merchant and
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/c_api/container_inventory.rs:1://! Shared bag/cursor/equipment transfers for C_Container and legacy globals.
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/c_api/c_azerite_empowered_item.rs:220:/// resolved to an item id (no shape match, or the bag/equipment lookup
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/c_api/c_azerite_empowered_item.rs:256:/// equipment-slot variants.
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/c_api/item_spell/c_equipment_set.rs:296:    // Cursor pickup of equipment sets is a hot-bar drag interaction
+
+STDERR:
+/usr/bin/grep: /home/osso/.worktrees/wow-ui-sim-p720-page/src/game: No such file or directory

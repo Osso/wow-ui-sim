@@ -1,0 +1,33 @@
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/lua_api/state/support_types/adventure_map.rs:356:/// `Blizzard_APIDocumentation.lua:81`). `cursor_position` is the
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_ui/blizzard_apidocumentation_generated/load.rs:13:const DEPENDENCY: &str = "Blizzard_APIDocumentation";
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_ui/blizzard_apidocumentation_generated/load.rs:125:                    C_AddOns.IsAddOnLoaded("Blizzard_APIDocumentation") == true
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_ui/blizzard_apidocumentation_generated/load.rs:140:        .expect("generated documentation closure must include Blizzard_APIDocumentation");
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_ui/blizzard_apidocumentation_generated/behavior_dependency_loads_first.rs:11:const DEPENDENCY: &str = "Blizzard_APIDocumentation";
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_ui/blizzard_apidocumentation_generated/behavior_dependency_loads_first.rs:38:            return C_AddOns.IsAddOnLoaded("Blizzard_APIDocumentation") == true,
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_ui/blizzard_apidocumentation_generated/behavior_dependency_loads_first.rs:90:                    C_AddOns.IsAddOnLoaded("Blizzard_APIDocumentation") == true
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_ui/blizzard_apidocumentation_generated/behavior_dependency_loads_first.rs:105:        .expect("generated documentation closure must include Blizzard_APIDocumentation");
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_ui/blizzard_apidocumentation/behavior_find_api_by_name_returns_first_match_across_kinds.rs:10:const ROOT: &str = "Blizzard_APIDocumentation";
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_ui/blizzard_apidocumentation/behavior_find_all_api_matches_returns_nil_when_empty.rs:10:const ROOT: &str = "Blizzard_APIDocumentation";
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_ui/blizzard_apidocumentation/behavior_add_documentation_table_routes_payload_kinds.rs:10:const ROOT: &str = "Blizzard_APIDocumentation";
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_ui/blizzard_apidocumentation/surface_mixins.rs:1://! Mixin surface probes for `Blizzard_APIDocumentation`.
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_ui/blizzard_apidocumentation/surface_mixins.rs:10:const ROOT: &str = "Blizzard_APIDocumentation";
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_ui/blizzard_apidocumentation/behavior_write_line_uses_system_chat_color.rs:10:const ROOT: &str = "Blizzard_APIDocumentation";
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_ui/blizzard_apidocumentation/behavior_handle_slash_command_stats_writes_counts.rs:10:const ROOT: &str = "Blizzard_APIDocumentation";
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_ui/blizzard_apidocumentation/behavior_get_indent_string_returns_two_space_blocks.rs:10:const ROOT: &str = "Blizzard_APIDocumentation";
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_ui/blizzard_apidocumentation/behavior_handle_api_link_default_writes_detailed_output.rs:10:const ROOT: &str = "Blizzard_APIDocumentation";
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_ui/blizzard_apidocumentation/load.rs:1://! Load probes for `Blizzard_APIDocumentation`.
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_ui/blizzard_apidocumentation/load.rs:10:const ROOT: &str = "Blizzard_APIDocumentation";
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_ui/blizzard_apidocumentation/behavior_handle_api_link_opendump_seeds_chat_edit.rs:10:const ROOT: &str = "Blizzard_APIDocumentation";
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_ui/blizzard_apidocumentation/behavior_handle_slash_command_system_search_dispatches_to_system.rs:10:const ROOT: &str = "Blizzard_APIDocumentation";
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_ui/blizzard_apidocumentation/behavior_handle_api_link_copyapi_records_clipboard.rs:10:const ROOT: &str = "Blizzard_APIDocumentation";
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_ui/blizzard_apidocumentation/surface_globals.rs:1://! Global surface probes for `Blizzard_APIDocumentation`.
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_ui/blizzard_apidocumentation/surface_globals.rs:10:const ROOT: &str = "Blizzard_APIDocumentation";
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_ui/blizzard_apidocumentation/behavior_handle_slash_command_system_list_writes_all_systems.rs:10:const ROOT: &str = "Blizzard_APIDocumentation";
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_ui/blizzard_apidocumentation/behavior_handle_slash_command_search_writes_matches.rs:10:const ROOT: &str = "Blizzard_APIDocumentation";
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_ui/blizzard_apidocumentation/behavior_get_api_table_by_type_name_routes_kind.rs:10:const ROOT: &str = "Blizzard_APIDocumentation";
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_ui/blizzard_apidocumentation/behavior_handle_slash_command_help_writes_usage.rs:10:const ROOT: &str = "Blizzard_APIDocumentation";
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/copy_to_clipboard.rs:3://! Drives `Blizzard_APIDocumentation/Blizzard_APIDocumentation.lua`
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_ui_blizzard_apidocumentation.rs:1://! Wrapper binary for Blizzard_APIDocumentation tests.
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/chat_frame_util_open_chat.rs:2://! helper. Drives `Blizzard_APIDocumentation/Blizzard_APIDocumentation.lua`
+
+STDERR:

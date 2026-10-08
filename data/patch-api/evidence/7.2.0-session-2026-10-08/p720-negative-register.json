@@ -1,0 +1,36 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "7.2.0",
+  "source": {
+    "path": "data/patch-api/sources/7.2.0-api-changes.wikitext",
+    "revid": 6767100,
+    "sha256": "8441bd7ac745b2f839156b4e7e37a14f63f4f001649c5cecfb5110ea45db08cf"
+  },
+  "header_counts": [],
+  "entries": [
+    {
+      "id": "wt-widgets-MaskTexture-5",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "MaskTexture",
+      "annotation": "",
+      "wikitext_line": 5
+    },
+    {
+      "id": "wt-widgets-Texture:SetVertexOffset-6",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Texture:SetVertexOffset",
+      "annotation": "",
+      "wikitext_line": 6
+    },
+    {
+      "id": "wt-global-api-C_EquipmentSet-10",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "P720_NONEXISTENT_NAMESPACE",
+      "annotation": "* All equipment set related API have been moved to the new C_EquipmentSet table. The old API will still be available via Lua versions implemented in Blizzard_Deprecated.",
+      "wikitext_line": 10
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+[
+  {
+    "source_id": "source-context-001",
+    "extract_line": 1,
+    "wikitext_line": 1,
+    "literal": "Patch 7.2.0 API changes",
+    "raw_literal": "{{apichanges|7.2.0|prev=7.1.0|next=7.3.0}}",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-003",
+    "extract_line": 3,
+    "wikitext_line": 3,
+    "literal": "== New ==",
+    "raw_literal": "==New==",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-004",
+    "extract_line": 4,
+    "wikitext_line": 4,
+    "literal": "* New AddOns: Blizzard_APIDocumentation, Blizzard_Contribution, Blizzard_Deprecated",
+    "raw_literal": "* New AddOns: Blizzard_APIDocumentation, Blizzard_Contribution, Blizzard_Deprecated",
+    "status": "bounded-coverage",
+    "reason": "All three named current-retail addons load through C_AddOns; no historical 2017 addon implementation or complete documentation/contribution/deprecation parity claimed."
+  },
+  {
+    "source_id": "prose-undated-005",
+    "extract_line": 5,
+    "wikitext_line": 5,
+    "literal": "* New widget type: MaskTexture",
+    "raw_literal": "* New widget type: [[UIOBJECT MaskTexture|MaskTexture]]",
+    "status": "bounded-coverage",
+    "reason": "CreateMaskTexture returns MaskTexture; duplicate attachment stays one, retrieval returns the same object, removal clears attachment. GPU masking/native 2017 visual parity not claimed."
+  },
+  {
+    "source_id": "prose-undated-006",
+    "extract_line": 6,
+    "wikitext_line": 6,
+    "literal": "* New texture method: texture:SetVertexOffset(vertexIndex, xOffset, yOffset)",
+    "raw_literal": "* New texture method: [[API_Texture_SetVertexOffset|texture:SetVertexOffset(vertexIndex, xOffset, yOffset)]]",
+    "status": "audit-pending",
+    "reason": "SetVertexOffset stores independent concrete corner offsets with readback; complete grep finds only setters/getters/default storage, no renderer consumer. Visual quad deformation remains unimplemented; no shim or vendor override added."
+  },
+  {
+    "source_id": "source-context-009",
+    "extract_line": 9,
+    "wikitext_line": 9,
+    "literal": "== Changes ==",
+    "raw_literal": "==Changes==",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-010",
+    "extract_line": 10,
+    "wikitext_line": 10,
+    "literal": "* All equipment set related API have been moved to the new C_EquipmentSet table. The old API will still be available via Lua versions implemented in Blizzard_Deprecated.",
+    "raw_literal": "* All equipment set related API have been moved to the new C_EquipmentSet table. The old API will still be available via Lua versions implemented in Blizzard_Deprecated.",
+    "status": "audit-pending",
+    "reason": "Existing C_EquipmentSet backing state supports create, rename, specialization assignment and delete in cached UI. Page gives no old-member catalog or exact deprecated-wrapper contract; historical Lua migration compatibility cannot be exhaustively established from this source. Current namespace presence is not full migration parity."
+  },
+  {
+    "source_id": "source-context-013",
+    "extract_line": 13,
+    "wikitext_line": 13,
+    "literal": "== Removals ==",
+    "raw_literal": "==Removals==",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-014",
+    "extract_line": 14,
+    "wikitext_line": 14,
+    "literal": "* Voice chat",
+    "raw_literal": "* Voice chat",
+    "status": "audit-pending",
+    "reason": "Voice chat is a domain-level removal summary without any named API member, signature or scope. Current voice systems also appear in later registers; no unspecified member retirement inferred or current consumer disabled."
+  },
+  {
+    "source_id": "prose-undated-015",
+    "extract_line": 15,
+    "wikitext_line": 15,
+    "literal": "* Mac movie recording",
+    "raw_literal": "* Mac movie recording",
+    "status": "audit-pending",
+    "reason": "Mac movie recording is a domain-level removal summary without any named API member or platform contract. No macOS recording backing system/native probe is available; no guessed member retirement or fake implementation added."
+  },
+  {
+    "source_id": "source-context-017",
+    "extract_line": 17,
+    "wikitext_line": 17,
+    "literal": "== References ==",
+    "raw_literal": "==References==",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-018",
+    "extract_line": 18,
+    "wikitext_line": 18,
+    "literal": "[References list; not expanded]",
+    "raw_literal": "{{Reflist}}",
+    "status": "metadata-only",
+    "reason": "Unexpanded reference-list marker; page supplies no inline citations or additional runtime contract."
+  }
+]

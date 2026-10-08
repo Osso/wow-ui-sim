@@ -1,0 +1,159 @@
+{
+  "base_revision": "1ade15b526f897e33c588409b64d8799d6942fa1",
+  "runtime_revision": "8ae333df454e4f0d5d4bf08cd9e6b9d90f270da7",
+  "passing_proofs": {
+    "p720-own-green": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "patch_7_2_0"
+    ],
+    "p720-all-sweeps": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "publication_sweep"
+    ],
+    "p720-texture-regression": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "texture_methods_port::"
+    ],
+    "p720-mask-regression": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "methods_texture::masks_and_misc::"
+    ],
+    "p720-equipment-regression": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "equipment_set"
+    ],
+    "p720-equipment-lib": [
+      "cargo",
+      "test",
+      "--lib",
+      "wow_api_equipment_set::"
+    ],
+    "p720-mists-check": [
+      "cargo",
+      "check",
+      "--no-default-features",
+      "--features",
+      "sound,gui,casc,client-mists",
+      "--tests"
+    ],
+    "p720-format-check": [
+      "cargo",
+      "fmt",
+      "--check"
+    ],
+    "p720-retail-build": [
+      "cargo",
+      "build",
+      "--bin",
+      "wow-sim"
+    ],
+    "p720-startup": [
+      "timeout",
+      "90",
+      "/home/osso/.cache/wow-ui-sim-targets/p720-page/debug/wow-sim",
+      "--no-saved-vars",
+      "lua-errors"
+    ],
+    "p720-master-build": [
+      "cargo",
+      "build",
+      "--manifest-path",
+      "/home/osso/.cache/wow-ui-sim-targets/p720-page/master-source-1ade15b52/Cargo.toml",
+      "--bin",
+      "wow-sim"
+    ],
+    "p720-master-startup": [
+      "timeout",
+      "90",
+      "/home/osso/.cache/wow-ui-sim-targets/p720-page/debug/wow-sim",
+      "--no-saved-vars",
+      "lua-errors"
+    ],
+    "p720-extractor-fixtures": [
+      "python3",
+      "-B",
+      "tools/test_extract_patch_non_inventory.py"
+    ],
+    "p720-generator-fixtures": [
+      "python3",
+      "-B",
+      "tools/test_gen_patch_wikitext_register.py"
+    ],
+    "p720-validator-fixtures": [
+      "python3",
+      "-B",
+      "tools/test_patch_audit_validation.py"
+    ],
+    "p720-source-reproduction": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/data/patch-api/evidence/7.2.0-session-2026-10-08/reproduce_sources.py"
+    ],
+    "p720-prior-validators": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p720-page/data/patch-api/evidence/7.2.0-session-2026-10-08/check_prior_validators.py"
+    ]
+  },
+  "runtime_proofs": [
+    "p720-own-green",
+    "p720-all-sweeps",
+    "p720-texture-regression",
+    "p720-mask-regression",
+    "p720-equipment-regression",
+    "p720-equipment-lib",
+    "p720-mists-check",
+    "p720-format-check",
+    "p720-retail-build"
+  ],
+  "runtime_scope": [
+    "tests/common/publication_sweep.rs",
+    "tests/patch_7_2_0_publication_sweep.rs",
+    "tests/patch_7_2_0_behavior.rs",
+    "tests/data/patch_7_2_0_sweep_known_gaps.json",
+    "build.rs",
+    "Cargo.toml",
+    "Cargo.lock",
+    "src/lua_api/frame/methods/widgets/texture/coords.rs",
+    "src/c_api/item_spell/c_equipment_set.rs"
+  ],
+  "prior_validators": {
+    "data/patch-api/evidence/10.0.0-session-2026-10-07/validate.py": 0,
+    "data/patch-api/evidence/10.0.2-session-2026-10-07/validate.py": 0,
+    "data/patch-api/evidence/10.0.5-session-2026-10-07/validate.py": 0,
+    "data/patch-api/evidence/7.3.0-session-2026-10-08/validate.py": 0,
+    "data/patch-api/evidence/7.3.2-session-2026-10-08/validate.py": 0,
+    "data/patch-api/evidence/8.0.1-session-2026-10-08/validate.py": 0,
+    "data/patch-api/evidence/8.1.0-session-2026-10-08/validate.py": 0,
+    "data/patch-api/evidence/8.1.5-session-2026-10-08/validate.py": 0,
+    "data/patch-api/evidence/8.2.0-session-2026-10-08/validate.py": 0,
+    "data/patch-api/evidence/8.2.5-session-2026-10-08/validate.py": 0,
+    "data/patch-api/evidence/8.3.0-session-2026-10-08/validate.py": 0,
+    "data/patch-api/evidence/8.3.7-session-2026-10-08/validate.py": 0,
+    "data/patch-api/evidence/9.0.1-session-2026-10-08/validate.py": 0,
+    "data/patch-api/evidence/9.0.2-session-2026-10-08/validate.py": 0,
+    "data/patch-api/evidence/9.0.5-session-2026-10-08/validate.py": 0,
+    "data/patch-api/evidence/9.1.0-session-2026-10-07/validate.py": 0,
+    "data/patch-api/evidence/9.1.5-session-2026-10-07/validate.py": 0,
+    "data/patch-api/evidence/9.2.0-session-2026-10-07/validate.py": 0,
+    "data/patch-api/evidence/9.2.5-session-2026-10-07/validate.py": 0,
+    "data/patch-api/evidence/9.2.7-session-2026-10-07/validate.py": 0
+  }
+}

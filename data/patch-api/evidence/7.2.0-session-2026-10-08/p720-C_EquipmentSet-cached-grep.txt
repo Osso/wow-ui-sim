@@ -1,0 +1,38 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/SlashCommands.lua:814:		local equipmentSetID = C_EquipmentSet.GetEquipmentSetID(set);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/SlashCommands.lua:816:			C_EquipmentSet.UseEquipmentSet(equipmentSetID);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/SecureTemplates.lua:441:		local setID = setName and C_EquipmentSet.GetEquipmentSetID(setName);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/SecureTemplates.lua:443:			C_EquipmentSet.UseEquipmentSet(setID);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Mainline/EquipmentManager.lua:260:	if ( C_EquipmentSet.EquipmentSetContainsLockedItems(setID) or UnitCastingInfo("player") ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Mainline/EquipmentManager.lua:265:	C_EquipmentSet.UseEquipmentSet(setID);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/Mainline/GameDialogDefs.lua:2:	 C_EquipmentSet.SaveEquipmentSet(data, dialog.selectedIcon); 
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/GameDialogDefs.lua:302:	OnAccept = function(dialog, data) C_EquipmentSet.SaveEquipmentSet(data); end,
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/GameDialogDefs.lua:315:	OnAccept = function(dialog, data) C_EquipmentSet.DeleteEquipmentSet(data); end,
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/PaperDollFrame.xml:365:					C_EquipmentSet.PickupEquipmentSet(self.setID);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua:106:			return C_EquipmentSet.GetNumEquipmentSets() > 0 or C_LFGInfo.CanPlayerUseLFD();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua:1460:	C_EquipmentSet.ClearIgnoredSlotsForSave();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua:1470:	local set = C_EquipmentSet.GetIgnoredSlots(setID);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua:1473:			C_EquipmentSet.IgnoreSlotForSave(slot);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua:1476:			C_EquipmentSet.UnignoreSlotForSave(slot);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua:1484:	C_EquipmentSet.IgnoreSlotForSave(slot);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua:2023:		C_EquipmentSet.IgnoreSlotForSave(slot:GetID());
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua:2031:		C_EquipmentSet.UnignoreSlotForSave(slot:GetID());
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua:2083:		return C_EquipmentSet.GetEquipmentSetAssignedSpec(GetSetID()) == i;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua:2087:		local currentSpecIndex = C_EquipmentSet.GetEquipmentSetAssignedSpec(GetSetID());
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua:2089:			C_EquipmentSet.AssignSpecToEquipmentSet(GetSetID(), i);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua:2091:			C_EquipmentSet.UnassignEquipmentSetSpec(GetSetID());
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua:2136:	local specIndex = C_EquipmentSet.GetEquipmentSetAssignedSpec(self.setID);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua:2226:		local name, texture = C_EquipmentSet.GetEquipmentSetInfo(self.setID);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua:2248:	local setID = C_EquipmentSet.GetEquipmentSetID(text);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua:2263:	elseif ( C_EquipmentSet.GetNumEquipmentSets() >= MAX_EQUIPMENT_SETS_PER_PLAYER and self.mode == IconSelectorPopupFrameModes.New ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua:2269:		C_EquipmentSet.CreateEquipmentSet(text, iconTexture);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua:2271:		local selectedSetID = C_EquipmentSet.GetEquipmentSetID(self.origName);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua:2273:		C_EquipmentSet.ModifyEquipmentSet(selectedSetID, text, iconTexture);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua:2358:		if C_EquipmentSet.GetEquipmentSetAssignedSpec(equipmentSetID) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua:2364:		if not C_EquipmentSet.GetEquipmentSetAssignedSpec(equipmentSetID) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua:2396:		local name, texture, setID, isEquipped, _, _, _, numLost = C_EquipmentSet.GetEquipmentSetInfo(equipmentSetIndex);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua:2454:		_, _, setID, isEquipped = C_EquipmentSet.GetEquipmentSetInfo(PaperDollFrame.EquipmentManagerPane.selectedSetID);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua:2478:		PaperDollFrame.EquipmentManagerPane.equipmentSetIDs = SortEquipmentSetIDs(C_EquipmentSet.GetEquipmentSetIDs());
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua:2498:		local selectedSetName = C_EquipmentSet.GetEquipmentSetInfo(selectedSetID);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_RestrictedAddOnEnvironment/SecureHandlers.lua:157:		C_EquipmentSet.PickupEquipmentSet(target);
+
+STDERR:

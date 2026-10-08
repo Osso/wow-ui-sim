@@ -1,0 +1,56 @@
+{
+  "wt-global-api-C_EquipmentSet-10": {
+    "expected": {
+      "direction": "changed",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_EquipmentSet"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=table; lookup=table",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-MaskTexture-5": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "MaskTexture"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "factory=false; type=string",
+      "kind": "object-kind",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-widgets-Texture:SetVertexOffset-6": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "Texture:SetVertexOffset"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Texture; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  }
+}

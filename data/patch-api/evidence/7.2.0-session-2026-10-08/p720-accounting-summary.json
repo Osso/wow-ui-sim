@@ -1,0 +1,13 @@
+{
+  "inventory_rows": 3,
+  "inventory_ok": 3,
+  "inventory_gaps": 0,
+  "extract_rows": 12,
+  "ledger_rows": 15,
+  "ledger_statuses": {
+    "bounded-coverage": 5,
+    "metadata-only": 6,
+    "audit-pending": 4
+  },
+  "pending_prose": 4
+}

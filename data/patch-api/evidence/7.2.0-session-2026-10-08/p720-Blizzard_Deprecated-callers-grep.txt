@@ -1,0 +1,40 @@
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/ptr/compat_bootstrap.rs:37:// (Blizzard_Deprecated/Mainline/Deprecated_12_1_0.lua) can still assign them.
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/lua_api/workarounds/temporary/click_bindings_defaults.rs:29:-- deprecated forwarder (Blizzard_Deprecated/Deprecated_12_0_7.lua rewrites the
+/home/osso/.worktrees/wow-ui-sim-p720-page/src/loader/tests/wow_api_globals/startup_globals.rs:541:    // Mirrors Blizzard_Deprecated/Mainline/Deprecated_12_1_0.lua assignments.
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/load_order.rs:337:            "Blizzard_Deprecated",
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_settings_shared_loads.rs:262:        "Blizzard_Deprecated.lua",
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/housing_category_search.rs:402:        .join("Blizzard_Deprecated/Mainline/Deprecated_12_0_5.lua");
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_deprecated_lfg_loads.rs:207:         Blizzard_Deprecated* shims which publish `_G.<LegacyName> = C_*.NewMethod`, this \
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/housing_catalog_base_lookups.rs:276:        .join(".cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/Mainline/Deprecated_12_0_5.lua");
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/private_aura_sound_add_context.rs:349:        .join(".cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/Shared/Deprecated_12_1_0.lua");
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/private_aura_sound_removal.rs:229:        .join(".cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/Shared/Deprecated_12_1_0.lua");
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/patch_12_0_7_b23_b28.rs:478:        std::fs::read_to_string(addons.join("Blizzard_Deprecated/Shared/Deprecated_12_1_0.lua"))
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_weekly_rewards_util_loads.rs:85:         Blizzard_Deprecated* addon, Blizzard_ChatFrameUtil, Blizzard_ClientSavedVariables, \
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/wowforever_batch5_surface.rs:106:            .join("Blizzard_Deprecated/Shared/Deprecated_12_1_0.lua"),
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_deprecated_loads.rs:17:    blizzard_ui_dir().join("Blizzard_Deprecated/Blizzard_Deprecated.toc")
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_deprecated_loads.rs:46:    let toc = TocFile::from_file(&deprecated_toc()).expect("Blizzard_Deprecated TOC should parse");
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_deprecated_loads.rs:49:        "Blizzard_Deprecated is non-LOD — the deprecated-fallback shims must install before any \
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_deprecated_loads.rs:56:        "Blizzard_Deprecated does not declare UseSecureEnvironment"
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_deprecated_loads.rs:60:        "Blizzard_Deprecated declares NO dependencies — it only redirects to C_PvP.GetScoreInfo \
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_deprecated_loads.rs:66:        std::fs::read_to_string(deprecated_toc()).expect("Blizzard_Deprecated TOC should read");
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_deprecated_loads.rs:69:        "Blizzard_Deprecated does NOT declare an explicit `## AllowLoad:` flag — the loader \
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_deprecated_loads.rs:76:        "Blizzard_Deprecated does NOT declare `## AllowLoadGameType:` so the deprecated shims \
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_deprecated_loads.rs:86:        .any(|(name, _)| name == "Blizzard_Deprecated");
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_deprecated_loads.rs:89:        "Blizzard_Deprecated (no AllowLoad flag, defaults to Game-only via src/toc.rs:311) \
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_deprecated_loads.rs:97:        .any(|(name, _)| name == "Blizzard_Deprecated");
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_deprecated_loads.rs:100:        "Blizzard_Deprecated should NOT appear on the Login / glue screens — the deprecated \
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_deprecated_loads.rs:118:        "Blizzard_Deprecated emitted Lua errors during Game-screen load:\n  {}",
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_deprecated_loads.rs:135:        "Blizzard_Deprecated/Deprecated_12_0_1.lua line 8+52 should publish global functions \
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_deprecated_loads.rs:152:        "Blizzard_Deprecated/Deprecated_12_0_1.lua line 67 should publish a global \
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_deprecated_loads.rs:172:        "Blizzard_Deprecated/Deprecated_12_0_1.lua line 75 should publish \
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_deprecated_loads.rs:215:    let dir = blizzard_ui_dir().join("Blizzard_Deprecated");
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_deprecated_loads.rs:217:        .expect("Blizzard_Deprecated dir should read")
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_deprecated_loads.rs:226:        "Blizzard_Deprecated has NO XML files — it only ships function-shim Lua. Got entries: \
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_deprecated_loads.rs:234:            "Blizzard_Deprecated.toc",
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/blizzard_deprecated_loads.rs:243:    let toc = TocFile::from_file(&deprecated_toc()).expect("Blizzard_Deprecated TOC should parse");
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/patch_12_0_7_removed_native_surface.rs:10:    "Blizzard_Deprecated/Mainline/Deprecated_12_0_7.lua",
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/fixtures/ptr-12-1-5-eager-load-order.md:9:- Ten removed `Blizzard_Deprecated*` addons are absent from both the PTR manifest and content index.
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/fixtures/ptr-12-1-5-eager-load-order.txt:137:Blizzard_Deprecated
+/home/osso/.worktrees/wow-ui-sim-p720-page/tests/p1207_merchant_currencies.rs:103:        .join(".cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/Mainline/Deprecated_12_0_7.lua");
+
+STDERR:
