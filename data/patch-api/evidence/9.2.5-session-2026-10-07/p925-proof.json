@@ -250,5 +250,18 @@
     "output_sha256": {
       "p925-report-regressions.log": "4e4fb9ee9e5cd5659aa99b1e6e9eff00df4abf5530ae534ca6100422eb0c0b38"
     }
+  },
+  {
+    "command": "python3 data/patch-api/evidence/9.2.5-session-2026-10-07/validate.py",
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p925-page",
+    "target": "/home/osso/.worktrees/wow-ui-sim-p925-page/target",
+    "revision": "b3f5906c0",
+    "exit": 0,
+    "scope": "All 220 ledger IDs/literals/hashes, 34 exact gaps/nine closures, negative control, 143 prior inputs, 54 mode outcomes, 28 sweep receipts and Mists warnings",
+    "output": "p925-artifact-validation.log",
+    "invalidated": false,
+    "output_sha256": {
+      "p925-artifact-validation.log": "cbb0011ca6d9d6dc4f63d4520303138e24f3d52d5625592ca9a4ac72409d406b"
+    }
   }
 ]
