@@ -1,0 +1,254 @@
+[
+  {
+    "source_id": "source-context-001",
+    "extract_line": 1,
+    "literal": "Patch 8.1.0 API changes",
+    "wikitext_line": 1,
+    "raw_literal": "{{apichanges|8.1.0|prev=8.0.1|next=8.1.5}}",
+    "status": "metadata-only",
+    "reason": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+  },
+  {
+    "source_id": "prose-undated-003",
+    "extract_line": 3,
+    "literal": "Diff: 8.0.1 (28153) to 8.1.0 (28724)",
+    "wikitext_line": 3,
+    "raw_literal": "Diff: 8.0.1 (28153) to 8.1.0 (28724)",
+    "status": "metadata-only",
+    "reason": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+  },
+  {
+    "source_id": "prose-undated-004",
+    "extract_line": 4,
+    "literal": "* https://github.com/Gethe/wow-ui-source/commit/3a045adeac5c520f9115293cbe1311eb75d3ad77",
+    "wikitext_line": 4,
+    "raw_literal": "* https://github.com/Gethe/wow-ui-source/commit/3a045adeac5c520f9115293cbe1311eb75d3ad77",
+    "status": "metadata-only",
+    "reason": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+  },
+  {
+    "source_id": "prose-undated-005",
+    "extract_line": 5,
+    "literal": "Blizzard Deprecated",
+    "wikitext_line": 5,
+    "raw_literal": "Blizzard Deprecated",
+    "status": "metadata-only",
+    "reason": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+  },
+  {
+    "source_id": "prose-undated-006",
+    "extract_line": 6,
+    "literal": "* https://www.townlong-yak.com/framexml/8.1.5/Blizzard_Deprecated/Deprecated_8_1_0.lua",
+    "wikitext_line": 6,
+    "raw_literal": "* https://www.townlong-yak.com/framexml/8.1.5/Blizzard_Deprecated/Deprecated_8_1_0.lua",
+    "status": "metadata-only",
+    "reason": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+  },
+  {
+    "source_id": "prose-undated-007",
+    "extract_line": 7,
+    "literal": "Resike/BlizzardInterfaceResources",
+    "wikitext_line": 7,
+    "raw_literal": "Resike/BlizzardInterfaceResources",
+    "status": "metadata-only",
+    "reason": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+  },
+  {
+    "source_id": "prose-undated-008",
+    "extract_line": 8,
+    "literal": "* https://github.com/Resike/BlizzardInterfaceResources",
+    "wikitext_line": 8,
+    "raw_literal": "* https://github.com/Resike/BlizzardInterfaceResources",
+    "status": "metadata-only",
+    "reason": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+  },
+  {
+    "source_id": "source-context-010",
+    "extract_line": 10,
+    "literal": "== API ==",
+    "wikitext_line": 10,
+    "raw_literal": "==API==",
+    "status": "metadata-only",
+    "reason": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+  },
+  {
+    "source_id": "source-context-011",
+    "extract_line": 11,
+    "literal": "==== New ====",
+    "wikitext_line": 11,
+    "raw_literal": "====New====",
+    "status": "metadata-only",
+    "reason": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+  },
+  {
+    "source_id": "prose-undated-012",
+    "extract_line": 12,
+    "literal": "New C_FriendList table",
+    "wikitext_line": 37,
+    "raw_literal": "New C_FriendList table",
+    "status": "metadata-only",
+    "reason": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+  },
+  {
+    "source_id": "prose-undated-013",
+    "extract_line": 13,
+    "literal": "New C_IncomingSummon table",
+    "wikitext_line": 68,
+    "raw_literal": "New C_IncomingSummon table",
+    "status": "metadata-only",
+    "reason": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+  },
+  {
+    "source_id": "prose-undated-014",
+    "extract_line": 14,
+    "literal": "New C_Loot table",
+    "wikitext_line": 75,
+    "raw_literal": "New C_Loot table",
+    "status": "metadata-only",
+    "reason": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+  },
+  {
+    "source_id": "prose-undated-015",
+    "extract_line": 15,
+    "literal": "New C_QuestChoice table",
+    "wikitext_line": 89,
+    "raw_literal": "New C_QuestChoice table",
+    "status": "metadata-only",
+    "reason": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+  },
+  {
+    "source_id": "prose-undated-016",
+    "extract_line": 16,
+    "literal": "New C_ReportSystem table",
+    "wikitext_line": 95,
+    "raw_literal": "New C_ReportSystem table",
+    "status": "metadata-only",
+    "reason": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+  },
+  {
+    "source_id": "prose-undated-017",
+    "extract_line": 17,
+    "literal": "New C_SummonInfo table",
+    "wikitext_line": 103,
+    "raw_literal": "New C_SummonInfo table",
+    "status": "metadata-only",
+    "reason": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+  },
+  {
+    "source_id": "source-context-019",
+    "extract_line": 19,
+    "literal": "==== Changes ====",
+    "wikitext_line": 116,
+    "raw_literal": "====Changes====",
+    "status": "metadata-only",
+    "reason": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+  },
+  {
+    "source_id": "prose-undated-020",
+    "extract_line": 20,
+    "literal": "?",
+    "wikitext_line": 117,
+    "raw_literal": "?",
+    "status": "audit-pending",
+    "reason": "Source explicitly supplies only \"?\" for this section; no enumerated contract to implement. Retain source uncertainty, not behavioral credit."
+  },
+  {
+    "source_id": "source-context-022",
+    "extract_line": 22,
+    "literal": "==== Renamed ====",
+    "wikitext_line": 119,
+    "raw_literal": "====Renamed====",
+    "status": "metadata-only",
+    "reason": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+  },
+  {
+    "source_id": "source-context-024",
+    "extract_line": 24,
+    "literal": "==== Removals ====",
+    "wikitext_line": 123,
+    "raw_literal": "====Removals====",
+    "status": "metadata-only",
+    "reason": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+  },
+  {
+    "source_id": "prose-undated-025",
+    "extract_line": 25,
+    "literal": "Removed C_ConfigurationWarnings table",
+    "wikitext_line": 125,
+    "raw_literal": "Removed C_ConfigurationWarnings table",
+    "status": "metadata-only",
+    "reason": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+  },
+  {
+    "source_id": "source-context-027",
+    "extract_line": 27,
+    "literal": "== Widgets ==",
+    "wikitext_line": 131,
+    "raw_literal": "==Widgets==",
+    "status": "metadata-only",
+    "reason": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+  },
+  {
+    "source_id": "prose-undated-028",
+    "extract_line": 28,
+    "literal": "?",
+    "wikitext_line": 132,
+    "raw_literal": "?",
+    "status": "audit-pending",
+    "reason": "Source explicitly supplies only \"?\" for this section; no enumerated contract to implement. Retain source uncertainty, not behavioral credit."
+  },
+  {
+    "source_id": "source-context-030",
+    "extract_line": 30,
+    "literal": "== Events ==",
+    "wikitext_line": 134,
+    "raw_literal": "==Events==",
+    "status": "metadata-only",
+    "reason": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+  },
+  {
+    "source_id": "source-context-031",
+    "extract_line": 31,
+    "literal": "==== Added ====",
+    "wikitext_line": 135,
+    "raw_literal": "====Added====",
+    "status": "metadata-only",
+    "reason": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+  },
+  {
+    "source_id": "source-context-033",
+    "extract_line": 33,
+    "literal": "== CVars ==",
+    "wikitext_line": 144,
+    "raw_literal": "==CVars==",
+    "status": "metadata-only",
+    "reason": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+  },
+  {
+    "source_id": "prose-undated-034",
+    "extract_line": 34,
+    "literal": "|+ 8.0.1 → 8.1.0 (28333) 19 Dec 2018[Reference: author=Ketho|url=https://www.wowinterface.com/forums/showthread.php?p=331293|title=Bfa console variables|publisher=WoWInterface|date=2019-01-07]",
+    "wikitext_line": 146,
+    "raw_literal": "|+ 8.0.1 &rarr; 8.1.0 (28333) 19 Dec 2018<ref>{{ref web|author=Ketho|url=https://www.wowinterface.com/forums/showthread.php?p=331293|title=Bfa console variables|publisher=[[WoWInterface]]|date=2019-01-07}}</ref>",
+    "status": "metadata-only",
+    "reason": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+  },
+  {
+    "source_id": "source-context-036",
+    "extract_line": 36,
+    "literal": "== References ==",
+    "wikitext_line": 189,
+    "raw_literal": "==References==",
+    "status": "metadata-only",
+    "reason": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+  },
+  {
+    "source_id": "prose-undated-037",
+    "extract_line": 37,
+    "literal": "{{reflist}}",
+    "wikitext_line": 190,
+    "raw_literal": "{{reflist}}",
+    "status": "metadata-only",
+    "reason": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+  }
+]

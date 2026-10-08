@@ -1,0 +1,1620 @@
+{
+  "schema": "patch-page-coverage/v1",
+  "patch": "8.1.0",
+  "source_sha256": "2b14287b5e8eba20cfc674184f2838ba87c551382eed782dfe39661c2807e147",
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/8.1.0-api-changes.txt",
+    "sha256": "3ebb449f9291e15c4df3341cee40daee03fa6299a986d3ca5a15f2d5c8403812"
+  },
+  "proof_policy": "Current retail publication/absence plus bounded supplied calendar comparison, never historical/native parity.",
+  "source_rows": [
+    {
+      "source_id": "wt-cvars-fstack_showanchors-152",
+      "source": "fstack_showanchors",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-fstack_showhidden-153",
+      "source": "fstack_showhidden",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-fstack_showregions-154",
+      "source": "fstack_showregions",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-gxMTAlphaM2-155",
+      "source": "gxMTAlphaM2",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-gxMTBeginDraw-156",
+      "source": "gxMTBeginDraw",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-gxMTDisable-157",
+      "source": "gxMTDisable",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-gxMTOpaque-158",
+      "source": "gxMTOpaque",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "CVar not registered. The page gives no default or simulator render-thread control contract; registering an arbitrary string would only fabricate publication."
+    },
+    {
+      "source_id": "wt-cvars-gxMTPrepass-159",
+      "source": "gxMTPrepass",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-gxMTShadow-160",
+      "source": "gxMTShadow",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-HealHandler-161",
+      "source": "HealHandler",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-newMythicPlusSeason-162",
+      "source": "newMythicPlusSeason",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-newPvpSeason-163",
+      "source": "newPvpSeason",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-seenAlliedRaceUnlocks-164",
+      "source": "seenAlliedRaceUnlocks",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-splashScreenSeason-165",
+      "source": "splashScreenSeason",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-videoOptionsVersionDefault-166",
+      "source": "videoOptionsVersionDefault",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-worldEntityLinkMode-167",
+      "source": "worldEntityLinkMode",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-worldPreloadNonCriticalTimeout-168",
+      "source": "worldPreloadNonCriticalTimeout",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-worldQuestFilterReputation-169",
+      "source": "worldQuestFilterReputation",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-gxRefresh-172",
+      "source": "gxRefresh",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-gxWindow-173",
+      "source": "gxWindow",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-RAIDSSAOBlur-174",
+      "source": "RAIDSSAOBlur",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-spellClutterDefaultTargetScalar-175",
+      "source": "spellClutterDefaultTargetScalar",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-spellClutterHostileScalar-176",
+      "source": "spellClutterHostileScalar",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-spellClutterMinSpellCount-177",
+      "source": "spellClutterMinSpellCount",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-spellClutterMinWeaponTrailCount-178",
+      "source": "spellClutterMinWeaponTrailCount",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-spellClutterPartySizeScalar-179",
+      "source": "spellClutterPartySizeScalar",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-spellClutterPlayerScalarMultiplier-180",
+      "source": "spellClutterPlayerScalarMultiplier",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-spellClutterRangeConstant-181",
+      "source": "spellClutterRangeConstant",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-spellClutterRangeConstantRaid-182",
+      "source": "spellClutterRangeConstantRaid",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-SSAOBlur-183",
+      "source": "SSAOBlur",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-SSAODistance-184",
+      "source": "SSAODistance",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-cvars-worldPoolUsage-185",
+      "source": "worldPoolUsage",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_AchievementInfo.GetRewardItemID-12",
+      "source": "C_AchievementInfo.GetRewardItemID",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_AchievementInfo.GetSupercedingAchievements-13",
+      "source": "C_AchievementInfo.GetSupercedingAchievements",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw achievement supersession query. Achievement records lack an ordered supersession relation; previous/next achievements are not proof of superseding achievements."
+    },
+    {
+      "source_id": "wt-global-api-C_AreaPoiInfo.GetAreaPOISecondsLeft-14",
+      "source": "C_AreaPoiInfo.GetAreaPOISecondsLeft",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ArtifactUI.GetArtifactItemID-15",
+      "source": "C_ArtifactUI.GetArtifactItemID",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ArtifactUI.GetEquippedArtifactItemID-16",
+      "source": "C_ArtifactUI.GetEquippedArtifactItemID",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_AzeriteEmpoweredItem.GetPowerText-17",
+      "source": "C_AzeriteEmpoweredItem.GetPowerText",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_AzeriteEmpoweredItem.IsHeartOfAzerothEquipped-18",
+      "source": "C_AzeriteEmpoweredItem.IsHeartOfAzerothEquipped",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Calendar.GetClubCalendarEvents-19",
+      "source": "C_Calendar.GetClubCalendarEvents",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Calendar.GetEventIndexInfo-20",
+      "source": "C_Calendar.GetEventIndexInfo",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No calendar event-index DTO producer. Needs the selected event calendar offset/day/index relation, not a fixed tuple."
+    },
+    {
+      "source_id": "wt-global-api-C_Calendar.GetNextClubId-21",
+      "source": "C_Calendar.GetNextClubId",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No pending/new-event club-ID state query. Needs staged calendar editor state distinct from current event ownership."
+    },
+    {
+      "source_id": "wt-global-api-C_Calendar.SetNextClubId-22",
+      "source": "C_Calendar.SetNextClubId",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No pending/new-event club-ID state mutation. Needs editor state and its consumption by event creation, not a no-op setter."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.IsValidChatLine-23",
+      "source": "C_ChatInfo.IsValidChatLine",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.ResetDefaultZoneChannels-24",
+      "source": "C_ChatInfo.ResetDefaultZoneChannels",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw zone-channel reset. Needs zone channel policy, joined-channel state and join/leave transitions; current channel defaults do not model reset."
+    },
+    {
+      "source_id": "wt-global-api-C_ChatInfo.SwapChatChannelsByChannelIndex-25",
+      "source": "C_ChatInfo.SwapChatChannelsByChannelIndex",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw ordered chat-channel swap. Needs channel IDs/indexes and the resulting persisted order; unrelated chat messages are not channel ordering."
+    },
+    {
+      "source_id": "wt-global-api-C_Club.AddClubStreamChatChannel-26",
+      "source": "C_Club.AddClubStreamChatChannel",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No club stream-to-chat channel join. Requires club/stream identity, membership and coherent channel state/events."
+    },
+    {
+      "source_id": "wt-global-api-C_Club.Flush-27",
+      "source": "C_Club.Flush",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw club cache flush. Needs cached request/snapshot ownership and invalidation semantics; an empty function would not flush anything."
+    },
+    {
+      "source_id": "wt-global-api-C_Club.GetClubLimits-28",
+      "source": "C_Club.GetClubLimits",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_CurrencyInfo.DoesWarModeBonusApply-29",
+      "source": "C_CurrencyInfo.DoesWarModeBonusApply",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No per-currency war-mode eligibility metadata query. A global war-mode boolean cannot establish whether this currency gets a bonus."
+    },
+    {
+      "source_id": "wt-global-api-C_DateAndTime.AdjustTimeByDays-30",
+      "source": "C_DateAndTime.AdjustTimeByDays",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_DateAndTime.AdjustTimeByMinutes-31",
+      "source": "C_DateAndTime.AdjustTimeByMinutes",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_DateAndTime.CompareCalendarTime-32",
+      "source": "C_DateAndTime.CompareCalendarTime",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "calendar-ordering",
+          "proof": "tests/patch_8_1_0_calendar_compare.rs"
+        }
+      ],
+      "note": "Bounded supplied-civil-time ordering; rhs sign follows Blizzard documentation, weekday ignored, inputs unchanged. Invalid civil-date/security/native parity not claimed."
+    },
+    {
+      "source_id": "wt-global-api-C_DateAndTime.GetCalendarTimeFromEpoch-33",
+      "source": "C_DateAndTime.GetCalendarTimeFromEpoch",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_DateAndTime.GetCurrentCalendarTime-34",
+      "source": "C_DateAndTime.GetCurrentCalendarTime",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Debug.DashboardIsEnabled-35",
+      "source": "C_Debug.DashboardIsEnabled",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No debug-dashboard state/domain. Native client diagnostics are not the simulator GUI; do not publish a constant as an enabled-state model."
+    },
+    {
+      "source_id": "wt-global-api-C_EncounterJournal.InstanceHasLoot-36",
+      "source": "C_EncounterJournal.InstanceHasLoot",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_FriendList.AddFriend-38",
+      "source": "C_FriendList.AddFriend",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw friend-list producer for friend request creation and response events. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+    },
+    {
+      "source_id": "wt-global-api-C_FriendList.AddIgnore-39",
+      "source": "C_FriendList.AddIgnore",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw friend-list producer for ignore-list identity insertion. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+    },
+    {
+      "source_id": "wt-global-api-C_FriendList.AddOrDelIgnore-40",
+      "source": "C_FriendList.AddOrDelIgnore",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw friend-list producer for ignore-list membership toggle. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+    },
+    {
+      "source_id": "wt-global-api-C_FriendList.AddOrRemoveFriend-41",
+      "source": "C_FriendList.AddOrRemoveFriend",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw friend-list producer for friend membership toggle with pending request semantics. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+    },
+    {
+      "source_id": "wt-global-api-C_FriendList.DelIgnore-42",
+      "source": "C_FriendList.DelIgnore",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw friend-list producer for ignore-list identity removal. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+    },
+    {
+      "source_id": "wt-global-api-C_FriendList.DelIgnoreByIndex-43",
+      "source": "C_FriendList.DelIgnoreByIndex",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw friend-list producer for ordered ignore-list removal by index. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+    },
+    {
+      "source_id": "wt-global-api-C_FriendList.GetFriendInfo-44",
+      "source": "C_FriendList.GetFriendInfo",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw friend-list producer for name/identity-based friend DTO lookup distinct from index lookup. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+    },
+    {
+      "source_id": "wt-global-api-C_FriendList.GetFriendInfoByIndex-45",
+      "source": "C_FriendList.GetFriendInfoByIndex",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_FriendList.GetIgnoreName-46",
+      "source": "C_FriendList.GetIgnoreName",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_FriendList.GetNumFriends-47",
+      "source": "C_FriendList.GetNumFriends",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_FriendList.GetNumIgnores-48",
+      "source": "C_FriendList.GetNumIgnores",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_FriendList.GetNumOnlineFriends-49",
+      "source": "C_FriendList.GetNumOnlineFriends",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_FriendList.GetNumWhoResults-50",
+      "source": "C_FriendList.GetNumWhoResults",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_FriendList.GetSelectedFriend-51",
+      "source": "C_FriendList.GetSelectedFriend",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw friend-list producer for selected friend index and empty-selection behavior. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+    },
+    {
+      "source_id": "wt-global-api-C_FriendList.GetSelectedIgnore-52",
+      "source": "C_FriendList.GetSelectedIgnore",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw friend-list producer for selected ignore index and empty-selection behavior. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+    },
+    {
+      "source_id": "wt-global-api-C_FriendList.GetWhoInfo-53",
+      "source": "C_FriendList.GetWhoInfo",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_FriendList.IsFriend-54",
+      "source": "C_FriendList.IsFriend",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_FriendList.IsIgnored-55",
+      "source": "C_FriendList.IsIgnored",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw friend-list producer for ignore membership by accepted player identity. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+    },
+    {
+      "source_id": "wt-global-api-C_FriendList.IsIgnoredByGuid-56",
+      "source": "C_FriendList.IsIgnoredByGuid",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw friend-list producer for GUID-to-ignore identity mapping and membership. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+    },
+    {
+      "source_id": "wt-global-api-C_FriendList.RemoveFriend-57",
+      "source": "C_FriendList.RemoveFriend",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw friend-list producer for friend removal by accepted player identity. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+    },
+    {
+      "source_id": "wt-global-api-C_FriendList.RemoveFriendByIndex-58",
+      "source": "C_FriendList.RemoveFriendByIndex",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw friend-list producer for ordered friend removal by index. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+    },
+    {
+      "source_id": "wt-global-api-C_FriendList.SendWho-59",
+      "source": "C_FriendList.SendWho",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw friend-list producer for who request/query lifecycle and response delivery; native hardware-event policy unverified. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+    },
+    {
+      "source_id": "wt-global-api-C_FriendList.SetFriendNotes-60",
+      "source": "C_FriendList.SetFriendNotes",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw friend-list producer for identity-based friend note mutation. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+    },
+    {
+      "source_id": "wt-global-api-C_FriendList.SetFriendNotesByIndex-61",
+      "source": "C_FriendList.SetFriendNotesByIndex",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw friend-list producer for index-based friend note mutation. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+    },
+    {
+      "source_id": "wt-global-api-C_FriendList.SetSelectedFriend-62",
+      "source": "C_FriendList.SetSelectedFriend",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw friend-list producer for persistent selected friend index updates. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+    },
+    {
+      "source_id": "wt-global-api-C_FriendList.SetSelectedIgnore-63",
+      "source": "C_FriendList.SetSelectedIgnore",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw friend-list producer for persistent selected ignore index updates. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+    },
+    {
+      "source_id": "wt-global-api-C_FriendList.SetWhoToUi-64",
+      "source": "C_FriendList.SetWhoToUi",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_FriendList.ShowFriends-65",
+      "source": "C_FriendList.ShowFriends",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_FriendList.SortWho-66",
+      "source": "C_FriendList.SortWho",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw friend-list producer for stable who-result ordering with field/direction semantics. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+    },
+    {
+      "source_id": "wt-global-api-C_Garrison.IsEnvironmentCountered-67",
+      "source": "C_Garrison.IsEnvironmentCountered",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No environment-counter computation. Requires mission environment mechanics and follower ability matching; mission presence alone is insufficient."
+    },
+    {
+      "source_id": "wt-global-api-C_IncomingSummon.HasIncomingSummon-69",
+      "source": "C_IncomingSummon.HasIncomingSummon",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_IncomingSummon.IncomingSummonStatus-70",
+      "source": "C_IncomingSummon.IncomingSummonStatus",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Item.CanScrapItem-71",
+      "source": "C_Item.CanScrapItem",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No item scrapping eligibility metadata/policy. Inventory presence does not identify scrappable classes, restrictions or context."
+    },
+    {
+      "source_id": "wt-global-api-C_Item.CanViewItemPowers-72",
+      "source": "C_Item.CanViewItemPowers",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No item power-view eligibility metadata. Item links and Azerite defaults do not establish whether this item supports power viewing."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.HasActiveEntryInfo-73",
+      "source": "C_LFGList.HasActiveEntryInfo",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_LFGList.HasSearchResultInfo-74",
+      "source": "C_LFGList.HasSearchResultInfo",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Loot.IsLegacyLootModeEnabled-76",
+      "source": "C_Loot.IsLegacyLootModeEnabled",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No legacy-loot mode state. Requires instance expansion/level/eligibility rules and selected loot context, not an arbitrary boolean."
+    },
+    {
+      "source_id": "wt-global-api-C_Map.GetBountySetMaps-77",
+      "source": "C_Map.GetBountySetMaps",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No bounty-set to ordered map index. Map records lack bounty-set membership, so returning every map or an empty table would fabricate the relation."
+    },
+    {
+      "source_id": "wt-global-api-C_MountJournal.GetMountFromItem-78",
+      "source": "C_MountJournal.GetMountFromItem",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No item-ID to mount-ID relation. Existing mount spell IDs cannot be treated as item IDs; needs item association metadata and unknown-ID output."
+    },
+    {
+      "source_id": "wt-global-api-C_MountJournal.GetMountUsabilityByID-79",
+      "source": "C_MountJournal.GetMountUsabilityByID",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_MythicPlus.GetCurrentSeason-80",
+      "source": "C_MythicPlus.GetCurrentSeason",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PartyInfo.GetInviteReferralInfo-81",
+      "source": "C_PartyInfo.GetInviteReferralInfo",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No pending party invitation referral DTO. Needs inviter/referral identity and request lifetime rather than the joined roster."
+    },
+    {
+      "source_id": "wt-global-api-C_PetJournal.GetPetInfoByItemID-82",
+      "source": "C_PetJournal.GetPetInfoByItemID",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No item-to-battle-pet species relation. Current species journal records do not supply item association metadata."
+    },
+    {
+      "source_id": "wt-global-api-C_PlayerInfo.GUIDIsPlayer-83",
+      "source": "C_PlayerInfo.GUIDIsPlayer",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No raw player-GUID classifier. Existing PlayerLocation temporary provider is not an unconditional C API producer; needs accepted GUID grammar/security contract without name or unit existence assumptions."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.CanToggleWarModeInArea-84",
+      "source": "C_PvP.CanToggleWarModeInArea",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No area-specific war-mode toggle policy. War-mode state alone lacks sanctuary/capital/map eligibility metadata."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetRewardItemLevelsByTierEnum-85",
+      "source": "C_PvP.GetRewardItemLevelsByTierEnum",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No tier-enum reward level table. Needs season/bracket/tier item-level metadata; rating records alone cannot derive reward levels."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetWarModeRewardBonus-86",
+      "source": "C_PvP.GetWarModeRewardBonus",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetWarModeRewardBonusDefault-87",
+      "source": "C_PvP.GetWarModeRewardBonusDefault",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetWeeklyChestInfo-88",
+      "source": "C_PvP.GetWeeklyChestInfo",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No historical PvP chest progress/reward DTO. Needs season-owned weekly entitlement state and historical fields; current weekly vault state is a different contract."
+    },
+    {
+      "source_id": "wt-global-api-C_QuestChoice.GetQuestChoiceInfo-90",
+      "source": "C_QuestChoice.GetQuestChoiceInfo",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Later register expects absence, but ordinary namespace lookup still fabricates this member. That later-page removal has a retained gap; this audit does not silently implement another page retirement without consumer/later-readdition proof. Supersession ID: wt-global-api-C_QuestChoice.GetQuestChoiceInfo-591"
+    },
+    {
+      "source_id": "wt-global-api-C_QuestChoice.GetQuestChoiceOptionInfo-91",
+      "source": "C_QuestChoice.GetQuestChoiceOptionInfo",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Later register expects absence, but ordinary namespace lookup still fabricates this member. That later-page removal has a retained gap; this audit does not silently implement another page retirement without consumer/later-readdition proof. Supersession ID: wt-global-api-C_QuestChoice.GetQuestChoiceOptionInfo-592"
+    },
+    {
+      "source_id": "wt-global-api-C_QuestLine.RequestQuestLinesForMap-92",
+      "source": "C_QuestLine.RequestQuestLinesForMap",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No questline request lifecycle. Needs a host map-to-questline index, response snapshot and completion events, not a no-op request."
+    },
+    {
+      "source_id": "wt-global-api-C_QuestLog.GetNumQuestObjectives-93",
+      "source": "C_QuestLog.GetNumQuestObjectives",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_QuestLog.IsLegendaryQuest-94",
+      "source": "C_QuestLog.IsLegendaryQuest",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ReportSystem.CanReportPlayer-96",
+      "source": "C_ReportSystem.CanReportPlayer",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No player-report eligibility policy. Needs target/report context and permission restrictions; account presence is insufficient."
+    },
+    {
+      "source_id": "wt-global-api-C_ReportSystem.ReportPlayer-97",
+      "source": "C_ReportSystem.ReportPlayer",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No player-report submission lifecycle. Current report-system state does not store target, report type and submission/result transition for this legacy member."
+    },
+    {
+      "source_id": "wt-global-api-C_ReportSystem.ReportServerLag-98",
+      "source": "C_ReportSystem.ReportServerLag",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No server-lag reporting transport/request state. Simulator network statistics are not a report submission; native backend remains unmodeled."
+    },
+    {
+      "source_id": "wt-global-api-C_ReportSystem.SetPendingReportPetTarget-99",
+      "source": "C_ReportSystem.SetPendingReportPetTarget",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ReportSystem.SetPendingReportTarget-100",
+      "source": "C_ReportSystem.SetPendingReportTarget",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_ReportSystem.SetPendingReportTargetByGuid-101",
+      "source": "C_ReportSystem.SetPendingReportTargetByGuid",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Social.TwitterPostItem-102",
+      "source": "C_Social.TwitterPostItem",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_SummonInfo.CancelSummon-104",
+      "source": "C_SummonInfo.CancelSummon",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No pending summon cancellation mutation. Needs a pending offer and its rejected/cleared transition with summon notifications."
+    },
+    {
+      "source_id": "wt-global-api-C_SummonInfo.ConfirmSummon-105",
+      "source": "C_SummonInfo.ConfirmSummon",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No pending summon acceptance mutation. Needs pending inviter/destination, expiration and accepted travel transition; teleporting immediately would bypass offer state."
+    },
+    {
+      "source_id": "wt-global-api-C_SummonInfo.GetSummonConfirmAreaName-106",
+      "source": "C_SummonInfo.GetSummonConfirmAreaName",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No pending summon destination name producer. Current player area is not the offered summon destination."
+    },
+    {
+      "source_id": "wt-global-api-C_SummonInfo.GetSummonConfirmSummoner-107",
+      "source": "C_SummonInfo.GetSummonConfirmSummoner",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No pending summon inviter identity producer. Needs the active offer sender, not a constant or player name."
+    },
+    {
+      "source_id": "wt-global-api-C_SummonInfo.GetSummonConfirmTimeLeft-108",
+      "source": "C_SummonInfo.GetSummonConfirmTimeLeft",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_SummonInfo.GetSummonReason-109",
+      "source": "C_SummonInfo.GetSummonReason",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_SummonInfo.IsSummonSkippingStartExperience-110",
+      "source": "C_SummonInfo.IsSummonSkippingStartExperience",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TaxiMap.ShouldMapShowTaxiNodes-111",
+      "source": "C_TaxiMap.ShouldMapShowTaxiNodes",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetAllProfessionTradeSkillLines-112",
+      "source": "C_TradeSkillUI.GetAllProfessionTradeSkillLines",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_TradeSkillUI.GetTradeSkillLineInfoByID-113",
+      "source": "C_TradeSkillUI.GetTradeSkillLineInfoByID",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Later register expects absence, but ordinary namespace lookup still fabricates this member. That later-page removal has a retained gap; this audit does not silently implement another page retirement without consumer/later-readdition proof. Supersession ID: wt-global-api-C_TradeSkillUI.GetTradeSkillLineInfoByID-519"
+    },
+    {
+      "source_id": "wt-global-api-C_UIWidgetManager.GetSpellDisplayVisualizationInfo-114",
+      "source": "C_UIWidgetManager.GetSpellDisplayVisualizationInfo",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No spell-display visualization DTO. Requires concrete widget-ID/type payload including spell-specific fields; other widget shapes cannot prove it."
+    },
+    {
+      "source_id": "wt-global-api-C_Map.GetBountySetIDForMap-124",
+      "source": "C_Map.GetBountySetIDForMap",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Consumer-free retail absence; bare/repeated/cached checks and Mists preservation. No native signature or behavior claim."
+    },
+    {
+      "source_id": "wt-global-api-C_ConfigurationWarnings.GetConfigurationWarningSeen-126",
+      "source": "C_ConfigurationWarnings.GetConfigurationWarningSeen",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No cached consumer, but simulator temporary provider and its unit tests still publish/call this getter after C API registration. Do not retire a live provider path; profile-safe provider/test migration needs a separate modeled contract. Retirement test exposed raw republication; candidate removed from retirement list, complete caller evidence retained."
+    },
+    {
+      "source_id": "wt-global-api-C_ConfigurationWarnings.GetConfigurationWarningString-127",
+      "source": "C_ConfigurationWarnings.GetConfigurationWarningString",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Retirement prohibited: current cached Blizzard Lua consumes this member. Keep modeled configuration warning state and report historical absence mismatch; complete qualified/bare/caller scans retained."
+    },
+    {
+      "source_id": "wt-global-api-C_ConfigurationWarnings.GetConfigurationWarnings-128",
+      "source": "C_ConfigurationWarnings.GetConfigurationWarnings",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Retirement prohibited: current cached Blizzard Lua consumes this member. Keep modeled configuration warning state and report historical absence mismatch; complete qualified/bare/caller scans retained."
+    },
+    {
+      "source_id": "wt-global-api-C_ConfigurationWarnings.SetConfigurationWarningSeen-129",
+      "source": "C_ConfigurationWarnings.SetConfigurationWarningSeen",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Retirement prohibited: current cached Blizzard Lua consumes this member. Keep modeled configuration warning state and report historical absence mismatch; complete qualified/bare/caller scans retained."
+    },
+    {
+      "source_id": "wt-events-AUCTION_HOUSE_SCRIPT_DEPRECATED-136",
+      "source": "AUCTION_HOUSE_SCRIPT_DEPRECATED",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-events-AZERITE_EMPOWERED_ITEM_EQUIPPED_STATUS_CHANGED-137",
+      "source": "AZERITE_EMPOWERED_ITEM_EQUIPPED_STATUS_CHANGED",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-events-INCOMING_SUMMON_CHANGED-138",
+      "source": "INCOMING_SUMMON_CHANGED",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-events-MYTHIC_PLUS_CURRENT_AFFIX_UPDATE-139",
+      "source": "MYTHIC_PLUS_CURRENT_AFFIX_UPDATE",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-events-MYTHIC_PLUS_NEW_SEASON_RECORD-140",
+      "source": "MYTHIC_PLUS_NEW_SEASON_RECORD",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-events-MYTHIC_PLUS_NEW_WEEKLY_RECORD-141",
+      "source": "MYTHIC_PLUS_NEW_WEEKLY_RECORD",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-events-REPORT_PLAYER_RESULT-142",
+      "source": "REPORT_PLAYER_RESULT",
+      "status": "partial-development-green",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Publication/absence observation only; no signature, populated-output, payload, security or behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-C_Calendar.EventGetClubID-120",
+      "source": "C_Calendar.EventGetClubID",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Consumer-free retail absence; bare/repeated/cached checks and Mists preservation. No native signature or behavior claim."
+    },
+    {
+      "source_id": "wt-global-api-C_Calendar.EventGetClubId-120",
+      "source": "C_Calendar.EventGetClubId",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No selected calendar-event club identity producer. Requires a selected event with club ownership and missing-selection semantics."
+    },
+    {
+      "source_id": "wt-global-api-C_Calendar.EventSetClubID-121",
+      "source": "C_Calendar.EventSetClubID",
+      "status": "bounded-coverage",
+      "capabilities": [
+        {
+          "kind": "publication/absence",
+          "proof": "tests/patch_8_1_0_publication_sweep.rs"
+        }
+      ],
+      "note": "Consumer-free retail absence; bare/repeated/cached checks and Mists preservation. No native signature or behavior claim."
+    },
+    {
+      "source_id": "wt-global-api-C_Calendar.EventSetClubId-121",
+      "source": "C_Calendar.EventSetClubId",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "No selected calendar-event club mutation. Requires selected event ownership, accepted club IDs and coherent update notifications."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-005",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-006",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-007",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-008",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+    },
+    {
+      "source_id": "source-context-010",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+    },
+    {
+      "source_id": "source-context-011",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-012",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-013",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-014",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-015",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-016",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-017",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+    },
+    {
+      "source_id": "source-context-019",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-020",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source explicitly supplies only \"?\" for this section; no enumerated contract to implement. Retain source uncertainty, not behavioral credit."
+    },
+    {
+      "source_id": "source-context-022",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+    },
+    {
+      "source_id": "source-context-024",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-025",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+    },
+    {
+      "source_id": "source-context-027",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-028",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Source explicitly supplies only \"?\" for this section; no enumerated contract to implement. Retain source uncertainty, not behavioral credit."
+    },
+    {
+      "source_id": "source-context-030",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+    },
+    {
+      "source_id": "source-context-031",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+    },
+    {
+      "source_id": "source-context-033",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-034",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+    },
+    {
+      "source_id": "source-context-036",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+    },
+    {
+      "source_id": "prose-undated-037",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Source/build/section/namespace/caption/reference context retained literally; inventory identities audited separately. No whole-namespace absence, linked-page content or behavioral credit."
+    }
+  ]
+}

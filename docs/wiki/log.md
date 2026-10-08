@@ -318,3 +318,8 @@ Pinned page 109654 revision 6471393; 220 inventory rows, command-column identity
 ## [2026-10-08] investigation | Slow integration prefork classification
 
 [Test-suite performance](investigations/test-suite-performance.md): complete >=1s fixture classification, original source traces, class/module time totals and disjoint module priorities. Eligibility is source-level; migration execution proof follows.
+
+
+## 2026-10-08 — 8.1.0 API page audit
+
+[Audit](investigations/patch-8-1-0-api-audit.md): refetch/pin revision 4462737; exhaustive API/rename/CVar/extract accounting, supplied calendar ordering, three consumer-free retirements, configuration-provider retention, complete grep callers and reproducible opt-in tooling. Validator preserves original shared inputs via pinned git trees, not post-merge path/digest assumptions.

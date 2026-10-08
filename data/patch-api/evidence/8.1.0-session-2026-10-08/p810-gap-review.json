@@ -1,0 +1,1322 @@
+[
+  {
+    "source_id": "wt-cvars-gxMTOpaque-158",
+    "symbol": "gxMTOpaque",
+    "wikitext_line": 158,
+    "literal": ": {{api|t=c|gxMTOpaque}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "gxMTOpaque"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "reason": "CVar not registered. The page gives no default or simulator render-thread control contract; registering an arbitrary string would only fabricate publication."
+  },
+  {
+    "source_id": "wt-global-api-C_AchievementInfo.GetSupercedingAchievements-13",
+    "symbol": "C_AchievementInfo.GetSupercedingAchievements",
+    "wikitext_line": 13,
+    "literal": "* {{api|C_AchievementInfo.GetSupercedingAchievements}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_AchievementInfo.GetSupercedingAchievements"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw achievement supersession query. Achievement records lack an ordered supersession relation; previous/next achievements are not proof of superseding achievements."
+  },
+  {
+    "source_id": "wt-global-api-C_Calendar.GetEventIndexInfo-20",
+    "symbol": "C_Calendar.GetEventIndexInfo",
+    "wikitext_line": 20,
+    "literal": "* {{api|C_Calendar.GetEventIndexInfo}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Calendar.GetEventIndexInfo"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No calendar event-index DTO producer. Needs the selected event calendar offset/day/index relation, not a fixed tuple."
+  },
+  {
+    "source_id": "wt-global-api-C_Calendar.GetNextClubId-21",
+    "symbol": "C_Calendar.GetNextClubId",
+    "wikitext_line": 21,
+    "literal": "* {{api|C_Calendar.GetNextClubId}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Calendar.GetNextClubId"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No pending/new-event club-ID state query. Needs staged calendar editor state distinct from current event ownership."
+  },
+  {
+    "source_id": "wt-global-api-C_Calendar.SetNextClubId-22",
+    "symbol": "C_Calendar.SetNextClubId",
+    "wikitext_line": 22,
+    "literal": "* {{api|C_Calendar.SetNextClubId}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Calendar.SetNextClubId"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No pending/new-event club-ID state mutation. Needs editor state and its consumption by event creation, not a no-op setter."
+  },
+  {
+    "source_id": "wt-global-api-C_ChatInfo.ResetDefaultZoneChannels-24",
+    "symbol": "C_ChatInfo.ResetDefaultZoneChannels",
+    "wikitext_line": 24,
+    "literal": "* {{api|C_ChatInfo.ResetDefaultZoneChannels}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ChatInfo.ResetDefaultZoneChannels"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw zone-channel reset. Needs zone channel policy, joined-channel state and join/leave transitions; current channel defaults do not model reset."
+  },
+  {
+    "source_id": "wt-global-api-C_ChatInfo.SwapChatChannelsByChannelIndex-25",
+    "symbol": "C_ChatInfo.SwapChatChannelsByChannelIndex",
+    "wikitext_line": 25,
+    "literal": "* {{api|C_ChatInfo.SwapChatChannelsByChannelIndex}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ChatInfo.SwapChatChannelsByChannelIndex"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw ordered chat-channel swap. Needs channel IDs/indexes and the resulting persisted order; unrelated chat messages are not channel ordering."
+  },
+  {
+    "source_id": "wt-global-api-C_Club.AddClubStreamChatChannel-26",
+    "symbol": "C_Club.AddClubStreamChatChannel",
+    "wikitext_line": 26,
+    "literal": "* {{api|C_Club.AddClubStreamChatChannel}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Club.AddClubStreamChatChannel"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No club stream-to-chat channel join. Requires club/stream identity, membership and coherent channel state/events."
+  },
+  {
+    "source_id": "wt-global-api-C_Club.Flush-27",
+    "symbol": "C_Club.Flush",
+    "wikitext_line": 27,
+    "literal": "* {{api|C_Club.Flush}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Club.Flush"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw club cache flush. Needs cached request/snapshot ownership and invalidation semantics; an empty function would not flush anything."
+  },
+  {
+    "source_id": "wt-global-api-C_CurrencyInfo.DoesWarModeBonusApply-29",
+    "symbol": "C_CurrencyInfo.DoesWarModeBonusApply",
+    "wikitext_line": 29,
+    "literal": "* {{api|C_CurrencyInfo.DoesWarModeBonusApply}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_CurrencyInfo.DoesWarModeBonusApply"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No per-currency war-mode eligibility metadata query. A global war-mode boolean cannot establish whether this currency gets a bonus."
+  },
+  {
+    "source_id": "wt-global-api-C_Debug.DashboardIsEnabled-35",
+    "symbol": "C_Debug.DashboardIsEnabled",
+    "wikitext_line": 35,
+    "literal": "* {{api|C_Debug.DashboardIsEnabled}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Debug.DashboardIsEnabled"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No debug-dashboard state/domain. Native client diagnostics are not the simulator GUI; do not publish a constant as an enabled-state model."
+  },
+  {
+    "source_id": "wt-global-api-C_FriendList.AddFriend-38",
+    "symbol": "C_FriendList.AddFriend",
+    "wikitext_line": 38,
+    "literal": "* {{api|C_FriendList.AddFriend}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_FriendList.AddFriend"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw friend-list producer for friend request creation and response events. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+  },
+  {
+    "source_id": "wt-global-api-C_FriendList.AddIgnore-39",
+    "symbol": "C_FriendList.AddIgnore",
+    "wikitext_line": 39,
+    "literal": "* {{api|C_FriendList.AddIgnore}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_FriendList.AddIgnore"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw friend-list producer for ignore-list identity insertion. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+  },
+  {
+    "source_id": "wt-global-api-C_FriendList.AddOrDelIgnore-40",
+    "symbol": "C_FriendList.AddOrDelIgnore",
+    "wikitext_line": 40,
+    "literal": "* {{api|C_FriendList.AddOrDelIgnore}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_FriendList.AddOrDelIgnore"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw friend-list producer for ignore-list membership toggle. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+  },
+  {
+    "source_id": "wt-global-api-C_FriendList.AddOrRemoveFriend-41",
+    "symbol": "C_FriendList.AddOrRemoveFriend",
+    "wikitext_line": 41,
+    "literal": "* {{api|C_FriendList.AddOrRemoveFriend}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_FriendList.AddOrRemoveFriend"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw friend-list producer for friend membership toggle with pending request semantics. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+  },
+  {
+    "source_id": "wt-global-api-C_FriendList.DelIgnore-42",
+    "symbol": "C_FriendList.DelIgnore",
+    "wikitext_line": 42,
+    "literal": "* {{api|C_FriendList.DelIgnore}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_FriendList.DelIgnore"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw friend-list producer for ignore-list identity removal. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+  },
+  {
+    "source_id": "wt-global-api-C_FriendList.DelIgnoreByIndex-43",
+    "symbol": "C_FriendList.DelIgnoreByIndex",
+    "wikitext_line": 43,
+    "literal": "* {{api|C_FriendList.DelIgnoreByIndex}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_FriendList.DelIgnoreByIndex"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw friend-list producer for ordered ignore-list removal by index. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+  },
+  {
+    "source_id": "wt-global-api-C_FriendList.GetFriendInfo-44",
+    "symbol": "C_FriendList.GetFriendInfo",
+    "wikitext_line": 44,
+    "literal": "* {{api|C_FriendList.GetFriendInfo}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_FriendList.GetFriendInfo"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw friend-list producer for name/identity-based friend DTO lookup distinct from index lookup. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+  },
+  {
+    "source_id": "wt-global-api-C_FriendList.GetSelectedFriend-51",
+    "symbol": "C_FriendList.GetSelectedFriend",
+    "wikitext_line": 51,
+    "literal": "* {{api|C_FriendList.GetSelectedFriend}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_FriendList.GetSelectedFriend"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw friend-list producer for selected friend index and empty-selection behavior. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+  },
+  {
+    "source_id": "wt-global-api-C_FriendList.GetSelectedIgnore-52",
+    "symbol": "C_FriendList.GetSelectedIgnore",
+    "wikitext_line": 52,
+    "literal": "* {{api|C_FriendList.GetSelectedIgnore}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_FriendList.GetSelectedIgnore"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw friend-list producer for selected ignore index and empty-selection behavior. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+  },
+  {
+    "source_id": "wt-global-api-C_FriendList.IsIgnored-55",
+    "symbol": "C_FriendList.IsIgnored",
+    "wikitext_line": 55,
+    "literal": "* {{api|C_FriendList.IsIgnored}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_FriendList.IsIgnored"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw friend-list producer for ignore membership by accepted player identity. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+  },
+  {
+    "source_id": "wt-global-api-C_FriendList.IsIgnoredByGuid-56",
+    "symbol": "C_FriendList.IsIgnoredByGuid",
+    "wikitext_line": 56,
+    "literal": "* {{api|C_FriendList.IsIgnoredByGuid}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_FriendList.IsIgnoredByGuid"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw friend-list producer for GUID-to-ignore identity mapping and membership. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+  },
+  {
+    "source_id": "wt-global-api-C_FriendList.RemoveFriend-57",
+    "symbol": "C_FriendList.RemoveFriend",
+    "wikitext_line": 57,
+    "literal": "* {{api|C_FriendList.RemoveFriend}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_FriendList.RemoveFriend"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw friend-list producer for friend removal by accepted player identity. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+  },
+  {
+    "source_id": "wt-global-api-C_FriendList.RemoveFriendByIndex-58",
+    "symbol": "C_FriendList.RemoveFriendByIndex",
+    "wikitext_line": 58,
+    "literal": "* {{api|C_FriendList.RemoveFriendByIndex}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_FriendList.RemoveFriendByIndex"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw friend-list producer for ordered friend removal by index. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+  },
+  {
+    "source_id": "wt-global-api-C_FriendList.SendWho-59",
+    "symbol": "C_FriendList.SendWho",
+    "wikitext_line": 59,
+    "literal": "* {{api|C_FriendList.SendWho}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_FriendList.SendWho"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw friend-list producer for who request/query lifecycle and response delivery; native hardware-event policy unverified. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+  },
+  {
+    "source_id": "wt-global-api-C_FriendList.SetFriendNotes-60",
+    "symbol": "C_FriendList.SetFriendNotes",
+    "wikitext_line": 60,
+    "literal": "* {{api|C_FriendList.SetFriendNotes}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_FriendList.SetFriendNotes"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw friend-list producer for identity-based friend note mutation. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+  },
+  {
+    "source_id": "wt-global-api-C_FriendList.SetFriendNotesByIndex-61",
+    "symbol": "C_FriendList.SetFriendNotesByIndex",
+    "wikitext_line": 61,
+    "literal": "* {{api|C_FriendList.SetFriendNotesByIndex}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_FriendList.SetFriendNotesByIndex"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw friend-list producer for index-based friend note mutation. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+  },
+  {
+    "source_id": "wt-global-api-C_FriendList.SetSelectedFriend-62",
+    "symbol": "C_FriendList.SetSelectedFriend",
+    "wikitext_line": 62,
+    "literal": "* {{api|C_FriendList.SetSelectedFriend}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_FriendList.SetSelectedFriend"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw friend-list producer for persistent selected friend index updates. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+  },
+  {
+    "source_id": "wt-global-api-C_FriendList.SetSelectedIgnore-63",
+    "symbol": "C_FriendList.SetSelectedIgnore",
+    "wikitext_line": 63,
+    "literal": "* {{api|C_FriendList.SetSelectedIgnore}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_FriendList.SetSelectedIgnore"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw friend-list producer for persistent selected ignore index updates. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+  },
+  {
+    "source_id": "wt-global-api-C_FriendList.SortWho-66",
+    "symbol": "C_FriendList.SortWho",
+    "wikitext_line": 66,
+    "literal": "* {{api|C_FriendList.SortWho}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_FriendList.SortWho"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw friend-list producer for stable who-result ordering with field/direction semantics. Requires coherent friend/ignore/who backing state; existing indexed/read-only fixtures and namespace autostubs do not implement this operation."
+  },
+  {
+    "source_id": "wt-global-api-C_Garrison.IsEnvironmentCountered-67",
+    "symbol": "C_Garrison.IsEnvironmentCountered",
+    "wikitext_line": 67,
+    "literal": "* {{api|C_Garrison.IsEnvironmentCountered}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Garrison.IsEnvironmentCountered"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No environment-counter computation. Requires mission environment mechanics and follower ability matching; mission presence alone is insufficient."
+  },
+  {
+    "source_id": "wt-global-api-C_Item.CanScrapItem-71",
+    "symbol": "C_Item.CanScrapItem",
+    "wikitext_line": 71,
+    "literal": "* {{api|C_Item.CanScrapItem}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Item.CanScrapItem"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No item scrapping eligibility metadata/policy. Inventory presence does not identify scrappable classes, restrictions or context."
+  },
+  {
+    "source_id": "wt-global-api-C_Item.CanViewItemPowers-72",
+    "symbol": "C_Item.CanViewItemPowers",
+    "wikitext_line": 72,
+    "literal": "* {{api|C_Item.CanViewItemPowers}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Item.CanViewItemPowers"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No item power-view eligibility metadata. Item links and Azerite defaults do not establish whether this item supports power viewing."
+  },
+  {
+    "source_id": "wt-global-api-C_Loot.IsLegacyLootModeEnabled-76",
+    "symbol": "C_Loot.IsLegacyLootModeEnabled",
+    "wikitext_line": 76,
+    "literal": "* {{api|C_Loot.IsLegacyLootModeEnabled}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Loot.IsLegacyLootModeEnabled"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "parent raw-absent; raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No legacy-loot mode state. Requires instance expansion/level/eligibility rules and selected loot context, not an arbitrary boolean."
+  },
+  {
+    "source_id": "wt-global-api-C_Map.GetBountySetMaps-77",
+    "symbol": "C_Map.GetBountySetMaps",
+    "wikitext_line": 77,
+    "literal": "* {{api|C_Map.GetBountySetMaps}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Map.GetBountySetMaps"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No bounty-set to ordered map index. Map records lack bounty-set membership, so returning every map or an empty table would fabricate the relation."
+  },
+  {
+    "source_id": "wt-global-api-C_MountJournal.GetMountFromItem-78",
+    "symbol": "C_MountJournal.GetMountFromItem",
+    "wikitext_line": 78,
+    "literal": "* {{api|C_MountJournal.GetMountFromItem}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_MountJournal.GetMountFromItem"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No item-ID to mount-ID relation. Existing mount spell IDs cannot be treated as item IDs; needs item association metadata and unknown-ID output."
+  },
+  {
+    "source_id": "wt-global-api-C_PartyInfo.GetInviteReferralInfo-81",
+    "symbol": "C_PartyInfo.GetInviteReferralInfo",
+    "wikitext_line": 81,
+    "literal": "* {{api|C_PartyInfo.GetInviteReferralInfo}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PartyInfo.GetInviteReferralInfo"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No pending party invitation referral DTO. Needs inviter/referral identity and request lifetime rather than the joined roster."
+  },
+  {
+    "source_id": "wt-global-api-C_PetJournal.GetPetInfoByItemID-82",
+    "symbol": "C_PetJournal.GetPetInfoByItemID",
+    "wikitext_line": 82,
+    "literal": "* {{api|C_PetJournal.GetPetInfoByItemID}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PetJournal.GetPetInfoByItemID"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No item-to-battle-pet species relation. Current species journal records do not supply item association metadata."
+  },
+  {
+    "source_id": "wt-global-api-C_PlayerInfo.GUIDIsPlayer-83",
+    "symbol": "C_PlayerInfo.GUIDIsPlayer",
+    "wikitext_line": 83,
+    "literal": "* {{api|C_PlayerInfo.GUIDIsPlayer}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PlayerInfo.GUIDIsPlayer"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No raw player-GUID classifier. Existing PlayerLocation temporary provider is not an unconditional C API producer; needs accepted GUID grammar/security contract without name or unit existence assumptions."
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.CanToggleWarModeInArea-84",
+    "symbol": "C_PvP.CanToggleWarModeInArea",
+    "wikitext_line": 84,
+    "literal": "* {{api|C_PvP.CanToggleWarModeInArea}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.CanToggleWarModeInArea"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No area-specific war-mode toggle policy. War-mode state alone lacks sanctuary/capital/map eligibility metadata."
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetRewardItemLevelsByTierEnum-85",
+    "symbol": "C_PvP.GetRewardItemLevelsByTierEnum",
+    "wikitext_line": 85,
+    "literal": "* {{api|C_PvP.GetRewardItemLevelsByTierEnum}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.GetRewardItemLevelsByTierEnum"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No tier-enum reward level table. Needs season/bracket/tier item-level metadata; rating records alone cannot derive reward levels."
+  },
+  {
+    "source_id": "wt-global-api-C_PvP.GetWeeklyChestInfo-88",
+    "symbol": "C_PvP.GetWeeklyChestInfo",
+    "wikitext_line": 88,
+    "literal": "* {{api|C_PvP.GetWeeklyChestInfo}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.GetWeeklyChestInfo"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No historical PvP chest progress/reward DTO. Needs season-owned weekly entitlement state and historical fields; current weekly vault state is a different contract."
+  },
+  {
+    "source_id": "wt-global-api-C_QuestChoice.GetQuestChoiceInfo-90",
+    "symbol": "C_QuestChoice.GetQuestChoiceInfo",
+    "wikitext_line": 90,
+    "literal": "* {{api|C_QuestChoice.GetQuestChoiceInfo}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_QuestChoice.GetQuestChoiceInfo-591",
+      "symbol": "C_QuestChoice.GetQuestChoiceInfo"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "parent raw-absent; raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Later register expects absence, but ordinary namespace lookup still fabricates this member. That later-page removal has a retained gap; this audit does not silently implement another page retirement without consumer/later-readdition proof. Supersession ID: wt-global-api-C_QuestChoice.GetQuestChoiceInfo-591"
+  },
+  {
+    "source_id": "wt-global-api-C_QuestChoice.GetQuestChoiceOptionInfo-91",
+    "symbol": "C_QuestChoice.GetQuestChoiceOptionInfo",
+    "wikitext_line": 91,
+    "literal": "* {{api|C_QuestChoice.GetQuestChoiceOptionInfo}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_QuestChoice.GetQuestChoiceOptionInfo-592",
+      "symbol": "C_QuestChoice.GetQuestChoiceOptionInfo"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Later register expects absence, but ordinary namespace lookup still fabricates this member. That later-page removal has a retained gap; this audit does not silently implement another page retirement without consumer/later-readdition proof. Supersession ID: wt-global-api-C_QuestChoice.GetQuestChoiceOptionInfo-592"
+  },
+  {
+    "source_id": "wt-global-api-C_QuestLine.RequestQuestLinesForMap-92",
+    "symbol": "C_QuestLine.RequestQuestLinesForMap",
+    "wikitext_line": 92,
+    "literal": "* {{api|C_QuestLine.RequestQuestLinesForMap}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestLine.RequestQuestLinesForMap"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No questline request lifecycle. Needs a host map-to-questline index, response snapshot and completion events, not a no-op request."
+  },
+  {
+    "source_id": "wt-global-api-C_ReportSystem.CanReportPlayer-96",
+    "symbol": "C_ReportSystem.CanReportPlayer",
+    "wikitext_line": 96,
+    "literal": "* {{api|C_ReportSystem.CanReportPlayer}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ReportSystem.CanReportPlayer"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No player-report eligibility policy. Needs target/report context and permission restrictions; account presence is insufficient."
+  },
+  {
+    "source_id": "wt-global-api-C_ReportSystem.ReportPlayer-97",
+    "symbol": "C_ReportSystem.ReportPlayer",
+    "wikitext_line": 97,
+    "literal": "* {{api|C_ReportSystem.ReportPlayer}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ReportSystem.ReportPlayer"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No player-report submission lifecycle. Current report-system state does not store target, report type and submission/result transition for this legacy member."
+  },
+  {
+    "source_id": "wt-global-api-C_ReportSystem.ReportServerLag-98",
+    "symbol": "C_ReportSystem.ReportServerLag",
+    "wikitext_line": 98,
+    "literal": "* {{api|C_ReportSystem.ReportServerLag}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ReportSystem.ReportServerLag"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No server-lag reporting transport/request state. Simulator network statistics are not a report submission; native backend remains unmodeled."
+  },
+  {
+    "source_id": "wt-global-api-C_SummonInfo.CancelSummon-104",
+    "symbol": "C_SummonInfo.CancelSummon",
+    "wikitext_line": 104,
+    "literal": "* {{api|C_SummonInfo.CancelSummon}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_SummonInfo.CancelSummon"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No pending summon cancellation mutation. Needs a pending offer and its rejected/cleared transition with summon notifications."
+  },
+  {
+    "source_id": "wt-global-api-C_SummonInfo.ConfirmSummon-105",
+    "symbol": "C_SummonInfo.ConfirmSummon",
+    "wikitext_line": 105,
+    "literal": "* {{api|C_SummonInfo.ConfirmSummon}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_SummonInfo.ConfirmSummon"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No pending summon acceptance mutation. Needs pending inviter/destination, expiration and accepted travel transition; teleporting immediately would bypass offer state."
+  },
+  {
+    "source_id": "wt-global-api-C_SummonInfo.GetSummonConfirmAreaName-106",
+    "symbol": "C_SummonInfo.GetSummonConfirmAreaName",
+    "wikitext_line": 106,
+    "literal": "* {{api|C_SummonInfo.GetSummonConfirmAreaName}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_SummonInfo.GetSummonConfirmAreaName"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No pending summon destination name producer. Current player area is not the offered summon destination."
+  },
+  {
+    "source_id": "wt-global-api-C_SummonInfo.GetSummonConfirmSummoner-107",
+    "symbol": "C_SummonInfo.GetSummonConfirmSummoner",
+    "wikitext_line": 107,
+    "literal": "* {{api|C_SummonInfo.GetSummonConfirmSummoner}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_SummonInfo.GetSummonConfirmSummoner"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No pending summon inviter identity producer. Needs the active offer sender, not a constant or player name."
+  },
+  {
+    "source_id": "wt-global-api-C_TradeSkillUI.GetTradeSkillLineInfoByID-113",
+    "symbol": "C_TradeSkillUI.GetTradeSkillLineInfoByID",
+    "wikitext_line": 113,
+    "literal": "* {{api|C_TradeSkillUI.GetTradeSkillLineInfoByID}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_TradeSkillUI.GetTradeSkillLineInfoByID-519",
+      "symbol": "C_TradeSkillUI.GetTradeSkillLineInfoByID"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Later register expects absence, but ordinary namespace lookup still fabricates this member. That later-page removal has a retained gap; this audit does not silently implement another page retirement without consumer/later-readdition proof. Supersession ID: wt-global-api-C_TradeSkillUI.GetTradeSkillLineInfoByID-519"
+  },
+  {
+    "source_id": "wt-global-api-C_UIWidgetManager.GetSpellDisplayVisualizationInfo-114",
+    "symbol": "C_UIWidgetManager.GetSpellDisplayVisualizationInfo",
+    "wikitext_line": 114,
+    "literal": "* {{api|C_UIWidgetManager.GetSpellDisplayVisualizationInfo}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_UIWidgetManager.GetSpellDisplayVisualizationInfo"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No spell-display visualization DTO. Requires concrete widget-ID/type payload including spell-specific fields; other widget shapes cannot prove it."
+  },
+  {
+    "source_id": "wt-global-api-C_ConfigurationWarnings.GetConfigurationWarningSeen-126",
+    "symbol": "C_ConfigurationWarnings.GetConfigurationWarningSeen",
+    "wikitext_line": 126,
+    "literal": "* {{api|C_ConfigurationWarnings.GetConfigurationWarningSeen}}",
+    "expectation": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ConfigurationWarnings.GetConfigurationWarningSeen"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No cached consumer, but simulator temporary provider and its unit tests still publish/call this getter after C API registration. Do not retire a live provider path; profile-safe provider/test migration needs a separate modeled contract. Retirement test exposed raw republication; candidate removed from retirement list, complete caller evidence retained."
+  },
+  {
+    "source_id": "wt-global-api-C_ConfigurationWarnings.GetConfigurationWarningString-127",
+    "symbol": "C_ConfigurationWarnings.GetConfigurationWarningString",
+    "wikitext_line": 127,
+    "literal": "* {{api|C_ConfigurationWarnings.GetConfigurationWarningString}}",
+    "expectation": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ConfigurationWarnings.GetConfigurationWarningString"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Retirement prohibited: current cached Blizzard Lua consumes this member. Keep modeled configuration warning state and report historical absence mismatch; complete qualified/bare/caller scans retained."
+  },
+  {
+    "source_id": "wt-global-api-C_ConfigurationWarnings.GetConfigurationWarnings-128",
+    "symbol": "C_ConfigurationWarnings.GetConfigurationWarnings",
+    "wikitext_line": 128,
+    "literal": "* {{api|C_ConfigurationWarnings.GetConfigurationWarnings}}",
+    "expectation": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ConfigurationWarnings.GetConfigurationWarnings"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Retirement prohibited: current cached Blizzard Lua consumes this member. Keep modeled configuration warning state and report historical absence mismatch; complete qualified/bare/caller scans retained."
+  },
+  {
+    "source_id": "wt-global-api-C_ConfigurationWarnings.SetConfigurationWarningSeen-129",
+    "symbol": "C_ConfigurationWarnings.SetConfigurationWarningSeen",
+    "wikitext_line": 129,
+    "literal": "* {{api|C_ConfigurationWarnings.SetConfigurationWarningSeen}}",
+    "expectation": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ConfigurationWarnings.SetConfigurationWarningSeen"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "Retirement prohibited: current cached Blizzard Lua consumes this member. Keep modeled configuration warning state and report historical absence mismatch; complete qualified/bare/caller scans retained."
+  },
+  {
+    "source_id": "wt-global-api-C_Calendar.EventGetClubId-120",
+    "symbol": "C_Calendar.EventGetClubId",
+    "wikitext_line": 120,
+    "literal": "* {{api|C_Calendar.EventGetClubID}} to {{api|C_Calendar.EventGetClubId}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Calendar.EventGetClubId"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No selected calendar-event club identity producer. Requires a selected event with club ownership and missing-selection semantics."
+  },
+  {
+    "source_id": "wt-global-api-C_Calendar.EventSetClubId-121",
+    "symbol": "C_Calendar.EventSetClubId",
+    "wikitext_line": 121,
+    "literal": "* {{api|C_Calendar.EventSetClubID}} to {{api|C_Calendar.EventSetClubId}}",
+    "expectation": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Calendar.EventSetClubId"
+    },
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "reason": "No selected calendar-event club mutation. Requires selected event ownership, accepted club IDs and coherent update notifications."
+  }
+]
