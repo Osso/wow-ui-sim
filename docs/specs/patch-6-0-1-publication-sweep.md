@@ -9,7 +9,8 @@ Audit Warcraft Wiki pageid 3058 revision 31159 as the literal redirect to Patch 
 - [x] Account for the sole context ID as metadata-only, with no runtime credit.
 - [x] Define a zero-row prefork sweep with an empty expected-gap fixture.
 - [x] Place queued 6.0.2, 6.1.0 and 6.2.0 placeholders before merged 6.2.2, 6.2.4 and newer registers.
-- [ ] Pass requested targeted proofs and the fresh-checkout/later-audit validator gate.
+- [x] Pass requested targeted proofs with explicit inherited extract failures.
+- [x] Pass the fresh-checkout/later-audit validator gate.
 
 ## How it works
 

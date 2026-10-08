@@ -445,3 +445,7 @@ Final integration proof: spell-line modules 190/190, prefork tooltip cases 34/34
 ## [2026-10-08] investigation | Patch 6.0.1 redirect audit
 
 Pinned pageid 3058 revision 31159 without following redirect to 6.0.2; empty register and one metadata-only context ID. Added prefork sweep, preserved queued-page order and recorded zero retirement candidates. [Audit](investigations/patch-6-0-1-api-audit.md).
+
+## [2026-10-08] verification | Patch 6.0.1 redirect audit
+
+[Audit](investigations/patch-6-0-1-api-audit.md): own sweep 1/1, all sweep/factory cases 52/52, Python fixtures 4/36/32/8, format and non-vendor-warning-free Mists pass. 51 registers/48 extracts reproduce with three unchanged inherited failures. Sealed validator gate at `352ebb471` passes 30/30 clean and 31/31 after synthetic later audit. No runtime changes or retirements; required queued-page placeholders retained.

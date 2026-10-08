@@ -1,0 +1,17 @@
+{
+  "revision": "352ebb471c3b1d5a01fe6e3d57f5734dddb8c744",
+  "later_revision": "e7a4175281f78ef3d0f76fd47e4c986864be22ad",
+  "status": "PASS",
+  "summary": {
+    "clean": {
+      "failed": 0,
+      "passed": 30
+    },
+    "later_audit": {
+      "failed": 0,
+      "passed": 31
+    }
+  },
+  "log": "p601-validator-gate.log",
+  "log_sha256": "62019919cdda59ff5a736f6a9415458600695f12d77a82affd3c617e4fd7967d"
+}

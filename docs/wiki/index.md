@@ -12,7 +12,7 @@
 
 ## [2026-10-08] investigation | Patch 6.0.1 redirect audit
 
-[Audit](investigations/patch-6-0-1-api-audit.md): pageid 3058 revision 31159 redirects to 6.0.2. Zero API entries, one metadata-only context ID, no models or retirements. Queued 6.0.2/6.1.0/6.2.0 placeholders retained; 52 sweep/factory cases, 80 Python fixtures, format/Mists and 51 register reproductions pass; three inherited extract failures unchanged. Portability gate pending.
+[Audit](investigations/patch-6-0-1-api-audit.md): pageid 3058 revision 31159 redirects to 6.0.2. Zero API entries, one metadata-only context ID, no models or retirements. Queued 6.0.2/6.1.0/6.2.0 placeholders retained; 52 sweep/factory cases, 80 Python fixtures, format/Mists and 51 register reproductions pass; three inherited extract failures unchanged. Validator gate passes 30/30 clean and 31/31 later-audit (synthetic included).
 
 ## [2026-10-08] integration | Patch 6.2.4 API audit
 
