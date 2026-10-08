@@ -550,6 +550,19 @@ def parse_indented_api_lists(text):
     return entries
 
 
+def parse_colon_api_bullets(text):
+    """Retain standalone colon-prefixed API additions, not addon descriptions."""
+    entries = []
+    in_new = False
+    for number, line in enumerate(text.splitlines(), 1):
+        heading = re.fullmatch(r'==\s*([^=]+?)\s*==', line)
+        if heading:
+            in_new = heading[1] == 'New'
+        elif in_new and re.fullmatch(r':[*:]+\s*\{\{api\|[^{}]+\}\}', line):
+            entries.append(make_entry('global-api', 'added', number, line))
+    return entries
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("patch", "path", "revid", "out"):
@@ -597,6 +610,8 @@ def main():
                         help='Parse Legion nested inventories, canonical widget owners and explicit removals; opt-in')
     parser.add_argument('--indented-api-lists', action='store_true',
                         help='Retain standalone legacy API lists, rename pairs and CVar removals; opt-in')
+    parser.add_argument('--colon-api-bullets', action='store_true',
+                        help='Retain standalone colon-prefixed New API bullets; opt-in')
     args = parser.parse_args()
     patch, path, revid, out = args.patch, args.path, args.revid, args.out
     raw = Path(path).read_bytes()
@@ -645,6 +660,8 @@ def main():
         entries, counts = parse_legion_prepatch(raw.decode('utf-8')), []
     if args.indented_api_lists:
         entries.extend(parse_indented_api_lists(raw.decode('utf-8')))
+    if args.colon_api_bullets:
+        entries.extend(parse_colon_api_bullets(raw.decode('utf-8')))
     if args.inventory_only:
         for entry in entries:
             for key in ("kind", "page_default", "test_inline"):

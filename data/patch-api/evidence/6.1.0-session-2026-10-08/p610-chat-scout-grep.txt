@@ -1,0 +1,8 @@
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/lua_api/chat_init.rs:125:            SendChatMessage = __wow_send_chat_message
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/lua_api/chat_init.rs:127:                C_ChatInfo.SendChatMessage = __wow_send_chat_message
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/lua_api/globals/message_verbs.rs:2://! `SendChatMessage`.
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/lua_api/globals/message_verbs.rs:10://! - `SendChatMessage(message, chatType, language, target)` — append to
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/lua_api/globals/message_verbs.rs:137:/// `SendChatMessage(message, chatType, language, target)` — log only.
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/lua_api/globals/message_verbs.rs:160:    LuaApiMut::register_function(lua, "SendChatMessage", send_chat_message)?;
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/lua_api/globals/message_verbs.rs:173:            table_set_rust_fn_static(state, chat_info_ref, "SendChatMessage", send_chat_message)?;
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/lua_api/sim_substates/mod.rs:291:/// `kind` is `"chat"` for `SendChatMessage` or `"addon"` for

@@ -1,0 +1,9 @@
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/lua_api/state_types/mythic_plus_scenario.rs:197:    /// `C_DeathRecap.GetRecapEvents`; 1-based.
+/home/osso/.worktrees/wow-ui-sim-p610-page/tests/blizzard_deprecated_combat_log_loads.rs:161:                and DeathRecap_GetEvents == C_DeathRecap.GetRecapEvents \
+/home/osso/.worktrees/wow-ui-sim-p610-page/tests/blizzard_deprecated_combat_log_loads.rs:162:                and DeathRecap_HasEvents == C_DeathRecap.HasRecapEvents \
+/home/osso/.worktrees/wow-ui-sim-p610-page/tests/blizzard_deprecated_combat_log_loads.rs:163:                and GetDeathRecapLink == C_DeathRecap.GetRecapLink",
+/home/osso/.worktrees/wow-ui-sim-p610-page/tests/blizzard_deprecated_combat_log_loads.rs:171:         DeathRecap_GetEvents → C_DeathRecap.GetRecapEvents, DeathRecap_HasEvents → \
+/home/osso/.worktrees/wow-ui-sim-p610-page/tests/blizzard_deprecated_combat_log_loads.rs:172:         C_DeathRecap.HasRecapEvents, GetDeathRecapLink → C_DeathRecap.GetRecapLink"
+/home/osso/.worktrees/wow-ui-sim-p610-page/tests/blizzard_death_recap_loads.rs:154:         frame visibility via ShowUIPanel/HideUIPanel and pushing C_DeathRecap.GetRecapEvents \
+/home/osso/.worktrees/wow-ui-sim-p610-page/tests/blizzard_death_recap_loads.rs:240:         DeathRecapMixin:BuildDataProvider also calls C_DeathRecap.GetRecapEvents(recapID) and \
+/home/osso/.worktrees/wow-ui-sim-p610-page/tests/blizzard_death_recap_loads.rs:269:         C_DeathRecap.GetRecapEvents(recapID) or {{}}` handles the nil case so the call must \

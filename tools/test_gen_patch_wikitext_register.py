@@ -23,6 +23,21 @@ class InventoryTests(unittest.TestCase):
             ('global-api', 'BNGetToonInfo', 'removed', 8)])
         self.assertEqual(len(rows), len({r['id'] for r in rows}))
 
+    def test_colon_api_bullets_keep_only_standalone_new_apis(self):
+        import gen_patch_wikitext_register as generator
+        raw = ('==New==\n:* Blizzard_DeathRecap - combat log\n'
+               '::* {{api|DeathRecap_HasEvents}}\n'
+               '::* {{api|DeathRecap_GetEvents}}\n'
+               '::* {{api|GetDeathRecapLink}}\n'
+               '==Changes==\n::* {{api|NotAnAddition}}\n')
+        rows = generator.parse_colon_api_bullets(raw)
+        self.assertEqual([(r['symbol'], r['direction'], r['wikitext_line']) for r in rows],
+                         [('DeathRecap_HasEvents', 'added', 3),
+                          ('DeathRecap_GetEvents', 'added', 4),
+                          ('GetDeathRecapLink', 'added', 5)])
+        self.assertEqual(generator.parse_colon_api_bullets(
+            '==New==\n:* prose {{api|NotStandalone}}\n'), [])
+
     def test_legion_prepatch_keeps_nested_methods_renames_and_bare_removals(self):
         import gen_patch_wikitext_register as generator
         raw = ('==New==\n* New Widget types: [[UIOBJECT Line|Line]] - derived from Texture\n'
