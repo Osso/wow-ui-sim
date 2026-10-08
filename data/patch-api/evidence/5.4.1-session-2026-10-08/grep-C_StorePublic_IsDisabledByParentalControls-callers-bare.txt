@@ -1,0 +1,1 @@
+src/c_api/patch_retired_members.rs:470:    ("C_StorePublic", &["IsDisabledByParentalControls"]),

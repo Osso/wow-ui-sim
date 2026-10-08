@@ -1,0 +1,5 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mainline/CharacterSelect.lua:2037:    self:RegisterEvent("PRODUCT_ASSIGN_TO_TARGET_FAILED");
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mainline/CharacterSelect.lua:2043:    elseif (event == "PRODUCT_ASSIGN_TO_TARGET_FAILED") then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mainline/CharacterSelect.lua:2052:		StaticPopup_Show("PRODUCT_ASSIGN_TO_TARGET_FAILED", errorText);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mainline/CharacterServices.lua:30:StaticPopupDialogs["PRODUCT_ASSIGN_TO_TARGET_FAILED"] = {
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/GameDialogDefs.lua:3000:StaticPopupDialogs["PRODUCT_ASSIGN_TO_TARGET_FAILED"] = {

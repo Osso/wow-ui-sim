@@ -22,6 +22,10 @@
 
 [Audit](investigations/patch-5-4-2-api-audit.md): integrated against 896086537; 39 gaps unchanged, no replacements/runtime changes. Nine rebased/two external identities and 123 historical artifacts preserved. All 59 registers/56 extracts reproduce with three unchanged inherited failures. Branch/master retail sweeps 58/57 pass; own prefork 3/3, integration selector zero cases, Classic commands 3/3 each (two page sweeps plus line control), Python 89/89, format/Mists warning gate and 43 prior validators pass. All 9,749 other retail observations and both Classic inventories equal master. Negative 39 → 40; Portable gate PASS at dcb39b5d4d3e60502056b1907db44aee4016de38: clean 45/45, synthetic later audit 46/46; zero failures. Historical/integrated own-log tampering is rejected at the exact seal and all bytes restored.
 
+## [2026-10-08] investigation | Patch 5.4.1 API audit
+
+[Audit](investigations/patch-5-4-1-api-audit.md): pinned 2013 retail build 17538/TOC 50400; 15 inventory and 10 extract IDs, two publication gaps and two pending prose contracts. No runtime edits or new retirements; bounded default realm CVar absence and portable targeted proof.
+
 ## [2026-10-08] integration | Patch 6.0.2 API audit
 
 [Audit](investigations/patch-6-0-2-api-audit.md): real 6.1.0/6.2.0/6.2.2 supersession registers; own 275 gaps/657 observations unchanged, all 52 other pages equal pinned master d0fabed03. Branch/master sweeps 54/53 pass; scoped bonus, tracker and vignette consumers pass; broader scenario assertion fails identically on master and remains untouched. 53 registers/50 extracts reproduce with three inherited failures; 84 Python fixtures, format, warning-clean non-vendor Mists and 37 prior validators pass. Twelve original/rebased commit identities and all historical validator invariants preserved. Both addons-enabled startups []; negative 275 → 276; sealed portability PASS clean 35/35 and later 36/36, own-log tampering rejected.

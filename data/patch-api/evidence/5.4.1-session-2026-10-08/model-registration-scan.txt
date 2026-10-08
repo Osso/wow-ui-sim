@@ -1,0 +1,3 @@
+src/c_api/patch_retired_members.rs:470:    ("C_StorePublic", &["IsDisabledByParentalControls"]),
+src/lua_api/globals/enum_data/addon_system.rs:316:        "RecruitAFriend",
+src/loader/tests/wow_api_globals/patch_12_1_service_payloads.rs:160:            if system.RecruitAFriend ~= 3 or system.RecentAllies ~= 4 then return "system-last" end

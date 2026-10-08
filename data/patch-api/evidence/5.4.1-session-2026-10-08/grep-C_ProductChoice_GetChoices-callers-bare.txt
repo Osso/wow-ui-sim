@@ -1,0 +1,12 @@
+src/c_api/patch_retired_members.rs:109:            "GetChoices",
+src/mists/compat_bootstrap.lua:738:if rawget(C_ProductChoice, "GetChoices") == nil then
+src/mists/compat_bootstrap.lua:739:  function C_ProductChoice.GetChoices() return {} end
+tests/patch_8_3_0_classic_surfaces.rs:8:assert(type(C_ProductChoice.GetChoices()) == "table")
+tests/patch_8_3_0_publication_fixes.rs:9:    "C_ProductChoice.GetChoices",
+tests/mists_compat_bootstrap.rs:328:                type(C_ProductChoice.GetChoices())
+tests/mists_product_choice_compat.rs:21:            GetChoices = function() return nil end,
+tests/mists_product_choice_compat.rs:39:            local choices = C_ProductChoice.GetChoices()
+tests/mists_product_choice_compat.rs:41:            return type(C_ProductChoice), type(C_ProductChoice.GetChoices), type(choices), ok, tostring(err)
+tests/mists_product_choice_compat.rs:50:        "the missing product-choice table is the C_ProductChoice.GetChoices() return value"
+tests/mists_product_choice_compat.rs:72:            local choices = C_ProductChoice.GetChoices()
+tests/mists_product_choice_compat.rs:101:            local choices = C_ProductChoice.GetChoices()

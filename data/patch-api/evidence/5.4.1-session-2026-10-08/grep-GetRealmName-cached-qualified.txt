@@ -1,0 +1,7 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopupShared/UnitPopupSharedUtils.lua:73:	return realmName == GetRealmName();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mainline/CharacterServicesPaidCharacterTransfer.lua:82:function TransferRealmEditboxMixin:GetRealmName()
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mainline/CharacterServicesPaidCharacterTransfer.lua:183:		destinationRealm = self.frame.ControlsFrame.TransferRealmEditbox:GetRealmName(),
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Shared/CharacterServicesFreeCharacterTransfer.lua:60:function TransferRealmEditboxMixin:GetRealmName()
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Shared/CharacterServicesFreeCharacterTransfer.lua:142:		destinationRealm = self.frame.ControlsFrame.TransferRealmEditbox:GetRealmName(),
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_RecruitAFriend/RecruitAFriendFrame.lua:1495:local PLAYER_REALM_NAME = GetRealmName();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:411:		playerRealmName = GetRealmName();

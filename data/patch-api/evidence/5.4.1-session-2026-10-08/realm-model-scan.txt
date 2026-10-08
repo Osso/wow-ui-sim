@@ -1,0 +1,49 @@
+src/iced_app/resize_event_tests.rs:88:                local oldValue = GetCVar(cvarName)
+src/iced_app/resize_event_tests.rs:94:                    local pairStateMatches = GetCVar(cvarName) == oldValue
+src/iced_app/resize_event_tests.rs:98:                        and GetCVar(cvarName) == tostring(requestedValue)
+src/wrath/compat_bootstrap.lua:601:if type(SetCVar) == "function" and (GetCVar == nil or GetCVar("voiceChatMode") == nil) then
+src/c_api/c_recent_allies.rs:250:        ("realmName", input.realm_name.as_str()),
+src/c_api/c_battle_net.rs:638:    table_set(state, t, "realmName", realm_name);
+src/lua_api/hot_literals.rs:84:    b"GetCVar",
+src/lua_api/chat_init.rs:216:        local fmt = GetCVar and GetCVar("showTimestamps")
+src/lua_api/workarounds/temporary/client_info_defaults.rs:54:if GetRealmName == nil then
+src/lua_api/workarounds/temporary/client_info_defaults.rs:55:  function GetRealmName()
+src/lua_api/workarounds/temporary/client_info_defaults.rs:262:                if GetRealmName() ~= "SimulatedRealm" or GetNormalizedRealmName() ~= "SimulatedRealm" then return "realm" end
+src/lua_api/globals/missing_surface/character_select.rs:262:    set_string_field(state, table, "realmName", &account.realm_name);
+src/lua_api/globals/set_cvar_verb.rs:1://! `SetCVar` / `GetCVar` globals + `C_CVar.{Set,Get,GetDefault}CVar`.
+src/lua_api/globals/set_cvar_verb.rs:9://! the retail-facing global was `stub_nil`; `GetCVar` came from
+src/lua_api/globals/set_cvar_verb.rs:31:    ("GetCVar", get_cvar),
+src/lua_api/globals/set_cvar_verb.rs:171:/// previously unknown CVar visible to later `GetCVar*` reads.
+src/lua_api/globals/set_cvar_verb.rs:187:/// `GetCVar(name)` — read `SimState.cvars[name]` (override → default).
+src/lua_api/globals/set_cvar_verb.rs:330:    LuaApiMut::register_function(lua, "GetCVar", get_cvar)?;
+src/lua_api/env_init/runtime_surface_bootstrap.lua:325:      { virtualRealmAddress = 101, realmName = "Azeroth" },
+src/lua_api/env_init/runtime_surface_bootstrap.lua:326:      { virtualRealmAddress = 202, realmName = "Kalimdor" },
+src/lua_api/env_init/runtime_surface_bootstrap.lua:330:        { guid = 501001, name = "Simhero", realmName = "Azeroth", wowAccount = 1001, guildMaster = true },
+src/lua_api/env_init/runtime_surface_bootstrap.lua:331:        { guid = 501002, name = "Simshaman", realmName = "Azeroth", wowAccount = 1001, guildMaster = false },
+src/lua_api/env_init/runtime_surface_bootstrap.lua:334:        { guid = 602001, name = "KalimdorMage", realmName = "Kalimdor", wowAccount = 2002, guildMaster = false },
+src/lua_api/env_init/runtime_surface_bootstrap.lua:372:      realmName = nil,
+src/lua_api/env_init/runtime_surface_bootstrap.lua:381:      return realm.realmName
+src/lua_api/env_init/runtime_surface_bootstrap.lua:553:  local realmName = __wow_store_realm_name(destinationRealmAddress)
+src/lua_api/env_init/runtime_surface_bootstrap.lua:554:  local duplicateKey = string.format("%s:%s:%s", tostring(productID), tostring(guid), tostring(realmName))
+src/lua_api/env_init/runtime_surface_bootstrap.lua:564:  __wow_store_state.completion.realmName = realmName
+src/lua_api/env_init/runtime_surface_bootstrap.lua:568:  return __wow_store_state.completion.productID, __wow_store_state.completion.guid, __wow_store_state.completion.realmName, __wow_store_state.disconnectOnLogout == true
+src/lua_api/env_init/runtime_surface_bootstrap.lua:623:  { realmName = "Azeroth", virtualRealmAddress = 101 },
+src/lua_api/env_init/runtime_surface_bootstrap.lua:624:  { realmName = "Kalimdor", virtualRealmAddress = 102 },
+src/lua_api/env_init/runtime_surface_bootstrap.lua:632:      realmName = "Azeroth",
+src/lua_api/env_init/runtime_surface_bootstrap.lua:645:      realmName = "Azeroth",
+src/lua_api/env_init/runtime_surface_bootstrap.lua:660:      realmName = "Kalimdor",
+src/loader/tests/wow_api_globals/patch_12_0_0_adv_fly_cvar_values.rs:21:                    local value = GetCVar(name)
+src/loader/tests/wow_api_globals/patch_12_0_0_changed_startup_values.rs:33:                    local value = GetCVar(name)
+src/loader/tests/wow_api_globals/patch_12_0_0_nameplate_cvar_changed_values.rs:39:                    local value = GetCVar(name)
+src/loader/tests/wow_api_globals/patch_12_0_0_cvar_removals.rs:9:                if GetCVar("ForceAllowAero") ~= nil then
+src/loader/tests/wow_api_globals/patch_12_0_0_cvar_removals.rs:10:                    return "value=" .. tostring(GetCVar("ForceAllowAero"))
+src/loader/tests/wow_api_globals/patch_12_0_0_cvar_removals.rs:167:                    local value = GetCVar(name)
+src/loader/tests/wow_api_globals/patch_12_0_0_cvar_removals.rs:169:                        return name .. ":GetCVar=" .. tostring(value)
+src/loader/tests/wow_api_globals/patch_12_0_0_mount_journal_nameplate_cvar_values.rs:20:                    local value = GetCVar(name)
+src/loader/tests/wow_api_globals/startup_globals.rs:488:            return type(GetCVar("accessibilityScreenNarrationEnabled")),
+src/loader/tests/wow_api_globals/startup_globals.rs:489:                type(GetCVar("discordClientEnabled")),
+src/loader/tests/wow_api_globals/startup_globals.rs:490:                type(GetCVar("pingTarget")),
+src/loader/tests/wow_api_globals/startup_globals.rs:523:            if GetCVar("lastLockedDelvesCompanionAbilities") ~= nil then return "delves-cvar" end
+src/loader/tests/wow_api_globals/startup_globals.rs:524:            if GetCVar("SlugSupersampling") ~= nil then return "slug-cvar" end
+src/loader/tests/wow_api_globals/patch_12_0_0_pet_journal_overlay_tracker_cvar_values.rs:23:                    local value = GetCVar(name)
+src/loader/tests/wow_api_globals/patch_12_0_0_ui_enum_metadata.rs:473:                    local value = GetCVar(name)

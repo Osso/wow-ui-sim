@@ -1,0 +1,32 @@
+src/c_api/patch_retired_members.rs:100:        "C_RecruitAFriend",
+src/c_api/patch_retired_members.rs:101:        &["CheckEmailEnabled", "IsSendingEnabled", "SendRecruit"],
+src/c_api/patch_retired_members.rs:470:    ("C_StorePublic", &["IsDisabledByParentalControls"]),
+src/ptr/compat_bootstrap.rs:45:    ("C_RecruitAFriend", &["IsEnabled"]),
+src/lua_api/hot_literals.rs:179:    b"C_RecruitAFriend",
+src/lua_api/hot_literals.rs:189:    b"C_StorePublic",
+src/lua_api/workarounds/temporary/store_public_defaults.rs:1://! Temporary `C_StorePublic` availability defaults.
+src/lua_api/workarounds/temporary/store_public_defaults.rs:7:C_StorePublic = C_StorePublic or __wow_namespace()
+src/lua_api/workarounds/temporary/store_public_defaults.rs:8:if type(rawget(C_StorePublic, "_state")) ~= "table" then
+src/lua_api/workarounds/temporary/store_public_defaults.rs:9:    rawset(C_StorePublic, "_state", {
+src/lua_api/workarounds/temporary/store_public_defaults.rs:15:if rawget(C_StorePublic, "IsEnabled") == nil then
+src/lua_api/workarounds/temporary/store_public_defaults.rs:16:    function C_StorePublic.IsEnabled()
+src/lua_api/workarounds/temporary/store_public_defaults.rs:21:if rawget(C_StorePublic, "DoesGroupHavePurchaseableProducts") == nil then
+src/lua_api/workarounds/temporary/store_public_defaults.rs:22:    function C_StorePublic.DoesGroupHavePurchaseableProducts(groupID)
+src/lua_api/workarounds/temporary/store_public_defaults.rs:31:if rawget(C_StorePublic, "EventStoreUISetShown") == nil then
+src/lua_api/workarounds/temporary/store_public_defaults.rs:32:    function C_StorePublic.EventStoreUISetShown(shown, contextKey)
+src/lua_api/workarounds/temporary/store_public_defaults.rs:33:        local state = rawget(C_StorePublic, "_state")
+src/lua_api/workarounds/temporary/store_public_defaults.rs:73:                C_StorePublic.EventStoreUISetShown(true, "services")
+src/lua_api/workarounds/temporary/store_public_defaults.rs:74:                return C_StorePublic.IsEnabled(),
+src/lua_api/workarounds/temporary/store_public_defaults.rs:75:                       C_StorePublic.DoesGroupHavePurchaseableProducts(501),
+src/lua_api/workarounds/temporary/store_public_defaults.rs:76:                       rawget(C_StorePublic, "_state").shown,
+src/lua_api/workarounds/temporary/store_public_defaults.rs:77:                       rawget(C_StorePublic, "_state").contextKey
+src/lua_api/workarounds/temporary/store_public_defaults.rs:80:            .expect("C_StorePublic defaults should run");
+src/lua_api/globals/missing_surface/recruit_a_friend.rs:1://! `C_RecruitAFriend` probe surface with disabled-by-default RAF data.
+src/lua_api/globals/missing_surface/recruit_a_friend.rs:10:    let ns = ensure_namespace(state, "C_RecruitAFriend")?;
+src/lua_api/globals/stubs/global_stubs.rs:335:    // 10.2.6 moved this global to C_RecruitAFriend; classic keeps its prior surface.
+src/lua_api/globals/store_frame.rs:73:        if wasShown ~= shown and C_StorePublic and type(C_StorePublic.EventStoreUISetShown) == "function" then
+src/lua_api/globals/store_frame.rs:74:            C_StorePublic.EventStoreUISetShown(shown, contextKeyString)
+src/loader/tests/wow_api_globals/startup_globals.rs:518:            if type(C_RecruitAFriend) == "table" and C_RecruitAFriend.IsEnabled ~= nil then return "raf-enabled" end
+src/loader/tests/wow_api_globals/startup_globals.rs:874:            if C_RecruitAFriend.IsSystemEnabled() ~= false then return "raf-enabled" end
+src/loader/tests/wow_api_globals/startup_globals.rs:875:            if C_RecruitAFriend.IsSystemSupported() ~= false then return "raf-supported" end
+src/loader/tests/wow_api_globals/startup_globals.rs:876:            local canSummon, summonReason = C_RecruitAFriend.CanSummonFriend("player")

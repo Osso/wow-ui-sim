@@ -1,0 +1,1 @@
+tests/patch_8_2_5_publication_fixes.rs:14:    "C_RecruitAFriend.CheckEmailEnabled",

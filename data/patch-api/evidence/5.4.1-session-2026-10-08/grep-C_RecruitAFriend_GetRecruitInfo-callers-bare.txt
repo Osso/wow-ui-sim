@@ -1,0 +1,4 @@
+src/lua_api/globals/missing_surface/recruit_a_friend.rs:13:    table_set_rust_fn_static(state, ns, "GetRecruitInfo", get_recruit_info)?;
+tests/startup_api_glue.rs:162:                   type(select(1, C_RecruitAFriend.GetRecruitInfo())),
+tests/startup_api_glue.rs:163:                   type(select(2, C_RecruitAFriend.GetRecruitInfo())),
+tests/startup_api_glue.rs:214:            local active, faction = C_RecruitAFriend.GetRecruitInfo()

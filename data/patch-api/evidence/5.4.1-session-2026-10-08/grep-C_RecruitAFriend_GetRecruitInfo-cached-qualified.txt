@@ -1,0 +1,2 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CharacterCreate/Blizzard_CharacterCreate.lua:235:	local active, faction = C_RecruitAFriend.GetRecruitInfo();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/DestinyFrame.lua:25:	local active, faction = C_RecruitAFriend.GetRecruitInfo();

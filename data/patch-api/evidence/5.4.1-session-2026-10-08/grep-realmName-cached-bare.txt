@@ -1,0 +1,61 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_LFGUtil/Classic/LFGUtil.lua:95:	local hasFocus, characterName, client, realmName, realmID, faction, race, class, _, zoneName, level, gameText, broadcast, broadcastTime, online, bnetIDGameAccount, bnetIDAccount = BNGetGameAccountInfoByGUID(guid);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopupShared/UnitPopupSharedUtils.lua:68:	local realmName = accountInfo.gameAccountInfo.realmName;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopupShared/UnitPopupSharedUtils.lua:69:	if not realmName then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopupShared/UnitPopupSharedUtils.lua:73:	return realmName == GetRealmName();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mainline/RealmList.lua:494:			local realmName = C_RealmList.GetRealmInfo(realmAddr).name;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mainline/RealmList.lua:496:			if ( realmName == name ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mainline/CharacterSelect/CharacterSelectListElements.lua:861:					statusText:SetText(characterInfo.realmName);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mainline/CharacterSelect/CharacterSelectList.lua:49:		local guid, realmName = ...;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mainline/CharacterSelect/CharacterSelectList.lua:52:				frame.characterInfo.realmName = realmName;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mainline/CharacterSelect/CharacterSelectUtil.lua:133:	local realmName = characterInfo.realmName;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mainline/CharacterSelect/CharacterSelectUtil.lua:153:	GameTooltip_AddColoredLine(GlueTooltip, CHARACTER_SELECT_REALM_TOOLTIP:format(realmName), GRAY_FONT_COLOR);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mainline/CharacterSelect/CharSelectSearch.lua:96:				elseif StringMatch(data.realmName, word) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mainline/CharacterSelect/CharacterSelectUI.lua:755:	local realmName = basicCharacterInfo.realmName;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mainline/CharacterSelect/CharacterSelectUI.lua:763:	return NarrationUtil.MakeNarrationString(realmName, level, className, location, professionName0, professionName1, moneyString);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mainline/CharacterServicesPaidCharacterTransfer.lua:137:		if realm.realmName == candidate then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mainline/CharacterServicesPaidCharacterTransfer.lua:138:			return realm.virtualRealmAddress, IsSameRealm(realm.realmName);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Shared/CharacterServicesTemplates.lua:98:			local name = realm.realmName;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Shared/CharacterServicesFreeCharacterTransfer.lua:113:		if realm.realmName == candidate then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Shared/CharacterServicesFreeCharacterTransfer.lua:114:			return realm.virtualRealmAddress, IsSameRealm(realm.realmName);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/ClubFinder.lua:1304:	if (info.realmName) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/ClubFinder.lua:1305:		GameTooltip_AddNormalLine(GameTooltip, CLUB_FINDER_REALM_NAME:format(info.realmName));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/ClubFinder.lua:1694:function ClubFinderGuildCardsBaseMixin:FindAndUpdateGuildRealmName(clubFinderGUID, realmName)
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/ClubFinder.lua:1697:			self.CardList[i].realmName = realmName;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/ClubFinder.lua:1939:		local clubFinderGUID, realmName = ...;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/ClubFinder.lua:1940:		self.GuildCards:FindAndUpdateGuildRealmName(clubFinderGUID, realmName);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/ClubFinder.lua:1941:		self.PendingGuildCards:FindAndUpdateGuildRealmName(clubFinderGUID, realmName);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_RecentAllies/Blizzard_RecentAlliesTemplates.lua:352:		server = recentAllyData.characterData.realmName,
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_RecentAllies/Blizzard_RecentAlliesTemplates.lua:1020:		server = recentAllyData.characterData.realmName,
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:1693:	local productName, characterName, realmName = C_StoreSecure.GetUnrevokedBoostInfo();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:1695:	StoreDialog.Description:SetText(string.format(BLIZZARD_STORE_BOOST_UNREVOKED_CONSUMPTION, productName, characterName, realmName));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:1983:			notice = string.format(VAS_FACTION_CHANGE_CONFIRMATION, character.name, SelectedRealm.realmName, newFaction);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:1986:			notice = string.format(VAS_RACE_CHANGE_CONFIRMATION, character.name, SelectedRealm.realmName);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:1989:			notice = string.format(VAS_APPEARANCE_CHANGE_CONFIRMATION, character.name, SelectedRealm.realmName);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:1992:			notice = string.format(VAS_CHARACTER_TRANSFER_CONFIRMATION, character.name, SelectedRealm.realmName, BuildCharacterTransferConfirmationString(character));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:2000:				notice = string.format(VAS_GUILD_FACTION_CHANGE_PLUS_NAME_CHANGE_CONFIRMATION, guildMasterInfo.guildName, SelectedRealm.realmName, newFaction, NameChangeNewName, NewGuildMaster, guildMasterInfo.guildName);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:2002:				notice = string.format(VAS_GUILD_FACTION_CHANGE_CONFIRMATION, guildMasterInfo.guildName, SelectedRealm.realmName, newFaction, OldGuildNewName, NewGuildMaster, OldGuildNewName);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:2008:				notice = string.format(VAS_GUILD_TRANSFER_PLUS_NAME_AND_FACTION_CHANGE_CONFIRMATION, guildMasterInfo.guildName, SelectedRealm.realmName, SelectedDestinationRealm, NameChangeNewName, newFaction, NewGuildMaster);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:2010:				notice = string.format(VAS_GUILD_TRANSFER_PLUS_FACTION_CHANGE_CONFIRMATION, guildMasterInfo.guildName, SelectedRealm.realmName, SelectedDestinationRealm, newFaction, NewGuildMaster);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:2012:				notice = string.format(VAS_GUILD_TRANSFER_PLUS_NAME_CHANGE_CONFIRMATION, guildMasterInfo.guildName, SelectedRealm.realmName, SelectedDestinationRealm, NameChangeNewName, NewGuildMaster);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:2014:				notice = string.format(VAS_GUILD_TRANSFER_CONFIRMATION, guildMasterInfo.guildName, SelectedRealm.realmName, SelectedDestinationRealm, NewGuildMaster);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:2314:	self.CharacterSelectionFrame.RealmSelector.Text:SetText(SelectedRealm.realmName);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:2621:	local productID, guid, realmName, shouldHandle = C_StoreSecure.GetVASCompletionInfo();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:2628:		StoreOutbound.StoreFrameShowGlueDialog(string.format(BLIZZARD_STORE_VAS_PRODUCT_READY, productInfo.sharedData.name), guid, realmName, shouldHandle);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:3052:	frame.RealmSelector.Text:SetText(SelectedRealm.realmName);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:3409:				local name = realm.realmName;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:3838:		infoTable[#infoTable+1] = {text=RealmList[i].realmName, value=RealmList[i], checked=(SelectedRealm == RealmList[i])};
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUIInbound.lua:72:		data.realmName = GetServerName();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUIOutbound.lua:64:function StoreOutbound.StoreFrameShowGlueDialog(text, guid, realmName, shouldHandle)
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUIOutbound.lua:65:	securecall("StoreFrame_ShowGlueDialog", text, guid, realmName, shouldHandle);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUIInsecure.lua:40:			if (GetServerName() ~= data.realmName) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUIInsecure.lua:57:			local productID, guid, realmName, shouldHandle = C_StoreSecure.GetVASCompletionInfo();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUIInsecure.lua:68:			if (GetServerName() ~= realmName or StoreFrame_IsVASTransferProduct(productID)) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUIInsecure.lua:83:	function StoreFrame_ShowGlueDialog(text, guid, realmName, shouldHandle)
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUIInsecure.lua:85:		local data = { ["guid"] = guid, ["realmName"] = realmName, ["shouldHandle"] = shouldHandle };
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopup/Mainline/UnitPopupUtils.lua:114:			local realmName = gameAccountInfo.realmName;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopup/Mainline/UnitPopupUtils.lua:115:			if characterName and realmName then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopup/Mainline/UnitPopupUtils.lua:116:				return characterName.."-"..realmName;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsListTemplates.lua:874:	local characterName = FULL_PLAYER_NAME:format(gameAccountInfo.characterName or "", gameAccountInfo.realmName or "");
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:2243:						local realmName = accountInfo.gameAccountInfo.realmDisplayName or UNKNOWN;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:2244:						anchor = FriendsFrameTooltip_SetLine(FriendsTooltipGameAccount1Info, nil, BNET_FRIEND_TOOLTIP_ZONE_AND_REALM:format(areaName, realmName), -4);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FriendsFrame/Mainline/FriendsFrame.lua:2344:					if (gameAccountInfo.realmName == playerRealmName) and (gameAccountInfo.factionName == playerFactionGroup) then

@@ -1,0 +1,26 @@
+[
+  {
+    "source_id": "wt-global-api-SelectedRealmName-25",
+    "symbol": "SelectedRealmName",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "reason": "Selected-realm navigation/session state is absent. Player/account realm fields and a temporary GetRealmName constant do not provide that state; aliasing them would invent semantics."
+  },
+  {
+    "source_id": "wt-events-PRODUCT_CHOICE_UPDATE-36",
+    "symbol": "PRODUCT_CHOICE_UPDATE",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"PRODUCT_CHOICE_UPDATE\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "reason": "Current strict event catalog rejects this historical event; product-choice selection and notification producer are not modeled after 8.3.0 namespace retirement. A registerable name alone would be a shim."
+  }
+]

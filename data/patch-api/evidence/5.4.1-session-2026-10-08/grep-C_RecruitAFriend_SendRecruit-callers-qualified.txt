@@ -1,0 +1,1 @@
+tests/patch_8_2_5_publication_fixes.rs:16:    "C_RecruitAFriend.SendRecruit",

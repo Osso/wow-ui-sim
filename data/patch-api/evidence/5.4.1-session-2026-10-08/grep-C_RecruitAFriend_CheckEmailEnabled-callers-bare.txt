@@ -1,0 +1,2 @@
+src/c_api/patch_retired_members.rs:101:        &["CheckEmailEnabled", "IsSendingEnabled", "SendRecruit"],
+tests/patch_8_2_5_publication_fixes.rs:14:    "C_RecruitAFriend.CheckEmailEnabled",

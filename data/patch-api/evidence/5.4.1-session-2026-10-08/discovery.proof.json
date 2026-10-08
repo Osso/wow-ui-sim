@@ -1,0 +1,23 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_5_4_1"
+  ],
+  "revision": "391d49670039ace0496ff18afeacea6bfb8d5c43",
+  "scope": "discovery",
+  "cwd": ".",
+  "target": "dedicated p541-page target (external to repository)",
+  "environment": {
+    "P541_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p541-page/data/patch-api/evidence/5.4.1-session-2026-10-08/discovery-results.json"
+  },
+  "exit": 1,
+  "log": "discovery.txt",
+  "log_sha256": "6b927f8f30932196251a3f75f5f9ef31c62d1af08527433fa513005ac37dd064",
+  "seconds": 475.3862010399971,
+  "invalidated": true,
+  "reason": "Exploratory run launched before new sweep files were committed; not acceptance proof. Sealed green run at committed source revision replaces this scope."
+}

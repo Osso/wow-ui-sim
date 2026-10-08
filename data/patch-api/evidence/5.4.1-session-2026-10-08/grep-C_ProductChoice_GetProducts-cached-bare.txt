@@ -1,0 +1,7 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:599:	local products = C_StoreSecure.GetProducts(StoreFrame_GetSelectedCategoryID());
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:698:		local products = C_StoreSecure.GetProducts(groupID);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:716:	local entries = C_StoreSecure.GetProducts(StoreFrame_GetSelectedCategoryID());
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:732:		entries = C_StoreSecure.GetProducts(id);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:988:	local products = C_StoreSecure.GetProducts(WOW_SERVICES_CATEGORY_ID);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:1028:	local entries = C_StoreSecure.GetProducts(groupID);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUITemplates.lua:286:		local validCategory = (#StoreFrame_FilterEntries(C_StoreSecure.GetProducts(groupID)) ~= 0) or HasProductGroupChildren(groupID, productGroups);

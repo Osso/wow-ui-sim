@@ -1,0 +1,23 @@
+src/c_api/c_recent_allies.rs:250:        ("realmName", input.realm_name.as_str()),
+src/c_api/c_battle_net.rs:638:    table_set(state, t, "realmName", realm_name);
+src/lua_api/globals/missing_surface/character_select.rs:262:    set_string_field(state, table, "realmName", &account.realm_name);
+src/lua_api/env_init/runtime_surface_bootstrap.lua:325:      { virtualRealmAddress = 101, realmName = "Azeroth" },
+src/lua_api/env_init/runtime_surface_bootstrap.lua:326:      { virtualRealmAddress = 202, realmName = "Kalimdor" },
+src/lua_api/env_init/runtime_surface_bootstrap.lua:330:        { guid = 501001, name = "Simhero", realmName = "Azeroth", wowAccount = 1001, guildMaster = true },
+src/lua_api/env_init/runtime_surface_bootstrap.lua:331:        { guid = 501002, name = "Simshaman", realmName = "Azeroth", wowAccount = 1001, guildMaster = false },
+src/lua_api/env_init/runtime_surface_bootstrap.lua:334:        { guid = 602001, name = "KalimdorMage", realmName = "Kalimdor", wowAccount = 2002, guildMaster = false },
+src/lua_api/env_init/runtime_surface_bootstrap.lua:372:      realmName = nil,
+src/lua_api/env_init/runtime_surface_bootstrap.lua:381:      return realm.realmName
+src/lua_api/env_init/runtime_surface_bootstrap.lua:553:  local realmName = __wow_store_realm_name(destinationRealmAddress)
+src/lua_api/env_init/runtime_surface_bootstrap.lua:554:  local duplicateKey = string.format("%s:%s:%s", tostring(productID), tostring(guid), tostring(realmName))
+src/lua_api/env_init/runtime_surface_bootstrap.lua:564:  __wow_store_state.completion.realmName = realmName
+src/lua_api/env_init/runtime_surface_bootstrap.lua:568:  return __wow_store_state.completion.productID, __wow_store_state.completion.guid, __wow_store_state.completion.realmName, __wow_store_state.disconnectOnLogout == true
+src/lua_api/env_init/runtime_surface_bootstrap.lua:623:  { realmName = "Azeroth", virtualRealmAddress = 101 },
+src/lua_api/env_init/runtime_surface_bootstrap.lua:624:  { realmName = "Kalimdor", virtualRealmAddress = 102 },
+src/lua_api/env_init/runtime_surface_bootstrap.lua:632:      realmName = "Azeroth",
+src/lua_api/env_init/runtime_surface_bootstrap.lua:645:      realmName = "Azeroth",
+src/lua_api/env_init/runtime_surface_bootstrap.lua:660:      realmName = "Kalimdor",
+tests/store_api.rs:67:    if realms[1].realmName ~= "Azeroth" or realms[2].realmName ~= "Kalimdor" then
+tests/store_api.rs:82:    if not character or character.name ~= "Simhero" or character.realmName ~= "Azeroth" then
+tests/c_battle_net_probes.rs:42:            return ga.characterName, ga.realmName, ga.classID, ga.characterLevel, ga.factionName
+tests/recent_allies_state_data.rs:153:        assert(c.fullName == "Aster-FixtureRealm" and c.realmName == "FixtureRealm")

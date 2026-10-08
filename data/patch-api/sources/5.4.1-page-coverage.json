@@ -1,0 +1,191 @@
+{
+  "schema": "patch-api-page-coverage/v1",
+  "patch": "5.4.1",
+  "source": "data/patch-api/sources/5.4.1-wikitext-register.json",
+  "source_sha256": "c24d0f45a77aa4123ac9af977ad75bd710aa272657aa3e15f5e2b2128ad593d5",
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/5.4.1-api-changes.txt",
+    "sha256": "2e9a7139991da34deafdfd1e7dabc760b37006791572f259efe34b6c5d5f5e73"
+  },
+  "proof_policy": "2013 retail only. Publication is not behavior. Two publication gaps and two historical prose contracts remain pending; no runtime shim, new service model or retirement. Queued 5.4.2/5.4.7/5.4.8 comments precede 6.0.1/6.0.2.",
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-C_ProductChoice.GetChoices-17",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after ordered later retail supersession; no historical output, signature, service producer or protected-call policy credit. No new retirement."
+    },
+    {
+      "source_id": "wt-global-api-C_ProductChoice.GetProducts-18",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after ordered later retail supersession; no historical output, signature, service producer or protected-call policy credit. No new retirement."
+    },
+    {
+      "source_id": "wt-global-api-C_ProductChoice.MakeSelection-19",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after ordered later retail supersession; no historical output, signature, service producer or protected-call policy credit. No new retirement."
+    },
+    {
+      "source_id": "wt-global-api-C_RecruitAFriend.CheckEmailEnabled-20",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after ordered later retail supersession; no historical output, signature, service producer or protected-call policy credit. No new retirement."
+    },
+    {
+      "source_id": "wt-global-api-C_RecruitAFriend.GetRecruitInfo-21",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after ordered later retail supersession; no historical output, signature, service producer or protected-call policy credit. No new retirement."
+    },
+    {
+      "source_id": "wt-global-api-C_RecruitAFriend.IsSendingEnabled-22",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after ordered later retail supersession; no historical output, signature, service producer or protected-call policy credit. No new retirement."
+    },
+    {
+      "source_id": "wt-global-api-C_RecruitAFriend.SendRecruit-23",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after ordered later retail supersession; no historical output, signature, service producer or protected-call policy credit. No new retirement."
+    },
+    {
+      "source_id": "wt-global-api-C_StorePublic.IsDisabledByParentalControls-24",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after ordered later retail supersession; no historical output, signature, service producer or protected-call policy credit. No new retirement."
+    },
+    {
+      "source_id": "wt-global-api-SelectedRealmName-25",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Selected-realm navigation/session state is absent. Player/account realm fields and a temporary GetRealmName constant do not provide that state; aliasing them would invent semantics."
+    },
+    {
+      "source_id": "wt-events-PRODUCT_ASSIGN_TO_TARGET_FAILED-35",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after ordered later retail supersession; no historical output, signature, service producer or protected-call policy credit. No new retirement."
+    },
+    {
+      "source_id": "wt-events-PRODUCT_CHOICE_UPDATE-36",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Current strict event catalog rejects this historical event; product-choice selection and notification producer are not modeled after 8.3.0 namespace retirement. A registerable name alone would be a shim."
+    },
+    {
+      "source_id": "wt-events-RECRUIT_A_FRIEND_CAN_EMAIL-37",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after ordered later retail supersession; no historical output, signature, service producer or protected-call policy credit. No new retirement."
+    },
+    {
+      "source_id": "wt-events-RECRUIT_A_FRIEND_INVITATION_FAILED-38",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after ordered later retail supersession; no historical output, signature, service producer or protected-call policy credit. No new retirement."
+    },
+    {
+      "source_id": "wt-events-RECRUIT_A_FRIEND_INVITER_FRIEND_ADDED-39",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after ordered later retail supersession; no historical output, signature, service producer or protected-call policy credit. No new retirement."
+    },
+    {
+      "source_id": "wt-events-RECRUIT_A_FRIEND_SYSTEM_STATUS-40",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Publication/absence only after ordered later retail supersession; no historical output, signature, service producer or protected-call policy credit. No new retirement."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [
+        "default-game-state-realm-cvar-absence"
+      ],
+      "status": "audit-pending",
+      "note": "Default Game-state global and C_CVar reads return nil, asserted in patch_5_4_1_behavior. GetRealmName remains a temporary constant, not player realm identity. Explicit registration/rejection behavior is unproved; full migration contract pending."
+    },
+    {
+      "source_id": "source-context-006",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-007",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "12.0.0 removal supersedes current publication. Historical parental-control secure service policy and tainted UpdateMicroButtons failure boundary are not modeled. Existing cached Classic-subfolder consumer forbids introducing a new retirement."
+    },
+    {
+      "source_id": "source-context-009",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-010",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-011",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "source-context-013",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-014",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Unexpanded reference-list marker; no runtime credit."
+    }
+  ]
+}

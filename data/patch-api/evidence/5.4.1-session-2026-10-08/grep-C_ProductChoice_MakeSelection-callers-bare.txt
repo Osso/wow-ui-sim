@@ -1,0 +1,5 @@
+src/c_api/patch_retired_members.rs:112:            "MakeSelection",
+src/mists/compat_bootstrap.lua:750:if rawget(C_ProductChoice, "MakeSelection") == nil then
+src/mists/compat_bootstrap.lua:751:  function C_ProductChoice.MakeSelection() return false end
+tests/patch_8_3_0_classic_surfaces.rs:11:assert(C_ProductChoice.MakeSelection() == false)
+tests/patch_8_3_0_publication_fixes.rs:12:    "C_ProductChoice.MakeSelection",

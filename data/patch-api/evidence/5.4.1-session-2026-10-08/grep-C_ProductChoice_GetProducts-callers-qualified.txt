@@ -1,0 +1,4 @@
+src/mists/compat_bootstrap.lua:743:  function C_ProductChoice.GetProducts(choiceID) return {} end
+tests/patch_8_3_0_classic_surfaces.rs:9:assert(type(C_ProductChoice.GetProducts(123)) == "table")
+tests/patch_8_3_0_publication_fixes.rs:11:    "C_ProductChoice.GetProducts",
+tests/mists_product_choice_compat.rs:102:            local products = C_ProductChoice.GetProducts(123)

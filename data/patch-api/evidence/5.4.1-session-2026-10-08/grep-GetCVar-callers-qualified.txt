@@ -1,0 +1,116 @@
+src/iced_app/resize_event_tests.rs:88:                local oldValue = GetCVar(cvarName)
+src/iced_app/resize_event_tests.rs:94:                    local pairStateMatches = GetCVar(cvarName) == oldValue
+src/iced_app/resize_event_tests.rs:98:                        and GetCVar(cvarName) == tostring(requestedValue)
+src/wrath/compat_bootstrap.lua:601:if type(SetCVar) == "function" and (GetCVar == nil or GetCVar("voiceChatMode") == nil) then
+src/lua_api/hot_literals.rs:84:    b"GetCVar",
+src/lua_api/chat_init.rs:216:        local fmt = GetCVar and GetCVar("showTimestamps")
+src/lua_api/globals/set_cvar_verb.rs:1://! `SetCVar` / `GetCVar` globals + `C_CVar.{Set,Get,GetDefault}CVar`.
+src/lua_api/globals/set_cvar_verb.rs:9://! the retail-facing global was `stub_nil`; `GetCVar` came from
+src/lua_api/globals/set_cvar_verb.rs:31:    ("GetCVar", get_cvar),
+src/lua_api/globals/set_cvar_verb.rs:171:/// previously unknown CVar visible to later `GetCVar*` reads.
+src/lua_api/globals/set_cvar_verb.rs:187:/// `GetCVar(name)` — read `SimState.cvars[name]` (override → default).
+src/lua_api/globals/set_cvar_verb.rs:330:    LuaApiMut::register_function(lua, "GetCVar", get_cvar)?;
+src/loader/tests/wow_api_globals/patch_12_0_0_adv_fly_cvar_values.rs:21:                    local value = GetCVar(name)
+src/loader/tests/wow_api_globals/patch_12_0_0_changed_startup_values.rs:33:                    local value = GetCVar(name)
+src/loader/tests/wow_api_globals/patch_12_0_0_nameplate_cvar_changed_values.rs:39:                    local value = GetCVar(name)
+src/loader/tests/wow_api_globals/patch_12_0_0_cvar_removals.rs:9:                if GetCVar("ForceAllowAero") ~= nil then
+src/loader/tests/wow_api_globals/patch_12_0_0_cvar_removals.rs:10:                    return "value=" .. tostring(GetCVar("ForceAllowAero"))
+src/loader/tests/wow_api_globals/patch_12_0_0_cvar_removals.rs:167:                    local value = GetCVar(name)
+src/loader/tests/wow_api_globals/patch_12_0_0_cvar_removals.rs:169:                        return name .. ":GetCVar=" .. tostring(value)
+src/loader/tests/wow_api_globals/patch_12_0_0_mount_journal_nameplate_cvar_values.rs:20:                    local value = GetCVar(name)
+src/loader/tests/wow_api_globals/startup_globals.rs:488:            return type(GetCVar("accessibilityScreenNarrationEnabled")),
+src/loader/tests/wow_api_globals/startup_globals.rs:489:                type(GetCVar("discordClientEnabled")),
+src/loader/tests/wow_api_globals/startup_globals.rs:490:                type(GetCVar("pingTarget")),
+src/loader/tests/wow_api_globals/startup_globals.rs:523:            if GetCVar("lastLockedDelvesCompanionAbilities") ~= nil then return "delves-cvar" end
+src/loader/tests/wow_api_globals/startup_globals.rs:524:            if GetCVar("SlugSupersampling") ~= nil then return "slug-cvar" end
+src/loader/tests/wow_api_globals/patch_12_0_0_pet_journal_overlay_tracker_cvar_values.rs:23:                    local value = GetCVar(name)
+src/loader/tests/wow_api_globals/patch_12_0_0_ui_enum_metadata.rs:473:                    local value = GetCVar(name)
+tests/common/publication_sweep.rs:227:    local value = C_CVar.GetCVar(symbol)
+tests/widget_slider.rs:270:        assert(C_CVar.GetCVar('__slider_castbar_scale') == '1.35', 'callback CVar write missing')
+tests/widget_slider.rs:273:        assert(C_CVar.GetCVar('__slider_castbar_scale') == '1')
+tests/blizzard_deprecated_spell_script_loads.rs:161:            local originalValue = GetCVar("SpellQueueWindow")
+tests/mists_nameplates_panel.rs:30:            if tonumber(GetCVar("NamePlateVerticalScale")) == nil then
+tests/p1200_mixed.rs:71:                assert(C_CVar.GetCVar(name) == nil and C_CVar.GetCVarDefault(name) == nil, name)
+tests/p1200_mixed.rs:75:                assert(C_CVar.GetCVar(name) == '1')
+tests/wowforever_gamepad_constants.rs:69:            assert(GetCVar(name) == default, name .. " current")
+tests/wowforever_gamepad_constants.rs:96:            assert(GetCVar(string.lower(name)) == "2")
+tests/wowforever_gamepad_constants.rs:115:            assert(GetCVar(name) == "2" and GetCVarDefault(name) == default)
+tests/wowforever_gamepad_constants.rs:168:        assert(bar:GetLinkedOverrideBarPage(GetCVar(bar.overrideCVar)) == 1)
+tests/patch_11_1_7_publication_fixes.rs:39:            assert(C_CVar.GetCVar(name) == nil)
+tests/set_cvar_global.rs:14:            assert(GetCVar('nameplateShowEnemies') == '0')
+tests/set_cvar_global.rs:17:            assert(C_CVar.GetCVar('nameplateShowEnemies') == '1')
+tests/set_cvar_global.rs:24:                checkNil(GetCVar(name))
+tests/set_cvar_global.rs:25:                checkNil(C_CVar.GetCVar(name))
+tests/set_cvar_global.rs:103:                    observed = table.concat({ event, name, tostring(value), GetCVar(name) }, ":")
+tests/set_cvar_global.rs:127:        .eval(r#"return C_CVar.GetCVar("showTimestamps")"#)
+tests/set_cvar_global.rs:139:            return GetCVar("__codex_register_default"),
+tests/set_cvar_global.rs:140:                   C_CVar.GetCVar("__codex_register_default"),
+tests/set_cvar_global.rs:164:                    assert(GetCVar(name) == entry[3], name .. ' current')
+tests/set_cvar_global.rs:165:                    assert(C_CVar.GetCVar(name) == entry[3], name .. ' namespace current')
+tests/set_cvar_global.rs:172:            assert(C_CVar.GetCVar('debugTargetInfo') == '0')
+tests/set_cvar_global.rs:187:                assert(GetCVar(name) == '1.25')
+tests/set_cvar_global.rs:190:                assert(GetCVar(name) == '1.25')
+tests/set_cvar_global.rs:208:                    assert(GetCVar(name) == nil, name .. ' should remain unknown')
+tests/set_cvar_global.rs:223:            return GetCVar("__codex_register_zero_default"), GetCVarDefault("__codex_register_zero_default"), GetCVarBool("__codex_register_zero_default")
+tests/set_cvar_global.rs:239:            assert(GetCVar(name) == nil)
+tests/set_cvar_global.rs:241:            assert(GetCVar(name) == '', 'explicit empty default must stay empty')
+tests/set_cvar_global.rs:242:            assert(C_CVar.GetCVar(name) == '')
+tests/set_cvar_global.rs:246:            assert(GetCVar(name) == '', 'registration must preserve the first default')
+tests/set_cvar_global.rs:249:            assert(GetCVar(name) == '1.25', 'registration must preserve overrides')
+tests/set_cvar_global.rs:262:            assert(GetCVar(name) == nil)
+tests/set_cvar_global.rs:264:            assert(GetCVar(name) == '0')
+tests/set_cvar_global.rs:279:            if C_CVar and C_CVar.GetCVar then
+tests/set_cvar_global.rs:280:                local ok, value = pcall(C_CVar.GetCVar, name)
+tests/set_cvar_global.rs:283:            if GetCVar then
+tests/set_cvar_global.rs:284:                local ok, value = pcall(GetCVar, name)
+tests/set_cvar_global.rs:297:        assert(GetCVar(name) == nil, 'fixture must start with an unknown CVar')
+tests/set_cvar_global.rs:323:            return GetCVar("__codex_register_preserve_override"), GetCVarDefault("__codex_register_preserve_override")
+tests/mists_nameplate_scale.rs:35:            local previousGetCVar = GetCVar
+tests/mists_nameplate_scale.rs:36:            GetCVar = function(name)
+tests/mists_nameplate_scale.rs:109:            return GetCVar("NamePlateVerticalScale"),
+tests/patch_11_0_5_publication_fixes.rs:36:            assert(GetCVar(name) == '1', name)
+tests/c_api_surface.rs:93:                assert(GetCVar('CAAPulsePlayerHealthPercent') == tostring(value))
+tests/c_api_surface.rs:98:                assert(GetCVar('CAAPulsePlayerHealthPercent') == '9')
+tests/blizzard_stable_ui_loads.rs:178:         is persisted via the petStableSort CVar (GetCVar/SetCVar), and \
+tests/patch_12_1_0_surface_closures.rs:27:                if C_CVar.GetCVar(name) ~= nil or C_CVar.GetCVarDefault(name) ~= nil then
+tests/patch_12_1_0_surface_closures.rs:44:                local before = C_CVar.GetCVar(name) .. "/" .. C_CVar.GetCVarDefault(name)
+tests/patch_12_0_1_retirement.rs:23:            assert(GetCVar(name) == nil, name)
+tests/patch_12_0_1_retirement.rs:27:            assert(GetCVar(name) == nil, name)
+tests/patch_12_0_7_cvars.rs:23:            checkOne(value, GetCVar(name))
+tests/patch_12_0_7_cvars.rs:24:            checkOne(value, C_CVar.GetCVar(name))
+tests/p1207_gap_closures.rs:91:            assert(C_CVar.GetCVar(name) == default, name)
+tests/patch_10_2_6_cached_surfaces.rs:9:        env.exec("assert(GetCVar('profanityFilter') ~= nil)").unwrap();
+tests/test_cvar_display_settings.rs:4://! GetCVar / SetCVar Rust impls make them visible to addon code that
+tests/test_cvar_display_settings.rs:18:    let value: String = env.eval(r#"return GetCVar("Brightness")"#).unwrap();
+tests/test_cvar_display_settings.rs:25:    let value: String = env.eval(r#"return GetCVar("Contrast")"#).unwrap();
+tests/test_cvar_display_settings.rs:32:    let value: String = env.eval(r#"return GetCVar("Gamma")"#).unwrap();
+tests/test_cvar_display_settings.rs:43:            return GetCVar("Brightness")
+tests/test_cvar_display_settings.rs:59:            return GetCVar("Contrast")
+tests/test_cvar_display_settings.rs:71:    let lower: String = env.eval(r#"return GetCVar("brightness")"#).unwrap();
+tests/test_cvar_display_settings.rs:72:    let upper: String = env.eval(r#"return GetCVar("BRIGHTNESS")"#).unwrap();
+tests/test_cvar_display_settings.rs:73:    let mixed: String = env.eval(r#"return GetCVar("Brightness")"#).unwrap();
+tests/test_cvar_display_settings.rs:102:            return C_CVar.GetCVar("Brightness")
+tests/test_cvar_display_settings.rs:115:        .eval(r#"return GetCVar("DefinitelyNotAReal_C_Var_xyz")"#)
+tests/battle_net_api.rs:27:            if GetCVar("useHighResTextures") ~= "1" then
+tests/mists_utility_dialog_interactions.rs:113:    if GetCVar("timeMgrAlarmMessage") ~= "Mists parity alarm" then
+tests/mists_utility_dialog_interactions.rs:116:    local militaryBefore = GetCVar("timeMgrUseMilitaryTime")
+tests/mists_utility_dialog_interactions.rs:118:    if GetCVar("timeMgrUseMilitaryTime") == militaryBefore then
+tests/c_system_api.rs:71:                    assert(GetCVar(record.command) ~= nil)
+tests/c_system_api.rs:79:                and GetCVar('ConsoleRegistryFixture') == '27'
+tests/c_system_api.rs:98:                    assert(GetCVar(record.command) == nil)
+tests/blizzard_ui/blizzard_arrow_callout_frame/behavior_acknowledged_callouts_persist_across_load.rs:18:       GetCVar("acknowledgedArrowCallouts")
+tests/blizzard_ui/blizzard_arrow_callout_frame/behavior_acknowledged_callouts_persist_across_load.rs:32:       GetCVar("acknowledgedArrowCallouts")
+tests/blizzard_ui/blizzard_apidocumentation/behavior_handle_api_link_opendump_seeds_chat_edit.rs:154:        function GetCVar(name)
+tests/blizzard_secure_transfer_ui_loads.rs:324:             colorblind-mode aware via GetCVar('colorblindMode')); \
+tests/globals_legacy.rs:431:        "GetCVar",      // cvar_api
+tests/mists_compat_bootstrap.rs:517:            return GetCVar("worldMapOpacity"),
+tests/mists_compat_bootstrap.rs:518:                GetCVar("NamePlateHorizontalScale"),
+tests/mists_compat_bootstrap.rs:519:                GetCVar("NamePlateVerticalScale"),
+tests/mists_world_map_opacity.rs:42:            local opacity = GetCVar("worldMapOpacity")
+tests/startup_warnings/late.rs:231:            .eval(r#"return GetCVar("PraiseTheSun"), GetCVarDefault("PraiseTheSun")"#)
+tests/blizzard_ping_ui_loads.rs:196:         pingMode is a CVar (read via `tonumber(GetCVar('pingMode'))` at line 207 of \
+tests/blizzard_ping_ui_loads.rs:561:         (returns `tonumber(GetCVar('pingMode'))`) and compared to `Enum.PingMode.\
+tests/console_commands.rs:18:                    assert(C_CVar.GetCVar(entry.command) ~= nil)
+tests/console_commands.rs:21:                    assert(C_CVar.GetCVar(entry.command) == nil)
+tests/console_commands.rs:59:        assert(C_CVar.GetCVar("ConsoleProbeMixedCase") == "override")
+tests/data/patch_8_1_5_sweep_known_gaps.json:13:  "wt-global-api-GetCVar-70",

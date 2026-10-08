@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p541-page/data/patch-api/evidence/5.4.1-session-2026-10-08/reproduce_sources.py"
+  ],
+  "revision": "1331e34d8ed9a2aa75d78860a0539e2bbc7ef682",
+  "scope": "reproduction",
+  "cwd": ".",
+  "target": "dedicated p541-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "reproduction.txt",
+  "log_sha256": "1c0288c591392da66e310ff1b639a86acbbe7c7a3149f1b249dc57912fa7ebdb",
+  "seconds": 3.4431074329986586,
+  "invalidated": false
+}

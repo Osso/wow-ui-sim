@@ -1,0 +1,13 @@
+src/c_api/patch_retired_members.rs:23:// No qualified retail consumers; bare GetProducts belongs to C_StoreSecure.
+src/c_api/patch_retired_members.rs:111:            "GetProducts",
+src/lua_api/workarounds/temporary/store_public_defaults.rs:23:        if type(C_StoreSecure) ~= "table" or type(C_StoreSecure.GetProducts) ~= "function" then
+src/lua_api/workarounds/temporary/store_public_defaults.rs:26:        local products = C_StoreSecure.GetProducts(groupID)
+src/lua_api/env_init/runtime_surface_bootstrap.lua:462:C_StoreSecure.GetProducts = function(groupID)
+src/lua_api/env_init/runtime_surface_bootstrap.lua:901:if rawget(C_StoreSecure, "GetProducts") == nil then
+src/lua_api/env_init/runtime_surface_bootstrap.lua:902:  function C_StoreSecure.GetProducts(groupID)
+src/mists/compat_bootstrap.lua:742:if rawget(C_ProductChoice, "GetProducts") == nil then
+src/mists/compat_bootstrap.lua:743:  function C_ProductChoice.GetProducts(choiceID) return {} end
+tests/patch_8_3_0_classic_surfaces.rs:9:assert(type(C_ProductChoice.GetProducts(123)) == "table")
+tests/store_tree.rs:211:            local products = C_StoreSecure.GetProducts(selectedCategory)
+tests/patch_8_3_0_publication_fixes.rs:11:    "C_ProductChoice.GetProducts",
+tests/mists_product_choice_compat.rs:102:            local products = C_ProductChoice.GetProducts(123)

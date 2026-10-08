@@ -1,0 +1,1 @@
+grep over data included its own redirected output and recursed for ten minutes. Sent SIGTERM to PID 339211; confirmed process exit. Removed incomplete 732 MB output. Replaced with captured scan limited to src and data/api; no background grep remains.

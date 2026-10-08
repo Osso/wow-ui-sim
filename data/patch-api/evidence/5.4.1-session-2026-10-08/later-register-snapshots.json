@@ -1,0 +1,772 @@
+[
+  {
+    "ref": "master",
+    "revision": "391d49670039ace0496ff18afeacea6bfb8d5c43",
+    "tree_log": "master-register-tree.txt",
+    "registers": [
+      "data/patch-api/sources/10.0.0-wikitext-register.json",
+      "data/patch-api/sources/10.0.2-wikitext-register.json",
+      "data/patch-api/sources/10.0.5-wikitext-register.json",
+      "data/patch-api/sources/10.0.7-wikitext-register.json",
+      "data/patch-api/sources/10.1.0-wikitext-register.json",
+      "data/patch-api/sources/10.1.5-wikitext-register.json",
+      "data/patch-api/sources/10.1.7-wikitext-register.json",
+      "data/patch-api/sources/10.2.0-wikitext-register.json",
+      "data/patch-api/sources/10.2.5-wikitext-register.json",
+      "data/patch-api/sources/10.2.6-wikitext-register.json",
+      "data/patch-api/sources/10.2.7-wikitext-register.json",
+      "data/patch-api/sources/11.0.0-wikitext-register.json",
+      "data/patch-api/sources/11.0.2-wikitext-register.json",
+      "data/patch-api/sources/11.0.5-wikitext-register.json",
+      "data/patch-api/sources/11.0.7-wikitext-register.json",
+      "data/patch-api/sources/11.1.0-wikitext-register.json",
+      "data/patch-api/sources/11.1.5-wikitext-register.json",
+      "data/patch-api/sources/11.1.7-wikitext-register.json",
+      "data/patch-api/sources/11.2.0-wikitext-register.json",
+      "data/patch-api/sources/11.2.5-wikitext-register.json",
+      "data/patch-api/sources/11.2.7-wikitext-register.json",
+      "data/patch-api/sources/12.0.0-wikitext-register.json",
+      "data/patch-api/sources/12.0.1-wikitext-register.json",
+      "data/patch-api/sources/12.0.5-wikitext-register.json",
+      "data/patch-api/sources/12.0.7-wikitext-register.json",
+      "data/patch-api/sources/12.1.0-wikitext-register.json",
+      "data/patch-api/sources/6.0.1-wikitext-register.json",
+      "data/patch-api/sources/6.0.2-wikitext-register.json",
+      "data/patch-api/sources/6.1.0-wikitext-register.json",
+      "data/patch-api/sources/6.2.0-wikitext-register.json",
+      "data/patch-api/sources/6.2.2-wikitext-register.json",
+      "data/patch-api/sources/6.2.4-wikitext-register.json",
+      "data/patch-api/sources/7.0.1-wikitext-register.json",
+      "data/patch-api/sources/7.0.3-wikitext-register.json",
+      "data/patch-api/sources/7.1.0-wikitext-register.json",
+      "data/patch-api/sources/7.2.0-wikitext-register.json",
+      "data/patch-api/sources/7.2.5-wikitext-register.json",
+      "data/patch-api/sources/7.3.0-wikitext-register.json",
+      "data/patch-api/sources/7.3.2-wikitext-register.json",
+      "data/patch-api/sources/8.0.1-wikitext-register.json",
+      "data/patch-api/sources/8.1.0-wikitext-register.json",
+      "data/patch-api/sources/8.1.5-wikitext-register.json",
+      "data/patch-api/sources/8.2.0-wikitext-register.json",
+      "data/patch-api/sources/8.2.5-wikitext-register.json",
+      "data/patch-api/sources/8.3.0-wikitext-register.json",
+      "data/patch-api/sources/8.3.7-wikitext-register.json",
+      "data/patch-api/sources/9.0.1-wikitext-register.json",
+      "data/patch-api/sources/9.0.2-wikitext-register.json",
+      "data/patch-api/sources/9.0.5-wikitext-register.json",
+      "data/patch-api/sources/9.1.0-wikitext-register.json",
+      "data/patch-api/sources/9.1.5-wikitext-register.json",
+      "data/patch-api/sources/9.2.0-wikitext-register.json",
+      "data/patch-api/sources/9.2.5-wikitext-register.json",
+      "data/patch-api/sources/9.2.7-wikitext-register.json"
+    ],
+    "matches": [
+      {
+        "path": "data/patch-api/sources/12.0.0-wikitext-register.json",
+        "entries": [
+          {
+            "id": "wt-global-api-C_StorePublic.IsDisabledByParentalControls-515",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_StorePublic.IsDisabledByParentalControls",
+            "annotation": "",
+            "wikitext_line": 515
+          }
+        ]
+      },
+      {
+        "path": "data/patch-api/sources/6.2.4-wikitext-register.json",
+        "entries": [
+          {
+            "id": "wt-cvars-realmName-26",
+            "section": "cvars",
+            "direction": "removed",
+            "symbol": "realmName",
+            "annotation": "* The \u201crealmName\u201d [[CVar]] no longer exists. You can get the name of the current realm using {{api|GetRealmName}}().",
+            "wikitext_line": 26
+          }
+        ]
+      },
+      {
+        "path": "data/patch-api/sources/8.1.5-wikitext-register.json",
+        "entries": [
+          {
+            "id": "wt-global-api-GetCVar-70",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "GetCVar",
+            "annotation": "",
+            "wikitext_line": 70
+          }
+        ]
+      },
+      {
+        "path": "data/patch-api/sources/8.2.5-wikitext-register.json",
+        "entries": [
+          {
+            "id": "wt-global-api-C_RecruitAFriend.CheckEmailEnabled-146",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_RecruitAFriend.CheckEmailEnabled",
+            "annotation": "",
+            "wikitext_line": 146
+          },
+          {
+            "id": "wt-global-api-C_RecruitAFriend.IsSendingEnabled-147",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_RecruitAFriend.IsSendingEnabled",
+            "annotation": "",
+            "wikitext_line": 147
+          },
+          {
+            "id": "wt-global-api-C_RecruitAFriend.SendRecruit-148",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_RecruitAFriend.SendRecruit",
+            "annotation": "",
+            "wikitext_line": 148
+          },
+          {
+            "id": "wt-events-RECRUIT_A_FRIEND_CAN_EMAIL-235",
+            "section": "events",
+            "direction": "removed",
+            "symbol": "RECRUIT_A_FRIEND_CAN_EMAIL",
+            "annotation": "",
+            "wikitext_line": 235
+          },
+          {
+            "id": "wt-events-RECRUIT_A_FRIEND_INVITATION_FAILED-236",
+            "section": "events",
+            "direction": "removed",
+            "symbol": "RECRUIT_A_FRIEND_INVITATION_FAILED",
+            "annotation": "",
+            "wikitext_line": 236
+          },
+          {
+            "id": "wt-events-RECRUIT_A_FRIEND_INVITER_FRIEND_ADDED-237",
+            "section": "events",
+            "direction": "removed",
+            "symbol": "RECRUIT_A_FRIEND_INVITER_FRIEND_ADDED",
+            "annotation": "",
+            "wikitext_line": 237
+          },
+          {
+            "id": "wt-events-RECRUIT_A_FRIEND_SYSTEM_STATUS-238",
+            "section": "events",
+            "direction": "removed",
+            "symbol": "RECRUIT_A_FRIEND_SYSTEM_STATUS",
+            "annotation": "",
+            "wikitext_line": 238
+          }
+        ]
+      },
+      {
+        "path": "data/patch-api/sources/8.3.0-wikitext-register.json",
+        "entries": [
+          {
+            "id": "wt-global-api-C_ProductChoice.GetChoices-153",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_ProductChoice.GetChoices",
+            "annotation": "",
+            "wikitext_line": 153
+          },
+          {
+            "id": "wt-global-api-C_ProductChoice.GetProducts-155",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_ProductChoice.GetProducts",
+            "annotation": "",
+            "wikitext_line": 155
+          },
+          {
+            "id": "wt-global-api-C_ProductChoice.MakeSelection-156",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_ProductChoice.MakeSelection",
+            "annotation": "",
+            "wikitext_line": 156
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "ref": "p548-page",
+    "revision": "91b3fa3b9534acad8f7652a674c5a7c29461cc79",
+    "tree_log": "p548-page-register-tree.txt",
+    "registers": [
+      "data/patch-api/sources/10.0.0-wikitext-register.json",
+      "data/patch-api/sources/10.0.2-wikitext-register.json",
+      "data/patch-api/sources/10.0.5-wikitext-register.json",
+      "data/patch-api/sources/10.0.7-wikitext-register.json",
+      "data/patch-api/sources/10.1.0-wikitext-register.json",
+      "data/patch-api/sources/10.1.5-wikitext-register.json",
+      "data/patch-api/sources/10.1.7-wikitext-register.json",
+      "data/patch-api/sources/10.2.0-wikitext-register.json",
+      "data/patch-api/sources/10.2.5-wikitext-register.json",
+      "data/patch-api/sources/10.2.6-wikitext-register.json",
+      "data/patch-api/sources/10.2.7-wikitext-register.json",
+      "data/patch-api/sources/11.0.0-wikitext-register.json",
+      "data/patch-api/sources/11.0.2-wikitext-register.json",
+      "data/patch-api/sources/11.0.5-wikitext-register.json",
+      "data/patch-api/sources/11.0.7-wikitext-register.json",
+      "data/patch-api/sources/11.1.0-wikitext-register.json",
+      "data/patch-api/sources/11.1.5-wikitext-register.json",
+      "data/patch-api/sources/11.1.7-wikitext-register.json",
+      "data/patch-api/sources/11.2.0-wikitext-register.json",
+      "data/patch-api/sources/11.2.5-wikitext-register.json",
+      "data/patch-api/sources/11.2.7-wikitext-register.json",
+      "data/patch-api/sources/12.0.0-wikitext-register.json",
+      "data/patch-api/sources/12.0.1-wikitext-register.json",
+      "data/patch-api/sources/12.0.5-wikitext-register.json",
+      "data/patch-api/sources/12.0.7-wikitext-register.json",
+      "data/patch-api/sources/12.1.0-wikitext-register.json",
+      "data/patch-api/sources/5.4.8-wikitext-register.json",
+      "data/patch-api/sources/6.0.1-wikitext-register.json",
+      "data/patch-api/sources/6.0.2-wikitext-register.json",
+      "data/patch-api/sources/6.1.0-wikitext-register.json",
+      "data/patch-api/sources/6.2.0-wikitext-register.json",
+      "data/patch-api/sources/6.2.2-wikitext-register.json",
+      "data/patch-api/sources/6.2.4-wikitext-register.json",
+      "data/patch-api/sources/7.0.1-wikitext-register.json",
+      "data/patch-api/sources/7.0.3-wikitext-register.json",
+      "data/patch-api/sources/7.1.0-wikitext-register.json",
+      "data/patch-api/sources/7.2.0-wikitext-register.json",
+      "data/patch-api/sources/7.2.5-wikitext-register.json",
+      "data/patch-api/sources/7.3.0-wikitext-register.json",
+      "data/patch-api/sources/7.3.2-wikitext-register.json",
+      "data/patch-api/sources/8.0.1-wikitext-register.json",
+      "data/patch-api/sources/8.1.0-wikitext-register.json",
+      "data/patch-api/sources/8.1.5-wikitext-register.json",
+      "data/patch-api/sources/8.2.0-wikitext-register.json",
+      "data/patch-api/sources/8.2.5-wikitext-register.json",
+      "data/patch-api/sources/8.3.0-wikitext-register.json",
+      "data/patch-api/sources/8.3.7-wikitext-register.json",
+      "data/patch-api/sources/9.0.1-wikitext-register.json",
+      "data/patch-api/sources/9.0.2-wikitext-register.json",
+      "data/patch-api/sources/9.0.5-wikitext-register.json",
+      "data/patch-api/sources/9.1.0-wikitext-register.json",
+      "data/patch-api/sources/9.1.5-wikitext-register.json",
+      "data/patch-api/sources/9.2.0-wikitext-register.json",
+      "data/patch-api/sources/9.2.5-wikitext-register.json",
+      "data/patch-api/sources/9.2.7-wikitext-register.json"
+    ],
+    "matches": [
+      {
+        "path": "data/patch-api/sources/12.0.0-wikitext-register.json",
+        "entries": [
+          {
+            "id": "wt-global-api-C_StorePublic.IsDisabledByParentalControls-515",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_StorePublic.IsDisabledByParentalControls",
+            "annotation": "",
+            "wikitext_line": 515
+          }
+        ]
+      },
+      {
+        "path": "data/patch-api/sources/6.2.4-wikitext-register.json",
+        "entries": [
+          {
+            "id": "wt-cvars-realmName-26",
+            "section": "cvars",
+            "direction": "removed",
+            "symbol": "realmName",
+            "annotation": "* The \u201crealmName\u201d [[CVar]] no longer exists. You can get the name of the current realm using {{api|GetRealmName}}().",
+            "wikitext_line": 26
+          }
+        ]
+      },
+      {
+        "path": "data/patch-api/sources/8.1.5-wikitext-register.json",
+        "entries": [
+          {
+            "id": "wt-global-api-GetCVar-70",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "GetCVar",
+            "annotation": "",
+            "wikitext_line": 70
+          }
+        ]
+      },
+      {
+        "path": "data/patch-api/sources/8.2.5-wikitext-register.json",
+        "entries": [
+          {
+            "id": "wt-global-api-C_RecruitAFriend.CheckEmailEnabled-146",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_RecruitAFriend.CheckEmailEnabled",
+            "annotation": "",
+            "wikitext_line": 146
+          },
+          {
+            "id": "wt-global-api-C_RecruitAFriend.IsSendingEnabled-147",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_RecruitAFriend.IsSendingEnabled",
+            "annotation": "",
+            "wikitext_line": 147
+          },
+          {
+            "id": "wt-global-api-C_RecruitAFriend.SendRecruit-148",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_RecruitAFriend.SendRecruit",
+            "annotation": "",
+            "wikitext_line": 148
+          },
+          {
+            "id": "wt-events-RECRUIT_A_FRIEND_CAN_EMAIL-235",
+            "section": "events",
+            "direction": "removed",
+            "symbol": "RECRUIT_A_FRIEND_CAN_EMAIL",
+            "annotation": "",
+            "wikitext_line": 235
+          },
+          {
+            "id": "wt-events-RECRUIT_A_FRIEND_INVITATION_FAILED-236",
+            "section": "events",
+            "direction": "removed",
+            "symbol": "RECRUIT_A_FRIEND_INVITATION_FAILED",
+            "annotation": "",
+            "wikitext_line": 236
+          },
+          {
+            "id": "wt-events-RECRUIT_A_FRIEND_INVITER_FRIEND_ADDED-237",
+            "section": "events",
+            "direction": "removed",
+            "symbol": "RECRUIT_A_FRIEND_INVITER_FRIEND_ADDED",
+            "annotation": "",
+            "wikitext_line": 237
+          },
+          {
+            "id": "wt-events-RECRUIT_A_FRIEND_SYSTEM_STATUS-238",
+            "section": "events",
+            "direction": "removed",
+            "symbol": "RECRUIT_A_FRIEND_SYSTEM_STATUS",
+            "annotation": "",
+            "wikitext_line": 238
+          }
+        ]
+      },
+      {
+        "path": "data/patch-api/sources/8.3.0-wikitext-register.json",
+        "entries": [
+          {
+            "id": "wt-global-api-C_ProductChoice.GetChoices-153",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_ProductChoice.GetChoices",
+            "annotation": "",
+            "wikitext_line": 153
+          },
+          {
+            "id": "wt-global-api-C_ProductChoice.GetProducts-155",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_ProductChoice.GetProducts",
+            "annotation": "",
+            "wikitext_line": 155
+          },
+          {
+            "id": "wt-global-api-C_ProductChoice.MakeSelection-156",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_ProductChoice.MakeSelection",
+            "annotation": "",
+            "wikitext_line": 156
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "ref": "p547-page",
+    "revision": "531ada0628ac9100228f228cce1fb96080ac4f16",
+    "tree_log": "p547-page-register-tree.txt",
+    "registers": [
+      "data/patch-api/sources/10.0.0-wikitext-register.json",
+      "data/patch-api/sources/10.0.2-wikitext-register.json",
+      "data/patch-api/sources/10.0.5-wikitext-register.json",
+      "data/patch-api/sources/10.0.7-wikitext-register.json",
+      "data/patch-api/sources/10.1.0-wikitext-register.json",
+      "data/patch-api/sources/10.1.5-wikitext-register.json",
+      "data/patch-api/sources/10.1.7-wikitext-register.json",
+      "data/patch-api/sources/10.2.0-wikitext-register.json",
+      "data/patch-api/sources/10.2.5-wikitext-register.json",
+      "data/patch-api/sources/10.2.6-wikitext-register.json",
+      "data/patch-api/sources/10.2.7-wikitext-register.json",
+      "data/patch-api/sources/11.0.0-wikitext-register.json",
+      "data/patch-api/sources/11.0.2-wikitext-register.json",
+      "data/patch-api/sources/11.0.5-wikitext-register.json",
+      "data/patch-api/sources/11.0.7-wikitext-register.json",
+      "data/patch-api/sources/11.1.0-wikitext-register.json",
+      "data/patch-api/sources/11.1.5-wikitext-register.json",
+      "data/patch-api/sources/11.1.7-wikitext-register.json",
+      "data/patch-api/sources/11.2.0-wikitext-register.json",
+      "data/patch-api/sources/11.2.5-wikitext-register.json",
+      "data/patch-api/sources/11.2.7-wikitext-register.json",
+      "data/patch-api/sources/12.0.0-wikitext-register.json",
+      "data/patch-api/sources/12.0.1-wikitext-register.json",
+      "data/patch-api/sources/12.0.5-wikitext-register.json",
+      "data/patch-api/sources/12.0.7-wikitext-register.json",
+      "data/patch-api/sources/12.1.0-wikitext-register.json",
+      "data/patch-api/sources/5.4.7-wikitext-register.json",
+      "data/patch-api/sources/6.0.2-wikitext-register.json",
+      "data/patch-api/sources/6.1.0-wikitext-register.json",
+      "data/patch-api/sources/6.2.0-wikitext-register.json",
+      "data/patch-api/sources/6.2.2-wikitext-register.json",
+      "data/patch-api/sources/6.2.4-wikitext-register.json",
+      "data/patch-api/sources/7.0.1-wikitext-register.json",
+      "data/patch-api/sources/7.0.3-wikitext-register.json",
+      "data/patch-api/sources/7.1.0-wikitext-register.json",
+      "data/patch-api/sources/7.2.0-wikitext-register.json",
+      "data/patch-api/sources/7.2.5-wikitext-register.json",
+      "data/patch-api/sources/7.3.0-wikitext-register.json",
+      "data/patch-api/sources/7.3.2-wikitext-register.json",
+      "data/patch-api/sources/8.0.1-wikitext-register.json",
+      "data/patch-api/sources/8.1.0-wikitext-register.json",
+      "data/patch-api/sources/8.1.5-wikitext-register.json",
+      "data/patch-api/sources/8.2.0-wikitext-register.json",
+      "data/patch-api/sources/8.2.5-wikitext-register.json",
+      "data/patch-api/sources/8.3.0-wikitext-register.json",
+      "data/patch-api/sources/8.3.7-wikitext-register.json",
+      "data/patch-api/sources/9.0.1-wikitext-register.json",
+      "data/patch-api/sources/9.0.2-wikitext-register.json",
+      "data/patch-api/sources/9.0.5-wikitext-register.json",
+      "data/patch-api/sources/9.1.0-wikitext-register.json",
+      "data/patch-api/sources/9.1.5-wikitext-register.json",
+      "data/patch-api/sources/9.2.0-wikitext-register.json",
+      "data/patch-api/sources/9.2.5-wikitext-register.json",
+      "data/patch-api/sources/9.2.7-wikitext-register.json"
+    ],
+    "matches": [
+      {
+        "path": "data/patch-api/sources/12.0.0-wikitext-register.json",
+        "entries": [
+          {
+            "id": "wt-global-api-C_StorePublic.IsDisabledByParentalControls-515",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_StorePublic.IsDisabledByParentalControls",
+            "annotation": "",
+            "wikitext_line": 515
+          }
+        ]
+      },
+      {
+        "path": "data/patch-api/sources/6.2.4-wikitext-register.json",
+        "entries": [
+          {
+            "id": "wt-cvars-realmName-26",
+            "section": "cvars",
+            "direction": "removed",
+            "symbol": "realmName",
+            "annotation": "* The \u201crealmName\u201d [[CVar]] no longer exists. You can get the name of the current realm using {{api|GetRealmName}}().",
+            "wikitext_line": 26
+          }
+        ]
+      },
+      {
+        "path": "data/patch-api/sources/8.1.5-wikitext-register.json",
+        "entries": [
+          {
+            "id": "wt-global-api-GetCVar-70",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "GetCVar",
+            "annotation": "",
+            "wikitext_line": 70
+          }
+        ]
+      },
+      {
+        "path": "data/patch-api/sources/8.2.5-wikitext-register.json",
+        "entries": [
+          {
+            "id": "wt-global-api-C_RecruitAFriend.CheckEmailEnabled-146",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_RecruitAFriend.CheckEmailEnabled",
+            "annotation": "",
+            "wikitext_line": 146
+          },
+          {
+            "id": "wt-global-api-C_RecruitAFriend.IsSendingEnabled-147",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_RecruitAFriend.IsSendingEnabled",
+            "annotation": "",
+            "wikitext_line": 147
+          },
+          {
+            "id": "wt-global-api-C_RecruitAFriend.SendRecruit-148",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_RecruitAFriend.SendRecruit",
+            "annotation": "",
+            "wikitext_line": 148
+          },
+          {
+            "id": "wt-events-RECRUIT_A_FRIEND_CAN_EMAIL-235",
+            "section": "events",
+            "direction": "removed",
+            "symbol": "RECRUIT_A_FRIEND_CAN_EMAIL",
+            "annotation": "",
+            "wikitext_line": 235
+          },
+          {
+            "id": "wt-events-RECRUIT_A_FRIEND_INVITATION_FAILED-236",
+            "section": "events",
+            "direction": "removed",
+            "symbol": "RECRUIT_A_FRIEND_INVITATION_FAILED",
+            "annotation": "",
+            "wikitext_line": 236
+          },
+          {
+            "id": "wt-events-RECRUIT_A_FRIEND_INVITER_FRIEND_ADDED-237",
+            "section": "events",
+            "direction": "removed",
+            "symbol": "RECRUIT_A_FRIEND_INVITER_FRIEND_ADDED",
+            "annotation": "",
+            "wikitext_line": 237
+          },
+          {
+            "id": "wt-events-RECRUIT_A_FRIEND_SYSTEM_STATUS-238",
+            "section": "events",
+            "direction": "removed",
+            "symbol": "RECRUIT_A_FRIEND_SYSTEM_STATUS",
+            "annotation": "",
+            "wikitext_line": 238
+          }
+        ]
+      },
+      {
+        "path": "data/patch-api/sources/8.3.0-wikitext-register.json",
+        "entries": [
+          {
+            "id": "wt-global-api-C_ProductChoice.GetChoices-153",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_ProductChoice.GetChoices",
+            "annotation": "",
+            "wikitext_line": 153
+          },
+          {
+            "id": "wt-global-api-C_ProductChoice.GetProducts-155",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_ProductChoice.GetProducts",
+            "annotation": "",
+            "wikitext_line": 155
+          },
+          {
+            "id": "wt-global-api-C_ProductChoice.MakeSelection-156",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_ProductChoice.MakeSelection",
+            "annotation": "",
+            "wikitext_line": 156
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "ref": "p542-page",
+    "revision": "8691fe460bebf2b1db12237e728a97e321e1c766",
+    "tree_log": "p542-page-register-tree.txt",
+    "registers": [
+      "data/patch-api/sources/10.0.0-wikitext-register.json",
+      "data/patch-api/sources/10.0.2-wikitext-register.json",
+      "data/patch-api/sources/10.0.5-wikitext-register.json",
+      "data/patch-api/sources/10.0.7-wikitext-register.json",
+      "data/patch-api/sources/10.1.0-wikitext-register.json",
+      "data/patch-api/sources/10.1.5-wikitext-register.json",
+      "data/patch-api/sources/10.1.7-wikitext-register.json",
+      "data/patch-api/sources/10.2.0-wikitext-register.json",
+      "data/patch-api/sources/10.2.5-wikitext-register.json",
+      "data/patch-api/sources/10.2.6-wikitext-register.json",
+      "data/patch-api/sources/10.2.7-wikitext-register.json",
+      "data/patch-api/sources/11.0.0-wikitext-register.json",
+      "data/patch-api/sources/11.0.2-wikitext-register.json",
+      "data/patch-api/sources/11.0.5-wikitext-register.json",
+      "data/patch-api/sources/11.0.7-wikitext-register.json",
+      "data/patch-api/sources/11.1.0-wikitext-register.json",
+      "data/patch-api/sources/11.1.5-wikitext-register.json",
+      "data/patch-api/sources/11.1.7-wikitext-register.json",
+      "data/patch-api/sources/11.2.0-wikitext-register.json",
+      "data/patch-api/sources/11.2.5-wikitext-register.json",
+      "data/patch-api/sources/11.2.7-wikitext-register.json",
+      "data/patch-api/sources/12.0.0-wikitext-register.json",
+      "data/patch-api/sources/12.0.1-wikitext-register.json",
+      "data/patch-api/sources/12.0.5-wikitext-register.json",
+      "data/patch-api/sources/12.0.7-wikitext-register.json",
+      "data/patch-api/sources/12.1.0-wikitext-register.json",
+      "data/patch-api/sources/5.4.2-wikitext-register.json",
+      "data/patch-api/sources/6.0.1-wikitext-register.json",
+      "data/patch-api/sources/6.0.2-wikitext-register.json",
+      "data/patch-api/sources/6.1.0-wikitext-register.json",
+      "data/patch-api/sources/6.2.0-wikitext-register.json",
+      "data/patch-api/sources/6.2.2-wikitext-register.json",
+      "data/patch-api/sources/6.2.4-wikitext-register.json",
+      "data/patch-api/sources/7.0.1-wikitext-register.json",
+      "data/patch-api/sources/7.0.3-wikitext-register.json",
+      "data/patch-api/sources/7.1.0-wikitext-register.json",
+      "data/patch-api/sources/7.2.0-wikitext-register.json",
+      "data/patch-api/sources/7.2.5-wikitext-register.json",
+      "data/patch-api/sources/7.3.0-wikitext-register.json",
+      "data/patch-api/sources/7.3.2-wikitext-register.json",
+      "data/patch-api/sources/8.0.1-wikitext-register.json",
+      "data/patch-api/sources/8.1.0-wikitext-register.json",
+      "data/patch-api/sources/8.1.5-wikitext-register.json",
+      "data/patch-api/sources/8.2.0-wikitext-register.json",
+      "data/patch-api/sources/8.2.5-wikitext-register.json",
+      "data/patch-api/sources/8.3.0-wikitext-register.json",
+      "data/patch-api/sources/8.3.7-wikitext-register.json",
+      "data/patch-api/sources/9.0.1-wikitext-register.json",
+      "data/patch-api/sources/9.0.2-wikitext-register.json",
+      "data/patch-api/sources/9.0.5-wikitext-register.json",
+      "data/patch-api/sources/9.1.0-wikitext-register.json",
+      "data/patch-api/sources/9.1.5-wikitext-register.json",
+      "data/patch-api/sources/9.2.0-wikitext-register.json",
+      "data/patch-api/sources/9.2.5-wikitext-register.json",
+      "data/patch-api/sources/9.2.7-wikitext-register.json"
+    ],
+    "matches": [
+      {
+        "path": "data/patch-api/sources/12.0.0-wikitext-register.json",
+        "entries": [
+          {
+            "id": "wt-global-api-C_StorePublic.IsDisabledByParentalControls-515",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_StorePublic.IsDisabledByParentalControls",
+            "annotation": "",
+            "wikitext_line": 515
+          }
+        ]
+      },
+      {
+        "path": "data/patch-api/sources/6.2.4-wikitext-register.json",
+        "entries": [
+          {
+            "id": "wt-cvars-realmName-26",
+            "section": "cvars",
+            "direction": "removed",
+            "symbol": "realmName",
+            "annotation": "* The \u201crealmName\u201d [[CVar]] no longer exists. You can get the name of the current realm using {{api|GetRealmName}}().",
+            "wikitext_line": 26
+          }
+        ]
+      },
+      {
+        "path": "data/patch-api/sources/8.1.5-wikitext-register.json",
+        "entries": [
+          {
+            "id": "wt-global-api-GetCVar-70",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "GetCVar",
+            "annotation": "",
+            "wikitext_line": 70
+          }
+        ]
+      },
+      {
+        "path": "data/patch-api/sources/8.2.5-wikitext-register.json",
+        "entries": [
+          {
+            "id": "wt-global-api-C_RecruitAFriend.CheckEmailEnabled-146",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_RecruitAFriend.CheckEmailEnabled",
+            "annotation": "",
+            "wikitext_line": 146
+          },
+          {
+            "id": "wt-global-api-C_RecruitAFriend.IsSendingEnabled-147",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_RecruitAFriend.IsSendingEnabled",
+            "annotation": "",
+            "wikitext_line": 147
+          },
+          {
+            "id": "wt-global-api-C_RecruitAFriend.SendRecruit-148",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_RecruitAFriend.SendRecruit",
+            "annotation": "",
+            "wikitext_line": 148
+          },
+          {
+            "id": "wt-events-RECRUIT_A_FRIEND_CAN_EMAIL-235",
+            "section": "events",
+            "direction": "removed",
+            "symbol": "RECRUIT_A_FRIEND_CAN_EMAIL",
+            "annotation": "",
+            "wikitext_line": 235
+          },
+          {
+            "id": "wt-events-RECRUIT_A_FRIEND_INVITATION_FAILED-236",
+            "section": "events",
+            "direction": "removed",
+            "symbol": "RECRUIT_A_FRIEND_INVITATION_FAILED",
+            "annotation": "",
+            "wikitext_line": 236
+          },
+          {
+            "id": "wt-events-RECRUIT_A_FRIEND_INVITER_FRIEND_ADDED-237",
+            "section": "events",
+            "direction": "removed",
+            "symbol": "RECRUIT_A_FRIEND_INVITER_FRIEND_ADDED",
+            "annotation": "",
+            "wikitext_line": 237
+          },
+          {
+            "id": "wt-events-RECRUIT_A_FRIEND_SYSTEM_STATUS-238",
+            "section": "events",
+            "direction": "removed",
+            "symbol": "RECRUIT_A_FRIEND_SYSTEM_STATUS",
+            "annotation": "",
+            "wikitext_line": 238
+          }
+        ]
+      },
+      {
+        "path": "data/patch-api/sources/8.3.0-wikitext-register.json",
+        "entries": [
+          {
+            "id": "wt-global-api-C_ProductChoice.GetChoices-153",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_ProductChoice.GetChoices",
+            "annotation": "",
+            "wikitext_line": 153
+          },
+          {
+            "id": "wt-global-api-C_ProductChoice.GetProducts-155",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_ProductChoice.GetProducts",
+            "annotation": "",
+            "wikitext_line": 155
+          },
+          {
+            "id": "wt-global-api-C_ProductChoice.MakeSelection-156",
+            "section": "global-api",
+            "direction": "removed",
+            "symbol": "C_ProductChoice.MakeSelection",
+            "annotation": "",
+            "wikitext_line": 156
+          }
+        ]
+      }
+    ]
+  }
+]

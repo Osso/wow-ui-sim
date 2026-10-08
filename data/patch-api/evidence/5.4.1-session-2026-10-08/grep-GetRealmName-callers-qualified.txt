@@ -1,0 +1,4 @@
+src/lua_api/workarounds/temporary/client_info_defaults.rs:54:if GetRealmName == nil then
+src/lua_api/workarounds/temporary/client_info_defaults.rs:55:  function GetRealmName()
+src/lua_api/workarounds/temporary/client_info_defaults.rs:262:                if GetRealmName() ~= "SimulatedRealm" or GetNormalizedRealmName() ~= "SimulatedRealm" then return "realm" end
+tests/runtime_bootstrap_boundaries.rs:277:        "GetRealmName",

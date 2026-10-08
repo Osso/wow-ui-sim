@@ -1,0 +1,3 @@
+src/mists/compat_bootstrap.lua:751:  function C_ProductChoice.MakeSelection() return false end
+tests/patch_8_3_0_classic_surfaces.rs:11:assert(C_ProductChoice.MakeSelection() == false)
+tests/patch_8_3_0_publication_fixes.rs:12:    "C_ProductChoice.MakeSelection",

@@ -1,0 +1,189 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonMissionUI.lua:617:	local lastTutorial = tonumber(GetCVar("lastGarrisonMissionTutorial"));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonShipyardUI.lua:1309:		if ( tonumber(GetCVar("shipyardMissionTutorialFirst")) == 0 ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonShipyardUI.lua:1314:			 tonumber(GetCVar("shipyardMissionTutorialBlockade")) == 0 ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonShipyardUI.lua:1318:		elseif ( missionFrame.bonusRewardArea and tonumber(GetCVar("shipyardMissionTutorialAreaBuff")) == 0 ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_OrderHallMissionUI.lua:1009:	local cvarVal = tonumber(GetCVar("orderHallMissionTutorial")) or 0;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_BNet/Mainline/BNet.lua:145:	AlertFrame_SetDuration(self, GetCVar("toastDuration"));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseSellFrame.lua:177:		self.durationIndex = tonumber(GetCVar("auctionHouseDurationDropdown"));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseSellFrame.lua:184:	return self.durationIndex or tonumber(GetCVar("auctionHouseDurationDropdown"));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PingUI/Blizzard_PingUI.lua:208:    return tonumber(GetCVar("pingMode"));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ActionStatus/Classic/ActionStatus.lua:29:	if ( ignoreNewbieTooltipSetting or GetCVar("showNewbieTips") == "1" ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/ChatFrameOverrides.lua:362:				and ( (chatGroup == "WHISPER" and GetCVar("whisperMode") ~= "popout_and_inline") or (chatGroup == "BN_WHISPER" and GetCVar("whisperMode") ~= "popout_and_inline") ) ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:756:		if (not (chatType == "WHISPER" and GetCVar("whisperMode") == "popout_and_inline")
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:757:			and not (chatType == "BN_WHISPER" and GetCVar("whisperMode") == "popout_and_inline") ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:1541:	if ( (IsVoiceTranscription(lastChatFrame) or IsVoiceTranscription(chatFrame)) or GetCVar("chatStyle") ~= "classic" ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:1590:	if ( GetCVar("chatStyle") == "im" and LAST_ACTIVE_CHAT_EDIT_BOX == frame.editBox ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:1744:	if ( GetCVar("chatStyle") == "im" and GetCVarBool("wholeChatWindowClickable") and
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:1787:	if ( GetCVar("chatStyle") == "im" ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:2466:	if ( (chatType == "BN_WHISPER" and GetCVar("whisperMode") == "popout")
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:2467:		or (chatType == "WHISPER" and GetCVar("whisperMode") == "popout") ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:2481:	if ( (chatType == "BN_WHISPER" and GetCVar("whisperMode") == "popout_and_inline")
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:2482:		or (chatType == "WHISPER" and GetCVar("whisperMode") == "popout_and_inline") ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:2520:		if ( (chatGroup == "BN_WHISPER" and (GetCVar("whisperMode") == "popout" or GetCVar("whisperMode") == "popout_and_inline"))
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:2521:			or (chatGroup == "WHISPER" and (GetCVar("whisperMode") == "popout" or GetCVar("whisperMode") == "popout_and_inline"))) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:2529:				if ((event == "CHAT_MSG_WHISPER_INFORM" and GetCVar("whisperMode") == "popout")
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:2530:					or (event == "CHAT_MSG_BN_WHISPER_INFORM" and GetCVar("whisperMode") == "popout") ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:2536:				if ( (chatType == "WHISPER_INFORM" and GetCVar("whisperMode") == "popout_and_inline")
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/FloatingChatFrame.lua:2537:				or (chatType == "BN_WHISPER_INFORM" and GetCVar("whisperMode") == "popout_and_inline")) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/ChatFrameUtil.lua:492:	if ( (not (lastActiveWindow and IsVoiceTranscription(lastActiveWindow.chatFrame))) and GetCVar("chatStyle") == "classic" ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/ChatFrameUtil.lua:510:		if ( IsVoiceTranscription(previousValue.chatFrame) or GetCVar("chatStyle") == "im" ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/ChatFrameUtil.lua:516:	if ( editBox and (IsVoiceTranscription(editBox.chatFrame) or GetCVar("chatStyle") == "im") and ACTIVE_CHAT_EDIT_BOX ~= editBox ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/ChatFrameUtil.lua:814:	local value = GetCVar("chatClassColorOverride");
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/ChatFrameEditBox.lua:535:	if ( not self.isGM and ((not IsVoiceTranscription(self.chatFrame) and GetCVar("chatStyle") ~= "im")) ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/ChatFrameEditBox.lua:545:	if ( self.disableActivate or (GetCVar("chatStyle") == "classic" and not IsVoiceTranscription(self.chatFrame)) and not self.isGM ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitFrame/Mainline/ComboFrame.lua:9:	if (GetCVar("comboPointLocation") ~= "1") then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitFrame/Shared/PartyFrame.lua:268:		OpacityFrameSlider:SetValue(tonumber(GetCVar("partyBackgroundOpacity")));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Collections/Mainline/Blizzard_Collections.xml:58:				PanelTemplates_SetTab(self, tonumber(GetCVar("petJournalTab")) or 1);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Collections/Shared/Blizzard_PetCollection.lua:666:			local display = GetCVar("statusTextDisplay")
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Collections/Shared/Blizzard_PetCollection.lua:1269:			local display = GetCVar("statusTextDisplay")
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SecureTransferUI/Blizzard_SecureTransferUI.lua:33:	if ( GetCVar("colorblindMode") == "1" ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_WowTokenUI/Blizzard_WowTokenUI.lua:340:	if ( GetCVar("colorblindMode") == "1" ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CatalogShop/Blizzard_CatalogShop_ErrorLookup.lua:31:	if ( GetCVar("colorblindMode") == "1" ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_TimeManager/Mainline/Blizzard_TimeManager.lua:25:local GetCVar = _G.GetCVar;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_TimeManager/Mainline/Blizzard_TimeManager.lua:82:	Settings[field] = GetCVar(cvar);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_TimeManager/Mainline/Blizzard_TimeManager.lua:102:	Settings.militaryTime = GetCVar(CVAR_USE_MILITARY_TIME) == "1";
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_TimeManager/Mainline/Blizzard_TimeManager.lua:103:	Settings.localTime = GetCVar(CVAR_USE_LOCAL_TIME) == "1";
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_TimeManager/Mainline/Blizzard_TimeManager.lua:104:	local alarmTime = tonumber(GetCVar(CVAR_ALARM_TIME));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_TimeManager/Mainline/Blizzard_TimeManager.lua:121:	Settings.alarmMessage = GetCVar(CVAR_ALARM_MESSAGE);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_TimeManager/Mainline/Blizzard_TimeManager.lua:122:	Settings.alarmEnabled = GetCVar(CVAR_ALARM_ENABLED) == "1";
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/WardrobeCustomSets.lua:443:	local classicSpecValue = GetCVar("lastTransmogCustomSetIDNoSpec");
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_TextStatusBar/TextStatusBar.lua:115:		if ( (self.cvar and GetCVar(self.cvar) == "1" and self.textLockable) or self.forceShow ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_TextStatusBar/TextStatusBar.lua:152:		local shouldUsePrefix = self.prefix and (self.alwaysPrefix or not (self.cvar and GetCVar(self.cvar) == "1" and self.textLockable) );
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_TextStatusBar/TextStatusBar.lua:154:		local displayMode = GetCVar("statusTextDisplay");
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_TextStatusBar/TextStatusBar.lua:275:		elseif ( (self.cvar and GetCVar(self.cvar) == "1" and self.textLockable) or self.forceShow ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_BattlefieldMap/Mainline/Blizzard_BattlefieldMap.lua:188:		if GetCVar("showBattlefieldMinimap") == "1" then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/WoWLabs/PlunderstormLobby.lua:40:		C_RealmList.ConnectToEventRealm(GetCVar("plunderStormRealm")); --WOWLABSTODO: Should this CVar thing be hidden from lua?
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/WoWLabs/PlunderstormLobby.lua:120:			local success = C_WoWLabsMatchmaking.SetPartyPlaylistEntry(GetCVar("last_matchmaking_party_size"));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mainline/CharacterLoginUtil.lua:8:    local firstLogin = GetCVar("seenAlliedRaceUnlocks") == "0";
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mainline/CharacterSelect.lua:771:		CharacterSelect.selectedIndex = tonumber(GetCVar("lastCharacterIndex")) + 1;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mainline/CharacterSelect/CharacterSelectList.lua:71:		CharacterSelect.selectedIndex = tonumber(GetCVar("lastCharacterIndex")) + 1;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mainline/CharacterSelect/CharacterSelectList.lua:85:		CharacterSelect.selectedIndex = tonumber(GetCVar("lastCharacterIndex")) + 1;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueXML/Mainline/CharacterSelect/CharacterSelectList.lua:482:	if GetCVar("showCreateCharacterRealmConfirmDialog") == "1" then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Shared/Subtitles.lua:93:			local movieSubtitleBackground = C_CVar.GetCVar(SUBTITLES_BACKGROUND_CVAR);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Shared/Subtitles.lua:104:				subtitleBackgroundAlpha = tonumber(C_CVar.GetCVar(SUBTITLES_BACKGROUND_OPACITY_CVAR) / 100) or BACKGROUND_OPACITY_DEFAULT,
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Shared/Subtitles.lua:113:                subtitleBackgroundAlpha = tonumber(C_CVar.GetCVar(SUBTITLES_BACKGROUND_OPACITY_CVAR) / 100) or BACKGROUND_OPACITY_DEFAULT,
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Shared/Subtitles.lua:149:			local movieSubtitleBackgroundAlpha = C_CVar.GetCVar(SUBTITLES_BACKGROUND_OPACITY_CVAR);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Shared/Languages.lua:19:	return CreateOptions(GetCVar("textLocale"), GetAvailableLocales());
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Shared/Languages.lua:23:	local textLocale = GetCVar("textLocale");
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Shared/Languages.lua:134:	local textLocaleCurrent = GetCVar("textLocale");
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Shared/Languages.lua:162:	local restartNeededData = { textLocaleOriginal = GetCVar("textLocale") };
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Shared/Audio.lua:448:		if C_CVar.GetCVar("Sound_EnablePetBattleMusic") then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Shared/Mainline/Text.lua:20:	if C_CVar.GetCVar(cvarName) == nil then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Shared/Graphics.lua:889:			return SplitMSAA(GetCVar("MSAAQuality"));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Shared/Graphics.lua:903:				local fxaa = tonumber(GetCVar("ffxAntiAliasingMode"));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Shared/Graphics.lua:1057:	if C_CVar.GetCVar("cameraFov") then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Shared/Graphics.lua:1227:			local gxapi = string.lower(GetCVar("gxapi"));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Shared/Graphics.lua:1239:			local requestedApi = GetCVar("gxapi");
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Shared/Graphics.lua:1289:	if C_CVar.GetCVar("physicsLevel") then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Shared/Graphics.lua:1504:			if C_CVar.GetCVar(cvar) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DebugTools/Blizzard_TexelSnappingVisualizer.lua:38:			return GetCVar("overridePixelGridSnapping") == value;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DebugTools/Blizzard_TexelSnappingVisualizer.lua:85:		texelSnappingSlider:SetValue(tonumber(GetCVar("overrideTexelSnappingBias")) or 0);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueParent/Mainline/GlueParent.lua:584:	local nextCinematicIndex = (tonumber(GetCVar("playIntroMovie")) or 0) + 1;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueParent/Mainline/GlueParent.lua:589:			MovieFrame.version = C_Login.IsNewPlayer() and 1 or tonumber(GetCVar("playIntroMovie"));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueParent/Shared/GlueParentUtil.lua:47:	local lastPhotosensitivityExpansionShown = (tonumber(GetCVar("showPhotosensitivityWarning")) or -1);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_MonthlyActivities.lua:922:	local currentMonth = tonumber(GetCVar("perksActivitiesCurrentMonth"));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_MonthlyActivities.lua:928:	local lastPoints = tonumber(GetCVar("perksActivitiesLastPoints"));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Mounts.lua:8:	if C_CVar.GetCVar("motionSicknessFocalCircle") and C_CVar.GetCVar("motionSicknessLandscapeDarkening") then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Mounts.lua:55:	if C_CVar.GetCVar("DisableAdvancedFlyingFullScreenEffects") then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Mounts.lua:62:	if C_CVar.GetCVar("DisableAdvancedFlyingVelocityVFX") then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Mounts.lua:69:	if C_CVar.GetCVar("advFlyPitchControl") then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Mounts.lua:71:			local pitchControl = tonumber(GetCVar("advFlyPitchControl"));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Accessibility.lua:16:		return not C_Glue.IsOnGlueScreen() and C_CVar.GetCVar(cvarName) ~= nil;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Accessibility.lua:79:			local shakeStrengthCamera = tonumber(GetCVar("ShakeStrengthCamera"))
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Accessibility.lua:80:			local shakeStrengthUI = tonumber(GetCVar("ShakeStrengthUI"));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Accessibility.lua:144:	if C_CVar.GetCVar("spellActivationOverlayOpacity") then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Accessibility.lua:149:	if C_CVar.GetCVar("ActionButtonUseKeyHeldSpell") then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Accessibility.lua:154:	if C_CVar.GetCVar("empowerTapControls") then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Social.lua:71:			return GetCVar("textLocale") ~= "zhCN";
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Social.lua:140:	if C_CVar.GetCVar("autoAcceptQuickJoinRequests") then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Controls.lua:75:			return tonumber(GetCVar("softTargetInteract")) == Enum.SoftTargetEnableFlags.Any;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Controls.lua:121:			return tonumber(C_CVar.GetCVar("cameraYawMoveSpeed"));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Controls.lua:184:			return tonumber(C_CVar.GetCVar("cameraYawSmoothSpeed"));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Combat.lua:36:	if C_CVar.GetCVar("lossOfControl") then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Combat.lua:47:	if IsMouseoverCastSupported() and C_CVar.GetCVar("enableMouseoverCast") then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Combat.lua:149:	if C_CVar.GetCVar("empowerTapControls") then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Combat.lua:162:	if C_CVar.GetCVar("spellActivationOverlayOpacity") then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Combat.lua:177:	if C_CVar.GetCVar("ActionButtonUseKeyHeldSpell") then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Combat.lua:185:			return tonumber(GetCVar("softTargetEnemy")) == Enum.SoftTargetEnableFlags.Any;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/PingSystem.lua:136:        if GetCVar("pingCategoryTutorialShown") == "0" and self:TutorialCutoffVersionCheck() then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Mainline/SocialOverrides.lua:16:			local censoredMessageSources = tonumber(C_CVar.GetCVar(cvar));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Mainline/ControlsOverrides.lua:17:	if C_CVar.GetCVar("combinedBags") then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Mainline/InterfaceOverrides.lua:19:	if C_CVar.GetCVar("raidFramesDisplayIncomingHeals") then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Mainline/InterfaceOverrides.lua:33:	if C_CVar.GetCVar("raidFramesDisplayAggroHighlight") then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Nameplates.lua:523:	if C_CVar.GetCVar(namePlateStackingTypesCVar) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Nameplates.lua:578:	if C_CVar.GetCVar("nameplateStyle") then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Nameplates.lua:601:	if C_CVar.GetCVar(nameplateInfoDisplayCVar) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Nameplates.lua:631:	if C_CVar.GetCVar(nameplateCastBarDisplayCVar) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Nameplates.lua:662:	if C_CVar.GetCVar(nameplateThreatDisplayCVar) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Nameplates.lua:689:	if C_CVar.GetCVar(nameplateEnemyNpcAuraDisplayCVar) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Nameplates.lua:718:	if C_CVar.GetCVar(nameplateEnemyPlayerAuraDisplayCVar) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Nameplates.lua:747:	if C_CVar.GetCVar(nameplateFriendlyPlayerAuraDisplayCVar) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Nameplates.lua:788:	if C_CVar.GetCVar(nameplatesSimplifiedTypesCVar) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Interface.lua:21:		if C_CVar.GetCVar("showInGameNavigation") then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Interface.lua:44:	if C_CVar.GetCVar("Outline") then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Interface.lua:65:			local statusTextDisplay = C_CVar.GetCVar("statusTextDisplay");
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Interface.lua:126:		if C_CVar.GetCVar("ReplaceOtherPlayerPortraits") then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Interface.lua:131:		if C_CVar.GetCVar("ReplaceMyPlayerPortrait") then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ProfessionsTemplates/Blizzard_Professions.lua:1017:	local duration = tonumber(GetCVar("professionsOrderDurationDropdown"));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ProfessionsTemplates/Blizzard_Professions.lua:1029:	local recipient = tonumber(GetCVar("professionsOrderRecipientDropdown"));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ProfessionsTemplates/Blizzard_ProfessionsRecipeCrafterDetails.lua:746:				local modifier = Clamp(tonumber(GetCVar("ShakeStrengthUI")) or 0, 0, 1);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Settings_Shared/Blizzard_ImplementationReadme.lua:106:	return tonumber(GetCVar("softTargetEnemy")) == Enum.SoftTargetEnableFlags.Any;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/HelpTip.lua:205:			if GetCVar(info.cvar) == info.cvarValue then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/ScriptAnimationUtil.lua:61:	local shakeStrength = tonumber(GetCVar("ShakeStrengthUI"));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Mainline/UIDropDownMenu.lua:1076:		if ( GetCVar("useUIScale") == "1" ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Mainline/UIDropDownMenu.lua:1077:			uiScale = tonumber(GetCVar("uiscale"));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Mainline/Sound.lua:6:	if ( GetCVar("Sound_EnableAllSound") == "0" ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Mainline/Sound.lua:9:		if ( GetCVar("Sound_EnableMusic") == "0" ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Mainline/Sound.lua:20:	if ( GetCVar("Sound_EnableAllSound") == "0" ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Mainline/Sound.lua:23:		if ( GetCVar("Sound_EnableSFX") == "0" ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Mainline/Sound.lua:38:	if ( GetCVar("Sound_EnableAllSound") == "0" ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Mainline/Sound.lua:41:		if ( GetCVar("Sound_EnableAmbience") == "0" ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Mainline/Sound.lua:52:	local volume = tonumber(GetCVar("Sound_MasterVolume"));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Mainline/ModelControlButtonMixin.lua:48:	if ( GetCVar("UberTooltips") == "1" ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/ModelSceneControlFrame.lua:154:	if ( GetCVar("UberTooltips") == "1" ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Shared/VASErrorLookup.lua:31:	if ( GetCVar("colorblindMode") == "1" ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/GameRulesUtil.lua:51:	return GetCVar("showTargetCastbar") and not C_GameRules.IsGameRuleActive(Enum.GameRule.TargetCastBarDisabled);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CatalogShopSharedUtil/Blizzard_CatalogShop_SharedUtil.lua:1136:	if ( (not C_Glue.IsOnGlueScreen() and GetCVar("colorblindMode") == "1" ) or forceColorBlind ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXMLBase/CvarUtil.lua:17:function GetCVar(name)
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXMLBase/CvarUtil.lua:18:	return C_CVar.GetCVar(name);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXMLBase/CvarUtil.lua:42:	local number = tonumber(GetCVar(name));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXMLBase/CvarUtil.lua:48:	return C_EncodingUtil.DeserializeCBOR(C_EncodingUtil.DecodeBase64(GetCVar(name))) or {};
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXMLBase/CvarUtil.lua:90:		local rawValue = GetCVar(cvar);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXMLBase/CvarUtil.lua:148:		value = GetCVar(cvar);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/CommunitiesFrame.lua:430:	local lastSelectedClubId = tonumber(GetCVar("lastSelectedClubId")) or 0;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Communities/CommunitiesLanguage.lua:2:	local currentLocale = GetCVar("textLocale");
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EditMode/Shared/EditModeManager.lua:2410:	local showLootFrame = self.settingsCheckButtons.LootFrame:IsControlChecked() and GetCVar("lootUnderMouse") ~= "1";
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CUFProfiles/Blizzard_CompactUnitFrameProfiles.lua:66:		if C_CVar.GetCVar(cvar) ~= nil then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Game/Classic/EventImplementation.lua:175:	local lastTalkedToGM = GetCVar("lastTalkedToGM");
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Game/Mainline/EventImplementation.lua:903:	if GetCVar("timeMgrAlarmEnabled") == "1" then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Game/Mainline/EventImplementation.lua:907:	if GetCVar("showBattlefieldMinimap") == "1" then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Game/Mainline/EventImplementation.lua:915:	local lastTalkedToGM = GetCVar("lastTalkedToGM");
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_OverrideActionBar/OverrideActionBar.xml:375:						if ( GetCVar("xpBarText") == "1" ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrame/Shared/TextToSpeechCommands.lua:484:				local currentVoiceID = tonumber(GetCVar("CAAVoice"));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ActionBar/WoWLabs/ActionButtonOverrides.lua:366:	if ( GetCVar("UberTooltips") == "1" or inQuickKeybind ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ActionBar/Mainline/AssistedCombatManager.lua:167:	local updateRate = tonumber(GetCVar("assistedCombatIconUpdateRate"));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ActionBar/Shared/PetActionBar.lua:304:	local uber = GetCVar("UberTooltips");
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ActionBar/Shared/SpellFlyout.lua:80:	if ( GetCVar("UberTooltips") == "1" or self.showFullTooltip ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ActionBar/Shared/ActionButton.lua:1072:	if ( GetCVar("UberTooltips") == "1" or inQuickKeybind ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ActionBar/Shared/PossessActionBar.lua:95:	if ( GetCVar("UberTooltips") == "1" ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Tutorials/Blizzard_Tutorials_Frame_Tutorials.lua:6:	local hasDoneSoftTargetTutorial = tonumber(GetCVar("softTargetInteractionTutorialTotalInteractions")) >= SOFT_TARGET_INTERACT_TUTORIAL_FINISHED_INTERACTIONS; 
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Tutorials/Blizzard_Tutorials_Frame_Tutorials.lua:7:	return (not hasDoneSoftTargetTutorial and tonumber(GetCVar("softTargetInteract")) > Enum.SoftTargetEnableFlags.Gamepad)
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Tutorials/Blizzard_Tutorials_Frame_Tutorials.lua:32:	local helptipText = INTERACT_KEY_TUTORIAL:format(bindingText, tonumber(GetCVar("softTargetInteractionTutorialTotalInteractions")))
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Tutorials/Blizzard_Tutorials_Frame_Tutorials.lua:74:	local currInteractions = tonumber(GetCVar("softTargetInteractionTutorialTotalInteractions")); 
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Tutorials/Blizzard_Tutorials_Frame_Tutorials.lua:95:	if ((not GetCVarBool("interactKeyWarningTutorial")) and tonumber(GetCVar("softTargetInteract")) > Enum.SoftTargetEnableFlags.Gamepad and not GetBindingKeyText()) then 
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChallengesUI/Mainline/Blizzard_ChallengesUI.lua:251:	local lastSeasonNumber = tonumber(GetCVar("newMythicPlusSeason"));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/EventScheduler.lua:292:	local lastUpdateTime = tonumber(C_CVar.GetCVar("eventSchedulerLastUpdate"));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Shared/CastingBarFrame.lua:730:	if self.InterruptShakeAnim and tonumber(GetCVar("ShakeStrengthUI")) > 0 then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:150:	if ( (not C_Glue.IsOnGlueScreen() and GetCVar("colorblindMode") == "1" ) or forceColorBlind ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PVPUI/Mainline/Blizzard_PVPUI.lua:1281:	local lastSeasonNumber = tonumber(GetCVar("newPvpSeason"));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CovenantRenown/Blizzard_CovenantRenown.lua:146:	local lastRenownLevel = tonumber(GetCVar(cvarName)) or 1;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StableUI/Blizzard_StableUI.lua:190:	return tonumber(GetCVar("petStableSort"));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_TimerunningCharacterCreate/Blizzard_TimerunningCharacterCreate.lua:60:		if GetCVar("showCreateCharacterRealmConfirmDialog") == "1" then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CustomizationUI/Blizzard_CustomizationAudioInterface.lua:22:	self.previousSFXSetting = GetCVar("Sound_EnableSFX");
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CustomizationUI/Blizzard_CustomizationAudioInterface.lua:23:	self.previousAllSoundSetting = GetCVar("Sound_EnableAllSound");
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Minimap/Mainline/Minimap.lua:322:	if ( GetCVar("UberTooltips") == "1" ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Minimap/Mainline/Minimap.lua:346:	if ( GetCVar("UberTooltips") == "1" ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopup/WoWLabs/UnitPopupButtons.lua:354:	if not IsInActiveWorldPVP() and (not UnitInBattleground("player") or GetCVar("enablePVPNotifyAFK") == "0") then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopup/WoWHack/UnitPopupButtons.lua:295:	if not IsInActiveWorldPVP() and (not UnitInBattleground("player") or GetCVar("enablePVPNotifyAFK") == "0") then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopup/Standard/UnitPopupButtons.lua:451:	if not IsInActiveWorldPVP() and (not UnitInBattleground("player") or GetCVar("enablePVPNotifyAFK") == "0") then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PerformanceBar/Classic/PerformanceBarOverrides.lua:3:	return GetCVar("showNewbieTips") == "1";

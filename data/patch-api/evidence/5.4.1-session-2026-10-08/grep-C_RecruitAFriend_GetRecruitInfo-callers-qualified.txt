@@ -1,0 +1,3 @@
+tests/startup_api_glue.rs:162:                   type(select(1, C_RecruitAFriend.GetRecruitInfo())),
+tests/startup_api_glue.rs:163:                   type(select(2, C_RecruitAFriend.GetRecruitInfo())),
+tests/startup_api_glue.rs:214:            local active, faction = C_RecruitAFriend.GetRecruitInfo()

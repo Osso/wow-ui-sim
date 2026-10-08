@@ -1,0 +1,1 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MicroMenu/Classic/MainMenuBarMicroButtons.lua:975:	if ( C_StorePublic.IsDisabledByParentalControls() ) then
