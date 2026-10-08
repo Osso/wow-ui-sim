@@ -67,7 +67,13 @@ def main():
     # not imported from whichever shared tool happens to be in the live tree.
     source = source.replace('from patch_audit_validation import historical_registers, historical_sweep_tests', '')
     exec(compile(source, 'historical-validator.py.txt', 'exec'), namespace)
-    namespace.update(ROOT=ROOT, HERE=HISTORY, blob=historical_blob, subprocess=HistoricalSubprocess,
+    class HistoricalDirectory:
+        def __truediv__(self, name):
+            # The public entry point is now a wrapper. Its historical session
+            # and self seals must still check the original validator bytes.
+            return HERE / 'historical-validator.py.txt' if name == 'validate.py' else HISTORY / name
+
+    namespace.update(ROOT=ROOT, HERE=HistoricalDirectory(), blob=historical_blob, subprocess=HistoricalSubprocess,
                      historical_registers=lambda root, rev: [Path(path) for path in historical_names(rev, 'data/patch-api/sources') if path.endswith('-wikitext-register.json')],
                      historical_sweep_tests=lambda root, rev: [Path(path) for path in historical_names(rev, 'tests') if path.endswith('_publication_sweep.rs')])
     namespace['main']()

@@ -265,7 +265,7 @@
     "prior-results.json": "4e2ac8d5267046f2456d8a0420d6d50e59dafef03ff844a4df2727d4de3a4f20",
     "prior-validator-inventory.json": "d5de3bd514e8d96a2939a4b63bb592c304fed2509f177fc6073f36ada72c5476",
     "rebase-mapping.json": "c1d9bba2a0d2ae84abc01a7efe284389b54042131e3165eb268deb075ad04fdc",
-    "replay_history.py": "0ff2b79aefa4e2a18a5321f145b4d2d1361748ca26a8a92ea224fe2352035512",
+    "replay_history.py": "a17b0832bd7f62733c17c877e5dcabbefe4846d4bb6a905b7917a8e16a76f5c6",
     "reproduce_sources.py": "5161cc29a56d5f48166e768710819296a45fd9216f32fd392aaff24b0bd92e23",
     "results/patch_10_0_0_publication_sweep-results.json": "bd4532b7b4b2181e0a522e63bc2e90133e3efb639d231069fdc99570b0a0207c",
     "results/patch_10_0_2_publication_sweep-results.json": "d2ede209933cfa895e526f94443b34f598e5ca15326c26d9ee0512b8b6fee549",
@@ -330,6 +330,9 @@
     "tools-tests.proof.json": "ed6bb106d099791856884d390957a33f7ac0224a8d6feeed5b49b9beea5a887f",
     "tools-tests.txt": "761603aa9d5e6daef84b5377e5409675f9e2bb7fe42e66dfb901be6bf66898e4",
     "tools.launcher.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "validate.py": "885906cbd82c21df9f93779e6a20e09107a1e76d22a3acd604997bc3b0e5ab68"
+    "validate.py": "885906cbd82c21df9f93779e6a20e09107a1e76d22a3acd604997bc3b0e5ab68",
+    "validator-gate-first.launcher.txt": "4a51cea255dd4525a6b3b7de10c28e188667e7660e7a600d2764ded9b1251350",
+    "validator-gate-first.proof.json": "9973eeafe010a746334828a70767034e00c8ebd65af04ec7745ff05e571de33e",
+    "validator-gate-first.txt": "28c9da7259c1f0dd344f1c44897d87153b928c171128431491495c62154ef71b"
   }
 }

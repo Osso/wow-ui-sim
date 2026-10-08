@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import runpy; runpy.run_path('/home/osso/.worktrees/wow-ui-sim-p554-page/data/patch-api/evidence/5.5.4-session-2026-10-08/integrated/run_proof.py')['run']('validator-gate', ['python3', '-B', '/home/osso/.worktrees/wow-ui-sim-p554-page/tools/check_patch_validators.py'])
+                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/osso/.worktrees/wow-ui-sim-p554-page/data/patch-api/evidence/5.5.4-session-2026-10-08/integrated/run_proof.py", line 36, in run
+    raise RuntimeError(f'{label}: exit {result.returncode}, expected {expected}')
+RuntimeError: validator-gate: exit 1, expected 0
