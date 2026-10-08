@@ -60,7 +60,7 @@ def check_source(context):
     assert {row['source_id'] for row in ledger['source_rows']} == {'source-context-001'}
     assert all(row['status'] == 'metadata-only' and row['capabilities'] == []
                for row in ledger['source_rows'])
-    assert historical_json(revision, 'tests/data/patch_6_0_1_sweep_known_gaps.json') == {}
+    assert historical_json(revision, 'tests/data/patch_6_0_1_sweep_known_gaps.json') == []
     gaps = read_json(HERE / 'p601-gap-review.json')
     problems = read_json(HERE / 'p601-problematic-contracts.json')
     decisions = read_json(HERE / 'p601-retirement-decisions.json')
