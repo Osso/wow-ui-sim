@@ -25,7 +25,7 @@ No new retirements. StartUnratedArena and securerandom already have nil raw/ordi
 
 Merged 5.4.7 then 5.4.8 registers start later_registers, followed by 6.0.1, 6.0.2 and the remaining merged retail chain. No 5.5.x Classic registers included. C_ProductChoice.GetNumSuppressed absence comes from existing 8.3.0 supersession; this audit does not retire it again.
 
-## Verification
+## Historical verification
 
 Discovery initially fails on the exact 39 unaccounted gaps. All publication sweeps pass 56/56; own cached cases 3/3, guild queries 22/22 and sliders 15/15 pass. All six Python fixture scripts pass (86 fixtures). All 55 registers and 52 extracts reproduce; three inherited extract failures (12.0.5, 12.0.7, 12.1.0) are unchanged, not repaired or hidden. Format and Mists tests check pass with zero non-vendor warnings; six inherited iced manifest warnings remain. Negative control adds exactly one gap (39 → 40) and fails as expected. Portable validator gate passes 37/37 in the clean committed checkout and 38/38 after synthetic later changes (including the synthetic validator). Own sealed-log tampering fails; the original log bytes are restored. The eight pending extract rows and 39 publication gaps are limitations, not passing behavior claims. No full integration suite. Runtime/src files are unchanged, so a shared-runtime startup-regression comparison is not required for this audit.
 
