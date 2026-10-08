@@ -41,21 +41,23 @@ def historical_extractor(revision):
 
 
 def source_accounting(context):
-    sources = ROOT / 'data/patch-api/sources'
-    provenance = read(sources / '6.1.0-api-changes.provenance.json')
+    revision_scope = context['accounting_revision']
+    def source_bytes(name):
+        return blob(revision_scope, 'data/patch-api/sources/' + name)
+
+    provenance = json.loads(source_bytes('6.1.0-api-changes.provenance.json'))
     fetch = read(HERE / 'p610-fetch.json')
     page = fetch['query']['pages'][str(provenance['pageid'])]
     revision = page['revisions'][0]
-    raw_path = sources / '6.1.0-api-changes.wikitext'
-    raw = raw_path.read_text()
+    raw = source_bytes('6.1.0-api-changes.wikitext').decode()
     assert provenance['pageid'] == 123523
     assert provenance['revid'] == revision['revid'] == 1216027
     assert provenance['timestamp'] == revision['timestamp']
     assert provenance['sha256'] == sha((HERE / 'p610-fetch.json').read_bytes())
     assert raw == revision['slots']['main']['*']
     assert provenance['wikitext_sha256'] == sha(raw.encode())
-    register_path = sources / '6.1.0-wikitext-register.json'
-    register = read(register_path)
+    register_bytes = source_bytes('6.1.0-wikitext-register.json')
+    register = json.loads(register_bytes)
     assert register['source']['sha256'] == sha(raw.encode())
     assert register['source']['revid'] == provenance['revid']
     # Exact occurrence inventory, including changed prose, never a transclusion expansion.
@@ -63,14 +65,14 @@ def source_accounting(context):
         ('DeathRecap_HasEvents', 'added', 7), ('DeathRecap_GetEvents', 'added', 8),
         ('GetDeathRecapLink', 'added', 9), ('SendChatMessage', 'changed', 14)}
     extractor = historical_extractor(context['source_revision'])
-    text_path = sources / '6.1.0-api-changes.txt'
+    text_bytes = source_bytes('6.1.0-api-changes.txt')
     flags = {f.removeprefix('--').replace('-', '_'): True for f in provenance['extractor_flags']}
     text = extractor['extract_text'](raw, **flags)
-    assert text == text_path.read_text()
+    assert text.encode() == text_bytes
     seeded = extractor['seed_rows'](text, '6.1.0')
-    ledger = read(sources / '6.1.0-page-coverage.json')
-    assert ledger['source_sha256'] == sha(register_path.read_bytes())
-    assert ledger['non_inventory_source']['sha256'] == sha(text_path.read_bytes())
+    ledger = json.loads(source_bytes('6.1.0-page-coverage.json'))
+    assert ledger['source_sha256'] == sha(register_bytes)
+    assert ledger['non_inventory_source']['sha256'] == sha(text_bytes)
     expected_ids = {r['id'] for r in register['entries']} | {r['source_id'] for r in seeded}
     rows = ledger['source_rows']
     assert len(rows) == len(expected_ids)
@@ -80,7 +82,7 @@ def source_accounting(context):
     observed = read(HERE / 'patch_6_1_0_publication_sweep-results.json')
     assert set(observed) == {r['id'] for r in register['entries']}
     gaps = {key for key, value in observed.items() if not value['ok']}
-    fixture = read(ROOT / 'tests/data/patch_6_1_0_sweep_known_gaps.json')
+    fixture = json.loads(blob(revision_scope, 'tests/data/patch_6_1_0_sweep_known_gaps.json'))
     assert gaps == set(fixture) == {'wt-global-api-SendChatMessage-14'}
     for row in rows:
         if row['source_id'] in observed:

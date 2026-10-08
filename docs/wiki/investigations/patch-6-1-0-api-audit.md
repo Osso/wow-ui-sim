@@ -31,7 +31,7 @@ Discovery exposed exactly one SendChatMessage absence mismatch; it is retained i
 
 ## Validator portability
 
-`validate.py` resolves register/sweep scope and prior validator inventory at recorded Git revisions. Historical source/other-audit digest checks read pinned Git blobs, never moving src/tools or other audits' live evidence. Only own retained receipts and artifacts are checked live. Counts are derived from files; no cwd/target equality gate. Wiki preservation is proved at a fixed documentation commit, allowing later additions.
+`validate.py` resolves register/sweep scope and prior validator inventory at recorded Git revisions. Source/test/tool/other-audit inputs read pinned Git blobs, never moving repo files or other audits' live evidence. Only own retained session receipts and artifacts are checked live. No gitignored scratch file is required. Counts are derived from files; no cwd/target equality gate. Wiki preservation is proved at a fixed documentation commit, allowing later additions.
 
 ## Sources
 
