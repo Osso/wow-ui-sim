@@ -1,0 +1,8 @@
+{
+  "revision": "16154a1e5",
+  "test_source": "p710-intrinsic-discovery.rs",
+  "sha256": "8d73603a69a9d803fc030b9a7f316e9b802e1b16e51202ada703d02af2b0cafe",
+  "receipt": "p710-own-green.proof.json",
+  "failure": "unknown frame type P710ClipIntrinsic",
+  "reason": "Registered custom intrinsic is not a known runtime tag; finite widget_type_for_tag mapping ignores dynamically registered intrinsic declarations. No native dynamic tag/security lifecycle model is established by this audit; retain this as a distinct XML gap, no special-case shim."
+}

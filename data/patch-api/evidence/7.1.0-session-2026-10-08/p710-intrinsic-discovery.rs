@@ -5,16 +5,16 @@ use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::xml::{XmlElement, parse_xml, register_template};
 
 prefork_full_ui_case! {
-fn patch_7_1_0_clip_children_state_and_xml(env: &WowLuaEnv) {
+fn patch_7_1_0_clip_children_state_and_intrinsic_xml(env: &WowLuaEnv) {
     let ui = parse_xml(r#"
         <Ui>
-            <Frame name="P710ClipBase" virtual="true" clipChildren="true">
+            <Frame name="P710ClipIntrinsic" intrinsic="true" clipChildren="true">
                 <Size x="91" y="47"/>
                 <Scripts><OnLoad>self.clippedOnLoad = self:DoesClipChildren()</OnLoad></Scripts>
             </Frame>
-            <Frame name="P710ClipOverride" virtual="true" inherits="P710ClipBase" clipChildren="false"/>
+            <Frame name="P710ClipOverride" virtual="true" inherits="P710ClipIntrinsic" clipChildren="false"/>
         </Ui>
-    "#).expect("parse clipping templates");
+    "#).expect("parse intrinsic and clipping XML");
     for element in ui.elements {
         if let XmlElement::Frame(frame) = element {
             let name = frame.name.clone().expect("named template");
@@ -22,7 +22,7 @@ fn patch_7_1_0_clip_children_state_and_xml(env: &WowLuaEnv) {
         }
     }
     env.exec(r#"
-        local intrinsic = CreateFrame('Frame', nil, UIParent, 'P710ClipBase')
+        local intrinsic = CreateFrame('P710ClipIntrinsic', nil, UIParent)
         assert(intrinsic:GetObjectType() == 'Frame')
         assert(intrinsic:GetWidth() == 91 and intrinsic:GetHeight() == 47)
         assert(intrinsic.clippedOnLoad == true and intrinsic:DoesClipChildren() == true)
@@ -34,7 +34,7 @@ fn patch_7_1_0_clip_children_state_and_xml(env: &WowLuaEnv) {
         assert(override:DoesClipChildren() == false)
         assert(override.clippedOnLoad == false)
         assert(intrinsic:DoesClipChildren() == true, 'frame clipping state must remain independent')
-    "#).expect("inherited clipping before OnLoad");
+    "#).expect("intrinsic factory and inherited clipping before OnLoad");
 }
 }
 
