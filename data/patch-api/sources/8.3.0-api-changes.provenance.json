@@ -7,7 +7,8 @@
   "method": "MediaWiki revisions API via browser-cli; pinned response in evidence/8.3.0-session-2026-10-08/p830-fetch.json",
   "wikitext_sha256": "01f5ca887f8dbe81b64ed25d5691bd2634e3367def22d8a713b892e2b01694f2",
   "generator_flags": [
-    "--legacy-column-headers"
+    "--legacy-column-headers",
+    "--diff-api-additions"
   ],
   "extractor_flags": [
     "--preserve-examples",

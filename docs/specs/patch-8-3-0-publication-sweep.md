@@ -4,7 +4,7 @@ Audit Warcraft Wiki page 109654 revision 6471393 against current retail 12.1.0. 
 
 ## What it must do
 
-- [ ] Retain all inventory occurrences, numerical headers and command-column identity; preserve every non-inventory statement and citation with recorded opt-in flags.
+- [ ] Retain all consolidated and late-build inventory occurrences, numerical headers and command-column identity; preserve every non-inventory statement and citation with recorded opt-in flags.
 - [ ] Apply every later master register chronologically and require exact reviewed gap identities, not zero gaps.
 - [ ] Preserve previous registers byte-identically and prior extraction outcomes; prove own saved extract reproduces.
 - [ ] Prove all publication sweeps, negative control, formatting, Mists tests check and retail startup `[]`.

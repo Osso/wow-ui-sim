@@ -5,6 +5,24 @@ from gen_patch_wikitext_register import parse_section, split_sections
 
 
 class InventoryTests(unittest.TestCase):
+    def test_diff_additions_retain_each_late_build_publication(self):
+        import gen_patch_wikitext_register as generator
+        raw = ('==Changes==\n* New functions: {{api|Ignore}}\n'
+               '==Diffs==\n===8.3.0 (34601)===\n'
+               '* New functions: {{api|C_AzeriteEssence.GetNumUsableEssences}}, '
+               '{{api|C_Item.IsItemCorruptable}}, {{api|TargetSpellHasApplyCorruption}}\n'
+               '* New event: {{api|t=e|LFG_GROUP_DELISTED_LEADERSHIP_CHANGE}}\n'
+               '==Global API==\n* New functions: {{api|IgnoreAgain}}\n')
+        entries = generator.parse_diff_api_additions(raw)
+        self.assertEqual([(e['section'], e['symbol'], e['direction'], e['wikitext_line'])
+                          for e in entries], [
+            ('global-api', 'C_AzeriteEssence.GetNumUsableEssences', 'added', 5),
+            ('global-api', 'C_Item.IsItemCorruptable', 'added', 5),
+            ('global-api', 'TargetSpellHasApplyCorruption', 'added', 5),
+            ('events', 'LFG_GROUP_DELISTED_LEADERSHIP_CHANGE', 'added', 6),
+        ])
+        self.assertEqual(len({e['id'] for e in entries}), 4)
+
     def test_legacy_headers_retain_counts_and_removed_command_kind(self):
         lines = [(1, '! style="width:50%"| 1 new cvars'),
                  (2, '! style="width:50%"| 1 removed command'),

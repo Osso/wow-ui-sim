@@ -1,0 +1,14 @@
+..E................
+======================================================================
+ERROR: test_diff_additions_retain_each_late_build_publication (test_gen_patch_wikitext_register.InventoryTests.test_diff_additions_retain_each_late_build_publication)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p830-page/tools/test_gen_patch_wikitext_register.py", line 16, in test_diff_additions_retain_each_late_build_publication
+    entries = generator.parse_diff_api_additions(raw)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'gen_patch_wikitext_register' has no attribute 'parse_diff_api_additions'
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.012s
+
+FAILED (errors=1)

@@ -180,6 +180,21 @@ def parse_simple_api_list(text):
     return entries
 
 
+def parse_diff_api_additions(text):
+    """Retain each explicit late-build addition outside consolidated inventories."""
+    entries = []
+    in_diffs = False
+    for line_no, line in enumerate(text.splitlines(), 1):
+        heading = re.fullmatch(r'==\s*([^=]+?)\s*==', line)
+        if heading:
+            in_diffs = heading[1] == 'Diffs'
+        elif in_diffs and line.startswith(('* New functions:', '* New event:')):
+            section = 'events' if line.startswith('* New event:') else 'global-api'
+            entries.extend(make_entry(section, 'added', line_no, match[0])
+                           for match in TEMPLATE.finditer(line))
+    return entries
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("patch", "path", "revid", "out"):
@@ -198,6 +213,8 @@ def main():
                         help='Retain API/New bullet additions; opt-in preserves prior registers')
     parser.add_argument('--legacy-column-headers', action='store_true',
                         help='Retain prose numerical headers and command-column kinds; opt-in preserves prior registers')
+    parser.add_argument('--diff-api-additions', action='store_true',
+                        help='Retain explicit late-build additions in Diffs; opt-in preserves prior registers')
     args = parser.parse_args()
     patch, path, revid, out = args.patch, args.path, args.revid, args.out
     raw = Path(path).read_bytes()
@@ -219,6 +236,8 @@ def main():
         counts += section_counts
     if args.simple_api_list:
         entries.extend(parse_simple_api_list(raw.decode('utf-8')))
+    if args.diff_api_additions:
+        entries.extend(parse_diff_api_additions(raw.decode('utf-8')))
     if args.inventory_only:
         for entry in entries:
             for key in ("kind", "page_default", "test_inline"):

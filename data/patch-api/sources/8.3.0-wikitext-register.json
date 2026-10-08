@@ -1817,6 +1817,38 @@
       "annotation": "",
       "wikitext_line": 288,
       "kind": "command"
+    },
+    {
+      "id": "wt-global-api-C_AzeriteEssence.GetNumUsableEssences-14",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AzeriteEssence.GetNumUsableEssences",
+      "annotation": "",
+      "wikitext_line": 14
+    },
+    {
+      "id": "wt-global-api-C_Item.IsItemCorruptable-14",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Item.IsItemCorruptable",
+      "annotation": "",
+      "wikitext_line": 14
+    },
+    {
+      "id": "wt-global-api-TargetSpellHasApplyCorruption-14",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "TargetSpellHasApplyCorruption",
+      "annotation": "",
+      "wikitext_line": 14
+    },
+    {
+      "id": "wt-events-LFG_GROUP_DELISTED_LEADERSHIP_CHANGE-18",
+      "section": "events",
+      "direction": "added",
+      "symbol": "LFG_GROUP_DELISTED_LEADERSHIP_CHANGE",
+      "annotation": "",
+      "wikitext_line": 18
     }
   ]
 }
