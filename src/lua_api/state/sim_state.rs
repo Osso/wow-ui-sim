@@ -44,6 +44,8 @@ pub struct SimState {
     pub encounter_journal: EncounterJournalState,
     pub anima_diversion: AnimaDiversionState,
     pub garrison_talents: GarrisonTalentState,
+    #[cfg(feature = "client-retail")]
+    pub garrison_trees: crate::c_api::c_garrison_trees::GarrisonTrees,
     pub clipboard: ClipboardState,
     pub chat_edit_open_state: Option<ChatEditOpenState>,
     /// INFERRED explicit host ingress; empty per environment.

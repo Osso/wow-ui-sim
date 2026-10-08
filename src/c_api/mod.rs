@@ -94,6 +94,8 @@ pub(crate) mod c_encounter_timeline;
 #[cfg(feature = "retail-12-0-0")]
 pub(crate) mod c_encounter_warnings;
 pub(crate) mod c_event_scheduler;
+#[cfg(feature = "client-retail")]
+pub mod c_garrison_trees;
 pub mod c_glue;
 pub mod c_housing;
 pub mod c_housing_bundles;
@@ -328,6 +330,8 @@ pub(crate) fn register_utility_bootstrap_tables(state: &mut LuaState) -> LuaResu
     #[cfg(feature = "retail-12-0-5")]
     c_navigation::register(state)?;
     c_weather::register(state)?;
+    #[cfg(feature = "client-retail")]
+    c_garrison_trees::register(state)?;
     c_damage_meter::register(state)?;
     #[cfg(feature = "retail-12-1-0")]
     c_encounter_timeline::register(state)?;

@@ -2,6 +2,10 @@
 
 [Audit](investigations/patch-7-3-0-api-audit.md): revision 5335723; merged 7.3.2 register, three table publications, eleven IDs, zero publication gaps and one pending slash/consent row. Integrated 44 sweeps, sound/menu/popup/panel tests, fixtures and Mists/format checks pass. Branch/master startup both []; 43 registers / 40 extracts reproduce with three inherited failures. All 20 validators pass; historical/integrated scopes fixed, original artifacts unchanged.
 
+## [2026-10-08] investigation | 7.2.5 API page audit
+
+[Audit](investigations/patch-7-2-5-api-audit.md): revision 4311256, sixteen API identities; six discovery gaps. Real retail garrison tree catalog/context model closes three targeted missing members; full reload lifecycle and ambiguous C_Unit remain problematic. ReloadUI retained after complete retail/caller/later-register scans. Targeted acceptance pending.
+
 ## [2026-10-08] investigation | Patch 8.0.1 API audit
 
 [Audit](investigations/patch-8-0-1-api-audit.md): integrated 8.1.0 bounty removal closes one gap (18 → 17); 269 inventory/295 total IDs, explicit world-coordinate model, 42 sweep/factory cases, 41 reproduced registers and portable historical proof.

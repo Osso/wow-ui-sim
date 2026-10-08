@@ -1,3 +1,7 @@
+## [2026-10-08] investigation | Patch 7.2.5
+
+Pinned page 448509 revision 4311256; opt-in canonical summary-bullet register. Added real retail garrison tree catalog/context; retained ReloadUI after whole-word grep consumer/caller scans. [Audit](investigations/patch-7-2-5-api-audit.md); acceptance pending.
+
 ## [2026-10-08] integration | Patch 8.1.0 API audit
 
 ## 2026-10-08 — Patch 7.3.2 API audit
