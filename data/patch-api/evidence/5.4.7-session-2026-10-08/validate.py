@@ -127,12 +127,14 @@ def check_historical_scope(context):
         path = PREFIX + row['patch'] + '-wikitext-register.json'
         assert row['exit'] == 0 and row['byte_identical']
         assert row['sha256'] == digest(blob(revision, path))
+        assert blob(revision, path) == blob(context['accounting_revision'], path)
     base = context['base_revision']
     prior_path = 'data/patch-api/evidence/6.0.2-session-2026-10-08/integrated/p602-saved-extract-reproduction.json'
     previous = {row['patch']: row for row in pinned(base, prior_path)}
     for row in extracts:
         path = PREFIX + row['patch'] + '-api-changes.txt'
         assert row['saved_sha256'] == digest(blob(revision, path))
+        assert blob(revision, path) == blob(context['accounting_revision'], path)
         if row['patch'] in previous:
             before = previous[row['patch']]
             assert (row['byte_identical'], row['error']) == (before['byte_identical'], before['error'])
