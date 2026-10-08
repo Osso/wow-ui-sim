@@ -1,0 +1,15 @@
+{
+  "tool": "/usr/bin/grep",
+  "command": [
+    "/usr/bin/grep",
+    "-nwE",
+    "integration_tests|read_dir|test_files|tests_dir",
+    "/home/osso/.worktrees/wow-ui-sim-p553-page/build.rs"
+  ],
+  "exit": 0,
+  "log": "wiring-scan.txt",
+  "log_sha256": "5b8ef3e5f74612f84493913faa4a8c73796834a88dac496c657647952386d806",
+  "untruncated": true,
+  "line_count": 19,
+  "revision": "d1ee20cb18c5a48326f8bedd1de175a4a3df5b1c"
+}

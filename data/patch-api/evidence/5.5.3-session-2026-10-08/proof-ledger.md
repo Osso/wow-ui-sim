@@ -11,7 +11,7 @@ Scope: current Mists Classic profile, resources-only inventory, no runtime chang
 | `negative` | One injected row against zero-row page contract | Must exit 101 at the 1 → 0 row-count boundary |
 | `tools-tests` | All `tools/test_*.py` fixtures | No tools source changed during this audit |
 | `format-final` | Final Rust source | Import deletion invalidates original format receipt; final receipt supersedes it |
-| `p553-reproduction.json` | Complete source/register/extract set at `d650107bf` | Source/tool bytes unchanged after that revision; three exact inherited extract failures retained |
+| `p553-reproduction.json` | Complete source/register/extract set at the revision recorded in the report | Every wikitext input, including the 6.0.2 transclusion, copied from Git into scratch; generator/extractor run there without live shared-source reads; three exact inherited extract failures retained |
 | `master/` | Historical retail baseline pinned at master `4d046d99d` | Git diff proves recorded baseline runtime equals master's src/tests/tools/Cargo/build scope; no redundant baseline rebuild |
 | Validator gate | Committed evidence in clean and unrelated-later-audit checkouts | Report records exact tested commit; later docs/evidence-only commits do not change sealed acceptance scope |
 

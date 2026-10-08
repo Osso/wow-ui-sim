@@ -40,6 +40,9 @@ def main():
         for tool in ['gen_patch_wikitext_register', 'extract_patch_non_inventory']:
             path = f'tools/{tool}.py'
             (scratch / path).write_bytes(blob(revision, path))
+        for source_path in (name for name in names if name.endswith('.wikitext')):
+            content = blob(revision, source_path)
+            (scratch / source_path).write_bytes(content)
         for register_path in sorted(name for name in names if name.endswith('-wikitext-register.json')):
             patch = Path(register_path).name.removesuffix('-wikitext-register.json')
             raw_path = f'data/patch-api/sources/{patch}-api-changes.wikitext'
@@ -48,12 +51,11 @@ def main():
             provenance = json.loads(blob(revision, f'data/patch-api/sources/{patch}-api-changes.provenance.json'))
             register_flags[patch] = provenance.get('generator_flags', register_flags.get(patch, []))
             extract_flags[patch] = provenance.get('extractor_flags', extract_flags.get(patch, []))
-            (scratch / raw_path).write_bytes(blob(revision, raw_path))
             out = scratch / register_path
             command = [sys.executable, '-B', str(scratch / 'tools/gen_patch_wikitext_register.py'),
                        patch, str(scratch / raw_path), str(register['source']['revid']), str(out),
                        *register_flags[patch]]
-            result = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
+            result = subprocess.run(command, cwd=scratch, capture_output=True, text=True)
             record = {'patch': patch, 'register_exit': result.returncode,
                       'register_sha256': hashlib.sha256(expected_register).hexdigest(),
                       'register_byte_identical': result.returncode == 0 and out.read_bytes() == expected_register,
@@ -65,7 +67,7 @@ def main():
                 expected_text = blob(revision, text_path)
                 command = [sys.executable, '-B', str(scratch / 'tools/extract_patch_non_inventory.py'),
                            '--patch', patch, '--text-only', *extract_flags[patch]]
-                result = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
+                result = subprocess.run(command, cwd=scratch, capture_output=True, text=True)
                 record.update(extract_exit=result.returncode,
                               extract_sha256=hashlib.sha256(expected_text).hexdigest(),
                               extract_byte_identical=result.returncode == 0 and

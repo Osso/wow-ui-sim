@@ -1,0 +1,19 @@
+56:    let tests_dir = manifest_dir.join("tests");
+58:    let harness_path = out_dir.join("integration_tests.rs");
+60:    let mut module_files = discover_top_level_test_modules(&tests_dir);
+66:        tests_dir.join("common/mod.rs")
+68:    for perf_module in discover_perf_helper_modules(&tests_dir.join("perf")) {
+76:        tests_dir.join("c_item_api/support.rs")
+80:        tests_dir.join("common/token_ui_fixtures.rs")
+116:    let tests_dir = manifest_dir.join("tests");
+120:    let source_files = discover_prefork_full_ui_sources(&tests_dir);
+121:    let cases = collect_prefork_full_ui_cases(&tests_dir, source_files);
+126:fn discover_prefork_full_ui_sources(tests_dir: &Path) -> Vec<PreforkFullUiSource> {
+128:    for source_path in discover_top_level_test_modules(tests_dir) {
+136:            let module_path = module_path_for_test_source(tests_dir, &sibling_path);
+207:    for entry in std::fs::read_dir(directory)
+283:fn module_path_for_test_source(tests_dir: &Path, source_path: &Path) -> String {
+285:        .strip_prefix(tests_dir)
+463:fn discover_top_level_test_modules(tests_dir: &Path) -> Vec<PathBuf> {
+464:    let entries = std::fs::read_dir(tests_dir).expect("read tests dir");
+474:    let mut modules: Vec<_> = std::fs::read_dir(perf_dir)
