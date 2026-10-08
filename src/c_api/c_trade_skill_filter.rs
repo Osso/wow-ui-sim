@@ -3,11 +3,11 @@
 
 use crate::c_api::ensure_namespace;
 use crate::lua_api::globals::profession_data;
-use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string};
+use crate::lua_api::methods::{borrow_state, borrow_state_mut, create_string, create_table};
 use crate::lua_api::script_helpers::fire_named_event_state;
-use crate::lua_bridge::{FromStack, IntoStack, table_set_rust_fn_static};
-use rilua::LuaResult;
+use crate::lua_bridge::{FromStack, table_set_rust_fn_static};
 use rilua::vm::state::LuaState;
+use rilua::{LuaResult, Val};
 
 pub(crate) fn register(state: &mut LuaState) -> LuaResult<()> {
     let table = ensure_namespace(state, "C_TradeSkillUI")?;
@@ -49,5 +49,11 @@ fn filter_recipe_ids(filter: &str) -> Vec<i32> {
 
 fn get_filtered_recipe_ids(state: &mut LuaState) -> LuaResult<u32> {
     let filter = borrow_state(state)?.crafting.recipe_name_filter.clone();
-    filter_recipe_ids(&filter).into_stack(state)
+    let ids = filter_recipe_ids(&filter);
+    let table = create_table(state);
+    for (index, id) in ids.into_iter().enumerate() {
+        super::helpers::set_table_array(state, table, (index + 1) as i64, Val::Num(id as f64));
+    }
+    state.push(table);
+    Ok(1)
 }
