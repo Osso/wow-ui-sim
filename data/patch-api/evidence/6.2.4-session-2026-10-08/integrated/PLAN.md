@@ -9,7 +9,7 @@ Scope: retire the superseded live-tool allowlist dependency, preserve historical
 - [x] Actually run the 30 validators selected from master 15b417367.
 - [x] Rerun all/own sweeps, three Python fixture scripts and format; seal six receipts.
 - [x] Update audit wiki without shrinking index/log.
-- [ ] Commit reconciliation and verify all 32 historical/integrated gates.
+- [x] Commit reconciliation and verify all 32 historical/integrated gates.
 
 - [x] Reproduce all saved registers/extracts with recorded flags; retain inherited failures.
 - [x] Run own sweep and apply only attributable later-audit supersessions if needed.

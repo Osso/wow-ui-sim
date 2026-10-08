@@ -1,0 +1,198 @@
+{
+  "scope_revision": "f180b309fe20b4c78f0821f8c7199cb3eb13bdaf",
+  "prior_scope_revision": "15b417367",
+  "rows": {
+    "data/patch-api/evidence/10.0.0-session-2026-10-07/validate.py": {
+      "exit": 0,
+      "validator_sha256": "46a4283d5ea4c1b33352fc3c7122277605db5986d55752e6ddddb75e8f1ea7ef",
+      "log": "rebase-validators/0.txt",
+      "log_sha256": "02719d9b18584d9151cfb79a95219fcb1ef1ee3517531d8e59fb1b3fee4140ba"
+    },
+    "data/patch-api/evidence/10.0.2-session-2026-10-07/validate.py": {
+      "exit": 0,
+      "validator_sha256": "73be1e31b335318f89937fb06c9e87f07fb3530e1ee5c90704ffbc61ec521c71",
+      "log": "rebase-validators/1.txt",
+      "log_sha256": "a75d4c47989b478e4c270c61cd67719c1a755014e9d83117d847eeb21c872a00"
+    },
+    "data/patch-api/evidence/10.0.5-session-2026-10-07/validate.py": {
+      "exit": 0,
+      "validator_sha256": "4ce935c001d712259ac2749f5b8a4214231f3b8e6f7b7e3649c8f5a0acc2d1b2",
+      "log": "rebase-validators/2.txt",
+      "log_sha256": "9624dc0ecd63092ab2a5ba3583bc5d1b1a6b3ddc1976813232c19492407a6678"
+    },
+    "data/patch-api/evidence/7.0.1-session-2026-10-08/validate.py": {
+      "exit": 0,
+      "validator_sha256": "977e6e9b5291562c6f410087322b37febebc92dda663965fa73be779e1a79eda",
+      "log": "rebase-validators/3.txt",
+      "log_sha256": "9fac4f78d07f7979dbc59ad81279fdcc3be64c19f946dff421381c3d44afeb21"
+    },
+    "data/patch-api/evidence/7.0.3-session-2026-10-08/integrated/validate.py": {
+      "exit": 0,
+      "validator_sha256": "ad2bf7471aed199cd5faea8ced55c1361fa20edbbc19c252c745dd10cc538384",
+      "log": "rebase-validators/4.txt",
+      "log_sha256": "f29a16d7a6a3bf4e8aa1215aa9931705325c2f28db2279bfbb59640916ef765b"
+    },
+    "data/patch-api/evidence/7.0.3-session-2026-10-08/validate.py": {
+      "exit": 0,
+      "validator_sha256": "05c14d50ec77437d34bb407564d8e14287e2c9466935aef2dcbba45ea892e386",
+      "log": "rebase-validators/5.txt",
+      "log_sha256": "81778c3d4422bbf48355eabf709cce30d80b55a7f0e2e6cdd8e680681fbac1ad"
+    },
+    "data/patch-api/evidence/7.1.0-session-2026-10-08/validate.py": {
+      "exit": 0,
+      "validator_sha256": "6759f21e21823b0118a9f59717423d775828788ee68ad299b1ac181794bc9047",
+      "log": "rebase-validators/6.txt",
+      "log_sha256": "95c9fc261fe87a29d885b3f7fa12689038b791abdb85eaf9ef499982a383fc16"
+    },
+    "data/patch-api/evidence/7.1.0-session-2026-10-08/validate_integrated.py": {
+      "exit": 0,
+      "validator_sha256": "9facc4b556bece199d319fa665a8dc94e3d4dfa381ba643d9e69d9fcfd657c43",
+      "log": "rebase-validators/7.txt",
+      "log_sha256": "0a0b8068c1ae678dd93ddb221f253cf2220f150e605c9733287c1244be62d74a"
+    },
+    "data/patch-api/evidence/7.2.0-session-2026-10-08/validate.py": {
+      "exit": 0,
+      "validator_sha256": "e4cb7b22f7fc6e8b62f6a414c2b54cce4bd423974f2a27a419e86fe4d482589c",
+      "log": "rebase-validators/8.txt",
+      "log_sha256": "02040aa405e1695312cfcf706bbeb1444d67560c85a71a2f0c16cc09864750e6"
+    },
+    "data/patch-api/evidence/7.2.0-session-2026-10-08/validate_integrated.py": {
+      "exit": 0,
+      "validator_sha256": "40192979dff1b5becd58cc378a808e9158b03502def93ccdd5d413a597929cac",
+      "log": "rebase-validators/9.txt",
+      "log_sha256": "d7de674dacf3d4c470a769639ba42d6c8c1fb5fde402338d127d287dd2f7c107"
+    },
+    "data/patch-api/evidence/7.2.5-session-2026-10-08/validate.py": {
+      "exit": 0,
+      "validator_sha256": "63cfe8b4f46146f793f0af2ffc8518f5ada86cfb1f24635d074efca95fc1e5c4",
+      "log": "rebase-validators/10.txt",
+      "log_sha256": "1a0246be35d42093e1ef274f03e86c1011ce869770d0a165a94b0f09497c8054"
+    },
+    "data/patch-api/evidence/7.2.5-session-2026-10-08/validate_integrated.py": {
+      "exit": 0,
+      "validator_sha256": "7a8ba86bfce57e09feacaa2511d66fb42395e70bf83952f88b575ae99a57bf40",
+      "log": "rebase-validators/11.txt",
+      "log_sha256": "25d03c68db3de7645a4eebe3e4c2b066bc1670d0570b0a3cc6be8153bd5c94ed"
+    },
+    "data/patch-api/evidence/7.3.0-session-2026-10-08/validate.py": {
+      "exit": 0,
+      "validator_sha256": "5819b4d1bbec4e08de84784bea227de53a5ec8a0db7366057ebacc5f9f863643",
+      "log": "rebase-validators/12.txt",
+      "log_sha256": "7efb3feea66565f2f1be77017d36be7fd487d22ef82b0107a8cfb85c0a996f52"
+    },
+    "data/patch-api/evidence/7.3.0-session-2026-10-08/validate_integrated.py": {
+      "exit": 0,
+      "validator_sha256": "89be648cde8a9ef9645248b6a5d0802474f40173a64ca3135652525f06376582",
+      "log": "rebase-validators/13.txt",
+      "log_sha256": "ffe3840382cb25fbbf2a9188ad80c4e12d028b0c571f267dc82f17b197ae8992"
+    },
+    "data/patch-api/evidence/7.3.2-session-2026-10-08/validate.py": {
+      "exit": 0,
+      "validator_sha256": "ad9d0b9941bb8bf728eb3d21ce791910c6ba92836d9de437d1a5c5524c008817",
+      "log": "rebase-validators/14.txt",
+      "log_sha256": "f268ca84f570953827495f17e26ef4dc4f31141fe17cd1eee8eeb09bf7b99a92"
+    },
+    "data/patch-api/evidence/8.0.1-session-2026-10-08/validate.py": {
+      "exit": 0,
+      "validator_sha256": "6d5cf002b9430c02cc7ac7962afd95b1ca28ad9bb72c6f3d4f46265f11ef8819",
+      "log": "rebase-validators/15.txt",
+      "log_sha256": "68a3cbed73487cea5d5b53c5cf063189d8c2b65ee3e413709f1a9b4b3d447ac4"
+    },
+    "data/patch-api/evidence/8.1.0-session-2026-10-08/validate.py": {
+      "exit": 0,
+      "validator_sha256": "fb5516df9aebfcb54e6c3f27cfa7ea1486fda8f233337f647d05067777e2218a",
+      "log": "rebase-validators/16.txt",
+      "log_sha256": "4c5ba94b1779a7b0c76f8f977e969413dd0dc62972412966276d9ba0d2f8268c"
+    },
+    "data/patch-api/evidence/8.1.5-session-2026-10-08/validate.py": {
+      "exit": 0,
+      "validator_sha256": "4f8f9dbf45eb5a0a8ddd21329ecfd4ded562b9b66e9f8ebceeba10c711392c47",
+      "log": "rebase-validators/17.txt",
+      "log_sha256": "9de776512053007fbc5f253942be06fca4a5d6f7a21b88be01d9d66607a7b779"
+    },
+    "data/patch-api/evidence/8.2.0-session-2026-10-08/validate.py": {
+      "exit": 0,
+      "validator_sha256": "a80033d2f7433844775ba683dc85c17e33844ddf800374bb6766e5eb05462fc4",
+      "log": "rebase-validators/18.txt",
+      "log_sha256": "7d2c3d9a0a02322078e8f02def876a8b7b91ba100b26fbc787f8cbf56f847f4c"
+    },
+    "data/patch-api/evidence/8.2.5-session-2026-10-08/validate.py": {
+      "exit": 0,
+      "validator_sha256": "7abca9dadf8702eceef729cd9e6dcccabdd92ed4f6d8f6523e6f72c66f447423",
+      "log": "rebase-validators/19.txt",
+      "log_sha256": "85f5c2e591e8fbe129243c3d4605dcd8eaf7ba085cf0bdfcf7dc0c34e29324fa"
+    },
+    "data/patch-api/evidence/8.3.0-session-2026-10-08/validate.py": {
+      "exit": 0,
+      "validator_sha256": "38fb3f088784fc3c91ff798667833fd88c9c023b7ee0b74dcc9d37090756fdce",
+      "log": "rebase-validators/20.txt",
+      "log_sha256": "171a3bb1d4478a1ee6f96c690772f529294e8e883ff124602f454f9152b2307e"
+    },
+    "data/patch-api/evidence/8.3.7-session-2026-10-08/validate.py": {
+      "exit": 0,
+      "validator_sha256": "7ccc9cfe748aa05ebedd62bd5e95ee09a9d40564cf483340697b2e137aae3ffc",
+      "log": "rebase-validators/21.txt",
+      "log_sha256": "7ce1e2ca96cddb502e4ed8723b679745c890127b222b9947cd99ba5851ac017d"
+    },
+    "data/patch-api/evidence/9.0.1-session-2026-10-08/validate.py": {
+      "exit": 0,
+      "validator_sha256": "2daa5e6851fbabf4303bfaf33d98802514c3e85340a3d3d2b2f0bd89e36b1a6a",
+      "log": "rebase-validators/22.txt",
+      "log_sha256": "4305826ca4bbb64981eeac6766c120314002474c23fa33230a3398c46286ae39"
+    },
+    "data/patch-api/evidence/9.0.2-session-2026-10-08/validate.py": {
+      "exit": 0,
+      "validator_sha256": "f1e9e54da4aeb147f998bdf69a3a351e7de091813be8265884f5a0ec2f36add5",
+      "log": "rebase-validators/23.txt",
+      "log_sha256": "21e197c8f556d1bbb55c8e7adf1b4dda36b76ae5ff014d5267d051bdfb626bcb"
+    },
+    "data/patch-api/evidence/9.0.5-session-2026-10-08/validate.py": {
+      "exit": 0,
+      "validator_sha256": "24d44afc05bbcd92992882b3c639c7f91f71d2d7968844033cda6f4862bd5df9",
+      "log": "rebase-validators/24.txt",
+      "log_sha256": "067769fafb5b05de8a957337872f11b8f01c8384c560b0229596b4453b4f094d"
+    },
+    "data/patch-api/evidence/9.1.0-session-2026-10-07/validate.py": {
+      "exit": 0,
+      "validator_sha256": "8788c857e84bd6eaf76f847956bd3bbb4880d2b24d9a96b8362c8fc0289b3b13",
+      "log": "rebase-validators/25.txt",
+      "log_sha256": "567d932853569bb43d98ae4ba7bdb96e04d5763632f82b94a186597e741adad8"
+    },
+    "data/patch-api/evidence/9.1.5-session-2026-10-07/validate.py": {
+      "exit": 0,
+      "validator_sha256": "5589974210edda5c7ff84993758b2b50e26d931e4bc6f959a78ed8a3b8e92203",
+      "log": "rebase-validators/26.txt",
+      "log_sha256": "7ecba1601b629b5e384ea2180087a2671a0d39de1bc5d25879964ab782c69c7c"
+    },
+    "data/patch-api/evidence/9.2.0-session-2026-10-07/validate.py": {
+      "exit": 0,
+      "validator_sha256": "a5ff5c05bd495fb3fcab34947ec58da23fa2cdd816b22d9e4bd1674d8e00223e",
+      "log": "rebase-validators/27.txt",
+      "log_sha256": "5eeea25834f3fe1ed7cf52fd897ae873a18ef5f06f9a5aa0ec6b06ca56e177a1"
+    },
+    "data/patch-api/evidence/9.2.5-session-2026-10-07/validate.py": {
+      "exit": 0,
+      "validator_sha256": "0ef6d65c08ab4d9d2c7ba7edd8d37ad271580552254ca114c48cc48581fb9325",
+      "log": "rebase-validators/28.txt",
+      "log_sha256": "cbb0011ca6d9d6dc4f63d4520303138e24f3d52d5625592ca9a4ac72409d406b"
+    },
+    "data/patch-api/evidence/9.2.7-session-2026-10-07/validate.py": {
+      "exit": 0,
+      "validator_sha256": "efbd478aab7fd7d9543f505cbc7d6f7fcf9c604d277110a9ff5d25701ad4ab2c",
+      "log": "rebase-validators/29.txt",
+      "log_sha256": "5e32c82c9a233afca2c86ee7f19b6b31da563df53d811ea65f37e1a7d82fa320"
+    },
+    "data/patch-api/evidence/6.2.4-session-2026-10-08/integrated/validate.py": {
+      "exit": 0,
+      "validator_sha256": "41070238f1ccb3cf8c292bbfcd74b2cf17ac0278facbe303a14dad83428565c0",
+      "log": "rebase-validators/integrated-6.2.4.txt",
+      "log_sha256": "571207bd515fc57b2bda851e4448e479de5b7325a78987cf8bb4cfd24965fe38"
+    },
+    "data/patch-api/evidence/6.2.4-session-2026-10-08/validate.py": {
+      "exit": 0,
+      "validator_sha256": "167d093eb6d095fbf8d497b4fe9272d040592518053308bcec58812534b39a0e",
+      "log": "rebase-validators/historical-6.2.4.txt",
+      "log_sha256": "bc4af733aa15516686b2c86c869284572807ea0459f3f41fea894904d9a2537e"
+    }
+  }
+}

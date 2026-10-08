@@ -4,7 +4,7 @@ Master `15b417367` supersedes the four-file `scope_input_matches` allowlist: its
 
 `rebase-mapping.json` records all ten supplied old/new commit pairs, stable patch IDs, tree hashes and changed before/after blob IDs. Nine patches are identical; only the superseded allowlist commit differs. The integrated gate resolves old receipt pins to rebased commits and verifies their source scope. Historical comparisons remain against pre-rebase base `846a30663`, rather than relabeling historical runs as new-master runs. Original historical validators and receipts remain unchanged.
 
-`context.json` pins prior-validator discovery to `15b417367`. `check_validators.py` ran each of its 30 validators and checked each executable's bytes against that Git blob; `prior-validator-matrix.json` seals executable/log SHA-256 values. The final current-worktree matrix additionally covers the original and integrated 6.2.4 validators, totaling 32.
+`context.json` pins prior-validator discovery to `15b417367`. `check_validators.py` ran each of its 30 validators and checked each executable's bytes against that Git blob; `prior-validator-matrix.json` seals executable/log SHA-256 values. `rebase-validator-matrix.json` additionally covers the original and integrated 6.2.4 validators at reconciliation commit `f180b309f`: 32/32 pass. The 30 unchanged prior gates reuse the newly generated pinned-master proof; both 6.2.4 gates were executed after that commit. Original pre-rebase matrix/log artifacts remain preserved.
 
 Fresh receipts in `rebase-checks/` cover source revision `1dbc6204c`, dedicated target `/home/osso/.cache/wow-ui-sim-targets/p624-page`:
 
