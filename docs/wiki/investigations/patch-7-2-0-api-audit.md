@@ -18,9 +18,9 @@ Initial prefork sweep reports exactly one gap: `wt-widgets-MaskTexture-5`. Runti
 
 ## Retirement review
 
-**No retirements.** Migration prose explicitly preserves old APIs through Blizzard_Deprecated. Removal prose names domains, not members. [Untruncated scans](../../../data/patch-api/evidence/7.2.0-session-2026-10-08/p720-scans.json) use `/usr/bin/grep -R -n -w -F` in retail cached AddOns, excluding `*Documentation*`, and src/tests. Bare-name scanning includes `pcall(Name, ...)` and `and Name then` without syntax filters. Current MaskTexture, SetVertexOffset and C_EquipmentSet consumers remain intact. [Later-register snapshots](../../../data/patch-api/evidence/7.2.0-session-2026-10-08/p720-later-register-scan.json) read master and p725-page Git objects only, never the parallel worktree. No named-identity intersection; voice-domain removal does not disable later voice APIs. 7.2.5 placeholder remains first in `later_registers`, followed by 7.3.0 and later pages.
+**No retirements.** Migration prose explicitly preserves old APIs through Blizzard_Deprecated. Removal prose names domains, not members. [Untruncated scans](../../../data/patch-api/evidence/7.2.0-session-2026-10-08/p720-scans.json) use `/usr/bin/grep -R -n -w -F` in retail cached AddOns, excluding `*Documentation*`, and src/tests. Bare-name scanning includes `pcall(Name, ...)` and `and Name then` without syntax filters. Current MaskTexture, SetVertexOffset and C_EquipmentSet consumers remain intact. [Later-register snapshots](../../../data/patch-api/evidence/7.2.0-session-2026-10-08/p720-later-register-scan.json) read master and p725-page Git objects only, never the parallel worktree. No named-identity intersection; voice-domain removal does not disable later voice APIs. The real merged 7.2.5 register replaces the first-position placeholder (`482612127`), followed by 7.3.0 and later pages in chronological order.
 
-## Verification
+## Historical verification
 
 Targeted acceptance passes. No full integration suite, agents/model CLIs, push or merge. Own target: `/home/osso/.cache/wow-ui-sim-targets/p720-page`. Commands use explicit owned cwd; long Cargo runs were detached with complete logs and scope/revision receipts. The host lacks a WoW install; CASC visual tests are not claimed.
 

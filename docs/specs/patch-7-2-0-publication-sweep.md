@@ -40,4 +40,4 @@ Audit the pinned [source](../../data/patch-api/sources/7.2.0-api-changes.provena
 
 ## Out of scope
 
-Native 2017 parity, expansion of linked pages into new requirements, unspecified method/security/return contracts, vendor edits, full integration suite, push and merge. 7.2.5 integration belongs to the merge owner; retain its first-position placeholder until its register merges.
+Native 2017 parity, expansion of linked pages into new requirements, unspecified method/security/return contracts, vendor edits, full integration suite, push and merge. The merged 7.2.5 register now participates in chronological supersession; its original placeholder is retired.
