@@ -244,9 +244,8 @@ fn appears_in_eager_discovery_on_all_four_screens() {
     }
 }
 
-#[test]
-fn full_game_load_emits_no_addon_specific_lua_errors() {
-    let env = load_full_ui_for(ScreenKind::Game);
+prefork_full_ui_case! {
+fn full_game_load_emits_no_addon_specific_lua_errors(env: &WowLuaEnv) {
 
     let errors = env.state().borrow().lua_errors.clone();
     let needles = [
@@ -269,10 +268,17 @@ fn full_game_load_emits_no_addon_specific_lua_errors() {
         matched
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn is_addon_loaded_reports_true_after_eager_sweep() {
+fn full_game_load_emits_no_addon_specific_lua_errors() {
     let env = load_full_ui_for(ScreenKind::Game);
+    full_game_load_emits_no_addon_specific_lua_errors::run(&env);
+}
+
+prefork_full_ui_case! {
+fn is_addon_loaded_reports_true_after_eager_sweep(env: &WowLuaEnv) {
 
     let loaded: bool = env
         .eval("return C_AddOns.IsAddOnLoaded('Blizzard_SocialToast')")
@@ -286,10 +292,17 @@ fn is_addon_loaded_reports_true_after_eager_sweep() {
          auto-loaded set"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn publishes_three_mixin_tables_with_canonical_methods() {
+fn is_addon_loaded_reports_true_after_eager_sweep() {
     let env = load_full_ui_for(ScreenKind::Game);
+    is_addon_loaded_reports_true_after_eager_sweep::run(&env);
+}
+
+prefork_full_ui_case! {
+fn publishes_three_mixin_tables_with_canonical_methods(env: &WowLuaEnv) {
 
     for mixin in PUBLISHED_MIXINS {
         let probe = format!("return type({mixin}) == 'table'");
@@ -325,10 +338,17 @@ fn publishes_three_mixin_tables_with_canonical_methods() {
          SocialToastMixin.OnLeave (mouseover pauses the auto-fade-out timer)"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn social_toast_mixin_calls_alert_frame_helpers_on_hover() {
+fn publishes_three_mixin_tables_with_canonical_methods() {
     let env = load_full_ui_for(ScreenKind::Game);
+    publishes_three_mixin_tables_with_canonical_methods::run(&env);
+}
+
+prefork_full_ui_case! {
+fn social_toast_mixin_calls_alert_frame_helpers_on_hover(env: &WowLuaEnv) {
 
     let probe = "return type(AlertFrame_PauseOutAnimation) == 'function' and \
                  type(AlertFrame_ResumeOutAnimation) == 'function'";
@@ -345,10 +365,17 @@ fn social_toast_mixin_calls_alert_frame_helpers_on_hover() {
          the dep edge is missing from the TOC declaration"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn social_toast_template_materializes_with_close_button_child_and_low_strata() {
+fn social_toast_mixin_calls_alert_frame_helpers_on_hover() {
     let env = load_full_ui_for(ScreenKind::Game);
+    social_toast_mixin_calls_alert_frame_helpers_on_hover::run(&env);
+}
+
+prefork_full_ui_case! {
+fn social_toast_template_materializes_with_close_button_child_and_low_strata(env: &WowLuaEnv) {
 
     let probe = "local f = CreateFrame('Button', 'SocialToastProbe', UIParent, 'SocialToastTemplate') \
                  if not f then return 'frame nil' end \
@@ -381,10 +408,17 @@ fn social_toast_template_materializes_with_close_button_child_and_low_strata() {
          parentKey shortcut"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn social_toast_close_button_template_materializes_with_three_state_textures() {
+fn social_toast_template_materializes_with_close_button_child_and_low_strata() {
     let env = load_full_ui_for(ScreenKind::Game);
+    social_toast_template_materializes_with_close_button_child_and_low_strata::run(&env);
+}
+
+prefork_full_ui_case! {
+fn social_toast_close_button_template_materializes_with_three_state_textures(env: &WowLuaEnv) {
 
     let probe = "local f = CreateFrame('Button', 'SocialToastCloseButtonProbe', UIParent, 'SocialToastCloseButtonTemplate') \
                  if not f then return false end \
@@ -409,10 +443,17 @@ fn social_toast_close_button_template_materializes_with_three_state_textures() {
          SocialToastTemplate's Frames block"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn xml_registers_all_five_virtual_templates() {
+fn social_toast_close_button_template_materializes_with_three_state_textures() {
     let env = load_full_ui_for(ScreenKind::Game);
+    social_toast_close_button_template_materializes_with_three_state_textures::run(&env);
+}
+
+prefork_full_ui_case! {
+fn xml_registers_all_five_virtual_templates(env: &WowLuaEnv) {
 
     for template in VIRTUAL_TEMPLATES {
         let widget_type = match *template {
@@ -444,10 +485,17 @@ fn xml_registers_all_five_virtual_templates() {
         );
     }
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn social_toast_template_inherits_backdrop_template() {
+fn xml_registers_all_five_virtual_templates() {
     let env = load_full_ui_for(ScreenKind::Game);
+    xml_registers_all_five_virtual_templates::run(&env);
+}
+
+prefork_full_ui_case! {
+fn social_toast_template_inherits_backdrop_template(env: &WowLuaEnv) {
 
     let probe = "local f = CreateFrame('Button', 'SocialToastBackdropProbe', UIParent, 'SocialToastTemplate') \
                  if not f then return false end \
@@ -466,10 +514,17 @@ fn social_toast_template_inherits_backdrop_template() {
          edge tile + 12-pixel insets — the standard friend-toast frame)"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn published_animation_group_template_with_default_anim_out_mixin_resolves() {
+fn social_toast_template_inherits_backdrop_template() {
     let env = load_full_ui_for(ScreenKind::Game);
+    social_toast_template_inherits_backdrop_template::run(&env);
+}
+
+prefork_full_ui_case! {
+fn published_animation_group_template_with_default_anim_out_mixin_resolves(env: &WowLuaEnv) {
 
     let probe = "return type(DefaultAnimOutMixin) == 'table' and \
                  type(DefaultAnimOutMixin.OnFinished) == 'function'";
@@ -485,4 +540,12 @@ fn published_animation_group_template_with_default_anim_out_mixin_resolves() {
          fade-out so the toast hides itself after 4s of visibility plus \
          1.5s of fade animation"
     );
+}
+}
+
+#[cfg(not(feature = "client-retail"))]
+#[test]
+fn published_animation_group_template_with_default_anim_out_mixin_resolves() {
+    let env = load_full_ui_for(ScreenKind::Game);
+    published_animation_group_template_with_default_anim_out_mixin_resolves::run(&env);
 }
