@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p548-page/data/patch-api/evidence/5.4.8-session-2026-10-08/verify_targeted.py"
+  ],
+  "revision": "d67ecb8321a7816d3d5846bd3bdcc32a9af01e03",
+  "scope": "p548-targeted-driver",
+  "cwd": ".",
+  "target": "dedicated p548-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p548-targeted-driver.txt",
+  "log_sha256": "282e0d6c134a5fc6ab8e61619d1ef9732125d801fc1594115093a0bc15b75256",
+  "seconds": 452.7786906679976,
+  "invalidated": false
+}

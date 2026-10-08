@@ -1,0 +1,32 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.58s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p548-page/debug/deps/integration-1db16289b0998b2a)
+
+running 18 tests
+test set_cvar_global::register_cvar_numeric_default_preserves_existing_override_and_first_default ... ok
+test set_cvar_global::register_cvar_nil_default_retains_zero_policy ... ok
+test set_cvar_global::register_cvar_preserves_explicit_empty_default_lifecycle ... ok
+test set_cvar_global::register_cvar_exposes_runtime_default_through_global_and_namespace ... ok
+test set_cvar_global::register_cvar_rejects_nonfinite_and_unsupported_defaults ... ok
+test set_cvar_global::clamp_exists_during_bootstrap ... ok
+test set_cvar_global::c_cvar_register_cvar_sets_default_without_overwriting_existing_value ... ok
+test set_cvar_global::empty_cvar_registration_preserves_classic_castbar_scale_default ... ok
+test set_cvar_global::legacy_cvar_compat_globals_exist_before_framexml_loads ... ok
+test set_cvar_global::register_cvar_accepts_finite_numeric_defaults_from_both_surfaces ... ok
+test set_cvar_global::register_cvar_makes_unknown_cvar_visible_with_zero_default ... ok
+test set_cvar_global::c_cvar_get_reads_back_the_value_set_via_global ... ok
+test set_cvar_global::set_cvar_fires_cvar_update_after_storing_value ... ok
+test set_cvar_global::set_cvar_accepts_boolean_as_one_zero ... ok
+test set_cvar_global::set_cvar_empty_name_returns_false ... ok
+test set_cvar_global::set_cvar_stores_string_value ... ok
+test set_cvar_global::set_cvar_accepts_numeric_value ... ok
+test set_cvar_global::set_cvar_accepts_fractional_numeric_value ... ok
+
+test result: ok. 18 passed; 0 failed; 0 ignored; 0 measured; 10658 filtered out; finished in 1.14s
+

@@ -1,0 +1,187 @@
+{
+  "alwaysShowActionBars": {
+    "status": "not-readable"
+  },
+  "bloatTest": {
+    "status": "not-readable"
+  },
+  "bloatnameplates": {
+    "status": "not-readable"
+  },
+  "bloatthreat": {
+    "status": "not-readable"
+  },
+  "consolidateBuffs": {
+    "status": "not-readable"
+  },
+  "fullSizeFocusFrame": {
+    "status": "not-readable"
+  },
+  "maxAlgoplates": {
+    "status": "not-readable"
+  },
+  "nameplateMotion": {
+    "status": "not-readable"
+  },
+  "nameplateOverlapH": {
+    "bitfield_blocked": true,
+    "events": 0,
+    "global_blocked": true,
+    "insecure_out_of_combat_write": true,
+    "namespace_blocked": true,
+    "scale_unchanged": true,
+    "secure_combat_write": true,
+    "status": "bounded-model",
+    "uppercase_blocked": true
+  },
+  "nameplateOverlapV": {
+    "bitfield_blocked": true,
+    "events": 0,
+    "global_blocked": true,
+    "insecure_out_of_combat_write": true,
+    "namespace_blocked": true,
+    "scale_unchanged": true,
+    "secure_combat_write": true,
+    "status": "bounded-model",
+    "uppercase_blocked": true
+  },
+  "nameplateShowEnemies": {
+    "bitfield_blocked": true,
+    "events": 0,
+    "global_blocked": true,
+    "insecure_out_of_combat_write": true,
+    "namespace_blocked": true,
+    "scale_unchanged": true,
+    "secure_combat_write": true,
+    "status": "bounded-model",
+    "uppercase_blocked": true
+  },
+  "nameplateShowEnemyGuardians": {
+    "bitfield_blocked": true,
+    "events": 0,
+    "global_blocked": true,
+    "insecure_out_of_combat_write": true,
+    "namespace_blocked": true,
+    "scale_unchanged": true,
+    "secure_combat_write": true,
+    "status": "bounded-model",
+    "uppercase_blocked": true
+  },
+  "nameplateShowEnemyPets": {
+    "bitfield_blocked": true,
+    "events": 0,
+    "global_blocked": true,
+    "insecure_out_of_combat_write": true,
+    "namespace_blocked": true,
+    "scale_unchanged": true,
+    "secure_combat_write": true,
+    "status": "bounded-model",
+    "uppercase_blocked": true
+  },
+  "nameplateShowEnemyTotems": {
+    "bitfield_blocked": true,
+    "events": 0,
+    "global_blocked": true,
+    "insecure_out_of_combat_write": true,
+    "namespace_blocked": true,
+    "scale_unchanged": true,
+    "secure_combat_write": true,
+    "status": "bounded-model",
+    "uppercase_blocked": true
+  },
+  "nameplateShowFriendlyGuardians": {
+    "status": "not-readable"
+  },
+  "nameplateShowFriendlyPets": {
+    "status": "not-readable"
+  },
+  "nameplateShowFriendlyTotems": {
+    "status": "not-readable"
+  },
+  "nameplateShowFriends": {
+    "bitfield_blocked": true,
+    "events": 0,
+    "global_blocked": true,
+    "insecure_out_of_combat_write": true,
+    "namespace_blocked": true,
+    "scale_unchanged": true,
+    "secure_combat_write": true,
+    "status": "bounded-model",
+    "uppercase_blocked": true
+  },
+  "repositionfrequency": {
+    "status": "not-readable"
+  },
+  "showArenaEnemyFrames": {
+    "bitfield_blocked": true,
+    "events": 0,
+    "global_blocked": true,
+    "insecure_out_of_combat_write": true,
+    "namespace_blocked": true,
+    "scale_unchanged": true,
+    "secure_combat_write": true,
+    "status": "bounded-model",
+    "uppercase_blocked": true
+  },
+  "showArenaEnemyPets": {
+    "bitfield_blocked": true,
+    "events": 0,
+    "global_blocked": true,
+    "insecure_out_of_combat_write": true,
+    "namespace_blocked": true,
+    "scale_unchanged": true,
+    "secure_combat_write": true,
+    "status": "bounded-model",
+    "uppercase_blocked": true
+  },
+  "showPartyPets": {
+    "bitfield_blocked": true,
+    "events": 0,
+    "global_blocked": true,
+    "insecure_out_of_combat_write": true,
+    "namespace_blocked": true,
+    "scale_unchanged": true,
+    "secure_combat_write": true,
+    "status": "bounded-model",
+    "uppercase_blocked": true
+  },
+  "showTargetOfTarget": {
+    "bitfield_blocked": true,
+    "events": 0,
+    "global_blocked": true,
+    "insecure_out_of_combat_write": true,
+    "namespace_blocked": true,
+    "scale_unchanged": true,
+    "secure_combat_write": true,
+    "status": "bounded-model",
+    "uppercase_blocked": true
+  },
+  "targetOfTargetMode": {
+    "status": "not-readable"
+  },
+  "uiScale": {
+    "bitfield_blocked": true,
+    "events": 0,
+    "global_blocked": true,
+    "insecure_out_of_combat_write": true,
+    "namespace_blocked": true,
+    "scale_unchanged": true,
+    "secure_combat_write": true,
+    "status": "bounded-model",
+    "uppercase_blocked": true
+  },
+  "useCompactPartyFrames": {
+    "status": "not-readable"
+  },
+  "useUiScale": {
+    "bitfield_blocked": true,
+    "events": 0,
+    "global_blocked": true,
+    "insecure_out_of_combat_write": true,
+    "namespace_blocked": true,
+    "scale_unchanged": true,
+    "secure_combat_write": true,
+    "status": "bounded-model",
+    "uppercase_blocked": true
+  }
+}
