@@ -13,6 +13,11 @@ ROOT = Path(__file__).resolve().parents[4]
 EVIDENCE = Path(__file__).resolve().parent
 SOURCES = ROOT / 'data/patch-api/sources'
 PATCH = '8.2.5'
+sys.path.insert(0, str(ROOT / 'tools'))
+from patch_audit_validation import historical_registers
+
+# Merged 8.2.5 endpoint: register set proven by this audit's receipts.
+AUDIT_REVISION = '127aa3724035d9e668143d9b28aaa4cf6e176fa1'
 
 
 def read(path):
@@ -208,7 +213,7 @@ def check_preservation():
             assert len(old_rows) == len(current_rows)
     outcomes = read(EVIDENCE / 'p825-extract-preservation.json')
     assert all(row['before'] == row['after'] and row['unchanged'] for row in outcomes)
-    patches = {path.name.removesuffix('-wikitext-register.json') for path in SOURCES.glob('*-wikitext-register.json')}
+    patches = {path.name.removesuffix('-wikitext-register.json') for path in historical_registers(ROOT, AUDIT_REVISION)}
     registers = read(EVIDENCE / 'p825-register-reproduction.json')
     saved = read(EVIDENCE / 'p825-saved-extract-reproduction.json')
     assert {row['patch'] for row in registers} == {row['patch'] for row in saved} == patches
@@ -233,7 +238,7 @@ def check_preservation():
 
 
 def check_sweeps():
-    registers = sorted(SOURCES.glob('*-wikitext-register.json'), key=lambda p: patch_key(p.name.split('-')[0]))
+    registers = sorted(historical_registers(ROOT, AUDIT_REVISION), key=lambda p: patch_key(p.name.split('-')[0]))
     summary = []
     for path in registers:
         patch = path.name.removesuffix('-wikitext-register.json')
