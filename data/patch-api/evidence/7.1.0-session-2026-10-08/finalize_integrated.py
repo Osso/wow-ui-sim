@@ -64,18 +64,24 @@ def seal():
     lines = ['# 7.1.0 integrated command ledger', '',
              'Exact master: `' + context['master_revision'] + '`. Source/runtime scope: `' + context['runtime_revision'] + '`.',
              'All commands run from `/home/osso/.worktrees/wow-ui-sim-p710-page`; CARGO_TARGET_DIR=/home/osso/.cache/wow-ui-sim-targets/p710-page.',
-             'Driver revisions and exact per-file source hashes are retained in each receipt. Evidence-only changes do not invalidate runtime proof.', '',
-             '| Receipt | Driver revision | Command | Exit | Result |', '|---|---|---|---|---|']
+             'The asynchronous queue loaded its driver at the runtime revision above. Receipt revision records checkout HEAD at command completion; exact per-file source hashes independently pin the tested scope. The corrected negative-only replay records its actual environment. Evidence/docs-only changes do not invalidate runtime proof.', '',
+             '| Receipt | Checkout revision | Command | Exit | Result |', '|---|---|---|---|---|']
     for path in sorted(FRESH.glob('*.proof.json')):
         receipt = read(path)
         log = (FRESH / receipt['log']).read_text()
         result = re.findall(r'test result: .*|Ran \d+ tests.*|.*Finished .*', log)
         if receipt['command'][:2] == ['cargo', 'test'] and '0 passed;' in log:
             result.append('ZERO CASES; no coverage credited')
-        lines.append('| ' + path.name + ' | ' + receipt['revision'][:10] + ' | `' + ' '.join(receipt['command']) + '` | '
+        if receipt.get('invalidated'):
+            result = ['INVALIDATED; no control proof credited: ' + receipt['reason']]
+        environment = receipt.get('environment', {})
+        control = ['env', 'P710_SWEEP_REGISTER=' + environment['P710_SWEEP_REGISTER'],
+                   'P710_SWEEP_OUT=' + environment['P710_SWEEP_OUT']] if 'P710_SWEEP_REGISTER' in environment else []
+        lines.append('| ' + path.name + ' | ' + receipt['revision'][:10] + ' | `' + ' '.join(control + receipt['command']) + '` | '
                      + str(receipt['exit']) + ' | ' + '; '.join(result[-3:]) + ' |')
     lines += ['', 'Source reproduction: ' + json.dumps(read(FRESH / 'source-reproduction-summary.json')),
-              '', 'Negative control and custom intrinsic discovery are expected failures, not passing coverage. Historical evidence is byte-preserved.']
+              '', 'Negative control and custom intrinsic discovery are expected failures, not passing coverage. Historical evidence is byte-preserved.',
+              'The initial negative attempt copied P720 environment names and selected the unmutated P710 register; its exit-zero receipt is explicitly invalidated. Only the corrected P710 replay supplies negative-control proof. No broad checks were repeated for this correction.']
     (FRESH / 'p710-final-command-ledger.md').write_text('\n'.join(lines) + '\n')
     excluded = {'artifact-hashes.json', 'validator-matrix.json', 'finalize.txt', 'job.json', 'launcher.txt'}
     hashes = {str(path.relative_to(ROOT)): digest(path) for path in FRESH.rglob('*')
