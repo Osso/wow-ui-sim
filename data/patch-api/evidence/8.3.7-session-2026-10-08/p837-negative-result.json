@@ -1,0 +1,11 @@
+{
+  "mutation": "wt-global-api-GetAreaText-9",
+  "baseline_gaps": 1,
+  "negative_gaps": 0,
+  "new_gaps": [],
+  "resolved_gaps": [
+    "wt-global-api-GetAreaText-9"
+  ],
+  "same_ids": true,
+  "exit": 1
+}

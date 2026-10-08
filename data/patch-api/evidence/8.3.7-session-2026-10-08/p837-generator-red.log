@@ -1,0 +1,14 @@
+..........E......
+======================================================================
+ERROR: test_simple_api_list_retains_function_and_cvar_source_lines (test_gen_patch_wikitext_register.InventoryTests.test_simple_api_list_retains_function_and_cvar_source_lines)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p83x-page/tools/test_gen_patch_wikitext_register.py", line 13, in test_simple_api_list_retains_function_and_cvar_source_lines
+    entries = generator.parse_simple_api_list(raw)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'gen_patch_wikitext_register' has no attribute 'parse_simple_api_list'
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.002s
+
+FAILED (errors=1)

@@ -8,3 +8,14 @@ Scope: all page occurrences, reproducible artifacts, meaningful bounded fixes on
 - [x] Commit bounded fixes, if supported by evidence.
 - [x] Run requested targeted verification and preservation checks.
 - [x] Update wiki and report commits/results.
+
+# 8.3.7 page audit
+
+Scope: pinned newest requested BfA page, complete occurrence accounting and targeted proof. Excludes historical reconstruction, undefined aliases, placeholders, vendor/cache/sibling writes, agents, push and merge.
+
+- [x] Capture pinned page and opt-in inventory parser.
+- [x] Review exact gaps and chronological supersession.
+- [x] Account for inventory/extract IDs and preservation.
+- [x] Run requested targeted verification.
+- [x] Update wiki, spec and proof ledger.
+- [ ] Validate final artifacts and report commits/results.

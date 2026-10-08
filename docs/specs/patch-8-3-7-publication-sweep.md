@@ -7,7 +7,7 @@ Audit Warcraft Wiki page 160588 revision 1572710 against current retail 12.1.0, 
 - [x] Retain pinned source, opt-in generator flags, both API/New bullet additions and every extract occurrence.
 - [x] Review exact publication gaps and apply chronological later-register supersession.
 - [x] Preserve classic profiles, vendor files and Blizzard deprecation wrappers.
-- [ ] Prove all publication sweeps, exact negative control, source reproduction, formatting, Mists tests check and retail startup `[]`.
+- [x] Prove all publication sweeps, exact negative control, source reproduction, formatting, Mists tests check and retail startup `[]`.
 
 ## Exclusions
 
