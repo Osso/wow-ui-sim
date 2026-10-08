@@ -12,7 +12,7 @@ MASTER = '896086537a2b3c1ead5886d5ae3e430d56e7ef20'
 REQUIRED = ['own-sweep', 'all-sweeps', 'prefork-patch_5_4_2', 'integration-patch_5_4_2',
             'negative', 'reproduction', 'prior-validators', 'checks', 'master-all-sweeps',
             'format', 'mists-check', 'test_check_patch_validators', 'test_extract_patch_non_inventory',
-            'test_gen_patch_wikitext_register', 'test_patch_audit_validation', 'test_patch_warlords_register', 'test_patch_mists_register']
+            'test_gen_patch_wikitext_register', 'test_patch_audit_validation', 'test_patch_warlords_register', 'test_patch_mists_register', 'mists-all-sweeps', 'master-mists-all-sweeps', 'mists-sweeps-driver']
 
 
 def read(name):
@@ -55,7 +55,7 @@ def summarize():
         pages.append({'patch': patch, 'observations': len(results),
                       'gaps': sorted(key for key, row in results.items() if not row['ok']),
                       'unchanged_vs_master': same})
-    assert len(pages) == 56
+    assert len(pages) == 58
     dump('gap-comparison.json', pages)
     print(json.dumps({'receipts': len(receipts), 'sweep_pages': len(pages),
                       'other_sweeps_unchanged': sum(row['unchanged_vs_master'] is True for row in pages)}))
