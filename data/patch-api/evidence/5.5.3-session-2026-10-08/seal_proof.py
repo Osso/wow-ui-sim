@@ -37,7 +37,9 @@ def main():
         assert before == after, row['patch']
         comparison.append({'patch': row['patch'], 'observations': len(after),
                            'gaps': sorted(key for key, value in after.items() if not value['ok']), 'identical': True})
-    (HERE / 'gap-comparison.json').write_text(json.dumps(comparison, indent=2) + '\n')
+    comparison_path = HERE / 'gap-comparison.json'
+    previous_comparison = comparison_path.read_bytes() if comparison_path.exists() else None
+    comparison_path.write_text(json.dumps(comparison, indent=2) + '\n')
     proofs = {}
     for label, receipt in receipts.items():
         policy = {'command': receipt['command'], 'exit': receipt['expected_exit']}
@@ -59,7 +61,9 @@ def main():
     context = {'runtime_revision': revision, 'master_revision': BASE, 'proofs': proofs,
                'shared_sha256': {path: digest(git('show', revision + ':' + path)) for path in shared_paths},
                'session_sha256': session}
-    (HERE / 'context.json').write_text(json.dumps(context, indent=2) + '\n')
+    context_path = HERE / 'context.json'
+    previous_context = context_path.read_bytes() if context_path.exists() else None
+    context_path.write_text(json.dumps(context, indent=2) + '\n')
     print(json.dumps({'runtime_revision': revision, 'sealed_session_inputs': len(session),
                       'retail_pages': len(comparison), 'retail_observations': sum(row['observations'] for row in comparison)}))
 

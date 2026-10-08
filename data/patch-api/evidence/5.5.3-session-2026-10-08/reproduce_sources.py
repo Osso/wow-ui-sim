@@ -89,7 +89,9 @@ def main():
               'historical_flags_sources': [FLAG_PREFIX + 'p548-register-reproduction.json',
                                            FLAG_PREFIX + 'p548-saved-extract-reproduction.json'],
               'records': records}
-    (HERE / 'p553-reproduction.json').write_text(json.dumps(report, indent=2) + '\n')
+    report_path = HERE / 'p553-reproduction.json'
+    previous_report = report_path.read_bytes() if report_path.exists() else None
+    report_path.write_text(json.dumps(report, indent=2) + '\n')
     print(json.dumps({'registers': len(records),
                       'register_failures': [row['patch'] for row in records if not row['register_byte_identical']],
                       'extracts': sum('extract_exit' in row for row in records),
