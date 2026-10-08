@@ -1,0 +1,182 @@
+{
+  "code_revision": "25934cc4ea714a08b5e5a323d747840b661d6da3",
+  "historical_scope_revision": "c5f05d05d",
+  "required": [
+    {
+      "receipt": "p732-cached-active-stack.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src/lua_api/globals/real/session_exit.rs",
+        "src/lua_api/globals/register.rs",
+        "src/lua_api/globals/admin.rs",
+        "src/lua_api/globals/mod.rs",
+        "src/lua_api/globals/real/mod.rs",
+        "src/lua_api/workarounds/mod.rs",
+        "src/lua_api/workarounds/temporary/mod.rs",
+        "src/lua_api/workarounds/temporary/session_exit_defaults.rs",
+        "tests/patch_7_3_2_session_protection.rs"
+      ]
+    },
+    {
+      "receipt": "p732-bare-final.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src/lua_api/globals/real/session_exit.rs",
+        "src/lua_api/globals/register.rs",
+        "src/lua_api/globals/admin.rs",
+        "src/lua_api/globals/mod.rs",
+        "src/lua_api/globals/real/mod.rs",
+        "src/lua_api/workarounds/mod.rs",
+        "src/lua_api/workarounds/temporary/mod.rs",
+        "src/lua_api/workarounds/temporary/session_exit_defaults.rs",
+        "tests/patch_7_3_2_session_protection.rs"
+      ]
+    },
+    {
+      "receipt": "p732-key-dispatch.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src/lua_api/globals/real/session_exit.rs",
+        "src/lua_api/globals/register.rs",
+        "src/lua_api/globals/admin.rs",
+        "src/lua_api/globals/mod.rs",
+        "src/lua_api/globals/real/mod.rs",
+        "src/lua_api/workarounds/mod.rs",
+        "src/lua_api/workarounds/temporary/mod.rs",
+        "src/lua_api/workarounds/temporary/session_exit_defaults.rs"
+      ]
+    },
+    {
+      "receipt": "p732-menu-bare.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src/lua_api/globals/real/session_exit.rs",
+        "src/lua_api/globals/register.rs",
+        "src/lua_api/globals/admin.rs",
+        "src/lua_api/globals/mod.rs",
+        "src/lua_api/globals/real/mod.rs",
+        "src/lua_api/workarounds/mod.rs",
+        "src/lua_api/workarounds/temporary/mod.rs",
+        "src/lua_api/workarounds/temporary/session_exit_defaults.rs"
+      ]
+    },
+    {
+      "receipt": "p732-menu-cached.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src/lua_api/globals/real/session_exit.rs",
+        "src/lua_api/globals/register.rs",
+        "src/lua_api/globals/admin.rs",
+        "src/lua_api/globals/mod.rs",
+        "src/lua_api/globals/real/mod.rs",
+        "src/lua_api/workarounds/mod.rs",
+        "src/lua_api/workarounds/temporary/mod.rs",
+        "src/lua_api/workarounds/temporary/session_exit_defaults.rs"
+      ]
+    },
+    {
+      "receipt": "p732-all-sweeps.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src/lua_api/globals/real/session_exit.rs",
+        "src/lua_api/globals/register.rs",
+        "src/lua_api/globals/admin.rs",
+        "src/lua_api/globals/mod.rs",
+        "src/lua_api/globals/real/mod.rs",
+        "src/lua_api/workarounds/mod.rs",
+        "src/lua_api/workarounds/temporary/mod.rs",
+        "src/lua_api/workarounds/temporary/session_exit_defaults.rs"
+      ]
+    },
+    {
+      "receipt": "p732-mists-check.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src/lua_api/globals/real/session_exit.rs",
+        "src/lua_api/globals/register.rs",
+        "src/lua_api/globals/admin.rs",
+        "src/lua_api/globals/mod.rs",
+        "src/lua_api/globals/real/mod.rs",
+        "src/lua_api/workarounds/mod.rs",
+        "src/lua_api/workarounds/temporary/mod.rs",
+        "src/lua_api/workarounds/temporary/session_exit_defaults.rs"
+      ]
+    },
+    {
+      "receipt": "p732-mists-session.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src/lua_api/globals/real/session_exit.rs",
+        "src/lua_api/globals/register.rs",
+        "src/lua_api/globals/admin.rs",
+        "src/lua_api/globals/mod.rs",
+        "src/lua_api/globals/real/mod.rs",
+        "src/lua_api/workarounds/mod.rs",
+        "src/lua_api/workarounds/temporary/mod.rs",
+        "src/lua_api/workarounds/temporary/session_exit_defaults.rs"
+      ]
+    },
+    {
+      "receipt": "p732-format.proof.json",
+      "expected_exit": 0,
+      "source_scope": []
+    },
+    {
+      "receipt": "p732-negative.proof.json",
+      "expected_exit": 1,
+      "source_scope": [
+        "src/lua_api/globals/real/session_exit.rs",
+        "src/lua_api/globals/register.rs",
+        "src/lua_api/globals/admin.rs",
+        "src/lua_api/globals/mod.rs",
+        "src/lua_api/globals/real/mod.rs",
+        "src/lua_api/workarounds/mod.rs",
+        "src/lua_api/workarounds/temporary/mod.rs",
+        "src/lua_api/workarounds/temporary/session_exit_defaults.rs",
+        "tests/patch_7_3_2_publication_sweep.rs"
+      ]
+    },
+    {
+      "receipt": "p732-source-reproduction.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "tools/gen_patch_wikitext_register.py",
+        "tools/extract_patch_non_inventory.py"
+      ]
+    },
+    {
+      "receipt": "p732-gen_patch_wikitext_register-green.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "tools/gen_patch_wikitext_register.py",
+        "tools/test_gen_patch_wikitext_register.py"
+      ]
+    },
+    {
+      "receipt": "p732-extract_patch_non_inventory-green.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "tools/extract_patch_non_inventory.py",
+        "tools/test_extract_patch_non_inventory.py"
+      ]
+    },
+    {
+      "receipt": "p732-validation-fixtures.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "tools/patch_audit_validation.py",
+        "tools/test_patch_audit_validation.py"
+      ]
+    },
+    {
+      "receipt": "p732-discovery.proof.json",
+      "expected_exit": 1,
+      "purpose": "Historical RED: cached publication passes; insecure actions mutate state."
+    },
+    {
+      "receipt": "p732-bare-red.proof.json",
+      "expected_exit": 101,
+      "purpose": "Historical RED: explicit taint capture and session state mutation."
+    }
+  ]
+}
