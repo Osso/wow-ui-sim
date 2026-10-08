@@ -6,6 +6,10 @@
 
 Pinned parent page 149103/1460518: zero inventory, eleven accounted extract rows. Retail spell-link cost omission modeled; two item-link contracts recorded pending. All targeted tests, fixtures, format/Mists and matching addons-enabled startup [] pass; 49 registers/46 extracts reproduce, three inherited failures. Thirty prior validators plus own portable gate pass; no retirements. Wiki files preserved without shrinkage.
 
+## [2026-10-08] investigation | Patch 6.1.0 API audit
+
+[Audit](investigations/patch-6-1-0-api-audit.md): pinned revision 1216027; four inventory/fourteen extract IDs, one retained SendChatMessage publication gap, eight substantive extract limits and no retirements or runtime shims. Automated diff retained unexpanded; ordered 6.2.0/6.2.2/6.2.4 placeholders. Targeted proof in progress.
+
 ## [2026-10-08] investigation | Patch 7.0.1 redirect audit
 
 [Audit](investigations/patch-7-0-1-api-audit.md): pageid 336026 revision 3241525 redirects to 7.0.3; zero API entries, one metadata-only ID, no retirements or runtime changes. 48/48 sweep/factory cases, fixtures 30/34/8, format/Mists and 28 validators pass; 47 registers/44 extracts reproduce with three inherited failures. Independent-clone expanded-scope/tamper portability proof passes.

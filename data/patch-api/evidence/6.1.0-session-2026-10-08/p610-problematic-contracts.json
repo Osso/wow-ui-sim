@@ -1,0 +1,38 @@
+[
+  {
+    "source_id": "wt-global-api-SendChatMessage-14",
+    "reason": "Later register removal expects absence, but simulator deliberately publishes log-only SendChatMessage and current Blizzard chat consumers call it. Whole-word cached/src/tests grep retained; retiring it would break current callers. No absence shim or consumer patch added. UTF-8 rejection also remains separately unproved."
+  },
+  {
+    "source_id": "prose-undated-005",
+    "reason": "Collections consolidation names four UI domains but provides no callable contract or input/output expectations. Existing mount/toy/heirloom models do not prove historical addon consolidation; no new wrapper invented."
+  },
+  {
+    "source_id": "prose-undated-006",
+    "reason": "Combat-log death-watch lifecycle needs event history, timestamps and native combat ingestion. SimState.death_recaps currently stores recap IDs and killing blows, not an event history; loading/opening the UI is not proof of automatic recording."
+  },
+  {
+    "source_id": "prose-undated-007",
+    "reason": "DeathRecap_HasEvents is a Blizzard alias to C_DeathRecap.HasRecapEvents. Target is generated compatibility, not a state-backed event-presence query. Killing blows are not an event history; unknown-ID/empty semantics are unspecified on this page."
+  },
+  {
+    "source_id": "prose-undated-008",
+    "reason": "DeathRecap_GetEvents aliases C_DeathRecap.GetRecapEvents, whose generated compatibility target has no backing recap-event records. KillingBlowInfo lacks event timestamps and full event structure; inventing these from spell/amount would misrepresent the contract."
+  },
+  {
+    "source_id": "prose-undated-009",
+    "reason": "GetDeathRecapLink aliases C_DeathRecap.GetRecapLink. No state-backed legacy link builder or pinned link-format/display/error contract exists. Adjacent GetMostRecentDeathRecap does not prove link behavior."
+  },
+  {
+    "source_id": "prose-undated-010",
+    "reason": "Twitter integration and screenshot browsing require external service/authentication and capture storage/lifecycle contracts not described here; screenshot rendering alone is not SocialUI parity. No networking or placeholder service added."
+  },
+  {
+    "source_id": "prose-undated-013",
+    "reason": "Historical TGA/PNG crash is a client defect report, not a desired simulator crash. No WoW install on this host; no crash introduced or image-loader parity credited."
+  },
+  {
+    "source_id": "prose-undated-014",
+    "reason": "SendChatMessage remains a log-only outbound API using opt_string conversion. Page does not distinguish client error, silent drop or server rejection of invalid UTF-8. Native rejection/error/side-effect behavior is unproved; no guessed rejection policy added."
+  }
+]

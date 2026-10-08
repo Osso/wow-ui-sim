@@ -1,0 +1,4 @@
+/home/osso/.worktrees/wow-ui-sim-p610-page/tests/p1200_plain_globals.rs:15:            'CombatLog_Object_IsA', 'CombatTextSetActiveUnit', 'DeathRecap_GetEvents',
+/home/osso/.worktrees/wow-ui-sim-p610-page/tests/publication_deprecated_alias.rs:25:            ("DeathRecap_GetEvents", "Deprecated_CombatLog.lua"),
+/home/osso/.worktrees/wow-ui-sim-p610-page/tests/blizzard_deprecated_combat_log_loads.rs:161:                and DeathRecap_GetEvents == C_DeathRecap.GetRecapEvents \
+/home/osso/.worktrees/wow-ui-sim-p610-page/tests/blizzard_deprecated_combat_log_loads.rs:171:         DeathRecap_GetEvents → C_DeathRecap.GetRecapEvents, DeathRecap_HasEvents → \

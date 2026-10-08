@@ -1,0 +1,127 @@
+{
+  "schema": "patch-api-page-coverage/v1",
+  "patch": "6.1.0",
+  "source": "data/patch-api/sources/6.1.0-wikitext-register.json",
+  "source_sha256": "707e1512c0591afe8037d53c79f21ca197b01a8922ee3eb377a636ce4dd05418",
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/6.1.0-api-changes.txt",
+    "sha256": "3986ede4da66787e60603d968d597175210c4b376617a65f905f0c33be93f084"
+  },
+  "proof_policy": "Account every pinned page occurrence; publication is not modeled behavior. Unexpanded automated diff explicitly excluded. Pending 6.2.0, 6.2.2, 6.2.4 integration placeholders retained.",
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-SendChatMessage-14",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "Later register removal expects absence, but simulator deliberately publishes log-only SendChatMessage and current Blizzard chat consumers call it. Whole-word cached/src/tests grep retained; retiring it would break current callers. No absence shim or consumer patch added. UTF-8 rejection also remains separately unproved."
+    },
+    {
+      "source_id": "wt-global-api-DeathRecap_HasEvents-7",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only. Legacy recap globals are cached Blizzard deprecation aliases, not simulator registrations. No output, signature, native or 6.1.0 behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-DeathRecap_GetEvents-8",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only. Legacy recap globals are cached Blizzard deprecation aliases, not simulator registrations. No output, signature, native or 6.1.0 behavior parity credit."
+    },
+    {
+      "source_id": "wt-global-api-GetDeathRecapLink-9",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only. Legacy recap globals are cached Blizzard deprecation aliases, not simulator registrations. No output, signature, native or 6.1.0 behavior parity credit."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Addon section label; not an API or standalone behavioral contract."
+    },
+    {
+      "source_id": "prose-undated-005",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Collections consolidation names four UI domains but provides no callable contract or input/output expectations. Existing mount/toy/heirloom models do not prove historical addon consolidation; no new wrapper invented."
+    },
+    {
+      "source_id": "prose-undated-006",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Combat-log death-watch lifecycle needs event history, timestamps and native combat ingestion. SimState.death_recaps currently stores recap IDs and killing blows, not an event history; loading/opening the UI is not proof of automatic recording."
+    },
+    {
+      "source_id": "prose-undated-007",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DeathRecap_HasEvents is a Blizzard alias to C_DeathRecap.HasRecapEvents. Target is generated compatibility, not a state-backed event-presence query. Killing blows are not an event history; unknown-ID/empty semantics are unspecified on this page."
+    },
+    {
+      "source_id": "prose-undated-008",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "DeathRecap_GetEvents aliases C_DeathRecap.GetRecapEvents, whose generated compatibility target has no backing recap-event records. KillingBlowInfo lacks event timestamps and full event structure; inventing these from spell/amount would misrepresent the contract."
+    },
+    {
+      "source_id": "prose-undated-009",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "GetDeathRecapLink aliases C_DeathRecap.GetRecapLink. No state-backed legacy link builder or pinned link-format/display/error contract exists. Adjacent GetMostRecentDeathRecap does not prove link behavior."
+    },
+    {
+      "source_id": "prose-undated-010",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Twitter integration and screenshot browsing require external service/authentication and capture storage/lifecycle contracts not described here; screenshot rendering alone is not SocialUI parity. No networking or placeholder service added."
+    },
+    {
+      "source_id": "source-context-012",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-013",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical TGA/PNG crash is a client defect report, not a desired simulator crash. No WoW install on this host; no crash introduced or image-loader parity credited."
+    },
+    {
+      "source_id": "prose-undated-014",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "SendChatMessage remains a log-only outbound API using opt_string conversion. Page does not distinguish client error, silent drop or server rejection of invalid UTF-8. Native rejection/error/side-effect behavior is unproved; no guessed rejection policy added."
+    },
+    {
+      "source_id": "source-context-016",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-017",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Explicit unexpanded Patch 6.1.0/API changes/diff transclusion. Not an empty/stub page and not expanded API coverage. Separate linked source requires its own pinned audit; no APIs or retirement names inferred from it."
+    }
+  ]
+}

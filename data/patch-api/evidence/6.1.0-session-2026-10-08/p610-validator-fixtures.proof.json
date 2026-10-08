@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p610-page/tools/test_patch_audit_validation.py"
+  ],
+  "revision": "882d8eb6c810fb88795b25724899f5965ab1c56c",
+  "scope": "p610-validator-fixtures",
+  "cwd": ".",
+  "target": "dedicated p610-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p610-validator-fixtures.txt",
+  "log_sha256": "27b14b71607a640f58e9166b67c8f3d64cd9912f8e659771b30d5583dfdd6431",
+  "seconds": 0.1613411090002046,
+  "invalidated": false
+}

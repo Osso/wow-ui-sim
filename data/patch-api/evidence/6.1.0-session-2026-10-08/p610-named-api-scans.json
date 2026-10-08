@@ -1,0 +1,134 @@
+[
+  {
+    "symbol": "DeathRecap_HasEvents",
+    "scope": "cached",
+    "command": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "--exclude=*Documentation*",
+      "--exclude-dir=*Documentation*",
+      "DeathRecap_HasEvents",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 0,
+    "file": "p610-DeathRecap_HasEvents-cached-grep.txt",
+    "sha256": "b3fc3ec3cf316f3ea96b6ab4465a082305ce8eff5b93489ff49ab92548a1cce5"
+  },
+  {
+    "symbol": "DeathRecap_HasEvents",
+    "scope": "callers",
+    "command": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "DeathRecap_HasEvents",
+      "/home/osso/.worktrees/wow-ui-sim-p610-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p610-page/tests"
+    ],
+    "exit": 0,
+    "file": "p610-DeathRecap_HasEvents-callers-grep.txt",
+    "sha256": "671554e406794f3aa048f65389abdc850a18fad928f7d3bda24eb8327391ee7c"
+  },
+  {
+    "symbol": "DeathRecap_GetEvents",
+    "scope": "cached",
+    "command": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "--exclude=*Documentation*",
+      "--exclude-dir=*Documentation*",
+      "DeathRecap_GetEvents",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 0,
+    "file": "p610-DeathRecap_GetEvents-cached-grep.txt",
+    "sha256": "f5a577fdb88bd86090d112fd6eb579edabc87faacea12ff9c511cdbfce5dc81a"
+  },
+  {
+    "symbol": "DeathRecap_GetEvents",
+    "scope": "callers",
+    "command": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "DeathRecap_GetEvents",
+      "/home/osso/.worktrees/wow-ui-sim-p610-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p610-page/tests"
+    ],
+    "exit": 0,
+    "file": "p610-DeathRecap_GetEvents-callers-grep.txt",
+    "sha256": "7ee19d63ffc2ace75a84121c5b76d11a58389fed0b747e9183b8039e80cfd662"
+  },
+  {
+    "symbol": "GetDeathRecapLink",
+    "scope": "cached",
+    "command": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "--exclude=*Documentation*",
+      "--exclude-dir=*Documentation*",
+      "GetDeathRecapLink",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 0,
+    "file": "p610-GetDeathRecapLink-cached-grep.txt",
+    "sha256": "ab9f7f4810d9e38fea4785a40047363144a9aa5b99ebf330874a407977a2952b"
+  },
+  {
+    "symbol": "GetDeathRecapLink",
+    "scope": "callers",
+    "command": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "GetDeathRecapLink",
+      "/home/osso/.worktrees/wow-ui-sim-p610-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p610-page/tests"
+    ],
+    "exit": 0,
+    "file": "p610-GetDeathRecapLink-callers-grep.txt",
+    "sha256": "f22b77e8aaba65d5497ed4c9af820d19f3db859d45538f5a7f4bdb156664e30d"
+  },
+  {
+    "symbol": "SendChatMessage",
+    "scope": "cached",
+    "command": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "--exclude=*Documentation*",
+      "--exclude-dir=*Documentation*",
+      "SendChatMessage",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 0,
+    "file": "p610-SendChatMessage-cached-grep.txt",
+    "sha256": "44e2564e749efd88031239483be1be622595b53e5284663e0e8dce9a3e3b1456"
+  },
+  {
+    "symbol": "SendChatMessage",
+    "scope": "callers",
+    "command": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "SendChatMessage",
+      "/home/osso/.worktrees/wow-ui-sim-p610-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p610-page/tests"
+    ],
+    "exit": 0,
+    "file": "p610-SendChatMessage-callers-grep.txt",
+    "sha256": "52c0eeba35a24768d37b85558b04f5011e1ef2f5c1a31bbe8a6b6264d235a25c"
+  }
+]

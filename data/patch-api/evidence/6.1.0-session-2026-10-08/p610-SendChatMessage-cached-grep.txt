@@ -1,0 +1,9 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Mainline/SlashCommandsOverrides.lua:178:	C_ChatInfo.SendChatMessage(msg, "AFK");
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/ChatFrameEditBox.lua:296:			C_ChatInfo.SendChatMessage(text, type, self.languageID, target);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/ChatFrameEditBox.lua:307:			C_ChatInfo.SendChatMessage(text, type, self.languageID, self:GetChannelTarget());
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/ChatFrameEditBox.lua:309:			C_ChatInfo.SendChatMessage(text, type, self.languageID);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/SlashCommands.lua:885:		C_ChatInfo.SendChatMessage(msg, "WHISPER", editBox.languageID, lastTell);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/SlashCommands.lua:1102:	C_ChatInfo.SendChatMessage(msg, "DND");
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ChatFrameBase/Shared/SlashCommands.lua:1120:	C_ChatInfo.SendChatMessage(msg, "CHANNEL", editBox.languageID, editBox:GetChannelTarget());
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedChatInfo/Deprecated_ChatInfo.lua:8:SendChatMessage = function(message, chatType, languageID, target)
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedChatInfo/Deprecated_ChatInfo.lua:9:	C_ChatInfo.SendChatMessage(message, chatType, languageID, target);

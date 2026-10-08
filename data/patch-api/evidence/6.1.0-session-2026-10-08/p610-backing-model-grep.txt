@@ -1,0 +1,19 @@
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/c_api/c_damage_meter.rs:62:    pub death_recap_id: i64,
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/c_api/mod.rs:82:pub mod c_death_recap;
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/c_api/c_death_recap.rs:1://! `C_DeathRecap` probe surface backed by `SimState.death_recaps`.
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/c_api/c_death_recap.rs:3://! - `C_DeathRecap.GetKillingBlows()` returns an array of `KillingBlowInfo`
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/c_api/c_death_recap.rs:6://! - `C_DeathRecap.GetMostRecentDeathRecap()` returns the most recent
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/c_api/c_death_recap.rs:7://!   `DeathRecapEntry` as a table (`recapID`, `zoneName`, `killingBlows`), or
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/c_api/c_death_recap.rs:12:use crate::lua_api::state::{DeathRecapEntry, KillingBlowInfo};
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/c_api/c_death_recap.rs:17:pub(crate) fn register_c_death_recap_surface(state: &mut LuaState) -> LuaResult<()> {
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/c_api/c_death_recap.rs:18:    let table_ref = ensure_namespace(state, "C_DeathRecap")?;
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/c_api/c_death_recap.rs:25:        c_death_recap_get_killing_blows,
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/c_api/c_death_recap.rs:30:        "GetMostRecentDeathRecap",
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/c_api/c_death_recap.rs:31:        c_death_recap_get_most_recent_death_recap,
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/c_api/c_death_recap.rs:43:            Some(id) => sim.death_recaps.iter().find(|entry| entry.recap_id == id),
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/c_api/c_death_recap.rs:44:            None => sim.death_recaps.last(),
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/c_api/c_death_recap.rs:53:fn c_death_recap_get_killing_blows(state: &mut LuaState) -> LuaResult<u32> {
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/c_api/c_death_recap.rs:55:        .death_recaps
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/c_api/c_death_recap.rs:68:fn c_death_recap_get_most_recent_death_recap(state: &mut LuaState) -> LuaResult<u32> {
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/c_api/c_death_recap.rs:69:    let entry: Option<DeathRecapEntry> = borrow_state(state)?.death_recaps.last().cloned();
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/c_api/c_damage_meter/snapshot.rs:103:        ("deathRecapID", input.death_recap_id as f64),

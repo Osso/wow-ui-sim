@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p610-page/tools/test_extract_patch_non_inventory.py"
+  ],
+  "revision": "882d8eb6c810fb88795b25724899f5965ab1c56c",
+  "scope": "p610-extractor-fixtures",
+  "cwd": ".",
+  "target": "dedicated p610-page target (external to repository)",
+  "environment": {},
+  "exit": 1,
+  "log": "p610-extractor-fixtures-red.txt",
+  "log_sha256": "1c24a36170ff4c0cb6713ba29bc24c5fb0028c0e54943c59c378ae105ec672e8",
+  "seconds": 0.06379324599402025,
+  "invalidated": false
+}

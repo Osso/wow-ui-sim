@@ -1,0 +1,26 @@
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/lua_api/chat_init.rs:125:            SendChatMessage = __wow_send_chat_message
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/lua_api/chat_init.rs:127:                C_ChatInfo.SendChatMessage = __wow_send_chat_message
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/lua_api/globals/message_verbs.rs:2://! `SendChatMessage`.
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/lua_api/globals/message_verbs.rs:10://! - `SendChatMessage(message, chatType, language, target)` — append to
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/lua_api/globals/message_verbs.rs:137:/// `SendChatMessage(message, chatType, language, target)` — log only.
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/lua_api/globals/message_verbs.rs:160:    LuaApiMut::register_function(lua, "SendChatMessage", send_chat_message)?;
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/lua_api/globals/message_verbs.rs:173:            table_set_rust_fn_static(state, chat_info_ref, "SendChatMessage", send_chat_message)?;
+/home/osso/.worktrees/wow-ui-sim-p610-page/src/lua_api/sim_substates/mod.rs:291:/// `kind` is `"chat"` for `SendChatMessage` or `"addon"` for
+/home/osso/.worktrees/wow-ui-sim-p610-page/tests/blizzard_deprecated_chat_info_loads.rs:50:        "Blizzard_DeprecatedChatInfo declares `## LoadOnDemand: 0` — the SendChatMessage / \
+/home/osso/.worktrees/wow-ui-sim-p610-page/tests/blizzard_deprecated_chat_info_loads.rs:132:            "return type(SendChatMessage) == 'function' \
+/home/osso/.worktrees/wow-ui-sim-p610-page/tests/blizzard_deprecated_chat_info_loads.rs:140:         SendChatMessage(message, chatType, languageID, target) → \
+/home/osso/.worktrees/wow-ui-sim-p610-page/tests/blizzard_deprecated_chat_info_loads.rs:141:         C_ChatInfo.SendChatMessage; DoEmote(emoteName, targetName, suppressMoveError) — \
+/home/osso/.worktrees/wow-ui-sim-p610-page/tests/chat_frame.rs:7://! C_ChatInfo.SendChatMessage.
+/home/osso/.worktrees/wow-ui-sim-p610-page/tests/chat_frame.rs:277:/// Hook C_ChatInfo.SendChatMessage to capture submitted messages.
+/home/osso/.worktrees/wow-ui-sim-p610-page/tests/chat_frame.rs:282:        local orig = C_ChatInfo.SendChatMessage
+/home/osso/.worktrees/wow-ui-sim-p610-page/tests/chat_frame.rs:283:        C_ChatInfo.SendChatMessage = function(msg, chatType, language, target)
+/home/osso/.worktrees/wow-ui-sim-p610-page/tests/chat_frame.rs:294:    .expect("Failed to hook SendChatMessage");
+/home/osso/.worktrees/wow-ui-sim-p610-page/tests/chat_frame.rs:405:        // Send a chat message — C_ChatInfo.SendChatMessage adds it to ChatFrame1
+/home/osso/.worktrees/wow-ui-sim-p610-page/tests/chat_frame.rs:406:        env.exec(r#"C_ChatInfo.SendChatMessage("Test timestamp", "SAY")"#)
+/home/osso/.worktrees/wow-ui-sim-p610-page/tests/message_verbs.rs:81:// ── SendChatMessage ───────────────────────────────────────────────────────────
+/home/osso/.worktrees/wow-ui-sim-p610-page/tests/message_verbs.rs:87:    env.exec(r#"SendChatMessage("hi there", "SAY", nil, "")"#)
+/home/osso/.worktrees/wow-ui-sim-p610-page/tests/message_verbs.rs:93:        "SendChatMessage must not queue an inbound event"
+/home/osso/.worktrees/wow-ui-sim-p610-page/tests/message_verbs.rs:104:    env.exec(r#"SendChatMessage("secret", "WHISPER", nil, "Bob")"#)
+/home/osso/.worktrees/wow-ui-sim-p610-page/tests/message_verbs.rs:117:        r#"SendChatMessage("one", "SAY")
+/home/osso/.worktrees/wow-ui-sim-p610-page/tests/message_verbs.rs:118:           SendChatMessage("two", "SAY")
+/home/osso/.worktrees/wow-ui-sim-p610-page/tests/data/patch_11_2_0_sweep_known_gaps.json:27:  "wt-global-api-SendChatMessage-136",

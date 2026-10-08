@@ -14,6 +14,10 @@
 
 [Audit](investigations/patch-6-2-0-api-audit.md): revision 1460518; zero inventory/eleven extract rows, modeled retail spell-link cost omission, two item-link contracts pending. 50 publication cases, scoped tooltip tests, fixtures 36/31/8, format/Mists and matching addons-enabled startup [] pass. 49 registers/46 extracts reproduce with three inherited failures; 30 prior validators plus portable own gate pass. No retirements.
 
+## [2026-10-08] investigation | Patch 6.1.0 API audit
+
+[Audit](investigations/patch-6-1-0-api-audit.md): pinned revision 1216027; four inventory/fourteen extract IDs, one retained SendChatMessage publication gap, eight substantive extract limits and no retirements or runtime shims. Automated diff retained unexpanded; ordered 6.2.0/6.2.2/6.2.4 placeholders. Targeted proof in progress.
+
 ## [2026-10-08] integration | Patch 7.0.3 API audit
 
 [Audit](investigations/patch-7-0-3-api-audit.md): merged 7.1.0 register, explicit seven-commit rebase mapping and 243 preserved historical artifacts. Own 52 gaps unchanged; 48 sweep/factory cases pass and every other page is unchanged versus exact master. 47 registers / 44 extracts reproduce with three inherited failures. Requested professions/crafting/mount regressions, Mists, 31/35/8 fixtures, format and both addons-enabled startups `[]` pass; 29 historical/integrated gates validated.
