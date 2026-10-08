@@ -1,0 +1,19 @@
+{
+  "command": [
+    "python3",
+    "data/patch-api/evidence/8.2.5-session-2026-10-08/validate.py"
+  ],
+  "revision": "84442531ffb5cf7ee3670c0e6e81455a561c0648",
+  "scope": "p825-artifact-validation",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p825-page",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "exit": 0,
+  "expected_exit": 0,
+  "log": "p825-artifact-validation.txt",
+  "log_sha256": "c5d7b0e78db4fdd6013fd73a83650775ef82a3c844ce13fabc45c6060719e362",
+  "invalidated": false,
+  "seconds": 0.25154289999954926
+}
