@@ -7,7 +7,7 @@
     "path": "data/patch-api/sources/5.4.2-api-changes.txt",
     "sha256": "fe2e48eb7d1f14f4995d9cd9c35fef099d6e50d6dfc6bf16f630400de3880980"
   },
-  "proof_policy": "2013 retail only. Publication/absence is not behavior. Enum values and explicitly stored roster names bounded; secure RNG and missing realm identity remain pending. Queued 5.4.7 then 5.4.8 placeholders precede 6.0.1, 6.0.2 and remaining retail registers.",
+  "proof_policy": "2013 retail only. Publication/absence is not behavior. Current enum aliases and explicitly stored roster names bounded; historical enum values remain pending; secure RNG and missing realm identity remain pending. Queued 5.4.7 then 5.4.8 placeholders precede 6.0.1, 6.0.2 and remaining retail registers.",
   "source_rows": [
     {
       "source_id": "wt-global-api-Ambiguate-18",
@@ -549,43 +549,33 @@
     },
     {
       "source_id": "prose-undated-016",
-      "capabilities": [
-        "cached-five-autocomplete-priority-values"
-      ],
-      "status": "bounded-coverage",
-      "note": "Exact pinned numeric value asserted by patch_5_4_2_enum_values_and_existing_absence; no native autocomplete-ranking lifecycle parity."
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical 1..5 differs from current documented Enum.AutoCompletePriority 0..4; current Blizzard deprecation Lua aliases the LE_* globals to those current values. Cached test asserts current aliases and values, not historical numeric parity; do not override current target."
     },
     {
       "source_id": "prose-undated-017",
-      "capabilities": [
-        "cached-five-autocomplete-priority-values"
-      ],
-      "status": "bounded-coverage",
-      "note": "Exact pinned numeric value asserted by patch_5_4_2_enum_values_and_existing_absence; no native autocomplete-ranking lifecycle parity."
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical 1..5 differs from current documented Enum.AutoCompletePriority 0..4; current Blizzard deprecation Lua aliases the LE_* globals to those current values. Cached test asserts current aliases and values, not historical numeric parity; do not override current target."
     },
     {
       "source_id": "prose-undated-018",
-      "capabilities": [
-        "cached-five-autocomplete-priority-values"
-      ],
-      "status": "bounded-coverage",
-      "note": "Exact pinned numeric value asserted by patch_5_4_2_enum_values_and_existing_absence; no native autocomplete-ranking lifecycle parity."
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical 1..5 differs from current documented Enum.AutoCompletePriority 0..4; current Blizzard deprecation Lua aliases the LE_* globals to those current values. Cached test asserts current aliases and values, not historical numeric parity; do not override current target."
     },
     {
       "source_id": "prose-undated-019",
-      "capabilities": [
-        "cached-five-autocomplete-priority-values"
-      ],
-      "status": "bounded-coverage",
-      "note": "Exact pinned numeric value asserted by patch_5_4_2_enum_values_and_existing_absence; no native autocomplete-ranking lifecycle parity."
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical 1..5 differs from current documented Enum.AutoCompletePriority 0..4; current Blizzard deprecation Lua aliases the LE_* globals to those current values. Cached test asserts current aliases and values, not historical numeric parity; do not override current target."
     },
     {
       "source_id": "prose-undated-020",
-      "capabilities": [
-        "cached-five-autocomplete-priority-values"
-      ],
-      "status": "bounded-coverage",
-      "note": "Exact pinned numeric value asserted by patch_5_4_2_enum_values_and_existing_absence; no native autocomplete-ranking lifecycle parity."
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "Historical 1..5 differs from current documented Enum.AutoCompletePriority 0..4; current Blizzard deprecation Lua aliases the LE_* globals to those current values. Cached test asserts current aliases and values, not historical numeric parity; do not override current target."
     }
   ]
 }

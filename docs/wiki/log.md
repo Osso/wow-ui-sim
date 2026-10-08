@@ -16,7 +16,7 @@
 
 ## [2026-10-08] investigation | Patch 5.4.2 retail API audit
 
-[Audit](investigations/patch-5-4-2-api-audit.md): pageid 262849 revision 2543251; parent TOC 50400/build 17688 confirms December 2013 retail, not Classic. All 68 inventory/17 extract IDs retained; 39 publication gaps precisely pending, five enum values and explicit roster backing bounded. No new models, retirements or shims; queued 5.4.7/5.4.8 placeholders precede 6.0.1/6.0.2. Targeted and portability verification in progress.
+[Audit](investigations/patch-5-4-2-api-audit.md): pageid 262849 revision 2543251; parent TOC 50400/build 17688 confirms December 2013 retail, not Classic. All 68 inventory/17 extract IDs retained; 39 publication gaps precisely pending, current enum aliases and explicit roster backing bounded; historical values pending. No new models, retirements or shims; queued 5.4.7/5.4.8 placeholders precede 6.0.1/6.0.2. Targeted and portability verification in progress.
 
 ## [2026-10-08] integration | Patch 6.2.4 API audit
 

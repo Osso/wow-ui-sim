@@ -29,17 +29,24 @@ fn patch_5_4_2_existing_roster_backing(env: &WowLuaEnv) {
 }
 
 prefork_full_ui_case! {
-fn patch_5_4_2_enum_values_and_existing_absence(env: &WowLuaEnv) {
+fn patch_5_4_2_current_enum_aliases_and_existing_absence(env: &WowLuaEnv) {
+    // Current cached documentation uses 0..4, unlike this page's historical 1..5.
+    let values: (i32, i32, i32, i32, i32) = env.eval(r#"
+        return LE_AUTOCOMPLETE_PRIORITY_OTHER, LE_AUTOCOMPLETE_PRIORITY_INTERACTED,
+            LE_AUTOCOMPLETE_PRIORITY_IN_GROUP, LE_AUTOCOMPLETE_PRIORITY_GUILD,
+            LE_AUTOCOMPLETE_PRIORITY_FRIEND
+    "#).expect("current cached autocomplete values");
+    assert_eq!(values, (0, 1, 2, 3, 4));
     let result: bool = env.eval(r#"
-        assert(LE_AUTOCOMPLETE_PRIORITY_OTHER == 1)
-        assert(LE_AUTOCOMPLETE_PRIORITY_INTERACTED == 2)
-        assert(LE_AUTOCOMPLETE_PRIORITY_IN_GROUP == 3)
-        assert(LE_AUTOCOMPLETE_PRIORITY_GUILD == 4)
-        assert(LE_AUTOCOMPLETE_PRIORITY_FRIEND == 5)
+        assert(LE_AUTOCOMPLETE_PRIORITY_OTHER == Enum.AutoCompletePriority.Other)
+        assert(LE_AUTOCOMPLETE_PRIORITY_INTERACTED == Enum.AutoCompletePriority.Interacted)
+        assert(LE_AUTOCOMPLETE_PRIORITY_IN_GROUP == Enum.AutoCompletePriority.InGroup)
+        assert(LE_AUTOCOMPLETE_PRIORITY_GUILD == Enum.AutoCompletePriority.Guild)
+        assert(LE_AUTOCOMPLETE_PRIORITY_FRIEND == Enum.AutoCompletePriority.Friend)
         assert(rawget(_G, 'StartUnratedArena') == nil and _G.StartUnratedArena == nil)
         assert(rawget(_G, 'securerandom') == nil and _G.securerandom == nil)
         return true
-    "#).expect("five retained numeric values and already-absent globals");
+    "#).expect("current aliases and already-absent globals");
     assert!(result);
 }
 }

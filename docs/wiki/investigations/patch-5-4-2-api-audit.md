@@ -6,14 +6,14 @@ Pinned from scratch on 2026-10-08: Warcraft Wiki pageid 262849, revision 2543251
 
 The page contains 68 inventory occurrences: seven new/two removed global APIs, two FrameXML additions, 55 events and two slider methods. All caption counts match. The opt-in `--mists-automated-diff` generator preserves bare removals and widget ownership; the extractor retains three prose contracts and five enum values instead of dropping the Lua Enums table. Saved sources use recorded flags; no default parser behavior changed.
 
-The ledger accounts for all 85 identities: 68 inventory plus 17 retained extract rows. Discovery found 39 publication gaps: 37 glue/auth/patcher events, fastrandom, and the IsOnGlueScreen name collision. No new runtime registrations, models or shims were added. Existing publication/absence covers 29 inventory rows; it does not prove historical behavior. Five numeric enum rows have exact cached assertions. Nine extract rows are metadata; three prose rows remain pending.
+The ledger accounts for all 85 identities: 68 inventory plus 17 retained extract rows. Discovery found 39 publication gaps: 37 glue/auth/patcher events, fastrandom, and the IsOnGlueScreen name collision. No new runtime registrations, models or shims were added. Existing publication/absence covers 29 inventory rows; it does not prove historical behavior. Five historical numeric rows remain pending because current documented/deprecation-alias values are 0–4, not 1–5. Nine extract rows are metadata; eight extract rows remain pending.
 
 ## Behavior and problematic cases
 
 | Contract | Current proof | Remaining boundary |
 |---|---|---|
 | Explicit guild name-realm | Cached query preserves Arthas-Silvermoon, follows Jaina-Proudmoore replacement, nil on roster removal | GuildMember stores only name/rank/online; no separate realm or local identity source. Bare Jaina stays bare. Automatic qualification unmodeled. |
-| Autocomplete priorities | Exact OTHER=1, INTERACTED=2, IN_GROUP=3, GUILD=4, FRIEND=5 | Native ranking/lifecycle not claimed. |
+| Autocomplete priorities | Current cached LE_* aliases equal documented Enum values 0–4 | Pinned 2013 values 1–5 differ. No historical numeric/ranking/lifecycle parity claim. |
 | Slider methods, full-name/ambiguation/color APIs | Inventory publication; existing targeted area tests requested | No 2013 signature/native parity claim. |
 | 37 missing events | Each rejected registration recorded | No authentication/network/launcher/patcher backend supplies lifecycle/payload. Registering arbitrary names would be a shim. |
 | RNG and secure environment | fastrandom absent; raw prose retained verbatim | Fast/secure generator separation, performance and secure-environment exclusion unmodeled. Prose redirects random/Math.random to securerandom while diff removes that exported name; no alias inferred. |

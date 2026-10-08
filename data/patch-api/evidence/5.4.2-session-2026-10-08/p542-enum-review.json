@@ -1,0 +1,37 @@
+{
+  "historical_values": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "current_documented_values": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "decision": "Preserve current target; historical values are not current compatibility requirements. No vendor patch or enum override.",
+  "documentation_scan": {
+    "command": [
+      "/usr/bin/grep",
+      "-n",
+      "EnumValue",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/AutoCompleteSharedDocumentation.lua"
+    ],
+    "exit": 0,
+    "log": "p542-current-enum-documentation-grep.txt"
+  },
+  "alias_scan": {
+    "command": [
+      "/usr/bin/grep",
+      "-n",
+      "LE_AUTOCOMPLETE_PRIORITY",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeprecatedAutoComplete/Deprecated_AutoComplete.lua"
+    ],
+    "exit": 0,
+    "log": "p542-current-enum-aliases-grep.txt"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "widget_slider",
+    "--",
+    "--nocapture"
+  ],
+  "revision": "554541cca7faddde6660341dbe4bed0f4afbbd3b",
+  "exit": 0,
+  "log": "p542-slider.log",
+  "log_sha256": "d176f14ddd722864ad74a132f5fe6d4468db8f61c304ed66a8e67cc144b3f887",
+  "env": {
+    "CARGO_TARGET_DIR": "/home/osso/.cache/wow-ui-sim-targets/p542-page"
+  },
+  "scope": [
+    "tests",
+    "src",
+    "data/patch-api/sources",
+    "Cargo.toml",
+    "Cargo.lock",
+    "build.rs",
+    "build"
+  ]
+}

@@ -1,0 +1,7 @@
+18:LE_AUTOCOMPLETE_PRIORITY_OTHER = assertsafe(Enum.AutoCompletePriority.Other);
+19:LE_AUTOCOMPLETE_PRIORITY_INTERACTED = assertsafe(Enum.AutoCompletePriority.Interacted);
+20:LE_AUTOCOMPLETE_PRIORITY_IN_GROUP = assertsafe(Enum.AutoCompletePriority.InGroup);
+21:LE_AUTOCOMPLETE_PRIORITY_GUILD = assertsafe(Enum.AutoCompletePriority.Guild);
+22:LE_AUTOCOMPLETE_PRIORITY_FRIEND = assertsafe(Enum.AutoCompletePriority.Friend);
+23:LE_AUTOCOMPLETE_PRIORITY_ACCOUNT_CHARACTER = assertsafe(Enum.AutoCompletePriority.AccountCharacter);
+24:LE_AUTOCOMPLETE_PRIORITY_ACCOUNT_CHARACTER_SAME_REALM = assertsafe(Enum.AutoCompletePriority.AccountCharacterSameRealm);
