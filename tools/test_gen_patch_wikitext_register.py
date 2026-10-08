@@ -28,6 +28,17 @@ class InventoryTests(unittest.TestCase):
         self.assertEqual([c['section'] for c in counts],
                          ['global-api', 'global-api', 'widgets', 'commands'])
 
+    def test_legacy_renames_retain_both_occurrences(self):
+        import gen_patch_wikitext_register as generator
+        raw = ('==API==\n====New====\n* {{api|Ignore}}\n'
+               '====Renamed====\n* {{api|C_Calendar.EventGetClubID}} to '
+               '{{api|C_Calendar.EventGetClubId}}\n====Removals====\n')
+        rows = generator.parse_legacy_api_renames(raw)
+        self.assertEqual([(r['symbol'], r['direction'], r['wikitext_line']) for r in rows],
+                         [('C_Calendar.EventGetClubID', 'removed', 5),
+                          ('C_Calendar.EventGetClubId', 'added', 5)])
+        self.assertEqual(len({r['id'] for r in rows}), 2)
+
     def test_diff_additions_retain_each_late_build_publication(self):
         import gen_patch_wikitext_register as generator
         raw = ('==Changes==\n* New functions: {{api|Ignore}}\n'

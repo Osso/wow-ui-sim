@@ -55,13 +55,34 @@ def render_line(line):
     return html.unescape(line).rstrip()
 
 
+def strip_legacy_cvar_tables(raw):
+    """Remove CVar inventory tables but keep captions and their source citations."""
+    lines = []
+    in_cvars, in_table = False, False
+    for line in raw.splitlines():
+        heading = re.fullmatch(r'==\s*([^=]+?)\s*==', line)
+        if heading:
+            in_cvars = heading[1] == 'CVars'
+        if in_cvars and line.startswith('{|'):
+            in_table = True
+        elif in_table and line == '|}':
+            in_table = False
+        elif not in_table or line.startswith('|+'):
+            lines.append(line)
+    if in_table:
+        raise ValueError('unterminated legacy CVar inventory table')
+    return '\n'.join(lines) + '\n'
+
+
 def extract_text(raw, *, preserve_examples=False, normalize_inventory_headings=False,
                  retain_reference_notes=False, legacy_api_tables=False,
-                 legacy_api_bullets=False):
+                 legacy_api_bullets=False, legacy_cvar_tables=False):
     if legacy_api_tables:
         raw = re.sub(r'^\{\|[^\n]*\n\|\+ (?:Global API|Widget API|Widget Handlers|Events|Console variables|Console commands) [\s\S]*?^\|\}\n?',
                      '', raw, flags=re.M)
         raw = re.sub(r'\{\{ref web\|([^{}]+)\}\}', r'[Reference: \1]', raw)
+    if legacy_cvar_tables:
+        raw = strip_legacy_cvar_tables(raw)
     if retain_reference_notes:
         raw = re.sub(r'<ref>\{\{ref web\|([^{}]+)\}\}</ref>',
                      r'[Reference: \1]', raw)
@@ -264,6 +285,8 @@ def main():
                         help='Strip legacy API/event bullets without losing prose or unknown markers')
     parser.add_argument('--text-only', action='store_true',
                         help='Write/check plaintext only; never read or modify a coverage ledger')
+    parser.add_argument('--legacy-cvar-tables', action='store_true',
+                        help='Strip CVar inventory tables, retaining captions/citations; opt-in')
     args = parser.parse_args()
     if args.self_test:
         check_examples()
@@ -277,7 +300,8 @@ def main():
                         normalize_inventory_headings=args.normalize_inventory_headings,
                         retain_reference_notes=args.retain_reference_notes,
                         legacy_api_tables=args.legacy_api_tables,
-                        legacy_api_bullets=args.legacy_api_bullets)
+                        legacy_api_bullets=args.legacy_api_bullets,
+                        legacy_cvar_tables=args.legacy_cvar_tables)
     rows = seed_rows(text, args.patch)
     if args.text_only:
         if args.check:

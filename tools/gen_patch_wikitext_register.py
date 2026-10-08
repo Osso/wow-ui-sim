@@ -253,6 +253,26 @@ def parse_legacy_api_bullets(text):
     return entries
 
 
+def parse_legacy_api_renames(text):
+    """Retain old and successor identities from API/Renamed bullet pairs."""
+    entries = []
+    in_api, renamed = False, False
+    for number, line in enumerate(text.splitlines(), 1):
+        heading = re.fullmatch(r'(=+)\s*(.*?)\s*\1', line)
+        if heading:
+            if len(heading[1]) == 2:
+                in_api, renamed = heading[2] == 'API', False
+            else:
+                renamed = in_api and heading[2] == 'Renamed'
+        elif renamed and line.startswith('* '):
+            references = list(TEMPLATE.finditer(line))
+            if len(references) != 2:
+                raise ValueError(f'expected old/successor rename pair: {line}')
+            entries.extend(make_entry('global-api', direction, number, reference[0])
+                           for reference, direction in zip(references, ('removed', 'added')))
+    return entries
+
+
 def parse_diff_api_additions(text):
     """Retain each explicit late-build addition outside consolidated inventories."""
     entries = []
@@ -294,6 +314,8 @@ def main():
                         help='Parse older unheaded/repeated caption inventories independently')
     parser.add_argument('--legacy-api-bullets', action='store_true',
                         help='Retain API New/Removals and event bullet inventories; opt-in')
+    parser.add_argument('--legacy-api-renames', action='store_true',
+                        help='Retain both identities in API/Renamed bullet pairs; opt-in')
     args = parser.parse_args()
     patch, path, revid, out = args.patch, args.path, args.revid, args.out
     raw = Path(path).read_bytes()
@@ -318,6 +340,8 @@ def main():
         entries, counts = parse_legacy_caption_tables(raw.decode('utf-8'))
     if args.legacy_api_bullets:
         entries.extend(parse_legacy_api_bullets(raw.decode('utf-8')))
+    if args.legacy_api_renames:
+        entries.extend(parse_legacy_api_renames(raw.decode('utf-8')))
     if args.simple_api_list:
         entries.extend(parse_simple_api_list(raw.decode('utf-8')))
     if args.diff_api_additions:

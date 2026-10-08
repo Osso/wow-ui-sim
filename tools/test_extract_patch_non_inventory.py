@@ -10,6 +10,16 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 class ExtractTests(unittest.TestCase):
+    def test_legacy_cvar_table_keeps_caption_not_inventory_markup(self):
+        raw = ('==API==\n====New====\n* {{api|C_Test.Call}}\n==CVars==\n'
+               '{| class="wikitable"\n|+ 8.0.1 to 8.1.0\n|-\n'
+               '! Added (1)\n| valign="top" | <div>\n: {{api|t=c|Foo}}\n'
+               '</div>\n|}\n==References==\n{{Reflist}}\n')
+        self.assertEqual(extract_text(raw, legacy_api_bullets=True, legacy_cvar_tables=True),
+                         '== API ==\n==== New ====\n== CVars ==\n'
+                         '|+ 8.0.1 to 8.1.0\n== References ==\n'
+                         '[References list; not expanded]\n')
+
     def test_legacy_bullets_strip_only_inventory_and_retain_unknown_sections(self):
         raw = ('Diff: 8.1.0 to 8.1.5\n==API==\n====New====\n'
                'New C_CVar table\n* {{api|C_CVar.GetCVar}}\n'

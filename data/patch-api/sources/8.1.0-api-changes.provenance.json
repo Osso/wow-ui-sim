@@ -1,0 +1,23 @@
+{
+  "title": "Patch 8.1.0/API changes",
+  "pageid": 464337,
+  "revid": 4462737,
+  "timestamp": "2021-12-04T17:01:42Z",
+  "fetched_at": "2026-10-08T13:22:48.840121+00:00",
+  "url": "https://warcraft.wiki.gg/api.php?action=query&pageids=464337&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&format=json",
+  "wikitext_sha256": "9cc26872abfdc3de1b9708ea9eeb79287d114bd1aa2b652e0fef0e20ee592832",
+  "extractor_flags": [
+    "--legacy-api-bullets",
+    "--legacy-cvar-tables",
+    "--retain-reference-notes"
+  ],
+  "generator_flags": [
+    "--legacy-api-bullets",
+    "--legacy-api-renames"
+  ],
+  "prerequisite": {
+    "branch": "p815-page",
+    "revision": "88276709e95b4ffd79e4ddfd38854827d2928c35",
+    "note": "Exact opt-in bullet parser/fixtures reused; merge deduplicates this prerequisite."
+  }
+}
