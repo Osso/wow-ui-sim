@@ -94,13 +94,16 @@ def main():
             paths = sorted({row['path'] for row in later_scans if row['revision'] == pin})
         else:
             revision = by_original[original]
-            paths = git('ls-tree', '-r', '--name-only', original, 'data/patch-api/sources', 'tests', 'tools', 'src/c_api').decode().splitlines()
+            paths = git('ls-tree', '-r', '--name-only', original, 'data/patch-api/sources', 'tests', 'tools', 'src/c_api', 'data/patch-api/evidence').decode().splitlines()
+        inventories = {directory: git('ls-tree', '-r', '--name-only', original, directory).decode().splitlines()
+                       for directory in ('data/patch-api/sources', 'tests', 'data/patch-api/evidence')}
         inputs = {}
         for name in paths:
             if not (name.startswith('data/patch-api/sources/') or
                     name in ('tools/gen_patch_wikitext_register.py', 'tools/extract_patch_non_inventory.py',
                              'tests/common/publication_sweep.rs', 'src/c_api/c_scenario_bonus.rs',
                              'src/c_api/patch_retired_members.rs') or
+                    (name.startswith('data/patch-api/evidence/') and name.endswith('/validate.py')) or
                     (name.startswith('tests/') and (name.endswith('_publication_sweep.rs') or 'patch_6_0_2' in name))):
                 continue
             old = git('show', original + ':' + name)
@@ -113,7 +116,8 @@ def main():
                 output.write_bytes(old)
                 row['historical_file'] = output.relative_to(HERE).as_posix()
             inputs[name] = row
-        scopes.append({'recorded_revision': original, 'rebased_revision': revision, 'inputs': inputs})
+        scopes.append({'recorded_revision': original, 'rebased_revision': revision,
+                       'inventories': inventories, 'inputs': inputs})
     dump('rebase-mapping.json', {'original_base': git('rev-parse', BASE).decode().strip(),
                                'rebased_base': git('rev-parse', MASTER).decode().strip(),
                                'commits': rows, 'external_commits': external, 'pinned_inputs': scopes})
