@@ -9,15 +9,22 @@ struct ChatScrollbarSurface {
     points: String,
 }
 
-#[test]
-fn chat_scrollbar_stays_attached_to_chat_frame_right_edge() {
-    test_timeout! {
-        let env = setup_env();
+prefork_full_ui_case! {
+fn chat_scrollbar_stays_attached_to_chat_frame_right_edge(env: &WowLuaEnv) {
+
         let layout = chat_layout_debug(&env);
         let surface = read_chat_scrollbar_surface(&env);
 
         assert_chat_scrollbar_surface(surface, &layout);
-    }
+
+}
+}
+
+#[cfg(not(feature = "client-retail"))]
+#[test]
+fn chat_scrollbar_stays_attached_to_chat_frame_right_edge() {
+    let env = setup_env();
+    chat_scrollbar_stays_attached_to_chat_frame_right_edge::run(&env);
 }
 
 fn read_chat_scrollbar_surface(env: &WowLuaEnv) -> ChatScrollbarSurface {
