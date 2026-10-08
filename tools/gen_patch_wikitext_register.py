@@ -537,7 +537,7 @@ def parse_warlords_diff(text):
         elif line == '|}' and section:
             # Bare removal identities need the same reference syntax as additions.
             normalized = [(n, ': {{api|' + s[2:] + '}}')
-                          if re.fullmatch(r': [A-Za-z_][A-Za-z0-9_:]*', s) else (n, s)
+                          if re.fullmatch(r': [A-Za-z_][A-Za-z0-9_:.]*', s) else (n, s)
                           for n, s in table]
             rows, headers = parse_section(section, normalized, legacy_column_headers=True)
             for row in rows:
