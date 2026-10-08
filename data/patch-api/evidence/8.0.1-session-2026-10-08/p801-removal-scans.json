@@ -1458,6 +1458,13 @@
           "path": "data/patch-api/sources/11.2.0-wikitext-register.json",
           "id": "wt-events-CHALLENGE_MODE_NEW_RECORD-187",
           "direction": "added"
+        },
+        {
+          "branch": "p815-page",
+          "revision": "4f21aa7dade78c22accac3e703dd3ef4e5ae8831",
+          "path": "data/patch-api/sources/11.2.0-wikitext-register.json",
+          "id": "wt-events-CHALLENGE_MODE_NEW_RECORD-187",
+          "direction": "added"
         }
       ],
       "decision": "retain-later-readdition"
@@ -5805,6 +5812,13 @@
         {
           "branch": "p810-page",
           "revision": "ba7e46ad6f6b0839f8443fb6173c5ca9de3a707b",
+          "path": "data/patch-api/sources/10.0.0-wikitext-register.json",
+          "id": "wt-events-RUNE_TYPE_UPDATE-730",
+          "direction": "added"
+        },
+        {
+          "branch": "p815-page",
+          "revision": "4f21aa7dade78c22accac3e703dd3ef4e5ae8831",
           "path": "data/patch-api/sources/10.0.0-wikitext-register.json",
           "id": "wt-events-RUNE_TYPE_UPDATE-730",
           "direction": "added"

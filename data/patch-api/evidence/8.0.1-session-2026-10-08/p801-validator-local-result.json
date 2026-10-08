@@ -1,0 +1,10 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "data/patch-api/evidence/8.0.1-session-2026-10-08/validate.py"
+  ],
+  "exit": 0,
+  "stdout": "{\n  \"status\": \"PASS\",\n  \"sealed_artifacts\": 119,\n  \"inventory_rows\": 269,\n  \"inventory_ok\": 251,\n  \"inventory_gaps\": 18,\n  \"extract_rows\": 26,\n  \"ledger_rows\": 295,\n  \"ledger_statuses\": {\n    \"partial-development-green\": 151,\n    \"audit-pending\": 28,\n    \"bounded-coverage\": 103,\n    \"metadata-only\": 13\n  },\n  \"pending_prose\": 10,\n  \"discovery_closures\": [\n    \"wt-global-api-C_ChatInfo.ReportPlayer-15\",\n    \"wt-global-api-C_Map.GetMapPosFromWorldPos-38\"\n  ],\n  \"sweeps\": 40,\n  \"sweep_inventory_rows\": 8703,\n  \"reproduced_registers\": 40,\n  \"reproduced_extracts\": 37,\n  \"inherited_extract_failures\": [\n    \"12.0.5\",\n    \"12.0.7\",\n    \"12.1.0\"\n  ],\n  \"scanned_removal_identities\": 98,\n  \"proof_receipts\": 18,\n  \"historical_preserved_inputs\": 199\n}\n",
+  "stderr": ""
+}

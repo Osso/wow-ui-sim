@@ -30,7 +30,7 @@
   "data/patch-api/evidence/8.0.1-session-2026-10-08/p801-input-hashes-before.json": "f8df83e11d259e0fb8482c65fbb0db3768a240cc56e3ee621030a5b35ab9fec8",
   "data/patch-api/evidence/8.0.1-session-2026-10-08/p801-later-master.json": "39fd730c9787d9670fb42025411eed7ed49f59f2d3939c8b67230eba9a49889b",
   "data/patch-api/evidence/8.0.1-session-2026-10-08/p801-later-p810-page.json": "22a74a1d67eb9230361377dff2dbfbfe2dcb760047153366a305a3f44215eed9",
-  "data/patch-api/evidence/8.0.1-session-2026-10-08/p801-later-p815-page.json": "ac0d7582c2c015d063f8754835349ef4ff509bcb6dee241e87ad4e98fb67adba",
+  "data/patch-api/evidence/8.0.1-session-2026-10-08/p801-later-p815-page.json": "0f54cfbdcf9b8472303ba176ff4fcc700d8e769d2297510cac6fe21daa1631b6",
   "data/patch-api/evidence/8.0.1-session-2026-10-08/p801-map-api.log": "1a6d0f6ce8be76927f4a96ed80bd312e019b9d35f4ce10211515b7a08ebdabc8",
   "data/patch-api/evidence/8.0.1-session-2026-10-08/p801-map-api.proof.json": "f15bd28bff9d04277a32a56f411a3c3194ded6dc55315f65aa51c035bba78ae8",
   "data/patch-api/evidence/8.0.1-session-2026-10-08/p801-map-doc-documentation-grep.txt": "11b888338d5da6f660e77d3c0ade5863c2281b14d6d85024efcc4599dfd569a3",
@@ -60,7 +60,7 @@
   "data/patch-api/evidence/8.0.1-session-2026-10-08/p801-red-test_extract_patch_non_inventory.py.log": "387574e0a39cbfda22f1c44025d82521c8d45af1ff32fae395e776e47161ebfd",
   "data/patch-api/evidence/8.0.1-session-2026-10-08/p801-red-test_gen_patch_wikitext_register.py.log": "a6426377dd423c46115518eb9615d438f00ae28451015956793a8e252a2a85db",
   "data/patch-api/evidence/8.0.1-session-2026-10-08/p801-register-reproduction.json": "d8ad41972409a83ff998776f228dd9695c9e23def1fe3585446ac26d4313ee27",
-  "data/patch-api/evidence/8.0.1-session-2026-10-08/p801-removal-scans.json": "359c29d838063ada45d182894f032e9afd4a2bf20e0e5a645a99dec67d4b1d8d",
+  "data/patch-api/evidence/8.0.1-session-2026-10-08/p801-removal-scans.json": "7f0a53bfa9092688f1aa9fa0f091e9dbc3ab570f289bad647277d57a5cc1911f",
   "data/patch-api/evidence/8.0.1-session-2026-10-08/p801-retail-build.log": "90159419b7ec8553ea33a7ff018b86e715b432f625565017a582a45a2e2ba56e",
   "data/patch-api/evidence/8.0.1-session-2026-10-08/p801-retail-build.proof.json": "81155f57db8e31fec97f7a28c4333d0ace5f93c27fcc7082cbc0e1d2f8606b5d",
   "data/patch-api/evidence/8.0.1-session-2026-10-08/p801-retirement-decisions.json": "87e52b1c40f60b9fa833a9fd2378d1f635d9d1ae391a302aa1da83f687df2041",
@@ -116,5 +116,6 @@
   "data/patch-api/sources/8.0.1-api-changes.provenance.json": "2b3898470e4716286bed474e2846a956f2ad7f9f9ed47bb458e1e0e93a6b654d",
   "data/patch-api/sources/8.0.1-api-changes.txt": "c5408fce8e67bc856215b01e26c787e68f6ac27fcd9ad449967294d7745a03c4",
   "data/patch-api/sources/8.0.1-api-changes.wikitext": "7fb0d6ed76e37632e306fb464dadaf33e151c8ec5346793366df6d4eef3641d4",
-  "data/patch-api/sources/8.0.1-wikitext-register.json": "df597a39c9802be51ad66720abb7dfb1b58e5c155b7735a0d9ce99a784a7ae83"
+  "data/patch-api/sources/8.0.1-wikitext-register.json": "df597a39c9802be51ad66720abb7dfb1b58e5c155b7735a0d9ce99a784a7ae83",
+  "data/patch-api/evidence/8.0.1-session-2026-10-08/p801-later-p815-page-unavailable.json": "e331a477a15c8fc033cdcd5aac4b33f9d33ea1ffa2ed665e0c7c4d39a13eee94"
 }

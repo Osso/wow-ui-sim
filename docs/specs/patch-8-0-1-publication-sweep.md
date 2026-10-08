@@ -7,10 +7,10 @@ Audit Warcraft Wiki page 149302, revision 1463362 (2023-07-20T21:26:53Z), refetc
 ## Required behavior
 
 - [x] Prefork full-UI sweep probes every register occurrence using the shared raw/ordinary lookup, event-registration and later-register supersession classifier. Publication is not signature, payload, security or native behavior parity.
-- [ ] Every failure has its exact literal, observation, expected publication and bounded reason in the coverage ledger/review.
-- [ ] Every candidate removal has untruncated whole-word qualified/bare cached and src/tests scans plus newer-register inspection. Current consumers must remain reachable.
-- [ ] Historical saved extracts/registers reproduce; inherited extraction failures remain explicitly recorded without rewriting inputs.
-- [ ] Portable validator derives counts from retained artifacts and scopes mutable historical inputs to the base Git revision.
+- [x] Every failure has its exact literal, observation, expected publication and bounded reason in the coverage ledger/review.
+- [x] Every candidate removal has untruncated whole-word qualified/bare cached and src/tests scans plus newer-register inspection. Current consumers must remain reachable.
+- [x] Historical saved extracts/registers checked: all registers reproduce; three inherited extraction failures remain explicitly recorded without rewriting inputs.
+- [x] Portable validator derives counts from retained artifacts and scopes mutable historical inputs to the base Git revision.
 
 ## Explicit world-position model
 
