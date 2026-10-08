@@ -1,0 +1,23 @@
+{
+  "command": [
+    "env",
+    "P554_SWEEP_REGISTER=/home/osso/.worktrees/wow-ui-sim-p554-page/data/patch-api/evidence/5.5.4-session-2026-10-08/p554-negative-register.json",
+    "cargo",
+    "test",
+    "--no-default-features",
+    "--features",
+    "sound,gui,casc,client-mists",
+    "--test",
+    "integration",
+    "patch_5_5_4_publication_sweep",
+    "--",
+    "--nocapture"
+  ],
+  "revision": "64459e44e7c8807ba3e3469e1516a6846b47fac2",
+  "profile": "mists",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p554-page-mists",
+  "exit": 101,
+  "log": "p554-mists-negative.log",
+  "log_sha256": "7f2f8e27852e162fa779bb2f5a91671747339a9f8d288abae10b418af3d38906",
+  "invalidated": false
+}

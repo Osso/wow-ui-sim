@@ -1,6 +1,6 @@
 ## [2026-10-08] investigation | Patch 5.5.4 Mists Classic API audit
 
-[Audit](investigations/patch-5-5-4-api-audit.md): revision 6778083, resources-only stub: zero inventory/four metadata IDs. Mists Classic TOC 50504, separate from the retail chain; prefork requires retail, so Mists uses profile-aware integration loading. No modeled gaps or retirements; targeted proof pending.
+[Audit](investigations/patch-5-5-4-api-audit.md): revision 6778083, resources-only stub: zero inventory/four metadata IDs. Mists Classic TOC 50504, separate from the retail chain; prefork requires retail, so Mists uses profile-aware integration loading. No modeled gaps or retirements. 52 retail sweep/factory cases, 2 Mists cases, 3 line controls, 82 Python fixtures and non-vendor warning-clean Mists/format checks pass; 9,051 retail observations unchanged. Full-Game preload self-anchor failure retained; SharedXML scope explicit. Portability gate pending.
 
 ## [2026-10-08] integration | Patch 6.2.4 API audit
 

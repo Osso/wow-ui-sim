@@ -30,7 +30,11 @@ The opt-in extractor flag renders the positional `5.5.4` navigation value rather
 
 ## Verification
 
-Targeted verification is pending. Required acceptance: all retail publication observations unchanged, Mists discovery and client-line tests, warning-clean non-vendor Mists `cargo check --tests`, every `tools/test_*.py`, historical source reproduction, formatting, and clean/later-audit portability gate. No full integration suite, native game probe, or runtime/API modifications are claimed.
+Final Rust scope `9ca9cd746`: 52 retail sweep/factory cases pass; all 9,051 observations across 51 pinned retail pages are exactly unchanged. Mists SharedXML/page/line cases pass 2/2; retail client-line controls pass 3/3 after their three-case RED. Mists `cargo check --tests` has zero non-vendor warnings; all 82 Python fixtures and Cargo/explicit generated-module formatting checks pass. All 52 registers and 49/52 extracts reproduce; inherited 12.0.5, 12.0.7 and 12.1.0 extract failures remain exact source boundaries. The negative register adds one row to the empty inventory and correctly fails 1 → 0 row-count enforcement.
+
+The evidence launcher originally saved the Mists line-control result under the page filename. Its first-match scanner was corrected to capture every output environment separately; [final page results](../../../data/patch-api/evidence/5.5.4-session-2026-10-08/p554-mists-evidence/patch_5_5_4_publication_sweep-results.json) are `{}`, while control observations retain their distinct file. No runtime sweep was changed to conceal that evidence bug.
+
+The portable historical validator is committed with Git-pinned shared inputs and own-session seals. Clean/later-audit portability gate pending. No full integration suite, native game probe, or runtime/API modifications are claimed.
 
 ## Sources
 

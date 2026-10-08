@@ -1,0 +1,76 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.56s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p554-page-mists/debug/deps/integration-f15e4c1da9a8b8f4)
+
+running 2 tests
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.004s] [Startup] SimState::default complete in 3.88ms
+[  0.004s] [Startup] rilua VM created in 222.17µs
+[  0.005s] [Startup] builtin frames initialized in 225.94µs
+[  0.005s] [Startup] template registry cleared in 16.17µs
+[  0.006s] [Startup] intrinsic templates registered in 1.80ms
+[  0.006s] [Startup] initial app_data lua handle installed in 2.37µs
+[  0.408s] [Startup] init_lua_state complete in 402.10ms
+[  0.409s] [Startup] final app_data lua handle installed in 231.00ns
+[  0.409s] [Startup] initial screen globals installed in 84.20µs
+[  0.409s] [Startup] WowLuaEnv::new complete
+[  0.420s] [Startup] WowLuaEnv::new begin
+[  0.421s] [Startup] SimState::default complete in 1.44ms
+[  0.421s] [Startup] rilua VM created in 74.17µs
+[  0.421s] [Startup] builtin frames initialized in 35.92µs
+[  0.421s] [Startup] template registry cleared in 11.56µs
+[  0.422s] [Startup] intrinsic templates registered in 126.13µs
+[  0.422s] [Startup] initial app_data lua handle installed in 150.00ns
+[  0.508s] [Startup] init_lua_state complete in 86.07ms
+[  0.508s] [Startup] final app_data lua handle installed in 270.00ns
+[  0.508s] [Startup] initial screen globals installed in 165.07µs
+[  0.508s] [Startup] WowLuaEnv::new complete
+test patch_5_5_4_publication_sweep::patch_5_5_4_client_line_excludes_retail_and_era ... ok
+
+running 1 test
+test patch_5_5_4_publication_sweep::patch_5_5_4_publication_sweep ... FAILED
+
+failures:
+
+failures:
+    patch_5_5_4_publication_sweep::patch_5_5_4_publication_sweep
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 8177 filtered out; finished in 0.26s
+
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 1.74ms
+[  0.002s] [Startup] rilua VM created in 95.64µs
+[  0.002s] [Startup] builtin frames initialized in 61.68µs
+[  0.002s] [Startup] template registry cleared in 7.04µs
+[  0.003s] [Startup] intrinsic templates registered in 1.01ms
+[  0.003s] [Startup] initial app_data lua handle installed in 341.00ns
+[  0.151s] [Startup] init_lua_state complete in 148.37ms
+[  0.151s] [Startup] final app_data lua handle installed in 210.00ns
+[  0.151s] [Startup] initial screen globals installed in 93.16µs
+[  0.151s] [Startup] WowLuaEnv::new complete
+
+thread 'patch_5_5_4_publication_sweep::patch_5_5_4_publication_sweep' (3398118) panicked at /home/osso/.worktrees/wow-ui-sim-p554-page/tests/common/publication_sweep.rs:356:9:
+assertion `left == right` failed: register row count changed
+  left: 1
+ right: 0
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'patch_5_5_4_publication_sweep::patch_5_5_4_publication_sweep' (3398097) panicked at /home/osso/.worktrees/wow-ui-sim-p554-page/tests/common/timeout_reexec.rs:181:9:
+timeout child for `patch_5_5_4_publication_sweep::patch_5_5_4_publication_sweep` failed (exit code 101)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test patch_5_5_4_publication_sweep::patch_5_5_4_publication_sweep ... FAILED
+
+failures:
+
+failures:
+    patch_5_5_4_publication_sweep::patch_5_5_4_publication_sweep
+
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 8176 filtered out; finished in 0.80s
+
+error: test failed, to rerun pass `--test integration`

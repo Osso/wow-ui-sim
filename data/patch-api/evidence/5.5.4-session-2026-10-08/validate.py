@@ -128,13 +128,18 @@ def check_proofs(context):
         if policy.get('passed_tests'):
             counts = re.findall(r'test result: ok\. (\d+) passed; 0 failed;', log.decode())
             assert int(counts[-1]) == policy['passed_tests'], (label, counts)
+        if label == 'p554-tools-tests':
+            assert re.search(r'Ran [1-9]\d* tests', log.decode()) and log.decode().rstrip().endswith('OK')
         if policy.get('warning_clean'):
             warnings = [line for line in log.decode().splitlines() if line.startswith('warning:')]
             assert all('iced-wgpu-patched/Cargo.toml:' in line or
                        '`iced_wgpu` (manifest)' in line for line in warnings), warnings
-    mists = read('p554-mists-scoped/patch_5_5_4_publication_sweep-results.json')
+    mists = read('p554-mists-evidence/patch_5_5_4_publication_sweep-results.json')
     assert mists == {}
-    assert read('p554-mists-scoped.proof.json')['profile'] == 'mists'
+    assert pinned_json(context['code_revision'], 'tests/data/patch_5_5_4_sweep_known_gaps.json') == []
+    assert read('p554-mists-evidence.proof.json')['profile'] == 'mists'
+    control = read('p554-mists-evidence/patch_5_5_4_publication_sweep-MISTS_LINE_CONTROL_OUT-results.json')
+    assert control['own']['expected']['publication'] == 'absent' and not control['own']['ok']
     negative = (HERE / 'p554-mists-negative.log').read_text()
     assert 'register row count changed' in negative
     assert 'left: 1' in negative and 'right: 0' in negative

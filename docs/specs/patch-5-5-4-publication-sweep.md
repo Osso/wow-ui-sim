@@ -4,12 +4,12 @@ Audit the pinned [5.5.4 source](../../data/patch-api/sources/5.5.4-api-changes.w
 
 ## What it must do
 
-- [ ] Preserve the resources-only page's zero API inventory and four metadata rows; do not expand linked diffs.
-- [ ] Probe any inventory rows under `client-mists`, using the Mists cached UI and active interface `50504`.
-- [ ] Keep supersession within a register's explicit client line; legacy unlabeled registers remain retail.
-- [ ] Reject a sweep executed under the wrong client profile.
-- [ ] Preserve every existing retail sweep's observations and exact known-gap sets.
-- [ ] Reproduce all historical registers/extracts, retaining precisely the inherited extract failures.
+- [x] Preserve the resources-only page's zero API inventory and four metadata rows; do not expand linked diffs.
+- [x] Probe any inventory rows under `client-mists`, using the Mists cached UI and active interface `50504`.
+- [x] Keep supersession within a register's explicit client line; legacy unlabeled registers remain retail.
+- [x] Reject a sweep executed under the wrong client profile.
+- [x] Preserve every existing retail sweep's observations and exact known-gap sets.
+- [x] Reproduce all historical registers/extracts, retaining precisely the inherited extract failures.
 - [ ] Validate committed evidence from a clean relocated checkout and after unrelated later work.
 
 ## How it works
@@ -34,7 +34,7 @@ Audit the pinned [5.5.4 source](../../data/patch-api/sources/5.5.4-api-changes.w
 
 ## Known gaps (current cycle)
 
-- [ ] Profile loading and targeted acceptance proofs pending.
+- [ ] Clean/later-audit portability gate pending; other targeted proofs pass.
 
 ## Out of scope
 
