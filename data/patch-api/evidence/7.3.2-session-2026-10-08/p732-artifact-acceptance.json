@@ -1,0 +1,49 @@
+{
+  "status": "PASS",
+  "audit_revision": "2f220a1bcf3988f03e78f7c73eecb20ba6622f6d",
+  "summary": {
+    "status": "PASS",
+    "inventory_rows": 2,
+    "extract_rows": 5,
+    "ledger_rows": 7,
+    "publication_gaps": 0,
+    "statuses": {
+      "bounded-coverage": 3,
+      "metadata-only": 4
+    },
+    "preserved_inputs": 209,
+    "preserved_extract_modes": 86,
+    "reproduced_registers": 41,
+    "inherited_extract_failures": [
+      "12.0.5",
+      "12.0.7",
+      "12.1.0"
+    ],
+    "retired": [],
+    "negative_baseline": 0,
+    "negative_gaps": 1,
+    "required_receipts": 16,
+    "publication_sweeps": 41,
+    "non_vendor_mists_warnings": 0
+  },
+  "validators": {
+    "local_passed": 18,
+    "local_total": 18,
+    "matrix": "p732-final-validator-matrix.json"
+  },
+  "portability_receipt": "p732-validator-portability.proof.json",
+  "unfinished": [
+    "8.0.1 rebase/placeholder replacement reserved for main-thread integration",
+    "Native block notification/error text, hardware-event policy, logout countdown/cancellation and historical/secret/restricted-context parity unverified",
+    "Inherited 12.0.5/12.0.7/12.1.0 extract reproduction failures unchanged"
+  ],
+  "constraints": {
+    "push": false,
+    "merge": false,
+    "agents": false,
+    "full_suite": false,
+    "vendor_edits": false,
+    "cwd_tool_calls": false,
+    "pycache": false
+  }
+}
