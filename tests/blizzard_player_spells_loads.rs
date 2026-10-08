@@ -170,6 +170,12 @@ fn load_runtime_game_ui() -> WowLuaEnv {
     env
 }
 
+fn load_player_spells_after_fork(env: &WowLuaEnv) {
+    load_addon(&env.loader_env(), &player_spells_toc())
+        .expect("explicit load_addon for Blizzard_PlayerSpells succeeds");
+
+}
+
 fn load_full_game_ui_with_player_spells() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
@@ -433,9 +439,10 @@ fn blizzard_player_spells_appears_in_full_addon_inventory() {
     );
 }
 
-#[test]
-fn blizzard_player_spells_is_addon_loaded_after_explicit_load() {
-    let env = load_full_game_ui_with_player_spells();
+prefork_full_ui_case! {
+fn blizzard_player_spells_is_addon_loaded_after_explicit_load(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    load_player_spells_after_fork(env);
 
     let loaded: bool = env
         .eval("return C_AddOns.IsAddOnLoaded('Blizzard_PlayerSpells')")
@@ -447,10 +454,19 @@ fn blizzard_player_spells_is_addon_loaded_after_explicit_load() {
          path makes IsAddOnLoaded report true"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn blizzard_player_spells_dependencies_loaded_via_eager_discovery() {
+fn blizzard_player_spells_is_addon_loaded_after_explicit_load() {
     let env = load_full_game_ui_with_player_spells();
+    blizzard_player_spells_is_addon_loaded_after_explicit_load::run(&env);
+}
+
+prefork_full_ui_case! {
+fn blizzard_player_spells_dependencies_loaded_via_eager_discovery(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    load_player_spells_after_fork(env);
 
     for dep in REQUIRED_DEPS {
         let loaded: bool = env
@@ -467,10 +483,19 @@ fn blizzard_player_spells_dependencies_loaded_via_eager_discovery() {
         );
     }
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn blizzard_player_spells_creates_named_non_virtual_frames() {
+fn blizzard_player_spells_dependencies_loaded_via_eager_discovery() {
     let env = load_full_game_ui_with_player_spells();
+    blizzard_player_spells_dependencies_loaded_via_eager_discovery::run(&env);
+}
+
+prefork_full_ui_case! {
+fn blizzard_player_spells_creates_named_non_virtual_frames(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    load_player_spells_after_fork(env);
 
     for frame in PUBLIC_NAMED_FRAMES {
         let kind: String = env
@@ -501,10 +526,19 @@ fn blizzard_player_spells_creates_named_non_virtual_frames() {
         );
     }
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn class_talent_load_system_inherits_dropdown_template_mixin_methods() {
+fn blizzard_player_spells_creates_named_non_virtual_frames() {
     let env = load_full_game_ui_with_player_spells();
+    blizzard_player_spells_creates_named_non_virtual_frames::run(&env);
+}
+
+prefork_full_ui_case! {
+fn class_talent_load_system_inherits_dropdown_template_mixin_methods(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    load_player_spells_after_fork(env);
 
     let get_dropdown_types: (String, String) = env
         .eval(
@@ -521,10 +555,19 @@ fn class_talent_load_system_inherits_dropdown_template_mixin_methods() {
          CreateFrame instances and nested XML children such as ClassTalentsFrame.LoadSystem"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn blizzard_player_spells_panel_root_is_hidden_after_load() {
+fn class_talent_load_system_inherits_dropdown_template_mixin_methods() {
     let env = load_full_game_ui_with_player_spells();
+    class_talent_load_system_inherits_dropdown_template_mixin_methods::run(&env);
+}
+
+prefork_full_ui_case! {
+fn blizzard_player_spells_panel_root_is_hidden_after_load(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    load_player_spells_after_fork(env);
 
     let visible: bool = env
         .eval("return PlayerSpellsFrame:IsShown()")
@@ -537,10 +580,19 @@ fn blizzard_player_spells_panel_root_is_hidden_after_load() {
          PlayerSpellsUtil.ToggleSpellBookFrame()"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn blizzard_player_spells_publishes_root_panel_mixins() {
+fn blizzard_player_spells_panel_root_is_hidden_after_load() {
     let env = load_full_game_ui_with_player_spells();
+    blizzard_player_spells_panel_root_is_hidden_after_load::run(&env);
+}
+
+prefork_full_ui_case! {
+fn blizzard_player_spells_publishes_root_panel_mixins(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    load_player_spells_after_fork(env);
 
     for mixin in ROOT_PANEL_MIXINS {
         let kind: String = env
@@ -558,10 +610,19 @@ fn blizzard_player_spells_publishes_root_panel_mixins() {
         );
     }
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn blizzard_player_spells_publishes_class_talent_button_mixins() {
+fn blizzard_player_spells_publishes_root_panel_mixins() {
     let env = load_full_game_ui_with_player_spells();
+    blizzard_player_spells_publishes_root_panel_mixins::run(&env);
+}
+
+prefork_full_ui_case! {
+fn blizzard_player_spells_publishes_class_talent_button_mixins(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    load_player_spells_after_fork(env);
 
     for mixin in TALENT_BUTTON_MIXINS {
         let kind: String = env
@@ -580,10 +641,19 @@ fn blizzard_player_spells_publishes_class_talent_button_mixins() {
         );
     }
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn blizzard_player_spells_publishes_hero_talent_mixins() {
+fn blizzard_player_spells_publishes_class_talent_button_mixins() {
     let env = load_full_game_ui_with_player_spells();
+    blizzard_player_spells_publishes_class_talent_button_mixins::run(&env);
+}
+
+prefork_full_ui_case! {
+fn blizzard_player_spells_publishes_hero_talent_mixins(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    load_player_spells_after_fork(env);
 
     for mixin in HERO_TALENT_MIXINS {
         let kind: String = env
@@ -604,10 +674,19 @@ fn blizzard_player_spells_publishes_hero_talent_mixins() {
         );
     }
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn blizzard_player_spells_publishes_spell_book_mixins() {
+fn blizzard_player_spells_publishes_hero_talent_mixins() {
     let env = load_full_game_ui_with_player_spells();
+    blizzard_player_spells_publishes_hero_talent_mixins::run(&env);
+}
+
+prefork_full_ui_case! {
+fn blizzard_player_spells_publishes_spell_book_mixins(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    load_player_spells_after_fork(env);
 
     for mixin in SPELL_BOOK_MIXINS {
         let kind: String = env
@@ -625,10 +704,19 @@ fn blizzard_player_spells_publishes_spell_book_mixins() {
         );
     }
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn blizzard_player_spells_publishes_loadout_dialog_mixins() {
+fn blizzard_player_spells_publishes_spell_book_mixins() {
     let env = load_full_game_ui_with_player_spells();
+    blizzard_player_spells_publishes_spell_book_mixins::run(&env);
+}
+
+prefork_full_ui_case! {
+fn blizzard_player_spells_publishes_loadout_dialog_mixins(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    load_player_spells_after_fork(env);
 
     for mixin in LOADOUT_DIALOG_MIXINS {
         let kind: String = env
@@ -648,10 +736,19 @@ fn blizzard_player_spells_publishes_loadout_dialog_mixins() {
         );
     }
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn blizzard_player_spells_publishes_pvp_and_warmode_mixins() {
+fn blizzard_player_spells_publishes_loadout_dialog_mixins() {
     let env = load_full_game_ui_with_player_spells();
+    blizzard_player_spells_publishes_loadout_dialog_mixins::run(&env);
+}
+
+prefork_full_ui_case! {
+fn blizzard_player_spells_publishes_pvp_and_warmode_mixins(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    load_player_spells_after_fork(env);
 
     for mixin in PVP_AND_WARMODE_MIXINS {
         let kind: String = env
@@ -668,10 +765,19 @@ fn blizzard_player_spells_publishes_pvp_and_warmode_mixins() {
         );
     }
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn blizzard_player_spells_publishes_player_spells_util_namespace() {
+fn blizzard_player_spells_publishes_pvp_and_warmode_mixins() {
     let env = load_full_game_ui_with_player_spells();
+    blizzard_player_spells_publishes_pvp_and_warmode_mixins::run(&env);
+}
+
+prefork_full_ui_case! {
+fn blizzard_player_spells_publishes_player_spells_util_namespace(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    load_player_spells_after_fork(env);
 
     let kind: String = env
         .eval("return type(_G.PlayerSpellsUtil)")
@@ -700,10 +806,19 @@ fn blizzard_player_spells_publishes_player_spells_util_namespace() {
          open-flow"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn blizzard_player_spells_loads_without_unrelated_lua_errors() {
+fn blizzard_player_spells_publishes_player_spells_util_namespace() {
     let env = load_full_game_ui_with_player_spells();
+    blizzard_player_spells_publishes_player_spells_util_namespace::run(&env);
+}
+
+prefork_full_ui_case! {
+fn blizzard_player_spells_loads_without_unrelated_lua_errors(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    load_player_spells_after_fork(env);
 
     let load_errors: Vec<String> = env
         .state()
@@ -731,4 +846,12 @@ fn blizzard_player_spells_loads_without_unrelated_lua_errors() {
          the documented 3D ModelScene permanent gap):\n  {}",
         load_errors.join("\n  ")
     );
+}
+}
+
+#[cfg(not(feature = "client-retail"))]
+#[test]
+fn blizzard_player_spells_loads_without_unrelated_lua_errors() {
+    let env = load_full_game_ui_with_player_spells();
+    blizzard_player_spells_loads_without_unrelated_lua_errors::run(&env);
 }
