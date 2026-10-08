@@ -1,0 +1,19 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "5.5.4",
+  "source": {
+    "path": "data/patch-api/sources/5.5.4-api-changes.wikitext",
+    "revid": 6778083,
+    "sha256": "6a6170c87c139503993a1c18be03292edd5563a7a2bfe9428ab1f97a2b8e74cb"
+  },
+  "header_counts": [],
+  "entries": [
+    {
+      "id": "negative",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "__P554Missing"
+    }
+  ],
+  "client_line": "mists-classic"
+}
