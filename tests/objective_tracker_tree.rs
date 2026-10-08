@@ -26,18 +26,23 @@ use crate::common;
 use wow_ui_sim::iced_app::{
     RegistryQuadBatchParams, build_quad_batch_for_registry_with_quest_blobs,
 };
+#[cfg(not(feature = "client-retail"))]
 use wow_ui_sim::loader::{discover_blizzard_addons_for_screen, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
+#[cfg(not(feature = "client-retail"))]
 use wow_ui_sim::paths::default_blizzard_ui_addons_path;
 use wow_ui_sim::render::{GlyphAtlas, WowFontSystem};
+#[cfg(not(feature = "client-retail"))]
 use wow_ui_sim::screen::ScreenKind;
+#[cfg(not(feature = "client-retail"))]
 use wow_ui_sim::startup::settle_headless_startup;
 
+#[cfg(not(feature = "client-retail"))]
 fn blizzard_ui_dir() -> std::path::PathBuf {
     default_blizzard_ui_addons_path().expect("Blizzard UI cache should be synced")
-
 }
 
+#[cfg(not(feature = "client-retail"))]
 fn load_settled_game_ui() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
@@ -53,6 +58,24 @@ fn load_settled_game_ui() -> WowLuaEnv {
     env.apply_post_load_workarounds();
     settle_headless_startup(&env);
     env
+}
+
+#[cfg(feature = "client-retail")]
+pub(crate) fn settle_prefork_game_ui(env: &WowLuaEnv) {
+    // Game-only tail of settle_headless_startup, without replaying login events.
+    // Glue refresh/dismiss steps have no published Glue frames in this fixture.
+    env.apply_post_event_workarounds();
+    wow_ui_sim::startup::settle_startup_animation_groups(env);
+    {
+        let mut state = env.state().borrow_mut();
+        state.widgets.rebuild_anchor_index();
+        state.initialize_render_state();
+    }
+    wow_ui_sim::startup::process_pending_timers(env);
+    wow_ui_sim::startup::fire_one_on_update_tick(env);
+    let _ = wow_ui_sim::lua_api::globals::global_frames::hide_runtime_hidden_frames(&*env.rilua());
+    wow_ui_sim::startup::run_extra_update_ticks(env, 3);
+    wow_ui_sim::startup::run_extra_update_ticks(env, 2);
 }
 
 fn build_text_quad_batch(env: &WowLuaEnv) -> wow_ui_sim::render::QuadBatch {
@@ -330,10 +353,11 @@ fn objective_tracker_quest_module_header_emits_glyph_quads(env: &WowLuaEnv) {
 }
 }
 
-#[test]
-fn objective_tracker_frame_layout_is_locked() {
-    test_timeout! {
-        let env = load_settled_game_ui();
+prefork_full_ui_case! {
+fn objective_tracker_frame_layout_is_locked(env: &WowLuaEnv) {
+    #[cfg(feature = "client-retail")]
+    settle_prefork_game_ui(env);
+
 
         env.exec(
             r#"
@@ -493,5 +517,13 @@ fn objective_tracker_frame_layout_is_locked() {
             "#,
         )
         .expect("objective tracker layout lock assertions");
-    }
+
+}
+}
+
+#[cfg(not(feature = "client-retail"))]
+#[test]
+fn objective_tracker_frame_layout_is_locked() {
+    let env = load_settled_game_ui();
+    objective_tracker_frame_layout_is_locked::run(&env);
 }
