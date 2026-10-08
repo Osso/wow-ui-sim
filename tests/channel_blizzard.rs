@@ -1,11 +1,13 @@
 //! Real cached Blizzard handlers consume simulator channel inputs without patches.
 #![cfg(feature = "retail-12-1-0")]
-use super::spell_casting::{drain_test_errors, env_with_full_blizzard_ui, install_test_error_handler};
+#[cfg(not(feature = "client-retail"))]
+use super::spell_casting::env_with_full_blizzard_ui;
+use super::spell_casting::{drain_test_errors, install_test_error_handler};
+use wow_ui_sim::lua_api::WowLuaEnv;
 
-#[test]
-fn channel_blizzard_view_observes_start_update_and_natural_completion() {
-    test_timeout! {
-        let env = env_with_full_blizzard_ui();
+prefork_full_ui_case! {
+fn channel_blizzard_view_observes_start_update_and_natural_completion(env: &WowLuaEnv) {
+
         install_test_error_handler(&env);
         env.exec(r#"
             CastingBarMixin.OnLoad(PlayerCastingBarFrame, 'player', true, false)
@@ -28,13 +30,20 @@ fn channel_blizzard_view_observes_start_update_and_natural_completion() {
             assert(not PlayerCastingBarFrame.channeling)
         "#).unwrap();
         assert!(drain_test_errors(&env).is_empty(), "channel consumer errors");
-    }
+
+}
 }
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn channel_blizzard_empower_pips_use_milliseconds_and_release_flags() {
-    test_timeout! {
-        let env = env_with_full_blizzard_ui();
+fn channel_blizzard_view_observes_start_update_and_natural_completion() {
+    let env = env_with_full_blizzard_ui();
+    channel_blizzard_view_observes_start_update_and_natural_completion::run(&env);
+}
+
+prefork_full_ui_case! {
+fn channel_blizzard_empower_pips_use_milliseconds_and_release_flags(env: &WowLuaEnv) {
+
         install_test_error_handler(&env);
         env.exec(r#"
             CastingBarMixin.OnLoad(PlayerCastingBarFrame, 'player', true, false)
@@ -65,13 +74,20 @@ fn channel_blizzard_empower_pips_use_milliseconds_and_release_flags() {
         env.exec("assert(UnitChannelInfo('player') == nil); assert(not PlayerCastingBarFrame.reverseChanneling)").unwrap();
         let errors = drain_test_errors(&env);
         assert!(errors.is_empty(), "empower consumer errors: {errors:?}");
-    }
+
+}
 }
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn channel_blizzard_empower_update_exposes_vendor_hold_boundary() {
-    test_timeout! {
-        let env = env_with_full_blizzard_ui();
+fn channel_blizzard_empower_pips_use_milliseconds_and_release_flags() {
+    let env = env_with_full_blizzard_ui();
+    channel_blizzard_empower_pips_use_milliseconds_and_release_flags::run(&env);
+}
+
+prefork_full_ui_case! {
+fn channel_blizzard_empower_update_exposes_vendor_hold_boundary(env: &WowLuaEnv) {
+
         install_test_error_handler(&env);
         env.exec(r#"
             CastingBarMixin.OnLoad(PlayerCastingBarFrame, 'player', true, false)
@@ -92,5 +108,13 @@ fn channel_blizzard_empower_update_exposes_vendor_hold_boundary() {
         "#).unwrap();
         let errors = drain_test_errors(&env);
         assert!(errors.is_empty(), "empower update errors: {errors:?}");
-    }
+
+}
+}
+
+#[cfg(not(feature = "client-retail"))]
+#[test]
+fn channel_blizzard_empower_update_exposes_vendor_hold_boundary() {
+    let env = env_with_full_blizzard_ui();
+    channel_blizzard_empower_update_exposes_vendor_hold_boundary::run(&env);
 }
