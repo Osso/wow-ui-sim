@@ -12,6 +12,8 @@
     "p815-source-reproduction",
     "p815-extract-cli-check",
     "p815-negative",
+    "p815-retail-build",
+    "p815-startup",
     "p815-regression-toy",
     "p815-regression-c_area_poi_probes",
     "p815-regression-calendar",
@@ -558,6 +560,29 @@
       "invalidated": false,
       "seconds": 2.0609529060020577
     },
+    "p815-startup": {
+      "command": [
+        "/usr/bin/timeout",
+        "90",
+        "/home/osso/.cache/wow-ui-sim-targets/p815-page/debug/wow-sim",
+        "--no-addons",
+        "--no-saved-vars",
+        "lua-errors"
+      ],
+      "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+      "scope": "p815-startup",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
+      "target": "/home/osso/.cache/wow-ui-sim-targets/p815-page",
+      "environment": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "exit": 0,
+      "expected_exit": 0,
+      "log": "p815-startup.txt",
+      "log_sha256": "8f47d4dff42afc94ea91594a57d3c09628b82cef40cba91e3a24b226296efe45",
+      "invalidated": false,
+      "seconds": 3.84120815300048
+    },
     "p815-retirement-cached": {
       "command": [
         "cargo",
@@ -646,6 +671,27 @@
       "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "invalidated": false,
       "seconds": 9.716689586999564
+    },
+    "p815-retail-build": {
+      "command": [
+        "cargo",
+        "build",
+        "--bin",
+        "wow-sim"
+      ],
+      "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+      "scope": "p815-retail-build",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
+      "target": "/home/osso/.cache/wow-ui-sim-targets/p815-page",
+      "environment": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+      },
+      "exit": 0,
+      "expected_exit": 0,
+      "log": "p815-retail-build.txt",
+      "log_sha256": "cd53b87c4d10544d6c84184b8eb503228764fa8bbeb2930bb305565aa192f297",
+      "invalidated": false,
+      "seconds": 0.19790209100028733
     },
     "p815-gen_patch_wikitext_register-fixtures": {
       "command": [

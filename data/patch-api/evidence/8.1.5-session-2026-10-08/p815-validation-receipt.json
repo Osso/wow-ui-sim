@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "/home/osso/.worktrees/wow-ui-sim-p815-page/data/patch-api/evidence/8.1.5-session-2026-10-08/validate.py"
+  ],
+  "revision": "d16974013ee9ed237ab34f938f1d42425c010c97",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p815-page",
+  "scope": "final artifact accounting and prior proof patch-equivalence",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "exit": 0,
+  "seconds": 0.0539243749990419,
+  "stdout_sha256": "6c2a345289b80c5f2d95317f138b81806a39e3b4700d0ab808fb96377c5b34fb",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}
