@@ -24,6 +24,8 @@ Merged audit validators prove historical executions, not new executions against 
 | 8.1.0 | Merged 8.1.5/8.2.0 registers; formerly accepted arbitrary protected-file drift | Pin integrated register/sweep scope at `ba7e46ad6`; shared exact preservation checks; refresh own receipts and two attributable supersessions |
 | 8.2.0 | Later 8.1.5 expands register and sweep sets; absolute receipt cwd/target | Pin merged 8.2.0/8.2.5 scope at `ea9e5995e`; remove path gates |
 
+| 7.0.3 integrated | Live shared-runtime hashes reject the later 6.2.0 cost-policy module despite fixed Git-scope proof | Remove redundant live-runtime equality; retain recorded revision/scope, receipts, historical artifacts and validator/log hashes |
+
 ## Historical inputs remain protected
 
 [Shared helper](../../../tools/patch_audit_validation.py) allows only the exact original-to-final SHA-256 pairs for the 9.2.5 ledger and known-gap fixture. Their replacement bytes are pinned to the merged [8.2.5 audit](patch-8-2-5-api-audit.md) endpoint `127aa3724035d9e668143d9b28aaa4cf6e176fa1`; original bytes are from `7ff3dc540^`. The sole closure is `wt-global-api-C_ClubFinder.ReportPosting-117`, listed in [later-gap closures](../../../data/patch-api/evidence/8.2.5-session-2026-10-08/p825-later-gap-closures.json).
