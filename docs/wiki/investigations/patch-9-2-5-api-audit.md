@@ -2,6 +2,10 @@
 
 Page 237255, revision 2301036 (September 3, 2022, 02:10:47 UTC), retrieved October 7, 2026. Requested page exists. Branch `p925-page` starts at master `572a77d84`, containing the 9.2.7 sweep. Current retail carries 12.1.0; historical Shadowlands behavior is not reconstructed. Direct HTTP returned 403; existing Chromium successfully returned the MediaWiki revision response.
 
+## 8.2.5 follow-up — October 8, 2026
+
+[8.2.5 audit](patch-8-2-5-api-audit.md) proves unused C_ClubFinder.ReportPosting absent on retail after complete cached/source/test scans. `wt-global-api-C_ClubFinder.ReportPosting-117` moves from pending to bounded retail absence: current fixture **33 gaps**, ledger **34 bounded / 153 pending**. Original 34-gap results/negative control below remain historical receipts; current 37-sweep proof is in the linked audit. No other 9.2.5 source row changes.
+
 ## Source accounting
 
 84 inventory occurrences: 55 added, 18 removed, 11 changed. Global API 44/16/11, widgets 1/0/0, events 7/2/0, CVars 3/0/0. All published counts match. All 27 later registers, 9.2.7 through 12.1.0, supersede this page.

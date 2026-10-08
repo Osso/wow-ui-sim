@@ -1,3 +1,7 @@
+## [2026-10-08] evidence | 8.2.5 API page audit
+
+[Audit](investigations/patch-8-2-5-api-audit.md): all 216 IDs accounted (198 inventory, fourteen extract, four captions); fourteen consumer-free retail retirements, 61 exact gaps and four substantive prose contracts pending. All 37 sweeps plus factory, negative control 61 → 62, bare/cached/Mists and scoped regressions, 49 parser fixtures, warning-clean non-vendor checks and startup `[]` pass. All registers reproduce; inherited three extract failures unchanged. ReportPosting closes one 9.2.5 gap (34 → 33). Exhaustive older-page list ends at 1.0.0; 100 pages remain after this audit.
+
 ## [2026-10-08] evidence | 8.3.0 API page audit
 
 [Audit](investigations/patch-8-3-0-api-audit.md): revision 6471393, 224 inventory / sixteen extract / four caption IDs; six bounded retail retirements and 41 exact publication gaps. All 36 sweeps plus animation regression, negative control, five affected Mists cases, warning-clean non-vendor checks and startup `[]` pass. Unrelated unchanged HonorFrame diagnostic assertion fails in broader Mists selection; retained and reported. All 183 prior inputs, 70 extraction outcomes and 36 register reproductions preserved.

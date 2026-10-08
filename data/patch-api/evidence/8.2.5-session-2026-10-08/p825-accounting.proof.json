@@ -1,0 +1,19 @@
+{
+  "command": [
+    "python3",
+    "data/patch-api/evidence/8.2.5-session-2026-10-08/build_accounting.py"
+  ],
+  "revision": "5e289fcad",
+  "scope": "p825-accounting",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p825-page",
+  "environment": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "exit": 0,
+  "expected_exit": 0,
+  "log": "p825-accounting.txt",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "invalidated": false,
+  "capture_note": "Original exact stdout/stderr retained from captured CommandResult; no command rerun for logs."
+}

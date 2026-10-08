@@ -6,7 +6,7 @@ Account for Warcraft Wiki page 237255 revision 2301036 against current retail 12
 
 - [x] Retain source/provenance, all 84 inventory occurrences, exact annotations/defaults and verbatim examples.
 - [x] Recover multiline security warning and inline structure boundaries with fixtures; preserve prior inputs and both extraction-mode outcomes.
-- [x] Probe all occurrences using all 27 chronological later registers and an exact 34-ID reviewed gap fixture.
+- [x] Probe all occurrences using all 27 chronological later registers and an exact reviewed gap fixture (currently 33 IDs after the [8.2.5 ReportPosting closure](../wiki/investigations/patch-8-2-5-api-audit.md)).
 - [x] Prevent raw/repeated lookup fabrication of nine unused retail removals without deleting live cached reporting/deprecation APIs or changing Mists legacy lookup.
 - [x] Account for all 220 inventory/extract/context IDs, assigning literal source lines and explicit proof boundaries.
 - [x] Detect a single GAME_PAD_POWER_CHANGED direction mutation: exactly 34 → 35 gaps, unchanged IDs.
@@ -34,7 +34,7 @@ Account for Warcraft Wiki page 237255 revision 2301036 against current retail 12
 
 ## Known gaps (current cycle)
 
-- [ ] 34 exact publication failures retain per-ID model/source reasons.
+- [ ] 33 exact publication failures retain per-ID model/source reasons; ReportPosting absence is now bounded by the 8.2.5 audit.
 - [ ] 120 substantive extract statements and successful inventory annotations/payloads lack occurrence-specific behavior/native parity proof.
 - [ ] GetSourceLocation creating script/line and two historical CVar default comparisons remain explicit mismatches.
 
