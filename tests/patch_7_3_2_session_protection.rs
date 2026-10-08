@@ -14,21 +14,25 @@ pub(crate) fn assert_insecure_session_actions_blocked(env: &WowLuaEnv) {
         }
         let code = format!(
             r#"
+            local taint
             local invoke = function()
-                assert(debug.getstacktaint() == 'Patch732Addon')
+                taint = debug.getstacktaint()
                 {symbol}()
             end
             debug.setobjecttaint(invoke, 'Patch732Addon')
-            return pcall(invoke)
+            local succeeded = pcall(invoke)
+            return succeeded, taint
             "#
         );
-        let allowed: bool = env.eval(&code).expect("probe insecure session action");
+        let (allowed, taint): (bool, String) =
+            env.eval(&code).expect("probe insecure session action");
+        assert_eq!(taint, "Patch732Addon", "probe must execute as addon code");
         let state = env.state().borrow();
         let unchanged = state.is_logged_in && !state.simulator_exit_requested;
         observations.insert(
             symbol.to_string(),
             serde_json::json!({"call_succeeded": allowed, "state_unchanged": unchanged,
-                               "ok": !allowed && unchanged}),
+                               "taint": taint, "ok": !allowed && unchanged}),
         );
     }
     if let Ok(path) = std::env::var("P732_PROTECTION_OUT") {
