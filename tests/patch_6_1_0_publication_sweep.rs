@@ -17,9 +17,9 @@ fn patch_6_1_0_publication_sweep(env: &WowLuaEnv) {
         register_env: "P610_SWEEP_REGISTER",
         out_env: "P610_SWEEP_OUT",
         later_registers: &[
-            // 6.2.0: pending p620-page integration.
-            // 6.2.2: pending p622-page integration.
-            // 6.2.4: pending p624-page integration.
+            include_str!("../data/patch-api/sources/6.2.0-wikitext-register.json"),
+            include_str!("../data/patch-api/sources/6.2.2-wikitext-register.json"),
+            include_str!("../data/patch-api/sources/6.2.4-wikitext-register.json"),
             include_str!("../data/patch-api/sources/7.0.1-wikitext-register.json"),
             include_str!("../data/patch-api/sources/7.0.3-wikitext-register.json"),
             include_str!("../data/patch-api/sources/7.1.0-wikitext-register.json"),
