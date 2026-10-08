@@ -196,9 +196,11 @@
   "source_rows": [
     {
       "source_id": "wt-global-api-AcknowledgeAADCAlert-23",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "AADC alert acknowledgement needs alert eligibility/lifecycle state; no registered acknowledgement producer. No fabricated acknowledgement success added."
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence is superseded by the 9.1.5 removal (applied at integration); historical behavior is not reconstructed."
     },
     {
       "source_id": "wt-global-api-C_BarberShop.RandomizeCustomizationChoices-24",
@@ -320,9 +322,11 @@
     },
     {
       "source_id": "wt-global-api-C_ItemUpgrade.GetItemLevelIncrement-42",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Needs item-upgrade progression data and level-increment lookup; no explicit producer."
+      "capabilities": [
+        "publication-sweep-9-1-0"
+      ],
+      "status": "bounded-coverage",
+      "note": "Current retail absence is superseded by the 9.1.5 removal (applied at integration); historical behavior is not reconstructed."
     },
     {
       "source_id": "wt-global-api-C_ItemUpgrade.GetItemUpgradeEffect-43",

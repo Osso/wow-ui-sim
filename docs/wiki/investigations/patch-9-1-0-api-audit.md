@@ -98,3 +98,5 @@ All commands explicitly use `/home/osso/.worktrees/wow-ui-sim-p910-page` as cwd;
 
 - [[patch-9-2-0-api-audit]] — publication accounting and conservative retirement template.
 - [[patch-9-2-5-api-audit]] — provenance flags and source/proof boundaries.
+
+**Integration (2026-10-08):** the 9.1.5 register was added to the later-register list after p915-page merged. As predicted above, `wt-global-api-AcknowledgeAADCAlert-23` and `wt-global-api-C_ItemUpgrade.GetItemLevelIncrement-42` are now superseded by 9.1.5 removals: the exact-gap fixture drops to **51**, and both ledger rows move to bounded-coverage (current absence only). The 9.1.0 sweep passes at 126+2 OK / 51 gaps.

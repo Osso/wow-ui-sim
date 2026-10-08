@@ -12,7 +12,7 @@ Account for page 17181 revision 167980 against current retail 12.1.0, not histor
 
 ## Proof boundary
 
-192 IDs: 61 current absences, 65 publication/registration-only rows, 56 pending rows (53 exact gaps plus three summary contracts), ten metadata rows. Twenty-one unused namespace retirements closed; post-load tooltip placeholder remains classic-only. Two historical CVar defaults differ without current-state rewrites. Thirty sweeps have combined current-scope proof; first aggregate run's own 9.1.0 failure was resolved by the subsequent focused run, not hidden as an aggregate pass. See [audit](../wiki/investigations/patch-9-1-0-api-audit.md).
+192 IDs: 61 current absences, 65 publication/registration-only rows, 56 pending rows (51 exact gaps after 9.1.5 integration plus three summary contracts; two former gaps are now bounded 9.1.5 supersessions), ten metadata rows. Twenty-one unused namespace retirements closed; post-load tooltip placeholder remains classic-only. Two historical CVar defaults differ without current-state rewrites. Thirty sweeps have combined current-scope proof; first aggregate run's own 9.1.0 failure was resolved by the subsequent focused run, not hidden as an aggregate pass. See [audit](../wiki/investigations/patch-9-1-0-api-audit.md).
 
 ## Exclusions
 

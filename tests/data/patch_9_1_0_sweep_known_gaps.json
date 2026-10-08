@@ -1,7 +1,6 @@
 [
   "wt-cvars-D3D11-234",
   "wt-cvars-D3D12-236",
-  "wt-global-api-AcknowledgeAADCAlert-23",
   "wt-global-api-C_ChallengeMode.GetDungeonScoreRarityColor-25",
   "wt-global-api-C_ChallengeMode.GetKeystoneLevelRarityColor-26",
   "wt-global-api-C_ChallengeMode.GetOverallDungeonScore-27",
@@ -15,7 +14,6 @@
   "wt-global-api-C_Item.GetAppliedItemTransmogInfo-39",
   "wt-global-api-C_Item.GetBaseItemTransmogInfo-40",
   "wt-global-api-C_Item.IsDressableItemByID-41",
-  "wt-global-api-C_ItemUpgrade.GetItemLevelIncrement-42",
   "wt-global-api-C_ItemUpgrade.GetItemUpgradeEffect-43",
   "wt-global-api-C_ItemUpgrade.GetNumItemUpgradeEffects-44",
   "wt-global-api-C_LFGList.GetApplicantDungeonScoreForListing-47",

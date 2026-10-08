@@ -34,12 +34,12 @@ def check_accounting():
     assert len(register['entries']) == len(result) == 179
     assert set(result) == {entry['id'] for entry in register['entries']}
     assert set(gaps) == {key for key, value in result.items() if not value['ok']}
-    assert len(gaps) == len(review) == 53
+    assert len(gaps) == len(review) == 51
     assert {row['source_id'] for row in review} == set(gaps)
     assert all(row['reason'] and row['literal'] for row in review)
     assert Counter(row['status'] for row in ledger['source_rows']) == {
-        'bounded-coverage': 61, 'partial-development-green': 65,
-        'audit-pending': 56, 'metadata-only': 10,
+        'bounded-coverage': 63, 'partial-development-green': 65,
+        'audit-pending': 54, 'metadata-only': 10,
     }
     assert all(not row['capabilities'] for row in ledger['source_rows']
                if row['status'] in ('audit-pending', 'metadata-only'))
@@ -72,6 +72,9 @@ def check_retirements():
     initial = read_json(EVIDENCE / 'p910-initial-results.json')
     final = read_json(EVIDENCE / 'p910_sweep_out-results.json')
     closed = {key for key in initial if not initial[key]['ok'] and final[key]['ok']}
+    # Two further gaps close only through the 9.1.5 register added at integration.
+    closed -= {'wt-global-api-AcknowledgeAADCAlert-23',
+               'wt-global-api-C_ItemUpgrade.GetItemLevelIncrement-42'}
     assert len(closed) == 21
     assert sum(not value['ok'] for value in initial.values()) == 74
     assert not any(initial[key]['ok'] and not final[key]['ok'] for key in initial)
@@ -122,7 +125,7 @@ def check_sweeps_and_negative():
     assert before['symbol'] == 'DISPLAY_EVENT_TOASTS'
     assert before['direction'] == 'added' and {**before, 'direction': 'removed'} == after
     negative = read_json(EVIDENCE / 'p910-negative-result.json')
-    assert negative == {'before': 53, 'after': 54, 'new': [before['id']], 'resolved': [], 'same_ids': True}
+    assert negative == {'before': 51, 'after': 52, 'new': [before['id']], 'resolved': [], 'same_ids': True}
     result = read_json(EVIDENCE / 'p910_sweep_out-results.json')
     negative_result = read_json(EVIDENCE / 'p910-negative-results.json')
     assert set(result) == set(negative_result)
@@ -161,7 +164,7 @@ def main():
     check_preservation()
     check_sweeps_and_negative()
     check_proof_and_supersession()
-    print('PASS: 192 IDs, 21 retirements, 53 exact gaps, 30 sweep scopes, 153 preserved inputs, 58 prior modes, negative control and targeted proof')
+    print('PASS: 192 IDs, 21 retirements, 51 exact gaps, 30 sweep scopes, 153 preserved inputs, 58 prior modes, negative control and targeted proof')
 
 
 if __name__ == '__main__':

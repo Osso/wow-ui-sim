@@ -1,19 +1,5 @@
 [
   {
-    "source_id": "wt-global-api-AcknowledgeAADCAlert-23",
-    "symbol": "AcknowledgeAADCAlert",
-    "literal": ": {{api|t=a|AcknowledgeAADCAlert}}",
-    "wikitext_line": 23,
-    "observed": {
-      "default": null,
-      "default_mismatch": false,
-      "detail": "raw=nil; lookup=nil",
-      "kind": "global",
-      "value": null
-    },
-    "reason": "AADC alert acknowledgement needs alert eligibility/lifecycle state; no registered acknowledgement producer. No fabricated acknowledgement success added."
-  },
-  {
     "source_id": "wt-global-api-C_ChallengeMode.GetDungeonScoreRarityColor-25",
     "symbol": "C_ChallengeMode.GetDungeonScoreRarityColor",
     "literal": ": {{api|t=a|C_ChallengeMode.GetDungeonScoreRarityColor}}",
@@ -194,20 +180,6 @@
       "value": null
     },
     "reason": "Needs item dressability metadata/eligibility; no explicit item-ID predicate."
-  },
-  {
-    "source_id": "wt-global-api-C_ItemUpgrade.GetItemLevelIncrement-42",
-    "symbol": "C_ItemUpgrade.GetItemLevelIncrement",
-    "literal": ": {{api|t=a|C_ItemUpgrade.GetItemLevelIncrement}}",
-    "wikitext_line": 42,
-    "observed": {
-      "default": null,
-      "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
-      "kind": "member",
-      "value": null
-    },
-    "reason": "Needs item-upgrade progression data and level-increment lookup; no explicit producer."
   },
   {
     "source_id": "wt-global-api-C_ItemUpgrade.GetItemUpgradeEffect-43",
