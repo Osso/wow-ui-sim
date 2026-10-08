@@ -4,11 +4,13 @@ use wow_ui_sim::loader::{discover_all_blizzard_addons, discover_blizzard_addons_
 use wow_ui_sim::loader::{find_toc_file, load_addon};
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
+#[cfg(not(feature = "client-retail"))]
 use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
-    wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("Blizzard UI cache should be available")
+    wow_ui_sim::paths::default_blizzard_ui_addons_path()
+        .expect("Blizzard UI cache should be available")
 }
 
 fn plunderstorm_basics_dir() -> PathBuf {
@@ -33,6 +35,12 @@ const PUBLIC_NAMED_FRAMES: &[&str] = &["PlunderstormBasicsContainerFrame"];
 
 const VIRTUAL_TEMPLATES_NOT_IN_GLOBALS: &[&str] = &["PlunderstormAccountStoreToggleTemplate"];
 
+fn load_plunderstorm_basics_after_fork(env: &WowLuaEnv) {
+    load_addon(&env.loader_env(), &plunderstorm_basics_toc())
+        .expect("explicit load_addon for Blizzard_PlunderstormBasics succeeds");
+}
+
+#[cfg(not(feature = "client-retail"))]
 fn load_full_game_ui_with_plunderstorm_basics() -> WowLuaEnv {
     let env = WowLuaEnv::new().expect("Failed to create Lua environment");
     env.set_screen_size(1024.0, 768.0);
@@ -253,9 +261,9 @@ fn blizzard_plunderstorm_basics_appears_in_full_addon_inventory() {
     );
 }
 
-#[test]
-fn blizzard_plunderstorm_basics_is_addon_loaded_after_explicit_load() {
-    let env = load_full_game_ui_with_plunderstorm_basics();
+prefork_full_ui_case! {
+    fn blizzard_plunderstorm_basics_is_addon_loaded_after_explicit_load(env: &WowLuaEnv) {
+    load_plunderstorm_basics_after_fork(env);
 
     let loaded: bool = env
         .eval("return C_AddOns.IsAddOnLoaded('Blizzard_PlunderstormBasics')")
@@ -267,10 +275,18 @@ fn blizzard_plunderstorm_basics_is_addon_loaded_after_explicit_load() {
          IsAddOnLoaded report true"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn blizzard_plunderstorm_basics_publishes_two_mixins() {
+fn blizzard_plunderstorm_basics_is_addon_loaded_after_explicit_load() {
     let env = load_full_game_ui_with_plunderstorm_basics();
+    blizzard_plunderstorm_basics_is_addon_loaded_after_explicit_load::run(&env);
+}
+
+prefork_full_ui_case! {
+    fn blizzard_plunderstorm_basics_publishes_two_mixins(env: &WowLuaEnv) {
+    load_plunderstorm_basics_after_fork(env);
 
     for mixin in PUBLIC_MIXINS {
         let kind: String = env
@@ -291,10 +307,18 @@ fn blizzard_plunderstorm_basics_publishes_two_mixins() {
         );
     }
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn blizzard_plunderstorm_basics_creates_named_non_virtual_frame() {
+fn blizzard_plunderstorm_basics_publishes_two_mixins() {
     let env = load_full_game_ui_with_plunderstorm_basics();
+    blizzard_plunderstorm_basics_publishes_two_mixins::run(&env);
+}
+
+prefork_full_ui_case! {
+    fn blizzard_plunderstorm_basics_creates_named_non_virtual_frame(env: &WowLuaEnv) {
+    load_plunderstorm_basics_after_fork(env);
 
     for frame in PUBLIC_NAMED_FRAMES {
         let kind: String = env
@@ -320,10 +344,18 @@ fn blizzard_plunderstorm_basics_creates_named_non_virtual_frame() {
         );
     }
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn blizzard_plunderstorm_basics_does_not_leak_virtual_template_to_globals() {
+fn blizzard_plunderstorm_basics_creates_named_non_virtual_frame() {
     let env = load_full_game_ui_with_plunderstorm_basics();
+    blizzard_plunderstorm_basics_creates_named_non_virtual_frame::run(&env);
+}
+
+prefork_full_ui_case! {
+    fn blizzard_plunderstorm_basics_does_not_leak_virtual_template_to_globals(env: &WowLuaEnv) {
+    load_plunderstorm_basics_after_fork(env);
 
     for template in VIRTUAL_TEMPLATES_NOT_IN_GLOBALS {
         let kind: String = env
@@ -341,10 +373,18 @@ fn blizzard_plunderstorm_basics_does_not_leak_virtual_template_to_globals() {
         );
     }
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn blizzard_plunderstorm_basics_loads_without_addon_specific_lua_errors() {
+fn blizzard_plunderstorm_basics_does_not_leak_virtual_template_to_globals() {
     let env = load_full_game_ui_with_plunderstorm_basics();
+    blizzard_plunderstorm_basics_does_not_leak_virtual_template_to_globals::run(&env);
+}
+
+prefork_full_ui_case! {
+    fn blizzard_plunderstorm_basics_loads_without_addon_specific_lua_errors(env: &WowLuaEnv) {
+    load_plunderstorm_basics_after_fork(env);
 
     let load_errors: Vec<String> = env
         .state()
@@ -363,4 +403,12 @@ fn blizzard_plunderstorm_basics_loads_without_addon_specific_lua_errors() {
         "Blizzard_PlunderstormBasics emitted addon-specific Lua errors during load:\n  {}",
         load_errors.join("\n  ")
     );
+}
+}
+
+#[cfg(not(feature = "client-retail"))]
+#[test]
+fn blizzard_plunderstorm_basics_loads_without_addon_specific_lua_errors() {
+    let env = load_full_game_ui_with_plunderstorm_basics();
+    blizzard_plunderstorm_basics_loads_without_addon_specific_lua_errors::run(&env);
 }
