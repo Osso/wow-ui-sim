@@ -1,0 +1,72 @@
+{
+  "commands": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p554-page/data/patch-api/evidence/5.5.4-session-2026-10-08/integrated/validate.py"
+      ],
+      "revision": "3bffa87e33a73fa994d43e435c24a16d3ed4e485",
+      "result": "PASS",
+      "scope": "integrated invariants"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p554-page/data/patch-api/evidence/5.5.4-session-2026-10-08/validate.py"
+      ],
+      "revision": "3bffa87e33a73fa994d43e435c24a16d3ed4e485",
+      "result": "PASS",
+      "scope": "historical invariants"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p554-page/data/patch-api/evidence/5.5.4-session-2026-10-08/integrated/check_tamper.py"
+      ],
+      "revision": "3bffa87e33a73fa994d43e435c24a16d3ed4e485",
+      "result": "PASS",
+      "scope": "both own seals reject tampering; exact restoration"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p554-page/data/patch-api/evidence/5.5.4-session-2026-10-08/integrated/reproduce_sources.py",
+        "7158cb3fbee1a617a7df2f090a6aef4cb64c2f23"
+      ],
+      "result": "56 registers byte-identical; 53 extracts reproduce; three inherited errors exactly unchanged"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p554-page/data/patch-api/evidence/5.5.4-session-2026-10-08/integrated/check_prior.py"
+      ],
+      "inventory_revision": "bebcc5830dcb21e768a2e3c365105351a400fccb",
+      "result": "38/38 PASS"
+    },
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p554-page/tools/check_patch_validators.py"
+      ],
+      "revision": "3bffa87e33a73fa994d43e435c24a16d3ed4e485",
+      "result": {
+        "clean": {
+          "failed": 0,
+          "passed": 40
+        },
+        "later_audit": {
+          "failed": 0,
+          "passed": 41
+        }
+      }
+    }
+  ],
+  "primary_ledger": "command-results.json",
+  "fresh_clone_receipt": "portable-clone.json"
+}

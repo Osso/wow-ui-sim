@@ -1,0 +1,31 @@
+{
+  "revision": "3bffa87e33a73fa994d43e435c24a16d3ed4e485",
+  "transport": "git clone --no-local --single-branch --branch p554-page",
+  "unreachable_original_commits": [
+    "50d18977fbb7a2366f04a87fe1757fb8198417ef",
+    "06c990d45ee0325a3a8b3b230e88e4fdcafb922b",
+    "e013dd4005603c8837e71676bf1bcc4ca63485da",
+    "64459e44e7c8807ba3e3469e1516a6846b47fac2",
+    "9ca9cd746cacf25803c5d5ac5d2e073caef0fc9e",
+    "167c371767fc7676937077df451b54aa397d6f88",
+    "74baa6172ada83010408ed892e35f38addcf67ff",
+    "f74c89cc04d5a1dcae87b0fbfcd7a4fa485262ff",
+    "44ebca873e7e187b429301c96234df7b2b3a4f51"
+  ],
+  "cat_file": "50d18977fbb7a2366f04a87fe1757fb8198417ef missing\n06c990d45ee0325a3a8b3b230e88e4fdcafb922b missing\ne013dd4005603c8837e71676bf1bcc4ca63485da missing\n64459e44e7c8807ba3e3469e1516a6846b47fac2 missing\n9ca9cd746cacf25803c5d5ac5d2e073caef0fc9e missing\n167c371767fc7676937077df451b54aa397d6f88 missing\n74baa6172ada83010408ed892e35f38addcf67ff missing\nf74c89cc04d5a1dcae87b0fbfcd7a4fa485262ff missing\n44ebca873e7e187b429301c96234df7b2b3a4f51 missing\n",
+  "validators": [
+    {
+      "validator": "data/patch-api/evidence/5.5.4-session-2026-10-08/validate.py",
+      "exit": 0,
+      "stdout": "{\"accounting\": {\"extract_rows\": 4, \"inventory_rows\": 0, \"metadata_rows\": 4, \"modeled_gaps\": 0, \"problematic_gaps\": 0, \"publication_gaps\": 0, \"retirements\": 0}, \"reproduction\": {\"extracts_passed\": 49, \"inherited_extract_failures\": [\"12.0.5\", \"12.0.7\", \"12.1.0\"], \"registers\": 52}, \"retail\": {\"observations\": 9051, \"pages\": 51}, \"status\": \"PASS\"}\n",
+      "stderr": ""
+    },
+    {
+      "validator": "data/patch-api/evidence/5.5.4-session-2026-10-08/integrated/validate.py",
+      "exit": 0,
+      "stdout": "{\"prior_validators\": 38, \"rebase_commits\": 9, \"reproduction\": {\"extracts\": 53, \"registers\": 56}, \"retail\": {\"differences\": 0, \"observations\": 9740, \"pages\": 55}, \"status\": \"PASS\"}\n",
+      "stderr": ""
+    }
+  ],
+  "status": "PASS"
+}

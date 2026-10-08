@@ -1,0 +1,35 @@
+{
+  "status": "PASS",
+  "tested_revision": "3bffa87e33a73fa994d43e435c24a16d3ed4e485",
+  "summary": {
+    "clean": {
+      "failed": 0,
+      "passed": 40
+    },
+    "later_audit": {
+      "failed": 0,
+      "passed": 41
+    }
+  },
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p554-page/tools/check_patch_validators.py"
+  ],
+  "log_sha256": "998be4d5bcdfd3971c6ba78ed3e2ac2109678f3341b8e5e2e1780852ae725019",
+  "unchanged_checked_inputs_after_gate": true,
+  "historical_records_preserved": 188,
+  "rebase_commits": 9,
+  "retail_pages": 55,
+  "retail_observations": 9740,
+  "retail_differences": 0,
+  "mists_tests_passed": 2,
+  "retail_line_controls_passed": 3,
+  "non_vendor_mists_warnings": 0,
+  "negative_row_count": [
+    1,
+    0
+  ],
+  "tamper_controls": "both rejected; exact bytes restored",
+  "fresh_clone": "both validators pass with all nine original commits absent"
+}

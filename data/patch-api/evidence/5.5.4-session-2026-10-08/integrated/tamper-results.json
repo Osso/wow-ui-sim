@@ -1,0 +1,18 @@
+[
+  {
+    "input": "integrated/all-sweeps.txt",
+    "validator": "integrated/validate.py",
+    "exit": 1,
+    "restored_sha256": "0af5c27a5363127449caf86f8ca466b5d32d1ecd106945088da6ddb161ffceef",
+    "log": "tamper-0.txt",
+    "log_sha256": "81e94939465a3e7913ffea713c7a87d368b93b2f251e5753cd6af2b0728d4ac1"
+  },
+  {
+    "input": "p554-retail-final.log",
+    "validator": "validate.py",
+    "exit": 1,
+    "restored_sha256": "75e72e452d722fbbcb1470f117cf200d8c6625d5ccdf137528917b9c15991f0c",
+    "log": "tamper-1.txt",
+    "log_sha256": "7f42b0eeeb6681388ded2a6e59723ef18bb7776135699a1c30ef94c93c60f15a"
+  }
+]
