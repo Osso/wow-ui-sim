@@ -128,7 +128,7 @@ fn is_compact_raid_manager_texture(path: &str) -> bool {
 prefork_full_ui_case! {
 fn compact_raid_manager_emits_background_and_forward_toggle_quad_bounds(env: &WowLuaEnv) {
     #[cfg(feature = "client-retail")]
-    super::objective_tracker_tree::settle_prefork_game_ui(env);
+    crate::objective_tracker_tree::settle_prefork_game_ui(env);
 
         env.exec(
             r#"
