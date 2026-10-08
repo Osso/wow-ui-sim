@@ -19,5 +19,13 @@
     "targeted verification",
     "validator portability gate",
     "wiki/spec completion"
-  ]
+  ],
+  "resolution": {
+    "status": "RESOLVED",
+    "date": "2026-10-08",
+    "decision": "TOC 50503, an ancestor build of the 50504 profile; same client line",
+    "client_line": "mists-classic",
+    "profile": "client-mists",
+    "authority": "Explicit main-thread decision supplied by user; current-profile audit matches historical retail treatment."
+  }
 }

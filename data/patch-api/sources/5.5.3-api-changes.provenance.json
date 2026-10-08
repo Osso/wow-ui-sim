@@ -10,5 +10,12 @@
   "classification": "resources-only-stub",
   "client_line": "mists-classic",
   "redirect": false,
-  "audit_status": "blocked-toc-profile-confirmation"
+  "audit_status": "resolved-current-mists-profile",
+  "generator_flags": [
+    "--client-line",
+    "mists-classic"
+  ],
+  "extractor_flags": [
+    "--canonical-patch-navigation"
+  ]
 }
