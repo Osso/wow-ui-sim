@@ -1,0 +1,20 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_8_3_0_cached_retirement"
+  ],
+  "revision": "cc64cba80563acd46a7249803e13e6aa3d573410",
+  "scope": "working namespace retirement plus global test RED before global implementation",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p830-page",
+  "target": "/home/osso/.worktrees/wow-ui-sim-p830-page/target",
+  "exit": 1,
+  "expected_exit": 1,
+  "seconds": 123.4623122215271,
+  "log": "p830-global-retirement-red.txt",
+  "log_sha256": "623cbecc9ad0ef283d00c345465b8e4436408cbae345f9965824055998d75bcb",
+  "invalidated": false
+}

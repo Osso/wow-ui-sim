@@ -1,0 +1,24 @@
+{
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tools",
+    "-p",
+    "test_*patch*.py"
+  ],
+  "revision": "cc64cba80563acd46a7249803e13e6aa3d573410",
+  "scope": "all generator/extractor serialized fixtures",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p830-page",
+  "target": "/home/osso/.worktrees/wow-ui-sim-p830-page/target",
+  "env": {
+    "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p830-page/target"
+  },
+  "exit": 0,
+  "seconds": 0.07,
+  "log": "p830-parser-green.txt",
+  "log_sha256": "ae7a2c474a8415ec69066f075a280d5fc3f1de6a798ae4ac1bda003ea074b104",
+  "invalidated": false
+}

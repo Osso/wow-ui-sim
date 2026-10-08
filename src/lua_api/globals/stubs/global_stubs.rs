@@ -146,6 +146,8 @@ static GLOBAL_FALSE_STUBS: &[&str] = &[
 
 static GLOBAL_ZERO_STUBS: &[&str] = &[
     // GetActionCooldown is SimState-backed in cooldown_probes.rs, not a stub.
+    // Removed in 8.3.0; classic clients retain the legacy global.
+    #[cfg(not(feature = "retail-12-0-0"))]
     "GetAuctionHouseDepositRate",
     // GetBackpackCurrencyInfo is profile-wrapped over C_CurrencyInfo.
     // GetBattlefieldInstanceRunTime / GetBattlefieldStatus are

@@ -20,6 +20,10 @@ Audit Warcraft Wiki page 109654 revision 6471393 against current retail 12.1.0. 
 - `tools/gen_patch_wikitext_register.py` — opt-in legacy numerical headers and command-column identity.
 - `tools/extract_patch_non_inventory.py` — opt-in inline reference retention.
 
+- `src/c_api/patch_retired_members.rs` — retail-only five-member 8.3.0 retirement.
+- `src/lua_api/globals/stubs/global_stubs.rs` — exclude removed deposit-rate global on retail only.
+- `tests/patch_8_3_0_publication_fixes.rs`, `patch_8_3_0_cached_surfaces.rs`, `patch_8_3_0_classic_surfaces.rs` — bare/cached-retail and Mists behavioral regression.
+
 ## Tests asserting this spec
 
 - `tests/patch_8_3_0_publication_sweep.rs` via `cargo test --test prefork_full_ui -- publication_sweep`.
@@ -27,7 +31,7 @@ Audit Warcraft Wiki page 109654 revision 6471393 against current retail 12.1.0. 
 
 ## Known gaps (current cycle)
 
-- [ ] Discovery and per-ID review pending.
+- [ ] Forty reviewed-gap identities require final per-ID review and proof.
 
 ## Out of scope
 

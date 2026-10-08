@@ -1,0 +1,23 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_8_3_0_publication_sweep"
+  ],
+  "revision": "cc64cba80563acd46a7249803e13e6aa3d573410",
+  "scope": "initial empty-fixture discovery, not acceptance",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p830-page",
+  "target": "/home/osso/.worktrees/wow-ui-sim-p830-page/target",
+  "env": {
+    "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p830-page/target",
+    "P830_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p830-page/data/patch-api/evidence/8.3.0-session-2026-10-08/p830-discovery-results.json"
+  },
+  "exit": 1,
+  "seconds": 477.59,
+  "log": "p830-discovery.txt",
+  "log_sha256": "3361dfb0729b88232112df297535a8b02614aedc0782b4133f97ff00ab4f086c",
+  "invalidated": false
+}

@@ -1,0 +1,723 @@
+running 1 tests
+test patch_8_3_0_publication_sweep::patch_8_3_0_publication_sweep ... FAILED (panic: assertion `left == right` failed: new gaps: ["wt-global-api-C_AuctionHouse.CanCancelAuction-30", "wt-global-api-C_AuctionHouse.GetNumReplicateItems-65", "wt-global-api-C_AuctionHouse.GetReplicateItemBattlePetInfo-69", "wt-global-api-C_AuctionHouse.GetReplicateItemLink-71", "wt-global-api-C_AuctionHouse.GetReplicateItemTimeLeft-72", "wt-global-api-C_AuctionHouse.ReplicateItems-93", "wt-global-api-C_AuctionHouse.SearchForItemKeys-98", "wt-global-api-C_Calendar.IsEventOpen-105", "wt-global-api-C_ClubFinder.GetPostingIDFromClubFinderGUID-106", "wt-global-api-C_Garrison.GetGarrisonTalentTreeCurrencyTypes-107", "wt-global-api-C_Garrison.GetGarrisonTalentTreeType-108", "wt-global-api-C_Garrison.GetTalentPointsSpentInTalentTree-109", "wt-global-api-C_Garrison.GetTalentTreeTalentPointResearchInfo-110", "wt-global-api-C_Item.IsItemCorrupted-113", "wt-global-api-C_Item.IsItemCorruptionRelated-114", "wt-global-api-C_Item.IsItemCorruptionResistant-115", "wt-global-api-C_Item.LockItemByGUID-116", "wt-global-api-C_Item.UnlockItemByGUID-117", "wt-global-api-C_ItemInteraction.ClearPendingItem-118", "wt-global-api-C_ItemInteraction.CloseUI-119", "wt-global-api-C_ItemInteraction.GetItemInteractionSpellId-121", "wt-global-api-C_ItemInteraction.InitializeFrame-122", "wt-global-api-C_ItemInteraction.PerformItemInteraction-123", "wt-global-api-C_ItemInteraction.Reset-124", "wt-global-api-C_ItemInteraction.SetPendingItem-126", "wt-global-api-C_Map.CloseWorldMapInteraction-129", "wt-global-api-C_ProductChoice.GetChoices-153", "wt-global-api-C_ProductChoice.GetNumSuppressed-154", "wt-global-api-C_ProductChoice.GetProducts-155", "wt-global-api-C_ProductChoice.MakeSelection-156", "wt-global-api-C_QuestLog.GetActiveThreatMaps-131", "wt-global-api-C_QuestLog.HasActiveThreats-132", "wt-global-api-C_TaskQuest.GetThreatQuests-134", "wt-global-api-C_WowTokenPublic.SellToken-157", "wt-global-api-C_WowTokenUI.StartTokenSell-136", "wt-global-api-CanSendAuctionQuery-160", "wt-global-api-CancelAuction-161", "wt-global-api-GetAuctionHouseDepositRate-168", "wt-global-api-GetNumAuctionItems-177", "wt-global-api-GetUnitPowerBarInfoByID-141", "wt-global-api-GetUnitPowerBarStrings-142", "wt-global-api-GetUnitPowerBarStringsByID-143", "wt-global-api-GetUnitPowerBarTextureInfo-144", "wt-global-api-GetUnitPowerBarTextureInfoByID-145", "wt-global-api-IsUsingFixedTimeStep-148", "wt-global-api-PetDefensiveAssistMode-149"]; resolved/stale gaps: []
+  left: {"wt-global-api-C_AuctionHouse.CanCancelAuction-30", "wt-global-api-C_AuctionHouse.GetNumReplicateItems-65", "wt-global-api-C_AuctionHouse.GetReplicateItemBattlePetInfo-69", "wt-global-api-C_AuctionHouse.GetReplicateItemLink-71", "wt-global-api-C_AuctionHouse.GetReplicateItemTimeLeft-72", "wt-global-api-C_AuctionHouse.ReplicateItems-93", "wt-global-api-C_AuctionHouse.SearchForItemKeys-98", "wt-global-api-C_Calendar.IsEventOpen-105", "wt-global-api-C_ClubFinder.GetPostingIDFromClubFinderGUID-106", "wt-global-api-C_Garrison.GetGarrisonTalentTreeCurrencyTypes-107", "wt-global-api-C_Garrison.GetGarrisonTalentTreeType-108", "wt-global-api-C_Garrison.GetTalentPointsSpentInTalentTree-109", "wt-global-api-C_Garrison.GetTalentTreeTalentPointResearchInfo-110", "wt-global-api-C_Item.IsItemCorrupted-113", "wt-global-api-C_Item.IsItemCorruptionRelated-114", "wt-global-api-C_Item.IsItemCorruptionResistant-115", "wt-global-api-C_Item.LockItemByGUID-116", "wt-global-api-C_Item.UnlockItemByGUID-117", "wt-global-api-C_ItemInteraction.ClearPendingItem-118", "wt-global-api-C_ItemInteraction.CloseUI-119", "wt-global-api-C_ItemInteraction.GetItemInteractionSpellId-121", "wt-global-api-C_ItemInteraction.InitializeFrame-122", "wt-global-api-C_ItemInteraction.PerformItemInteraction-123", "wt-global-api-C_ItemInteraction.Reset-124", "wt-global-api-C_ItemInteraction.SetPendingItem-126", "wt-global-api-C_Map.CloseWorldMapInteraction-129", "wt-global-api-C_ProductChoice.GetChoices-153", "wt-global-api-C_ProductChoice.GetNumSuppressed-154", "wt-global-api-C_ProductChoice.GetProducts-155", "wt-global-api-C_ProductChoice.MakeSelection-156", "wt-global-)
+---- patch_8_3_0_publication_sweep::patch_8_3_0_publication_sweep stderr ----
+
+thread 'main' (1246368) panicked at /home/osso/.worktrees/wow-ui-sim-p830-page/tests/common/publication_sweep.rs:503:5:
+assertion `left == right` failed: new gaps: ["wt-global-api-C_AuctionHouse.CanCancelAuction-30", "wt-global-api-C_AuctionHouse.GetNumReplicateItems-65", "wt-global-api-C_AuctionHouse.GetReplicateItemBattlePetInfo-69", "wt-global-api-C_AuctionHouse.GetReplicateItemLink-71", "wt-global-api-C_AuctionHouse.GetReplicateItemTimeLeft-72", "wt-global-api-C_AuctionHouse.ReplicateItems-93", "wt-global-api-C_AuctionHouse.SearchForItemKeys-98", "wt-global-api-C_Calendar.IsEventOpen-105", "wt-global-api-C_ClubFinder.GetPostingIDFromClubFinderGUID-106", "wt-global-api-C_Garrison.GetGarrisonTalentTreeCurrencyTypes-107", "wt-global-api-C_Garrison.GetGarrisonTalentTreeType-108", "wt-global-api-C_Garrison.GetTalentPointsSpentInTalentTree-109", "wt-global-api-C_Garrison.GetTalentTreeTalentPointResearchInfo-110", "wt-global-api-C_Item.IsItemCorrupted-113", "wt-global-api-C_Item.IsItemCorruptionRelated-114", "wt-global-api-C_Item.IsItemCorruptionResistant-115", "wt-global-api-C_Item.LockItemByGUID-116", "wt-global-api-C_Item.UnlockItemByGUID-117", "wt-global-api-C_ItemInteraction.ClearPendingItem-118", "wt-global-api-C_ItemInteraction.CloseUI-119", "wt-global-api-C_ItemInteraction.GetItemInteractionSpellId-121", "wt-global-api-C_ItemInteraction.InitializeFrame-122", "wt-global-api-C_ItemInteraction.PerformItemInteraction-123", "wt-global-api-C_ItemInteraction.Reset-124", "wt-global-api-C_ItemInteraction.SetPendingItem-126", "wt-global-api-C_Map.CloseWorldMapInteraction-129", "wt-global-api-C_ProductChoice.GetChoices-153", "wt-global-api-C_ProductChoice.GetNumSuppressed-154", "wt-global-api-C_ProductChoice.GetProducts-155", "wt-global-api-C_ProductChoice.MakeSelection-156", "wt-global-api-C_QuestLog.GetActiveThreatMaps-131", "wt-global-api-C_QuestLog.HasActiveThreats-132", "wt-global-api-C_TaskQuest.GetThreatQuests-134", "wt-global-api-C_WowTokenPublic.SellToken-157", "wt-global-api-C_WowTokenUI.StartTokenSell-136", "wt-global-api-CanSendAuctionQuery-160", "wt-global-api-CancelAuction-161", "wt-global-api-GetAuctionHouseDepositRate-168", "wt-global-api-GetNumAuctionItems-177", "wt-global-api-GetUnitPowerBarInfoByID-141", "wt-global-api-GetUnitPowerBarStrings-142", "wt-global-api-GetUnitPowerBarStringsByID-143", "wt-global-api-GetUnitPowerBarTextureInfo-144", "wt-global-api-GetUnitPowerBarTextureInfoByID-145", "wt-global-api-IsUsingFixedTimeStep-148", "wt-global-api-PetDefensiveAssistMode-149"]; resolved/stale gaps: []
+  left: {"wt-global-api-C_AuctionHouse.CanCancelAuction-30", "wt-global-api-C_AuctionHouse.GetNumReplicateItems-65", "wt-global-api-C_AuctionHouse.GetReplicateItemBattlePetInfo-69", "wt-global-api-C_AuctionHouse.GetReplicateItemLink-71", "wt-global-api-C_AuctionHouse.GetReplicateItemTimeLeft-72", "wt-global-api-C_AuctionHouse.ReplicateItems-93", "wt-global-api-C_AuctionHouse.SearchForItemKeys-98", "wt-global-api-C_Calendar.IsEventOpen-105", "wt-global-api-C_ClubFinder.GetPostingIDFromClubFinderGUID-106", "wt-global-api-C_Garrison.GetGarrisonTalentTreeCurrencyTypes-107", "wt-global-api-C_Garrison.GetGarrisonTalentTreeType-108", "wt-global-api-C_Garrison.GetTalentPointsSpentInTalentTree-109", "wt-global-api-C_Garrison.GetTalentTreeTalentPointResearchInfo-110", "wt-global-api-C_Item.IsItemCorrupted-113", "wt-global-api-C_Item.IsItemCorruptionRelated-114", "wt-global-api-C_Item.IsItemCorruptionResistant-115", "wt-global-api-C_Item.LockItemByGUID-116", "wt-global-api-C_Item.UnlockItemByGUID-117", "wt-global-api-C_ItemInteraction.ClearPendingItem-118", "wt-global-api-C_ItemInteraction.CloseUI-119", "wt-global-api-C_ItemInteraction.GetItemInteractionSpellId-121", "wt-global-api-C_ItemInteraction.InitializeFrame-122", "wt-global-api-C_ItemInteraction.PerformItemInteraction-123", "wt-global-api-C_ItemInteraction.Reset-124", "wt-global-api-C_ItemInteraction.SetPendingItem-126", "wt-global-api-C_Map.CloseWorldMapInteraction-129", "wt-global-api-C_ProductChoice.GetChoices-153", "wt-global-api-C_ProductChoice.GetNumSuppressed-154", "wt-global-api-C_ProductChoice.GetProducts-155", "wt-global-api-C_ProductChoice.MakeSelection-156", "wt-global-api-C_QuestLog.GetActiveThreatMaps-131", "wt-global-api-C_QuestLog.HasActiveThreats-132", "wt-global-api-C_TaskQuest.GetThreatQuests-134", "wt-global-api-C_WowTokenPublic.SellToken-157", "wt-global-api-C_WowTokenUI.StartTokenSell-136", "wt-global-api-CanSendAuctionQuery-160", "wt-global-api-CancelAuction-161", "wt-global-api-GetAuctionHouseDepositRate-168", "wt-global-api-GetNumAuctionItems-177", "wt-global-api-GetUnitPowerBarInfoByID-141", "wt-global-api-GetUnitPowerBarStrings-142", "wt-global-api-GetUnitPowerBarStringsByID-143", "wt-global-api-GetUnitPowerBarTextureInfo-144", "wt-global-api-GetUnitPowerBarTextureInfoByID-145", "wt-global-api-IsUsingFixedTimeStep-148", "wt-global-api-PetDefensiveAssistMode-149"}
+ right: {}
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+test result: FAILED. 0 passed; 1 failed; 1 total
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling quote v1.0.43
+   Compiling proc-macro2 v1.0.105
+   Compiling unicode-ident v1.0.22
+   Compiling cfg-if v1.0.4
+   Compiling libc v0.2.180
+   Compiling log v0.4.29
+   Compiling bitflags v2.10.0
+   Compiling smallvec v1.15.1
+   Compiling libm v0.2.15
+   Compiling autocfg v1.5.0
+   Compiling syn v2.0.114
+   Compiling once_cell v1.21.3
+   Compiling scopeguard v1.2.0
+   Compiling pin-project-lite v0.2.16
+   Compiling lock_api v0.4.14
+   Compiling find-msvc-tools v0.1.7
+   Compiling shlex v1.3.0
+   Compiling pkg-config v0.3.32
+   Compiling jobserver v0.1.34
+   Compiling cc v1.2.52
+   Compiling num-traits v0.2.19
+   Compiling memchr v2.7.6
+   Compiling crossbeam-utils v0.8.21
+   Compiling slab v0.4.11
+   Compiling arrayvec v0.7.6
+   Compiling futures-core v0.3.31
+   Compiling parking_lot_core v0.9.12
+   Compiling version_check v0.9.5
+   Compiling thiserror v2.0.17
+   Compiling rustix v1.1.3
+   Compiling linux-raw-sys v0.11.0
+   Compiling stable_deref_trait v1.2.1
+   Compiling parking_lot v0.12.5
+   Compiling libloading v0.8.9
+   Compiling errno v0.3.14
+   Compiling bytes v1.11.0
+   Compiling bytemuck_derive v1.10.2
+   Compiling thiserror-impl v2.0.17
+   Compiling signal-hook-registry v1.4.8
+   Compiling bytemuck v1.24.0
+   Compiling zerocopy v0.8.33
+   Compiling futures-io v0.3.31
+   Compiling zerocopy-derive v0.8.33
+   Compiling simd-adler32 v0.3.8
+   Compiling tokio-macros v2.6.0
+   Compiling socket2 v0.6.1
+   Compiling mio v1.1.1
+   Compiling tokio v1.49.0
+   Compiling adler2 v2.0.1
+   Compiling crc32fast v1.5.0
+   Compiling futures-sink v0.3.31
+   Compiling miniz_oxide v0.8.9
+   Compiling tracing-core v0.1.36
+   Compiling serde v1.0.228
+   Compiling tracing-attributes v0.1.31
+   Compiling flate2 v1.1.9
+   Compiling futures-channel v0.3.31
+   Compiling serde_derive v1.0.228
+   Compiling tracing v0.1.44
+   Compiling futures-macro v0.3.31
+   Compiling dlib v0.5.2
+   Compiling synstructure v0.13.2
+   Compiling wayland-sys v0.31.8
+   Compiling futures-task v0.3.31
+   Compiling pin-utils v0.1.0
+   Compiling futures-util v0.3.31
+   Compiling wayland-backend v0.3.12
+   Compiling serde_core v1.0.228
+   Compiling zerofrom-derive v0.1.6
+   Compiling crossbeam-epoch v0.9.18
+   Compiling rayon-core v1.13.0
+   Compiling downcast-rs v1.2.1
+   Compiling anyhow v1.0.100
+   Compiling scoped-tls v1.0.1
+   Compiling quick-xml v0.38.4
+   Compiling zerofrom v0.1.7
+   Compiling crossbeam-deque v0.8.6
+   Compiling yoke-derive v0.8.1
+   Compiling num-integer v0.1.46
+   Compiling wayland-client v0.31.12
+   Compiling yoke v0.8.1
+   Compiling wayland-scanner v0.31.8
+   Compiling spin v0.9.8
+   Compiling memmap2 v0.9.9
+   Compiling either v1.15.0
+   Compiling cfg_aliases v0.2.1
+   Compiling half v2.7.1
+   Compiling displaydoc v0.2.5
+   Compiling zerovec-derive v0.11.2
+   Compiling core_maths v0.1.1
+   Compiling foldhash v0.2.0
+   Compiling hashbrown v0.16.1
+   Compiling zerovec v0.11.5
+   Compiling rayon v1.11.0
+   Compiling lazy_static v1.5.0
+   Compiling itoa v1.0.17
+   Compiling equivalent v1.0.2
+   Compiling zeroize v1.8.2
+   Compiling typenum v1.19.0
+   Compiling writeable v0.6.3
+   Compiling indexmap v2.13.0
+   Compiling profiling-procmacros v1.0.17
+   Compiling generic-array v0.14.7
+   Compiling profiling v1.0.17
+   Compiling polling v3.11.0
+   Compiling equator-macro v0.4.2
+   Compiling getrandom v0.2.16
+   Compiling num_cpus v1.17.0
+   Compiling winnow v0.7.14
+   Compiling const-oid v0.9.6
+   Compiling vcpkg v0.2.15
+   Compiling futures-executor v0.3.31
+   Compiling equator v0.4.2
+   Compiling tinystr v0.8.2
+   Compiling num-bigint v0.4.6
+   Compiling weezl v0.1.12
+   Compiling litemap v0.8.2
+   Compiling raw-window-handle v0.6.2
+   Compiling fastrand v2.3.0
+   Compiling num-rational v0.4.2
+   Compiling icu_locale_core v2.1.1
+   Compiling toml_parser v1.0.6+spec-1.1.0
+   Compiling aligned-vec v0.6.4
+   Compiling futures v0.3.31
+   Compiling potential_utf v0.1.4
+   Compiling toml_datetime v0.7.5+spec-1.1.0
+   Compiling zerotrie v0.2.3
+   Compiling euclid v0.22.13
+   Compiling smol_str v0.2.2
+   Compiling bitflags v1.3.2
+   Compiling icu_provider v2.1.1
+   Compiling icu_collections v2.1.1
+   Compiling v_frame v0.3.9
+   Compiling ttf-parser v0.25.1
+   Compiling fdeflate v0.3.7
+   Compiling as-slice v0.2.1
+   Compiling av-scenechange v0.14.1
+   Compiling built v0.8.0
+   Compiling parking v2.2.1
+   Compiling paste v1.0.15
+   Compiling color_quant v1.1.0
+   Compiling rustc-hash v1.1.0
+   Compiling atomic-waker v1.1.2
+   Compiling rav1e v0.8.1
+   Compiling aligned v0.4.3
+   Compiling crypto-common v0.1.7
+   Compiling zune-inflate v0.2.54
+   Compiling font-types v0.10.1
+   Compiling arg_enum_proc_macro v0.3.4
+   Compiling concurrent-queue v2.5.0
+   Compiling core2 v0.4.0
+   Compiling nom v8.0.0
+   Compiling encoding_rs v0.8.35
+   Compiling web-time v1.1.0
+   Compiling rustc-hash v2.1.2
+   Compiling pastey v0.1.1
+   Compiling foldhash v0.1.5
+   Compiling percent-encoding v2.3.2
+   Compiling y4m v0.8.0
+   Compiling quick-error v2.0.1
+   Compiling bit_field v0.10.3
+   Compiling lebe v0.5.3
+   Compiling exr v1.74.0
+   Compiling av1-grain v0.2.5
+   Compiling hashbrown v0.15.5
+   Compiling lilt v0.8.1
+   Compiling bitstream-io v4.9.0
+   Compiling read-fonts v0.35.0
+   Compiling maybe-rayon v0.1.1
+   Compiling wayland-protocols v0.32.10
+   Compiling itertools v0.14.0
+   Compiling qoi v0.4.1
+   Compiling fax_derive v0.2.0
+   Compiling num-derive v0.4.2
+   Compiling slotmap v1.1.1
+   Compiling simd_helpers v0.1.0
+   Compiling new_debug_unreachable v1.0.6
+   Compiling noop_proc_macro v0.3.0
+   Compiling imgref v1.12.0
+   Compiling zune-core v0.4.12
+   Compiling glam v0.25.0
+   Compiling icu_properties_data v2.1.2
+   Compiling zune-jpeg v0.4.21
+   Compiling loop9 v0.1.5
+   Compiling iced_core v0.14.0
+   Compiling fax v0.2.6
+   Compiling symphonia-core v0.5.5
+   Compiling lyon_geom v1.0.18
+   Compiling block-buffer v0.10.4
+   Compiling http v1.4.0
+   Compiling avif-serialize v0.8.6
+   Compiling ring v0.17.14
+   Compiling pxfm v0.1.27
+   Compiling icu_normalizer_data v2.1.1
+   Compiling roxmltree v0.20.0
+   Compiling rgb v0.8.52
+   Compiling tinyvec_macros v0.1.1
+   Compiling byteorder-lite v0.1.0
+   Compiling zune-core v0.5.0
+   Compiling zune-jpeg v0.5.8
+   Compiling image-webp v0.2.4
+   Compiling tinyvec v1.10.0
+   Compiling ravif v0.12.0
+   Compiling moxcms v0.7.11
+   Compiling fontconfig-parser v0.5.8
+   Compiling digest v0.10.7
+   Compiling lyon_path v1.0.16
+   Compiling tiff v0.10.3
+   Compiling skrifa v0.37.0
+   Compiling gif v0.14.1
+   Compiling png v0.18.0
+   Compiling toml_edit v0.23.10+spec-1.0.0
+   Compiling rustls-pki-types v1.14.1
+   Compiling naga v27.0.3
+   Compiling enumflags2_derive v0.7.12
+   Compiling ash v0.38.0+1.3.281
+   Compiling yazi v0.2.1
+   Compiling owo-colors v4.3.0
+   Compiling hex v0.4.3
+   Compiling khronos-egl v6.0.0
+   Compiling zeno v0.3.3
+   Compiling utf8_iter v1.0.4
+   Compiling unicode-width v0.2.2
+   Compiling as-raw-xcb-connection v1.0.1
+   Compiling bit-vec v0.8.0
+   Compiling bit-set v0.8.0
+   Compiling codespan-reporting v0.12.0
+   Compiling swash v0.2.6
+   Compiling proc-macro-crate v3.4.0
+   Compiling image v0.25.9
+   Compiling icu_properties v2.1.2
+   Compiling fontdb v0.23.0
+   Compiling http-body v1.0.1
+   Compiling zvariant_utils v3.3.0
+   Compiling iced_futures v0.14.0
+   Compiling harfrust v0.3.2
+   Compiling event-listener v5.4.1
+   Compiling openssl-sys v0.9.117
+   Compiling wgpu-hal v27.0.4
+   Compiling tokio-util v0.7.18
+   Compiling gethostname v1.1.0
+   Compiling gpu-descriptor-types v0.2.0
+   Compiling gpu-alloc-types v0.3.0
+   Compiling spirv v0.3.0+sdk-1.3.268.0
+   Compiling linebender_resource_handle v0.1.1
+   Compiling unicode-script v0.5.8
+   Compiling write16 v1.0.0
+   Compiling untrusted v0.9.0
+   Compiling self_cell v1.2.2
+   Compiling unicode-linebreak v0.1.5
+   Compiling thiserror v1.0.69
+   Compiling x11rb-protocol v0.13.2
+   Compiling xkeysym v0.2.1
+   Compiling alloc-no-stdlib v2.0.4
+   Compiling unicode-bidi v0.3.18
+   Compiling binrw_derive v0.15.2
+   Compiling fnv v1.0.7
+   Compiling rangemap v1.7.1
+   Compiling unicode-segmentation v1.12.0
+   Compiling sys-locale v0.3.2
+   Compiling utf16_iter v1.0.5
+   Compiling xcursor v0.3.10
+   Compiling httparse v1.10.1
+   Compiling base64ct v1.8.3
+   Compiling hexf-parse v0.2.1
+   Compiling cursor-icon v1.2.0
+   Compiling wayland-csd-frame v0.3.0
+   Compiling pem-rfc7468 v0.7.0
+   Compiling x11rb v0.13.2
+   Compiling wayland-cursor v0.31.12
+   Compiling icu_normalizer v2.1.1
+   Compiling cosmic-text v0.15.0
+   Compiling alloc-stdlib v0.2.4
+   Compiling gpu-alloc v0.6.0
+   Compiling gpu-descriptor v0.3.2
+   Compiling event-listener-strategy v0.5.4
+   Compiling zvariant_derive v5.9.2
+   Compiling symphonia-metadata v0.5.5
+   Compiling wayland-protocols-wlr v0.3.10
+   Compiling futures-lite v2.6.1
+   Compiling inout v0.1.4
+   Compiling rand_core v0.6.4
+   Compiling wgpu-types v27.0.1
+   Compiling der_derive v0.7.3
+   Compiling thiserror-impl v1.0.69
+   Compiling ordered-float v5.1.0
+   Compiling subtle v2.6.1
+   Compiling base64 v0.22.1
+   Compiling glow v0.16.0
+   Compiling tower-service v0.3.3
+   Compiling zmij v1.0.14
+   Compiling try-lock v0.2.5
+   Compiling renderdoc-sys v1.1.0
+   Compiling mutate_once v0.1.2
+   Compiling openssl-probe v0.2.1
+   Compiling rustix v0.38.44
+   Compiling rustls v0.23.40
+   Compiling arrayref v0.3.9
+   Compiling strict-num v0.1.1
+   Compiling flagset v0.4.7
+   Compiling binrw v0.15.2
+   Compiling der v0.7.10
+   Compiling tiny-skia-path v0.11.4
+   Compiling kamadak-exif v0.6.1
+   Compiling want v0.3.1
+   Compiling cipher v0.4.4
+   Compiling rustls-webpki v0.103.13
+   Compiling brotli-decompressor v5.0.3
+   Compiling h2 v0.4.15
+   Compiling wgpu-core v27.0.3
+   Compiling ppv-lite86 v0.2.21
+   Compiling async-io v2.6.0
+   Compiling serde_json v1.0.149
+   Compiling linux-raw-sys v0.4.15
+   Compiling array-init v2.1.0
+   Compiling getrandom v0.3.4
+   Compiling litrs v1.0.0
+   Compiling document-features v0.2.12
+   Compiling hyper v1.9.0
+   Compiling rand_chacha v0.3.1
+   Compiling brotli v8.0.4
+   Compiling salsa20 v0.10.2
+   Compiling wgpu-core-deps-windows-linux-android v27.0.0
+   Compiling iced_graphics v0.14.0
+   Compiling spki v0.7.3
+   Compiling tiny-skia v0.11.4
+   Compiling idna_adapter v1.2.1
+   Compiling enumflags2 v0.7.12
+   Compiling md-5 v0.10.6
+   Compiling form_urlencoded v1.2.2
+   Compiling calloop v0.14.3
+   Compiling wgpu v27.0.1
+   Compiling async-trait v0.1.89
+   Compiling tiny-xlib v0.2.4
+   Compiling smithay-client-toolkit v0.20.0
+   Compiling compression-core v0.4.32
+   Compiling foreign-types-shared v0.1.1
+   Compiling async-task v4.7.1
+   Compiling svg_fmt v0.4.5
+   Compiling twox-hash v2.1.2
+   Compiling ipnet v2.12.0
+   Compiling endi v1.1.1
+   Compiling openssl v0.10.81
+   Compiling zvariant v5.9.2
+   Compiling hyper-util v0.1.20
+   Compiling lz4_flex v0.12.1
+   Compiling foreign-types v0.3.2
+   Compiling compression-codecs v0.4.38
+   Compiling calloop-wayland-source v0.4.1
+   Compiling cascette-crypto v0.2.0 (https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48#758d8dbf)
+   Compiling idna v1.1.0
+   Compiling calloop v0.13.0
+   Compiling rand v0.8.5
+   Compiling symphonia-utils-xiph v0.5.5
+   Compiling async-channel v2.5.0
+   Compiling iced_debug v0.14.0
+   Compiling http-body-util v0.1.3
+   Compiling wayland-protocols-experimental v20250721.0.1
+   Compiling wayland-protocols-misc v0.3.10
+   Compiling openssl-macros v0.1.1
+   Compiling sync_wrapper v1.0.2
+   Compiling ctor-lite v0.1.1
+   Compiling float_next_after v1.0.0
+   Compiling md5 v0.8.0
+   Compiling rand_core v0.10.1
+   Compiling getrandom v0.4.3
+   Compiling tower-layer v0.3.3
+   Compiling static_assertions v1.1.0
+   Compiling hashbrown v0.14.5
+   Compiling icu_locale_data v2.1.2
+   Compiling smithay-client-toolkit v0.19.2
+   Compiling native-tls v0.2.18
+   Compiling dashmap v6.1.0
+   Compiling tower v0.5.3
+   Compiling cascette-formats v0.2.0 (https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48#758d8dbf)
+   Compiling lyon_tessellation v1.0.16
+   Compiling async-signal v0.2.13
+   Compiling calloop-wayland-source v0.3.0
+   Compiling url v2.5.8
+   Compiling async-compression v0.4.42
+   Compiling zbus_names v4.3.1
+   Compiling etagere v0.2.15
+   Compiling tokio-rustls v0.26.4
+   Compiling async-lock v3.4.2
+   Compiling webpki-roots v1.0.7
+   Compiling lyon_algorithms v1.0.16
+   Compiling owned_ttf_parser v0.25.1
+   Compiling piper v0.2.4
+   Compiling ahash v0.8.12
+   Compiling x11-dl v2.21.0
+   Compiling alsa-sys v0.3.1
+   Compiling ab_glyph_rasterizer v0.1.10
+   Compiling num-bigint-dig v0.8.6
+   Compiling ryu v1.0.23
+   Compiling utf8parse v0.2.2
+   Compiling cpufeatures v0.3.0
+   Compiling android-build v0.1.3
+   Compiling lru v0.16.3
+   Compiling cryoglyph v0.1.0
+   Compiling mundy v0.2.2
+   Compiling chacha20 v0.10.1
+   Compiling anstyle-parse v0.2.7
+   Compiling ab_glyph v0.2.32
+   Compiling prost-derive v0.14.4
+   Compiling blocking v1.6.2
+   Compiling async-process v2.5.0
+   Compiling lyon v1.0.16
+   Compiling hyper-rustls v0.27.9
+   Compiling zbus_macros v5.13.2
+   Compiling tower-http v0.6.10
+   Compiling smithay-clipboard v0.7.3
+   Compiling softbuffer v0.4.8
+   Compiling guillotiere v0.6.2
+   Compiling async-executor v1.13.3
+   Compiling pkcs8 v0.10.2
+   Compiling rustls-native-certs v0.8.4
+   Compiling async-broadcast v0.7.2
+   Compiling libsqlite3-sys v0.33.0
+   Compiling serde_spanned v1.1.1
+   Compiling winit v0.30.12
+   Compiling uuid v1.20.0
+   Compiling num-iter v0.1.45
+   Compiling serde_repr v0.1.20
+   Compiling ordered-stream v0.2.0
+   Compiling kurbo v0.10.4
+   Compiling aho-corasick v1.1.4
+   Compiling siphasher v1.0.2
+   Compiling regex-syntax v0.8.8
+   Compiling mime v0.3.17
+   Compiling colorchoice v1.0.4
+   Compiling cpufeatures v0.2.17
+   Compiling anstyle v1.0.13
+   Compiling anstyle-query v1.1.5
+   Compiling glob v0.3.3
+   Compiling is_terminal_polyfill v1.70.2
+   Compiling prometheus v0.14.0
+   Compiling anstream v0.6.21
+   Compiling libwebp-sys v0.9.6
+   Compiling phf_shared v0.11.3
+   Compiling sha2 v0.10.9
+   Compiling regex-automata v0.4.13
+   Compiling iced_tiny_skia v0.14.0
+   Compiling zbus v5.13.2
+   Compiling toml v0.9.11+spec-1.1.0
+   Compiling rustls-platform-verifier v0.6.2
+   Compiling pkcs1 v0.7.5
+   Compiling iced_wgpu v0.14.0 (/home/osso/.worktrees/wow-ui-sim-p830-page/iced-wgpu-patched)
+   Compiling icu_locale v2.1.1
+   Compiling rand v0.10.1
+   Compiling tokio-native-tls v0.3.1
+   Compiling sctk-adwaita v0.10.1
+   Compiling clipboard_wayland v0.2.2
+   Compiling prost v0.14.4
+   Compiling x509-cert v0.2.5
+   Compiling signature v2.2.0
+   Compiling clipboard_x11 v0.4.3
+   Compiling xkbcommon-dl v0.4.2
+   Compiling iced_runtime v0.14.0
+   Compiling wayland-protocols-plasma v0.3.10
+   Compiling hashify v0.2.9
+   Compiling jpeg-decoder v0.3.2
+   Compiling asn1_derive v0.23.1
+   Compiling rmp v0.8.15
+   Compiling strsim v0.11.1
+   Compiling icu_casemap_data v2.1.1
+   Compiling dpi v0.1.2
+   Compiling cpal v0.16.0
+   Compiling clap_lex v0.7.7
+   Compiling icu_collator_data v2.1.1
+   Compiling icu_segmenter_data v2.1.1
+   Compiling extended v0.1.0
+   Compiling icu_plurals_data v2.1.1
+   Compiling heck v0.5.0
+   Compiling symphonia-format-riff v0.5.5
+   Compiling clap_derive v4.5.55
+   Compiling clap_builder v4.5.56
+   Compiling rmp-serde v1.3.1
+   Compiling asn1 v0.23.1
+   Compiling tiff v0.9.1
+   Compiling mail-parser v0.11.4
+   Compiling iced_program v0.14.0
+   Compiling window_clipboard v0.5.1
+   Compiling rsa v0.9.10
+   Compiling cms v0.2.3
+   Compiling alsa v0.9.1
+   Compiling cascette-client-storage v0.2.0 (https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48#758d8dbf)
+   Compiling hyper-tls v0.6.0
+   Compiling cascette-cache v0.2.0 (https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48#758d8dbf)
+   Compiling iced_renderer v0.14.0
+   Compiling reqwest v0.13.1
+   Compiling winresource v0.1.30
+   Compiling phf_generator v0.11.3
+   Compiling serde_urlencoded v0.7.1
+   Compiling symphonia-codec-vorbis v0.5.5
+   Compiling symphonia-format-isomp4 v0.5.5
+   Compiling symphonia-bundle-flac v0.5.5
+   Compiling symphonia-format-ogg v0.5.5
+   Compiling symphonia-bundle-mp3 v0.5.5
+   Compiling symphonia-codec-pcm v0.5.5
+   Compiling symphonia-codec-aac v0.5.5
+   Compiling hashlink v0.10.0
+   Compiling gif v0.13.3
+   Compiling png v0.17.16
+   Compiling minimal-lexical v0.2.1
+   Compiling dasp_sample v0.11.0
+   Compiling byteorder v1.5.0
+   Compiling winapi v0.3.9
+   Compiling option-ext v0.2.0
+   Compiling fallible-streaming-iterator v0.1.9
+   Compiling fallible-iterator v0.3.0
+   Compiling rusqlite v0.35.0
+   Compiling dirs-sys v0.4.1
+   Compiling image v0.24.9
+   Compiling nom v7.1.3
+   Compiling symphonia v0.5.5
+   Compiling reqwest v0.12.28
+   Compiling cascette-protocol v0.2.0 (https://github.com/Osso/cascette-rs?rev=758d8dbfbc64d500b2f8f5b5c133d9f82fa79a48#758d8dbf)
+   Compiling phf_macros v0.11.3
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p830-page)
+   Compiling iced_widget v0.14.2
+   Compiling iced_winit v0.14.0
+   Compiling clap v4.5.56
+   Compiling peercred-ipc v0.1.0 (https://github.com/Osso/peercred-ipc.git?tag=v0.2.0#dc0093cf)
+   Compiling matchers v0.2.0
+   Compiling fixed_decimal v0.7.0
+   Compiling texpresso v2.0.2
+   Compiling sharded-slab v0.1.7
+   Compiling tracing-log v0.2.0
+   Compiling xattr v1.6.1
+   Compiling filetime v0.2.28
+   Compiling thread_local v1.1.9
+   Compiling same-file v1.0.6
+   Compiling nu-ansi-term v0.50.3
+   Compiling tracing-subscriber v0.3.22
+   Compiling iced-layout-inspector v0.1.0 (https://github.com/Osso/iced-layout-inspector.git?tag=v0.2.0#c1f1dd2c)
+   Compiling walkdir v2.5.0
+   Compiling tar v0.4.45
+   Compiling image-blp v1.2.0
+   Compiling icu_plurals v2.1.1
+   Compiling phf_codegen v0.11.3
+   Compiling icu_segmenter v2.1.1
+   Compiling icu_collator v2.1.1
+   Compiling icu_casemap v2.1.1
+   Compiling iced v0.14.0
+   Compiling casc-extract v0.1.0 (https://github.com/Osso/casc-extract?rev=bbfb184066531b6eb674b50b63a6052eb871ab2f#bbfb1840)
+   Compiling phf v0.11.3
+   Compiling webp v0.3.1
+   Compiling rodio v0.21.1
+   Compiling asset-resolver v0.1.0 (https://github.com/world-of-osso/asset-resolver?rev=462097bba2aa72d1afed8e0ca5b7c7315096427d#462097bb)
+   Compiling dirs v5.0.1
+   Compiling regex v1.12.2
+   Compiling quick-xml v0.37.5
+   Compiling rilua v0.1.21 (https://github.com/Osso/rilua.git?rev=842e4d3ff8592af45a5a93058eddf93419d29012#842e4d3f)
+   Compiling pollster v0.4.0
+   Compiling unicode-blocks v0.1.10
+   Compiling httpdate v1.0.3
+   Compiling tempfile v3.24.0
+   Compiling console v0.15.11
+   Compiling similar v2.7.0
+   Compiling insta v1.46.0
+    Finished `test` profile [optimized + debuginfo] target(s) in 7m 50s
+     Running tests/prefork_full_ui.rs (target/debug/deps/prefork_full_ui-34a818a91c447c36)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.012s] [Startup] SimState::default complete in 12.09ms
+[  0.012s] [Startup] rilua VM created in 122.39µs
+[  0.012s] [Startup] builtin frames initialized in 80.46µs
+[  0.012s] [Startup] template registry cleared in 6.60µs
+[  0.012s] [Startup] intrinsic templates registered in 8.18µs
+[  0.012s] [Startup] initial app_data lua handle installed in 592.00ns
+[  0.135s] [Startup] init_lua_state complete in 123.06ms
+[  0.135s] [Startup] final app_data lua handle installed in 681.00ns
+[  0.136s] [Startup] initial screen globals installed in 86.29µs
+[  0.136s] [Startup] WowLuaEnv::new complete
+[  2.962s] [Startup] apply_post_load_workarounds: begin
+[  2.962s] [Workarounds] starting patch_edit_mode_manager
+[  2.962s] [Workarounds] finished patch_edit_mode_manager in 285.28µs
+[  2.962s] [Workarounds] starting init_edit_mode_layout
+[  2.962s] [EditMode] starting setup_layout_info
+[  2.965s] [EditMode] finished setup_layout_info in 3.17ms
+[  2.965s] [EditMode] starting apply_system_anchors
+[  3.154s] [EditMode] finished apply_system_anchors in 188.66ms
+[  3.154s] [EditMode] starting finalize_action_bar_positions
+[  3.157s] [EditMode] finished finalize_action_bar_positions in 2.35ms
+[  3.157s] [EditMode] starting invoke_anchor_changed_hooks
+[  3.157s] [EditMode] finished invoke_anchor_changed_hooks in 522.05µs
+[  3.157s] [EditMode] starting fix_action_bar_nan_size
+[  3.157s] [EditMode] finished fix_action_bar_nan_size in 59.50µs
+[  3.157s] [EditMode] starting fix_action_bar_scale
+[  3.157s] [EditMode] finished fix_action_bar_scale in 6.50µs
+[  3.157s] [Workarounds] finished init_edit_mode_layout in 194.80ms
+[  3.157s] [Workarounds] starting patch_ui_parent_panel_toggles
+[  3.157s] [Workarounds] finished patch_ui_parent_panel_toggles in 319.84µs
+[  3.157s] [Workarounds] starting patch_uiparent_onupdate_worklists
+[  3.158s] [Workarounds] finished patch_uiparent_onupdate_worklists in 135.23µs
+[  3.158s] [Workarounds] starting init_chat_type_colors
+[  3.158s] [Workarounds] finished init_chat_type_colors in 147.31µs
+[  3.158s] [Workarounds] starting patch_chat_voice_button_surface
+[  3.158s] [Workarounds] finished patch_chat_voice_button_surface in 161.37µs
+[  3.158s] [Workarounds] starting patch_item_socketing_tooltips
+[  3.158s] [Workarounds] finished patch_item_socketing_tooltips in 79.41µs
+[  3.158s] [Workarounds] starting patch_character_select_selected_name
+[  3.158s] [Workarounds] finished patch_character_select_selected_name in 42.89µs
+[  3.158s] [Workarounds] starting patch_character_create_defaults
+[  3.158s] [Workarounds] finished patch_character_create_defaults in 305.64µs
+[  3.158s] [Workarounds] starting patch_character_frame_title_refresh
+[  3.166s] [Workarounds] finished patch_character_frame_title_refresh in 7.98ms
+[  3.166s] [Workarounds] starting patch_vignette_pin_template
+[  3.166s] [Workarounds] finished patch_vignette_pin_template in 119.21µs
+[  3.166s] [Workarounds] starting patch_fog_of_war_pin_mixin
+[  3.167s] [Workarounds] finished patch_fog_of_war_pin_mixin in 367.66µs
+[  3.167s] [Workarounds] starting patch_map_exploration_pin_mixin
+[  3.175s] [Workarounds] finished patch_map_exploration_pin_mixin in 7.95ms
+[  3.175s] [Workarounds] starting patch_map_canvas_data_provider_attachment
+[  3.175s] [Workarounds] finished patch_map_canvas_data_provider_attachment in 118.16µs
+[  3.175s] [Workarounds] starting ensure_adventure_map_frame_surface
+[  3.176s] [Workarounds] finished ensure_adventure_map_frame_surface in 646.02µs
+[  3.176s] [Workarounds] starting patch_action_bar_button_event_fanout
+[  3.176s] [Workarounds] finished patch_action_bar_button_event_fanout in 143.78µs
+[  3.176s] [Workarounds] starting patch_paging_controls_page_text
+[  3.176s] [Workarounds] finished patch_paging_controls_page_text in 55.58µs
+[  3.176s] [Workarounds] starting patch_talent_edge_frame_level_sync
+[  3.176s] [Workarounds] finished patch_talent_edge_frame_level_sync in 42.58µs
+[  3.176s] [Workarounds] starting patch_catalog_shop_product_card_defaults
+[  3.176s] [Workarounds] finished patch_catalog_shop_product_card_defaults in 94.00µs
+[  3.176s] [Workarounds] starting patch_game_time_defaults
+[  3.176s] [Workarounds] finished patch_game_time_defaults in 9.43µs
+[  3.176s] [Workarounds] starting patch_tooltip_nineslice_surface
+[  3.176s] [Workarounds] finished patch_tooltip_nineslice_surface in 60.22µs
+[  3.176s] [Workarounds] starting patch_container_frame_token_tracker
+[  3.176s] [Workarounds] finished patch_container_frame_token_tracker in 56.48µs
+[  3.176s] [Workarounds] starting patch_achievement_display_set_achievements
+[  3.176s] [Workarounds] finished patch_achievement_display_set_achievements in 11.24µs
+[  3.176s] [Workarounds] starting patch_housing_dashboard_preload
+[  3.176s] [Workarounds] finished patch_housing_dashboard_preload in 228.42µs
+[  3.176s] [Workarounds] starting patch_lfg_lock_list
+[  3.176s] [Workarounds] finished patch_lfg_lock_list in 48.39µs
+[  3.176s] [Workarounds] starting patch_auction_house_browse_results_event
+[  3.176s] [Workarounds] finished patch_auction_house_browse_results_event in 92.90µs
+[  3.176s] [Workarounds] starting patch_auction_house_search_context_aliases
+[  3.176s] [Workarounds] finished patch_auction_house_search_context_aliases in 41.11µs
+[  3.176s] [Workarounds] starting patch_auth_challenge_frame_parent
+[  3.177s] [Workarounds] finished patch_auth_challenge_frame_parent in 90.35µs
+[  3.177s] [Workarounds] starting patch_settings_surface_defaults
+[  3.177s] [Workarounds] finished patch_settings_surface_defaults in 496.33µs
+[  3.177s] [Workarounds] starting patch_settings_canvas_layout_visibility
+[  3.177s] [Workarounds] finished patch_settings_canvas_layout_visibility in 158.77µs
+[  3.177s] [Startup] apply_post_load_workarounds: workarounds complete
+[  3.261s] [Startup] apply_post_load_workarounds: globals restored
+[  3.262s] [Startup] apply_post_load_workarounds: patch 12.1 compatibility restored
+[  3.262s] [Startup] apply_post_load_workarounds: seterrorhandler restored
+[  3.424s] [Startup] begin login sequence
+[  3.425s] [Startup] Firing ADDON_LOADED
+[  3.425s] [Startup] Firing VARIABLES_LOADED
+[  3.553s] [Startup] Firing DISPLAY_SIZE_CHANGED
+[  3.604s] [Startup] Firing UI_SCALE_CHANGED
+[  3.605s] [Startup] Firing PLAYER_LOGIN
+[  3.605s] [Startup] end login sequence in 180.92ms
+[  3.605s] [Startup] begin world enter sequence
+[  3.605s] [Startup] Skipping EDIT_MODE_LAYOUTS_UPDATED
+[  3.605s] [Startup] Firing TIME_PLAYED_MSG via RequestTimePlayed
+[  3.605s] [Startup] Firing PLAYER_ENTERING_WORLD
+[  3.930s] [EditMode] starting setup_layout_info
+[  3.936s] [EditMode] finished setup_layout_info in 5.58ms
+[  3.936s] [EditMode] starting apply_system_anchors
+[  4.118s] [EditMode] finished apply_system_anchors in 182.17ms
+[  4.118s] [EditMode] starting finalize_action_bar_positions
+[  4.122s] [EditMode] finished finalize_action_bar_positions in 3.40ms
+[  4.122s] [EditMode] starting invoke_anchor_changed_hooks
+[  4.129s] [EditMode] finished invoke_anchor_changed_hooks in 7.24ms
+[  4.129s] [EditMode] starting fix_action_bar_nan_size
+[  4.129s] [EditMode] finished fix_action_bar_nan_size in 103.23µs
+[  4.129s] [EditMode] starting fix_action_bar_scale
+[  4.129s] [EditMode] finished fix_action_bar_scale in 6.77µs
+[  4.129s] [EditMode] starting reapply_player_frame_anchor
+[  4.131s] [EditMode] finished reapply_player_frame_anchor in 1.89ms
+[  4.143s] [Startup] end world enter sequence in 537.51ms
+[  4.143s] [Startup] begin post-login events
+[  4.144s] [Startup] Firing UNIT_AURA
+[  4.145s] [Startup] Firing PET_UI_UPDATE
+[  4.147s] [Startup] Firing BAG_UPDATE_DELAYED
+[  4.149s] [Startup] Firing QUEST_LOG_UPDATE
+[  4.151s] [Startup] Firing GROUP_ROSTER_UPDATE
+[  4.278s] [Startup] Firing ACTIONBAR_UPDATE_STATE
+[  4.278s] [Startup] Firing ACTIONBAR_UPDATE_COOLDOWN
+[  4.279s] [Startup] Firing UPDATE_BONUS_ACTIONBAR
+[  4.297s] [Startup] Firing PLAYER_CAN_GLIDE_CHANGED
+[  4.297s] [Startup] Firing PLAYER_IS_GLIDING_CHANGED
+[  4.297s] [Startup] Firing UPDATE_BINDINGS
+[  4.301s] [Startup] Firing UPDATE_CHAT_WINDOWS
+[  4.305s] [Startup] Firing LFG_UPDATE_RANDOM_INFO
+[  4.306s] [Startup] end post-login events in 163.01ms
+[  4.306s] [Startup] begin close startup special windows
+[  4.306s] [Startup] end close startup special windows in 359.60µs
+[  4.306s] [Startup] begin FIRST_FRAME_RENDERED
+[  4.306s] [Startup] Firing FIRST_FRAME_RENDERED
+[  4.307s] [Startup] end FIRST_FRAME_RENDERED in 223.63µs
+[  4.307s] [Startup] begin unblock hidden splash alerts
+[  4.307s] [Startup] end unblock hidden splash alerts in 18.78µs
+[  4.307s] [Startup] begin post-event workarounds
+[  4.307s] [Startup] end post-event workarounds in 1.18µs
+error: test failed, to rerun pass `--test prefork_full_ui`
+
+Caused by:
+  process didn't exit successfully: `/home/osso/.worktrees/wow-ui-sim-p830-page/target/debug/deps/prefork_full_ui-34a818a91c447c36 patch_8_3_0_publication_sweep` (exit status: 1)

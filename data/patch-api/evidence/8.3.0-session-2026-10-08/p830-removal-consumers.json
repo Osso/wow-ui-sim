@@ -1,0 +1,596 @@
+[
+  {
+    "source_id": "wt-global-api-C_ProductChoice.GetChoices-153",
+    "symbol": "C_ProductChoice.GetChoices",
+    "cached_qualified": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "C_ProductChoice.GetChoices",
+        "--glob",
+        "*.lua",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "cached_bare": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "GetChoices",
+        "--glob",
+        "*.lua",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "whole_callers_qualified": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "C_ProductChoice.GetChoices",
+        "src",
+        "tests"
+      ],
+      "exit": 0,
+      "stdout": "src/mists/compat_bootstrap.lua:739:  function C_ProductChoice.GetChoices() return {} end\ntests/mists_product_choice_compat.rs:39:            local choices = C_ProductChoice.GetChoices()\ntests/mists_product_choice_compat.rs:41:            return type(C_ProductChoice), type(C_ProductChoice.GetChoices), type(choices), ok, tostring(err)\ntests/mists_product_choice_compat.rs:50:        \"the missing product-choice table is the C_ProductChoice.GetChoices() return value\"\ntests/mists_product_choice_compat.rs:72:            local choices = C_ProductChoice.GetChoices()\ntests/mists_product_choice_compat.rs:101:            local choices = C_ProductChoice.GetChoices()\ntests/mists_compat_bootstrap.rs:328:                type(C_ProductChoice.GetChoices())\n",
+      "stderr": ""
+    },
+    "whole_callers_bare": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "GetChoices",
+        "src",
+        "tests"
+      ],
+      "exit": 0,
+      "stdout": "src/mists/compat_bootstrap.lua:738:if rawget(C_ProductChoice, \"GetChoices\") == nil then\nsrc/mists/compat_bootstrap.lua:739:  function C_ProductChoice.GetChoices() return {} end\ntests/mists_compat_bootstrap.rs:328:                type(C_ProductChoice.GetChoices())\ntests/mists_product_choice_compat.rs:21:            GetChoices = function() return nil end,\ntests/mists_product_choice_compat.rs:39:            local choices = C_ProductChoice.GetChoices()\ntests/mists_product_choice_compat.rs:41:            return type(C_ProductChoice), type(C_ProductChoice.GetChoices), type(choices), ok, tostring(err)\ntests/mists_product_choice_compat.rs:50:        \"the missing product-choice table is the C_ProductChoice.GetChoices() return value\"\ntests/mists_product_choice_compat.rs:72:            local choices = C_ProductChoice.GetChoices()\ntests/mists_product_choice_compat.rs:101:            local choices = C_ProductChoice.GetChoices()\n",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_ProductChoice.GetNumSuppressed-154",
+    "symbol": "C_ProductChoice.GetNumSuppressed",
+    "cached_qualified": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "C_ProductChoice.GetNumSuppressed",
+        "--glob",
+        "*.lua",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "cached_bare": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "GetNumSuppressed",
+        "--glob",
+        "*.lua",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "whole_callers_qualified": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "C_ProductChoice.GetNumSuppressed",
+        "src",
+        "tests"
+      ],
+      "exit": 0,
+      "stdout": "src/mists/compat_bootstrap.lua:747:  function C_ProductChoice.GetNumSuppressed() return 0 end\ntests/mists_product_choice_compat.rs:103:            return type(choices), #choices, type(products), #products, C_ProductChoice.GetNumSuppressed()\n",
+      "stderr": ""
+    },
+    "whole_callers_bare": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "GetNumSuppressed",
+        "src",
+        "tests"
+      ],
+      "exit": 0,
+      "stdout": "src/mists/compat_bootstrap.lua:746:if rawget(C_ProductChoice, \"GetNumSuppressed\") == nil then\nsrc/mists/compat_bootstrap.lua:747:  function C_ProductChoice.GetNumSuppressed() return 0 end\ntests/mists_product_choice_compat.rs:103:            return type(choices), #choices, type(products), #products, C_ProductChoice.GetNumSuppressed()\n",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_ProductChoice.GetProducts-155",
+    "symbol": "C_ProductChoice.GetProducts",
+    "cached_qualified": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "C_ProductChoice.GetProducts",
+        "--glob",
+        "*.lua",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "cached_bare": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "GetProducts",
+        "--glob",
+        "*.lua",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ],
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUITemplates.lua:286:\t\tlocal validCategory = (#StoreFrame_FilterEntries(C_StoreSecure.GetProducts(groupID)) ~= 0) or HasProductGroupChildren(groupID, productGroups);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:599:\tlocal products = C_StoreSecure.GetProducts(StoreFrame_GetSelectedCategoryID());\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:698:\t\tlocal products = C_StoreSecure.GetProducts(groupID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:716:\tlocal entries = C_StoreSecure.GetProducts(StoreFrame_GetSelectedCategoryID());\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:732:\t\tentries = C_StoreSecure.GetProducts(id);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:988:\tlocal products = C_StoreSecure.GetProducts(WOW_SERVICES_CATEGORY_ID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StoreUI/Blizzard_Shared_StoreUISecure.lua:1028:\tlocal entries = C_StoreSecure.GetProducts(groupID);\n",
+      "stderr": ""
+    },
+    "whole_callers_qualified": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "C_ProductChoice.GetProducts",
+        "src",
+        "tests"
+      ],
+      "exit": 0,
+      "stdout": "src/mists/compat_bootstrap.lua:743:  function C_ProductChoice.GetProducts(choiceID) return {} end\ntests/mists_product_choice_compat.rs:102:            local products = C_ProductChoice.GetProducts(123)\n",
+      "stderr": ""
+    },
+    "whole_callers_bare": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "GetProducts",
+        "src",
+        "tests"
+      ],
+      "exit": 0,
+      "stdout": "src/mists/compat_bootstrap.lua:742:if rawget(C_ProductChoice, \"GetProducts\") == nil then\nsrc/mists/compat_bootstrap.lua:743:  function C_ProductChoice.GetProducts(choiceID) return {} end\nsrc/lua_api/env_init/runtime_surface_bootstrap.lua:462:C_StoreSecure.GetProducts = function(groupID)\nsrc/lua_api/env_init/runtime_surface_bootstrap.lua:901:if rawget(C_StoreSecure, \"GetProducts\") == nil then\nsrc/lua_api/env_init/runtime_surface_bootstrap.lua:902:  function C_StoreSecure.GetProducts(groupID)\nsrc/lua_api/workarounds/temporary/store_public_defaults.rs:23:        if type(C_StoreSecure) ~= \"table\" or type(C_StoreSecure.GetProducts) ~= \"function\" then\nsrc/lua_api/workarounds/temporary/store_public_defaults.rs:26:        local products = C_StoreSecure.GetProducts(groupID)\ntests/mists_product_choice_compat.rs:102:            local products = C_ProductChoice.GetProducts(123)\ntests/store_tree.rs:211:            local products = C_StoreSecure.GetProducts(selectedCategory)\n",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_ProductChoice.MakeSelection-156",
+    "symbol": "C_ProductChoice.MakeSelection",
+    "cached_qualified": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "C_ProductChoice.MakeSelection",
+        "--glob",
+        "*.lua",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "cached_bare": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "MakeSelection",
+        "--glob",
+        "*.lua",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "whole_callers_qualified": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "C_ProductChoice.MakeSelection",
+        "src",
+        "tests"
+      ],
+      "exit": 0,
+      "stdout": "src/mists/compat_bootstrap.lua:751:  function C_ProductChoice.MakeSelection() return false end\n",
+      "stderr": ""
+    },
+    "whole_callers_bare": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "MakeSelection",
+        "src",
+        "tests"
+      ],
+      "exit": 0,
+      "stdout": "src/mists/compat_bootstrap.lua:750:if rawget(C_ProductChoice, \"MakeSelection\") == nil then\nsrc/mists/compat_bootstrap.lua:751:  function C_ProductChoice.MakeSelection() return false end\n",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-C_WowTokenPublic.SellToken-157",
+    "symbol": "C_WowTokenPublic.SellToken",
+    "cached_qualified": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "C_WowTokenPublic.SellToken",
+        "--glob",
+        "*.lua",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "cached_bare": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "SellToken",
+        "--glob",
+        "*.lua",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "whole_callers_qualified": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "C_WowTokenPublic.SellToken",
+        "src",
+        "tests"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "whole_callers_bare": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "SellToken",
+        "src",
+        "tests"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-CanSendAuctionQuery-160",
+    "symbol": "CanSendAuctionQuery",
+    "cached_qualified": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "CanSendAuctionQuery",
+        "--glob",
+        "*.lua",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "cached_bare": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "CanSendAuctionQuery",
+        "--glob",
+        "*.lua",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "whole_callers_qualified": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "CanSendAuctionQuery",
+        "src",
+        "tests"
+      ],
+      "exit": 0,
+      "stdout": "src/lua_api/globals/stubs/global_stubs.rs:105:    \"CanSendAuctionQuery\",\nsrc/lua_api/globals/auction_verbs.rs:602:    LuaApiMut::register_function(lua, \"CanSendAuctionQuery\", can_send_auction_query)?;\n",
+      "stderr": ""
+    },
+    "whole_callers_bare": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "CanSendAuctionQuery",
+        "src",
+        "tests"
+      ],
+      "exit": 0,
+      "stdout": "src/lua_api/globals/stubs/global_stubs.rs:105:    \"CanSendAuctionQuery\",\nsrc/lua_api/globals/auction_verbs.rs:602:    LuaApiMut::register_function(lua, \"CanSendAuctionQuery\", can_send_auction_query)?;\n",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-CancelAuction-161",
+    "symbol": "CancelAuction",
+    "cached_qualified": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "CancelAuction",
+        "--glob",
+        "*.lua",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ],
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseFrame.lua:82:\t\tC_AuctionHouse.CancelAuction(data.auctionID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/AuctionHouseDocumentation.lua:60:\t\t\tName = \"CancelAuction\",\n",
+      "stderr": ""
+    },
+    "cached_bare": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "CancelAuction",
+        "--glob",
+        "*.lua",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ],
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseFrame.lua:82:\t\tC_AuctionHouse.CancelAuction(data.auctionID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/AuctionHouseDocumentation.lua:60:\t\t\tName = \"CancelAuction\",\n",
+      "stderr": ""
+    },
+    "whole_callers_qualified": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "CancelAuction",
+        "src",
+        "tests"
+      ],
+      "exit": 0,
+      "stdout": "tests/blizzard_auction_house_cancel_auction.rs:60:C_AuctionHouse.CancelAuction(auctionID)\ntests/c_auction_house_sell_cancel.rs:4://! `CancelSell`, `CancelAuction`. Each covers the\ntests/c_auction_house_sell_cancel.rs:238:        C_AuctionHouse.CancelAuction(42)\ntests/c_auction_house_sell_cancel.rs:263:    env.eval::<()>(\"C_AuctionHouse.CancelAuction(7)\").unwrap();\ntests/c_auction_house_sell_cancel.rs:286:        C_AuctionHouse.CancelAuction(9999)\ntests/c_auction_house_sell_cancel.rs:310:        C_AuctionHouse.CancelAuction(11)\nsrc/lua_api/globals/auction_verbs.rs:641:    LuaApiMut::register_function(lua, \"CancelAuction\", cancel_auction)?;\nsrc/lua_api/globals/message_verbs.rs:1://! Auction / message verbs: `CancelAuction`, `SendAddonMessage`,\nsrc/lua_api/globals/message_verbs.rs:6://! - `CancelAuction(index)` \u2014 fires `AUCTION_CANCELED` with the index\nsrc/lua_api/globals/message_verbs.rs:102:/// `CancelAuction(index)` \u2014 fire `AUCTION_CANCELED` carrying the index.\nsrc/lua_api/globals/message_verbs.rs:158:    LuaApiMut::register_function(lua, \"CancelAuction\", cancel_auction)?;\nsrc/lua_api/globals/missing_surface/auction_house/registry_and_rows.rs:192:    (\"CancelAuction\", c_auction_house_cancel_auction),\ntests/message_verbs.rs:10:// \u2500\u2500 CancelAuction \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\ntests/message_verbs.rs:15:    env.exec(\"CancelAuction(42)\").unwrap();\ntests/message_verbs.rs:30:    env.exec(\"CancelAuction()\").unwrap();\nsrc/lua_api/globals/missing_surface/auction_house/posting.rs:184:/// `CancelAuction` on a stale id as a silent no-op.\ntests/mists_auction_house_panel.rs:90:            CancelAuction(1)\n",
+      "stderr": ""
+    },
+    "whole_callers_bare": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "CancelAuction",
+        "src",
+        "tests"
+      ],
+      "exit": 0,
+      "stdout": "tests/blizzard_auction_house_cancel_auction.rs:60:C_AuctionHouse.CancelAuction(auctionID)\nsrc/lua_api/globals/auction_verbs.rs:641:    LuaApiMut::register_function(lua, \"CancelAuction\", cancel_auction)?;\nsrc/lua_api/globals/message_verbs.rs:1://! Auction / message verbs: `CancelAuction`, `SendAddonMessage`,\nsrc/lua_api/globals/message_verbs.rs:6://! - `CancelAuction(index)` \u2014 fires `AUCTION_CANCELED` with the index\nsrc/lua_api/globals/message_verbs.rs:102:/// `CancelAuction(index)` \u2014 fire `AUCTION_CANCELED` carrying the index.\nsrc/lua_api/globals/message_verbs.rs:158:    LuaApiMut::register_function(lua, \"CancelAuction\", cancel_auction)?;\nsrc/lua_api/globals/missing_surface/auction_house/registry_and_rows.rs:192:    (\"CancelAuction\", c_auction_house_cancel_auction),\nsrc/lua_api/globals/missing_surface/auction_house/posting.rs:184:/// `CancelAuction` on a stale id as a silent no-op.\ntests/c_auction_house_sell_cancel.rs:4://! `CancelSell`, `CancelAuction`. Each covers the\ntests/c_auction_house_sell_cancel.rs:238:        C_AuctionHouse.CancelAuction(42)\ntests/c_auction_house_sell_cancel.rs:263:    env.eval::<()>(\"C_AuctionHouse.CancelAuction(7)\").unwrap();\ntests/c_auction_house_sell_cancel.rs:286:        C_AuctionHouse.CancelAuction(9999)\ntests/c_auction_house_sell_cancel.rs:310:        C_AuctionHouse.CancelAuction(11)\ntests/message_verbs.rs:10:// \u2500\u2500 CancelAuction \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\ntests/message_verbs.rs:15:    env.exec(\"CancelAuction(42)\").unwrap();\ntests/message_verbs.rs:30:    env.exec(\"CancelAuction()\").unwrap();\ntests/mists_auction_house_panel.rs:90:            CancelAuction(1)\n",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-GetAuctionHouseDepositRate-168",
+    "symbol": "GetAuctionHouseDepositRate",
+    "cached_qualified": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "GetAuctionHouseDepositRate",
+        "--glob",
+        "*.lua",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "cached_bare": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "GetAuctionHouseDepositRate",
+        "--glob",
+        "*.lua",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "whole_callers_qualified": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "GetAuctionHouseDepositRate",
+        "src",
+        "tests"
+      ],
+      "exit": 0,
+      "stdout": "src/lua_api/globals/stubs/global_stubs.rs:149:    \"GetAuctionHouseDepositRate\",\n",
+      "stderr": ""
+    },
+    "whole_callers_bare": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "GetAuctionHouseDepositRate",
+        "src",
+        "tests"
+      ],
+      "exit": 0,
+      "stdout": "src/lua_api/globals/stubs/global_stubs.rs:149:    \"GetAuctionHouseDepositRate\",\n",
+      "stderr": ""
+    }
+  },
+  {
+    "source_id": "wt-global-api-GetNumAuctionItems-177",
+    "symbol": "GetNumAuctionItems",
+    "cached_qualified": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "GetNumAuctionItems",
+        "--glob",
+        "*.lua",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "cached_bare": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "GetNumAuctionItems",
+        "--glob",
+        "*.lua",
+        "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "whole_callers_qualified": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "GetNumAuctionItems",
+        "src",
+        "tests"
+      ],
+      "exit": 0,
+      "stdout": "src/lua_api/globals/stubs/global_stubs.rs:189:    // GetNumAuctionItems is SimState-backed in inventory_counts.rs, not a stub.\ntests/inventory_counts.rs:303:// \u2500\u2500 GetNumAuctionItems \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\ntests/inventory_counts.rs:313:    let (n, total): (i32, i32) = env.eval(r#\"return GetNumAuctionItems(\"list\")\"#).unwrap();\ntests/inventory_counts.rs:323:        env.eval(r#\"return GetNumAuctionItems(\"owner\")\"#).unwrap();\ntests/inventory_counts.rs:325:        env.eval(r#\"return GetNumAuctionItems(\"bidder\")\"#).unwrap();\ntests/inventory_counts.rs:334:    let (n, total): (i32, i32) = env.eval(\"return GetNumAuctionItems()\").unwrap();\ntests/mists_auction_house_panel.rs:46:            local browseCount, browseTotal = GetNumAuctionItems(\"list\")\ntests/mists_auction_house_panel.rs:81:            local ownedCount = GetNumAuctionItems(\"owner\")\nsrc/lua_api/globals/auction_verbs.rs:615:    LuaApiMut::register_function(lua, \"GetNumAuctionItems\", get_num_auction_items)?;\nsrc/lua_api/globals/inventory_counts.rs:9://! - `GetNumAuctionItems(listType)` \u2192 `(numItems, totalItems)` from\nsrc/lua_api/globals/inventory_counts.rs:42:/// Retail `GetNumAuctionItems(listType)` returns `(numItems, totalItems)`.\nsrc/lua_api/globals/inventory_counts.rs:66:    LuaApiMut::register_function(lua, \"GetNumAuctionItems\", get_num_auction_items)?;\n",
+      "stderr": ""
+    },
+    "whole_callers_bare": {
+      "command": [
+        "rg",
+        "-n",
+        "--no-heading",
+        "-w",
+        "-F",
+        "GetNumAuctionItems",
+        "src",
+        "tests"
+      ],
+      "exit": 0,
+      "stdout": "src/lua_api/globals/stubs/global_stubs.rs:189:    // GetNumAuctionItems is SimState-backed in inventory_counts.rs, not a stub.\nsrc/lua_api/globals/auction_verbs.rs:615:    LuaApiMut::register_function(lua, \"GetNumAuctionItems\", get_num_auction_items)?;\nsrc/lua_api/globals/inventory_counts.rs:9://! - `GetNumAuctionItems(listType)` \u2192 `(numItems, totalItems)` from\nsrc/lua_api/globals/inventory_counts.rs:42:/// Retail `GetNumAuctionItems(listType)` returns `(numItems, totalItems)`.\nsrc/lua_api/globals/inventory_counts.rs:66:    LuaApiMut::register_function(lua, \"GetNumAuctionItems\", get_num_auction_items)?;\ntests/inventory_counts.rs:303:// \u2500\u2500 GetNumAuctionItems \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\ntests/inventory_counts.rs:313:    let (n, total): (i32, i32) = env.eval(r#\"return GetNumAuctionItems(\"list\")\"#).unwrap();\ntests/inventory_counts.rs:323:        env.eval(r#\"return GetNumAuctionItems(\"owner\")\"#).unwrap();\ntests/inventory_counts.rs:325:        env.eval(r#\"return GetNumAuctionItems(\"bidder\")\"#).unwrap();\ntests/inventory_counts.rs:334:    let (n, total): (i32, i32) = env.eval(\"return GetNumAuctionItems()\").unwrap();\ntests/mists_auction_house_panel.rs:46:            local browseCount, browseTotal = GetNumAuctionItems(\"list\")\ntests/mists_auction_house_panel.rs:81:            local ownedCount = GetNumAuctionItems(\"owner\")\n",
+      "stderr": ""
+    }
+  }
+]

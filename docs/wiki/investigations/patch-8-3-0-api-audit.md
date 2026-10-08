@@ -20,3 +20,9 @@ Sixteen nonblank extract occurrences remain; four late-build APIs appear in two 
 
 - [[patch-8-3-7-api-audit]] — publication/extract accounting precedent.
 - [[patch-9-0-1-api-audit]] — chronological supersession and retained boundaries.
+
+## Bounded retirement implementation
+
+Initial discovery finds 174 OK / 46 gaps. Six unused retail surfaces are retired: four C_ProductChoice members, C_WowTokenPublic.SellToken and GetAuctionHouseDepositRate. A separate RETIRED_8_3_0_MEMBERS list uses the existing retail-only module gate; the legacy global is excluded only under retail-12-0-0. Mists defaults and classic callers remain intact.
+
+Qualified and bare cached-retail searches plus whole src/tests scans are retained untruncated in [consumer receipt](../../../data/patch-api/evidence/8.3.0-session-2026-10-08/p830-removal-consumers.json). Bare GetProducts matches belong to C_StoreSecure, not C_ProductChoice. ProductChoice callers are already Mists-only; no retail caller migration needed. RED tests fail at fabricated GetChoices lookup and legacy deposit-rate raw publication after unmodified cached preload. Expected final fixture has forty gaps; GREEN and final proof pending.
