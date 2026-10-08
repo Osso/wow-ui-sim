@@ -1,0 +1,18 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p548-page/data/patch-api/evidence/5.4.8-session-2026-10-08/startup_compare.py",
+    "master"
+  ],
+  "revision": "48860e1f80b787dadc785937038a73d28d946bf5",
+  "scope": "p548-master-startup-driver",
+  "cwd": ".",
+  "target": "dedicated p548-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p548-master-startup-driver.txt",
+  "log_sha256": "b9d999b8989721757a53574f85c95161c283ff8aa542a696114504202ed90466",
+  "seconds": 145.45407065099425,
+  "invalidated": false
+}

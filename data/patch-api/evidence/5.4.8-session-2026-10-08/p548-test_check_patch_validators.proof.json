@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p548-page/tools/test_check_patch_validators.py"
+  ],
+  "revision": "48860e1f80b787dadc785937038a73d28d946bf5",
+  "scope": "p548-test_check_patch_validators",
+  "cwd": ".",
+  "target": "dedicated p548-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p548-test_check_patch_validators.txt",
+  "log_sha256": "ecab2e6e8ee241a4c11939c4fb6008ed93e7a943bfe6bbe21aaacc46a8cfd12f",
+  "seconds": 0.3928894299970125,
+  "invalidated": false
+}

@@ -1,0 +1,28 @@
+{
+  "inventory": 28,
+  "extract": 32,
+  "total": 60,
+  "statuses": {
+    "bounded-coverage": 36,
+    "audit-pending": 21,
+    "metadata-only": 3
+  },
+  "current_readable_cvars": [
+    "nameplateOverlapH",
+    "nameplateOverlapV",
+    "nameplateShowEnemies",
+    "nameplateShowEnemyGuardians",
+    "nameplateShowEnemyPets",
+    "nameplateShowEnemyTotems",
+    "nameplateShowFriends",
+    "showArenaEnemyFrames",
+    "showArenaEnemyPets",
+    "showPartyPets",
+    "showTargetOfTarget",
+    "uiScale",
+    "useUiScale"
+  ],
+  "meaningful_models": 14,
+  "publication_gaps": 7,
+  "retirements": 0
+}

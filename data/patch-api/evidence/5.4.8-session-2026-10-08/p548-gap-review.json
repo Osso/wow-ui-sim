@@ -1,0 +1,156 @@
+[
+  {
+    "source_id": "wt-cvars-bloatTest-7",
+    "observation": {
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "published",
+        "section": "cvars",
+        "superseded_by": null,
+        "symbol": "bloatTest"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "value/default queried",
+        "kind": "cvar",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "bloatTest: GetCVar/GetCVarDefault are nil and no later merged removal accounts for this identity. Page supplies a restriction, not a current default/storage or nameplate/buff/repositioning model. No placeholder default or republishing shim added."
+  },
+  {
+    "source_id": "wt-cvars-bloatnameplates-6",
+    "observation": {
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "published",
+        "section": "cvars",
+        "superseded_by": null,
+        "symbol": "bloatnameplates"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "value/default queried",
+        "kind": "cvar",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "bloatnameplates: GetCVar/GetCVarDefault are nil and no later merged removal accounts for this identity. Page supplies a restriction, not a current default/storage or nameplate/buff/repositioning model. No placeholder default or republishing shim added."
+  },
+  {
+    "source_id": "wt-cvars-bloatthreat-8",
+    "observation": {
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "published",
+        "section": "cvars",
+        "superseded_by": null,
+        "symbol": "bloatthreat"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "value/default queried",
+        "kind": "cvar",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "bloatthreat: GetCVar/GetCVarDefault are nil and no later merged removal accounts for this identity. Page supplies a restriction, not a current default/storage or nameplate/buff/repositioning model. No placeholder default or republishing shim added."
+  },
+  {
+    "source_id": "wt-cvars-consolidateBuffs-9",
+    "observation": {
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "published",
+        "section": "cvars",
+        "superseded_by": null,
+        "symbol": "consolidateBuffs"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "value/default queried",
+        "kind": "cvar",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "consolidateBuffs: GetCVar/GetCVarDefault are nil and no later merged removal accounts for this identity. Page supplies a restriction, not a current default/storage or nameplate/buff/repositioning model. No placeholder default or republishing shim added."
+  },
+  {
+    "source_id": "wt-cvars-maxAlgoplates-11",
+    "observation": {
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "published",
+        "section": "cvars",
+        "superseded_by": null,
+        "symbol": "maxAlgoplates"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "value/default queried",
+        "kind": "cvar",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "maxAlgoplates: GetCVar/GetCVarDefault are nil and no later merged removal accounts for this identity. Page supplies a restriction, not a current default/storage or nameplate/buff/repositioning model. No placeholder default or republishing shim added."
+  },
+  {
+    "source_id": "wt-cvars-repositionfrequency-23",
+    "observation": {
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "published",
+        "section": "cvars",
+        "superseded_by": null,
+        "symbol": "repositionfrequency"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "value/default queried",
+        "kind": "cvar",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "repositionfrequency: GetCVar/GetCVarDefault are nil and no later merged removal accounts for this identity. Page supplies a restriction, not a current default/storage or nameplate/buff/repositioning model. No placeholder default or republishing shim added."
+  },
+  {
+    "source_id": "wt-cvars-targetOfTargetMode-28",
+    "observation": {
+      "expected": {
+        "direction": "changed",
+        "page_default": null,
+        "publication": "published",
+        "section": "cvars",
+        "superseded_by": null,
+        "symbol": "targetOfTargetMode"
+      },
+      "observed": {
+        "default": null,
+        "default_mismatch": false,
+        "detail": "value/default queried",
+        "kind": "cvar",
+        "value": null
+      },
+      "ok": false
+    },
+    "reason": "targetOfTargetMode: GetCVar/GetCVarDefault are nil and no later merged removal accounts for this identity. Page supplies a restriction, not a current default/storage or nameplate/buff/repositioning model. No placeholder default or republishing shim added."
+  }
+]

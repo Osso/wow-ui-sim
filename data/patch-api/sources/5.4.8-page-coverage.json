@@ -1,0 +1,445 @@
+{
+  "schema": "patch-api-page-coverage/v1",
+  "patch": "5.4.8",
+  "source": "data/patch-api/sources/5.4.8-wikitext-register.json",
+  "source_sha256": "bff0a33a4df525cac8e73899cb318947358d699ffacbb2e736fed948b21c49e5",
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/5.4.8-api-changes.txt",
+    "sha256": "f881069e44e3d84a47dc46891795c9e5315b68e080a3d11ba873d2adc16d32e8"
+  },
+  "proof_policy": "Every pinned occurrence accounted. Current-retail publication and bounded active-member combat models are separate capabilities; no exact native/historical parity. Retail 6.0.1/6.0.2 integration placeholders only; Classic 5.5.x excluded.",
+  "source_rows": [
+    {
+      "source_id": "wt-cvars-alwaysShowActionBars-5",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; not historical behavior parity. Superseded by wt-cvars-alwaysShowActionBars-563; no new retirement performed."
+    },
+    {
+      "source_id": "wt-cvars-bloatnameplates-6",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "bloatnameplates: GetCVar/GetCVarDefault are nil and no later merged removal accounts for this identity. Page supplies a restriction, not a current default/storage or nameplate/buff/repositioning model. No placeholder default or republishing shim added."
+    },
+    {
+      "source_id": "wt-cvars-bloatTest-7",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "bloatTest: GetCVar/GetCVarDefault are nil and no later merged removal accounts for this identity. Page supplies a restriction, not a current default/storage or nameplate/buff/repositioning model. No placeholder default or republishing shim added."
+    },
+    {
+      "source_id": "wt-cvars-bloatthreat-8",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "bloatthreat: GetCVar/GetCVarDefault are nil and no later merged removal accounts for this identity. Page supplies a restriction, not a current default/storage or nameplate/buff/repositioning model. No placeholder default or republishing shim added."
+    },
+    {
+      "source_id": "wt-cvars-consolidateBuffs-9",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "consolidateBuffs: GetCVar/GetCVarDefault are nil and no later merged removal accounts for this identity. Page supplies a restriction, not a current default/storage or nameplate/buff/repositioning model. No placeholder default or republishing shim added."
+    },
+    {
+      "source_id": "wt-cvars-fullSizeFocusFrame-10",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; not historical behavior parity. Superseded by wt-cvars-fullSizeFocusFrame-909; no new retirement performed."
+    },
+    {
+      "source_id": "wt-cvars-maxAlgoplates-11",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "maxAlgoplates: GetCVar/GetCVarDefault are nil and no later merged removal accounts for this identity. Page supplies a restriction, not a current default/storage or nameplate/buff/repositioning model. No placeholder default or republishing shim added."
+    },
+    {
+      "source_id": "wt-cvars-nameplateMotion-12",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; not historical behavior parity. Superseded by wt-cvars-nameplateMotion-1086; no new retirement performed."
+    },
+    {
+      "source_id": "wt-cvars-nameplateOverlapH-13",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; not historical behavior parity."
+    },
+    {
+      "source_id": "wt-cvars-nameplateOverlapV-14",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; not historical behavior parity."
+    },
+    {
+      "source_id": "wt-cvars-nameplateShowEnemies-15",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; not historical behavior parity."
+    },
+    {
+      "source_id": "wt-cvars-nameplateShowEnemyGuardians-16",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; not historical behavior parity."
+    },
+    {
+      "source_id": "wt-cvars-nameplateShowEnemyPets-17",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; not historical behavior parity."
+    },
+    {
+      "source_id": "wt-cvars-nameplateShowEnemyTotems-18",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; not historical behavior parity."
+    },
+    {
+      "source_id": "wt-cvars-nameplateShowFriendlyGuardians-19",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; not historical behavior parity. Superseded by wt-cvars-nameplateShowFriendlyGuardians-1098; no new retirement performed."
+    },
+    {
+      "source_id": "wt-cvars-nameplateShowFriendlyPets-20",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; not historical behavior parity. Superseded by wt-cvars-nameplateShowFriendlyPets-1101; no new retirement performed."
+    },
+    {
+      "source_id": "wt-cvars-nameplateShowFriendlyTotems-21",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; not historical behavior parity. Superseded by wt-cvars-nameplateShowFriendlyTotems-1102; no new retirement performed."
+    },
+    {
+      "source_id": "wt-cvars-nameplateShowFriends-22",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; not historical behavior parity."
+    },
+    {
+      "source_id": "wt-cvars-repositionfrequency-23",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "repositionfrequency: GetCVar/GetCVarDefault are nil and no later merged removal accounts for this identity. Page supplies a restriction, not a current default/storage or nameplate/buff/repositioning model. No placeholder default or republishing shim added."
+    },
+    {
+      "source_id": "wt-cvars-showArenaEnemyFrames-24",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; not historical behavior parity."
+    },
+    {
+      "source_id": "wt-cvars-showArenaEnemyPets-25",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; not historical behavior parity."
+    },
+    {
+      "source_id": "wt-cvars-showPartyPets-26",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; not historical behavior parity."
+    },
+    {
+      "source_id": "wt-cvars-showTargetOfTarget-27",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; not historical behavior parity."
+    },
+    {
+      "source_id": "wt-cvars-targetOfTargetMode-28",
+      "status": "audit-pending",
+      "capabilities": [],
+      "note": "targetOfTargetMode: GetCVar/GetCVarDefault are nil and no later merged removal accounts for this identity. Page supplies a restriction, not a current default/storage or nameplate/buff/repositioning model. No placeholder default or republishing shim added."
+    },
+    {
+      "source_id": "wt-cvars-uiScale-29",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; not historical behavior parity."
+    },
+    {
+      "source_id": "wt-cvars-useCompactPartyFrames-30",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; not historical behavior parity. Superseded by wt-cvars-useCompactPartyFrames-501; no new retirement performed."
+    },
+    {
+      "source_id": "wt-cvars-useUiScale-31",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; not historical behavior parity."
+    },
+    {
+      "source_id": "wt-global-api-SetUIVisibility-34",
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-publication-or-absence"
+      ],
+      "note": "Current-retail publication/absence only; not historical behavior parity."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [
+        "current-active-cvar-combat-write-protection"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bounded to currently readable page members: insecure combat global/namespace/bitfield/case-varied writes reject before persistence, scale and events; secure and out-of-combat controls remain usable. Inactive historical defaults/native notifications remain unproved."
+    },
+    {
+      "source_id": "prose-undated-005",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "alwaysShowActionBars: currently unreadable (missing or superseded default); no active state model on which to prove the historical combat transition. Page gives no default/value domain or exact native failure policy. Current publication/absence is accounted independently; no retired setting republished, shim or vendor patch added."
+    },
+    {
+      "source_id": "prose-undated-006",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "bloatnameplates: currently unreadable (missing or superseded default); no active state model on which to prove the historical combat transition. Page gives no default/value domain or exact native failure policy. Current publication/absence is accounted independently; no retired setting republished, shim or vendor patch added."
+    },
+    {
+      "source_id": "prose-undated-007",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "bloatTest: currently unreadable (missing or superseded default); no active state model on which to prove the historical combat transition. Page gives no default/value domain or exact native failure policy. Current publication/absence is accounted independently; no retired setting republished, shim or vendor patch added."
+    },
+    {
+      "source_id": "prose-undated-008",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "bloatthreat: currently unreadable (missing or superseded default); no active state model on which to prove the historical combat transition. Page gives no default/value domain or exact native failure policy. Current publication/absence is accounted independently; no retired setting republished, shim or vendor patch added."
+    },
+    {
+      "source_id": "prose-undated-009",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "consolidateBuffs: currently unreadable (missing or superseded default); no active state model on which to prove the historical combat transition. Page gives no default/value domain or exact native failure policy. Current publication/absence is accounted independently; no retired setting republished, shim or vendor patch added."
+    },
+    {
+      "source_id": "prose-undated-010",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "fullSizeFocusFrame: currently unreadable (missing or superseded default); no active state model on which to prove the historical combat transition. Page gives no default/value domain or exact native failure policy. Current publication/absence is accounted independently; no retired setting republished, shim or vendor patch added."
+    },
+    {
+      "source_id": "prose-undated-011",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "maxAlgoplates: currently unreadable (missing or superseded default); no active state model on which to prove the historical combat transition. Page gives no default/value domain or exact native failure policy. Current publication/absence is accounted independently; no retired setting republished, shim or vendor patch added."
+    },
+    {
+      "source_id": "prose-undated-012",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "nameplateMotion: currently unreadable (missing or superseded default); no active state model on which to prove the historical combat transition. Page gives no default/value domain or exact native failure policy. Current publication/absence is accounted independently; no retired setting republished, shim or vendor patch added."
+    },
+    {
+      "source_id": "prose-undated-013",
+      "capabilities": [
+        "current-active-cvar-combat-write-protection"
+      ],
+      "status": "bounded-coverage",
+      "note": "nameplateOverlapH: current CVar storage plus player combat state and active Lua caller taint back rejection before mutation; global, C_CVar, case variation and bitfield paths covered. Secure combat and insecure out-of-combat writes remain allowed. Exact 2014 defaults and native failure/notification policy not claimed."
+    },
+    {
+      "source_id": "prose-undated-014",
+      "capabilities": [
+        "current-active-cvar-combat-write-protection"
+      ],
+      "status": "bounded-coverage",
+      "note": "nameplateOverlapV: current CVar storage plus player combat state and active Lua caller taint back rejection before mutation; global, C_CVar, case variation and bitfield paths covered. Secure combat and insecure out-of-combat writes remain allowed. Exact 2014 defaults and native failure/notification policy not claimed."
+    },
+    {
+      "source_id": "prose-undated-015",
+      "capabilities": [
+        "current-active-cvar-combat-write-protection"
+      ],
+      "status": "bounded-coverage",
+      "note": "nameplateShowEnemies: current CVar storage plus player combat state and active Lua caller taint back rejection before mutation; global, C_CVar, case variation and bitfield paths covered. Secure combat and insecure out-of-combat writes remain allowed. Exact 2014 defaults and native failure/notification policy not claimed."
+    },
+    {
+      "source_id": "prose-undated-016",
+      "capabilities": [
+        "current-active-cvar-combat-write-protection"
+      ],
+      "status": "bounded-coverage",
+      "note": "nameplateShowEnemyGuardians: current CVar storage plus player combat state and active Lua caller taint back rejection before mutation; global, C_CVar, case variation and bitfield paths covered. Secure combat and insecure out-of-combat writes remain allowed. Exact 2014 defaults and native failure/notification policy not claimed."
+    },
+    {
+      "source_id": "prose-undated-017",
+      "capabilities": [
+        "current-active-cvar-combat-write-protection"
+      ],
+      "status": "bounded-coverage",
+      "note": "nameplateShowEnemyPets: current CVar storage plus player combat state and active Lua caller taint back rejection before mutation; global, C_CVar, case variation and bitfield paths covered. Secure combat and insecure out-of-combat writes remain allowed. Exact 2014 defaults and native failure/notification policy not claimed."
+    },
+    {
+      "source_id": "prose-undated-018",
+      "capabilities": [
+        "current-active-cvar-combat-write-protection"
+      ],
+      "status": "bounded-coverage",
+      "note": "nameplateShowEnemyTotems: current CVar storage plus player combat state and active Lua caller taint back rejection before mutation; global, C_CVar, case variation and bitfield paths covered. Secure combat and insecure out-of-combat writes remain allowed. Exact 2014 defaults and native failure/notification policy not claimed."
+    },
+    {
+      "source_id": "prose-undated-019",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "nameplateShowFriendlyGuardians: currently unreadable (missing or superseded default); no active state model on which to prove the historical combat transition. Page gives no default/value domain or exact native failure policy. Current publication/absence is accounted independently; no retired setting republished, shim or vendor patch added."
+    },
+    {
+      "source_id": "prose-undated-020",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "nameplateShowFriendlyPets: currently unreadable (missing or superseded default); no active state model on which to prove the historical combat transition. Page gives no default/value domain or exact native failure policy. Current publication/absence is accounted independently; no retired setting republished, shim or vendor patch added."
+    },
+    {
+      "source_id": "prose-undated-021",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "nameplateShowFriendlyTotems: currently unreadable (missing or superseded default); no active state model on which to prove the historical combat transition. Page gives no default/value domain or exact native failure policy. Current publication/absence is accounted independently; no retired setting republished, shim or vendor patch added."
+    },
+    {
+      "source_id": "prose-undated-022",
+      "capabilities": [
+        "current-active-cvar-combat-write-protection"
+      ],
+      "status": "bounded-coverage",
+      "note": "nameplateShowFriends: current CVar storage plus player combat state and active Lua caller taint back rejection before mutation; global, C_CVar, case variation and bitfield paths covered. Secure combat and insecure out-of-combat writes remain allowed. Exact 2014 defaults and native failure/notification policy not claimed."
+    },
+    {
+      "source_id": "prose-undated-023",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "repositionfrequency: currently unreadable (missing or superseded default); no active state model on which to prove the historical combat transition. Page gives no default/value domain or exact native failure policy. Current publication/absence is accounted independently; no retired setting republished, shim or vendor patch added."
+    },
+    {
+      "source_id": "prose-undated-024",
+      "capabilities": [
+        "current-active-cvar-combat-write-protection"
+      ],
+      "status": "bounded-coverage",
+      "note": "showArenaEnemyFrames: current CVar storage plus player combat state and active Lua caller taint back rejection before mutation; global, C_CVar, case variation and bitfield paths covered. Secure combat and insecure out-of-combat writes remain allowed. Exact 2014 defaults and native failure/notification policy not claimed."
+    },
+    {
+      "source_id": "prose-undated-025",
+      "capabilities": [
+        "current-active-cvar-combat-write-protection"
+      ],
+      "status": "bounded-coverage",
+      "note": "showArenaEnemyPets: current CVar storage plus player combat state and active Lua caller taint back rejection before mutation; global, C_CVar, case variation and bitfield paths covered. Secure combat and insecure out-of-combat writes remain allowed. Exact 2014 defaults and native failure/notification policy not claimed."
+    },
+    {
+      "source_id": "prose-undated-026",
+      "capabilities": [
+        "current-active-cvar-combat-write-protection"
+      ],
+      "status": "bounded-coverage",
+      "note": "showPartyPets: current CVar storage plus player combat state and active Lua caller taint back rejection before mutation; global, C_CVar, case variation and bitfield paths covered. Secure combat and insecure out-of-combat writes remain allowed. Exact 2014 defaults and native failure/notification policy not claimed."
+    },
+    {
+      "source_id": "prose-undated-027",
+      "capabilities": [
+        "current-active-cvar-combat-write-protection"
+      ],
+      "status": "bounded-coverage",
+      "note": "showTargetOfTarget: current CVar storage plus player combat state and active Lua caller taint back rejection before mutation; global, C_CVar, case variation and bitfield paths covered. Secure combat and insecure out-of-combat writes remain allowed. Exact 2014 defaults and native failure/notification policy not claimed."
+    },
+    {
+      "source_id": "prose-undated-028",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "targetOfTargetMode: currently unreadable (missing or superseded default); no active state model on which to prove the historical combat transition. Page gives no default/value domain or exact native failure policy. Current publication/absence is accounted independently; no retired setting republished, shim or vendor patch added."
+    },
+    {
+      "source_id": "prose-undated-029",
+      "capabilities": [
+        "current-active-cvar-combat-write-protection"
+      ],
+      "status": "bounded-coverage",
+      "note": "uiScale: current CVar storage plus player combat state and active Lua caller taint back rejection before mutation; global, C_CVar, case variation and bitfield paths covered. Secure combat and insecure out-of-combat writes remain allowed. Exact 2014 defaults and native failure/notification policy not claimed."
+    },
+    {
+      "source_id": "prose-undated-030",
+      "capabilities": [],
+      "status": "audit-pending",
+      "note": "useCompactPartyFrames: currently unreadable (missing or superseded default); no active state model on which to prove the historical combat transition. Page gives no default/value domain or exact native failure policy. Current publication/absence is accounted independently; no retired setting republished, shim or vendor patch added."
+    },
+    {
+      "source_id": "prose-undated-031",
+      "capabilities": [
+        "current-active-cvar-combat-write-protection"
+      ],
+      "status": "bounded-coverage",
+      "note": "useUiScale: current CVar storage plus player combat state and active Lua caller taint back rejection before mutation; global, C_CVar, case variation and bitfield paths covered. Secure combat and insecure out-of-combat writes remain allowed. Exact 2014 defaults and native failure/notification policy not claimed."
+    },
+    {
+      "source_id": "prose-undated-033",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial section label; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-034",
+      "capabilities": [
+        "current-retail-ui-visibility-combat-protection"
+      ],
+      "status": "bounded-coverage",
+      "note": "Existing UIParent visibility model blocks insecure combat false, allows true, and preserves secure/out-of-combat visibility transitions. Exact native error text, addon-blocked notifications and historical client timing are not claimed."
+    }
+  ]
+}

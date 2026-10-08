@@ -1,0 +1,22 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_5_4_8"
+  ],
+  "revision": "48860e1f80b787dadc785937038a73d28d946bf5",
+  "scope": "p548-discovery-red",
+  "cwd": ".",
+  "target": "dedicated p548-page target (external to repository)",
+  "environment": {
+    "P548_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p548-page/data/patch-api/evidence/5.4.8-session-2026-10-08/p548-discovery-results.json"
+  },
+  "exit": 1,
+  "log": "p548-discovery-red.txt",
+  "log_sha256": "68480c176ad79773f4bf6a379277e17dfd2220952d081312577300d148ee1f86",
+  "seconds": 244.82618739699683,
+  "invalidated": false
+}

@@ -1,0 +1,86 @@
+[
+  {
+    "source_id": "wt-cvars-bloatnameplates-6",
+    "reason": "bloatnameplates: GetCVar/GetCVarDefault are nil and no later merged removal accounts for this identity. Page supplies a restriction, not a current default/storage or nameplate/buff/repositioning model. No placeholder default or republishing shim added."
+  },
+  {
+    "source_id": "wt-cvars-bloatTest-7",
+    "reason": "bloatTest: GetCVar/GetCVarDefault are nil and no later merged removal accounts for this identity. Page supplies a restriction, not a current default/storage or nameplate/buff/repositioning model. No placeholder default or republishing shim added."
+  },
+  {
+    "source_id": "wt-cvars-bloatthreat-8",
+    "reason": "bloatthreat: GetCVar/GetCVarDefault are nil and no later merged removal accounts for this identity. Page supplies a restriction, not a current default/storage or nameplate/buff/repositioning model. No placeholder default or republishing shim added."
+  },
+  {
+    "source_id": "wt-cvars-consolidateBuffs-9",
+    "reason": "consolidateBuffs: GetCVar/GetCVarDefault are nil and no later merged removal accounts for this identity. Page supplies a restriction, not a current default/storage or nameplate/buff/repositioning model. No placeholder default or republishing shim added."
+  },
+  {
+    "source_id": "wt-cvars-maxAlgoplates-11",
+    "reason": "maxAlgoplates: GetCVar/GetCVarDefault are nil and no later merged removal accounts for this identity. Page supplies a restriction, not a current default/storage or nameplate/buff/repositioning model. No placeholder default or republishing shim added."
+  },
+  {
+    "source_id": "wt-cvars-repositionfrequency-23",
+    "reason": "repositionfrequency: GetCVar/GetCVarDefault are nil and no later merged removal accounts for this identity. Page supplies a restriction, not a current default/storage or nameplate/buff/repositioning model. No placeholder default or republishing shim added."
+  },
+  {
+    "source_id": "wt-cvars-targetOfTargetMode-28",
+    "reason": "targetOfTargetMode: GetCVar/GetCVarDefault are nil and no later merged removal accounts for this identity. Page supplies a restriction, not a current default/storage or nameplate/buff/repositioning model. No placeholder default or republishing shim added."
+  },
+  {
+    "source_id": "prose-undated-005",
+    "reason": "alwaysShowActionBars: currently unreadable (missing or superseded default); no active state model on which to prove the historical combat transition. Page gives no default/value domain or exact native failure policy. Current publication/absence is accounted independently; no retired setting republished, shim or vendor patch added."
+  },
+  {
+    "source_id": "prose-undated-006",
+    "reason": "bloatnameplates: currently unreadable (missing or superseded default); no active state model on which to prove the historical combat transition. Page gives no default/value domain or exact native failure policy. Current publication/absence is accounted independently; no retired setting republished, shim or vendor patch added."
+  },
+  {
+    "source_id": "prose-undated-007",
+    "reason": "bloatTest: currently unreadable (missing or superseded default); no active state model on which to prove the historical combat transition. Page gives no default/value domain or exact native failure policy. Current publication/absence is accounted independently; no retired setting republished, shim or vendor patch added."
+  },
+  {
+    "source_id": "prose-undated-008",
+    "reason": "bloatthreat: currently unreadable (missing or superseded default); no active state model on which to prove the historical combat transition. Page gives no default/value domain or exact native failure policy. Current publication/absence is accounted independently; no retired setting republished, shim or vendor patch added."
+  },
+  {
+    "source_id": "prose-undated-009",
+    "reason": "consolidateBuffs: currently unreadable (missing or superseded default); no active state model on which to prove the historical combat transition. Page gives no default/value domain or exact native failure policy. Current publication/absence is accounted independently; no retired setting republished, shim or vendor patch added."
+  },
+  {
+    "source_id": "prose-undated-010",
+    "reason": "fullSizeFocusFrame: currently unreadable (missing or superseded default); no active state model on which to prove the historical combat transition. Page gives no default/value domain or exact native failure policy. Current publication/absence is accounted independently; no retired setting republished, shim or vendor patch added."
+  },
+  {
+    "source_id": "prose-undated-011",
+    "reason": "maxAlgoplates: currently unreadable (missing or superseded default); no active state model on which to prove the historical combat transition. Page gives no default/value domain or exact native failure policy. Current publication/absence is accounted independently; no retired setting republished, shim or vendor patch added."
+  },
+  {
+    "source_id": "prose-undated-012",
+    "reason": "nameplateMotion: currently unreadable (missing or superseded default); no active state model on which to prove the historical combat transition. Page gives no default/value domain or exact native failure policy. Current publication/absence is accounted independently; no retired setting republished, shim or vendor patch added."
+  },
+  {
+    "source_id": "prose-undated-019",
+    "reason": "nameplateShowFriendlyGuardians: currently unreadable (missing or superseded default); no active state model on which to prove the historical combat transition. Page gives no default/value domain or exact native failure policy. Current publication/absence is accounted independently; no retired setting republished, shim or vendor patch added."
+  },
+  {
+    "source_id": "prose-undated-020",
+    "reason": "nameplateShowFriendlyPets: currently unreadable (missing or superseded default); no active state model on which to prove the historical combat transition. Page gives no default/value domain or exact native failure policy. Current publication/absence is accounted independently; no retired setting republished, shim or vendor patch added."
+  },
+  {
+    "source_id": "prose-undated-021",
+    "reason": "nameplateShowFriendlyTotems: currently unreadable (missing or superseded default); no active state model on which to prove the historical combat transition. Page gives no default/value domain or exact native failure policy. Current publication/absence is accounted independently; no retired setting republished, shim or vendor patch added."
+  },
+  {
+    "source_id": "prose-undated-023",
+    "reason": "repositionfrequency: currently unreadable (missing or superseded default); no active state model on which to prove the historical combat transition. Page gives no default/value domain or exact native failure policy. Current publication/absence is accounted independently; no retired setting republished, shim or vendor patch added."
+  },
+  {
+    "source_id": "prose-undated-028",
+    "reason": "targetOfTargetMode: currently unreadable (missing or superseded default); no active state model on which to prove the historical combat transition. Page gives no default/value domain or exact native failure policy. Current publication/absence is accounted independently; no retired setting republished, shim or vendor patch added."
+  },
+  {
+    "source_id": "prose-undated-030",
+    "reason": "useCompactPartyFrames: currently unreadable (missing or superseded default); no active state model on which to prove the historical combat transition. Page gives no default/value domain or exact native failure policy. Current publication/absence is accounted independently; no retired setting republished, shim or vendor patch added."
+  }
+]

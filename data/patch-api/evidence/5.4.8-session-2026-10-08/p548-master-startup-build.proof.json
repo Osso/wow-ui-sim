@@ -1,0 +1,18 @@
+{
+  "command": [
+    "cargo",
+    "build",
+    "--bin",
+    "wow-sim"
+  ],
+  "revision": "48860e1f80b787dadc785937038a73d28d946bf5",
+  "scope": "p548-master-startup-build",
+  "cwd": ".",
+  "target": "dedicated p548-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p548-master-startup-build.txt",
+  "log_sha256": "5f9f84c7f141593ac6c50b516355d5625b666b9df8173262c7ce776a31fa8ab0",
+  "seconds": 141.0134981279989,
+  "invalidated": false
+}
