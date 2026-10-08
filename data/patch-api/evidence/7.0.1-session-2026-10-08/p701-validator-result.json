@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p701-page/data/patch-api/evidence/7.0.1-session-2026-10-08/validate.py"
+  ],
+  "revision": "2aafe08f7ad8008b232a2a71422a3e3c6a625fe8",
+  "exit": 0,
+  "stdout": "{\n  \"source\": {\n    \"inventory\": 0,\n    \"extract\": 1,\n    \"statuses\": {\n      \"metadata-only\": 1\n    }\n  },\n  \"reproduction\": {\n    \"inputs\": 239,\n    \"extract_modes\": 100,\n    \"registers\": 47,\n    \"extracts_reproduced\": 44,\n    \"inherited_extract_failures\": [\n      \"12.0.5\",\n      \"12.0.7\",\n      \"12.1.0\"\n    ]\n  },\n  \"proof\": {\n    \"sweeps\": 47,\n    \"validators\": 27\n  }\n}\n",
+  "stderr": ""
+}
