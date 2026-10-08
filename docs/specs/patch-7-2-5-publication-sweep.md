@@ -19,9 +19,9 @@ Audit [pinned Warcraft Wiki source](../../data/patch-api/sources/7.2.5-api-chang
 ## Implementation inventory
 
 - `tools/gen_patch_wikitext_register.py`: opt-in top-level summary bullet parser, canonical identities and rename directions.
-- `tests/patch_7_2_5_publication_sweep.rs`: publication and exact retained-gap sweep; 7.3.0 integration placeholder first.
+- `tests/patch_7_2_5_publication_sweep.rs`: publication and exact retained-gap sweep; merged 7.3.0 register first.
 - `src/c_api/c_garrison_trees.rs`: selected-tree context and class/type catalog queries.
-- `data/patch-api/evidence/7.2.5-session-2026-10-08/validate.py`: portable, read-only historical proof.
+- `data/patch-api/evidence/7.2.5-session-2026-10-08/validate.py`: portable, read-only historical proof plus separately sealed integrated receipts scoped at a recorded revision.
 
 ## Tests asserting this spec
 

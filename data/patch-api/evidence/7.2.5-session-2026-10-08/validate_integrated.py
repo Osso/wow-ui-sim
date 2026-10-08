@@ -120,10 +120,13 @@ def check_receipts(context):
         if receipt['command'][:2] == ['cargo', 'test'] and expected_exit == 0:
             counts = re.findall(r'test result: ok\. (\d+) passed; 0 failed;', log.read_text())
             assert counts, label
-            if label == 'prefork_full_ui-anima':
-                assert counts == ['0'], 'update explicitly documented empty prefork selection'
-            else:
-                assert any(int(count) > 0 for count in counts), 'empty selection: ' + label
+            assert any(int(count) > 0 for count in counts), 'empty selection: ' + label
+    diversion = {case for case in passed_cases((FRESH / 'integration-anima.txt').read_text())
+                 if 'blizzard_animadiversionui::' in case}
+    assert len(diversion) == 42, 'AnimaDiversion integration coverage changed'
+    # These diversion cases use #[test], not the cached prefork case macro.
+    assert not any('blizzard_animadiversionui::' in case
+                   for case in passed_cases((FRESH / 'prefork_full_ui-anima.txt').read_text()))
     warning_lines = [line for line in (FRESH / 'mists-check.txt').read_text().splitlines() if line.startswith('warning:')]
     assert all('iced-wgpu-patched/Cargo.toml' in line or '`iced_wgpu` (manifest)' in line for line in warning_lines)
     assert errors((FRESH / 'startup-addons.txt').read_text()) == errors((FRESH / 'master-startup-addons.txt').read_text()) == []
