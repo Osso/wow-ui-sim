@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p624-page/data/patch-api/evidence/6.2.4-session-2026-10-08/integrated/validate.py"
+  ],
+  "revision": "9abcd6e98fa65fca2b4d9da9f93c158db688d7c6",
+  "exit": 0,
+  "log": "final-validation.txt",
+  "log_sha256": "e04435ac883fb96c4a972da457d6e95ed1fc2f1b75c98eea47c9fd3b6509eb20",
+  "scope": "Sealed integrated artifacts, exact master comparisons and complete recorded prior validator set."
+}

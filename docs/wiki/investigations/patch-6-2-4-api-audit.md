@@ -77,13 +77,13 @@ Fresh evidence lives in [integrated/](../../../data/patch-api/evidence/6.2.4-ses
 | Negative control | **0 → 1** gap, expected exit 1; exact original one-row mutation reused |
 | `cargo fmt --check` | Exit 0 |
 | Mists `cargo check --no-default-features --features sound,gui,casc,client-mists --tests` | Exit 0; zero non-vendor warnings, six inherited iced manifest deprecations unsuppressed |
-| Prior historical/integrated validators | **31/31**; new integrated gate recorded separately |
+| All historical/integrated validators | **32/32**, including the new sealed integrated gate |
 
 [Command summary](../../../data/patch-api/evidence/6.2.4-session-2026-10-08/integrated/command-summary.json) retains commands, source revisions, exits and log hashes. All Cargo uses the dedicated `p624-page` target; background runner streams logs without poll-wait. `extend_patch_audit_receipts.py` supplies real 7.0.1/7.0.3 register and sweep rows. Reproduction preserves **249 master source files** and every recorded legacy extraction-mode outcome.
 
 The sole initial validator failure was 7.0.3's strict tool hash gate. Its [updated validator](../../../data/patch-api/evidence/7.0.3-session-2026-10-08/integrated/validate.py) admits only the **four exact tool/fixture blobs** between master **846a30663** and **0e40aff7e**: opt-in 6.2.4 additions coexist with `--legion-prepatch`. Every unrelated byte change remains rejected. Its original validator/seal table and failing log are preserved here; only its validator's own seal entry is refreshed. A concrete test accepts original/exact replacement bytes and rejects whitespace tampering, wrong recorded hashes and unrelated paths. No accounting or gap invariant is relaxed.
 
-[Integrated 6.2.4 validator](../../../data/patch-api/evidence/6.2.4-session-2026-10-08/integrated/validate.py) fixes register/sweep and prior-validator sets via `git ls-tree` at **f260499ee**, not live files or receipt subsets. It seals integrated artifacts, checks original preservation, exact master comparisons, flags, inherited failures, command input scopes, negative control and prior gates. Mutable current wiki text never changes historical proof scope.
+[Integrated 6.2.4 validator](../../../data/patch-api/evidence/6.2.4-session-2026-10-08/integrated/validate.py) fixes register/sweep and prior-validator sets via `git ls-tree` at **f260499ee**, not live files or receipt subsets. It seals integrated artifacts, checks original preservation, exact master comparisons, flags, inherited failures, command input scopes, negative control and prior gates. Mutable current wiki text never changes historical proof scope. [Final validator matrix](../../../data/patch-api/evidence/6.2.4-session-2026-10-08/integrated/validator-matrix.json) covers all **32** gates at evidence revision **9abcd6e98**; the integrated gate passes with 15 command receipts and 31 prior validators.
 
 ## Sources
 

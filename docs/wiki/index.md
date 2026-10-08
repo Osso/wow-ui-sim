@@ -1,6 +1,6 @@
 ## [2026-10-08] integration | Patch 6.2.4 API audit
 
-[Audit](investigations/patch-6-2-4-api-audit.md): merged 7.0.1/7.0.3 registers integrated on master 846a30663; own zero gaps and seven pending historical contracts unchanged. All 50 sweep/factory cases pass; all 48 other pages match exact master observations. 49 registers / 46 extracts reproduce, three inherited failures retained. Negative 0 → 1, identity/BN regressions, 32/36/8 fixtures and format/Mists checks pass; 31 prior validators pass. Historical artifacts preserved; 7.0.3 accepts only four exact opt-in tool replacements, with tamper rejection.
+[Audit](investigations/patch-6-2-4-api-audit.md): merged 7.0.1/7.0.3 registers integrated on master 846a30663; own zero gaps and seven pending historical contracts unchanged. All 50 sweep/factory cases pass; all 48 other pages match exact master observations. 49 registers / 46 extracts reproduce, three inherited failures retained. Negative 0 → 1, identity/BN regressions, 32/36/8 fixtures and format/Mists checks pass; 32 historical/integrated validators pass. Historical artifacts preserved; 7.0.3 accepts only four exact opt-in tool replacements, with tamper rejection.
 
 ## [2026-10-08] integration | Patch 7.0.3 API audit
 
