@@ -1,0 +1,53 @@
+[
+  {
+    "command": [
+      "/usr/bin/grep",
+      "-R",
+      "-nE",
+      "--include=*.rs",
+      "--include=*.lua",
+      "--include=*.xml",
+      "\\b(SetCVar|SetCVarBitfield|SetUIVisibility)\\b",
+      "/home/osso/.worktrees/wow-ui-sim-p548-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p548-page/tests"
+    ],
+    "exit": 0,
+    "output": "runtime-callers.txt",
+    "lines": 162,
+    "sha256": "6ed9cd691a26f21cff9b7a114a3e28f0cb553ecd9831bbe7e62c6062c3d31688",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/usr/bin/grep",
+      "-R",
+      "-nE",
+      "--include=*.rs",
+      "--include=*.lua",
+      "--include=*.xml",
+      "\\b(SetCVar|SetCVarBitfield|SetUIVisibility)\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+    ],
+    "exit": 0,
+    "output": "cached-blizzard-callers.txt",
+    "lines": 469,
+    "sha256": "0d278fdd16945d95cf9f9d903ffe79cc252d75983594698dd44da15e08c22db1",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/usr/bin/grep",
+      "-R",
+      "-nE",
+      "--include=*.lua",
+      "--include=*.xml",
+      "\\b(SetCVar|SetCVarBitfield|SetUIVisibility)\\b",
+      "/home/osso/.cache/wow-ui-sim/blizzard-ui/mists/AddOns"
+    ],
+    "exit": 0,
+    "output": "cached-mists-callers.txt",
+    "lines": 465,
+    "sha256": "69271d8f29f511d1c0ee8633e5177a59474b1d2a647f9415db5d74bb53f3c3db",
+    "stderr": ""
+  }
+]

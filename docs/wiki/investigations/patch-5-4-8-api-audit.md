@@ -6,7 +6,7 @@ Pinned pageid 177816, revision 1736772 (2014-05-16). This is the 2014 retail Mis
 
 The page contains 27 changed CVar identities and one `SetUIVisibility` combat restriction, not API additions/removals. Default extraction retains all prose and yields 32 supplemental occurrences. An opt-in `--combat-restriction-bullets` generator flag preserves the 28 inventory occurrences; prior defaults remain unchanged.
 
-The prefork sweep applies current-retail publication/absence only. Two ordered integration placeholders remain: 6.0.1 then 6.0.2, followed by the merged 6.1.0 and later retail chain. Classic 5.5.x registers are excluded.
+The prefork sweep applies current-retail publication/absence only. Real merged 6.0.1 and 6.0.2 registers precede 6.1.0 and the later retail chain. Classic 5.5.x registers are excluded.
 
 ## Retirement and caller evidence
 
@@ -26,7 +26,15 @@ The CVar policy lives under `src/c_api/` because it backs `C_CVar`; legacy globa
 
 All 60 occurrences accounted: 28 inventory plus 32 supplemental; 36 bounded, 21 pending, three metadata. Meaningful models cover 13 currently readable CVars plus UI visibility. Seven inventory gaps and 14 inactive behavioral rows remain distinct. Seven later-superseded absent settings pass publication/absence only; this audit makes no retirements.
 
-## Proof status
+## Integrated proof on master a9d7c9566
+
+Real 6.0.1/6.0.2 supersession registers leave all 28 own observations and seven gaps unchanged; no attributable replacement is needed. All 55 pages reproduce their expected gaps, and all 9,712 observations on the other 54 pages equal fresh pinned-master outputs byte-for-value. Saved-source reproduction passes for 55 registers and 52 extracts; the same inherited 12.0.5/12.0.7/12.1.0 failures remain.
+
+Nine original/rebased audit commits and one external queued-register revision have explicit patch IDs, trees and blob mappings. All 226 historical artifacts remain preserved, including the original validator; its complete original invariants replay successfully through the pinned mapping. Source-directory comparisons use preserved original blob identities, not rebased trees that include unrelated 6.0.x runtime changes.
+
+Untruncated caller and protected-name scans, cache input digests, and concrete combat-fixture review are retained in [integrated caller review](../../../data/patch-api/evidence/5.4.8-session-2026-10-08/integrated/caller-scan-summary.md). Regression/master and portability checks are recorded below when complete.
+
+## Historical proof status
 
 Initial RED reproduced insecure combat writes; the first fixture was incorrectly a map rather than a sequence, then corrected. Discovery found the seven gaps above; cached modeled behavior passed. Targeted acceptance passes: 54/54 publication/factory cases, all 9,083 observations retained, and all 52 other pages match pinned master exactly. Cached combat plus CVar/world-map/keybinding filters pass (1/26/26/13); bare combat and existing CVar/bitfield/display/UI-visibility integration scopes pass (1/18/2/9/3). All four Python fixture scripts pass (4/36/34/8), format passes, and Mists `cargo check --no-default-features --features sound,gui,casc,client-mists --tests` passes with zero non-vendor warnings. Addons-enabled branch and master startup outputs both equal `[]`.
 
@@ -36,7 +44,7 @@ Portability gate PASS at `e9b815c8d`: clean detached checkout 34/34 validators, 
 
 ## Remaining limits
 
-Seven publication gaps, 14 inactive historical behavioral rows and exact native failure/default/notification parity remain precisely accounted, not solved with shims. Three inherited extract reproduction failures remain unchanged. The ordered 6.0.1/6.0.2 placeholders require main-thread integration after those retail pages merge; neither queued register intersects an own identity at its recorded revision. This branch was not pushed or merged.
+Seven publication gaps, 14 inactive historical behavioral rows and exact native failure/default/notification parity remain precisely accounted, not solved with shims. Three inherited extract reproduction failures remain unchanged. Real merged 6.0.1/6.0.2 registers are integrated without changing an own observation. This branch was not pushed or merged.
 
 ## Sources
 

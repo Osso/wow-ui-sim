@@ -1,0 +1,86 @@
+cached-retail/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonBuildingUI.lua:892:	local uiScale = UIParent:GetScale();
+cached-retail/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonBuildingUI.lua:893:	GarrisonBuildingPlacer:SetPoint("CENTER", UIParent, "BOTTOMLEFT", cursorX / uiScale, cursorY / uiScale);
+cached-retail/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonBuildingUI.lua:1289:	local uiScale = UIParent:GetScale();
+cached-retail/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonBuildingUI.lua:1290:	GarrisonBuildingPlacer:SetPoint("CENTER", UIParent, "BOTTOMLEFT", cursorX / uiScale, cursorY / uiScale);
+cached-retail/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonBuildingUI.lua:1304:	local uiScale = UIParent:GetScale();
+cached-retail/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonBuildingUI.lua:1305:	GarrisonBuildingPlacer:SetPoint("CENTER", UIParent, "BOTTOMLEFT", cursorX / uiScale, cursorY / uiScale);
+cached-retail/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonBuildingUI.lua:1366:	local uiScale = UIParent:GetScale();
+cached-retail/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonBuildingUI.lua:1367:	GarrisonBuildingPlacer:SetPoint("CENTER", UIParent, "BOTTOMLEFT", cursorX / uiScale, cursorY / uiScale);
+cached-retail/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonBuildingUI.lua:1385:	local uiScale = UIParent:GetScale();
+cached-retail/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonBuildingUI.lua:1386:	GarrisonBuildingPlacer:SetPoint("CENTER", UIParent, "BOTTOMLEFT", cursorX / uiScale, cursorY / uiScale);
+cached-retail/Blizzard_UnitFrame/Mainline/PartyMemberFrame.lua:250:	CVarCallbackRegistry:RegisterCallback("showPartyPets", self.UpdatePet, self);
+cached-retail/Blizzard_UnitFrame/Mainline/PartyMemberFrame.lua:317:	if UnitIsConnected(self:GetUnit()) and UnitExists(self.PetFrame.unit) and CVarCallbackRegistry:GetCVarValueBool("showPartyPets") then
+cached-retail/Blizzard_UnitFrame/Mainline/TargetFrame.lua:16:CVarCallbackRegistry:SetCVarCachable("showTargetOfTarget");
+cached-retail/Blizzard_UnitFrame/Mainline/TargetFrame.lua:860:local targetOfTargetCVar = "showTargetOfTarget";
+cached-retail/Blizzard_UnitFrame/Mainline/TargetFrame.lua:870:	self.showTargetOfTarget = CVarCallbackRegistry:GetCVarValueBool(targetOfTargetCVar);
+cached-retail/Blizzard_UnitFrame/Mainline/TargetFrame.lua:871:	if self.showTargetOfTarget then
+cached-retail/Blizzard_UnitFrame/Mainline/TargetFrame.lua:891:	if (self.showTargetOfTarget and UnitExists(parent.unit) and UnitExists(self.unit)
+cached-retail/Blizzard_UnitFrame/Shared/PartyFrame.lua:4:CVarCallbackRegistry:SetCVarCachable("showPartyPets");
+cached-retail/Blizzard_UnitFrame/Shared/PartyFrame.lua:25:	CVarCallbackRegistry:RegisterCallback("showPartyPets", self.UpdateSpacingAndLayout, self);
+cached-retail/Blizzard_UnitFrame/Shared/PartyFrame.lua:139:	local showPartyPets = CVarCallbackRegistry:GetCVarValueBool("showPartyPets");
+cached-retail/Blizzard_UnitFrame/Shared/PartyFrame.lua:140:	if (showPartyPets) then
+cached-retail/Blizzard_UnitFrame/Shared/PartyMemberFrame.lua:12:CVarCallbackRegistry:SetCVarCachable("showPartyPets");
+cached-retail/Blizzard_FrameXML/Bindings_Mists.xml:1117:		local showEnemies = Settings.GetValue("nameplateShowEnemies");
+cached-retail/Blizzard_FrameXML/Bindings_Mists.xml:1119:			Settings.SetValue("nameplateShowEnemies", false);
+cached-retail/Blizzard_FrameXML/Bindings_Mists.xml:1122:			Settings.SetValue("nameplateShowEnemies", true);
+cached-retail/Blizzard_FrameXML/Bindings_Mists.xml:1147:		local showEnemies = Settings.GetValue("nameplateShowEnemies");
+cached-retail/Blizzard_FrameXML/Bindings_Mists.xml:1150:			Settings.SetValue("nameplateShowEnemies", true);
+cached-retail/Blizzard_FrameXML/Bindings_Mists.xml:1159:			Settings.SetValue("nameplateShowEnemies", false);
+cached-retail/Blizzard_FrameXML/Bindings_Standard.xml:1122:		local showEnemies = Settings.GetValue("nameplateShowEnemies");
+cached-retail/Blizzard_FrameXML/Bindings_Standard.xml:1124:			Settings.SetValue("nameplateShowEnemies", false);
+cached-retail/Blizzard_FrameXML/Bindings_Standard.xml:1127:			Settings.SetValue("nameplateShowEnemies", true);
+cached-retail/Blizzard_FrameXML/Bindings_Standard.xml:1150:		local showEnemies = Settings.GetValue("nameplateShowEnemies");
+cached-retail/Blizzard_FrameXML/Bindings_Standard.xml:1153:			Settings.SetValue("nameplateShowEnemies", true);
+cached-retail/Blizzard_FrameXML/Bindings_Standard.xml:1161:			Settings.SetValue("nameplateShowEnemies", false);
+cached-retail/Blizzard_FrameXML/MotionSickness.lua:6:	landscapeDarkeningUseFixedScale = true,		-- whether to ignore uiScale
+cached-retail/Blizzard_FrameXML/MotionSickness.lua:11:	focalCircleUseFixedScale = true,			-- whether to ignore uiScale
+cached-retail/Blizzard_FrameXML/Bindings_WoWHack.xml:319:		local showEnemies = Settings.GetValue("nameplateShowEnemies");
+cached-retail/Blizzard_FrameXML/Bindings_WoWHack.xml:321:			Settings.SetValue("nameplateShowEnemies", false);
+cached-retail/Blizzard_FrameXML/Bindings_WoWHack.xml:324:			Settings.SetValue("nameplateShowEnemies", true);
+cached-retail/Blizzard_FrameXML/Bindings_WoWHack.xml:347:		local showEnemies = Settings.GetValue("nameplateShowEnemies");
+cached-retail/Blizzard_FrameXML/Bindings_WoWHack.xml:350:			Settings.SetValue("nameplateShowEnemies", true);
+cached-retail/Blizzard_FrameXML/Bindings_WoWHack.xml:358:			Settings.SetValue("nameplateShowEnemies", false);
+cached-retail/Blizzard_NewPlayerExperience/Blizzard_Tutorial.lua:46:	SetCVar("nameplateShowEnemies", 1); -- 0
+cached-retail/Blizzard_SettingsDefinitions_Shared/Graphics.lua:803:			local getValue, setValue, getDefaultValue = Settings.CreateCVarAccessorClosures("useUiScale", Settings.VarType.Boolean);
+cached-retail/Blizzard_SettingsDefinitions_Shared/Graphics.lua:811:			local getValue, setValue, getDefaultValue = Settings.CreateCVarAccessorClosures("uiscale", Settings.VarType.Number);
+cached-retail/Blizzard_GlueParent/Mainline/GlueParent.lua:881:	local uiScale = GlueParent:GetEffectiveScale();
+cached-retail/Blizzard_GlueParent/Mainline/GlueParent.lua:883:	return x / uiScale, y / uiScale;
+cached-retail/Blizzard_GlueParent/Mainline/GlueParent.lua:887:	local uiScale = GlueParent:GetEffectiveScale();
+cached-retail/Blizzard_GlueParent/Mainline/GlueParent.lua:889:	return x / uiScale, y / uiScale;
+cached-retail/Blizzard_SettingsDefinitions_Frame/Combat.lua:31:	Settings.SetupCVarCheckbox(category, "showTargetOfTarget", SHOW_TARGET_OF_TARGET_TEXT, OPTION_TOOLTIP_SHOW_TARGET_OF_TARGET);
+cached-retail/Blizzard_SettingsDefinitions_Frame/Nameplates.lua:460:		local enemyUnitSetting, enemyUnitInitializer = Settings.SetupCVarCheckbox(category, "nameplateShowEnemies", UNIT_NAMEPLATES_SHOW_ENEMIES, enemyTooltip);
+cached-retail/Blizzard_SharedXML/Mainline/UIDropDownMenu.lua:1074:		local uiScale;
+cached-retail/Blizzard_SharedXML/Mainline/UIDropDownMenu.lua:1076:		if ( GetCVar("useUIScale") == "1" ) then
+cached-retail/Blizzard_SharedXML/Mainline/UIDropDownMenu.lua:1077:			uiScale = tonumber(GetCVar("uiscale"));
+cached-retail/Blizzard_SharedXML/Mainline/UIDropDownMenu.lua:1078:			if ( topLevelParentScale < uiScale ) then
+cached-retail/Blizzard_SharedXML/Mainline/UIDropDownMenu.lua:1079:				uiScale = topLevelParentScale;
+cached-retail/Blizzard_SharedXML/Mainline/UIDropDownMenu.lua:1082:			uiScale = topLevelParentScale;
+cached-retail/Blizzard_SharedXML/Mainline/UIDropDownMenu.lua:1084:		listFrame:SetScale(uiScale);
+cached-retail/Blizzard_SharedXML/Mainline/UIDropDownMenu.lua:1120:				cursorX = cursorX/uiScale;
+cached-retail/Blizzard_SharedXML/Mainline/UIDropDownMenu.lua:1121:				cursorY =  cursorY/uiScale;
+cached-retail/Blizzard_SharedXML/Mainline/UIDropDownMenu.lua:1221:			local offLeft = listFrame:GetLeft()/uiScale;
+cached-retail/Blizzard_SharedXML/Mainline/UIDropDownMenu.lua:1222:			local offRight = (GetScreenWidth() - listFrame:GetRight())/uiScale;
+cached-retail/Blizzard_SharedXML/Mainline/UIDropDownMenu.lua:1223:			local offTop = (GetScreenHeight() - listFrame:GetTop())/uiScale;
+cached-retail/Blizzard_SharedXML/Mainline/UIDropDownMenu.lua:1224:			local offBottom = listFrame:GetBottom()/uiScale;
+cached-retail/Blizzard_SharedXML/Mainline/SharedUIPanelTemplates.xml:1516:		This was primarily added for Glues, where we used to apply a UIScale at 1.0, with no way to turn it off.
+cached-retail/Blizzard_SharedXML/Shared/Scroll/ScrollBox.lua:542:function ScrollBoxBaseMixin:SetShadowsScale(uiScale)
+cached-retail/Blizzard_SharedXML/Shared/Scroll/ScrollBox.lua:543:	self.Shadows:SetScale(uiScale);
+cached-retail/Blizzard_Deprecated_ArenaUI/Deprecated_ArenaUI.lua:8:CVarCallbackRegistry:SetCVarCachable("showArenaEnemyPets");
+cached-retail/Blizzard_Deprecated_ArenaUI/Deprecated_ArenaUI.lua:75:	if ( (event == "CVAR_UPDATE") and (arg1 == "showArenaEnemyFrames") ) then
+cached-retail/Blizzard_Deprecated_ArenaUI/Deprecated_ArenaUI.lua:119:		if ( GetCVarBool("showArenaEnemyFrames") or cvarUpdate ) then
+cached-retail/Blizzard_Deprecated_ArenaUI/Deprecated_ArenaUI.lua:365:	if UnitGUID(self.unit) and CVarCallbackRegistry:GetCVarValue("showArenaEnemyPets") then
+cached-retail/Blizzard_RaidUI/Classic/Blizzard_RaidUI.lua:618:	local uiScale = UIParent:GetScale();
+cached-retail/Blizzard_RaidUI/Mainline/Blizzard_RaidUI.lua:582:	local uiScale = UIParent:GetScale();
+cached-retail/Blizzard_BoostTutorial/Blizzard_Tutorial.lua:23:	SetCVar("nameplateShowEnemies", 1); -- 0
+cached-retail/Blizzard_GarrisonTemplates/Blizzard_GarrisonMissionTemplates.lua:827:	local uiScale = UIParent:GetScale();
+cached-retail/Blizzard_GarrisonTemplates/Blizzard_GarrisonMissionTemplates.lua:829:	placer:SetPoint("TOP", UIParent, "BOTTOMLEFT", cursorX / uiScale, cursorY / uiScale + placer.yOffset);
+cached-retail/Blizzard_GarrisonTemplates/Blizzard_GarrisonMissionTemplates.lua:873:	local uiScale = UIParent:GetScale();
+cached-retail/Blizzard_GarrisonTemplates/Blizzard_GarrisonMissionTemplates.lua:874:	self:SetPoint("TOP", UIParent, "BOTTOMLEFT", cursorX / uiScale, cursorY / uiScale + self.yOffset);
+cached-retail/Blizzard_Commentator/Classic/Blizzard_Commentator.lua:241:	SetCVar("nameplateShowEnemies", 1);
+cached-retail/Blizzard_Commentator/Classic/Blizzard_Commentator.lua:242:	SetCVar("nameplateShowEnemyPets", 1);
+cached-retail/Blizzard_Commentator/Classic/Blizzard_Commentator.lua:243:	SetCVar("nameplateShowEnemyGuardians", 0);
+cached-retail/Blizzard_Commentator/Classic/Blizzard_Commentator.lua:244:	SetCVar("nameplateShowEnemyTotems", 0);
+cached-retail/Blizzard_Commentator/Mainline/Blizzard_Commentator.lua:221:	SetCVar("nameplateShowEnemies", 1);
+cached-retail/Blizzard_Commentator/Mainline/Blizzard_Commentator.lua:222:	SetCVar("nameplateShowEnemyPets", 1);
+cached-retail/Blizzard_Commentator/Mainline/Blizzard_Commentator.lua:223:	SetCVar("nameplateShowEnemyGuardians", 0);
+cached-retail/Blizzard_Commentator/Mainline/Blizzard_Commentator.lua:224:	SetCVar("nameplateShowEnemyTotems", 0);

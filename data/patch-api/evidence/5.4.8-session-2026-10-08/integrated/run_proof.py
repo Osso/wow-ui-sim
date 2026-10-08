@@ -18,14 +18,14 @@ def run_proof(name, command):
     log = EVIDENCE / f'{name}.txt'
     environment = {key: value for key, value in os.environ.items()
                    if key.startswith(('P548_', 'PATCH_', 'WOW_SIM_', 'PREFORK_'))
-                   or key.endswith('_SWEEP_OUT')}
+                   or key.endswith('_SWEEP_OUT') or key == 'CARGO_TARGET_DIR'}
     with log.open('w') as output:
         result = subprocess.run(command, cwd=ROOT,
                                 env=dict(os.environ, CARGO_TARGET_DIR=os.environ.get('CARGO_TARGET_DIR', TARGET),
                                          PYTHONDONTWRITEBYTECODE='1'),
                                 stdout=output, stderr=subprocess.STDOUT)
     receipt = {'command': command, 'revision': revision, 'scope': name,
-               'cwd': '.', 'target': 'dedicated p548-page target (external to repository)',
+               'cwd': '.', 'target': os.environ.get('CARGO_TARGET_DIR', TARGET),
                'environment': environment, 'exit': result.returncode,
                'log': log.name, 'log_sha256': hashlib.sha256(log.read_bytes()).hexdigest(),
                'seconds': time.monotonic() - started, 'invalidated': False}

@@ -1,0 +1,10 @@
+{
+  "before_gaps": 7,
+  "after_gaps": 7,
+  "observation_changes": {},
+  "replacements": [],
+  "integrated_registers": [
+    "6.0.1",
+    "6.0.2"
+  ]
+}

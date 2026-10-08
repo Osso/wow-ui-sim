@@ -1,0 +1,2030 @@
+[
+  {
+    "profile": "retail",
+    "path": "Blizzard_APIDocumentationGenerated/CVarDocumentation.lua",
+    "sha256": "8cd903bed7a22c8f6c647ab4b2fada2b61f8a9db1d132825c2d2c46ab4fffe03",
+    "bytes": 4343
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_APIDocumentationGenerated/GameUIDocumentation.lua",
+    "sha256": "5bca0ff4bbfbd4c8ac4180fda84574eb8fdb6660c9998c51d09c6a06d698d96f",
+    "bytes": 591
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_AccessibilityTemplates/TextSizeManager.lua",
+    "sha256": "094f99deb9910167af7481ad6a99cd51f6126f14dc358ca52adb9133d87c43a4",
+    "bytes": 4157
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_AddFriend/AddFriendTemplates.xml",
+    "sha256": "1a6ddf804a63491ff5ad6f205c23c9a55760d987a078aeef3fc2d61420fa493d",
+    "bytes": 19931
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_ArtifactUI/Blizzard_ArtifactUI.lua",
+    "sha256": "9501d7c6ab5c3606cea99c537ce2c0f6842ad4d0225bb6ad916d70343b943786",
+    "bytes": 10833
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseSellFrame.lua",
+    "sha256": "57d325fab8f2c949d94617f894824e8a9e5320651e0d87aced72caf5574556cb",
+    "bytes": 15517
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseWoWTokenFrame.lua",
+    "sha256": "fb30573ddd196bb0a2ad9ceb257a4b4aad7be0372076e2b7abb7514356fa4252",
+    "bytes": 15668
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_AzeriteEssenceUI/Blizzard_AzeriteEssenceUI.lua",
+    "sha256": "9067dbcae9f805f104d45ce348ad28ce692a77293481fb661260985fe6d0eacf",
+    "bytes": 49195
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_AzeriteRespecUI/Blizzard_AzeriteRespecUI.lua",
+    "sha256": "7256b20cbe876d1c9f2efbff40f13d29b3f214a6c1edbad2c1eb5ee9d56a4df6",
+    "bytes": 6797
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_BattlefieldMap/Classic/Blizzard_BattlefieldMap.lua",
+    "sha256": "d9866904b14f975ae5cf2f4039968d13a5858b1b8d83d73332bfdf4304eaa06e",
+    "bytes": 13253
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_BattlefieldMap/Classic/Blizzard_BattlefieldMap.xml",
+    "sha256": "26d7355582b0ae5509c7bc8c27d24eb99fab99554c6d995eb9532f648f9a26b5",
+    "bytes": 5974
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_BattlefieldMap/Mainline/Blizzard_BattlefieldMap.lua",
+    "sha256": "017c76194800322aa5eff6faddae463b4df17e177b15c7bc42ade7e6f6b0709a",
+    "bytes": 11901
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_BattlefieldMap/Mainline/Blizzard_BattlefieldMap.xml",
+    "sha256": "066c1f3765dc391f992b873356349663871975bd19aba1ade651c72d7dd699df",
+    "bytes": 5551
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_BoostTutorial/Blizzard_Tutorial.lua",
+    "sha256": "6e8950781e80e0bf3f22a18211a31157b2b6f68efbbea4d9dd6660ba38b1f065",
+    "bytes": 1906
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_Calendar/Mainline/Blizzard_Calendar.lua",
+    "sha256": "b4c917d8173e153e9c22c24dcaf1290255ee16cc0d549d3fa39fa7f449759fbf",
+    "bytes": 174142
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_ChallengesUI/Mainline/Blizzard_ChallengesUI.lua",
+    "sha256": "54aef35b6597a5c9f44eab68386c13478098e0e0b787b094a3d335a3b0446e23",
+    "bytes": 37845
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_Channels/ChannelButton.lua",
+    "sha256": "a526c383b58d2f00a4cb8f425b09900d51a20645a5fb7ce2baae7f2cce33f536",
+    "bytes": 12413
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_CharacterCreate/Blizzard_CharacterCreate.lua",
+    "sha256": "fa0a70b51dbde6da4c6ee63213c2cf15892181dd933719d271203862b7beb56e",
+    "bytes": 86589
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_ChatFrame/Mainline/ChatConfigFrame.lua",
+    "sha256": "7d4b5fddf06b52cc8fedb624341b9edb367886d9f61a014d836be5893c3cd133",
+    "bytes": 99107
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_ChatFrame/Shared/TextToSpeech.lua",
+    "sha256": "64c1172d2bca28dcb15e7ab458d4f1f1438e8b070cfbea73962ec9e871b4e9f8",
+    "bytes": 2840
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_ChatFrame/Shared/TextToSpeechCommands.lua",
+    "sha256": "116dee19599cabc5bc1389645286f805664d947b8557448d258c8f4348376718",
+    "bytes": 69846
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_ChatFrame/Shared/TextToSpeechFrame.lua",
+    "sha256": "4445cd4b727bab5596872e10490464e16ff61740891e05593a367582b0eeaa72",
+    "bytes": 37256
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_ChatFrame/Shared/VoiceChatTranscriptionButton.lua",
+    "sha256": "7fc4edca411b2e751bd5381edb74c6af1d13d74337b245419501d89ba76f6485",
+    "bytes": 7258
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_ChatFrameBase/Mainline/ChatFrameUtilOverrides.lua",
+    "sha256": "c6bd33f1c12c6fae81b09ba1efc04b041c758197fd581c9568f7266d8c9e4d47",
+    "bytes": 6708
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_ChatFrameBase/Shared/SlashCommands.lua",
+    "sha256": "77372981e9527849392c23d6e3266eb9aae144528008fb9c9b0ac572ef596778",
+    "bytes": 58869
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_ClickBindingUI/Blizzard_ClickBindingUI.lua",
+    "sha256": "ecb8e6a703d460942eb91240d0926d2c21b6d75bc190cd8446b39866e845bf17",
+    "bytes": 27575
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_Collections/Mainline/Blizzard_Collections.lua",
+    "sha256": "abed397438456ce3555290748f4ff240fec1bcf60acb1f1e5323e9fa513353ed",
+    "bytes": 2780
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_Collections/Mainline/Blizzard_HeirloomCollection.lua",
+    "sha256": "52e0c9044daf4aeedbf29df83a16edee120dc9847e289f1f442c9f1849cb2dcf",
+    "bytes": 23387
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_Collections/Mainline/Blizzard_MountCollection.lua",
+    "sha256": "ff113526852d24335c32aabbcfb370938f5cd2f34fbb67948d39472e8510484a",
+    "bytes": 39580
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_Collections/Mainline/Blizzard_ToyBox.lua",
+    "sha256": "af7ea4b9e36d075e4062b08d96db2f9dd8c2568a006ef3a2dda1ea1bb1988d53",
+    "bytes": 14427
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_Collections/Mainline/Blizzard_Wardrobe.lua",
+    "sha256": "527194ad36f9d8114d2ae7e6bef3f737e8fc1e8095f05d23f338fc2342c116eb",
+    "bytes": 62691
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_Collections/Shared/Blizzard_PetCollection.lua",
+    "sha256": "41491aa6c4be386800db8bd302669c9df0026000402f4e0e246f6ae1cc91000a",
+    "bytes": 61298
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_Collections/Shared/Blizzard_Wardrobe_Sets.lua",
+    "sha256": "062e9d6f324a32d7c1d4c9a737e8a5f87dfaeddc75c3db86ab3c97c0aeaa8fe4",
+    "bytes": 41916
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_Commentator/Classic/Blizzard_Commentator.lua",
+    "sha256": "92086b0c4279b8c6ea8fd5befd908a62b2ecf14242610e5ebd08101d6c566ccf",
+    "bytes": 19363
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_Commentator/Mainline/Blizzard_Commentator.lua",
+    "sha256": "d9f8e815b5ac739e4eced325db2493fe66cc64a8bff44c542716b780b538a5ee",
+    "bytes": 18035
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_Communities/CommunitiesFrame.lua",
+    "sha256": "34bf737bc49c15d845f152cc739389ab7a3a21531004ab44c60f6c403cb0b369",
+    "bytes": 65793
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_Communities/CommunitiesMemberList.lua",
+    "sha256": "ebee0f13fda036e27d1053c6eb552403599b6bd57615e1e3ce12d6eb0b95b7dd",
+    "bytes": 59356
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_CompactRaidFrames/Classic/Blizzard_CompactRaidFrameManager.xml",
+    "sha256": "055c22f631bfcd1ce3dfbefff2166b3373c4aa24aea0053a9aed007e603219e0",
+    "bytes": 25510
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_CompactRaidFrames/Mainline/Blizzard_CompactRaidFrameManager.lua",
+    "sha256": "c3811f6368c70f37bd323b51c82b9e4e161504eb7fc618cab478c10577e3a66c",
+    "bytes": 42229
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_CooldownViewer/CooldownViewerSettings.lua",
+    "sha256": "86e4c4fe5050091e626dfc3772d423940db1d55e2a0ae3f27979fa1931daeb02",
+    "bytes": 64790
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_CovenantRenown/Blizzard_CovenantRenown.lua",
+    "sha256": "e5a57fce2846aeb77c10a9672b510f14759e171c4a0ac7a8912e6f7a3a36603c",
+    "bytes": 12928
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_CustomizationUI/Blizzard_CustomizationAudioInterface.lua",
+    "sha256": "e8383073d5f6bd6a4d5e878fbd2944316a725f5c09d3e4824e1d158ba1595a84",
+    "bytes": 5993
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_DebugTools/Blizzard_DebugTools.lua",
+    "sha256": "51b1b36c64bcde6f13c9067f305a6b2fbdbb225139d83bc0254f038d39358c5e",
+    "bytes": 10869
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_DebugTools/Blizzard_TexelSnappingVisualizer.lua",
+    "sha256": "3f88e6341cb0ac7fab516f896e75acb42a2d8714d5d7cb1a831d330412a5168f",
+    "bytes": 4268
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_DelvesCompanionConfiguration/Blizzard_DelvesCompanionConfiguration.lua",
+    "sha256": "60a8df72b3553f7984b8b7f5d7bdc90ac90d4a063e24fbd2bd907645eddb0e41",
+    "bytes": 29396
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_EditMode/Shared/EditModeTemplates.lua",
+    "sha256": "05d612d045e2142a4aeb82e0288da77be8b5e6679fb62e61ffb94818ad6b11a9",
+    "bytes": 13168
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_EncounterJournal/Mainline/Blizzard_EncounterJournal.lua",
+    "sha256": "334831414fe2787233fe3ce6addcaf6b6266c95912f37b64d1b5484fdbcda41e",
+    "bytes": 130557
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_EncounterJournal/Mainline/Blizzard_MonthlyActivities.lua",
+    "sha256": "98517a04a6acc3705d65cb34d228c5aba28448ed06e21b4dc71ae072733ff2dd",
+    "bytes": 57478
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_ExpansionLandingPage/Blizzard_MidnightLandingPage.lua",
+    "sha256": "cc077a1ea5dddf89263381ee7fd204acf7d15bbfc3fbe29250140983ad89ebc9",
+    "bytes": 6600
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_FrameXML/Bindings_Mists.xml",
+    "sha256": "31f545e7ed45c993c82dee03d0d5ecdd7c496b67481801414241852fec96bb49",
+    "bytes": 58294
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_FrameXML/Bindings_Standard.xml",
+    "sha256": "555764d4c4875e41d2e782c3268beed69ee4fca142a8602ec17752cbd4ed090b",
+    "bytes": 71621
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_FrameXML/Bindings_WoWHack.xml",
+    "sha256": "5b1ead934311e1a530a1ec5d81fc3eb4320d916e4abad61d4019b31dfbeec166",
+    "bytes": 25682
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_FrameXML/Bindings_WoWLabs.xml",
+    "sha256": "3c88e504c9e2201a41217bc2ce8082b28e06b6ce03dff8ff707e53b1a2f335c1",
+    "bytes": 23426
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_FrameXML/MovieFrame.lua",
+    "sha256": "42585a1ec5c020ee4b31878f16cda7f41b216e0a05ffaca4eb458aa737c85d1c",
+    "bytes": 3220
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_FrameXML/PVPHonorSystem.lua",
+    "sha256": "e2905620aed6a82cbf41b0ecb135e75207116a4803f6a770e226bfbbb9b75783",
+    "bytes": 9516
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_FrameXML/WardrobeCustomSets.lua",
+    "sha256": "92d9835f59ab1940f4c0c44e43dbe4c47db2c198efe18ca250ea809f5c39efd2",
+    "bytes": 18381
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_FriendsFrame/Mainline/FriendRequestsListTemplates.lua",
+    "sha256": "57b2ba1571ffc2141776cd0ba0ccdb85298db45171d547b25684820e03194459",
+    "bytes": 19829
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+    "sha256": "c8814e094fbfa0bb6a652b55e51afe2b6ac3b5dd67d2687cbf2d51461e7225a7",
+    "bytes": 101949
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.xml",
+    "sha256": "e4cfd5247b3fb108b6acc63df6fa889b9d8664cedcea5ceb36363b15212d1cc2",
+    "bytes": 49640
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_GMChatUI/Blizzard_GMChatUI.lua",
+    "sha256": "d1d9617f62619c1820543ec37133d114eafc5763f71aad47d7b474d63775ed37",
+    "bytes": 6075
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_Game/Mainline/EventImplementation.lua",
+    "sha256": "d22e61a34db33ecb7349da7d081d5b19edd7ff6f8095aeed1749077de214c695",
+    "bytes": 32149
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_Game/Shared/Game.lua",
+    "sha256": "68ea452a0bb9d4f130d81885959b04a5da4b19e36b03253efa0635849e842866",
+    "bytes": 1855
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_GarrisonTemplates/Blizzard_CovenantMissionTemplates.lua",
+    "sha256": "2b959adc446eb07236abf839c89923da881506e363af5ac495c541b93caa904d",
+    "bytes": 31417
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonBuildingUI.lua",
+    "sha256": "88103333849e8efdbb46c746ed1a3ad89efb85ad3e82fcd39b70df2c1ff12ade",
+    "bytes": 70231
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonMissionUI.lua",
+    "sha256": "b3f4b2c143c4db0793197be8e772726d96c153b687b4df098db51448af99dfe7",
+    "bytes": 64478
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonShipyardUI.lua",
+    "sha256": "b5c3bb5a5e2f8e4bc6a2f3286988ea69519fb10e0d9cedfdd90eb55e92b51605",
+    "bytes": 90224
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_GarrisonUI/Mainline/Blizzard_OrderHallMissionUI.lua",
+    "sha256": "6f9e3563f0429187f2d583ef6665e08e4068614d3a90c8e0ebd3564729ed17dd",
+    "bytes": 40700
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_GlueParent/Mainline/GlueParent.lua",
+    "sha256": "fcebc8836799fe33333108e6739c5aa2888985c77809a74f1f299279906d3a4f",
+    "bytes": 31181
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_GlueParent/Shared/GlueParentUtil.lua",
+    "sha256": "5dc568fc28c7053a070b2a0efd773fa7dfa216395af9e413358758fba7d0e7c6",
+    "bytes": 3008
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_GlueXML/Mainline/CharacterLoginUtil.lua",
+    "sha256": "dc2193fa67c909f495b5a75cc24bbaba9d1349de42594c005cc8b9b05e36fd98",
+    "bytes": 1392
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_GlueXML/Mainline/CharacterSelect.lua",
+    "sha256": "9373d83a779206f942fec429ccc01499230fdabf4fec38a553bfb0e766767bcb",
+    "bytes": 108282
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_GlueXML/Mainline/CharacterSelect/CharacterSelectUI.lua",
+    "sha256": "56138648ea252a74492eaa8550359d9a6896808d49d4d901cd67b73ec3896a0a",
+    "bytes": 33755
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_GlueXML/Mainline/CinematicsMenu.lua",
+    "sha256": "e6083b4f96c11ba132a702cd5277a7a4032388e394d54b9df1c04bcc0199d8ab",
+    "bytes": 8458
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_GlueXML/WoWLabs/PlunderstormLobby.lua",
+    "sha256": "1bd5deac9026650bc69d316432a75e33890ed2307c972fab4519723f7e763d25",
+    "bytes": 9312
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_GroupFinder/Mainline/LFDFrame.lua",
+    "sha256": "0197d212c1bacac40205c7eff57b32a83836040db260a5597feb72eea3924316",
+    "bytes": 34599
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_HouseEditor/Blizzard_HouseEditorStorageFrame.lua",
+    "sha256": "422b4dc5ce64d703aee64a003c7448ed4fcb589c6ff23576cecc884d8b33f0f2",
+    "bytes": 33151
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_HousingDashboard/Blizzard_HousingDashboardInitiatives.lua",
+    "sha256": "848634cc1f08f2cc7aa85b07980268d743dce7a737ebaaad58ec92828ac2248f",
+    "bytes": 28077
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_HousingTutorials/Blizzard_HousingTutorialsMisc.lua",
+    "sha256": "7c8793727edd87eb265e3364697ffb8a3c0d18d634fbeb2a00386b517c98b105",
+    "bytes": 7303
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_HousingTutorials/Blizzard_HousingTutorialsUtil.lua",
+    "sha256": "ef2b25de22139503cf586a8502671063caa32f7fcca6e7831bf1a4a95b05a933",
+    "bytes": 2474
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_IslandsQueueUI/Blizzard_IslandsQueueUI.lua",
+    "sha256": "6df8e44506894f96773e4a218c7a2ce95e70c35c9955cea340c3fe9d2490cbdb",
+    "bytes": 11437
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_IslandsQueueUI/Blizzard_IslandsQueueUI.xml",
+    "sha256": "db18265a302d397b62cd9641cc4ed92153a916e153e95a5fae4205aa8e849df1",
+    "bytes": 17382
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_ItemInteractionUI/Blizzard_ItemInteractionUI.lua",
+    "sha256": "eac089ca1efa7ed8bd6905a7f638ec9fad8e0613bb1e301437d5a25a6f6bd205",
+    "bytes": 36944
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_Kiosk/Housing/Game.lua",
+    "sha256": "b9f21654ad64fac3fbd2cbb711dbcb918a4c0f9c0df2f461f2d2efa4ebb0a352",
+    "bytes": 5337
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_LandingSoulbinds/Blizzard_LandingSoulbindButton.lua",
+    "sha256": "2d6e592da8853f274ce69e798e5728ce79ef135a78b214684828e086aff52820",
+    "bytes": 1984
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_LoginWarningDialogs/Blizzard_LoginWarningDialogs.lua",
+    "sha256": "f3a119f705b7fb17fc8f2d3a7f4da0389999245054af93f41197809ab1698073",
+    "bytes": 2696
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_MainMenuBarBagButtons/Mainline/MainMenuBarBagButtons.lua",
+    "sha256": "c231a863e51189534d88f7ffaa5f5c819aa62cf29e374d6e587e71b46ba9189c",
+    "bytes": 12154
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_MainMenuBarBagButtons/Shared/MainMenuBarBagManager.lua",
+    "sha256": "7a2e2715d3bc76b6d661543ceade1682ca47b8252f5113d3b47b3aa0df841b26",
+    "bytes": 2355
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_MicroMenu/Classic/MainMenuBarMicroButtons.lua",
+    "sha256": "35e3fa01d955d31a8c66ff03539aaf16a573eb82b8eafb6b80187ac1d66ac8a6",
+    "bytes": 34899
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_MicroMenu/Classic/MainMenuBarMicroButtons.xml",
+    "sha256": "f37f500633f6e30b90358697341573acb039b4c40c7c3c2e1eb264c9e3a303a8",
+    "bytes": 13535
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua",
+    "sha256": "360cfdc7d87c196896785a6b08ba8272777fcf3a2bad581363838cbd981a0564",
+    "bytes": 58501
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_Minimap/Mainline/Minimap.lua",
+    "sha256": "671fc873002a0e63448d959d6643e4d75eb045801901dc6102421fdd342df02a",
+    "bytes": 43130
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_MovePad/Blizzard_MovePad.lua",
+    "sha256": "e2dc381f6e7e37e0cb3f14d9f19997ec6c37925aadb37c79813e4b4eca2a8fb5",
+    "bytes": 5363
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_NewPlayerExperience/Blizzard_Tutorial.lua",
+    "sha256": "4a8a376019db9bcec5b37315fbbb7a8c10c7b6703a8f3aeb35272d1501819aed",
+    "bytes": 2449
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_NewPlayerExperience/Blizzard_TutorialWatchers.lua",
+    "sha256": "081e3b7f4c15b2d0307e5a1f859b794aa4f5bfabf96f1162dbd0139f534d1066",
+    "bytes": 34079
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_PVPUI/Mainline/Blizzard_PVPUI.lua",
+    "sha256": "c9bf6f371b0b0148dfbab7cb3a351210227d10db8dfc504f5bdf92d2620c846d",
+    "bytes": 107410
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_PVPUI/Mainline/Blizzard_PVPUI.xml",
+    "sha256": "32d41c630a7be130a589089e1a4ca6e770768cd78c8e9f9e54f0dfc60df82e25",
+    "bytes": 85684
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_PlayerSpells/ClassTalents/Blizzard_ClassTalentsFrame.lua",
+    "sha256": "6bb5de9a35b5d8706d7d7ccf7cfd3c3950d172ce02b70deb820f1e8435ac2f45",
+    "bytes": 63813
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_PlayerSpells/ClassTalents/Blizzard_HeroTalentsContainer.lua",
+    "sha256": "1bfa18a1685844962b66f5ebf22756b6376e0a19b05e836e372f9aabc130a844",
+    "bytes": 26583
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_PlayerSpells/SpellBook/Blizzard_SpellBookFrame.lua",
+    "sha256": "a3ec35ecf79a65c487e90b2428487db82784fe97be8485f3e2ab315b80b046a5",
+    "bytes": 22379
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_PlayerSpells/SpellBook/Blizzard_SpellBookFrameTutorials.lua",
+    "sha256": "8f86ed6098ef9de7cedc2c586b5ff4ceb8bde3c54877d44fbf819ea6978a2d58",
+    "bytes": 5833
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_Professions/Blizzard_ProfessionsCrafterOrderPage.lua",
+    "sha256": "e64a837153c121fc6c1a2be52a83e7049b1c1f8b425d53f84a52bd421ba4193e",
+    "bytes": 30154
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_Professions/Blizzard_ProfessionsCrafterOrderView.lua",
+    "sha256": "f87e666aa7d8413c353cd8e1d0af10abeb11e603d4c5c430c205bced93cfc9a8",
+    "bytes": 49395
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_Professions/Blizzard_ProfessionsFrame.lua",
+    "sha256": "aeb35c49d55873d327c26f4bc005b85d8cca04f42ca2ebfdd16e9729b6900141",
+    "bytes": 19869
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_ProfessionsBook/Blizzard_ProfessionsBook.lua",
+    "sha256": "aad2abc0f9821ee6cccc350a3f2060cfb368563465f4989cd291be19ba3d527e",
+    "bytes": 16871
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_ProfessionsTemplates/Blizzard_Professions.lua",
+    "sha256": "7718e89211d3a75fc1c52f5ca6c60ca245d04b604a9a000d5680014af36fda8c",
+    "bytes": 59836
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_ProfessionsTemplates/Blizzard_ProfessionsRecipeFlyout.lua",
+    "sha256": "d78a2331a5432882325bbd8bea87f8b5c3e288469ffb2108395998e3a1c5aee3",
+    "bytes": 27129
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_QuickJoin/QuickJoin.lua",
+    "sha256": "a60cfced0cd21db86c2e50f8b1740d5f11011771bfbdc82756a73ff7bdb89e36",
+    "bytes": 19758
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_RemixArtifactTutorialUI/Blizzard_RemixArtifactTutorialUI.lua",
+    "sha256": "407273c5b78d90360a0a96d84a612a8075529cf4a016fece31fbae38971f8c71",
+    "bytes": 6294
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_RuneforgeUI/Blizzard_RuneforgeItemSlot.lua",
+    "sha256": "66c895481effb0af8182a09e8f95d166a3d09174559414ff55b860c4337188db",
+    "bytes": 10900
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_SettingsDefinitions_Frame/Accessibility.lua",
+    "sha256": "a6de9b1093db9342f87a77364a55a6ebbb99560e1e4b9e295d76bf17d4f51960",
+    "bytes": 8282
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_SettingsDefinitions_Frame/AdvancedOptions.lua",
+    "sha256": "d34e05c16c1306f3d40b053c641f70397975f2ceec76bf5082764d3985863d40",
+    "bytes": 19401
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_SettingsDefinitions_Frame/Combat.lua",
+    "sha256": "a885b66a23213661855d470d38edd3271f2443743c89dd0d4a6c8dae1ae90c8a",
+    "bytes": 8010
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_SettingsDefinitions_Frame/Controls.lua",
+    "sha256": "f093dacaa6bcd7a75cf8158a49e179f232642caca10ead166e4b63c9f25fa81e",
+    "bytes": 8722
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_SettingsDefinitions_Frame/Interface.lua",
+    "sha256": "6cb049e405d380fb9431ebe92343180edd2cbb8f0d3392827376d0b0c71bc2b5",
+    "bytes": 6207
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_SettingsDefinitions_Frame/Mainline/CombatOverrides.lua",
+    "sha256": "1ea8fbaa4ae1d946f96375102ca1e9e32dbd135f5b4edac61ce4fa0e6c9536e1",
+    "bytes": 2507
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_SettingsDefinitions_Frame/Mainline/InterfaceOverrides.lua",
+    "sha256": "a461a0a1bf3c39a775b7dd31d5243f20aabe19b90ccf84c7073157145dc94a55",
+    "bytes": 16902
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_SettingsDefinitions_Frame/Mainline/SocialOverrides.lua",
+    "sha256": "9d7c6b84f2ae688c5e43935bf98512c72512e3af89a0f2cc340035fa893dab62",
+    "bytes": 2351
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_SettingsDefinitions_Frame/Mounts.lua",
+    "sha256": "6601ac592ca4f29b8feadefa53e1fc72a20d011e5985b1b4cd172891303a8468",
+    "bytes": 5820
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_SettingsDefinitions_Frame/Nameplates.lua",
+    "sha256": "e684cbd0b7eaa7d3642e22e52c7a49d2f95fea28885abe0540455f10dbb66ded",
+    "bytes": 39605
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_SettingsDefinitions_Frame/PingSystem.lua",
+    "sha256": "4dd1e9d6f76fc680dbecedcd9e651a688316da1bc8eb52c68a7124d376b93f38",
+    "bytes": 6497
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_SettingsDefinitions_Frame/Social.lua",
+    "sha256": "e868d01ed511d424ca4a35730facc6b091081461809596d52025b3c1ba8010ee",
+    "bytes": 12906
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_SettingsDefinitions_Shared/Graphics.lua",
+    "sha256": "7483fcb811ed2901d75e6fb709781ae647d078095713d0959a5b39c0257d0b09",
+    "bytes": 66691
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_SettingsDefinitions_Shared/Mainline/Text.lua",
+    "sha256": "28c33965a75bd031e049f0782dc5c292958390e44f9fff20b00d5e1a00ff531d",
+    "bytes": 3753
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_SettingsDefinitions_Shared/Subtitles.lua",
+    "sha256": "327f9b75d235a98ca908283afa534b6edd5a5b4953f84ae4893c59aeab3d31f3",
+    "bytes": 6646
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_Settings_Shared/Blizzard_ImplementationReadme.lua",
+    "sha256": "d0f1d46adc12daf44d140aa3eb7767451724c1fb575988686c5fcfcd7aa99c88",
+    "bytes": 8687
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_SharedXML/HelpTip.lua",
+    "sha256": "3c186f517662bfc2a271f41c4657a177583ef11ada3a1db9b0af3c2100cde9cb",
+    "bytes": 23569
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_SharedXML/Mainline/SharedUIPanelTemplates.lua",
+    "sha256": "e8eb493db2ad538126050928d66f424208f5ee2b1384431833c3c6cc4fb9eeb0",
+    "bytes": 65416
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_SharedXML/Mainline/Sound.lua",
+    "sha256": "3c002bed39f37c797ebd83cb9a5dbccb873d5a8923912cd6049cac083675919a",
+    "bytes": 1912
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_SharedXML/SharedBasicControls.lua",
+    "sha256": "057c45a6740d9675569a1b4fadf917d3dc02348cdecdb4b989326094cb5b1762",
+    "bytes": 4617
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_SharedXMLBase/CvarUtil.lua",
+    "sha256": "a52140c06ac8c30f61f67841641427ee57bcb54c4b6fc8cc6c83f0f4c78183b0",
+    "bytes": 8471
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_SharedXMLGame/DressUpModelFrameMixin.lua",
+    "sha256": "0213224e545817196ea4ae7c8d95179793929508c66a032f6a6348a47a9a85f2",
+    "bytes": 25625
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_Soulbinds/Blizzard_SoulbindsSelectButton.lua",
+    "sha256": "d79fffeabd074c67300128f89a73f7c7afdb554d71afd49203efca85f5c0c698",
+    "bytes": 6568
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_Soulbinds/Blizzard_SoulbindsViewer.lua",
+    "sha256": "10553012ecec35b7357de0e84a5a7402c5fe1b885ec882631b463f0e056205c9",
+    "bytes": 19224
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_StableUI/Blizzard_StableUI.lua",
+    "sha256": "36675adfc5183be7185534a03caca3b14d627fb511f99e2dbab2edcc63163eee",
+    "bytes": 41009
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_StaticPopup_Game/GameDialogDefs.lua",
+    "sha256": "3dc0bb9f449cdc57a85f007fbbb91e2d3da19fb692e8d90fbaf90d1d92b5135e",
+    "bytes": 88583
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_StaticPopup_Glue/GlueDialogDefs.lua",
+    "sha256": "5153f1baf62d9c99c6efdc73602fbb0a2dbd2a359f6f89473da1ce5e89d11066",
+    "bytes": 7260
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+    "sha256": "c99a705a4384d6a80b094e12f4a1e6a3f54555191438c9300871f4e2b5bab642",
+    "bytes": 55911
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_TalentUI/Mists/Blizzard_TalentUI.lua",
+    "sha256": "d6fa907341b2ad17b9f7f8adbe5d84ebab7becd8adef24a2407f63415b19c52c",
+    "bytes": 48844
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_TimeManager/Mainline/Blizzard_TimeManager.lua",
+    "sha256": "de969a09916b97715af5f68351b0cb2683ed1cda6752477d1b73a550ca6566e2",
+    "bytes": 21250
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_TimerunningCharacterCreate/Blizzard_TimerunningCharacterCreate.lua",
+    "sha256": "5c50174f96f1bb36f08dcbc003395e70e1a55953d1ef29907b37dfc726240ae7",
+    "bytes": 14641
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_Transmog/Blizzard_Transmog.lua",
+    "sha256": "7221b9479fa5a0b35df87232502a8ef826ca7caf6c034ecb0361cee994e30500",
+    "bytes": 115990
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_Tutorials/Blizzard_Tutorials.lua",
+    "sha256": "b5313f40c6f30a2ff0bc37e9efb9e3bb7592aa26d863cf9a01f5376d95cb7336",
+    "bytes": 1611
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_Tutorials/Blizzard_Tutorials_Classes.lua",
+    "sha256": "0eef5873d5ac6438f9340d411f5bc8fd98a1eeea8b91eec178039c91068bcf32",
+    "bytes": 18281
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_Tutorials/Blizzard_Tutorials_Dracthyr.lua",
+    "sha256": "a24c8c41fb93e08976c084d3c51fceba08ab9c38fcff3b65c1b42fb9fd4eca85",
+    "bytes": 13468
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_Tutorials/Blizzard_Tutorials_Frame_Tutorials.lua",
+    "sha256": "b412376a0cf8b675cc59001c87d301b17bd57499f302e62d7d448fd59258e06f",
+    "bytes": 5633
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_Tutorials/Blizzard_Tutorials_Professions.lua",
+    "sha256": "8ab18b41a382427bf98c3ccfcdc07b92c37638ba04ca7a625e2434462868e105",
+    "bytes": 24436
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_Tutorials/Blizzard_Tutorials_RPE.lua",
+    "sha256": "8fdbe37dffffb2621281c5a75481202f6a18f0bd2d70a8e0ea0fb58a21144aee",
+    "bytes": 18429
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_Tutorials/StateMachineTutorialUtil.lua",
+    "sha256": "fea5f402bc45346e6153edaad425240cd73fb362b86805d3597a31ab64d56d16",
+    "bytes": 3436
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_UIPanels_Game/Mainline/BankFrame.lua",
+    "sha256": "70190238703402486c5e14c47ecdaa1746ae543859381728301936888e6cd75a",
+    "bytes": 51830
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_UIPanels_Game/Mainline/ContainerFrame.lua",
+    "sha256": "453e51b00d997b1ad2941446c1948368a0360093773a8db8faadeede5c71e72c",
+    "bytes": 85244
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_UIPanels_Game/Mainline/EventScheduler.lua",
+    "sha256": "80e1c8193111cf64e1dabd4dcf2c68d19b3410451931580c2fbfe5a50b89c581",
+    "bytes": 28518
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_UIPanels_Game/Mainline/GroupLootFrame.lua",
+    "sha256": "500c1646c4894b2e6a57f88f63dfaf439eb6525713ed3d7a3bbfa98140b1ce8b",
+    "bytes": 26054
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua",
+    "sha256": "fad5a0bf9a9edfe33918411a0d14bd71faccc663d1c9710d0a694429b397968c",
+    "bytes": 99992
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua",
+    "sha256": "f2e7fda681a37234d336487d32182312a07360d455ad08cc02a24e6629532fc5",
+    "bytes": 84308
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_UIPanels_Game/Mainline/ReputationFrame.lua",
+    "sha256": "9f3d7360ee2955682904bdf720acd499df1ec510dcd495ddb864094f8580b0bc",
+    "bytes": 29877
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_UIParentPanelManager/Shared/UIParentPanelManager.lua",
+    "sha256": "43233019218c6b4695dcd716efd0531226b497cc8771d3354be14967ffefe417",
+    "bytes": 43710
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_UnitFrame/Shared/PartyFrame.lua",
+    "sha256": "206ee10bfddaea56eb2986caf86171606de119813d5e88ded49af0a0341f5d2e",
+    "bytes": 8901
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_UnitPopupShared/UnitPopupSharedButtonMixins.lua",
+    "sha256": "8a97640f5c348c07b6c69b69c3ec43c269424fe5ce329545534b8d1c6a0a991d",
+    "bytes": 111903
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_WorldMap/Blizzard_WorldMap.lua",
+    "sha256": "91a9e0f474d90e483266110cba4d91bfaab9d39233e14ad17e27650e5271c82b",
+    "bytes": 24396
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_WorldMap/Blizzard_WorldMapTemplates.lua",
+    "sha256": "23a2e7304f35df4130ca0d66ba6cacb7dfe7f9f0cf92b372665ea0a82ab1563a",
+    "bytes": 27308
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_WorldMap/QuestLogOwnerMixin.lua",
+    "sha256": "54c436b87a35557489bf37b9a636d4fcef68b48977bfb130cf9dad0f2ad56427",
+    "bytes": 7013
+  },
+  {
+    "profile": "retail",
+    "path": "Blizzard_ZoneAbility/ZoneAbility.lua",
+    "sha256": "4b196c09b3a68a551eae290279caf1c330b3cbf01d16dfbfe7d27f308eaf19fe",
+    "bytes": 10751
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_APIDocumentationGenerated/CVarDocumentation.lua",
+    "sha256": "4077bf22c83086f458ee5fd2701d4a971b5f458c837a960674c8c637c450dec8",
+    "bytes": 3944
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_APIDocumentationGenerated/GameUIDocumentation.lua",
+    "sha256": "fd2b51249c4f2a6a948e79718d0830080b74e47637043685266f4f45b3bbf638",
+    "bytes": 501
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_AccessibilityTemplates/TextSizeManager.lua",
+    "sha256": "5be44e5b27d547efb2c43dfac055c9cf13bb0a1f0b01cbeb0df7280d35aaaaf3",
+    "bytes": 3832
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_ActionBar/Classic/MainMenuBar.lua",
+    "sha256": "7d56abe4d4a971f9714760342f1d4d835fc43873f53214aaa0b655a21167c9ea",
+    "bytes": 5303
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_ArtifactUI/Blizzard_ArtifactUI.lua",
+    "sha256": "eb4c7b2f12baef23e5fb1373a96956af88464e76efab206ff982c2351a15021f",
+    "bytes": 10509
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseSellFrame.lua",
+    "sha256": "57d325fab8f2c949d94617f894824e8a9e5320651e0d87aced72caf5574556cb",
+    "bytes": 15517
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_AuctionHouseUI/Shared/Blizzard_AuctionHouseWoWTokenFrame.lua",
+    "sha256": "fb30573ddd196bb0a2ad9ceb257a4b4aad7be0372076e2b7abb7514356fa4252",
+    "bytes": 15668
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_AzeriteEssenceUI/Blizzard_AzeriteEssenceUI.lua",
+    "sha256": "487ccc96b623718f7a42acda47dea4e79b5966bf85a45d94a04141e9286ee600",
+    "bytes": 47761
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_AzeriteRespecUI/Blizzard_AzeriteRespecUI.lua",
+    "sha256": "04136588456ef11efabed5f40da07de75f8c256c97b48a5872e452c5af17c17d",
+    "bytes": 6600
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_BattlefieldMap/Blizzard_BattlefieldMap.lua",
+    "sha256": "d9866904b14f975ae5cf2f4039968d13a5858b1b8d83d73332bfdf4304eaa06e",
+    "bytes": 13253
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_BattlefieldMap/Blizzard_BattlefieldMap.xml",
+    "sha256": "ca31f8dce5808229fe96e90a89d77da519ee148041f7d7c42b0cf92c6b2bffc8",
+    "bytes": 5971
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_BoostTutorial/Blizzard_Tutorial.lua",
+    "sha256": "7a1a194445f42ded410c082799401d2f47f42e0c577c3fe765041d22ee6cf925",
+    "bytes": 1847
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_Calendar/Mainline/Blizzard_Calendar.lua",
+    "sha256": "0eae1d0a3f5c0b884b9e00f6f848fabeef512192008e210314555c1a69908208",
+    "bytes": 169124
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_ChallengesUI/Mainline/Blizzard_ChallengesUI.lua",
+    "sha256": "48a1c6f00b64c15f801138690a13269084b02d00b0e8d50d49e890cf82017a6b",
+    "bytes": 37567
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_Channels/ChannelButton.lua",
+    "sha256": "afa668569348cff10db3e5a3ea72b9593abba985587e3d01e620eca16cc94ae8",
+    "bytes": 11565
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_Channels/ChannelFrame.xml",
+    "sha256": "1c7f206567755dded3fbacf73ca0c8abb382755af10bc7c002b3409184b9fca5",
+    "bytes": 4401
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_CharacterCreate/Blizzard_CharacterCreate.lua",
+    "sha256": "0341d16cba6d1288f6c4b469009cd537fe80413101c77a4547ba77860440ccb9",
+    "bytes": 80644
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_ChatFrame/Classic/ChatConfigFrame_Shared.lua",
+    "sha256": "4d08bc28df92ee92b25d9232454c04b22159d6a740301041cf4281c0848f02d8",
+    "bytes": 94102
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_ChatFrame/Mainline/ChatConfigFrame.lua",
+    "sha256": "fb1fd471275a5a5c35f51caafea91351df76889449e88bf93fa8b7a5eecfb9e0",
+    "bytes": 94195
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_ChatFrame/Shared/TextToSpeech.lua",
+    "sha256": "64c1172d2bca28dcb15e7ab458d4f1f1438e8b070cfbea73962ec9e871b4e9f8",
+    "bytes": 2840
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_ChatFrame/Shared/TextToSpeechCommands.lua",
+    "sha256": "3537ae29a6029a4c6344fd6413e01d1b08a83657ce9344fae6beef7bb7f8f3f0",
+    "bytes": 55422
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_ChatFrame/Shared/TextToSpeechFrame.lua",
+    "sha256": "4445cd4b727bab5596872e10490464e16ff61740891e05593a367582b0eeaa72",
+    "bytes": 37256
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_ChatFrame/Shared/VoiceChatTranscriptionButton.lua",
+    "sha256": "7fc4edca411b2e751bd5381edb74c6af1d13d74337b245419501d89ba76f6485",
+    "bytes": 7258
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_ChatFrameBase/Mainline/ChatFrameUtilOverrides.lua",
+    "sha256": "f056b82366863f71fad9f61535086bf73f387144f184dfb4b1d9bc63fe88252c",
+    "bytes": 6155
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_ChatFrameBase/Shared/SlashCommands.lua",
+    "sha256": "9aad5bd93004cfb0c80b3b6203426e95ae98c836843ed500fdd74bf6afaa3bb5",
+    "bytes": 56989
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_ClickBindingUI/Blizzard_ClickBindingUI.lua",
+    "sha256": "ea7aad8738e0052135d13b7e360a21cbb30dd03d8c3cca85f53eb0aaf90d408c",
+    "bytes": 26755
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_Collections/Mainline/Blizzard_Collections.lua",
+    "sha256": "abed397438456ce3555290748f4ff240fec1bcf60acb1f1e5323e9fa513353ed",
+    "bytes": 2780
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_Collections/Mainline/Blizzard_HeirloomCollection.lua",
+    "sha256": "52e0c9044daf4aeedbf29df83a16edee120dc9847e289f1f442c9f1849cb2dcf",
+    "bytes": 23387
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_Collections/Mainline/Blizzard_MountCollection.lua",
+    "sha256": "ff113526852d24335c32aabbcfb370938f5cd2f34fbb67948d39472e8510484a",
+    "bytes": 39580
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_Collections/Mainline/Blizzard_ToyBox.lua",
+    "sha256": "af7ea4b9e36d075e4062b08d96db2f9dd8c2568a006ef3a2dda1ea1bb1988d53",
+    "bytes": 14427
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_Collections/Mainline/Blizzard_Wardrobe.lua",
+    "sha256": "a2f4b0d079b4ef8c6e9ee573dec1a5883e9452edc7ed7a33f6fc0ba11ee1f69d",
+    "bytes": 62613
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_Collections/Shared/Blizzard_PetCollection.lua",
+    "sha256": "b2ee58d33bd98fd5ae5fd8dcf0e7be583299c8d3338b1a1c82e8d841e24fdabf",
+    "bytes": 61116
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_Collections/Shared/Blizzard_Wardrobe_Sets.lua",
+    "sha256": "062e9d6f324a32d7c1d4c9a737e8a5f87dfaeddc75c3db86ab3c97c0aeaa8fe4",
+    "bytes": 41916
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_Commentator/Blizzard_Commentator.lua",
+    "sha256": "93a12b93ea89d7b0a77dfc91a13697dbbac5383868d1d75709222dbdc0865447",
+    "bytes": 19031
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_Communities/CommunitiesFrame.lua",
+    "sha256": "3ad940d72ea8f122e190b3c131f2248052926e5dca56ec41fbeb755b5c46b60c",
+    "bytes": 64291
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_Communities/CommunitiesMemberList.lua",
+    "sha256": "7e065135b369924e997b5f3c200e67705675ba1a588c2df095c2b2f6b2817d56",
+    "bytes": 59344
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_CompactRaidFrames/Classic/Blizzard_CompactRaidFrameManager.xml",
+    "sha256": "055c22f631bfcd1ce3dfbefff2166b3373c4aa24aea0053a9aed007e603219e0",
+    "bytes": 25510
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_CompactRaidFrames/Mainline/Blizzard_CompactRaidFrameManager.lua",
+    "sha256": "a19a2113520bdb09c0aae75bcfa757768775f2353e918679ec3a923928a70da7",
+    "bytes": 42295
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_CooldownViewer/CooldownViewerSettings.lua",
+    "sha256": "78d2f032fde6c6a2d15efaa6d3f8cb7402a30a2bbdc19eb3c67e55707d543166",
+    "bytes": 60971
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_CovenantRenown/Blizzard_CovenantRenown.lua",
+    "sha256": "a46b4e37504755f4fe195f81ece3d6335c9c5f08b72112be59fb05f73b407bcc",
+    "bytes": 12554
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_CustomizationUI/Blizzard_CustomizationAudioInterface.lua",
+    "sha256": "e8383073d5f6bd6a4d5e878fbd2944316a725f5c09d3e4824e1d158ba1595a84",
+    "bytes": 5993
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_DebugTools/Blizzard_DebugTools.lua",
+    "sha256": "51b1b36c64bcde6f13c9067f305a6b2fbdbb225139d83bc0254f038d39358c5e",
+    "bytes": 10869
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_DebugTools/Blizzard_TexelSnappingVisualizer.lua",
+    "sha256": "3f88e6341cb0ac7fab516f896e75acb42a2d8714d5d7cb1a831d330412a5168f",
+    "bytes": 4268
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_DelvesCompanionConfiguration/Blizzard_DelvesCompanionConfiguration.lua",
+    "sha256": "ca832653b008dcc1201483ca33991c0c3198ca6c09da62a3ee5eb8ea1b6fc3ed",
+    "bytes": 28036
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_EditMode/Shared/EditModeTemplates.lua",
+    "sha256": "7d7c544aa4526bc4b1774900f4d1e8dbb4aa8be0333d25366f7202a5e725d637",
+    "bytes": 13048
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_EncounterJournal/Mainline/Blizzard_EncounterJournal.lua",
+    "sha256": "11ae50e574cf6d307131a7bcccf38f531651472b29bfe9b788e04696296f4eb6",
+    "bytes": 124326
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_EncounterJournal/Mainline/Blizzard_MonthlyActivities.lua",
+    "sha256": "c02b972cb98435cf0cbd0d27b230410781b29052e3c33ece14217dc602189f30",
+    "bytes": 55792
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_FrameXML/Bindings_Mists.xml",
+    "sha256": "e248f59523aa2c8b296a1fa19b125032ed567339225fd900c05b988caf60216c",
+    "bytes": 57536
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_FrameXML/Bindings_Standard.xml",
+    "sha256": "07c4611d3307c14f321753021e9b5c5c9f359e6824f7028c77765a6cea0f6938",
+    "bytes": 69768
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_FrameXML/Bindings_WoWHack.xml",
+    "sha256": "dc6a7638beacbf9f57d3fbff3711ca7fe75e45140dabb96bb277974a072a1c7a",
+    "bytes": 25599
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_FrameXML/Bindings_WoWLabs.xml",
+    "sha256": "e6ab56a40df5265412754f70e9521a5b484e67633d6b87a32ea6fc84d76c45d3",
+    "bytes": 23493
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_FrameXML/MovieFrame.lua",
+    "sha256": "7071b6bf5dd36258ac14a9778f6a5bc4bef039970650d524ca08c48d55c79c85",
+    "bytes": 3202
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_FrameXML/PVPHonorSystem.lua",
+    "sha256": "cb67126c44664c4af6da91624cdd19ae61fe19f313259aaeb88c7757f90bffe9",
+    "bytes": 9167
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_FrameXML/WardrobeCustomSets.lua",
+    "sha256": "92d9835f59ab1940f4c0c44e43dbe4c47db2c198efe18ca250ea809f5c39efd2",
+    "bytes": 18381
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.lua",
+    "sha256": "9fd32ac625391e291d73a38c73ca1a8c85cbb429dda9b41eb91c777616e1ec47",
+    "bytes": 108458
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_FriendsFrame/Mainline/FriendsFrame.xml",
+    "sha256": "dd855ca776566f7647cd15dd2f726414d9f6cc2351abfb5dabef030d79c8a6b0",
+    "bytes": 70303
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_GMChatUI/Blizzard_GMChatUI.lua",
+    "sha256": "d1d9617f62619c1820543ec37133d114eafc5763f71aad47d7b474d63775ed37",
+    "bytes": 6075
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_GarrisonTemplates/Blizzard_CovenantMissionTemplates.lua",
+    "sha256": "5daed489020eea4b204c5858766c5743300b6c431c34c298707c88c20804ee3e",
+    "bytes": 30568
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonBuildingUI.lua",
+    "sha256": "e8af49d55c1fac2a4507e047d844b7a0c76792e9c22ac449b244b7a85f9b5b1e",
+    "bytes": 68347
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonMissionUI.lua",
+    "sha256": "dbf7d2694bd301a24c834accb98a234e39a3bf199457a65f27311d9b86abcfca",
+    "bytes": 62373
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonShipyardUI.lua",
+    "sha256": "6a0aa80fb4767b2b7eff4427452e8ee57cd128a412c626c3f75ae1f43229ea84",
+    "bytes": 87427
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_GarrisonUI/Mainline/Blizzard_OrderHallMissionUI.lua",
+    "sha256": "17d1cdeff49aad651b734f3a9c1e36f70c897ac937b69c288019a4aef246df2c",
+    "bytes": 39383
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_GlueParent/Mainline/GlueParent.lua",
+    "sha256": "0c3cf1e8a7703571b2f115d17eaf7cb8c3b55de8c960a857f6bcb5eec3d9e5af",
+    "bytes": 30124
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_GlueParent/Shared/GlueParentUtil.lua",
+    "sha256": "74a927835ae2a44b05cf1d256a52211914f3d18fec25a02f7b11d9270d9bbdcd",
+    "bytes": 2380
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_GlueXML/Mainline/CharacterLoginUtil.lua",
+    "sha256": "d32c23d13366dd6593553d8613bdc1759134a083f0a7ed2b266d46fe9e20d5c5",
+    "bytes": 1352
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_GlueXML/Mainline/CharacterSelect.lua",
+    "sha256": "2df73942e8a5859faff10f686fd5b76d1480e41a05beedcffd71869da578ad9f",
+    "bytes": 102832
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_GlueXML/Mainline/CharacterSelect/CharacterSelectUI.lua",
+    "sha256": "338edbea257ed8d1081284b34fd914f9024d7644efea41d80716708119bfd416",
+    "bytes": 30104
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_GlueXML/Mainline/CinematicsMenu.lua",
+    "sha256": "28ab3e67292823fa2f9f321ee1c061e0272e48610ed56e6c1d9e5f0df64c92dc",
+    "bytes": 8177
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_GlueXML/WoWLabs/PlunderstormLobby.lua",
+    "sha256": "d9538cf17209bcb835a8f9eda958544e6128d4cfecc212b7b981241808a8ac14",
+    "bytes": 8755
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_GroupFinder/Mainline/LFDFrame.lua",
+    "sha256": "c03b26beec8b070c5f5324997b2f6eed09be9f73f94d452aa408a7e7fa8def10",
+    "bytes": 33660
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_HouseEditor/Blizzard_HouseEditorStorageFrame.lua",
+    "sha256": "267f79b77295db9ac9a02004d48b634fd89457b886e9691c1ea34f5d466d8765",
+    "bytes": 29279
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_HousingTutorials/Blizzard_HousingTutorialsMisc.lua",
+    "sha256": "9ce1445d6d24735f18c4716f911adc8e633b43be761a152a5bb318e1575a6d3f",
+    "bytes": 7131
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_HousingTutorials/Blizzard_HousingTutorialsUtil.lua",
+    "sha256": "7f8de6f1a319aefe9b4999e52edd8ba5bce5a7e9c8b450bf8b371bbeba039b4f",
+    "bytes": 2063
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_IslandsQueueUI/Blizzard_IslandsQueueUI.lua",
+    "sha256": "24915ef1864eabf331f230aac6359f17cd78e5203550f08e7ed5f0b1fbf2f312",
+    "bytes": 11103
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_IslandsQueueUI/Blizzard_IslandsQueueUI.xml",
+    "sha256": "61b01d99ec8ea63fd05a9dc96a9466e97dd29767f75fa35adcd9255cd974b1b0",
+    "bytes": 16883
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_ItemInteractionUI/Blizzard_ItemInteractionUI.lua",
+    "sha256": "443f28a71578606792cee7a314b43706428e3c5007d4f576fbc532c704664fb3",
+    "bytes": 35881
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_Kiosk/Housing/Game.lua",
+    "sha256": "b9f21654ad64fac3fbd2cbb711dbcb918a4c0f9c0df2f461f2d2efa4ebb0a352",
+    "bytes": 5337
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_LandingSoulbinds/Blizzard_LandingSoulbindButton.lua",
+    "sha256": "0c6358fdf0fb53c5427a9a11e69a7f3c9860c5f56d3e3d7e4fca41d57cbe6258",
+    "bytes": 1926
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_LoginWarningDialogs/Blizzard_LoginWarningDialogs.lua",
+    "sha256": "f3a119f705b7fb17fc8f2d3a7f4da0389999245054af93f41197809ab1698073",
+    "bytes": 2696
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_MainMenuBarBagButtons/Mainline/MainMenuBarBagButtons.lua",
+    "sha256": "c231a863e51189534d88f7ffaa5f5c819aa62cf29e374d6e587e71b46ba9189c",
+    "bytes": 12154
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_MainMenuBarBagButtons/Shared/MainMenuBarBagManager.lua",
+    "sha256": "7a2e2715d3bc76b6d661543ceade1682ca47b8252f5113d3b47b3aa0df841b26",
+    "bytes": 2355
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_MicroMenu/Cata/MainMenuBarMicroButtons.lua",
+    "sha256": "d9b4e344abc994b70889608d5c0dbf5fda410d024460262a5d49521f79f72dbe",
+    "bytes": 10428
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_MicroMenu/Cata/MainMenuBarMicroButtons.xml",
+    "sha256": "c7833327e9db692dbf6e2d9b19067665ceaa3f141e0d7ea9f50dab511fe2c883",
+    "bytes": 17298
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_MicroMenu/Classic/MainMenuBarMicroButtons.lua",
+    "sha256": "145a7d8699eff655bffca70b7a73ebf3e64a75d343cd8df763dd400e1e30c4e8",
+    "bytes": 34807
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_MicroMenu/Mainline/MainMenuBarMicroButtons.lua",
+    "sha256": "6f6d495f99715ab72180c914dd2e5bd7c0f1a83bbe02339240205dc45685f4e5",
+    "bytes": 58229
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_MicroMenu/Mists/MainMenuBarMicroButtons.lua",
+    "sha256": "900d3ebc2520580992786ef5ae3d5c56863415e01bed6746be44364d304752dd",
+    "bytes": 13579
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_MicroMenu/Vanilla/MainMenuBarMicroButtons.xml",
+    "sha256": "4ad33ec3e2eb68564f6a06f282067351405e5fd5d004838ec51595167374dc26",
+    "bytes": 9922
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_MicroMenu/Wrath/MainMenuBarMicroButtons.lua",
+    "sha256": "417c1711f03c3fe3e88bca9e486308b1d35abf0c535ee22db417359677b90e4c",
+    "bytes": 6947
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_MicroMenu/Wrath/MainMenuBarMicroButtons.xml",
+    "sha256": "d45c70302ff497b1baf901485dda78e63cf2f8a21b6d2fa732f03a7eeda52eb8",
+    "bytes": 16272
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_Minimap/Cata/Minimap.lua",
+    "sha256": "61f15f24487b230c6fb3f8b846a49cd33aec182f1af2b2797859806161378eb4",
+    "bytes": 26126
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_Minimap/Mainline/Minimap.lua",
+    "sha256": "382a45234e605ac78f5943d15a9f307e80aea18c45f034b6566e206a1efd90b4",
+    "bytes": 38495
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_Minimap/Mists/Minimap.lua",
+    "sha256": "e06e3dab997e6c979d914201d4070bcdc36bfe9e6e9f252d3b205cb58962885b",
+    "bytes": 27697
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_MovePad/Blizzard_MovePad.lua",
+    "sha256": "e2dc381f6e7e37e0cb3f14d9f19997ec6c37925aadb37c79813e4b4eca2a8fb5",
+    "bytes": 5363
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_NewPlayerExperience/Blizzard_Tutorial.lua",
+    "sha256": "9e2f15bb29e7e8163a2ee0fd7b22bd0f2175ffe59d6bc814cfbb376f9d7defb3",
+    "bytes": 2049
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_NewPlayerExperience/Blizzard_TutorialWatchers.lua",
+    "sha256": "f6f565982fde65d0ad1db8315e6aae00a92933c964b5135d84f68cc9532cec11",
+    "bytes": 33097
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_PVPUI/Mainline/Blizzard_PVPUI.lua",
+    "sha256": "0dffebf399b353558361e9b114aab983d7dfb041ac02b79fce52d71e66ee4664",
+    "bytes": 107200
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_PVPUI/Mainline/Blizzard_PVPUI.xml",
+    "sha256": "016b769c8124ef48f9b1506235a5ecbc1c5eaa71a2dc2503cb261063a8b707ca",
+    "bytes": 84831
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_PlayerSpells/ClassTalents/Blizzard_ClassTalentsFrame.lua",
+    "sha256": "937df3644ad40650aa1ebb42f3849bda2a701695871e477e7a9ee244ae540b8b",
+    "bytes": 62040
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_PlayerSpells/ClassTalents/Blizzard_HeroTalentsContainer.lua",
+    "sha256": "999ea3e266fcef8802f737b57a4002e6b43de1d7df61a5e28f7ba54d338d8d11",
+    "bytes": 25827
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_PlayerSpells/SpellBook/Blizzard_SpellBookFrame.lua",
+    "sha256": "96fcc7516be5a0b5a1b01f8004053e9b15db7b611c62a1520162a846142d65d8",
+    "bytes": 22000
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_PlayerSpells/SpellBook/Blizzard_SpellBookFrameTutorials.lua",
+    "sha256": "40c082b6293a4bcbaf2708f2b9f4b7e342c63f06c234fc866a72e66ba8896fd7",
+    "bytes": 5680
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_Professions/Blizzard_ProfessionsCrafterOrderPage.lua",
+    "sha256": "2c8252179cc274f372e5e88ee20add5267a75aab23d9267ddbfaaa7104b6306e",
+    "bytes": 29334
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_Professions/Blizzard_ProfessionsCrafterOrderView.lua",
+    "sha256": "328c15a0dfda33356e74d1848ef21d5d4d89c383c7c6c5ba64dee676fc0800e6",
+    "bytes": 48211
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_Professions/Blizzard_ProfessionsFrame.lua",
+    "sha256": "fbabf12ce095c3840e23af28299c8d5dbf4014600adbe4c709fbddb9a607addf",
+    "bytes": 19354
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_ProfessionsBook/Blizzard_ProfessionsBook.lua",
+    "sha256": "da43556d1701ea7339ac148d5a398746feeacda7579111c87c90648f043515e6",
+    "bytes": 16353
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_ProfessionsTemplates/Blizzard_Professions.lua",
+    "sha256": "aee937b2e462a8217d96acbacbb6e20c112f5921647b32250e6a89fef63849c7",
+    "bytes": 58197
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_ProfessionsTemplates/Blizzard_ProfessionsRecipeFlyout.lua",
+    "sha256": "454cd8f129425c1b5dfdfd099ea1b83aae98699554504568b6ff5d67e3ba2b6a",
+    "bytes": 26313
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_RemixArtifactTutorialUI/Blizzard_RemixArtifactTutorialUI.lua",
+    "sha256": "407273c5b78d90360a0a96d84a612a8075529cf4a016fece31fbae38971f8c71",
+    "bytes": 6294
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_RuneforgeUI/Blizzard_RuneforgeItemSlot.lua",
+    "sha256": "d0c57ba03deeda901bd2b3860a1ca887be8709171c8e6aa67a59e7eb5715e85e",
+    "bytes": 10550
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_SettingsDefinitions_Frame/Accessibility.lua",
+    "sha256": "e353fa91f5c1d1f6f615dd2c20ac9b6273c66910a00c02b9da0e08935ae2cdd9",
+    "bytes": 8286
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_SettingsDefinitions_Frame/AdvancedOptions.lua",
+    "sha256": "fbfb60457a053cc0323dc1fcad38dff3bb826b4702db6583875cc6ccdead616c",
+    "bytes": 19403
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_SettingsDefinitions_Frame/Classic/CombatOverrides.lua",
+    "sha256": "bcca2a3e6bfa8633e9ec1838e441341dff2cd8a7813729c78eea37664fba4ed5",
+    "bytes": 9418
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_SettingsDefinitions_Frame/Classic/InterfaceOverrides.lua",
+    "sha256": "7d87e199f9f18974d45a6c0b88241ee19c32bae10c21112a1f13de5893454f28",
+    "bytes": 11126
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_SettingsDefinitions_Frame/Combat.lua",
+    "sha256": "a885b66a23213661855d470d38edd3271f2443743c89dd0d4a6c8dae1ae90c8a",
+    "bytes": 8010
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_SettingsDefinitions_Frame/Controls.lua",
+    "sha256": "f093dacaa6bcd7a75cf8158a49e179f232642caca10ead166e4b63c9f25fa81e",
+    "bytes": 8722
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_SettingsDefinitions_Frame/Interface.lua",
+    "sha256": "81797d386fb8e61c0b0eb0598db400d387ea0c344d713b759f93a93bc35b357a",
+    "bytes": 6022
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_SettingsDefinitions_Frame/Mainline/CombatOverrides.lua",
+    "sha256": "7ec506d7bb7cb7f2812ab2fcf9fdeb1fb458cb04965518d49942aca14475713f",
+    "bytes": 2385
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_SettingsDefinitions_Frame/Mainline/InterfaceOverrides.lua",
+    "sha256": "d46efc263de23c960ed07b1b454562de7c98a2f5aa84cac6cd14fb7fd538c1ee",
+    "bytes": 12483
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_SettingsDefinitions_Frame/Mainline/SocialOverrides.lua",
+    "sha256": "68a79ebe374187a04dd0a01e9a2b508c94ae574f48a0227fac2f3ee5ca796218",
+    "bytes": 2291
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_SettingsDefinitions_Frame/Mounts.lua",
+    "sha256": "7d84eac4d71f2d5e797422e8aeb3f59737984d10294d16d5ebfdb527f5fa5556",
+    "bytes": 5696
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_SettingsDefinitions_Frame/Nameplates.lua",
+    "sha256": "1ff9d1914bfddce01eaa61e9b6adf1e23df7cdfd9761a1abbaa024f9951f989b",
+    "bytes": 36051
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_SettingsDefinitions_Frame/PingSystem.lua",
+    "sha256": "22c9a59213ee24cecedc421252bc076a2aea6ba242883c7680fce81094cc457b",
+    "bytes": 5298
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_SettingsDefinitions_Frame/Social.lua",
+    "sha256": "3f1c2e2878fc9a926de86043cdd96fe4d85e2b3c8d7d5b9fec0b1033324bc5f9",
+    "bytes": 10257
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_SettingsDefinitions_Frame/Subtitles.lua",
+    "sha256": "8ea19b4deed71c9732ff5ac51ace56baea537d2c6bd6cdd9c7b038ea01e2fb6d",
+    "bytes": 6644
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_SettingsDefinitions_Shared/Graphics.lua",
+    "sha256": "f39e4545d331c76113484a06c96395b660fd2ab167425489c6ccda42e1d33528",
+    "bytes": 61480
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_SettingsDefinitions_Shared/Mainline/Text.lua",
+    "sha256": "28c33965a75bd031e049f0782dc5c292958390e44f9fff20b00d5e1a00ff531d",
+    "bytes": 3753
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_Settings_Shared/Blizzard_ImplementationReadme.lua",
+    "sha256": "d0f1d46adc12daf44d140aa3eb7767451724c1fb575988686c5fcfcd7aa99c88",
+    "bytes": 8687
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_Settings_Shared/Classic/GraphicsOverrides.lua",
+    "sha256": "3ee48ed678cad5e2a6805bee37a8a01d0523288748faf59abba5099b4a97668e",
+    "bytes": 6351
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_SharedXML/Classic/ClassicCvarUtil.lua",
+    "sha256": "50935a11a482ca72cd912fb92296a57c9350623c2904b56d713889e30560aa2d",
+    "bytes": 462
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_SharedXML/Classic/SharedUIPanelTemplates.lua",
+    "sha256": "8327c8b752ed3225626bcc370c9e16c626c57cf3ecb98759e9982fc52da148d7",
+    "bytes": 58457
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_SharedXML/Classic/Sound.lua",
+    "sha256": "74f1264a8435d7985abc46b698d42e48b67a946f4217c8ea846cd19b65d1f71e",
+    "bytes": 1532
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_SharedXML/HelpTip.lua",
+    "sha256": "3c186f517662bfc2a271f41c4657a177583ef11ada3a1db9b0af3c2100cde9cb",
+    "bytes": 23569
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_SharedXML/Mainline/SharedUIPanelTemplates.lua",
+    "sha256": "10be020d48186dc32b91912bb0d5d588f22bbfce702007ec57427bd0b1e0013c",
+    "bytes": 63524
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_SharedXML/Mainline/Sound.lua",
+    "sha256": "bc8e1462329ec6a6e19d131450ea853b442fa6fd10b7b9d34ec88703592e21bd",
+    "bytes": 1840
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_SharedXML/SharedBasicControls.lua",
+    "sha256": "057c45a6740d9675569a1b4fadf917d3dc02348cdecdb4b989326094cb5b1762",
+    "bytes": 4617
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_SharedXMLBase/CvarUtil.lua",
+    "sha256": "a52140c06ac8c30f61f67841641427ee57bcb54c4b6fc8cc6c83f0f4c78183b0",
+    "bytes": 8471
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_SharedXMLGame/DressUpModelFrameMixin.lua",
+    "sha256": "b0ee88ca91049e46605869b7e8088dbcf1c7c20fa20418ed2c9de61f5f8cb413",
+    "bytes": 24832
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_Soulbinds/Blizzard_SoulbindsSelectButton.lua",
+    "sha256": "52298f892a44dc801da10b3b7757c974349d40f8e9624bcceff15500eab80506",
+    "bytes": 6356
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_Soulbinds/Blizzard_SoulbindsViewer.lua",
+    "sha256": "16c35cf0ac3bfaed2ed35903ae2243629f300883fb0019c5dd2a6d98cfb48d1c",
+    "bytes": 18682
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_StableUI/Blizzard_StableUI.lua",
+    "sha256": "9bc59007907b738d0e8f93f4efb5b693384177b46fbc1791c60fb665e31080f3",
+    "bytes": 39725
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_StaticPopup_Game/GameDialogDefs.lua",
+    "sha256": "246a8e2b683280f8f9de01663d48d908f680b559fc64efc5979bb6c8353fe0e9",
+    "bytes": 84954
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_TalentUI/Cata/Blizzard_TalentUI.lua",
+    "sha256": "c99a705a4384d6a80b094e12f4a1e6a3f54555191438c9300871f4e2b5bab642",
+    "bytes": 55911
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_TalentUI/Mists/Blizzard_TalentUI.lua",
+    "sha256": "a91ee4340fc822b859c8a3c9a670e4d1f070a46a04c7408c072dd0eb84e81fdc",
+    "bytes": 48856
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_TimeManager/Mainline/Blizzard_TimeManager.lua",
+    "sha256": "67f9163b6cbf840d3418465168c0b11ad71375bceaf4adc1a5a0277c9b9dac7e",
+    "bytes": 19899
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_TimerunningCharacterCreate/Blizzard_TimerunningCharacterCreate.lua",
+    "sha256": "c81a71df921b31db93d0e9e2e8a40619492b8497b0bac4815aeea4dd673a573f",
+    "bytes": 14219
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_Transmog/Blizzard_Transmog.lua",
+    "sha256": "14992a49aa7e7d29d85c8e21bd8f9c6cdadb67825d05a433509f96d19efa1c93",
+    "bytes": 115837
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_Tutorials/Blizzard_Tutorials.lua",
+    "sha256": "81c7c5eb47c4970e3e6bb9e3022351bf245acdaa764f6a490c3aab034c5dac06",
+    "bytes": 1562
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_Tutorials/Blizzard_Tutorials_Classes.lua",
+    "sha256": "9a1888b5806b78eae586b59a486eb656f14e296978d9aa02220e6d5b5071de04",
+    "bytes": 17783
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_Tutorials/Blizzard_Tutorials_Dracthyr.lua",
+    "sha256": "2d6e6ff07d7ad9b41ffd86d2b947452614e64ebaa8497d6ea6156a5bc51ef1b3",
+    "bytes": 13115
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_Tutorials/Blizzard_Tutorials_Frame_Tutorials.lua",
+    "sha256": "3c1f238a0d3d890e840abb84f522c6f1e51e9d3c7d10e7c282ef12115948998c",
+    "bytes": 5482
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_Tutorials/Blizzard_Tutorials_Professions.lua",
+    "sha256": "e2d1cd6876e30691f790bde763778326e8f9d83077f553cec3701dae29e0176d",
+    "bytes": 23731
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_Tutorials/Blizzard_Tutorials_RPE.lua",
+    "sha256": "5cd2193186019ee771b97a5d1ad9d0e20c986ae96615e9cf2a40fe3e01bb41d8",
+    "bytes": 17934
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_Tutorials/StateMachineTutorialUtil.lua",
+    "sha256": "24845dffe9024ed465a447ca3ab0f3f386fed9bc5cf655cf9edf1783352aa517",
+    "bytes": 3326
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_UIPanels_Game/Classic/ContainerFrame.xml",
+    "sha256": "5805cb852495e47e4d7722d45d584d10a235de8e396641d342dc333f9baa517e",
+    "bytes": 20147
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_UIPanels_Game/Classic/FriendsFrame.lua",
+    "sha256": "ac3e95feff4e7a13b1d96c44036fc8498074e0189449652e912c48f764e01b31",
+    "bytes": 124475
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_UIPanels_Game/Classic/FriendsFrame.xml",
+    "sha256": "f519a3be550d430c5a9f208032a4a47d4482a9c210749e6f8a827eef962180d5",
+    "bytes": 175688
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_UIPanels_Game/Mainline/BankFrame.lua",
+    "sha256": "9a4be94dc4272f96a0a1d96e6f4903e11192ccaf4396685f36bab4332f30235f",
+    "bytes": 49715
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_UIPanels_Game/Mainline/ContainerFrame.lua",
+    "sha256": "173bd5513472d3cc33be6db76ede5d83314e38a4208c70339b8a4d9f545604bc",
+    "bytes": 82533
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_UIPanels_Game/Mainline/EventScheduler.lua",
+    "sha256": "2331ff1a0ce0f9b32ea24baad6fa9f1fbd51df42fef144c5c2145ce3b2fffdac",
+    "bytes": 27675
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_UIPanels_Game/Mainline/GroupLootFrame.lua",
+    "sha256": "29cac5f8433bbac54c8a3dd88ffa39d118102c60478579cc774b21460bf8aa9b",
+    "bytes": 25275
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_UIPanels_Game/Mainline/PaperDollFrame.lua",
+    "sha256": "51c84c7091babda7e5b0053724dcce92a8ef8038672d08b0568cda8592c7a9db",
+    "bytes": 97411
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua",
+    "sha256": "2f8f59e7790a3c90840cda05521897f98aee68a26cee6251db753401cf96492b",
+    "bytes": 81802
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_UIPanels_Game/Mainline/ReputationFrame.lua",
+    "sha256": "ee3b69c33d0aea814098de8665e8d5e89c23e56e609a89b5d4fbdd7368be275b",
+    "bytes": 29027
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_UIPanels_Game/Mists/WatchFrame.lua",
+    "sha256": "1dd8e473d1f5f66f93b72348b5f647ae3bc26936d714a2e06cf0e8287dd62065",
+    "bytes": 80933
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_UIPanels_Game/Wrath/QuestMapFrame.lua",
+    "sha256": "116fc423e0f1b055cd1a652be6887ac03d7005992e158914ede5908e4540d611",
+    "bytes": 38169
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_UIParent/Mainline/UIParent.lua",
+    "sha256": "9879b1729af592cef52287296d214f0f122e2dcec44f53ba7d1be7510b6992d4",
+    "bytes": 98031
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_UIParent/Mists/UIParent.lua",
+    "sha256": "c3235d89c3b81601e5ce768f45422ff57001ac9cc70eb941fb62f41dab7e2964",
+    "bytes": 67728
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_UIParentPanelManager/Shared/UIParentPanelManager.lua",
+    "sha256": "3f89533624429009896842761a33bb16f488bc282f355891a802c2c76a55e039",
+    "bytes": 44047
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_UnitFrame/Shared/PartyFrame.lua",
+    "sha256": "206ee10bfddaea56eb2986caf86171606de119813d5e88ded49af0a0341f5d2e",
+    "bytes": 8901
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_UnitPopupShared/UnitPopupSharedButtonMixins.lua",
+    "sha256": "8c9fefae14328f6b089a52851ff9951f822a13c25fcbb25f2104ab9fce033633",
+    "bytes": 107497
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_WorldMap/Blizzard_WorldMap.lua",
+    "sha256": "487b7d8886b755df857c3de6815dc7a0c8ff6978834aec18253b76e57a60c7dd",
+    "bytes": 22784
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_WorldMap/Blizzard_WorldMapTemplates.lua",
+    "sha256": "e92010be5066eaccb1a056d67de653750f36dcdb71fb0a96e40bf1846983f37e",
+    "bytes": 7289
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_WorldMap/Cata/Blizzard_WorldMap.lua",
+    "sha256": "4aa9905332637ba3a2801b857c3895cb1c1b07d5c72b8c0cddc44450f936f2a7",
+    "bytes": 26697
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_WorldMap/QuestLogOwnerMixin.lua",
+    "sha256": "2990bce27b76f9fdb25e3bb8fa9e84a89c9f0287de879aa9c1c68234c743efa3",
+    "bytes": 6768
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_WorldMap/Wrath/QuestLogOwnerMixin.lua",
+    "sha256": "a1b225932707f31fa359ccc8cc3c99593481c1aefb5cd9d6be3876a0865adc73",
+    "bytes": 5391
+  },
+  {
+    "profile": "mists",
+    "path": "Blizzard_ZoneAbility/ZoneAbility.lua",
+    "sha256": "4b8c89ededc6288e08257223ea76676a403dce186cdba621f2ec9ae4ca0c27b1",
+    "bytes": 10094
+  }
+]

@@ -1,0 +1,254 @@
+[
+  {
+    "path": "tests/c_system_api.rs",
+    "sha256": "6f4e9b617c950f8d4587800203678ac7667521ef47c565535c45f400c0860603",
+    "combat_lines": [],
+    "protected_setting_lines": [
+      {
+        "line": 78,
+        "text": "return found.ConsoleRegistryFixture == 1 and found.uiScale == 1"
+      }
+    ]
+  },
+  {
+    "path": "tests/frame_position_replay.rs",
+    "sha256": "a48032b80495c35019d8bab70fd1368091aaf87b533c91e2f35b054eefa9521c",
+    "combat_lines": [
+      {
+        "line": 39,
+        "text": "assert(not InCombatLockdown())"
+      }
+    ],
+    "protected_setting_lines": [
+      {
+        "line": 64,
+        "text": "env.exec(\"SetCVar('uiScale', '0.79999995231628'); SetCVar('useUiScale', '1')\")"
+      }
+    ]
+  },
+  {
+    "path": "tests/patch_5_4_8_combat_restrictions.rs",
+    "sha256": "68ba03a533d3d0169321ba49507fb9197732f8d01ac80e2e1308b0300376f21f",
+    "combat_lines": [
+      {
+        "line": 1,
+        "text": "//! Bounded retail combat protection: state and side effects, not native error parity."
+      },
+      {
+        "line": 6,
+        "text": "fn assert_cvar_combat_restrictions(env: &WowLuaEnv) {"
+      },
+      {
+        "line": 24,
+        "text": "env.state().borrow_mut().player.in_combat = false;"
+      },
+      {
+        "line": 27,
+        "text": "env.state().borrow_mut().player.in_combat = true;"
+      },
+      {
+        "line": 56,
+        "text": "assert!(!global_ok && !namespace_ok, \"{name}: insecure combat writes blocked\");"
+      },
+      {
+        "line": 65,
+        "text": "env.state().borrow_mut().player.in_combat = false;"
+      },
+      {
+        "line": 76,
+        "text": "\"secure_combat_write\": true, \"insecure_out_of_combat_write\": true"
+      },
+      {
+        "line": 80,
+        "text": "env.state().borrow_mut().player.in_combat = true;"
+      },
+      {
+        "line": 87,
+        "text": "env.state().borrow_mut().player.in_combat = false;"
+      },
+      {
+        "line": 93,
+        "text": "fn assert_visibility_combat_restrictions(env: &WowLuaEnv) {"
+      },
+      {
+        "line": 95,
+        "text": "env.state().borrow_mut().player.in_combat = true;"
+      },
+      {
+        "line": 110,
+        "text": "assert!(!hidden, \"insecure combat hide must be blocked\");"
+      },
+      {
+        "line": 111,
+        "text": "assert!(shown && visible, \"insecure combat show remains allowed\");"
+      },
+      {
+        "line": 114,
+        "text": "env.state().borrow_mut().player.in_combat = false;"
+      },
+      {
+        "line": 129,
+        "text": "fn patch_5_4_8_bare_combat_restrictions() {"
+      },
+      {
+        "line": 131,
+        "text": "assert_cvar_combat_restrictions(&env);"
+      },
+      {
+        "line": 132,
+        "text": "assert_visibility_combat_restrictions(&env);"
+      },
+      {
+        "line": 136,
+        "text": "fn patch_5_4_8_cached_combat_restrictions(env: &WowLuaEnv) {"
+      },
+      {
+        "line": 137,
+        "text": "assert_cvar_combat_restrictions(env);"
+      },
+      {
+        "line": 138,
+        "text": "assert_visibility_combat_restrictions(env);"
+      }
+    ],
+    "protected_setting_lines": [
+      {
+        "line": 12,
+        "text": "env.exec(\"SetCVar('useUiScale', 1); SetCVar('uiScale', 0.75)\")"
+      },
+      {
+        "line": 94,
+        "text": "env.exec(\"SetUIVisibility(true)\").unwrap();"
+      },
+      {
+        "line": 101,
+        "text": "SetUIVisibility(value)"
+      },
+      {
+        "line": 112,
+        "text": "env.exec(\"assert(issecure()); SetUIVisibility(false); assert(not UIParent:IsShown())\")"
+      },
+      {
+        "line": 117,
+        "text": "SetUIVisibility(true)"
+      },
+      {
+        "line": 118,
+        "text": "local hide = function() SetUIVisibility(false) end"
+      },
+      {
+        "line": 122,
+        "text": "SetUIVisibility(true)"
+      }
+    ]
+  },
+  {
+    "path": "tests/screen_mode.rs",
+    "sha256": "5e399021ee5d550bfd9358bf4db8841b7ccd013b89f34ce5d19765a61f948564",
+    "combat_lines": [],
+    "protected_setting_lines": [
+      {
+        "line": 174,
+        "text": "assert(SetCVar(\"uiScale\", \"0.79999995231628\"))"
+      },
+      {
+        "line": 175,
+        "text": "assert(SetCVar(\"useUiScale\", \"1\"))"
+      }
+    ]
+  },
+  {
+    "path": "tests/set_cvar_global.rs",
+    "sha256": "4e7c5ae39662a9cad467eac222ddc89bb7fea567f446790e7f373261f6a63874",
+    "combat_lines": [],
+    "protected_setting_lines": [
+      {
+        "line": 12,
+        "text": "assert(GetCVarDefault('nameplateShowEnemies') == '1')"
+      },
+      {
+        "line": 13,
+        "text": "assert(C_CVar.SetCVar('nameplateShowEnemies', '0') == true)"
+      },
+      {
+        "line": 14,
+        "text": "assert(GetCVar('nameplateShowEnemies') == '0')"
+      },
+      {
+        "line": 15,
+        "text": "assert(C_CVar.GetCVarBool('nameplateShowEnemies') == false)"
+      },
+      {
+        "line": 16,
+        "text": "assert(SetCVar('nameplateShowEnemies', GetCVarDefault('nameplateShowEnemies')) == true)"
+      },
+      {
+        "line": 17,
+        "text": "assert(C_CVar.GetCVar('nameplateShowEnemies') == '1')"
+      },
+      {
+        "line": 18,
+        "text": "assert(GetCVarBool('nameplateShowEnemies') == true)"
+      },
+      {
+        "line": 73,
+        "text": "env.exec(r#\"SetCVar(\"uiScale\", 0.75)\"#).unwrap();"
+      },
+      {
+        "line": 74,
+        "text": "let value = env.state().borrow().cvars.get(\"uiScale\");"
+      },
+      {
+        "line": 81,
+        "text": "env.exec(r#\"SetCVar(\"nameplateShowEnemies\", true)\"#)"
+      },
+      {
+        "line": 83,
+        "text": "let value = env.state().borrow().cvars.get(\"nameplateShowEnemies\");"
+      },
+      {
+        "line": 85,
+        "text": "env.exec(r#\"SetCVar(\"nameplateShowEnemies\", false)\"#)"
+      },
+      {
+        "line": 87,
+        "text": "let value = env.state().borrow().cvars.get(\"nameplateShowEnemies\");"
+      }
+    ]
+  },
+  {
+    "path": "tests/ui_visibility_globals.rs",
+    "sha256": "773099b3ef4b0a685f97e97fb8ce234c01da54dc7f86984fd0c37d6ed2136f32",
+    "combat_lines": [],
+    "protected_setting_lines": [
+      {
+        "line": 1,
+        "text": "//! Integration tests for `SetUIVisibility` / `SetInWorldUIVisibility`."
+      },
+      {
+        "line": 13,
+        "text": ".eval(\"return type(SetUIVisibility), type(SetInWorldUIVisibility)\")"
+      },
+      {
+        "line": 23,
+        "text": "env.exec(\"SetUIVisibility(false)\").unwrap();"
+      },
+      {
+        "line": 27,
+        "text": "\"UIParent should be hidden after SetUIVisibility(false)\""
+      },
+      {
+        "line": 30,
+        "text": "env.exec(\"SetUIVisibility(true)\").unwrap();"
+      },
+      {
+        "line": 34,
+        "text": "\"UIParent should be shown after SetUIVisibility(true)\""
+      },
+      {
+        "line": 43,
+        "text": ".expect(\"OpenWorldMap maximize path should not error on SetUIVisibility\");"
+      }
+    ]
+  }
+]

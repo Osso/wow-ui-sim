@@ -1,0 +1,48 @@
+src/iced_app/resize_event_tests.rs:81:        .set("useUiScale", "1");
+src/iced_app/resize_event_tests.rs:110:            __ui_scale_order = captureScaleCVarOrder("uiScale", 0.8, 0.8)
+src/iced_app/resize_event_tests.rs:111:            __use_ui_scale_order = captureScaleCVarOrder("useUiScale", 0, 0.8)
+src/c_api/cvar_combat_policy.rs:17:                | "nameplateoverlaph"
+src/c_api/cvar_combat_policy.rs:18:                | "nameplateoverlapv"
+src/c_api/cvar_combat_policy.rs:19:                | "nameplateshowenemies"
+src/c_api/cvar_combat_policy.rs:20:                | "nameplateshowenemyguardians"
+src/c_api/cvar_combat_policy.rs:21:                | "nameplateshowenemypets"
+src/c_api/cvar_combat_policy.rs:22:                | "nameplateshowenemytotems"
+src/c_api/cvar_combat_policy.rs:26:                | "nameplateshowfriends"
+src/c_api/cvar_combat_policy.rs:28:                | "showarenaenemyframes"
+src/c_api/cvar_combat_policy.rs:29:                | "showarenaenemypets"
+src/c_api/cvar_combat_policy.rs:30:                | "showpartypets"
+src/c_api/cvar_combat_policy.rs:31:                | "showtargetoftarget"
+src/c_api/cvar_combat_policy.rs:33:                | "uiscale"
+src/c_api/cvar_combat_policy.rs:35:                | "useuiscale"
+src/lua_api/globals/set_cvar_verb.rs:150:    matches!(name.to_ascii_lowercase().as_str(), "uiscale" | "useuiscale")
+src/lua_api/globals/set_cvar_verb.rs:156:        "uiscale" if borrow_state(state)?.cvars.get_bool("useUiScale") => value.parse().ok(),
+src/lua_api/globals/set_cvar_verb.rs:157:        "useuiscale" if value == "1" => borrow_state(state)?
+src/lua_api/globals/set_cvar_verb.rs:159:            .get("uiScale")
+src/loader/tests/wow_api_globals/patch_12_0_0_nameplate_cvar_changed_values.rs:25:                    {"nameplateOverlapH", "0.800000"},
+src/loader/tests/wow_api_globals/patch_12_0_0_nameplate_cvar_changed_values.rs:26:                    {"nameplateOverlapV", "1.100000"},
+src/loader/tests/wow_api_globals/patch_12_0_0_cvar_removals.rs:149:                    "nameplateShowFriends",
+src/cvars.rs:392:// Only names cvars.yaml still carries; nameplateShowFriends and
+src/cvars.rs:482:    ("nameplateShowFriends", "0"),
+src/cvars.rs:602:        assert!(storage.get("nameplateShowEnemies").is_some());
+src/cvars.rs:604:        storage.set("nameplateShowEnemies", "0");
+src/cvars.rs:605:        assert_eq!(storage.get("nameplateShowEnemies"), Some("0".to_string()));
+src/cvars.rs:608:            storage.get("NAMEPLATESHOWENEMIES"),
+src/cvars.rs:609:            storage.get("nameplateShowEnemies")
+tests/set_cvar_global.rs:12:            assert(GetCVarDefault('nameplateShowEnemies') == '1')
+tests/set_cvar_global.rs:13:            assert(C_CVar.SetCVar('nameplateShowEnemies', '0') == true)
+tests/set_cvar_global.rs:14:            assert(GetCVar('nameplateShowEnemies') == '0')
+tests/set_cvar_global.rs:15:            assert(C_CVar.GetCVarBool('nameplateShowEnemies') == false)
+tests/set_cvar_global.rs:16:            assert(SetCVar('nameplateShowEnemies', GetCVarDefault('nameplateShowEnemies')) == true)
+tests/set_cvar_global.rs:17:            assert(C_CVar.GetCVar('nameplateShowEnemies') == '1')
+tests/set_cvar_global.rs:18:            assert(GetCVarBool('nameplateShowEnemies') == true)
+tests/set_cvar_global.rs:73:    env.exec(r#"SetCVar("uiScale", 0.75)"#).unwrap();
+tests/set_cvar_global.rs:74:    let value = env.state().borrow().cvars.get("uiScale");
+tests/set_cvar_global.rs:81:    env.exec(r#"SetCVar("nameplateShowEnemies", true)"#)
+tests/set_cvar_global.rs:83:    let value = env.state().borrow().cvars.get("nameplateShowEnemies");
+tests/set_cvar_global.rs:85:    env.exec(r#"SetCVar("nameplateShowEnemies", false)"#)
+tests/set_cvar_global.rs:87:    let value = env.state().borrow().cvars.get("nameplateShowEnemies");
+tests/patch_5_4_8_combat_restrictions.rs:12:    env.exec("SetCVar('useUiScale', 1); SetCVar('uiScale', 0.75)")
+tests/c_system_api.rs:78:            return found.ConsoleRegistryFixture == 1 and found.uiScale == 1
+tests/screen_mode.rs:174:        assert(SetCVar("uiScale", "0.79999995231628"))
+tests/screen_mode.rs:175:        assert(SetCVar("useUiScale", "1"))
+tests/frame_position_replay.rs:64:    env.exec("SetCVar('uiScale', '0.79999995231628'); SetCVar('useUiScale', '1')")
