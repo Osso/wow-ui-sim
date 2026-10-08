@@ -41,6 +41,9 @@ def assert_receipt(name, expected_exit=0):
     assert not receipt['invalidated'], name
     assert receipt['log_sha256'] == digest((HERE / receipt['log']).read_bytes()), name
     git('rev-parse', '--verify', receipt['revision'] + '^{commit}')
+    if expected_exit == 0 and receipt['command'][:2] == ['cargo', 'test']:
+        match = re.search(r'test result: ok\. (\d+) passed', (HERE / receipt['log']).read_text())
+        assert match and int(match[1]) > 0, (name, 'empty test selection')
     return receipt
 
 
@@ -95,6 +98,18 @@ def check_reproduction(revision):
             assert row['byte_identical'], row
     assert read('p540-diff-extract-reproduction.json')['byte_identical']
     return len(rows), sum(row['byte_identical'] for row in extracts)
+
+
+def check_parser_origins(revision):
+    for row in read('p540-parser-origin.json'):
+        bodies = []
+        for pin in (revision, row['origin_revision']):
+            source = pinned(row['path'], pin).decode()
+            start = source.index(row['function'])
+            end = source.index('\ndef ', start + len(row['function'])) + 1
+            bodies.append(source[start:end].encode())
+        assert bodies[0] == bodies[1], row['path']
+        assert digest(bodies[0]) == row['sha256']
 
 
 def check_accounting(register, revision):
@@ -166,6 +181,7 @@ def main():
         assert digest(pinned(row['path'], revision)) == row['sha256'], row['path']
     assert not git('diff', manifest['base_revision'], revision, '--', 'src'), 'unexpected runtime mutation'
     register = check_sources(revision)
+    check_parser_origins(revision)
     counts = check_accounting(register, revision)
     reproduction = check_reproduction(revision)
     removals = check_removals(register)
@@ -174,6 +190,8 @@ def main():
     assert_receipt('p540-negative', None)
     mists = (HERE / 'p540-mists-check.txt').read_text()
     assert not re.search(r'-->\s+(?:src|tests)/', mists), 'non-vendor diagnostic'
+    assert not re.search(r'-->\s+' + re.escape(str(ROOT)) + r'/(?:src|tests)/', mists), 'absolute non-vendor diagnostic'
+    assert not re.search(r'warning: `wow[_-]ui[_-]sim`', mists), 'non-vendor warning summary'
     assert 'Finished `dev` profile' in mists
     print(json.dumps({'status': 'PASS', 'inventory': counts[0], 'extract_rows': counts[1],
                       'retained_gaps': counts[2], 'registers_reproduced': reproduction[0],

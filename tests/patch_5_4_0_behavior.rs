@@ -3,6 +3,18 @@
 
 use wow_ui_sim::lua_api::WowLuaEnv;
 
+#[test]
+fn patch_5_4_0_standalone_instance_group_size() {
+    let env = WowLuaEnv::new().expect("create standalone instance fixture");
+    patch_5_4_0_instance_group_size_tracks_world_state::run(&env);
+}
+
+#[test]
+fn patch_5_4_0_standalone_forbidden_frame_flag() {
+    let env = WowLuaEnv::new().expect("create standalone forbidden-flag fixture");
+    patch_5_4_0_forbidden_frame_flag_round_trips::run(&env);
+}
+
 prefork_full_ui_case! {
 fn patch_5_4_0_instance_group_size_tracks_world_state(env: &WowLuaEnv) {
     {

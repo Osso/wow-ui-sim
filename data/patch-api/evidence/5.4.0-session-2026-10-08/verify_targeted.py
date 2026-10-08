@@ -16,6 +16,16 @@ def write_sweep_outputs():
         os.environ[variable] = str(EVIDENCE / (path.stem + '-results.json'))
 
 
+def run_check(name, command):
+    exit_code = run_proof(name, command)
+    if exit_code == 0 and command[:2] == ['cargo', 'test']:
+        log = (EVIDENCE / (name + '.txt')).read_text()
+        match = re.search(r'test result: ok\. (\d+) passed', log)
+        if match is None or int(match[1]) == 0:
+            raise ValueError(f'{name}: successful exit selected no passing tests')
+    return exit_code
+
+
 def main():
     write_sweep_outputs()
     checks = [
@@ -27,7 +37,7 @@ def main():
         ('p540-format', ['cargo', 'fmt', '--check']),
         ('p540-mists-check', ['cargo', 'check', '--no-default-features', '--features', 'sound,gui,casc,client-mists', '--tests']),
     ]
-    results = {name: run_proof(name, command) for name, command in checks}
+    results = {name: run_check(name, command) for name, command in checks}
     (EVIDENCE / 'p540-targeted-summary.json').write_text(json.dumps(results, indent=2) + '\n')
     return int(any(results.values()))
 

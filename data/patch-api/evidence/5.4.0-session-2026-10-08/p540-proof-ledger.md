@@ -31,3 +31,7 @@ No `src/` runtime code changed and no new retirement occurred. Runtime-module `c
 ## Invalidation policy
 
 Command receipts record exact Git revision, command, environment, log hash, exit and invalidation state. Python source/tool changes invalidate reproduction/fixtures; Rust or known-gap fixture changes invalidate affected runtime proofs. Evidence/docs-only commits do not invalidate unrelated runtime/code scopes. Do not rerun broad proof merely for another commit milestone.
+
+## Standalone registration correction
+
+The prefork marker defines runnable modules, not standalone #[test] functions. Initial integration selection returned exit 0 but ran zero tests; its receipt is explicitly invalidated and retained as empty-selection evidence. Added two standalone wrappers reusing unchanged prefork assertions. This invalidates the standalone selection and format check only: publication tests/assertions, existing caller tests, source-unit modules and Python recipes are unchanged; new wrappers remain under client-retail and do not alter the Mists profile. Final seals reject zero-test success. Outer development-driver success is not acceptance evidence.

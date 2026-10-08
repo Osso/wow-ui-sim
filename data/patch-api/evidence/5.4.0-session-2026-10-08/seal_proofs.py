@@ -1,6 +1,7 @@
 """Seal completed 5.4.0 receipts without moving historical shared-file scope."""
 import hashlib
 import json
+import re
 from pathlib import Path
 import subprocess
 import sys
@@ -28,11 +29,15 @@ def main():
     receipts = ['p540-python-fixtures', 'p540-reproduction', 'p540-all-sweeps',
                 'p540-prefork-behavior', 'p540-integration-behavior',
                 'p540-integration-instance', 'p540-integration-forbidden', 'p540-lib-frame-state',
-                'p540-format', 'p540-mists-check', 'p540-targeted-driver']
+                'p540-format', 'p540-mists-check']
     for name in receipts:
         receipt = json.loads((HERE / (name + '.proof.json')).read_text())
         assert receipt['exit'] == 0 and not receipt['invalidated'], name
-        assert digest((HERE / receipt['log']).read_bytes()) == receipt['log_sha256']
+        log = (HERE / receipt['log']).read_bytes()
+        assert digest(log) == receipt['log_sha256']
+        if receipt['command'][:2] == ['cargo', 'test']:
+            match = re.search(r'test result: ok\. (\d+) passed', log.decode())
+            assert match and int(match[1]) > 0, name
     negative = json.loads((HERE / 'p540-negative.proof.json').read_text())
     assert negative['exit'] != 0
     rows = []
