@@ -4,14 +4,15 @@ Audit pinned [page 549091, revision 5295335](../../data/patch-api/sources/7.0.3-
 
 ## What it must do
 
-- [ ] Probe every registered identity, distinguishing publication/absence from behavioral parity and applying later registers chronologically.
-- [ ] Account for every retained extract statement; keep unspecified domains and historical contracts explicit rather than inventing shims.
-- [ ] Persist recipe search text, filter the existing learned catalogue case-insensitively, clear with nil, reject invalid input, and publish list updates.
-- [ ] Preserve default recipe-list order/results when search is empty.
-- [ ] Keep consumer-free retail GetMountInfo/GetMountInfoExtra absent on raw, ordinary and repeated lookup; retain current successors and live legacy Summon callers.
-- [ ] Preserve classic surfaces and all merged publication sweep expectations.
-- [ ] Validate fixed historical register scope and file-derived counts from any checkout, including after later audits merge.
-- [ ] Reproduce all saved registers/extracts using recorded flags, retaining only the three inherited extract failures.
+- [x] Probe every registered identity, distinguishing publication/absence from behavioral parity and applying later registers chronologically.
+- [x] Account for every retained extract statement; keep unspecified domains and historical contracts explicit rather than inventing shims.
+- [x] Persist recipe search text, filter the existing learned catalogue case-insensitively, clear with nil, reject invalid input, and publish list updates.
+- [x] Preserve default recipe-list order/results when search is empty, including the Mists build.
+- [x] Keep consumer-free retail GetMountInfo/GetMountInfoExtra absent on raw, ordinary and repeated lookup; retain current successors and live legacy Summon callers.
+- [x] Preserve all 45 earlier publication sweep expectations and prove the modeled name filter in Mists; retirement code remains retail-gated.
+- [ ] Complete native/classic historical API parity is not implied by those bounded checks.
+- [x] Validate fixed historical register scope and file-derived counts from any checkout, including after later audits merge.
+- [x] Reproduce all saved registers/extracts using recorded flags, retaining only the three inherited extract failures.
 
 ## How it works
 

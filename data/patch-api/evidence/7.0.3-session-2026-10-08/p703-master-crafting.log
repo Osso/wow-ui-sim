@@ -1,0 +1,173 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.cache/wow-ui-sim-targets/p703-page/master-source)
+    Finished `test` profile [optimized + debuginfo] target(s) in 3m 52s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p703-page/debug/deps/integration-1db16289b0998b2a)
+
+running 1 test
+
+running 1 test
+test test_showuipanel_professions_crafting::professions_crafting_data_pipeline_lists_recipes_details_and_crafts_one ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10669 filtered out; finished in 2.01s
+
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 2.11ms
+[  0.002s] [Startup] rilua VM created in 123.53µs
+[  0.002s] [Startup] builtin frames initialized in 81.69µs
+[  0.002s] [Startup] template registry cleared in 5.01µs
+[  0.002s] [Startup] intrinsic templates registered in 5.87µs
+[  0.002s] [Startup] initial app_data lua handle installed in 1.36µs
+[  0.143s] [Startup] init_lua_state complete in 140.97ms
+[  0.143s] [Startup] final app_data lua handle installed in 421.00ns
+[  0.143s] [Startup] initial screen globals installed in 81.07µs
+[  0.143s] [Startup] WowLuaEnv::new complete
+[  1.427s] [Startup] apply_post_load_workarounds: begin
+[  1.427s] [Workarounds] starting patch_edit_mode_manager
+[  1.427s] [Workarounds] finished patch_edit_mode_manager in 242.16µs
+[  1.427s] [Workarounds] starting init_edit_mode_layout
+[  1.427s] [EditMode] starting setup_layout_info
+[  1.431s] [EditMode] finished setup_layout_info in 3.50ms
+[  1.431s] [EditMode] starting apply_system_anchors
+[  1.473s] [EditMode] finished apply_system_anchors in 42.34ms
+[  1.473s] [EditMode] starting finalize_action_bar_positions
+[  1.474s] [EditMode] finished finalize_action_bar_positions in 1.34ms
+[  1.474s] [EditMode] starting invoke_anchor_changed_hooks
+[  1.475s] [EditMode] finished invoke_anchor_changed_hooks in 249.09µs
+[  1.475s] [EditMode] starting fix_action_bar_nan_size
+[  1.475s] [EditMode] finished fix_action_bar_nan_size in 40.03µs
+[  1.475s] [EditMode] starting fix_action_bar_scale
+[  1.475s] [EditMode] finished fix_action_bar_scale in 4.57µs
+[  1.475s] [Workarounds] finished init_edit_mode_layout in 47.51ms
+[  1.475s] [Workarounds] starting patch_ui_parent_panel_toggles
+[  1.475s] [Workarounds] finished patch_ui_parent_panel_toggles in 214.32µs
+[  1.475s] [Workarounds] starting patch_uiparent_onupdate_worklists
+[  1.475s] [Workarounds] finished patch_uiparent_onupdate_worklists in 76.76µs
+[  1.475s] [Workarounds] starting init_chat_type_colors
+[  1.475s] [Workarounds] finished init_chat_type_colors in 119.71µs
+[  1.475s] [Workarounds] starting patch_chat_voice_button_surface
+[  1.475s] [Workarounds] finished patch_chat_voice_button_surface in 106.98µs
+[  1.475s] [Workarounds] starting patch_item_socketing_tooltips
+[  1.475s] [Workarounds] finished patch_item_socketing_tooltips in 52.46µs
+[  1.475s] [Workarounds] starting patch_character_select_selected_name
+[  1.475s] [Workarounds] finished patch_character_select_selected_name in 26.38µs
+[  1.475s] [Workarounds] starting patch_character_create_defaults
+[  1.475s] [Workarounds] finished patch_character_create_defaults in 158.53µs
+[  1.475s] [Workarounds] starting patch_character_frame_title_refresh
+[  1.479s] [Workarounds] finished patch_character_frame_title_refresh in 3.42ms
+[  1.479s] [Workarounds] starting patch_vignette_pin_template
+[  1.479s] [Workarounds] finished patch_vignette_pin_template in 79.96µs
+[  1.479s] [Workarounds] starting patch_fog_of_war_pin_mixin
+[  1.479s] [Workarounds] finished patch_fog_of_war_pin_mixin in 123.40µs
+[  1.479s] [Workarounds] starting patch_map_exploration_pin_mixin
+[  1.479s] [Workarounds] finished patch_map_exploration_pin_mixin in 209.21µs
+[  1.479s] [Workarounds] starting patch_map_canvas_data_provider_attachment
+[  1.479s] [Workarounds] finished patch_map_canvas_data_provider_attachment in 46.19µs
+[  1.479s] [Workarounds] starting ensure_adventure_map_frame_surface
+[  1.480s] [Workarounds] finished ensure_adventure_map_frame_surface in 146.53µs
+[  1.480s] [Workarounds] starting patch_action_bar_button_event_fanout
+[  1.480s] [Workarounds] finished patch_action_bar_button_event_fanout in 87.49µs
+[  1.480s] [Workarounds] starting patch_paging_controls_page_text
+[  1.480s] [Workarounds] finished patch_paging_controls_page_text in 38.88µs
+[  1.480s] [Workarounds] starting patch_talent_edge_frame_level_sync
+[  1.480s] [Workarounds] finished patch_talent_edge_frame_level_sync in 31.51µs
+[  1.480s] [Workarounds] starting patch_catalog_shop_product_card_defaults
+[  1.480s] [Workarounds] finished patch_catalog_shop_product_card_defaults in 57.37µs
+[  1.480s] [Workarounds] starting patch_game_time_defaults
+[  1.480s] [Workarounds] finished patch_game_time_defaults in 6.44µs
+[  1.480s] [Workarounds] starting patch_tooltip_nineslice_surface
+[  1.480s] [Workarounds] finished patch_tooltip_nineslice_surface in 29.02µs
+[  1.480s] [Workarounds] starting patch_container_frame_token_tracker
+[  1.480s] [Workarounds] finished patch_container_frame_token_tracker in 402.30µs
+[  1.480s] [Workarounds] starting patch_achievement_display_set_achievements
+[  1.480s] [Workarounds] finished patch_achievement_display_set_achievements in 10.88µs
+[  1.480s] [Workarounds] starting patch_housing_dashboard_preload
+[  1.480s] [Workarounds] finished patch_housing_dashboard_preload in 109.87µs
+[  1.480s] [Workarounds] starting patch_lfg_lock_list
+[  1.480s] [Workarounds] finished patch_lfg_lock_list in 15.12µs
+[  1.480s] [Workarounds] starting patch_auction_house_browse_results_event
+[  1.480s] [Workarounds] finished patch_auction_house_browse_results_event in 74.84µs
+[  1.480s] [Workarounds] starting patch_auction_house_search_context_aliases
+[  1.480s] [Workarounds] finished patch_auction_house_search_context_aliases in 25.23µs
+[  1.480s] [Workarounds] starting patch_auth_challenge_frame_parent
+[  1.481s] [Workarounds] finished patch_auth_challenge_frame_parent in 80.43µs
+[  1.481s] [Workarounds] starting patch_settings_surface_defaults
+[  1.481s] [Workarounds] finished patch_settings_surface_defaults in 365.07µs
+[  1.481s] [Workarounds] starting patch_settings_canvas_layout_visibility
+[  1.481s] [Workarounds] finished patch_settings_canvas_layout_visibility in 107.30µs
+[  1.481s] [Startup] apply_post_load_workarounds: workarounds complete
+[  1.536s] [Startup] apply_post_load_workarounds: globals restored
+[  1.536s] [Startup] apply_post_load_workarounds: patch 12.1 compatibility restored
+[  1.536s] [Startup] apply_post_load_workarounds: seterrorhandler restored
+[  1.651s] [EditMode] starting setup_layout_info
+[  1.654s] [EditMode] finished setup_layout_info in 3.04ms
+[  1.654s] [EditMode] starting apply_system_anchors
+[  1.672s] [EditMode] finished apply_system_anchors in 17.58ms
+[  1.672s] [EditMode] starting finalize_action_bar_positions
+[  1.673s] [EditMode] finished finalize_action_bar_positions in 1.60ms
+[  1.673s] [EditMode] starting invoke_anchor_changed_hooks
+[  1.677s] [EditMode] finished invoke_anchor_changed_hooks in 3.61ms
+[  1.677s] [EditMode] starting fix_action_bar_nan_size
+[  1.677s] [EditMode] finished fix_action_bar_nan_size in 53.47µs
+[  1.677s] [EditMode] starting fix_action_bar_scale
+[  1.677s] [EditMode] finished fix_action_bar_scale in 4.43µs
+[  1.677s] [EditMode] starting reapply_player_frame_anchor
+[  1.679s] [EditMode] finished reapply_player_frame_anchor in 1.74ms
+Lua error: @Interface/AddOns/Blizzard_SharedTalentUI/Blizzard_SharedTalentUtil.lua: ...ns/Blizzard_SharedTalentUI/Blizzard_SharedTalentUtil.lua:602: attempt to index global 'SpellSearchUtil' (a nil value)
+stack traceback:
+	(string):1: in main chunk
+Lua error: Lua Error: @Interface/AddOns/Blizzard_SharedTalentUI/Blizzard_SharedTalentUtil.lua: ...ns/Blizzard_SharedTalentUI/Blizzard_SharedTalentUtil.lua:602: attempt to index global 'SpellSearchUtil' (a nil value)
+stack traceback:
+	(string):1: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+
+Lua error: ...AddOns/Blizzard_UIPanels_Game/Mainline/MerchantFrame.lua:934: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'CanMerchantRepair'
+	...AddOns/Blizzard_UIPanels_Game/Mainline/MerchantFrame.lua:934: in function 'MerchantFrame_UpdateRepairButtons'
+	...AddOns/Blizzard_UIPanels_Game/Mainline/MerchantFrame.lua:406: in function 'MerchantFrame_UpdateMerchantInfo'
+	...AddOns/Blizzard_UIPanels_Game/Mainline/MerchantFrame.lua:202: in function 'MerchantFrame_Update'
+	...AddOns/Blizzard_UIPanels_Game/Mainline/MerchantFrame.lua:102: in function <...AddOns/Blizzard_UIPanels_Game/Mainline/MerchantFrame.lua:94>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function 'CraftRecipe'
+	(string):64: in function '__wow_eval'
+	(string):83: in main chunk
+Lua error: Lua Error: ...AddOns/Blizzard_UIPanels_Game/Mainline/MerchantFrame.lua:934: attempt to call a nil value
+stack traceback:
+	(string):12: in function <(string):12>
+	[C]: in function 'native_xpcall'
+	(string):11: in function 'CanMerchantRepair'
+	...AddOns/Blizzard_UIPanels_Game/Mainline/MerchantFrame.lua:934: in function 'MerchantFrame_UpdateRepairButtons'
+	...AddOns/Blizzard_UIPanels_Game/Mainline/MerchantFrame.lua:406: in function 'MerchantFrame_UpdateMerchantInfo'
+	...AddOns/Blizzard_UIPanels_Game/Mainline/MerchantFrame.lua:202: in function 'MerchantFrame_Update'
+	...AddOns/Blizzard_UIPanels_Game/Mainline/MerchantFrame.lua:102: in function <...AddOns/Blizzard_UIPanels_Game/Mainline/MerchantFrame.lua:94>
+	(tail call): ?
+	(tail call): ?
+	[C]: in function 'native_xpcall'
+	(string):8: in function <(string):5>
+	(tail call): ?
+	[C]: in function 'CraftRecipe'
+	(string):64: in function '__wow_eval'
+	(string):83: in main chunk
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+=[C]:: in function 'CraftRecipe'
+=(string):64: in function '__wow_eval'
+=(string):83: in main chunk
+
+test test_showuipanel_professions_crafting::professions_crafting_data_pipeline_lists_recipes_details_and_crafts_one ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 10669 filtered out; finished in 2.03s
+

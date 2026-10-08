@@ -1,0 +1,15 @@
+{
+  "branch": {
+    "@Interface/AddOns/Blizzard_SharedTalentUI/Blizzard_SharedTalentUtil.lua: ...ns/Blizzard_SharedTalentUI/Blizzard_SharedTalentUtil.lua:602: attempt to index global 'SpellSearchUtil' (a nil value)": 1,
+    "...AddOns/Blizzard_UIPanels_Game/Mainline/MerchantFrame.lua:934: attempt to call a nil value": 1
+  },
+  "master": {
+    "@Interface/AddOns/Blizzard_SharedTalentUI/Blizzard_SharedTalentUtil.lua: ...ns/Blizzard_SharedTalentUI/Blizzard_SharedTalentUtil.lua:602: attempt to index global 'SpellSearchUtil' (a nil value)": 1,
+    "...AddOns/Blizzard_UIPanels_Game/Mainline/MerchantFrame.lua:934: attempt to call a nil value": 1
+  },
+  "unchanged": true,
+  "branch_receipt": "p703-crafting-panel-integration.proof.json",
+  "master_receipt": "p703-master-crafting.proof.json",
+  "master_snapshot": "p703-master-crafting-snapshot.json",
+  "policy": "Test success does not erase diagnostics. All isolated crafting-panel Lua error signatures/counts match exact master; startup remains [] for both."
+}

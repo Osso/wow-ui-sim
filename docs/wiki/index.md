@@ -8,7 +8,7 @@
 
 ## [2026-10-08] investigation | Patch 7.0.3 API audit
 
-[Audit](investigations/patch-7-0-3-api-audit.md): pinned revision 5295335, 134 inventory identities; modeled recipe-name search and two consumer-free mount retirements. Discovery/accounting and targeted proof remain in progress.
+[Audit](investigations/patch-7-0-3-api-audit.md): revision 5295335; 178 IDs accounted, modeled recipe-name search and two consumer-free mount retirements. 52 publication gaps/34 prose contracts recorded; all 47 sweeps, targeted caller tests, Python fixtures and Mists/format checks pass. Startup matches master []; 46 registers/43 extracts reproduce with three inherited failures. Portable historical validator; 7.1.0 integration placeholder remains, with no symbol intersection.
 
 ## [2026-10-08] investigation | Patch 7.3.0 API audit
 

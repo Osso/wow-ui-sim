@@ -1,0 +1,42 @@
+[
+  {
+    "label": "p703-all-sweeps",
+    "exit": 0
+  },
+  {
+    "label": "p703-profession-integration",
+    "exit": 0
+  },
+  {
+    "label": "p703-collection-integration",
+    "exit": 0
+  },
+  {
+    "label": "p703-function-diff-integration",
+    "exit": 0
+  },
+  {
+    "label": "p703-profession-prefork",
+    "exit": 0
+  },
+  {
+    "label": "p703-crafting-panel-prefork",
+    "exit": 0
+  },
+  {
+    "label": "p703-retail-build",
+    "exit": 0
+  },
+  {
+    "label": "p703-startup",
+    "exit": 0
+  },
+  {
+    "label": "p703-mists-check",
+    "exit": 101
+  },
+  {
+    "label": "p703-format-check",
+    "exit": 0
+  }
+]

@@ -2,26 +2,52 @@
 
 Pinned page 549091, revision 5295335 (2017-09-18T11:16:26Z), fetched 2026-10-08. Source has 123 wikitext lines and 134 explicit publication identities, including nested profession inventories and prose retirements. This is a bounded current-retail audit, not reconstruction of the Legion client.
 
-## Active coverage matrix
+## Concrete coverage matrix
 
-| Boundary | Modeled/preserved | Problematic | Proof stage |
+| Boundary | Modeled/preserved | Missing/problematic | Proof |
 |---|---|---|---|
-| Recipe name filter | Per-environment text, existing learned catalogue, nil clear, case-insensitive matching, list-update dispatch | Native locale collation, reagent searching and other filters excluded | Cached RED proves no-op setter; implementation awaiting GREEN |
-| Mount renames | GetMountInfo/GetMountInfoExtra absence; current ByID successors untouched | Summon has live simulator callers; retain legacy member | Initial sweep proves synthesized lookup; complete grep/later-register review |
-| Historical widgets | Correct existing region/animation factories | Native 3D UiCamera and Model rendering intentionally unsupported | Publication distinct from behavior |
-| Remaining source | Every literal retained for exact accounting | Archive-only APIs, missing fixtures and unnamed domain migrations | Discovery: 57/134 publication gaps; final accounting pending |
+| Recipe name search | Per-environment text; case-insensitive search over existing learned catalogue; nil clear; invalid-input rejection; list-update event; empty-filter ordering unchanged | Native locale collation, reagent searching, other recipe filters | Bare + cached tests, Mists recipe test; profession caller regressions |
+| Mount renames | Consumer-free GetMountInfo/GetMountInfoExtra absent on raw/ordinary/repeated lookup; ByID successors preserved | Summon retained for live callers; historical index/ID parity not inferred | Bare + cached tests; collection/diff regressions; complete scans |
+| Widget probes | Line through CreateLine; Alpha endpoints through CreateAnimation('Alpha') | Native 3D UiCamera/Model behavior; live SetChange retained | Factory test; all publication sweeps |
+| Current publication | 82/134 inventory observations pass, with no behavioral credit inferred from publication | 52 exact gaps: 32 missing historical profession producers, ten later-removal namespace lookups, four retained live removals, four old map/nameplate globals, two nameplate size methods | [Gap review](../../../data/patch-api/evidence/7.0.3-session-2026-10-08/p703-gap-review.json) gives each ID's expected/observed state and reason |
+| Complete page | 134 inventory + 44 extract IDs = 178; 87 bounded, 86 pending, five metadata-only | 34 substantive extract contracts remain pending | [Occurrence ledger](../../../data/patch-api/sources/7.0.3-page-coverage.json), literal raw/extract mapping and validator |
+
+Initial discovery reports 57 gaps and a concrete failing name-filter test. Five closures: one modeled producer, two safe retirements and two corrected Alpha endpoint probes. No shim, guessed server data, vendor edit or 3D implementation was added. Existing table/function publication is never equated with historical or native behavior.
 
 ## Retirement boundary
 
-All nineteen explicitly removed identities have qualified and bare whole-word `/usr/bin/grep` scans, excluding `*Documentation*` in cached retail AddOns. Full src/tests scans have no syntax filter, so `pcall(Name, ...)` and `and Name then` cannot be missed. Outputs are untruncated. [Scan index](../../../data/patch-api/evidence/7.0.3-session-2026-10-08/p703-retirement-scans.json) records commands, exits, matches and hashes.
+All twenty explicitly removed identities have qualified and bare whole-word `/usr/bin/grep` scans: **80 complete outputs**, excluding `*Documentation*` in cached retail AddOns. Full src/tests scans have no syntax filter, so `pcall(Name, ...)` and `and Name then` cannot be missed. [Scan index](../../../data/patch-api/evidence/7.0.3-session-2026-10-08/p703-retirement-scans.json) records commands, exits, matches, hashes and pre-implementation scope. [Decisions](../../../data/patch-api/evidence/7.0.3-session-2026-10-08/p703-retirement-decisions.json) account for every member.
 
-Only C_MountJournal.GetMountInfo and GetMountInfoExtra are newly retired: neither has cached or simulator callers, and no later register re-adds them. [Later scan](../../../data/patch-api/evidence/7.0.3-session-2026-10-08/p703-later-register-scan.json) reads fixed master and p710-page Git objects, never the parallel worktree. Other consumers remain: SetGlyph is used by cached InspectUI; Summon by collection tests; Alpha:SetChange, Model:GetModel and GameTooltip:SetTradeSkillItem by existing behavioral callers. ShowHelm/ShowCloak/ShowingHelm/ShowingCloak are explicitly re-added by 12.0.0. Already absent identities need no code change. Unnamed glyph `etc.`, Multistrike and Amplify members are not guessed.
+Only C_MountJournal.GetMountInfo and GetMountInfoExtra are newly retired: neither has cached or simulator callers, and no later register re-adds them. Retail-only tombstones prevent namespace autostub fabrication. [Later scan](../../../data/patch-api/evidence/7.0.3-session-2026-10-08/p703-later-register-scan.json) reads fixed master and p710-page Git objects, never the parallel worktree. Other consumers remain: cached InspectUI's SetGlyph method; Summon collection callers; Alpha:SetChange, Model:GetModel and GameTooltip:SetTradeSkillItem behavioral callers. ShowHelm/ShowCloak/ShowingHelm/ShowingCloak are explicitly re-added by 12.0.0. Already absent identities need no code change. Unnamed glyph `etc.`, Multistrike and Amplify members are not guessed.
 
-## Verification policy
+## Targeted verification
 
-Long commands run asynchronously with complete log files and revision/scope receipts under the owned target. No full integration suite, push, merge, agents/model CLIs, working-directory switching, other-worktree edits or vendor changes. Master baseline is an immutable Git-archive snapshot inside the owned target, not a worktree. Addons-enabled startup comparison and touched profession/collection regressions are required before completion.
+| Command / filter | Result |
+|---|---|
+| `cargo test --test prefork_full_ui -- patch_7_0_3` | 3/3: sweep, cached name search, cached retirements |
+| `cargo test --test integration patch_7_0_3 -- --nocapture` | 3/3: name search, retirements, Line/Alpha factories |
+| `cargo test --test prefork_full_ui -- publication_sweep` | 47/47; all 45 earlier sweep ID sets/ok-statuses unchanged |
+| Integration `professions_api::`, `c_collection_api::`, `c_function_diff_coverage::` | 35/35, 37/37, 4/4 |
+| Prefork `professions` | 21/21 |
+| Integration `test_showuipanel_professions_crafting::` | 1/1; isolated SpellSearchUtil/MerchantFrame diagnostic signatures and counts exactly match master |
+| Prefork `test_showuipanel_professions_crafting` | Zero selected cases; no coverage credited |
+| Mists recipe-name integration test | 1/1 |
+| Python extractor / generator / validator fixtures | 35/35, 30/30, 8/8 |
+| Register / extract reproduction | 46/46 registers; 43/46 extracts, exactly three inherited failures |
+| Mists `cargo check --no-default-features --features sound,gui,casc,client-mists --tests` | Exit 0; zero non-vendor warnings |
+| `cargo fmt --check` | Exit 0 |
+| Separate branch/master builds; addons-enabled `--no-saved-vars lua-errors` | Both exit 0 and exact arrays `[]` |
+| Negative namespace substitution | Expected exit 1; exactly 52 → 53 failed IDs, no resolved/stale IDs |
 
-Opt-in `--legion-prepatch` preserves prior parser behavior. Initial reproduction: 46 registers and 43 extracts reproduce; inherited 12.0.5, 12.0.7 and 12.1.0 extract failures are unchanged. All 25 pre-existing historical/integrated validators pass. Final proof remains pending at this implementation checkpoint.
+[Proof ledger](../../../data/patch-api/evidence/7.0.3-session-2026-10-08/p703-proof-ledger.md) records commands, revisions, complete logs, scope hashes and invalidated development results. Retail proof is pinned at `69625973b`. The only later source change moves a misplaced cfg attribute back onto the original retail quality module; both modules' default-retail declarations are unchanged. The validator proves that exact transformation and identical remaining runtime scope. Mists is freshly checked/tested at `5168fb2d4`. No broad successful scope was rerun merely for an evidence/docs milestone. Six inherited vendor iced manifest deprecations remain unsuppressed. Changed Rust readability review found no new suppressions or deep nesting.
+
+Master baseline is an immutable Git-archive snapshot inside the owned target, not a worktree. [Startup comparison](../../../data/patch-api/evidence/7.0.3-session-2026-10-08/p703-startup-comparison.json) proves addons enabled and zero errors in both executions. The host has no WoW install; no CASC/native visual test is claimed. No full integration suite, push, merge, agents/model CLIs, working-directory switching, other-worktree mutation or vendor/Wowless/WowlessData edit.
+
+## Historical validator and integration
+
+[Validator](../../../data/patch-api/evidence/7.0.3-session-2026-10-08/validate.py) passes read-only, with register/sweep scope from `historical_registers`/`historical_sweep_tests` at the fixed proof revision. Counts derive from retained files, not moving HEAD or receipt-derived subsets. Source/accounting, complete receipt/log hashes, input preservation, scans, negative control and prior-validator matrix remain checked. No current-checkout absolute cwd/target equality. All 25 prior historical/integrated validators pass; own validator supplies the additional gate. [Relocation proof](../../../data/patch-api/evidence/7.0.3-session-2026-10-08/p703-validator-portability.json) exercises another checkout, added audit/register files, whitespace tamper rejection and exact restoration. Full Git history is required; no missing-history bypass.
+
+Branch remains based on `aa57dd8f8`; 7.1.0's first-position integration placeholder remains by agreement with main. Read-only review of the merged 7.1.0 register at `25fbde058` finds **no intersection** with any 7.0.3 inventory symbol, including either retirement. Integration must replace the placeholder and refresh that sweep's evidence. No p701-page or other worktree was read or modified.
 
 ## Sources
 

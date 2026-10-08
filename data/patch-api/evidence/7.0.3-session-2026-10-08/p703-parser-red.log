@@ -1,0 +1,14 @@
+..............E...............
+======================================================================
+ERROR: test_legion_prepatch_keeps_nested_methods_renames_and_bare_removals (__main__.InventoryTests.test_legion_prepatch_keeps_nested_methods_renames_and_bare_removals)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p703-page/tools/test_gen_patch_wikitext_register.py", line 20, in test_legion_prepatch_keeps_nested_methods_renames_and_bare_removals
+    rows = generator.parse_legion_prepatch(raw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'gen_patch_wikitext_register' has no attribute 'parse_legion_prepatch'. Did you mean: 'parse_bfa_prepatch'?
+
+----------------------------------------------------------------------
+Ran 30 tests in 0.002s
+
+FAILED (errors=1)

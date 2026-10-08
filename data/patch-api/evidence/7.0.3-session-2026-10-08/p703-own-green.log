@@ -1,0 +1,28 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p703-page)
+error[E0599]: no method named `into_stack` found for struct `Vec<i32>` in the current scope
+  --> src/c_api/c_trade_skill_filter.rs:52:32
+   |
+52 |     filter_recipe_ids(&filter).into_stack(state)
+   |                                ^^^^^^^^^^
+   |
+   = help: items from traits can only be used if the trait is implemented and in scope
+note: `IntoStack` defines an item `into_stack`, perhaps you need to implement it
+  --> src/lua_bridge/into_stack.rs:20:1
+   |
+20 | pub trait IntoStack {
+   | ^^^^^^^^^^^^^^^^^^^
+help: there is a method `into_raw` with a similar name, but with different arguments
+  --> /home/osso/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/yoke-0.8.1/src/cartable_ptr.rs:80:5
+   |
+80 |     fn into_raw(self) -> NonNull<Self::Raw>;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For more information about this error, try `rustc --explain E0599`.
+error: could not compile `wow-ui-sim` (lib) due to 1 previous error

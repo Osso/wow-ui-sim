@@ -1,0 +1,88 @@
+{
+  "revision": "25fbde058514034692df481bd568e952a2b9851e",
+  "path": "data/patch-api/sources/7.1.0-wikitext-register.json",
+  "intersections": [],
+  "entries": [
+    {
+      "id": "wt-global-api-GetPhysicalScreenSize-4",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetPhysicalScreenSize",
+      "annotation": "* New API: {{api|GetPhysicalScreenSize}}, {{api|GetDetailedItemLevelInfo}}",
+      "wikitext_line": 4
+    },
+    {
+      "id": "wt-global-api-GetDetailedItemLevelInfo-4",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetDetailedItemLevelInfo",
+      "annotation": "* New API: {{api|GetPhysicalScreenSize}}, {{api|GetDetailedItemLevelInfo}}",
+      "wikitext_line": 4
+    },
+    {
+      "id": "wt-widgets-Frame:SetClipsChildren-6",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Frame:SetClipsChildren",
+      "annotation": "",
+      "wikitext_line": 6
+    },
+    {
+      "id": "wt-widgets-Frame:DoesClipChildren-6",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Frame:DoesClipChildren",
+      "annotation": "",
+      "wikitext_line": 6
+    },
+    {
+      "id": "wt-cvars-NameplatePersonalShowAlways-8",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "NameplatePersonalShowAlways",
+      "annotation": "",
+      "wikitext_line": 8
+    },
+    {
+      "id": "wt-cvars-NameplatePersonalShowInCombat-9",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "NameplatePersonalShowInCombat",
+      "annotation": "",
+      "wikitext_line": 9
+    },
+    {
+      "id": "wt-cvars-NameplatePersonalShowWithTarget-10",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "NameplatePersonalShowWithTarget",
+      "annotation": "",
+      "wikitext_line": 10
+    },
+    {
+      "id": "wt-cvars-NameplatePersonalHideDelaySeconds-12",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "NameplatePersonalHideDelaySeconds",
+      "annotation": "",
+      "wikitext_line": 12
+    },
+    {
+      "id": "wt-cvars-NameplatePersonalHideDelayAlpha-13",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "NameplatePersonalHideDelayAlpha",
+      "annotation": "",
+      "wikitext_line": 13
+    },
+    {
+      "id": "wt-global-api-GetItemInfo-19",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetItemInfo",
+      "annotation": "* [[API_GetItemInfo|GetItemInfo]] has four new returns: 14: bindType, 15: expacID, 16: itemSetID, 17: isCraftingReagent",
+      "wikitext_line": 19
+    }
+  ],
+  "policy": "Read-only integration preparation; branch remains on aa57dd8f8. No parallel worktree read or mutation."
+}
