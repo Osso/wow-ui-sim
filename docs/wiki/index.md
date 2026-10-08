@@ -4,7 +4,7 @@
 
 ## [2026-10-08] investigation | 7.2.5 API page audit
 
-[Audit](investigations/patch-7-2-5-api-audit.md): revision 4311256, 16 inventory / 12 extract IDs accounted. Real retail garrison tree catalog/context closes three gaps; three exact publication gaps and four prose contracts retained. All 43 sweeps plus factory, own bare/cached tests, garrison/anima integration callers, 26/34/8 Python fixtures, warning-clean non-vendor Mists check and startup pass. Cached garrison 37/38; exact remaining failure reproduced on base. 43 registers / 40 extracts reproduce; inherited three extract failures unchanged. All twenty validators pass; own independent-checkout/later-scope/tamper proof passes. 7.3.0 integration placeholder retained.
+[Audit](investigations/patch-7-2-5-api-audit.md): revision 4311256, all 28 IDs accounted; merged 7.3.0 register integrated on master 1ade15b52. Three publication gaps unchanged; all 44 sweeps plus factory pass (45/45), 8,869 observations. Own tests, garrison/order hall/AnimaDiversion integration, Python fixtures 27/34/8 and format/Mists checks pass. Cached garrison 37/38 matches exact master failure; no prefork diversion cases exist. Both addons-enabled startups []; 44 registers / 41 extracts reproduce with three unchanged inherited failures. Historical and sealed integrated validator scopes remain fixed; final matrix linked from audit.
 
 ## [2026-10-08] investigation | Patch 8.0.1 API audit
 

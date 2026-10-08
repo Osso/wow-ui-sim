@@ -1,0 +1,29 @@
+{
+  "registers": 44,
+  "registers_byte_identical": 44,
+  "extracts": 44,
+  "extracts_byte_identical": 41,
+  "inherited_extract_failures": [
+    {
+      "patch": "12.0.5",
+      "flags": [],
+      "error": null,
+      "saved_sha256": "4da3872aa566695f46e2dacd4e79992f5b06be9541f0d19cf0e8dba45cea8329",
+      "generated_sha256": "f446822f72eeb475e5b261657104cc87984c98079487b233c68988dc2cde202a"
+    },
+    {
+      "patch": "12.0.7",
+      "flags": [],
+      "error": null,
+      "saved_sha256": "014f7d51eca1b2fc5d76071978e09c537efd66d14069e21d163e58ccd04a561e",
+      "generated_sha256": "ad333a5b736549f66f6756386baad2039d1980315fdf6b6f650e9a9f157b1855"
+    },
+    {
+      "patch": "12.1.0",
+      "flags": [],
+      "error": "unhandled template: {{#description2:Midnight 12.1.0 (Curse of Ula\u2019tek)}}",
+      "saved_sha256": "c051a68b442b2e69d602650d1c5ec07c1d0262dd1aea01fe73d3f60cd5f29c3b",
+      "generated_sha256": null
+    }
+  ]
+}

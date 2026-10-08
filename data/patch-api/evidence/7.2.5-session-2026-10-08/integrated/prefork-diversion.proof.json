@@ -1,0 +1,21 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "anima_diversion"
+  ],
+  "revision": "ba25334e14147303b7230e865a7a5108c528a63f",
+  "scope": "p725-integrated-prefork-diversion",
+  "cwd": ".",
+  "target": "dedicated p725-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "prefork-diversion.txt",
+  "log_sha256": "74dba23daaaa46ac513798b9c60740725bf24882d27b34382064afc7689a99e8",
+  "seconds": 0.1780555879995518,
+  "invalidated": false,
+  "source_revision": "80bb6f64edb56e257bc6e22cdb163defd86197e1"
+}

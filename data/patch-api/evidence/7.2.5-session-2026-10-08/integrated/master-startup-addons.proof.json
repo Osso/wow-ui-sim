@@ -1,0 +1,20 @@
+{
+  "command": [
+    "timeout",
+    "90",
+    "/home/osso/.cache/wow-ui-sim-targets/p725-page/debug/wow-sim",
+    "--no-saved-vars",
+    "lua-errors"
+  ],
+  "revision": "01a266edc8fe49d34081f147fefe53377e46e121",
+  "scope": "master-startup-addons",
+  "cwd": ".",
+  "target": "dedicated p725-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "master-startup-addons.txt",
+  "log_sha256": "2e0c97d92b79f1ed283c2cb558b7a98b75953d523bd60d902e9347e4c3aeddbd",
+  "seconds": 3.1563186349994794,
+  "invalidated": false,
+  "source_revision": "1ade15b526f897e33c588409b64d8799d6942fa1"
+}

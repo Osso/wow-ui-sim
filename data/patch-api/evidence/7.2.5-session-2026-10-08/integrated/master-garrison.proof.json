@@ -1,0 +1,23 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--manifest-path",
+    "/tmp/p725-master-1ade15b52/Cargo.toml",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors"
+  ],
+  "revision": "80bb6f64edb56e257bc6e22cdb163defd86197e1",
+  "scope": "master-garrison",
+  "cwd": ".",
+  "target": "dedicated p725-page target (external to repository)",
+  "environment": {},
+  "exit": 1,
+  "log": "master-garrison.txt",
+  "log_sha256": "843b5b59a0a879774d89648f8afc3326c63766c1a77fdb7a5377b35a0ea86edc",
+  "seconds": 108.16930737600342,
+  "invalidated": false,
+  "source_revision": "1ade15b526f897e33c588409b64d8799d6942fa1"
+}

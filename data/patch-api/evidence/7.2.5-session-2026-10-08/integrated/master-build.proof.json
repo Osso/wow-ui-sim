@@ -1,0 +1,21 @@
+{
+  "command": [
+    "cargo",
+    "build",
+    "--manifest-path",
+    "/tmp/p725-master-1ade15b52/Cargo.toml",
+    "--bin",
+    "wow-sim"
+  ],
+  "revision": "01a266edc8fe49d34081f147fefe53377e46e121",
+  "scope": "master-build",
+  "cwd": ".",
+  "target": "dedicated p725-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "master-build.txt",
+  "log_sha256": "1afad71cffa4861308085463d2f51a8ecf9741e2866c68fd332b128b40126899",
+  "seconds": 0.16688585699739633,
+  "invalidated": false,
+  "source_revision": "1ade15b526f897e33c588409b64d8799d6942fa1"
+}

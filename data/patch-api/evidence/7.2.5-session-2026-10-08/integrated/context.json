@@ -1,0 +1,61 @@
+{
+  "runtime_revision": "80bb6f64edb56e257bc6e22cdb163defd86197e1",
+  "master_revision": "1ade15b526f897e33c588409b64d8799d6942fa1",
+  "retained_historical_context": "../p725-context.json",
+  "expected_exits": {
+    "master-garrison": 1,
+    "master-build": 0,
+    "master-startup-addons": 0,
+    "all-sweeps": 0,
+    "integration-p725": 0,
+    "prefork-p725": 0,
+    "integration-garrison": 0,
+    "integration-order_hall": 0,
+    "integration-anima": 0,
+    "prefork_full_ui-garrison": 1,
+    "prefork_full_ui-order_hall": 0,
+    "prefork_full_ui-anima": 0,
+    "gen_patch_wikitext_register-fixtures": 0,
+    "extract_patch_non_inventory-fixtures": 0,
+    "patch_audit_validation-fixtures": 0,
+    "format": 0,
+    "mists-check": 0,
+    "retail-build": 0,
+    "startup-addons": 0,
+    "extend-receipts": 0,
+    "negative": 1,
+    "prefork-diversion": 0
+  },
+  "runtime_scope": {
+    "Cargo.lock": "859f258fa21eb92f7f0c83c77d526ea0ce3e7535b0970df2e39c459023c0b9cf",
+    "Cargo.toml": "98e73c27d7cd21438f61e6839c823c128d1be338ea60e603202a7417f51b0e07",
+    "build.rs": "df6b286152daa948557c17c4abb8776af2aed573c45f1fcb4901fd2b4a8ccde2",
+    "data/patch-api/evidence/7.2.5-session-2026-10-08/run_proof.py": "ee6da6c2183c2151d780bc10bf5654570e0a191803299e5e226e7265f8245846",
+    "src/c_api/c_garrison_trees.rs": "a988bd2f43733ffebb400378c0eb0ab07942a478e23b7565097e5935dfce4cd7",
+    "src/c_api/mod.rs": "c46eb2e129722acf06c0c0c64962b1882ed3b488b4fb6fbba0caa1f500d1b34a",
+    "src/lua_api/state.rs": "83573e680834d209cf67e0f1fd777769916a9034e0b8189aefb28a6944b785f7",
+    "src/lua_api/state/sim_state.rs": "37d8fb2d609e2bd159fe994370d9f733b8fe4c45f99315332cd93a9c1f1d3a39",
+    "tests/common/publication_sweep.rs": "4cc4c29d2cb8ac47647c6ce389fbd8d9549b1894ef94710e51a9f76a99a4377d",
+    "tests/data/patch_7_2_5_sweep_known_gaps.json": "3f7f956a60864b0bd3a98eaee19656b545282581264089c704bdbc483c21889c",
+    "tests/patch_7_2_5_garrison_trees.rs": "d10af0acb627fa3354259246af2a15a3c7fa827fcc90f3a365d73731ec6125ee",
+    "tests/patch_7_2_5_publication_sweep.rs": "8a6d8a931aadd75b97ed142fbabe879a178f417f21d1031d40381ec6c6e81976",
+    "tools/extract_patch_non_inventory.py": "36755572f4d0566278f00547c44db0e76e658d4ed3d05f3c942e7e7711311d3a",
+    "tools/gen_patch_wikitext_register.py": "90f7114959b54506bcf173649c4592606d9a9f0969800d2661361cc285a1e2b3",
+    "tools/patch_audit_validation.py": "ece34f1c15a1f4e27bb82abf0ae2f137b228c2b7f29c5042a38b8d0fcc9131e8",
+    "tools/test_extract_patch_non_inventory.py": "0ef7ddf2f264315377342a6bb9a8443b33774f0e3237d73472aba85e8bdff39b",
+    "tools/test_gen_patch_wikitext_register.py": "af3cd473c810ea31e00540b26d11c4bf35f91e6cc697191ce6710b6e524f8c73",
+    "tools/test_patch_audit_validation.py": "509d0049733b8ebbff7b110cabc684586f978c36ada6a4a2d175482a5bdb638b"
+  },
+  "empty_prefork_selection": {
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "anima_diversion"
+    ],
+    "cases": 0,
+    "note": "AnimaDiversion cases use #[test]; no cached prefork cases exist. Broader anima filters also exercise animation cases."
+  }
+}

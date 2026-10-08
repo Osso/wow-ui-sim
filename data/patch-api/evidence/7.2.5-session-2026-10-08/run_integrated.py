@@ -94,7 +94,8 @@ def run_commands():
         os.environ[out_env] = str(FRESH / (path.stem + '-results.json'))
     commands = [('all-sweeps', ['cargo', 'test', '--test', 'prefork_full_ui', '--', 'publication_sweep']),
                 ('integration-p725', ['cargo', 'test', '--test', 'integration', '--', 'patch_7_2_5']),
-                ('prefork-p725', ['cargo', 'test', '--test', 'prefork_full_ui', '--', 'patch_7_2_5'])]
+                ('prefork-p725', ['cargo', 'test', '--test', 'prefork_full_ui', '--', 'patch_7_2_5']),
+                ('prefork-diversion', ['cargo', 'test', '--test', 'prefork_full_ui', '--', 'anima_diversion'])]
     for harness in ('integration', 'prefork_full_ui'):
         for selection in ('garrison', 'order_hall', 'anima'):
             commands.append((harness + '-' + selection,
@@ -112,6 +113,15 @@ def run_commands():
     ])
     for label, command in commands:
         run(label, command)
+        if label == 'extend-receipts':
+            path = FRESH / 'extension/p725-register-reproduction.json'
+            rows = read(path)
+            added = next(row for row in rows if row['patch'] == '7.3.0')
+            # The shared extender clones receipt fields from an older row.
+            # Retain that template revision, but stamp the actual regeneration.
+            added['template_revision'] = added['revision']
+            added['revision'] = read(FRESH / 'extend-receipts.proof.json')['revision']
+            dump(path, rows)
     os.environ['P725_SWEEP_REGISTER'] = str(HERE / 'p725-negative-register.json')
     os.environ['P725_SWEEP_OUT'] = str(FRESH / 'negative-results.json')
     run('negative', ['cargo', 'test', '--test', 'prefork_full_ui', '--', 'patch_7_2_5_publication_sweep'])

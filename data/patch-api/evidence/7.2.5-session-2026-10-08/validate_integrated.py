@@ -43,6 +43,7 @@ def check_sources(revision):
             assert row['verified_flags'] == provenance['generator_flags']
     added = next(row for row in extension if row['patch'] == '7.3.0')
     assert added['verified_flags'] == ['--legacy-summary-tables']
+    assert added['revision'] == read(FRESH / 'extend-receipts.proof.json')['revision']
     for row in extracts:
         path = ROOT / 'data/patch-api/sources' / (row['patch'] + '-api-changes.txt')
         assert digest(path) == row['saved_sha256']
@@ -120,7 +121,10 @@ def check_receipts(context):
         if receipt['command'][:2] == ['cargo', 'test'] and expected_exit == 0:
             counts = re.findall(r'test result: ok\. (\d+) passed; 0 failed;', log.read_text())
             assert counts, label
-            assert any(int(count) > 0 for count in counts), 'empty selection: ' + label
+            if label == 'prefork-diversion':
+                assert counts == ['0'], 'update explicitly documented empty diversion selection'
+            else:
+                assert any(int(count) > 0 for count in counts), 'empty selection: ' + label
     diversion = {case for case in passed_cases((FRESH / 'integration-anima.txt').read_text())
                  if 'blizzard_animadiversionui::' in case}
     assert len(diversion) == 42, 'AnimaDiversion integration coverage changed'

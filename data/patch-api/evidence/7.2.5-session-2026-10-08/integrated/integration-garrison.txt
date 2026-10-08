@@ -1,0 +1,42 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.13s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p725-page/debug/deps/integration-1db16289b0998b2a)
+
+running 28 tests
+test blizzard_garrison_base_loads::blizzard_garrison_base_resolves_single_unsuffixed_toc ... ok
+test blizzard_garrison_base_loads::blizzard_garrison_base_toc_lists_only_xml_files ... ok
+test blizzard_garrison_base_loads::blizzard_garrison_base_toc_declares_colors_dependency_and_no_load_flags ... ok
+test blizzard_garrison_templates_loads::blizzard_garrison_templates_toc_lists_three_xml_and_localization_lua ... ok
+test blizzard_garrison_ui_loads::blizzard_garrison_ui_toc_declares_allow_load_game_and_mainline ... ok
+test blizzard_garrison_base_loads::blizzard_garrison_base_defaults_to_game_screen_only ... ok
+test blizzard_garrison_ui_loads::blizzard_garrison_ui_resolves_mainline_toc ... ok
+test blizzard_garrison_templates_loads::blizzard_garrison_templates_toc_declares_lod_and_two_deps ... ok
+test blizzard_garrison_ui_loads::blizzard_garrison_ui_toc_lists_thirty_two_mainline_files_plus_localization ... ok
+test blizzard_garrison_templates_loads::blizzard_garrison_templates_resolves_single_unsuffixed_toc ... ok
+test blizzard_garrison_ui_loads::blizzard_garrison_ui_toc_declares_lod_required_deps_game_only_mainline ... ok
+test blizzard_garrison_base_loads::blizzard_garrison_base_auto_loads_on_game_and_skips_login ... ok
+test blizzard_garrison_ui_loads::blizzard_garrison_ui_excluded_from_game_auto_discovery_due_to_lod ... ok
+test blizzard_garrison_templates_loads::blizzard_garrison_templates_excluded_from_game_auto_discovery_due_to_lod ... ok
+test c_small_namespaces_probes::garrison_info_has_garrison_false ... ok
+test c_garrison_talents::get_talent_unlock_world_quest_returns_nil_when_absent ... ok
+test c_small_namespaces_probes::garrison_info_get_garrison_type_zero ... ok
+test c_garrison_talents::get_talent_unlock_world_quest_returns_seeded_id ... ok
+test c_garrison_talents::cost_string_abbreviates_when_requested ... ok
+test c_garrison_talents::get_talent_info_returns_seeded_shape ... ok
+test c_garrison_talents::get_talent_info_returns_nil_when_unknown ... ok
+test c_garrison_talents::cost_string_omits_color_when_unset ... ok
+test c_garrison_talents::cost_string_joins_seeded_rows_with_color_code ... ok
+test global_frames::test_garrison_type_enum ... ok
+test c_garrison_talents::cost_string_returns_nil_for_empty_cost_list ... ok
+test patch_7_2_5_garrison_trees::patch_7_2_5_garrison_bare_catalog_isolation ... ok
+test patch_7_2_5_garrison_trees::patch_7_2_5_garrison_bare_context_transitions ... ok
+test blizzard_ui_blizzard_ardenweald_gardening::load::ardenweald_gardening_caller_shape_loads_garrison_ui ... ok
+
+test result: ok. 28 passed; 0 failed; 0 ignored; 0 measured; 10642 filtered out; finished in 1.31s
+

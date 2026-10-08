@@ -1,0 +1,22 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_7_2_5_publication_sweep"
+  ],
+  "revision": "2b8d2d2452ae2b0a21f7754b0d80b41fdc2e7cb2",
+  "scope": "p725-integrated-own",
+  "cwd": ".",
+  "target": "dedicated p725-page target (external to repository)",
+  "environment": {
+    "P725_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p725-page/data/patch-api/evidence/7.2.5-session-2026-10-08/integrated/patch_7_2_5_publication_sweep-results.json"
+  },
+  "exit": 0,
+  "log": "p725-integrated-own.txt",
+  "log_sha256": "32e610233e65da3f02e3a22ba614d3b3f7c36e7a6f07fa7f31df7804be998959",
+  "seconds": 128.35974446299952,
+  "invalidated": false
+}

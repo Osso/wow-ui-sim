@@ -32,7 +32,7 @@ Current cached `GarrisonInfoDocumentation.lua` documents nullable current-tree/f
 
 All **28 identities** are accounted: sixteen inventory and twelve extract rows; seventeen bounded, seven pending and four metadata-only. The three publication gaps are C_UI.Reload, C_Unit and ReloadUI historical absence. Four substantive prose rows remain pending: unnamed commentator functions, unnamed transmog functions, ambiguous C_Unit namespace and full reload/rename semantics. Headings/title and event-documentation editorial context receive no runtime credit. Namespace presence never credits unnamed member behavior.
 
-## Targeted proof
+## Original pre-integration proof
 
 Runtime scope `43dd7ed8e` contains the full model and 43-register/sweep set. [Command receipts](../../../data/patch-api/evidence/7.2.5-session-2026-10-08/p725-context.json) and complete logs retain commands, code revisions, exits and hashes. RED's added uncommitted harness is separately retained and hashed; its receipt revision pins the pre-model runtime, not that harness. No full integration suite, WoW texture tests, vendor edits, agents, push or merge.
 
@@ -47,7 +47,17 @@ The read-only own validator scopes registers/sweeps through historical_registers
 
 `blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors` fails in both this branch and an exact Git archive of base `85c2acb2d`, with the same `ipairs` nil error at Blizzard_AdventuresCombatLog.lua:90. OnLoad calls **GetAutoCombatDamageClassValues**, not one of the three tree queries. [Baseline receipt/context](../../../data/patch-api/evidence/7.2.5-session-2026-10-08/p725-garrison-baseline-context.json) records base source revision, matching unchanged caller/implementation hashes and complete log. Both the existing assertion and vendor code remain intact; no unrelated damage-class shim/model was added. The overall verification runner exits 1 because it faithfully retains that failure; other targeted commands pass. This is not an all-green garrison suite claim.
 
-7.3.0 merged on master `1ade15b52` while acceptance finished. The latest-master register scan still shows no ReloadUI re-addition. By coordination agreement, the **7.3.0 placeholder remains first** in later_registers; integration owner will replace it with the merged register and refresh own proof. No rebase was performed, so the 43-register runtime receipts remain explicitly pre-integration. No native historical catalog, reload lifecycle or unspecified member/event reconstruction is claimed.
+## Integrated proof after 7.3.0
+
+Rebased onto master `1ade15b52`; commit `2b8d2d245` replaces the 7.3.0 placeholder with the real register. Integrated runtime/register scope is `80bb6f64edb56e257bc6e22cdb163defd86197e1`. Subsequent evidence/validator/wiki commits do not change that runtime scope. [Fresh command ledger](../../../data/patch-api/evidence/7.2.5-session-2026-10-08/integrated/p725-final-command-ledger.md) records commands, actual driver revisions, exits and complete hashed logs separately from immutable original receipts.
+
+- **44/44 registers and 41/44 extracts reproduce** with recorded/inherited flags. The same 12.0.5/12.0.7 mismatches and 12.1.0 unsupported-template error remain attributable inherited failures. Shared receipt extension adds 7.3.0 with `--legacy-summary-tables`, three inventory rows and zero gaps; saved-extract rows are independently refreshed.
+- **44 publication sweeps plus factory pass (45/45)**, across **8,869 observations**. Own three gaps remain three; every earlier/later gap set is unchanged. No supersession edits or preservation exceptions added. Negative control adds only the ChatBubbles row: **3 → 4**, expected exit 1, no resolved/stale IDs.
+- Own integration **2/2** and prefork **5/5** pass. Garrison integration **28/28**, order hall integration/prefork **6/6 each**, and cached garrison **37/38** match prior scope. AnimaDiversion contributes **42 passing integration cases** within the broader `anima` selection (163/163). The broader prefork `anima` selection passes 9/9 animation cases, **not diversion coverage**. Exact `anima_diversion` prefork selection runs zero cases: diversion tests use `#[test]`, not the prefork macro.
+- Exact archived master `1ade15b52` reproduces the sole cached explicit-load failure, with the same `ipairs` nil diagnostic at Blizzard_AdventuresCombatLog.lua:90 and unchanged assertion/caller/backing implementation. No new failures or unrelated shim added. Separately built master and branch **addons-enabled startup both print `[]`**.
+- Python fixtures **27/34/8**, format and Mists tests-check pass; **zero non-vendor warnings**, six inherited iced manifest warnings unsuppressed. Original historical 43-register scope remains fixed; integrated validator uses the recorded 44-register revision rather than current globs. [Validator matrix](../../../data/patch-api/evidence/7.2.5-session-2026-10-08/integrated/validator-matrix.json) records final results.
+
+No native historical catalog, reload lifecycle or unspecified member/event reconstruction is claimed. No vendor/Wowless edits, agents, push or merge; no `__pycache__` retained.
 
 ## Sources
 
