@@ -436,4 +436,4 @@ Final integration proof: spell-line modules 190/190, prefork tooltip cases 34/34
 
 ## [2026-10-08] investigation | Patch 6.0.2 API audit
 
-[Audit](investigations/patch-6-0-2-api-audit.md): pinned main and transcluded diff, 657 API occurrences and 79 enum statements. Scenario bonus state queries and consumer-free retirements; final targeted proof pending.
+[Audit](investigations/patch-6-0-2-api-audit.md): 657 API occurrences, 100 prose rows and 79 enum members; two scenario-backed queries and three consumer-free retirements. 382 bounded/275 API gaps; 51 sweeps, 3 cached/2 bare cases and 11 scenario regressions pass; 50 registers/47 extracts reproduce with three inherited failures. Both addons-enabled startups []; portability/Mists proof retained in final session summary.
