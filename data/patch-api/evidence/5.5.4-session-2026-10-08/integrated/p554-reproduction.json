@@ -1,5 +1,5 @@
 {
-  "revision": "7158cb3fb",
+  "revision": "7158cb3fbee1a617a7df2f090a6aef4cb64c2f23",
   "historical_flags_revision": "bebcc5830dcb21e768a2e3c365105351a400fccb",
   "historical_flags_sources": [
     "data/patch-api/evidence/5.4.8-session-2026-10-08/integrated/p548-register-reproduction.json",
@@ -406,7 +406,7 @@
       "extract_exit": 1,
       "extract_sha256": "c051a68b442b2e69d602650d1c5ec07c1d0262dd1aea01fe73d3f60cd5f29c3b",
       "extract_byte_identical": false,
-      "extract_error": "Traceback (most recent call last):\n  File \"/tmp/p554-reproduction-n5ekfqtd/tools/extract_patch_non_inventory.py\", line 411, in <module>\n    main()\n    ~~~~^^\n  File \"/tmp/p554-reproduction-n5ekfqtd/tools/extract_patch_non_inventory.py\", line 356, in main\n    text = extract_text(raw_path.read_text(), preserve_examples=args.preserve_examples,\n                        normalize_inventory_headings=args.normalize_inventory_headings,\n    ...<6 lines>...\n                        retain_patch_diff_reference=args.retain_patch_diff_reference,\n                        canonical_patch_navigation=args.canonical_patch_navigation)\n  File \"/tmp/p554-reproduction-n5ekfqtd/tools/extract_patch_non_inventory.py\", line 215, in extract_text\n    raise ValueError(f\"unhandled template: {line}\")\nValueError: unhandled template: {{#description2:Midnight 12.1.0 (Curse of Ula\u2019tek)}}\n",
+      "extract_error": "Traceback (most recent call last):\n  File \"/tmp/p554-reproduction-i6u2siim/tools/extract_patch_non_inventory.py\", line 411, in <module>\n    main()\n    ~~~~^^\n  File \"/tmp/p554-reproduction-i6u2siim/tools/extract_patch_non_inventory.py\", line 356, in main\n    text = extract_text(raw_path.read_text(), preserve_examples=args.preserve_examples,\n                        normalize_inventory_headings=args.normalize_inventory_headings,\n    ...<6 lines>...\n                        retain_patch_diff_reference=args.retain_patch_diff_reference,\n                        canonical_patch_navigation=args.canonical_patch_navigation)\n  File \"/tmp/p554-reproduction-i6u2siim/tools/extract_patch_non_inventory.py\", line 215, in extract_text\n    raise ValueError(f\"unhandled template: {line}\")\nValueError: unhandled template: {{#description2:Midnight 12.1.0 (Curse of Ula\u2019tek)}}\n",
       "generated_extract_sha256": null,
       "generated_extract_error": "unhandled template: {{#description2:Midnight 12.1.0 (Curse of Ula\u2019tek)}}"
     },

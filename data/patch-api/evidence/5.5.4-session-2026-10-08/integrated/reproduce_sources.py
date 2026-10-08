@@ -17,7 +17,8 @@ def blob(revision, path):
 
 
 def main():
-    revision = sys.argv[1]
+    revision = subprocess.check_output(['git', 'rev-parse', '--verify', sys.argv[1] + '^{commit}'],
+                                       cwd=ROOT, text=True).strip()
     names = subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', revision,
                                     'data/patch-api/sources'], cwd=ROOT, text=True).splitlines()
     register_flags = {row['patch']: row['verified_flags'] for row in
