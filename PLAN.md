@@ -1,9 +1,10 @@
-# Patch 9.1.5 audit
+# 9.0.5 page audit
 
-Active goal: complete publication accounting against retail 12.1.0, preserve prior inputs, close cheap meaningful gaps only, retain targeted proof. Excludes historical reconstruction, vendor/cache/sibling/canonical edits, agents/models, push and merge.
+Scope: all page occurrences, reproducible artifacts, meaningful bounded fixes only. Done: exact gap accounting and requested targeted verification retained. Excludes historical runtime reconstruction, placeholders, vendor/cache edits, sibling writes, agents, push and merge.
 
-- [x] Capture page/provenance and reproduce 169 inventory plus 18 extract occurrences.
-- [x] Retire eleven unused retail namespace members after exact consumer/caller scans.
-- [x] Review all 47 gaps and account for all 188 source IDs without behavior inflation.
-- [x] Verify all publication sweeps, negative control, bare/cached/Mists behavior, formatting/checks and startup `[]`.
-- [x] Commit accounting/docs and validate retained artifacts; report 9.2.0 intersection.
+- [x] Capture pinned source and generate inventory/extract.
+- [ ] Observe publication and review each gap.
+- [ ] Record occurrence ledger and possible 9.1.0 supersessions.
+- [ ] Commit bounded fixes, if supported by evidence.
+- [ ] Run requested targeted verification and preservation checks.
+- [ ] Update wiki and report commits/results.
