@@ -1,3 +1,7 @@
+## [2026-10-08] investigation | Patch 7.3.0 API audit
+
+[Audit](investigations/patch-7-3-0-api-audit.md): pinned revision 5335723; three bare table-summary occurrences, lossless prose extract, opt-in parser and cached sound-request transition test. Discovery and acceptance pending.
+
 ## [2026-10-08] investigation | Patch 8.0.1 API audit
 
 [Audit](investigations/patch-8-0-1-api-audit.md): integrated 8.1.0 bounty removal closes one gap (18 → 17); 269 inventory/295 total IDs, explicit world-coordinate model, 42 sweep/factory cases, 41 reproduced registers and portable historical proof.

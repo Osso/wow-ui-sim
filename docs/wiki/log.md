@@ -344,3 +344,7 @@ Integrated merged 8.1.0/8.1.5/8.2.0 extraction modes; 41 registers and 38 extrac
 ## [2026-10-08] Patch 7.3.2 integration
 
 [Audit](investigations/patch-7-3-2-api-audit.md): real 8.0.1 supersession register, complete revision-scoped receipts, unchanged publication gaps, fresh live logout/quit/camp caller proof and validator matrix. Inherited extract failures and default-mode slash-registration gap remain explicit; no vendor edits, preservation exceptions, push or merge.
+
+## 2026-10-08 — Patch 7.3.0 source and discovery
+
+Pinned page 553643 revision 5335723; additive opt-in table-summary parser, three-row prefork discovery and concrete sound input/request-state test. [Audit](investigations/patch-7-3-0-api-audit.md); acceptance pending.
