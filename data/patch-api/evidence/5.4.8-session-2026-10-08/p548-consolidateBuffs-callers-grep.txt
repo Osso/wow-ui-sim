@@ -1,0 +1,1 @@
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_ui_unit.rs:492:                pcall(SetCVar, "consolidateBuffs", "0")

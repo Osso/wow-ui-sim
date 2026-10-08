@@ -1,0 +1,8 @@
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/iced_app/resize_event_tests.rs:110:            __ui_scale_order = captureScaleCVarOrder("uiScale", 0.8, 0.8)
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/cvars.yaml:1510:uiScale: '1.000000'
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/lua_api/globals/set_cvar_verb.rs:145:            .get("uiScale")
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:73:    env.exec(r#"SetCVar("uiScale", 0.75)"#).unwrap();
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:74:    let value = env.state().borrow().cvars.get("uiScale");
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/c_system_api.rs:78:            return found.ConsoleRegistryFixture == 1 and found.uiScale == 1
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/screen_mode.rs:174:        assert(SetCVar("uiScale", "0.79999995231628"))
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/frame_position_replay.rs:64:    env.exec("SetCVar('uiScale', '0.79999995231628'); SetCVar('useUiScale', '1')")

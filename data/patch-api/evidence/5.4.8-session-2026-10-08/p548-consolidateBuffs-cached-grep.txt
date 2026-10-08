@@ -1,0 +1,5 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_BuffFrame/BuffFrame.lua:6:CVarCallbackRegistry:SetCVarCachable("consolidateBuffs");
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_BuffFrame/BuffFrame.lua:452:	CVarCallbackRegistry:RegisterCallback("consolidateBuffs", self.OnConsolidationSettingsChanged, self);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_BuffFrame/BuffFrame.lua:517:		-- If we're using the consolidateBuffs functionality, start with
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_BuffFrame/BuffFrame.lua:1150:	return CVarCallbackRegistry:GetCVarValueBool("collapseExpandBuffs") and not CVarCallbackRegistry:GetCVarValueBool("consolidateBuffs");
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_BuffFrame/BuffFrame.lua:1297:	return CVarCallbackRegistry:GetCVarValueBool("consolidateBuffs");

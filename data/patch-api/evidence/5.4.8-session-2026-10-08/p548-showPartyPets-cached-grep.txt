@@ -1,0 +1,7 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitFrame/Mainline/PartyMemberFrame.lua:250:	CVarCallbackRegistry:RegisterCallback("showPartyPets", self.UpdatePet, self);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitFrame/Mainline/PartyMemberFrame.lua:317:	if UnitIsConnected(self:GetUnit()) and UnitExists(self.PetFrame.unit) and CVarCallbackRegistry:GetCVarValueBool("showPartyPets") then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitFrame/Shared/PartyFrame.lua:4:CVarCallbackRegistry:SetCVarCachable("showPartyPets");
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitFrame/Shared/PartyFrame.lua:25:	CVarCallbackRegistry:RegisterCallback("showPartyPets", self.UpdateSpacingAndLayout, self);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitFrame/Shared/PartyFrame.lua:139:	local showPartyPets = CVarCallbackRegistry:GetCVarValueBool("showPartyPets");
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitFrame/Shared/PartyFrame.lua:140:	if (showPartyPets) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitFrame/Shared/PartyMemberFrame.lua:12:CVarCallbackRegistry:SetCVarCachable("showPartyPets");

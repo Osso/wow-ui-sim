@@ -1,0 +1,16 @@
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/cvars.yaml:999:nameplateShowEnemies: '1'
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/cvars.rs:602:        assert!(storage.get("nameplateShowEnemies").is_some());
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/cvars.rs:604:        storage.set("nameplateShowEnemies", "0");
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/cvars.rs:605:        assert_eq!(storage.get("nameplateShowEnemies"), Some("0".to_string()));
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/cvars.rs:609:            storage.get("nameplateShowEnemies")
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:12:            assert(GetCVarDefault('nameplateShowEnemies') == '1')
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:13:            assert(C_CVar.SetCVar('nameplateShowEnemies', '0') == true)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:14:            assert(GetCVar('nameplateShowEnemies') == '0')
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:15:            assert(C_CVar.GetCVarBool('nameplateShowEnemies') == false)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:16:            assert(SetCVar('nameplateShowEnemies', GetCVarDefault('nameplateShowEnemies')) == true)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:17:            assert(C_CVar.GetCVar('nameplateShowEnemies') == '1')
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:18:            assert(GetCVarBool('nameplateShowEnemies') == true)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:81:    env.exec(r#"SetCVar("nameplateShowEnemies", true)"#)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:83:    let value = env.state().borrow().cvars.get("nameplateShowEnemies");
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:85:    env.exec(r#"SetCVar("nameplateShowEnemies", false)"#)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:87:    let value = env.state().borrow().cvars.get("nameplateShowEnemies");

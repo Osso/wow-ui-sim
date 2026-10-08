@@ -1,0 +1,2 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Commentator/Classic/Blizzard_Commentator.lua:242:	SetCVar("nameplateShowEnemyPets", 1);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Commentator/Mainline/Blizzard_Commentator.lua:222:	SetCVar("nameplateShowEnemyPets", 1);

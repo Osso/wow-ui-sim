@@ -1,0 +1,23 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Bindings_Mists.xml:1117:		local showEnemies = Settings.GetValue("nameplateShowEnemies");
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Bindings_Mists.xml:1119:			Settings.SetValue("nameplateShowEnemies", false);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Bindings_Mists.xml:1122:			Settings.SetValue("nameplateShowEnemies", true);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Bindings_Mists.xml:1147:		local showEnemies = Settings.GetValue("nameplateShowEnemies");
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Bindings_Mists.xml:1150:			Settings.SetValue("nameplateShowEnemies", true);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Bindings_Mists.xml:1159:			Settings.SetValue("nameplateShowEnemies", false);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Bindings_Standard.xml:1122:		local showEnemies = Settings.GetValue("nameplateShowEnemies");
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Bindings_Standard.xml:1124:			Settings.SetValue("nameplateShowEnemies", false);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Bindings_Standard.xml:1127:			Settings.SetValue("nameplateShowEnemies", true);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Bindings_Standard.xml:1150:		local showEnemies = Settings.GetValue("nameplateShowEnemies");
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Bindings_Standard.xml:1153:			Settings.SetValue("nameplateShowEnemies", true);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Bindings_Standard.xml:1161:			Settings.SetValue("nameplateShowEnemies", false);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Bindings_WoWHack.xml:319:		local showEnemies = Settings.GetValue("nameplateShowEnemies");
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Bindings_WoWHack.xml:321:			Settings.SetValue("nameplateShowEnemies", false);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Bindings_WoWHack.xml:324:			Settings.SetValue("nameplateShowEnemies", true);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Bindings_WoWHack.xml:347:		local showEnemies = Settings.GetValue("nameplateShowEnemies");
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Bindings_WoWHack.xml:350:			Settings.SetValue("nameplateShowEnemies", true);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Bindings_WoWHack.xml:358:			Settings.SetValue("nameplateShowEnemies", false);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_NewPlayerExperience/Blizzard_Tutorial.lua:46:	SetCVar("nameplateShowEnemies", 1); -- 0
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Nameplates.lua:460:		local enemyUnitSetting, enemyUnitInitializer = Settings.SetupCVarCheckbox(category, "nameplateShowEnemies", UNIT_NAMEPLATES_SHOW_ENEMIES, enemyTooltip);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_BoostTutorial/Blizzard_Tutorial.lua:23:	SetCVar("nameplateShowEnemies", 1); -- 0
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Commentator/Classic/Blizzard_Commentator.lua:241:	SetCVar("nameplateShowEnemies", 1);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Commentator/Mainline/Blizzard_Commentator.lua:221:	SetCVar("nameplateShowEnemies", 1);

@@ -1,0 +1,36 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonBuildingUI.lua:892:	local uiScale = UIParent:GetScale();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonBuildingUI.lua:893:	GarrisonBuildingPlacer:SetPoint("CENTER", UIParent, "BOTTOMLEFT", cursorX / uiScale, cursorY / uiScale);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonBuildingUI.lua:1289:	local uiScale = UIParent:GetScale();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonBuildingUI.lua:1290:	GarrisonBuildingPlacer:SetPoint("CENTER", UIParent, "BOTTOMLEFT", cursorX / uiScale, cursorY / uiScale);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonBuildingUI.lua:1304:	local uiScale = UIParent:GetScale();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonBuildingUI.lua:1305:	GarrisonBuildingPlacer:SetPoint("CENTER", UIParent, "BOTTOMLEFT", cursorX / uiScale, cursorY / uiScale);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonBuildingUI.lua:1366:	local uiScale = UIParent:GetScale();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonBuildingUI.lua:1367:	GarrisonBuildingPlacer:SetPoint("CENTER", UIParent, "BOTTOMLEFT", cursorX / uiScale, cursorY / uiScale);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonBuildingUI.lua:1385:	local uiScale = UIParent:GetScale();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonUI/Mainline/Blizzard_GarrisonBuildingUI.lua:1386:	GarrisonBuildingPlacer:SetPoint("CENTER", UIParent, "BOTTOMLEFT", cursorX / uiScale, cursorY / uiScale);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/MotionSickness.lua:6:	landscapeDarkeningUseFixedScale = true,		-- whether to ignore uiScale
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/MotionSickness.lua:11:	focalCircleUseFixedScale = true,			-- whether to ignore uiScale
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueParent/Mainline/GlueParent.lua:881:	local uiScale = GlueParent:GetEffectiveScale();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueParent/Mainline/GlueParent.lua:883:	return x / uiScale, y / uiScale;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueParent/Mainline/GlueParent.lua:887:	local uiScale = GlueParent:GetEffectiveScale();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GlueParent/Mainline/GlueParent.lua:889:	return x / uiScale, y / uiScale;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Mainline/UIDropDownMenu.lua:1074:		local uiScale;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Mainline/UIDropDownMenu.lua:1077:			uiScale = tonumber(GetCVar("uiscale"));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Mainline/UIDropDownMenu.lua:1078:			if ( topLevelParentScale < uiScale ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Mainline/UIDropDownMenu.lua:1079:				uiScale = topLevelParentScale;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Mainline/UIDropDownMenu.lua:1082:			uiScale = topLevelParentScale;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Mainline/UIDropDownMenu.lua:1084:		listFrame:SetScale(uiScale);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Mainline/UIDropDownMenu.lua:1120:				cursorX = cursorX/uiScale;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Mainline/UIDropDownMenu.lua:1121:				cursorY =  cursorY/uiScale;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Mainline/UIDropDownMenu.lua:1221:			local offLeft = listFrame:GetLeft()/uiScale;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Mainline/UIDropDownMenu.lua:1222:			local offRight = (GetScreenWidth() - listFrame:GetRight())/uiScale;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Mainline/UIDropDownMenu.lua:1223:			local offTop = (GetScreenHeight() - listFrame:GetTop())/uiScale;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Mainline/UIDropDownMenu.lua:1224:			local offBottom = listFrame:GetBottom()/uiScale;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Shared/Scroll/ScrollBox.lua:542:function ScrollBoxBaseMixin:SetShadowsScale(uiScale)
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/Shared/Scroll/ScrollBox.lua:543:	self.Shadows:SetScale(uiScale);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_RaidUI/Classic/Blizzard_RaidUI.lua:618:	local uiScale = UIParent:GetScale();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_RaidUI/Mainline/Blizzard_RaidUI.lua:582:	local uiScale = UIParent:GetScale();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonTemplates/Blizzard_GarrisonMissionTemplates.lua:827:	local uiScale = UIParent:GetScale();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonTemplates/Blizzard_GarrisonMissionTemplates.lua:829:	placer:SetPoint("TOP", UIParent, "BOTTOMLEFT", cursorX / uiScale, cursorY / uiScale + placer.yOffset);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonTemplates/Blizzard_GarrisonMissionTemplates.lua:873:	local uiScale = UIParent:GetScale();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_GarrisonTemplates/Blizzard_GarrisonMissionTemplates.lua:874:	self:SetPoint("TOP", UIParent, "BOTTOMLEFT", cursorX / uiScale, cursorY / uiScale + self.yOffset);

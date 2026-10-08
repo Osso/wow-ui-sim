@@ -1,0 +1,7 @@
+{
+  "retired_members": [],
+  "reason": "Pinned source contains only changed combat restrictions, no removal/rename occurrence. No runtime retirement made. Whole-word current-consumer/caller scans for all touched identities and queued retail register intersections retained separately.",
+  "tool": "/usr/bin/grep",
+  "scans": "p548-named-scans.json",
+  "later_registers": "p548-later-register-check.json"
+}

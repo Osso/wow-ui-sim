@@ -1,0 +1,114 @@
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/iced_app/resize_event_tests.rs:105:                SetCVar(cvarName, requestedValue)
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/wrath/compat_bootstrap.lua:601:if type(SetCVar) == "function" and (GetCVar == nil or GetCVar("voiceChatMode") == nil) then
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/wrath/compat_bootstrap.lua:602:  SetCVar("voiceChatMode", "0")
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/lua_api/hot_literals.rs:85:    b"SetCVar",
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/lua_api/globals/set_cvar_verb.rs:1://! `SetCVar` / `GetCVar` globals + `C_CVar.{Set,Get,GetDefault}CVar`.
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/lua_api/globals/set_cvar_verb.rs:8://! Previously `SetCVar` was registered only on the `A_Admin` path and
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/lua_api/globals/set_cvar_verb.rs:32:    ("SetCVar", set_cvar),
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/lua_api/globals/set_cvar_verb.rs:74:/// `SetCVar(name, value)` — write `value` (stringified) to
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/lua_api/globals/set_cvar_verb.rs:329:    LuaApiMut::register_function(lua, "SetCVar", set_cvar)?;
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/loader/tests/wow_api_globals/startup_globals.rs:885:            SetCVar("discordClientEnabled", "1")
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/loader/tests/wow_api_globals/startup_globals.rs:887:            SetCVar("discordClientEnabled", "0")
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/loader/tests/wow_api.rs:627:    let ty: String = env.eval("return type(C_CVar.SetCVar)").unwrap();
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/ui_visibility_globals.rs:41:    env.exec("SetCVar('miniWorldMap', 0)").unwrap();
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/wowforever_finite_constants.rs:366:        assert(SetCVar("GamepadStanceBarOverride", "1"))
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/widget_slider.rs:265:            C_CVar.SetCVar('__slider_castbar_scale', tostring(db.scale))
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_azerite_essence_ui_essence_list_update.rs:21:                env.exec(r#"SetCVar("otherRolesAzeriteEssencesHidden", "1")"#)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_deprecated_spell_script_loads.rs:163:            SetCVar("SpellQueueWindow", "250")
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_deprecated_spell_script_loads.rs:165:            SetCVar("SpellQueueWindow", originalValue)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/p1200_mixed.rs:74:                C_CVar.SetCVar(name, '1')
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/wowforever_gamepad_constants.rs:95:            assert(C_CVar.SetCVar(name, "2"))
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/wowforever_gamepad_constants.rs:112:            assert(SetCVar(name, "2"))
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/wowforever_gamepad_constants.rs:114:            assert(not pcall(SetCVar, name, "not-a-number"))
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/wowforever_gamepad_constants.rs:169:        assert(SetCVar(bar.overrideCVar, "1"))
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:13:            assert(C_CVar.SetCVar('nameplateShowEnemies', '0') == true)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:16:            assert(SetCVar('nameplateShowEnemies', GetCVarDefault('nameplateShowEnemies')) == true)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:55:        .eval(r#"return SetCVar("nameplateShowAll", "1")"#)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:65:    env.exec(r#"SetCVar("nameplateMaxDistance", 60)"#).unwrap();
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:73:    env.exec(r#"SetCVar("uiScale", 0.75)"#).unwrap();
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:81:    env.exec(r#"SetCVar("nameplateShowEnemies", true)"#)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:85:    env.exec(r#"SetCVar("nameplateShowEnemies", false)"#)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:106:            SetCVar("runtimeEventProbe", "new")
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:118:    let ok: bool = env.eval(r#"return SetCVar("", "1")"#).unwrap();
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:125:    env.exec(r#"SetCVar("showTimestamps", "chat")"#).unwrap();
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:185:                SetCVar(name, '1.25')
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:247:            SetCVar(name, '1.25')
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:305:        SetCVar(name, '1.25')
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/set_cvar_global.rs:321:            SetCVar("__codex_register_preserve_override", "1")
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/wowforever_has_key.rs:54:    env.exec("SetCVar('showKeyring', 1); ring = CreateFrame('Button'); KeyRingMixin.TriggerTutorial(ring)").unwrap();
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_11_0_5_publication_fixes.rs:37:            assert(C_CVar.SetCVar(string.upper(name), '0'))
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_11_0_5_publication_fixes.rs:40:            assert(SetCVar(name, GetCVarDefault(name)))
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_stable_ui_loads.rs:178:         is persisted via the petStableSort CVar (GetCVar/SetCVar), and \
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_1_0_surface_closures.rs:45:                C_CVar.SetCVar(name, "1")
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_gm_chat_ui_loads.rs:65:         the standard ScrollingMessageFrame surface and SetCVar(\"lastTalkedToGM\") which routes \
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_0_1_retirement.rs:26:            SetCVar(name, '9')
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_5_4_8_combat_restrictions.rs:21:        env.exec(&format!("assert(SetCVar('{name}', '0'))"))
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_5_4_8_combat_restrictions.rs:37:            local globalOK = pcall(invoke, SetCVar)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_5_4_8_combat_restrictions.rs:38:            local namespaceOK = pcall(invoke, C_CVar.SetCVar)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_5_4_8_combat_restrictions.rs:47:        env.exec(&format!("assert(issecure()); assert(C_CVar.SetCVar('{name}', '1'))"))
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_5_4_8_combat_restrictions.rs:52:            "local f=function() SetCVar('{name}', '0') end; debug.setobjecttaint(f, 'Patch548Addon'); f()"
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_0_7_cvars.rs:31:            -- Read before writing: SetCVar can create unknown override keys.
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_0_7_cvars.rs:34:            assert(SetCVar(name, changed) == true, name .. ': global write')
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_0_7_cvars.rs:36:            assert(C_CVar.SetCVar(name, default) == true, name .. ': namespace reset')
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_0_7_cvars.rs:38:            assert(C_CVar.SetCVar(string.upper(name), changed) == true)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_0_7_cvars.rs:42:            assert(SetCVar(name, GetCVarDefault(name)) == true)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_0_7_cvars.rs:44:            assert(SetCVar(name, changed) == true)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_0_7_cvars.rs:45:            assert(C_CVar.SetCVar(name, C_CVar.GetCVarDefault(name)) == true)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_0_7_cvars.rs:103:                    assert(SetCVar(name, sample[1]) == true)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_0_7_cvars.rs:105:                    assert(C_CVar.SetCVar(name, sample[1]) == true)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_0_7_cvars.rs:108:                assert(SetCVar(name, GetCVarDefault(name)) == true)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_0_7_cvars.rs:126:                assert(SetCVar(name, changed) == true)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_0_7_cvars.rs:139:                assert(C_CVar.SetCVar(name, '2') == true)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_0_7_cvars.rs:152:                assert(C_CVar.SetCVar(name, C_CVar.GetCVarDefault(name)) == true)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_0_7_cvars.rs:164:                assert(SetCVar(name, GetCVarDefault(name)) == true)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_0_7_cvars.rs:181:                assert(C_CVar.SetCVar(name, changed) == true)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_0_7_cvars.rs:186:                assert(SetCVar(name, GetCVarDefault(name)) == true)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_0_7_cvars.rs:203:            assert(SetCVar(name, '1') == true)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_0_7_cvars.rs:205:            assert(C_CVar.SetCVar(name, '0') == true)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_0_7_b23_b28.rs:480:    env.exec("SetCVar('loadDeprecationFallbacks', '1')")
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/tooltip_money_line.rs:18:    SetCVar("colorblindMode", "0")
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_cvar_display_settings.rs:4://! GetCVar / SetCVar Rust impls make them visible to addon code that
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_cvar_display_settings.rs:42:            SetCVar("Brightness", 75)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_cvar_display_settings.rs:48:    env.exec(r#"SetCVar("Brightness", GetCVarDefault("Brightness"))"#)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_cvar_display_settings.rs:58:            SetCVar("Contrast", 30)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_cvar_display_settings.rs:64:    env.exec(r#"SetCVar("Contrast", GetCVarDefault("Contrast"))"#)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_cvar_display_settings.rs:85:            SetCVar("Brightness", 99)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_cvar_display_settings.rs:91:    env.exec(r#"SetCVar("Brightness", GetCVarDefault("Brightness"))"#)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_cvar_display_settings.rs:101:            C_CVar.SetCVar("Brightness", 42)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_cvar_display_settings.rs:107:    env.exec(r#"SetCVar("Brightness", GetCVarDefault("Brightness"))"#)
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/battle_net_api.rs:17:            SetCVar("useHighResTextures", "0")
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/p1207_b14_tooltip.rs:12:                    SetCVar('colorblindMode', '0')
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/p1200_rest_encounter.rs:37:        C_CVar.SetCVar('encounterWarningsEnabled', '0')
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_ui/blizzard_addonlist/behavior_get_addon_metric_percent_warning_color.rs:20:                SetCVar("addonPerformanceMsgWarning", "0.10")
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_ui/blizzard_addonlist/behavior_update_performance_writes_metric_text.rs:30:                SetCVar("addonPerformanceMsgWarning", "0")
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/combo_points.rs:136:    env.exec("SetCVar('comboPointLocation', '1')").unwrap();
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_auto_complete_colorblind.rs:23:SetCVar("colorblindMode", "1")
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_auto_complete_colorblind.rs:30:SetCVar("colorblindMode", "0")
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_ui_unit.rs:490:            if SetCVar then
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_ui_unit.rs:491:                pcall(SetCVar, "buffDurations", "1")
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_ui_unit.rs:492:                pcall(SetCVar, "consolidateBuffs", "0")
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_ui_unit.rs:493:                pcall(SetCVar, "collapseExpandBuffs", "0")
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_0_7_b01_b04.rs:221:    env.exec("SetCVar('loadDeprecationFallbacks', '1')").unwrap();
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_keybindings_targeting.rs:276:        env.exec("SetCVar(\"ReplaceOtherPlayerPortraits\", \"1\")")
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/click_targeting/forever_regressions.rs:11:                env.exec("SetCVar('comboPointLocation', '1')").expect("enable player-frame combo points");
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_1_0_added_globals.rs:237:    env.exec(r#"SetCVar("useHighResTextures", "0")"#).unwrap();
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_1_0_added_globals.rs:241:    env.exec(r#"SetCVar("useHighResTextures", "1")"#).unwrap();
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_11_0_5_cached_surfaces.rs:33:            assert(SetCVar(name, '0'))
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_showuipanel_lod.rs:280:            SetCVar("damageMeterEnabled", "1")
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/test_showuipanel_lod.rs:612:                 RegisterCVar('lossOfControl', '0'); return SetCVar('lossOfControl', '1')",
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_0_7_removed_native_surface.rs:213:        SetCVar('loadDeprecationFallbacks', '1')
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_0_7_removed_native_surface.rs:262:        SetCVar('loadDeprecationFallbacks', '1')
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_0_7_removed_native_surface.rs:302:        SetCVar('loadDeprecationFallbacks', '1')
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_0_7_removed_native_surface.rs:391:        SetCVar('loadDeprecationFallbacks', '1')
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_0_7_removed_native_surface.rs:450:    env.exec("SetCVar('loadDeprecationFallbacks', '0')")
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_0_7_removed_native_surface.rs:467:    env.exec("SetCVar('loadDeprecationFallbacks', '1'); MenuUtil = MenuUtil or {}")
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/startup_warnings/late.rs:557:            SetCVar("showBattlefieldMinimap", "1")
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/screen_mode.rs:174:        assert(SetCVar("uiScale", "0.79999995231628"))
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/screen_mode.rs:175:        assert(SetCVar("useUiScale", "1"))
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/chat_frame.rs:403:        env.exec(r#"SetCVar("showTimestamps", "%H:%M ")"#).unwrap();
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/retail_unit_queries.rs:92:    env.exec("SetCVar('comboPointLocation', '1')").unwrap();
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/console_commands.rs:42:        SetCVar("ConsoleProbeMixedCase", "override")
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/frame_position_replay.rs:64:    env.exec("SetCVar('uiScale', '0.79999995231628'); SetCVar('useUiScale', '1')")
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/data/patch_8_1_5_sweep_known_gaps.json:20:  "wt-global-api-SetCVar-80",
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_landing_soulbinds_loads.rs:107:         GetCVarBool / SetCVar / UIParentLoadAddOn / ToggleCovenantRenown surface from \
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/blizzard_landing_soulbinds_loads.rs:122:         cvar `soulbindsLandingPageTutorial` (set via SetCVar in ShowHelpTip) persists \

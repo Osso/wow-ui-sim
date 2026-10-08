@@ -1,0 +1,11 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIParentPanelManager/Shared/UIParentPanelManager.lua:412:			SetUIVisibility(true);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Bindings_Mists.xml:1388:			SetUIVisibility(false);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Bindings_Mists.xml:1391:			SetUIVisibility(true);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Bindings_WoWLabs.xml:449:			SetUIVisibility(false);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Bindings_WoWLabs.xml:451:			SetUIVisibility(true);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Bindings_Standard.xml:1403:			SetUIVisibility(false);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Bindings_Standard.xml:1405:			SetUIVisibility(true);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/MovieFrame.lua:73:		SetUIVisibility(true);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Bindings_WoWHack.xml:454:			SetUIVisibility(false);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Bindings_WoWHack.xml:456:			SetUIVisibility(true);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Game/Shared/Game.lua:35:	SetUIVisibility(true);

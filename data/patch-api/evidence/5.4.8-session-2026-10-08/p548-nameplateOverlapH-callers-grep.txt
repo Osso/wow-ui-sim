@@ -1,0 +1,2 @@
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/cvars.yaml:988:nameplateOverlapH: '0.800000'
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/loader/tests/wow_api_globals/patch_12_0_0_nameplate_cvar_changed_values.rs:25:                    {"nameplateOverlapH", "0.800000"},

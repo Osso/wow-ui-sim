@@ -1,0 +1,6 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitFrame/Mainline/TargetFrame.lua:16:CVarCallbackRegistry:SetCVarCachable("showTargetOfTarget");
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitFrame/Mainline/TargetFrame.lua:860:local targetOfTargetCVar = "showTargetOfTarget";
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitFrame/Mainline/TargetFrame.lua:870:	self.showTargetOfTarget = CVarCallbackRegistry:GetCVarValueBool(targetOfTargetCVar);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitFrame/Mainline/TargetFrame.lua:871:	if self.showTargetOfTarget then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitFrame/Mainline/TargetFrame.lua:891:	if (self.showTargetOfTarget and UnitExists(parent.unit) and UnitExists(self.unit)
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Frame/Combat.lua:31:	Settings.SetupCVarCheckbox(category, "showTargetOfTarget", SHOW_TARGET_OF_TARGET_TEXT, OPTION_TOOLTIP_SHOW_TARGET_OF_TARGET);

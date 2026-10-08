@@ -1,0 +1,2 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated_ArenaUI/Deprecated_ArenaUI.lua:8:CVarCallbackRegistry:SetCVarCachable("showArenaEnemyPets");
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated_ArenaUI/Deprecated_ArenaUI.lua:365:	if UnitGUID(self.unit) and CVarCallbackRegistry:GetCVarValue("showArenaEnemyPets") then

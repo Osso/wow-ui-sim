@@ -1,0 +1,1 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SettingsDefinitions_Shared/Graphics.lua:803:			local getValue, setValue, getDefaultValue = Settings.CreateCVarAccessorClosures("useUiScale", Settings.VarType.Boolean);

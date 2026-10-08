@@ -1,0 +1,2 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated_ArenaUI/Deprecated_ArenaUI.lua:75:	if ( (event == "CVAR_UPDATE") and (arg1 == "showArenaEnemyFrames") ) then
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated_ArenaUI/Deprecated_ArenaUI.lua:119:		if ( GetCVarBool("showArenaEnemyFrames") or cvarUpdate ) then

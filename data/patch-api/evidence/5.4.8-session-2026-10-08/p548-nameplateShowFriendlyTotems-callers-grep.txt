@@ -1,0 +1,1 @@
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/loader/tests/wow_api_globals/patch_12_0_0_cvar_removals.rs:148:                    "nameplateShowFriendlyTotems",

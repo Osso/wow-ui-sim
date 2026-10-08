@@ -1,0 +1,4 @@
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/cvars.rs:207:        "useCompactPartyFrames",
+/home/osso/.worktrees/wow-ui-sim-p548-page/src/cvars.rs:386:    "useCompactPartyFrames",
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/p1200_mixed.rs:69:        for _, name in ipairs({{'minimapTrackedInfov2', 'useCompactPartyFrames'}}) do
+/home/osso/.worktrees/wow-ui-sim-p548-page/tests/patch_12_0_1_retirement.rs:21:        for _, name in ipairs({'minimapTrackedInfov2', 'useCompactPartyFrames',
