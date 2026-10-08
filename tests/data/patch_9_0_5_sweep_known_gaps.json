@@ -1,1 +1,16 @@
-[]
+[
+  "wt-cvars-GamePadSmoothFacing-68",
+  "wt-global-api-C_ChallengeMode.CanUseKeystoneInCurrentMap-14",
+  "wt-global-api-C_CovenantSanctumUI.HasMaximumRenown-15",
+  "wt-global-api-C_CovenantSanctumUI.IsPlayerInRenownCatchUpMode-16",
+  "wt-global-api-C_CovenantSanctumUI.IsWeeklyRenownCapped-17",
+  "wt-global-api-C_CovenantSanctumUI.RequestCatchUpState-18",
+  "wt-global-api-C_Garrison.IsFollowerOnCompletedMission-19",
+  "wt-global-api-C_GossipInfo.GetCustomGossipDescriptionString-20",
+  "wt-global-api-C_GuildInfo.QueryGuildMembersForRecipe-21",
+  "wt-global-api-C_QuestLog.ShouldDisplayTimeRemaining-24",
+  "wt-global-api-C_WeeklyRewards.AreRewardsForCurrentRewardPeriod-25",
+  "wt-global-api-C_WeeklyRewards.GetActivityEncounterInfo-26",
+  "wt-global-api-C_WeeklyRewards.GetNextMythicPlusIncrease-27",
+  "wt-global-api-C_WeeklyRewards.HasInteraction-28"
+]
