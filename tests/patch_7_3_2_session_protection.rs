@@ -73,7 +73,12 @@ fn patch_7_3_2_cached_slash_session_commands_preserve_transitions(env: &WowLuaEn
             state.simulator_exit_requested = false;
         }
         env.exec(&format!(
-            "assert(IsSecureCmd('{command}')); ChatFrame1EditBox:SetText('{command}'); \
+            "assert(IsSecureCmd('{command}') == true, 'command not registered as secure: ' .. \
+             tostring(issecure()) .. ', mode=' .. tostring(C_GameRules.GetActiveGameMode()) .. \
+             ', standard=' .. tostring(Enum.GameMode.Standard) .. \
+             ', logoutAlias=' .. tostring(SLASH_LOGOUT1) .. \
+             ', insecureLogout=' .. tostring(SlashCmdList.LOGOUT)); \
+             ChatFrame1EditBox:SetText('{command}'); \
              ChatFrame1EditBox:ParseText(1)"
         ))
         .expect("secure Blizzard chat command should execute");
