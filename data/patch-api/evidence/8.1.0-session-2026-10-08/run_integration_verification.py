@@ -33,8 +33,14 @@ def main():
             os.environ[match[1]] = str(EVIDENCE / (path.stem + '-results.json'))
     require('p810-integration-all-sweeps', ['cargo', 'test', '--test', 'prefork_full_ui', '--', 'publication_sweep'])
     refresh_summary()
-    require('p810-integration-cached', ['cargo', 'test', '--test', 'prefork_full_ui', '--',
-                                       'patch_8_1_0', 'blizzard_calendar_loads'])
+    run_remaining_checks()
+
+
+def run_remaining_checks():
+    require('p810-integration-cached-final', ['cargo', 'test', '--test', 'prefork_full_ui', '--',
+                                             'patch_8_1_0'])
+    require('p810-integration-calendar', ['cargo', 'test', '--test', 'prefork_full_ui', '--',
+                                         'blizzard_calendar_loads'])
     require('p810-integration-bare', ['cargo', 'test', '--test', 'integration', '--',
                                      'patch_8_1_0', 'c_calendar', 'c_map_probes', 'date_and_time'])
     require('p810-integration-lib', ['cargo', 'test', '--lib', '--',
