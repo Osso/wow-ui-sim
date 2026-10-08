@@ -101,6 +101,13 @@ def verify_reproduction(revision, base):
 def verify_retail(revision, base):
     baseline = read('master-baseline.json')
     assert baseline['master_revision'] == base
+    prefix = 'data/patch-api/evidence/5.5.4-session-2026-10-08/integrated/'
+    for name in ['context.json', 'all-sweeps.proof.json', 'all-sweeps.txt']:
+        assert (HERE / 'master' / name).read_bytes() == blob(base, prefix + name), name
+    receipt = read('master/all-sweeps.proof.json')
+    assert receipt['revision'] == baseline['runtime_revision']
+    assert receipt['exit'] == receipt['expected_exit'] == 0
+    assert receipt['log_sha256'] == digest((HERE / 'master/all-sweeps.txt').read_bytes())
     scope = ['src', 'tests', 'tools', 'Cargo.toml', 'Cargo.lock', 'build.rs']
     assert not git('diff', baseline['runtime_revision'], base, '--', *scope)
     changed = git('diff', '--name-only', base, revision, '--', *scope).decode().splitlines()

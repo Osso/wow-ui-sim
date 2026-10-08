@@ -1,0 +1,17 @@
+{
+  "revision": "95be934e7",
+  "accounting": {
+    "inventory": 0,
+    "metadata": 4,
+    "gaps": 0
+  },
+  "reproduction": {
+    "registers": 57,
+    "extracts": 54,
+    "inherited_extract_failures": [
+      "12.0.5",
+      "12.0.7",
+      "12.1.0"
+    ]
+  }
+}
