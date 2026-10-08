@@ -1,0 +1,86 @@
+[
+  {
+    "symbol": "C_UIWidgetManager.GetTextureWithStateVisualizationInfo",
+    "pattern": "C_UIWidgetManager.GetTextureWithStateVisualizationInfo",
+    "scanner": "/usr/bin/grep",
+    "whole_word": true,
+    "untruncated": true,
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "C_UIWidgetManager.GetTextureWithStateVisualizationInfo",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 0,
+    "stdout": "/home/osso/.worktrees/wow-ui-sim-p820-page/tests/patch_8_2_0_classic_surfaces.rs:9:        assert(type(C_UIWidgetManager.GetTextureWithStateVisualizationInfo) == 'function')\n",
+    "stderr": "",
+    "note": "Bare-name whole-word scan includes direct calls, pcall(Name, ...), and and Name then; output is not truncated."
+  },
+  {
+    "symbol": "C_UIWidgetManager.GetTextureWithStateVisualizationInfo",
+    "pattern": "GetTextureWithStateVisualizationInfo",
+    "scanner": "/usr/bin/grep",
+    "whole_word": true,
+    "untruncated": true,
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "GetTextureWithStateVisualizationInfo",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 0,
+    "stdout": "/home/osso/.worktrees/wow-ui-sim-p820-page/src/c_api/patch_retired_members.rs:29:    &[\"GetTextureWithStateVisualizationInfo\"],\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/patch_8_2_0_publication_fixes.rs:11:assert(rawget(ns, 'GetTextureWithStateVisualizationInfo') == nil)\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/patch_8_2_0_publication_fixes.rs:12:assert(ns.GetTextureWithStateVisualizationInfo == nil, 'removed widget lookup')\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/patch_8_2_0_publication_fixes.rs:13:assert(ns.GetTextureWithStateVisualizationInfo == nil, 'removed widget repeat')\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/patch_8_2_0_classic_surfaces.rs:9:        assert(type(C_UIWidgetManager.GetTextureWithStateVisualizationInfo) == 'function')\n",
+    "stderr": "",
+    "note": "Bare-name whole-word scan includes direct calls, pcall(Name, ...), and and Name then; output is not truncated."
+  },
+  {
+    "symbol": "C_VoiceChat.SetMasterVolumeScale",
+    "pattern": "C_VoiceChat.SetMasterVolumeScale",
+    "scanner": "/usr/bin/grep",
+    "whole_word": true,
+    "untruncated": true,
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "C_VoiceChat.SetMasterVolumeScale",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 0,
+    "stdout": "/home/osso/.worktrees/wow-ui-sim-p820-page/src/c_api/c_voice_chat_volume.rs:26:                \"C_VoiceChat.SetMasterVolumeScale: scale must be a number in [0, 1]\",\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/patch_8_2_0_publication_fixes.rs:18:    assert(select('#', C_VoiceChat.SetMasterVolumeScale(scale)) == 0)\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/patch_8_2_0_publication_fixes.rs:22:    assert(not pcall(C_VoiceChat.SetMasterVolumeScale, invalid), 'invalid scale accepted')\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/patch_8_2_0_publication_fixes.rs:25:assert(not pcall(C_VoiceChat.SetMasterVolumeScale), 'missing scale accepted')\n",
+    "stderr": "",
+    "note": "Bare-name whole-word scan includes direct calls, pcall(Name, ...), and and Name then; output is not truncated."
+  },
+  {
+    "symbol": "C_VoiceChat.SetMasterVolumeScale",
+    "pattern": "SetMasterVolumeScale",
+    "scanner": "/usr/bin/grep",
+    "whole_word": true,
+    "untruncated": true,
+    "argv": [
+      "/usr/bin/grep",
+      "-R",
+      "-n",
+      "-w",
+      "-F",
+      "SetMasterVolumeScale",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/src",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tests"
+    ],
+    "exit": 0,
+    "stdout": "/home/osso/.worktrees/wow-ui-sim-p820-page/src/c_api/c_voice_chat_volume.rs:16:        \"SetMasterVolumeScale\",\n/home/osso/.worktrees/wow-ui-sim-p820-page/src/c_api/c_voice_chat_volume.rs:26:                \"C_VoiceChat.SetMasterVolumeScale: scale must be a number in [0, 1]\",\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/patch_8_2_0_publication_fixes.rs:18:    assert(select('#', C_VoiceChat.SetMasterVolumeScale(scale)) == 0)\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/patch_8_2_0_publication_fixes.rs:22:    assert(not pcall(C_VoiceChat.SetMasterVolumeScale, invalid), 'invalid scale accepted')\n/home/osso/.worktrees/wow-ui-sim-p820-page/tests/patch_8_2_0_publication_fixes.rs:25:assert(not pcall(C_VoiceChat.SetMasterVolumeScale), 'missing scale accepted')\n",
+    "stderr": "",
+    "note": "Bare-name whole-word scan includes direct calls, pcall(Name, ...), and and Name then; output is not truncated."
+  }
+]

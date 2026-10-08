@@ -1,0 +1,20 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "patch_8_2_0_colon_handler",
+    "--",
+    "--nocapture"
+  ],
+  "revision": "f60b92dce",
+  "scope": "new working-tree colon handler fixture; MovieFrame misclassification; resolved by 05bf3b559",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p820-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p820-page",
+  "exit": 101,
+  "expected_exit": 101,
+  "log": "p820-handler-behavior-red.log",
+  "log_sha256": "9ce325102d9d857883efafd2a83bafc53a4950e2131cc0726e15d4bb925b8f1b",
+  "historical": true
+}

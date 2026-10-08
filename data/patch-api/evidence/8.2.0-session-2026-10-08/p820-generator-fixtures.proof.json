@@ -1,0 +1,16 @@
+{
+  "command": [
+    "python3",
+    "tools/test_gen_patch_wikitext_register.py"
+  ],
+  "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+  "scope": "generator-fixtures",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p820-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p820-page",
+  "environment": {},
+  "exit": 0,
+  "expected_exit": 0,
+  "seconds": 0.04967045783996582,
+  "log": "p820-generator-fixtures.log",
+  "log_sha256": "244d5a0653221273c834694f46b92cd90f3b359bced7158e649fb89aef49f477"
+}

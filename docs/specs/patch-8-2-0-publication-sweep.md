@@ -8,8 +8,14 @@ Audit Warcraft Wiki page 533235 revision 5142162 against current retail. Source:
 - [x] Discover publication gaps through the prefork full-UI harness; apply later master registers chronologically, reserving 8.2.5 for integration.
 - [x] Model `C_VoiceChat.SetMasterVolumeScale` through existing voice-chat state for normalized settings-slider inputs; getter reflects writes, unrelated output volume remains unchanged. Reject invalid input without mutation to preserve the simulator state invariant; native out-of-range/security parity is not claimed.
 - [x] Retire unused `C_UIWidgetManager.GetTextureWithStateVisualizationInfo` on retail only after whole-word cached/source/test consumer scans. Preserve Mists' existing lookup.
-- [ ] Account for every unresolved inventory/prose gap with exact reasons, without placeholder publication credit.
-- [ ] Prove all publication sweeps, targeted affected behavior, source reproduction, Python fixtures, format and warning-clean non-vendor Mists check.
+- [x] Account for every unresolved inventory/prose gap with exact reasons, without placeholder publication credit.
+- [x] Prove all publication sweeps, targeted affected behavior, own source reproduction, all register reproductions, Python fixtures, format and warning-clean non-vendor Mists check. Preserve and report inherited saved-extract failures rather than rewriting prior sources.
+
+## Remaining contracts
+
+- [ ] Fifty-nine exact inventory gaps and ten substantive prose contracts remain recorded-problematic; exact producer, lifecycle or permission-policy reasons live in the audit's per-ID review.
+- [ ] Main thread inserts the real 8.2.5 register and refreshes supersessions/fixtures/accounting at integration.
+- [ ] Inherited 12.0.5, 12.0.7 and 12.1.0 saved-extract reproduction failures remain unchanged, as in the completed 8.3.0 audit.
 
 ## Tests
 

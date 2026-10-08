@@ -1,0 +1,51 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+   Compiling wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p820-page)
+    Finished `test` profile [optimized + debuginfo] target(s) in 26.54s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p820-page/debug/deps/integration-1db16289b0998b2a)
+
+running 3 tests
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 2.09ms
+[  0.002s] [Startup] SimState::default complete in 2.10ms
+[  0.002s] [Startup] SimState::default complete in 2.16ms
+[  0.002s] [Startup] rilua VM created in 130.85µs
+[  0.002s] [Startup] rilua VM created in 127.39µs
+[  0.002s] [Startup] rilua VM created in 129.27µs
+[  0.002s] [Startup] builtin frames initialized in 88.45µs
+[  0.002s] [Startup] builtin frames initialized in 85.65µs
+[  0.002s] [Startup] builtin frames initialized in 87.30µs
+[  0.002s] [Startup] template registry cleared in 5.66µs
+[  0.002s] [Startup] template registry cleared in 12.72µs
+[  0.002s] [Startup] template registry cleared in 13.30µs
+[  0.002s] [Startup] intrinsic templates registered in 5.89µs
+[  0.002s] [Startup] intrinsic templates registered in 4.76µs
+[  0.002s] [Startup] initial app_data lua handle installed in 330.00ns
+[  0.002s] [Startup] initial app_data lua handle installed in 130.00ns
+[  0.002s] [Startup] intrinsic templates registered in 9.96µs
+[  0.002s] [Startup] initial app_data lua handle installed in 491.00ns
+[  0.207s] [Startup] init_lua_state complete in 204.30ms
+[  0.207s] [Startup] final app_data lua handle installed in 180.00ns
+[  0.207s] [Startup] initial screen globals installed in 223.61µs
+[  0.207s] [Startup] WowLuaEnv::new complete
+[  0.208s] [Startup] init_lua_state complete in 205.13ms
+[  0.208s] [Startup] final app_data lua handle installed in 411.00ns
+[  0.208s] [Startup] init_lua_state complete in 205.17ms
+[  0.208s] [Startup] final app_data lua handle installed in 411.00ns
+[  0.208s] [Startup] initial screen globals installed in 125.37µs
+[  0.208s] [Startup] WowLuaEnv::new complete
+[  0.208s] [Startup] initial screen globals installed in 148.30µs
+[  0.208s] [Startup] WowLuaEnv::new complete
+test patch_8_2_0_publication_fixes::patch_8_2_0_master_volume_round_trip ... ok
+test patch_8_2_0_publication_fixes::patch_8_2_0_unused_widget_member_stays_absent ... ok
+test patch_8_2_0_publication_fixes::patch_8_2_0_colon_handler_probe_uses_declared_owner ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 10815 filtered out; finished in 0.22s
+

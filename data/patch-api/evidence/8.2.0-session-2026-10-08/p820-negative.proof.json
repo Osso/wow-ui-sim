@@ -1,0 +1,23 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_8_2_0_publication_sweep"
+  ],
+  "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+  "scope": "negative",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p820-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p820-page",
+  "environment": {
+    "P820_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/p820-negative-register.json",
+    "P820_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/p820-negative-observation.json"
+  },
+  "exit": 1,
+  "expected_exit": 1,
+  "seconds": 12.784457921981812,
+  "log": "p820-negative.log",
+  "log_sha256": "7b87387102d2ef06e1fd60d2db0c0714d45963397bcad65168e4e61560e3a6f2"
+}

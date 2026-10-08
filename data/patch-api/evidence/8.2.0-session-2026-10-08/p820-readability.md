@@ -1,0 +1,3 @@
+# Changed Rust readability
+
+Manual changed-line audit; rust-code-analysis-cli is not installed. Reviewed src/c_api/c_voice_chat_volume.rs, mod.rs, registration.rs, patch_retired_members.rs, tests/common/publication_sweep.rs and all patch_8_2_0_*.rs files. No warning suppressions, hidden fallbacks, unexplained nesting or introduced duplicate logic. Volume setter has one validation match, one explicit mutation, one return; borrowed state does not span Lua callbacks. Tests assert observable round trips, rejection/no mutation, retained legacy lookup and repeated absence, not implementation shape. Registration/list entries use existing module boundaries. Existing long declaration lists remain unchanged except scoped insertions. No readability violations in changed lines.

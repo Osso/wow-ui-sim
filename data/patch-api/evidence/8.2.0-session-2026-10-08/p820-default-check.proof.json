@@ -1,0 +1,16 @@
+{
+  "command": [
+    "cargo",
+    "check"
+  ],
+  "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+  "scope": "default-check",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p820-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p820-page",
+  "environment": {},
+  "exit": 0,
+  "expected_exit": 0,
+  "seconds": 77.63116526603699,
+  "log": "p820-default-check.log",
+  "log_sha256": "23bf9903fad4d8fc2fdfc5ded2cd85b8ab6a5cbc1055dd2c59dc7961119e1fcb"
+}

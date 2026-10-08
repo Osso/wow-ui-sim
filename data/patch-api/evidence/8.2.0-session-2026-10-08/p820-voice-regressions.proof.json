@@ -1,0 +1,21 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "c_voice_chat_probes::",
+    "--",
+    "--nocapture"
+  ],
+  "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+  "scope": "voice-regressions",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p820-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p820-page",
+  "environment": {},
+  "exit": 0,
+  "expected_exit": 0,
+  "seconds": 0.8376669883728027,
+  "log": "p820-voice-regressions.log",
+  "log_sha256": "d004e3d36d1bb41c0a5cac1db4aad023ada3247261b3a3f8743d1ca4592fea28"
+}

@@ -1,0 +1,2025 @@
+{
+  "proof_policy": "Exact runtime/tool revisions and scope; later evidence/docs edits do not invalidate runtime proof. Historical expected failures are labeled separately. No independent agent verification authorized.",
+  "receipts": [
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "publication_sweep"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "scope": "all-sweeps",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p820-page",
+      "target": "/home/osso/.cache/wow-ui-sim-targets/p820-page",
+      "environment": {
+        "P910_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_9_1_0_publication_sweep-results.json",
+        "P1007_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_10_0_7_publication_sweep-results.json",
+        "P1200_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_12_0_0_publication_sweep-results.json",
+        "P837_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_8_3_7_publication_sweep-results.json",
+        "P905_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_9_0_5_publication_sweep-results.json",
+        "P1025_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_10_2_5_publication_sweep-results.json",
+        "P1125_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_11_2_5_publication_sweep-results.json",
+        "P1115_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_11_1_5_publication_sweep-results.json",
+        "P920_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_9_2_0_publication_sweep-results.json",
+        "P1017_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_10_1_7_publication_sweep-results.json",
+        "P1005_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_10_0_5_publication_sweep-results.json",
+        "P1010_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_10_1_0_publication_sweep-results.json",
+        "P1102_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_11_0_2_publication_sweep-results.json",
+        "P1207_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_12_0_7_publication_sweep-results.json",
+        "P830_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_8_3_0_publication_sweep-results.json",
+        "P820_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_8_2_0_publication_sweep-results.json",
+        "P1107_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_11_0_7_publication_sweep-results.json",
+        "P927_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_9_2_7_publication_sweep-results.json",
+        "P1027_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_10_2_7_publication_sweep-results.json",
+        "P1120_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_11_2_0_publication_sweep-results.json",
+        "P1201_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_12_0_1_publication_sweep-results.json",
+        "P1015_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_10_1_5_publication_sweep-results.json",
+        "P1105_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_11_0_5_publication_sweep-results.json",
+        "P1020_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_10_2_0_publication_sweep-results.json",
+        "P1117_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_11_1_7_publication_sweep-results.json",
+        "P1026_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_10_2_6_publication_sweep-results.json",
+        "P901_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_9_0_1_publication_sweep-results.json",
+        "P1210_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_12_1_0_publication_sweep-results.json",
+        "P1110_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_11_1_0_publication_sweep-results.json",
+        "P1100_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_11_0_0_publication_sweep-results.json",
+        "P1000_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_10_0_0_publication_sweep-results.json",
+        "P902_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_9_0_2_publication_sweep-results.json",
+        "P925_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_9_2_5_publication_sweep-results.json",
+        "P1002_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_10_0_2_publication_sweep-results.json",
+        "P1205_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_12_0_5_publication_sweep-results.json",
+        "P1127_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_11_2_7_publication_sweep-results.json",
+        "P915_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_9_1_5_publication_sweep-results.json"
+      },
+      "exit": 0,
+      "expected_exit": 0,
+      "seconds": 43.8552348613739,
+      "log": "p820-all-sweeps.log",
+      "log_sha256": "1485bcc4b15085e82f05a42cbd147344a2699d74d4394ccc3d36c718f61dcde0"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_8_2_0_",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "scope": "bare-green",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p820-page",
+      "target": "/home/osso/.cache/wow-ui-sim-targets/p820-page",
+      "environment": {},
+      "exit": 0,
+      "expected_exit": 0,
+      "seconds": 26.847021102905273,
+      "log": "p820-bare-green.log",
+      "log_sha256": "3f6c564ff6c56d42264e5ddfb34d61a5eff0952f28fccfda4871c7df44242279"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_8_2_0_cached_"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "scope": "cached-green",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p820-page",
+      "target": "/home/osso/.cache/wow-ui-sim-targets/p820-page",
+      "environment": {},
+      "exit": 0,
+      "expected_exit": 0,
+      "seconds": 10.198789834976196,
+      "log": "p820-cached-green.log",
+      "log_sha256": "fb57287d3fb9d142254582ca4c3bd42a1a0f8bef614e1d9bd7300eeea08e4994"
+    },
+    {
+      "command": [
+        "cargo",
+        "check"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "scope": "default-check",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p820-page",
+      "target": "/home/osso/.cache/wow-ui-sim-targets/p820-page",
+      "environment": {},
+      "exit": 0,
+      "expected_exit": 0,
+      "seconds": 77.63116526603699,
+      "log": "p820-default-check.log",
+      "log_sha256": "23bf9903fad4d8fc2fdfc5ded2cd85b8ab6a5cbc1055dd2c59dc7961119e1fcb"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_8_2_0"
+      ],
+      "revision": "da7091099647b79f4a5af5be5b012b2b4ac7839d",
+      "scope": "193-row discovery; no known gaps yet",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p820-page",
+      "target": "/home/osso/.cache/wow-ui-sim-targets/p820-page",
+      "exit": 1,
+      "expected_exit": 1,
+      "log": "p820-discovery.log",
+      "log_sha256": "223a1a2d6311a9478fcaa433f1bb63dda02a45887881e0eb9975cca5291368bb"
+    },
+    {
+      "command": [
+        "cargo",
+        "fmt",
+        "--check"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "scope": "format",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p820-page",
+      "target": "/home/osso/.cache/wow-ui-sim-targets/p820-page",
+      "environment": {},
+      "exit": 0,
+      "expected_exit": 0,
+      "seconds": 13.347947120666504,
+      "log": "p820-format.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/test_gen_patch_wikitext_register.py"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "scope": "generator-fixtures",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p820-page",
+      "target": "/home/osso/.cache/wow-ui-sim-targets/p820-page",
+      "environment": {},
+      "exit": 0,
+      "expected_exit": 0,
+      "seconds": 0.04967045783996582,
+      "log": "p820-generator-fixtures.log",
+      "log_sha256": "244d5a0653221273c834694f46b92cd90f3b359bced7158e649fb89aef49f477"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_8_2_0_colon_handler",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "f60b92dce",
+      "scope": "new working-tree colon handler fixture; MovieFrame misclassification; resolved by 05bf3b559",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p820-page",
+      "target": "/home/osso/.cache/wow-ui-sim-targets/p820-page",
+      "exit": 101,
+      "expected_exit": 101,
+      "log": "p820-handler-behavior-red.log",
+      "log_sha256": "9ce325102d9d857883efafd2a83bafc53a4950e2131cc0726e15d4bb925b8f1b",
+      "historical": true
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_8_2_0_colon_handler",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "bd6b32f45",
+      "scope": "compilation blocker: bridge imports; resolved by f60b92dce; not behavioral RED evidence",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p820-page",
+      "target": "/home/osso/.cache/wow-ui-sim-targets/p820-page",
+      "exit": 101,
+      "expected_exit": 101,
+      "log": "p820-handler-red.log",
+      "log_sha256": "46affc48c624fd3911da0c53e5265ba1abc59ba75dbae04e7e88a16dfa313160",
+      "historical": true
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--no-default-features",
+        "--features",
+        "sound,gui,casc,client-mists",
+        "--test",
+        "integration",
+        "patch_8_2_0_mists_",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "scope": "mists-behavior",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p820-page",
+      "target": "/home/osso/.cache/wow-ui-sim-targets/p820-page",
+      "exit": 0,
+      "expected_exit": 0,
+      "seconds": 151.62507009506226,
+      "log": "p820-mists-behavior.log",
+      "log_sha256": "a8fed32ab6835e3a4db432090242173d1539f1af06ec4c7410f32eb4c77a584e"
+    },
+    {
+      "command": [
+        "cargo",
+        "check",
+        "--no-default-features",
+        "--features",
+        "sound,gui,casc,client-mists",
+        "--tests"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "scope": "mists-check",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p820-page",
+      "target": "/home/osso/.cache/wow-ui-sim-targets/p820-page",
+      "exit": 0,
+      "expected_exit": 0,
+      "seconds": 62.871941804885864,
+      "log": "p820-mists-check.log",
+      "log_sha256": "c7f85afd292e7f8f8ae7d1f37071c432a449f8dfeeee37c11fe5811adc6a3846"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_8_2_0_",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "da7091099",
+      "scope": "new working-tree model/retirement fixture; resolved by runtime commits",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p820-page",
+      "target": "/home/osso/.cache/wow-ui-sim-targets/p820-page",
+      "exit": 101,
+      "expected_exit": 101,
+      "log": "p820-model-red.log",
+      "log_sha256": "5137dfeb1526abcb0ee25e49a566cc80601decd4460c3c4a1a711b480f89b5eb",
+      "historical": true
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_8_2_0_publication_sweep"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "scope": "negative",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p820-page",
+      "target": "/home/osso/.cache/wow-ui-sim-targets/p820-page",
+      "environment": {
+        "P820_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/p820-negative-register.json",
+        "P820_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/p820-negative-observation.json"
+      },
+      "exit": 1,
+      "expected_exit": 1,
+      "seconds": 12.784457921981812,
+      "log": "p820-negative.log",
+      "log_sha256": "7b87387102d2ef06e1fd60d2db0c0714d45963397bcad65168e4e61560e3a6f2"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/test_extract_patch_non_inventory.py"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "scope": "parser-fixtures",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p820-page",
+      "target": "/home/osso/.cache/wow-ui-sim-targets/p820-page",
+      "environment": {},
+      "exit": 0,
+      "expected_exit": 0,
+      "seconds": 0.05649447441101074,
+      "log": "p820-parser-fixtures.log",
+      "log_sha256": "4ce44bb7a0342e2621c88c914f343e3239bab836773d3746af1cf538fea68f5d"
+    },
+    {
+      "command": [
+        "cargo",
+        "build",
+        "--bin",
+        "wow-sim"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "scope": "retail-build",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p820-page",
+      "target": "/home/osso/.cache/wow-ui-sim-targets/p820-page",
+      "environment": {},
+      "exit": 0,
+      "expected_exit": 0,
+      "seconds": 0.43601012229919434,
+      "log": "p820-retail-build.log",
+      "log_sha256": "6f2ba031644f0687bd1a7265dffbff4aa30325f06dde4be4bf267cad68f4c316"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_8_2_0"
+      ],
+      "revision": "05bf3b5590ebb634dcf75dcc21ec64862990b312",
+      "scope": "corrected handler discovery and cached behavior; fixture still empty",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p820-page",
+      "target": "/home/osso/.cache/wow-ui-sim-targets/p820-page",
+      "exit": 1,
+      "expected_exit": 1,
+      "log": "p820-reviewed-discovery.log",
+      "log_sha256": "af2cb507aea3c707cb3ee2df81821a59f40b13c6ed82988730f1da57e5f4a8cf"
+    },
+    {
+      "command": [
+        "timeout",
+        "90",
+        "/home/osso/.cache/wow-ui-sim-targets/p820-page/debug/wow-sim",
+        "--no-addons",
+        "--no-saved-vars",
+        "lua-errors"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "scope": "startup",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p820-page",
+      "target": "/home/osso/.cache/wow-ui-sim-targets/p820-page",
+      "environment": {},
+      "exit": 0,
+      "expected_exit": 0,
+      "seconds": 6.658996820449829,
+      "log": "p820-startup.log",
+      "log_sha256": "fa6316f3d83fd5b5106247e053a47a4fd59e0928f2fb7d714f273f7bea34baa6"
+    },
+    {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "c_voice_chat_probes::",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "scope": "voice-regressions",
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p820-page",
+      "target": "/home/osso/.cache/wow-ui-sim-targets/p820-page",
+      "environment": {},
+      "exit": 0,
+      "expected_exit": 0,
+      "seconds": 0.8376669883728027,
+      "log": "p820-voice-regressions.log",
+      "log_sha256": "d004e3d36d1bb41c0a5cac1db4aad023ada3247261b3a3f8743d1ca4592fea28"
+    }
+  ],
+  "register_reproduction": [
+    {
+      "patch": "10.0.0",
+      "recorded_flags": null,
+      "verified_flags": [
+        "--expand-shared-changes"
+      ],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "10.0.0",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/10.0.0-api-changes.wikitext",
+        "6789768",
+        "/tmp/p820-reproduction-8mqwfjmi/10.0.0-register.json",
+        "--expand-shared-changes"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "c093335505ec54e96dda556f6011facd7c7616d80636843413fc193a25b7a1ca"
+    },
+    {
+      "patch": "10.0.2",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "10.0.2",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/10.0.2-api-changes.wikitext",
+        "2926754",
+        "/tmp/p820-reproduction-8mqwfjmi/10.0.2-register.json"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "84941b2b96c7c3a20e972045487ff66c5ede5845be7e453c5806669a18c85059"
+    },
+    {
+      "patch": "10.0.5",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "10.0.5",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/10.0.5-api-changes.wikitext",
+        "742761",
+        "/tmp/p820-reproduction-8mqwfjmi/10.0.5-register.json"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "336973622327eddaf6d21111354402b4b1faf424a0701e34a99c3a56640be0b1"
+    },
+    {
+      "patch": "10.0.7",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "10.0.7",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/10.0.7-api-changes.wikitext",
+        "1063344",
+        "/tmp/p820-reproduction-8mqwfjmi/10.0.7-register.json"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "64ef0166fa31a83460312cb97ac2d0f4b65113779b4d6904c43283dc0854ad1e"
+    },
+    {
+      "patch": "10.1.0",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "10.1.0",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/10.1.0-api-changes.wikitext",
+        "2236681",
+        "/tmp/p820-reproduction-8mqwfjmi/10.1.0-register.json"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "9ef8625ab492bdc51b1a010b859044987e63f72dd89c65c878f447948edacd76"
+    },
+    {
+      "patch": "10.1.5",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "10.1.5",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/10.1.5-api-changes.wikitext",
+        "3807695",
+        "/tmp/p820-reproduction-8mqwfjmi/10.1.5-register.json"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "cbd9a9de7fff6b6e8d77e352dccbe96b21caed7650577d432eaa24673fb8746f"
+    },
+    {
+      "patch": "10.1.7",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "10.1.7",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/10.1.7-api-changes.wikitext",
+        "6473483",
+        "/tmp/p820-reproduction-8mqwfjmi/10.1.7-register.json"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "d0db70aa76a3aa2b01e39227420f3fb5c3874b8c3b2457847ae4fa913299c01c"
+    },
+    {
+      "patch": "10.2.0",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "10.2.0",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/10.2.0-api-changes.wikitext",
+        "6473470",
+        "/tmp/p820-reproduction-8mqwfjmi/10.2.0-register.json"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "beaf8a6dd57229712abf3366b8ffc29163e75aa827533e108d59b89f6c56b979"
+    },
+    {
+      "patch": "10.2.5",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "10.2.5",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/10.2.5-api-changes.wikitext",
+        "5993852",
+        "/tmp/p820-reproduction-8mqwfjmi/10.2.5-register.json"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "38bf561f25edb63ab3f34e17aef9e088471cc85844c3ca9d5c269c3b206723b8"
+    },
+    {
+      "patch": "10.2.6",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "10.2.6",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/10.2.6-api-changes.wikitext",
+        "6268742",
+        "/tmp/p820-reproduction-8mqwfjmi/10.2.6-register.json"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "922d9173720213392dc4c228881539cf59a45fd7b3f0a3155176c36d68deb772"
+    },
+    {
+      "patch": "10.2.7",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "10.2.7",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/10.2.7-api-changes.wikitext",
+        "6268738",
+        "/tmp/p820-reproduction-8mqwfjmi/10.2.7-register.json"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "f5415c7991f08f5cf958648d0b2aa8f62f43647be819b44156963c0f9a2ad045"
+    },
+    {
+      "patch": "11.0.0",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "11.0.0",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/11.0.0-api-changes.wikitext",
+        "6726780",
+        "/tmp/p820-reproduction-8mqwfjmi/11.0.0-register.json"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "628e96cf4efca59242d3a6c093f5d7fa09657b47c2d71e39563ea62ea56a0186"
+    },
+    {
+      "patch": "11.0.2",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "11.0.2",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/11.0.2-api-changes.wikitext",
+        "6862982",
+        "/tmp/p820-reproduction-8mqwfjmi/11.0.2-register.json"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "a5edb6c195e1ccc9722aa1358fc0a392b772563a43bf5c4abf4d45446e6bf9ca"
+    },
+    {
+      "patch": "11.0.5",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "11.0.5",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/11.0.5-api-changes.wikitext",
+        "6726778",
+        "/tmp/p820-reproduction-8mqwfjmi/11.0.5-register.json"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "ba4d8add87e00805279188fc091f2b4dc3ded5b12a436d2d579768943280c4fd"
+    },
+    {
+      "patch": "11.0.7",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "11.0.7",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/11.0.7-api-changes.wikitext",
+        "6726777",
+        "/tmp/p820-reproduction-8mqwfjmi/11.0.7-register.json"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "0e3807e89614ed0cca38ba8d80c803a5cbab8df45d6213255512f952f03071ae"
+    },
+    {
+      "patch": "11.1.0",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "11.1.0",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/11.1.0-api-changes.wikitext",
+        "6726776",
+        "/tmp/p820-reproduction-8mqwfjmi/11.1.0-register.json"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "97a4d016518760cdbd1ff671c7f566747d9601d19785e84486eed2fdd84d9280"
+    },
+    {
+      "patch": "11.1.5",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "11.1.5",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/11.1.5-api-changes.wikitext",
+        "6726775",
+        "/tmp/p820-reproduction-8mqwfjmi/11.1.5-register.json"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "3d2d199167a33cb25baa1e83f4003897f271e06645b78bc636c83fcaf5c6b703"
+    },
+    {
+      "patch": "11.1.7",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "11.1.7",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/11.1.7-api-changes.wikitext",
+        "6726774",
+        "/tmp/p820-reproduction-8mqwfjmi/11.1.7-register.json"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "966516954a173cbbbfb3ad982982b1af4165535284b5f842837970fd964f7439"
+    },
+    {
+      "patch": "11.2.0",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "11.2.0",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/11.2.0-api-changes.wikitext",
+        "6726773",
+        "/tmp/p820-reproduction-8mqwfjmi/11.2.0-register.json"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "2a147afc5d7940f5d02c28817e224b504cd710277cc0a934f1bffef4a9c691e8"
+    },
+    {
+      "patch": "11.2.5",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "11.2.5",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/11.2.5-api-changes.wikitext",
+        "6726772",
+        "/tmp/p820-reproduction-8mqwfjmi/11.2.5-register.json"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "6d12d274d66f73fb8dedc45ba40f9036ac74a99a5721f3dab1bb9bd3dc10c46a"
+    },
+    {
+      "patch": "11.2.7",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "11.2.7",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/11.2.7-api-changes.wikitext",
+        "6726771",
+        "/tmp/p820-reproduction-8mqwfjmi/11.2.7-register.json"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "a45643efaf16dfeb58006019535ed43c304bb504d14697f7460f180ab8eb1986"
+    },
+    {
+      "patch": "12.0.0",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "12.0.0",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/12.0.0-api-changes.wikitext",
+        "6747189",
+        "/tmp/p820-reproduction-8mqwfjmi/12.0.0-register.json"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "2149b28b9165ecaa346b03a7192b775b77bd6bf9921851acc920bfefe412cf5d"
+    },
+    {
+      "patch": "12.0.1",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "12.0.1",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/12.0.1-api-changes.wikitext",
+        "6747895",
+        "/tmp/p820-reproduction-8mqwfjmi/12.0.1-register.json"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "3ae13ba41a6583c1d05c00552aa444501386fcf5484884d2395aa77cecd9a8cb"
+    },
+    {
+      "patch": "12.0.5",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "12.0.5",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/12.0.5-api-changes.wikitext",
+        "6747894",
+        "/tmp/p820-reproduction-8mqwfjmi/12.0.5-register.json"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "a87c2c978086e8b6c62fb560aa764556213c6b19735a4be35e12311ec42d6e23"
+    },
+    {
+      "patch": "12.0.7",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "12.0.7",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/12.0.7-api-changes.wikitext",
+        "6794100",
+        "/tmp/p820-reproduction-8mqwfjmi/12.0.7-register.json"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "aad4af3207d4585ed8494c837f253a23607bf1f8e752e0b52d39dd7e533189e7"
+    },
+    {
+      "patch": "12.1.0",
+      "recorded_flags": null,
+      "verified_flags": [
+        "--inventory-only"
+      ],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "12.1.0",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/12.1.0-api-changes.wikitext",
+        "6886719",
+        "/tmp/p820-reproduction-8mqwfjmi/12.1.0-register.json",
+        "--inventory-only"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "924774ddea912d58af87211b41549d550a12594cc2b5de0b8b3de7574e9e8311"
+    },
+    {
+      "patch": "8.2.0",
+      "recorded_flags": [
+        "--legacy-api-tables"
+      ],
+      "verified_flags": [
+        "--legacy-api-tables"
+      ],
+      "inferred_historical_flags": false,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "8.2.0",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/8.2.0-api-changes.wikitext",
+        "5142162",
+        "/tmp/p820-reproduction-8mqwfjmi/8.2.0-register.json",
+        "--legacy-api-tables"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "0755a978c7c9821a87431337fc2ae834f5fdfc139180f38af3bf613168b21203"
+    },
+    {
+      "patch": "8.3.0",
+      "recorded_flags": [
+        "--legacy-column-headers",
+        "--diff-api-additions"
+      ],
+      "verified_flags": [
+        "--legacy-column-headers",
+        "--diff-api-additions"
+      ],
+      "inferred_historical_flags": false,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "8.3.0",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/8.3.0-api-changes.wikitext",
+        "6471393",
+        "/tmp/p820-reproduction-8mqwfjmi/8.3.0-register.json",
+        "--legacy-column-headers",
+        "--diff-api-additions"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "372ee6b18ee3a47ec80c7886621a7686cf90381f113e50caed4594b6d18dcbef"
+    },
+    {
+      "patch": "8.3.7",
+      "recorded_flags": [
+        "--simple-api-list"
+      ],
+      "verified_flags": [
+        "--simple-api-list"
+      ],
+      "inferred_historical_flags": false,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "8.3.7",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/8.3.7-api-changes.wikitext",
+        "1572710",
+        "/tmp/p820-reproduction-8mqwfjmi/8.3.7-register.json",
+        "--simple-api-list"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "12c1c3a4d678b3a4ba2c1ae808fc3831a672375eebb2158b0e25261bb0a7e175"
+    },
+    {
+      "patch": "9.0.1",
+      "recorded_flags": [
+        "--skip-plain-scripts-label"
+      ],
+      "verified_flags": [
+        "--skip-plain-scripts-label"
+      ],
+      "inferred_historical_flags": false,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "9.0.1",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/9.0.1-api-changes.wikitext",
+        "6471353",
+        "/tmp/p820-reproduction-8mqwfjmi/9.0.1-register.json",
+        "--skip-plain-scripts-label"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "b61d5965061e199bd4149093e5fd2b5b03ee82a2bdabd18070a7b449454fa665"
+    },
+    {
+      "patch": "9.0.2",
+      "recorded_flags": [],
+      "verified_flags": [],
+      "inferred_historical_flags": false,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "9.0.2",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/9.0.2-api-changes.wikitext",
+        "659986",
+        "/tmp/p820-reproduction-8mqwfjmi/9.0.2-register.json"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "e9c69d02cbd34aab19236d82b52a6ae574312ef8e4f6ee9c07896a8dddef8e6b"
+    },
+    {
+      "patch": "9.0.5",
+      "recorded_flags": [],
+      "verified_flags": [],
+      "inferred_historical_flags": false,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "9.0.5",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/9.0.5-api-changes.wikitext",
+        "4298844",
+        "/tmp/p820-reproduction-8mqwfjmi/9.0.5-register.json"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "c9852dbae8b4cf0ccfa46810e571fe4bfe8f3435d9680855845a70979c819b13"
+    },
+    {
+      "patch": "9.1.0",
+      "recorded_flags": [
+        "--expand-shared-changes",
+        "--skip-plain-scripts-label"
+      ],
+      "verified_flags": [
+        "--expand-shared-changes",
+        "--skip-plain-scripts-label"
+      ],
+      "inferred_historical_flags": false,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "9.1.0",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/9.1.0-api-changes.wikitext",
+        "167980",
+        "/tmp/p820-reproduction-8mqwfjmi/9.1.0-register.json",
+        "--expand-shared-changes",
+        "--skip-plain-scripts-label"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "deeaaed02589405b31b89341c48081a72890118cce878e802bd01df8cef1abdb"
+    },
+    {
+      "patch": "9.1.5",
+      "recorded_flags": [
+        "--expand-shared-changes",
+        "--capture-span-defaults"
+      ],
+      "verified_flags": [
+        "--expand-shared-changes",
+        "--capture-span-defaults"
+      ],
+      "inferred_historical_flags": false,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "9.1.5",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/9.1.5-api-changes.wikitext",
+        "5920444",
+        "/tmp/p820-reproduction-8mqwfjmi/9.1.5-register.json",
+        "--expand-shared-changes",
+        "--capture-span-defaults"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "f47c868a2a650f6119ade3f755c02c1c6d352330ed0cef1e7c5cb067e4df6f6f"
+    },
+    {
+      "patch": "9.2.0",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "9.2.0",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/9.2.0-api-changes.wikitext",
+        "4788278",
+        "/tmp/p820-reproduction-8mqwfjmi/9.2.0-register.json"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "69dd92fb3a392bb6c73917fa4c7917a787a57299bf5eb584061d0de542b48191"
+    },
+    {
+      "patch": "9.2.5",
+      "recorded_flags": [
+        "--expand-shared-changes",
+        "--separate-inline-structures",
+        "--capture-span-defaults"
+      ],
+      "verified_flags": [
+        "--expand-shared-changes",
+        "--separate-inline-structures",
+        "--capture-span-defaults"
+      ],
+      "inferred_historical_flags": false,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "9.2.5",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/9.2.5-api-changes.wikitext",
+        "2301036",
+        "/tmp/p820-reproduction-8mqwfjmi/9.2.5-register.json",
+        "--expand-shared-changes",
+        "--separate-inline-structures",
+        "--capture-span-defaults"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "de6a6208e1989a5a811e6706c6a8d42e5c2f730e96be75293b48c43741e1a0b0"
+    },
+    {
+      "patch": "9.2.7",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/gen_patch_wikitext_register.py",
+        "9.2.7",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/9.2.7-api-changes.wikitext",
+        "5227425",
+        "/tmp/p820-reproduction-8mqwfjmi/9.2.7-register.json"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "c349d4a3d3f5dba40f60e2a9739a7467322effc7111188aab5bb15b040b39fc7"
+    }
+  ],
+  "saved_extract_reproduction": [
+    {
+      "patch": "10.0.0",
+      "recorded_flags": null,
+      "verified_flags": [
+        "--preserve-examples"
+      ],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "10.0.0",
+        "--text-only",
+        "--check",
+        "--preserve-examples"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"10.0.0\", \"rows\": 439, \"statuses\": {\"metadata-only\": 15, \"audit-pending\": 424}}\n",
+      "stderr": "",
+      "sha256": "17a3a97fba53aad8c84b08c5e625211e5351ec8ce1fe190a05f9b3aa176fb6a2",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "10.0.2",
+      "recorded_flags": null,
+      "verified_flags": [
+        "--preserve-examples"
+      ],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "10.0.2",
+        "--text-only",
+        "--check",
+        "--preserve-examples"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"10.0.2\", \"rows\": 167, \"statuses\": {\"metadata-only\": 11, \"audit-pending\": 156}}\n",
+      "stderr": "",
+      "sha256": "1f43010bba50fcfc6c323ab7d75c7984e87a8e588ab1693f641111fa0f249feb",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "10.0.5",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "10.0.5",
+        "--text-only",
+        "--check"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"10.0.5\", \"rows\": 67, \"statuses\": {\"metadata-only\": 7, \"audit-pending\": 60}}\n",
+      "stderr": "",
+      "sha256": "60f99c9d781367178a5a2220c4bb71cb59b8dd91b02a48959e8e2237a8119a20",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "10.0.7",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "10.0.7",
+        "--text-only",
+        "--check"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"10.0.7\", \"rows\": 2214, \"statuses\": {\"metadata-only\": 11, \"audit-pending\": 2203}}\n",
+      "stderr": "",
+      "sha256": "879577e70ea3990e65b4044f07e1928e3ba9bf509f13400147016c483c9729a5",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "10.1.0",
+      "recorded_flags": null,
+      "verified_flags": [
+        "--preserve-examples"
+      ],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "10.1.0",
+        "--text-only",
+        "--check",
+        "--preserve-examples"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"10.1.0\", \"rows\": 287, \"statuses\": {\"metadata-only\": 12, \"audit-pending\": 275}}\n",
+      "stderr": "",
+      "sha256": "50ab412824b136929589560a58d933c2cf68ebccea09ad2dc4c3870d40a7c069",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "10.1.5",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "10.1.5",
+        "--text-only",
+        "--check"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"10.1.5\", \"rows\": 98, \"statuses\": {\"metadata-only\": 9, \"audit-pending\": 89}}\n",
+      "stderr": "",
+      "sha256": "d871bfe9ac485926da1fb380b1a7f1e7eb9aa18025b9f7b09354e43f4f66b1f1",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "10.1.7",
+      "recorded_flags": null,
+      "verified_flags": [
+        "--preserve-examples"
+      ],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "10.1.7",
+        "--text-only",
+        "--check",
+        "--preserve-examples"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"10.1.7\", \"rows\": 55, \"statuses\": {\"metadata-only\": 10, \"audit-pending\": 45}}\n",
+      "stderr": "",
+      "sha256": "e2d9c557e865b7b9e9e2133064ddc229587001edf91ea08a3deaba65059bfc2a",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "10.2.0",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "10.2.0",
+        "--text-only",
+        "--check"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"10.2.0\", \"rows\": 134, \"statuses\": {\"metadata-only\": 15, \"audit-pending\": 119}}\n",
+      "stderr": "",
+      "sha256": "9354b5bfd77b78079a216766945da4ad04c979c2bb3b723cc5fd86adc73af5fd",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "10.2.5",
+      "recorded_flags": null,
+      "verified_flags": [
+        "--preserve-examples"
+      ],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "10.2.5",
+        "--text-only",
+        "--check",
+        "--preserve-examples"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"10.2.5\", \"rows\": 356, \"statuses\": {\"metadata-only\": 17, \"audit-pending\": 339}}\n",
+      "stderr": "",
+      "sha256": "cbeca6db214446a0cd8ea8acd939e2764d73bfb8e0a027398403afbcbb764fb0",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "10.2.6",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "10.2.6",
+        "--text-only",
+        "--check"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"10.2.6\", \"rows\": 138, \"statuses\": {\"metadata-only\": 17, \"audit-pending\": 121}}\n",
+      "stderr": "",
+      "sha256": "037da4f0fbbc43bc8cdee6545be687d07c083c3cdc334fc4284567abe22502b1",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "10.2.7",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "10.2.7",
+        "--text-only",
+        "--check"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"10.2.7\", \"rows\": 83, \"statuses\": {\"metadata-only\": 12, \"audit-pending\": 71}}\n",
+      "stderr": "",
+      "sha256": "3456a7aa752cca63eba2758ea0583b764826b808f04c6a8dd6752b19b7e6b832",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "11.0.0",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "11.0.0",
+        "--text-only",
+        "--check"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"11.0.0\", \"rows\": 347, \"statuses\": {\"metadata-only\": 19, \"audit-pending\": 328}}\n",
+      "stderr": "",
+      "sha256": "f74031387786890b33d9c1b2bb49691c165e8720976db662cfddb3d9353f6826",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "11.0.2",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "11.0.2",
+        "--text-only",
+        "--check"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"11.0.2\", \"rows\": 229, \"statuses\": {\"metadata-only\": 22, \"audit-pending\": 207}}\n",
+      "stderr": "",
+      "sha256": "5df4b79162d245df301779c781bd8496143bc4e86fd7a882f0d77f40ed5c3b18",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "11.0.5",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "11.0.5",
+        "--text-only",
+        "--check"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"11.0.5\", \"rows\": 34, \"statuses\": {\"metadata-only\": 10, \"audit-pending\": 24}}\n",
+      "stderr": "",
+      "sha256": "c91cb989e635c029c6eabbc86523d68cbf33d16590af5f043614b667caeb87d4",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "11.0.7",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "11.0.7",
+        "--text-only",
+        "--check"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"11.0.7\", \"rows\": 83, \"statuses\": {\"metadata-only\": 14, \"audit-pending\": 69}}\n",
+      "stderr": "",
+      "sha256": "581f98e5dcb3d350df424725839f281dda7c90e015870d05c92e25a55d931cb1",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "11.1.0",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "11.1.0",
+        "--text-only",
+        "--check"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"11.1.0\", \"rows\": 100, \"statuses\": {\"metadata-only\": 13, \"audit-pending\": 87}}\n",
+      "stderr": "",
+      "sha256": "e954712fd44a0e153427bc18ac686523860753b4e04ede52dae715342f5c3aa6",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "11.1.5",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "11.1.5",
+        "--text-only",
+        "--check"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"11.1.5\", \"rows\": 99, \"statuses\": {\"metadata-only\": 14, \"audit-pending\": 85}}\n",
+      "stderr": "",
+      "sha256": "947ccdfae886c48429354ed3aea7af15a5901fcffb2ee8cabb8904b1c1ae734b",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "11.1.7",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "11.1.7",
+        "--text-only",
+        "--check"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"11.1.7\", \"rows\": 27, \"statuses\": {\"metadata-only\": 11, \"audit-pending\": 16}}\n",
+      "stderr": "",
+      "sha256": "0f48983a93e1a1cf060f9bebc387ecc00d8a7a7d942efc7c94a0bea98801601b",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "11.2.0",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "11.2.0",
+        "--text-only",
+        "--check"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"11.2.0\", \"rows\": 82, \"statuses\": {\"metadata-only\": 17, \"audit-pending\": 65}}\n",
+      "stderr": "",
+      "sha256": "eb11e8cf5ce088bf2d6442578d3663c62f3963ce34ee1403d4a302cc2636952f",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "11.2.5",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "11.2.5",
+        "--text-only",
+        "--check"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"11.2.5\", \"rows\": 73, \"statuses\": {\"metadata-only\": 15, \"audit-pending\": 58}}\n",
+      "stderr": "",
+      "sha256": "f3d3e3bf435d6129ce031bbbf5aa8be0f14c424c51802a590fc6d424813e8be4",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "11.2.7",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "11.2.7",
+        "--text-only",
+        "--check"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"11.2.7\", \"rows\": 19, \"statuses\": {\"metadata-only\": 9, \"audit-pending\": 10}}\n",
+      "stderr": "",
+      "sha256": "9e53fa2661695fe940d744cd93754929ea9f84573d8033a97e52352b5345b53b",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "12.0.0",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "12.0.0",
+        "--text-only",
+        "--check"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"12.0.0\", \"rows\": 143, \"statuses\": {\"metadata-only\": 31, \"audit-pending\": 112}}\n",
+      "stderr": "",
+      "sha256": "c8bb5d03f47cc3ca31d43bb0a0f973804790fbe430d962ffa2403a9364e5adeb",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "12.0.1",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "12.0.1",
+        "--text-only",
+        "--check"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"12.0.1\", \"rows\": 252, \"statuses\": {\"metadata-only\": 51, \"audit-pending\": 201}}\n",
+      "stderr": "",
+      "sha256": "6178cf0702bf7c1b79d39c8e3345b2aee15ee7c1cea2756c343b0918cab9906d",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "12.0.5",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "12.0.5",
+        "--text-only",
+        "--check"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 1,
+      "byte_identical": false,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p820-page/tools/extract_patch_non_inventory.py\", line 315, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p820-page/tools/extract_patch_non_inventory.py\", line 273, in main\n    assert text_path.read_text() == text, 'extract differs'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: extract differs\n",
+      "sha256": "4da3872aa566695f46e2dacd4e79992f5b06be9541f0d19cf0e8dba45cea8329",
+      "inherited_nonreproducible": true
+    },
+    {
+      "patch": "12.0.7",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "12.0.7",
+        "--text-only",
+        "--check"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 1,
+      "byte_identical": false,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p820-page/tools/extract_patch_non_inventory.py\", line 315, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p820-page/tools/extract_patch_non_inventory.py\", line 273, in main\n    assert text_path.read_text() == text, 'extract differs'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: extract differs\n",
+      "sha256": "014f7d51eca1b2fc5d76071978e09c537efd66d14069e21d163e58ccd04a561e",
+      "inherited_nonreproducible": true
+    },
+    {
+      "patch": "12.1.0",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "12.1.0",
+        "--text-only",
+        "--check"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 1,
+      "byte_identical": false,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p820-page/tools/extract_patch_non_inventory.py\", line 315, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p820-page/tools/extract_patch_non_inventory.py\", line 266, in main\n    text = extract_text(raw_path.read_text(), preserve_examples=args.preserve_examples,\n                        normalize_inventory_headings=args.normalize_inventory_headings,\n                        retain_reference_notes=args.retain_reference_notes,\n                        legacy_api_tables=args.legacy_api_tables)\n  File \"/home/osso/.worktrees/wow-ui-sim-p820-page/tools/extract_patch_non_inventory.py\", line 137, in extract_text\n    raise ValueError(f\"unhandled template: {line}\")\nValueError: unhandled template: {{#description2:Midnight 12.1.0 (Curse of Ula\u2019tek)}}\n",
+      "sha256": "c051a68b442b2e69d602650d1c5ec07c1d0262dd1aea01fe73d3f60cd5f29c3b",
+      "inherited_nonreproducible": true
+    },
+    {
+      "patch": "8.2.0",
+      "recorded_flags": [
+        "--legacy-api-tables"
+      ],
+      "verified_flags": [
+        "--legacy-api-tables"
+      ],
+      "inferred_historical_flags": false,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "8.2.0",
+        "--text-only",
+        "--check",
+        "--legacy-api-tables"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"8.2.0\", \"rows\": 24, \"statuses\": {\"metadata-only\": 5, \"audit-pending\": 19}}\n",
+      "stderr": "",
+      "sha256": "49736eb93e74da2436d5e600e58b6ee8674927ef4b15f50e10adffa675585dd0",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "8.3.0",
+      "recorded_flags": [
+        "--preserve-examples",
+        "--normalize-inventory-headings",
+        "--retain-reference-notes"
+      ],
+      "verified_flags": [
+        "--preserve-examples",
+        "--normalize-inventory-headings",
+        "--retain-reference-notes"
+      ],
+      "inferred_historical_flags": false,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "8.3.0",
+        "--text-only",
+        "--check",
+        "--preserve-examples",
+        "--normalize-inventory-headings",
+        "--retain-reference-notes"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"8.3.0\", \"rows\": 16, \"statuses\": {\"metadata-only\": 9, \"audit-pending\": 7}}\n",
+      "stderr": "",
+      "sha256": "5de022982639c186f36ba05a3a1c6e6140d0dd79e0da356cbfafc3f46b57a1d3",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "8.3.7",
+      "recorded_flags": null,
+      "verified_flags": [
+        "--preserve-examples"
+      ],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "8.3.7",
+        "--text-only",
+        "--check",
+        "--preserve-examples"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"8.3.7\", \"rows\": 8, \"statuses\": {\"metadata-only\": 5, \"audit-pending\": 3}}\n",
+      "stderr": "",
+      "sha256": "78f1f7c357923c589ba34c865cf3309c444d8493b788b17c105809e6dc35efc2",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "9.0.1",
+      "recorded_flags": [
+        "--normalize-inventory-headings",
+        "--preserve-examples"
+      ],
+      "verified_flags": [
+        "--normalize-inventory-headings",
+        "--preserve-examples"
+      ],
+      "inferred_historical_flags": false,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "9.0.1",
+        "--text-only",
+        "--check",
+        "--normalize-inventory-headings",
+        "--preserve-examples"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"9.0.1\", \"rows\": 135, \"statuses\": {\"metadata-only\": 13, \"audit-pending\": 122}}\n",
+      "stderr": "",
+      "sha256": "b4bfffbdad9981f0156a5ed21e7ce9ecef236c033c04c749a4f3100fce2f80c0",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "9.0.2",
+      "recorded_flags": null,
+      "verified_flags": [
+        "--preserve-examples"
+      ],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "9.0.2",
+        "--text-only",
+        "--check",
+        "--preserve-examples"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"9.0.2\", \"rows\": 11, \"statuses\": {\"metadata-only\": 6, \"audit-pending\": 5}}\n",
+      "stderr": "",
+      "sha256": "9a193fe2a9b927d74db45a14a7fbe774eea57583235d8f1113d97fe8c86b50f6",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "9.0.5",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "9.0.5",
+        "--text-only",
+        "--check"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"9.0.5\", \"rows\": 4, \"statuses\": {\"metadata-only\": 4}}\n",
+      "stderr": "",
+      "sha256": "7a7ca87f3b1973400a79c0458a35e76442cc2529050df94b6b84af2abb5cd4ce",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "9.1.0",
+      "recorded_flags": null,
+      "verified_flags": [
+        "--preserve-examples"
+      ],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "9.1.0",
+        "--text-only",
+        "--check",
+        "--preserve-examples"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"9.1.0\", \"rows\": 12, \"statuses\": {\"metadata-only\": 7, \"audit-pending\": 5}}\n",
+      "stderr": "",
+      "sha256": "961a8cd7dff7cf67ab13b4112ff18520a074f369a8201df3f192a5694c942783",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "9.1.5",
+      "recorded_flags": null,
+      "verified_flags": [],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "9.1.5",
+        "--text-only",
+        "--check"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"9.1.5\", \"rows\": 18, \"statuses\": {\"metadata-only\": 7, \"audit-pending\": 11}}\n",
+      "stderr": "",
+      "sha256": "e9e3b40f6d63639f224a0297b82dfe62bcc0d07f61931e2c1c9354bcdb822eba",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "9.2.0",
+      "recorded_flags": null,
+      "verified_flags": [
+        "--preserve-examples"
+      ],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "9.2.0",
+        "--text-only",
+        "--check",
+        "--preserve-examples"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"9.2.0\", \"rows\": 14, \"statuses\": {\"metadata-only\": 7, \"audit-pending\": 7}}\n",
+      "stderr": "",
+      "sha256": "4946812493aa7bbf9cf4ddc3b18857ee603e0bb4577533a8860759fa9bb0e43e",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "9.2.5",
+      "recorded_flags": null,
+      "verified_flags": [
+        "--preserve-examples"
+      ],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "9.2.5",
+        "--text-only",
+        "--check",
+        "--preserve-examples"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"9.2.5\", \"rows\": 135, \"statuses\": {\"metadata-only\": 10, \"audit-pending\": 125}}\n",
+      "stderr": "",
+      "sha256": "e1b3b6e79876aa416513d622bc823e5a1f372096d7c0f9c7054c4c4a0c1a9518",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "9.2.7",
+      "recorded_flags": null,
+      "verified_flags": [
+        "--preserve-examples"
+      ],
+      "inferred_historical_flags": true,
+      "command": [
+        "python3",
+        "tools/extract_patch_non_inventory.py",
+        "--patch",
+        "9.2.7",
+        "--text-only",
+        "--check",
+        "--preserve-examples"
+      ],
+      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"9.2.7\", \"rows\": 23, \"statuses\": {\"metadata-only\": 8, \"audit-pending\": 15}}\n",
+      "stderr": "",
+      "sha256": "6528a2aadae856784b4a8530cc3fbe592ab8eb5097a65f5e62789de9c6c3e86b",
+      "inherited_nonreproducible": false
+    }
+  ],
+  "manual_rust_readability": "p820-readability.md",
+  "inherited_failure_policy": "Three saved-extract failures derive from completed 8.3.0 receipts; prior bytes/outcomes preserved."
+}

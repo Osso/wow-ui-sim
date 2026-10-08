@@ -1,0 +1,296 @@
+[
+  {
+    "source_id": "wt-global-api-C_UIWidgetManager.GetTextureWithStateVisualizationInfo-150",
+    "symbol": "C_UIWidgetManager.GetTextureWithStateVisualizationInfo",
+    "decision": "retired",
+    "cached_hits": false,
+    "reason": "Qualified/bare cached and complete pre-change src/tests grep scans have no occurrences; remove fabricated ordinary lookup on retail only.",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-GetGuildTabardFileNames-151",
+    "symbol": "GetGuildTabardFileNames",
+    "decision": "unchanged",
+    "cached_hits": false,
+    "reason": "No runtime change: already meets current publication expectation through absence, later supersession or attributed Blizzard deprecation. Cached hits (when present) retained; no consumer-facing retirement attempted.",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-CanEditOfficerNote-152",
+    "symbol": "CanEditOfficerNote",
+    "decision": "unchanged",
+    "cached_hits": true,
+    "reason": "No runtime change: already meets current publication expectation through absence, later supersession or attributed Blizzard deprecation. Cached hits (when present) retained; no consumer-facing retirement attempted.",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-CanViewOfficerNote-153",
+    "symbol": "CanViewOfficerNote",
+    "decision": "unchanged",
+    "cached_hits": true,
+    "reason": "No runtime change: already meets current publication expectation through absence, later supersession or attributed Blizzard deprecation. Cached hits (when present) retained; no consumer-facing retirement attempted.",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-GetBattlefieldStatInfo-154",
+    "symbol": "GetBattlefieldStatInfo",
+    "decision": "unchanged",
+    "cached_hits": false,
+    "reason": "No runtime change: already meets current publication expectation through absence, later supersession or attributed Blizzard deprecation. Cached hits (when present) retained; no consumer-facing retirement attempted.",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-GetGuildNewsInfo-155",
+    "symbol": "GetGuildNewsInfo",
+    "decision": "unchanged",
+    "cached_hits": true,
+    "reason": "No runtime change: already meets current publication expectation through absence, later supersession or attributed Blizzard deprecation. Cached hits (when present) retained; no consumer-facing retirement attempted.",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-GetNumBattlefieldStats-156",
+    "symbol": "GetNumBattlefieldStats",
+    "decision": "unchanged",
+    "cached_hits": false,
+    "reason": "No runtime change: already meets current publication expectation through absence, later supersession or attributed Blizzard deprecation. Cached hits (when present) retained; no consumer-facing retirement attempted.",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-GuildRoster-157",
+    "symbol": "GuildRoster",
+    "decision": "unchanged",
+    "cached_hits": true,
+    "reason": "No runtime change: already meets current publication expectation through absence, later supersession or attributed Blizzard deprecation. Cached hits (when present) retained; no consumer-facing retirement attempted.",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-IsRatedBattleground-158",
+    "symbol": "IsRatedBattleground",
+    "decision": "unchanged",
+    "cached_hits": true,
+    "reason": "No runtime change: already meets current publication expectation through absence, later supersession or attributed Blizzard deprecation. Cached hits (when present) retained; no consumer-facing retirement attempted.",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-IsRatedMap-159",
+    "symbol": "IsRatedMap",
+    "decision": "unchanged",
+    "cached_hits": true,
+    "reason": "No runtime change: already meets current publication expectation through absence, later supersession or attributed Blizzard deprecation. Cached hits (when present) retained; no consumer-facing retirement attempted.",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-widgets-Browser:ClearCache-182",
+    "symbol": "Browser:ClearCache",
+    "decision": "unchanged",
+    "cached_hits": true,
+    "reason": "No runtime change: already meets current publication expectation through absence, later supersession or attributed Blizzard deprecation. Cached hits (when present) retained; no consumer-facing retirement attempted.",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Browser; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-widgets-Browser:HasConnection-183",
+    "symbol": "Browser:HasConnection",
+    "decision": "unchanged",
+    "cached_hits": false,
+    "reason": "No runtime change: already meets current publication expectation through absence, later supersession or attributed Blizzard deprecation. Cached hits (when present) retained; no consumer-facing retirement attempted.",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Browser; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-widgets-Checkout:ClearRenderSize-184",
+    "symbol": "Checkout:ClearRenderSize",
+    "decision": "unchanged",
+    "cached_hits": false,
+    "reason": "No runtime change: already meets current publication expectation through absence, later supersession or attributed Blizzard deprecation. Cached hits (when present) retained; no consumer-facing retirement attempted.",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Checkout; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-widgets-Checkout:SetRenderSize-185",
+    "symbol": "Checkout:SetRenderSize",
+    "decision": "unchanged",
+    "cached_hits": false,
+    "reason": "No runtime change: already meets current publication expectation through absence, later supersession or attributed Blizzard deprecation. Cached hits (when present) retained; no consumer-facing retirement attempted.",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Checkout; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-widgets-TabardModel:GetLowerEmblemFileName-186",
+    "symbol": "TabardModel:GetLowerEmblemFileName",
+    "decision": "unchanged",
+    "cached_hits": false,
+    "reason": "No runtime change: already meets current publication expectation through absence, later supersession or attributed Blizzard deprecation. Cached hits (when present) retained; no consumer-facing retirement attempted.",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "TabardModel; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-widgets-TabardModel:GetUpperEmblemFileName-187",
+    "symbol": "TabardModel:GetUpperEmblemFileName",
+    "decision": "unchanged",
+    "cached_hits": false,
+    "reason": "No runtime change: already meets current publication expectation through absence, later supersession or attributed Blizzard deprecation. Cached hits (when present) retained; no consumer-facing retirement attempted.",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "TabardModel; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-cvars-BrowserNavigateLog-267",
+    "symbol": "BrowserNavigateLog",
+    "decision": "unchanged",
+    "cached_hits": false,
+    "reason": "No runtime change: already meets current publication expectation through absence, later supersession or attributed Blizzard deprecation. Cached hits (when present) retained; no consumer-facing retirement attempted.",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-cvars-GxAllowSoftwareRenderer-268",
+    "symbol": "GxAllowSoftwareRenderer",
+    "decision": "unchanged",
+    "cached_hits": false,
+    "reason": "No runtime change: already meets current publication expectation through absence, later supersession or attributed Blizzard deprecation. Cached hits (when present) retained; no consumer-facing retirement attempted.",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-cvars-gxMTOpaque-269",
+    "symbol": "gxMTOpaque",
+    "decision": "unchanged",
+    "cached_hits": false,
+    "reason": "No runtime change: already meets current publication expectation through absence, later supersession or attributed Blizzard deprecation. Cached hits (when present) retained; no consumer-facing retirement attempted.",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-cvars-mtParticles-270",
+    "symbol": "mtParticles",
+    "decision": "unchanged",
+    "cached_hits": false,
+    "reason": "No runtime change: already meets current publication expectation through absence, later supersession or attributed Blizzard deprecation. Cached hits (when present) retained; no consumer-facing retirement attempted.",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-cvars-GxToggleWindowMode-287",
+    "symbol": "GxToggleWindowMode",
+    "decision": "unchanged",
+    "cached_hits": false,
+    "reason": "No runtime change: already meets current publication expectation through absence, later supersession or attributed Blizzard deprecation. Cached hits (when present) retained; no consumer-facing retirement attempted.",
+    "observation": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Command record present=false",
+      "kind": "command",
+      "value": null
+    }
+  }
+]
