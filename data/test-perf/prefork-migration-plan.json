@@ -48448,7 +48448,7 @@
           "line": 144
         }
       ],
-      "deferred_reason": "Original master 102fb5088 passes with the manual spell_casting startup fixture. Completed preload_full_game_ui fails the unchanged unlocked-parent assertion (expected BottomManagedFrameContainer). This case observes the partial login/edit-mode startup boundary, not just Game publication; retain the original addon/event/workaround sequence rather than resetting the parent after fork."
+      "deferred_reason": "Original master 102fb5088 passes with the manual spell_casting startup fixture. Completed preload_full_game_ui fails the unchanged unlocked-parent assertion (UIParent instead of BottomManagedFrameContainer). This case observes the partial login/edit-mode startup boundary, not just Game publication; retain the original addon/event/workaround sequence rather than resetting the parent after fork."
     },
     {
       "name": "spell_casting::cast_bar_times_are_in_milliseconds",

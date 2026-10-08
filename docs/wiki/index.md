@@ -8,7 +8,7 @@
 
 ## [2026-10-08] investigation | Slow integration prefork migration
 
-[Test-suite performance](investigations/test-suite-performance.md): complete slow-case fixture classification and module priorities; partial, Glue, clean startup and timing boundaries retained.
+[Test-suite performance](investigations/test-suite-performance.md): complete slow-case fixture classification; final migration batch moves 25 cases and defers four distinct startup/keybind boundaries. Partial, Glue, clean startup and timing coverage retained.
 
 ## [2026-10-08] evidence | 9.0.1 page audit
 
