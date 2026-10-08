@@ -9,14 +9,14 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "10.0.0",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/10.0.0-api-changes.wikitext",
       "6789768",
-      "/tmp/p801-reproduce-euc925ma/10.0.0-register.json",
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/10.0.0-wikitext-register.json",
       "--expand-shared-changes"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -31,13 +31,13 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "10.0.2",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/10.0.2-api-changes.wikitext",
       "2926754",
-      "/tmp/p801-reproduce-euc925ma/10.0.2-register.json"
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/10.0.2-wikitext-register.json"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -52,13 +52,13 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "10.0.5",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/10.0.5-api-changes.wikitext",
       "742761",
-      "/tmp/p801-reproduce-euc925ma/10.0.5-register.json"
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/10.0.5-wikitext-register.json"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -73,13 +73,13 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "10.0.7",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/10.0.7-api-changes.wikitext",
       "1063344",
-      "/tmp/p801-reproduce-euc925ma/10.0.7-register.json"
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/10.0.7-wikitext-register.json"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -94,13 +94,13 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "10.1.0",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/10.1.0-api-changes.wikitext",
       "2236681",
-      "/tmp/p801-reproduce-euc925ma/10.1.0-register.json"
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/10.1.0-wikitext-register.json"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -115,13 +115,13 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "10.1.5",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/10.1.5-api-changes.wikitext",
       "3807695",
-      "/tmp/p801-reproduce-euc925ma/10.1.5-register.json"
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/10.1.5-wikitext-register.json"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -136,13 +136,13 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "10.1.7",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/10.1.7-api-changes.wikitext",
       "6473483",
-      "/tmp/p801-reproduce-euc925ma/10.1.7-register.json"
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/10.1.7-wikitext-register.json"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -157,13 +157,13 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "10.2.0",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/10.2.0-api-changes.wikitext",
       "6473470",
-      "/tmp/p801-reproduce-euc925ma/10.2.0-register.json"
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/10.2.0-wikitext-register.json"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -178,13 +178,13 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "10.2.5",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/10.2.5-api-changes.wikitext",
       "5993852",
-      "/tmp/p801-reproduce-euc925ma/10.2.5-register.json"
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/10.2.5-wikitext-register.json"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -199,13 +199,13 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "10.2.6",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/10.2.6-api-changes.wikitext",
       "6268742",
-      "/tmp/p801-reproduce-euc925ma/10.2.6-register.json"
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/10.2.6-wikitext-register.json"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -220,13 +220,13 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "10.2.7",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/10.2.7-api-changes.wikitext",
       "6268738",
-      "/tmp/p801-reproduce-euc925ma/10.2.7-register.json"
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/10.2.7-wikitext-register.json"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -241,13 +241,13 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "11.0.0",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/11.0.0-api-changes.wikitext",
       "6726780",
-      "/tmp/p801-reproduce-euc925ma/11.0.0-register.json"
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/11.0.0-wikitext-register.json"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -262,13 +262,13 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "11.0.2",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/11.0.2-api-changes.wikitext",
       "6862982",
-      "/tmp/p801-reproduce-euc925ma/11.0.2-register.json"
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/11.0.2-wikitext-register.json"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -283,13 +283,13 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "11.0.5",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/11.0.5-api-changes.wikitext",
       "6726778",
-      "/tmp/p801-reproduce-euc925ma/11.0.5-register.json"
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/11.0.5-wikitext-register.json"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -304,13 +304,13 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "11.0.7",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/11.0.7-api-changes.wikitext",
       "6726777",
-      "/tmp/p801-reproduce-euc925ma/11.0.7-register.json"
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/11.0.7-wikitext-register.json"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -325,13 +325,13 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "11.1.0",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/11.1.0-api-changes.wikitext",
       "6726776",
-      "/tmp/p801-reproduce-euc925ma/11.1.0-register.json"
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/11.1.0-wikitext-register.json"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -346,13 +346,13 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "11.1.5",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/11.1.5-api-changes.wikitext",
       "6726775",
-      "/tmp/p801-reproduce-euc925ma/11.1.5-register.json"
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/11.1.5-wikitext-register.json"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -367,13 +367,13 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "11.1.7",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/11.1.7-api-changes.wikitext",
       "6726774",
-      "/tmp/p801-reproduce-euc925ma/11.1.7-register.json"
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/11.1.7-wikitext-register.json"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -388,13 +388,13 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "11.2.0",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/11.2.0-api-changes.wikitext",
       "6726773",
-      "/tmp/p801-reproduce-euc925ma/11.2.0-register.json"
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/11.2.0-wikitext-register.json"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -409,13 +409,13 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "11.2.5",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/11.2.5-api-changes.wikitext",
       "6726772",
-      "/tmp/p801-reproduce-euc925ma/11.2.5-register.json"
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/11.2.5-wikitext-register.json"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -430,13 +430,13 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "11.2.7",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/11.2.7-api-changes.wikitext",
       "6726771",
-      "/tmp/p801-reproduce-euc925ma/11.2.7-register.json"
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/11.2.7-wikitext-register.json"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -451,13 +451,13 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "12.0.0",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/12.0.0-api-changes.wikitext",
       "6747189",
-      "/tmp/p801-reproduce-euc925ma/12.0.0-register.json"
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/12.0.0-wikitext-register.json"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -472,13 +472,13 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "12.0.1",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/12.0.1-api-changes.wikitext",
       "6747895",
-      "/tmp/p801-reproduce-euc925ma/12.0.1-register.json"
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/12.0.1-wikitext-register.json"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -493,13 +493,13 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "12.0.5",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/12.0.5-api-changes.wikitext",
       "6747894",
-      "/tmp/p801-reproduce-euc925ma/12.0.5-register.json"
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/12.0.5-wikitext-register.json"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -514,13 +514,13 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "12.0.7",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/12.0.7-api-changes.wikitext",
       "6794100",
-      "/tmp/p801-reproduce-euc925ma/12.0.7-register.json"
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/12.0.7-wikitext-register.json"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -537,14 +537,14 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "12.1.0",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/12.1.0-api-changes.wikitext",
       "6886719",
-      "/tmp/p801-reproduce-euc925ma/12.1.0-register.json",
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/12.1.0-wikitext-register.json",
       "--inventory-only"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -563,19 +563,48 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "8.0.1",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/8.0.1-api-changes.wikitext",
       "1463362",
-      "/tmp/p801-reproduce-euc925ma/8.0.1-register.json",
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/8.0.1-wikitext-register.json",
       "--bfa-prepatch"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
     "stderr": "",
     "sha256": "df597a39c9802be51ad66720abb7dfb1b58e5c155b7735a0d9ce99a784a7ae83"
+  },
+  {
+    "patch": "8.1.0",
+    "recorded_flags": [
+      "--legacy-api-bullets",
+      "--legacy-api-renames"
+    ],
+    "verified_flags": [
+      "--legacy-api-bullets",
+      "--legacy-api-renames"
+    ],
+    "inferred_historical_flags": false,
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
+      "8.1.0",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/8.1.0-api-changes.wikitext",
+      "4462737",
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/8.1.0-wikitext-register.json",
+      "--legacy-api-bullets",
+      "--legacy-api-renames"
+    ],
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
+    "exit": 0,
+    "byte_identical": true,
+    "stdout": "",
+    "stderr": "",
+    "sha256": "2b14287b5e8eba20cfc674184f2838ba87c551382eed782dfe39661c2807e147"
   },
   {
     "patch": "8.1.5",
@@ -589,14 +618,14 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "8.1.5",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/8.1.5-api-changes.wikitext",
       "3789732",
-      "/tmp/p801-reproduce-euc925ma/8.1.5-register.json",
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/8.1.5-wikitext-register.json",
       "--legacy-api-bullets"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -615,14 +644,14 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "8.2.0",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/8.2.0-api-changes.wikitext",
       "5142162",
-      "/tmp/p801-reproduce-euc925ma/8.2.0-register.json",
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/8.2.0-wikitext-register.json",
       "--legacy-api-tables"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -641,14 +670,14 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "8.2.5",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/8.2.5-api-changes.wikitext",
       "6471405",
-      "/tmp/p801-reproduce-euc925ma/8.2.5-register.json",
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/8.2.5-wikitext-register.json",
       "--legacy-inventory-labels"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -669,15 +698,15 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "8.3.0",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/8.3.0-api-changes.wikitext",
       "6471393",
-      "/tmp/p801-reproduce-euc925ma/8.3.0-register.json",
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/8.3.0-wikitext-register.json",
       "--legacy-column-headers",
       "--diff-api-additions"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -696,14 +725,14 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "8.3.7",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/8.3.7-api-changes.wikitext",
       "1572710",
-      "/tmp/p801-reproduce-euc925ma/8.3.7-register.json",
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/8.3.7-wikitext-register.json",
       "--simple-api-list"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -722,14 +751,14 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "9.0.1",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/9.0.1-api-changes.wikitext",
       "6471353",
-      "/tmp/p801-reproduce-euc925ma/9.0.1-register.json",
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/9.0.1-wikitext-register.json",
       "--skip-plain-scripts-label"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -744,13 +773,13 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "9.0.2",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/9.0.2-api-changes.wikitext",
       "659986",
-      "/tmp/p801-reproduce-euc925ma/9.0.2-register.json"
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/9.0.2-wikitext-register.json"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -765,13 +794,13 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "9.0.5",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/9.0.5-api-changes.wikitext",
       "4298844",
-      "/tmp/p801-reproduce-euc925ma/9.0.5-register.json"
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/9.0.5-wikitext-register.json"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -792,15 +821,15 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "9.1.0",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/9.1.0-api-changes.wikitext",
       "167980",
-      "/tmp/p801-reproduce-euc925ma/9.1.0-register.json",
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/9.1.0-wikitext-register.json",
       "--expand-shared-changes",
       "--skip-plain-scripts-label"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -821,15 +850,15 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "9.1.5",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/9.1.5-api-changes.wikitext",
       "5920444",
-      "/tmp/p801-reproduce-euc925ma/9.1.5-register.json",
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/9.1.5-wikitext-register.json",
       "--expand-shared-changes",
       "--capture-span-defaults"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -844,13 +873,13 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "9.2.0",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/9.2.0-api-changes.wikitext",
       "4788278",
-      "/tmp/p801-reproduce-euc925ma/9.2.0-register.json"
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/9.2.0-wikitext-register.json"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -873,16 +902,16 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "9.2.5",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/9.2.5-api-changes.wikitext",
       "2301036",
-      "/tmp/p801-reproduce-euc925ma/9.2.5-register.json",
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/9.2.5-wikitext-register.json",
       "--expand-shared-changes",
       "--separate-inline-structures",
       "--capture-span-defaults"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
@@ -897,13 +926,13 @@
     "command": [
       "python3",
       "-B",
-      "tools/gen_patch_wikitext_register.py",
+      "/home/osso/.worktrees/wow-ui-sim-p801-page/tools/gen_patch_wikitext_register.py",
       "9.2.7",
       "/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/sources/9.2.7-api-changes.wikitext",
       "5227425",
-      "/tmp/p801-reproduce-euc925ma/9.2.7-register.json"
+      "/home/osso/.cache/wow-ui-sim-targets/p801-page/audit-reproduction/9.2.7-wikitext-register.json"
     ],
-    "revision": "69b4f0912e6e35072f6fde5e9edc20ccb44a6ccc",
+    "revision": "4759562bc46b1e44cb47018f28a80ef4297eca68",
     "exit": 0,
     "byte_identical": true,
     "stdout": "",
