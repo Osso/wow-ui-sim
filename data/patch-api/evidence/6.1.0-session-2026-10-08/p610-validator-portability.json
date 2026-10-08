@@ -1,0 +1,18 @@
+{
+  "clean_revision": "c0c48de70388385f6aeaa8d816a52ddddefdf58d",
+  "synthetic_revision": "b7c935fb409eda1f12c993ee4ef5efc15f54c8b7",
+  "synthetic_changes": [
+    "src/c_api/c_death_recap.rs",
+    "tools/gen_patch_wikitext_register.py",
+    "tests/common/publication_sweep.rs",
+    "data/patch-api/sources/7.0.3-page-coverage.json",
+    "data/patch-api/evidence/7.0.1-session-2026-10-08/p701-proof-context.json",
+    "data/patch-api/sources/0.0.0-wikitext-register.json",
+    "tests/patch_0_0_0_publication_sweep.rs"
+  ],
+  "clean_exit": 0,
+  "synthetic_exit": 0,
+  "own_log_tamper_rejected": true,
+  "retained_historical_scope": true,
+  "temporary_worktree_removed": true
+}

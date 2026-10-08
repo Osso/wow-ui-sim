@@ -33,7 +33,7 @@ Discovery exposed exactly one SendChatMessage absence mismatch; it is retained i
 - Recap UI/alias prefork cases: 8/8; seeded C_DeathRecap integration probes: 6/6; bare legacy-absence integration case: 1/1.
 - Python generator/extractor/validator fixtures: 32/36/8 pass. All 49 registers reproduce; 46 extracts reproduce, with only unchanged inherited 12.0.5/12.0.7/12.1.0 failures. 249 earlier source artifacts and 105 mode outcomes preserved.
 - `cargo fmt --check` and `cargo check --no-default-features --features sound,gui,casc,client-mists --tests`: pass, zero non-vendor warnings. Six existing iced_wgpu manifest deprecations remain unmodified.
-- All 30 pre-audit validators pass. Own clean-checkout/synthetic-later-commit gate is pending.
+- All 30 pre-audit validators and own validator pass. Own validator also passes a clean detached checkout at `c0c48de70` and a synthetic later commit expanding registers/sweeps and changing src/tools/tests/other-page sources/evidence. Tampered own discovery log is rejected; temporary worktree removed.
 
 No full integration suite. No runtime source changed, so addons-enabled startup comparison is not required by the widely-used-path condition.
 

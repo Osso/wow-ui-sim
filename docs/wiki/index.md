@@ -16,7 +16,7 @@
 
 ## [2026-10-08] investigation | Patch 6.1.0 API audit
 
-[Audit](investigations/patch-6-1-0-api-audit.md): pinned revision 1216027; four inventory/fourteen extract IDs, one retained SendChatMessage publication gap, eight substantive extract limits and no retirements or runtime shims. Automated diff retained unexpanded; ordered 6.2.0/6.2.2/6.2.4 placeholders. 50 sweep/factory cases, 8/6/1 scoped recap/legacy cases, 32/36/8 Python fixtures, 49 register reproductions, format/Mists and all 30 prior validators pass; own portability gate pending.
+[Audit](investigations/patch-6-1-0-api-audit.md): pinned revision 1216027; four inventory/fourteen extract IDs, one retained SendChatMessage publication gap, eight substantive extract limits and no retirements or runtime shims. Automated diff retained unexpanded; ordered 6.2.0/6.2.2/6.2.4 placeholders. 50 sweep/factory cases, 8/6/1 scoped recap/legacy cases, 32/36/8 Python fixtures, 49 register reproductions, format/Mists and all 30 prior validators pass; own validator passes locally, in a clean checkout and after synthetic later changes, and rejects own-log tampering.
 
 ## [2026-10-08] integration | Patch 7.0.3 API audit
 

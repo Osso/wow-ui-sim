@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/tmp/p610-check/data/patch-api/evidence/6.1.0-session-2026-10-08/validate.py"
+  ],
+  "revision": "c0c48de70388385f6aeaa8d816a52ddddefdf58d",
+  "scope": "p610-own-log-tamper",
+  "cwd": ".",
+  "target": "dedicated p610-page target (external to repository)",
+  "environment": {},
+  "exit": 1,
+  "log": "p610-own-log-tamper.txt",
+  "log_sha256": "f7bef4e8653474ae12e83a34584bfe9fe872a80e946893f0e1577d38ab39b1d3",
+  "seconds": 0.9193744069998502,
+  "invalidated": false
+}

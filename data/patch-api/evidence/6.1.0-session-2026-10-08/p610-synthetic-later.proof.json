@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/tmp/p610-check/data/patch-api/evidence/6.1.0-session-2026-10-08/validate.py"
+  ],
+  "revision": "c0c48de70388385f6aeaa8d816a52ddddefdf58d",
+  "scope": "p610-synthetic-later",
+  "cwd": ".",
+  "target": "dedicated p610-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p610-synthetic-later.txt",
+  "log_sha256": "4451ff123318a92932ab6acd5f9fda118da1ad719c29536ead5254b68c87e4b6",
+  "seconds": 1.2624994200014044,
+  "invalidated": false
+}

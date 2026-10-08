@@ -1,0 +1,6 @@
+{
+  "revision": "e958b7d38b9950d8def127ef5cf64d04fca96992",
+  "path": "tools/check_patch_validators.py",
+  "sha256": "72226ca4823ac3564cc7afe7987608d51808a22c1a235a7302e06081b6f6127d",
+  "execution": "Unmodified gate loaded with checkout ROOT; wrapper additionally checks wiki size before each synthetic commit."
+}

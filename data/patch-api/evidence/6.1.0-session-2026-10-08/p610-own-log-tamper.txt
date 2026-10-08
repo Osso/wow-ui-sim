@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/tmp/p610-check/data/patch-api/evidence/6.1.0-session-2026-10-08/validate.py", line 215, in <module>
+    main()
+    ~~~~^^
+  File "/tmp/p610-check/data/patch-api/evidence/6.1.0-session-2026-10-08/validate.py", line 209, in main
+    'verification': command_proof(context)}
+                    ~~~~~~~~~~~~~^^^^^^^^^
+  File "/tmp/p610-check/data/patch-api/evidence/6.1.0-session-2026-10-08/validate.py", line 140, in command_proof
+    assert sha((HERE / receipt['log']).read_bytes()) == receipt['log_sha256']
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
