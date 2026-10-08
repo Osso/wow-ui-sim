@@ -50,6 +50,8 @@ pub(crate) fn register_character_progression_tables(state: &mut LuaState) -> Lua
 
 pub(crate) fn register_interaction_tables(state: &mut LuaState) -> LuaResult<()> {
     #[cfg(feature = "retail-12-0-0")]
+    super::c_voice_chat_volume::register(state)?;
+    #[cfg(feature = "retail-12-0-0")]
     register_retirement_successors(state)?;
     #[cfg(feature = "client-wowforever")]
     super::addon_messages::register_chat(state)?;
