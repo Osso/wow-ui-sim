@@ -15,18 +15,18 @@
   "behaviorally_modeled_missing_members": 1,
   "negative_baseline_gaps": 24,
   "negative_gaps": 25,
-  "registers_reproduced": 38,
-  "saved_extracts_checked": 38,
+  "registers_reproduced": 39,
+  "saved_extracts_checked": 39,
   "inherited_extract_failures": [
     "12.0.5",
     "12.0.7",
     "12.1.0"
   ],
   "prior_inputs_preserved": 194,
-  "prior_mode_outcomes_preserved": 74,
-  "publication_sweeps": 38,
-  "inventory_rows_all_sweeps": 8241,
-  "required_proofs": 23,
+  "prior_mode_outcomes_preserved": 76,
+  "publication_sweeps": 39,
+  "inventory_rows_all_sweeps": 8434,
+  "required_proofs": 24,
   "warnings": {
     "p815-default-check": {
       "vendor_warnings": 7,
