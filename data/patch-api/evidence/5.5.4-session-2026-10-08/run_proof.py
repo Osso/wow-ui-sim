@@ -27,9 +27,7 @@ def run_worker(args):
     env = dict(os.environ, CARGO_TARGET_DIR=TARGETS[args.profile],
                PYTHONDONTWRITEBYTECODE='1')
     for source in (ROOT / 'tests').glob('patch_*_publication_sweep.rs'):
-        match = re.search(r'out_env: "([^"]+)"', source.read_text())
-        if match:
-            env[match[1]] = str(result_dir / (source.stem + '-results.json'))
+        env.update(sweep_output_paths(source, result_dir))
     log = HERE / (args.label + '.log')
     with log.open('wb') as output:
         result = subprocess.run(args.command, cwd=ROOT, env=env, stdout=output,
@@ -40,6 +38,15 @@ def run_worker(args):
                'log_sha256': hashlib.sha256(log.read_bytes()).hexdigest(),
                'invalidated': False}
     (HERE / (args.label + '.proof.json')).write_text(json.dumps(receipt, indent=2) + '\n')
+
+
+def sweep_output_paths(source, result_dir):
+    """Capture every requested output without mixing controls with page observations."""
+    outputs = {}
+    for name in re.findall(r'out_env: "([^"]+)"', source.read_text()):
+        suffix = '' if name.endswith('_SWEEP_OUT') else '-' + name
+        outputs[name] = str(result_dir / (source.stem + suffix + '-results.json'))
+    return outputs
 
 
 def main():
