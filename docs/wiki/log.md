@@ -331,3 +331,7 @@ Pinned page 109654 revision 6471393; 220 inventory rows, command-column identity
 ## 2026-10-08 — 8.1.0 API page audit
 
 [Audit](investigations/patch-8-1-0-api-audit.md): refetch/pin revision 4462737; exhaustive API/rename/CVar/extract accounting, supplied calendar ordering, three consumer-free retirements, configuration-provider retention, complete grep callers and reproducible opt-in tooling. Validator preserves original shared inputs via pinned git trees, not post-merge path/digest assumptions.
+
+## [2026-10-08] Patch 8.0.1 integration
+
+Integrated merged 8.1.0/8.1.5/8.2.0 extraction modes; 41 registers and 38 extracts reproduce, three inherited failures unchanged. Bounty removal closes one own gap (18 → 17); no later closures. Forty-one sweeps plus factory, exact negative control (17 → 18), cached/model/map checks and warning-clean non-vendor Mists check pass. [Audit](investigations/patch-8-0-1-api-audit.md).

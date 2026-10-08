@@ -1,6 +1,6 @@
 ## [2026-10-08] investigation | Patch 8.0.1 API audit
 
-[Audit](investigations/patch-8-0-1-api-audit.md): exhaustive pinned-source accounting, explicit world-coordinate model, consumer-safe removal review and portable targeted proof.
+[Audit](investigations/patch-8-0-1-api-audit.md): integrated 8.1.0 bounty removal closes one gap (18 → 17); 269 inventory/295 total IDs, explicit world-coordinate model, 42 sweep/factory cases, 41 reproduced registers and portable historical proof.
 
 ## [2026-10-08] investigation | Historical audit validator portability
 

@@ -1,0 +1,65 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.13s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p801-page/debug/deps/integration-1db16289b0998b2a)
+
+running 51 tests
+test c_map_api::test_c_fog_of_war_returns_nil_for_current_map_without_fog_data ... ok
+test c_map_api::test_get_all_taxi_nodes ... ok
+test c_map_api::test_get_club_calendar_events_defaults_empty ... ok
+test c_map_api::test_get_area_info_nil_for_unknown ... ok
+test c_map_api::test_get_calendar_time_from_microsecond_epoch_is_bounded ... ok
+test c_map_api::test_get_area_info ... ok
+test c_map_api::test_get_best_map_for_unit ... ok
+test c_map_api::test_adjust_time_by_minutes_crosses_day_boundaries ... ok
+test c_map_api::test_get_explored_area_ids ... ok
+test c_map_api::test_c_fog_of_war_returns_nil_for_unknown_map ... ok
+test c_map_api::test_get_current_calendar_time ... ok
+test c_map_api::test_get_explored_area_ids_follow_real_overlay_positions ... ok
+test c_map_api::test_get_map_art_id_returns_nonzero ... ok
+test c_map_api::test_get_map_art_layer_textures_returns_filedata_ids ... ok
+test c_map_api::test_get_map_art_layer_textures_values_are_numbers ... ok
+test c_map_api::test_get_map_art_layer_textures_count_matches_grid ... ok
+test c_map_api::test_get_explored_map_textures ... ok
+test c_map_api::test_get_explored_map_textures_return_real_irregular_overlays_for_current_map ... ok
+test c_map_api::test_get_map_info ... ok
+test c_map_api::test_get_map_children_info ... ok
+test c_map_api::test_get_map_art_layers_uses_current_map_for_nil_map_id ... ok
+test c_map_api::test_get_explored_area_ids_leave_one_current_map_sub_zone_unexplored ... ok
+test c_map_api::test_get_map_art_background_atlas_returns_world_map_tile_background ... ok
+test c_map_api::test_get_map_info_has_name_field ... ok
+test c_map_api::test_get_map_info_has_shadowlands_compat_maps ... ok
+test c_map_api::test_get_minimap_zone_text ... ok
+test c_map_api::test_get_player_map_position ... ok
+test c_map_api::test_get_map_info_returns_generic_details_for_unseeded_retail_maps ... ok
+test c_map_api::test_get_map_info_returns_nil_for_absurd_sentinel_map_ids ... ok
+test c_map_api::test_get_seconds_until_daily_reset ... ok
+test c_map_api::test_get_map_world_size ... ok
+test c_map_api::test_get_taxi_nodes_for_map ... ok
+test c_map_api::test_get_real_zone_text ... ok
+test c_map_api::test_get_sub_zone_text ... ok
+test c_map_api::test_get_seconds_until_weekly_reset ... ok
+test c_map_api::test_get_server_time_local ... ok
+test c_map_api::test_get_zone_text ... ok
+test c_map_api::test_get_world_pos_from_map_pos_returns_instance_and_vector ... ok
+test c_map_api::test_is_visible_ignores_alpha ... ok
+test c_map_api::test_minimap_get_view_radius ... ok
+test c_map_api::test_navigation_get_distance ... ok
+test c_map_api::test_navigation_is_auto_follow_enabled ... ok
+test c_map_api::test_should_map_show_taxi_nodes ... ok
+test c_map_api::test_minimap_is_inside_quest_blob ... ok
+test c_map_api::test_minimap_set_player_texture_no_error ... ok
+test c_map_api::test_navigation_get_frame_nil ... ok
+test c_map_api::test_ui_map_point_create_from_coordinates ... ok
+test c_map_api::test_navigation_set_auto_follow_enabled_no_error ... ok
+test c_map_api::test_ui_map_point_create_from_vector ... ok
+test c_map_api::texture::test_create_texture_applies_sublevel_argument ... ok
+test c_map_api::texture::test_create_texture_inherits_template_size ... ok
+
+test result: ok. 51 passed; 0 failed; 0 ignored; 0 measured; 10614 filtered out; finished in 0.50s
+

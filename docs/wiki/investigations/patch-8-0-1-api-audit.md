@@ -42,19 +42,20 @@ Cargo target: `/home/osso/.cache/wow-ui-sim-targets/p801-page`. All commands exe
 
 | Command | Result |
 |---|---|
-| `cargo test --test prefork_full_ui -- publication_sweep` | 41/41; 40 page sweeps plus factory regression |
+| `cargo test --test prefork_full_ui -- publication_sweep` | 42/42; 41 page sweeps plus factory regression |
 | `cargo test --test prefork_full_ui -- patch_8_0_1_cached_` | 1/1 input semantics |
 | `cargo test --test integration patch_8_0_1_ -- --nocapture` | 2/2 world-rectangle cases |
 | `cargo test --test integration c_map_probes:: -- --nocapture` | 28/28 |
 | `cargo test --test integration c_map_api:: -- --nocapture` | 51/51 |
-| `python3 -B tools/test_extract_patch_non_inventory.py` | 32/32 |
-| `python3 -B tools/test_gen_patch_wikitext_register.py` | 23/23 |
-| Per-source register regeneration | 40/40 byte-identical |
-| Per-source extract `--text-only --check` | 37/40; inherited 12.0.5, 12.0.7, 12.1.0 failures unchanged |
+| `python3 -B tools/test_extract_patch_non_inventory.py` | 33/33 |
+| `python3 -B tools/test_gen_patch_wikitext_register.py` | 24/24 |
+| `python3 -B tools/test_patch_audit_validation.py` | 8/8 |
+| Per-source register regeneration | 41/41 byte-identical |
+| Per-source extract `--text-only --check` | 38/41; inherited 12.0.5, 12.0.7, 12.1.0 failures unchanged |
 | `cargo check --no-default-features --features sound,gui,casc,client-mists --tests` | Exit 0; zero non-vendor warnings |
-| `cargo fmt --check`, `cargo check` | Exit 0; zero non-vendor warnings |
-| Negative register injection | Expected exit 1; exactly one new failure, 18 → 19, no resolved IDs |
-| `cargo build --bin wow-sim`, then `timeout 90 <target>/debug/wow-sim --no-addons --no-saved-vars lua-errors` | Exit 0; startup `[]`, zero Lua errors |
+| `cargo fmt --check` | Exit 0 |
+| Negative register injection | Expected exit 1; exactly one new failure, 17 → 18, no resolved IDs |
+| Original `cargo check`, build and startup receipts | Historical exit 0; startup `[]`; not rerun for receipt-only integration |
 
 [Proof receipts](../../../data/patch-api/evidence/8.0.1-session-2026-10-08/p801-proof.json) pin commands, code revisions/scopes, results and log hashes. Initial discovery/behavior REDs, the fixed mid-file Rust doc-comment parse error, and the stale ReportPlayer fixture after 8.1.5 integration remain labeled historical failures. No failing run is represented as green. Inherited iced manifest deprecations remain unsuppressed. Changed Rust was manually audited for readability; no suppression or runtime fallback added.
 
@@ -64,7 +65,7 @@ Cargo target: `/home/osso/.cache/wow-ui-sim-targets/p801-page`. All commands exe
 
 Validator **PASS** locally and in a separate temporary clone, invoked from the original checkout. [Portability receipt](../../../data/patch-api/evidence/8.0.1-session-2026-10-08/p801-validator-portability.json) also proves a simulated later register/known-gap closure does not expand historical scope, and protected source tampering fails. Temporary clone was removed. The original p815-page ref disappeared after its merge; its failed lookup is retained as invalid intermediate evidence, and the accepted register scan pins merged endpoint `4f21aa7dade78c22accac3e703dd3ef4e5ae8831`.
 
-8.1.5 is now a real `later_registers` input; 8.1.0's first-position integration placeholder remains. Integrator must add its register, reconcile any exact superseded gaps, and refresh affected proof without treating later events/fields as native historical parity. Host has no WoW install; no CASC-dependent visual proof is claimed. Remaining 18 inventory gaps, ten prose contracts, real geography/secret parity and three inherited extract failures are explicit unfinished boundaries.
+Integration onto master `b4ff281a5` replaces the 8.1.0 placeholder with its real register. [Closure receipt](../../../data/patch-api/evidence/8.0.1-session-2026-10-08/p801-later-gap-closures.json) attributes C_Map.GetBountySetIDForMap absence to the 8.1.0 removal: 18 → 17 gaps, 252/269 observations OK. [Later-sweep impact](../../../data/patch-api/evidence/8.0.1-session-2026-10-08/p801-later-sweep-impact.json) records no later gap changes from GetMapPosFromWorldPos, so no new historical-input replacement is authorized. All 41 register/extract recipes include their recorded flags; three inherited extraction failures remain unchanged. Integrated register/sweep scope pins `d14286005`, excluding future pages rather than iterating today's filesystem. [Integrated proof ledger](../../../data/patch-api/evidence/8.0.1-session-2026-10-08/p801-final-command-ledger.md) separates current commands from original historical proof. Host has no WoW install; no CASC-dependent visual proof is claimed. Remaining 17 inventory gaps, ten prose contracts, real geography/secret parity and three inherited extract failures remain unfinished boundaries.
 
 ## Sources
 
@@ -75,6 +76,7 @@ Validator **PASS** locally and in a separate temporary clone, invoked from the o
 
 ## See Also
 
+- [[patch-8-1-0-api-audit]] — merged bounty-removal supersession and historical proof scope.
 - [[patch-8-1-5-api-audit]] — merged reporting retirement supersession and separate bullet parser.
 - [[patch-8-2-0-api-audit]] — discovery/retirement/evidence template.
 - [[patch-audit-validator-portability]] — historical scope and checkout independence.

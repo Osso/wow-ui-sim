@@ -1,0 +1,17 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "--",
+    "patch_8_0_1_"
+  ],
+  "revision": "5523449f014a1e3df7d612b0b30ebf66fad85157",
+  "scope": "Integrated p801-page command; evidence-only updates do not change Rust scope",
+  "exit": 0,
+  "log": "p801-integration-behavior.log",
+  "log_sha256": "f7e00e56f7bf4f27e8df0efba6c5e4e9608a3273ac6a2910e3051eee9accbb31",
+  "elapsed_seconds": 23.82,
+  "invalidated": false
+}

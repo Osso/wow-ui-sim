@@ -4287,19 +4287,19 @@
     "expected": {
       "direction": "added",
       "page_default": null,
-      "publication": "published",
+      "publication": "absent",
       "section": "global-api",
-      "superseded_by": null,
+      "superseded_by": "wt-global-api-C_Map.GetBountySetIDForMap-124",
       "symbol": "C_Map.GetBountySetIDForMap"
     },
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=nil; lookup=nil",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_Map.GetFallbackWorldMapID-22": {
     "expected": {

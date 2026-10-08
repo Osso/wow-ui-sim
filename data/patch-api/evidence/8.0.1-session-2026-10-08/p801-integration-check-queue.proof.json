@@ -1,0 +1,14 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/tmp/p801-check-queue.py"
+  ],
+  "revision": "5523449f014a1e3df7d612b0b30ebf66fad85157",
+  "scope": "Integrated p801-page command; evidence-only updates do not change Rust scope",
+  "exit": 0,
+  "log": "p801-integration-check-queue.log",
+  "log_sha256": "fa181ed2528cc0e471ed0e9753c722564e7bc877eb4c30b449970691f2f18e4f",
+  "elapsed_seconds": 75.07,
+  "invalidated": false
+}

@@ -1,0 +1,17 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "--",
+    "c_map_probes"
+  ],
+  "revision": "5523449f014a1e3df7d612b0b30ebf66fad85157",
+  "scope": "Integrated p801-page command; evidence-only updates do not change Rust scope",
+  "exit": 0,
+  "log": "p801-integration-map-probes.log",
+  "log_sha256": "6b8bc7b608a3c231d98c30fab12c479a8ac785155476a030a2de1f61fa23db8f",
+  "elapsed_seconds": 0.51,
+  "invalidated": false
+}

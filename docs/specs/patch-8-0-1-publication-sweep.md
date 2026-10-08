@@ -10,7 +10,7 @@ Audit Warcraft Wiki page 149302, revision 1463362 (2023-07-20T21:26:53Z), refetc
 - [x] Every failure has its exact literal, observation, expected publication and bounded reason in the coverage ledger/review.
 - [x] Every candidate removal has untruncated whole-word qualified/bare cached and src/tests scans plus newer-register inspection. Current consumers must remain reachable.
 - [x] Historical saved extracts/registers checked: all registers reproduce; three inherited extraction failures remain explicitly recorded without rewriting inputs.
-- [x] Portable validator derives counts from retained artifacts and scopes mutable historical inputs to the base Git revision.
+- [x] Portable validator derives counts from retained artifacts and scopes original and integrated historical registers/sweeps to recorded Git revisions. Merged 8.1.0 bounty and 8.1.5 reporting removals carry explicit supersession receipts; later sweeps retain exact gap equality.
 
 ## Explicit world-position model
 

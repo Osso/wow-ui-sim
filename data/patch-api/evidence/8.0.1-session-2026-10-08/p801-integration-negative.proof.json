@@ -1,0 +1,24 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_8_0_1_publication_sweep"
+  ],
+  "revision": "5523449f014a1e3df7d612b0b30ebf66fad85157",
+  "scope": "Integrated p801-page command; evidence-only updates do not change Rust scope",
+  "exit": 1,
+  "log": "p801-integration-negative.log",
+  "log_sha256": "f099f84be29778006bca7f5729b1f8f02a1619231f8a7e964c1e5908890096b8",
+  "elapsed_seconds": 5.14,
+  "invalidated": false,
+  "mutation": "wt-global-api-C_Map.GetAreaInfo-19",
+  "baseline_gaps": 17,
+  "negative_gaps": 18,
+  "new_gaps": [
+    "wt-global-api-C_Map.GetAreaInfo-19"
+  ],
+  "resolved_gaps": []
+}

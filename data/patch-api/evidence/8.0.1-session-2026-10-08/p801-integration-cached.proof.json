@@ -1,0 +1,17 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_8_0_1_cached_"
+  ],
+  "revision": "5523449f014a1e3df7d612b0b30ebf66fad85157",
+  "scope": "Integrated p801-page command; evidence-only updates do not change Rust scope",
+  "exit": 0,
+  "log": "p801-integration-cached.log",
+  "log_sha256": "2ee0b72b6e0c5f7d74e390c4be24e87377eb4481b9f114c2684065138fb875ec",
+  "elapsed_seconds": 4.94,
+  "invalidated": false
+}

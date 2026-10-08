@@ -132,9 +132,16 @@ def check_accounting(context, register, extractor, raw, text):
     closures = [key for key in ids if not initial[key]['ok'] and result[key]['ok']]
     summary['discovery_closures'] = sorted(closures)
     negative = read(HERE / 'p801-negative-observation.json')
+    modified = read(HERE / 'p801-negative-register.json')
+    changes = [(before, after) for before, after in zip(register['entries'], modified['entries'])
+               if before != after]
+    assert len(register['entries']) == len(modified['entries']) and len(changes) == 1
+    before, after = changes[0]
+    assert after == dict(before, symbol='P801_NEGATIVE_NONEXISTENT_API')
     receipt = read(HERE / 'p801-integration-negative.proof.json')
     failures = {key for key, row in negative.items() if not row['ok']}
     assert set(negative) == ids and receipt['exit'] != 0
+    assert before['id'] == receipt['mutation']
     assert sorted(failures - known) == receipt['new_gaps'] == [receipt['mutation']]
     assert sorted(known - failures) == receipt['resolved_gaps'] == []
     assert (len(known), len(failures)) == (receipt['baseline_gaps'], receipt['negative_gaps'])
@@ -163,11 +170,16 @@ def check_sweeps_and_reproduction(context):
     assert sorted(summary, key=lambda row: row['patch']) == read(HERE / 'p801-sweep-summary.json')
     patches = {path.name.split('-')[0] for path in paths}
     inherited = read(ROOT / 'data/patch-api/evidence/8.2.0-session-2026-10-08/p820-saved-extract-reproduction.json')
+    inherited_by_patch = {row['patch']: row for row in read(
+        ROOT / 'data/patch-api/evidence/8.1.0-session-2026-10-08/p810-saved-extract-reproduction.json')}
     prior_failures = {row['patch'] for row in inherited if not row['byte_identical']}
     generated = read(HERE / 'p801-register-reproduction.json')
     extracts = read(HERE / 'p801-saved-extract-reproduction.json')
     assert {row['patch'] for row in generated} == {row['patch'] for row in extracts} == patches
     assert {row['patch'] for row in extracts if not row['byte_identical']} == prior_failures
+    for row in extracts:
+        if row['patch'] in prior_failures:
+            assert row['error'] == inherited_by_patch[row['patch']]['error']
     for proof, kind, suffix in [(generated, 'generator_flags', 'wikitext-register.json'),
                                (extracts, 'extractor_flags', 'api-changes.txt')]:
         for row in proof:

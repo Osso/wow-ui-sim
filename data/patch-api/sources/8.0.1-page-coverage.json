@@ -7,7 +7,7 @@
     "path": "data/patch-api/sources/8.0.1-api-changes.txt",
     "sha256": "c5408fce8e67bc856215b01e26c787e68f6ac27fcd9ad449967294d7745a03c4"
   },
-  "proof_policy": "Complete occurrence accounting; bounded local behavior is not native parity. 8.1.5 merged; 8.1.0 integration placeholder remains. Problematic cases retain literal reasons without shims.",
+  "proof_policy": "Complete occurrence accounting; bounded local behavior is not native parity. Merged 8.1.0/8.1.5 removals are explicit supersessions. Problematic cases retain literal reasons without shims.",
   "source_rows": [
     {
       "source_id": "wt-global-api-C_ChatInfo-7",
