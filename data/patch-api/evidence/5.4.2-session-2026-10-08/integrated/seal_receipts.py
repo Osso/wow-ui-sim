@@ -12,7 +12,7 @@ MASTER = '896086537a2b3c1ead5886d5ae3e430d56e7ef20'
 REQUIRED = ['own-sweep', 'all-sweeps', 'prefork-patch_5_4_2', 'integration-patch_5_4_2',
             'negative', 'reproduction', 'prior-validators', 'checks', 'master-all-sweeps',
             'format', 'mists-check', 'test_check_patch_validators', 'test_extract_patch_non_inventory',
-            'test_gen_patch_wikitext_register', 'test_patch_audit_validation', 'test_patch_warlords_register', 'test_patch_mists_register', 'mists-all-sweeps', 'master-mists-all-sweeps', 'mists-sweeps-driver']
+            'test_gen_patch_wikitext_register', 'test_patch_audit_validation', 'test_patch_warlords_register', 'test_patch_mists_register', 'mists-all-sweeps', 'master-mists-all-sweeps', 'mists-sweeps-driver', 'historical-replay']
 
 
 def read(name):
