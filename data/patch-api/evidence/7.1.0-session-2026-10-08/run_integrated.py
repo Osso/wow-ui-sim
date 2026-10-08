@@ -160,8 +160,8 @@ def main():
     ])
     for label, command in commands:
         execute(label, command)
-    negative_env = dict(branch_env, P720_SWEEP_REGISTER=str(HERE / 'p710-negative-register.json'),
-                        P720_SWEEP_OUT=str(FRESH / 'negative-results.json'))
+    negative_env = dict(branch_env, P710_SWEEP_REGISTER=str(HERE / 'p710-negative-register.json'),
+                        P710_SWEEP_OUT=str(FRESH / 'negative-results.json'))
     execute('negative', ['cargo', 'test', '--test', 'prefork_full_ui', '--', 'patch_7_1_0_publication_sweep'], negative_env)
     dump(FRESH / 'command-results.json', results)
     dump(FRESH / 'context.json', {'runtime_revision': revision, 'master_revision': master_revision,
@@ -170,8 +170,36 @@ def main():
     print('Integrated command queue finished', flush=True)
 
 
+def finish_negative():
+    """Resume only the negative gate after a corrected control environment."""
+    results = read(FRESH / 'command-results.json')
+    assert results['negative'] == 0 and all(code == 0 for name, code in results.items()
+                                          if name not in ('negative', 'intrinsic-discovery'))
+    prior = read(FRESH / 'negative.proof.json')
+    prior['invalidated'] = True
+    prior['reason'] = 'Copied P720 environment names did not select the P710 mutated register.'
+    dump(FRESH / 'negative-setup-error.proof.json', prior)
+    (FRESH / 'negative.txt').rename(FRESH / 'negative-setup-error.txt')
+    prior['log'] = 'negative-setup-error.txt'
+    dump(FRESH / 'negative-setup-error.proof.json', prior)
+    own = read(FRESH / 'own-sweep.proof.json')
+    master = read(FRESH / 'master-all-sweeps.proof.json')
+    env = dict(os.environ, CARGO_TARGET_DIR=TARGET, PYTHONDONTWRITEBYTECODE='1',
+               P710_SWEEP_REGISTER=str(HERE / 'p710-negative-register.json'),
+               P710_SWEEP_OUT=str(FRESH / 'negative-results.json'))
+    results['negative'] = run('negative', ['cargo', 'test', '--test', 'prefork_full_ui', '--',
+                              'patch_7_1_0_publication_sweep'], env, own['source_revision'], own['scope'])
+    assert results['negative'] == 1
+    dump(FRESH / 'command-results.json', results)
+    dump(FRESH / 'context.json', {'runtime_revision': own['source_revision'],
+         'master_revision': master['source_revision'], 'historical_context': '../p710-context.json',
+         'runtime_scope': own['scope'], 'master_scope': master['scope'], 'expected_exits': results})
+
+
 if __name__ == '__main__':
-    if '--detach' in sys.argv:
+    if '--finish-negative' in sys.argv:
+        finish_negative()
+    elif '--detach' in sys.argv:
         FRESH.mkdir(exist_ok=True)
         with (FRESH / 'launcher.txt').open('wb') as handle:
             process = subprocess.Popen([sys.executable, '-B', str(Path(__file__).resolve())], cwd=ROOT,
