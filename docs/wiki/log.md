@@ -8,7 +8,7 @@
 
 ## [2026-10-08] integration | Retail Patch 5.4.7 API audit
 
-[Audit](investigations/patch-5-4-7-api-audit.md): merged 5.4.8/6.0.1 registers applied against bebcc5830. Nine observations and two gaps unchanged; no supersession replacements. Sweep/factory 57/57 and own prefork 2/2 pass; integration filter selects no cases. 56 registers/53 extracts reproduce, three inherited failures unchanged. Ten own commits and one external pin mapped; historical invariants replay from preserved bytes. All 55 other pages equal fresh master. Negative 2 → 3, Python 85/85, Mists/format and 38 prior validators pass. Clean/future gate pending.
+[Audit](investigations/patch-5-4-7-api-audit.md): merged 5.4.8/6.0.1 registers applied against bebcc5830. Nine observations and two gaps unchanged; no supersession replacements. Sweep/factory 57/57 and own prefork 2/2 pass; integration filter selects no cases. 56 registers/53 extracts reproduce, three inherited failures unchanged. Ten own commits and one external pin mapped; historical invariants replay from preserved bytes. All 55 other pages equal fresh master. Negative 2 → 3, Python 85/85, Mists/format and 38 prior validators pass. Portability PASS at e65d0f2fb: clean 40/40, synthetic later audit 41/41; zero failures.
 
 ## [2026-10-08] investigation | Retail Patch 5.4.7 API audit
 

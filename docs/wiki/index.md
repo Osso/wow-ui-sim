@@ -4,7 +4,7 @@
 
 ## [2026-10-08] investigation | Retail Patch 5.4.7 API audit
 
-[Audit](investigations/patch-5-4-7-api-audit.md): retail revision 5298169, linked TOC 50400; nine inventory/19 total IDs, two upgrade-event gaps and three chat-prose limits. Merged 5.4.8/6.0.1 registers integrated against bebcc5830 without replacements. Sweeps/factory 57/57; all 55 other pages identical to fresh master. Own prefork 2/2, negative 2 → 3, Python 85/85, Mists/format and 38 prior validators pass. 56 registers/53 extracts reproduce, three inherited failures unchanged. Historical receipts preserved through ten own patch-equivalent rebase mappings and one external pin. Clean/future gate pending.
+[Audit](investigations/patch-5-4-7-api-audit.md): retail revision 5298169, linked TOC 50400; nine inventory/19 total IDs, two upgrade-event gaps and three chat-prose limits. Merged 5.4.8/6.0.1 registers integrated against bebcc5830 without replacements. Sweeps/factory 57/57; all 55 other pages identical to fresh master. Own prefork 2/2, negative 2 → 3, Python 85/85, Mists/format and 38 prior validators pass. 56 registers/53 extracts reproduce, three inherited failures unchanged. Historical receipts preserved through ten own patch-equivalent rebase mappings and one external pin. Portability PASS at e65d0f2fb: clean 40/40, synthetic later audit 41/41; zero failures.
 
 ## [2026-10-08] integration | Patch 6.0.2 API audit
 
