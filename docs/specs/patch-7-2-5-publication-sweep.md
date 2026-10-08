@@ -4,7 +4,7 @@ Audit [pinned Warcraft Wiki source](../../data/patch-api/sources/7.2.5-api-chang
 
 ## What it must do
 
-- [ ] Account for every linked API identity and retained extract row.
+- [x] Account for every linked API identity and retained extract row.
 - [x] Probe real raw publication and lookup after unmodified cached retail startup; compare the exact gap set.
 - [x] Preserve complete historical inputs; reproduce saved registers and retain the exact inherited non-reproducible extract outcomes with recorded flags.
 - [x] Query selected garrison tree ID and its optional friendship faction from simulator state.

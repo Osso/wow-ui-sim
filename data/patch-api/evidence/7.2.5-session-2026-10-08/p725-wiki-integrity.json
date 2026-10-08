@@ -1,0 +1,18 @@
+[
+  {
+    "path": "docs/wiki/index.md",
+    "base_lines": 2647,
+    "before_commit_lines": 2651,
+    "final_lines": 2651,
+    "base_content_retained_as_suffix": true,
+    "final_sha256": "d7e0070e7378b6ca6f7c58c116692395767bfc0b29df9e388185519c25ec9317"
+  },
+  {
+    "path": "docs/wiki/log.md",
+    "base_lines": 346,
+    "before_commit_lines": 350,
+    "final_lines": 350,
+    "base_content_retained_as_suffix": true,
+    "final_sha256": "e59323c6ad74f78cc0b1cba05e1d5cae4e05e512def5cde3faeee82b4de217de"
+  }
+]

@@ -1,0 +1,55 @@
+{
+  "revision": "a476d67d35d2e36eb61f04eed3e464989141f7b2",
+  "historical_scope_revision": "43dd7ed8e15ae6a00a04818e28ad1754f4540dd6",
+  "cases": [
+    {
+      "scope": "independent checkout",
+      "command": [
+        "python3",
+        "-B",
+        "/tmp/p725-validator-checkout-j405losc/data/patch-api/evidence/7.2.5-session-2026-10-08/validate.py"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "stdout": "{\"extract\": 12, \"extract_modes\": 92, \"extracts_reproduced\": 40, \"gaps\": 3, \"inventory\": 16, \"ledger\": 28, \"negative_control\": [3, 4], \"preserved_inputs\": 219, \"publication_sweeps\": 43, \"registers\": 43, \"status\": \"pass\", \"statuses\": {\"audit-pending\": 7, \"bounded-coverage\": 17, \"metadata-only\": 4}}\n",
+      "stderr": ""
+    },
+    {
+      "scope": "additional later-audit register and sweep",
+      "command": [
+        "python3",
+        "-B",
+        "/tmp/p725-validator-checkout-j405losc/data/patch-api/evidence/7.2.5-session-2026-10-08/validate.py"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "stdout": "{\"extract\": 12, \"extract_modes\": 92, \"extracts_reproduced\": 40, \"gaps\": 3, \"inventory\": 16, \"ledger\": 28, \"negative_control\": [3, 4], \"preserved_inputs\": 219, \"publication_sweeps\": 43, \"registers\": 43, \"status\": \"pass\", \"statuses\": {\"audit-pending\": 7, \"bounded-coverage\": 17, \"metadata-only\": 4}}\n",
+      "stderr": ""
+    },
+    {
+      "scope": "protected historical input tampering rejected",
+      "command": [
+        "python3",
+        "-B",
+        "/tmp/p725-validator-checkout-j405losc/data/patch-api/evidence/7.2.5-session-2026-10-08/validate.py"
+      ],
+      "exit": 1,
+      "expected_exit": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/tmp/p725-validator-checkout-j405losc/data/patch-api/evidence/7.2.5-session-2026-10-08/validate.py\", line 205, in <module>\n    main()\n    ~~~~^^\n  File \"/tmp/p725-validator-checkout-j405losc/data/patch-api/evidence/7.2.5-session-2026-10-08/validate.py\", line 199, in main\n    result = {**source_and_accounting(), **preservation_and_reproduction(context), **proof(context)}\n                                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^\n  File \"/tmp/p725-validator-checkout-j405losc/data/patch-api/evidence/7.2.5-session-2026-10-08/validate.py\", line 93, in preservation_and_reproduction\n    assert preserved_input_matches(ROOT, row['path'], original), row['path']\n           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: data/patch-api/sources/8.0.1-api-changes.wikitext\n"
+    },
+    {
+      "scope": "restored checkout",
+      "command": [
+        "python3",
+        "-B",
+        "/tmp/p725-validator-checkout-j405losc/data/patch-api/evidence/7.2.5-session-2026-10-08/validate.py"
+      ],
+      "exit": 0,
+      "expected_exit": 0,
+      "stdout": "{\"extract\": 12, \"extract_modes\": 92, \"extracts_reproduced\": 40, \"gaps\": 3, \"inventory\": 16, \"ledger\": 28, \"negative_control\": [3, 4], \"preserved_inputs\": 219, \"publication_sweeps\": 43, \"registers\": 43, \"status\": \"pass\", \"statuses\": {\"audit-pending\": 7, \"bounded-coverage\": 17, \"metadata-only\": 4}}\n",
+      "stderr": ""
+    }
+  ],
+  "no_absolute_cwd_or_target_gate": true
+}
