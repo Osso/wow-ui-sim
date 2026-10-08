@@ -46,3 +46,29 @@ Fixtures 27/34/8 pass. Format and requested Mists check pass, zero non-vendor wa
 ## Validator matrix
 
 Final matrix recorded in validator-matrix.json; all evidence/*/validate.py scripts must pass. Original historical scope remains fixed at its recorded revision; separately sealed integrated scope contains 44 registers at the recorded runtime revision.
+
+All **21/21 validators pass**. Own integrated validator passed at `d0af1837a9c6a935ec53ecbbae54ce3f9c59b29b`; twenty prior validators passed at `01a266edc` with unchanged covered inputs. First own-validator attempt is retained in validator-attempt-1.json; its overbroad stderr matcher was corrected to byte-identical master/branch assertion payload comparison. No Cargo/runtime inputs changed; no broad checks rerun.
+
+| Evidence directory | Exit | Result |
+|---|---|---|
+| `10.0.0-session-2026-10-07` | 0 | PASS |
+| `10.0.2-session-2026-10-07` | 0 | PASS |
+| `10.0.5-session-2026-10-07` | 0 | PASS |
+| `7.2.5-session-2026-10-08` | 0 | PASS |
+| `7.3.0-session-2026-10-08` | 0 | PASS |
+| `7.3.2-session-2026-10-08` | 0 | PASS |
+| `8.0.1-session-2026-10-08` | 0 | PASS |
+| `8.1.0-session-2026-10-08` | 0 | PASS |
+| `8.1.5-session-2026-10-08` | 0 | PASS |
+| `8.2.0-session-2026-10-08` | 0 | PASS |
+| `8.2.5-session-2026-10-08` | 0 | PASS |
+| `8.3.0-session-2026-10-08` | 0 | PASS |
+| `8.3.7-session-2026-10-08` | 0 | PASS |
+| `9.0.1-session-2026-10-08` | 0 | PASS |
+| `9.0.2-session-2026-10-08` | 0 | PASS |
+| `9.0.5-session-2026-10-08` | 0 | PASS |
+| `9.1.0-session-2026-10-07` | 0 | PASS |
+| `9.1.5-session-2026-10-07` | 0 | PASS |
+| `9.2.0-session-2026-10-07` | 0 | PASS |
+| `9.2.5-session-2026-10-07` | 0 | PASS |
+| `9.2.7-session-2026-10-07` | 0 | PASS |
