@@ -48,6 +48,32 @@ fn patch_8_0_1_world_position_projects_into_explicit_map_rectangles() {
         .eval("local _, p = C_Map.GetMapPosFromWorldPos(42, {x=0,y=400}, 2248); return p.x")
         .unwrap();
     assert_eq!(x, 0.5);
+    let rectangle = env.state().borrow().map_world_rects[&2248];
+    env.state().borrow_mut().map_world_rects.insert(84, rectangle);
+    env.eval::<()>(
+        r#"
+        assert(select('#', C_Map.GetMapPosFromWorldPos(42, {x=0,y=400})) == 0)
+        local id, p = C_Map.GetMapPosFromWorldPos(42, {x=0,y=400}, 84)
+        assert(id == 84 and p.x == 0.5)
+        "#,
+    )
+    .unwrap();
+    env.state().borrow_mut().map_world_rects.get_mut(&84).unwrap().left = 200.0;
+    env.state().borrow_mut().map_world_rects.get_mut(&84).unwrap().right = -200.0;
+    env.eval::<()>(
+        r#"
+        local id, p = C_Map.GetMapPosFromWorldPos(42, {x=100,y=400}, 84)
+        assert(id == 84 and p.x == 0.25)
+        assert(select('#', C_Map.GetMapPosFromWorldPos(42, {x=0/0,y=400}, 84)) == 0)
+        assert(select('#', C_Map.GetMapPosFromWorldPos(42, {x=math.huge,y=400}, 84)) == 0)
+        "#,
+    )
+    .unwrap();
+    env.state().borrow_mut().map_world_rects.get_mut(&84).unwrap().right = 200.0;
+    let degenerate: i32 = env
+        .eval("return select('#', C_Map.GetMapPosFromWorldPos(42, {x=200,y=400}, 84))")
+        .unwrap();
+    assert_eq!(degenerate, 0);
     let other = WowLuaEnv::new().unwrap();
     let count: i32 = other
         .eval("return select('#', C_Map.GetMapPosFromWorldPos(42, {x=0,y=400}, 2248))")
