@@ -16,21 +16,28 @@ Written 2026-10-08 by the laptop main session (Claude). Master at handoff: `5131
   never edit Blizzard/vendor/Wowless files or monkey-patch Blizzard Lua.
 - Commit each coherent change immediately. Worktrees go in `~/.worktrees/<repo>-<branch>`.
 
-## Ownership split during the handoff
+## Ownership: this session owns everything now
 
-The laptop session still owns two in-flight agents and will merge them itself:
+The laptop session stopped its two in-flight agents mid-work and pushed their branches.
+Nothing runs on the laptop any more. Resume both from these branches (not from scratch):
 
-1. `p825-page` — the 8.2.5 audit. Its first step writes
-   `data/patch-api/sources/api-change-pages-remaining.json`: every remaining page
-   older than 8.3.0 (this answers "where does the series end").
-2. `prefork-migrate-1` — first batch of moving slow integration tests into the prefork
-   harness (user-approved). It writes `data/test-perf/prefork-migration-plan.json` with
-   the remaining batches.
+1. `origin/p825-page` (3 commits, agent stopped mid-audit) — the 8.2.5 audit.
+   `769f10bfb` already wrote `data/patch-api/sources/api-change-pages-remaining.json`:
+   every remaining page older than 8.3.0 (this answers "where does the series end" —
+   report it to the user). Then a discovery sweep was added; gap accounting, retirements,
+   ledger, validator and wiki are not done. Its sweep may still have the 8.3.0
+   placeholder: 8.3.0 is on master now, so add that register.
+2. `origin/prefork-migrate-1` (user-approved: move slow integration tests into the prefork
+   harness). `ac46bb90a` committed the classification in
+   `data/test-perf/prefork-migration-plan.json`; 7 modules migrated (garrison UI, static
+   popup game, static popup, social toast, spell diminish UI, simple checkout, player
+   spells, player choice). The last commit `0074cd5b2` is an UNVERIFIED WIP migration of
+   the new-player-experience-guide cases — verify or redo it. Then verify the batch
+   (all prefork cases pass, integration no longer lists migrated tests, no assertion
+   weakened), merge, and continue with the remaining batches from the plan.
 
-Until those land on master (watch `git log origin/master`), do not start 8.2.5 or
-migration batch 1 here. You may start the next page after 8.2.5 with a placeholder for
-the 8.2.5 register (see "Parallel pages" below). After both land, this session owns all
-remaining pages and migration batches; the laptop session stops.
+Create local worktrees from these branches
+(`git worktree add ~/.worktrees/wow-ui-sim-<branch> <branch>` after `git fetch`).
 
 ## Test infrastructure on this host
 
