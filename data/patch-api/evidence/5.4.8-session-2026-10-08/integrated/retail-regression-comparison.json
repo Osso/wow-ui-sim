@@ -1,0 +1,557 @@
+[
+  {
+    "target": "integration",
+    "selectors": [
+      {
+        "selector": "settings",
+        "branch_count": 80,
+        "master_count": 80
+      },
+      {
+        "selector": "cvar",
+        "branch_count": 58,
+        "master_count": 58
+      },
+      {
+        "selector": "edit_mode",
+        "branch_count": 49,
+        "master_count": 49
+      },
+      {
+        "selector": "keybind",
+        "branch_count": 86,
+        "master_count": 86
+      },
+      {
+        "selector": "nameplate",
+        "branch_count": 23,
+        "master_count": 23
+      },
+      {
+        "selector": "action_bar",
+        "branch_count": 123,
+        "master_count": 123
+      },
+      {
+        "selector": "chat",
+        "branch_count": 158,
+        "master_count": 158
+      },
+      {
+        "selector": "combat",
+        "branch_count": 124,
+        "master_count": 123
+      },
+      {
+        "selector": "taint",
+        "branch_count": 183,
+        "master_count": 183
+      },
+      {
+        "selector": "secure",
+        "branch_count": 269,
+        "master_count": 269
+      },
+      {
+        "selector": "ui_visibility",
+        "branch_count": 3,
+        "master_count": 3
+      },
+      {
+        "selector": "screenshot",
+        "branch_count": 7,
+        "master_count": 7
+      },
+      {
+        "selector": "hide_ui",
+        "branch_count": 1,
+        "master_count": 1
+      },
+      {
+        "selector": "hide_user_interface",
+        "branch_count": 0,
+        "master_count": 0
+      },
+      {
+        "selector": "patch_5_4_8",
+        "branch_count": 1,
+        "master_count": 0
+      }
+    ],
+    "checks": [
+      {
+        "branch": {
+          "receipt": "integration-regressions.proof.json",
+          "exit": 101,
+          "summaries": [
+            "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10677 filtered out; finished in 2.22s",
+            "test result: FAILED. 1076 passed; 3 failed; 3 ignored; 0 measured; 9596 filtered out; finished in 121.79s"
+          ],
+          "failures": [
+            "c_api_surface::chat_info_no_state_defaults_are_not_c_api_temporary_shims",
+            "edit_mode_api::enums::unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size",
+            "test_keybindings_targeting::target_frame_portrait_corners_match_background_when_replaced_with_class_icon"
+          ],
+          "panics": [
+            {
+              "case": "c_api_surface::chat_info_no_state_defaults_are_not_c_api_temporary_shims",
+              "location": "tests/c_api_surface.rs:602:5",
+              "message": "C_ChatInfo no-state defaults should not be wired through c_api registration"
+            },
+            {
+              "case": "edit_mode_api::enums::unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size",
+              "location": "tests/edit_mode_api/enums.rs:44:5",
+              "message": "assertion `left == right` failed\n  left: 22\n right: 21"
+            },
+            {
+              "case": "test_keybindings_targeting::target_frame_portrait_corners_match_background_when_replaced_with_class_icon",
+              "location": "tests/common/timeout_reexec.rs:181:9",
+              "message": "timeout child for `test_keybindings_targeting::target_frame_portrait_corners_match_background_when_replaced_with_class_icon` failed (exit code 101)"
+            },
+            {
+              "case": "test_keybindings_targeting::target_frame_portrait_corners_match_background_when_replaced_with_class_icon",
+              "location": "tests/test_keybindings_targeting.rs:308:9",
+              "message": "hiding the portrait should materially change the portrait center: visible=[63, 63, 80, 255] hidden=[63, 63, 80, 255]"
+            }
+          ]
+        },
+        "master": {
+          "receipt": "master-integration-regressions.proof.json",
+          "exit": 101,
+          "summaries": [
+            "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10676 filtered out; finished in 2.29s",
+            "test result: FAILED. 1075 passed; 3 failed; 3 ignored; 0 measured; 9596 filtered out; finished in 325.44s"
+          ],
+          "failures": [
+            "c_api_surface::chat_info_no_state_defaults_are_not_c_api_temporary_shims",
+            "edit_mode_api::enums::unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size",
+            "test_keybindings_targeting::target_frame_portrait_corners_match_background_when_replaced_with_class_icon"
+          ],
+          "panics": [
+            {
+              "case": "c_api_surface::chat_info_no_state_defaults_are_not_c_api_temporary_shims",
+              "location": "tests/c_api_surface.rs:602:5",
+              "message": "C_ChatInfo no-state defaults should not be wired through c_api registration"
+            },
+            {
+              "case": "edit_mode_api::enums::unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size",
+              "location": "tests/edit_mode_api/enums.rs:44:5",
+              "message": "assertion `left == right` failed\n  left: 22\n right: 21"
+            },
+            {
+              "case": "test_keybindings_targeting::target_frame_portrait_corners_match_background_when_replaced_with_class_icon",
+              "location": "tests/common/timeout_reexec.rs:181:9",
+              "message": "timeout child for `test_keybindings_targeting::target_frame_portrait_corners_match_background_when_replaced_with_class_icon` failed (exit code 101)"
+            },
+            {
+              "case": "test_keybindings_targeting::target_frame_portrait_corners_match_background_when_replaced_with_class_icon",
+              "location": "tests/test_keybindings_targeting.rs:308:9",
+              "message": "hiding the portrait should materially change the portrait center: visible=[63, 63, 80, 255] hidden=[63, 63, 80, 255]"
+            }
+          ]
+        }
+      }
+    ],
+    "branch_unique_selected": 1082,
+    "master_unique_selected": 1081
+  },
+  {
+    "target": "prefork_full_ui",
+    "selectors": [
+      {
+        "selector": "settings",
+        "branch_count": 44,
+        "master_count": 44
+      },
+      {
+        "selector": "cvar",
+        "branch_count": 26,
+        "master_count": 26
+      },
+      {
+        "selector": "edit_mode",
+        "branch_count": 10,
+        "master_count": 10
+      },
+      {
+        "selector": "keybind",
+        "branch_count": 17,
+        "master_count": 17
+      },
+      {
+        "selector": "nameplate",
+        "branch_count": 7,
+        "master_count": 7
+      },
+      {
+        "selector": "action_bar",
+        "branch_count": 13,
+        "master_count": 13
+      },
+      {
+        "selector": "chat",
+        "branch_count": 31,
+        "master_count": 31
+      },
+      {
+        "selector": "combat",
+        "branch_count": 45,
+        "master_count": 44
+      },
+      {
+        "selector": "taint",
+        "branch_count": 4,
+        "master_count": 4
+      },
+      {
+        "selector": "secure",
+        "branch_count": 60,
+        "master_count": 60
+      },
+      {
+        "selector": "ui_visibility",
+        "branch_count": 0,
+        "master_count": 0
+      },
+      {
+        "selector": "screenshot",
+        "branch_count": 2,
+        "master_count": 2
+      },
+      {
+        "selector": "hide_ui",
+        "branch_count": 1,
+        "master_count": 1
+      },
+      {
+        "selector": "hide_user_interface",
+        "branch_count": 0,
+        "master_count": 0
+      },
+      {
+        "selector": "patch_5_4_8",
+        "branch_count": 2,
+        "master_count": 0
+      }
+    ],
+    "checks": [
+      {
+        "selector": "settings",
+        "branch": {
+          "receipt": "prefork-settings.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 44 passed; 0 failed; 44 total"
+          ],
+          "failures": [],
+          "panics": []
+        },
+        "master": {
+          "receipt": "master-prefork-settings.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 44 passed; 0 failed; 44 total"
+          ],
+          "failures": [],
+          "panics": []
+        }
+      },
+      {
+        "selector": "cvar",
+        "branch": {
+          "receipt": "prefork-cvar.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 26 passed; 0 failed; 26 total"
+          ],
+          "failures": [],
+          "panics": []
+        },
+        "master": {
+          "receipt": "master-prefork-cvar.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 26 passed; 0 failed; 26 total"
+          ],
+          "failures": [],
+          "panics": []
+        }
+      },
+      {
+        "selector": "edit_mode",
+        "branch": {
+          "receipt": "prefork-edit_mode.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 10 passed; 0 failed; 10 total"
+          ],
+          "failures": [],
+          "panics": []
+        },
+        "master": {
+          "receipt": "master-prefork-edit_mode.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 10 passed; 0 failed; 10 total"
+          ],
+          "failures": [],
+          "panics": []
+        }
+      },
+      {
+        "selector": "keybind",
+        "branch": {
+          "receipt": "prefork-keybind.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 17 passed; 0 failed; 17 total"
+          ],
+          "failures": [],
+          "panics": []
+        },
+        "master": {
+          "receipt": "master-prefork-keybind.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 17 passed; 0 failed; 17 total"
+          ],
+          "failures": [],
+          "panics": []
+        }
+      },
+      {
+        "selector": "nameplate",
+        "branch": {
+          "receipt": "prefork-nameplate.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 7 passed; 0 failed; 7 total"
+          ],
+          "failures": [],
+          "panics": []
+        },
+        "master": {
+          "receipt": "master-prefork-nameplate.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 7 passed; 0 failed; 7 total"
+          ],
+          "failures": [],
+          "panics": []
+        }
+      },
+      {
+        "selector": "action_bar",
+        "branch": {
+          "receipt": "prefork-action_bar.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 13 passed; 0 failed; 13 total"
+          ],
+          "failures": [],
+          "panics": []
+        },
+        "master": {
+          "receipt": "master-prefork-action_bar.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 13 passed; 0 failed; 13 total"
+          ],
+          "failures": [],
+          "panics": []
+        }
+      },
+      {
+        "selector": "chat",
+        "branch": {
+          "receipt": "prefork-chat.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 31 passed; 0 failed; 31 total"
+          ],
+          "failures": [],
+          "panics": []
+        },
+        "master": {
+          "receipt": "master-prefork-chat.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 31 passed; 0 failed; 31 total"
+          ],
+          "failures": [],
+          "panics": []
+        }
+      },
+      {
+        "selector": "combat",
+        "branch": {
+          "receipt": "prefork-combat.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 45 passed; 0 failed; 45 total"
+          ],
+          "failures": [],
+          "panics": []
+        },
+        "master": {
+          "receipt": "master-prefork-combat.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 44 passed; 0 failed; 44 total"
+          ],
+          "failures": [],
+          "panics": []
+        }
+      },
+      {
+        "selector": "taint",
+        "branch": {
+          "receipt": "prefork-taint.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 4 passed; 0 failed; 4 total"
+          ],
+          "failures": [],
+          "panics": []
+        },
+        "master": {
+          "receipt": "master-prefork-taint.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 4 passed; 0 failed; 4 total"
+          ],
+          "failures": [],
+          "panics": []
+        }
+      },
+      {
+        "selector": "secure",
+        "branch": {
+          "receipt": "prefork-secure.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 60 passed; 0 failed; 60 total"
+          ],
+          "failures": [],
+          "panics": []
+        },
+        "master": {
+          "receipt": "master-prefork-secure.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 60 passed; 0 failed; 60 total"
+          ],
+          "failures": [],
+          "panics": []
+        }
+      },
+      {
+        "selector": "ui_visibility",
+        "branch": {
+          "receipt": "prefork-ui_visibility.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 0 passed; 0 failed; 0 total"
+          ],
+          "failures": [],
+          "panics": []
+        },
+        "master": {
+          "receipt": "master-prefork-ui_visibility.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 0 passed; 0 failed; 0 total"
+          ],
+          "failures": [],
+          "panics": []
+        }
+      },
+      {
+        "selector": "screenshot",
+        "branch": {
+          "receipt": "prefork-screenshot.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 2 passed; 0 failed; 2 total"
+          ],
+          "failures": [],
+          "panics": []
+        },
+        "master": {
+          "receipt": "master-prefork-screenshot.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 2 passed; 0 failed; 2 total"
+          ],
+          "failures": [],
+          "panics": []
+        }
+      },
+      {
+        "selector": "hide_ui",
+        "branch": {
+          "receipt": "prefork-hide_ui.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 1 passed; 0 failed; 1 total"
+          ],
+          "failures": [],
+          "panics": []
+        },
+        "master": {
+          "receipt": "master-prefork-hide_ui.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 1 passed; 0 failed; 1 total"
+          ],
+          "failures": [],
+          "panics": []
+        }
+      },
+      {
+        "selector": "hide_user_interface",
+        "branch": {
+          "receipt": "prefork-hide_user_interface.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 0 passed; 0 failed; 0 total"
+          ],
+          "failures": [],
+          "panics": []
+        },
+        "master": {
+          "receipt": "master-prefork-hide_user_interface.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 0 passed; 0 failed; 0 total"
+          ],
+          "failures": [],
+          "panics": []
+        }
+      },
+      {
+        "selector": "patch_5_4_8",
+        "branch": {
+          "receipt": "prefork-patch_5_4_8.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 2 passed; 0 failed; 2 total"
+          ],
+          "failures": [],
+          "panics": []
+        },
+        "master": {
+          "receipt": "master-prefork-patch_5_4_8.proof.json",
+          "exit": 0,
+          "summaries": [
+            "test result: ok. 0 passed; 0 failed; 0 total"
+          ],
+          "failures": [],
+          "panics": []
+        }
+      }
+    ],
+    "branch_unique_selected": 250,
+    "master_unique_selected": 248
+  }
+]

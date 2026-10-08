@@ -33,6 +33,7 @@ def check(label, args):
 
 if __name__ == '__main__':
     results = {}
+    mists = ['--no-default-features', '--features', 'sound,gui,casc,client-mists']
     with tempfile.TemporaryDirectory(prefix='p548-master-') as directory:
         snapshot = Path(directory)
         archive = subprocess.check_output(['git', 'archive', MASTER], cwd=ROOT)
