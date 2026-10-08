@@ -169,7 +169,7 @@
   "data/patch-api/evidence/7.0.3-session-2026-10-08/integrated/source-reproduction-summary.json": "a1d9ecebd1b5bc474beccedd4b2b853597fc1f70562b28de56645f07264bae27",
   "data/patch-api/evidence/7.0.3-session-2026-10-08/integrated/startup.proof.json": "2b43678cd0c9228651df3fe968cfe4936354087d78c870bde3b61b082f114927",
   "data/patch-api/evidence/7.0.3-session-2026-10-08/integrated/startup.txt": "70f7445b7ef7426b1b19007a16f28b78936077baada8f7dab61aa45f560a71aa",
-  "data/patch-api/evidence/7.0.3-session-2026-10-08/integrated/validate.py": "b426e66dc6682d26e2d0767b0952ba5317eda297ca4d66c8333509909a6f56f2",
+  "data/patch-api/evidence/7.0.3-session-2026-10-08/integrated/validate.py": "79e9525f7954ee11b00a270326da2517de9f7c69e056e5ed1791c1b811522fd6",
   "data/patch-api/evidence/7.0.3-session-2026-10-08/integrated/validators/10.0.0-session-2026-10-07-validate.py.txt": "02719d9b18584d9151cfb79a95219fcb1ef1ee3517531d8e59fb1b3fee4140ba",
   "data/patch-api/evidence/7.0.3-session-2026-10-08/integrated/validators/10.0.2-session-2026-10-07-validate.py.txt": "a75d4c47989b478e4c270c61cd67719c1a755014e9d83117d847eeb21c872a00",
   "data/patch-api/evidence/7.0.3-session-2026-10-08/integrated/validators/10.0.5-session-2026-10-07-validate.py.txt": "9624dc0ecd63092ab2a5ba3583bc5d1b1a6b3ddc1976813232c19492407a6678",

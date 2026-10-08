@@ -10,6 +10,7 @@ sys.dont_write_bytecode = True
 ROOT = Path(__file__).resolve().parents[5]
 HERE = Path(__file__).resolve().parent
 HISTORICAL = HERE.parent
+MERGE_REVISION = 'dfede62de1f48ef2af1a4d37a18d274e26df3d81'
 sys.path.insert(0, str(ROOT / 'tools'))
 from patch_audit_validation import historical_registers, historical_sweep_tests
 
@@ -214,7 +215,12 @@ def main():
     assert comparison(context) == read(HERE / 'gap-comparison.json')
     commands = check_receipts(context)
     matrix = read(HERE / 'prior-validator-matrix.json')
-    expected = {p.relative_to(ROOT).as_posix() for p in (ROOT / 'data/patch-api/evidence').rglob('validate*.py') if p != Path(__file__).resolve()}
+    # Validators present at the 7.0.3 merge; later audits add their own validators.
+    own = Path(__file__).resolve().relative_to(ROOT).as_posix()
+    listed = subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', MERGE_REVISION,
+                                      'data/patch-api/evidence'], cwd=ROOT, text=True).splitlines()
+    expected = {name for name in listed
+                if Path(name).name.startswith('validate') and name.endswith('.py') and name != own}
     assert set(matrix) == expected and all(row['exit'] == 0 for row in matrix.values())
     for path, row in matrix.items():
         assert digest(ROOT / path) == row['validator_sha256'], 'validator proof invalidated: ' + path
