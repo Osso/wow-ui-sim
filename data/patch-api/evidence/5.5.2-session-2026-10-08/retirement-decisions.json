@@ -1,0 +1,13 @@
+{
+  "removed_entries": [],
+  "new_retirements": [],
+  "later_registers": [
+    "5.5.3",
+    "5.5.4"
+  ],
+  "later_readditions": {
+    "5.5.3": [],
+    "5.5.4": []
+  },
+  "reason": "Resources-only stub lists no identities to retire; both same-line successors also empty."
+}
