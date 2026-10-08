@@ -32,6 +32,21 @@ class ExtractTests(unittest.TestCase):
                          '==== Removals ====\n== Widgets ==\n?\n== Events ==\n'
                          '== CVars ==\n?\n')
         self.assertNotEqual(extract_text(raw), extract_text(raw, legacy_api_bullets=True))
+    def test_bfa_prepatch_retains_migrations_and_references_not_inventories(self):
+        raw = ('{{apichanges|8.0.1|prev=7.3.2|next=8.1.0}}\n'
+               '==New==\n* New {{api|C_Map}} table.\n**{{api|C_Map.GetMapInfo}}\n'
+               '==Changes==\n* {{api|Old}} moved to {{api|C_New}}.\n'
+               '==Removals==\n* {{api|OldMap}} removed. Use {{api|C_Map.NewMap}}.\n'
+               '==Events==\n====Added====\nThese events were added or initially documented.\n'
+               '* {{api|t=e|NEW_EVENT}}\n====Removed====\n* {{api|t=e|OLD_EVENT}}\n'
+               '==See also==\n*{{ref web|url=https://example.test|title=Bfa}}\n')
+        self.assertEqual(extract_text(raw, bfa_prepatch=True),
+                         'Patch 8.0.1 API changes\n== Changes ==\n'
+                         '* Old moved to C_New.\n== Removals ==\n'
+                         '* OldMap removed. Use C_Map.NewMap.\n== Events ==\n'
+                         '==== Added ====\nThese events were added or initially documented.\n'
+                         '==== Removed ====\n== See also ==\n'
+                         '*[Reference: url=https://example.test|title=Bfa]\n')
 
     def test_cli_self_test_runs_without_argument_conflict(self):
         result = subprocess.run(

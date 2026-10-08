@@ -189,35 +189,6 @@ def split_sections(text, *, separate_inline_structures=False):
     return buckets
 
 
-def parse_legacy_caption_tables(text):
-    """Parse older unheaded and repeated inventories independently by table caption."""
-    sections = {'Global API': 'global-api', 'Widget API': 'widgets',
-                'Widget Handlers': 'widgets', 'Events': 'events',
-                'Console variables': 'cvars', 'Console commands': 'commands'}
-    entries, counts, table = [], [], []
-    section = None
-    for number, line in enumerate(text.splitlines(), 1):
-        if line.startswith('{|'):
-            table, section = [], None
-        elif line.startswith('|+'):
-            section = next((value for caption, value in sections.items()
-                            if line.startswith('|+ ' + caption + ' ')), None)
-        elif line == '|}' and section:
-            rows, headers = parse_section('cvars' if section == 'commands' else section,
-                                          table, legacy_column_headers=True)
-            if section == 'commands':
-                for row in rows:
-                    row['kind'] = 'command'
-                for header in headers:
-                    header['section'] = 'commands'
-            entries.extend(rows)
-            counts.extend(headers)
-            section = None
-        else:
-            table.append((number, line))
-    return entries, counts
-
-
 def parse_simple_api_list(text):
     """Retain the bullet additions under API/New (8.3.7's inventory format)."""
     entries = []
@@ -273,45 +244,6 @@ def parse_legacy_api_renames(text):
     return entries
 
 
-def bfa_removal_entries(number, line):
-    """Do not mistake replacement API links after 'Use' for removals."""
-    removed = re.split(r'\b(?:Use|use)\b', line, maxsplit=1)[0]
-    entries = [make_entry('global-api', 'removed', number, match[0])
-               for match in TEMPLATE.finditer(removed)]
-    entries.extend(make_entry('events', 'removed', number, '{{api|' + name + '}}')
-                   for name in re.findall(r'\[\[(GLYPH_[A-Z]+)\]\]', removed))
-    if not entries:
-        names = re.findall(r'\b(?:FindSpellOverrideNameByName|FindBaseSpellNameByName|SearchGuildRecipes)\b', removed)
-        entries.extend(make_entry('global-api', 'removed', number, '{{api|' + name + '}}')
-                       for name in names)
-    return entries
-
-
-def parse_bfa_prepatch(text):
-    """8.0.1: top-level nested namespaces, prose removals, four-level events."""
-    entries = []
-    section, direction = None, None
-    for number, line in enumerate(text.splitlines(), 1):
-        heading = re.fullmatch(r'(=+)\s*(.*?)\s*\1', line)
-        if heading:
-            title = heading[2]
-            if len(heading[1]) == 2:
-                section = title
-                direction = 'added' if title == 'New' else None
-            elif section == 'Events':
-                direction = {'Added': 'added', 'Removed': 'removed'}.get(title)
-            continue
-        if not line.startswith('*'):
-            continue
-        if section == 'Removals':
-            entries.extend(bfa_removal_entries(number, line))
-        elif direction and section in ('New', 'Events'):
-            category = 'events' if section == 'Events' else 'global-api'
-            entries.extend(make_entry(category, direction, number, match[0])
-                           for match in TEMPLATE.finditer(line))
-    return entries
-
-
 def parse_diff_api_additions(text):
     """Retain each explicit late-build addition outside consolidated inventories."""
     entries = []
@@ -349,15 +281,10 @@ def main():
                         help='Retain explicit late-build additions in Diffs; opt-in preserves prior registers')
     parser.add_argument('--legacy-inventory-labels', action='store_true',
                         help='Retain prose counts and singular CVar/Command labels; opt-in preserves prior registers')
-    parser.add_argument('--legacy-api-tables', action='store_true',
-                        help='Parse older unheaded/repeated caption inventories independently')
     parser.add_argument('--legacy-api-bullets', action='store_true',
                         help='Retain API New/Removals and event bullet inventories; opt-in')
     parser.add_argument('--legacy-api-renames', action='store_true',
                         help='Retain both identities in API/Renamed bullet pairs; opt-in')
-
-    parser.add_argument('--bfa-prepatch', action='store_true',
-                        help='Parse 8.0.1 nested namespaces, prose removals and event lists; opt-in')
     args = parser.parse_args()
     patch, path, revid, out = args.patch, args.path, args.revid, args.out
     raw = Path(path).read_bytes()
@@ -378,14 +305,10 @@ def main():
                 count["section"] = "commands"
         entries += section_entries
         counts += section_counts
-    if args.legacy_api_tables:
-        entries, counts = parse_legacy_caption_tables(raw.decode('utf-8'))
     if args.legacy_api_bullets:
         entries.extend(parse_legacy_api_bullets(raw.decode('utf-8')))
     if args.legacy_api_renames:
         entries.extend(parse_legacy_api_renames(raw.decode('utf-8')))
-    if args.bfa_prepatch:
-        entries, counts = parse_bfa_prepatch(raw.decode('utf-8')), []
     if args.simple_api_list:
         entries.extend(parse_simple_api_list(raw.decode('utf-8')))
     if args.diff_api_additions:

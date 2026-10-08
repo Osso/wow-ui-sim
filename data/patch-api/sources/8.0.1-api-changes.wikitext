@@ -1,0 +1,293 @@
+{{apichanges|8.0.1|prev=7.3.2|next=8.1.0}}
+
+Battle for Azeroth alpha UI changes observations:
+* https://github.com/Ellypse/wow-ui-source/wiki/Battle-for-Azeroth-alpha-UI-changes-observations
+
+==New==
+* New {{api|C_ChatInfo}} table.
+**{{api|C_ChatInfo.CanReportPlayer}}
+**{{api|C_ChatInfo.IsAddonMessagePrefixRegistered}}
+**{{api|C_ChatInfo.IsPartyChannelType}}
+**{{api|C_ChatInfo.GetChannelRosterInfo}}
+**{{api|C_ChatInfo.GetNumActiveChannels}}
+**{{api|C_ChatInfo.GetRegisteredAddonMessagePrefixes}}
+**{{api|C_ChatInfo.RegisterAddonMessagePrefix}}
+**{{api|C_ChatInfo.ReportPlayer}}
+**{{api|C_ChatInfo.SendAddonMessage}}
+**{{api|C_ChatInfo.SendAddonMessageLogged}}
+* New {{api|C_Map}} table.
+**{{api|C_Map.GetAreaInfo}}
+**{{api|C_Map.GetBestMapForUnit}}
+**{{api|C_Map.GetBountySetIDForMap}}
+**{{api|C_Map.GetFallbackWorldMapID}}
+**{{api|C_Map.GetMapArtBackgroundAtlas}}
+**{{api|C_Map.GetMapArtHelpTextPosition}}
+**{{api|C_Map.GetMapArtID}}
+**{{api|C_Map.GetMapArtLayerTextures}}
+**{{api|C_Map.GetMapArtLayers}}
+**{{api|C_Map.GetMapBannersForMap}}
+**{{api|C_Map.GetMapChildrenInfo}}
+**{{api|C_Map.GetMapDisplayInfo}}
+**{{api|C_Map.GetMapGroupID}}
+**{{api|C_Map.GetMapGroupMembersInfo}}
+**{{api|C_Map.GetMapHighlightInfoAtPosition}}
+**{{api|C_Map.GetMapInfo}}
+**{{api|C_Map.GetMapInfoAtPosition}}
+**{{api|C_Map.GetMapLevels}}
+**{{api|C_Map.GetMapLinksForMap}}
+**{{api|C_Map.GetMapPosFromWorldPos}}
+**{{api|C_Map.GetMapRectOnMap}}
+**{{api|C_Map.GetPlayerMapPosition}}
+**{{api|C_Map.GetWorldPosFromMapPos}}
+**{{api|C_Map.MapHasArt}}
+**{{api|C_Map.RequestPreloadMap}}
+
+==Changes==
+* {{api|SendAddonMessage}}, {{api|RegisterAddonMessagePrefix}}, {{api|IsAddonMessagePrefixRegistered}} and {{api|GetRegisteredAddonMessagePrefixes}} have been moved inside the new {{api|C_ChatInfo}} namespace.
+* [[COMBAT_LOG_EVENT_UNFILTERED]] event no longer provides a loadout. {{api|CombatLogGetCurrentEventInfo}} should be used OnEvent to retrieve that info.
+* {{api|t=w|Frame:RegisterEvent}} now raises an error when trying to register an unknown event.
+* {{api|UnitAura}} no longer accepts a spell name as a filter. You can use the new {{api|AuraUtil.FindAuraByName}} instead, implemented in Lua.
+* [[UNIT_POWER]] is now [[UNIT_POWER_UPDATE]]
+* The limit on the number of chat channels that can be joined by the player has been increased from 10 to 20.
+* [[:Category:API namespaces/C_Vignettes|C_Vignettes]] replaced by [[:Category:API namespaces/C_VignetteInfo|C_VignetteInfo]]
+
+==Removals==
+*"all map API was removed", including functions like {{api|GetMapContinents}} or {{api|GetCurrentMapContinent}}.
+** {{api|GetCurrentMapAreaID}} has been removed. Use {{api|C_Map.GetBestMapForUnit}}("player") to get the current [[uiMapID]] for the player or WorldMapFrame:GetMapID() to get the [[uiMapID]] map currently displayed in the World Map Frame UI.
+** {{api|GetPlayerMapPosition}} has been removed. Use {{api|C_Map.GetPlayerMapPosition}}(uiMapID, unitToken) to get the position of the unit (only works for the player and party members).
+* {{api|EJ_GetCurrentInstance}} has been removed, use EJ_GetInstanceForMap(C_Map.GetBestMapForUnit("player")) instead to get the current instance ID.
+* [[GLYPH_ADDED]], [[GLYPH_REMOVED]], and [[GLYPH_UPDATED]] have been removed.
+* FindSpellOverrideNameByName, FindBaseSpellNameByName, and SearchGuildRecipes have been removed.
+
+==Events==
+====Added====
+These events were added or initially documented in Blizzard API Documentation.
+* {{api|t=e|ACHIEVEMENT_PLAYER_NAME}}
+* {{api|t=e|AREA_POIS_UPDATED}}
+* {{api|t=e|AVATAR_LIST_UPDATED}}
+* {{api|t=e|AZERITE_EMPOWERED_ITEM_LOOTED}}
+* {{api|t=e|AZERITE_EMPOWERED_ITEM_SELECTION_UPDATED}}
+* {{api|t=e|AZERITE_ITEM_EXPERIENCE_CHANGED}}
+* {{api|t=e|AZERITE_ITEM_POWER_LEVEL_CHANGED}}
+* {{api|t=e|CALENDAR_UPDATE_ERROR_WITH_COUNT}}
+* {{api|t=e|CALENDAR_UPDATE_ERROR_WITH_PLAYER_NAME}}
+* {{api|t=e|CAPTUREFRAMES_FAILED}}
+* {{api|t=e|CAPTUREFRAMES_SUCCEEDED}}
+* {{api|t=e|CEMETERY_PREFERENCE_UPDATED}}
+* {{api|t=e|CHALLENGE_MODE_MEMBER_INFO_UPDATED}}
+* {{api|t=e|CHANNEL_LEFT}}
+* {{api|t=e|CHAT_MSG_ADDON_LOGGED}}
+* {{api|t=e|CHAT_MSG_BN}}
+* {{api|t=e|CHAT_MSG_COMMUNITIES_CHANNEL}}
+* {{api|t=e|CLASS_TRIAL_TIMER_START}}
+* {{api|t=e|CLASS_TRIAL_UPGRADE_COMPLETE}}
+* {{api|t=e|CLUB_ADDED}}
+* {{api|t=e|CLUB_ERROR}}
+* {{api|t=e|CLUB_INVITATIONS_RECEIVED_FOR_CLUB}}
+* {{api|t=e|CLUB_INVITATION_ADDED_FOR_SELF}}
+* {{api|t=e|CLUB_INVITATION_REMOVED_FOR_SELF}}
+* {{api|t=e|CLUB_MEMBER_ADDED}}
+* {{api|t=e|CLUB_MEMBER_PRESENCE_UPDATED}}
+* {{api|t=e|CLUB_MEMBER_REMOVED}}
+* {{api|t=e|CLUB_MEMBER_ROLE_UPDATED}}
+* {{api|t=e|CLUB_MEMBER_UPDATED}}
+* {{api|t=e|CLUB_MESSAGE_ADDED}}
+* {{api|t=e|CLUB_MESSAGE_HISTORY_RECEIVED}}
+* {{api|t=e|CLUB_MESSAGE_UPDATED}}
+* {{api|t=e|CLUB_REMOVED}}
+* {{api|t=e|CLUB_REMOVED_MESSAGE}}
+* {{api|t=e|CLUB_SELF_MEMBER_ROLE_UPDATED}}
+* {{api|t=e|CLUB_STREAMS_LOADED}}
+* {{api|t=e|CLUB_STREAM_ADDED}}
+* {{api|t=e|CLUB_STREAM_REMOVED}}
+* {{api|t=e|CLUB_STREAM_SUBSCRIBED}}
+* {{api|t=e|CLUB_STREAM_UNSUBSCRIBED}}
+* {{api|t=e|CLUB_STREAM_UPDATED}}
+* {{api|t=e|CLUB_TICKETS_RECEIVED}}
+* {{api|t=e|CLUB_TICKET_CREATED}}
+* {{api|t=e|CLUB_TICKET_RECEIVED}}
+* {{api|t=e|CLUB_UPDATED}}
+* {{api|t=e|COMMUNITIES_STREAM_CURSOR_CLEAR}}
+* {{api|t=e|CONSOLE_LOG}}
+* {{api|t=e|CONTRIBUTION_CHANGED}}
+* {{api|t=e|DYNAMIC_GOSSIP_POI_UPDATED}}
+* {{api|t=e|FOG_OF_WAR_UPDATED}}
+* {{api|t=e|GDF_SIM_COMPLETE}}
+* {{api|t=e|GENERIC_ERROR}}
+* {{api|t=e|GLUE_CONSOLE_LOG}}
+* {{api|t=e|GLUE_SCREENSHOT_FAILED}}
+* {{api|t=e|GROUP_FORMED}}
+* {{api|t=e|HIDE_SUBTITLE}}
+* {{api|t=e|INITIAL_CLUBS_LOADED}}
+* {{api|t=e|INSTANCE_ENCOUNTER_ADD_TIMER}}
+* {{api|t=e|INSTANCE_ENCOUNTER_OBJECTIVE_COMPLETE}}
+* {{api|t=e|INSTANCE_ENCOUNTER_OBJECTIVE_START}}
+* {{api|t=e|INSTANCE_ENCOUNTER_OBJECTIVE_UPDATE}}
+* {{api|t=e|ISLANDS_QUEUE_CLOSE}}
+* {{api|t=e|ISLANDS_QUEUE_OPEN}}
+* {{api|t=e|ISLAND_AZERITE_GAIN}}
+* {{api|t=e|ISLAND_COMPLETED}}
+* {{api|t=e|ITEM_DATA_LOAD_RESULT}}
+* {{api|t=e|LOC_RESULT}}
+* {{api|t=e|MAP_EXPLORATION_UPDATED}}
+* {{api|t=e|NOTIFY_PVP_AFK_RESULT}}
+* {{api|t=e|OBJECT_ENTERED_AOI}}
+* {{api|t=e|OBJECT_LEFT_AOI}}
+* {{api|t=e|PLAYER_LEVEL_CHANGED}}
+* {{api|t=e|PORTRAITS_UPDATED}}
+* {{api|t=e|PVP_VEHICLE_INFO_UPDATED}}
+* {{api|t=e|QUEST_CURRENCY_LOOT_RECEIVED}}
+* {{api|t=e|RESPEC_AZERITE_EMPOWERED_ITEM_CLOSED}}
+* {{api|t=e|RESPEC_AZERITE_EMPOWERED_ITEM_OPENED}}
+* {{api|t=e|SCENARIO_BONUS_OBJECTIVE_COMPLETE}}
+* {{api|t=e|SCENARIO_BONUS_VISIBILITY_UPDATE}}
+* {{api|t=e|SCRAPPING_MACHINE_CLOSE}}
+* {{api|t=e|SCRAPPING_MACHINE_ITEM_REMOVED_OR_CANCELLED}}
+* {{api|t=e|SCRAPPING_MACHINE_PENDING_ITEM_CHANGED}}
+* {{api|t=e|SCRAPPING_MACHINE_SCRAPPING_FINISHED}}
+* {{api|t=e|SCRAPPING_MACHINE_SHOW}}
+* {{api|t=e|SPELL_DATA_LOAD_RESULT}}
+* {{api|t=e|SPELL_TEXT_UPDATE}}
+* {{api|t=e|STREAM_VIEW_MARKER_UPDATED}}
+* {{api|t=e|TOKEN_CAN_VETERAN_BUY_UPDATE}}
+* {{api|t=e|TRAINER_SERVICE_INFO_NAME_UPDATE}}
+* {{api|t=e|TUTORIAL_HIGHLIGHT_SPELL}}
+* {{api|t=e|TUTORIAL_UNHIGHLIGHT_SPELL}}
+* {{api|t=e|UNIT_CHEAT_TOGGLE_EVENT}}
+* {{api|t=e|UNIT_POWER_UPDATE}}
+* {{api|t=e|UPDATE_ALL_UI_WIDGETS}}
+* {{api|t=e|UPDATE_UI_WIDGET}}
+* {{api|t=e|VIGNETTES_UPDATED}}
+* {{api|t=e|VIGNETTE_MINIMAP_UPDATED}}
+* {{api|t=e|VOICE_CHAT_ACTIVE_INPUT_DEVICE_UPDATED}}
+* {{api|t=e|VOICE_CHAT_ACTIVE_OUTPUT_DEVICE_UPDATED}}
+* {{api|t=e|VOICE_CHAT_AUDIO_CAPTURE_ENERGY}}
+* {{api|t=e|VOICE_CHAT_AUDIO_CAPTURE_STARTED}}
+* {{api|t=e|VOICE_CHAT_AUDIO_CAPTURE_STOPPED}}
+* {{api|t=e|VOICE_CHAT_CHANNEL_ACTIVATED}}
+* {{api|t=e|VOICE_CHAT_CHANNEL_DEACTIVATED}}
+* {{api|t=e|VOICE_CHAT_CHANNEL_DISPLAY_NAME_CHANGED}}
+* {{api|t=e|VOICE_CHAT_CHANNEL_JOINED}}
+* {{api|t=e|VOICE_CHAT_CHANNEL_MEMBER_ACTIVE_STATE_CHANGED}}
+* {{api|t=e|VOICE_CHAT_CHANNEL_MEMBER_ADDED}}
+* {{api|t=e|VOICE_CHAT_CHANNEL_MEMBER_ENERGY_CHANGED}}
+* {{api|t=e|VOICE_CHAT_CHANNEL_MEMBER_GUID_UPDATED}}
+* {{api|t=e|VOICE_CHAT_CHANNEL_MEMBER_MUTE_FOR_ALL_CHANGED}}
+* {{api|t=e|VOICE_CHAT_CHANNEL_MEMBER_MUTE_FOR_ME_CHANGED}}
+* {{api|t=e|VOICE_CHAT_CHANNEL_MEMBER_REMOVED}}
+* {{api|t=e|VOICE_CHAT_CHANNEL_MEMBER_SILENCED_CHANGED}}
+* {{api|t=e|VOICE_CHAT_CHANNEL_MEMBER_SPEAKING_STATE_CHANGED}}
+* {{api|t=e|VOICE_CHAT_CHANNEL_MEMBER_VOLUME_CHANGED}}
+* {{api|t=e|VOICE_CHAT_CHANNEL_MUTE_STATE_CHANGED}}
+* {{api|t=e|VOICE_CHAT_CHANNEL_PTT_CHANGED}}
+* {{api|t=e|VOICE_CHAT_CHANNEL_REMOVED}}
+* {{api|t=e|VOICE_CHAT_CHANNEL_TRANSMIT_CHANGED}}
+* {{api|t=e|VOICE_CHAT_CHANNEL_VOLUME_CHANGED}}
+* {{api|t=e|VOICE_CHAT_COMMUNICATION_MODE_CHANGED}}
+* {{api|t=e|VOICE_CHAT_CONNECTION_SUCCESS}}
+* {{api|t=e|VOICE_CHAT_DEAFENED_CHANGED}}
+* {{api|t=e|VOICE_CHAT_ERROR}}
+* {{api|t=e|VOICE_CHAT_INPUT_DEVICES_UPDATED}}
+* {{api|t=e|VOICE_CHAT_LOGIN}}
+* {{api|t=e|VOICE_CHAT_LOGOUT}}
+* {{api|t=e|VOICE_CHAT_MUTED_CHANGED}}
+* {{api|t=e|VOICE_CHAT_OUTPUT_DEVICES_UPDATED}}
+* {{api|t=e|VOICE_CHAT_PENDING_CHANNEL_JOIN_STATE}}
+* {{api|t=e|VOICE_CHAT_PTT_BUTTON_PRESSED_STATE_CHANGED}}
+* {{api|t=e|VOICE_CHAT_SILENCED_CHANGED}}
+* {{api|t=e|VOID_TRANSFER_SUCCESS}}
+* {{api|t=e|WARFRONT_COMPLETED}}
+* {{api|t=e|WAR_MODE_STATUS_UPDATE}}
+
+====Removed====
+These events were removed.
+* {{api|t=e|BATTLEFIELD_MGR_DROP_TIMER_CANCELED}}
+* {{api|t=e|BATTLEFIELD_MGR_DROP_TIMER_STARTED}}
+* {{api|t=e|BATTLEFIELD_MGR_EJECTED}}
+* {{api|t=e|BATTLEFIELD_MGR_EJECT_PENDING}}
+* {{api|t=e|BATTLEFIELD_MGR_ENTERED}}
+* {{api|t=e|BATTLEFIELD_MGR_ENTRY_INVITE}}
+* {{api|t=e|BATTLEFIELD_MGR_QUEUE_INVITE}}
+* {{api|t=e|BATTLEFIELD_MGR_QUEUE_REQUEST_RESPONSE}}
+* {{api|t=e|BATTLEFIELD_MGR_QUEUE_STATUS_UPDATE}}
+* {{api|t=e|BATTLEFIELD_MGR_STATE_CHANGE}}
+* {{api|t=e|BN_FRIEND_INVITE_SEND_RESULT}}
+* {{api|t=e|BN_NEW_PRESENCE}}
+* {{api|t=e|BN_REQUEST_FOF_FAILED}}
+* {{api|t=e|BN_SELF_OFFLINE}}
+* {{api|t=e|BN_SELF_ONLINE}}
+* {{api|t=e|BN_SYSTEM_MESSAGE}}
+* {{api|t=e|CHALLENGE_MODE_NEW_RECORD}}
+* {{api|t=e|CHANNEL_VOICE_UPDATE}}
+* {{api|t=e|CLOSE_WORLD_MAP}}
+* {{api|t=e|COMMENTATOR_PARTY_INFO_REQUEST}}
+* {{api|t=e|EVENT_CLASS_TRIAL_UPGRADE_COMPLETE}}
+* {{api|t=e|EVENT_TUTORIAL_HIGHLIGHT_SPELL}}
+* {{api|t=e|EVENT_TUTORIAL_UNHIGHLIGHT_SPELL}}
+* {{api|t=e|GARRISON_BUILDINGS_SWAPPED}}
+* {{api|t=e|GLYPH_ADDED}}
+* {{api|t=e|GLYPH_DISABLED}}
+* {{api|t=e|GLYPH_ENABLED}}
+* {{api|t=e|GLYPH_REMOVED}}
+* {{api|t=e|GLYPH_UPDATED}}
+* {{api|t=e|GMRESPONSE_RECEIVED}}
+* {{api|t=e|GMSURVEY_DISPLAY}}
+* {{api|t=e|GUILD_PERK_UPDATE}}
+* {{api|t=e|GUILD_REP_UPDATED}}
+* {{api|t=e|GUILD_XP_UPDATE}}
+* {{api|t=e|HONOR_PRESTIGE_UPDATE}}
+* {{api|t=e|MAP_BAR_UPDATE}}
+* {{api|t=e|MOVIE_COMPRESSING_PROGRESS}}
+* {{api|t=e|MOVIE_RECORDING_PROGRESS}}
+* {{api|t=e|MOVIE_UNCOMPRESSED_MOVIE}}
+* {{api|t=e|NEW_TITLE_EARNED}}
+* {{api|t=e|NPC_PVPQUEUE_ANYWHERE}}
+* {{api|t=e|OLD_TITLE_LOST}}
+* {{api|t=e|PARTY_CONVERTED_TO_RAID}}
+* {{api|t=e|PARTY_MEMBERS_CHANGED}}
+* {{api|t=e|PETITION_VENDOR_CLOSED}}
+* {{api|t=e|PETITION_VENDOR_SHOW}}
+* {{api|t=e|PETITION_VENDOR_UPDATE}}
+* {{api|t=e|PET_BAR_HIDE}}
+* {{api|t=e|PET_BATTLE_TURN_STARTED}}
+* {{api|t=e|PET_RENAMEABLE}}
+* {{api|t=e|PLAYER_AURAS_CHANGED}}
+* {{api|t=e|PLAYER_CHARACTER_UPGRADE_TALENT_COUNT_CHANGED}}
+* {{api|t=e|PRESTIGE_AND_HONOR_INVOLUNTARILY_CHANGED}}
+* {{api|t=e|PREVIEW_TALENT_POINTS_CHANGED}}
+* {{api|t=e|PREVIEW_TALENT_PRIMARY_TREE_CHANGED}}
+* {{api|t=e|QUEST_WATCH_OBJECTIVES_CHANGED}}
+* {{api|t=e|RESTRICTED_ACCOUNT_WARNING}}
+* {{api|t=e|RUNE_TYPE_UPDATE}}
+* {{api|t=e|SCRIPT_ACHIEVEMENT_PLAYER_NAME}}
+* {{api|t=e|STORE_CLOSE_SIMPLE_CHECKOUT}}
+* {{api|t=e|SYNCHRONIZE_SETTINGS}}
+* {{api|t=e|TRADE_SKILL_FILTER_UPDATE}}
+* {{api|t=e|TRANSMOG_COLLECTION_LOADED}}
+* {{api|t=e|UNIT_POWER}}
+* {{api|t=e|UPDATE_LFG_LIST_INCREMENTAL}}
+* {{api|t=e|UPDATE_LFG_TYPES}}
+* {{api|t=e|UPDATE_TICKET}}
+* {{api|t=e|UPDATE_WORLD_STATES}}
+* {{api|t=e|VIGNETTE_ADDED}}
+* {{api|t=e|VIGNETTE_REMOVED}}
+* {{api|t=e|VOICE_CHANNEL_STATUS_UPDATE}}
+* {{api|t=e|VOICE_CHAT_ENABLED_UPDATE}}
+* {{api|t=e|VOICE_LEFT_SESSION}}
+* {{api|t=e|VOICE_PLATE_START}}
+* {{api|t=e|VOICE_PLATE_STOP}}
+* {{api|t=e|VOICE_PUSH_TO_TALK_START}}
+* {{api|t=e|VOICE_PUSH_TO_TALK_STOP}}
+* {{api|t=e|VOICE_SELF_MUTE}}
+* {{api|t=e|VOICE_SESSIONS_UPDATE}}
+* {{api|t=e|VOICE_START}}
+* {{api|t=e|VOICE_STATUS_UPDATE}}
+* {{api|t=e|VOICE_STOP}}
+* {{api|t=e|WEIGHTED_SPELL_UPDATED}}
+* {{api|t=e|WORLD_MAP_UPDATE}}
+* {{api|t=e|WORLD_STATE_UI_TIMER_UPDATE}}
+
+
+==See also==
+*{{ref web|url=https://us.battle.net/forums/en/wow/topic/20762318007|author=[[Ythisens]]|date=2018-04-24 16:45|accessdate=2018-05-12|title=Battle For Azeroth Addon Changes|archiveurl=}}
+*{{ref web|url=https://www.wowinterface.com/forums/showthread.php?p=331293|author=Ketho|date=2018-07-18|title=Bfa console variables|publisher=[[WoWInterface]]}}

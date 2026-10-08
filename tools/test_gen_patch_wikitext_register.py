@@ -5,6 +5,26 @@ from gen_patch_wikitext_register import parse_section, split_sections
 
 
 class InventoryTests(unittest.TestCase):
+    def test_bfa_prepatch_nested_namespaces_events_and_removal_successors(self):
+        import gen_patch_wikitext_register as generator
+        raw = ('==New==\n* New {{api|C_Map}} table.\n**{{api|C_Map.GetMapInfo}}\n'
+               '==Changes==\n* {{api|Old}} moved to {{api|C_New}}.\n'
+               '==Removals==\n* {{api|OldMap}} removed. Use {{api|C_Map.NewMap}}.\n'
+               '* FindSpellOverrideNameByName, FindBaseSpellNameByName, and SearchGuildRecipes have been removed.\n'
+               '* [[GLYPH_ADDED]], [[GLYPH_REMOVED]] have been removed.\n'
+               '==Events==\n====Added====\n* {{api|t=e|NEW_EVENT}}\n'
+               '====Removed====\n* {{api|t=e|OLD_EVENT}}\n==See also==\n')
+        entries = generator.parse_bfa_prepatch(raw)
+        self.assertEqual([(e['section'], e['symbol'], e['direction']) for e in entries], [
+            ('global-api', 'C_Map', 'added'), ('global-api', 'C_Map.GetMapInfo', 'added'),
+            ('global-api', 'OldMap', 'removed'),
+            ('global-api', 'FindSpellOverrideNameByName', 'removed'),
+            ('global-api', 'FindBaseSpellNameByName', 'removed'),
+            ('global-api', 'SearchGuildRecipes', 'removed'),
+            ('events', 'GLYPH_ADDED', 'removed'), ('events', 'GLYPH_REMOVED', 'removed'),
+            ('events', 'NEW_EVENT', 'added'), ('events', 'OLD_EVENT', 'removed')])
+        self.assertEqual(len(entries), len({e['id'] for e in entries}))
+
     def test_legacy_caption_tables_keep_handlers_commands_and_directions(self):
         import gen_patch_wikitext_register as generator
         raw = ('==API==\n====Changes====\n* {{api|NotInventory}}\n'

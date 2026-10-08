@@ -74,9 +74,29 @@ def strip_legacy_cvar_tables(raw):
     return '\n'.join(lines) + '\n'
 
 
+def strip_bfa_inventories(raw):
+    """Keep 8.0.1 prose, migration notes and event documentation qualifications."""
+    lines = []
+    section = None
+    for line in raw.splitlines():
+        heading = re.fullmatch(r'==([^=]+)==', line)
+        if heading:
+            section = heading[1].strip()
+        if section == 'New' or (section == 'Events' and line.startswith('*')):
+            continue
+        lines.append(line)
+    return '\n'.join(lines) + '\n'
+
+
 def extract_text(raw, *, preserve_examples=False, normalize_inventory_headings=False,
                  retain_reference_notes=False, legacy_api_tables=False,
-                 legacy_api_bullets=False, legacy_cvar_tables=False):
+                 legacy_api_bullets=False, legacy_cvar_tables=False,
+                 bfa_prepatch=False):
+    if bfa_prepatch:
+        raw = strip_bfa_inventories(raw)
+        raw = re.sub(r'\{\{ref web\|([^{}]+)\}\}', r'[Reference: \1]', raw)
+        # Preserve the event section's editorial qualifiers, not its API inventory.
+        raw = raw.replace('==Events==', '== Events ==')
     if legacy_api_tables:
         raw = re.sub(r'^\{\|[^\n]*\n\|\+ (?:Global API|Widget API|Widget Handlers|Events|Console variables|Console commands) [\s\S]*?^\|\}\n?',
                      '', raw, flags=re.M)
@@ -287,6 +307,8 @@ def main():
                         help='Write/check plaintext only; never read or modify a coverage ledger')
     parser.add_argument('--legacy-cvar-tables', action='store_true',
                         help='Strip CVar inventory tables, retaining captions/citations; opt-in')
+    parser.add_argument('--bfa-prepatch', action='store_true',
+                        help='Strip 8.0.1 nested additions/events, retaining prose and reference fields; opt-in')
     args = parser.parse_args()
     if args.self_test:
         check_examples()
@@ -301,7 +323,8 @@ def main():
                         retain_reference_notes=args.retain_reference_notes,
                         legacy_api_tables=args.legacy_api_tables,
                         legacy_api_bullets=args.legacy_api_bullets,
-                        legacy_cvar_tables=args.legacy_cvar_tables)
+                        legacy_cvar_tables=args.legacy_cvar_tables,
+                        bfa_prepatch=args.bfa_prepatch)
     rows = seed_rows(text, args.patch)
     if args.text_only:
         if args.check:
