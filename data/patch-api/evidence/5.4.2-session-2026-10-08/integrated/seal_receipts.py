@@ -55,7 +55,7 @@ def summarize():
         pages.append({'patch': patch, 'observations': len(results),
                       'gaps': sorted(key for key, row in results.items() if not row['ok']),
                       'unchanged_vs_master': same})
-    assert len(pages) == 58
+    assert len(pages) == 59
     dump('gap-comparison.json', pages)
     print(json.dumps({'receipts': len(receipts), 'sweep_pages': len(pages),
                       'other_sweeps_unchanged': sum(row['unchanged_vs_master'] is True for row in pages)}))
