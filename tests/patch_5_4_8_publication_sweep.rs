@@ -17,8 +17,8 @@ fn patch_5_4_8_publication_sweep(env: &WowLuaEnv) {
         register_env: "P548_SWEEP_REGISTER",
         out_env: "P548_SWEEP_OUT",
         later_registers: &[
-            // 6.0.1 p601-page: pending retail redirect-only register integration.
-            // 6.0.2 p602-page: pending retail Warlords register integration.
+            include_str!("../data/patch-api/sources/6.0.1-wikitext-register.json"),
+            include_str!("../data/patch-api/sources/6.0.2-wikitext-register.json"),
             include_str!("../data/patch-api/sources/6.1.0-wikitext-register.json"),
             include_str!("../data/patch-api/sources/6.2.0-wikitext-register.json"),
             include_str!("../data/patch-api/sources/6.2.2-wikitext-register.json"),
