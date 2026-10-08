@@ -1,3 +1,7 @@
+## [2026-10-08] evidence | 9.0.1 page audit
+
+[Audit](investigations/patch-9-0-1-api-audit.md): all 894 IDs accounted, opt-in spaced-heading deprecated-table retention, eleven retail-only retirements and 273 exact retained gaps. All 33 publication sweeps plus factory, one-ID negative control, bare/cached/Mists lookup, format/default/Mists checks and exit-0 startup `[]` pass. Prior inputs/outcomes unchanged; all 33 registers reproduce. Eleven retained-gap intersections with read-only 9.0.2 snapshot; main-thread placeholder awaits integration. No agents, push, merge, vendor/cache/Wowless or sibling working-file edits.
+
 ## [2026-10-07] evidence | 9.1.0 API audit
 
 [Audit](investigations/patch-9-1-0-api-audit.md): all 192 IDs accounted; opt-in plain Scripts label recovery, 21 bounded retirements and 53 exact publication gaps. Post-load tooltip re-registration reproduced and epoch-gated; current-scope sweep, negative-control, bare/cached/Mists, format/default/Mists-check and exit-0 startup `[]` proof retained. Earlier 153 inputs/58 mode outcomes and all 30 register reproductions preserved. Read-only 9.1.5 comparison identifies two likely gap supersessions; placeholder reserved for integrating main thread. No agents, push, merge, vendor/cache or sibling working-file edits.

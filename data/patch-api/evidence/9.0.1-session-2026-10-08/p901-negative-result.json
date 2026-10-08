@@ -1,0 +1,9 @@
+{
+  "mutation": "wt-events-CURSOR_CHANGED-777",
+  "baseline_gaps": 273,
+  "negative_gaps": 274,
+  "added": [
+    "wt-events-CURSOR_CHANGED-777"
+  ],
+  "resolved": []
+}

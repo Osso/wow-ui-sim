@@ -1,0 +1,22 @@
+[
+  {
+    "source_id": "source-build-context-149",
+    "wikitext_line": 149,
+    "literal": "|+ Global API 8.3.7 (35662) &rarr; 9.0.1 (36230)"
+  },
+  {
+    "source_id": "source-build-context-700",
+    "wikitext_line": 700,
+    "literal": "|+ Widget API 8.3.7 (35662) &rarr; 9.0.1 (36230)"
+  },
+  {
+    "source_id": "source-build-context-747",
+    "wikitext_line": 747,
+    "literal": "|+ Events 8.3.7 (35662) &rarr; 9.0.1 (36230)"
+  },
+  {
+    "source_id": "source-build-context-843",
+    "wikitext_line": 843,
+    "literal": "|+ CVars 8.3.7 (35662) &rarr; 9.0.1 (36230)"
+  }
+]

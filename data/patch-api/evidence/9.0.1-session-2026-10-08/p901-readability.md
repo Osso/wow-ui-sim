@@ -1,0 +1,3 @@
+# Changed Rust readability
+
+Flat retirement constant and one explicit `mark_members` call; no added branches, nesting, warning suppressions, hidden I/O or speculative abstraction. Existing registration sequence remains unchanged outside the additive call. Sweep inputs are literal data. Bare/cached/Mists tests exercise observable repeated lookup, not construction shape. All five metrics commands exit zero; existing fallible registration sequence contributes cyclomatic paths but the new list introduces no decision. Whole post-change scan contains only retirement data and new behavioral assertions; pre-change scans prove no existing callers.

@@ -1,0 +1,248 @@
+{
+  "read_only_path": "/home/osso/.worktrees/wow-ui-sim-p902-page/data/patch-api/sources/9.0.2-wikitext-register.json",
+  "sha256": "e9c69d02cbd34aab19236d82b52a6ae574312ef8e4f6ee9c07896a8dddef8e6b",
+  "intersections": [
+    {
+      "gap_id": "wt-global-api-C_CovenantSanctumUI.GetRenownMilestones-246",
+      "symbol": "C_CovenantSanctumUI.GetRenownMilestones",
+      "current_expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_CovenantSanctumUI.GetRenownMilestones"
+      },
+      "later_rows": [
+        {
+          "id": "wt-global-api-C_CovenantSanctumUI.GetRenownMilestones-67",
+          "section": "global-api",
+          "direction": "removed",
+          "symbol": "C_CovenantSanctumUI.GetRenownMilestones",
+          "annotation": "",
+          "wikitext_line": 67
+        }
+      ]
+    },
+    {
+      "gap_id": "wt-global-api-C_Soulbinds.AddPendingConduit-452",
+      "symbol": "C_Soulbinds.AddPendingConduit",
+      "current_expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_Soulbinds.AddPendingConduit"
+      },
+      "later_rows": [
+        {
+          "id": "wt-global-api-C_Soulbinds.AddPendingConduit-68",
+          "section": "global-api",
+          "direction": "removed",
+          "symbol": "C_Soulbinds.AddPendingConduit",
+          "annotation": "",
+          "wikitext_line": 68
+        }
+      ]
+    },
+    {
+      "gap_id": "wt-global-api-C_Soulbinds.GetPendingConduitID-467",
+      "symbol": "C_Soulbinds.GetPendingConduitID",
+      "current_expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_Soulbinds.GetPendingConduitID"
+      },
+      "later_rows": [
+        {
+          "id": "wt-global-api-C_Soulbinds.GetPendingConduitID-69",
+          "section": "global-api",
+          "direction": "removed",
+          "symbol": "C_Soulbinds.GetPendingConduitID",
+          "annotation": "",
+          "wikitext_line": 69
+        }
+      ]
+    },
+    {
+      "gap_id": "wt-global-api-C_Soulbinds.GetPendingNodeIDInSoulbind-468",
+      "symbol": "C_Soulbinds.GetPendingNodeIDInSoulbind",
+      "current_expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_Soulbinds.GetPendingNodeIDInSoulbind"
+      },
+      "later_rows": [
+        {
+          "id": "wt-global-api-C_Soulbinds.GetPendingNodeIDInSoulbind-70",
+          "section": "global-api",
+          "direction": "removed",
+          "symbol": "C_Soulbinds.GetPendingNodeIDInSoulbind",
+          "annotation": "",
+          "wikitext_line": 70
+        }
+      ]
+    },
+    {
+      "gap_id": "wt-global-api-C_Soulbinds.HasPendingConduitInSoulbind-473",
+      "symbol": "C_Soulbinds.HasPendingConduitInSoulbind",
+      "current_expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_Soulbinds.HasPendingConduitInSoulbind"
+      },
+      "later_rows": [
+        {
+          "id": "wt-global-api-C_Soulbinds.HasPendingConduitInSoulbind-71",
+          "section": "global-api",
+          "direction": "removed",
+          "symbol": "C_Soulbinds.HasPendingConduitInSoulbind",
+          "annotation": "",
+          "wikitext_line": 71
+        }
+      ]
+    },
+    {
+      "gap_id": "wt-global-api-C_Soulbinds.MatchesCurrentSpecSet-479",
+      "symbol": "C_Soulbinds.MatchesCurrentSpecSet",
+      "current_expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_Soulbinds.MatchesCurrentSpecSet"
+      },
+      "later_rows": [
+        {
+          "id": "wt-global-api-C_Soulbinds.MatchesCurrentSpecSet-72",
+          "section": "global-api",
+          "direction": "removed",
+          "symbol": "C_Soulbinds.MatchesCurrentSpecSet",
+          "annotation": "",
+          "wikitext_line": 72
+        }
+      ]
+    },
+    {
+      "gap_id": "wt-global-api-C_Soulbinds.RemovePendingConduit-480",
+      "symbol": "C_Soulbinds.RemovePendingConduit",
+      "current_expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_Soulbinds.RemovePendingConduit"
+      },
+      "later_rows": [
+        {
+          "id": "wt-global-api-C_Soulbinds.RemovePendingConduit-73",
+          "section": "global-api",
+          "direction": "removed",
+          "symbol": "C_Soulbinds.RemovePendingConduit",
+          "annotation": "",
+          "wikitext_line": 73
+        }
+      ]
+    },
+    {
+      "gap_id": "wt-global-api-C_Soulbinds.ResetSoulbindConduits-481",
+      "symbol": "C_Soulbinds.ResetSoulbindConduits",
+      "current_expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_Soulbinds.ResetSoulbindConduits"
+      },
+      "later_rows": [
+        {
+          "id": "wt-global-api-C_Soulbinds.ResetSoulbindConduits-74",
+          "section": "global-api",
+          "direction": "removed",
+          "symbol": "C_Soulbinds.ResetSoulbindConduits",
+          "annotation": "",
+          "wikitext_line": 74
+        }
+      ]
+    },
+    {
+      "gap_id": "wt-global-api-C_Spell.GetMawPowerRarityStringAndBorderAtlasBySpellID-486",
+      "symbol": "C_Spell.GetMawPowerRarityStringAndBorderAtlasBySpellID",
+      "current_expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_Spell.GetMawPowerRarityStringAndBorderAtlasBySpellID"
+      },
+      "later_rows": [
+        {
+          "id": "wt-global-api-C_Spell.GetMawPowerRarityStringAndBorderAtlasBySpellID-75",
+          "section": "global-api",
+          "direction": "removed",
+          "symbol": "C_Spell.GetMawPowerRarityStringAndBorderAtlasBySpellID",
+          "annotation": "",
+          "wikitext_line": 75
+        }
+      ]
+    },
+    {
+      "gap_id": "wt-global-api-C_UIWidgetManager.GetWidgetLayoutDirectionFromWidgetSetID-512",
+      "symbol": "C_UIWidgetManager.GetWidgetLayoutDirectionFromWidgetSetID",
+      "current_expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "global-api",
+        "superseded_by": null,
+        "symbol": "C_UIWidgetManager.GetWidgetLayoutDirectionFromWidgetSetID"
+      },
+      "later_rows": [
+        {
+          "id": "wt-global-api-C_UIWidgetManager.GetWidgetLayoutDirectionFromWidgetSetID-76",
+          "section": "global-api",
+          "direction": "removed",
+          "symbol": "C_UIWidgetManager.GetWidgetLayoutDirectionFromWidgetSetID",
+          "annotation": "",
+          "wikitext_line": 76
+        }
+      ]
+    },
+    {
+      "gap_id": "wt-events-SOULBIND_CONDUITS_RESET-806",
+      "symbol": "SOULBIND_CONDUITS_RESET",
+      "current_expected": {
+        "direction": "added",
+        "page_default": null,
+        "publication": "published",
+        "section": "events",
+        "superseded_by": null,
+        "symbol": "SOULBIND_CONDUITS_RESET"
+      },
+      "later_rows": [
+        {
+          "id": "wt-events-SOULBIND_CONDUITS_RESET-113",
+          "section": "events",
+          "direction": "removed",
+          "symbol": "SOULBIND_CONDUITS_RESET",
+          "annotation": "",
+          "wikitext_line": 113
+        }
+      ]
+    }
+  ]
+}

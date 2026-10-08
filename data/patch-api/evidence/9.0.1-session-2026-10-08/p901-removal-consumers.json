@@ -1,0 +1,838 @@
+[
+  {
+    "id": "wt-global-api-AddQuestWatch-571",
+    "symbol": "AddQuestWatch",
+    "qualified": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:365:\t\t\t\t\tC_QuestLog.AddQuestWatch(questID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:541:\t\t\tC_QuestLog.AddQuestWatch(questID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:1381:\t\t\tC_QuestLog.AddQuestWatch(questID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_ObjectiveTracker.lua:24:\t\t\t\tC_QuestLog.AddQuestWatch(questID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_POIButton/POIButton.lua:471:\t\t\tC_QuestLog.AddQuestWatch(questID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SplashFrame/Mainline/SplashFrame.lua:87:\tC_QuestLog.AddQuestWatch(questID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/QuestLogDocumentation.lua:15:\t\t\tName = \"AddQuestWatch\",\n",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:365:\t\t\t\t\tC_QuestLog.AddQuestWatch(questID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:541:\t\t\tC_QuestLog.AddQuestWatch(questID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:1381:\t\t\tC_QuestLog.AddQuestWatch(questID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_POIButton/POIButton.lua:471:\t\t\tC_QuestLog.AddQuestWatch(questID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_ObjectiveTracker.lua:24:\t\t\t\tC_QuestLog.AddQuestWatch(questID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/QuestLogDocumentation.lua:15:\t\t\tName = \"AddQuestWatch\",\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SplashFrame/Mainline/SplashFrame.lua:87:\tC_QuestLog.AddQuestWatch(questID);\n",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 0,
+      "stdout": "/home/osso/.worktrees/wow-ui-sim-p901-page/tests/blizzard_poi_button_loads.rs:356:             C_QuestLog.AddQuestWatch + C_SuperTrack.SetSuperTrackedQuestID, trackable \\\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/blizzard_objective_tracker_loads.rs:149:         delay the tracker until the first AddQuestWatch call, defeating the purpose of the \\\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/quest_surface/register.rs:28:    (\"AddQuestWatch\", noop),\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/quest_surface/register.rs:81:    (\"AddQuestWatch\", noop),\n",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-C_CampaignInfo.GetCurrentCampaignChapterID-574",
+    "symbol": "C_CampaignInfo.GetCurrentCampaignChapterID",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-C_CampaignInfo.GetCurrentCampaignID-575",
+    "symbol": "C_CampaignInfo.GetCurrentCampaignID",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-C_Commentator.GetPlayerInfo-576",
+    "symbol": "C_Commentator.GetPlayerInfo",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 0,
+      "stdout": "/home/osso/.worktrees/wow-ui-sim-p901-page/src/mists/compat_bootstrap.lua:615:    GetPlayerInfo = function() return nil end,\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/c_api/patch_retired_members.rs:150:            \"GetPlayerInfo\",\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/patch_10_1_0_publication_fixes.rs:11:    { C_LootHistory, 'GetPlayerInfo' },\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/missing_surface/pet_battles.rs:13://! - `GetPlayerInfo(owner)` \u2014 returns owner index (pass-through numeric stub).\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/missing_surface/pet_battles.rs:45:    table_set_rust_fn_static(state, ns, \"GetPlayerInfo\", get_player_info)?;\n",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-C_Commentator.GetTeamHighlightColor-577",
+    "symbol": "C_Commentator.GetTeamHighlightColor",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-C_Garrison.GetMissionInfo-578",
+    "symbol": "C_Garrison.GetMissionInfo",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-C_Garrison.GetTalent-579",
+    "symbol": "C_Garrison.GetTalent",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/TooltipInfoDocumentation.lua:1066:\t\t\tName = \"GetTalent\",\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXMLGame/Tooltip/TooltipDataHandler.lua:566:\t\tSetTalent = \"GetTalent\",\n",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 0,
+      "stdout": "/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/frame/methods/widgets/tooltip/content.rs:308:    let has_lines = populate_tooltip_from_method(state, tooltip_id, \"GetTalent\", &args, None)?;\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/missing_surface/tooltip_info/mod.rs:226:            (\"GetTalent\", c_tooltip_get_talent),\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/tooltip_talent.rs:13:            local talentTip = C_TooltipInfo.GetTalent(122583)\n",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-C_Garrison.GetTalentTreeInfoForID-580",
+    "symbol": "C_Garrison.GetTalentTreeInfoForID",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-C_GossipInfo.GetGossipPoiForUiMapID-581",
+    "symbol": "C_GossipInfo.GetGossipPoiForUiMapID",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-C_GossipInfo.GetGossipPoiInfo-582",
+    "symbol": "C_GossipInfo.GetGossipPoiInfo",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-C_Item.IsItemCorruptable-583",
+    "symbol": "C_Item.IsItemCorruptable",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-C_LootJournal.GetClassAndSpecFilters-584",
+    "symbol": "C_LootJournal.GetClassAndSpecFilters",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Collections/Mainline/Blizzard_HeirloomCollection.lua:20:\tlocal classFilter, specFilter = C_Heirloom.GetClassAndSpecFilters();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Collections/Mainline/Blizzard_HeirloomCollection.lua:264:\tlocal classFilter, specFilter = C_Heirloom.GetClassAndSpecFilters();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Collections/Mainline/Blizzard_HeirloomCollection.lua:526:\t\t\tlocal classFilter, specFilter = C_Heirloom.GetClassAndSpecFilters();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Collections/Mainline/Blizzard_HeirloomCollection.lua:693:\tlocal classFilter, specFilter = C_Heirloom.GetClassAndSpecFilters();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Collections/Mainline/Blizzard_HeirloomCollection.lua:698:\tlocal classFilter, specFilter = C_Heirloom.GetClassAndSpecFilters();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Collections/Mainline/Blizzard_HeirloomCollection.lua:703:\tlocal classFilter, specFilter = C_Heirloom.GetClassAndSpecFilters();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_LootJournalItems.lua:20:function LootJournalItemsMixin:GetClassAndSpecFilters()\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_LootJournalItems.lua:95:function LootJournalItemSetsMixin:GetClassAndSpecFilters()\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_LootJournalItems.lua:96:\treturn self:GetParent():GetClassAndSpecFilters();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_LootJournalItems.lua:100:\tlocal classID, specID = self:GetClassAndSpecFilters();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_LootJournalItems.lua:132:\tlocal classFilter, specFilter = self:GetClassAndSpecFilters();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_LootJournalItems.lua:137:\tlocal classFilter, specFilter = self:GetClassAndSpecFilters();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_LootJournalItems.lua:142:\tlocal classFilter, specFilter = self:GetClassAndSpecFilters();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_LootJournalItems.lua:255:\t\tself.itemSets = C_LootJournal.GetItemSets(self:GetClassAndSpecFilters());\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_LootJournal.lua:217:function LootJournalMixin:GetClassAndSpecFilters()\n",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 0,
+      "stdout": "/home/osso/.worktrees/wow-ui-sim-p901-page/tests/c_transmog_heirloom_api/heirloom.rs:166:        .eval(\"return C_Heirloom.GetClassAndSpecFilters()\")\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/missing_surface/heirloom.rs:194:        \"GetClassAndSpecFilters\",\n",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-C_LootJournal.GetFilteredItemSets-585",
+    "symbol": "C_LootJournal.GetFilteredItemSets",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-C_LootJournal.SetClassAndSpecFilters-587",
+    "symbol": "C_LootJournal.SetClassAndSpecFilters",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Collections/Mainline/Blizzard_HeirloomCollection.lua:24:\t\t\tC_Heirloom.SetClassAndSpecFilters(UNSPECIFIED_CLASS_FILTER, UNSPECIFIED_SPEC_FILTER);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Collections/Mainline/Blizzard_HeirloomCollection.lua:36:\t\t\tC_Heirloom.SetClassAndSpecFilters(classID, specID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Collections/Mainline/Blizzard_HeirloomCollection.lua:167:\tlocal setClassAndSpecFilter = GenerateClosure(self.SetClassAndSpecFilters, self);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Collections/Mainline/Blizzard_HeirloomCollection.lua:532:\t\t\t\tC_Heirloom.SetClassAndSpecFilters(UNSPECIFIED_CLASS_FILTER, UNSPECIFIED_SPEC_FILTER);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Collections/Mainline/Blizzard_HeirloomCollection.lua:544:\t\t\t\t\tC_Heirloom.SetClassAndSpecFilters(oldClassFilter, oldSpecFilter);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Collections/Mainline/Blizzard_HeirloomCollection.lua:702:function HeirloomsMixin:SetClassAndSpecFilters(newClassFilter, newSpecFilter)\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Collections/Mainline/Blizzard_HeirloomCollection.lua:705:\t\tC_Heirloom.SetClassAndSpecFilters(newClassFilter, newSpecFilter);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_LootJournalItems.lua:12:\tself:SetClassAndSpecFilters(classID, specID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_LootJournalItems.lua:15:function LootJournalItemsMixin:SetClassAndSpecFilters(classID, specID)\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_LootJournalItems.lua:90:\tlocal setClassAndSpecFilter = GenerateClosure(self.SetClassAndSpecFilters, self);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_LootJournalItems.lua:141:function LootJournalItemSetsMixin:SetClassAndSpecFilters(newClassFilter, newSpecFilter)\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_LootJournalItems.lua:156:\t\tself:GetParent():SetClassAndSpecFilters(newClassFilter, newSpecFilter);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_LootJournal.lua:76:\tself:SetClassAndSpecFilters(RuneforgeUtil.GetPreviewClassAndSpec());\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_LootJournal.lua:118:\tlocal setClassAndSpecFilter = GenerateClosure(self.SetClassAndSpecFilters, self);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_LootJournal.lua:158:\t\t\tself:SetClassAndSpecFilters(RuneforgeUtil.GetPreviewClassAndSpec(), UNSPECIFIED_SPEC_FILTER);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterJournal/Mainline/Blizzard_LootJournal.lua:197:function LootJournalMixin:SetClassAndSpecFilters(newClassFilter, newSpecFilter)\n",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-C_LossOfControl.GetEventInfo-588",
+    "symbol": "C_LossOfControl.GetEventInfo",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Calendar/Mainline/Blizzard_Calendar.lua:2744:\t\t\t\tlocal eventInfo = C_Calendar.GetEventInfo();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Calendar/Mainline/Blizzard_Calendar.lua:2780:\tlocal eventInfo = C_Calendar.GetEventInfo();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Calendar/Mainline/Blizzard_Calendar.lua:3517:\t\tlocal eventInfo = C_Calendar.GetEventInfo();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeathRecap/Blizzard_DeathRecap.lua:100:function DeathRecapEntryMixin:GetEventInfo(eventData)\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_DeathRecap/Blizzard_DeathRecap.lua:157:\tself.spellId, self.spellName, self.texture = self:GetEventInfo(elementData);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterTimeline/EncounterTimelineView.lua:257:\tlocal eventInfo = self:GetEventInfo(eventID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterTimeline/EncounterTimelineTrackEvent.lua:638:\tlocal eventInfo = self:GetEventInfo();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterTimeline/EncounterTimelineTrackEvent.lua:679:\tlocal eventInfo = self:GetEventInfo();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterTimeline/EncounterTimelineTrackEvent.lua:715:\tlocal eventInfo = self:GetEventInfo();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterTimeline/EncounterTimelineTrackEvent.lua:734:\tlocal eventInfo = self:GetEventInfo();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterTimeline/EncounterTimelineTimerEvent.lua:682:\tlocal eventInfo = self:GetEventInfo();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterTimeline/EncounterTimelineTimerEvent.lua:715:\tlocal eventInfo = self:GetEventInfo();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterTimeline/EncounterTimelineTimerEvent.lua:730:\tlocal eventInfo = self:GetEventInfo();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterTimeline/EncounterTimelineEventFrame.lua:109:function EncounterTimelineEventFrameMixin:GetEventInfo()\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterTimeline/EncounterTimelineEventFrame.lua:196:\tlocal eventInfo = self:GetEventInfo();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterTimeline/EncounterTimelineDataProvider.lua:108:\t\tlocal eventInfo = C_EncounterTimeline.GetEventInfo(eventID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_EncounterTimeline/EncounterTimelineDataProvider.lua:135:function EncounterTimelineDataProviderMixin:GetEventInfo(eventID)\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/CalendarDocumentation.lua:599:\t\t\tName = \"GetEventInfo\",\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/EncounterEventsDocumentation.lua:28:\t\t\tName = \"GetEventInfo\",\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/EncounterTimelineDocumentation.lua:126:\t\t\tName = \"GetEventInfo\",\n",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 0,
+      "stdout": "/home/osso/.worktrees/wow-ui-sim-p901-page/tests/blizzard_death_recap_loads.rs:174:                and type(DeathRecapEntryMixin.GetEventInfo) == 'function' \\\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/blizzard_death_recap_loads.rs:197:         DEATH_RECAP_DEATH_TT lines; GetEventInfo(eventData) decoding the spell\u2192localized + \\\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/c_api/c_encounter_timeline/queries.rs:13:        (\"GetEventInfo\", info),\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/workarounds/temporary/encounter_state.rs:30:if rawget(C_EncounterTimeline, \"GetEventInfo\") == nil then\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/workarounds/temporary/encounter_state.rs:31:    function C_EncounterTimeline.GetEventInfo(eventID)\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/workarounds/temporary/encounter_state.rs:133:if rawget(C_EncounterEvents, \"GetEventInfo\") == nil then\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/workarounds/temporary/encounter_state.rs:134:    function C_EncounterEvents.GetEventInfo(eventID)\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/workarounds/temporary/encounter_state.rs:262:                if C_EncounterTimeline.GetEventInfo(1).spellName ~= \"Flash of Light\" then\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/workarounds/temporary/encounter_state.rs:275:                local eventInfo = C_EncounterEvents.GetEventInfo(1)\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/encounter_timeline_view.rs:119:            local info=T.GetEventInfo(id)\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/encounter_events.rs:18:            local info = C_EncounterEvents.GetEventInfo(first)\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/encounter_events.rs:31:        \"GetEventInfo should return matching encounterEventID field\"\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/encounter_events.rs:44:            local info = C_EncounterEvents.GetEventInfo(eventID)\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/encounter_events.rs:47:            local colorCleared = C_EncounterEvents.GetEventColor(eventID) == nil and C_EncounterEvents.GetEventInfo(eventID).color == nil\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/encounter_events.rs:56:    assert!(info_has_color, \"GetEventInfo should reflect override color\");\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/encounter_events.rs:109:                   C_EncounterEvents.GetEventInfo(\"not-a-number\") == nil,\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/encounter_timeline_tracks.rs:44:            assert(T.GetEventInfo(eventID))\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/encounter_timeline_tracks.rs:65:    env.exec(\"assert(T.GetEventState(id)==2 and not T.HasVisibleEvents()); assert(T.GetEventInfo(id))\").unwrap();\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/encounter_timeline_tracks.rs:67:    env.exec(\"assert(T.GetEventInfo(id)==nil and timer:GetElapsedDuration()==16)\").unwrap();\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/encounter_timeline_tracks.rs:130:            local info=T.GetEventInfo(id)\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/encounter_timeline_tracks.rs:205:        for _,id in ipairs(old) do assert(T.GetEventInfo(id)==nil) end\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/encounter_timeline_script.rs:25:        local info = timeline.GetEventInfo(id)\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/encounter_timeline_script.rs:32:        assert(timeline.GetEventInfo(id).duration == 5)\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/encounter_timeline_script.rs:34:        local explicit = timeline.GetEventInfo(other)\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/encounter_timeline_script.rs:48:        assert(timeline.GetEventInfo(0) == nil and timeline.GetEventTimer(9999) == nil)\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/encounter_timeline_script.rs:74:        assert(timer:GetTotalDuration() == 5 and timeline.GetEventInfo(id).duration == 5)\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/encounter_timeline_script.rs:89:        assert(timeline.GetEventInfo(id) == nil and timeline.GetEventTimer(id) == nil)\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/encounter_timeline_script.rs:105:                assert(timeline.GetEventInfo(payload.id).duration == payload.duration)\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/encounter_timeline_script.rs:113:                assert(timeline.GetEventInfo(payload) == nil and timeline.GetEventState(payload) == nil)\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/encounter_timeline_script.rs:121:        assert(log[1] == \"added\" and timeline.GetEventInfo(id).spellName == \"Flash of Light\")\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/encounter_timeline_script.rs:200:        assert(timeline.GetEventInfo(id) == nil and #timeline.GetEventList() == 0)\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/encounter_timeline_script.rs:204:        assert(timeline.GetEventInfo(nextID).duration == 3)\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/encounter_timeline_script.rs:220:        consumer:Init(timeline.GetEventInfo(id), timeline.GetEventTimer(id),\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/encounter_timeline_script.rs:236:    env.exec(\"assert(timeline.GetEventInfo(id) == nil and consumer:GetEventTimeElapsed() == 4)\").unwrap();\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/missing_surface/encounter_events.rs:25:    table_set_rust_fn_static(state, ns, \"GetEventInfo\", get_event_info)?;\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/test_showuipanel_lod.rs:262:            local eventInfo = eventFrame:GetEventInfo()\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/p1207_remaining_timeline_color_event.rs:18:            assert(C_EncounterTimeline.GetEventInfo(id) ~= nil)\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/system_api_seeded.rs:30:        local info = C_EncounterTimeline.GetEventInfo(eventID)\n",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-C_LossOfControl.GetNumEvents-589",
+    "symbol": "C_LossOfControl.GetNumEvents",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentation/SystemsAPIMixin.lua:140:function SystemsAPIMixin:GetNumEvents()\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentation/Blizzard_APIDocumentation.lua:153:\t\ttotalEvents = totalEvents + systemInfo:GetNumEvents();\n",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 0,
+      "stdout": "/home/osso/.worktrees/wow-ui-sim-p901-page/tests/blizzard_ui/blizzard_apidocumentation_generated/behavior_handle_slash_command_stats_writes_real_counts.rs:49:                   sumSystemMethod(\"GetNumEvents\"),\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/blizzard_ui/blizzard_apidocumentation/surface_mixins.rs:80:    \"GetNumEvents\",\n",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-C_MountJournal.IsMountEquipmentUnlocked-590",
+    "symbol": "C_MountJournal.IsMountEquipmentUnlocked",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-C_QuestChoice.GetQuestChoiceInfo-591",
+    "symbol": "C_QuestChoice.GetQuestChoiceInfo",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 0,
+      "stdout": "/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/missing_surface/quest_choice.rs:48:    (\"GetQuestChoiceInfo\", get_quest_choice_info),\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/quest_verbs.rs:94:            local choiceID, _question, optionCount = C_QuestChoice.GetQuestChoiceInfo()\n",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-C_QuestChoice.GetQuestChoiceOptionInfo-592",
+    "symbol": "C_QuestChoice.GetQuestChoiceOptionInfo",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 0,
+      "stdout": "/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/missing_surface/quest_choice.rs:49:    (\"GetQuestChoiceOptionInfo\", get_quest_choice_option_info),\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/quest_verbs.rs:95:            local optionID, optionText = C_QuestChoice.GetQuestChoiceOptionInfo(0)\n",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-C_QuestLog.GetQuestInfo-593",
+    "symbol": "C_QuestLog.GetQuestInfo",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_AdventureMap/AM_QuestDialog.lua:190:\tlocal questTitle, descriptionText, objectiveText = C_AdventureMap.GetQuestInfo(self.questID);\n",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 0,
+      "stdout": "/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/state/support_types/adventure_map.rs:38:/// by quest id and surfaced via `C_AdventureMap.GetQuestInfo`. Missing\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/state/support_types/adventure_map.rs:108:/// make `C_AdventureMap.GetQuestInfo` return zero values so the\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/adventure_map.rs:7://! `GetQuestOfferInfo()`, `GetQuestInfo()`, `GetQuestPortraitInfo()`,\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/adventure_map.rs:36:    (\"GetQuestInfo\", get_quest_info),\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/c_adventure_map/quests.rs:262:        .eval(\"return type(C_AdventureMap.GetQuestInfo)\")\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/c_adventure_map/quests.rs:271:        .eval(\"return select('#', C_AdventureMap.GetQuestInfo(99999))\")\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/c_adventure_map/quests.rs:275:        \"GetQuestInfo must return zero values for unknown quests so the dialog's \\\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/c_adventure_map/quests.rs:284:        .eval(\"return select('#', C_AdventureMap.GetQuestInfo('not-a-number'))\")\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/c_adventure_map/quests.rs:298:    env.exec(\"questTitle, descriptionText, objectiveText = C_AdventureMap.GetQuestInfo(40519)\")\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/c_adventure_map/quests.rs:302:        .eval(\"return select('#', C_AdventureMap.GetQuestInfo(40519))\")\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/c_adventure_map/quests.rs:331:        .eval(\"local t = C_AdventureMap.GetQuestInfo(40519) return t\")\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/c_adventure_map/quests.rs:334:        .eval(\"local t = C_AdventureMap.GetQuestInfo(40521) return t\")\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/c_adventure_map/quests.rs:346:        local _, descriptionText = C_AdventureMap.GetQuestInfo(123456)\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/c_adventure_map/quests.rs:373:        local questTitle, descriptionText, objectiveText = C_AdventureMap.GetQuestInfo(40519)\n",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-C_TaskQuest.GetDistanceSqToQuest-594",
+    "symbol": "C_TaskQuest.GetDistanceSqToQuest",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Mainline/TutorialFrame.lua:29:\tif C_QuestLog and C_QuestLog.GetDistanceSqToQuest then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Mainline/TutorialFrame.lua:30:\t\treturn C_QuestLog.GetDistanceSqToQuest(questID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Mainline/TutorialFrame.lua:33:\treturn GetDistanceSqToQuest(questIndex);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/QuestLogDocumentation.lua:159:\t\t\tName = \"GetDistanceSqToQuest\",\n",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-C_TransmogCollection.GetAppearanceSourceInfoForTransmog-595",
+    "symbol": "C_TransmogCollection.GetAppearanceSourceInfoForTransmog",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-CanAbandonQuest-596",
+    "symbol": "CanAbandonQuest",
+    "qualified": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:1084:\tlocal canAbandon = not isQuestDisabled and C_QuestLog.CanAbandonQuest(questID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:2293:\t\tif C_QuestLog.CanAbandonQuest(self.questID) then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/QuestLogDocumentation.lua:46:\t\t\tName = \"CanAbandonQuest\",\n",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:1084:\tlocal canAbandon = not isQuestDisabled and C_QuestLog.CanAbandonQuest(questID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:2293:\t\tif C_QuestLog.CanAbandonQuest(self.questID) then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/QuestLogDocumentation.lua:46:\t\t\tName = \"CanAbandonQuest\",\n",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 0,
+      "stdout": "/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/quest_surface/register.rs:85:    (\"CanAbandonQuest\", can_abandon_quest),\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/mists_quest_panel.rs:44:            if not CanAbandonQuest(questID) then\n",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-EJ_GetLootInfoByIndex-601",
+    "symbol": "EJ_GetLootInfoByIndex",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 0,
+      "stdout": "/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/missing_surface/encounter_journal.rs:89:        \"EJ_GetLootInfoByIndex\",\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/c_encounter_journal_probes.rs:217:                local item = EJ_GetLootInfoByIndex(i)\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/c_encounter_journal_probes.rs:334:                    local item = EJ_GetLootInfoByIndex(i)\n",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-GetAbandonQuestItems-609",
+    "symbol": "GetAbandonQuestItems",
+    "qualified": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/QuestLogDocumentation.lua:86:\t\t\tName = \"GetAbandonQuestItems\",\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:1418:\tlocal items = BuildItemNames(C_QuestLog.GetAbandonQuestItems());\n",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:1418:\tlocal items = BuildItemNames(C_QuestLog.GetAbandonQuestItems());\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/QuestLogDocumentation.lua:86:\t\t\tName = \"GetAbandonQuestItems\",\n",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 0,
+      "stdout": "/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/quest_surface/register.rs:86:    (\"GetAbandonQuestItems\", get_abandon_quest_items),\n",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-GetAbandonQuestName-610",
+    "symbol": "GetAbandonQuestName",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 0,
+      "stdout": "/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/quest_surface/register.rs:87:    (\"GetAbandonQuestName\", get_abandon_quest_name),\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/mists_quest_panel.rs:40:            if GetAbandonQuestName() ~= questTitle then\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/mists_quest_panel.rs:41:                error(\"GetAbandonQuestName did not return the selected quest title\")\n",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-GetNumQuestLogEntries-628",
+    "symbol": "GetNumQuestLogEntries",
+    "qualified": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_BoostTutorial/Blizzard_TutorialQuestManager.lua:93:\tfor i = 1, C_QuestLog.GetNumQuestLogEntries() do\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_BoostTutorial/Blizzard_TutorialLogic.lua:743:\tfor i = 1, C_QuestLog.GetNumQuestLogEntries() do\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_BoostTutorial/Blizzard_TutorialLogic.lua:2985:\tfor i = 1, C_QuestLog.GetNumQuestLogEntries() do\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Game/Mainline/EventImplementation.lua:332:\tlocal _numEntries, numQuests = C_QuestLog.GetNumQuestLogEntries();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Game/Classic/EventImplementation.lua:152:\tlocal _numEntries, numQuests = GetNumQuestLogEntries();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:165:\tfor i = 1, C_QuestLog.GetNumQuestLogEntries() do\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:183:\tfor i = 1, C_QuestLog.GetNumQuestLogEntries() do\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:356:\tfor i = headerLogIndex + 1, C_QuestLog.GetNumQuestLogEntries() do\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:877:\tlocal numEntries, numQuests = C_QuestLog.GetNumQuestLogEntries();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:1628:\tlocal numEntries = C_QuestLog.GetNumQuestLogEntries();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:2489:\tlocal numQuests = C_QuestLog.GetNumQuestLogEntries();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/QuestSession.lua:438:\tfor questLogIndex = 1, C_QuestLog.GetNumQuestLogEntries() do\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PTRFeedback/Blizzard_Reports.lua:107:\t\tfor i=1, C_QuestLog.GetNumQuestLogEntries() do\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PTRFeedback/Blizzard_PTRFeedback_Events.lua:123:    local numberOfEntries = C_QuestLog.GetNumQuestLogEntries()\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_TutorialManager/Blizzard_TutorialQuestManager.lua:88:\tfor i = 1, C_QuestLog.GetNumQuestLogEntries() do\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/GameDialogDefs.lua:56:\tif C_QuestLog and C_QuestLog.GetNumQuestLogEntries then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/GameDialogDefs.lua:57:\t\t_, numQuests = C_QuestLog.GetNumQuestLogEntries();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/GameDialogDefs.lua:59:\t\t_, numQuests = GetNumQuestLogEntries();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/QuestLogDocumentation.lua:303:\t\t\tName = \"GetNumQuestLogEntries\",\n",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_BoostTutorial/Blizzard_TutorialQuestManager.lua:93:\tfor i = 1, C_QuestLog.GetNumQuestLogEntries() do\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_BoostTutorial/Blizzard_TutorialLogic.lua:743:\tfor i = 1, C_QuestLog.GetNumQuestLogEntries() do\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_BoostTutorial/Blizzard_TutorialLogic.lua:2985:\tfor i = 1, C_QuestLog.GetNumQuestLogEntries() do\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/QuestSession.lua:438:\tfor questLogIndex = 1, C_QuestLog.GetNumQuestLogEntries() do\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:165:\tfor i = 1, C_QuestLog.GetNumQuestLogEntries() do\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:183:\tfor i = 1, C_QuestLog.GetNumQuestLogEntries() do\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:356:\tfor i = headerLogIndex + 1, C_QuestLog.GetNumQuestLogEntries() do\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:877:\tlocal numEntries, numQuests = C_QuestLog.GetNumQuestLogEntries();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:1628:\tlocal numEntries = C_QuestLog.GetNumQuestLogEntries();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:2489:\tlocal numQuests = C_QuestLog.GetNumQuestLogEntries();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Game/Mainline/EventImplementation.lua:332:\tlocal _numEntries, numQuests = C_QuestLog.GetNumQuestLogEntries();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Game/Classic/EventImplementation.lua:152:\tlocal _numEntries, numQuests = GetNumQuestLogEntries();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PTRFeedback/Blizzard_Reports.lua:107:\t\tfor i=1, C_QuestLog.GetNumQuestLogEntries() do\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_PTRFeedback/Blizzard_PTRFeedback_Events.lua:123:    local numberOfEntries = C_QuestLog.GetNumQuestLogEntries()\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_TutorialManager/Blizzard_TutorialQuestManager.lua:88:\tfor i = 1, C_QuestLog.GetNumQuestLogEntries() do\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/GameDialogDefs.lua:56:\tif C_QuestLog and C_QuestLog.GetNumQuestLogEntries then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/GameDialogDefs.lua:57:\t\t_, numQuests = C_QuestLog.GetNumQuestLogEntries();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_StaticPopup_Game/GameDialogDefs.lua:59:\t\t_, numQuests = GetNumQuestLogEntries();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/QuestLogDocumentation.lua:303:\t\t\tName = \"GetNumQuestLogEntries\",\n",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 0,
+      "stdout": "/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/stubs/global_stubs.rs:199:    // GetNumQuestLogEntries is SimState-backed in quest_surface.rs, not a stub.\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/quest_surface/task_quest.rs:27:/// surface that backs `C_QuestLog.GetNumQuestLogEntries()`.\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/quest_surface/register.rs:13:    (\"GetNumQuestLogEntries\", get_num_quest_log_entries),\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/quest_surface/register.rs:95:    (\"GetNumQuestLogEntries\", get_num_quest_log_entries),\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/missing_surface/quest_log.rs:14://! - `GetNumQuestLogEntries()` \u2014 returns (shownCount, totalCount).\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/missing_surface/quest_log.rs:65:    (\"GetNumQuestLogEntries\", get_num_quest_log_entries),\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/c_quest_log_probes.rs:12:// \u2500\u2500 GetNumQuestLogEntries \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/c_quest_log_probes.rs:18:        .eval(\"return C_QuestLog.GetNumQuestLogEntries()\")\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/c_quest_log_probes.rs:32:        .eval(\"return C_QuestLog.GetNumQuestLogEntries()\")\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/c_quest_log_defaults_probes.rs:23:            local shown, total = C_QuestLog.GetNumQuestLogEntries()\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/mists_quest_panel.rs:20:            local entries = GetNumQuestLogEntries()\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/quest_counts.rs:5://! - `GetNumQuestLogEntries`\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/quest_counts.rs:21:            local ta, tb = GetNumQuestLogEntries()\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/quest_counts.rs:22:            local ca, cb = C_QuestLog.GetNumQuestLogEntries()\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/quest_counts.rs:50:            local _, quests = C_QuestLog.GetNumQuestLogEntries()\n",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-GetNumQuestWatches-629",
+    "symbol": "GetNumQuestWatches",
+    "qualified": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_QuestObjectiveTracker.lua:157:\tfor i = 1, C_QuestLog.GetNumQuestWatches() do\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_ObjectiveTracker.lua:23:\t\t\tif GetCVarBool(\"autoQuestWatch\") and C_QuestLog.GetNumQuestWatches() < Constants.QuestWatchConsts.MAX_QUEST_WATCHES then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:540:\t\tif questLogIndex and GetCVarBool(\"autoQuestWatch\") and GetNumQuestLeaderBoards(questLogIndex) > 0 and C_QuestLog.GetNumQuestWatches() < Constants.QuestWatchConsts.MAX_QUEST_WATCHES then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:1378:\t\tif C_QuestLog.GetNumQuestWatches() >= Constants.QuestWatchConsts.MAX_QUEST_WATCHES then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/QuestLogDocumentation.lua:328:\t\t\tName = \"GetNumQuestWatches\",\n",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_QuestObjectiveTracker.lua:157:\tfor i = 1, C_QuestLog.GetNumQuestWatches() do\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_ObjectiveTracker.lua:23:\t\t\tif GetCVarBool(\"autoQuestWatch\") and C_QuestLog.GetNumQuestWatches() < Constants.QuestWatchConsts.MAX_QUEST_WATCHES then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:540:\t\tif questLogIndex and GetCVarBool(\"autoQuestWatch\") and GetNumQuestLeaderBoards(questLogIndex) > 0 and C_QuestLog.GetNumQuestWatches() < Constants.QuestWatchConsts.MAX_QUEST_WATCHES then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:1378:\t\tif C_QuestLog.GetNumQuestWatches() >= Constants.QuestWatchConsts.MAX_QUEST_WATCHES then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/QuestLogDocumentation.lua:328:\t\t\tName = \"GetNumQuestWatches\",\n",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 0,
+      "stdout": "/home/osso/.worktrees/wow-ui-sim-p901-page/src/era/compat_bootstrap.lua:77:if rawget(_G, \"GetNumQuestWatches\") == nil then\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/era/compat_bootstrap.lua:78:  function GetNumQuestWatches() return 0 end\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/mists/compat_bootstrap.lua:703:if rawget(_G, \"GetNumQuestWatches\") == nil then\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/mists/compat_bootstrap.lua:704:  function GetNumQuestWatches() return 0 end\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/quest_surface/register.rs:18:    (\"GetNumQuestWatches\", get_num_quest_watches),\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/quest_surface/register.rs:103:    (\"GetNumQuestWatches\", get_num_quest_watches),\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/c_quest_log_defaults_probes.rs:16:            if type(C_QuestLog.GetNumQuestWatches()) ~= \"number\" then return \"quest-count\" end\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/c_quest_log_defaults_probes.rs:17:            for index = 1, C_QuestLog.GetNumQuestWatches() do\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/mists_quest_panel.rs:48:            if GetNumQuestWatches() < 1 then\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/quest_counts.rs:83:            for index = 1, C_QuestLog.GetNumQuestWatches() do\n",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-GetQuestIndexForWatch-638",
+    "symbol": "GetQuestIndexForWatch",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 0,
+      "stdout": "/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/quest_surface/register.rs:100:    (\"GetQuestIndexForWatch\", get_quest_index_for_watch),\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/mists_quest_panel.rs:52:            if GetQuestIndexForWatch(1) ~= 2 then\n",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-GetQuestLogIndexByID-640",
+    "symbol": "GetQuestLogIndexByID",
+    "qualified": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Mainline/TutorialFrame.lua:25:\treturn GetQuestLogIndexByID(questID);\n",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Mainline/TutorialFrame.lua:25:\treturn GetQuestLogIndexByID(questID);\n",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 0,
+      "stdout": "/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/quest_surface/register.rs:88:    (\"GetQuestLogIndexByID\", get_quest_log_index_by_id),\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/mists_world_map_panel.rs:79:            local selectedLogIndex = GetQuestLogIndexByID(questPin.questID) or 0\n",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-GetQuestLogPushable-642",
+    "symbol": "GetQuestLogPushable",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 0,
+      "stdout": "/home/osso/.worktrees/wow-ui-sim-p901-page/src/mists/compat_bootstrap.lua:193:if rawget(_G, \"GetQuestLogPushable\") == nil then\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/mists/compat_bootstrap.lua:194:  function GetQuestLogPushable() return false end\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/quest_surface/register.rs:89:    (\"GetQuestLogPushable\", get_quest_log_pushable),\n",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-GetQuestLogRequiredMoney-643",
+    "symbol": "GetQuestLogRequiredMoney",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 0,
+      "stdout": "/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/quest_surface/register.rs:90:    (\"GetQuestLogRequiredMoney\", get_required_money),\n",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-GetQuestLogSelection-644",
+    "symbol": "GetQuestLogSelection",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 0,
+      "stdout": "/home/osso/.worktrees/wow-ui-sim-p901-page/src/wrath/compat_bootstrap.lua:464:if rawget(_G, \"GetQuestLogSelection\") == nil then\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/wrath/compat_bootstrap.lua:465:  function GetQuestLogSelection()\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/mists/compat_bootstrap.lua:181:if rawget(_G, \"GetQuestLogSelection\") == nil then\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/mists/compat_bootstrap.lua:182:  function GetQuestLogSelection() return 0 end\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/mists/compat_bootstrap.lua:1099:  function GetQuestLogSelection()\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/quest_surface/register.rs:91:    (\"GetQuestLogSelection\", get_quest_log_selection),\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/mists_world_map_panel.rs:80:            if selectedLogIndex > 0 and GetQuestLogSelection() ~= selectedLogIndex then\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/mists_quest_panel.rs:36:            if GetQuestLogSelection() ~= 2 then\n",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-GetQuestLogTitle-646",
+    "symbol": "GetQuestLogTitle",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 0,
+      "stdout": "/home/osso/.worktrees/wow-ui-sim-p901-page/src/mists/compat_bootstrap.lua:185:if rawget(_G, \"GetQuestLogTitle\") == nil then\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/mists/compat_bootstrap.lua:186:  function GetQuestLogTitle(idx) return nil end\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/quest_surface/register.rs:93:    (\"GetQuestLogTitle\", get_quest_log_title),\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/mists_quest_panel.rs:25:            local headerTitle, _, _, isHeader = GetQuestLogTitle(1)\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/mists_quest_panel.rs:30:            local questTitle, _, _, questIsHeader, _, _, _, questID = GetQuestLogTitle(2)\n",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-GetQuestWatchIndex-649",
+    "symbol": "GetQuestWatchIndex",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 0,
+      "stdout": "/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/quest_surface/register.rs:102:    (\"GetQuestWatchIndex\", get_quest_watch_index),\n",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-IsQuestComplete-660",
+    "symbol": "IsQuestComplete",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 0,
+      "stdout": "/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/quest_surface/register.rs:147:    (\"IsQuestComplete\", is_quest_complete),\n",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-IsQuestWatched-665",
+    "symbol": "IsQuestWatched",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 0,
+      "stdout": "/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/quest_surface/register.rs:148:    (\"IsQuestWatched\", is_quest_watched),\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/mists_quest_panel.rs:56:            if not IsQuestWatched(2) then\n",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-IsUnitOnQuest-666",
+    "symbol": "IsUnitOnQuest",
+    "qualified": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXMLUtil/Mainline/QuestUtils.lua:1056:\t\tif C_QuestLog.IsUnitOnQuest(\"party\"..i, questID) then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/QuestLogDocumentation.lua:1033:\t\t\tName = \"IsUnitOnQuest\",\n",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXMLUtil/Mainline/QuestUtils.lua:1056:\t\tif C_QuestLog.IsUnitOnQuest(\"party\"..i, questID) then\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/QuestLogDocumentation.lua:1033:\t\t\tName = \"IsUnitOnQuest\",\n",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 0,
+      "stdout": "/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/quest_surface/register.rs:150:    (\"IsUnitOnQuest\", is_unit_on_quest),\n",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-QuestPOIGetQuestIDByVisibleIndex-673",
+    "symbol": "QuestPOIGetQuestIDByVisibleIndex",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 0,
+      "stdout": "/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/quest_surface/register.rs:152:        \"QuestPOIGetQuestIDByVisibleIndex\",\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/mists_world_map_panel.rs:35:            local questID, questLogIndex = QuestPOIGetQuestIDByVisibleIndex(2)\n",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-RemoveQuestWatch-674",
+    "symbol": "RemoveQuestWatch",
+    "qualified": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/QuestLogDocumentation.lua:1156:\t\t\tName = \"RemoveQuestWatch\",\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:368:\t\t\t\t\t\tC_QuestLog.RemoveQuestWatch(questID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:1375:\t\t\tC_QuestLog.RemoveQuestWatch(questID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_POIButton/POIButton.lua:466:\t\t\t\t\tC_QuestLog.RemoveQuestWatch(questID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_QuestObjectiveTracker.lua:60:\t\t\t\tC_QuestLog.RemoveQuestWatch(questID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_QuestObjectiveTracker.lua:100:\t\t\t\t\tC_QuestLog.RemoveQuestWatch(questID);\n",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:368:\t\t\t\t\t\tC_QuestLog.RemoveQuestWatch(questID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:1375:\t\t\tC_QuestLog.RemoveQuestWatch(questID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_POIButton/POIButton.lua:466:\t\t\t\t\tC_QuestLog.RemoveQuestWatch(questID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_QuestObjectiveTracker.lua:60:\t\t\t\tC_QuestLog.RemoveQuestWatch(questID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_QuestObjectiveTracker.lua:100:\t\t\t\t\tC_QuestLog.RemoveQuestWatch(questID);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/QuestLogDocumentation.lua:1156:\t\t\tName = \"RemoveQuestWatch\",\n",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 0,
+      "stdout": "/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/quest_surface/register.rs:29:    (\"RemoveQuestWatch\", noop),\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/quest_surface/register.rs:155:    (\"RemoveQuestWatch\", noop),\n",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-SelectGossipOption-679",
+    "symbol": "SelectGossipOption",
+    "qualified": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Shared/GossipFrameShared.lua:224:function GossipFrameSharedMixin:SelectGossipOption(index)\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Shared/GossipFrameShared.lua:301:function SelectGossipOption(index)\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Shared/GossipFrameShared.lua:303:\t\tGossipFrame:SelectGossipOption(index);\n",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Shared/GossipFrameShared.lua:224:function GossipFrameSharedMixin:SelectGossipOption(index)\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Shared/GossipFrameShared.lua:301:function SelectGossipOption(index)\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Shared/GossipFrameShared.lua:303:\t\tGossipFrame:SelectGossipOption(index);\n",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-SelectQuestLogEntry-680",
+    "symbol": "SelectQuestLogEntry",
+    "qualified": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 0,
+      "stdout": "/home/osso/.worktrees/wow-ui-sim-p901-page/src/wrath/compat_bootstrap.lua:412:if SelectQuestLogEntry == nil then\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/wrath/compat_bootstrap.lua:413:  function SelectQuestLogEntry()\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/mists/compat_bootstrap.lua:1094:if rawget(_G, \"SelectQuestLogEntry\") == nil then\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/mists/compat_bootstrap.lua:1096:  function SelectQuestLogEntry(index)\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/mists_interactive_legacy_apis.rs:24:                type(SelectQuestLogEntry) == \"function\" and SelectQuestLogEntry(1) == nil,\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/mists_quest_panel.rs:35:            SelectQuestLogEntry(2)\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/mists_quest_panel.rs:37:                error(\"SelectQuestLogEntry did not update the selected log index\")\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/quest_surface/register.rs:156:    (\"SelectQuestLogEntry\", select_quest_log_entry),\n",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-SetAbandonQuest-682",
+    "symbol": "SetAbandonQuest",
+    "qualified": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/QuestLogDocumentation.lua:1196:\t\t\tName = \"SetAbandonQuest\",\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:1416:\tC_QuestLog.SetAbandonQuest();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:2363:\tC_QuestLog.SetAbandonQuest();\n",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:1416:\tC_QuestLog.SetAbandonQuest();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UIPanels_Game/Mainline/QuestMapFrame.lua:2363:\tC_QuestLog.SetAbandonQuest();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/QuestLogDocumentation.lua:1196:\t\t\tName = \"SetAbandonQuest\",\n",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 0,
+      "stdout": "/home/osso/.worktrees/wow-ui-sim-p901-page/tests/quest_verbs.rs:118:// \u2500\u2500 SetAbandonQuest \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/quest_verbs.rs:128:    env.exec(\"SetAbandonQuest()\").unwrap();\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/quest_verbs.rs:140:    env.exec(\"SetAbandonQuest()\").unwrap();\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/quest_verbs.rs:14://! - `SetAbandonQuest()`                  \u2014 snapshot the currently selected\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/quest_verbs.rs:22://! emits `QUEST_REMOVED` from `SetAbandonQuest` so tests can observe the\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/quest_verbs.rs:120:/// `SetAbandonQuest()` \u2014 snapshot the currently selected quest as the\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/quest_verbs.rs:264:    LuaApiMut::register_function(lua, \"SetAbandonQuest\", set_abandon_quest)?;\n",
+      "stderr": ""
+    }
+  },
+  {
+    "id": "wt-global-api-SortQuestWatches-687",
+    "symbol": "SortQuestWatches",
+    "qualified": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/QuestLogDocumentation.lua:1250:\t\t\tName = \"SortQuestWatches\",\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_ObjectiveTracker.lua:13:\t\tC_QuestLog.SortQuestWatches();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_ObjectiveTracker.lua:17:\t\t\tC_QuestLog.SortQuestWatches();\n",
+      "stderr": ""
+    },
+    "bare": {
+      "exit": 0,
+      "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_APIDocumentationGenerated/QuestLogDocumentation.lua:1250:\t\t\tName = \"SortQuestWatches\",\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_ObjectiveTracker.lua:13:\t\tC_QuestLog.SortQuestWatches();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_ObjectiveTracker.lua:17:\t\t\tC_QuestLog.SortQuestWatches();\n",
+      "stderr": ""
+    },
+    "callers": {
+      "exit": 0,
+      "stdout": "/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/quest_surface/register.rs:30:    (\"SortQuestWatches\", noop),\n/home/osso/.worktrees/wow-ui-sim-p901-page/src/lua_api/globals/quest_surface/register.rs:170:    (\"SortQuestWatches\", noop),\n/home/osso/.worktrees/wow-ui-sim-p901-page/tests/startup_api_stubs.rs:144:                SortQuestWatches()\n",
+      "stderr": ""
+    }
+  }
+]

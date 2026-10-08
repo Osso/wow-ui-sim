@@ -1,0 +1,226 @@
+running 34 tests
+test patch_10_0_0_publication_sweep::patch_10_0_0_animation_probe_factories ... ok
+test patch_10_0_2_publication_sweep::patch_10_0_2_publication_sweep ... ok
+test patch_10_0_0_publication_sweep::patch_10_0_0_publication_sweep ... ok
+test patch_10_0_5_publication_sweep::patch_10_0_5_publication_sweep ... ok
+test patch_10_0_7_publication_sweep::patch_10_0_7_publication_sweep ... ok
+test patch_10_1_0_publication_sweep::patch_10_1_0_publication_sweep ... ok
+test patch_10_1_5_publication_sweep::patch_10_1_5_publication_sweep ... ok
+test patch_10_1_7_publication_sweep::patch_10_1_7_publication_sweep ... ok
+test patch_10_2_0_publication_sweep::patch_10_2_0_publication_sweep ... ok
+test patch_10_2_5_publication_sweep::patch_10_2_5_publication_sweep ... ok
+test patch_10_2_7_publication_sweep::patch_10_2_7_publication_sweep ... ok
+test patch_10_2_6_publication_sweep::patch_10_2_6_publication_sweep ... ok
+test patch_11_0_2_publication_sweep::patch_11_0_2_publication_sweep ... ok
+test patch_11_0_5_publication_sweep::patch_11_0_5_publication_sweep ... ok
+test patch_11_0_0_publication_sweep::patch_11_0_0_publication_sweep ... ok
+test patch_11_0_7_publication_sweep::patch_11_0_7_publication_sweep ... ok
+test patch_11_1_0_publication_sweep::patch_11_1_0_publication_sweep ... ok
+test patch_11_1_5_publication_sweep::patch_11_1_5_publication_sweep ... ok
+test patch_11_1_7_publication_sweep::patch_11_1_7_publication_sweep ... ok
+test patch_11_2_0_publication_sweep::patch_11_2_0_publication_sweep ... ok
+test patch_11_2_5_publication_sweep::patch_11_2_5_publication_sweep ... ok
+test patch_11_2_7_publication_sweep::patch_11_2_7_publication_sweep ... ok
+test patch_12_0_1_publication_sweep::patch_12_0_1_publication_sweep ... ok
+test patch_12_0_0_publication_sweep::patch_12_0_0_publication_sweep ... ok
+test patch_12_0_7_publication_sweep::patch_12_0_7_publication_sweep ... ok
+test patch_12_0_5_publication_sweep::patch_12_0_5_publication_sweep ... ok
+test patch_12_1_0_publication_sweep::patch_12_1_0_publication_sweep ... ok
+test patch_9_0_1_publication_sweep::patch_9_0_1_publication_sweep ... ok
+test patch_9_0_5_publication_sweep::patch_9_0_5_publication_sweep ... ok
+test patch_9_1_0_publication_sweep::patch_9_1_0_publication_sweep ... ok
+test patch_9_1_5_publication_sweep::patch_9_1_5_publication_sweep ... ok
+test patch_9_2_5_publication_sweep::patch_9_2_5_publication_sweep ... ok
+test patch_9_2_0_publication_sweep::patch_9_2_0_publication_sweep ... ok
+test patch_9_2_7_publication_sweep::patch_9_2_7_publication_sweep ... ok
+
+test result: ok. 34 passed; 0 failed; 34 total
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.37s
+     Running tests/prefork_full_ui.rs (target/debug/deps/prefork_full_ui-34a818a91c447c36)
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.004s] [Startup] SimState::default complete in 3.93ms
+[  0.004s] [Startup] rilua VM created in 224.49µs
+[  0.004s] [Startup] builtin frames initialized in 185.22µs
+[  0.004s] [Startup] template registry cleared in 9.99µs
+[  0.004s] [Startup] intrinsic templates registered in 11.72µs
+[  0.004s] [Startup] initial app_data lua handle installed in 631.00ns
+[  0.270s] [Startup] init_lua_state complete in 265.08ms
+[  0.270s] [Startup] final app_data lua handle installed in 270.00ns
+[  0.270s] [Startup] initial screen globals installed in 123.96µs
+[  0.270s] [Startup] WowLuaEnv::new complete
+[  4.113s] [Startup] apply_post_load_workarounds: begin
+[  4.113s] [Workarounds] starting patch_edit_mode_manager
+[  4.113s] [Workarounds] finished patch_edit_mode_manager in 492.58µs
+[  4.113s] [Workarounds] starting init_edit_mode_layout
+[  4.113s] [EditMode] starting setup_layout_info
+[  4.119s] [EditMode] finished setup_layout_info in 5.49ms
+[  4.119s] [EditMode] starting apply_system_anchors
+[  4.344s] [EditMode] finished apply_system_anchors in 224.89ms
+[  4.344s] [EditMode] starting finalize_action_bar_positions
+[  4.347s] [EditMode] finished finalize_action_bar_positions in 3.35ms
+[  4.347s] [EditMode] starting invoke_anchor_changed_hooks
+[  4.347s] [EditMode] finished invoke_anchor_changed_hooks in 579.58µs
+[  4.348s] [EditMode] starting fix_action_bar_nan_size
+[  4.348s] [EditMode] finished fix_action_bar_nan_size in 64.60µs
+[  4.348s] [EditMode] starting fix_action_bar_scale
+[  4.348s] [EditMode] finished fix_action_bar_scale in 7.03µs
+[  4.348s] [Workarounds] finished init_edit_mode_layout in 234.45ms
+[  4.348s] [Workarounds] starting patch_ui_parent_panel_toggles
+[  4.348s] [Workarounds] finished patch_ui_parent_panel_toggles in 344.54µs
+[  4.348s] [Workarounds] starting patch_uiparent_onupdate_worklists
+[  4.348s] [Workarounds] finished patch_uiparent_onupdate_worklists in 146.02µs
+[  4.348s] [Workarounds] starting init_chat_type_colors
+[  4.348s] [Workarounds] finished init_chat_type_colors in 168.26µs
+[  4.348s] [Workarounds] starting patch_chat_voice_button_surface
+[  4.348s] [Workarounds] finished patch_chat_voice_button_surface in 171.44µs
+[  4.348s] [Workarounds] starting patch_item_socketing_tooltips
+[  4.349s] [Workarounds] finished patch_item_socketing_tooltips in 84.36µs
+[  4.349s] [Workarounds] starting patch_character_select_selected_name
+[  4.349s] [Workarounds] finished patch_character_select_selected_name in 45.93µs
+[  4.349s] [Workarounds] starting patch_character_create_defaults
+[  4.349s] [Workarounds] finished patch_character_create_defaults in 329.95µs
+[  4.349s] [Workarounds] starting patch_character_frame_title_refresh
+[  4.358s] [Workarounds] finished patch_character_frame_title_refresh in 8.67ms
+[  4.358s] [Workarounds] starting patch_vignette_pin_template
+[  4.358s] [Workarounds] finished patch_vignette_pin_template in 142.31µs
+[  4.358s] [Workarounds] starting patch_fog_of_war_pin_mixin
+[  4.358s] [Workarounds] finished patch_fog_of_war_pin_mixin in 478.77µs
+[  4.358s] [Workarounds] starting patch_map_exploration_pin_mixin
+[  4.367s] [Workarounds] finished patch_map_exploration_pin_mixin in 8.93ms
+[  4.367s] [Workarounds] starting patch_map_canvas_data_provider_attachment
+[  4.367s] [Workarounds] finished patch_map_canvas_data_provider_attachment in 203.26µs
+[  4.367s] [Workarounds] starting ensure_adventure_map_frame_surface
+[  4.368s] [Workarounds] finished ensure_adventure_map_frame_surface in 930.13µs
+[  4.368s] [Workarounds] starting patch_action_bar_button_event_fanout
+[  4.368s] [Workarounds] finished patch_action_bar_button_event_fanout in 177.69µs
+[  4.368s] [Workarounds] starting patch_paging_controls_page_text
+[  4.369s] [Workarounds] finished patch_paging_controls_page_text in 65.36µs
+[  4.369s] [Workarounds] starting patch_talent_edge_frame_level_sync
+[  4.369s] [Workarounds] finished patch_talent_edge_frame_level_sync in 49.67µs
+[  4.369s] [Workarounds] starting patch_catalog_shop_product_card_defaults
+[  4.369s] [Workarounds] finished patch_catalog_shop_product_card_defaults in 112.75µs
+[  4.369s] [Workarounds] starting patch_game_time_defaults
+[  4.369s] [Workarounds] finished patch_game_time_defaults in 18.66µs
+[  4.369s] [Workarounds] starting patch_tooltip_nineslice_surface
+[  4.369s] [Workarounds] finished patch_tooltip_nineslice_surface in 83.60µs
+[  4.369s] [Workarounds] starting patch_container_frame_token_tracker
+[  4.369s] [Workarounds] finished patch_container_frame_token_tracker in 69.47µs
+[  4.369s] [Workarounds] starting patch_achievement_display_set_achievements
+[  4.369s] [Workarounds] finished patch_achievement_display_set_achievements in 13.87µs
+[  4.369s] [Workarounds] starting patch_housing_dashboard_preload
+[  4.369s] [Workarounds] finished patch_housing_dashboard_preload in 306.91µs
+[  4.369s] [Workarounds] starting patch_lfg_lock_list
+[  4.369s] [Workarounds] finished patch_lfg_lock_list in 213.06µs
+[  4.369s] [Workarounds] starting patch_auction_house_browse_results_event
+[  4.370s] [Workarounds] finished patch_auction_house_browse_results_event in 377.51µs
+[  4.370s] [Workarounds] starting patch_auction_house_search_context_aliases
+[  4.370s] [Workarounds] finished patch_auction_house_search_context_aliases in 72.63µs
+[  4.370s] [Workarounds] starting patch_auth_challenge_frame_parent
+[  4.370s] [Workarounds] finished patch_auth_challenge_frame_parent in 258.48µs
+[  4.370s] [Workarounds] starting patch_settings_surface_defaults
+[  4.371s] [Workarounds] finished patch_settings_surface_defaults in 784.48µs
+[  4.371s] [Workarounds] starting patch_settings_canvas_layout_visibility
+[  4.371s] [Workarounds] finished patch_settings_canvas_layout_visibility in 213.91µs
+[  4.371s] [Startup] apply_post_load_workarounds: workarounds complete
+[  4.468s] [Startup] apply_post_load_workarounds: globals restored
+[  4.469s] [Startup] apply_post_load_workarounds: patch 12.1 compatibility restored
+[  4.469s] [Startup] apply_post_load_workarounds: seterrorhandler restored
+[  4.636s] [Startup] begin login sequence
+[  4.636s] [Startup] Firing ADDON_LOADED
+[  4.637s] [Startup] Firing VARIABLES_LOADED
+[  4.788s] [Startup] Firing DISPLAY_SIZE_CHANGED
+[  4.843s] [Startup] Firing UI_SCALE_CHANGED
+[  4.844s] [Startup] Firing PLAYER_LOGIN
+[  4.844s] [Startup] end login sequence in 207.96ms
+[  4.844s] [Startup] begin world enter sequence
+[  4.844s] [Startup] Skipping EDIT_MODE_LAYOUTS_UPDATED
+[  4.844s] [Startup] Firing TIME_PLAYED_MSG via RequestTimePlayed
+[  4.844s] [Startup] Firing PLAYER_ENTERING_WORLD
+[  5.212s] [EditMode] starting setup_layout_info
+[  5.220s] [EditMode] finished setup_layout_info in 7.62ms
+[  5.220s] [EditMode] starting apply_system_anchors
+[  5.436s] [EditMode] finished apply_system_anchors in 216.12ms
+[  5.436s] [EditMode] starting finalize_action_bar_positions
+[  5.439s] [EditMode] finished finalize_action_bar_positions in 3.34ms
+[  5.439s] [EditMode] starting invoke_anchor_changed_hooks
+[  5.447s] [EditMode] finished invoke_anchor_changed_hooks in 7.91ms
+[  5.447s] [EditMode] starting fix_action_bar_nan_size
+[  5.447s] [EditMode] finished fix_action_bar_nan_size in 98.81µs
+[  5.447s] [EditMode] starting fix_action_bar_scale
+[  5.447s] [EditMode] finished fix_action_bar_scale in 6.82µs
+[  5.447s] [EditMode] starting reapply_player_frame_anchor
+[  5.449s] [EditMode] finished reapply_player_frame_anchor in 2.05ms
+[  5.463s] [Startup] end world enter sequence in 618.97ms
+[  5.463s] [Startup] begin post-login events
+[  5.465s] [Startup] Firing UNIT_AURA
+[  5.466s] [Startup] Firing PET_UI_UPDATE
+[  5.469s] [Startup] Firing BAG_UPDATE_DELAYED
+[  5.471s] [Startup] Firing QUEST_LOG_UPDATE
+[  5.473s] [Startup] Firing GROUP_ROSTER_UPDATE
+[  5.617s] [Startup] Firing ACTIONBAR_UPDATE_STATE
+[  5.617s] [Startup] Firing ACTIONBAR_UPDATE_COOLDOWN
+[  5.619s] [Startup] Firing UPDATE_BONUS_ACTIONBAR
+[  5.638s] [Startup] Firing PLAYER_CAN_GLIDE_CHANGED
+[  5.638s] [Startup] Firing PLAYER_IS_GLIDING_CHANGED
+[  5.638s] [Startup] Firing UPDATE_BINDINGS
+[  5.644s] [Startup] Firing UPDATE_CHAT_WINDOWS
+[  5.649s] [Startup] Firing LFG_UPDATE_RANDOM_INFO
+[  5.651s] [Startup] end post-login events in 187.24ms
+[  5.651s] [Startup] begin close startup special windows
+[  5.651s] [Startup] end close startup special windows in 500.29µs
+[  5.651s] [Startup] begin FIRST_FRAME_RENDERED
+[  5.651s] [Startup] Firing FIRST_FRAME_RENDERED
+[  5.651s] [Startup] end FIRST_FRAME_RENDERED in 337.64µs
+[  5.651s] [Startup] begin unblock hidden splash alerts
+[  5.651s] [Startup] end unblock hidden splash alerts in 30.20µs
+[  5.651s] [Startup] begin post-event workarounds
+[  5.651s] [Startup] end post-event workarounds in 1.87µs
+CVar default mismatch wt-cvars-CMAA2HalfFloat-814: page=Some("0"), observed=Some("1")
+CVar default mismatch wt-cvars-luaErrorExceptions-835: page=Some("1"), observed=None
+CVar default mismatch wt-cvars-minimapTrackedInfov3-837: page=Some("1006319"), observed=None
+CVar default mismatch wt-cvars-SoftTargetEnemyRange-857: page=Some("45"), observed=Some("45.000000")
+CVar default mismatch wt-cvars-SoftTargetFriendRange-861: page=Some("45"), observed=Some("45.000000")
+CVar default mismatch wt-cvars-SoftTargetInteractRange-869: page=Some("10"), observed=Some("10.000000")
+CVar default mismatch wt-cvars-SoftTargetWorldtextFarDist-884: page=Some("40"), observed=Some("40.000000")
+CVar default mismatch wt-cvars-SoftTargetWorldtextNearDist-885: page=Some("4"), observed=Some("4.000000")
+CVar default mismatch wt-cvars-SoftTargetWorldtextNearScale-886: page=Some("1"), observed=Some("1.000000")
+CVar default mismatch wt-cvars-SoftTargetWorldtextSize-887: page=Some("32"), observed=Some("32.000000")
+CVar default mismatch wt-cvars-WorldTextMinSize-901: page=Some("0"), observed=Some("0.000000")
+CVar default mismatch wt-cvars-vrsValarEnvLuma-109: page=Some("0.05"), observed=None
+CVar default mismatch wt-cvars-vrsValarK-110: page=Some("2.13"), observed=None
+CVar default mismatch wt-cvars-vrsValarSensitivityThreshold-111: page=Some("0.31"), observed=None
+CVar default mismatch wt-cvars-vrsValarUseAsyncCompute-112: page=Some("0"), observed=None
+CVar default mismatch wt-cvars-vrsValarUseMotionVectors-113: page=Some("0"), observed=None
+CVar default mismatch wt-cvars-vrsValarUseWeberFechner-114: page=Some("0"), observed=None
+CVar default mismatch wt-cvars-vrsValarWeberFechnerConstant-115: page=Some("1.0"), observed=None
+CVar default mismatch wt-cvars-nameplateGameObjectMaxDistance-400: page=Some("30"), observed=Some("30.000000")
+CVar default mismatch wt-cvars-wmoPortalInteriorFade-168: page=Some("0"), observed=Some("1")
+CVar default mismatch wt-cvars-advFlyKeyboardMaxPitchFactor-245: page=Some("5.0"), observed=Some("5.000000")
+CVar default mismatch wt-cvars-advFlyKeyboardMaxTurnFactor-246: page=Some("8.0"), observed=Some("8.000000")
+CVar default mismatch wt-cvars-advFlyKeyboardMinPitchFactor-247: page=Some("2.5"), observed=Some("2.500000")
+CVar default mismatch wt-cvars-advFlyKeyboardMinTurnFactor-248: page=Some("5.0"), observed=Some("5.000000")
+CVar default mismatch wt-cvars-advFlyPitchControlCameraChase-249: page=Some("20.0"), observed=Some("20.000000")
+CVar default mismatch wt-cvars-gxMTDecals-249: page=Some("1"), observed=Some("0")
+CVar default mismatch wt-cvars-AllowSoftwareRendererDX12-653: page=Some("0"), observed=None
+CVar default mismatch wt-cvars-AllowWinRT-655: page=Some("0"), observed=None
+CVar default mismatch wt-cvars-cameraIndirectOffset-658: page=Some("1.500000"), observed=Some("6.000000")
+CVar default mismatch wt-cvars-questPOILocalStory-692: page=Some("0"), observed=Some("1")
+CVar default mismatch wt-cvars-showPhotosensitivityWarning-700: page=Some("0"), observed=Some("-1")
+CVar default mismatch wt-cvars-showTempMaxHealthLoss-703: page=Some("0"), observed=Some("1")
+CVar default mismatch wt-cvars-vrsValarAlwaysOn-714: page=Some("0"), observed=None
+CVar default mismatch wt-cvars-vrsValarLPUseCornerSampling-716: page=Some("1"), observed=None
+CVar default mismatch wt-cvars-CameraFollowGamepadAdjustDelay-208: page=Some("1.0"), observed=Some("1.000000")
+CVar default mismatch wt-cvars-CameraFollowGamepadAdjustEaseIn-209: page=Some("1.0"), observed=Some("1.000000")
+CVar default mismatch wt-cvars-graphicsComputeEffects-219: page=Some("4"), observed=Some("1")
+CVar default mismatch wt-cvars-RAIDVolumeFog-224: page=Some("1"), observed=Some("0")
+CVar default mismatch wt-cvars-TTSUseCharacterSettings-227: page=Some("1"), observed=None
+CVar default mismatch wt-cvars-CMAA2Quality-137: page=Some("2"), observed=Some("3")
+CVar default mismatch wt-cvars-cameraFov-242: page=Some("90"), observed=Some("90.000000")
+CVar default mismatch wt-cvars-enableSourceLocationLookup-243: page=Some("0"), observed=Some("1")

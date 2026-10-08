@@ -1,0 +1,1217 @@
+[
+  {
+    "source_id": "source-context-001",
+    "extract_line": 1,
+    "literal": "Patch 9.0.1 API changes",
+    "wikitext_line": 1,
+    "raw_literal": "{{apichanges|9.0.1|prev=8.3.7|next=9.0.2}}",
+    "status": "metadata-only",
+    "reason": "Navigation, release/source context, heading, table markup or code fence; no runtime credit."
+  },
+  {
+    "source_id": "source-context-003",
+    "extract_line": 3,
+    "literal": "== Summary ==",
+    "wikitext_line": 3,
+    "raw_literal": "==Summary==",
+    "status": "metadata-only",
+    "reason": "Navigation, release/source context, heading, table markup or code fence; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-004",
+    "extract_line": 4,
+    "literal": "Patch 9.0.1 is the pre-patch for Shadowlands API and systems.",
+    "wikitext_line": 4,
+    "raw_literal": "Patch 9.0.1 is the pre-patch for Shadowlands API and systems.",
+    "status": "metadata-only",
+    "reason": "Navigation, release/source context, heading, table markup or code fence; no runtime credit."
+  },
+  {
+    "source_id": "source-context-005",
+    "extract_line": 5,
+    "literal": "* TOC: 90001",
+    "wikitext_line": 5,
+    "raw_literal": "* TOC: <code>90001</code>",
+    "status": "metadata-only",
+    "reason": "Navigation, release/source context, heading, table markup or code fence; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-006",
+    "extract_line": 6,
+    "literal": "* Frames no longer provide any form of Backdrop API by default. See Backdrop System Changes.",
+    "wikitext_line": 6,
+    "raw_literal": "* {{api|t=o|Frame}}s no longer provide any form of [[API_Frame_SetBackdrop|Backdrop API]] by default. See [https://github.com/Stanzilla/WoWUIBugs/wiki/9.0.1-Consolidated-UI-Changes#backdrop-system-changes Backdrop System Changes].",
+    "status": "audit-pending",
+    "reason": "Default frame backdrop availability and explicit-template behavior require separate widget tests; historical default versus current compatibility surface is not proven here."
+  },
+  {
+    "source_id": "prose-undated-007",
+    "extract_line": 7,
+    "literal": "* Various LE_* enumerations have been moved to the global Enum table. See Enum Changes.",
+    "wikitext_line": 7,
+    "raw_literal": "* Various <code>LE_*</code> enumerations have been moved to the global <code>Enum</code> table. See [https://github.com/Stanzilla/WoWUIBugs/wiki/9.0.1-Consolidated-UI-Changes#enum-changes Enum Changes].",
+    "status": "audit-pending",
+    "reason": "Broad legacy-enum migration needs the named enum/value mapping and profile-specific visibility tests; linked external page is not expanded."
+  },
+  {
+    "source_id": "prose-undated-008",
+    "extract_line": 8,
+    "literal": "* APIs deprecated during the lifetime of 8.x and present within the Blizzard_Deprecated addon have been removed. See Deprecated API Removals.",
+    "wikitext_line": 8,
+    "raw_literal": "* APIs deprecated during the lifetime of 8.x and present within the Blizzard_Deprecated addon have been removed. See [https://github.com/Stanzilla/WoWUIBugs/wiki/9.0.1-Consolidated-UI-Changes#deprecated-api-removals Deprecated API Removals].",
+    "status": "audit-pending",
+    "reason": "Historical expansion/deprecation/removal prose requires behavioral compatibility audit; page retention is not runtime credit."
+  },
+  {
+    "source_id": "prose-undated-009",
+    "extract_line": 9,
+    "literal": "* New files and TOC format metadata changes no longer require a client restart to take effect, only a /reload (on Windows).",
+    "wikitext_line": 9,
+    "raw_literal": "* New files and [[TOC format]] metadata changes no longer require a client restart to take effect, only a [[MACRO reload|/reload]] (on Windows).",
+    "status": "audit-pending",
+    "reason": "Windows reload discovery/TOC metadata claim requires file/process lifecycle reproduction; in-memory publication tests do not exercise client restart behavior."
+  },
+  {
+    "source_id": "prose-undated-010",
+    "extract_line": 10,
+    "literal": "* The |r escape sequence now pops nested |c color sequences in-order, instead of resetting the text to the default color.",
+    "wikitext_line": 10,
+    "raw_literal": "* The <code>|r</code> [[UI_escape_sequences|escape sequence]] now pops nested <code>|c</code> color sequences in-order, instead of resetting the text to the default color.",
+    "status": "audit-pending",
+    "reason": "Nested color-stack reset/pop semantics require behavior proof with nested markup; publication sweeps do not exercise text parsing."
+  },
+  {
+    "source_id": "source-context-012",
+    "extract_line": 12,
+    "literal": "== Resources ==",
+    "wikitext_line": 12,
+    "raw_literal": "==Resources==",
+    "status": "metadata-only",
+    "reason": "Navigation, release/source context, heading, table markup or code fence; no runtime credit."
+  },
+  {
+    "source_id": "source-context-013",
+    "extract_line": 13,
+    "literal": "* Diffs: wow-ui-source, BlizzardInterfaceResources",
+    "wikitext_line": 13,
+    "raw_literal": "* Diffs: [https://github.com/Gethe/wow-ui-source/compare/8.3.7...9.0.1 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/8.3.7...9.0.1 BlizzardInterfaceResources]",
+    "status": "metadata-only",
+    "reason": "Navigation, release/source context, heading, table markup or code fence; no runtime credit."
+  },
+  {
+    "source_id": "source-context-014",
+    "extract_line": 14,
+    "literal": "* Official patch notes: Shadowlands Pre-Expansion Patch Notes",
+    "wikitext_line": 14,
+    "raw_literal": "* Official patch notes: [https://worldofwarcraft.com/en-us/news/23529209/shadowlands-pre-expansion-patch-notes#item13 Shadowlands Pre-Expansion Patch Notes]",
+    "status": "metadata-only",
+    "reason": "Navigation, release/source context, heading, table markup or code fence; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-015",
+    "extract_line": 15,
+    "literal": "* Community patch notes: 9.0.1 Consolidated UI Changes",
+    "wikitext_line": 15,
+    "raw_literal": "* Community patch notes: [https://github.com/Stanzilla/WoWUIBugs/wiki/9.0.1-Consolidated-UI-Changes 9.0.1 Consolidated UI Changes]",
+    "status": "metadata-only",
+    "reason": "Navigation, release/source context, heading, table markup or code fence; no runtime credit."
+  },
+  {
+    "source_id": "source-context-017",
+    "extract_line": 17,
+    "literal": "== Deprecated API ==",
+    "wikitext_line": 17,
+    "raw_literal": "==Deprecated API==",
+    "status": "metadata-only",
+    "reason": "Navigation, release/source context, heading, table markup or code fence; no runtime credit."
+  },
+  {
+    "source_id": "deprecated api-removal-summary-018",
+    "extract_line": 18,
+    "literal": "APIs deprecated over the course of the 8.x expansion lifecycle were removed with 9.0.1 https://github.com/Gethe/wow-ui-source/tree/8.3.7/AddOns/Blizzard_Deprecated",
+    "wikitext_line": 18,
+    "raw_literal": "APIs deprecated over the course of the 8.x expansion lifecycle were removed with 9.0.1 <ref>https://github.com/Gethe/wow-ui-source/tree/8.3.7/AddOns/Blizzard_Deprecated</ref>",
+    "status": "audit-pending",
+    "reason": "Historical expansion/deprecation/removal prose requires behavioral compatibility audit; page retention is not runtime credit."
+  },
+  {
+    "source_id": "deprecated api-removal-summary-020",
+    "extract_line": 20,
+    "literal": "{| class=\"wikitable\" style=\"min-width: 600px\"",
+    "wikitext_line": 20,
+    "raw_literal": "{| class=\"wikitable\" style=\"min-width: 600px\"",
+    "status": "metadata-only",
+    "reason": "Navigation, release/source context, heading, table markup or code fence; no runtime credit."
+  },
+  {
+    "source_id": "deprecated api-removal-summary-021",
+    "extract_line": 21,
+    "literal": "|- class=\"mw-customtoggle-deprecated\" style=\"cursor: pointer\"",
+    "wikitext_line": 21,
+    "raw_literal": "|- class=\"mw-customtoggle-deprecated\" style=\"cursor: pointer\" ",
+    "status": "metadata-only",
+    "reason": "Navigation, release/source context, heading, table markup or code fence; no runtime credit."
+  },
+  {
+    "source_id": "deprecated api-removal-summary-022",
+    "extract_line": 22,
+    "literal": "! Deprecated 8.x API",
+    "wikitext_line": 22,
+    "raw_literal": "! Deprecated 8.x API",
+    "status": "metadata-only",
+    "reason": "Navigation, release/source context, heading, table markup or code fence; no runtime credit."
+  },
+  {
+    "source_id": "deprecated api-removal-summary-023",
+    "extract_line": 23,
+    "literal": "|- class=\"mw-collapsible\" id=\"mw-customcollapsible-deprecated\"",
+    "wikitext_line": 23,
+    "raw_literal": "|- class=\"mw-collapsible\" id=\"mw-customcollapsible-deprecated\"",
+    "status": "metadata-only",
+    "reason": "Navigation, release/source context, heading, table markup or code fence; no runtime credit."
+  },
+  {
+    "source_id": "source-context-024",
+    "extract_line": 24,
+    "literal": "=== 8.1.0 ===",
+    "wikitext_line": 25,
+    "raw_literal": "=== 8.1.0 ===",
+    "status": "metadata-only",
+    "reason": "Navigation, release/source context, heading, table markup or code fence; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-025",
+    "extract_line": 25,
+    "literal": ": GetSummonConfirmTimeLeft → C_SummonInfo.GetSummonConfirmTimeLeft",
+    "wikitext_line": 26,
+    "raw_literal": ": {{api|t=a|GetSummonConfirmTimeLeft}} → {{api|t=a|C_SummonInfo.GetSummonConfirmTimeLeft}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-026",
+    "extract_line": 26,
+    "literal": ": GetSummonConfirmSummoner → C_SummonInfo.GetSummonConfirmSummoner",
+    "wikitext_line": 27,
+    "raw_literal": ": {{api|t=a|GetSummonConfirmSummoner}} → {{api|t=a|C_SummonInfo.GetSummonConfirmSummoner}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-027",
+    "extract_line": 27,
+    "literal": ": GetSummonConfirmAreaName → C_SummonInfo.GetSummonConfirmAreaName",
+    "wikitext_line": 28,
+    "raw_literal": ": {{api|t=a|GetSummonConfirmAreaName}} → {{api|t=a|C_SummonInfo.GetSummonConfirmAreaName}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-028",
+    "extract_line": 28,
+    "literal": ": ConfirmSummon → C_SummonInfo.ConfirmSummon",
+    "wikitext_line": 29,
+    "raw_literal": ": {{api|t=a|ConfirmSummon}} → {{api|t=a|C_SummonInfo.ConfirmSummon}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-029",
+    "extract_line": 29,
+    "literal": ": CancelSummon → C_SummonInfo.CancelSummon",
+    "wikitext_line": 30,
+    "raw_literal": ": {{api|t=a|CancelSummon}} → {{api|t=a|C_SummonInfo.CancelSummon}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-030",
+    "extract_line": 30,
+    "literal": ": C_Calendar.GetDate → C_DateAndTime.GetCurrentCalendarTime",
+    "wikitext_line": 31,
+    "raw_literal": ": {{api|t=a|C_Calendar.GetDate}} → {{api|t=a|C_DateAndTime.GetCurrentCalendarTime}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-031",
+    "extract_line": 31,
+    "literal": ": C_DateAndTime.GetDateFromEpoch → C_DateAndTime.GetCalendarTimeFromEpoch",
+    "wikitext_line": 32,
+    "raw_literal": ": {{api|t=a|C_DateAndTime.GetDateFromEpoch}} → {{api|t=a|C_DateAndTime.GetCalendarTimeFromEpoch}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-032",
+    "extract_line": 32,
+    "literal": ": C_DateAndTime.GetTodaysDate → C_DateAndTime.GetCurrentCalendarTime",
+    "wikitext_line": 33,
+    "raw_literal": ": {{api|t=a|C_DateAndTime.GetTodaysDate}} → {{api|t=a|C_DateAndTime.GetCurrentCalendarTime}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-033",
+    "extract_line": 33,
+    "literal": ": C_DateAndTime.GetYesterdaysDate → C_DateAndTime.AdjustTimeByDays",
+    "wikitext_line": 34,
+    "raw_literal": ": {{api|t=a|C_DateAndTime.GetYesterdaysDate}} → {{api|t=a|C_DateAndTime.AdjustTimeByDays}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-034",
+    "extract_line": 34,
+    "literal": ": GetNumFriends → C_FriendList.GetNumFriends, C_FriendList.GetNumOnlineFriends",
+    "wikitext_line": 35,
+    "raw_literal": ": {{api|t=a|GetNumFriends}} → {{api|t=a|C_FriendList.GetNumFriends}}, {{api|t=a|C_FriendList.GetNumOnlineFriends}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-035",
+    "extract_line": 35,
+    "literal": ": GetFriendInfo → C_FriendList.GetFriendInfo, C_FriendList.GetFriendInfoByIndex",
+    "wikitext_line": 36,
+    "raw_literal": ": {{api|t=a|GetFriendInfo}} → {{api|t=a|C_FriendList.GetFriendInfo}}, {{api|t=a|C_FriendList.GetFriendInfoByIndex}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-036",
+    "extract_line": 36,
+    "literal": ": SetSelectedFriend → C_FriendList.SetSelectedFriend",
+    "wikitext_line": 37,
+    "raw_literal": ": {{api|t=a|SetSelectedFriend}} → {{api|t=a|C_FriendList.SetSelectedFriend}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-037",
+    "extract_line": 37,
+    "literal": ": GetSelectedFriend → C_FriendList.GetSelectedFriend",
+    "wikitext_line": 38,
+    "raw_literal": ": {{api|t=a|GetSelectedFriend}} → {{api|t=a|C_FriendList.GetSelectedFriend}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-038",
+    "extract_line": 38,
+    "literal": ": AddOrRemoveFriend → C_FriendList.AddOrRemoveFriend",
+    "wikitext_line": 39,
+    "raw_literal": ": {{api|t=a|AddOrRemoveFriend}} → {{api|t=a|C_FriendList.AddOrRemoveFriend}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-039",
+    "extract_line": 39,
+    "literal": ": AddFriend → C_FriendList.AddFriend",
+    "wikitext_line": 40,
+    "raw_literal": ": {{api|t=a|AddFriend}} → {{api|t=a|C_FriendList.AddFriend}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-040",
+    "extract_line": 40,
+    "literal": ": RemoveFriend → C_FriendList.RemoveFriend, C_FriendList.RemoveFriendByIndex",
+    "wikitext_line": 41,
+    "raw_literal": ": {{api|t=a|RemoveFriend}} → {{api|t=a|C_FriendList.RemoveFriend}}, {{api|t=a|C_FriendList.RemoveFriendByIndex}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-041",
+    "extract_line": 41,
+    "literal": ": ShowFriends → C_FriendList.ShowFriends",
+    "wikitext_line": 42,
+    "raw_literal": ": {{api|t=a|ShowFriends}} → {{api|t=a|C_FriendList.ShowFriends}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-042",
+    "extract_line": 42,
+    "literal": ": SetFriendNotes → C_FriendList.SetFriendNotes, C_FriendList.SetFriendNotesByIndex",
+    "wikitext_line": 43,
+    "raw_literal": ": {{api|t=a|SetFriendNotes}} → {{api|t=a|C_FriendList.SetFriendNotes}}, {{api|t=a|C_FriendList.SetFriendNotesByIndex}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-043",
+    "extract_line": 43,
+    "literal": ": IsCharacterFriend → C_FriendList.IsFriend",
+    "wikitext_line": 44,
+    "raw_literal": ": {{api|t=a|IsCharacterFriend}} → {{api|t=a|C_FriendList.IsFriend}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-044",
+    "extract_line": 44,
+    "literal": ": GetNumIgnores → C_FriendList.GetNumIgnores",
+    "wikitext_line": 45,
+    "raw_literal": ": {{api|t=a|GetNumIgnores}} → {{api|t=a|C_FriendList.GetNumIgnores}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-045",
+    "extract_line": 45,
+    "literal": ": GetIgnoreName → C_FriendList.GetIgnoreName",
+    "wikitext_line": 46,
+    "raw_literal": ": {{api|t=a|GetIgnoreName}} → {{api|t=a|C_FriendList.GetIgnoreName}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-046",
+    "extract_line": 46,
+    "literal": ": SetSelectedIgnore → C_FriendList.SetSelectedIgnore",
+    "wikitext_line": 47,
+    "raw_literal": ": {{api|t=a|SetSelectedIgnore}} → {{api|t=a|C_FriendList.SetSelectedIgnore}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-047",
+    "extract_line": 47,
+    "literal": ": GetSelectedIgnore → C_FriendList.GetSelectedIgnore",
+    "wikitext_line": 48,
+    "raw_literal": ": {{api|t=a|GetSelectedIgnore}} → {{api|t=a|C_FriendList.GetSelectedIgnore}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-048",
+    "extract_line": 48,
+    "literal": ": AddOrDelIgnore → C_FriendList.AddOrDelIgnore",
+    "wikitext_line": 49,
+    "raw_literal": ": {{api|t=a|AddOrDelIgnore}} → {{api|t=a|C_FriendList.AddOrDelIgnore}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-049",
+    "extract_line": 49,
+    "literal": ": AddIgnore → C_FriendList.AddIgnore",
+    "wikitext_line": 50,
+    "raw_literal": ": {{api|t=a|AddIgnore}} → {{api|t=a|C_FriendList.AddIgnore}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-050",
+    "extract_line": 50,
+    "literal": ": DelIgnore → C_FriendList.DelIgnore, C_FriendList.DelIgnoreByIndex",
+    "wikitext_line": 51,
+    "raw_literal": ": {{api|t=a|DelIgnore}} → {{api|t=a|C_FriendList.DelIgnore}}, {{api|t=a|C_FriendList.DelIgnoreByIndex}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-051",
+    "extract_line": 51,
+    "literal": ": IsIgnored → C_FriendList.IsIgnored",
+    "wikitext_line": 52,
+    "raw_literal": ": {{api|t=a|IsIgnored}} → {{api|t=a|C_FriendList.IsIgnored}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-052",
+    "extract_line": 52,
+    "literal": ": SendWho → C_FriendList.SendWho",
+    "wikitext_line": 53,
+    "raw_literal": ": {{api|t=a|SendWho}} → {{api|t=a|C_FriendList.SendWho}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-053",
+    "extract_line": 53,
+    "literal": ": GetNumWhoResults → C_FriendList.GetNumWhoResults",
+    "wikitext_line": 54,
+    "raw_literal": ": {{api|t=a|GetNumWhoResults}} → {{api|t=a|C_FriendList.GetNumWhoResults}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-054",
+    "extract_line": 54,
+    "literal": ": GetWhoInfo → C_FriendList.GetWhoInfo",
+    "wikitext_line": 55,
+    "raw_literal": ": {{api|t=a|GetWhoInfo}} → {{api|t=a|C_FriendList.GetWhoInfo}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-055",
+    "extract_line": 55,
+    "literal": ": SetWhoToUI → C_FriendList.SetWhoToUi",
+    "wikitext_line": 56,
+    "raw_literal": ": {{api|t=a|SetWhoToUI}} → {{api|t=a|C_FriendList.SetWhoToUi}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-056",
+    "extract_line": 56,
+    "literal": ": SortWho → C_FriendList.SortWho",
+    "wikitext_line": 57,
+    "raw_literal": ": {{api|t=a|SortWho}} → {{api|t=a|C_FriendList.SortWho}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-057",
+    "extract_line": 57,
+    "literal": ": GetInviteReferralInfo → C_PartyInfo.GetInviteReferralInfo",
+    "wikitext_line": 58,
+    "raw_literal": ": {{api|t=a|GetInviteReferralInfo}} → {{api|t=a|C_PartyInfo.GetInviteReferralInfo}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-058",
+    "extract_line": 58,
+    "literal": ": SetPendingReportPetTarget → C_ReportSystem.SetPendingReportPetTarget",
+    "wikitext_line": 59,
+    "raw_literal": ": {{api|t=a|SetPendingReportPetTarget}} → {{api|t=a|C_ReportSystem.SetPendingReportPetTarget}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-059",
+    "extract_line": 59,
+    "literal": ": SetPendingReportTarget → C_ReportSystem.SetPendingReportTarget",
+    "wikitext_line": 60,
+    "raw_literal": ": {{api|t=a|SetPendingReportTarget}} → {{api|t=a|C_ReportSystem.SetPendingReportTarget}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-060",
+    "extract_line": 60,
+    "literal": ": C_ChatInfo.CanReportPlayer → C_ReportSystem.CanReportPlayer",
+    "wikitext_line": 61,
+    "raw_literal": ": {{api|t=a|C_ChatInfo.CanReportPlayer}} → {{api|t=a|C_ReportSystem.CanReportPlayer}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-061",
+    "extract_line": 61,
+    "literal": ": C_Club.AddClubStreamToChatWindow → C_Club.AddClubStreamChatChannel",
+    "wikitext_line": 62,
+    "raw_literal": ": {{api|t=a|C_Club.AddClubStreamToChatWindow}} → {{api|t=a|C_Club.AddClubStreamChatChannel}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-062",
+    "extract_line": 62,
+    "literal": ": GetAtlasInfo → C_Texture.GetAtlasInfo",
+    "wikitext_line": 63,
+    "raw_literal": ": {{api|t=a|GetAtlasInfo}} → {{api|t=a|C_Texture.GetAtlasInfo}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-063",
+    "extract_line": 63,
+    "literal": ": GetQuestChoiceInfo → C_QuestChoice.GetQuestChoiceInfo",
+    "wikitext_line": 64,
+    "raw_literal": ": {{api|t=a|GetQuestChoiceInfo}} → {{api|t=a|C_QuestChoice.GetQuestChoiceInfo}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-064",
+    "extract_line": 64,
+    "literal": ": GetQuestChoiceOptionInfo → C_QuestChoice.GetQuestChoiceOptionInfo",
+    "wikitext_line": 65,
+    "raw_literal": ": {{api|t=a|GetQuestChoiceOptionInfo}} → {{api|t=a|C_QuestChoice.GetQuestChoiceOptionInfo}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-065",
+    "extract_line": 65,
+    "literal": ": C_AreaPoiInfo.GetAreaPOITimeLeft → C_AreaPoiInfo.GetAreaPOISecondsLeft",
+    "wikitext_line": 66,
+    "raw_literal": ": {{api|t=a|C_AreaPoiInfo.GetAreaPOITimeLeft}} → {{api|t=a|C_AreaPoiInfo.GetAreaPOISecondsLeft}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "source-context-067",
+    "extract_line": 67,
+    "literal": "=== 8.1.5 ===",
+    "wikitext_line": 68,
+    "raw_literal": "=== 8.1.5 ===",
+    "status": "metadata-only",
+    "reason": "Navigation, release/source context, heading, table markup or code fence; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-068",
+    "extract_line": 68,
+    "literal": ": InActiveBattlefield → C_PvP.IsActiveBattlefield",
+    "wikitext_line": 69,
+    "raw_literal": ": {{api|t=a|InActiveBattlefield}} → {{api|t=a|C_PvP.IsActiveBattlefield}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-069",
+    "extract_line": 69,
+    "literal": ": HasInspectHonorData → function() return true end",
+    "wikitext_line": 70,
+    "raw_literal": ": {{api|t=a|HasInspectHonorData}} → <code>function() return true end</code>",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-070",
+    "extract_line": 70,
+    "literal": ": RequestInspectHonorData → function() end",
+    "wikitext_line": 71,
+    "raw_literal": ": {{api|t=a|RequestInspectHonorData}} → <code>function() end</code>",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-071",
+    "extract_line": 71,
+    "literal": ": C_PvP.GetBrawlInfo → C_PvP.GetAvailableBrawlInfo",
+    "wikitext_line": 72,
+    "raw_literal": ": {{api|t=a|C_PvP.GetBrawlInfo}} → {{api|t=a|C_PvP.GetAvailableBrawlInfo}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-072",
+    "extract_line": 72,
+    "literal": ": C_Social.GetLastScreenshot → C_Social.GetLastScreenshotIndex",
+    "wikitext_line": 73,
+    "raw_literal": ": {{api|t=a|C_Social.GetLastScreenshot}} → {{api|t=a|C_Social.GetLastScreenshotIndex}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-073",
+    "extract_line": 73,
+    "literal": ": C_Social.GetScreenshotByIndex → C_Social.GetScreenshotInfoByIndex",
+    "wikitext_line": 74,
+    "raw_literal": ": {{api|t=a|C_Social.GetScreenshotByIndex}} → {{api|t=a|C_Social.GetScreenshotInfoByIndex}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "source-context-075",
+    "extract_line": 75,
+    "literal": "=== 8.2.0 ===",
+    "wikitext_line": 76,
+    "raw_literal": "=== 8.2.0 ===",
+    "status": "metadata-only",
+    "reason": "Navigation, release/source context, heading, table markup or code fence; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-076",
+    "extract_line": 76,
+    "literal": ": IsRatedBattleground → C_PvP.IsRatedBattleground",
+    "wikitext_line": 77,
+    "raw_literal": ": {{api|t=a|IsRatedBattleground}} → {{api|t=a|C_PvP.IsRatedBattleground}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-077",
+    "extract_line": 77,
+    "literal": ": IsRatedArena → C_PvP.IsRatedArena",
+    "wikitext_line": 78,
+    "raw_literal": ": {{api|t=a|IsRatedArena}} → {{api|t=a|C_PvP.IsRatedArena}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-078",
+    "extract_line": 78,
+    "literal": ": IsRatedMap →  C_PvP.IsRatedMap",
+    "wikitext_line": 79,
+    "raw_literal": ": {{api|t=a|IsRatedMap}} → {{api|t=a| C_PvP.IsRatedMap}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-079",
+    "extract_line": 79,
+    "literal": ": GetNumBattlefieldStats → C_PvP.GetMatchPVPStatIDs",
+    "wikitext_line": 80,
+    "raw_literal": ": {{api|t=a|GetNumBattlefieldStats}} → {{api|t=a|C_PvP.GetMatchPVPStatIDs}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-080",
+    "extract_line": 80,
+    "literal": ": GetBattlefieldStatInfo → C_PvP.GetMatchPVPStatIDs, C_PvP.GetMatchPVPStatColumn",
+    "wikitext_line": 81,
+    "raw_literal": ": {{api|t=a|GetBattlefieldStatInfo}} → {{api|t=a|C_PvP.GetMatchPVPStatIDs}}, {{api|t=a|C_PvP.GetMatchPVPStatColumn}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-081",
+    "extract_line": 81,
+    "literal": ": C_ChatInfo.ReportPlayer → function() end",
+    "wikitext_line": 82,
+    "raw_literal": ": {{api|t=a|C_ChatInfo.ReportPlayer}} → <code>function() end</code>",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-082",
+    "extract_line": 82,
+    "literal": ": GetGuildNewsInfo → C_GuildInfo.GetGuildNewsInfo",
+    "wikitext_line": 83,
+    "raw_literal": ": {{api|t=a|GetGuildNewsInfo}} → {{api|t=a|C_GuildInfo.GetGuildNewsInfo}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-083",
+    "extract_line": 83,
+    "literal": ": GuildRoster → C_GuildInfo.GuildRoster",
+    "wikitext_line": 84,
+    "raw_literal": ": {{api|t=a|GuildRoster}} → {{api|t=a|C_GuildInfo.GuildRoster}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-084",
+    "extract_line": 84,
+    "literal": ": CanEditOfficerNote → C_GuildInfo.CanEditOfficerNote",
+    "wikitext_line": 85,
+    "raw_literal": ": {{api|t=a|CanEditOfficerNote}} → {{api|t=a|C_GuildInfo.CanEditOfficerNote}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-085",
+    "extract_line": 85,
+    "literal": ": CanViewOfficerNote → C_GuildInfo.CanViewOfficerNote",
+    "wikitext_line": 86,
+    "raw_literal": ": {{api|t=a|CanViewOfficerNote}} → {{api|t=a|C_GuildInfo.CanViewOfficerNote}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-086",
+    "extract_line": 86,
+    "literal": ": GetTimeStringFromSeconds → SecondsToClock",
+    "wikitext_line": 87,
+    "raw_literal": ": {{api|t=a|GetTimeStringFromSeconds}} → {{api|t=a|SecondsToClock}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "source-context-088",
+    "extract_line": 88,
+    "literal": "=== 8.2.5 ===",
+    "wikitext_line": 89,
+    "raw_literal": "=== 8.2.5 ===",
+    "status": "metadata-only",
+    "reason": "Navigation, release/source context, heading, table markup or code fence; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-089",
+    "extract_line": 89,
+    "literal": ": C_RecruitAFriend.IsSendingEnabled → C_RecruitAFriend.IsEnabled",
+    "wikitext_line": 90,
+    "raw_literal": ": {{api|t=a|C_RecruitAFriend.IsSendingEnabled}} → {{api|t=a|C_RecruitAFriend.IsEnabled}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-090",
+    "extract_line": 90,
+    "literal": ": C_RecruitAFriend.CheckEmailEnabled → C_RecruitAFriend.IsEnabled",
+    "wikitext_line": 91,
+    "raw_literal": ": {{api|t=a|C_RecruitAFriend.CheckEmailEnabled}} → {{api|t=a|C_RecruitAFriend.IsEnabled}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-091",
+    "extract_line": 91,
+    "literal": ": C_RecruitAFriend.SendRecruit → function() end",
+    "wikitext_line": 92,
+    "raw_literal": ": {{api|t=a|C_RecruitAFriend.SendRecruit}} → <code>function() end</code>",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-092",
+    "extract_line": 92,
+    "literal": ": SendSoRByText → function() return false end",
+    "wikitext_line": 93,
+    "raw_literal": ": {{api|t=a|SendSoRByText}} → <code>function() return false end</code>",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-093",
+    "extract_line": 93,
+    "literal": ": CanSendSoRByText  → function() return false end",
+    "wikitext_line": 94,
+    "raw_literal": ": {{api|t=a|CanSendSoRByText }} → <code>function() return false end</code>",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-094",
+    "extract_line": 94,
+    "literal": ": GetNumSoRRemaining  → function() return 0 end",
+    "wikitext_line": 95,
+    "raw_literal": ": {{api|t=a|GetNumSoRRemaining }} → <code>function() return 0 end</code>",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-095",
+    "extract_line": 95,
+    "literal": ": GuildRosterSendSoR → function() return false end",
+    "wikitext_line": 96,
+    "raw_literal": ": {{api|t=a|GuildRosterSendSoR}} → <code>function() return false end</code>",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-096",
+    "extract_line": 96,
+    "literal": ": IsQuestFlaggedCompleted → C_QuestLog.IsQuestFlaggedCompleted",
+    "wikitext_line": 97,
+    "raw_literal": ": {{api|t=a|IsQuestFlaggedCompleted}} → {{api|t=a|C_QuestLog.IsQuestFlaggedCompleted}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-097",
+    "extract_line": 97,
+    "literal": ": BNGetFriendInfo → C_BattleNet.GetFriendAccountInfo",
+    "wikitext_line": 98,
+    "raw_literal": ": {{api|t=a|BNGetFriendInfo}} → {{api|t=a|C_BattleNet.GetFriendAccountInfo}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-098",
+    "extract_line": 98,
+    "literal": ": BNGetFriendInfoByID → C_BattleNet.GetAccountInfoByID",
+    "wikitext_line": 99,
+    "raw_literal": ": {{api|t=a|BNGetFriendInfoByID}} → {{api|t=a|C_BattleNet.GetAccountInfoByID}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-099",
+    "extract_line": 99,
+    "literal": ": BNGetFriendGameAccountInfo → C_BattleNet.GetFriendGameAccountInfo, C_BattleNet.GetFriendAccountInfo",
+    "wikitext_line": 100,
+    "raw_literal": ": {{api|t=a|BNGetFriendGameAccountInfo}} → {{api|t=a|C_BattleNet.GetFriendGameAccountInfo}}, {{api|t=a|C_BattleNet.GetFriendAccountInfo}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-100",
+    "extract_line": 100,
+    "literal": ": BNGetGameAccountInfo → C_BattleNet.GetGameAccountInfoByID, C_BattleNet.GetAccountInfoByID",
+    "wikitext_line": 101,
+    "raw_literal": ": {{api|t=a|BNGetGameAccountInfo}} → {{api|t=a|C_BattleNet.GetGameAccountInfoByID}}, {{api|t=a|C_BattleNet.GetAccountInfoByID}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-101",
+    "extract_line": 101,
+    "literal": ": BNGetGameAccountInfoByGUID →  C_BattleNet.GetGameAccountInfoByGUID, C_BattleNet.GetAccountInfoByGUID",
+    "wikitext_line": 102,
+    "raw_literal": ": {{api|t=a|BNGetGameAccountInfoByGUID}} → {{api|t=a| C_BattleNet.GetGameAccountInfoByGUID}}, {{api|t=a|C_BattleNet.GetAccountInfoByGUID}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-102",
+    "extract_line": 102,
+    "literal": ": BNGetNumFriendGameAccounts → C_BattleNet.GetFriendNumGameAccounts",
+    "wikitext_line": 103,
+    "raw_literal": ": {{api|t=a|BNGetNumFriendGameAccounts}} → {{api|t=a|C_BattleNet.GetFriendNumGameAccounts}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-103",
+    "extract_line": 103,
+    "literal": ": LeaveParty → C_PartyInfo.LeaveParty",
+    "wikitext_line": 104,
+    "raw_literal": ": {{api|t=a|LeaveParty}} → {{api|t=a|C_PartyInfo.LeaveParty}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-104",
+    "extract_line": 104,
+    "literal": ": ConvertToRaid → C_PartyInfo.ConvertToRaid",
+    "wikitext_line": 105,
+    "raw_literal": ": {{api|t=a|ConvertToRaid}} → {{api|t=a|C_PartyInfo.ConvertToRaid}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-105",
+    "extract_line": 105,
+    "literal": ": ConvertToParty → C_PartyInfo.ConvertToParty",
+    "wikitext_line": 106,
+    "raw_literal": ": {{api|t=a|ConvertToParty}} → {{api|t=a|C_PartyInfo.ConvertToParty}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-106",
+    "extract_line": 106,
+    "literal": ": CanGroupInvite → C_PartyInfo.CanInvite",
+    "wikitext_line": 107,
+    "raw_literal": ": {{api|t=a|CanGroupInvite}} → {{api|t=a|C_PartyInfo.CanInvite}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-107",
+    "extract_line": 107,
+    "literal": ": InviteToGroup → C_PartyInfo.InviteUnit",
+    "wikitext_line": 108,
+    "raw_literal": ": {{api|t=a|InviteToGroup}} → {{api|t=a|C_PartyInfo.InviteUnit}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-108",
+    "extract_line": 108,
+    "literal": ": InviteUnit → C_PartyInfo.InviteUnit",
+    "wikitext_line": 109,
+    "raw_literal": ": {{api|t=a|InviteUnit}} → {{api|t=a|C_PartyInfo.InviteUnit}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-109",
+    "extract_line": 109,
+    "literal": ": RequestInviteFromUnit → C_PartyInfo.RequestInviteFromUnit",
+    "wikitext_line": 110,
+    "raw_literal": ": {{api|t=a|RequestInviteFromUnit}} → {{api|t=a|C_PartyInfo.RequestInviteFromUnit}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-110",
+    "extract_line": 110,
+    "literal": ": C_PvP.GetMatchPVPStatIDs → C_PvP.GetMatchPVPStatColumns",
+    "wikitext_line": 111,
+    "raw_literal": ": {{api|t=a|C_PvP.GetMatchPVPStatIDs}} → {{api|t=a|C_PvP.GetMatchPVPStatColumns}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "source-context-112",
+    "extract_line": 112,
+    "literal": "=== 8.3.0 ===",
+    "wikitext_line": 113,
+    "raw_literal": "=== 8.3.0 ===",
+    "status": "metadata-only",
+    "reason": "Navigation, release/source context, heading, table markup or code fence; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-113",
+    "extract_line": 113,
+    "literal": ": GetAlternatePowerInfoByID → GetUnitPowerBarInfoByID, GetUnitPowerBarStringsByID",
+    "wikitext_line": 114,
+    "raw_literal": ": {{api|t=a|GetAlternatePowerInfoByID}} → {{api|t=a|GetUnitPowerBarInfoByID}}, {{api|t=a|GetUnitPowerBarStringsByID}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-114",
+    "extract_line": 114,
+    "literal": ": UnitAlternatePowerInfo → UnitPowerBarID, GetAlternatePowerInfoByID",
+    "wikitext_line": 115,
+    "raw_literal": ": {{api|t=a|UnitAlternatePowerInfo}} → {{api|t=a|UnitPowerBarID}}, {{api|t=a|GetAlternatePowerInfoByID}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-115",
+    "extract_line": 115,
+    "literal": ": UnitAlternatePowerTextureInfo → GetUnitPowerBarTextureInfo",
+    "wikitext_line": 116,
+    "raw_literal": ": {{api|t=a|UnitAlternatePowerTextureInfo}} → {{api|t=a|GetUnitPowerBarTextureInfo}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-116",
+    "extract_line": 116,
+    "literal": ": UnitAlternatePowerCounterInfo → GetUnitPowerBarInfo",
+    "wikitext_line": 117,
+    "raw_literal": ": {{api|t=a|UnitAlternatePowerCounterInfo}} → {{api|t=a|GetUnitPowerBarInfo}}",
+    "status": "audit-pending",
+    "reason": "Deprecated identity/successor statement retained verbatim. Requires separate alias/removal, signature and populated successor behavior proof; inventory publication does not prove this historical migration."
+  },
+  {
+    "source_id": "prose-undated-118",
+    "extract_line": 118,
+    "literal": "The following bag constants are no longer available to the global environment.",
+    "wikitext_line": 119,
+    "raw_literal": "The following bag constants are no longer available to the global environment.",
+    "status": "audit-pending",
+    "reason": "Historical expansion/deprecation/removal prose requires behavioral compatibility audit; page retention is not runtime credit."
+  },
+  {
+    "source_id": "prose-undated-119",
+    "extract_line": 119,
+    "literal": "```lua",
+    "wikitext_line": 120,
+    "raw_literal": "<syntaxhighlight lang=\"lua\">",
+    "status": "metadata-only",
+    "reason": "Navigation, release/source context, heading, table markup or code fence; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-120",
+    "extract_line": 120,
+    "literal": "MAX_CONTAINER_ITEMS = 36",
+    "wikitext_line": 121,
+    "raw_literal": "MAX_CONTAINER_ITEMS = 36",
+    "status": "audit-pending",
+    "reason": "Historical bag global constant/value and global-environment removal claim require visibility/value behavior proof; Lua example is retained verbatim, not implemented by seeding globals."
+  },
+  {
+    "source_id": "prose-undated-121",
+    "extract_line": 121,
+    "literal": "NUM_CONTAINER_COLUMNS = 4",
+    "wikitext_line": 122,
+    "raw_literal": "NUM_CONTAINER_COLUMNS = 4",
+    "status": "audit-pending",
+    "reason": "Historical bag global constant/value and global-environment removal claim require visibility/value behavior proof; Lua example is retained verbatim, not implemented by seeding globals."
+  },
+  {
+    "source_id": "prose-undated-122",
+    "extract_line": 122,
+    "literal": "ROWS_IN_BG_TEXTURE = 6",
+    "wikitext_line": 123,
+    "raw_literal": "ROWS_IN_BG_TEXTURE = 6",
+    "status": "audit-pending",
+    "reason": "Historical bag global constant/value and global-environment removal claim require visibility/value behavior proof; Lua example is retained verbatim, not implemented by seeding globals."
+  },
+  {
+    "source_id": "prose-undated-123",
+    "extract_line": 123,
+    "literal": "MAX_BG_TEXTURES = 2",
+    "wikitext_line": 124,
+    "raw_literal": "MAX_BG_TEXTURES = 2",
+    "status": "audit-pending",
+    "reason": "Historical bag global constant/value and global-environment removal claim require visibility/value behavior proof; Lua example is retained verbatim, not implemented by seeding globals."
+  },
+  {
+    "source_id": "prose-undated-124",
+    "extract_line": 124,
+    "literal": "BG_TEXTURE_HEIGHT = 512",
+    "wikitext_line": 125,
+    "raw_literal": "BG_TEXTURE_HEIGHT = 512",
+    "status": "audit-pending",
+    "reason": "Historical bag global constant/value and global-environment removal claim require visibility/value behavior proof; Lua example is retained verbatim, not implemented by seeding globals."
+  },
+  {
+    "source_id": "prose-undated-125",
+    "extract_line": 125,
+    "literal": "CONTAINER_WIDTH = 192",
+    "wikitext_line": 126,
+    "raw_literal": "CONTAINER_WIDTH = 192",
+    "status": "audit-pending",
+    "reason": "Historical bag global constant/value and global-environment removal claim require visibility/value behavior proof; Lua example is retained verbatim, not implemented by seeding globals."
+  },
+  {
+    "source_id": "prose-undated-126",
+    "extract_line": 126,
+    "literal": "CONTAINER_SPACING = 0",
+    "wikitext_line": 127,
+    "raw_literal": "CONTAINER_SPACING = 0",
+    "status": "audit-pending",
+    "reason": "Historical bag global constant/value and global-environment removal claim require visibility/value behavior proof; Lua example is retained verbatim, not implemented by seeding globals."
+  },
+  {
+    "source_id": "prose-undated-127",
+    "extract_line": 127,
+    "literal": "VISIBLE_CONTAINER_SPACING = 3",
+    "wikitext_line": 128,
+    "raw_literal": "VISIBLE_CONTAINER_SPACING = 3",
+    "status": "audit-pending",
+    "reason": "Historical bag global constant/value and global-environment removal claim require visibility/value behavior proof; Lua example is retained verbatim, not implemented by seeding globals."
+  },
+  {
+    "source_id": "prose-undated-128",
+    "extract_line": 128,
+    "literal": "MINIMUM_CONTAINER_OFFSET_X = 10",
+    "wikitext_line": 129,
+    "raw_literal": "MINIMUM_CONTAINER_OFFSET_X = 10",
+    "status": "audit-pending",
+    "reason": "Historical bag global constant/value and global-environment removal claim require visibility/value behavior proof; Lua example is retained verbatim, not implemented by seeding globals."
+  },
+  {
+    "source_id": "prose-undated-129",
+    "extract_line": 129,
+    "literal": "CONTAINER_SCALE = 0.75",
+    "wikitext_line": 130,
+    "raw_literal": "CONTAINER_SCALE = 0.75",
+    "status": "audit-pending",
+    "reason": "Historical bag global constant/value and global-environment removal claim require visibility/value behavior proof; Lua example is retained verbatim, not implemented by seeding globals."
+  },
+  {
+    "source_id": "prose-undated-130",
+    "extract_line": 130,
+    "literal": "BACKPACK_MONEY_OFFSET_DEFAULT = -231",
+    "wikitext_line": 131,
+    "raw_literal": "BACKPACK_MONEY_OFFSET_DEFAULT = -231",
+    "status": "audit-pending",
+    "reason": "Historical bag global constant/value and global-environment removal claim require visibility/value behavior proof; Lua example is retained verbatim, not implemented by seeding globals."
+  },
+  {
+    "source_id": "prose-undated-131",
+    "extract_line": 131,
+    "literal": "BACKPACK_MONEY_HEIGHT_OFFSET_PER_EXTRA_ROW = 41",
+    "wikitext_line": 132,
+    "raw_literal": "BACKPACK_MONEY_HEIGHT_OFFSET_PER_EXTRA_ROW = 41",
+    "status": "audit-pending",
+    "reason": "Historical bag global constant/value and global-environment removal claim require visibility/value behavior proof; Lua example is retained verbatim, not implemented by seeding globals."
+  },
+  {
+    "source_id": "prose-undated-132",
+    "extract_line": 132,
+    "literal": "BACKPACK_BASE_HEIGHT = 255",
+    "wikitext_line": 133,
+    "raw_literal": "BACKPACK_BASE_HEIGHT = 255",
+    "status": "audit-pending",
+    "reason": "Historical bag global constant/value and global-environment removal claim require visibility/value behavior proof; Lua example is retained verbatim, not implemented by seeding globals."
+  },
+  {
+    "source_id": "prose-undated-133",
+    "extract_line": 133,
+    "literal": "BACKPACK_HEIGHT_OFFSET_PER_EXTRA_ROW = 43",
+    "wikitext_line": 134,
+    "raw_literal": "BACKPACK_HEIGHT_OFFSET_PER_EXTRA_ROW = 43",
+    "status": "audit-pending",
+    "reason": "Historical bag global constant/value and global-environment removal claim require visibility/value behavior proof; Lua example is retained verbatim, not implemented by seeding globals."
+  },
+  {
+    "source_id": "prose-undated-134",
+    "extract_line": 134,
+    "literal": "BACKPACK_DEFAULT_TOPHEIGHT = 255",
+    "wikitext_line": 135,
+    "raw_literal": "BACKPACK_DEFAULT_TOPHEIGHT = 255",
+    "status": "audit-pending",
+    "reason": "Historical bag global constant/value and global-environment removal claim require visibility/value behavior proof; Lua example is retained verbatim, not implemented by seeding globals."
+  },
+  {
+    "source_id": "prose-undated-135",
+    "extract_line": 135,
+    "literal": "BACKPACK_EXTENDED_TOPHEIGHT = 226",
+    "wikitext_line": 136,
+    "raw_literal": "BACKPACK_EXTENDED_TOPHEIGHT = 226",
+    "status": "audit-pending",
+    "reason": "Historical bag global constant/value and global-environment removal claim require visibility/value behavior proof; Lua example is retained verbatim, not implemented by seeding globals."
+  },
+  {
+    "source_id": "prose-undated-136",
+    "extract_line": 136,
+    "literal": "BACKPACK_BASE_SIZE = 16",
+    "wikitext_line": 137,
+    "raw_literal": "BACKPACK_BASE_SIZE = 16",
+    "status": "audit-pending",
+    "reason": "Historical bag global constant/value and global-environment removal claim require visibility/value behavior proof; Lua example is retained verbatim, not implemented by seeding globals."
+  },
+  {
+    "source_id": "prose-undated-137",
+    "extract_line": 137,
+    "literal": "FIRST_BACKPACK_BUTTON_OFFSET_BASE = -225",
+    "wikitext_line": 138,
+    "raw_literal": "FIRST_BACKPACK_BUTTON_OFFSET_BASE = -225",
+    "status": "audit-pending",
+    "reason": "Historical bag global constant/value and global-environment removal claim require visibility/value behavior proof; Lua example is retained verbatim, not implemented by seeding globals."
+  },
+  {
+    "source_id": "prose-undated-138",
+    "extract_line": 138,
+    "literal": "FIRST_BACKPACK_BUTTON_OFFSET_PER_EXTRA_ROW = 41",
+    "wikitext_line": 139,
+    "raw_literal": "FIRST_BACKPACK_BUTTON_OFFSET_PER_EXTRA_ROW = 41",
+    "status": "audit-pending",
+    "reason": "Historical bag global constant/value and global-environment removal claim require visibility/value behavior proof; Lua example is retained verbatim, not implemented by seeding globals."
+  },
+  {
+    "source_id": "prose-undated-139",
+    "extract_line": 139,
+    "literal": "CONTAINER_BOTTOM_TEXTURE_DEFAULT_HEIGHT = 10",
+    "wikitext_line": 140,
+    "raw_literal": "CONTAINER_BOTTOM_TEXTURE_DEFAULT_HEIGHT = 10",
+    "status": "audit-pending",
+    "reason": "Historical bag global constant/value and global-environment removal claim require visibility/value behavior proof; Lua example is retained verbatim, not implemented by seeding globals."
+  },
+  {
+    "source_id": "prose-undated-140",
+    "extract_line": 140,
+    "literal": "CONTAINER_BOTTOM_TEXTURE_DEFAULT_TOP_COORD = 0.330078125",
+    "wikitext_line": 141,
+    "raw_literal": "CONTAINER_BOTTOM_TEXTURE_DEFAULT_TOP_COORD = 0.330078125",
+    "status": "audit-pending",
+    "reason": "Historical bag global constant/value and global-environment removal claim require visibility/value behavior proof; Lua example is retained verbatim, not implemented by seeding globals."
+  },
+  {
+    "source_id": "prose-undated-141",
+    "extract_line": 141,
+    "literal": "CONTAINER_BOTTOM_TEXTURE_DEFAULT_BOTTOM_COORD = 0.349609375",
+    "wikitext_line": 142,
+    "raw_literal": "CONTAINER_BOTTOM_TEXTURE_DEFAULT_BOTTOM_COORD = 0.349609375",
+    "status": "audit-pending",
+    "reason": "Historical bag global constant/value and global-environment removal claim require visibility/value behavior proof; Lua example is retained verbatim, not implemented by seeding globals."
+  },
+  {
+    "source_id": "prose-undated-142",
+    "extract_line": 142,
+    "literal": "```",
+    "wikitext_line": 143,
+    "raw_literal": "</syntaxhighlight>",
+    "status": "metadata-only",
+    "reason": "Navigation, release/source context, heading, table markup or code fence; no runtime credit."
+  },
+  {
+    "source_id": "source-context-145",
+    "extract_line": 145,
+    "literal": "== References ==",
+    "wikitext_line": 956,
+    "raw_literal": "==References==",
+    "status": "metadata-only",
+    "reason": "Navigation, release/source context, heading, table markup or code fence; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-146",
+    "extract_line": 146,
+    "literal": "[References list; not expanded]",
+    "wikitext_line": 957,
+    "raw_literal": "{{Reflist}}",
+    "status": "metadata-only",
+    "reason": "Navigation, release/source context, heading, table markup or code fence; no runtime credit."
+  }
+]

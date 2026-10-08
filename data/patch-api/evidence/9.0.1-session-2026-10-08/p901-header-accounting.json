@@ -1,0 +1,104 @@
+{
+  "headers": [
+    {
+      "wikitext_line": 151,
+      "literal": "! style=\"width: 50%; padding-right: 1em;\"| 413 new functions",
+      "numbers": [
+        413
+      ]
+    },
+    {
+      "wikitext_line": 152,
+      "literal": "! style=\"width: 50%; padding-right: 1em;\"| 125 removed/renamed functions",
+      "numbers": [
+        125
+      ]
+    },
+    {
+      "wikitext_line": 702,
+      "literal": "! style=\"width: 50%; padding-right: 1em;\"| 22 new methods, 3 new scripts",
+      "numbers": [
+        22,
+        3
+      ]
+    },
+    {
+      "wikitext_line": 703,
+      "literal": "! style=\"width: 50%; padding-right: 1em;\"| 8 removed methods",
+      "numbers": [
+        8
+      ]
+    },
+    {
+      "wikitext_line": 749,
+      "literal": "! style=\"width: 50%; padding-right: 1em;\"| 75 new events",
+      "numbers": [
+        75
+      ]
+    },
+    {
+      "wikitext_line": 750,
+      "literal": "! style=\"width: 50%; padding-right: 1em;\"| 8 removed events",
+      "numbers": [
+        8
+      ]
+    },
+    {
+      "wikitext_line": 845,
+      "literal": "! style=\"width: 50%; padding-right: 1em;\"| 88 new cvars, 8 new commands",
+      "numbers": [
+        88,
+        8
+      ]
+    },
+    {
+      "wikitext_line": 846,
+      "literal": "! style=\"width: 50%; padding-right: 1em;\"| 5 removed cvars",
+      "numbers": [
+        5
+      ]
+    }
+  ],
+  "parsed": [
+    {
+      "section": "global-api",
+      "direction": "added",
+      "rows": 413
+    },
+    {
+      "section": "global-api",
+      "direction": "removed",
+      "rows": 125
+    },
+    {
+      "section": "widgets",
+      "direction": "added",
+      "rows": 25
+    },
+    {
+      "section": "widgets",
+      "direction": "removed",
+      "rows": 8
+    },
+    {
+      "section": "events",
+      "direction": "added",
+      "rows": 75
+    },
+    {
+      "section": "events",
+      "direction": "removed",
+      "rows": 8
+    },
+    {
+      "section": "cvars",
+      "direction": "added",
+      "rows": 96
+    },
+    {
+      "section": "cvars",
+      "direction": "removed",
+      "rows": 5
+    }
+  ]
+}
