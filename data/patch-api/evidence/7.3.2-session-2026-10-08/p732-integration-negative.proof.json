@@ -1,0 +1,30 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_7_3_2_publication_sweep"
+  ],
+  "revision": "e5ed4121d6fa3964e7af3e664b7e4f6f86e7a3de",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p732-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p732-page",
+  "environment": {
+    "P732_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p732-page/data/patch-api/evidence/7.3.2-session-2026-10-08/p732-negative-register.json",
+    "P732_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p732-page/data/patch-api/evidence/7.3.2-session-2026-10-08/p732-negative-observation.json"
+  },
+  "exit": 1,
+  "log": "p732-integration-negative.log",
+  "log_sha256": "a455b8e83de5be202ca9fbe88b8edf68f1130762a8f37fedf1541d90b9979f19",
+  "invalidated": false,
+  "started": "2026-10-08T15:46:50.166356+00:00",
+  "finished": "2026-10-08T15:46:54.832522+00:00",
+  "mutation": "wt-global-api-Logout-4",
+  "baseline_gaps": 0,
+  "negative_gaps": 1,
+  "new_gaps": [
+    "wt-global-api-Logout-4"
+  ],
+  "resolved_gaps": []
+}

@@ -1,0 +1,23 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--no-default-features",
+    "--features",
+    "sound,gui,casc,client-mists",
+    "--test",
+    "integration",
+    "--",
+    "patch_7_3_2"
+  ],
+  "revision": "e5ed4121d6fa3964e7af3e664b7e4f6f86e7a3de",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p732-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p732-page",
+  "environment": {},
+  "exit": 0,
+  "log": "p732-integration-mists-session.log",
+  "log_sha256": "3f1cf3c4198312beae3f531815bbeb32efb518f77401dd2c1991f779ffe783b3",
+  "invalidated": false,
+  "started": "2026-10-08T15:47:04.533063+00:00",
+  "finished": "2026-10-08T15:48:15.900338+00:00"
+}

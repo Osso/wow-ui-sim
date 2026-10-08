@@ -1,0 +1,38 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.13s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p732-page/debug/deps/integration-1db16289b0998b2a)
+
+running 24 tests
+test blizzard_game_menu_loads::blizzard_game_menu_defaults_to_game_screen_only ... ok
+test blizzard_order_hall_ui_loads::blizzard_order_hall_toc_declares_load_on_demand_with_game_menu_dependency ... ok
+test blizzard_game_menu_loads::blizzard_game_menu_mainline_toc_declares_current_dependencies ... ok
+test blizzard_game_menu_loads::blizzard_game_menu_picks_mainline_toc_variant ... ok
+test blizzard_photo_sharing_loads::blizzard_photo_sharing_toc_declares_eager_mainline_only_with_game_menu_dependency ... ok
+test blizzard_game_menu_loads::blizzard_game_menu_auto_loads_on_game_and_skips_login ... ok
+test key_dispatch::esc_dispatches_blizzard_toggle_game_menu_binding ... ok
+test ace3::test_load_game_menu ... ok
+test game_menu::test_game_menu_frame_exists ... ok
+test game_menu::test_game_menu_frame_strata ... ok
+test keyboard::test_escape_hides_game_menu_when_shown ... ok
+test keyboard::test_escape_no_target_opens_game_menu ... ok
+test keyboard::test_escape_without_game_menu_frame ... ok
+test keyboard::test_escape_shows_game_menu ... ok
+test keyboard::test_escape_toggles_game_menu_twice ... ok
+test game_menu::test_game_menu_buttons_created_on_show ... ok
+test game_menu::test_game_menu_shop_button_opens_store_and_menu_can_reopen_after_store_closes ... ok
+test game_menu::test_game_menu_all_enabled_buttons_have_callable_callbacks ... ok
+test test_showuipanel::escape_key_closes_character_frame_before_game_menu ... ok
+test game_menu::test_game_menu_button_positions_vertical_layout ... ok
+test game_menu::test_game_menu_options_button_hitbox_matches_visual_center ... ok
+test game_menu::test_game_menu_exit_button_requests_simulator_quit ... ok
+test game_menu::test_game_menu_macro_button_callback_is_callable ... ok
+test game_menu::test_game_menu_hide ... ok
+
+test result: ok. 24 passed; 0 failed; 0 ignored; 0 measured; 10643 filtered out; finished in 7.30s
+

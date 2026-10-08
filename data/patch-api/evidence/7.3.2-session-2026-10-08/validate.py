@@ -12,9 +12,9 @@ sys.dont_write_bytecode = True
 ROOT = Path(__file__).resolve().parents[4]
 EVIDENCE = Path(__file__).resolve().parent
 SOURCES = ROOT / 'data/patch-api/sources'
-AUDIT_REVISION = 'c5f05d05d'
+AUDIT_REVISION = json.loads((EVIDENCE / 'p732-integration-context.json').read_text())['integrated_runtime_revision']
 sys.path.insert(0, str(ROOT / 'tools'))
-from patch_audit_validation import historical_registers, historical_sweep_tests, preserved_input_matches
+from patch_audit_validation import historical_json, historical_registers, historical_sweep_tests, preserved_input_matches
 
 
 def read(path):
@@ -109,6 +109,18 @@ def check_preservation():
     registers = read(EVIDENCE / 'p732-register-reproduction.json')
     assert {r['patch'] for r in registers} == patches
     assert all(r['exit'] == 0 and r['byte_identical'] for r in registers)
+    for rows, kind, suffix in [(registers, 'generator_flags', 'wikitext-register.json'),
+                              (read(EVIDENCE / 'p732-saved-extract-reproduction.json'),
+                               'extractor_flags', 'api-changes.txt')]:
+        for row in rows:
+            provenance = historical_json(ROOT,
+                f"data/patch-api/sources/{row['patch']}-api-changes.provenance.json", AUDIT_REVISION)
+            assert row['recorded_flags'] == provenance.get(kind)
+            if row['recorded_flags'] is not None:
+                assert row['verified_flags'] == row['recorded_flags']
+            path = f"data/patch-api/sources/{row['patch']}-{suffix}"
+            assert row['sha256'] == hashlib.sha256(blob(AUDIT_REVISION, path)).hexdigest()
+            assert preserved_input_matches(ROOT, path, row['sha256']), path
     extracts = read(EVIDENCE / 'p732-saved-extract-reproduction.json')
     assert {r['patch'] for r in extracts} == patches
     inherited = {r['patch']: r for r in read(ROOT / 'data/patch-api/evidence/8.1.0-session-2026-10-08/p810-saved-extract-reproduction.json')}
@@ -152,7 +164,11 @@ def check_negative(register):
     old = {key for key, row in baseline.items() if not row['ok']}
     new = {key for key, row in negative.items() if not row['ok']}
     assert new - old == {before['id']} and not old - new
-    assert read(EVIDENCE / 'p732-negative.proof.json')['exit'] == 1
+    receipt = read(EVIDENCE / 'p732-integration-negative.proof.json')
+    assert receipt['exit'] == 1
+    assert receipt['mutation'] == before['id']
+    assert receipt['new_gaps'] == [before['id']] and not receipt['resolved_gaps']
+    assert (receipt['baseline_gaps'], receipt['negative_gaps']) == (len(old), len(new))
     return {'negative_baseline': len(old), 'negative_gaps': len(new)}
 
 
@@ -178,8 +194,9 @@ def check_proof():
         assert row['gaps'] == sum(not result['ok'] for result in results.values())
         patch = row['file'].removeprefix('patch_').removesuffix('_publication_sweep-results.json')
         fixture = ROOT / f'tests/data/patch_{patch}_sweep_known_gaps.json'
-        assert {key for key, result in results.items() if not result['ok']} == set(read(fixture))
-    receipt = read(EVIDENCE / 'p732-all-sweeps.proof.json')
+        known = historical_json(ROOT, fixture.relative_to(ROOT).as_posix(), AUDIT_REVISION)
+        assert {key for key, result in results.items() if not result['ok']} == set(known)
+    receipt = read(EVIDENCE / 'p732-integration-all-sweeps.proof.json')
     log = (EVIDENCE / receipt['log']).read_text()
     passing = set(re.findall(r'test patch_([\d_]+)_publication_sweep::patch_[\d_]+_publication_sweep \.\.\. ok', log))
     assert passing == {p.name.removeprefix('patch_').removesuffix('_publication_sweep.rs')
@@ -189,8 +206,32 @@ def check_proof():
             'non_vendor_mists_warnings': len(warnings)}
 
 
+def check_integrated_proof():
+    proof = read(EVIDENCE / 'p732-integration-proof.json')
+    assert proof['code_revision'] == AUDIT_REVISION
+    for row in proof['required']:
+        receipt = read(EVIDENCE / row['receipt'])
+        assert receipt['exit'] == row['expected_exit'] and not receipt['invalidated']
+        assert sha(EVIDENCE / receipt['log']) == receipt['log_sha256']
+        for path in row.get('source_scope', []):
+            observed = subprocess.check_output(['git', 'rev-parse', f"{receipt['revision']}:{path}"], cwd=ROOT)
+            integrated = subprocess.check_output(['git', 'rev-parse', f'{AUDIT_REVISION}:{path}'], cwd=ROOT)
+            assert observed == integrated, (row['receipt'], path)
+    mists = read(EVIDENCE / 'p732-integration-mists-check.proof.json')
+    warnings = [line for line in (EVIDENCE / mists['log']).read_text().splitlines()
+                if line.startswith('warning:') and not line.startswith(
+                    ('warning: iced-wgpu-patched/', 'warning: `iced_wgpu`'))]
+    assert not warnings, warnings
+    startup = read(EVIDENCE / 'p732-integration-startup.proof.json')
+    assert (EVIDENCE / startup['log']).read_text().splitlines()[-1] == '[]'
+    return {'integrated_required_receipts': len(proof['required']),
+            'integrated_non_vendor_mists_warnings': len(warnings),
+            'integrated_scope_revision': AUDIT_REVISION}
+
+
 if __name__ == '__main__':
     register, extractor, text = check_source()
     summary = {**check_accounting(register, extractor, text), **check_preservation(),
-               **check_scans(register), **check_negative(register), **check_proof()}
+               **check_scans(register), **check_negative(register), **check_proof(),
+               **check_integrated_proof()}
     print(json.dumps({'status': 'PASS', **summary}, indent=2))

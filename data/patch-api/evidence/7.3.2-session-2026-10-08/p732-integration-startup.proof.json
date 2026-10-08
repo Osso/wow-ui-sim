@@ -1,0 +1,20 @@
+{
+  "command": [
+    "timeout",
+    "90",
+    "/home/osso/.cache/wow-ui-sim-targets/p732-page/debug/wow-sim",
+    "--no-addons",
+    "--no-saved-vars",
+    "lua-errors"
+  ],
+  "revision": "e5ed4121d6fa3964e7af3e664b7e4f6f86e7a3de",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p732-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p732-page",
+  "environment": {},
+  "exit": 0,
+  "log": "p732-integration-startup.log",
+  "log_sha256": "d2537903ee0c84d498a1d313c5ade281bea133e13049a007cca1089e489131ec",
+  "invalidated": false,
+  "started": "2026-10-08T15:48:43.415654+00:00",
+  "finished": "2026-10-08T15:48:46.295552+00:00"
+}

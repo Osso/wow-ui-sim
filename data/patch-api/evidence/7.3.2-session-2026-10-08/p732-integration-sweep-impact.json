@@ -1,0 +1,306 @@
+{
+  "own_gap_change": [
+    0,
+    0
+  ],
+  "rows": [
+    {
+      "patch": "10.0.0",
+      "rows": 639,
+      "gaps": 173,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "10.0.2",
+      "rows": 416,
+      "gaps": 149,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "10.0.5",
+      "rows": 93,
+      "gaps": 27,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "10.0.7",
+      "rows": 70,
+      "gaps": 26,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "10.1.0",
+      "rows": 129,
+      "gaps": 36,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "10.1.5",
+      "rows": 101,
+      "gaps": 32,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "10.1.7",
+      "rows": 48,
+      "gaps": 14,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "10.2.0",
+      "rows": 150,
+      "gaps": 30,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "10.2.5",
+      "rows": 59,
+      "gaps": 14,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "10.2.6",
+      "rows": 220,
+      "gaps": 20,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "10.2.7",
+      "rows": 104,
+      "gaps": 36,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "11.0.0",
+      "rows": 495,
+      "gaps": 166,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "11.0.2",
+      "rows": 34,
+      "gaps": 12,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "11.0.5",
+      "rows": 48,
+      "gaps": 10,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "11.0.7",
+      "rows": 98,
+      "gaps": 28,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "11.1.0",
+      "rows": 116,
+      "gaps": 19,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "11.1.5",
+      "rows": 125,
+      "gaps": 36,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "11.1.7",
+      "rows": 48,
+      "gaps": 8,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "11.2.0",
+      "rows": 162,
+      "gaps": 27,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "11.2.5",
+      "rows": 163,
+      "gaps": 45,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "11.2.7",
+      "rows": 508,
+      "gaps": 94,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "12.0.0",
+      "rows": 1010,
+      "gaps": 21,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "12.0.1",
+      "rows": 225,
+      "gaps": 3,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "12.0.5",
+      "rows": 363,
+      "gaps": 11,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "12.0.7",
+      "rows": 174,
+      "gaps": 3,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "12.1.0",
+      "rows": 778,
+      "gaps": 5,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "7.3.2",
+      "rows": 2,
+      "gaps": 0,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "8.0.1",
+      "rows": 269,
+      "gaps": 17,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "8.1.0",
+      "rows": 145,
+      "gaps": 58,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "8.1.5",
+      "rows": 66,
+      "gaps": 24,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "8.2.0",
+      "rows": 193,
+      "gaps": 53,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "8.2.5",
+      "rows": 198,
+      "gaps": 61,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "8.3.0",
+      "rows": 224,
+      "gaps": 41,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "8.3.7",
+      "rows": 2,
+      "gaps": 1,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "9.0.1",
+      "rows": 755,
+      "gaps": 263,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "9.0.2",
+      "rows": 77,
+      "gaps": 26,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "9.0.5",
+      "rows": 28,
+      "gaps": 13,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "9.1.0",
+      "rows": 179,
+      "gaps": 51,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "9.1.5",
+      "rows": 169,
+      "gaps": 47,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "9.2.0",
+      "rows": 80,
+      "gaps": 26,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "9.2.5",
+      "rows": 84,
+      "gaps": 33,
+      "resolved_gaps": [],
+      "new_gaps": []
+    },
+    {
+      "patch": "9.2.7",
+      "rows": 3,
+      "gaps": 0,
+      "resolved_gaps": [],
+      "new_gaps": []
+    }
+  ],
+  "later_resolved_gaps": [],
+  "later_new_gaps": [],
+  "later_audit_replacements_required": false,
+  "total_observations": 8850
+}

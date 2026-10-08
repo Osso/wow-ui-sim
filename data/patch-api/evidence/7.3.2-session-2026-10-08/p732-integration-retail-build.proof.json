@@ -1,0 +1,18 @@
+{
+  "command": [
+    "cargo",
+    "build",
+    "--bin",
+    "wow-sim"
+  ],
+  "revision": "e5ed4121d6fa3964e7af3e664b7e4f6f86e7a3de",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p732-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p732-page",
+  "environment": {},
+  "exit": 0,
+  "log": "p732-integration-retail-build.log",
+  "log_sha256": "1afad71cffa4861308085463d2f51a8ecf9741e2866c68fd332b128b40126899",
+  "invalidated": false,
+  "started": "2026-10-08T15:48:43.251475+00:00",
+  "finished": "2026-10-08T15:48:43.414464+00:00"
+}

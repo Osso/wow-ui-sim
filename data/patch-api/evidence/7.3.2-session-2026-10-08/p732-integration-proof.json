@@ -1,0 +1,195 @@
+{
+  "code_revision": "e5ed4121d6fa3964e7af3e664b7e4f6f86e7a3de",
+  "required": [
+    {
+      "receipt": "p732-integration-behavior.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src",
+        "tests",
+        "Cargo.toml",
+        "Cargo.lock"
+      ]
+    },
+    {
+      "receipt": "p732-integration-cached.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src",
+        "tests",
+        "Cargo.toml",
+        "Cargo.lock"
+      ]
+    },
+    {
+      "receipt": "p732-integration-key-dispatch.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src",
+        "tests",
+        "Cargo.toml",
+        "Cargo.lock"
+      ]
+    },
+    {
+      "receipt": "p732-integration-menu-bare.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src",
+        "tests",
+        "Cargo.toml",
+        "Cargo.lock"
+      ]
+    },
+    {
+      "receipt": "p732-integration-menu-cached.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src",
+        "tests",
+        "Cargo.toml",
+        "Cargo.lock"
+      ]
+    },
+    {
+      "receipt": "p732-integration-popup-bare.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src",
+        "tests",
+        "Cargo.toml",
+        "Cargo.lock"
+      ]
+    },
+    {
+      "receipt": "p732-integration-popup-cached.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src",
+        "tests",
+        "Cargo.toml",
+        "Cargo.lock"
+      ]
+    },
+    {
+      "receipt": "p732-integration-all-sweeps.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src",
+        "tests",
+        "Cargo.toml",
+        "Cargo.lock"
+      ]
+    },
+    {
+      "receipt": "p732-integration-negative.proof.json",
+      "expected_exit": 1,
+      "source_scope": [
+        "src",
+        "tests",
+        "Cargo.toml",
+        "Cargo.lock"
+      ]
+    },
+    {
+      "receipt": "p732-integration-format.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src",
+        "tests",
+        "Cargo.toml",
+        "Cargo.lock"
+      ]
+    },
+    {
+      "receipt": "p732-integration-mists-session.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src",
+        "tests",
+        "Cargo.toml",
+        "Cargo.lock"
+      ]
+    },
+    {
+      "receipt": "p732-integration-mists-check.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src",
+        "tests",
+        "Cargo.toml",
+        "Cargo.lock"
+      ]
+    },
+    {
+      "receipt": "p732-integration-own.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src",
+        "tests/patch_7_3_2_publication_sweep.rs",
+        "tests/common/publication_sweep.rs",
+        "data/patch-api/sources",
+        "Cargo.toml",
+        "Cargo.lock"
+      ]
+    },
+    {
+      "receipt": "p732-integration-retail-build.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src",
+        "Cargo.toml",
+        "Cargo.lock"
+      ]
+    },
+    {
+      "receipt": "p732-integration-startup.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "src",
+        "Cargo.toml",
+        "Cargo.lock"
+      ]
+    },
+    {
+      "receipt": "p732-integration-gen_patch_wikitext_register-fixtures.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "tools/gen_patch_wikitext_register.py",
+        "tools/test_gen_patch_wikitext_register.py"
+      ]
+    },
+    {
+      "receipt": "p732-integration-extract_patch_non_inventory-fixtures.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "tools/extract_patch_non_inventory.py",
+        "tools/test_extract_patch_non_inventory.py"
+      ]
+    },
+    {
+      "receipt": "p732-integration-patch_audit_validation-fixtures.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "tools/patch_audit_validation.py",
+        "tools/test_patch_audit_validation.py"
+      ]
+    },
+    {
+      "receipt": "p732-integration-source-reproduction.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "tools/gen_patch_wikitext_register.py",
+        "tools/extract_patch_non_inventory.py",
+        "data/patch-api/sources"
+      ]
+    },
+    {
+      "receipt": "p732-integration-extend-receipts.proof.json",
+      "expected_exit": 0,
+      "source_scope": [
+        "tools/extend_patch_audit_receipts.py"
+      ]
+    }
+  ]
+}

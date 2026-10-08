@@ -6,7 +6,7 @@ Verified source 2026-10-08: Warcraft Wiki page **230850**, revision **6200179** 
 
 The complete page contains one Changes statement: **Logout and Quit lua functions are now protected**. Both API-linked occurrences are retained as `changed`, not invented additions/removals. The register has two identities; the extract has five identities (one compound behavioral statement, four source/heading/reference contexts). The ledger accounts for seven identities; no raw context is duplicated outside the extract.
 
-Generator `--prose-api-links` is opt-in; existing inventory/bullet/rename flags do not capture Changes prose API links. Extractor reuses `--retain-reference-notes`, accepting capitalized `Ref web` only behind that flag. Prior default behavior remains unchanged. Linked Reddit discussion and reference list are retained but not expanded. Parallel 8.0.1's `--bfa-prepatch` is not duplicated. The later-register list starts with its one-line 8.0.1 integration placeholder, then 8.1.0 and all later registers from the audit base. 8.0.1 merged to master at `af7a101e2` during verification; rebase/placeholder replacement is deliberately left to main-thread integration, not silently included in these receipts.
+Generator `--prose-api-links` is opt-in; existing inventory/bullet/rename flags do not capture Changes prose API links. Extractor reuses `--retain-reference-notes`, accepting capitalized `Ref web` only behind that flag. Prior default behavior remains unchanged. Linked Reddit discussion and reference list are retained but not expanded. The integrated generator retains both 8.0.1's `--bfa-prepatch` and 7.3.2's `--prose-api-links`. Rebase onto `af7a101e2` incorporates the merged 8.0.1 audit; `ad188f494` replaces the later-register placeholder with its real register, followed by 8.1.0 and all later registers. Integrated reproduction retains each page's recorded flags.
 
 ## Coverage matrix
 
@@ -37,7 +37,13 @@ Tests retain concrete state observations rather than merely checking function ty
 - **Logout countdown/cancellation:** existing state has no pending deadline/rest-area policy; immediate secure logout is preserved, not claimed as a countdown model.
 - **Historical/secret/restricted execution:** retail target and lack of native captures cannot prove reconstructed 7.3.2 or full restricted-context policy.
 
-## Proof
+## Integrated caller coverage
+
+Two additional cached cases exercise the live GameMenu logout callback and QUIT acceptance/CAMP acceptance/cancellation/QUIT hide callbacks. ForceQuit retains its existing exit transition; cancellation retains the documented no-op, not native countdown parity. Integration and prefork session/menu/popup regressions are required by [integrated proof](../../../data/patch-api/evidence/7.3.2-session-2026-10-08/p732-integration-proof.json).
+
+The supplemental slash-command diagnostic found an inherited registration gap **before** any session action: active mode `0`, Standard enum `1`, no secure `/logout` registration. [Diagnostic and unchanged master input hashes](../../../data/patch-api/evidence/7.3.2-session-2026-10-08/p732-integration-slash-registration-gap.json) establish that the C_GameRules/state/enum inputs match `af7a101e2`. The test's default-registry precondition was unsupported; no production workaround, mode-default change, or vendor patch was made. This is not claimed as slash-command execution coverage.
+
+## Original proof (historical)
 
 [Evidence directory](../../../data/patch-api/evidence/7.3.2-session-2026-10-08/) retains source/fetch receipt, RED discovery, complete scans, reproduction and scoped validators. Dedicated p732 target; long Cargo commands write logs asynchronously, without polling waits. No full suite, WoW asset tests, push, merge, model/agent subprocess or session-cwd mutation.
 

@@ -1,0 +1,54 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.13s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p732-page/debug/deps/integration-1db16289b0998b2a)
+
+running 40 tests
+test blizzard_static_popup_game_loads::allow_load_game_resolves_to_game_screen_only ... ok
+test blizzard_static_popup_game_loads::toc_raw_bytes_pin_three_metadata_directives ... ok
+test blizzard_static_popup_game_loads::body_orders_definitions_before_logic_before_layout ... ok
+test blizzard_static_popup_game_loads::body_substitutes_family_and_filters_classic_only_entries ... ok
+test blizzard_static_popup_glue_loads::allow_load_glue_resolves_to_three_glue_screens ... ok
+test blizzard_static_popup_game_loads::dependencies_chain_pulls_six_blizzard_addons_via_plural_dependencies_key ... ok
+test blizzard_static_popup_game_loads::find_toc_file_resolves_bare_toc ... ok
+test blizzard_static_popup_game_loads::no_game_type_restriction_at_addon_level ... ok
+test blizzard_static_popup_glue_loads::body_orders_defs_before_logic_before_xml ... ok
+test blizzard_static_popup_game_loads::toc_is_eager_with_no_secure_env_or_saved_vars ... ok
+test blizzard_static_popup_glue_loads::dependencies_chain_pulls_three_blizzard_addons ... ok
+test blizzard_static_popup_glue_loads::find_toc_file_resolves_bare_toc ... ok
+test blizzard_static_popup_glue_loads::body_substitutes_family_placeholders_to_mainline ... ok
+test blizzard_static_popup_game_loads::appears_in_eager_discovery_on_game_screen_only ... ok
+test blizzard_static_popup_glue_loads::appears_in_eager_discovery_on_glue_screens_only ... ok
+test blizzard_static_popup_glue_loads::glue_dialog_button_mixin_publishes_on_text_scale_updated ... ok
+test blizzard_static_popup_glue_loads::no_addon_level_game_type_restriction ... ok
+test blizzard_static_popup_glue_loads::glue_dialog_mixin_publishes_with_full_method_surface ... ok
+test blizzard_static_popup_glue_loads::glue_dialog_background_top_atlas_global_publishes ... ok
+test blizzard_static_popup_glue_loads::glue_announcement_dialog_named_frame_materializes_on_glue ... ok
+test blizzard_static_popup_glue_loads::glue_announcement_dialog_mixin_publishes_with_two_methods ... ok
+test blizzard_static_popup_glue_loads::glue_dialog_named_frame_materializes ... ok
+test blizzard_static_popup_glue_loads::toc_is_eager_with_no_secure_env_or_saved_vars ... ok
+test blizzard_static_popup_glue_loads::toc_raw_bytes_pin_three_metadata_directives ... ok
+test blizzard_static_popup_glue_loads::full_login_load_emits_no_addon_specific_lua_errors ... ok
+test blizzard_static_popup_glue_loads::glue_dialog_button_template_materializes_via_create_frame ... ok
+test blizzard_static_popup_glue_loads::mainline_glue_dialog_definitions_seed_into_dispatcher ... ok
+test blizzard_static_popup_glue_loads::mainline_realm_is_full_on_cancel_overrides_in_place ... ok
+test blizzard_static_popup_loads::body_lists_three_lua_files_in_dependency_order ... ok
+test blizzard_static_popup_loads::allow_load_both_resolves_to_all_four_screens ... ok
+test blizzard_static_popup_loads::dependencies_are_empty ... ok
+test blizzard_static_popup_loads::body_orders_dispatcher_before_templates_before_definitions ... ok
+test blizzard_static_popup_loads::find_toc_file_resolves_bare_toc ... ok
+test blizzard_static_popup_loads::no_game_type_restriction ... ok
+test blizzard_static_popup_loads::toc_raw_bytes_pin_three_metadata_directives ... ok
+test blizzard_static_popup_loads::toc_is_eager_with_no_secure_env_or_saved_vars ... ok
+test blizzard_static_popup_loads::appears_in_eager_discovery_on_all_four_screens ... ok
+test blizzard_static_popup_glue_loads::shared_glue_dialog_definitions_seed_into_dispatcher ... ok
+test blizzard_static_popup_glue_loads::is_addon_loaded_reports_true_on_each_glue_screen ... ok
+test blizzard_static_popup_glue_loads::is_addon_loaded_reports_false_on_game_screen ... ok
+
+test result: ok. 40 passed; 0 failed; 0 ignored; 0 measured; 10627 filtered out; finished in 3.39s
+

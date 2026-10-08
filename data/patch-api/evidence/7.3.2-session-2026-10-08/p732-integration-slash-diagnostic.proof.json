@@ -1,0 +1,20 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_7_3_2_cached_slash"
+  ],
+  "revision": "5e5ae41f7dbdcb4e6d77bb3d8bd6179e6d3ea1fd",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p732-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p732-page",
+  "environment": {},
+  "exit": 1,
+  "log": "p732-integration-slash-diagnostic.log",
+  "log_sha256": "161945eb3ad61fa9468a1ead02f41e290edee2e5c1e7b3e7887b347f93032398",
+  "invalidated": false,
+  "started": "2026-10-08T15:41:53.871169+00:00",
+  "finished": "2026-10-08T15:42:18.588404+00:00"
+}

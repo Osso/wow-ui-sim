@@ -1,0 +1,4 @@
+receipt 8.0.1 True
+summary 7.3.2 {'patch': '7.3.2', 'rows': 2, 'ok': 2, 'gaps': 0, 'result': 'pass'}
+summary 8.0.1 {'patch': '8.0.1', 'rows': 269, 'ok': 252, 'gaps': 17, 'result': 'pass'}
+{"registers_reproduced": 42, "extracts_reproduced": 39, "inherited_extract_failures": ["12.0.5", "12.0.7", "12.1.0"]}

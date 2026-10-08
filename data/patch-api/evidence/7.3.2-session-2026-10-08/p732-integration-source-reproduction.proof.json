@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p732-page/data/patch-api/evidence/7.3.2-session-2026-10-08/reproduce_integrated_sources.py"
+  ],
+  "revision": "ad188f494ad534da0cb8786c8b164e9b7fd7e5b2",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p732-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p732-page",
+  "environment": {},
+  "exit": 0,
+  "log": "p732-integration-source-reproduction.log",
+  "log_sha256": "3323b11d196188a80ce7cb1a225b4965041995c85106d316747b5e836d680d29",
+  "invalidated": false,
+  "started": "2026-10-08T15:35:30.896115+00:00",
+  "finished": "2026-10-08T15:35:32.186912+00:00"
+}

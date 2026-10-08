@@ -1,0 +1,12 @@
+/home/osso/.worktrees/wow-ui-sim-p732-page/tests/key_dispatch.rs:199:    assert!(requested, "CTRL-Q should dispatch the default Quit binding");
+/home/osso/.worktrees/wow-ui-sim-p732-page/tests/patch_7_3_2_classic_session.rs:8:    for symbol in ["Logout", "Quit"] {
+/home/osso/.worktrees/wow-ui-sim-p732-page/tests/patch_7_3_2_classic_session.rs:20:        assert_eq!(state.is_logged_in, symbol != "Logout");
+/home/osso/.worktrees/wow-ui-sim-p732-page/tests/patch_7_3_2_classic_session.rs:21:        assert_eq!(state.simulator_exit_requested, symbol == "Quit");
+/home/osso/.worktrees/wow-ui-sim-p732-page/tests/blizzard_game_menu_loads.rs:80:         in the standard taint environment (Logout / Quit are protected by separate \
+/home/osso/.worktrees/wow-ui-sim-p732-page/tests/blizzard_game_menu_loads.rs:395:         CanEnterEditMode flags, then adds Logout + Exit + AddCloseButton at the bottom), \
+/home/osso/.worktrees/wow-ui-sim-p732-page/tests/blizzard_voice_toggle_button_loads.rs:424:         16-21). It registers VOICE_CHAT_LOGIN/LOGOUT state-update \
+/home/osso/.worktrees/wow-ui-sim-p732-page/tests/patch_7_3_2_session_protection.rs:1://! Source contract: insecure Logout/Quit must not mutate existing session state.
+/home/osso/.worktrees/wow-ui-sim-p732-page/tests/patch_7_3_2_session_protection.rs:9:    for symbol in ["Logout", "Quit"] {
+/home/osso/.worktrees/wow-ui-sim-p732-page/tests/patch_7_3_2_session_protection.rs:56:    for symbol in ["Logout", "Quit"] {
+/home/osso/.worktrees/wow-ui-sim-p732-page/tests/patch_7_3_2_session_protection.rs:62:        assert_eq!(state.is_logged_in, symbol != "Logout");
+/home/osso/.worktrees/wow-ui-sim-p732-page/tests/patch_7_3_2_session_protection.rs:63:        assert_eq!(state.simulator_exit_requested, symbol == "Quit");

@@ -156,10 +156,16 @@
     "gaps": 5
   },
   {
-    "file": "patch_7_3_2_publication_sweep-results.json",
     "rows": 2,
     "ok": 2,
-    "gaps": 0
+    "gaps": 0,
+    "file": "patch_7_3_2_publication_sweep-results.json"
+  },
+  {
+    "rows": 269,
+    "ok": 252,
+    "gaps": 17,
+    "file": "patch_8_0_1_publication_sweep-results.json"
   },
   {
     "file": "patch_8_1_0_publication_sweep-results.json",

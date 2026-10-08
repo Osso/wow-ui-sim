@@ -1,0 +1,43 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.13s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p732-page/debug/deps/integration-1db16289b0998b2a)
+
+running 29 tests
+test key_dispatch::action_button_key_dispatch_casts_once_through_button_down ... ok
+test key_dispatch::editbox_limit_rejects_overflow_at_end_and_middle_without_moving_caret ... ok
+test key_dispatch::editbox_backspace_removes_last_character ... ok
+test key_dispatch::editbox_limit_zero_defaults_allow_multichar_unicode_input ... ok
+test key_dispatch::default_ctrl_q_binding_requests_simulator_exit ... ok
+test key_dispatch::default_keybindings_dispatch_on_init ... ok
+test key_dispatch::ctrl_q_control_character_without_modifier_requests_simulator_exit ... ok
+test key_dispatch::editbox_cursor_keys_move_within_text_bounds ... ok
+test key_dispatch::editbox_on_text_changed_fires_on_input ... ok
+test key_dispatch::editbox_limit_counts_unicode_scalars_and_utf8_bytes_independently ... ok
+test key_dispatch::editbox_limit_rejection_preserves_selection_and_emits_no_edit_callbacks ... ok
+test key_dispatch::bound_key_dispatches_lua_code ... ok
+test key_dispatch::esc_dispatches_blizzard_toggle_game_menu_binding ... ok
+test key_dispatch::esc_with_focused_editbox_fires_on_escape_pressed_and_returns_early ... ok
+test key_dispatch::focused_editbox_typing_replaces_selection_and_consumes_it_before_public_insert ... ok
+test key_dispatch::esc_does_not_error_with_no_focus ... ok
+test key_dispatch::focused_editbox_inserts_printable_key_when_text_payload_is_missing ... ok
+test key_dispatch::on_key_down_fires_on_focused_frame ... ok
+test key_dispatch::editbox_receives_typed_text ... ok
+test key_dispatch::focused_editbox_typing_replaces_utf8_byte_selection ... ok
+test key_dispatch::key_down_state_tracks_real_dispatch_and_release ... ok
+test key_dispatch::quit_game_global_requests_simulator_exit ... ok
+test key_dispatch::rejected_numeric_key_preserves_selection_for_next_valid_key ... ok
+test key_dispatch::selected_keyboard_edits_dispatch_callbacks_after_committing_text_and_caret ... ok
+test key_dispatch::spell_stop_casting_clears_active_cast ... ok
+test key_dispatch::unbound_key_is_silent_no_op ... ok
+test key_dispatch::synthetic_key_press_releases_and_headless_keys_start_up ... ok
+test keybindings::explicit_unbind_blocks_default_key_dispatch ... ok
+test key_dispatch::focused_editbox_deletion_keys_remove_selected_range_and_consume_selection ... ok
+
+test result: ok. 29 passed; 0 failed; 0 ignored; 0 measured; 10638 filtered out; finished in 0.32s
+

@@ -1,0 +1,20 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "blizzard_static_popup"
+  ],
+  "revision": "e5ed4121d6fa3964e7af3e664b7e4f6f86e7a3de",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p732-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p732-page",
+  "environment": {},
+  "exit": 0,
+  "log": "p732-integration-popup-cached.log",
+  "log_sha256": "2f4e172dc7d32a2d74edb6797feea5a19846e6ba1026564d76881c2fac311de1",
+  "invalidated": false,
+  "started": "2026-10-08T15:45:54.353437+00:00",
+  "finished": "2026-10-08T15:45:59.174167+00:00"
+}
