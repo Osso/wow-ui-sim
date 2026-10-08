@@ -20,6 +20,8 @@ Merged audit validators prove historical executions, not new executions against 
 | 9.2.0 | None; already passing | Unchanged |
 | 9.2.5 | Later ledger counts and gap fixture disagree with historical observations; absolute receipt paths | Validate current replacement provenance, then check historical ledger/fixture; remove path gates |
 | 9.2.7 | Absolute receipt cwd | Remove path gate |
+| 8.1.5 | Refreshed 8.2.0 register set; absolute receipt cwd/target; validator rewrites evidence | Pin integrated register scope at `ee2315426`; use shared exact preservation allowances; validate read-only |
+| 8.2.0 | Later 8.1.5 expands register and sweep sets; absolute receipt cwd/target | Pin merged 8.2.0/8.2.5 scope at `ea9e5995e`; remove path gates |
 
 ## Historical inputs remain protected
 

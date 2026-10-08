@@ -9,6 +9,7 @@ import importlib.util
 import json
 import re
 import subprocess
+import sys
 from collections import Counter
 from pathlib import Path
 
@@ -16,7 +17,12 @@ ROOT = Path(__file__).resolve().parents[4]
 HERE = Path(__file__).resolve().parent
 SOURCES = ROOT / 'data/patch-api/sources'
 PATCH = '8.2.0'
-TARGET = '/home/osso/.cache/wow-ui-sim-targets/p820-page'
+
+sys.path.insert(0, str(ROOT / 'tools'))
+from patch_audit_validation import historical_registers
+
+# Merged 8.2.0/8.2.5 proof scope, before the later 8.1.5 audit.
+AUDIT_REVISION = 'ea9e5995e'
 
 
 def read(path):
@@ -135,7 +141,8 @@ def check_preservation():
             assert (ROOT / path).read_bytes() == allowed_change, path
     preserved = read(HERE / 'p820-extract-preservation.json')
     assert all(row['unchanged'] and row['before'] == row['after'] for row in preserved)
-    patches = {p.name.removesuffix('-wikitext-register.json') for p in SOURCES.glob('*-wikitext-register.json')}
+    patches = {p.name.removesuffix('-wikitext-register.json')
+               for p in historical_registers(ROOT, AUDIT_REVISION)}
     regenerated = read(HERE / 'p820-register-reproduction.json')
     saved = read(HERE / 'p820-saved-extract-reproduction.json')
     prior_saved = read(ROOT / 'data/patch-api/evidence/8.3.0-session-2026-10-08/p830-saved-extract-reproduction.json')
@@ -158,7 +165,7 @@ def check_preservation():
 
 def check_sweeps():
     key = lambda patch: tuple(map(int, patch.split('.')))
-    paths = sorted(SOURCES.glob('*-wikitext-register.json'), key=lambda p:key(p.name.split('-')[0]))
+    paths = sorted(historical_registers(ROOT, AUDIT_REVISION), key=lambda p:key(p.name.split('-')[0]))
     summary = []
     for path in paths:
         patch = path.name.split('-')[0]
@@ -199,7 +206,6 @@ def check_scans_and_proof(register):
         assert all(not scan['stdout'] for scan in indexed[row['symbol']]['scans'])
     receipts = [read(p) for p in HERE.glob('*.proof.json')]
     for row in receipts:
-        assert row['cwd'] == str(ROOT) and row['target'] == TARGET
         assert row['log_sha256'] == digest(HERE / row['log'])
         assert row['exit'] == row['expected_exit'], row['scope']
     for label in ('mists-check','default-check'):
