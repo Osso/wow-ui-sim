@@ -12,63 +12,24 @@ sys.dont_write_bytecode = True
 ROOT = Path(__file__).resolve().parents[4]
 HERE = Path(__file__).resolve().parent
 SOURCES = ROOT / 'data/patch-api/sources'
-PIN = 'ddd76addc3bd451894316ab8c3575ff9e8ec0f35'
-MAPPING = json.loads((HERE / 'integrated/rebase-mapping.json').read_text())['commits']
-
-
-def mapped_row(revision):
-    return next((row for row in MAPPING if row['recorded_revision'].startswith(revision)), None)
-
-
-def mapped_revision(revision):
-    row = mapped_row(revision)
-    return row.get('rebased_revision', row.get('superseded_by')) if row else revision
-
-
-def historical_registers(root, revision):
-    return [root / name for name in paths_at(revision, 'data/patch-api/sources')
-            if name.endswith('-wikitext-register.json')]
-
-
-def historical_sweep_tests(root, revision):
-    return [root / name for name in paths_at(revision, 'tests')
-            if name.endswith('_publication_sweep.rs')]
-
-
-def preserved_input_matches(root, path, expected):
-    current = sha(blob(PIN, path))
-    helper = load_tool('patch_audit_validation')
-    return current == expected or helper.LATER_AUDIT_REPLACEMENTS.get(path) == (expected, current)
+sys.path.insert(0, str(ROOT / 'tools'))
+from patch_audit_validation import historical_registers, historical_sweep_tests, preserved_input_matches
 
 
 def read(path):
-    return json.loads(shared_bytes(path))
+    return json.loads(path.read_text())
 
 
 def sha(data):
     return hashlib.sha256(data).hexdigest()
 
 
-def shared_bytes(path):
-    if path.is_relative_to(HERE):
-        return path.read_bytes()
-    return blob(PIN, path.relative_to(ROOT).as_posix())
-
-
 def digest(path):
-    return sha(shared_bytes(path))
+    return sha(path.read_bytes())
 
 
 def git(*args):
-    arguments = list(args)
-    for index, arg in enumerate(arguments):
-        revision, separator, suffix = arg.partition(':')
-        tail = ''
-        if revision.endswith('^{commit}'):
-            revision = revision.removesuffix('^{commit}')
-            tail = '^{commit}'
-        arguments[index] = mapped_revision(revision) + tail + separator + suffix
-    return subprocess.check_output(['git', *arguments], cwd=ROOT)
+    return subprocess.check_output(['git', *args], cwd=ROOT)
 
 
 def blob(revision, path):
@@ -76,19 +37,13 @@ def blob(revision, path):
 
 
 def paths_at(revision, directory):
-    row = mapped_row(revision)
-    if row and directory in ('data/patch-api/sources', 'tests'):
-        key = 'recorded_registers' if directory == 'data/patch-api/sources' else 'recorded_sweeps'
-        return row[key]
     return git('ls-tree', '-r', '--name-only', revision, directory).decode().splitlines()
 
 
 def load_tool(name):
-    import types
-    module = types.ModuleType(name)
-    module.__file__ = str(ROOT / 'tools' / (name + '.py'))
-    source = blob(PIN, 'tools/' + name + '.py')
-    exec(compile(source, module.__file__, 'exec'), module.__dict__)
+    spec = importlib.util.spec_from_file_location(name, ROOT / 'tools' / (name + '.py'))
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
     return module
 
 
@@ -96,7 +51,7 @@ def check_source():
     provenance = read(SOURCES / '6.2.0-api-changes.provenance.json')
     page = read(HERE / 'p620-fetch.json')['query']['pages'][0]
     revision = page['revisions'][0]
-    raw = shared_bytes(SOURCES / '6.2.0-api-changes.wikitext').decode()
+    raw = (SOURCES / '6.2.0-api-changes.wikitext').read_text()
     assert page['pageid'] == provenance['pageid'] == 149103
     assert page['title'] == provenance['title'] == 'Patch 6.2.0/API changes'
     assert revision['revid'] == provenance['revid'] == 1460518
@@ -109,7 +64,7 @@ def check_source():
     assert register['source']['sha256'] == sha(raw.encode())
     assert register['entries'] == register['header_counts'] == []
     extractor = load_tool('extract_patch_non_inventory')
-    text = shared_bytes(SOURCES / '6.2.0-api-changes.txt').decode()
+    text = (SOURCES / '6.2.0-api-changes.txt').read_text()
     assert provenance['extractor_flags'] == ['--retain-patch-diff-reference']
     assert extractor.extract_text(raw, retain_patch_diff_reference=True) == text
     ledger = read(SOURCES / '6.2.0-page-coverage.json')
@@ -249,11 +204,6 @@ def check_scans_and_validators():
 
 def main():
     context = read(HERE / 'p620-context.json')
-    row = mapped_row(context['runtime_revision'])
-    assert context['runtime_src_tree'] == row['recorded_src_tree']
-    assert context['runtime_tests_tree'] == row['recorded_tests_tree']
-    context['runtime_src_tree'] = row['rebased_src_tree']
-    context['runtime_tests_tree'] = row['rebased_tests_tree']
     result = {'status': 'PASS', **check_source(), **check_sources(context),
               **check_sweeps(context), 'commands': check_commands(context),
               'prior_validators': check_scans_and_validators()}
