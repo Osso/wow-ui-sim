@@ -1,0 +1,15 @@
+{
+  "before_gaps": [
+    "wt-global-api-SendChatMessage-14"
+  ],
+  "after_gaps": [
+    "wt-global-api-SendChatMessage-14"
+  ],
+  "replacements": [],
+  "later_intersections": {
+    "6.2.0": [],
+    "6.2.2": [],
+    "6.2.4": []
+  },
+  "pending_extract_contracts": 8
+}
