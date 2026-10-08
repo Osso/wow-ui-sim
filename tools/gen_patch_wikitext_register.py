@@ -74,7 +74,8 @@ def make_entry(section, direction, line_no, text):
 
 
 def parse_section(section, lines, *, expand_shared_changes=False, capture_span_defaults=False,
-                  skip_plain_scripts_label=False, legacy_column_headers=False):
+                  skip_plain_scripts_label=False, legacy_column_headers=False,
+                  legacy_inventory_labels=False):
     """lines: [(line_no, text)] between this heading and the next."""
     entries, headers, columns = [], [], 0
     mode = None
@@ -99,6 +100,10 @@ def parse_section(section, lines, *, expand_shared_changes=False, capture_span_d
             mode = None
         elif text.startswith("|}") or "'''Changed'''" in text:
             mode = "changed"
+        elif legacy_inventory_labels and section == 'cvars' and text.strip() == ': CVar':
+            inline_commands = False
+        elif legacy_inventory_labels and section == 'cvars' and text.strip() == ': Command':
+            inline_commands = True
         elif section == "cvars" and text.strip() in (": '''Commands'''", ": Commands"):
             inline_commands = True
         elif section == "widgets" and (text.strip() == ": Widget Scripts" or
@@ -134,7 +139,28 @@ def parse_section(section, lines, *, expand_shared_changes=False, capture_span_d
         counts.append(
             {"section": section, "direction": direction, "header_count": header, "parsed_count": parsed}
         )
+    if legacy_inventory_labels:
+        counts = legacy_inventory_counts(section, lines, entries)
     return entries, counts
+
+
+def legacy_inventory_counts(section, lines, entries):
+    """Retain each prose numerical header, including mixed CVar/command counts."""
+    counts = []
+    for _, text in lines:
+        if not text.startswith('! '):
+            continue
+        for count, change, kind in re.findall(
+                r'(\d+)\s+(new|removed(?:/renamed)?)\s+(\w+)', text):
+            direction = 'added' if change == 'new' else 'removed'
+            command = kind in ('command', 'commands')
+            parsed = sum(entry['direction'] == direction and
+                         (section != 'cvars' or (entry.get('kind') == 'command') == command)
+                         for entry in entries)
+            counts.append({'section': 'commands' if command else section,
+                           'direction': direction, 'header_count': int(count),
+                           'parsed_count': parsed})
+    return counts
 
 
 def split_sections(text, *, separate_inline_structures=False):
@@ -215,6 +241,8 @@ def main():
                         help='Retain prose numerical headers and command-column kinds; opt-in preserves prior registers')
     parser.add_argument('--diff-api-additions', action='store_true',
                         help='Retain explicit late-build additions in Diffs; opt-in preserves prior registers')
+    parser.add_argument('--legacy-inventory-labels', action='store_true',
+                        help='Retain prose counts and singular CVar/Command labels; opt-in preserves prior registers')
     args = parser.parse_args()
     patch, path, revid, out = args.patch, args.path, args.revid, args.out
     raw = Path(path).read_bytes()
@@ -228,7 +256,8 @@ def main():
             expand_shared_changes=args.expand_shared_changes,
             capture_span_defaults=args.capture_span_defaults,
             skip_plain_scripts_label=args.skip_plain_scripts_label,
-            legacy_column_headers=args.legacy_column_headers)
+            legacy_column_headers=args.legacy_column_headers,
+            legacy_inventory_labels=args.legacy_inventory_labels)
         if section == "commands":
             for count in section_counts:
                 count["section"] = "commands"

@@ -275,5 +275,22 @@ class InventoryTests(unittest.TestCase):
         self.assertEqual(counts, [])
 
 
+    def test_legacy_mixed_cvars_retain_labels_and_count_each_kind(self):
+        lines = [(1, '! style="padding: 0 1em;"| 4 new cvars, 1 new command'),
+                 (2, '| valign="top" | <div>'), (3, ': CVar'),
+                 (4, ': {{api|t=c|AIProcessDebugger}}'),
+                 (5, ': {{api|t=c|closedInfoFramesAccountWide}}'),
+                 (6, ': {{api|t=c|mountJournalShowPlayer}}'),
+                 (7, ': {{api|t=c|PhaseHistory}}'), (8, ': Command'),
+                 (9, ': {{api|t=c|DefragmentGPU}}')]
+        entries, counts = parse_section('cvars', lines, legacy_inventory_labels=True)
+        self.assertEqual([(e['symbol'], e.get('kind')) for e in entries], [
+            ('AIProcessDebugger', None), ('closedInfoFramesAccountWide', None),
+            ('mountJournalShowPlayer', None), ('PhaseHistory', None),
+            ('DefragmentGPU', 'command')])
+        self.assertEqual(counts, [
+            {'section': 'cvars', 'direction': 'added', 'header_count': 4, 'parsed_count': 4},
+            {'section': 'commands', 'direction': 'added', 'header_count': 1, 'parsed_count': 1}])
+
 if __name__ == "__main__":
     unittest.main()

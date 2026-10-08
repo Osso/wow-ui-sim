@@ -304,5 +304,12 @@ class ExtractTests(unittest.TestCase):
         self.assertIn('p1201-extract-scout.md', spell['note'])
 
 
+    def test_legacy_inline_reference_retains_hardware_contract(self):
+        raw = '* {{api|SendChatMessage}} restricted.<ref>{{ref web|url=https://example.org|quote=CHANNEL protected}}</ref>\n'
+        self.assertEqual(extract_text(raw, retain_reference_notes=True),
+                         '* SendChatMessage restricted.[Reference: url=https://example.org|quote=CHANNEL protected]\n')
+        with self.assertRaisesRegex(ValueError, 'unhandled template'):
+            extract_text(raw)
+
 if __name__ == '__main__':
     unittest.main()

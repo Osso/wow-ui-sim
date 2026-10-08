@@ -248,6 +248,8 @@ def main():
                         help='Retain inline ref web citation fields alongside publication prose')
     parser.add_argument('--text-only', action='store_true',
                         help='Write/check plaintext only; never read or modify a coverage ledger')
+    parser.add_argument('--retain-reference-notes', action='store_true',
+                        help='Retain inline ref web citation fields alongside publication prose')
     args = parser.parse_args()
     if args.self_test:
         check_examples()
