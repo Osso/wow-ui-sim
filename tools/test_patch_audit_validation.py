@@ -78,6 +78,13 @@ class PatchAuditValidationTests(unittest.TestCase):
             path.write_text(json.dumps({'current': 2}))
             self.assertEqual(read_audit_json(root, path, revision), {'current': 2})
 
+    def test_910_validates_historical_gap_fixture(self):
+        validator = ROOT / 'data/patch-api/evidence/9.1.0-session-2026-10-07/validate.py'
+        result = subprocess.run(['python3', '-B', str(validator)], cwd=ROOT,
+                                capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn('PASS:', result.stdout)
+
     def test_1000_validator_does_not_rewrite_historical_result(self):
         directory = ROOT / 'data/patch-api/evidence/10.0.0-session-2026-10-07'
         result = directory / 'p1000-validation-result.json'

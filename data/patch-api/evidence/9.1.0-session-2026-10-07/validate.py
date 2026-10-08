@@ -10,14 +10,15 @@ ROOT = Path(__file__).resolve().parents[4]
 
 sys.dont_write_bytecode = True
 sys.path.insert(0, str(ROOT / 'tools'))
-from patch_audit_validation import preserved_input_matches
+from patch_audit_validation import preserved_input_matches, read_audit_json
 
+AUDIT_REVISION = '95f82e8d0f3612285886810157430da357aec5d1'
 EVIDENCE = Path(__file__).resolve().parent
 SOURCES = ROOT / 'data/patch-api/sources'
 
 
 def read_json(path):
-    return json.loads(path.read_text())
+    return read_audit_json(ROOT, path, AUDIT_REVISION)
 
 
 def sha256(path):

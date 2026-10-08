@@ -15,7 +15,7 @@ Merged audit validators prove historical executions, not new executions against 
 | 9.0.1 | Later 9.2.5 ledger/fixture closure; expanded register and sweep-source sets; absolute receipt paths | Same, plus pin source-defined historical sweep set |
 | 9.0.2 | Later 9.2.5 ledger/fixture closure; expanded register set; absolute receipt paths | Exact merged replacement allowance; historical accounting and register scope; remove path gates |
 | 9.0.5 | Later 9.2.5 ledger/fixture closure; expanded register set; absolute receipt paths | Same |
-| 9.1.0 | Later 9.2.5 ledger closure violates frozen hash | Exact merged replacement allowance |
+| 9.1.0 | Later 9.2.5 ledger closure violates frozen hash; changed fixture disagrees with historical sweep | Exact merged replacement allowance; historical fixture accounting |
 | 9.1.5 | Later 9.2.5 ledger closure; absolute receipt paths | Exact merged replacement allowance; remove path gates |
 | 9.2.0 | None; already passing | Unchanged |
 | 9.2.5 | Later ledger counts and gap fixture disagree with historical observations; absolute receipt paths | Validate current replacement provenance, then check historical ledger/fixture; remove path gates |
