@@ -5,7 +5,7 @@ Account for Warcraft Wiki page 219137 revision 5920444 against current retail 12
 ## Requirements
 
 - [x] Retain source, revision, provenance generator flags, every inventory/extract/context occurrence.
-- [x] Probe all inventory rows with later 9.2.5–12.1.0 registers and exact reviewed gap IDs; leave a 9.2.0 integration placeholder.
+- [x] Probe all inventory rows with later 9.2.0–12.1.0 registers and exact reviewed gap IDs (9.2.0 added at integration).
 - [x] Close only cheap meaningful modeled gaps; retain precise model/source boundaries for others.
 - [x] Before any retirement, retain qualified/bare cached-retail scans; preserve live/deprecation consumers and classic profiles.
 - [x] Preserve prior extracts in both modes and registers byte-identically with recorded flags.
@@ -25,4 +25,4 @@ Historical reconstruction, placeholders, vendor/cache edits, sibling/canonical w
 
 - [ ] Forty-seven exact publication failures need their recorded models or scope decisions.
 - [ ] Eight substantive extract contracts, event producers/payloads and native behavior parity remain unproven.
-- [ ] Integrating main thread must prepend 9.2.0 at the retained placeholder; no gap-ID intersection observed.
+- [x] Integration prepended 9.2.0; the 47 exact gaps are unchanged.

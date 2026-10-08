@@ -189,13 +189,11 @@
     "patch": "9.1.5",
     "recorded_flags": [
       "--expand-shared-changes",
-      "--capture-span-defaults",
-      "--plain-command-labels"
+      "--capture-span-defaults"
     ],
     "verified_flags": [
       "--expand-shared-changes",
-      "--capture-span-defaults",
-      "--plain-command-labels"
+      "--capture-span-defaults"
     ],
     "byte_identical": true,
     "sha256": "f47c868a2a650f6119ade3f755c02c1c6d352330ed0cef1e7c5cb067e4df6f6f"

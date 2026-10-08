@@ -37,14 +37,14 @@ def check_sources():
     assert revision['slots']['main']['content'] == raw.read_text()
     assert provenance['wikitext_sha256'] == register['source']['sha256'] == sha256(raw)
     assert provenance['generator_flags'] == [
-        '--expand-shared-changes', '--capture-span-defaults', '--plain-command-labels']
+        '--expand-shared-changes', '--capture-span-defaults']
     generator = load_tool('gen_patch_wikitext_register')
     buckets = generator.split_sections(raw.read_text())
     generated, counts = [], []
     for section in generator.SECTIONS.values():
         entries, headers = generator.parse_section(
             section, buckets.get(section, []), expand_shared_changes=True,
-            capture_span_defaults=True, plain_command_labels=True)
+            capture_span_defaults=True)
         generated.extend(entries)
         counts.extend(headers)
     assert generated == register['entries']
