@@ -10,6 +10,16 @@
     "--retain-patch-diff-reference"
   ],
   "generator_flags": [
-    "--warlords-prepatch"
-  ]
+    "--warlords-prepatch",
+    "--warlords-diff",
+    "data/patch-api/sources/6.0.2-api-changes.diff.wikitext"
+  ],
+  "transcluded_diff": {
+    "pageid": 372865,
+    "title": "Patch 6.0.2/API changes/diff",
+    "revid": 3594774,
+    "timestamp": "2017-04-07T07:59:59Z",
+    "path": "data/patch-api/sources/6.0.2-api-changes.diff.wikitext",
+    "sha256": "2b938d39696995e8ea4a6d0e88328bcff94a91cf95bfae6cfa0153880b910cef"
+  }
 }

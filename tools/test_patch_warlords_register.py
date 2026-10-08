@@ -21,6 +21,22 @@ class WarlordsRegisterTests(unittest.TestCase):
             ('global-api', 'changed', 'GetTalentInfo')])
         self.assertEqual(len(rows), len({r['id'] for r in rows}))
 
+    def test_diff_bare_removals_and_framexml_headers(self):
+        raw = ('=== FrameXML ===\n{|\n|+ FrameXML (old &rarr; new)\n'
+               '! | 1 new functions\n! | 1 removed functions\n'
+               '| valign="top"\n: {{api|NewHelper}}\n</div>\n'
+               '| valign="top"\n: OldHelper\n</div>\n|}\n'
+               '=== Widget API ===\n{|\n|+ Widget API (old &rarr; new)\n'
+               '! | 1 new methods\n! | 1 removed methods\n'
+               '| valign="top"\n: {{api|t=w|Texture:SetAtlas}}\n</div>\n'
+               '| valign="top"\n: Animation:GetProgressWithDelay\n</div>\n|}\n')
+        rows, counts = generator.parse_warlords_diff(raw)
+        self.assertEqual([(r['section'], r['direction'], r['symbol']) for r in rows], [
+            ('framexml', 'added', 'NewHelper'), ('framexml', 'removed', 'OldHelper'),
+            ('widgets', 'added', 'Texture:SetAtlas'),
+            ('widgets', 'removed', 'Animation:GetProgressWithDelay')])
+        self.assertTrue(all(c['header_count'] == c['parsed_count'] for c in counts))
+
     def test_unnamed_removals_and_transclusion_not_invented(self):
         raw = ('==Changes==\n*Many legacy functions removed in C_MountJournal.\n'
                '**Note: GetCompanionInfo remains broken.\n'

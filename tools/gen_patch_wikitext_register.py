@@ -523,6 +523,34 @@ def parse_legion_prepatch(text):
     return entries
 
 
+def parse_warlords_diff(text):
+    """Parse the separately pinned 6.0.2 diff; enum values remain prose targets."""
+    sections = {'Global API': 'global-api', 'FrameXML': 'framexml',
+                'Events': 'events', 'Widget API': 'widgets'}
+    entries, counts, table, section = [], [], [], None
+    for number, line in enumerate(text.splitlines(), 1):
+        if line.startswith('{|'):
+            table, section = [], None
+        elif line.startswith('|+'):
+            section = next((value for caption, value in sections.items()
+                            if line.startswith('|+ ' + caption + ' ')), None)
+        elif line == '|}' and section:
+            # Bare removal identities need the same reference syntax as additions.
+            normalized = [(n, ': {{api|' + s[2:] + '}}')
+                          if re.fullmatch(r': [A-Za-z_][A-Za-z0-9_:]*', s) else (n, s)
+                          for n, s in table]
+            rows, headers = parse_section(section, normalized, legacy_column_headers=True)
+            for row in rows:
+                row['id'] = 'diff-' + row['id']
+                row['source_path'] = 'data/patch-api/sources/6.0.2-api-changes.diff.wikitext'
+            entries.extend(rows)
+            counts.extend(headers)
+            section = None
+        else:
+            table.append((number, line))
+    return entries, counts
+
+
 def parse_warlords_prepatch(text):
     """Retain compact/nested 6.0.2 references; unnamed removals stay prose."""
     entries, section = [], None
@@ -640,6 +668,7 @@ def main():
                         help='Retain standalone colon-prefixed New API bullets; opt-in')
     parser.add_argument('--warlords-prepatch', action='store_true',
                         help='Retain compact Warlords summary references and canonical widget owners; opt-in')
+    parser.add_argument('--warlords-diff', help='Separately pinned Warlords transcluded inventory; opt-in')
     args = parser.parse_args()
     patch, path, revid, out = args.patch, args.path, args.revid, args.out
     raw = Path(path).read_bytes()
@@ -692,6 +721,10 @@ def main():
         entries.extend(parse_indented_api_lists(raw.decode('utf-8')))
     if args.colon_api_bullets:
         entries.extend(parse_colon_api_bullets(raw.decode('utf-8')))
+    if args.warlords_diff:
+        diff_entries, diff_counts = parse_warlords_diff(Path(args.warlords_diff).read_text())
+        entries.extend(diff_entries)
+        counts.extend(diff_counts)
     if args.inventory_only:
         for entry in entries:
             for key in ("kind", "page_default", "test_inline"):
