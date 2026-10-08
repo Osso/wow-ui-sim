@@ -1,0 +1,11 @@
+{
+  "client_line": "mists-classic",
+  "entries": [
+    {
+      "id": "injected",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetTime"
+    }
+  ]
+}
