@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p624-page/data/patch-api/evidence/6.2.4-session-2026-10-08/validate.py"
+  ],
+  "revision": "0b0bc411755af0ec1e6d8836dbafd8ad812e8d30",
+  "scope": "p624-validator",
+  "cwd": ".",
+  "target": "dedicated p624-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p624-validator.txt",
+  "log_sha256": "bc4af733aa15516686b2c86c869284572807ea0459f3f41fea894904d9a2537e",
+  "seconds": 0.4539242210012162,
+  "invalidated": false
+}
