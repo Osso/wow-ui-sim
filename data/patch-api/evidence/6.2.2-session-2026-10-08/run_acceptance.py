@@ -41,7 +41,7 @@ def main():
         'sound,gui,casc,client-mists', '--tests']))
     outcomes.append(run_proof('p622-format-check', ['cargo', 'fmt', '--check']))
     (HERE / 'p622-acceptance-outcomes.json').write_text(json.dumps(outcomes, indent=2) + '\n')
-    assert all(row['exit'] == (101 if row['label'] == 'p622-negative' else 0)
+    assert all(row['exit'] == (1 if row['label'] == 'p622-negative' else 0)
                for row in outcomes), outcomes
 
 

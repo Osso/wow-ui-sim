@@ -1,0 +1,22 @@
+{
+  "reason": "Initial wrapper expected conventional libtest exit 101; prefork harness returns 1 for a failed case. Saved negative log proves row-count rejection; only wrapper expectation corrected.",
+  "outcomes_verified": [
+    {
+      "label": "p622-all-sweeps",
+      "exit": 0
+    },
+    {
+      "label": "p622-negative",
+      "exit": 1
+    },
+    {
+      "label": "p622-mists-check",
+      "exit": 0
+    },
+    {
+      "label": "p622-format-check",
+      "exit": 0
+    }
+  ],
+  "rerun": "No cargo rerun: actual proof scope and outputs remain valid."
+}

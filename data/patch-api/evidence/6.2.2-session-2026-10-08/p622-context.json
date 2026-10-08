@@ -1,0 +1,108 @@
+{
+  "base_revision": "dfede62de1f48ef2af1a4d37a18d274e26df3d81",
+  "source_revision": "c30c6c1cb",
+  "proof_scope": [
+    "tests/patch_6_2_2_publication_sweep.rs",
+    "tests/data/patch_6_2_2_sweep_known_gaps.json",
+    "tests/common/publication_sweep.rs",
+    "tools/gen_patch_wikitext_register.py",
+    "tools/extract_patch_non_inventory.py",
+    "Cargo.toml",
+    "Cargo.lock",
+    "build.rs"
+  ],
+  "proofs": {
+    "p622-discovery": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_6_2_2"
+      ],
+      "exit": 0
+    },
+    "p622-all-sweeps": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "publication_sweep"
+      ],
+      "exit": 0
+    },
+    "p622-negative": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_6_2_2"
+      ],
+      "exit": 1
+    },
+    "p622-mists-check": {
+      "command": [
+        "cargo",
+        "check",
+        "--no-default-features",
+        "--features",
+        "sound,gui,casc,client-mists",
+        "--tests"
+      ],
+      "exit": 0
+    },
+    "p622-format-check": {
+      "command": [
+        "cargo",
+        "fmt",
+        "--check"
+      ],
+      "exit": 0
+    },
+    "p622-generator-fixtures": {
+      "command": [
+        "python3",
+        "-B",
+        "tools/test_gen_patch_wikitext_register.py"
+      ],
+      "exit": 0
+    },
+    "p622-extractor-fixtures": {
+      "command": [
+        "python3",
+        "-B",
+        "tools/test_extract_patch_non_inventory.py"
+      ],
+      "exit": 0
+    },
+    "p622-validator-fixtures": {
+      "command": [
+        "python3",
+        "-B",
+        "tools/test_patch_audit_validation.py"
+      ],
+      "exit": 0
+    },
+    "p622-reproduction": {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p622-page/data/patch-api/evidence/6.2.2-session-2026-10-08/reproduce_sources.py"
+      ],
+      "exit": 0
+    },
+    "p622-prior-validators": {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p622-page/data/patch-api/evidence/6.2.2-session-2026-10-08/check_prior_validators.py"
+      ],
+      "exit": 0
+    }
+  }
+}
