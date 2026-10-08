@@ -1,0 +1,5 @@
+{
+  "exit": 1,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/validate.py\", line 342, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p801-page/data/patch-api/evidence/8.0.1-session-2026-10-08/validate.py\", line 337, in main\n    summary.update(check_integrated_proofs(context), check_supersessions(context))\n    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: update expected at most 1 argument, got 2\n"
+}

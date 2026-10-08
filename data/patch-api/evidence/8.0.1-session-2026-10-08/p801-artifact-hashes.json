@@ -152,7 +152,7 @@
   "data/patch-api/evidence/8.0.1-session-2026-10-08/patch_9_2_5_publication_sweep-results.json": "961c0b44ffecad59e032fe345f5012b00aae419ff714e2b56661b9e2ce34109b",
   "data/patch-api/evidence/8.0.1-session-2026-10-08/patch_9_2_7_publication_sweep-results.json": "75ee0c42a0ee28e36913384c4f8ce534bbbf4fc7cf90cc3ba5f8c9fee12c0fad",
   "data/patch-api/evidence/8.0.1-session-2026-10-08/reproduce_sources.py": "a7659718ae2c1650bdea9863a7b22b11ef66fabb6e4472aaf479cabfbe3aee0d",
-  "data/patch-api/evidence/8.0.1-session-2026-10-08/validate.py": "89de76ac6812e15291f45cca140ea7df1437d8e4c3902256088e3122ff1b09c4",
+  "data/patch-api/evidence/8.0.1-session-2026-10-08/validate.py": "6d5cf002b9430c02cc7ac7962afd95b1ca28ad9bb72c6f3d4f46265f11ef8819",
   "data/patch-api/sources/8.0.1-api-changes.provenance.json": "2b3898470e4716286bed474e2846a956f2ad7f9f9ed47bb458e1e0e93a6b654d",
   "data/patch-api/sources/8.0.1-api-changes.txt": "c5408fce8e67bc856215b01e26c787e68f6ac27fcd9ad449967294d7745a03c4",
   "data/patch-api/sources/8.0.1-api-changes.wikitext": "7fb0d6ed76e37632e306fb464dadaf33e151c8ec5346793366df6d4eef3641d4",

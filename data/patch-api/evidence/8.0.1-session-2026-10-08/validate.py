@@ -334,7 +334,7 @@ def main():
     summary['scanned_removal_identities'] = check_scans(register)
     summary['proof_receipts'] = check_proofs(context)
     summary['historical_preserved_inputs'] = check_preservation(context)
-    summary.update(check_integrated_proofs(context), check_supersessions(context))
+    summary.update({**check_integrated_proofs(context), **check_supersessions(context)})
     print(json.dumps({'status': 'PASS', **summary}, indent=2))
 
 
