@@ -8,6 +8,20 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 class ExtractTests(unittest.TestCase):
+    def test_spaced_inventory_headings_retain_deprecated_table(self):
+        raw = ('==Deprecated API==\n{| class="wikitable"\n'
+               ': {{api|Old}} → {{api|C_New.Call}}\n|}\n'
+               '== Global API ==\n{| class="wikitable"\n: {{api|IgnoreMe}}\n|}\n'
+               '== Widgets ==\n: {{api|Frame:IgnoreMe}}\n'
+               '== Events ==\n: {{api|t=e|IGNORE_ME}}\n'
+               '== CVars ==\n: {{api|t=c|ignoreMe}}\n'
+               '==References==\n{{Reflist}}\n')
+        self.assertEqual(extract_text(raw), '== Deprecated API ==\n')
+        self.assertEqual(extract_text(raw, normalize_inventory_headings=True),
+                         '== Deprecated API ==\n{| class="wikitable"\n'
+                         ': Old → C_New.Call\n== References ==\n'
+                         '[References list; not expanded]\n')
+
     def test_multiline_ambox_preserves_security_warning(self):
         raw = ('==UnitPopup Changes==\n{{Ambox\n'
                '| image = [[Image:Icon.png]]\n| border = red\n'

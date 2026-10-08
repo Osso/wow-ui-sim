@@ -55,7 +55,10 @@ def render_line(line):
     return html.unescape(line).rstrip()
 
 
-def extract_text(raw, *, preserve_examples=False):
+def extract_text(raw, *, preserve_examples=False, normalize_inventory_headings=False):
+    if normalize_inventory_headings:
+        raw = re.sub(r'^==\s*(Global API|Widgets|Events|CVars)\s*==$'
+                     , r'==\1==', raw, flags=re.M)
     lines = []
     inventory = False
     in_example = False
@@ -233,6 +236,8 @@ def main():
     parser.add_argument('--patch', default='12.0.0')
     parser.add_argument('--preserve-examples', action='store_true',
                         help='Retain Lua/XML syntaxhighlight contents verbatim in fenced blocks')
+    parser.add_argument('--normalize-inventory-headings', action='store_true',
+                        help='Recognize spaced inventory headings without swallowing earlier deprecated tables')
     parser.add_argument('--text-only', action='store_true',
                         help='Write/check plaintext only; never read or modify a coverage ledger')
     args = parser.parse_args()
@@ -244,7 +249,8 @@ def main():
     raw_path = base / f'{args.patch}-api-changes.wikitext'
     text_path = base / f'{args.patch}-api-changes.txt'
     coverage_path = base / f'{args.patch}-page-coverage.json'
-    text = extract_text(raw_path.read_text(), preserve_examples=args.preserve_examples)
+    text = extract_text(raw_path.read_text(), preserve_examples=args.preserve_examples,
+                        normalize_inventory_headings=args.normalize_inventory_headings)
     rows = seed_rows(text, args.patch)
     if args.text_only:
         if args.check:

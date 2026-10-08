@@ -1,0 +1,16 @@
+{
+  "pageid": 229972,
+  "revid": 6471353,
+  "timestamp": "2025-09-13T09:42:38Z",
+  "retrieved": "2026-10-08",
+  "url": "https://warcraft.wiki.gg/wiki/Patch_9.0.1/API_changes",
+  "fetch": "MediaWiki API query via curl",
+  "wikitext_sha256": "51c3ecf32ee65f178aaae7c711ff7af7bd9f243aea27712bf98261d78682d236",
+  "generator_flags": [
+    "--skip-plain-scripts-label"
+  ],
+  "extractor_flags": [
+    "--normalize-inventory-headings",
+    "--preserve-examples"
+  ]
+}
