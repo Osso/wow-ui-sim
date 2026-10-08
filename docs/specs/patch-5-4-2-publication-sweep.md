@@ -9,7 +9,7 @@ Audit the 2013 retail Warcraft Wiki [pinned page](../../data/patch-api/sources/5
 - [x] Record the five historical values (1–5) against current documented/deprecation-alias values (0–4); do not override the current target.
 - [x] Assert existing guild roster backing preserves explicitly qualified names, tracks state changes and returns nil after removal. Record that unqualified input remains unqualified; this is not automatic realm qualification.
 - [x] Preserve absence of the already-missing StartUnratedArena and securerandom globals. No new retirement without complete whole-word cached/source/test scans and pinned later-register checks.
-- [ ] Complete targeted sweeps, affected-area tests, Python fixtures, saved-source reproduction, warning-clean non-vendor Mists tests check, format and historical-validator portability gates.
+- [x] Complete targeted sweeps, affected-area tests, Python fixtures, saved-source reproduction, warning-clean non-vendor Mists tests check, format and historical-validator portability gates.
 
 ## How it works
 
@@ -35,6 +35,7 @@ Audit the 2013 retail Warcraft Wiki [pinned page](../../data/patch-api/sources/5
 - [ ] `fastrandom` lacks a modeled fast RNG and secure-environment publication boundary. Do not alias generic randomness as a shortcut.
 - [ ] Later removal of IsOnGlueScreen conflicts with a consumed current Blizzard boolean of that name. Preserve the consumer.
 - [ ] Secure RNG redirection/performance and guild automatic realm qualification lack the required backing data/policy.
+- [ ] Five historical enum values differ from current documented values; preserve current targets rather than claiming historical numeric parity.
 
 ## Out of scope
 

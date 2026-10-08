@@ -16,7 +16,7 @@
 
 ## [2026-10-08] investigation | Patch 5.4.2 retail API audit
 
-[Audit](investigations/patch-5-4-2-api-audit.md): pageid 262849 revision 2543251; parent TOC 50400/build 17688 confirms December 2013 retail, not Classic. All 68 inventory/17 extract IDs retained; 39 publication gaps precisely pending, current enum aliases and explicit roster backing bounded; historical values pending. No new models, retirements or shims; queued 5.4.7/5.4.8 placeholders precede 6.0.1/6.0.2. Sweeps 56/56, own 3/3, guild 22/22, sliders 15/15, 86 Python fixtures, format/Mists pass; 55 registers/52 extracts reproduce with three unchanged inherited failures. Negative 39 → 40; portability gate pending.
+[Audit](investigations/patch-5-4-2-api-audit.md): pageid 262849 revision 2543251; parent TOC 50400/build 17688 confirms December 2013 retail, not Classic. All 68 inventory/17 extract IDs retained; 39 publication gaps precisely pending, current enum aliases and explicit roster backing bounded; historical values pending. No new models, retirements or shims; queued 5.4.7/5.4.8 placeholders precede 6.0.1/6.0.2. Sweeps 56/56, own 3/3, guild 22/22, sliders 15/15, 86 Python fixtures, format/Mists pass; 55 registers/52 extracts reproduce with three unchanged inherited failures. Negative 39 → 40; portability gate PASS 37/37 clean and 38/38 later-audit; own-log tampering rejected.
 
 ## [2026-10-08] integration | Patch 6.2.4 API audit
 

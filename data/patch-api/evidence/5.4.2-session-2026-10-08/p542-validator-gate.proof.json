@@ -1,0 +1,23 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "tools/check_patch_validators.py",
+    "90372a7381b315c29627629a6448fa3296f346e0"
+  ],
+  "revision": "90372a7381b315c29627629a6448fa3296f346e0",
+  "exit": 0,
+  "log": "p542-validator-gate.json",
+  "log_sha256": "7f61272599ba8047d1f89aca6f00075ea4080948ecfcdb2d9043825260ecb3ad",
+  "status": "PASS",
+  "summary": {
+    "clean": {
+      "failed": 0,
+      "passed": 37
+    },
+    "later_audit": {
+      "failed": 0,
+      "passed": 38
+    }
+  }
+}

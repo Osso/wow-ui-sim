@@ -14,7 +14,7 @@ The ledger accounts for all 85 identities: 68 inventory plus 17 retained extract
 |---|---|---|
 | Explicit guild name-realm | Cached query preserves Arthas-Silvermoon, follows Jaina-Proudmoore replacement, nil on roster removal | GuildMember stores only name/rank/online; no separate realm or local identity source. Bare Jaina stays bare. Automatic qualification unmodeled. |
 | Autocomplete priorities | Current cached LE_* aliases equal documented Enum values 0–4 | Pinned 2013 values 1–5 differ. No historical numeric/ranking/lifecycle parity claim. |
-| Slider methods, full-name/ambiguation/color APIs | Inventory publication; existing targeted area tests requested | No 2013 signature/native parity claim. |
+| Slider methods, full-name/ambiguation/color APIs | Inventory publication; existing slider tests pass 15/15 | No 2013 signature/native parity claim. |
 | 37 missing events | Each rejected registration recorded | No authentication/network/launcher/patcher backend supplies lifecycle/payload. Registering arbitrary names would be a shim. |
 | RNG and secure environment | fastrandom absent; raw prose retained verbatim | Fast/secure generator separation, performance and secure-environment exclusion unmodeled. Prose redirects random/Math.random to securerandom while diff removes that exported name; no alias inferred. |
 | IsOnGlueScreen | Later 6.0.2 removal meets current boolean export; whole-word consumers retained | Boolean is consumed by current Blizzard UI; do not delete or patch consumers. |
@@ -27,7 +27,7 @@ Queued 5.4.7 then 5.4.8 placeholders start later_registers, followed by 6.0.1, 6
 
 ## Verification
 
-Discovery initially fails on the exact 39 unaccounted gaps. All publication sweeps pass 56/56; own cached cases 3/3, guild queries 22/22 and sliders 15/15 pass. All six Python fixture scripts pass (86 fixtures). All 55 registers and 52 extracts reproduce; three inherited extract failures (12.0.5, 12.0.7, 12.1.0) are unchanged, not repaired or hidden. Format and Mists tests check pass with zero non-vendor warnings; six inherited iced manifest warnings remain. Negative control adds exactly one gap (39 → 40) and fails as expected. Portability acceptance remains the final gate. No full integration suite. Runtime/src files are unchanged, so a shared-runtime startup-regression comparison is not required for this audit.
+Discovery initially fails on the exact 39 unaccounted gaps. All publication sweeps pass 56/56; own cached cases 3/3, guild queries 22/22 and sliders 15/15 pass. All six Python fixture scripts pass (86 fixtures). All 55 registers and 52 extracts reproduce; three inherited extract failures (12.0.5, 12.0.7, 12.1.0) are unchanged, not repaired or hidden. Format and Mists tests check pass with zero non-vendor warnings; six inherited iced manifest warnings remain. Negative control adds exactly one gap (39 → 40) and fails as expected. Portable validator gate passes 37/37 in the clean committed checkout and 38/38 after synthetic later changes (including the synthetic validator). Own sealed-log tampering fails; the original log bytes are restored. The eight pending extract rows and 39 publication gaps are limitations, not passing behavior claims. No full integration suite. Runtime/src files are unchanged, so a shared-runtime startup-regression comparison is not required for this audit.
 
 ## Sources
 
