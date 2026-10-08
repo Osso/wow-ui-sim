@@ -10,7 +10,7 @@ Retire only `C_Scenario.GetBonusCriteriaInfo`, `C_Scenario.GetBonusStepInfo` and
 
 ## Proof boundaries
 
-Record exact remaining gaps and reasons, including unmodeled garrison missions/recruitment, applicant workflows, historical stat/talent APIs, removed-but-consumed globals and historical enum contracts. Pending 6.1.0/6.2.0/6.2.2 integration comments precede later registers.
+Record exact remaining gaps and reasons, including unmodeled garrison missions/recruitment, applicant workflows, historical stat/talent APIs, removed-but-consumed globals and historical enum contracts. Merged 6.1.0/6.2.0/6.2.2 registers precede 6.2.4 and later registers. Integration receipts compare every other page's complete observations against pinned master; historical receipts and original validator invariants remain preserved through explicit rebase mappings.
 
 Targeted gates: all publication sweeps, bare/cached own behavior and existing scenario regressions, Python fixtures, reproduction of all saved sources, Mists tests check, format, addons-enabled startup comparison, and clean/later-audit validator portability. No full integration suite or CASC texture acceptance on this host.
 

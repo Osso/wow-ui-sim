@@ -35,8 +35,11 @@ def main():
     for path in sorted(HISTORY.iterdir()):
         if not path.is_file():
             continue
-        content = path.read_bytes()
-        preserved[path.relative_to(ROOT).as_posix()] = digest(content)
+        name = path.relative_to(ROOT).as_posix()
+        content = git('show', REBASED_TIP + ':' + name)
+        if path.name != 'validate.py':
+            assert path.read_bytes() == content, name
+        preserved[name] = digest(content)
         if path.name == 'validate.py':
             (HERE / 'historical-validator.py.txt').write_bytes(content)
     dump('historical-preservation.json', preserved)
