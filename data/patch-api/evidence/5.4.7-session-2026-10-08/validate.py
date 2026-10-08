@@ -10,6 +10,7 @@ sys.dont_write_bytecode = True
 ROOT = Path(__file__).resolve().parents[4]
 HERE = Path(__file__).resolve().parent
 PREFIX = 'data/patch-api/sources/'
+CONTEXT_SHA256 = 'b8d0914ee21a8252f014b3e1a661a748fc88eb498b99354109b55476e163ab13'
 
 
 def read(path):
@@ -192,6 +193,7 @@ def check_proofs(context):
 
 
 def main():
+    assert digest((HERE / 'p547-context.json').read_bytes()) == CONTEXT_SHA256
     context = read(HERE / 'p547-context.json')
     check_own_seals(context)
     register = check_source(context)
