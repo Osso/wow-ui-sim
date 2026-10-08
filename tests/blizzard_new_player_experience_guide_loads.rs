@@ -6,7 +6,6 @@ use wow_ui_sim::loader::{
 };
 use wow_ui_sim::lua_api::WowLuaEnv;
 use wow_ui_sim::screen::ScreenKind;
-use wow_ui_sim::startup::fire_startup_events_for_screen;
 use wow_ui_sim::toc::TocFile;
 
 fn blizzard_ui_dir() -> PathBuf {
@@ -37,33 +36,10 @@ const NAMED_FRAMES: &[&str] = &["GuideFrame"];
 const VIRTUAL_TEMPLATES_NOT_IN_GLOBALS: &[&str] =
     &["CriteriaBulletTemplate", "CriteriaDisplayTemplate"];
 
-fn load_full_game_ui_then_request_guide() -> WowLuaEnv {
-    let env = WowLuaEnv::new().expect("Failed to create Lua environment");
-    env.set_screen_size(1024.0, 768.0);
-    env.set_screen_mode(ScreenKind::Game);
-
-    {
-        let mut state = env.state().borrow_mut();
-        state.addon_base_paths = vec![blizzard_ui_dir()];
-    }
-
-    wow_ui_sim::xml::register_intrinsic_templates();
-
-    let ui = blizzard_ui_dir();
-    let addons = discover_blizzard_addons_for_screen(&ui, ScreenKind::Game);
-    for (name, toc_path) in &addons {
-        load_addon(&env.loader_env(), toc_path)
-            .unwrap_or_else(|err| panic!("[load {name}] FAILED: {err}"));
-    }
-
+fn load_new_player_experience_guide_after_fork(env: &WowLuaEnv) {
     load_addon(&env.loader_env(), &guide_toc()).expect(
         "Blizzard_NewPlayerExperienceGuide load_addon succeeds after eager Game-screen sweep",
     );
-
-    env.apply_post_load_workarounds();
-    fire_startup_events_for_screen(&env, ScreenKind::Game);
-
-    env
 }
 
 #[test]
@@ -247,9 +223,9 @@ fn blizzard_npe_guide_appears_in_discover_all_blizzard_addons() {
     );
 }
 
-#[test]
-fn blizzard_npe_guide_loads_without_addon_specific_lua_errors() {
-    let env = load_full_game_ui_then_request_guide();
+prefork_full_ui_case! {
+fn blizzard_npe_guide_loads_without_addon_specific_lua_errors(env: &WowLuaEnv) {
+    load_new_player_experience_guide_after_fork(env);
 
     let load_errors: Vec<String> = env
         .state()
@@ -272,10 +248,11 @@ fn blizzard_npe_guide_loads_without_addon_specific_lua_errors() {
         load_errors.join("\n  ")
     );
 }
+}
 
-#[test]
-fn blizzard_npe_guide_is_addon_loaded_after_explicit_load_addon_call() {
-    let env = load_full_game_ui_then_request_guide();
+prefork_full_ui_case! {
+fn blizzard_npe_guide_is_addon_loaded_after_explicit_load_addon_call(env: &WowLuaEnv) {
+    load_new_player_experience_guide_after_fork(env);
 
     let loaded: bool = env
         .eval("return C_AddOns.IsAddOnLoaded('Blizzard_NewPlayerExperienceGuide')")
@@ -288,10 +265,11 @@ fn blizzard_npe_guide_is_addon_loaded_after_explicit_load_addon_call() {
          calls a load_addon equivalent when the player interacts with a mentor-program NPC"
     );
 }
+}
 
-#[test]
-fn blizzard_npe_guide_publishes_four_mixin_tables() {
-    let env = load_full_game_ui_then_request_guide();
+prefork_full_ui_case! {
+fn blizzard_npe_guide_publishes_four_mixin_tables(env: &WowLuaEnv) {
+    load_new_player_experience_guide_after_fork(env);
 
     for global in PUBLIC_MIXINS {
         let kind: String = env
@@ -318,10 +296,11 @@ fn blizzard_npe_guide_publishes_four_mixin_tables() {
         );
     }
 }
+}
 
-#[test]
-fn blizzard_npe_guide_publishes_named_frame_as_global() {
-    let env = load_full_game_ui_then_request_guide();
+prefork_full_ui_case! {
+fn blizzard_npe_guide_publishes_named_frame_as_global(env: &WowLuaEnv) {
+    load_new_player_experience_guide_after_fork(env);
 
     for frame in NAMED_FRAMES {
         let kind: String = env
@@ -340,10 +319,11 @@ fn blizzard_npe_guide_publishes_named_frame_as_global() {
         );
     }
 }
+}
 
-#[test]
-fn blizzard_npe_guide_does_not_leak_virtual_templates_as_globals() {
-    let env = load_full_game_ui_then_request_guide();
+prefork_full_ui_case! {
+fn blizzard_npe_guide_does_not_leak_virtual_templates_as_globals(env: &WowLuaEnv) {
+    load_new_player_experience_guide_after_fork(env);
 
     for template in VIRTUAL_TEMPLATES_NOT_IN_GLOBALS {
         let kind: String = env
@@ -364,10 +344,11 @@ fn blizzard_npe_guide_does_not_leak_virtual_templates_as_globals() {
         );
     }
 }
+}
 
-#[test]
-fn blizzard_npe_guide_populates_enum_guide_frame_state_constants() {
-    let env = load_full_game_ui_then_request_guide();
+prefork_full_ui_case! {
+fn blizzard_npe_guide_populates_enum_guide_frame_state_constants(env: &WowLuaEnv) {
+    load_new_player_experience_guide_after_fork(env);
 
     let kind: String = env
         .eval("return type(_G.Enum.GuideFrameState)")
@@ -402,10 +383,11 @@ fn blizzard_npe_guide_populates_enum_guide_frame_state_constants() {
         );
     }
 }
+}
 
-#[test]
-fn blizzard_npe_guide_registers_uipanelwindows_entry() {
-    let env = load_full_game_ui_then_request_guide();
+prefork_full_ui_case! {
+fn blizzard_npe_guide_registers_uipanelwindows_entry(env: &WowLuaEnv) {
+    load_new_player_experience_guide_after_fork(env);
 
     let kind: String = env
         .eval("return type(_G.UIPanelWindows.GuideFrame)")
@@ -430,4 +412,5 @@ fn blizzard_npe_guide_registers_uipanelwindows_entry() {
          left-slot panel position (next to QuestLogFrame / CharacterFrame), reflecting that \
          it is a player-facing modal dialog rather than a tooltip / overlay"
     );
+}
 }
