@@ -23,3 +23,5 @@ Revision/filter scope is authoritative; later docs/session-only changes do not i
 - `c0c48de70388385f6aeaa8d816a52ddddefdf58d` / `p610-clean-checkout.proof.json`: `["python3", "-B", "/tmp/p610-check/data/patch-api/evidence/6.1.0-session-2026-10-08/validate.py"]`; exit 0; log `p610-clean-checkout.txt`; invalidated=False.
 - `c0c48de70388385f6aeaa8d816a52ddddefdf58d` / `p610-synthetic-later.proof.json`: `["python3", "-B", "/tmp/p610-check/data/patch-api/evidence/6.1.0-session-2026-10-08/validate.py"]`; exit 0; log `p610-synthetic-later.txt`; invalidated=False.
 - `c0c48de70388385f6aeaa8d816a52ddddefdf58d` / `p610-own-log-tamper.proof.json`: `["python3", "-B", "/tmp/p610-check/data/patch-api/evidence/6.1.0-session-2026-10-08/validate.py"]`; exit 1; log `p610-own-log-tamper.txt`; invalidated=False.
+
+- `0804aeada12f82a91e6349561ee1555778e3e182` / `p610-master-validator-gate.proof.json`: master clean/later-audit gate; exit 0; log `p610-master-validator-gate.txt`. Clean {'passed': 27, 'failed': 0}; later {'passed': 28, 'failed': 0}. Explicit late user requirement; no Cargo scope rerun.

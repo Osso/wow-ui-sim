@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p610-page/data/patch-api/evidence/6.1.0-session-2026-10-08/run_master_validator_gate.py"
+  ],
+  "revision": "0804aeada12f82a91e6349561ee1555778e3e182",
+  "scope": "p610-master-validator-gate",
+  "cwd": ".",
+  "target": "dedicated p610-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p610-master-validator-gate.txt",
+  "log_sha256": "76f79df131c6a545dfadf03b3114a54fde2fc36f735f667f08d8c532a42e63c9",
+  "seconds": 56.97983736899914,
+  "invalidated": false
+}
