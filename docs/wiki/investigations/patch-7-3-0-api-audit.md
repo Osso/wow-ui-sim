@@ -1,6 +1,6 @@
 # Patch 7.3.0 API audit
 
-Page 553643 refetched on 2026-10-08 and pinned to revision **5335723** (2017-10-26). Source is a ten-line summary: three named table additions, addon/debug-tool announcements and a PlaySound input change. Audit in progress; no completion claim.
+Page 553643 refetched on 2026-10-08 and pinned to revision **5335723** (2017-10-26). Source is a ten-line summary: three named table additions, addon/debug-tool announcements and a PlaySound input change. All three table publications pass. Sound alias model and real inspector-window behavior pass; portable evidence validation is still being finalized.
 
 ## Source and extraction
 
@@ -30,3 +30,7 @@ No removal statements occur on this page; no retirement is authorized. Complete 
 Cached Blizzard `Blizzard_SharedXML/Mainline/Sound.lua` assigns `PlaySound = C_Sound.PlaySound`. The global previously recorded numeric requests, but `sound_driver_defaults.rs` supplied a no-op namespace member. Full UI therefore lost both request recording and old-name rejection. The prefork sound assertion reproduced `None` instead of `Some(861)`; the inspector and three publications already passed.
 
 Moved the existing numeric request implementation to `src/c_api/c_sound.rs`, registered it on the namespace and reused it from the legacy global. Removed only the replaced PlaySound stubs. Existing 12.1 options code moved unchanged into `c_sound/options.rs` and retains its epoch gate; basic sound requests are shared across profiles. No Blizzard Lua changed. Bare namespace/global and actual cached alias tests cover the distinct lifetime boundaries. Acceptance remains pending.
+
+## Occurrence accounting
+
+[Ledger](../../../data/patch-api/sources/7.3.0-page-coverage.json) accounts for eleven IDs: three inventory occurrences plus eight retained extract rows (three editorial, five substantive). Three publication rows, four bounded prose rows, three metadata rows and one pending prose row. Zero publication gaps. `/tinspect` command/consent routing remains pending despite passing direct inspector-window focus/navigation/close. Complete historical SOUNDKIT key/name similarity also lacks an exhaustive source catalog; concrete ID/request behavior alone is credited.

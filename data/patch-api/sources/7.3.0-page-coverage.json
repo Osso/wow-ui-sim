@@ -1,0 +1,97 @@
+{
+  "schema": "patch-api-page-coverage/v1",
+  "patch": "7.3.0",
+  "source": "data/patch-api/sources/7.3.0-wikitext-register.json",
+  "source_sha256": "b0f06f6e0f8ce4fd8be89845fce0fa0ef5ac2ddf71de7885b8adcd49af3daa10",
+  "non_inventory_source": {
+    "path": "data/patch-api/sources/7.3.0-api-changes.txt",
+    "sha256": "0fce01e22d2750a479d65e8604900f331598c169bee2beee12e7dc89fce5e8f8"
+  },
+  "proof_policy": "Complete source occurrence accounting. Bounded current behavior is not native/historical parity. 7.3.2 integration placeholder remains. No retirements or shims.",
+  "source_rows": [
+    {
+      "source_id": "wt-global-api-SOUNDKIT-5",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-table-publication"
+      ],
+      "note": "Raw and ordinary lookup table publication only; no fabricated callable, member/signature/output/security or complete historical parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_ArtifactRelicForgeUI-6",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-table-publication"
+      ],
+      "note": "Raw and ordinary lookup table publication only; no fabricated callable, member/signature/output/security or complete historical parity claim."
+    },
+    {
+      "source_id": "wt-global-api-C_Console-6",
+      "status": "partial-development-green",
+      "capabilities": [
+        "current-retail-table-publication"
+      ],
+      "note": "Raw and ordinary lookup table publication only; no fabricated callable, member/signature/output/security or complete historical parity claim."
+    },
+    {
+      "source_id": "source-context-001",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial/source/build context or external resource link; no runtime credit."
+    },
+    {
+      "source_id": "source-context-003",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-004",
+      "capabilities": [
+        "cached-console-addon"
+      ],
+      "status": "bounded-coverage",
+      "note": "Actual current Blizzard_Console load, frame publication and command-history behavior covered by existing targeted prefork cases; not historical 2017 implementation parity."
+    },
+    {
+      "source_id": "prose-undated-005",
+      "capabilities": [
+        "numeric-soundkit-entry",
+        "sound-request-model"
+      ],
+      "status": "bounded-coverage",
+      "note": "Concrete SOUNDKIT.IG_INVENTORY_ROTATE_CHARACTER = 861 reaches request state. Legacy sound-name rejection is tested. Complete historical key/name similarity is unspecified: the source supplies no old-name catalog or exhaustive mapping."
+    },
+    {
+      "source_id": "prose-undated-006",
+      "capabilities": [
+        "current-retail-table-publication"
+      ],
+      "status": "bounded-coverage",
+      "note": "Both named namespaces are raw/lookup tables. No member list is given; unspecified artifact-forge/console members and native behavior are not inferred from table publication."
+    },
+    {
+      "source_id": "prose-undated-007",
+      "capabilities": [
+        "actual-inspector-window-lifecycle"
+      ],
+      "status": "audit-pending",
+      "note": "Actual Blizzard_DebugTools inspector focuses concrete root/child tables, navigates backward and closes. Exact /tinspect slash dispatch and dangerous-script consent gating are not proved by calling DisplayTableInspectorWindow directly; no consent shim or vendor override was added."
+    },
+    {
+      "source_id": "source-context-009",
+      "capabilities": [],
+      "status": "metadata-only",
+      "note": "Editorial heading; no runtime credit."
+    },
+    {
+      "source_id": "prose-undated-010",
+      "capabilities": [
+        "numeric-sound-input-change",
+        "shared-sound-request-model"
+      ],
+      "status": "bounded-coverage",
+      "note": "Bare C_Sound/global and cached Blizzard alias use one sound-kit request model. IDs 861/839 update state; an old string name errors without replacing the accepted request. Audio fidelity, optional channels/handles and exhaustive numeric validation parity are not claimed."
+    }
+  ]
+}

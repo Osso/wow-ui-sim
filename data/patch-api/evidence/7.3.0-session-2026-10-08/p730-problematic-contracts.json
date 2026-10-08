@@ -1,0 +1,12 @@
+[
+  {
+    "source_id": "prose-undated-005",
+    "scope": "Historical SOUNDKIT key/name catalog",
+    "reason": "Concrete SOUNDKIT.IG_INVENTORY_ROTATE_CHARACTER = 861 reaches request state. Legacy sound-name rejection is tested. Complete historical key/name similarity is unspecified: the source supplies no old-name catalog or exhaustive mapping."
+  },
+  {
+    "source_id": "prose-undated-007",
+    "scope": "/tinspect command routing and consent",
+    "reason": "Actual Blizzard_DebugTools inspector focuses concrete root/child tables, navigates backward and closes. Exact /tinspect slash dispatch and dangerous-script consent gating are not proved by calling DisplayTableInspectorWindow directly; no consent shim or vendor override was added."
+  }
+]

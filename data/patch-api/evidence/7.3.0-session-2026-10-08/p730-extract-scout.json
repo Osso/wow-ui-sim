@@ -1,0 +1,74 @@
+[
+  {
+    "source_id": "source-context-001",
+    "extract_line": 1,
+    "wikitext_line": 1,
+    "literal": "Patch 7.3.0 API changes",
+    "raw_literal": "{{apichanges|7.3.0|prev=7.2.0|next=7.3.2}}",
+    "status": "metadata-only",
+    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+  },
+  {
+    "source_id": "source-context-003",
+    "extract_line": 3,
+    "wikitext_line": 3,
+    "literal": "== New ==",
+    "raw_literal": "==New==",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-004",
+    "extract_line": 4,
+    "wikitext_line": 4,
+    "literal": "* New AddOns: Blizzard_Console",
+    "raw_literal": "* New AddOns: Blizzard_Console",
+    "status": "bounded-coverage",
+    "reason": "Actual current Blizzard_Console load, frame publication and command-history behavior covered by existing targeted prefork cases; not historical 2017 implementation parity."
+  },
+  {
+    "source_id": "prose-undated-005",
+    "extract_line": 5,
+    "wikitext_line": 5,
+    "literal": "* New global table: SOUNDKIT - Keys are named similar to the old string names, and they hold the soundkit ID for the sound",
+    "raw_literal": "* New global table: SOUNDKIT - Keys are named similar to the old string names, and they hold the soundkit ID for the sound",
+    "status": "bounded-coverage",
+    "reason": "Concrete SOUNDKIT.IG_INVENTORY_ROTATE_CHARACTER = 861 reaches request state. Legacy sound-name rejection is tested. Complete historical key/name similarity is unspecified: the source supplies no old-name catalog or exhaustive mapping."
+  },
+  {
+    "source_id": "prose-undated-006",
+    "extract_line": 6,
+    "wikitext_line": 6,
+    "literal": "* New API tables: C_ArtifactRelicForgeUI, C_Console",
+    "raw_literal": "* New API tables: C_ArtifactRelicForgeUI, C_Console",
+    "status": "bounded-coverage",
+    "reason": "Both named namespaces are raw/lookup tables. No member list is given; unspecified artifact-forge/console members and native behavior are not inferred from table publication."
+  },
+  {
+    "source_id": "prose-undated-007",
+    "extract_line": 7,
+    "wikitext_line": 7,
+    "literal": "* New debug tool: Table Inspector - /tinspect",
+    "raw_literal": "* New debug tool: Table Inspector - /tinspect",
+    "status": "audit-pending",
+    "reason": "Actual Blizzard_DebugTools inspector focuses concrete root/child tables, navigates backward and closes. Exact /tinspect slash dispatch and dangerous-script consent gating are not proved by calling DisplayTableInspectorWindow directly; no consent shim or vendor override was added."
+  },
+  {
+    "source_id": "source-context-009",
+    "extract_line": 9,
+    "wikitext_line": 9,
+    "literal": "== Changes ==",
+    "raw_literal": "==Changes==",
+    "status": "metadata-only",
+    "reason": "Editorial heading; no runtime credit."
+  },
+  {
+    "source_id": "prose-undated-010",
+    "extract_line": 10,
+    "wikitext_line": 10,
+    "literal": "* PlaySound() will now only accept soundkit IDs.",
+    "raw_literal": "* PlaySound() will now only accept soundkit IDs.",
+    "status": "bounded-coverage",
+    "reason": "Bare C_Sound/global and cached Blizzard alias use one sound-kit request model. IDs 861/839 update state; an old string name errors without replacing the accepted request. Audio fidelity, optional channels/handles and exhaustive numeric validation parity are not claimed."
+  }
+]

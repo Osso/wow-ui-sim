@@ -4,12 +4,12 @@ Audit the pinned [page source](../../data/patch-api/sources/7.3.0-api-changes.wi
 
 ## What it must do
 
-- [ ] Probe all three named table additions through raw and ordinary lookup in a cached retail environment; require exact reviewed failure IDs after later-register supersession.
-- [ ] Keep the 7.3.2 integration placeholder first, then 8.0.1 and all newer registers in chronological order.
-- [ ] Account for every retained nonblank prose line, separately from table publication.
-- [ ] Both `C_Sound.PlaySound` and the legacy global must use the same simulator request model; cached Blizzard aliasing must retain numeric validation and recording.
-- [ ] Verify a concrete SOUNDKIT numeric ID reaches the existing sound-request state; reject the old string name without replacing the accepted request.
-- [ ] Exercise the actual Table Inspector window with concrete root/child tables, navigation and close lifecycle, without vendor overrides.
+- [x] Probe all three named table additions through raw and ordinary lookup in a cached retail environment; require exact reviewed failure IDs after later-register supersession.
+- [x] Keep the 7.3.2 integration placeholder first, then 8.0.1 and all newer registers in chronological order.
+- [x] Account for every retained nonblank prose line, separately from table publication.
+- [x] Both `C_Sound.PlaySound` and the legacy global must use the same simulator request model; cached Blizzard aliasing must retain numeric validation and recording.
+- [x] Verify a concrete SOUNDKIT numeric ID reaches the existing sound-request state; reject the old string name without replacing the accepted request.
+- [x] Exercise the actual Table Inspector window with concrete root/child tables, navigation and close lifecycle, without vendor overrides.
 - [ ] Preserve every earlier source and reproduce registers using recorded flags; inherited extract failures remain explicitly distinguished.
 - [ ] Validate historical proof read-only from any checkout, with fixed historical register scope and file-derived counts.
 
@@ -36,8 +36,8 @@ Audit the pinned [page source](../../data/patch-api/sources/7.3.0-api-changes.wi
 
 ## Known gaps (current cycle)
 
-- [ ] Discovery and retained-gap review pending.
-- [ ] Blizzard_Console load/interaction and full Table Inspector behavior require independent lifecycle proof.
+- [x] Discovery and retained-gap review complete: zero inventory failures; one pending prose row.
+- [ ] Exact `/tinspect` slash dispatch/consent and complete Table Inspector behavior are not inferred from the direct window lifecycle test.
 - [ ] Historical SOUNDKIT catalog/name similarity and full artifact-forge behavior are not implied by table existence.
 
 ## Out of scope
