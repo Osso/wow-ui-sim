@@ -350,9 +350,11 @@
     },
     {
       "source_id": "wt-global-api-C_ClubFinder.ReportPosting-117",
-      "capabilities": [],
-      "status": "audit-pending",
-      "note": "Removed member remains dynamically fabricated. Bare cached ReportPosting references retained; namespace successor exists, no wrapper or classic behavior deleted in this audit."
+      "capabilities": [
+        "retail-absence"
+      ],
+      "status": "bounded-coverage",
+      "note": "Unused historical member retirement proven by Patch 8.2.5 audit; cached retail has no consumer. Publication/absence only."
     },
     {
       "source_id": "wt-global-api-C_Cursor.DropCursorCommunitiesStream-118",

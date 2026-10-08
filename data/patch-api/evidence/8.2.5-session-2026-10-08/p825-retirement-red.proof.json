@@ -1,0 +1,20 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_8_2_5_cached_retirement"
+  ],
+  "revision": "2b005f5b103f468aff05889fe7ba64b0dbf4803c",
+  "scope": "p825-retirement-red",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p825-page",
+  "exit": 1,
+  "expected_exit": 1,
+  "log": "p825-retirement-red.txt",
+  "log_sha256": "676c24319d6052e6464a92dbb3fee92a1fa938a77e314b1197b990c1baa89ef5",
+  "invalidated": false,
+  "seconds": 36.32838844100115
+}

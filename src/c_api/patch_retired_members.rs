@@ -1,4 +1,4 @@
-//! Namespace members (and whole namespaces) the Patch 8.3.0 / 9.0.1 / 9.0.2 / 9.0.5 / 9.1.0 / 9.1.5 / 9.2.0 / 9.2.5 / 10.0.2 / 10.0.5 / 10.0.7 / 10.1.0 / 10.1.5 / 10.2.0 / 10.2.6 / 11.0.0 / 11.0.2 / 11.0.5 / 11.0.7 / 11.1.0 / 11.1.5 / 11.1.7 / 11.2.0 / 11.2.7 / 12.0.0 / 12.0.1 / 12.0.5 / 12.0.7
+//! Namespace members (and whole namespaces) the Patch 8.2.5 / 8.3.0 / 9.0.1 / 9.0.2 / 9.0.5 / 9.1.0 / 9.1.5 / 9.2.0 / 9.2.5 / 10.0.2 / 10.0.5 / 10.0.7 / 10.1.0 / 10.1.5 / 10.2.0 / 10.2.6 / 11.0.0 / 11.0.2 / 11.0.5 / 11.0.7 / 11.1.0 / 11.1.5 / 11.1.7 / 11.2.0 / 11.2.7 / 12.0.0 / 12.0.1 / 12.0.5 / 12.0.7
 //! consolidated API tables list as removed that no other module retires.
 //! Marking keeps the namespace `__index` autostub from fabricating them on
 //! ordinary lookup.
@@ -22,6 +22,36 @@ use rilua::vm::state::LuaState;
 // No qualified or bare-name cached retail consumers; classic profiles do not load this module.
 // No qualified retail consumers; bare GetProducts belongs to C_StoreSecure.
 // Mists product-choice defaults remain outside this retail-only module.
+// Qualified/bare cached retail and complete src/tests scans find no consumers.
+// SpellBook.IsSpellDisabled and LeaveParty remain reachable for current consumers.
+const RETIRED_8_2_5_MEMBERS: &[(&str, &[&str])] = &[
+    (
+        "C_ClubFinder",
+        &[
+            "ReportPosting",
+            "ReturnCommunityApplicantList",
+            "ReturnGuildApplicantList",
+            "ReturnPendingCommunityApplicantList",
+            "ReturnPendingGuildApplicantList",
+        ],
+    ),
+    (
+        "C_Commentator",
+        &[
+            "GetElapsedMs",
+            "GetTrackedDefensiveCooldowns",
+            "GetTrackedOffensiveCooldowns",
+            "IsTrackedDefensiveCooldown",
+            "IsTrackedOffensiveCooldown",
+        ],
+    ),
+    ("C_PvP", &["GetMatchPVPStatIDs"]),
+    (
+        "C_RecruitAFriend",
+        &["CheckEmailEnabled", "IsSendingEnabled", "SendRecruit"],
+    ),
+];
+
 const RETIRED_8_3_0_MEMBERS: &[(&str, &[&str])] = &[
     (
         "C_ProductChoice",
@@ -481,6 +511,7 @@ const RETIRED_12_0_7_MEMBERS: &[(&str, &[&str])] = &[
 ];
 
 pub(crate) fn mark_retired_members(state: &mut LuaState) -> LuaResult<()> {
+    mark_members(state, RETIRED_8_2_5_MEMBERS)?;
     mark_members(state, RETIRED_8_3_0_MEMBERS)?;
     mark_members(state, RETIRED_9_0_1_MEMBERS)?;
     mark_members(state, RETIRED_9_0_5_MEMBERS)?;

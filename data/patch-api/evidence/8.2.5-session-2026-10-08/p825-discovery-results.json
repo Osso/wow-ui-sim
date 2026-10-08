@@ -1,0 +1,3566 @@
+{
+  "wt-cvars-AIProcessDebugger-253": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "cvars",
+      "superseded_by": "wt-cvars-AIProcessDebugger-235",
+      "symbol": "AIProcessDebugger"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-cvars-DefragmentGPU-258": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "DefragmentGPU"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "Command record present=false",
+      "kind": "command",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-cvars-PhaseHistory-256": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "PhaseHistory"
+    },
+    "observed": {
+      "default": "0",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "0"
+    },
+    "ok": true
+  },
+  "wt-cvars-closedInfoFramesAccountWide-254": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "closedInfoFramesAccountWide"
+    },
+    "observed": {
+      "default": "",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "0D"
+    },
+    "ok": true
+  },
+  "wt-cvars-mountJournalShowPlayer-255": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "cvars",
+      "superseded_by": null,
+      "symbol": "mountJournalShowPlayer"
+    },
+    "observed": {
+      "default": "0",
+      "default_mismatch": false,
+      "detail": "value/default queried",
+      "kind": "cvar",
+      "value": "0"
+    },
+    "ok": true
+  },
+  "wt-events-BNET_REQUEST_INVITE_CONFIRMATION-202": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "BNET_REQUEST_INVITE_CONFIRMATION"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-CLUB_FINDER_APPLICANT_INVITE_RECIEVED-203": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "CLUB_FINDER_APPLICANT_INVITE_RECIEVED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-CLUB_FINDER_APPLICATIONS_UPDATED-204": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "CLUB_FINDER_APPLICATIONS_UPDATED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-CLUB_FINDER_CLUB_REPORTED-205": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "CLUB_FINDER_CLUB_REPORTED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-CLUB_FINDER_COMMUNITY_OFFLINE_JOIN-206": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "CLUB_FINDER_COMMUNITY_OFFLINE_JOIN"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-CLUB_FINDER_ENABLED_OR_DISABLED-207": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "CLUB_FINDER_ENABLED_OR_DISABLED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-CLUB_FINDER_LINKED_CLUB_RETURNED-208": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "CLUB_FINDER_LINKED_CLUB_RETURNED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-CLUB_FINDER_RECRUITMENT_POST_RETURNED-209": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "CLUB_FINDER_RECRUITMENT_POST_RETURNED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-CONVERT_TO_RAID_CONFIRMATION-210": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "CONVERT_TO_RAID_CONFIRMATION"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-ENTITLEMENT_DELIVERED-211": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "ENTITLEMENT_DELIVERED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-INVITE_TO_PARTY_CONFIRMATION-212": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "INVITE_TO_PARTY_CONFIRMATION"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-INVITE_TRAVEL_PASS_CONFIRMATION-213": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "INVITE_TRAVEL_PASS_CONFIRMATION"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-LEAVE_PARTY_CONFIRMATION-214": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "LEAVE_PARTY_CONFIRMATION"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-LEVEL_GRANT_PROPOSED-233": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "LEVEL_GRANT_PROPOSED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"LEVEL_GRANT_PROPOSED\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-PARTY_REFER_A_FRIEND_UPDATED-234": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "PARTY_REFER_A_FRIEND_UPDATED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"PARTY_REFER_A_FRIEND_UPDATED\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-PVP_SPECIAL_EVENT_INFO_UPDATED-215": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "PVP_SPECIAL_EVENT_INFO_UPDATED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-QUEST_DATA_LOAD_RESULT-216": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "QUEST_DATA_LOAD_RESULT"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-QUEST_SESSION_CREATED-217": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "QUEST_SESSION_CREATED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-QUEST_SESSION_DESTROYED-218": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "QUEST_SESSION_DESTROYED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-QUEST_SESSION_ENABLED_STATE_CHANGED-219": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "QUEST_SESSION_ENABLED_STATE_CHANGED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-QUEST_SESSION_JOINED-220": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "QUEST_SESSION_JOINED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-QUEST_SESSION_LEFT-221": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "QUEST_SESSION_LEFT"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-QUEST_SESSION_MEMBER_CONFIRM-222": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "QUEST_SESSION_MEMBER_CONFIRM"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-QUEST_SESSION_MEMBER_START_RESPONSE-223": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "QUEST_SESSION_MEMBER_START_RESPONSE"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-QUEST_SESSION_NOTIFICATION-224": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "QUEST_SESSION_NOTIFICATION"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-RAF_ENTITLEMENT_DELIVERED-225": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "RAF_ENTITLEMENT_DELIVERED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-RAF_INFO_UPDATED-226": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "RAF_INFO_UPDATED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-RAF_RECRUITING_ENABLED_STATUS-227": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "RAF_RECRUITING_ENABLED_STATUS"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-RAF_SYSTEM_ENABLED_STATUS-228": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "RAF_SYSTEM_ENABLED_STATUS"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-RAF_SYSTEM_INFO_UPDATED-229": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "RAF_SYSTEM_INFO_UPDATED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-RECRUIT_A_FRIEND_CAN_EMAIL-235": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "RECRUIT_A_FRIEND_CAN_EMAIL"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"RECRUIT_A_FRIEND_CAN_EMAIL\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-RECRUIT_A_FRIEND_INVITATION_FAILED-236": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "RECRUIT_A_FRIEND_INVITATION_FAILED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"RECRUIT_A_FRIEND_INVITATION_FAILED\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-RECRUIT_A_FRIEND_INVITER_FRIEND_ADDED-237": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "RECRUIT_A_FRIEND_INVITER_FRIEND_ADDED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"RECRUIT_A_FRIEND_INVITER_FRIEND_ADDED\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-RECRUIT_A_FRIEND_SYSTEM_STATUS-238": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "RECRUIT_A_FRIEND_SYSTEM_STATUS"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"RECRUIT_A_FRIEND_SYSTEM_STATUS\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-REQUEST_INVITE_CONFIRMATION-230": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "REQUEST_INVITE_CONFIRMATION"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=true; return=true; registered=true",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-SOR_BY_TEXT_UPDATED-239": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "SOR_BY_TEXT_UPDATED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"SOR_BY_TEXT_UPDATED\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-SOR_COUNTS_UPDATED-240": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "SOR_COUNTS_UPDATED"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"SOR_COUNTS_UPDATED\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-events-SOR_START_EXPERIENCE_INCOMPLETE-241": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "events",
+      "superseded_by": null,
+      "symbol": "SOR_START_EXPERIENCE_INCOMPLETE"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"SOR_START_EXPERIENCE_INCOMPLETE\"; registered=false",
+      "kind": "event",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-AcceptLevelGrant-129": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "AcceptLevelGrant"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-AddQuestWatchForQuestID-24": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-AddQuestWatchForQuestID-572",
+      "symbol": "AddQuestWatchForQuestID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-BNGetFriendGameAccountInfo-130": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "BNGetFriendGameAccountInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-BNGetFriendInfo-131": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "BNGetFriendInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-BNGetFriendInfoByID-132": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "BNGetFriendInfoByID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-BNGetGameAccountInfo-133": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "BNGetGameAccountInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-BNGetGameAccountInfoByGUID-134": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "BNGetGameAccountInfoByGUID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-BNGetNumFriendGameAccounts-135": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "BNGetNumFriendGameAccounts"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_BattleNet.GetAccountInfoByGUID-25": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_BattleNet.GetAccountInfoByGUID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_BattleNet.GetAccountInfoByID-26": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_BattleNet.GetAccountInfoByID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_BattleNet.GetFriendAccountInfo-27": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_BattleNet.GetFriendAccountInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_BattleNet.GetFriendGameAccountInfo-28": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_BattleNet.GetFriendGameAccountInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_BattleNet.GetFriendNumGameAccounts-29": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_BattleNet.GetFriendNumGameAccounts"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_BattleNet.GetGameAccountInfoByGUID-30": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_BattleNet.GetGameAccountInfoByGUID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_BattleNet.GetGameAccountInfoByID-31": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_BattleNet.GetGameAccountInfoByID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_Calendar.EventRemoveInviteByGuid-32": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Calendar.EventRemoveInviteByGuid"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_Club.GetClubCapacity-33": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Club.GetClubCapacity"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_ClubFinder.DoesPlayerBelongToClubFromClubGUID-34": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.DoesPlayerBelongToClubFromClubGUID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_ClubFinder.GetClubFinderDisableReason-35": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.GetClubFinderDisableReason"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_ClubFinder.GetClubTypeFromFinderGUID-36": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.GetClubTypeFromFinderGUID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_ClubFinder.GetFocusIndexFromFlag-37": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.GetFocusIndexFromFlag"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_ClubFinder.GetPlayerClubApplicationStatus-38": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.GetPlayerClubApplicationStatus"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_ClubFinder.GetPlayerSettingsFocusFlagsSelectedCount-39": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.GetPlayerSettingsFocusFlagsSelectedCount"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_ClubFinder.GetRecruitingClubInfoFromClubID-40": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.GetRecruitingClubInfoFromClubID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_ClubFinder.GetRecruitingClubInfoFromFinderGUID-41": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.GetRecruitingClubInfoFromFinderGUID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_ClubFinder.GetTotalMatchingCommunityListSize-42": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.GetTotalMatchingCommunityListSize"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_ClubFinder.GetTotalMatchingGuildListSize-43": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.GetTotalMatchingGuildListSize"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_ClubFinder.HasAlreadyAppliedToLinkedPosting-44": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.HasAlreadyAppliedToLinkedPosting"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_ClubFinder.IsEnabled-45": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.IsEnabled"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_ClubFinder.IsListingEnabledFromFlags-46": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.IsListingEnabledFromFlags"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_ClubFinder.LookupClubPostingFromClubFinderGUID-47": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.LookupClubPostingFromClubFinderGUID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_ClubFinder.ReportPosting-48": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_ClubFinder.ReportPosting-117",
+      "symbol": "C_ClubFinder.ReportPosting"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_ClubFinder.RequestNextCommunityPage-49": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.RequestNextCommunityPage"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_ClubFinder.RequestNextGuildPage-50": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.RequestNextGuildPage"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_ClubFinder.RequestPostingInformationFromClubId-51": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.RequestPostingInformationFromClubId"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_ClubFinder.RequestSubscribedClubPostingIDs-52": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.RequestSubscribedClubPostingIDs"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_ClubFinder.ResetClubPostingMapCache-53": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.ResetClubPostingMapCache"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_ClubFinder.ReturnClubApplicantList-54": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.ReturnClubApplicantList"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_ClubFinder.ReturnCommunityApplicantList-136": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.ReturnCommunityApplicantList"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_ClubFinder.ReturnGuildApplicantList-137": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.ReturnGuildApplicantList"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_ClubFinder.ReturnPendingClubApplicantList-55": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.ReturnPendingClubApplicantList"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_ClubFinder.ReturnPendingCommunityApplicantList-138": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.ReturnPendingCommunityApplicantList"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_ClubFinder.ReturnPendingGuildApplicantList-139": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.ReturnPendingGuildApplicantList"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_ClubFinder.SetAllRecruitmentSettings-56": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_ClubFinder.SetAllRecruitmentSettings"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_Commentator.GetElapsedMs-140": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Commentator.GetElapsedMs"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_Commentator.GetIndirectSpellID-57": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Commentator.GetIndirectSpellID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_Commentator.GetMatchDuration-58": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Commentator.GetMatchDuration"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_Commentator.GetPlayerAuraInfo-59": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Commentator.GetPlayerAuraInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_Commentator.GetTrackedDefensiveCooldowns-141": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Commentator.GetTrackedDefensiveCooldowns"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_Commentator.GetTrackedOffensiveCooldowns-142": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Commentator.GetTrackedOffensiveCooldowns"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_Commentator.GetTrackedSpellID-60": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Commentator.GetTrackedSpellID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_Commentator.GetTrackedSpells-61": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Commentator.GetTrackedSpells"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_Commentator.IsTrackedDefensiveCooldown-143": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Commentator.IsTrackedDefensiveCooldown"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_Commentator.IsTrackedOffensiveCooldown-144": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Commentator.IsTrackedOffensiveCooldown"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_Commentator.IsTrackedSpell-62": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Commentator.IsTrackedSpell"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_Commentator.SetRequestedDebuffCooldowns-63": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_Commentator.SetRequestedDebuffCooldowns"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_GuildInfo.IsGuildOfficer-64": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_GuildInfo.IsGuildOfficer"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_LFGInfo.GetRoleCheckDifficultyDetails-65": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_LFGInfo.GetRoleCheckDifficultyDetails"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_LevelLink.IsActionLocked-66": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_LevelLink.IsActionLocked"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_LevelLink.IsSpellLocked-67": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_LevelLink.IsSpellLocked"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_PartyInfo.AllowedToDoPartyConversion-68": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PartyInfo.AllowedToDoPartyConversion"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_PartyInfo.CanInvite-69": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PartyInfo.CanInvite"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PartyInfo.ConfirmConvertToRaid-70": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PartyInfo.ConfirmConvertToRaid"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PartyInfo.ConfirmInviteTravelPass-71": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PartyInfo.ConfirmInviteTravelPass"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PartyInfo.ConfirmInviteUnit-72": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PartyInfo.ConfirmInviteUnit"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PartyInfo.ConfirmLeaveParty-73": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PartyInfo.ConfirmLeaveParty"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PartyInfo.ConfirmRequestInviteFromUnit-74": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PartyInfo.ConfirmRequestInviteFromUnit"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PartyInfo.ConvertToParty-75": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PartyInfo.ConvertToParty"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PartyInfo.ConvertToRaid-76": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PartyInfo.ConvertToRaid"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PartyInfo.InviteUnit-77": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PartyInfo.InviteUnit"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PartyInfo.IsPartyFull-78": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PartyInfo.IsPartyFull"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_PartyInfo.LeaveParty-79": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PartyInfo.LeaveParty"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_PartyInfo.RequestInviteFromUnit-80": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PartyInfo.RequestInviteFromUnit"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PvP.GetMatchPVPStatColumns-81": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.GetMatchPVPStatColumns"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PvP.GetMatchPVPStatIDs-145": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_PvP.GetMatchPVPStatIDs"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_PvP.GetSpecialEventDetails-82": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_PvP.GetSpecialEventDetails-81",
+      "symbol": "C_PvP.GetSpecialEventDetails"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_PvP.GetSpecialEventInfo-83": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_PvP.GetSpecialEventInfo-82",
+      "symbol": "C_PvP.GetSpecialEventInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_QuestLog.GetQuestDifficultyLevel-84": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestLog.GetQuestDifficultyLevel"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_QuestLog.IsQuestDisabledForSession-85": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestLog.IsQuestDisabledForSession"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_QuestLog.IsQuestFlaggedCompleted-86": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestLog.IsQuestFlaggedCompleted"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_QuestLog.IsQuestReplayable-87": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestLog.IsQuestReplayable"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_QuestLog.IsQuestReplayedRecently-88": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestLog.IsQuestReplayedRecently"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_QuestLog.IsQuestTrivial-89": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestLog.IsQuestTrivial"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_QuestLog.QuestHasQuestSessionBonus-90": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestLog.QuestHasQuestSessionBonus"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_QuestLog.RequestLoadQuestByID-91": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestLog.RequestLoadQuestByID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_QuestSession.CanStart-92": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestSession.CanStart"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_QuestSession.CanStop-93": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestSession.CanStop"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_QuestSession.Exists-94": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestSession.Exists"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_QuestSession.GetAvailableSessionCommand-95": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestSession.GetAvailableSessionCommand"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_QuestSession.GetPendingCommand-96": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestSession.GetPendingCommand"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_QuestSession.GetSessionBeginDetails-97": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestSession.GetSessionBeginDetails"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_QuestSession.GetSuperTrackedQuest-98": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestSession.GetSuperTrackedQuest"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_QuestSession.HasJoined-99": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestSession.HasJoined"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_QuestSession.HasPendingCommand-100": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestSession.HasPendingCommand"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_QuestSession.RequestSessionStart-101": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestSession.RequestSessionStart"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_QuestSession.RequestSessionStop-102": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestSession.RequestSessionStop"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_QuestSession.SendSessionBeginResponse-103": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestSession.SendSessionBeginResponse"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_QuestSession.SetQuestIsSuperTracked-104": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_QuestSession.SetQuestIsSuperTracked"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_RecruitAFriend.CheckEmailEnabled-146": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_RecruitAFriend.CheckEmailEnabled"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_RecruitAFriend.ClaimActivityReward-105": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_RecruitAFriend.ClaimActivityReward"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_RecruitAFriend.ClaimNextReward-106": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_RecruitAFriend.ClaimNextReward"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_RecruitAFriend.GenerateRecruitmentLink-107": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_RecruitAFriend.GenerateRecruitmentLink"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_RecruitAFriend.GetRAFInfo-108": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_RecruitAFriend.GetRAFInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_RecruitAFriend.GetRAFSystemInfo-109": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_RecruitAFriend.GetRAFSystemInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_RecruitAFriend.GetRecruitActivityRequirementsText-110": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_RecruitAFriend.GetRecruitActivityRequirementsText"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_RecruitAFriend.IsEnabled-111": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_RecruitAFriend.IsEnabled-571",
+      "symbol": "C_RecruitAFriend.IsEnabled"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_RecruitAFriend.IsRecruitingEnabled-112": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_RecruitAFriend.IsRecruitingEnabled"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_RecruitAFriend.IsSendingEnabled-147": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_RecruitAFriend.IsSendingEnabled"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_RecruitAFriend.RemoveRAFRecruit-113": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_RecruitAFriend.RemoveRAFRecruit"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_RecruitAFriend.RequestUpdatedRecruitmentInfo-114": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_RecruitAFriend.RequestUpdatedRecruitmentInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_RecruitAFriend.SendRecruit-148": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_RecruitAFriend.SendRecruit"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_SocialRestrictions.IsMuted-115": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_SocialRestrictions.IsMuted"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_SocialRestrictions.IsSilenced-116": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_SocialRestrictions.IsSilenced"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_SocialRestrictions.IsSquelched-117": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_SocialRestrictions.IsSquelched"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-C_SpellBook.IsSpellDisabled-118": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-C_SpellBook.IsSpellDisabled-410",
+      "symbol": "C_SpellBook.IsSpellDisabled"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-C_UIWidgetManager.GetCaptureZoneVisualizationInfo-119": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "C_UIWidgetManager.GetCaptureZoneVisualizationInfo"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-CanGrantLevel-149": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "CanGrantLevel"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-CanSendSoRByText-150": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "CanSendSoRByText"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-ConfirmBNRequestInviteFriend-120": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "ConfirmBNRequestInviteFriend"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-ConvertToParty-151": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "ConvertToParty"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-ConvertToRaid-152": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "ConvertToRaid"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-DeclineLevelGrant-153": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "DeclineLevelGrant"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-GetExpansionForLevel-121": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetExpansionForLevel"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-GetLFGTypes-154": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetLFGTypes"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-GetNumSoRRemaining-155": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetNumSoRRemaining"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-GetRealmID-122": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GetRealmID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-GrantLevel-156": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GrantLevel"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-GuildRosterSendSoR-157": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "GuildRosterSendSoR"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-InviteUnit-158": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "InviteUnit"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-IsQuestFlaggedCompleted-159": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "IsQuestFlaggedCompleted"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-IsRecruitAFriendLinked-123": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-IsRecruitAFriendLinked-207",
+      "symbol": "IsRecruitAFriendLinked"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-IsReferAFriendLinked-160": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "IsReferAFriendLinked"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-LeaveParty-161": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "LeaveParty"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-global-api-RemoveQuestWatchForQuestID-124": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-RemoveQuestWatchForQuestID-675",
+      "symbol": "RemoveQuestWatchForQuestID"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-RequestInviteFromUnit-162": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "RequestInviteFromUnit"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-SendSoRByText-163": {
+    "expected": {
+      "direction": "removed",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": null,
+      "symbol": "SendSoRByText"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-UnitAuraBySlot-125": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-UnitAuraBySlot-119",
+      "symbol": "UnitAuraBySlot"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-global-api-UnitAuraSlots-126": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "global-api",
+      "superseded_by": "wt-global-api-UnitAuraSlots-120",
+      "symbol": "UnitAuraSlots"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-FontString:SetFixedColor-174": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "FontString:SetFixedColor"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "FontString; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-GameTooltip:AddAtlas-175": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "GameTooltip:AddAtlas"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "GameTooltip; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-GameTooltip:SetQuestPartyProgress-176": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": "wt-widgets-GameTooltip:SetQuestPartyProgress-491",
+      "symbol": "GameTooltip:SetQuestPartyProgress"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "GameTooltip; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-ModelSceneActor:AttachToMount-177": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "ModelSceneActor:AttachToMount"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "ModelSceneActor; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-widgets-ModelSceneActor:CalculateMountScale-178": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "ModelSceneActor:CalculateMountScale"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "ModelSceneActor; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-widgets-ModelSceneActor:Dress-179": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "ModelSceneActor:Dress"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "ModelSceneActor; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-widgets-ModelSceneActor:GetAutoDress-180": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "ModelSceneActor:GetAutoDress"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "ModelSceneActor; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-widgets-ModelSceneActor:GetSheathed-181": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "ModelSceneActor:GetSheathed"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "ModelSceneActor; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-widgets-ModelSceneActor:GetSlotTransmogSources-182": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "absent",
+      "section": "widgets",
+      "superseded_by": "wt-widgets-ModelSceneActor:GetSlotTransmogSources-174",
+      "symbol": "ModelSceneActor:GetSlotTransmogSources"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "ModelSceneActor; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-ModelSceneActor:GetUseTransmogSkin-183": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "ModelSceneActor:GetUseTransmogSkin"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "ModelSceneActor; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-widgets-ModelSceneActor:SetAutoDress-184": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "ModelSceneActor:SetAutoDress"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "ModelSceneActor; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-ModelSceneActor:SetPlayerModelFromGlues-185": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "ModelSceneActor:SetPlayerModelFromGlues"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "ModelSceneActor; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-widgets-ModelSceneActor:SetSheathed-186": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "ModelSceneActor:SetSheathed"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "ModelSceneActor; lookup=nil",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": false
+  },
+  "wt-widgets-ModelSceneActor:SetUseTransmogSkin-187": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "ModelSceneActor:SetUseTransmogSkin"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "ModelSceneActor; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-ModelSceneActor:TryOn-188": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "ModelSceneActor:TryOn"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "ModelSceneActor; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-ModelSceneActor:Undress-189": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "ModelSceneActor:Undress"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "ModelSceneActor; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  },
+  "wt-widgets-ModelSceneActor:UndressSlot-190": {
+    "expected": {
+      "direction": "added",
+      "page_default": null,
+      "publication": "published",
+      "section": "widgets",
+      "superseded_by": null,
+      "symbol": "ModelSceneActor:UndressSlot"
+    },
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "ModelSceneActor; lookup=function",
+      "kind": "object-method",
+      "value": null
+    },
+    "ok": true
+  }
+}

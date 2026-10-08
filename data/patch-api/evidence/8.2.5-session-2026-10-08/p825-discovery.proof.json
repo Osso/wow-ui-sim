@@ -1,0 +1,20 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_8_2_5"
+  ],
+  "revision": "2b005f5b103f468aff05889fe7ba64b0dbf4803c",
+  "scope": "p825-discovery",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p825-page",
+  "target": "/home/osso/.cache/wow-ui-sim-targets/p825-page",
+  "exit": 1,
+  "expected_exit": 1,
+  "log": "p825-discovery.txt",
+  "log_sha256": "c4f441cab3cd195f6b42c3a028da7fad84031e954870decfc6e90faa52d9f159",
+  "invalidated": false,
+  "seconds": 420.8314814567566
+}

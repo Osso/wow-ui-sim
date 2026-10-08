@@ -1,0 +1,771 @@
+{
+  "tool_note": "rg unavailable; /usr/bin/grep -rnE with whole-word \\b used; full outputs preserved. Documentation paths excluded; cache must exist.",
+  "cache_exists": true,
+  "rows": [
+    {
+      "source_id": "wt-global-api-BNGetFriendInfo-131",
+      "symbol": "BNGetFriendInfo",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "BNGetFriendInfo\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bBNGetFriendInfo\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bBNGetFriendInfo\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p825-page/src/lua_api/workarounds/temporary/inert_global_defaults.rs:136:if BNGetFriendInfo == nil then\n/home/osso/.worktrees/wow-ui-sim-p825-page/src/lua_api/workarounds/temporary/inert_global_defaults.rs:137:    function BNGetFriendInfo() return nil end\n/home/osso/.worktrees/wow-ui-sim-p825-page/src/lua_api/workarounds/temporary/inert_global_defaults.rs:314:                if BNGetFriendInfo(1) ~= nil then return \"bnet_info\" end\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/system_api_seeded.rs:165:    let is_nil: bool = env.eval(\"return BNGetFriendInfo(1) == nil\").unwrap();\n",
+          "stderr": ""
+        }
+      },
+      "decision": "retain",
+      "reason": "Legacy implementation and tests require profile-safe migration."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.ReportPosting-48",
+      "symbol": "C_ClubFinder.ReportPosting",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "C_ClubFinder\\.ReportPosting\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bReportPosting\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bReportPosting\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p825-page/tests/data/patch_9_2_5_sweep_known_gaps.json:7:  \"wt-global-api-C_ClubFinder.ReportPosting-117\",\n",
+          "stderr": ""
+        }
+      },
+      "decision": "retire",
+      "reason": "No current cached consumer or runtime caller; only existing ReportPosting known-gap identity matches."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.ReturnCommunityApplicantList-136",
+      "symbol": "C_ClubFinder.ReturnCommunityApplicantList",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "C_ClubFinder\\.ReturnCommunityApplicantList\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bReturnCommunityApplicantList\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bReturnCommunityApplicantList\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        }
+      },
+      "decision": "retire",
+      "reason": "No current cached consumer or runtime caller; only existing ReportPosting known-gap identity matches."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.ReturnGuildApplicantList-137",
+      "symbol": "C_ClubFinder.ReturnGuildApplicantList",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "C_ClubFinder\\.ReturnGuildApplicantList\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bReturnGuildApplicantList\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bReturnGuildApplicantList\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        }
+      },
+      "decision": "retire",
+      "reason": "No current cached consumer or runtime caller; only existing ReportPosting known-gap identity matches."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.ReturnPendingCommunityApplicantList-138",
+      "symbol": "C_ClubFinder.ReturnPendingCommunityApplicantList",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "C_ClubFinder\\.ReturnPendingCommunityApplicantList\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bReturnPendingCommunityApplicantList\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bReturnPendingCommunityApplicantList\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        }
+      },
+      "decision": "retire",
+      "reason": "No current cached consumer or runtime caller; only existing ReportPosting known-gap identity matches."
+    },
+    {
+      "source_id": "wt-global-api-C_ClubFinder.ReturnPendingGuildApplicantList-139",
+      "symbol": "C_ClubFinder.ReturnPendingGuildApplicantList",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "C_ClubFinder\\.ReturnPendingGuildApplicantList\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bReturnPendingGuildApplicantList\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bReturnPendingGuildApplicantList\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        }
+      },
+      "decision": "retire",
+      "reason": "No current cached consumer or runtime caller; only existing ReportPosting known-gap identity matches."
+    },
+    {
+      "source_id": "wt-global-api-C_Commentator.GetElapsedMs-140",
+      "symbol": "C_Commentator.GetElapsedMs",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "C_Commentator\\.GetElapsedMs\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bGetElapsedMs\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bGetElapsedMs\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        }
+      },
+      "decision": "retire",
+      "reason": "No current cached consumer or runtime caller; only existing ReportPosting known-gap identity matches."
+    },
+    {
+      "source_id": "wt-global-api-C_Commentator.GetTrackedDefensiveCooldowns-141",
+      "symbol": "C_Commentator.GetTrackedDefensiveCooldowns",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "C_Commentator\\.GetTrackedDefensiveCooldowns\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bGetTrackedDefensiveCooldowns\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bGetTrackedDefensiveCooldowns\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        }
+      },
+      "decision": "retire",
+      "reason": "No current cached consumer or runtime caller; only existing ReportPosting known-gap identity matches."
+    },
+    {
+      "source_id": "wt-global-api-C_Commentator.GetTrackedOffensiveCooldowns-142",
+      "symbol": "C_Commentator.GetTrackedOffensiveCooldowns",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "C_Commentator\\.GetTrackedOffensiveCooldowns\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bGetTrackedOffensiveCooldowns\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bGetTrackedOffensiveCooldowns\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        }
+      },
+      "decision": "retire",
+      "reason": "No current cached consumer or runtime caller; only existing ReportPosting known-gap identity matches."
+    },
+    {
+      "source_id": "wt-global-api-C_Commentator.IsTrackedDefensiveCooldown-143",
+      "symbol": "C_Commentator.IsTrackedDefensiveCooldown",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "C_Commentator\\.IsTrackedDefensiveCooldown\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bIsTrackedDefensiveCooldown\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bIsTrackedDefensiveCooldown\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        }
+      },
+      "decision": "retire",
+      "reason": "No current cached consumer or runtime caller; only existing ReportPosting known-gap identity matches."
+    },
+    {
+      "source_id": "wt-global-api-C_Commentator.IsTrackedOffensiveCooldown-144",
+      "symbol": "C_Commentator.IsTrackedOffensiveCooldown",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "C_Commentator\\.IsTrackedOffensiveCooldown\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bIsTrackedOffensiveCooldown\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bIsTrackedOffensiveCooldown\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        }
+      },
+      "decision": "retire",
+      "reason": "No current cached consumer or runtime caller; only existing ReportPosting known-gap identity matches."
+    },
+    {
+      "source_id": "wt-global-api-C_PvP.GetMatchPVPStatIDs-145",
+      "symbol": "C_PvP.GetMatchPVPStatIDs",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "C_PvP\\.GetMatchPVPStatIDs\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bGetMatchPVPStatIDs\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bGetMatchPVPStatIDs\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        }
+      },
+      "decision": "retire",
+      "reason": "No current cached consumer or runtime caller; only existing ReportPosting known-gap identity matches."
+    },
+    {
+      "source_id": "wt-global-api-C_RecruitAFriend.CheckEmailEnabled-146",
+      "symbol": "C_RecruitAFriend.CheckEmailEnabled",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "C_RecruitAFriend\\.CheckEmailEnabled\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bCheckEmailEnabled\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bCheckEmailEnabled\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        }
+      },
+      "decision": "retire",
+      "reason": "No current cached consumer or runtime caller; only existing ReportPosting known-gap identity matches."
+    },
+    {
+      "source_id": "wt-global-api-C_RecruitAFriend.IsSendingEnabled-147",
+      "symbol": "C_RecruitAFriend.IsSendingEnabled",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "C_RecruitAFriend\\.IsSendingEnabled\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bIsSendingEnabled\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bIsSendingEnabled\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        }
+      },
+      "decision": "retire",
+      "reason": "No current cached consumer or runtime caller; only existing ReportPosting known-gap identity matches."
+    },
+    {
+      "source_id": "wt-global-api-C_RecruitAFriend.SendRecruit-148",
+      "symbol": "C_RecruitAFriend.SendRecruit",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "C_RecruitAFriend\\.SendRecruit\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bSendRecruit\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bSendRecruit\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "exit": 1,
+          "stdout": "",
+          "stderr": ""
+        }
+      },
+      "decision": "retire",
+      "reason": "No current cached consumer or runtime caller; only existing ReportPosting known-gap identity matches."
+    },
+    {
+      "source_id": "wt-global-api-C_SpellBook.IsSpellDisabled-118",
+      "symbol": "C_SpellBook.IsSpellDisabled",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "C_SpellBook\\.IsSpellDisabled\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:130:C_SpellBook.IsSpellDisabled = C_Spell.IsSpellDisabled\n",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bIsSpellDisabled\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Deprecated/11_0_0_SpellBookAPITransitionGuide.lua:130:C_SpellBook.IsSpellDisabled = C_Spell.IsSpellDisabled\n",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bIsSpellDisabled\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p825-page/tests/data/patch_11_0_0_sweep_known_gaps.json:95:  \"wt-global-api-C_Spell.IsSpellDisabled-307\",\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/data/patch_11_0_0_sweep_known_gaps.json:119:  \"wt-global-api-C_SpellBook.IsSpellDisabled-410\",\n",
+          "stderr": ""
+        }
+      },
+      "decision": "retain",
+      "reason": "Current cached consumer; prohibited retirement."
+    },
+    {
+      "source_id": "wt-global-api-LeaveParty-161",
+      "symbol": "LeaveParty",
+      "scans": {
+        "qualified": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "LeaveParty\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/QuestSession.lua:539:\tC_PartyInfo.ConfirmLeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Mainline/InstanceAbandon.lua:40:\t\tC_PartyInfo.ConfirmLeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_LFGUtil/Classic/LFGUtil.lua:23:\t\tLeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_LFGUtil/Mainline/LFGUtil.lua:34:\tC_PartyInfo.LeaveParty(LE_PARTY_CATEGORY_INSTANCE);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_LFGUtil/Shared/LFGUtilShared.lua:18:function ConfirmOrLeaveParty()\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopupShared/UnitPopupSharedButtonMixins.lua:938:\tC_PartyInfo.LeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopupShared/UnitPopupSharedButtonMixins.lua:960:\tConfirmOrLeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopupShared/Mainline/UnitPopupSharedButtonMixins.lua:34:\tC_WoWLabsMatchmaking.LeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_QueueStatusFrame/Mainline/QueueStatusFrame.lua:1477:\t\t\t\tConfirmOrLeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CompactRaidFrames/Mainline/Blizzard_CompactRaidFrameManager.lua:1314:\t\tC_PartyInfo.LeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CompactRaidFrames/Mainline/Blizzard_CompactRaidFrameManager.lua:1336:\tConfirmOrLeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopup/WoWLabs/UnitPopupButtons.lua:461:\tC_PartyInfo.LeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopup/WoWLabs/UnitPopupButtons.lua:559:\tC_WoWLabsMatchmaking.LeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopup/WoWHack/UnitPopupButtons.lua:398:\tC_PartyInfo.LeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopup/Standard/UnitPopupButtons.lua:562:\tC_PartyInfo.LeaveParty();\n",
+          "stderr": ""
+        },
+        "bare": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bLeaveParty\\b",
+            "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_LFGUtil/Classic/LFGUtil.lua:23:\t\tLeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_LFGUtil/Mainline/LFGUtil.lua:34:\tC_PartyInfo.LeaveParty(LE_PARTY_CATEGORY_INSTANCE);\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopupShared/UnitPopupSharedButtonMixins.lua:938:\tC_PartyInfo.LeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopupShared/Mainline/UnitPopupSharedButtonMixins.lua:34:\tC_WoWLabsMatchmaking.LeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_CompactRaidFrames/Mainline/Blizzard_CompactRaidFrameManager.lua:1314:\t\tC_PartyInfo.LeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopup/WoWLabs/UnitPopupButtons.lua:461:\tC_PartyInfo.LeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopup/WoWLabs/UnitPopupButtons.lua:559:\tC_WoWLabsMatchmaking.LeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopup/WoWHack/UnitPopupButtons.lua:398:\tC_PartyInfo.LeaveParty();\n/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_UnitPopup/Standard/UnitPopupButtons.lua:562:\tC_PartyInfo.LeaveParty();\n",
+          "stderr": ""
+        },
+        "callers": {
+          "command": [
+            "/usr/bin/grep",
+            "-rnE",
+            "--exclude=*Documentation*",
+            "\\bLeaveParty\\b",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/src",
+            "/home/osso/.worktrees/wow-ui-sim-p825-page/tests"
+          ],
+          "exit": 0,
+          "stdout": "/home/osso/.worktrees/wow-ui-sim-p825-page/src/c_api/c_party_info/roles_1207.rs:251:        // INFERRED: self-uninvite is a no-op; use LeaveParty explicitly.\n/home/osso/.worktrees/wow-ui-sim-p825-page/src/c_api/c_party_info.rs:4://! `IsGUIDInGroup` read the existing party roster model. `LeaveParty` and\n/home/osso/.worktrees/wow-ui-sim-p825-page/src/c_api/c_party_info.rs:76:    table_set_rust_fn_static(state, table_ref, \"LeaveParty\", c_party_info_leave_party)?;\n/home/osso/.worktrees/wow-ui-sim-p825-page/src/lua_api/globals/group_verbs.rs:12://! - `LeaveParty()`            \u2014 clears members + `party_group_active`,\n/home/osso/.worktrees/wow-ui-sim-p825-page/src/lua_api/globals/group_verbs.rs:112:/// `LeaveParty()` \u2014 clear members + active flag.\n/home/osso/.worktrees/wow-ui-sim-p825-page/src/lua_api/globals/group_verbs.rs:236:    LuaApiMut::register_function(lua, \"LeaveParty\", leave_party)?;\n/home/osso/.worktrees/wow-ui-sim-p825-page/src/lua_api/globals/wowlabs.rs:71:        (\"LeaveParty\", leave_party),\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/blizzard_unit_popup_shared_loads.rs:501:             UnitPopupGlueLeavePartyButton uses LeaveParty + \\\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/patch_12_0_5_pending_party.rs:10:        LeaveParty()\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/group_verbs.rs:67:// \u2500\u2500 LeaveParty \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/group_verbs.rs:86:    env.exec(\"LeaveParty()\").unwrap();\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/c_party_info_probes.rs:144:// \u2500\u2500 LeaveParty \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/c_party_info_probes.rs:153:            C_PartyInfo.LeaveParty()\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/wowlabs_matchmaking.rs:110:            if not C_WoWLabsMatchmaking.LeaveParty() then\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/party_1207_audit.rs:13:    env.exec(\"LeaveParty()\").unwrap();\n/home/osso/.worktrees/wow-ui-sim-p825-page/tests/party_1207_audit.rs:155:        LeaveParty()\n",
+          "stderr": ""
+        }
+      },
+      "decision": "retain",
+      "reason": "Current cached consumer; prohibited retirement."
+    }
+  ]
+}
