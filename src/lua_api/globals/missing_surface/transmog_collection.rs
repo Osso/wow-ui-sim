@@ -81,6 +81,7 @@ fn register_transmog_collection_flags(
         &[
             ("IsSearchInProgress", return_false),
             ("IsAppearanceHiddenVisual", is_appearance_hidden_visual),
+            #[cfg(not(feature = "retail-12-0-0"))]
             (
                 "GetShowMissingSourceInItemTooltips",
                 get_show_missing_source_in_item_tooltips,
@@ -511,6 +512,7 @@ fn return_false(state: &mut LuaState) -> LuaResult<u32> {
     Ok(1)
 }
 
+#[cfg(not(feature = "retail-12-0-0"))]
 fn get_show_missing_source_in_item_tooltips(state: &mut LuaState) -> LuaResult<u32> {
     state.push(Val::Bool(true));
     Ok(1)
