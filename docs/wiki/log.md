@@ -356,3 +356,5 @@ Pinned page 553643 revision 5335723; additive opt-in table-summary parser, three
 ## 2026-10-08 — Patch 7.3.0 validator portability acceptance
 
 Second temporary clone: all nineteen validators pass from the original cwd. Future register/sweep additions leave historical counts unchanged; source tampering is rejected; evidence remains read-only. [Receipt](../../data/patch-api/evidence/7.3.0-session-2026-10-08/p730-validator-portability.json). Temporary clone removed; existing other worktrees untouched.
+
+- 2026-10-08: 7.3.0 integration refresh pins the merged 7.3.2 register, retains sealed historical evidence and adds independently scoped fresh validator receipts.

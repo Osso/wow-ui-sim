@@ -18,7 +18,7 @@ Existing inventory flags require template references, nested API sections or cap
 | SOUNDKIT / PlaySound | Concrete ID 861; subsequent ID 839; old string name rejected without replacing request state | Complete historical key/name similarity lacks a source catalog; audio fidelity and optional argument/return parity not claimed | Bare namespace/global and actual cached Blizzard alias tests |
 | Table Inspector | Actual vendor window focuses root `{p730Field=17, child={leaf=23}}`, selects child, navigates backward, closes | Exact `/tinspect` slash routing/consent not proved by direct window entry point | Cached Blizzard_DebugTools lifecycle case; no vendor overrides |
 | Blizzard_Console | Current addon load/frame/helpers/history tail behavior | Historical 2017 implementation parity not claimed | Six existing targeted prefork cases |
-| Source preservation | All earlier inputs unchanged; 42 registers reproduce | Three inherited extracts remain nonreproducible | Reproduction receipts, exact original-input hashes |
+| Source preservation | All earlier inputs unchanged; 43 integrated registers reproduce | Three inherited extracts remain nonreproducible | Reproduction receipts, exact original-input hashes |
 
 [Problematic contracts](../../../data/patch-api/evidence/7.3.0-session-2026-10-08/p730-problematic-contracts.json) retain exact limitations. The `/tinspect` row stays audit-pending despite bounded window-lifecycle credit. No consent shim was added. Table existence is not used to fabricate unspecified artifact-forge/console behavior.
 
@@ -34,9 +34,9 @@ Moved the existing numeric request implementation to `src/c_api/c_sound.rs`, reg
 
 [Complete scans](../../../data/patch-api/evidence/7.3.0-session-2026-10-08/p730-scans.json) use `/usr/bin/grep -R -n -w -F` for all named identities and PlaySound in cached retail AddOns, excluding `*Documentation*`, and src/tests. Bare-name scans include `pcall(Name, ...)` and `and Name then` without syntax filtering; stdout/stderr/exits are retained untruncated. Cached SOUNDKIT, artifact namespace and PlaySound consumers are preserved. C_Console has no cached qualified-name hits, but existing simulator console consumers remain; no namespace retirement is inferred from absence.
 
-[Later-register snapshots](../../../data/patch-api/evidence/7.3.0-session-2026-10-08/p730-later-register-scan.json) read master `af7a101e2` and p732-page `ac94f5a4a` Git blobs only. No other worktree changed. The 7.3.2 placeholder remains first in `later_registers`, followed by 8.0.1 and newer pages. Integration must replace that placeholder after 7.3.2 merges.
+[Later-register snapshots](../../../data/patch-api/evidence/7.3.0-session-2026-10-08/p730-later-register-scan.json) read master `af7a101e2` and p732-page `ac94f5a4a` Git blobs only. No other worktree changed. The historical snapshot used a 7.3.2 placeholder. Commit `045259220` replaces it with the merged register from master `85c2acb2d`; the integrated own sweep still has zero gaps. No supersession closure or new replacement exception is needed.
 
-## Verification
+## Historical verification
 
 Owned target: `/home/osso/.cache/wow-ui-sim-targets/p730-page`. Every command uses the explicit owned cwd. Long Cargo commands launch asynchronously with full logs; no polling/wait loop, full integration suite, agents/model CLIs, push or merge.
 
@@ -61,6 +61,10 @@ Owned target: `/home/osso/.cache/wow-ui-sim-targets/p730-page`. Every command us
 ## Historical validator
 
 [Validator](../../../data/patch-api/evidence/7.3.0-session-2026-10-08/validate.py) passes, is read-only, uses `historical_registers` / historical sweep paths at the recorded runtime revision, derives counts from files, and has no absolute cwd/target equality gate. Accounting is pinned to its Git revision. New earlier-page audits do not enlarge historical proof scope; complete Git history remains required. Retained hashes reject arbitrary evidence/source changes.
+
+## Integrated refresh
+
+Rebased onto master `85c2acb2d`, including the completed 7.3.2 audit. Fresh proof uses [integrated evidence](../../../data/patch-api/evidence/7.3.0-session-2026-10-08/integrated/) and fixed historical register/sweep scope at `b13975944`. Original sealed receipts remain unchanged. All 43 registers and 40/43 extracts reproduce with their recorded/inherited flags; the same three inherited extract failures remain. The shared receipt-extension tool adds the real 7.3.2 register and two-row sweep. Fresh negative-control, all-sweeps, caller, sound/menu/popup/panel, Mists and branch/master startup checks run separately; their final results are recorded in the integrated command ledger.
 
 ## Sources
 

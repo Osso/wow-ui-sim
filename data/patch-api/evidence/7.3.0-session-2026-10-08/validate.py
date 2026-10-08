@@ -202,6 +202,10 @@ def main():
     sweeps, cases = check_receipts(context)
     check_negative(register)
     prior = check_scans_and_prior(context)
+    spec = importlib.util.spec_from_file_location('integrated', HERE / 'validate_integrated.py')
+    integrated = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(integrated)
+    integrated.main()
     print(json.dumps({'status': 'PASS', **summary, 'registers_reproduced': registers,
                       'extracts_reproduced': extracts, 'page_sweeps': sweeps,
                       'sweep_cases': cases, 'prior_validators': prior,
