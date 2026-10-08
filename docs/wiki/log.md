@@ -1,3 +1,7 @@
+## [2026-10-08] investigation | Patch 7.0.1 redirect audit
+
+[Audit](investigations/patch-7-0-1-api-audit.md): pageid 336026 revision 3241525 redirects to 7.0.3; zero API entries, one metadata-only ID, no retirements or runtime changes. Sources reproduce with three inherited extract failures; fixture/prior-validator proof passes, targeted Cargo proof pending.
+
 ## [2026-10-08] investigation | Patch 7.1.0 API audit
 
 Pinned 3742660; ten inventory/twenty-one extract IDs. Publication discovery passes; custom intrinsic gap retained, no retirement. Added [audit](investigations/patch-7-1-0-api-audit.md), bounded probes and opt-in generator. Forty-five sweeps plus factory, scoped tests, fixtures, format/Mists and 22 validators pass; 45 registers/42 extracts reproduce, three inherited failures unchanged.

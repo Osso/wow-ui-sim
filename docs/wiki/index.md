@@ -2,6 +2,10 @@
 
 [Audit](investigations/patch-7-0-3-api-audit.md): merged 7.1.0 register, explicit seven-commit rebase mapping and 243 preserved historical artifacts. Own 52 gaps unchanged; 48 sweep/factory cases pass and every other page is unchanged versus exact master. 47 registers / 44 extracts reproduce with three inherited failures. Requested professions/crafting/mount regressions, Mists, 31/35/8 fixtures, format and both addons-enabled startups `[]` pass; 29 historical/integrated gates validated.
 
+## [2026-10-08] investigation | Patch 7.0.1 redirect audit
+
+[Audit](investigations/patch-7-0-1-api-audit.md): pageid 336026 revision 3241525 redirects to 7.0.3; zero API entries, one metadata-only ID, no retirements or runtime changes. Sources reproduce with three inherited extract failures; fixture/prior-validator proof passes, targeted Cargo proof pending.
+
 ## [2026-10-08] integration | Patch 7.1.0 API audit
 
 [Audit](investigations/patch-7-1-0-api-audit.md): merged 7.2.0 register, fixed historical/integrated scopes; 46 registers / 43 extracts reproduce with three inherited failures. 47 sweep/factory cases pass; all 45 existing pages unchanged versus exact master. Own gaps zero; custom-intrinsic failure persists. Scoped checks, 30/34/8 fixtures, format/Mists and all 27 historical/integrated validators pass; 127 old artifacts preserved.

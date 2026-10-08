@@ -1,0 +1,306 @@
+{
+  "inventory_rows": 193,
+  "extract_rows": 24,
+  "context_rows": 6,
+  "ledger_rows": 223,
+  "ledger_statuses": {
+    "audit-pending": 63,
+    "partial-development-green": 107,
+    "bounded-coverage": 33,
+    "metadata-only": 20
+  },
+  "inventory_gaps": 53,
+  "prose_pending": 10,
+  "discovery_closures": [
+    "wt-global-api-C_ClubFinder.ReturnGuildApplicantList-77",
+    "wt-global-api-C_UIWidgetManager.GetTextureWithStateVisualizationInfo-150",
+    "wt-global-api-C_ClubFinder.ReturnPendingGuildApplicantList-81",
+    "wt-global-api-C_ClubFinder.ReturnCommunityApplicantList-76",
+    "wt-widgets-Checkout:OnEscapePressed-201",
+    "wt-global-api-C_VoiceChat.SetMasterVolumeScale-139",
+    "wt-global-api-C_PvP.GetMatchPVPStatIDs-112",
+    "wt-global-api-C_Commentator.GetElapsedMs-85",
+    "wt-global-api-C_ClubFinder.ReturnPendingCommunityApplicantList-80"
+  ],
+  "preserved_inputs": 188,
+  "preserved_extract_modes": 74,
+  "reproduced_registers": 38,
+  "inherited_nonreproducible_extracts": [
+    "12.0.5",
+    "12.0.7",
+    "12.1.0"
+  ],
+  "scanned_removals": 21,
+  "retirements": [
+    "C_UIWidgetManager.GetTextureWithStateVisualizationInfo"
+  ],
+  "proof_receipts": 18,
+  "sweeps": [
+    {
+      "patch": "8.2.0",
+      "rows": 193,
+      "ok": 140,
+      "gaps": 53,
+      "result": "pass"
+    },
+    {
+      "patch": "8.2.5",
+      "rows": 198,
+      "ok": 137,
+      "gaps": 61,
+      "result": "pass"
+    },
+    {
+      "patch": "8.3.0",
+      "rows": 224,
+      "ok": 183,
+      "gaps": 41,
+      "result": "pass"
+    },
+    {
+      "patch": "8.3.7",
+      "rows": 2,
+      "ok": 1,
+      "gaps": 1,
+      "result": "pass"
+    },
+    {
+      "patch": "9.0.1",
+      "rows": 755,
+      "ok": 492,
+      "gaps": 263,
+      "result": "pass"
+    },
+    {
+      "patch": "9.0.2",
+      "rows": 77,
+      "ok": 51,
+      "gaps": 26,
+      "result": "pass"
+    },
+    {
+      "patch": "9.0.5",
+      "rows": 28,
+      "ok": 15,
+      "gaps": 13,
+      "result": "pass"
+    },
+    {
+      "patch": "9.1.0",
+      "rows": 179,
+      "ok": 128,
+      "gaps": 51,
+      "result": "pass"
+    },
+    {
+      "patch": "9.1.5",
+      "rows": 169,
+      "ok": 122,
+      "gaps": 47,
+      "result": "pass"
+    },
+    {
+      "patch": "9.2.0",
+      "rows": 80,
+      "ok": 54,
+      "gaps": 26,
+      "result": "pass"
+    },
+    {
+      "patch": "9.2.5",
+      "rows": 84,
+      "ok": 51,
+      "gaps": 33,
+      "result": "pass"
+    },
+    {
+      "patch": "9.2.7",
+      "rows": 3,
+      "ok": 3,
+      "gaps": 0,
+      "result": "pass"
+    },
+    {
+      "patch": "10.0.0",
+      "rows": 639,
+      "ok": 466,
+      "gaps": 173,
+      "result": "pass"
+    },
+    {
+      "patch": "10.0.2",
+      "rows": 416,
+      "ok": 267,
+      "gaps": 149,
+      "result": "pass"
+    },
+    {
+      "patch": "10.0.5",
+      "rows": 93,
+      "ok": 66,
+      "gaps": 27,
+      "result": "pass"
+    },
+    {
+      "patch": "10.0.7",
+      "rows": 70,
+      "ok": 44,
+      "gaps": 26,
+      "result": "pass"
+    },
+    {
+      "patch": "10.1.0",
+      "rows": 129,
+      "ok": 93,
+      "gaps": 36,
+      "result": "pass"
+    },
+    {
+      "patch": "10.1.5",
+      "rows": 101,
+      "ok": 69,
+      "gaps": 32,
+      "result": "pass"
+    },
+    {
+      "patch": "10.1.7",
+      "rows": 48,
+      "ok": 34,
+      "gaps": 14,
+      "result": "pass"
+    },
+    {
+      "patch": "10.2.0",
+      "rows": 150,
+      "ok": 120,
+      "gaps": 30,
+      "result": "pass"
+    },
+    {
+      "patch": "10.2.5",
+      "rows": 59,
+      "ok": 45,
+      "gaps": 14,
+      "result": "pass"
+    },
+    {
+      "patch": "10.2.6",
+      "rows": 220,
+      "ok": 200,
+      "gaps": 20,
+      "result": "pass"
+    },
+    {
+      "patch": "10.2.7",
+      "rows": 104,
+      "ok": 68,
+      "gaps": 36,
+      "result": "pass"
+    },
+    {
+      "patch": "11.0.0",
+      "rows": 495,
+      "ok": 329,
+      "gaps": 166,
+      "result": "pass"
+    },
+    {
+      "patch": "11.0.2",
+      "rows": 34,
+      "ok": 22,
+      "gaps": 12,
+      "result": "pass"
+    },
+    {
+      "patch": "11.0.5",
+      "rows": 48,
+      "ok": 38,
+      "gaps": 10,
+      "result": "pass"
+    },
+    {
+      "patch": "11.0.7",
+      "rows": 98,
+      "ok": 70,
+      "gaps": 28,
+      "result": "pass"
+    },
+    {
+      "patch": "11.1.0",
+      "rows": 116,
+      "ok": 97,
+      "gaps": 19,
+      "result": "pass"
+    },
+    {
+      "patch": "11.1.5",
+      "rows": 125,
+      "ok": 89,
+      "gaps": 36,
+      "result": "pass"
+    },
+    {
+      "patch": "11.1.7",
+      "rows": 48,
+      "ok": 40,
+      "gaps": 8,
+      "result": "pass"
+    },
+    {
+      "patch": "11.2.0",
+      "rows": 162,
+      "ok": 135,
+      "gaps": 27,
+      "result": "pass"
+    },
+    {
+      "patch": "11.2.5",
+      "rows": 163,
+      "ok": 118,
+      "gaps": 45,
+      "result": "pass"
+    },
+    {
+      "patch": "11.2.7",
+      "rows": 508,
+      "ok": 414,
+      "gaps": 94,
+      "result": "pass"
+    },
+    {
+      "patch": "12.0.0",
+      "rows": 1010,
+      "ok": 989,
+      "gaps": 21,
+      "result": "pass"
+    },
+    {
+      "patch": "12.0.1",
+      "rows": 225,
+      "ok": 222,
+      "gaps": 3,
+      "result": "pass"
+    },
+    {
+      "patch": "12.0.5",
+      "rows": 363,
+      "ok": 352,
+      "gaps": 11,
+      "result": "pass"
+    },
+    {
+      "patch": "12.0.7",
+      "rows": 174,
+      "ok": 171,
+      "gaps": 3,
+      "result": "pass"
+    },
+    {
+      "patch": "12.1.0",
+      "rows": 778,
+      "ok": 773,
+      "gaps": 5,
+      "result": "pass"
+    }
+  ]
+}
