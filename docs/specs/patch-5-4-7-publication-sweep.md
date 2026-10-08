@@ -9,7 +9,7 @@ Audit Warcraft Wiki pageid 549368 at revision 5298169, from the 2014 retail Mist
 - [x] Prove the unmodified cached `BNSendGameData` wrapper preserves a real outbound intent for an online game account, drops the namespace status return, and appends nothing after that account goes offline. These are bounded existing simulator policies, not network delivery or native 2014 limits.
 - [x] Reuse existing specialization catalog behavioral tests rather than duplicating them; distinguish those contracts from function publication.
 - [x] No runtime retirements without a page removal, whole-word cached/caller scans, and pinned master/queued re-addition checks.
-- [ ] Keep shared proof inputs pinned to recorded revisions; derive register and sweep scope from historical Git inventories. Validate in clean and synthetic-future checkouts without ignored inputs.
+- [x] Keep shared proof inputs pinned to recorded revisions; derive register and sweep scope from historical Git inventories. Validate in clean and synthetic-future checkouts without ignored inputs.
 
 ## How it works
 

@@ -1,0 +1,24 @@
+{
+  "revision": "731d8bd4298db18526a83d963a6eada022c9e3fb",
+  "base_revision": "080f26f1cbc54b2ee4637a8df6b72d4592b87965",
+  "changed_tests": [
+    "tests/data/patch_5_4_7_sweep_known_gaps.json",
+    "tests/patch_5_4_7_behavior.rs",
+    "tests/patch_5_4_7_publication_sweep.rs"
+  ],
+  "changed_docs": [
+    "docs/specs/patch-5-4-7-publication-sweep.md",
+    "docs/wiki/index.md",
+    "docs/wiki/investigations/patch-5-4-7-api-audit.md",
+    "docs/wiki/log.md"
+  ],
+  "runtime_tool_vendor_changes": [],
+  "sealed_artifacts": 120,
+  "all_seals_match": true,
+  "no_pycache": true,
+  "wiki_lines": {
+    "docs/wiki/index.md": 2719,
+    "docs/wiki/log.md": 447
+  },
+  "remaining_user_workflow": "No push or merge. 5.4.8 then 6.0.1 placeholders await ordered retail integration."
+}

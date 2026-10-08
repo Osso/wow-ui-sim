@@ -1,0 +1,61 @@
+{
+  "status": "PASS",
+  "gate_revision": "517ca44b128f41ad4368d7a91ffcf624c02cacaf",
+  "gate_summary": {
+    "clean": {
+      "failed": 0,
+      "passed": 36
+    },
+    "later_audit": {
+      "failed": 0,
+      "passed": 37
+    }
+  },
+  "source": {
+    "pageid": 549368,
+    "revid": 5298169,
+    "retail_toc": 50400,
+    "toc_note": "API page states build 5.4.7.17956; linked patch page states TOC 50400 and 2014 release."
+  },
+  "accounting": {
+    "inventory": 9,
+    "total_ids": 19,
+    "publication_gaps": 2,
+    "statuses": {
+      "audit-pending": 5,
+      "bounded-coverage": 7,
+      "metadata-only": 7
+    },
+    "pending_prose": [
+      "prose-undated-004",
+      "prose-undated-005",
+      "prose-undated-006"
+    ]
+  },
+  "reproduction": {
+    "registers": 54,
+    "extracts": 51,
+    "inherited_failures": [
+      "12.0.5",
+      "12.0.7",
+      "12.1.0"
+    ]
+  },
+  "negative": {
+    "original_gaps": 2,
+    "negative_gaps": 3,
+    "changed_ids": [
+      "wt-global-api-BNGetFriendInviteInfoByAddon-16"
+    ]
+  },
+  "non_vendor_mists_warnings": 0,
+  "source_test_acceptance_revision": "7ba500c07",
+  "accounting_revision": "500543bd7",
+  "runtime_retirements": [],
+  "unfinished": [
+    "CHARACTER_UPGRADE_ABORTED and CHARACTER_UPGRADE_STARTED lifecycle/publication gaps",
+    "CHAT_MSG_ADDON sender, CHAT_MSG_WHISPER author, and unverified other CHAT_MSG_* prose contracts",
+    "Ordered integration of 5.4.8 then 6.0.1 retail registers; placeholders retained"
+  ],
+  "no_push_merge_agents": true
+}

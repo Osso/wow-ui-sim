@@ -8,7 +8,7 @@
 
 ## [2026-10-08] investigation | Retail Patch 5.4.7 API audit
 
-[Audit](investigations/patch-5-4-7-api-audit.md): pageid 549368 revision 5298169, retail TOC 50400 from linked patch page; 19 IDs accounted, two upgrade-event publication gaps, three chat-prose limits, no retirements or runtime/tool changes. Existing backing behavior tested without vendor edits. Five Python scripts and 54 register/51 extract reproductions pass; final targeted/gate acceptance pending. Wiki preserved without shrinkage.
+[Audit](investigations/patch-5-4-7-api-audit.md): pageid 549368 revision 5298169, linked retail TOC 50400; 19 IDs, two upgrade-event gaps and three chat-prose limits. Existing backing behavior passes, no retirements/runtime/tool/vendor changes. Sweeps/factory 55/55, scoped cases 2/3/1/1, Python 84/84, Mists/format, negative 2 → 3 and 54 register/51 extract reproductions pass (three inherited failures unchanged). Gate PASS clean 36/36, later 37/37; tampering rejected. Wiki preserved without shrinkage.
 
 ## [2026-10-08] integration | Patch 6.2.4 API audit
 
