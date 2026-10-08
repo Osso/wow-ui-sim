@@ -1,0 +1,10 @@
+{
+  "mutation": "wt-events-AUCTION_CANCELED-223",
+  "baseline_gaps": 40,
+  "negative_gaps": 41,
+  "new_gaps": [
+    "wt-events-AUCTION_CANCELED-223"
+  ],
+  "resolved_gaps": [],
+  "exit": 1
+}

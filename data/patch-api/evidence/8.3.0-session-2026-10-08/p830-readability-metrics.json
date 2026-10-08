@@ -1,0 +1,38 @@
+[
+  {
+    "path": "src/c_api/patch_retired_members.rs",
+    "exit": 0,
+    "stdout_file": "p830-metrics-patch_retired_members.json",
+    "stderr": ""
+  },
+  {
+    "path": "src/lua_api/globals/stubs/global_stubs.rs",
+    "exit": 0,
+    "stdout_file": "p830-metrics-global_stubs.json",
+    "stderr": ""
+  },
+  {
+    "path": "tests/patch_8_3_0_publication_sweep.rs",
+    "exit": 0,
+    "stdout_file": "p830-metrics-patch_8_3_0_publication_sweep.json",
+    "stderr": ""
+  },
+  {
+    "path": "tests/patch_8_3_0_publication_fixes.rs",
+    "exit": 0,
+    "stdout_file": "p830-metrics-patch_8_3_0_publication_fixes.json",
+    "stderr": ""
+  },
+  {
+    "path": "tests/patch_8_3_0_cached_surfaces.rs",
+    "exit": 0,
+    "stdout_file": "p830-metrics-patch_8_3_0_cached_surfaces.json",
+    "stderr": ""
+  },
+  {
+    "path": "tests/patch_8_3_0_classic_surfaces.rs",
+    "exit": 0,
+    "stdout_file": "p830-metrics-patch_8_3_0_classic_surfaces.json",
+    "stderr": ""
+  }
+]

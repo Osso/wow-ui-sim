@@ -4,111 +4,143 @@
     "extract_line": 1,
     "literal": "Patch 8.3.0 API changes",
     "status": "metadata-only",
-    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+    "reason": "Editorial/source/build context or external resource link; no runtime credit.",
+    "wikitext_line": 1,
+    "raw_literal": "{{apichanges|8.3.0|prev=8.2.5|next=8.3.7}}"
   },
   {
     "source_id": "source-context-003",
     "extract_line": 3,
     "literal": "== Changes ==",
     "status": "metadata-only",
-    "reason": "Editorial heading; no runtime credit."
+    "reason": "Editorial heading; no runtime credit.",
+    "wikitext_line": 3,
+    "raw_literal": "==Changes=="
   },
   {
     "source_id": "source-context-004",
     "extract_line": 4,
     "literal": "* TOC: 80300",
     "status": "metadata-only",
-    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+    "reason": "Editorial/source/build context or external resource link; no runtime credit.",
+    "wikitext_line": 4,
+    "raw_literal": "* TOC: <code>80300</code>"
   },
   {
     "source_id": "prose-undated-005",
     "extract_line": 5,
     "literal": "* The Auction House was revamped [Reference: url=https://us.forums.blizzard.com/en/wow/t/feedback-auction-house-revamp/324822|author=Kaivax|date=2019-10-07|title=Feedback – Auction House Revamp]",
     "status": "audit-pending",
-    "reason": "Auction House revamp is a broad behavioral summary. Inventory publication and existing auction UI tests do not prove full historical revamp parity; complete service/search/bid/replication lifecycle audit remains outside this bounded publication sweep."
+    "reason": "Auction House revamp is a broad behavioral summary. Inventory publication and existing auction UI tests do not prove full historical revamp parity; complete service/search/bid/replication lifecycle audit remains outside this bounded publication sweep.",
+    "wikitext_line": 5,
+    "raw_literal": "* The [[Auction House]] was revamped <ref>{{ref web|url=https://us.forums.blizzard.com/en/wow/t/feedback-auction-house-revamp/324822|author=[[Kaivax]]|date=2019-10-07|title=Feedback – Auction House Revamp}}</ref>"
   },
   {
     "source_id": "source-context-006",
     "extract_line": 6,
     "literal": "* Deprecated API: Deprecated_8_3_0.lua",
     "status": "metadata-only",
-    "reason": "Editorial/source/build context or external resource link; no runtime credit."
+    "reason": "Editorial/source/build context or external resource link; no runtime credit.",
+    "wikitext_line": 6,
+    "raw_literal": "* Deprecated API: [https://www.townlong-yak.com/framexml/8.3.0/Blizzard_Deprecated/Deprecated_8_3_0.lua Deprecated_8_3_0.lua]"
   },
   {
     "source_id": "source-context-008",
     "extract_line": 8,
     "literal": "== Diffs ==",
     "status": "metadata-only",
-    "reason": "Editorial heading; no runtime credit."
+    "reason": "Editorial heading; no runtime credit.",
+    "wikitext_line": 8,
+    "raw_literal": "==Diffs=="
   },
   {
     "source_id": "source-context-009",
     "extract_line": 9,
     "literal": "=== 8.2.5 (32978) to 8.3.0 (33062) Jan 14 2020 ===",
     "status": "metadata-only",
-    "reason": "Editorial heading; no runtime credit."
+    "reason": "Editorial heading; no runtime credit.",
+    "wikitext_line": 9,
+    "raw_literal": "===8.2.5 (32978) to 8.3.0 (33062) Jan 14 2020==="
   },
   {
     "source_id": "prose-undated-010",
     "extract_line": 10,
     "literal": ": FrameXML, InterfaceResources",
     "status": "metadata-only",
-    "reason": "External build/reference resource context; linked source not expanded, no runtime credit."
+    "reason": "External build/reference resource context; linked source not expanded, no runtime credit.",
+    "wikitext_line": 10,
+    "raw_literal": ": [https://github.com/Gethe/wow-ui-source/commit/356d028f9d245f6e75dc8a806deb3c38aa0aa77f FrameXML], [https://github.com/Ketho/BlizzardInterfaceResources/commit/896f3ba53697f11b2c3705a1298daa48cb8aa38f InterfaceResources]"
   },
   {
     "source_id": "source-context-012",
     "extract_line": 12,
     "literal": "=== 8.3.0 (34601) May 29 2020 ===",
     "status": "metadata-only",
-    "reason": "Editorial heading; no runtime credit."
+    "reason": "Editorial heading; no runtime credit.",
+    "wikitext_line": 12,
+    "raw_literal": "===8.3.0 (34601) May 29 2020==="
   },
   {
     "source_id": "prose-undated-013",
     "extract_line": 13,
     "literal": ": FrameXML, InterfaceResources",
     "status": "metadata-only",
-    "reason": "External build/reference resource context; linked source not expanded, no runtime credit."
+    "reason": "External build/reference resource context; linked source not expanded, no runtime credit.",
+    "wikitext_line": 13,
+    "raw_literal": ": [https://github.com/Gethe/wow-ui-source/commit/479bb55438dcafb6898e919591b2659e5e27835b FrameXML], [https://github.com/Ketho/BlizzardInterfaceResources/commit/907b6f51751e78e7115a0965f2f9e928abc2c486 InterfaceResources]"
   },
   {
     "source_id": "prose-undated-014",
     "extract_line": 14,
     "literal": "* New functions: C_AzeriteEssence.GetNumUsableEssences, C_Item.IsItemCorruptable, TargetSpellHasApplyCorruption",
     "status": "metadata-only",
-    "reason": "Duplicate rendering of inventoried late-build additions: wt-global-api-C_AzeriteEssence.GetNumUsableEssences-14, wt-global-api-C_Item.IsItemCorruptable-14, wt-global-api-TargetSpellHasApplyCorruption-14. No independent runtime credit."
+    "reason": "Duplicate rendering of inventoried late-build additions: wt-global-api-C_AzeriteEssence.GetNumUsableEssences-14, wt-global-api-C_Item.IsItemCorruptable-14, wt-global-api-TargetSpellHasApplyCorruption-14. No independent runtime credit.",
+    "wikitext_line": 14,
+    "raw_literal": "* New functions: {{api|C_AzeriteEssence.GetNumUsableEssences}}, {{api|C_Item.IsItemCorruptable}}, {{api|TargetSpellHasApplyCorruption}}"
   },
   {
     "source_id": "source-context-016",
     "extract_line": 16,
     "literal": "=== 8.3.0 (34769) Jun 11 2020 ===",
     "status": "metadata-only",
-    "reason": "Editorial heading; no runtime credit."
+    "reason": "Editorial heading; no runtime credit.",
+    "wikitext_line": 16,
+    "raw_literal": "===8.3.0 (34769) Jun 11 2020==="
   },
   {
     "source_id": "prose-undated-017",
     "extract_line": 17,
     "literal": ": FrameXML, InterfaceResources",
     "status": "metadata-only",
-    "reason": "External build/reference resource context; linked source not expanded, no runtime credit."
+    "reason": "External build/reference resource context; linked source not expanded, no runtime credit.",
+    "wikitext_line": 17,
+    "raw_literal": ": [https://github.com/Gethe/wow-ui-source/commit/424379ff64268b92097ab52fe5e7b6af6c5e70ff FrameXML], [https://github.com/Ketho/BlizzardInterfaceResources/commit/380fe7459cbf34141be77fc9d58805fde5b1c324 InterfaceResources]"
   },
   {
     "source_id": "prose-undated-018",
     "extract_line": 18,
     "literal": "* New event: LFG_GROUP_DELISTED_LEADERSHIP_CHANGE",
     "status": "metadata-only",
-    "reason": "Duplicate rendering of inventoried late-build additions: wt-events-LFG_GROUP_DELISTED_LEADERSHIP_CHANGE-18. No independent runtime credit."
+    "reason": "Duplicate rendering of inventoried late-build additions: wt-events-LFG_GROUP_DELISTED_LEADERSHIP_CHANGE-18. No independent runtime credit.",
+    "wikitext_line": 18,
+    "raw_literal": "* New event: {{api|t=e|LFG_GROUP_DELISTED_LEADERSHIP_CHANGE}}"
   },
   {
     "source_id": "source-context-020",
     "extract_line": 20,
     "literal": "== References ==",
     "status": "metadata-only",
-    "reason": "Editorial heading; no runtime credit."
+    "reason": "Editorial heading; no runtime credit.",
+    "wikitext_line": 292,
+    "raw_literal": "==References=="
   },
   {
     "source_id": "prose-undated-021",
     "extract_line": 21,
     "literal": "[References list; not expanded]",
     "status": "metadata-only",
-    "reason": "External build/reference resource context; linked source not expanded, no runtime credit."
+    "reason": "External build/reference resource context; linked source not expanded, no runtime credit.",
+    "wikitext_line": 293,
+    "raw_literal": "{{Reflist}}"
   }
 ]

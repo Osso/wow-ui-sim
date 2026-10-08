@@ -1,0 +1,19 @@
+{
+  "command": [
+    "cargo",
+    "check"
+  ],
+  "revision": "f65b5dcc8081d65e2d93384423fb222a65a2eb3c",
+  "scope": "default retail compilation",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p830-page",
+  "target": "/home/osso/.worktrees/wow-ui-sim-p830-page/target",
+  "env": {
+    "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p830-page/target"
+  },
+  "exit": 0,
+  "expected_exit": 0,
+  "seconds": 110.78,
+  "log": "p830-default-check.txt",
+  "log_sha256": "51a5e27afb42ecaa778d24eb75e37623a40b0f028effcce3da508c137e69c186",
+  "invalidated": false
+}

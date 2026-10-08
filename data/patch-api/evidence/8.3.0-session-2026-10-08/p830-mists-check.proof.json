@@ -1,0 +1,20 @@
+{
+  "command": [
+    "cargo",
+    "check",
+    "--no-default-features",
+    "--features",
+    "sound,gui,casc,client-mists",
+    "--tests"
+  ],
+  "revision": "f65b5dcc8081d65e2d93384423fb222a65a2eb3c",
+  "scope": "Mists tests compilation; zero non-vendor warnings",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p830-page",
+  "target": "/home/osso/.worktrees/wow-ui-sim-p830-page/target",
+  "exit": 0,
+  "expected_exit": 0,
+  "seconds": 278.3,
+  "log": "p830-mists-check.txt",
+  "log_sha256": "e7af4b255f397d5bc1dc12430f9cae087adccc83e5b99acd51f040e16f27342f",
+  "invalidated": false
+}

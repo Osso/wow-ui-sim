@@ -1,0 +1,23 @@
+{
+  "command": [
+    "timeout",
+    "90",
+    "/home/osso/.worktrees/wow-ui-sim-p830-page/target/debug/wow-sim",
+    "--no-addons",
+    "--no-saved-vars",
+    "lua-errors"
+  ],
+  "revision": "f65b5dcc8081d65e2d93384423fb222a65a2eb3c",
+  "scope": "bounded retail startup stdout []",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p830-page",
+  "target": "/home/osso/.worktrees/wow-ui-sim-p830-page/target",
+  "env": {
+    "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p830-page/target"
+  },
+  "exit": 0,
+  "expected_exit": 0,
+  "seconds": 8.65,
+  "log": "p830-startup.txt",
+  "log_sha256": "92066452de2c7ea43fac8e4bc47f2ec3a82a25ff8391208c026b6e4bcee7b5d5",
+  "invalidated": false
+}

@@ -20,5 +20,7 @@
   "seconds": 0.07,
   "log": "p830-parser-green.txt",
   "log_sha256": "ae7a2c474a8415ec69066f075a280d5fc3f1de6a798ae4ac1bda003ea074b104",
-  "invalidated": false
+  "invalidated": true,
+  "expected_exit": 0,
+  "invalidation_reason": "Expanded own register/parser scope superseded by final expanded receipts; original narrower evidence retained."
 }

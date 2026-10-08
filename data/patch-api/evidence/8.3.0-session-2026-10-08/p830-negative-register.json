@@ -1,0 +1,1822 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "8.3.0",
+  "source": {
+    "path": "data/patch-api/sources/8.3.0-api-changes.wikitext",
+    "revid": 6471393,
+    "sha256": "01f5ca887f8dbe81b64ed25d5691bd2634e3367def22d8a713b892e2b01694f2"
+  },
+  "header_counts": [
+    {
+      "section": "global-api",
+      "direction": "added",
+      "header_count": 123,
+      "parsed_count": 123
+    },
+    {
+      "section": "global-api",
+      "direction": "removed",
+      "header_count": 42,
+      "parsed_count": 42
+    },
+    {
+      "section": "widgets",
+      "direction": "added",
+      "header_count": 2,
+      "parsed_count": 2
+    },
+    {
+      "section": "widgets",
+      "direction": "removed",
+      "header_count": 2,
+      "parsed_count": 2
+    },
+    {
+      "section": "events",
+      "direction": "added",
+      "header_count": 39,
+      "parsed_count": 39
+    },
+    {
+      "section": "events",
+      "direction": "removed",
+      "header_count": 6,
+      "parsed_count": 6
+    },
+    {
+      "section": "cvars",
+      "direction": "added",
+      "header_count": 5,
+      "parsed_count": 5
+    },
+    {
+      "section": "cvars",
+      "direction": "removed",
+      "header_count": 1,
+      "parsed_count": 1
+    }
+  ],
+  "entries": [
+    {
+      "id": "wt-global-api-C_AuctionHouse.CalculateCommodityDeposit-28",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.CalculateCommodityDeposit",
+      "annotation": "",
+      "wikitext_line": 28
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.CalculateItemDeposit-29",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.CalculateItemDeposit",
+      "annotation": "",
+      "wikitext_line": 29
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.CanCancelAuction-30",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.CanCancelAuction",
+      "annotation": "",
+      "wikitext_line": 30
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.CancelAuction-31",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.CancelAuction",
+      "annotation": "",
+      "wikitext_line": 31
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.CancelCommoditiesPurchase-32",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.CancelCommoditiesPurchase",
+      "annotation": "",
+      "wikitext_line": 32
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.CancelSell-33",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.CancelSell",
+      "annotation": "",
+      "wikitext_line": 33
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.CloseAuctionHouse-34",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.CloseAuctionHouse",
+      "annotation": "",
+      "wikitext_line": 34
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.ConfirmCommoditiesPurchase-35",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.ConfirmCommoditiesPurchase",
+      "annotation": "",
+      "wikitext_line": 35
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.FavoritesAreAvailable-36",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.FavoritesAreAvailable",
+      "annotation": "",
+      "wikitext_line": 36
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetAuctionItemSubClasses-37",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetAuctionItemSubClasses",
+      "annotation": "",
+      "wikitext_line": 37
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetAvailablePostCount-38",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetAvailablePostCount",
+      "annotation": "",
+      "wikitext_line": 38
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetBidInfo-39",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetBidInfo",
+      "annotation": "",
+      "wikitext_line": 39
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetBidType-40",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetBidType",
+      "annotation": "",
+      "wikitext_line": 40
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetBrowseResults-41",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetBrowseResults",
+      "annotation": "",
+      "wikitext_line": 41
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetCancelCost-42",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetCancelCost",
+      "annotation": "",
+      "wikitext_line": 42
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetCommoditySearchResultInfo-43",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetCommoditySearchResultInfo",
+      "annotation": "",
+      "wikitext_line": 43
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetCommoditySearchResultsQuantity-44",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetCommoditySearchResultsQuantity",
+      "annotation": "",
+      "wikitext_line": 44
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetExtraBrowseInfo-45",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetExtraBrowseInfo",
+      "annotation": "",
+      "wikitext_line": 45
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetFilterGroups-46",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetFilterGroups",
+      "annotation": "",
+      "wikitext_line": 46
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetItemCommodityStatus-47",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetItemCommodityStatus",
+      "annotation": "",
+      "wikitext_line": 47
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetItemKeyFromItem-48",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetItemKeyFromItem",
+      "annotation": "",
+      "wikitext_line": 48
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetItemKeyInfo-49",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetItemKeyInfo",
+      "annotation": "",
+      "wikitext_line": 49
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetItemSearchResultInfo-50",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetItemSearchResultInfo",
+      "annotation": "",
+      "wikitext_line": 50
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetItemSearchResultsQuantity-51",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetItemSearchResultsQuantity",
+      "annotation": "",
+      "wikitext_line": 51
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetMaxBidItemBid-52",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetMaxBidItemBid",
+      "annotation": "",
+      "wikitext_line": 52
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetMaxBidItemBuyout-53",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetMaxBidItemBuyout",
+      "annotation": "",
+      "wikitext_line": 53
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetMaxCommoditySearchResultPrice-54",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetMaxCommoditySearchResultPrice",
+      "annotation": "",
+      "wikitext_line": 54
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetMaxItemSearchResultBid-55",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetMaxItemSearchResultBid",
+      "annotation": "",
+      "wikitext_line": 55
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetMaxItemSearchResultBuyout-56",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetMaxItemSearchResultBuyout",
+      "annotation": "",
+      "wikitext_line": 56
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetMaxOwnedAuctionBid-57",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetMaxOwnedAuctionBid",
+      "annotation": "",
+      "wikitext_line": 57
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetMaxOwnedAuctionBuyout-58",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetMaxOwnedAuctionBuyout",
+      "annotation": "",
+      "wikitext_line": 58
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetNumBidTypes-59",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetNumBidTypes",
+      "annotation": "",
+      "wikitext_line": 59
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetNumBids-60",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetNumBids",
+      "annotation": "",
+      "wikitext_line": 60
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetNumCommoditySearchResults-61",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetNumCommoditySearchResults",
+      "annotation": "",
+      "wikitext_line": 61
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetNumItemSearchResults-62",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetNumItemSearchResults",
+      "annotation": "",
+      "wikitext_line": 62
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetNumOwnedAuctionTypes-63",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetNumOwnedAuctionTypes",
+      "annotation": "",
+      "wikitext_line": 63
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetNumOwnedAuctions-64",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetNumOwnedAuctions",
+      "annotation": "",
+      "wikitext_line": 64
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetNumReplicateItems-65",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetNumReplicateItems",
+      "annotation": "",
+      "wikitext_line": 65
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetOwnedAuctionInfo-66",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetOwnedAuctionInfo",
+      "annotation": "",
+      "wikitext_line": 66
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetOwnedAuctionType-67",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetOwnedAuctionType",
+      "annotation": "",
+      "wikitext_line": 67
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetQuoteDurationRemaining-68",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetQuoteDurationRemaining",
+      "annotation": "",
+      "wikitext_line": 68
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetReplicateItemBattlePetInfo-69",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetReplicateItemBattlePetInfo",
+      "annotation": "",
+      "wikitext_line": 69
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetReplicateItemInfo-70",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetReplicateItemInfo",
+      "annotation": "",
+      "wikitext_line": 70
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetReplicateItemLink-71",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetReplicateItemLink",
+      "annotation": "",
+      "wikitext_line": 71
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetReplicateItemTimeLeft-72",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetReplicateItemTimeLeft",
+      "annotation": "",
+      "wikitext_line": 72
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.GetTimeLeftBandInfo-73",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.GetTimeLeftBandInfo",
+      "annotation": "",
+      "wikitext_line": 73
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.HasFavorites-74",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.HasFavorites",
+      "annotation": "",
+      "wikitext_line": 74
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.HasFullBidResults-75",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.HasFullBidResults",
+      "annotation": "",
+      "wikitext_line": 75
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.HasFullBrowseResults-76",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.HasFullBrowseResults",
+      "annotation": "",
+      "wikitext_line": 76
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.HasFullCommoditySearchResults-77",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.HasFullCommoditySearchResults",
+      "annotation": "",
+      "wikitext_line": 77
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.HasFullItemSearchResults-78",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.HasFullItemSearchResults",
+      "annotation": "",
+      "wikitext_line": 78
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.HasFullOwnedAuctionResults-79",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.HasFullOwnedAuctionResults",
+      "annotation": "",
+      "wikitext_line": 79
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.HasMaxFavorites-80",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.HasMaxFavorites",
+      "annotation": "",
+      "wikitext_line": 80
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.HasSearchResults-81",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.HasSearchResults",
+      "annotation": "",
+      "wikitext_line": 81
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.IsFavoriteItem-82",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.IsFavoriteItem",
+      "annotation": "",
+      "wikitext_line": 82
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.IsSellItemValid-83",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.IsSellItemValid",
+      "annotation": "",
+      "wikitext_line": 83
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.IsThrottledMessageSystemReady-84",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.IsThrottledMessageSystemReady",
+      "annotation": "",
+      "wikitext_line": 84
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.MakeItemKey-85",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.MakeItemKey",
+      "annotation": "",
+      "wikitext_line": 85
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.PlaceBid-86",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.PlaceBid",
+      "annotation": "",
+      "wikitext_line": 86
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.PostCommodity-87",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.PostCommodity",
+      "annotation": "",
+      "wikitext_line": 87
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.PostItem-88",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.PostItem",
+      "annotation": "",
+      "wikitext_line": 88
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.QueryBids-89",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.QueryBids",
+      "annotation": "",
+      "wikitext_line": 89
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.QueryOwnedAuctions-90",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.QueryOwnedAuctions",
+      "annotation": "",
+      "wikitext_line": 90
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.RefreshCommoditySearchResults-91",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.RefreshCommoditySearchResults",
+      "annotation": "",
+      "wikitext_line": 91
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.RefreshItemSearchResults-92",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.RefreshItemSearchResults",
+      "annotation": "",
+      "wikitext_line": 92
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.ReplicateItems-93",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.ReplicateItems",
+      "annotation": "",
+      "wikitext_line": 93
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.RequestMoreBrowseResults-94",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.RequestMoreBrowseResults",
+      "annotation": "",
+      "wikitext_line": 94
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.RequestMoreCommoditySearchResults-95",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.RequestMoreCommoditySearchResults",
+      "annotation": "",
+      "wikitext_line": 95
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.RequestMoreItemSearchResults-96",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.RequestMoreItemSearchResults",
+      "annotation": "",
+      "wikitext_line": 96
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.SearchForFavorites-97",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.SearchForFavorites",
+      "annotation": "",
+      "wikitext_line": 97
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.SearchForItemKeys-98",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.SearchForItemKeys",
+      "annotation": "",
+      "wikitext_line": 98
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.SendBrowseQuery-99",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.SendBrowseQuery",
+      "annotation": "",
+      "wikitext_line": 99
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.SendSearchQuery-100",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.SendSearchQuery",
+      "annotation": "",
+      "wikitext_line": 100
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.SendSellSearchQuery-101",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.SendSellSearchQuery",
+      "annotation": "",
+      "wikitext_line": 101
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.SetFavoriteItem-102",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.SetFavoriteItem",
+      "annotation": "",
+      "wikitext_line": 102
+    },
+    {
+      "id": "wt-global-api-C_AuctionHouse.StartCommoditiesPurchase-103",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AuctionHouse.StartCommoditiesPurchase",
+      "annotation": "",
+      "wikitext_line": 103
+    },
+    {
+      "id": "wt-global-api-C_AzeriteItem.GetUnlimitedPowerLevel-104",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_AzeriteItem.GetUnlimitedPowerLevel",
+      "annotation": "",
+      "wikitext_line": 104
+    },
+    {
+      "id": "wt-global-api-C_Calendar.IsEventOpen-105",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Calendar.IsEventOpen",
+      "annotation": "",
+      "wikitext_line": 105
+    },
+    {
+      "id": "wt-global-api-C_ClubFinder.GetPostingIDFromClubFinderGUID-106",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ClubFinder.GetPostingIDFromClubFinderGUID",
+      "annotation": "",
+      "wikitext_line": 106
+    },
+    {
+      "id": "wt-global-api-C_Garrison.GetGarrisonTalentTreeCurrencyTypes-107",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Garrison.GetGarrisonTalentTreeCurrencyTypes",
+      "annotation": "",
+      "wikitext_line": 107
+    },
+    {
+      "id": "wt-global-api-C_Garrison.GetGarrisonTalentTreeType-108",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Garrison.GetGarrisonTalentTreeType",
+      "annotation": "",
+      "wikitext_line": 108
+    },
+    {
+      "id": "wt-global-api-C_Garrison.GetTalentPointsSpentInTalentTree-109",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Garrison.GetTalentPointsSpentInTalentTree",
+      "annotation": "",
+      "wikitext_line": 109
+    },
+    {
+      "id": "wt-global-api-C_Garrison.GetTalentTreeTalentPointResearchInfo-110",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Garrison.GetTalentTreeTalentPointResearchInfo",
+      "annotation": "",
+      "wikitext_line": 110
+    },
+    {
+      "id": "wt-global-api-C_GuildInfo.GetGuildTabardInfo-111",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_GuildInfo.GetGuildTabardInfo",
+      "annotation": "",
+      "wikitext_line": 111
+    },
+    {
+      "id": "wt-global-api-C_Item.GetStackCount-112",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Item.GetStackCount",
+      "annotation": "",
+      "wikitext_line": 112
+    },
+    {
+      "id": "wt-global-api-C_Item.IsItemCorrupted-113",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Item.IsItemCorrupted",
+      "annotation": "",
+      "wikitext_line": 113
+    },
+    {
+      "id": "wt-global-api-C_Item.IsItemCorruptionRelated-114",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Item.IsItemCorruptionRelated",
+      "annotation": "",
+      "wikitext_line": 114
+    },
+    {
+      "id": "wt-global-api-C_Item.IsItemCorruptionResistant-115",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Item.IsItemCorruptionResistant",
+      "annotation": "",
+      "wikitext_line": 115
+    },
+    {
+      "id": "wt-global-api-C_Item.LockItemByGUID-116",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Item.LockItemByGUID",
+      "annotation": "",
+      "wikitext_line": 116
+    },
+    {
+      "id": "wt-global-api-C_Item.UnlockItemByGUID-117",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Item.UnlockItemByGUID",
+      "annotation": "",
+      "wikitext_line": 117
+    },
+    {
+      "id": "wt-global-api-C_ItemInteraction.ClearPendingItem-118",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ItemInteraction.ClearPendingItem",
+      "annotation": "",
+      "wikitext_line": 118
+    },
+    {
+      "id": "wt-global-api-C_ItemInteraction.CloseUI-119",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ItemInteraction.CloseUI",
+      "annotation": "",
+      "wikitext_line": 119
+    },
+    {
+      "id": "wt-global-api-C_ItemInteraction.GetItemInteractionInfo-120",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ItemInteraction.GetItemInteractionInfo",
+      "annotation": "",
+      "wikitext_line": 120
+    },
+    {
+      "id": "wt-global-api-C_ItemInteraction.GetItemInteractionSpellId-121",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ItemInteraction.GetItemInteractionSpellId",
+      "annotation": "",
+      "wikitext_line": 121
+    },
+    {
+      "id": "wt-global-api-C_ItemInteraction.InitializeFrame-122",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ItemInteraction.InitializeFrame",
+      "annotation": "",
+      "wikitext_line": 122
+    },
+    {
+      "id": "wt-global-api-C_ItemInteraction.PerformItemInteraction-123",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ItemInteraction.PerformItemInteraction",
+      "annotation": "",
+      "wikitext_line": 123
+    },
+    {
+      "id": "wt-global-api-C_ItemInteraction.Reset-124",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ItemInteraction.Reset",
+      "annotation": "",
+      "wikitext_line": 124
+    },
+    {
+      "id": "wt-global-api-C_ItemInteraction.SetCorruptionReforgerItemTooltip-125",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ItemInteraction.SetCorruptionReforgerItemTooltip",
+      "annotation": "",
+      "wikitext_line": 125
+    },
+    {
+      "id": "wt-global-api-C_ItemInteraction.SetPendingItem-126",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ItemInteraction.SetPendingItem",
+      "annotation": "",
+      "wikitext_line": 126
+    },
+    {
+      "id": "wt-global-api-C_LFGuildInfo.GetRecruitingGuildTabardInfo-127",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_LFGuildInfo.GetRecruitingGuildTabardInfo",
+      "annotation": "",
+      "wikitext_line": 127
+    },
+    {
+      "id": "wt-global-api-C_Mail.CanCheckInbox-128",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Mail.CanCheckInbox",
+      "annotation": "",
+      "wikitext_line": 128
+    },
+    {
+      "id": "wt-global-api-C_Map.CloseWorldMapInteraction-129",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Map.CloseWorldMapInteraction",
+      "annotation": "",
+      "wikitext_line": 129
+    },
+    {
+      "id": "wt-global-api-C_PartyInfo.GetMinLevel-130",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PartyInfo.GetMinLevel",
+      "annotation": "",
+      "wikitext_line": 130
+    },
+    {
+      "id": "wt-global-api-C_QuestLog.GetActiveThreatMaps-131",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_QuestLog.GetActiveThreatMaps",
+      "annotation": "",
+      "wikitext_line": 131
+    },
+    {
+      "id": "wt-global-api-C_QuestLog.HasActiveThreats-132",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_QuestLog.HasActiveThreats",
+      "annotation": "",
+      "wikitext_line": 132
+    },
+    {
+      "id": "wt-global-api-C_QuestLog.IsThreatQuest-133",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_QuestLog.IsThreatQuest",
+      "annotation": "",
+      "wikitext_line": 133
+    },
+    {
+      "id": "wt-global-api-C_TaskQuest.GetThreatQuests-134",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_TaskQuest.GetThreatQuests",
+      "annotation": "",
+      "wikitext_line": 134
+    },
+    {
+      "id": "wt-global-api-C_UIWidgetManager.GetPowerBarWidgetSetID-135",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_UIWidgetManager.GetPowerBarWidgetSetID",
+      "annotation": "",
+      "wikitext_line": 135
+    },
+    {
+      "id": "wt-global-api-C_WowTokenUI.StartTokenSell-136",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_WowTokenUI.StartTokenSell",
+      "annotation": "",
+      "wikitext_line": 136
+    },
+    {
+      "id": "wt-global-api-GetCorruption-137",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCorruption",
+      "annotation": "",
+      "wikitext_line": 137
+    },
+    {
+      "id": "wt-global-api-GetCorruptionResistance-138",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCorruptionResistance",
+      "annotation": "",
+      "wikitext_line": 138
+    },
+    {
+      "id": "wt-global-api-GetNegativeCorruptionEffectInfo-139",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNegativeCorruptionEffectInfo",
+      "annotation": "",
+      "wikitext_line": 139
+    },
+    {
+      "id": "wt-global-api-GetUnitPowerBarInfo-140",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetUnitPowerBarInfo",
+      "annotation": "",
+      "wikitext_line": 140
+    },
+    {
+      "id": "wt-global-api-GetUnitPowerBarInfoByID-141",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetUnitPowerBarInfoByID",
+      "annotation": "",
+      "wikitext_line": 141
+    },
+    {
+      "id": "wt-global-api-GetUnitPowerBarStrings-142",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetUnitPowerBarStrings",
+      "annotation": "",
+      "wikitext_line": 142
+    },
+    {
+      "id": "wt-global-api-GetUnitPowerBarStringsByID-143",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetUnitPowerBarStringsByID",
+      "annotation": "",
+      "wikitext_line": 143
+    },
+    {
+      "id": "wt-global-api-GetUnitPowerBarTextureInfo-144",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetUnitPowerBarTextureInfo",
+      "annotation": "",
+      "wikitext_line": 144
+    },
+    {
+      "id": "wt-global-api-GetUnitPowerBarTextureInfoByID-145",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetUnitPowerBarTextureInfoByID",
+      "annotation": "",
+      "wikitext_line": 145
+    },
+    {
+      "id": "wt-global-api-IsCorruptedItem-146",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsCorruptedItem",
+      "annotation": "",
+      "wikitext_line": 146
+    },
+    {
+      "id": "wt-global-api-IsUnitModelReadyForUI-147",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsUnitModelReadyForUI",
+      "annotation": "",
+      "wikitext_line": 147
+    },
+    {
+      "id": "wt-global-api-IsUsingFixedTimeStep-148",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsUsingFixedTimeStep",
+      "annotation": "",
+      "wikitext_line": 148
+    },
+    {
+      "id": "wt-global-api-PetDefensiveAssistMode-149",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "PetDefensiveAssistMode",
+      "annotation": "",
+      "wikitext_line": 149
+    },
+    {
+      "id": "wt-global-api-UnitPowerBarID-150",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitPowerBarID",
+      "annotation": "",
+      "wikitext_line": 150
+    },
+    {
+      "id": "wt-global-api-C_ProductChoice.GetChoices-153",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_ProductChoice.GetChoices",
+      "annotation": "",
+      "wikitext_line": 153
+    },
+    {
+      "id": "wt-global-api-C_ProductChoice.GetNumSuppressed-154",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_ProductChoice.GetNumSuppressed",
+      "annotation": "",
+      "wikitext_line": 154
+    },
+    {
+      "id": "wt-global-api-C_ProductChoice.GetProducts-155",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_ProductChoice.GetProducts",
+      "annotation": "",
+      "wikitext_line": 155
+    },
+    {
+      "id": "wt-global-api-C_ProductChoice.MakeSelection-156",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_ProductChoice.MakeSelection",
+      "annotation": "",
+      "wikitext_line": 156
+    },
+    {
+      "id": "wt-global-api-C_WowTokenPublic.SellToken-157",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_WowTokenPublic.SellToken",
+      "annotation": "",
+      "wikitext_line": 157
+    },
+    {
+      "id": "wt-global-api-CalculateAuctionDeposit-158",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CalculateAuctionDeposit",
+      "annotation": "",
+      "wikitext_line": 158
+    },
+    {
+      "id": "wt-global-api-CanCancelAuction-159",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CanCancelAuction",
+      "annotation": "",
+      "wikitext_line": 159
+    },
+    {
+      "id": "wt-global-api-CanSendAuctionQuery-160",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CanSendAuctionQuery",
+      "annotation": "",
+      "wikitext_line": 160
+    },
+    {
+      "id": "wt-global-api-CancelAuction-161",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CancelAuction",
+      "annotation": "",
+      "wikitext_line": 161
+    },
+    {
+      "id": "wt-global-api-CancelSell-162",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CancelSell",
+      "annotation": "",
+      "wikitext_line": 162
+    },
+    {
+      "id": "wt-global-api-ClickAuctionSellItemButton-163",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ClickAuctionSellItemButton",
+      "annotation": "",
+      "wikitext_line": 163
+    },
+    {
+      "id": "wt-global-api-CloseAuctionHouse-164",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CloseAuctionHouse",
+      "annotation": "",
+      "wikitext_line": 164
+    },
+    {
+      "id": "wt-global-api-ConfirmPostAuction-165",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ConfirmPostAuction",
+      "annotation": "",
+      "wikitext_line": 165
+    },
+    {
+      "id": "wt-global-api-GetAlternatePowerInfoByID-166",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetAlternatePowerInfoByID",
+      "annotation": "",
+      "wikitext_line": 166
+    },
+    {
+      "id": "wt-global-api-GetAuctionDeposit-167",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetAuctionDeposit",
+      "annotation": "",
+      "wikitext_line": 167
+    },
+    {
+      "id": "wt-global-api-GetAuctionHouseDepositRate-168",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetAuctionHouseDepositRate",
+      "annotation": "",
+      "wikitext_line": 168
+    },
+    {
+      "id": "wt-global-api-GetAuctionItemBattlePetInfo-169",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetAuctionItemBattlePetInfo",
+      "annotation": "",
+      "wikitext_line": 169
+    },
+    {
+      "id": "wt-global-api-GetAuctionItemInfo-170",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetAuctionItemInfo",
+      "annotation": "",
+      "wikitext_line": 170
+    },
+    {
+      "id": "wt-global-api-GetAuctionItemLink-171",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetAuctionItemLink",
+      "annotation": "",
+      "wikitext_line": 171
+    },
+    {
+      "id": "wt-global-api-GetAuctionItemSubClasses-172",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetAuctionItemSubClasses",
+      "annotation": "",
+      "wikitext_line": 172
+    },
+    {
+      "id": "wt-global-api-GetAuctionItemTimeLeft-173",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetAuctionItemTimeLeft",
+      "annotation": "",
+      "wikitext_line": 173
+    },
+    {
+      "id": "wt-global-api-GetAuctionSellItemInfo-174",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetAuctionSellItemInfo",
+      "annotation": "",
+      "wikitext_line": 174
+    },
+    {
+      "id": "wt-global-api-GetAuctionSort-175",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetAuctionSort",
+      "annotation": "",
+      "wikitext_line": 175
+    },
+    {
+      "id": "wt-global-api-GetBidderAuctionItems-176",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetBidderAuctionItems",
+      "annotation": "",
+      "wikitext_line": 176
+    },
+    {
+      "id": "wt-global-api-GetNumAuctionItems-177",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetNumAuctionItems",
+      "annotation": "",
+      "wikitext_line": 177
+    },
+    {
+      "id": "wt-global-api-GetOwnerAuctionItems-178",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetOwnerAuctionItems",
+      "annotation": "",
+      "wikitext_line": 178
+    },
+    {
+      "id": "wt-global-api-GetRecruitingGuildTabardInfo-179",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetRecruitingGuildTabardInfo",
+      "annotation": "",
+      "wikitext_line": 179
+    },
+    {
+      "id": "wt-global-api-GetSelectedAuctionItem-180",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetSelectedAuctionItem",
+      "annotation": "",
+      "wikitext_line": 180
+    },
+    {
+      "id": "wt-global-api-IsAuctionSortReversed-181",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "IsAuctionSortReversed",
+      "annotation": "",
+      "wikitext_line": 181
+    },
+    {
+      "id": "wt-global-api-PlaceAuctionBid-182",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "PlaceAuctionBid",
+      "annotation": "",
+      "wikitext_line": 182
+    },
+    {
+      "id": "wt-global-api-PostAuction-183",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "PostAuction",
+      "annotation": "",
+      "wikitext_line": 183
+    },
+    {
+      "id": "wt-global-api-QueryAuctionItems-184",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "QueryAuctionItems",
+      "annotation": "",
+      "wikitext_line": 184
+    },
+    {
+      "id": "wt-global-api-SetAuctionsTabShowing-185",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetAuctionsTabShowing",
+      "annotation": "",
+      "wikitext_line": 185
+    },
+    {
+      "id": "wt-global-api-SetSelectedAuctionItem-186",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetSelectedAuctionItem",
+      "annotation": "",
+      "wikitext_line": 186
+    },
+    {
+      "id": "wt-global-api-SortAuctionApplySort-187",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SortAuctionApplySort",
+      "annotation": "",
+      "wikitext_line": 187
+    },
+    {
+      "id": "wt-global-api-SortAuctionClearSort-188",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SortAuctionClearSort",
+      "annotation": "",
+      "wikitext_line": 188
+    },
+    {
+      "id": "wt-global-api-SortAuctionItems-189",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SortAuctionItems",
+      "annotation": "",
+      "wikitext_line": 189
+    },
+    {
+      "id": "wt-global-api-SortAuctionSetSort-190",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SortAuctionSetSort",
+      "annotation": "",
+      "wikitext_line": 190
+    },
+    {
+      "id": "wt-global-api-StartAuction-191",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "StartAuction",
+      "annotation": "",
+      "wikitext_line": 191
+    },
+    {
+      "id": "wt-global-api-UnitAlternatePowerCounterInfo-192",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "UnitAlternatePowerCounterInfo",
+      "annotation": "",
+      "wikitext_line": 192
+    },
+    {
+      "id": "wt-global-api-UnitAlternatePowerInfo-193",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "UnitAlternatePowerInfo",
+      "annotation": "",
+      "wikitext_line": 193
+    },
+    {
+      "id": "wt-global-api-UnitAlternatePowerTextureInfo-194",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "UnitAlternatePowerTextureInfo",
+      "annotation": "",
+      "wikitext_line": 194
+    },
+    {
+      "id": "wt-widgets-Button:RegisterForMouse-206",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Button:RegisterForMouse",
+      "annotation": "",
+      "wikitext_line": 206
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetItemKey-207",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "GameTooltip:SetItemKey",
+      "annotation": "",
+      "wikitext_line": 207
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetAuctionItem-210",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "GameTooltip:SetAuctionItem",
+      "annotation": "",
+      "wikitext_line": 210
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetAuctionSellItem-211",
+      "section": "widgets",
+      "direction": "removed",
+      "symbol": "GameTooltip:SetAuctionSellItem",
+      "annotation": "",
+      "wikitext_line": 211
+    },
+    {
+      "id": "wt-events-AUCTION_CANCELED-223",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "AUCTION_CANCELED",
+      "annotation": "",
+      "wikitext_line": 223
+    },
+    {
+      "id": "wt-events-AUCTION_HOUSE_AUCTION_CREATED-224",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AUCTION_HOUSE_AUCTION_CREATED",
+      "annotation": "",
+      "wikitext_line": 224
+    },
+    {
+      "id": "wt-events-AUCTION_HOUSE_BROWSE_FAILURE-225",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AUCTION_HOUSE_BROWSE_FAILURE",
+      "annotation": "",
+      "wikitext_line": 225
+    },
+    {
+      "id": "wt-events-AUCTION_HOUSE_BROWSE_RESULTS_ADDED-226",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AUCTION_HOUSE_BROWSE_RESULTS_ADDED",
+      "annotation": "",
+      "wikitext_line": 226
+    },
+    {
+      "id": "wt-events-AUCTION_HOUSE_BROWSE_RESULTS_UPDATED-227",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AUCTION_HOUSE_BROWSE_RESULTS_UPDATED",
+      "annotation": "",
+      "wikitext_line": 227
+    },
+    {
+      "id": "wt-events-AUCTION_HOUSE_FAVORITES_UPDATED-228",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AUCTION_HOUSE_FAVORITES_UPDATED",
+      "annotation": "",
+      "wikitext_line": 228
+    },
+    {
+      "id": "wt-events-AUCTION_HOUSE_NEW_BID_RECEIVED-229",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AUCTION_HOUSE_NEW_BID_RECEIVED",
+      "annotation": "",
+      "wikitext_line": 229
+    },
+    {
+      "id": "wt-events-AUCTION_HOUSE_NEW_RESULTS_RECEIVED-230",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AUCTION_HOUSE_NEW_RESULTS_RECEIVED",
+      "annotation": "",
+      "wikitext_line": 230
+    },
+    {
+      "id": "wt-events-AUCTION_HOUSE_THROTTLED_MESSAGE_DROPPED-231",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AUCTION_HOUSE_THROTTLED_MESSAGE_DROPPED",
+      "annotation": "",
+      "wikitext_line": 231
+    },
+    {
+      "id": "wt-events-AUCTION_HOUSE_THROTTLED_MESSAGE_QUEUED-232",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AUCTION_HOUSE_THROTTLED_MESSAGE_QUEUED",
+      "annotation": "",
+      "wikitext_line": 232
+    },
+    {
+      "id": "wt-events-AUCTION_HOUSE_THROTTLED_MESSAGE_RESPONSE_RECEIVED-233",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AUCTION_HOUSE_THROTTLED_MESSAGE_RESPONSE_RECEIVED",
+      "annotation": "",
+      "wikitext_line": 233
+    },
+    {
+      "id": "wt-events-AUCTION_HOUSE_THROTTLED_MESSAGE_SENT-234",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AUCTION_HOUSE_THROTTLED_MESSAGE_SENT",
+      "annotation": "",
+      "wikitext_line": 234
+    },
+    {
+      "id": "wt-events-AUCTION_HOUSE_THROTTLED_SPECIFIC_SEARCH_READY-235",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AUCTION_HOUSE_THROTTLED_SPECIFIC_SEARCH_READY",
+      "annotation": "",
+      "wikitext_line": 235
+    },
+    {
+      "id": "wt-events-AUCTION_HOUSE_THROTTLED_SYSTEM_READY-236",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AUCTION_HOUSE_THROTTLED_SYSTEM_READY",
+      "annotation": "",
+      "wikitext_line": 236
+    },
+    {
+      "id": "wt-events-BIDS_UPDATED-237",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BIDS_UPDATED",
+      "annotation": "",
+      "wikitext_line": 237
+    },
+    {
+      "id": "wt-events-BID_ADDED-238",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BID_ADDED",
+      "annotation": "",
+      "wikitext_line": 238
+    },
+    {
+      "id": "wt-events-COMMENTATOR_IMMEDIATE_FOV_UPDATE-239",
+      "section": "events",
+      "direction": "added",
+      "symbol": "COMMENTATOR_IMMEDIATE_FOV_UPDATE",
+      "annotation": "",
+      "wikitext_line": 239
+    },
+    {
+      "id": "wt-events-COMMODITY_PRICE_UNAVAILABLE-240",
+      "section": "events",
+      "direction": "added",
+      "symbol": "COMMODITY_PRICE_UNAVAILABLE",
+      "annotation": "",
+      "wikitext_line": 240
+    },
+    {
+      "id": "wt-events-COMMODITY_PRICE_UPDATED-241",
+      "section": "events",
+      "direction": "added",
+      "symbol": "COMMODITY_PRICE_UPDATED",
+      "annotation": "",
+      "wikitext_line": 241
+    },
+    {
+      "id": "wt-events-COMMODITY_PURCHASED-242",
+      "section": "events",
+      "direction": "added",
+      "symbol": "COMMODITY_PURCHASED",
+      "annotation": "",
+      "wikitext_line": 242
+    },
+    {
+      "id": "wt-events-COMMODITY_PURCHASE_FAILED-243",
+      "section": "events",
+      "direction": "added",
+      "symbol": "COMMODITY_PURCHASE_FAILED",
+      "annotation": "",
+      "wikitext_line": 243
+    },
+    {
+      "id": "wt-events-COMMODITY_PURCHASE_SUCCEEDED-244",
+      "section": "events",
+      "direction": "added",
+      "symbol": "COMMODITY_PURCHASE_SUCCEEDED",
+      "annotation": "",
+      "wikitext_line": 244
+    },
+    {
+      "id": "wt-events-COMMODITY_SEARCH_RESULTS_ADDED-245",
+      "section": "events",
+      "direction": "added",
+      "symbol": "COMMODITY_SEARCH_RESULTS_ADDED",
+      "annotation": "",
+      "wikitext_line": 245
+    },
+    {
+      "id": "wt-events-COMMODITY_SEARCH_RESULTS_UPDATED-246",
+      "section": "events",
+      "direction": "added",
+      "symbol": "COMMODITY_SEARCH_RESULTS_UPDATED",
+      "annotation": "",
+      "wikitext_line": 246
+    },
+    {
+      "id": "wt-events-EXTRA_BROWSE_INFO_RECEIVED-247",
+      "section": "events",
+      "direction": "added",
+      "symbol": "EXTRA_BROWSE_INFO_RECEIVED",
+      "annotation": "",
+      "wikitext_line": 247
+    },
+    {
+      "id": "wt-events-GLOBAL_MOUSE_DOWN-248",
+      "section": "events",
+      "direction": "added",
+      "symbol": "GLOBAL_MOUSE_DOWN",
+      "annotation": "",
+      "wikitext_line": 248
+    },
+    {
+      "id": "wt-events-GLOBAL_MOUSE_UP-249",
+      "section": "events",
+      "direction": "added",
+      "symbol": "GLOBAL_MOUSE_UP",
+      "annotation": "",
+      "wikitext_line": 249
+    },
+    {
+      "id": "wt-events-ITEM_INTERACTION_CLOSE-250",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ITEM_INTERACTION_CLOSE",
+      "annotation": "",
+      "wikitext_line": 250
+    },
+    {
+      "id": "wt-events-ITEM_INTERACTION_ITEM_SELECTION_UPDATED-251",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ITEM_INTERACTION_ITEM_SELECTION_UPDATED",
+      "annotation": "",
+      "wikitext_line": 251
+    },
+    {
+      "id": "wt-events-ITEM_INTERACTION_OPEN-252",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ITEM_INTERACTION_OPEN",
+      "annotation": "",
+      "wikitext_line": 252
+    },
+    {
+      "id": "wt-events-ITEM_KEY_ITEM_INFO_RECEIVED-253",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ITEM_KEY_ITEM_INFO_RECEIVED",
+      "annotation": "",
+      "wikitext_line": 253
+    },
+    {
+      "id": "wt-events-ITEM_PURCHASED-254",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ITEM_PURCHASED",
+      "annotation": "",
+      "wikitext_line": 254
+    },
+    {
+      "id": "wt-events-ITEM_SEARCH_RESULTS_ADDED-255",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ITEM_SEARCH_RESULTS_ADDED",
+      "annotation": "",
+      "wikitext_line": 255
+    },
+    {
+      "id": "wt-events-ITEM_SEARCH_RESULTS_UPDATED-256",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ITEM_SEARCH_RESULTS_UPDATED",
+      "annotation": "",
+      "wikitext_line": 256
+    },
+    {
+      "id": "wt-events-OWNED_AUCTIONS_UPDATED-257",
+      "section": "events",
+      "direction": "added",
+      "symbol": "OWNED_AUCTIONS_UPDATED",
+      "annotation": "",
+      "wikitext_line": 257
+    },
+    {
+      "id": "wt-events-REPLICATE_ITEM_LIST_UPDATE-258",
+      "section": "events",
+      "direction": "added",
+      "symbol": "REPLICATE_ITEM_LIST_UPDATE",
+      "annotation": "",
+      "wikitext_line": 258
+    },
+    {
+      "id": "wt-events-TOKEN_SELL_CONFIRMED-259",
+      "section": "events",
+      "direction": "added",
+      "symbol": "TOKEN_SELL_CONFIRMED",
+      "annotation": "",
+      "wikitext_line": 259
+    },
+    {
+      "id": "wt-events-WORLD_MAP_CLOSE-260",
+      "section": "events",
+      "direction": "added",
+      "symbol": "WORLD_MAP_CLOSE",
+      "annotation": "",
+      "wikitext_line": 260
+    },
+    {
+      "id": "wt-events-WORLD_MAP_OPEN-261",
+      "section": "events",
+      "direction": "added",
+      "symbol": "WORLD_MAP_OPEN",
+      "annotation": "",
+      "wikitext_line": 261
+    },
+    {
+      "id": "wt-events-AUCTION_BIDDER_LIST_UPDATE-264",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "AUCTION_BIDDER_LIST_UPDATE",
+      "annotation": "",
+      "wikitext_line": 264
+    },
+    {
+      "id": "wt-events-AUCTION_HOUSE_POST_ERROR-265",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "AUCTION_HOUSE_POST_ERROR",
+      "annotation": "",
+      "wikitext_line": 265
+    },
+    {
+      "id": "wt-events-AUCTION_HOUSE_POST_WARNING-266",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "AUCTION_HOUSE_POST_WARNING",
+      "annotation": "",
+      "wikitext_line": 266
+    },
+    {
+      "id": "wt-events-AUCTION_ITEM_LIST_UPDATE-267",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "AUCTION_ITEM_LIST_UPDATE",
+      "annotation": "",
+      "wikitext_line": 267
+    },
+    {
+      "id": "wt-events-AUCTION_OWNED_LIST_UPDATE-268",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "AUCTION_OWNED_LIST_UPDATE",
+      "annotation": "",
+      "wikitext_line": 268
+    },
+    {
+      "id": "wt-events-NEW_AUCTION_UPDATE-269",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "NEW_AUCTION_UPDATE",
+      "annotation": "",
+      "wikitext_line": 269
+    },
+    {
+      "id": "wt-cvars-calendarShowHolidays-281",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "calendarShowHolidays",
+      "annotation": "",
+      "wikitext_line": 281
+    },
+    {
+      "id": "wt-cvars-Collision-282",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "Collision",
+      "annotation": "",
+      "wikitext_line": 282
+    },
+    {
+      "id": "wt-cvars-NamePlateClassificationScale-283",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "NamePlateClassificationScale",
+      "annotation": "",
+      "wikitext_line": 283
+    },
+    {
+      "id": "wt-cvars-NamePlateMaximumClassificationScale-284",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "NamePlateMaximumClassificationScale",
+      "annotation": "",
+      "wikitext_line": 284
+    },
+    {
+      "id": "wt-cvars-PreventOsIdleSleep-285",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "PreventOsIdleSleep",
+      "annotation": "",
+      "wikitext_line": 285
+    },
+    {
+      "id": "wt-cvars-DumpSoundKits-288",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "DumpSoundKits",
+      "annotation": "",
+      "wikitext_line": 288,
+      "kind": "command"
+    }
+  ]
+}

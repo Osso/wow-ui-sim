@@ -1,0 +1,16 @@
+{
+  "revision": "f65b5dcc8",
+  "log": "p830-mists-behavior.txt",
+  "affected_cases": [
+    "patch_8_3_0_classic_surfaces::patch_8_3_0_mists_preserves_legacy_lookup",
+    "mists_product_choice_compat::mists_product_choice_alerts_reproduce_nil_choices_length",
+    "mists_product_choice_compat::mists_product_choice_empty_choices_are_available_data",
+    "mists_product_choice_compat::mists_product_choice_api_defaults_expose_empty_tables",
+    "mists_compat_bootstrap::mists_bootstrap_supplies_legacy_startup_api_shapes"
+  ],
+  "unrelated_failure": {
+    "case": "mists_compat_bootstrap::mists_honor_frame_shared_reproduces_missing_honor_system_enabled",
+    "reason": "Unchanged diagnostic-string assertion for HonorSystemEnabled; actual nil-call error omits the global name. Retail-only runtime changes do not affect this Mists path."
+  },
+  "observed_test_summary": "test result: FAILED. 26 passed; 1 failed; 0 ignored; 0 measured; 8136 filtered out; finished in 1.68s"
+}

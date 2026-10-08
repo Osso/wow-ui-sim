@@ -1,0 +1,26 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_8_3_0_publication_sweep"
+  ],
+  "revision": "f65b5dcc8081d65e2d93384423fb222a65a2eb3c",
+  "scope": "one-event negative control; fixed IDs and row count",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p830-page",
+  "target": "/home/osso/.worktrees/wow-ui-sim-p830-page/target",
+  "env": {
+    "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p830-page/target",
+    "P830_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p830-page/data/patch-api/evidence/8.3.0-session-2026-10-08/p830-negative-register.json",
+    "P830_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p830-page/data/patch-api/evidence/8.3.0-session-2026-10-08/p830-negative-observation.json"
+  },
+  "exit": 1,
+  "expected_exit": 1,
+  "seconds": 35.95,
+  "log": "p830-negative.txt",
+  "log_sha256": "3de1253df8d4caf549e7e31766fb5eb3cfa517a6a846bdee1c7289f0abb7a245",
+  "invalidated": true,
+  "invalidation_reason": "Expanded own register/parser scope superseded by final expanded receipts; original narrower evidence retained."
+}

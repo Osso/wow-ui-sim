@@ -1,0 +1,21 @@
+{
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tools",
+    "-p",
+    "test_gen_patch_wikitext_register.py"
+  ],
+  "revision": "f65b5dcc8",
+  "scope": "working test-only late-build publication fixture, before implementation",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p830-page",
+  "target": "/home/osso/.worktrees/wow-ui-sim-p830-page/target",
+  "exit": 1,
+  "expected_exit": 1,
+  "invalidated": false,
+  "log": "p830-diff-parser-red.txt",
+  "log_sha256": "9080cef0d3d6b9f59289028f6dddcca824c32bdb98200d735eba8de77933cd17"
+}

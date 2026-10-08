@@ -1,0 +1,98 @@
+[
+  {
+    "symbol": "C_ProductChoice.GetChoices",
+    "command": [
+      "rg",
+      "-n",
+      "--no-heading",
+      "-w",
+      "-F",
+      "GetChoices",
+      "src",
+      "tests"
+    ],
+    "exit": 0,
+    "stdout": "src/c_api/patch_retired_members.rs:29:            \"GetChoices\",\nsrc/mists/compat_bootstrap.lua:738:if rawget(C_ProductChoice, \"GetChoices\") == nil then\nsrc/mists/compat_bootstrap.lua:739:  function C_ProductChoice.GetChoices() return {} end\ntests/patch_8_3_0_classic_surfaces.rs:8:assert(type(C_ProductChoice.GetChoices()) == \"table\")\ntests/patch_8_3_0_publication_fixes.rs:9:    \"C_ProductChoice.GetChoices\",\ntests/mists_compat_bootstrap.rs:328:                type(C_ProductChoice.GetChoices())\ntests/mists_product_choice_compat.rs:21:            GetChoices = function() return nil end,\ntests/mists_product_choice_compat.rs:39:            local choices = C_ProductChoice.GetChoices()\ntests/mists_product_choice_compat.rs:41:            return type(C_ProductChoice), type(C_ProductChoice.GetChoices), type(choices), ok, tostring(err)\ntests/mists_product_choice_compat.rs:50:        \"the missing product-choice table is the C_ProductChoice.GetChoices() return value\"\ntests/mists_product_choice_compat.rs:72:            local choices = C_ProductChoice.GetChoices()\ntests/mists_product_choice_compat.rs:101:            local choices = C_ProductChoice.GetChoices()\n",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_ProductChoice.GetNumSuppressed",
+    "command": [
+      "rg",
+      "-n",
+      "--no-heading",
+      "-w",
+      "-F",
+      "GetNumSuppressed",
+      "src",
+      "tests"
+    ],
+    "exit": 0,
+    "stdout": "src/mists/compat_bootstrap.lua:746:if rawget(C_ProductChoice, \"GetNumSuppressed\") == nil then\nsrc/mists/compat_bootstrap.lua:747:  function C_ProductChoice.GetNumSuppressed() return 0 end\nsrc/c_api/patch_retired_members.rs:30:            \"GetNumSuppressed\",\ntests/mists_product_choice_compat.rs:103:            return type(choices), #choices, type(products), #products, C_ProductChoice.GetNumSuppressed()\ntests/patch_8_3_0_classic_surfaces.rs:10:assert(C_ProductChoice.GetNumSuppressed() == 0)\ntests/patch_8_3_0_publication_fixes.rs:10:    \"C_ProductChoice.GetNumSuppressed\",\n",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_ProductChoice.GetProducts",
+    "command": [
+      "rg",
+      "-n",
+      "--no-heading",
+      "-w",
+      "-F",
+      "GetProducts",
+      "src",
+      "tests"
+    ],
+    "exit": 0,
+    "stdout": "src/mists/compat_bootstrap.lua:742:if rawget(C_ProductChoice, \"GetProducts\") == nil then\nsrc/mists/compat_bootstrap.lua:743:  function C_ProductChoice.GetProducts(choiceID) return {} end\nsrc/c_api/patch_retired_members.rs:23:// No qualified retail consumers; bare GetProducts belongs to C_StoreSecure.\nsrc/c_api/patch_retired_members.rs:31:            \"GetProducts\",\nsrc/lua_api/env_init/runtime_surface_bootstrap.lua:462:C_StoreSecure.GetProducts = function(groupID)\nsrc/lua_api/env_init/runtime_surface_bootstrap.lua:901:if rawget(C_StoreSecure, \"GetProducts\") == nil then\nsrc/lua_api/env_init/runtime_surface_bootstrap.lua:902:  function C_StoreSecure.GetProducts(groupID)\nsrc/lua_api/workarounds/temporary/store_public_defaults.rs:23:        if type(C_StoreSecure) ~= \"table\" or type(C_StoreSecure.GetProducts) ~= \"function\" then\nsrc/lua_api/workarounds/temporary/store_public_defaults.rs:26:        local products = C_StoreSecure.GetProducts(groupID)\ntests/mists_product_choice_compat.rs:102:            local products = C_ProductChoice.GetProducts(123)\ntests/store_tree.rs:211:            local products = C_StoreSecure.GetProducts(selectedCategory)\ntests/patch_8_3_0_publication_fixes.rs:11:    \"C_ProductChoice.GetProducts\",\ntests/patch_8_3_0_classic_surfaces.rs:9:assert(type(C_ProductChoice.GetProducts(123)) == \"table\")\n",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_ProductChoice.MakeSelection",
+    "command": [
+      "rg",
+      "-n",
+      "--no-heading",
+      "-w",
+      "-F",
+      "MakeSelection",
+      "src",
+      "tests"
+    ],
+    "exit": 0,
+    "stdout": "src/mists/compat_bootstrap.lua:750:if rawget(C_ProductChoice, \"MakeSelection\") == nil then\nsrc/mists/compat_bootstrap.lua:751:  function C_ProductChoice.MakeSelection() return false end\nsrc/c_api/patch_retired_members.rs:32:            \"MakeSelection\",\ntests/patch_8_3_0_classic_surfaces.rs:11:assert(C_ProductChoice.MakeSelection() == false)\ntests/patch_8_3_0_publication_fixes.rs:12:    \"C_ProductChoice.MakeSelection\",\n",
+    "stderr": ""
+  },
+  {
+    "symbol": "C_WowTokenPublic.SellToken",
+    "command": [
+      "rg",
+      "-n",
+      "--no-heading",
+      "-w",
+      "-F",
+      "SellToken",
+      "src",
+      "tests"
+    ],
+    "exit": 0,
+    "stdout": "src/c_api/patch_retired_members.rs:35:    (\"C_WowTokenPublic\", &[\"SellToken\"]),\ntests/patch_8_3_0_classic_surfaces.rs:12:assert(type(C_WowTokenPublic.SellToken) == \"function\")\ntests/patch_8_3_0_publication_fixes.rs:13:    \"C_WowTokenPublic.SellToken\",\n",
+    "stderr": ""
+  },
+  {
+    "symbol": "GetAuctionHouseDepositRate",
+    "command": [
+      "rg",
+      "-n",
+      "--no-heading",
+      "-w",
+      "-F",
+      "GetAuctionHouseDepositRate",
+      "src",
+      "tests"
+    ],
+    "exit": 0,
+    "stdout": "src/lua_api/globals/stubs/global_stubs.rs:151:    \"GetAuctionHouseDepositRate\",\ntests/patch_8_3_0_classic_surfaces.rs:13:assert(type(GetAuctionHouseDepositRate) == \"function\")\ntests/patch_8_3_0_classic_surfaces.rs:14:assert(GetAuctionHouseDepositRate() == 0)\ntests/patch_8_3_0_publication_fixes.rs:5:assert(rawget(_G, \"GetAuctionHouseDepositRate\") == nil, \"GetAuctionHouseDepositRate raw\")\ntests/patch_8_3_0_publication_fixes.rs:6:assert(GetAuctionHouseDepositRate == nil, \"GetAuctionHouseDepositRate lookup\")\ntests/patch_8_3_0_publication_fixes.rs:7:assert(GetAuctionHouseDepositRate == nil, \"GetAuctionHouseDepositRate repeat\")\n",
+    "stderr": ""
+  }
+]

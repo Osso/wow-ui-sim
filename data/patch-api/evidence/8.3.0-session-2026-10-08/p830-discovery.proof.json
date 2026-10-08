@@ -19,5 +19,6 @@
   "seconds": 477.59,
   "log": "p830-discovery.txt",
   "log_sha256": "3361dfb0729b88232112df297535a8b02614aedc0782b4133f97ff00ab4f086c",
-  "invalidated": false
+  "invalidated": false,
+  "expected_exit": 1
 }

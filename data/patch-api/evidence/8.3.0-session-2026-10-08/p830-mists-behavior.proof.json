@@ -1,0 +1,32 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--no-default-features",
+    "--features",
+    "sound,gui,casc,client-mists",
+    "--test",
+    "integration",
+    "--",
+    "patch_8_3_0_mists_preserves_legacy_lookup",
+    "mists_product_choice_compat",
+    "mists_compat_bootstrap"
+  ],
+  "revision": "f65b5dcc8081d65e2d93384423fb222a65a2eb3c",
+  "scope": "new legacy regression plus every existing ProductChoice caller test",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p830-page",
+  "target": "/home/osso/.worktrees/wow-ui-sim-p830-page/target",
+  "env": {
+    "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p830-page/target"
+  },
+  "exit": 101,
+  "expected_exit": 0,
+  "seconds": 1218.21,
+  "log": "p830-mists-behavior.txt",
+  "log_sha256": "e2d3b5d42388e08a44d3100dfa7f925deb7a7d26cca4e21a61e0f6dd7fba2a5e",
+  "invalidated": false,
+  "unrelated_failure": {
+    "case": "mists_compat_bootstrap::mists_honor_frame_shared_reproduces_missing_honor_system_enabled",
+    "reason": "Unchanged diagnostic-string assertion for HonorSystemEnabled; actual nil-call error omits the global name. Retail-only runtime changes do not affect this Mists path."
+  }
+}
