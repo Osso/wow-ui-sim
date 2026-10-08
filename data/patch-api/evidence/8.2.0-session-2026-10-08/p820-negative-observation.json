@@ -1623,37 +1623,37 @@
     "expected": {
       "direction": "added",
       "page_default": null,
-      "publication": "published",
+      "publication": "absent",
       "section": "global-api",
-      "superseded_by": null,
+      "superseded_by": "wt-global-api-C_ClubFinder.ReturnCommunityApplicantList-136",
       "symbol": "C_ClubFinder.ReturnCommunityApplicantList"
     },
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=nil; lookup=nil",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_ClubFinder.ReturnGuildApplicantList-77": {
     "expected": {
       "direction": "added",
       "page_default": null,
-      "publication": "published",
+      "publication": "absent",
       "section": "global-api",
-      "superseded_by": null,
+      "superseded_by": "wt-global-api-C_ClubFinder.ReturnGuildApplicantList-137",
       "symbol": "C_ClubFinder.ReturnGuildApplicantList"
     },
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=nil; lookup=nil",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_ClubFinder.ReturnMatchingCommunityList-78": {
     "expected": {
@@ -1695,37 +1695,37 @@
     "expected": {
       "direction": "added",
       "page_default": null,
-      "publication": "published",
+      "publication": "absent",
       "section": "global-api",
-      "superseded_by": null,
+      "superseded_by": "wt-global-api-C_ClubFinder.ReturnPendingCommunityApplicantList-138",
       "symbol": "C_ClubFinder.ReturnPendingCommunityApplicantList"
     },
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=nil; lookup=nil",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_ClubFinder.ReturnPendingGuildApplicantList-81": {
     "expected": {
       "direction": "added",
       "page_default": null,
-      "publication": "published",
+      "publication": "absent",
       "section": "global-api",
-      "superseded_by": null,
+      "superseded_by": "wt-global-api-C_ClubFinder.ReturnPendingGuildApplicantList-139",
       "symbol": "C_ClubFinder.ReturnPendingGuildApplicantList"
     },
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=nil; lookup=nil",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_ClubFinder.SetPlayerApplicantSettings-82": {
     "expected": {
@@ -1785,19 +1785,19 @@
     "expected": {
       "direction": "added",
       "page_default": null,
-      "publication": "published",
+      "publication": "absent",
       "section": "global-api",
-      "superseded_by": null,
+      "superseded_by": "wt-global-api-C_Commentator.GetElapsedMs-140",
       "symbol": "C_Commentator.GetElapsedMs"
     },
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=nil; lookup=nil",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_EncounterJournal.SetPreviewMythicPlusLevel-86": {
     "expected": {
@@ -2271,19 +2271,19 @@
     "expected": {
       "direction": "added",
       "page_default": null,
-      "publication": "published",
+      "publication": "absent",
       "section": "global-api",
-      "superseded_by": null,
+      "superseded_by": "wt-global-api-C_PvP.GetMatchPVPStatIDs-145",
       "symbol": "C_PvP.GetMatchPVPStatIDs"
     },
     "observed": {
       "default": null,
       "default_mismatch": false,
-      "detail": "raw=nil; lookup=function",
+      "detail": "raw=nil; lookup=nil",
       "kind": "member",
       "value": null
     },
-    "ok": false
+    "ok": true
   },
   "wt-global-api-C_PvP.GetPVPActiveMatchPersonalRatedInfo-115": {
     "expected": {

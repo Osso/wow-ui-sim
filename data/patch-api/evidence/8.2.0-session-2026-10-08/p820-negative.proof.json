@@ -7,7 +7,7 @@
     "--",
     "patch_8_2_0_publication_sweep"
   ],
-  "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+  "revision": "9c8e19340fdaf7a5f01efb8fbbf609ca9787a3d6",
   "scope": "negative",
   "cwd": "/home/osso/.worktrees/wow-ui-sim-p820-page",
   "target": "/home/osso/.cache/wow-ui-sim-targets/p820-page",
@@ -17,7 +17,7 @@
   },
   "exit": 1,
   "expected_exit": 1,
-  "seconds": 12.784457921981812,
+  "seconds": 26.262398181999743,
   "log": "p820-negative.log",
-  "log_sha256": "7b87387102d2ef06e1fd60d2db0c0714d45963397bcad65168e4e61560e3a6f2"
+  "log_sha256": "ca9680c949007963b18d66911dae39aaf1b02a05fa1cbc0323bbb6efd1b8420a"
 }

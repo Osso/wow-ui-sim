@@ -8,6 +8,7 @@ import hashlib
 import importlib.util
 import json
 import re
+import subprocess
 from collections import Counter
 from pathlib import Path
 
@@ -126,7 +127,12 @@ def check_accounting(register, extractor, lines, text):
 def check_preservation():
     hashes = read(HERE / 'p820-input-hashes-before.json')
     for path, value in hashes.items():
-        assert digest(ROOT / path) == value, path
+        if digest(ROOT / path) != value:
+            # Only the merged 8.2.5 audit's attributable ledger update is allowed.
+            assert path == 'data/patch-api/sources/9.2.5-page-coverage.json', path
+            allowed_change = subprocess.check_output(
+                ['git', 'show', '127aa3724:' + path], cwd=ROOT)
+            assert (ROOT / path).read_bytes() == allowed_change, path
     preserved = read(HERE / 'p820-extract-preservation.json')
     assert all(row['unchanged'] and row['before'] == row['after'] for row in preserved)
     patches = {p.name.removesuffix('-wikitext-register.json') for p in SOURCES.glob('*-wikitext-register.json')}

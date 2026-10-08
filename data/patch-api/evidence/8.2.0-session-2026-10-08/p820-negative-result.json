@@ -1,7 +1,7 @@
 {
   "mutation": "wt-events-AZERITE_ESSENCE_ACTIVATED-213",
-  "baseline_gaps": 59,
-  "negative_gaps": 60,
+  "baseline_gaps": 53,
+  "negative_gaps": 54,
   "new_gaps": [
     "wt-events-AZERITE_ESSENCE_ACTIVATED-213"
   ],

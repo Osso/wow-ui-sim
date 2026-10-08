@@ -10,7 +10,7 @@
         "--",
         "publication_sweep"
       ],
-      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "revision": "9c8e19340fdaf7a5f01efb8fbbf609ca9787a3d6",
       "scope": "all-sweeps",
       "cwd": "/home/osso/.worktrees/wow-ui-sim-p820-page",
       "target": "/home/osso/.cache/wow-ui-sim-targets/p820-page",
@@ -51,13 +51,14 @@
         "P1002_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_10_0_2_publication_sweep-results.json",
         "P1205_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_12_0_5_publication_sweep-results.json",
         "P1127_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_11_2_7_publication_sweep-results.json",
-        "P915_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_9_1_5_publication_sweep-results.json"
+        "P915_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_9_1_5_publication_sweep-results.json",
+        "P825_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/evidence/8.2.0-session-2026-10-08/patch_8_2_5_publication_sweep-results.json"
       },
       "exit": 0,
       "expected_exit": 0,
-      "seconds": 43.8552348613739,
+      "seconds": 18.893651285001397,
       "log": "p820-all-sweeps.log",
-      "log_sha256": "1485bcc4b15085e82f05a42cbd147344a2699d74d4394ccc3d36c718f61dcde0"
+      "log_sha256": "ee20f0f70712d36a0d1e7011a6b0b4c1060edfffe083a83f478d166862ded375"
     },
     {
       "command": [
@@ -69,16 +70,16 @@
         "--",
         "--nocapture"
       ],
-      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "revision": "9c8e19340fdaf7a5f01efb8fbbf609ca9787a3d6",
       "scope": "bare-green",
       "cwd": "/home/osso/.worktrees/wow-ui-sim-p820-page",
       "target": "/home/osso/.cache/wow-ui-sim-targets/p820-page",
       "environment": {},
       "exit": 0,
       "expected_exit": 0,
-      "seconds": 26.847021102905273,
+      "seconds": 8.852196029001789,
       "log": "p820-bare-green.log",
-      "log_sha256": "3f6c564ff6c56d42264e5ddfb34d61a5eff0952f28fccfda4871c7df44242279"
+      "log_sha256": "d9d46a94a0d2d1d78cf4795e0c7e15e9cb225b69ace3ea2fe895ab5701327269"
     },
     {
       "command": [
@@ -89,16 +90,16 @@
         "--",
         "patch_8_2_0_cached_"
       ],
-      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "revision": "9c8e19340fdaf7a5f01efb8fbbf609ca9787a3d6",
       "scope": "cached-green",
       "cwd": "/home/osso/.worktrees/wow-ui-sim-p820-page",
       "target": "/home/osso/.cache/wow-ui-sim-targets/p820-page",
       "environment": {},
       "exit": 0,
       "expected_exit": 0,
-      "seconds": 10.198789834976196,
+      "seconds": 9.446170546998474,
       "log": "p820-cached-green.log",
-      "log_sha256": "fb57287d3fb9d142254582ca4c3bd42a1a0f8bef614e1d9bd7300eeea08e4994"
+      "log_sha256": "516fb362c7b9e6885eff8ddb67709b2ec33dcaf09a5830fd3220a631c34301cc"
     },
     {
       "command": [
@@ -278,7 +279,7 @@
         "--",
         "patch_8_2_0_publication_sweep"
       ],
-      "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+      "revision": "9c8e19340fdaf7a5f01efb8fbbf609ca9787a3d6",
       "scope": "negative",
       "cwd": "/home/osso/.worktrees/wow-ui-sim-p820-page",
       "target": "/home/osso/.cache/wow-ui-sim-targets/p820-page",
@@ -288,9 +289,9 @@
       },
       "exit": 1,
       "expected_exit": 1,
-      "seconds": 12.784457921981812,
+      "seconds": 26.262398181999743,
       "log": "p820-negative.log",
-      "log_sha256": "7b87387102d2ef06e1fd60d2db0c0714d45963397bcad65168e4e61560e3a6f2"
+      "log_sha256": "ca9680c949007963b18d66911dae39aaf1b02a05fa1cbc0323bbb6efd1b8420a"
     },
     {
       "command": [
@@ -1182,6 +1183,31 @@
       "stdout": "",
       "stderr": "",
       "sha256": "c349d4a3d3f5dba40f60e2a9739a7467322effc7111188aab5bb15b040b39fc7"
+    },
+    {
+      "patch": "8.2.5",
+      "recorded_flags": [
+        "--legacy-inventory-labels"
+      ],
+      "verified_flags": [
+        "--legacy-inventory-labels"
+      ],
+      "inferred_historical_flags": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/tools/gen_patch_wikitext_register.py",
+        "8.2.5",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/8.2.5-api-changes.wikitext",
+        "6471405",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/target/patch-api-audit-registers/8.2.5-wikitext-register.json",
+        "--legacy-inventory-labels"
+      ],
+      "revision": "9c8e19340fdaf7a5f01efb8fbbf609ca9787a3d6",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "",
+      "stderr": "",
+      "sha256": "9068d2c59c69fa49a3bc0a257707597d4a9d98a971187e374fc92c20f46f9f4c"
     }
   ],
   "saved_extract_reproduction": [
@@ -2017,6 +2043,35 @@
       "stdout": "{\"patch\": \"9.2.7\", \"rows\": 23, \"statuses\": {\"metadata-only\": 8, \"audit-pending\": 15}}\n",
       "stderr": "",
       "sha256": "6528a2aadae856784b4a8530cc3fbe592ab8eb5097a65f5e62789de9c6c3e86b",
+      "inherited_nonreproducible": false
+    },
+    {
+      "patch": "8.2.5",
+      "recorded_flags": [
+        "--preserve-examples",
+        "--retain-reference-notes"
+      ],
+      "verified_flags": [
+        "--preserve-examples",
+        "--retain-reference-notes"
+      ],
+      "inferred_historical_flags": false,
+      "command": [
+        "python3",
+        "/home/osso/.worktrees/wow-ui-sim-p820-page/tools/extract_patch_non_inventory.py",
+        "--patch",
+        "8.2.5",
+        "--text-only",
+        "--check",
+        "--preserve-examples",
+        "--retain-reference-notes"
+      ],
+      "revision": "9c8e19340fdaf7a5f01efb8fbbf609ca9787a3d6",
+      "exit": 0,
+      "byte_identical": true,
+      "stdout": "{\"patch\": \"8.2.5\", \"rows\": 14, \"statuses\": {\"metadata-only\": 6, \"audit-pending\": 8}}\n",
+      "stderr": "",
+      "sha256": "acee4aa6cb4716ce55ea115b277924d234c2142bf635236d40d62072a12f939e",
       "inherited_nonreproducible": false
     }
   ],

@@ -1,6 +1,6 @@
 # Patch 8.2.0 API page audit
 
-Warcraft Wiki page **533235**, current revision **5142162** (2021-04-23T01:19:12Z), fetched 2026-10-08. Pinned raw source, revision response, successful HTTP headers and failed initial fetch/browser attempts are retained. Audit against current retail, not reconstructed historical WoW. Branch `p820-page`; runtime proof revision `e0d115f55`.
+Warcraft Wiki page **533235**, current revision **5142162** (2021-04-23T01:19:12Z), fetched 2026-10-08. Pinned raw source, revision response, successful HTTP headers and failed initial fetch/browser attempts are retained. Audit against current retail, not reconstructed historical WoW. Branch `p820-page`; refreshed runtime proof revision `9c8e19340` (older unaffected receipts retain their original revisions).
 
 ## Source and parser boundary
 
@@ -34,7 +34,7 @@ All commands use `/home/osso/.worktrees/wow-ui-sim-p820-page`; Cargo uses `CARGO
 
 | Command | Result |
 |---|---|
-| `cargo test --test prefork_full_ui -- publication_sweep` | 38/38: all 37 sweeps plus factory regression, 8,170 inventory rows |
+| `cargo test --test prefork_full_ui -- publication_sweep` | 39/39: all 38 sweeps plus factory regression, 8,368 inventory rows |
 | `cargo test --test integration patch_8_2_0_ -- --nocapture` | 3/3 bare volume/retirement/handler cases |
 | `cargo test --test prefork_full_ui -- patch_8_2_0_cached_` | 1/1 cached volume/retirement; unchanged Lua error count |
 | `cargo test --test integration c_voice_chat_probes:: -- --nocapture` | 25/25 existing voice regressions |
@@ -44,9 +44,9 @@ All commands use `/home/osso/.worktrees/wow-ui-sim-p820-page`; Cargo uses `CARGO
 | `cargo fmt`, `cargo fmt --check` | Exit 0 |
 | `python3 tools/test_extract_patch_non_inventory.py` | 28/28 |
 | `python3 tools/test_gen_patch_wikitext_register.py` | 20/20 |
-| Generator per-source commands with recorded or explicitly inferred flags | 37/37 byte-identical registers |
-| Extractor `--patch <patch> --text-only --check` with recorded or explicitly inferred flags | 34/37; three inherited failures unchanged |
-| `P820_SWEEP_REGISTER=<negative> cargo test --test prefork_full_ui -- patch_8_2_0_publication_sweep` | Expected exit 1: exactly AZERITE_ESSENCE_ACTIVATED adds one gap, 59 → 60; zero resolved IDs |
+| Generator per-source commands with recorded or explicitly inferred flags | 38/38 byte-identical registers |
+| Extractor `--patch <patch> --text-only --check` with recorded or explicitly inferred flags | 35/38; three inherited failures unchanged |
+| `P820_SWEEP_REGISTER=<negative> cargo test --test prefork_full_ui -- patch_8_2_0_publication_sweep` | Expected exit 1: exactly AZERITE_ESSENCE_ACTIVATED adds one gap, 53 → 54; zero resolved IDs |
 | `cargo build --bin wow-sim`, then `timeout 90 <target>/debug/wow-sim --no-addons --no-saved-vars lua-errors` | Both exit 0; startup `[]` |
 | `python3 data/patch-api/evidence/8.2.0-session-2026-10-08/validate.py` | PASS; counts derived from files |
 
@@ -54,7 +54,7 @@ All commands use `/home/osso/.worktrees/wow-ui-sim-p820-page`; Cargo uses `CARGO
 
 ## Preservation and unfinished boundaries
 
-All **188 prior source/register/ledger inputs** remain byte-identical; **74 prior extraction-mode outcomes** remain unchanged. [Register reproduction](../../../data/patch-api/evidence/8.2.0-session-2026-10-08/p820-register-reproduction.json) contains every exact generator command. [Saved-extract reproduction](../../../data/patch-api/evidence/8.2.0-session-2026-10-08/p820-saved-extract-reproduction.json) records every check command, stdout and error. Existing **12.0.5, 12.0.7 and 12.1.0** extract failures predate this branch and are not silently rewritten; validator derives exceptions from the completed 8.3.0 receipts.
+**187 of 188 prior source/register/ledger inputs** remain byte-identical; only `data/patch-api/sources/9.2.5-page-coverage.json` changed in the merged 8.2.5 audit. Its original before-hash is preserved; validator accepts the changed bytes only when identical to `git show 127aa3724:<path>`. **74 prior extraction-mode outcomes** remain unchanged. [Register reproduction](../../../data/patch-api/evidence/8.2.0-session-2026-10-08/p820-register-reproduction.json) contains every exact generator command. [Saved-extract reproduction](../../../data/patch-api/evidence/8.2.0-session-2026-10-08/p820-saved-extract-reproduction.json) records every check command, stdout and error. Existing **12.0.5, 12.0.7 and 12.1.0** extract failures predate this branch and are not silently rewritten; validator derives exceptions from the completed 8.3.0 receipts.
 
 **8.2.5 merged in `127aa3724`**: `later_registers` includes its real register (integration commit `9009f9c79`). Four ClubFinder applicant-list members, `C_Commentator.GetElapsedMs` and `C_PvP.GetMatchPVPStatIDs` are superseded by its removals: 59 → 53 gaps, with bounded absence coverage rather than historical behavior credit. [Supersession IDs](../../../data/patch-api/evidence/8.2.0-session-2026-10-08/p820-later-gap-closures.json). No p825-page worktree touched. Host has no WoW install; CASC-dependent contracts are recorded, not claimed tested. Wrath/Era/Anniversary not executed; existing profile gates exclude them from retail-only changes.
 

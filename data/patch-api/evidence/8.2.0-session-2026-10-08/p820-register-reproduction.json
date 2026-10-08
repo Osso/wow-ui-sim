@@ -794,5 +794,30 @@
     "stdout": "",
     "stderr": "",
     "sha256": "c349d4a3d3f5dba40f60e2a9739a7467322effc7111188aab5bb15b040b39fc7"
+  },
+  {
+    "patch": "8.2.5",
+    "recorded_flags": [
+      "--legacy-inventory-labels"
+    ],
+    "verified_flags": [
+      "--legacy-inventory-labels"
+    ],
+    "inferred_historical_flags": false,
+    "command": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tools/gen_patch_wikitext_register.py",
+      "8.2.5",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/data/patch-api/sources/8.2.5-api-changes.wikitext",
+      "6471405",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/target/patch-api-audit-registers/8.2.5-wikitext-register.json",
+      "--legacy-inventory-labels"
+    ],
+    "revision": "9c8e19340fdaf7a5f01efb8fbbf609ca9787a3d6",
+    "exit": 0,
+    "byte_identical": true,
+    "stdout": "",
+    "stderr": "",
+    "sha256": "9068d2c59c69fa49a3bc0a257707597d4a9d98a971187e374fc92c20f46f9f4c"
   }
 ]

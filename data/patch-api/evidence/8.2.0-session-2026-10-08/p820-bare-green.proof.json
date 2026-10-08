@@ -8,14 +8,14 @@
     "--",
     "--nocapture"
   ],
-  "revision": "e0d115f55beb5ade2270a06a9be9970f3a236e20",
+  "revision": "9c8e19340fdaf7a5f01efb8fbbf609ca9787a3d6",
   "scope": "bare-green",
   "cwd": "/home/osso/.worktrees/wow-ui-sim-p820-page",
   "target": "/home/osso/.cache/wow-ui-sim-targets/p820-page",
   "environment": {},
   "exit": 0,
   "expected_exit": 0,
-  "seconds": 26.847021102905273,
+  "seconds": 8.852196029001789,
   "log": "p820-bare-green.log",
-  "log_sha256": "3f6c564ff6c56d42264e5ddfb34d61a5eff0952f28fccfda4871c7df44242279"
+  "log_sha256": "d9d46a94a0d2d1d78cf4795e0c7e15e9cb225b69ace3ea2fe895ab5701327269"
 }

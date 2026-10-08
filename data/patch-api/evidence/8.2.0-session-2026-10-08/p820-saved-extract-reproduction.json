@@ -832,5 +832,34 @@
     "stderr": "",
     "sha256": "6528a2aadae856784b4a8530cc3fbe592ab8eb5097a65f5e62789de9c6c3e86b",
     "inherited_nonreproducible": false
+  },
+  {
+    "patch": "8.2.5",
+    "recorded_flags": [
+      "--preserve-examples",
+      "--retain-reference-notes"
+    ],
+    "verified_flags": [
+      "--preserve-examples",
+      "--retain-reference-notes"
+    ],
+    "inferred_historical_flags": false,
+    "command": [
+      "python3",
+      "/home/osso/.worktrees/wow-ui-sim-p820-page/tools/extract_patch_non_inventory.py",
+      "--patch",
+      "8.2.5",
+      "--text-only",
+      "--check",
+      "--preserve-examples",
+      "--retain-reference-notes"
+    ],
+    "revision": "9c8e19340fdaf7a5f01efb8fbbf609ca9787a3d6",
+    "exit": 0,
+    "byte_identical": true,
+    "stdout": "{\"patch\": \"8.2.5\", \"rows\": 14, \"statuses\": {\"metadata-only\": 6, \"audit-pending\": 8}}\n",
+    "stderr": "",
+    "sha256": "acee4aa6cb4716ce55ea115b277924d234c2142bf635236d40d62072a12f939e",
+    "inherited_nonreproducible": false
   }
 ]
