@@ -106,5 +106,6 @@
   "data/patch-api/evidence/7.2.5-session-2026-10-08/integrated/retail-build.txt": "1afad71cffa4861308085463d2f51a8ecf9741e2866c68fd332b128b40126899",
   "data/patch-api/evidence/7.2.5-session-2026-10-08/integrated/source-reproduction-summary.json": "5aad65f3904d032261c32a05ba2777b0f8729a3ca1aff3211f7eb89d5cb3e76c",
   "data/patch-api/evidence/7.2.5-session-2026-10-08/integrated/startup-addons.proof.json": "664b51fb53a3213c724e1a725789a999242ee72dc0031a3b8627b2f16f46a6e7",
-  "data/patch-api/evidence/7.2.5-session-2026-10-08/integrated/startup-addons.txt": "bce956f034e26e1d4cd088d24768f40387f2a276af7ce8818f707eb38e305654"
+  "data/patch-api/evidence/7.2.5-session-2026-10-08/integrated/startup-addons.txt": "bce956f034e26e1d4cd088d24768f40387f2a276af7ce8818f707eb38e305654",
+  "data/patch-api/evidence/7.2.5-session-2026-10-08/integrated/validator-attempt-1.json": "0fa686e906ce0bc43801a1abd808090321c1d3d71bb96fb836aa15aa4b6127a2"
 }

@@ -107,6 +107,12 @@ def errors(log):
     raise AssertionError('missing Lua error JSON')
 
 
+def failure_payload(log, case):
+    marker = 'test ' + case + ' ... FAILED (panic: '
+    assert log.count(marker) == 1, 'missing/duplicate failure payload: ' + case
+    return log.split(marker, 1)[1].split('\n---- ', 1)[0]
+
+
 def check_receipts(context):
     for label, expected_exit in context['expected_exits'].items():
         receipt = read(FRESH / (label + '.proof.json'))
@@ -141,10 +147,13 @@ def check_receipts(context):
     expected_failure = {'blizzard_garrison_ui_loads::blizzard_garrison_ui_loads_explicitly_via_load_addon_without_errors'}
     assert failed_cases(branch) == failed_cases(master) == expected_failure
     diagnostic = "bad argument #1 to 'ipairs' (table expected, got nil) at ...ard_GarrisonUI/Mainline/Blizzard_AdventuresCombatLog.lua:90"
-    for log in (branch, master):
-        assert diagnostic in log
-        diagnostics = re.findall(r'(?:Failed to create frame|Lua Error:)[^\n]+', log)
-        assert diagnostics and all(diagnostic in line for line in diagnostics), diagnostics
+    case = next(iter(expected_failure))
+    branch_failure = failure_payload(branch, case)
+    master_failure = failure_payload(master, case)
+    assert branch_failure == master_failure, 'cached garrison failure differs from exact master'
+    assert diagnostic in branch_failure
+    diagnostics = re.findall(r'(?:Failed to create frame|Lua Error:)[^\n]+', branch_failure)
+    assert diagnostics and all(diagnostic in line for line in diagnostics), diagnostics
     for row in read(HERE / 'p725-garrison-baseline-context.json')['files']:
         assert blob(context['master_revision'], row['path']) == blob(context['runtime_revision'], row['path'])
     negative = read(FRESH / 'negative-results.json')
