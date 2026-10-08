@@ -1,3 +1,7 @@
+## [2026-10-08] integration | Patch 7.1.0 API audit
+
+[Audit](investigations/patch-7-1-0-api-audit.md): real merged 7.2.0 register, fixed historical/integrated scopes; 46 registers / 43 extracts reproduce with unchanged inherited failures. Own gaps remain zero; archived custom-intrinsic probe still fails, not closed by the shared factory change. Exact-master comparison and final checks pending.
+
 ## [2026-10-08] investigation | Patch 7.1.0 API audit
 
 [Audit](investigations/patch-7-1-0-api-audit.md): revision 3742660; 31 IDs, zero publication gaps after later supersession, five pending prose contracts. Existing clipping/item/display models bounded; custom intrinsic failure retained. All 45 sweeps plus factory, scoped tests, fixtures, format/Mists and 22 validators pass. 45 registers/42 extracts reproduce with three inherited failures. No runtime retirements or shims.

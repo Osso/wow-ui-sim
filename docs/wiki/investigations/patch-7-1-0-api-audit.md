@@ -31,7 +31,7 @@ The first cached behavior experiment fails `CreateFrame('P710ClipIntrinsic')` de
 
 Recorded master and unmerged p720-page revisions contain no TitleRegion re-additions. [Scan receipt](../../../data/patch-api/evidence/7.1.0-session-2026-10-08/p710-retirement-scans.json) pins complete register sets; the p720 register is present in its Git snapshot. Related GetTitleRegion/CreateTitleRegion scans find nine retail lines, all GetTitleRegion Lua-mixin consumers, and no src/tests lines; those names are not silently treated as retired. Unknown runtime CreateFrame kinds are rejected, but that alone does not prove the historical native TitleRegion region/method contract. No runtime surface is removed.
 
-## Proof status
+## Historical proof status
 
 Evidence directory: [7.1.0-session-2026-10-08](../../../data/patch-api/evidence/7.1.0-session-2026-10-08/).
 
@@ -47,7 +47,9 @@ No full integration suite, CASC texture tests, agents/model CLIs, other-worktree
 
 ## Integration boundary
 
-7.2.0 remains unmerged. One-line placeholder appears first in `later_registers`, before 7.2.5 and every merged later register. Main-thread integration must replace it with the real 7.2.0 register and refresh only attributable supersessions/proof. Historical validator register/sweep sets remain scoped to a recorded revision; future pages do not expand old proof scope.
+Rebased onto merged 7.2.0 master `aa57dd8f830ec9c53e2f9c9dac5c7a69b5b042ec`. The real 7.2.0 register now appears first in `later_registers`; the placeholder is gone. Historical validator register/sweep scope remains pinned at `7778521e8`; integrated runtime/register/sweep scope is separately pinned at `50c69faa3938e23b3e339d47c0ac2f7f0c7bdc6d`.
+
+[Integrated source reproduction](../../../data/patch-api/evidence/7.1.0-session-2026-10-08/integrated/source-reproduction-summary.json) verifies **46/46 registers** and **43/46 extracts**, retaining exactly the three historical extract failures. Own publication remains **zero gaps**; all ten observations are byte-equivalent to the historical result. The shared 7.2.0 probe-factory change does **not** resolve arbitrary intrinsic tags: the [archived custom-intrinsic experiment](../../../data/patch-api/evidence/7.1.0-session-2026-10-08/integrated/intrinsic-discovery-context.json) still fails exactly with `unknown frame type 'P710ClipIntrinsic'`. No supersession closure or runtime fix is credited. Exact-master all-sweep comparison and remaining integrated checks are pending.
 
 ## Sources
 
