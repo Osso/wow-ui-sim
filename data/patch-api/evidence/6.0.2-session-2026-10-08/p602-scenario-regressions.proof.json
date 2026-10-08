@@ -1,0 +1,20 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "--",
+    "c_scenario_info_probes"
+  ],
+  "revision": "c0f58dad85ae20d75713136e5d80bd15fa2a6e53",
+  "scope": "p602-scenario-regressions",
+  "cwd": ".",
+  "target": "dedicated p602-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p602-scenario-regressions.txt",
+  "log_sha256": "6d75486055a8755b500c5ad9810f18260bc6621b3d998a7fd7ba9c587c0a4fc5",
+  "seconds": 1.4543224810040556,
+  "invalidated": false
+}

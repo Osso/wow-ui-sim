@@ -1,0 +1,23 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_6_0_2"
+  ],
+  "revision": "d5c2163a66baefec0287e123becbccc4d6263a5b",
+  "scope": "p602-discovery",
+  "cwd": ".",
+  "target": "dedicated p602-page target (external to repository)",
+  "environment": {
+    "P602_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p602-page/data/patch-api/evidence/6.0.2-session-2026-10-08/p602-discovery-results.json"
+  },
+  "exit": 1,
+  "log": "p602-discovery.txt",
+  "log_sha256": "19d9438392663657ac1a4549ad4801438c71992c2a4cd729d1cd2dda476bf05b",
+  "seconds": 464.76455046000046,
+  "invalidated": true,
+  "invalidation_reason": "Register expanded during first compilation; use expanded discovery at 730484331 instead."
+}

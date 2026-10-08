@@ -1,0 +1,3 @@
+src/lua_api/globals/real/combat_stats.rs:420:    ("GetRangedMissChance", get_zero_percent),
+tests/character_stats/stat_restriction.rs:53:            GetRangedMissChance(), GetEnemyDodgeChance(), UnitXP('player'),
+tests/character_stats.rs:200:                GetRangedMissChance(),

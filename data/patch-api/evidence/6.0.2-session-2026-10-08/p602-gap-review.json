@@ -1,0 +1,3302 @@
+[
+  {
+    "source_id": "wt-global-api-EquipmentManager_UnpackLocation-28",
+    "symbol": "EquipmentManager_UnpackLocation",
+    "reason": "EquipmentManager_UnpackLocation: Exact legacy global is missing or conflicts with a later removal; recorded current publication cannot substitute for native successor/signature evidence. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-GetMapZones-31",
+    "symbol": "GetMapZones",
+    "reason": "GetMapZones: Historical geographic hierarchy/nearest-entity or taxi slot catalog has no exact modeled provider. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-GetTalentInfoByID-35",
+    "symbol": "GetTalentInfoByID",
+    "reason": "GetTalentInfoByID: Historical talent/zone-ability selection and source-era catalog are not represented by the current specialization model. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-GetTalentLink-36",
+    "symbol": "GetTalentLink",
+    "reason": "GetTalentLink: Historical talent/zone-ability selection and source-era catalog are not represented by the current specialization model. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-global-api-GetQuestLogTitle-38",
+    "symbol": "GetQuestLogTitle",
+    "reason": "GetQuestLogTitle: Historical removal conflicts with current publication; no destructive change without native/successor evidence. Observed: raw=function; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "wt-events-COMBAT_LOG_EVENT-53",
+    "symbol": "COMBAT_LOG_EVENT",
+    "reason": "COMBAT_LOG_EVENT: Historical event name is not in the current retail event registry; historical payload/native timing not modeled. Observed: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"COMBAT_LOG_EVENT\"; registered=false",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"COMBAT_LOG_EVENT\"; registered=false",
+      "kind": "event",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-AntiAliasingSupported-10",
+    "symbol": "AntiAliasingSupported",
+    "reason": "AntiAliasingSupported: Hardware graphics-setting selection/capability state is not modeled on this headless host. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-AutoChooseCurrentGraphicsSetting-11",
+    "symbol": "AutoChooseCurrentGraphicsSetting",
+    "reason": "AutoChooseCurrentGraphicsSetting: Hardware graphics-setting selection/capability state is not modeled on this headless host. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-BNSummonFriendByIndex-12",
+    "symbol": "BNSummonFriendByIndex",
+    "reason": "BNSummonFriendByIndex: Native support/customer-service/social matchmaking or spectator operation has no backing server workflow. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.AddFollowerToMission-15",
+    "symbol": "C_Garrison.AddFollowerToMission",
+    "reason": "C_Garrison.AddFollowerToMission: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.AssignFollowerToBuilding-16",
+    "symbol": "C_Garrison.AssignFollowerToBuilding",
+    "reason": "C_Garrison.AssignFollowerToBuilding: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.CanGenerateRecruits-17",
+    "symbol": "C_Garrison.CanGenerateRecruits",
+    "reason": "C_Garrison.CanGenerateRecruits: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.CanOpenMissionChest-18",
+    "symbol": "C_Garrison.CanOpenMissionChest",
+    "reason": "C_Garrison.CanOpenMissionChest: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.CanSetRecruitmentPreference-19",
+    "symbol": "C_Garrison.CanSetRecruitmentPreference",
+    "reason": "C_Garrison.CanSetRecruitmentPreference: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.CanUpgradeGarrison-20",
+    "symbol": "C_Garrison.CanUpgradeGarrison",
+    "reason": "C_Garrison.CanUpgradeGarrison: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.CancelConstruction-21",
+    "symbol": "C_Garrison.CancelConstruction",
+    "reason": "C_Garrison.CancelConstruction: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.CastSpellOnFollower-22",
+    "symbol": "C_Garrison.CastSpellOnFollower",
+    "reason": "C_Garrison.CastSpellOnFollower: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.CloseArchitect-23",
+    "symbol": "C_Garrison.CloseArchitect",
+    "reason": "C_Garrison.CloseArchitect: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.CloseGarrisonTradeskillNPC-24",
+    "symbol": "C_Garrison.CloseGarrisonTradeskillNPC",
+    "reason": "C_Garrison.CloseGarrisonTradeskillNPC: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.CloseMissionNPC-25",
+    "symbol": "C_Garrison.CloseMissionNPC",
+    "reason": "C_Garrison.CloseMissionNPC: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.CloseRecruitmentNPC-26",
+    "symbol": "C_Garrison.CloseRecruitmentNPC",
+    "reason": "C_Garrison.CloseRecruitmentNPC: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.CloseTradeskillCrafter-27",
+    "symbol": "C_Garrison.CloseTradeskillCrafter",
+    "reason": "C_Garrison.CloseTradeskillCrafter: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GenerateRecruits-28",
+    "symbol": "C_Garrison.GenerateRecruits",
+    "reason": "C_Garrison.GenerateRecruits: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetAvailableMissions-29",
+    "symbol": "C_Garrison.GetAvailableMissions",
+    "reason": "C_Garrison.GetAvailableMissions: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetAvailableRecruits-30",
+    "symbol": "C_Garrison.GetAvailableRecruits",
+    "reason": "C_Garrison.GetAvailableRecruits: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetBasicMissionInfo-31",
+    "symbol": "C_Garrison.GetBasicMissionInfo",
+    "reason": "C_Garrison.GetBasicMissionInfo: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetBuffedFollowersForMission-32",
+    "symbol": "C_Garrison.GetBuffedFollowersForMission",
+    "reason": "C_Garrison.GetBuffedFollowersForMission: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetBuildingInfo-33",
+    "symbol": "C_Garrison.GetBuildingInfo",
+    "reason": "C_Garrison.GetBuildingInfo: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetBuildingLockInfo-34",
+    "symbol": "C_Garrison.GetBuildingLockInfo",
+    "reason": "C_Garrison.GetBuildingLockInfo: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetBuildingSpecInfo-36",
+    "symbol": "C_Garrison.GetBuildingSpecInfo",
+    "reason": "C_Garrison.GetBuildingSpecInfo: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetBuildingTimeRemaining-37",
+    "symbol": "C_Garrison.GetBuildingTimeRemaining",
+    "reason": "C_Garrison.GetBuildingTimeRemaining: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetBuildingTooltip-38",
+    "symbol": "C_Garrison.GetBuildingTooltip",
+    "reason": "C_Garrison.GetBuildingTooltip: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetBuildingUpgradeInfo-39",
+    "symbol": "C_Garrison.GetBuildingUpgradeInfo",
+    "reason": "C_Garrison.GetBuildingUpgradeInfo: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetBuildings-40",
+    "symbol": "C_Garrison.GetBuildings",
+    "reason": "C_Garrison.GetBuildings: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetBuildingsForPlot-41",
+    "symbol": "C_Garrison.GetBuildingsForPlot",
+    "reason": "C_Garrison.GetBuildingsForPlot: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetBuildingsForSize-42",
+    "symbol": "C_Garrison.GetBuildingsForSize",
+    "reason": "C_Garrison.GetBuildingsForSize: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetCompleteMissions-43",
+    "symbol": "C_Garrison.GetCompleteMissions",
+    "reason": "C_Garrison.GetCompleteMissions: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerAbilities-44",
+    "symbol": "C_Garrison.GetFollowerAbilities",
+    "reason": "C_Garrison.GetFollowerAbilities: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerAbilityAtIndex-45",
+    "symbol": "C_Garrison.GetFollowerAbilityAtIndex",
+    "reason": "C_Garrison.GetFollowerAbilityAtIndex: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerAbilityAtIndexByID-46",
+    "symbol": "C_Garrison.GetFollowerAbilityAtIndexByID",
+    "reason": "C_Garrison.GetFollowerAbilityAtIndexByID: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerAbilityCounterMechanicInfo-47",
+    "symbol": "C_Garrison.GetFollowerAbilityCounterMechanicInfo",
+    "reason": "C_Garrison.GetFollowerAbilityCounterMechanicInfo: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerAbilityDescription-48",
+    "symbol": "C_Garrison.GetFollowerAbilityDescription",
+    "reason": "C_Garrison.GetFollowerAbilityDescription: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerAbilityIcon-49",
+    "symbol": "C_Garrison.GetFollowerAbilityIcon",
+    "reason": "C_Garrison.GetFollowerAbilityIcon: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerAbilityIsTrait-50",
+    "symbol": "C_Garrison.GetFollowerAbilityIsTrait",
+    "reason": "C_Garrison.GetFollowerAbilityIsTrait: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerAbilityLink-51",
+    "symbol": "C_Garrison.GetFollowerAbilityLink",
+    "reason": "C_Garrison.GetFollowerAbilityLink: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerAbilityName-52",
+    "symbol": "C_Garrison.GetFollowerAbilityName",
+    "reason": "C_Garrison.GetFollowerAbilityName: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerActivationCost-53",
+    "symbol": "C_Garrison.GetFollowerActivationCost",
+    "reason": "C_Garrison.GetFollowerActivationCost: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerBiasForMission-54",
+    "symbol": "C_Garrison.GetFollowerBiasForMission",
+    "reason": "C_Garrison.GetFollowerBiasForMission: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerClassSpec-55",
+    "symbol": "C_Garrison.GetFollowerClassSpec",
+    "reason": "C_Garrison.GetFollowerClassSpec: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerClassSpecAtlas-56",
+    "symbol": "C_Garrison.GetFollowerClassSpecAtlas",
+    "reason": "C_Garrison.GetFollowerClassSpecAtlas: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerClassSpecByID-57",
+    "symbol": "C_Garrison.GetFollowerClassSpecByID",
+    "reason": "C_Garrison.GetFollowerClassSpecByID: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerClassSpecName-58",
+    "symbol": "C_Garrison.GetFollowerClassSpecName",
+    "reason": "C_Garrison.GetFollowerClassSpecName: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerDisplayID-59",
+    "symbol": "C_Garrison.GetFollowerDisplayID",
+    "reason": "C_Garrison.GetFollowerDisplayID: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerDisplayIDByID-60",
+    "symbol": "C_Garrison.GetFollowerDisplayIDByID",
+    "reason": "C_Garrison.GetFollowerDisplayIDByID: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerInfo-61",
+    "symbol": "C_Garrison.GetFollowerInfo",
+    "reason": "C_Garrison.GetFollowerInfo: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerInfoForBuilding-62",
+    "symbol": "C_Garrison.GetFollowerInfoForBuilding",
+    "reason": "C_Garrison.GetFollowerInfoForBuilding: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerItemLevelAverage-63",
+    "symbol": "C_Garrison.GetFollowerItemLevelAverage",
+    "reason": "C_Garrison.GetFollowerItemLevelAverage: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerItems-64",
+    "symbol": "C_Garrison.GetFollowerItems",
+    "reason": "C_Garrison.GetFollowerItems: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerLevel-65",
+    "symbol": "C_Garrison.GetFollowerLevel",
+    "reason": "C_Garrison.GetFollowerLevel: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerLevelXP-66",
+    "symbol": "C_Garrison.GetFollowerLevelXP",
+    "reason": "C_Garrison.GetFollowerLevelXP: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerLink-67",
+    "symbol": "C_Garrison.GetFollowerLink",
+    "reason": "C_Garrison.GetFollowerLink: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerLinkByID-68",
+    "symbol": "C_Garrison.GetFollowerLinkByID",
+    "reason": "C_Garrison.GetFollowerLinkByID: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerMissionCompleteInfo-69",
+    "symbol": "C_Garrison.GetFollowerMissionCompleteInfo",
+    "reason": "C_Garrison.GetFollowerMissionCompleteInfo: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerModelItems-70",
+    "symbol": "C_Garrison.GetFollowerModelItems",
+    "reason": "C_Garrison.GetFollowerModelItems: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerName-71",
+    "symbol": "C_Garrison.GetFollowerName",
+    "reason": "C_Garrison.GetFollowerName: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerNameByID-72",
+    "symbol": "C_Garrison.GetFollowerNameByID",
+    "reason": "C_Garrison.GetFollowerNameByID: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerPortraitIconIDByID-73",
+    "symbol": "C_Garrison.GetFollowerPortraitIconIDByID",
+    "reason": "C_Garrison.GetFollowerPortraitIconIDByID: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerQuality-74",
+    "symbol": "C_Garrison.GetFollowerQuality",
+    "reason": "C_Garrison.GetFollowerQuality: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerQualityTable-75",
+    "symbol": "C_Garrison.GetFollowerQualityTable",
+    "reason": "C_Garrison.GetFollowerQualityTable: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerSoftCap-76",
+    "symbol": "C_Garrison.GetFollowerSoftCap",
+    "reason": "C_Garrison.GetFollowerSoftCap: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerSourceTextByID-77",
+    "symbol": "C_Garrison.GetFollowerSourceTextByID",
+    "reason": "C_Garrison.GetFollowerSourceTextByID: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerStatus-78",
+    "symbol": "C_Garrison.GetFollowerStatus",
+    "reason": "C_Garrison.GetFollowerStatus: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerTraitAtIndex-79",
+    "symbol": "C_Garrison.GetFollowerTraitAtIndex",
+    "reason": "C_Garrison.GetFollowerTraitAtIndex: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerTraitAtIndexByID-80",
+    "symbol": "C_Garrison.GetFollowerTraitAtIndexByID",
+    "reason": "C_Garrison.GetFollowerTraitAtIndexByID: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerXP-81",
+    "symbol": "C_Garrison.GetFollowerXP",
+    "reason": "C_Garrison.GetFollowerXP: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowerXPTable-82",
+    "symbol": "C_Garrison.GetFollowerXPTable",
+    "reason": "C_Garrison.GetFollowerXPTable: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowers-83",
+    "symbol": "C_Garrison.GetFollowers",
+    "reason": "C_Garrison.GetFollowers: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetFollowersTraitsForMission-84",
+    "symbol": "C_Garrison.GetFollowersTraitsForMission",
+    "reason": "C_Garrison.GetFollowersTraitsForMission: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetGarrisonInfo-85",
+    "symbol": "C_Garrison.GetGarrisonInfo",
+    "reason": "C_Garrison.GetGarrisonInfo: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetGarrisonUpgradeCost-86",
+    "symbol": "C_Garrison.GetGarrisonUpgradeCost",
+    "reason": "C_Garrison.GetGarrisonUpgradeCost: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetInProgressMissions-87",
+    "symbol": "C_Garrison.GetInProgressMissions",
+    "reason": "C_Garrison.GetInProgressMissions: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetLandingPageItems-88",
+    "symbol": "C_Garrison.GetLandingPageItems",
+    "reason": "C_Garrison.GetLandingPageItems: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetLandingPageShipmentCount-89",
+    "symbol": "C_Garrison.GetLandingPageShipmentCount",
+    "reason": "C_Garrison.GetLandingPageShipmentCount: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetLandingPageShipmentInfo-90",
+    "symbol": "C_Garrison.GetLandingPageShipmentInfo",
+    "reason": "C_Garrison.GetLandingPageShipmentInfo: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetMissionCompleteEncounters-91",
+    "symbol": "C_Garrison.GetMissionCompleteEncounters",
+    "reason": "C_Garrison.GetMissionCompleteEncounters: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetMissionDisplayIDs-92",
+    "symbol": "C_Garrison.GetMissionDisplayIDs",
+    "reason": "C_Garrison.GetMissionDisplayIDs: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetMissionLink-94",
+    "symbol": "C_Garrison.GetMissionLink",
+    "reason": "C_Garrison.GetMissionLink: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetMissionMaxFollowers-95",
+    "symbol": "C_Garrison.GetMissionMaxFollowers",
+    "reason": "C_Garrison.GetMissionMaxFollowers: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetMissionName-96",
+    "symbol": "C_Garrison.GetMissionName",
+    "reason": "C_Garrison.GetMissionName: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetMissionRewardInfo-97",
+    "symbol": "C_Garrison.GetMissionRewardInfo",
+    "reason": "C_Garrison.GetMissionRewardInfo: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetMissionTimes-98",
+    "symbol": "C_Garrison.GetMissionTimes",
+    "reason": "C_Garrison.GetMissionTimes: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetMissionUncounteredMechanics-99",
+    "symbol": "C_Garrison.GetMissionUncounteredMechanics",
+    "reason": "C_Garrison.GetMissionUncounteredMechanics: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetNumActiveFollowers-100",
+    "symbol": "C_Garrison.GetNumActiveFollowers",
+    "reason": "C_Garrison.GetNumActiveFollowers: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetNumFollowerActivationsRemaining-101",
+    "symbol": "C_Garrison.GetNumFollowerActivationsRemaining",
+    "reason": "C_Garrison.GetNumFollowerActivationsRemaining: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetNumFollowerDailyActivations-102",
+    "symbol": "C_Garrison.GetNumFollowerDailyActivations",
+    "reason": "C_Garrison.GetNumFollowerDailyActivations: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetNumFollowers-103",
+    "symbol": "C_Garrison.GetNumFollowers",
+    "reason": "C_Garrison.GetNumFollowers: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetNumFollowersOnMission-104",
+    "symbol": "C_Garrison.GetNumFollowersOnMission",
+    "reason": "C_Garrison.GetNumFollowersOnMission: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetNumPendingShipments-105",
+    "symbol": "C_Garrison.GetNumPendingShipments",
+    "reason": "C_Garrison.GetNumPendingShipments: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetNumShipmentReagents-106",
+    "symbol": "C_Garrison.GetNumShipmentReagents",
+    "reason": "C_Garrison.GetNumShipmentReagents: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetOwnedBuildingInfo-107",
+    "symbol": "C_Garrison.GetOwnedBuildingInfo",
+    "reason": "C_Garrison.GetOwnedBuildingInfo: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetOwnedBuildingInfoAbbrev-108",
+    "symbol": "C_Garrison.GetOwnedBuildingInfoAbbrev",
+    "reason": "C_Garrison.GetOwnedBuildingInfoAbbrev: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetPartyBuffs-109",
+    "symbol": "C_Garrison.GetPartyBuffs",
+    "reason": "C_Garrison.GetPartyBuffs: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetPartyMissionInfo-110",
+    "symbol": "C_Garrison.GetPartyMissionInfo",
+    "reason": "C_Garrison.GetPartyMissionInfo: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetPendingShipmentInfo-111",
+    "symbol": "C_Garrison.GetPendingShipmentInfo",
+    "reason": "C_Garrison.GetPendingShipmentInfo: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetPlots-112",
+    "symbol": "C_Garrison.GetPlots",
+    "reason": "C_Garrison.GetPlots: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetPlotsForBuilding-113",
+    "symbol": "C_Garrison.GetPlotsForBuilding",
+    "reason": "C_Garrison.GetPlotsForBuilding: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetPossibleFollowersForBuilding-114",
+    "symbol": "C_Garrison.GetPossibleFollowersForBuilding",
+    "reason": "C_Garrison.GetPossibleFollowersForBuilding: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetRecruitAbilities-115",
+    "symbol": "C_Garrison.GetRecruitAbilities",
+    "reason": "C_Garrison.GetRecruitAbilities: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetRecruiterAbilityList-117",
+    "symbol": "C_Garrison.GetRecruiterAbilityList",
+    "reason": "C_Garrison.GetRecruiterAbilityList: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetRecruitmentPreferences-118",
+    "symbol": "C_Garrison.GetRecruitmentPreferences",
+    "reason": "C_Garrison.GetRecruitmentPreferences: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetRewardChance-119",
+    "symbol": "C_Garrison.GetRewardChance",
+    "reason": "C_Garrison.GetRewardChance: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetShipmentContainerInfo-120",
+    "symbol": "C_Garrison.GetShipmentContainerInfo",
+    "reason": "C_Garrison.GetShipmentContainerInfo: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetShipmentItemInfo-121",
+    "symbol": "C_Garrison.GetShipmentItemInfo",
+    "reason": "C_Garrison.GetShipmentItemInfo: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetShipmentReagentCurrencyInfo-122",
+    "symbol": "C_Garrison.GetShipmentReagentCurrencyInfo",
+    "reason": "C_Garrison.GetShipmentReagentCurrencyInfo: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetShipmentReagentInfo-123",
+    "symbol": "C_Garrison.GetShipmentReagentInfo",
+    "reason": "C_Garrison.GetShipmentReagentInfo: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetShipmentReagentItemLink-124",
+    "symbol": "C_Garrison.GetShipmentReagentItemLink",
+    "reason": "C_Garrison.GetShipmentReagentItemLink: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetSpecChangeCost-125",
+    "symbol": "C_Garrison.GetSpecChangeCost",
+    "reason": "C_Garrison.GetSpecChangeCost: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.GetTabForPlot-126",
+    "symbol": "C_Garrison.GetTabForPlot",
+    "reason": "C_Garrison.GetTabForPlot: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.IsAboveFollowerSoftCap-127",
+    "symbol": "C_Garrison.IsAboveFollowerSoftCap",
+    "reason": "C_Garrison.IsAboveFollowerSoftCap: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.IsFollowerCollected-128",
+    "symbol": "C_Garrison.IsFollowerCollected",
+    "reason": "C_Garrison.IsFollowerCollected: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.IsFollowerUnique-129",
+    "symbol": "C_Garrison.IsFollowerUnique",
+    "reason": "C_Garrison.IsFollowerUnique: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.IsInvasionAvailable-130",
+    "symbol": "C_Garrison.IsInvasionAvailable",
+    "reason": "C_Garrison.IsInvasionAvailable: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.IsOnGarrisonMap-131",
+    "symbol": "C_Garrison.IsOnGarrisonMap",
+    "reason": "C_Garrison.IsOnGarrisonMap: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.IsUsingPartyGarrison-132",
+    "symbol": "C_Garrison.IsUsingPartyGarrison",
+    "reason": "C_Garrison.IsUsingPartyGarrison: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.IsVisitGarrisonAvailable-133",
+    "symbol": "C_Garrison.IsVisitGarrisonAvailable",
+    "reason": "C_Garrison.IsVisitGarrisonAvailable: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.MarkMissionComplete-134",
+    "symbol": "C_Garrison.MarkMissionComplete",
+    "reason": "C_Garrison.MarkMissionComplete: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.MissionBonusRoll-135",
+    "symbol": "C_Garrison.MissionBonusRoll",
+    "reason": "C_Garrison.MissionBonusRoll: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.PlaceBuilding-136",
+    "symbol": "C_Garrison.PlaceBuilding",
+    "reason": "C_Garrison.PlaceBuilding: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.RecruitFollower-137",
+    "symbol": "C_Garrison.RecruitFollower",
+    "reason": "C_Garrison.RecruitFollower: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.RemoveFollower-138",
+    "symbol": "C_Garrison.RemoveFollower",
+    "reason": "C_Garrison.RemoveFollower: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.RemoveFollowerFromBuilding-139",
+    "symbol": "C_Garrison.RemoveFollowerFromBuilding",
+    "reason": "C_Garrison.RemoveFollowerFromBuilding: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.RemoveFollowerFromMission-140",
+    "symbol": "C_Garrison.RemoveFollowerFromMission",
+    "reason": "C_Garrison.RemoveFollowerFromMission: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.RequestGarrisonUpgradeable-141",
+    "symbol": "C_Garrison.RequestGarrisonUpgradeable",
+    "reason": "C_Garrison.RequestGarrisonUpgradeable: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.RequestLandingPageShipmentInfo-142",
+    "symbol": "C_Garrison.RequestLandingPageShipmentInfo",
+    "reason": "C_Garrison.RequestLandingPageShipmentInfo: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.RequestShipmentCreation-143",
+    "symbol": "C_Garrison.RequestShipmentCreation",
+    "reason": "C_Garrison.RequestShipmentCreation: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.RequestShipmentInfo-144",
+    "symbol": "C_Garrison.RequestShipmentInfo",
+    "reason": "C_Garrison.RequestShipmentInfo: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.SearchForFollower-145",
+    "symbol": "C_Garrison.SearchForFollower",
+    "reason": "C_Garrison.SearchForFollower: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.SetBuildingActive-146",
+    "symbol": "C_Garrison.SetBuildingActive",
+    "reason": "C_Garrison.SetBuildingActive: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.SetBuildingSpecialization-147",
+    "symbol": "C_Garrison.SetBuildingSpecialization",
+    "reason": "C_Garrison.SetBuildingSpecialization: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.SetFollowerFavorite-148",
+    "symbol": "C_Garrison.SetFollowerFavorite",
+    "reason": "C_Garrison.SetFollowerFavorite: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.SetFollowerInactive-149",
+    "symbol": "C_Garrison.SetFollowerInactive",
+    "reason": "C_Garrison.SetFollowerInactive: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.SetRecruitmentPreferences-150",
+    "symbol": "C_Garrison.SetRecruitmentPreferences",
+    "reason": "C_Garrison.SetRecruitmentPreferences: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.SetUsingPartyGarrison-151",
+    "symbol": "C_Garrison.SetUsingPartyGarrison",
+    "reason": "C_Garrison.SetUsingPartyGarrison: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.StartMission-152",
+    "symbol": "C_Garrison.StartMission",
+    "reason": "C_Garrison.StartMission: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.SwapBuildings-153",
+    "symbol": "C_Garrison.SwapBuildings",
+    "reason": "C_Garrison.SwapBuildings: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.UpgradeBuilding-154",
+    "symbol": "C_Garrison.UpgradeBuilding",
+    "reason": "C_Garrison.UpgradeBuilding: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Garrison.UpgradeGarrison-155",
+    "symbol": "C_Garrison.UpgradeGarrison",
+    "reason": "C_Garrison.UpgradeGarrison: Historical garrison building/follower/mission/recruitment/shipment contract lacks a registered modeled provider for this member; namespace lookup alone is not backing behavior. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_LFGList.AcceptInvite-156",
+    "symbol": "C_LFGList.AcceptInvite",
+    "reason": "C_LFGList.AcceptInvite: Existing listing/search/application models do not implement this applicant/invite/role-check/social-data operation; no synthesized server responses. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_LFGList.ClearSearchResults-159",
+    "symbol": "C_LFGList.ClearSearchResults",
+    "reason": "C_LFGList.ClearSearchResults: Existing listing/search/application models do not implement this applicant/invite/role-check/social-data operation; no synthesized server responses. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_LFGList.DeclineApplicant-161",
+    "symbol": "C_LFGList.DeclineApplicant",
+    "reason": "C_LFGList.DeclineApplicant: Existing listing/search/application models do not implement this applicant/invite/role-check/social-data operation; no synthesized server responses. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_LFGList.DeclineInvite-162",
+    "symbol": "C_LFGList.DeclineInvite",
+    "reason": "C_LFGList.DeclineInvite: Existing listing/search/application models do not implement this applicant/invite/role-check/social-data operation; no synthesized server responses. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_LFGList.GetActivityInfoExpensive-166",
+    "symbol": "C_LFGList.GetActivityInfoExpensive",
+    "reason": "C_LFGList.GetActivityInfoExpensive: Existing listing/search/application models do not implement this applicant/invite/role-check/social-data operation; no synthesized server responses. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_LFGList.GetApplicantInfo-167",
+    "symbol": "C_LFGList.GetApplicantInfo",
+    "reason": "C_LFGList.GetApplicantInfo: Existing listing/search/application models do not implement this applicant/invite/role-check/social-data operation; no synthesized server responses. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_LFGList.GetApplicantMemberInfo-168",
+    "symbol": "C_LFGList.GetApplicantMemberInfo",
+    "reason": "C_LFGList.GetApplicantMemberInfo: Existing listing/search/application models do not implement this applicant/invite/role-check/social-data operation; no synthesized server responses. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_LFGList.GetApplicantMemberStats-169",
+    "symbol": "C_LFGList.GetApplicantMemberStats",
+    "reason": "C_LFGList.GetApplicantMemberStats: Existing listing/search/application models do not implement this applicant/invite/role-check/social-data operation; no synthesized server responses. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_LFGList.GetApplicants-170",
+    "symbol": "C_LFGList.GetApplicants",
+    "reason": "C_LFGList.GetApplicants: Existing listing/search/application models do not implement this applicant/invite/role-check/social-data operation; no synthesized server responses. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_LFGList.GetNumInvitedApplicantMembers-180",
+    "symbol": "C_LFGList.GetNumInvitedApplicantMembers",
+    "reason": "C_LFGList.GetNumInvitedApplicantMembers: Existing listing/search/application models do not implement this applicant/invite/role-check/social-data operation; no synthesized server responses. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_LFGList.GetRoleCheckInfo-181",
+    "symbol": "C_LFGList.GetRoleCheckInfo",
+    "reason": "C_LFGList.GetRoleCheckInfo: Existing listing/search/application models do not implement this applicant/invite/role-check/social-data operation; no synthesized server responses. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_LFGList.GetSearchResultEncounterInfo-182",
+    "symbol": "C_LFGList.GetSearchResultEncounterInfo",
+    "reason": "C_LFGList.GetSearchResultEncounterInfo: Existing listing/search/application models do not implement this applicant/invite/role-check/social-data operation; no synthesized server responses. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_LFGList.GetSearchResultFriends-183",
+    "symbol": "C_LFGList.GetSearchResultFriends",
+    "reason": "C_LFGList.GetSearchResultFriends: Existing listing/search/application models do not implement this applicant/invite/role-check/social-data operation; no synthesized server responses. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_LFGList.InviteApplicant-189",
+    "symbol": "C_LFGList.InviteApplicant",
+    "reason": "C_LFGList.InviteApplicant: Existing listing/search/application models do not implement this applicant/invite/role-check/social-data operation; no synthesized server responses. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_LFGList.IsCurrentlyApplying-190",
+    "symbol": "C_LFGList.IsCurrentlyApplying",
+    "reason": "C_LFGList.IsCurrentlyApplying: Existing listing/search/application models do not implement this applicant/invite/role-check/social-data operation; no synthesized server responses. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_LFGList.RefreshApplicants-191",
+    "symbol": "C_LFGList.RefreshApplicants",
+    "reason": "C_LFGList.RefreshApplicants: Existing listing/search/application models do not implement this applicant/invite/role-check/social-data operation; no synthesized server responses. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_LFGList.RemoveApplicant-192",
+    "symbol": "C_LFGList.RemoveApplicant",
+    "reason": "C_LFGList.RemoveApplicant: Existing listing/search/application models do not implement this applicant/invite/role-check/social-data operation; no synthesized server responses. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_LFGList.ReportApplicant-194",
+    "symbol": "C_LFGList.ReportApplicant",
+    "reason": "C_LFGList.ReportApplicant: Historical removal conflicts with current publication; no destructive change without native/successor evidence. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_LFGList.RequestAvailableActivities-196",
+    "symbol": "C_LFGList.RequestAvailableActivities",
+    "reason": "C_LFGList.RequestAvailableActivities: Existing listing/search/application models do not implement this applicant/invite/role-check/social-data operation; no synthesized server responses. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_LFGList.SetApplicantMemberRole-198",
+    "symbol": "C_LFGList.SetApplicantMemberRole",
+    "reason": "C_LFGList.SetApplicantMemberRole: Existing listing/search/application models do not implement this applicant/invite/role-check/social-data operation; no synthesized server responses. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_MountJournal.Pickup-206",
+    "symbol": "C_MountJournal.Pickup",
+    "reason": "C_MountJournal.Pickup: Legacy pickup/summon contract lacks a modeled provider and has simulator successor callers; no retirement or placeholder added. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_MountJournal.Summon-209",
+    "symbol": "C_MountJournal.Summon",
+    "reason": "C_MountJournal.Summon: Historical removal conflicts with current publication; no destructive change without native/successor evidence. Observed: raw=function; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Questline.GetNumAvailableQuestlines-210",
+    "symbol": "C_Questline.GetNumAvailableQuestlines",
+    "reason": "C_Questline.GetNumAvailableQuestlines: Historical indexed questline catalog contract differs from current questline lookup; no indexed catalog fixture or translation proved. Observed: parent raw-absent; raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "parent raw-absent; raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Questline.GetQuestlineInfoByIndex-211",
+    "symbol": "C_Questline.GetQuestlineInfoByIndex",
+    "reason": "C_Questline.GetQuestlineInfoByIndex: Historical indexed questline catalog contract differs from current questline lookup; no indexed catalog fixture or translation proved. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Scenario.GetSupersededObjectives-215",
+    "symbol": "C_Scenario.GetSupersededObjectives",
+    "reason": "C_Scenario.GetSupersededObjectives: Scenario objective supersession/dungeon classification contract is not represented by the existing step/reward model. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Scenario.TreatScenarioAsDungeon-216",
+    "symbol": "C_Scenario.TreatScenarioAsDungeon",
+    "reason": "C_Scenario.TreatScenarioAsDungeon: Scenario objective supersession/dungeon classification contract is not represented by the existing step/reward model. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_TaskQuest.GetQuestObjectiveStrByQuestID-217",
+    "symbol": "C_TaskQuest.GetQuestObjectiveStrByQuestID",
+    "reason": "C_TaskQuest.GetQuestObjectiveStrByQuestID: Historical task quest text getter has no registered provider; modern task query presence is not a historical signature proof. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_TaskQuest.GetQuestTitleByQuestID-218",
+    "symbol": "C_TaskQuest.GetQuestTitleByQuestID",
+    "reason": "C_TaskQuest.GetQuestTitleByQuestID: Historical task quest text getter has no registered provider; modern task query presence is not a historical signature proof. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_ToyBox.ClearAllSourceTypesFiltered-221",
+    "symbol": "C_ToyBox.ClearAllSourceTypesFiltered",
+    "reason": "C_ToyBox.ClearAllSourceTypesFiltered: Historical toy filter/cursor operation lacks a state-backed provider; collection presence does not implement its filter or pickup semantics. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_ToyBox.FilterToys-222",
+    "symbol": "C_ToyBox.FilterToys",
+    "reason": "C_ToyBox.FilterToys: Historical toy filter/cursor operation lacks a state-backed provider; collection presence does not implement its filter or pickup semantics. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_ToyBox.GetFilterCollected-223",
+    "symbol": "C_ToyBox.GetFilterCollected",
+    "reason": "C_ToyBox.GetFilterCollected: Historical toy filter/cursor operation lacks a state-backed provider; collection presence does not implement its filter or pickup semantics. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_ToyBox.GetFilterUncollected-224",
+    "symbol": "C_ToyBox.GetFilterUncollected",
+    "reason": "C_ToyBox.GetFilterUncollected: Historical toy filter/cursor operation lacks a state-backed provider; collection presence does not implement its filter or pickup semantics. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_ToyBox.IsSourceTypeFiltered-234",
+    "symbol": "C_ToyBox.IsSourceTypeFiltered",
+    "reason": "C_ToyBox.IsSourceTypeFiltered: Historical toy filter/cursor operation lacks a state-backed provider; collection presence does not implement its filter or pickup semantics. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_ToyBox.PickupToyBoxItem-235",
+    "symbol": "C_ToyBox.PickupToyBoxItem",
+    "reason": "C_ToyBox.PickupToyBoxItem: Historical toy filter/cursor operation lacks a state-backed provider; collection presence does not implement its filter or pickup semantics. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_ToyBox.SetAllSourceTypesFiltered-236",
+    "symbol": "C_ToyBox.SetAllSourceTypesFiltered",
+    "reason": "C_ToyBox.SetAllSourceTypesFiltered: Historical toy filter/cursor operation lacks a state-backed provider; collection presence does not implement its filter or pickup semantics. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_ToyBox.SetFilterCollected-237",
+    "symbol": "C_ToyBox.SetFilterCollected",
+    "reason": "C_ToyBox.SetFilterCollected: Historical toy filter/cursor operation lacks a state-backed provider; collection presence does not implement its filter or pickup semantics. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_ToyBox.SetFilterSourceType-238",
+    "symbol": "C_ToyBox.SetFilterSourceType",
+    "reason": "C_ToyBox.SetFilterSourceType: Historical toy filter/cursor operation lacks a state-backed provider; collection presence does not implement its filter or pickup semantics. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_ToyBox.SetFilterString-239",
+    "symbol": "C_ToyBox.SetFilterString",
+    "reason": "C_ToyBox.SetFilterString: Historical toy filter/cursor operation lacks a state-backed provider; collection presence does not implement its filter or pickup semantics. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_ToyBox.SetFilterUncollected-240",
+    "symbol": "C_ToyBox.SetFilterUncollected",
+    "reason": "C_ToyBox.SetFilterUncollected: Historical toy filter/cursor operation lacks a state-backed provider; collection presence does not implement its filter or pickup semantics. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Trophy.MonumentChangeAppearanceToTrophyID-242",
+    "symbol": "C_Trophy.MonumentChangeAppearanceToTrophyID",
+    "reason": "C_Trophy.MonumentChangeAppearanceToTrophyID: Garrison monument selection/appearance persistence has no backing subsystem; no fabricated monument inventory. Observed: parent raw-absent; raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "parent raw-absent; raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Trophy.MonumentCloseMonumentUI-243",
+    "symbol": "C_Trophy.MonumentCloseMonumentUI",
+    "reason": "C_Trophy.MonumentCloseMonumentUI: Garrison monument selection/appearance persistence has no backing subsystem; no fabricated monument inventory. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Trophy.MonumentGetCount-244",
+    "symbol": "C_Trophy.MonumentGetCount",
+    "reason": "C_Trophy.MonumentGetCount: Garrison monument selection/appearance persistence has no backing subsystem; no fabricated monument inventory. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Trophy.MonumentGetSelectedTrophyID-245",
+    "symbol": "C_Trophy.MonumentGetSelectedTrophyID",
+    "reason": "C_Trophy.MonumentGetSelectedTrophyID: Garrison monument selection/appearance persistence has no backing subsystem; no fabricated monument inventory. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Trophy.MonumentGetTrophyInfoByIndex-246",
+    "symbol": "C_Trophy.MonumentGetTrophyInfoByIndex",
+    "reason": "C_Trophy.MonumentGetTrophyInfoByIndex: Garrison monument selection/appearance persistence has no backing subsystem; no fabricated monument inventory. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Trophy.MonumentLoadList-247",
+    "symbol": "C_Trophy.MonumentLoadList",
+    "reason": "C_Trophy.MonumentLoadList: Garrison monument selection/appearance persistence has no backing subsystem; no fabricated monument inventory. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Trophy.MonumentLoadSelectedTrophyID-248",
+    "symbol": "C_Trophy.MonumentLoadSelectedTrophyID",
+    "reason": "C_Trophy.MonumentLoadSelectedTrophyID: Garrison monument selection/appearance persistence has no backing subsystem; no fabricated monument inventory. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Trophy.MonumentRevertAppearanceToSaved-249",
+    "symbol": "C_Trophy.MonumentRevertAppearanceToSaved",
+    "reason": "C_Trophy.MonumentRevertAppearanceToSaved: Garrison monument selection/appearance persistence has no backing subsystem; no fabricated monument inventory. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Trophy.MonumentSaveSelection-250",
+    "symbol": "C_Trophy.MonumentSaveSelection",
+    "reason": "C_Trophy.MonumentSaveSelection: Garrison monument selection/appearance persistence has no backing subsystem; no fabricated monument inventory. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-C_Vignettes.GetVignetteGUID-251",
+    "symbol": "C_Vignettes.GetVignetteGUID",
+    "reason": "C_Vignettes.GetVignetteGUID: Historical vignette GUID lookup lacks a modeled instance-to-GUID catalog; no fabricated identity. Observed: raw=nil; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=function",
+      "kind": "member",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-ClosestGameObjectPosition-254",
+    "symbol": "ClosestGameObjectPosition",
+    "reason": "ClosestGameObjectPosition: Historical geographic hierarchy/nearest-entity or taxi slot catalog has no exact modeled provider. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-ClosestUnitPosition-255",
+    "symbol": "ClosestUnitPosition",
+    "reason": "ClosestUnitPosition: Historical geographic hierarchy/nearest-entity or taxi slot catalog has no exact modeled provider. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-CommentatorFollowUnit-256",
+    "symbol": "CommentatorFollowUnit",
+    "reason": "CommentatorFollowUnit: Native support/customer-service/social matchmaking or spectator operation has no backing server workflow. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GMEuropaBugsEnabled-258",
+    "symbol": "GMEuropaBugsEnabled",
+    "reason": "GMEuropaBugsEnabled: Native support/customer-service/social matchmaking or spectator operation has no backing server workflow. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GMEuropaComplaintsEnabled-259",
+    "symbol": "GMEuropaComplaintsEnabled",
+    "reason": "GMEuropaComplaintsEnabled: Native support/customer-service/social matchmaking or spectator operation has no backing server workflow. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GMEuropaSuggestionsEnabled-260",
+    "symbol": "GMEuropaSuggestionsEnabled",
+    "reason": "GMEuropaSuggestionsEnabled: Native support/customer-service/social matchmaking or spectator operation has no backing server workflow. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GMEuropaTicketsEnabled-261",
+    "symbol": "GMEuropaTicketsEnabled",
+    "reason": "GMEuropaTicketsEnabled: Native support/customer-service/social matchmaking or spectator operation has no backing server workflow. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetAmplify-264",
+    "symbol": "GetAmplify",
+    "reason": "GetAmplify: Retired source-era combat stat/formula has no explicit modeled input or era-specific evaluation. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetArmorEffectiveness-265",
+    "symbol": "GetArmorEffectiveness",
+    "reason": "GetArmorEffectiveness: Retired source-era combat stat/formula has no explicit modeled input or era-specific evaluation. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetBladedArmorEffect-273",
+    "symbol": "GetBladedArmorEffect",
+    "reason": "GetBladedArmorEffect: Retired source-era combat stat/formula has no explicit modeled input or era-specific evaluation. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetCleave-274",
+    "symbol": "GetCleave",
+    "reason": "GetCleave: Retired source-era combat stat/formula has no explicit modeled input or era-specific evaluation. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetContinentName-275",
+    "symbol": "GetContinentName",
+    "reason": "GetContinentName: Historical geographic hierarchy/nearest-entity or taxi slot catalog has no exact modeled provider. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetCurrentGraphicsSetting-277",
+    "symbol": "GetCurrentGraphicsSetting",
+    "reason": "GetCurrentGraphicsSetting: Hardware graphics-setting selection/capability state is not modeled on this headless host. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetCurrentLevelDraenorTalent-278",
+    "symbol": "GetCurrentLevelDraenorTalent",
+    "reason": "GetCurrentLevelDraenorTalent: Historical talent/zone-ability selection and source-era catalog are not represented by the current specialization model. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetCurrentMapHeaderIndex-279",
+    "symbol": "GetCurrentMapHeaderIndex",
+    "reason": "GetCurrentMapHeaderIndex: Historical geographic hierarchy/nearest-entity or taxi slot catalog has no exact modeled provider. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetEquipmentSetIgnoreSlots-281",
+    "symbol": "GetEquipmentSetIgnoreSlots",
+    "reason": "GetEquipmentSetIgnoreSlots: Historical equipment ignore-set/loot tuple or name-to-toy lookup lacks the corresponding modeled catalog and operation. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetLFGInviteRoleAvailability-288",
+    "symbol": "GetLFGInviteRoleAvailability",
+    "reason": "GetLFGInviteRoleAvailability: Source-era group role restriction/legacy raid difficulty policy has no explicit transition or eligibility fixture. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetLFGInviteRoleRestrictions-289",
+    "symbol": "GetLFGInviteRoleRestrictions",
+    "reason": "GetLFGInviteRoleRestrictions: Source-era group role restriction/legacy raid difficulty policy has no explicit transition or eligibility fixture. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetLootInfo-294",
+    "symbol": "GetLootInfo",
+    "reason": "GetLootInfo: Historical equipment ignore-set/loot tuple or name-to-toy lookup lacks the corresponding modeled catalog and operation. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetMapHierarchy-295",
+    "symbol": "GetMapHierarchy",
+    "reason": "GetMapHierarchy: Historical geographic hierarchy/nearest-entity or taxi slot catalog has no exact modeled provider. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetMapSubzones-296",
+    "symbol": "GetMapSubzones",
+    "reason": "GetMapSubzones: Historical geographic hierarchy/nearest-entity or taxi slot catalog has no exact modeled provider. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetMaxRewardCurrencies-297",
+    "symbol": "GetMaxRewardCurrencies",
+    "reason": "GetMaxRewardCurrencies: Historical quest/task/objective query schema or current successor migration is not implemented for this exact global. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetMultistrike-298",
+    "symbol": "GetMultistrike",
+    "reason": "GetMultistrike: Retired source-era combat stat/formula has no explicit modeled input or era-specific evaluation. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetMultistrikeEffect-299",
+    "symbol": "GetMultistrikeEffect",
+    "reason": "GetMultistrikeEffect: Retired source-era combat stat/formula has no explicit modeled input or era-specific evaluation. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetNumQuestLogTasks-300",
+    "symbol": "GetNumQuestLogTasks",
+    "reason": "GetNumQuestLogTasks: Historical quest/task/objective query schema or current successor migration is not implemented for this exact global. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetQuestFactionGroup-301",
+    "symbol": "GetQuestFactionGroup",
+    "reason": "GetQuestFactionGroup: Historical quest/task/objective query schema or current successor migration is not implemented for this exact global. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetQuestObjectiveInfo-303",
+    "symbol": "GetQuestObjectiveInfo",
+    "reason": "GetQuestObjectiveInfo: Historical quest/task/objective query schema or current successor migration is not implemented for this exact global. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetReadiness-309",
+    "symbol": "GetReadiness",
+    "reason": "GetReadiness: Retired source-era combat stat/formula has no explicit modeled input or era-specific evaluation. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetSpecializationReadinessSpell-313",
+    "symbol": "GetSpecializationReadinessSpell",
+    "reason": "GetSpecializationReadinessSpell: Retired source-era combat stat/formula has no explicit modeled input or era-specific evaluation. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetSpellsForCharacterUpgradeTier-316",
+    "symbol": "GetSpellsForCharacterUpgradeTier",
+    "reason": "GetSpellsForCharacterUpgradeTier: Exact legacy global is missing or conflicts with a later removal; recorded current publication cannot substitute for native successor/signature evidence. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetTalentInfoByID-318",
+    "symbol": "GetTalentInfoByID",
+    "reason": "GetTalentInfoByID: Historical talent/zone-ability selection and source-era catalog are not represented by the current specialization model. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetTaskInfo-320",
+    "symbol": "GetTaskInfo",
+    "reason": "GetTaskInfo: Historical quest/task/objective query schema or current successor migration is not implemented for this exact global. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-GetTaskPOIs-321",
+    "symbol": "GetTaskPOIs",
+    "reason": "GetTaskPOIs: Historical quest/task/objective query schema or current successor migration is not implemented for this exact global. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-HasDraenorZoneAbility-328",
+    "symbol": "HasDraenorZoneAbility",
+    "reason": "HasDraenorZoneAbility: Historical talent/zone-ability selection and source-era catalog are not represented by the current specialization model. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-HasDualWieldPenalty-329",
+    "symbol": "HasDualWieldPenalty",
+    "reason": "HasDualWieldPenalty: Retired source-era combat stat/formula has no explicit modeled input or era-specific evaluation. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-IsArenaSkirmish-333",
+    "symbol": "IsArenaSkirmish",
+    "reason": "IsArenaSkirmish: Native support/customer-service/social matchmaking or spectator operation has no backing server workflow. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-IsBreadcrumbQuest-336",
+    "symbol": "IsBreadcrumbQuest",
+    "reason": "IsBreadcrumbQuest: Historical quest/task/objective query schema or current successor migration is not implemented for this exact global. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-IsLegacyDifficulty-339",
+    "symbol": "IsLegacyDifficulty",
+    "reason": "IsLegacyDifficulty: Source-era group role restriction/legacy raid difficulty policy has no explicit transition or eligibility fixture. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-IsMapGarrisonMap-340",
+    "symbol": "IsMapGarrisonMap",
+    "reason": "IsMapGarrisonMap: Historical geographic hierarchy/nearest-entity or taxi slot catalog has no exact modeled provider. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-IsNPCCrafting-341",
+    "symbol": "IsNPCCrafting",
+    "reason": "IsNPCCrafting: Exact legacy global is missing or conflicts with a later removal; recorded current publication cannot substitute for native successor/signature evidence. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-IsPlayerInMicroDungeon-342",
+    "symbol": "IsPlayerInMicroDungeon",
+    "reason": "IsPlayerInMicroDungeon: Historical geographic hierarchy/nearest-entity or taxi slot catalog has no exact modeled provider. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-IsQuestComplete-344",
+    "symbol": "IsQuestComplete",
+    "reason": "IsQuestComplete: Historical removal conflicts with current publication; no destructive change without native/successor evidence. Observed: raw=function; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-IsStoryQuest-350",
+    "symbol": "IsStoryQuest",
+    "reason": "IsStoryQuest: Historical quest/task/objective query schema or current successor migration is not implemented for this exact global. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-JoinSkirmish-353",
+    "symbol": "JoinSkirmish",
+    "reason": "JoinSkirmish: Native support/customer-service/social matchmaking or spectator operation has no backing server workflow. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-RequeueSkirmish-358",
+    "symbol": "RequeueSkirmish",
+    "reason": "RequeueSkirmish: Native support/customer-service/social matchmaking or spectator operation has no backing server workflow. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-SetCurrentGraphicsSetting-366",
+    "symbol": "SetCurrentGraphicsSetting",
+    "reason": "SetCurrentGraphicsSetting: Hardware graphics-setting selection/capability state is not modeled on this headless host. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-SetInsertItemsLeftToRight-367",
+    "symbol": "SetInsertItemsLeftToRight",
+    "reason": "SetInsertItemsLeftToRight: Historical removal conflicts with current publication; no destructive change without native/successor evidence. Observed: raw=function; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-SetLegacyRaidDifficultyID-368",
+    "symbol": "SetLegacyRaidDifficultyID",
+    "reason": "SetLegacyRaidDifficultyID: Exact legacy global is missing or conflicts with a later removal; recorded current publication cannot substitute for native successor/signature evidence. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-ShouldHideTalentsTab-370",
+    "symbol": "ShouldHideTalentsTab",
+    "reason": "ShouldHideTalentsTab: Historical talent/zone-ability selection and source-era catalog are not represented by the current specialization model. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-SortBags-371",
+    "symbol": "SortBags",
+    "reason": "SortBags: Historical removal conflicts with current publication; no destructive change without native/successor evidence. Observed: raw=function; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-StartSpectatorWarGame-375",
+    "symbol": "StartSpectatorWarGame",
+    "reason": "StartSpectatorWarGame: Native support/customer-service/social matchmaking or spectator operation has no backing server workflow. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-StartWarGameByName-376",
+    "symbol": "StartWarGameByName",
+    "reason": "StartWarGameByName: Native support/customer-service/social matchmaking or spectator operation has no backing server workflow. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-TaxiGetNodeSlot-377",
+    "symbol": "TaxiGetNodeSlot",
+    "reason": "TaxiGetNodeSlot: Historical geographic hierarchy/nearest-entity or taxi slot catalog has no exact modeled provider. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-UnitBonusArmor-378",
+    "symbol": "UnitBonusArmor",
+    "reason": "UnitBonusArmor: Retired source-era combat stat/formula has no explicit modeled input or era-specific evaluation. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-global-api-UseToyByName-382",
+    "symbol": "UseToyByName",
+    "reason": "UseToyByName: Historical equipment ignore-set/loot tuple or name-to-toy lookup lacks the corresponding modeled catalog and operation. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-framexml-CheckBagSettingsTutorial-435",
+    "symbol": "CheckBagSettingsTutorial",
+    "reason": "CheckBagSettingsTutorial: Exact legacy global is missing or conflicts with a later removal; recorded current publication cannot substitute for native successor/signature evidence. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-framexml-GetAvailableAudioLocales-437",
+    "symbol": "GetAvailableAudioLocales",
+    "reason": "GetAvailableAudioLocales: Exact legacy global is missing or conflicts with a later removal; recorded current publication cannot substitute for native successor/signature evidence. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-framexml-GetItemIDFromHyperlink-438",
+    "symbol": "GetItemIDFromHyperlink",
+    "reason": "GetItemIDFromHyperlink: Exact legacy global is missing or conflicts with a later removal; recorded current publication cannot substitute for native successor/signature evidence. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-framexml-GetLastDraenorSpellTexture-439",
+    "symbol": "GetLastDraenorSpellTexture",
+    "reason": "GetLastDraenorSpellTexture: Historical talent/zone-ability selection and source-era catalog are not represented by the current specialization model. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-framexml-GetZoneStoryID-441",
+    "symbol": "GetZoneStoryID",
+    "reason": "GetZoneStoryID: Historical quest/task/objective query schema or current successor migration is not implemented for this exact global. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-framexml-HasDraenorZoneSpellOnBar-442",
+    "symbol": "HasDraenorZoneSpellOnBar",
+    "reason": "HasDraenorZoneSpellOnBar: Historical talent/zone-ability selection and source-era catalog are not represented by the current specialization model. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-framexml-ReagentButtonInventorySlot-449",
+    "symbol": "ReagentButtonInventorySlot",
+    "reason": "ReagentButtonInventorySlot: Exact legacy global is missing or conflicts with a later removal; recorded current publication cannot substitute for native successor/signature evidence. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-framexml-ShowQuestLog-454",
+    "symbol": "ShowQuestLog",
+    "reason": "ShowQuestLog: Historical quest/task/objective query schema or current successor migration is not implemented for this exact global. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-framexml-StoreShowPreview-455",
+    "symbol": "StoreShowPreview",
+    "reason": "StoreShowPreview: Exact legacy global is missing or conflicts with a later removal; recorded current publication cannot substitute for native successor/signature evidence. Observed: raw=nil; lookup=nil",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=nil; lookup=nil",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-framexml-BreakUpLargeNumbers-465",
+    "symbol": "BreakUpLargeNumbers",
+    "reason": "BreakUpLargeNumbers: Retirement prohibited: current cached consumers, simulator callers or later re-additions remain; preserve the live contract. Observed: raw=function; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-framexml-GetBindingText-467",
+    "symbol": "GetBindingText",
+    "reason": "GetBindingText: Retirement prohibited: current cached consumers, simulator callers or later re-additions remain; preserve the live contract. Observed: raw=function; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-framexml-GetMeleeMissChance-469",
+    "symbol": "GetMeleeMissChance",
+    "reason": "GetMeleeMissChance: Retirement prohibited: current cached consumers, simulator callers or later re-additions remain; preserve the live contract. Observed: raw=function; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-framexml-GetRangedMissChance-470",
+    "symbol": "GetRangedMissChance",
+    "reason": "GetRangedMissChance: Retirement prohibited: current cached consumers, simulator callers or later re-additions remain; preserve the live contract. Observed: raw=function; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-framexml-GetSpellMissChance-471",
+    "symbol": "GetSpellMissChance",
+    "reason": "GetSpellMissChance: Retirement prohibited: current cached consumers, simulator callers or later re-additions remain; preserve the live contract. Observed: raw=function; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "raw=function; lookup=function",
+      "kind": "global",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-events-AMPLIFY_UPDATE-493",
+    "symbol": "AMPLIFY_UPDATE",
+    "reason": "AMPLIFY_UPDATE: Historical event name is not in the current retail event registry; historical payload/native timing not modeled. Observed: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"AMPLIFY_UPDATE\"; registered=false",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"AMPLIFY_UPDATE\"; registered=false",
+      "kind": "event",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-events-CLEAVE_UPDATE-507",
+    "symbol": "CLEAVE_UPDATE",
+    "reason": "CLEAVE_UPDATE: Historical event name is not in the current retail event registry; historical payload/native timing not modeled. Observed: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"CLEAVE_UPDATE\"; registered=false",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"CLEAVE_UPDATE\"; registered=false",
+      "kind": "event",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-events-MULTISTRIKE_UPDATE-570",
+    "symbol": "MULTISTRIKE_UPDATE",
+    "reason": "MULTISTRIKE_UPDATE: Historical event name is not in the current retail event registry; historical payload/native timing not modeled. Observed: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"MULTISTRIKE_UPDATE\"; registered=false",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"MULTISTRIKE_UPDATE\"; registered=false",
+      "kind": "event",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-events-QUESTTASK_UPDATE-580",
+    "symbol": "QUESTTASK_UPDATE",
+    "reason": "QUESTTASK_UPDATE: Historical event name is not in the current retail event registry; historical payload/native timing not modeled. Observed: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"QUESTTASK_UPDATE\"; registered=false",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"QUESTTASK_UPDATE\"; registered=false",
+      "kind": "event",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-events-READINESS_UPDATE-586",
+    "symbol": "READINESS_UPDATE",
+    "reason": "READINESS_UPDATE: Historical event name is not in the current retail event registry; historical payload/native timing not modeled. Observed: pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"READINESS_UPDATE\"; registered=false",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "pcall=false; return=Frame:RegisterEvent(): Frame:RegisterEvent(): Attempt to register unknown event \"READINESS_UPDATE\"; registered=false",
+      "kind": "event",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-GameTooltip:AdvanceSecondaryCompareItem-649",
+    "symbol": "GameTooltip:AdvanceSecondaryCompareItem",
+    "reason": "GameTooltip:AdvanceSecondaryCompareItem: Historical removal conflicts with current publication; no destructive change without native/successor evidence. Observed: GameTooltip; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "GameTooltip; lookup=function",
+      "kind": "object-method",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-GameTooltip:ResetSecondaryCompareItem-650",
+    "symbol": "GameTooltip:ResetSecondaryCompareItem",
+    "reason": "GameTooltip:ResetSecondaryCompareItem: Historical removal conflicts with current publication; no destructive change without native/successor evidence. Observed: GameTooltip; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "GameTooltip; lookup=function",
+      "kind": "object-method",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-GameTooltip:SetCompareItem-651",
+    "symbol": "GameTooltip:SetCompareItem",
+    "reason": "GameTooltip:SetCompareItem: Historical removal conflicts with current publication; no destructive change without native/successor evidence. Observed: GameTooltip; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "GameTooltip; lookup=function",
+      "kind": "object-method",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-GameTooltip:SetMountBySpellID-653",
+    "symbol": "GameTooltip:SetMountBySpellID",
+    "reason": "GameTooltip:SetMountBySpellID: Historical removal conflicts with current publication; no destructive change without native/successor evidence. Observed: GameTooltip; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "GameTooltip; lookup=function",
+      "kind": "object-method",
+      "value": null
+    }
+  },
+  {
+    "source_id": "diff-wt-widgets-GameTooltip:SetToyByItemID-654",
+    "symbol": "GameTooltip:SetToyByItemID",
+    "reason": "GameTooltip:SetToyByItemID: Historical removal conflicts with current publication; no destructive change without native/successor evidence. Observed: GameTooltip; lookup=function",
+    "observed": {
+      "default": null,
+      "default_mismatch": false,
+      "detail": "GameTooltip; lookup=function",
+      "kind": "object-method",
+      "value": null
+    }
+  }
+]

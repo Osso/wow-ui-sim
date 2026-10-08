@@ -1,0 +1,802 @@
+[
+  {
+    "source_id": "source-context-001",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial/source/build context or external resource link; no runtime credit.",
+    "literal": "Patch 6.0.2 API changes",
+    "extract_line": 1
+  },
+  {
+    "source_id": "prose-undated-003",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical domain/prose statement retained verbatim; addon/file migration or source-era behavior is not inferred from current publication.",
+    "literal": "Blizzard has also posted an official thread on 6.0 changes.",
+    "extract_line": 3
+  },
+  {
+    "source_id": "source-context-005",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial heading; no runtime credit.",
+    "literal": "== New ==",
+    "extract_line": 5
+  },
+  {
+    "source_id": "prose-undated-006",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "CinematicModel publication is swept; 3D cinematic rendering is intentionally unsupported, not a modeled display contract.",
+    "literal": "*New Widget type: CinematicModel, derivative of PlayerModel",
+    "extract_line": 6
+  },
+  {
+    "source_id": "prose-undated-007",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "XML/atlas statement retained; no historical XML grammar/size/parent-field parity proof in this audit.",
+    "literal": "*New XML element type: \"keyValue\", currently only supported for Frames.",
+    "extract_line": 7
+  },
+  {
+    "source_id": "prose-undated-008",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "XML/atlas statement retained; no historical XML grammar/size/parent-field parity proof in this audit.",
+    "literal": "**Functionality appears equivalent to creating a new element in ParentKey's table.",
+    "extract_line": 8
+  },
+  {
+    "source_id": "prose-undated-009",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "XML/atlas statement retained; no historical XML grammar/size/parent-field parity proof in this audit.",
+    "literal": "*New \"atlas\" and \"useAtlasSize\" properties for textures defined in XML. Equivalent function added for texture widgets called Texture:SetAtlas. For example:",
+    "extract_line": 9
+  },
+  {
+    "source_id": "prose-undated-010",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "XML/atlas statement retained; no historical XML grammar/size/parent-field parity proof in this audit.",
+    "literal": "**Before: file=\"Interface\\PetBattles\\PetJournal\"",
+    "extract_line": 10
+  },
+  {
+    "source_id": "prose-undated-011",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "XML/atlas statement retained; no historical XML grammar/size/parent-field parity proof in this audit.",
+    "literal": "**After: atlas=\"PetJournal-BattleSlot-Locked\" useAtlasSize=\"true\"",
+    "extract_line": 11
+  },
+  {
+    "source_id": "prose-undated-012",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Timer publication swept separately; this audit does not claim native scheduling/cancellation/GC parity.",
+    "literal": "*C_Timer functions added - timers with callback functionality! See C_Timer.After, C_Timer.NewTimer, and C_Timer.NewTicker for more details.",
+    "extract_line": 12
+  },
+  {
+    "source_id": "prose-undated-013",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Timer publication swept separately; this audit does not claim native scheduling/cancellation/GC parity.",
+    "literal": "**handle = C_Timer.NewTimer(lengthInSeconds, callback)",
+    "extract_line": 13
+  },
+  {
+    "source_id": "prose-undated-014",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Timer publication swept separately; this audit does not claim native scheduling/cancellation/GC parity.",
+    "literal": "**if (handle) then handle:Cancel(); --timer complete code goes here; end",
+    "extract_line": 14
+  },
+  {
+    "source_id": "prose-undated-015",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical domain/prose statement retained verbatim; addon/file migration or source-era behavior is not inferred from current publication.",
+    "literal": "*Garrison stuff - AddOns/Blizzard_GarrisonUI, C_Garrison.*",
+    "extract_line": 15
+  },
+  {
+    "source_id": "prose-undated-016",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical domain/prose statement retained verbatim; addon/file migration or source-era behavior is not inferred from current publication.",
+    "literal": "*Objective Tracker - AddOns/Blizzard_ObjectiveTracker (quest, achievement, auto quest popup, scenario, bonus objective, ...)",
+    "extract_line": 16
+  },
+  {
+    "source_id": "prose-undated-017",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "XML/atlas statement retained; no historical XML grammar/size/parent-field parity proof in this audit.",
+    "literal": "*Group finder - FrameXML/LFGList.(lua,xml), C_LFGList.*",
+    "extract_line": 17
+  },
+  {
+    "source_id": "prose-undated-018",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical domain/prose statement retained verbatim; addon/file migration or source-era behavior is not inferred from current publication.",
+    "literal": "*Second Void Storage page",
+    "extract_line": 18
+  },
+  {
+    "source_id": "source-context-020",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial heading; no runtime credit.",
+    "literal": "== Changes ==",
+    "extract_line": 20
+  },
+  {
+    "source_id": "prose-undated-021",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical argument/tuple/boolean or event-payload contract retained; publication alone does not prove this behavior.",
+    "literal": "*1/(nil|0) changed to true/false all over the API, notably:",
+    "extract_line": 21
+  },
+  {
+    "source_id": "prose-undated-022",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical argument/tuple/boolean or event-payload contract retained; publication alone does not prove this behavior.",
+    "literal": "**CheckButton SetChecked()",
+    "extract_line": 22
+  },
+  {
+    "source_id": "prose-undated-023",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical argument/tuple/boolean or event-payload contract retained; publication alone does not prove this behavior.",
+    "literal": "**GameTooltip SetText(): last parameter (textWrap)",
+    "extract_line": 23
+  },
+  {
+    "source_id": "prose-undated-024",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical domain/prose statement retained verbatim; addon/file migration or source-era behavior is not inferred from current publication.",
+    "literal": "**GameTooltip SetMinimumWidth()",
+    "extract_line": 24
+  },
+  {
+    "source_id": "prose-undated-025",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical argument/tuple/boolean or event-payload contract retained; publication alone does not prove this behavior.",
+    "literal": "**TargetUnit() and friends",
+    "extract_line": 25
+  },
+  {
+    "source_id": "prose-undated-026",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical argument/tuple/boolean or event-payload contract retained; publication alone does not prove this behavior.",
+    "literal": "**Texture SetDesaturated()",
+    "extract_line": 26
+  },
+  {
+    "source_id": "prose-undated-027",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical argument/tuple/boolean or event-payload contract retained; publication alone does not prove this behavior.",
+    "literal": "**InCombatLockdown()",
+    "extract_line": 27
+  },
+  {
+    "source_id": "prose-undated-028",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical argument/tuple/boolean or event-payload contract retained; publication alone does not prove this behavior.",
+    "literal": "*EquipmentManager_UnpackLocation() 2 new returns after bag, tab, voidSlot",
+    "extract_line": 28
+  },
+  {
+    "source_id": "prose-undated-029",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical argument/tuple/boolean or event-payload contract retained; publication alone does not prove this behavior.",
+    "literal": "*GetGlyphInfo() new return (#8): specMatches",
+    "extract_line": 29
+  },
+  {
+    "source_id": "prose-undated-030",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical argument/tuple/boolean or event-payload contract retained; publication alone does not prove this behavior.",
+    "literal": "*GetMapContinents() now also returns the mapID : mapID1, mapName1, mapID2, mapName2, etc.",
+    "extract_line": 30
+  },
+  {
+    "source_id": "prose-undated-031",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical argument/tuple/boolean or event-payload contract retained; publication alone does not prove this behavior.",
+    "literal": "*GetMapZones() now also returns the zoneID : zoneID1, zoneName1, zoneID2, zoneName2, etc.",
+    "extract_line": 31
+  },
+  {
+    "source_id": "prose-undated-032",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical argument/tuple/boolean or event-payload contract retained; publication alone does not prove this behavior.",
+    "literal": "*GetTalentInfo() has had its arguments and return values changed:",
+    "extract_line": 32
+  },
+  {
+    "source_id": "prose-undated-033",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical argument/tuple/boolean or event-payload contract retained; publication alone does not prove this behavior.",
+    "literal": "**args: (index[, isInspect, talentGroup, inspectedUnit, classID]) -> (tier, column, talentGroup[, isInspect, inspectUnit])",
+    "extract_line": 33
+  },
+  {
+    "source_id": "prose-undated-034",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical argument/tuple/boolean or event-payload contract retained; publication alone does not prove this behavior.",
+    "literal": "**returns: name, iconTexture, tier, column, selected, available -> talentID, name, iconTexture, selected, available",
+    "extract_line": 34
+  },
+  {
+    "source_id": "prose-undated-035",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical argument/tuple/boolean or event-payload contract retained; publication alone does not prove this behavior.",
+    "literal": "* GetTalentInfoByID() is a new function that takes a talentID as its parameter, and returns the same as GetTalentInfo().",
+    "extract_line": 35
+  },
+  {
+    "source_id": "prose-undated-036",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical argument/tuple/boolean or event-payload contract retained; publication alone does not prove this behavior.",
+    "literal": "*GetTalentLink() now takes a talentID as its parameter, as returned by GetTalentInfo().",
+    "extract_line": 36
+  },
+  {
+    "source_id": "prose-undated-037",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical argument/tuple/boolean or event-payload contract retained; publication alone does not prove this behavior.",
+    "literal": "*QueryAuctionItems new return (#11): exactMatch",
+    "extract_line": 37
+  },
+  {
+    "source_id": "prose-undated-038",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical argument/tuple/boolean or event-payload contract retained; publication alone does not prove this behavior.",
+    "literal": "*GetQuestLogTitle has greatly changed returns.",
+    "extract_line": 38
+  },
+  {
+    "source_id": "prose-undated-039",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical argument/tuple/boolean or event-payload contract retained; publication alone does not prove this behavior.",
+    "literal": "**returns: title, level, suggestedGroup, questTag, isHeader, isCollapsed, isComplete, isDaily, frequency, questID, startEvent, displayQuestID, isOnMap, hasLocalPOI, isTask, isStory",
+    "extract_line": 39
+  },
+  {
+    "source_id": "prose-undated-040",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical argument/tuple/boolean or event-payload contract retained; publication alone does not prove this behavior.",
+    "literal": "*GetQuestTagInfo replacement for removed questTag return value from GetQuestLogTitle.",
+    "extract_line": 40
+  },
+  {
+    "source_id": "prose-undated-041",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical argument/tuple/boolean or event-payload contract retained; publication alone does not prove this behavior.",
+    "literal": "**returns: tagID, tagName",
+    "extract_line": 41
+  },
+  {
+    "source_id": "prose-undated-042",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical argument/tuple/boolean or event-payload contract retained; publication alone does not prove this behavior.",
+    "literal": "*GetGossipAvailableQuests has changed returns.",
+    "extract_line": 42
+  },
+  {
+    "source_id": "prose-undated-043",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical argument/tuple/boolean or event-payload contract retained; publication alone does not prove this behavior.",
+    "literal": "**returns: title, level, isTrivial, isDaily, frequency, isRepeatable, isLegendary, ...",
+    "extract_line": 43
+  },
+  {
+    "source_id": "prose-undated-044",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical argument/tuple/boolean or event-payload contract retained; publication alone does not prove this behavior.",
+    "literal": "*GetAvailableQuestInfo has changed returns.",
+    "extract_line": 44
+  },
+  {
+    "source_id": "prose-undated-045",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical argument/tuple/boolean or event-payload contract retained; publication alone does not prove this behavior.",
+    "literal": "**returns: isTrivial, isDaily, frequency, isRepeatable, isLegendary",
+    "extract_line": 45
+  },
+  {
+    "source_id": "prose-undated-046",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical argument/tuple/boolean or event-payload contract retained; publication alone does not prove this behavior.",
+    "literal": "*GetSpellInfo has removed some returns.",
+    "extract_line": 46
+  },
+  {
+    "source_id": "prose-undated-047",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical argument/tuple/boolean or event-payload contract retained; publication alone does not prove this behavior.",
+    "literal": "**returns: name, rank, icon, powerCost, isFunnel, powerType, castingTime, minRange, maxRange",
+    "extract_line": 47
+  },
+  {
+    "source_id": "prose-undated-048",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical argument/tuple/boolean or event-payload contract retained; publication alone does not prove this behavior.",
+    "literal": "*GetWeaponEnchantInfo has greatly changed returns.",
+    "extract_line": 48
+  },
+  {
+    "source_id": "prose-undated-049",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical argument/tuple/boolean or event-payload contract retained; publication alone does not prove this behavior.",
+    "literal": "**returns:  hasMainHandEnchant, mainHandExpiration, mainHandCharges, mainHandEnchantID, hasOffHandEnchant, offHandExpiration, offHandCharges, offHandEnchantId, hasThrownEnchant, thrownExpiration, thrownCharges",
+    "extract_line": 49
+  },
+  {
+    "source_id": "prose-undated-052",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical domain/prose statement retained verbatim; addon/file migration or source-era behavior is not inferred from current publication.",
+    "literal": "*A new event, LOOT_READY, signals the start of the availability of loot data for various loot-related API functions.",
+    "extract_line": 52
+  },
+  {
+    "source_id": "prose-undated-053",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical domain/prose statement retained verbatim; addon/file migration or source-era behavior is not inferred from current publication.",
+    "literal": "*COMBAT_LOG_EVENT",
+    "extract_line": 53
+  },
+  {
+    "source_id": "prose-undated-054",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical argument/tuple/boolean or event-payload contract retained; publication alone does not prove this behavior.",
+    "literal": "**SWING_DAMAGE/SPELL_DAMAGE/SPELL_PERIODIC_DAMAGE gain new parameters after crushing (isOffHand, multistrike)",
+    "extract_line": 54
+  },
+  {
+    "source_id": "prose-undated-055",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical argument/tuple/boolean or event-payload contract retained; publication alone does not prove this behavior.",
+    "literal": "**SPELL_HEAL/SPELL_PERIODIC_HEAL gains new parameter after critical (multistrike)",
+    "extract_line": 55
+  },
+  {
+    "source_id": "prose-undated-056",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical argument/tuple/boolean or event-payload contract retained; publication alone does not prove this behavior.",
+    "literal": "**SPELL_MISSED/SPELL_PERIODIC_MISSED/RANGE_MISSED/SWING_MISSED gains new parameter after isOffHand (multistrike)",
+    "extract_line": 56
+  },
+  {
+    "source_id": "prose-undated-057",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical domain/prose statement retained verbatim; addon/file migration or source-era behavior is not inferred from current publication.",
+    "literal": "*New floating combat text type: PERIODIC_HEAL_CRIT",
+    "extract_line": 57
+  },
+  {
+    "source_id": "prose-undated-058",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Source-era raid difficulty/size mapping retained; no historical raid eligibility/native transition proof.",
+    "literal": "*Instance difficulty",
+    "extract_line": 58
+  },
+  {
+    "source_id": "prose-undated-059",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Source-era raid difficulty/size mapping retained; no historical raid eligibility/native transition proof.",
+    "literal": "**difficultyID 14 (Normal flex10-30, previously \"Flex\")",
+    "extract_line": 59
+  },
+  {
+    "source_id": "prose-undated-060",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Source-era raid difficulty/size mapping retained; no historical raid eligibility/native transition proof.",
+    "literal": "**difficultyID 15 (Heroic flex10-30, new)",
+    "extract_line": 60
+  },
+  {
+    "source_id": "prose-undated-061",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Source-era raid difficulty/size mapping retained; no historical raid eligibility/native transition proof.",
+    "literal": "**difficultyID 16 (Mythic 20, new)",
+    "extract_line": 61
+  },
+  {
+    "source_id": "prose-undated-062",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Source-era raid difficulty/size mapping retained; no historical raid eligibility/native transition proof.",
+    "literal": "**difficultyID 17 (Looking For Raid flex10-30, new)",
+    "extract_line": 62
+  },
+  {
+    "source_id": "prose-undated-063",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical domain/prose statement retained verbatim; addon/file migration or source-era behavior is not inferred from current publication.",
+    "literal": "*Many legacy mount-related and pet-related functions were removed and replaced by new functions in C_MountJournal.",
+    "extract_line": 63
+  },
+  {
+    "source_id": "prose-undated-064",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical domain/prose statement retained verbatim; addon/file migration or source-era behavior is not inferred from current publication.",
+    "literal": "** Note: the legacy functions that remain, such as GetCompanionInfo, are almost completely broken as well.",
+    "extract_line": 64
+  },
+  {
+    "source_id": "prose-undated-065",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical domain/prose statement retained verbatim; addon/file migration or source-era behavior is not inferred from current publication.",
+    "literal": "*New Globally Unique Identifier format :",
+    "extract_line": 65
+  },
+  {
+    "source_id": "prose-undated-066",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical GUID format statement retained; no complete player/pet/object/vignette generator and identity round-trip parity proof.",
+    "literal": "**For players: Player-[server ID]-[player UID] (Example: \"Player-976-0002FD64\")",
+    "extract_line": 66
+  },
+  {
+    "source_id": "prose-undated-067",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical GUID format statement retained; no complete player/pet/object/vignette generator and identity round-trip parity proof.",
+    "literal": "**For battle pets: BattlePet-0-[Battle Pet UID] (Example: \"BattlePet-0-000000E0156B\")",
+    "extract_line": 67
+  },
+  {
+    "source_id": "prose-undated-068",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical GUID format statement retained; no complete player/pet/object/vignette generator and identity round-trip parity proof.",
+    "literal": "**For creatures, pets, objects, and vehicles: [Unit type]-0-[server ID]-[instance ID]-[zone UID]-[ID]-[Spawn UID] (Example: \"Creature-0-976-0-11-31146-000136DF91\")",
+    "extract_line": 68
+  },
+  {
+    "source_id": "prose-undated-069",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical GUID format statement retained; no complete player/pet/object/vignette generator and identity round-trip parity proof.",
+    "literal": "**Unit Type Names: \"Creature\", \"Pet\", \"GameObject\", and \"Vehicle\"",
+    "extract_line": 69
+  },
+  {
+    "source_id": "prose-undated-070",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical GUID format statement retained; no complete player/pet/object/vignette generator and identity round-trip parity proof.",
+    "literal": "**For vignettes: Vignette-0-[server ID]-[instance ID]-[zone UID]-0-[spawn UID] (Example: \"Vignette-0-970-1116-7-0-0017CAE465\" for rare mob Sulfurious)",
+    "extract_line": 70
+  },
+  {
+    "source_id": "prose-undated-071",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical item-bonus/link schema requires source-era DB2 and upgrade/stat/appearance evaluation; no game install or native item-bonus fixture on this host.",
+    "literal": "*Item links data: itemID:enchant:gem1:gem2:gem3:gem4:suffixID:uniqueID:level:reforgeId:upgradeId -> itemID:enchant:gem1:gem2:gem3:gem4:suffixID:uniqueID:level:upgradeId:instanceDifficultyID:numBonusIDs:bonusID1:bonusID2... Example of some bonusIDs:",
+    "extract_line": 71
+  },
+  {
+    "source_id": "prose-undated-072",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical domain/prose statement retained verbatim; addon/file migration or source-era behavior is not inferred from current publication.",
+    "literal": "**448 - Warforged, +6 item level",
+    "extract_line": 72
+  },
+  {
+    "source_id": "prose-undated-073",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical domain/prose statement retained verbatim; addon/file migration or source-era behavior is not inferred from current publication.",
+    "literal": "**449 - Heroic, +13 item level",
+    "extract_line": 73
+  },
+  {
+    "source_id": "prose-undated-074",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical domain/prose statement retained verbatim; addon/file migration or source-era behavior is not inferred from current publication.",
+    "literal": "**450 - Mythic, +26 item level",
+    "extract_line": 74
+  },
+  {
+    "source_id": "prose-undated-075",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical domain/prose statement retained verbatim; addon/file migration or source-era behavior is not inferred from current publication.",
+    "literal": "**451 - Looking For Raid, -12 item level",
+    "extract_line": 75
+  },
+  {
+    "source_id": "prose-undated-076",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical domain/prose statement retained verbatim; addon/file migration or source-era behavior is not inferred from current publication.",
+    "literal": "**15 - Epic, +20 item level",
+    "extract_line": 76
+  },
+  {
+    "source_id": "prose-undated-077",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical domain/prose statement retained verbatim; addon/file migration or source-era behavior is not inferred from current publication.",
+    "literal": "**171 - Rare, +10 item level",
+    "extract_line": 77
+  },
+  {
+    "source_id": "prose-undated-078",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical item-bonus/link schema requires source-era DB2 and upgrade/stat/appearance evaluation; no game install or native item-bonus fixture on this host.",
+    "literal": "* BonusIDs are stored in ItemBonus.db2.",
+    "extract_line": 78
+  },
+  {
+    "source_id": "prose-undated-079",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical item-bonus/link schema requires source-era DB2 and upgrade/stat/appearance evaluation; no game install or native item-bonus fixture on this host.",
+    "literal": "* BonusIDs have a massive number of uses, including but not limited to:",
+    "extract_line": 79
+  },
+  {
+    "source_id": "prose-undated-080",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical item-bonus/link schema requires source-era DB2 and upgrade/stat/appearance evaluation; no game install or native item-bonus fixture on this host.",
+    "literal": "**Random suffixes with varying stat amounts - ex. of the Fireflash: BonusIDs 19-39",
+    "extract_line": 80
+  },
+  {
+    "source_id": "prose-undated-081",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical item-bonus/link schema requires source-era DB2 and upgrade/stat/appearance evaluation; no game install or native item-bonus fixture on this host.",
+    "literal": "**Random bonus tertiary stats - BonusID 40: +Avoidance, BonusID 41: +Leech, etc",
+    "extract_line": 81
+  },
+  {
+    "source_id": "prose-undated-082",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical domain/prose statement retained verbatim; addon/file migration or source-era behavior is not inferred from current publication.",
+    "literal": "**Raid typing - see above",
+    "extract_line": 82
+  },
+  {
+    "source_id": "prose-undated-083",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical item-bonus/link schema requires source-era DB2 and upgrade/stat/appearance evaluation; no game install or native item-bonus fixture on this host.",
+    "literal": "**Dungeon typing - i.e. BonusID 518 with qualifier 17 restricts Bloodmaul Slag Mines Normal mode items to have -10 level",
+    "extract_line": 83
+  },
+  {
+    "source_id": "prose-undated-084",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical domain/prose statement retained verbatim; addon/file migration or source-era behavior is not inferred from current publication.",
+    "literal": "**Random quest upgrades - see above entries for 'Rare' and 'Epic'",
+    "extract_line": 84
+  },
+  {
+    "source_id": "prose-undated-085",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical item-bonus/link schema requires source-era DB2 and upgrade/stat/appearance evaluation; no game install or native item-bonus fixture on this host.",
+    "literal": "**Crafting upgrades - BonusID 525: Basic, BonusID 526: Expert, etc",
+    "extract_line": 85
+  },
+  {
+    "source_id": "prose-undated-086",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical item-bonus/link schema requires source-era DB2 and upgrade/stat/appearance evaluation; no game install or native item-bonus fixture on this host.",
+    "literal": "* BonusIDs can do the following 10 actions:",
+    "extract_line": 86
+  },
+  {
+    "source_id": "prose-undated-087",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical domain/prose statement retained verbatim; addon/file migration or source-era behavior is not inferred from current publication.",
+    "literal": "**1 - Adjust Itemlevel",
+    "extract_line": 87
+  },
+  {
+    "source_id": "prose-undated-088",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical domain/prose statement retained verbatim; addon/file migration or source-era behavior is not inferred from current publication.",
+    "literal": "**2 - Modify Stats",
+    "extract_line": 88
+  },
+  {
+    "source_id": "prose-undated-089",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical domain/prose statement retained verbatim; addon/file migration or source-era behavior is not inferred from current publication.",
+    "literal": "**3 - Change Item Quality",
+    "extract_line": 89
+  },
+  {
+    "source_id": "prose-undated-090",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical domain/prose statement retained verbatim; addon/file migration or source-era behavior is not inferred from current publication.",
+    "literal": "**4 - Add Item Titles",
+    "extract_line": 90
+  },
+  {
+    "source_id": "prose-undated-091",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical domain/prose statement retained verbatim; addon/file migration or source-era behavior is not inferred from current publication.",
+    "literal": "**5 - Append Words to Item Name",
+    "extract_line": 91
+  },
+  {
+    "source_id": "prose-undated-092",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical domain/prose statement retained verbatim; addon/file migration or source-era behavior is not inferred from current publication.",
+    "literal": "**6 - Add Sockets",
+    "extract_line": 92
+  },
+  {
+    "source_id": "prose-undated-093",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical item-bonus/link schema requires source-era DB2 and upgrade/stat/appearance evaluation; no game install or native item-bonus fixture on this host.",
+    "literal": "**7 - Adjust ItemAppearanceID (which controls ItemDisplayInfoID and FileDataIconID)",
+    "extract_line": 93
+  },
+  {
+    "source_id": "prose-undated-094",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical domain/prose statement retained verbatim; addon/file migration or source-era behavior is not inferred from current publication.",
+    "literal": "**8 - Adjust Equip Level",
+    "extract_line": 94
+  },
+  {
+    "source_id": "prose-undated-095",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Source itself leaves this item-bonus action unknown; no semantics invented.",
+    "literal": "**9 - Unknown",
+    "extract_line": 95
+  },
+  {
+    "source_id": "prose-undated-096",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Source itself leaves this item-bonus action unknown; no semantics invented.",
+    "literal": "**10 - Unknown",
+    "extract_line": 96
+  },
+  {
+    "source_id": "prose-undated-098",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical zero/negative-size anchor restriction conflicts with supported current layout behavior; native epoch evidence required before restricting simulator anchors.",
+    "literal": "* You can no longer anchor a frame to another frame that has negative, or zero, width or height. Previously, this was acceptable and could be used for adjusting layouts easily by changing a frame's size when it was hidden.",
+    "extract_line": 98
+  },
+  {
+    "source_id": "source-context-100",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial heading; no runtime credit.",
+    "literal": "== Removals ==",
+    "extract_line": 100
+  },
+  {
+    "source_id": "prose-undated-101",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical domain/prose statement retained verbatim; addon/file migration or source-era behavior is not inferred from current publication.",
+    "literal": "*AddOns",
+    "extract_line": 101
+  },
+  {
+    "source_id": "prose-undated-102",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical domain/prose statement retained verbatim; addon/file migration or source-era behavior is not inferred from current publication.",
+    "literal": "**Reforging",
+    "extract_line": 102
+  },
+  {
+    "source_id": "prose-undated-103",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "XML/atlas statement retained; no historical XML grammar/size/parent-field parity proof in this audit.",
+    "literal": "*FrameXML",
+    "extract_line": 103
+  },
+  {
+    "source_id": "prose-undated-104",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical domain/prose statement retained verbatim; addon/file migration or source-era behavior is not inferred from current publication.",
+    "literal": "**AnimTimerFrame.xml",
+    "extract_line": 104
+  },
+  {
+    "source_id": "prose-undated-105",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Historical domain/prose statement retained verbatim; addon/file migration or source-era behavior is not inferred from current publication.",
+    "literal": "**FlexRaidFrame.(lua,xml)",
+    "extract_line": 105
+  },
+  {
+    "source_id": "source-context-107",
+    "capabilities": [],
+    "status": "metadata-only",
+    "note": "Editorial heading; no runtime credit.",
+    "literal": "== Automated diff ==",
+    "extract_line": 107
+  },
+  {
+    "source_id": "prose-undated-108",
+    "capabilities": [],
+    "status": "audit-pending",
+    "note": "Diff is independently pinned and its four API inventories and explicit enum members are separately accounted; no transclusion expansion at runtime.",
+    "literal": "[Transcluded source: Patch 6.0.2/API changes/diff; not expanded]",
+    "extract_line": 108
+  }
+]

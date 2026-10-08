@@ -1,0 +1,2 @@
+src/wrath/compat_bootstrap.lua:84:if GetCurrentMultisampleFormat == nil then
+src/wrath/compat_bootstrap.lua:85:  function GetCurrentMultisampleFormat()

@@ -1,0 +1,100 @@
+src/c_api/c_party_info/roles_1207.rs:84:            .party_members
+src/c_api/c_party_info/roles_1207.rs:94:            .party_members
+src/c_api/c_party_info/roles_1207.rs:100:        .party_members
+src/c_api/c_party_info/roles_1207.rs:154:            .party_members
+src/c_api/c_party_info/roles_1207.rs:208:                        .party_members
+src/c_api/c_party_info/roles_1207.rs:225:        .party_members
+src/c_api/c_party_info/roles_1207.rs:231:    sim.party_members.remove(index);
+src/c_api/c_party_info/loot_method.rs:133:    if !sim.party_group_active || sim.party_members.is_empty() {
+src/c_api/c_party_info/loot_method.rs:136:    if sim.party_members.len() >= 6 {
+src/c_api/c_party_info/loot_method.rs:142:        .party_members
+src/lua_api/globals/missing_surface/friend_list.rs:212:    table_set_static(state, table, "connected", Val::Bool(friend.is_online));
+src/lua_api/globals/missing_surface/tooltip_info/unit.rs:89:    (idx < sim.party_members.len()).then_some(idx)
+src/lua_api/globals/missing_surface/tooltip_info/unit.rs:94:    sim.party_members.get(idx)
+src/lua_api/globals/missing_surface/tooltip_info/unit.rs:142:    (0..sim.party_members.len())
+src/lua_api/globals/targeting_verbs.rs:97:    st.party_members.get(idx).map(|member| {
+src/lua_api/globals/group_verbs.rs:1://! Group/party verbs that mutate `SimState.party_members` /
+src/lua_api/globals/group_verbs.rs:53:        connected: true,
+src/lua_api/globals/group_verbs.rs:77:        st.party_members.push(synthesize_party_member(name));
+src/lua_api/globals/group_verbs.rs:99:    st.party_members.clear();
+src/lua_api/globals/group_verbs.rs:127:        let before = st.party_members.len();
+src/lua_api/globals/group_verbs.rs:128:        st.party_members.retain(|m| m.name != name);
+src/lua_api/globals/group_verbs.rs:129:        before != st.party_members.len()
+src/lua_api/globals/group_verbs.rs:146:            && index < st.party_members.len()
+src/lua_api/globals/group_verbs.rs:148:            st.party_members.remove(index);
+src/lua_api/globals/group_verbs.rs:151:            let before = st.party_members.len();
+src/lua_api/globals/group_verbs.rs:152:            st.party_members.retain(|m| m.name != token);
+src/lua_api/globals/group_verbs.rs:153:            before != st.party_members.len()
+src/lua_api/globals/wowlabs.rs:149:    state.party_members.len() <= queue_capacity(state.party_playlist_entry)
+src/lua_api/globals/wowlabs.rs:234:        .party_members
+src/lua_api/globals/wowlabs.rs:258:        .party_members
+src/lua_api/globals/wowlabs.rs:378:            matchmaking.party_members = vec![
+src/lua_api/globals/wowlabs.rs:473:    let party_size = snapshot_matchmaking(state)?.party_members.len() as f64;
+src/lua_api/globals/wowlabs.rs:479:    let is_alone = snapshot_matchmaking(state)?.party_members.len() <= 1;
+src/lua_api/globals/wowlabs.rs:497:    let is_party_full = snapshot_matchmaking(state)?.party_members.len() >= 3;
+src/lua_api/globals/wowlabs.rs:504:        .party_members
+src/lua_api/globals/wowlabs.rs:516:        .party_members
+src/lua_api/globals/wowlabs.rs:538:        matchmaking.party_members = vec![local_member(&local_name, true)];
+src/lua_api/globals/wowlabs.rs:553:            matchmaking.party_members = vec![local_member(&local_name, true)];
+src/lua_api/globals/wowlabs.rs:557:            .party_members
+src/lua_api/globals/wowlabs.rs:561:            matchmaking.party_members.remove(index);
+src/lua_api/globals/wowlabs.rs:563:                .party_members
+src/lua_api/globals/wowlabs.rs:585:    Ok(snapshot_matchmaking(state)?.party_members.len() >= 3)
+src/lua_api/globals/wowlabs.rs:606:        let fits_party = matchmaking.party_members.len() <= queue_capacity(playlist_entry);
+src/lua_api/globals/wowlabs.rs:624:        .party_members
+src/lua_api/globals/wowlabs.rs:642:        .party_members
+src/lua_api/globals/unit_stats.rs:180:            .and_then(|index| sim.party_members.get(index))
+src/lua_api/globals/real/instanced_identity.rs:37:            .party_members
+src/lua_api/globals/unit_probes.rs:7://! exists, party members are modelled in `SimState.party_members`, and the
+src/lua_api/globals/unit_probes.rs:80:        return sim.party_members.get(idx).is_some();
+src/lua_api/globals/inventory_probes.rs:127:            .is_some_and(|idx| st.party_group_active && idx < st.party_members.len()),
+src/lua_api/globals/movement_probes.rs:5://! - `IsPlayerMoving()` — `player.movement.moving`
+src/lua_api/globals/movement_probes.rs:92:    LuaApiMut::register_function(lua, "IsPlayerMoving", is_player_moving)?;
+src/lua_api/globals/group_queries.rs:56:    set_global(state, "GroupHasOfflineMember", group_has_offline_member);
+src/lua_api/globals/group_queries.rs:310:    let roster_count = st.party_members.len() + 1;
+src/lua_api/globals/group_queries.rs:317:        st.party_members.get(index - 2).cloned()
+src/lua_api/globals/group_queries.rs:325:        st.party_group_active && st.party_members.iter().any(|member| !member.connected)
+src/lua_api/globals/group_queries.rs:336:        connected: true,
+src/lua_api/globals/group_queries.rs:452:        st.party_members.len()
+src/lua_api/globals/group_queries.rs:501:                st.party_group_active && idx < st.party_members.len()
+src/lua_api/globals/group_queries.rs:507:                        .is_some_and(|n| n > 0 && n - 1 < st.party_members.len())
+src/lua_api/globals/group_queries.rs:658:        if idx < st.party_members.len() {
+src/lua_api/globals/group_queries.rs:659:            st.party_members.get(idx)
+src/lua_api/globals/group_queries.rs:667:            .and_then(|idx| st.party_members.get(idx))
+src/lua_api/globals/group_queries_relationships.rs:33:        if !st.party_group_active || st.party_members.len() < 6 {
+src/lua_api/globals/group_queries_relationships.rs:245:    let active = st.party_group_active && !st.party_members.is_empty();
+src/lua_api/globals/group_queries_relationships.rs:310:        st.party_members.len() >= 6
+src/lua_api/globals/group_queries_relationships.rs:325:        if !st.party_group_active || st.party_members.is_empty() {
+src/lua_api/globals/group_queries_relationships.rs:340:    let party_len = st.party_members.len();
+src/lua_api/globals/group_queries_relationships.rs:389:    let connected = {
+src/lua_api/globals/group_queries_relationships.rs:396:                visible_party_member(&st, other).is_some_and(|member| member.connected)
+src/lua_api/globals/group_queries_relationships.rs:401:    state.push(Val::Bool(connected));
+src/lua_api/globals/unit_misc.rs:35:                sim.party_members
+src/lua_api/globals/unit_misc.rs:282:    sim.party_members.iter().enumerate().find_map(|(idx, _)| {
+src/lua_api/globals/security/cmd_option.rs:257:        return sim.party_members.get(idx);
+src/lua_api/globals/security/cmd_option.rs:262:        .and_then(|idx| sim.party_members.get(idx))
+src/lua_api/globals/utility_system_spell/mod.rs:398:/// BNConnected() — always true (sim pretends connected).
+src/lua_api/globals/utility_system_spell/spell_api.rs:37:            .party_members
+src/lua_api/globals/admin_party_target_helpers.rs:63:        connected: true,
+src/lua_api/globals/admin_party_target_helpers.rs:194:        let size_changed = st.party_members.len() != size;
+src/lua_api/globals/admin_party_target_helpers.rs:195:        while st.party_members.len() < size {
+src/lua_api/globals/admin_party_target_helpers.rs:196:            st.party_members.push(default_party_member());
+src/lua_api/globals/admin_party_target_helpers.rs:198:        st.party_members.truncate(size);
+src/lua_api/globals/admin_party_target_helpers.rs:221:            (idx < st.party_members.len()).then_some(Some(idx))
+src/lua_api/globals/admin_party_target_helpers.rs:249:        if let Some(member) = st.party_members.get_mut((idx - 1) as usize) {
+src/lua_api/globals/admin_party_target_helpers.rs:270:    let connected = bool::from_stack(state, 2)?;
+src/lua_api/globals/admin_party_target_helpers.rs:279:        let Some(member) = st.party_members.get_mut((index - 1) as usize) else {
+src/lua_api/globals/admin_party_target_helpers.rs:282:        if member.connected == connected {
+src/lua_api/globals/admin_party_target_helpers.rs:285:        member.connected = connected;
+src/lua_api/globals/admin_party_target_helpers.rs:291:        &[unit_target, Val::Bool(connected)],
+src/lua_api/globals/admin_party_target_helpers.rs:301:    if let Some(member) = st.party_members.get_mut((idx - 1) as usize) {
+src/lua_api/globals/admin_party_target_helpers.rs:311:    if let Some(member) = st.party_members.get_mut((idx - 1) as usize) {
+src/lua_api/globals/admin_party_target_helpers.rs:320:    if let Some(member) = st.party_members.get_mut((idx - 1) as usize) {
+src/lua_api/globals/admin_api/units.rs:360:            let changed = state.party_members.len() != size;
+src/lua_api/globals/admin_api/units.rs:382:    while state.party_members.len() < size {
+src/lua_api/globals/admin_api/units.rs:383:        state.party_members.push(default_party_member());
+src/lua_api/globals/admin_api/units.rs:385:    state.party_members.truncate(size);
+src/lua_api/globals/admin_api/units.rs:392:        connected: true,
+src/lua_api/globals/admin_api/units.rs:409:    state.party_members.get_mut((idx - 1) as usize)
+src/lua_api/globals/auras.rs:304:        if let Some(member) = sim.party_members.get(idx) {
+src/lua_api/state/sim_state.rs:334:    pub party_members: Vec<PartyMember>,

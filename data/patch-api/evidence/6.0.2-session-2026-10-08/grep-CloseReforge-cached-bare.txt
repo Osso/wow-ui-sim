@@ -1,0 +1,2 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ReforgingUI/Classic/Blizzard_ReforgingUI.lua:11:		C_Reforge.CloseReforge();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ReforgingUI/Classic/Blizzard_ReforgingUI.lua:44:	C_Reforge.CloseReforge();

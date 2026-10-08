@@ -1,0 +1,4 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_BonusObjectiveTracker.lua:97:		local tblBonusSteps = C_Scenario.GetBonusSteps();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_BonusObjectiveTracker.lua:109:						local questID = C_Scenario.GetBonusStepRewardQuestID(bonusStepIndex);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_BonusObjectiveTracker.lua:238:		local tblBonusSteps = C_Scenario.GetBonusSteps();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ObjectiveTracker/Blizzard_BonusObjectiveTracker.lua:635:		questID = C_Scenario.GetBonusStepRewardQuestID(-self.id);

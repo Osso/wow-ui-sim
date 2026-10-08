@@ -1,0 +1,19 @@
+{
+  "command": [
+    "timeout",
+    "90",
+    "/home/osso/.cache/wow-ui-sim-targets/p602-page/debug/wow-sim",
+    "--no-saved-vars",
+    "lua-errors"
+  ],
+  "revision": "c0f58dad85ae20d75713136e5d80bd15fa2a6e53",
+  "scope": "p602-branch-startup",
+  "cwd": ".",
+  "target": "dedicated p602-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p602-branch-startup.txt",
+  "log_sha256": "6dbb013456c6def235727dbc34fd63b6d4408e63386a6e914335592d7a947932",
+  "seconds": 7.595938409001974,
+  "invalidated": false
+}

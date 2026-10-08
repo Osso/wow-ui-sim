@@ -1,0 +1,1 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Game/Cata/EventRouting.lua:6:	["FORGE_MASTER_OPENED"] = function(...) GameEvent.HandleForgeMasterOpened(...) end,

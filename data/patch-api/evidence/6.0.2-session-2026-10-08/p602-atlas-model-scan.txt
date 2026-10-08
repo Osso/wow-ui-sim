@@ -1,0 +1,112 @@
+src/c_api/c_encounter_timeline/visuals.rs:101:        call_method(state, texture, "SetAtlas", Val::Str(value))?;
+src/lua_api/frame/methods/widgets/texture/atlas.rs:11:pub(super) fn set_atlas(state: &mut LuaState) -> LuaResult<u32> {
+src/lua_api/frame/methods/widgets/texture/atlas.rs:15:        return set_atlas_usage_error();
+src/lua_api/frame/methods/widgets/texture/atlas.rs:24:        _ => return set_atlas_usage_error(),
+src/lua_api/frame/methods/widgets/texture/atlas.rs:50:fn set_atlas_usage_error() -> LuaResult<u32> {
+src/lua_api/frame/methods/widgets/texture/atlas.rs:52:        "SetAtlas(): Usage: (\"atlasName\"[, useAtlasSize, filterMode, resetTexCoords, \
+src/lua_api/frame/methods/widgets/texture/mod.rs:33:    ("SetAtlas", atlas::set_atlas),
+src/lua_api/hot_literals.rs:284:    b"SetAtlas",
+src/lua_api/state_render.rs:311:    /// dependents. Called by SetWidth/SetHeight/SetSize/SetScale/SetAtlas so
+src/lua_api/workarounds/temporary/container_portrait_texture.rs:26:        if atlas and texture.SetAtlas then
+src/lua_api/workarounds/temporary/container_portrait_texture.rs:27:          texture:SetAtlas(atlas)
+src/lua_api/workarounds/temporary/chat_voice_button_surface.rs:50:            if type(icon.SetAtlas) == "function" then
+src/lua_api/workarounds/temporary/chat_voice_button_surface.rs:51:                icon:SetAtlas("chatframe-button-icon-voicechat")
+src/lua_api/workarounds/temporary/chat_voice_button_surface.rs:142:                SetAtlas = function(self, atlas)
+src/lua_api/globals/template/elements/texture/codegen.rs:166:            "            {}:SetAtlas(\"{}\", {})\n",
+src/lua_api/globals/template/elements/texture/codegen.rs:353:                     f.{parent_key}:SetAtlas(f.{kv_key}, true) end\n"
+src/lua_api/state/support_types.rs:333:/// `Texture:SetAtlas` for the overlay frame.
+src/loader/button.rs:17:            "do\n    local tex = {}:{}()\n    if tex then tex:SetAtlas(\"{}\") end\nend\n",
+src/loader/xml_frame_extras.rs:333:            "            {var_name}:SetAtlas(\"{}\")\n",
+src/loader/xml_texture.rs:29:        tex:SetAtlas("{}", {})
+src/widget/frame.rs:272:    /// Atlas name (if set via SetAtlas).
+src/widget/frame.rs:276:    /// Nine-slice atlas kit (detected from SetAtlas when name is a kit prefix).
+tests/set_atlas_arguments.rs:4:fn test_set_atlas_argument_validation_matches_retail() {
+tests/set_atlas_arguments.rs:18:            local noArgOk, noArgErr = pcall(function() tex:SetAtlas() end)
+tests/set_atlas_arguments.rs:19:            local nilOk = pcall(function() tex:SetAtlas(nil) end)
+tests/set_atlas_arguments.rs:20:            local falseOk, falseErr = pcall(function() tex:SetAtlas(false) end)
+tests/set_atlas_arguments.rs:21:            local zeroOk = pcall(function() tex:SetAtlas(0) end)
+tests/xml_templates/three_slice.rs:70:        self.Left:SetAtlas(self.atlasName .. "-Left", true)
+tests/xml_templates/three_slice.rs:71:        self.Center:SetAtlas("_" .. self.atlasName .. "-Center")
+tests/xml_templates/three_slice.rs:72:        self.Right:SetAtlas(self.atlasName .. "-Right", true)
+tests/methods_texture/masks_and_misc.rs:186:// SetAtlas with useAtlasSize
+tests/methods_texture/masks_and_misc.rs:190:fn test_set_atlas_use_atlas_size() {
+tests/methods_texture/masks_and_misc.rs:193:    env.exec(&format!(r#"{tex}:SetAtlas("checkbox-minimal", true)"#))
+tests/blizzard_zone_ability_loads.rs:529:             OVERLAY-layer Texture that swaps atlas via SetAtlas (textureKit-driven \
+tests/frame_creation_checkbutton.rs:187:        tex:SetAtlas("checkbox-minimal")
+tests/frame_creation_checkbutton.rs:200:        "CheckButton's normal_texture should be set via SetAtlas propagation, got None"
+tests/frame_creation_checkbutton.rs:215:        "NormalTexture child should have texture set via SetAtlas"
+tests/wowforever_atlas.rs:23:            texture:SetAtlas(alias, true)
+tests/wowforever_atlas.rs:25:            texture:SetAtlas(explicit, true)
+tests/widget_methods_colorselect.rs:733:            tex:SetAtlas("UI-HUD-UnitFrame-Party-PortraitOn-Bar-Mana")
+tests/widget_methods_colorselect.rs:759:            texture:SetAtlas("UI-HUD-UnitFrame-Party-PortraitOn-Bar-Mana")
+tests/hero_talents.rs:188:fn test_set_atlas_numeric_element_id() {
+tests/hero_talents.rs:190:    // SetAtlas should accept numeric element IDs (e.g. iconElementID from subtree info)
+tests/hero_talents.rs:196:            t:SetAtlas(26680)
+tests/hero_talents.rs:203:        "SetAtlas should resolve numeric element ID to atlas name"
+tests/blizzard_ui/blizzard_animadiversionui/behavior_data_provider_connects_active_pins_to_origin.rs:59:        SetAtlas = function()
+tests/blizzard_ui/blizzard_adventuremap/behavior_quest_dialog_refresh_details_branches_on_widgets_and_rewards.rs:45:        SetAtlas = function(self, atlas)
+tests/blizzard_ui/blizzard_adventuremap/behavior_quest_choice_refresh_acquires_pin_per_valid_choice.rs:46:                            SetAtlas = function(_, atlas) pin.iconAtlas = atlas end,
+tests/blizzard_ui/blizzard_adventuremap/behavior_quest_choice_refresh_acquires_pin_per_valid_choice.rs:50:                            SetAtlas = function() end,
+tests/methods_texture.rs:4://! SetColorTexture, SetAtlas, GetAtlas, SetBlendMode, GetBlendMode,
+tests/methods_texture.rs:170:        {tex}:SetAtlas("checkbox-minimal")
+tests/methods_texture.rs:199:        {tex}:SetAtlas("checkbox-minimal")
+tests/methods_texture.rs:618:// SetAtlas / GetAtlas
+tests/methods_texture.rs:622:fn test_set_atlas_known() {
+tests/methods_texture.rs:625:    env.exec(&format!(r#"{tex}:SetAtlas("checkbox-minimal")"#))
+tests/methods_texture.rs:647:fn test_set_atlas_tile_slice_uses_direct_atlas_entry() {
+tests/methods_texture.rs:650:    env.exec(&format!(r#"{tex}:SetAtlas("questlog-frame")"#))
+tests/methods_texture.rs:681:fn test_set_atlas_applies_atlas_tiling_flags() {
+tests/methods_texture.rs:685:        r#"{tex}:SetAtlas("!minimal-scrollbar-track-middle")"#
+tests/methods_texture.rs:700:fn test_set_atlas_clears_previous_atlas_tiling_flags() {
+tests/methods_texture.rs:705:        {tex}:SetAtlas("!minimal-scrollbar-track-middle")
+tests/methods_texture.rs:706:        {tex}:SetAtlas("checkbox-minimal")
+tests/methods_texture.rs:722:fn test_set_atlas_uses_render_preferred_2x_texture_path() {
+tests/methods_texture.rs:725:    env.exec(&format!(r#"{tex}:SetAtlas("questlog-icon-ticksquare")"#))
+tests/methods_texture.rs:748:fn test_set_atlas_unknown() {
+tests/methods_texture.rs:752:        r#"{tex}:SetAtlas("nonexistent-atlas-name-12345")"#
+tests/methods_texture.rs:783:    env.exec(&format!(r#"{tex}:SetAtlas("checkbox-minimal")"#))
+tests/methods_texture.rs:790:// SetAtlas - button parent propagation
+tests/methods_texture.rs:794:fn test_set_atlas_propagates_to_button_normal_texture() {
+tests/methods_texture.rs:802:        normalTex:SetAtlas("checkbox-minimal")
+tests/methods_texture.rs:812:        "SetAtlas on NormalTexture child should propagate to parent button"
+tests/methods_texture.rs:816:        "SetAtlas on NormalTexture child should set parent's normal_tex_coords"
+tests/xml_animation_group_onload.rs:261:        CustomTextureButton.CustomArt:SetAtlas("checkbox-minimal")
+tests/xml_animation_group_onload.rs:262:        assert(not CustomTextureButton.CustomArt:IsShown(), "custom button child shown by SetAtlas")
+tests/blizzard_poi_button_loads.rs:350:             nudging via PixelUtil.SetPoint, UpdateInProgress / SetTextureSize / SetAtlas \
+tests/texture_atlas_regressions.rs:7://! Regression 2: `SetAtlas` on child textures with standard parentKeys
+tests/texture_atlas_regressions.rs:170:// Regression 2: SetAtlas propagates to parent button slots
+tests/texture_atlas_regressions.rs:173:/// Child texture with parentKey "NormalTexture" calling SetAtlas should
+tests/texture_atlas_regressions.rs:176:fn set_atlas_propagates_to_parent_button_normal_texture() {
+tests/texture_atlas_regressions.rs:184:        tex:SetAtlas("checkbox-minimal")
+tests/texture_atlas_regressions.rs:194:        "SetAtlas on NormalTexture child should propagate to parent.normal_texture"
+tests/texture_atlas_regressions.rs:198:        "SetAtlas on NormalTexture child should populate parent.normal_tex_coords"
+tests/texture_atlas_regressions.rs:203:fn empty_set_atlas_clears_texture_instead_of_using_empty_atlas_db_entry() {
+tests/texture_atlas_regressions.rs:209:        tex:SetAtlas("")
+tests/texture_atlas_regressions.rs:222:        "SetAtlas(\"\") should clear texture path"
+tests/texture_atlas_regressions.rs:224:    assert_eq!(tex.atlas, None, "SetAtlas(\"\") should clear atlas name");
+tests/texture_atlas_regressions.rs:228:fn empty_set_atlas_clears_parent_button_slot_texture() {
+tests/texture_atlas_regressions.rs:236:        tex:SetAtlas("checkbox-minimal")
+tests/texture_atlas_regressions.rs:237:        tex:SetAtlas("")
+tests/texture_atlas_regressions.rs:250:        "SetAtlas(\"\") on NormalTexture child should clear parent normal_texture"
+tests/texture_atlas_regressions.rs:254:        "SetAtlas(\"\") on NormalTexture child should clear parent normal_tex_coords"
+tests/texture_atlas_regressions.rs:258:/// Child texture with parentKey "PushedTexture" calling SetAtlas should
+tests/texture_atlas_regressions.rs:261:fn set_atlas_propagates_to_parent_button_pushed_texture() {
+tests/texture_atlas_regressions.rs:269:        tex:SetAtlas("checkbox-minimal")
+tests/texture_atlas_regressions.rs:279:        "SetAtlas on PushedTexture child should propagate to parent.pushed_texture"
+tests/texture_atlas_regressions.rs:283:        "SetAtlas on PushedTexture child should populate parent.pushed_tex_coords"
+tests/texture_atlas_regressions.rs:287:/// Child texture with parentKey "HighlightTexture" calling SetAtlas should
+tests/texture_atlas_regressions.rs:290:fn set_atlas_propagates_to_parent_button_highlight_texture() {
+tests/texture_atlas_regressions.rs:298:        tex:SetAtlas("checkbox-minimal")
+tests/texture_atlas_regressions.rs:308:        "SetAtlas on HighlightTexture child should propagate to parent.highlight_texture"
+tests/texture_atlas_regressions.rs:312:        "SetAtlas on HighlightTexture child should populate parent.highlight_tex_coords"
+tests/texture_atlas_regressions.rs:316:/// Child texture with parentKey "DisabledTexture" calling SetAtlas should
+tests/texture_atlas_regressions.rs:319:fn set_atlas_propagates_to_parent_button_disabled_texture() {
+tests/texture_atlas_regressions.rs:327:        tex:SetAtlas("checkbox-minimal")
+tests/texture_atlas_regressions.rs:337:        "SetAtlas on DisabledTexture child should propagate to parent.disabled_texture"
+tests/texture_atlas_regressions.rs:341:        "SetAtlas on DisabledTexture child should populate parent.disabled_tex_coords"
+tests/texture_atlas_regressions.rs:347:fn set_atlas_on_custom_parent_key_does_not_propagate() {
+tests/texture_atlas_regressions.rs:355:        tex:SetAtlas("checkbox-minimal")
+tests/texture_atlas_regressions.rs:365:        "custom parentKey SetAtlas must NOT touch parent.normal_texture"
+tests/texture_atlas_regressions.rs:369:        "custom parentKey SetAtlas must NOT touch parent.pushed_texture"
+tests/texture_atlas_regressions.rs:373:        "custom parentKey SetAtlas must NOT touch parent.highlight_texture"
+tests/texture_atlas_regressions.rs:377:        "custom parentKey SetAtlas must NOT touch parent.disabled_texture"

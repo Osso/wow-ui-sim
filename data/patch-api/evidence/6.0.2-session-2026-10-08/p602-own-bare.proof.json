@@ -1,0 +1,20 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "--",
+    "patch_6_0_2"
+  ],
+  "revision": "c0f58dad85ae20d75713136e5d80bd15fa2a6e53",
+  "scope": "p602-own-bare",
+  "cwd": ".",
+  "target": "dedicated p602-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p602-own-bare.txt",
+  "log_sha256": "aa7d696df98d669d52e98b8c9e897210f283bdf22cfd4ac4058bddd0fcb9d788",
+  "seconds": 85.65511845600122,
+  "invalidated": false
+}

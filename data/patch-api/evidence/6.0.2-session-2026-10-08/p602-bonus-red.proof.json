@@ -1,0 +1,20 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_6_0_2_cached_bonus_step_queries"
+  ],
+  "revision": "b98890db4f4e1352d7d7c62f3df856a78770147f",
+  "scope": "p602-bonus-red",
+  "cwd": ".",
+  "target": "dedicated p602-page target (external to repository)",
+  "environment": {},
+  "exit": 1,
+  "log": "p602-bonus-red.txt",
+  "log_sha256": "a64aaf710e0fd6a84fb70b57cf25ad012c232bcb71d1ccafe3186647a67ec0f7",
+  "seconds": 69.11061533400061,
+  "invalidated": false
+}

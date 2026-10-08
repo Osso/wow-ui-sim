@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/home/osso/.cache/wow-ui-sim-targets/p602-page/debug/deps/prefork_full_ui-21dd5c807fe7a7b6",
+    "patch_6_0_2_publication_sweep"
+  ],
+  "revision": "c0f58dad85ae20d75713136e5d80bd15fa2a6e53",
+  "scope": "p602-own-results",
+  "cwd": ".",
+  "target": "dedicated p602-page target (external to repository)",
+  "environment": {
+    "P602_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p602-page/data/patch-api/evidence/6.0.2-session-2026-10-08/patch_6_0_2_publication_sweep-results.json"
+  },
+  "exit": 0,
+  "log": "p602-own-results.txt",
+  "log_sha256": "f17870e2ad129d5ab35bf4036cf1cccff7cd1e9ac89e7eaf4a7509c73d156452",
+  "seconds": 8.381476745998953,
+  "invalidated": false
+}

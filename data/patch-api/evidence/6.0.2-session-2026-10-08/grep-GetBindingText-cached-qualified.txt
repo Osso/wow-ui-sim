@@ -1,0 +1,30 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MainMenuBarBagButtons/Mainline/MainMenuBarBagButtons.lua:108:				bindingKey = GetBindingText(bindingKey);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MainMenuBarBagButtons/Mainline/MainMenuBarBagButtons.lua:250:			keyBinding = GetBindingText(keyBinding);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_HUDInventoryTemplates/Blizzard_HUDInventoryButton.lua:111:		local text = GetBindingText(key, 0);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Bindings_Mists.xml:1389:			ActionStatus_DisplayMessage(format(UI_HIDDEN, GetBindingText(GetBindingKey("TOGGLEUI"))))
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Mainline/TutorialFrame.lua:568:			keyString:SetText( GetBindingText(GetBindingKey(keyData.command)) );
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/CustomBindingManager.lua:56:	local text = GetBindingText(CreateKeyChordStringFromTable(keys));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/CustomBindingManager.lua:100:--[[public]] function CustomBindingManager:GetBindingText(customBindingType)
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/CustomBindingManager.lua:108:		return GetConvertedBindingText(GetBindingText(table.concat(keys, "-")));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_NewPlayerExperience/Blizzard_TutorialKeyboardMouseFrame.lua:114:				bindingText = GetBindingText(key, 1);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_MicroMenu/Classic/MainMenuBarMicroButtons.lua:43:		return text.." "..NORMAL_FONT_COLOR_CODE.."("..GetBindingText(GetBindingKey(action))..")"..FONT_COLOR_CODE_CLOSE;
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Settings_Shared/Blizzard_SettingsPanel.lua:966:	self:SetOutputText(SETTINGS_BIND_KEY_TO_COMMAND_OR_CANCEL:format(GetBindingName(action), GetBindingText("ESCAPE")));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Settings_Shared/Blizzard_Settings.lua:281:			local bindingText = NORMAL_FONT_COLOR:WrapTextInColorCode(GetBindingText(bindingKey));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Settings_Shared/Blizzard_Keybindings.lua:419:			Settings.InitTooltip(KEY_BINDING_NAME_AND_KEY:format(bindingName, GetBindingText(key)), KEY_BINDING_TOOLTIP);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Settings_Shared/Blizzard_Keybindings.lua:519:	initializer.GetBindingText = function(self, bindingIndex, actionIndex)
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Settings_Shared/Blizzard_Keybindings.lua:522:			return GetBindingText(binding1);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Settings_Shared/Blizzard_Keybindings.lua:524:			return GetBindingText(binding2);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Settings_Shared/Blizzard_Keybindings.lua:536:			local bindingText = self:GetBindingText(bindingIndex, actionIndex):upper();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/BindingUtil.lua:154:		key = GetBindingText(key);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/BindingUtil.lua:219:		bindingText = CustomBindingManager:GetBindingText(button:GetCustomBindingType());
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_SharedXML/BindingUtil.lua:221:		bindingText = GetBindingText(binding);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ActionBar/WoWLabs/KeybindReminder.lua:55:	local bindingText = GetBindingText(key, 1);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ActionBar/Shared/PetActionBar.lua:307:		local bindingText = GetBindingText(GetBindingKey("BONUSACTIONBUTTON"..self:GetID()));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ActionBar/Shared/PetActionBar.lua:360:	local binding = GetBindingText(GetBindingKey("BONUSACTIONBUTTON"..self:GetID()), true);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ActionBar/Shared/ActionButton.lua:491:	local text = GetBindingText(key, 1);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Tutorials/Blizzard_Tutorials_Frame_Tutorials.lua:15:		bindingText = GetBindingText(binding1);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Tutorials/Blizzard_Tutorials_Frame_Tutorials.lua:17:		bindingText = GetBindingText(binding2);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Channels/VoiceChatPrompt.lua:53:			return VOICE_CHAT_NOTIFICATION_COMMS_MODE_PTT:format(GetBindingText(CreateKeyChordStringFromTable(bindingKeys)));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_HousingTemplates/Blizzard_HousingActionButton.lua:149:		local bindingKey = GetBindingText(GetBindingKey(self.keybindName));
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_HousingTemplates/Blizzard_HousingActionButton.lua:153:		bindingKeyAbbr = GetBindingText(GetBindingKey(self.keybindName), abbreviated);
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_HousingTemplates/Blizzard_HousingActionButton.lua:156:		local altBindingKey = GetBindingText(GetBindingKey(self.altKeybindName));

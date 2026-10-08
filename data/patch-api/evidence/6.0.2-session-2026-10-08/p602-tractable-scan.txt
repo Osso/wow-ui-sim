@@ -1,0 +1,6 @@
+src/lua_api/state_types/collections.rs:576:/// Backs `C_LFGList.GetApplications` and `GetApplicationInfo`. Created by
+src/lua_api/globals/lfg_list.rs:377:/// `GetApplications()` → array of `searchResultID` for every pending
+src/lua_api/globals/lfg_list.rs:429:/// `GetApplicationInfo(searchResultID)` →
+src/lua_api/globals/lfg_list.rs:712:            ("GetApplications", get_applications),
+src/lua_api/globals/lfg_list.rs:713:            ("GetApplicationInfo", get_application_info),
+src/loader/tests/wow_api_globals/startup_globals.rs:1252:                type(C_LFGList.GetApplications),

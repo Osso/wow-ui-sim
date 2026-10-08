@@ -1,0 +1,16 @@
+src/lua_api/state_types/mythic_plus_scenario.rs:116:    /// Drives `C_ScenarioInfo.GetScenarioBonusStepRewardQuestID`.
+src/lua_api/state_types/mythic_plus_scenario.rs:117:    pub bonus_reward_quest_id: Option<i32>,
+src/lua_api/globals/missing_surface/scenario_info.rs:9://! - `GetScenarioBonusStepRewardQuestID(stepID)` — returns the
+src/lua_api/globals/missing_surface/scenario_info.rs:27:        "GetScenarioBonusStepRewardQuestID",
+src/lua_api/globals/missing_surface/scenario_info.rs:93:    if let Some(quest_id) = step.bonus_reward_quest_id {
+src/lua_api/globals/missing_surface/scenario_info.rs:108:        .and_then(|s| s.bonus_reward_quest_id);
+tests/c_scenario_info_probes.rs:36:        .eval("return C_ScenarioInfo.GetScenarioBonusStepRewardQuestID(1)")
+tests/c_scenario_info_probes.rs:108:                bonus_reward_quest_id: None,
+tests/c_scenario_info_probes.rs:149:                    bonus_reward_quest_id: None,
+tests/c_scenario_info_probes.rs:158:                    bonus_reward_quest_id: None,
+tests/c_scenario_info_probes.rs:193:                bonus_reward_quest_id: None,
+tests/c_scenario_info_probes.rs:198:        .eval("return C_ScenarioInfo.GetScenarioBonusStepRewardQuestID(1)")
+tests/c_scenario_info_probes.rs:228:                    bonus_reward_quest_id: None,
+tests/c_scenario_info_probes.rs:237:                    bonus_reward_quest_id: Some(99999),
+tests/c_scenario_info_probes.rs:243:        .eval("return C_ScenarioInfo.GetScenarioBonusStepRewardQuestID(2)")
+tests/c_scenario_info_probes.rs:288:                bonus_reward_quest_id: Some(12345),

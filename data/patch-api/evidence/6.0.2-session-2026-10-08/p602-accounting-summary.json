@@ -1,0 +1,13 @@
+{
+  "inventory_rows": 657,
+  "inventory_gaps": 275,
+  "inventory_ok": 382,
+  "prose_rows": 100,
+  "enum_members": 79,
+  "ledger_rows": 854,
+  "statuses": {
+    "bounded-coverage": 382,
+    "audit-pending": 449,
+    "metadata-only": 23
+  }
+}

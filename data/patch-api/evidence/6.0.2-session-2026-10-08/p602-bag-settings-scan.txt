@@ -1,0 +1,12 @@
+src/c_api/item_spell/c_container.rs:70:                "GetBackpackAutosortDisabled",
+src/lua_api/globals/stubs/global_stubs.rs:67:    "SetInsertItemsLeftToRight",
+tests/c_item_api/c_container.rs:226:            local autosortInitially = C_Container.GetBackpackAutosortDisabled()
+tests/c_item_api/c_container.rs:230:            local autosortAfterSet = C_Container.GetBackpackAutosortDisabled()
+tests/c_item_api/c_container.rs:234:            local autosortAfterBothSet = C_Container.GetBackpackAutosortDisabled()
+tests/c_item_api/c_container.rs:245:                   C_Container.GetBackpackAutosortDisabled(),
+tests/data/patch_10_0_2_sweep_known_gaps.json:10:  "wt-global-api-C_Container.GetInsertItemsLeftToRight-138",
+tests/data/patch_10_0_2_sweep_known_gaps.json:12:  "wt-global-api-C_Container.GetSortBagsRightToLeft-141",
+tests/data/patch_10_0_2_sweep_known_gaps.json:14:  "wt-global-api-C_Container.SetBackpackAutosortDisabled-146",
+tests/data/patch_10_0_2_sweep_known_gaps.json:16:  "wt-global-api-C_Container.SetInsertItemsLeftToRight-149",
+tests/data/patch_10_0_2_sweep_known_gaps.json:18:  "wt-global-api-C_Container.SetSortBagsRightToLeft-151",
+tests/data/patch_10_0_2_sweep_known_gaps.json:109:  "wt-global-api-SetInsertItemsLeftToRight-374",

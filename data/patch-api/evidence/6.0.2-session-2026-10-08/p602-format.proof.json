@@ -1,0 +1,17 @@
+{
+  "command": [
+    "cargo",
+    "fmt",
+    "--check"
+  ],
+  "revision": "c0f58dad85ae20d75713136e5d80bd15fa2a6e53",
+  "scope": "p602-format",
+  "cwd": ".",
+  "target": "dedicated p602-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p602-format.txt",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "seconds": 14.118467469997995,
+  "invalidated": false
+}

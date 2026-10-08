@@ -1,0 +1,30 @@
+src/c_api/c_stable_info/forever.rs:22:        // Explicit empty, fully-unlocked scenario; capacity alone does not imply ownership.
+src/c_api/patch_retired_members.rs:350:    ("C_Scenario", &["GetCriteriaInfo", "GetCriteriaInfoByStep"]),
+src/c_api/c_scenario_info.rs:42:/// Returns nothing outside a scenario or when it has no theme color.
+src/c_api/c_scenario_info.rs:47:        sim.scenario
+src/c_api/c_scenario_info.rs:49:            .then_some(sim.scenario.display_theme_color)
+src/c_api/c_scenario_info.rs:64:/// Nil unless inside a tiered entrance scenario.
+src/c_api/c_scenario_info.rs:69:        let scenario = &sim.scenario;
+src/c_api/c_scenario_info.rs:70:        (scenario.in_scenario && scenario.is_tiered_entrance)
+src/c_api/c_scenario_info.rs:71:            .then(|| scenario.tiered_entrance_active_spells.clone())
+src/c_api/c_scenario_info.rs:95:        if !sim.scenario.in_scenario {
+src/c_api/c_scenario_info.rs:98:        sim.scenario.unit_criteria.get(&unit).cloned()
+src/lua_api/state/sim_state.rs:80:    /// Explicit test scenario only; no combat or spell-secrecy inference.
+src/lua_api/state/sim_state.rs:617:    pub scenario: ScenarioState,
+src/lua_api/state/support_types/adventure_map.rs:119:/// scenario explicitly seeds a kit.
+src/lua_api/state/support_types/adventure_map.rs:263:/// when a scenario seeds one). `map_id` is the UI map id the bolster
+src/lua_api/state/support_types.rs:179:/// while a quest/encounter/scenario has granted the player a temporary
+src/lua_api/state_types/mod.rs:29:    MythicPlusWeeklyBest, ScenarioState, ScenarioStep,
+src/lua_api/state_types/mythic_plus_scenario.rs:1://! Mythic+, scenario, and death-recap substate types.
+src/lua_api/state_types/mythic_plus_scenario.rs:99:/// One step within an active scenario. Drives
+src/lua_api/state_types/mythic_plus_scenario.rs:105:    /// Display title shown in the scenario tracker.
+src/lua_api/state_types/mythic_plus_scenario.rs:121:/// `in_scenario` defaults to false (no active scenario).
+src/lua_api/state_types/mythic_plus_scenario.rs:123:pub struct ScenarioState {
+src/lua_api/state_types/mythic_plus_scenario.rs:124:    /// Whether the player is currently inside a scenario.
+src/lua_api/state_types/mythic_plus_scenario.rs:126:    /// Display name of the scenario (e.g. "Assault on Violet Hold").
+src/lua_api/state_types/mythic_plus_scenario.rs:132:    /// Total number of steps in the scenario.
+src/lua_api/state_types/mythic_plus_scenario.rs:136:    /// UI texture kit name for the scenario tracker background.
+src/lua_api/state_types/mythic_plus_scenario.rs:138:    /// Whether this is a tiered entrance scenario. Drives
+src/lua_api/state_types/mythic_plus_scenario.rs:141:    /// Active challenge spells of a tiered entrance scenario. Drives
+src/lua_api/state_types/mythic_plus_scenario.rs:144:    /// Scenario theme color (r, g, b); None means the scenario has no
+src/lua_api/state_types/mythic_plus_scenario.rs:153:impl Default for ScenarioState {

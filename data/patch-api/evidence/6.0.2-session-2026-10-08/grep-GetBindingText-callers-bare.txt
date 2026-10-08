@@ -1,0 +1,1 @@
+src/lua_api/globals/keybindings.rs:709:    LuaApiMut::register_function(lua, "GetBindingText", get_binding_text)?;

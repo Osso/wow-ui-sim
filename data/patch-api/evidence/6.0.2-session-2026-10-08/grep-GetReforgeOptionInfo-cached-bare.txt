@@ -1,0 +1,1 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ReforgingUI/Classic/Blizzard_ReforgingUI.lua:117:			ReforgingFrame.destStat, ReforgingFrame.destValue = C_Reforge.GetReforgeOptionInfo(currentReforge);

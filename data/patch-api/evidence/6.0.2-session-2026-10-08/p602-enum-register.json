@@ -1,0 +1,634 @@
+[
+  {
+    "source_id": "diff-enum-688",
+    "symbol": "NUM_ACTIONS_PER_PAGE",
+    "direction": "changed",
+    "page_value": 12,
+    "wikitext_line": 688,
+    "literal": ":: NUM_ACTIONS_PER_PAGE = 12"
+  },
+  {
+    "source_id": "diff-enum-689",
+    "symbol": "NUM_BONUS_ACTION_PAGES",
+    "direction": "changed",
+    "page_value": 4,
+    "wikitext_line": 689,
+    "literal": ":: NUM_BONUS_ACTION_PAGES = 4"
+  },
+  {
+    "source_id": "diff-enum-690",
+    "symbol": "NUM_NORMAL_ACTION_PAGES",
+    "direction": "changed",
+    "page_value": 6,
+    "wikitext_line": 690,
+    "literal": ":: NUM_NORMAL_ACTION_PAGES = 6"
+  },
+  {
+    "source_id": "diff-enum-692",
+    "symbol": "LE_BAG_FILTER_FLAG_IGNORE_CLEANUP",
+    "direction": "changed",
+    "page_value": 1,
+    "wikitext_line": 692,
+    "literal": ":: _IGNORE_CLEANUP = 1"
+  },
+  {
+    "source_id": "diff-enum-693",
+    "symbol": "LE_BAG_FILTER_FLAG_EQUIPMENT",
+    "direction": "changed",
+    "page_value": 2,
+    "wikitext_line": 693,
+    "literal": ":: _EQUIPMENT = 2"
+  },
+  {
+    "source_id": "diff-enum-694",
+    "symbol": "LE_BAG_FILTER_FLAG_CONSUMABLES",
+    "direction": "changed",
+    "page_value": 3,
+    "wikitext_line": 694,
+    "literal": ":: _CONSUMABLES = 3"
+  },
+  {
+    "source_id": "diff-enum-695",
+    "symbol": "LE_BAG_FILTER_FLAG_TRADE_GOODS",
+    "direction": "changed",
+    "page_value": 4,
+    "wikitext_line": 695,
+    "literal": ":: _TRADE_GOODS = 4"
+  },
+  {
+    "source_id": "diff-enum-696",
+    "symbol": "LE_BAG_FILTER_FLAG_JUNK",
+    "direction": "changed",
+    "page_value": 5,
+    "wikitext_line": 696,
+    "literal": ":: _JUNK = 5"
+  },
+  {
+    "source_id": "diff-enum-698",
+    "symbol": "LE_CHARACTER_UNDELETE_RESULT_OK",
+    "direction": "changed",
+    "page_value": 1,
+    "wikitext_line": 698,
+    "literal": ":: _OK = 1"
+  },
+  {
+    "source_id": "diff-enum-699",
+    "symbol": "LE_CHARACTER_UNDELETE_RESULT_ERROR_COOLDOWN",
+    "direction": "changed",
+    "page_value": 2,
+    "wikitext_line": 699,
+    "literal": ":: _ERROR_COOLDOWN = 2"
+  },
+  {
+    "source_id": "diff-enum-700",
+    "symbol": "LE_CHARACTER_UNDELETE_RESULT_ERROR_CHAR_CREATE",
+    "direction": "changed",
+    "page_value": 3,
+    "wikitext_line": 700,
+    "literal": ":: _ERROR_CHAR_CREATE = 3"
+  },
+  {
+    "source_id": "diff-enum-701",
+    "symbol": "LE_CHARACTER_UNDELETE_RESULT_ERROR_DISABLED",
+    "direction": "changed",
+    "page_value": 4,
+    "wikitext_line": 701,
+    "literal": ":: _ERROR_DISABLED = 4"
+  },
+  {
+    "source_id": "diff-enum-702",
+    "symbol": "LE_CHARACTER_UNDELETE_RESULT_ERROR_NAME_TAKEN_BY_THIS_ACCOUNT",
+    "direction": "changed",
+    "page_value": 5,
+    "wikitext_line": 702,
+    "literal": ":: _ERROR_NAME_TAKEN_BY_THIS_ACCOUNT = 5"
+  },
+  {
+    "source_id": "diff-enum-703",
+    "symbol": "LE_CHARACTER_UNDELETE_RESULT_ERROR_UNKNOWN",
+    "direction": "changed",
+    "page_value": 6,
+    "wikitext_line": 703,
+    "literal": ":: _ERROR_UNKNOWN = 6"
+  },
+  {
+    "source_id": "diff-enum-705",
+    "symbol": "LE_EXPANSION_CLASSIC",
+    "direction": "changed",
+    "page_value": 0,
+    "wikitext_line": 705,
+    "literal": ":: _CLASSIC = 0"
+  },
+  {
+    "source_id": "diff-enum-706",
+    "symbol": "LE_EXPANSION_BURNING_CRUSADE",
+    "direction": "changed",
+    "page_value": 1,
+    "wikitext_line": 706,
+    "literal": ":: _BURNING_CRUSADE = 1"
+  },
+  {
+    "source_id": "diff-enum-707",
+    "symbol": "LE_EXPANSION_WRATH_OF_THE_LICH_KING",
+    "direction": "changed",
+    "page_value": 2,
+    "wikitext_line": 707,
+    "literal": ":: _WRATH_OF_THE_LICH_KING = 2"
+  },
+  {
+    "source_id": "diff-enum-708",
+    "symbol": "LE_EXPANSION_CATACLYSM",
+    "direction": "changed",
+    "page_value": 3,
+    "wikitext_line": 708,
+    "literal": ":: _CATACLYSM = 3"
+  },
+  {
+    "source_id": "diff-enum-709",
+    "symbol": "LE_EXPANSION_MISTS_OF_PANDARIA",
+    "direction": "changed",
+    "page_value": 4,
+    "wikitext_line": 709,
+    "literal": ":: _MISTS_OF_PANDARIA = 4"
+  },
+  {
+    "source_id": "diff-enum-710",
+    "symbol": "LE_EXPANSION_WARLORDS_OF_DRAENOR",
+    "direction": "changed",
+    "page_value": 5,
+    "wikitext_line": 710,
+    "literal": ":: _WARLORDS_OF_DRAENOR = 5"
+  },
+  {
+    "source_id": "diff-enum-711",
+    "symbol": "LE_EXPANSION_LEVEL_CURRENT",
+    "direction": "changed",
+    "page_value": 5,
+    "wikitext_line": 711,
+    "literal": ":: _LEVEL_CURRENT = 5"
+  },
+  {
+    "source_id": "diff-enum-713",
+    "symbol": "LE_FRAME_TUTORIAL_GARRISON_BUILDING",
+    "direction": "changed",
+    "page_value": 9,
+    "wikitext_line": 713,
+    "literal": ":: _GARRISON_BUILDING = 9 (new)"
+  },
+  {
+    "source_id": "diff-enum-714",
+    "symbol": "LE_FRAME_TUTORIAL_GARRISON_MISSION_LIST",
+    "direction": "changed",
+    "page_value": 10,
+    "wikitext_line": 714,
+    "literal": ":: _GARRISON_MISSION_LIST = 10 (new)"
+  },
+  {
+    "source_id": "diff-enum-715",
+    "symbol": "LE_FRAME_TUTORIAL_GARRISON_MISSION_PAGE",
+    "direction": "changed",
+    "page_value": 11,
+    "wikitext_line": 715,
+    "literal": ":: _GARRISON_MISSION_PAGE = 11 (new)"
+  },
+  {
+    "source_id": "diff-enum-716",
+    "symbol": "LE_FRAME_TUTORIAL_GARRISON_LANDING",
+    "direction": "changed",
+    "page_value": 12,
+    "wikitext_line": 716,
+    "literal": ":: _GARRISON_LANDING = 12 (new)"
+  },
+  {
+    "source_id": "diff-enum-717",
+    "symbol": "LE_FRAME_TUTORIAL_GARRISON_ZONE_ABILITY",
+    "direction": "changed",
+    "page_value": 13,
+    "wikitext_line": 717,
+    "literal": ":: _GARRISON_ZONE_ABILITY = 13 (new)"
+  },
+  {
+    "source_id": "diff-enum-718",
+    "symbol": "LE_FRAME_TUTORIAL_WORLD_MAP_FRAME",
+    "direction": "changed",
+    "page_value": 14,
+    "wikitext_line": 718,
+    "literal": ":: _WORLD_MAP_FRAME = 14 (new)"
+  },
+  {
+    "source_id": "diff-enum-719",
+    "symbol": "LE_FRAME_TUTORIAL_CLEAN_UP_BAGS",
+    "direction": "changed",
+    "page_value": 15,
+    "wikitext_line": 719,
+    "literal": ":: _CLEAN_UP_BAGS = 15 (new)"
+  },
+  {
+    "source_id": "diff-enum-720",
+    "symbol": "LE_FRAME_TUTORIAL_BAG_SETTINGS",
+    "direction": "changed",
+    "page_value": 16,
+    "wikitext_line": 720,
+    "literal": ":: _BAG_SETTINGS = 16 (new)"
+  },
+  {
+    "source_id": "diff-enum-721",
+    "symbol": "LE_FRAME_TUTORIAL_REAGENT_BANK_UNLOCK",
+    "direction": "changed",
+    "page_value": 17,
+    "wikitext_line": 721,
+    "literal": ":: _REAGENT_BANK_UNLOCK = 17 (new)"
+  },
+  {
+    "source_id": "diff-enum-722",
+    "symbol": "LE_FRAME_TUTORIAL_TOYBOX_FAVORITE",
+    "direction": "changed",
+    "page_value": 18,
+    "wikitext_line": 722,
+    "literal": ":: _TOYBOX_FAVORITE = 18 (new)"
+  },
+  {
+    "source_id": "diff-enum-723",
+    "symbol": "LE_FRAME_TUTORIAL_TOYBOX_MOUSEWHEEL_PAGING",
+    "direction": "changed",
+    "page_value": 19,
+    "wikitext_line": 723,
+    "literal": ":: _TOYBOX_MOUSEWHEEL_PAGING = 19 (new)"
+  },
+  {
+    "source_id": "diff-enum-724",
+    "symbol": "LE_FRAME_TUTORIAL_LFG_LIST",
+    "direction": "changed",
+    "page_value": 20,
+    "wikitext_line": 724,
+    "literal": ":: _LFG_LIST = 20 (new)"
+  },
+  {
+    "source_id": "diff-enum-726",
+    "symbol": "LE_ITEM_QUALITY_POOR",
+    "direction": "changed",
+    "page_value": 0,
+    "wikitext_line": 726,
+    "literal": ":: _POOR = 0"
+  },
+  {
+    "source_id": "diff-enum-727",
+    "symbol": "LE_ITEM_QUALITY_COMMON",
+    "direction": "changed",
+    "page_value": 1,
+    "wikitext_line": 727,
+    "literal": ":: _COMMON = 1"
+  },
+  {
+    "source_id": "diff-enum-728",
+    "symbol": "LE_ITEM_QUALITY_UNCOMMON",
+    "direction": "changed",
+    "page_value": 2,
+    "wikitext_line": 728,
+    "literal": ":: _UNCOMMON = 2"
+  },
+  {
+    "source_id": "diff-enum-729",
+    "symbol": "LE_ITEM_QUALITY_RARE",
+    "direction": "changed",
+    "page_value": 3,
+    "wikitext_line": 729,
+    "literal": ":: _RARE = 3"
+  },
+  {
+    "source_id": "diff-enum-730",
+    "symbol": "LE_ITEM_QUALITY_EPIC",
+    "direction": "changed",
+    "page_value": 4,
+    "wikitext_line": 730,
+    "literal": ":: _EPIC = 4"
+  },
+  {
+    "source_id": "diff-enum-731",
+    "symbol": "LE_ITEM_QUALITY_LEGENDARY",
+    "direction": "changed",
+    "page_value": 5,
+    "wikitext_line": 731,
+    "literal": ":: _LEGENDARY = 5"
+  },
+  {
+    "source_id": "diff-enum-732",
+    "symbol": "LE_ITEM_QUALITY_HEIRLOOM",
+    "direction": "changed",
+    "page_value": 7,
+    "wikitext_line": 732,
+    "literal": ":: _HEIRLOOM = 7"
+  },
+  {
+    "source_id": "diff-enum-734",
+    "symbol": "LE_LFG_LIST_DISPLAY_TYPE_ROLE_COUNT",
+    "direction": "changed",
+    "page_value": 1,
+    "wikitext_line": 734,
+    "literal": ":: _ROLE_COUNT = 1"
+  },
+  {
+    "source_id": "diff-enum-735",
+    "symbol": "LE_LFG_LIST_DISPLAY_TYPE_ROLE_ENUMERATE",
+    "direction": "changed",
+    "page_value": 2,
+    "wikitext_line": 735,
+    "literal": ":: _ROLE_ENUMERATE = 2"
+  },
+  {
+    "source_id": "diff-enum-736",
+    "symbol": "LE_LFG_LIST_DISPLAY_TYPE_CLASS_ENUMERATE",
+    "direction": "changed",
+    "page_value": 3,
+    "wikitext_line": 736,
+    "literal": ":: _CLASS_ENUMERATE = 3"
+  },
+  {
+    "source_id": "diff-enum-737",
+    "symbol": "LE_LFG_LIST_DISPLAY_TYPE_HIDE_ALL",
+    "direction": "changed",
+    "page_value": 4,
+    "wikitext_line": 737,
+    "literal": ":: _HIDE_ALL = 4"
+  },
+  {
+    "source_id": "diff-enum-739",
+    "symbol": "LE_LFG_LIST_FILTER_RECOMMENDED",
+    "direction": "changed",
+    "page_value": 1,
+    "wikitext_line": 739,
+    "literal": ":: _RECOMMENDED = 1"
+  },
+  {
+    "source_id": "diff-enum-740",
+    "symbol": "LE_LFG_LIST_FILTER_NOT_RECOMMENDED",
+    "direction": "changed",
+    "page_value": 2,
+    "wikitext_line": 740,
+    "literal": ":: _NOT_RECOMMENDED = 2"
+  },
+  {
+    "source_id": "diff-enum-741",
+    "symbol": "LE_LFG_LIST_FILTER_PVE",
+    "direction": "changed",
+    "page_value": 4,
+    "wikitext_line": 741,
+    "literal": ":: _PVE = 4"
+  },
+  {
+    "source_id": "diff-enum-742",
+    "symbol": "LE_LFG_LIST_FILTER_PVP",
+    "direction": "changed",
+    "page_value": 8,
+    "wikitext_line": 742,
+    "literal": ":: _PVP = 8"
+  },
+  {
+    "source_id": "diff-enum-744",
+    "symbol": "LE_MOUNT_JOURNAL_FILTER_COLLECTED",
+    "direction": "changed",
+    "page_value": 1,
+    "wikitext_line": 744,
+    "literal": ":: _COLLECTED = 1"
+  },
+  {
+    "source_id": "diff-enum-745",
+    "symbol": "LE_MOUNT_JOURNAL_FILTER_NOT_COLLECTED",
+    "direction": "changed",
+    "page_value": 2,
+    "wikitext_line": 745,
+    "literal": ":: _NOT_COLLECTED = 2"
+  },
+  {
+    "source_id": "diff-enum-747",
+    "symbol": "LE_PAN_STEADY",
+    "direction": "changed",
+    "page_value": 1,
+    "wikitext_line": 747,
+    "literal": ":: _STEADY = 1"
+  },
+  {
+    "source_id": "diff-enum-748",
+    "symbol": "LE_PAN_NONE",
+    "direction": "changed",
+    "page_value": 2,
+    "wikitext_line": 748,
+    "literal": ":: _NONE = 2"
+  },
+  {
+    "source_id": "diff-enum-749",
+    "symbol": "LE_PAN_NONE_RANGED",
+    "direction": "changed",
+    "page_value": 3,
+    "wikitext_line": 749,
+    "literal": ":: _NONE_RANGED = 3"
+  },
+  {
+    "source_id": "diff-enum-750",
+    "symbol": "LE_PAN_FAST_SLOW",
+    "direction": "changed",
+    "page_value": 4,
+    "wikitext_line": 750,
+    "literal": ":: _FAST_SLOW = 4"
+  },
+  {
+    "source_id": "diff-enum-751",
+    "symbol": "LE_PAN_SLOW_FAST",
+    "direction": "changed",
+    "page_value": 5,
+    "wikitext_line": 751,
+    "literal": ":: _SLOW_FAST = 5"
+  },
+  {
+    "source_id": "diff-enum-752",
+    "symbol": "LE_PAN_AND_JUMP",
+    "direction": "changed",
+    "page_value": 6,
+    "wikitext_line": 752,
+    "literal": ":: _AND_JUMP = 6"
+  },
+  {
+    "source_id": "diff-enum-754",
+    "symbol": "LE_PET_JOURNAL_FLAG_DEFAULT",
+    "direction": "changed",
+    "page_value": 262144,
+    "wikitext_line": 754,
+    "literal": ":: _DEFAULT = 262144 (new)"
+  },
+  {
+    "source_id": "diff-enum-756",
+    "symbol": "LE_QUEST_FACTION_ALLIANCE",
+    "direction": "changed",
+    "page_value": 1,
+    "wikitext_line": 756,
+    "literal": ":: _ALLIANCE = 1"
+  },
+  {
+    "source_id": "diff-enum-757",
+    "symbol": "LE_QUEST_FACTION_HORDE",
+    "direction": "changed",
+    "page_value": 2,
+    "wikitext_line": 757,
+    "literal": ":: _HORDE = 2"
+  },
+  {
+    "source_id": "diff-enum-759",
+    "symbol": "LE_QUEST_FREQUENCY_DEFAULT",
+    "direction": "changed",
+    "page_value": 1,
+    "wikitext_line": 759,
+    "literal": ":: _DEFAULT = 1"
+  },
+  {
+    "source_id": "diff-enum-760",
+    "symbol": "LE_QUEST_FREQUENCY_DAILY",
+    "direction": "changed",
+    "page_value": 2,
+    "wikitext_line": 760,
+    "literal": ":: _DAILY = 2"
+  },
+  {
+    "source_id": "diff-enum-761",
+    "symbol": "LE_QUEST_FREQUENCY_WEEKLY",
+    "direction": "changed",
+    "page_value": 3,
+    "wikitext_line": 761,
+    "literal": ":: _WEEKLY = 3"
+  },
+  {
+    "source_id": "diff-enum-763",
+    "symbol": "LE_RAID_BUFF_HASTE",
+    "direction": "changed",
+    "page_value": 4,
+    "wikitext_line": 763,
+    "literal": ":: _HASTE = 4 (new)"
+  },
+  {
+    "source_id": "diff-enum-764",
+    "symbol": "LE_RAID_BUFF_CRITICAL_STRIKE",
+    "direction": "changed",
+    "page_value": 6,
+    "wikitext_line": 764,
+    "literal": ":: _CRITICAL_STRIKE = 6 (was 7)"
+  },
+  {
+    "source_id": "diff-enum-765",
+    "symbol": "LE_RAID_BUFF_MASTERY",
+    "direction": "changed",
+    "page_value": 7,
+    "wikitext_line": 765,
+    "literal": ":: _MASTERY = 7 (was 8)"
+  },
+  {
+    "source_id": "diff-enum-766",
+    "symbol": "LE_RAID_BUFF_MULITSTRIKE",
+    "direction": "changed",
+    "page_value": 8,
+    "wikitext_line": 766,
+    "literal": ":: _MULITSTRIKE = 8 (new)"
+  },
+  {
+    "source_id": "diff-enum-767",
+    "symbol": "LE_RAID_BUFF_VERSATILITY",
+    "direction": "changed",
+    "page_value": 9,
+    "wikitext_line": 767,
+    "literal": ":: _VERSATILITY = 9 (new)"
+  },
+  {
+    "source_id": "diff-enum-769",
+    "symbol": "LE_TRACKER_SORTING_MANUAL",
+    "direction": "changed",
+    "page_value": 1,
+    "wikitext_line": 769,
+    "literal": ":: _MANUAL = 1"
+  },
+  {
+    "source_id": "diff-enum-770",
+    "symbol": "LE_TRACKER_SORTING_PROXIMITY",
+    "direction": "changed",
+    "page_value": 2,
+    "wikitext_line": 770,
+    "literal": ":: _PROXIMITY = 2"
+  },
+  {
+    "source_id": "diff-enum-771",
+    "symbol": "LE_TRACKER_SORTING_DIFFICULTY_LOW",
+    "direction": "changed",
+    "page_value": 3,
+    "wikitext_line": 771,
+    "literal": ":: _DIFFICULTY_LOW = 3"
+  },
+  {
+    "source_id": "diff-enum-772",
+    "symbol": "LE_TRACKER_SORTING_DIFFICULTY_HIGH",
+    "direction": "changed",
+    "page_value": 4,
+    "wikitext_line": 772,
+    "literal": ":: _DIFFICULTY_HIGH = 4"
+  },
+  {
+    "source_id": "diff-enum-774",
+    "symbol": "LE_UNIT_STAT_STRENGTH",
+    "direction": "changed",
+    "page_value": 1,
+    "wikitext_line": 774,
+    "literal": ":: _STRENGTH = 1"
+  },
+  {
+    "source_id": "diff-enum-775",
+    "symbol": "LE_UNIT_STAT_AGILITY",
+    "direction": "changed",
+    "page_value": 2,
+    "wikitext_line": 775,
+    "literal": ":: _AGILITY = 2"
+  },
+  {
+    "source_id": "diff-enum-776",
+    "symbol": "LE_UNIT_STAT_STAMINA",
+    "direction": "changed",
+    "page_value": 3,
+    "wikitext_line": 776,
+    "literal": ":: _STAMINA = 3"
+  },
+  {
+    "source_id": "diff-enum-777",
+    "symbol": "LE_UNIT_STAT_INTELLECT",
+    "direction": "changed",
+    "page_value": 4,
+    "wikitext_line": 777,
+    "literal": ":: _INTELLECT = 4"
+  },
+  {
+    "source_id": "diff-enum-778",
+    "symbol": "LE_UNIT_STAT_SPIRIT",
+    "direction": "changed",
+    "page_value": 5,
+    "wikitext_line": 778,
+    "literal": ":: _SPIRIT = 5"
+  },
+  {
+    "source_id": "diff-enum-782",
+    "symbol": "LE_PET_JOURNAL_FLAG_FAVORITES",
+    "direction": "removed",
+    "page_value": null,
+    "wikitext_line": 782,
+    "literal": ":: _FAVORITES"
+  },
+  {
+    "source_id": "diff-enum-784",
+    "symbol": "LE_RAID_BUFF_PHYSICAL_HASTE",
+    "direction": "removed",
+    "page_value": null,
+    "wikitext_line": 784,
+    "literal": ":: _PHYSICAL_HASTE"
+  },
+  {
+    "source_id": "diff-enum-785",
+    "symbol": "LE_RAID_BUFF_SPELL_HASTE",
+    "direction": "removed",
+    "page_value": null,
+    "wikitext_line": 785,
+    "literal": ":: _SPELL_HASTE"
+  }
+]

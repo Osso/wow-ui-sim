@@ -1,0 +1,1 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_FrameXML/Cata/TalentFrameBase.lua:67:	local numTalents = GetNumTalents(selectedTab, TalentFrame.inspect, TalentFrame.pet);

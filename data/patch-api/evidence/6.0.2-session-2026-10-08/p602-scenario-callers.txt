@@ -1,0 +1,3 @@
+src/c_api/registration.rs:93:    super::c_scenario_info::register(state)?;
+src/c_api/mod.rs:157:pub mod c_scenario_info;
+src/lua_api/state_types/mythic_plus_scenario.rs:150:    pub unit_criteria: HashMap<String, crate::c_api::c_scenario_info::UnitCriteriaProgress>,

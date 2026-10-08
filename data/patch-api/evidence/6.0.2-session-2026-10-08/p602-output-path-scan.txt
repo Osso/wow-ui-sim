@@ -1,0 +1,39 @@
+386:fn write_results_if_requested(out_env: &str, results: &BTreeMap<String, Value>) {
+387-    if let Some(path) = std::env::var_os(out_env) {
+388-        let json = serde_json::to_vec_pretty(results).expect("serialize sweep results");
+389-        std::fs::write(&path, json)
+390-            .unwrap_or_else(|error| panic!("write {out_env} {path:?}: {error}"));
+391-    }
+392-}
+393-
+394-/// Attribute only direct assignments in loaded, unmodified cached deprecation files
+395-/// (any `*Deprecated*.lua` under a loaded addon). No hand-maintained symbol whitelist,
+396-/// and no source rewrite; the probe still requires exact target identity at runtime.
+397-pub(crate) fn read_deprecated_aliases(env: &WowLuaEnv) -> BTreeMap<String, (String, String)> {
+398-    let root =
+399-        wow_ui_sim::paths::default_blizzard_ui_addons_path().expect("resolve cached Blizzard UI");
+400-    let mut aliases = BTreeMap::new();
+401-    for addon in read_sorted_dir(&root) {
+402-        let Some(name) = addon
+403-            .file_name()
+404-            .and_then(|n| n.to_str())
+405-            .map(str::to_owned)
+406-        else {
+407-            continue;
+408-        };
+409-        if !addon.is_dir() || !addon_is_loaded(env, &name) {
+410-            continue;
+--
+500:    write_results_if_requested(spec.out_env, &results);
+501-    let non_ok: BTreeSet<String> = results
+502-        .iter()
+503-        .filter(|(_, result)| result["ok"] == false)
+504-        .map(|(id, _)| id.clone())
+505-        .collect();
+506-    let new_gaps: Vec<_> = non_ok.difference(&known).collect();
+507-    let resolved_gaps: Vec<_> = known.difference(&non_ok).collect();
+508-    assert_eq!(
+509-        non_ok, known,
+510-        "new gaps: {new_gaps:?}; resolved/stale gaps: {resolved_gaps:?}"
+511-    );
+512-}

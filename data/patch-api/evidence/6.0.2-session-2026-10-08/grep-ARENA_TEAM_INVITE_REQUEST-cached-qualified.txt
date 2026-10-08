@@ -1,0 +1,1 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Game/TBC/EventRouting.lua:2:	["ARENA_TEAM_INVITE_REQUEST"] = function(...) GameEvent.HandleArenaTeamInviteRequest(...) end,

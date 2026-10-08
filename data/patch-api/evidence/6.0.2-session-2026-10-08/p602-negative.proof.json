@@ -1,0 +1,19 @@
+{
+  "command": [
+    "/home/osso/.cache/wow-ui-sim-targets/p602-page/debug/deps/prefork_full_ui-21dd5c807fe7a7b6",
+    "patch_6_0_2_publication_sweep"
+  ],
+  "revision": "c0f58dad85ae20d75713136e5d80bd15fa2a6e53",
+  "scope": "p602-negative",
+  "cwd": ".",
+  "target": "dedicated p602-page target (external to repository)",
+  "environment": {
+    "P602_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p602-page/data/patch-api/evidence/6.0.2-session-2026-10-08/p602-negative-results.json",
+    "P602_SWEEP_REGISTER": "/home/osso/.worktrees/wow-ui-sim-p602-page/data/patch-api/evidence/6.0.2-session-2026-10-08/p602-negative-register.json"
+  },
+  "exit": 1,
+  "log": "p602-negative.txt",
+  "log_sha256": "3bc9a21bbbfd1664084bfe415138e7c7f98cef58680163ac6f140ab5628c450e",
+  "seconds": 8.338146567002696,
+  "invalidated": false
+}

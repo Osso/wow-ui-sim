@@ -1,0 +1,69 @@
+src/lua_api/workarounds/temporary/formatting_utility_defaults.rs:308:        if BreakUpLargeNumbers == nil then
+src/lua_api/workarounds/temporary/formatting_utility_defaults.rs:309:          function BreakUpLargeNumbers(value)
+src/lua_api/workarounds/temporary/formatting_utility_defaults.rs:387:            .eval("return BreakUpLargeNumbers(12345)")
+src/lua_api/globals/real/break_up_large_numbers.rs:18:                "BreakUpLargeNumbers argument #{index} must not be secret"
+src/lua_api/globals/real/break_up_large_numbers.rs:24:            "BreakUpLargeNumbers argument #1 must be a finite number",
+src/lua_api/globals/real/break_up_large_numbers.rs:29:            "BreakUpLargeNumbers argument #1 must be a finite number",
+src/lua_api/globals/real/break_up_large_numbers.rs:37:                "BreakUpLargeNumbers argument #2 must be a boolean or nil",
+src/lua_api/globals/real/break_up_large_numbers.rs:45:        .map_err(|error| runtime_error(format!("BreakUpLargeNumbers: {error}")))?;
+src/lua_api/globals/real/break_up_large_numbers.rs:63:                "BreakUpLargeNumbers GetLocale must return a public string",
+src/lua_api/globals/real/break_up_large_numbers.rs:68:                "BreakUpLargeNumbers GetLocale must return a public string",
+src/lua_api/globals/real/break_up_large_numbers.rs:75:            .ok_or_else(|| runtime_error("BreakUpLargeNumbers locale is unavailable"))?
+src/lua_api/globals/real/break_up_large_numbers.rs:78:            .map_err(|_| runtime_error("BreakUpLargeNumbers locale must be UTF-8"))?;
+src/lua_api/globals/real/break_up_large_numbers.rs:100:    LuaApiMut::register_function(lua, "BreakUpLargeNumbers", break_up_large_numbers)
+src/loader/tests/wow_api_globals/global_functions.rs:314:        "BreakUpLargeNumbers",
+tests/break_up_large_numbers.rs:41:            BUResult('1,234.5', BreakUpLargeNumbers(1234.5, false))
+tests/break_up_large_numbers.rs:46:            assert(type(BreakUpLargeNumbers) == 'function', 'actual global required')
+tests/break_up_large_numbers.rs:47:            local ok, err = pcall(BreakUpLargeNumbers, ...)
+tests/break_up_large_numbers.rs:67:                    BUResult(expected, BreakUpLargeNumbers(inputs.number, inputs.natural))
+tests/break_up_large_numbers.rs:69:                    local ok, err = pcall(BreakUpLargeNumbers, inputs.number, inputs.natural)
+tests/break_up_large_numbers.rs:81:                BUResult('1,234', BreakUpLargeNumbers(1234.75, true))
+tests/break_up_large_numbers.rs:82:                BUResult('-1,234.5', BreakUpLargeNumbers(-1234.5, false))
+tests/break_up_large_numbers.rs:261:        BUResult('1,234', BreakUpLargeNumbers(1234))
+tests/break_up_large_numbers.rs:262:        BUResult('1,234.5', BreakUpLargeNumbers(1234.5))
+tests/break_up_large_numbers.rs:263:        BUResult('1,234.5', BreakUpLargeNumbers(1234.5, nil))
+tests/break_up_large_numbers.rs:264:        BUResult('1,234.5', BreakUpLargeNumbers(1234.5, false))
+tests/break_up_large_numbers.rs:275:        BUResult('1,234', BreakUpLargeNumbers(1234.75, true))
+tests/break_up_large_numbers.rs:276:        BUResult('-1,234', BreakUpLargeNumbers(-1234.75, true))
+tests/break_up_large_numbers.rs:277:        BUResult('1,234.75', BreakUpLargeNumbers(1234.75, false))
+tests/break_up_large_numbers.rs:278:        BUResult('-1,234.75', BreakUpLargeNumbers(-1234.75, false))
+tests/break_up_large_numbers.rs:279:        BUResult('0', BreakUpLargeNumbers(0.75, true))
+tests/break_up_large_numbers.rs:280:        BUResult('-1', BreakUpLargeNumbers(-1.75, true))
+tests/break_up_large_numbers.rs:293:            BUResult(row[2], BreakUpLargeNumbers(row[1], false))
+tests/break_up_large_numbers.rs:305:        BUResult('1,234.5', BreakUpLargeNumbers(1234.5))
+tests/break_up_large_numbers.rs:307:        BUResult('1.234,5', BreakUpLargeNumbers(1234.5))
+tests/break_up_large_numbers.rs:308:        BUResult('1.234', BreakUpLargeNumbers(1234.75, true))
+tests/break_up_large_numbers.rs:310:        BUResult('1\226\128\175234,5', BreakUpLargeNumbers(1234.5))
+tests/break_up_large_numbers.rs:324:        BUResult('1,234.5', BreakUpLargeNumbers(inputs.number, inputs.natural))
+tests/break_up_large_numbers.rs:341:        .exec("BUResult('1.234,5', BreakUpLargeNumbers(1234.5)); assert(BUInputs.marker == 99)")
+tests/break_up_large_numbers.rs:473:            BUResult('1,234', BreakUpLargeNumbers(1234.75, true))
+tests/break_up_large_numbers.rs:478:            BUResult('1,234', BreakUpLargeNumbers(1234.75, true))
+tests/blizzard_ui/blizzard_achievementui/behavior_progress_bar.rs:34://! `AchievementFrame_OnShow` at lua:272 (`SetText(BreakUpLargeNumbers(GetTotalAchievementPoints()))`),
+tests/blizzard_ui/blizzard_achievementui/behavior_progress_bar.rs:52://!   the FontString's text equals `BreakUpLargeNumbers(GetTotalAchievementPoints())`
+tests/blizzard_ui/blizzard_achievementui/behavior_progress_bar.rs:113:             it means the C API was removed or renamed, in which case the inline `:SetText(BreakUpLargeNumbers(GetTotalAchievementPoints()))` \
+tests/blizzard_ui/blizzard_achievementui/behavior_progress_bar.rs:143:             `AchievementFrame.Header.Points:SetText(BreakUpLargeNumbers(GetTotalAchievementPoints()))`. \
+tests/blizzard_ui/blizzard_achievementui/behavior_progress_bar.rs:145:             `GetTotalAchievementPoints()` returned nil/0 with `BreakUpLargeNumbers` producing \
+tests/blizzard_ui/blizzard_achievementui/behavior_summary_update.rs:29://!   `AchievementFrameSummaryCategoriesStatusBarText:SetText(BreakUpLargeNumbers(completed).."/"..BreakUpLargeNumbers(total))`.
+tests/blizzard_ui/blizzard_achievementui/behavior_summary_update.rs:37://! direct inline `:SetText(BreakUpLargeNumbers(GetTotalAchievementPoints(...)))`
+tests/blizzard_ui/blizzard_achievementui/behavior_summary_update.rs:54://!   `BreakUpLargeNumbers(completed).."/"..BreakUpLargeNumbers(total)`
+tests/blizzard_ui/blizzard_achievementui/behavior_summary_update.rs:170:             (`SetText(BreakUpLargeNumbers(completed)..\"/\"..BreakUpLargeNumbers(total))`) \
+tests/blizzard_ui/blizzard_achievementui/behavior_summary_update.rs:185:             presence-half pin (`GetText() == BreakUpLargeNumbers(GetTotalAchievementPoints())`) \
+tests/blizzard_ui/blizzard_achievementui/behavior_summary_update.rs:195:             `BreakUpLargeNumbers(completed)..\"/\"..BreakUpLargeNumbers(total)` so any pair of \
+tests/blizzard_ui/blizzard_achievementui/behavior_summary_update.rs:199:             was skipped or errored), `BreakUpLargeNumbers` returned a non-string, or the \
+tests/blizzard_ui/blizzard_achievementui/surface_globals.rs:224:///   `AchievementFrame.Header.Points:SetText(BreakUpLargeNumbers(GetTotalAchievementPoints(InGuildView())))`.
+tests/blizzard_ui/blizzard_achievementui/behavior_achievement_earned_event.rs:4://! via `BreakUpLargeNumbers(GetTotalAchievementPoints(InGuildView()))`.
+tests/blizzard_ui/blizzard_achievementui/behavior_achievement_earned_event.rs:31://!     AchievementFrame.Header.Points:SetText(BreakUpLargeNumbers(GetTotalAchievementPoints(InGuildView())));  -- line 904
+tests/blizzard_ui/blizzard_achievementui/behavior_achievement_earned_event.rs:59://! - `BreakUpLargeNumbers(10)` returns the string `"10"` (no thousands
+tests/blizzard_ui/blizzard_achievementui/behavior_achievement_earned_event.rs:105://!     `BreakUpLargeNumbers(GetTotalAchievementPoints(false))` for an
+tests/blizzard_ui/blizzard_achievementui/behavior_achievement_earned_event.rs:239:             (`SetText(BreakUpLargeNumbers(GetTotalAchievementPoints(InGuildView())))`) would crash."
+tests/blizzard_ui/blizzard_achievementui/behavior_achievement_earned_event.rs:278:             (`SetText(BreakUpLargeNumbers(GetTotalAchievementPoints(InGuildView())))`). Got \
+tests/blizzard_ui/blizzard_achievementui/behavior_guild_view_toggle.rs:197:                local original_break = _G.BreakUpLargeNumbers
+tests/blizzard_ui/blizzard_achievementui/behavior_guild_view_toggle.rs:198:                _G.BreakUpLargeNumbers = function(n) return tostring(n) end
+tests/blizzard_ui/blizzard_achievementui/behavior_guild_view_toggle.rs:247:                _G.BreakUpLargeNumbers = original_break
+tests/blizzard_ui/blizzard_accountstore/behavior_currency_format.rs:17://!     return BreakUpLargeNumbers(currencyAmount) .. " " .. CreateSimpleTextureMarkup(currencyInfo.icon, 12, 12);
+tests/blizzard_ui/blizzard_accountstore/behavior_currency_format.rs:35://!    into `BreakUpLargeNumbers` (which would format the id like a
+tests/blizzard_ui/blizzard_accountstore/behavior_currency_format.rs:51://!    the amount is passed through `BreakUpLargeNumbers` (a thousands-
+tests/blizzard_ui/blizzard_accountstore/behavior_currency_format.rs:210:             `BreakUpLargeNumbers(currencyAmount) .. \" \" .. CreateSimpleTextureMarkup(\
+tests/blizzard_ui/blizzard_accountstore/behavior_currency_format.rs:211:             currencyInfo.icon, 12, 12)`. Under the simulator, `BreakUpLargeNumbers` (stubbed at \
+tests/blizzard_ui/blizzard_accountstore/behavior_currency_format.rs:218:             or BreakUpLargeNumbers is no longer a passthrough."
+tests/runtime_bootstrap_boundaries.rs:311:        "BreakUpLargeNumbers",

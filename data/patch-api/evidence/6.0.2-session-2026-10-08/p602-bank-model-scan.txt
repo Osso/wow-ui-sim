@@ -1,0 +1,11 @@
+src/c_api/patch_retired_members.rs:409:    ("C_Container", &["SortReagentBankBags"]),
+src/lua_api/globals/bank_storage_verbs.rs:28:    LuaApiMut::register_function(lua, "GetNumBankSlots", get_num_bank_slots)?;
+src/lua_api/globals/bank_storage_verbs.rs:85:fn get_num_bank_slots(state: &mut LuaState) -> LuaResult<u32> {
+src/loader/tests/wow_api.rs:27:fn test_enum_bag_index_retail_bank_slots() {
+tests/patch_11_2_0_publication_fixes.rs:48:            assert(C_Container.SortReagentBankBags == nil)
+tests/mists_bank_storage_panel.rs:54:            local bankSlots, full = GetNumBankSlots()
+tests/mists_bank_storage_panel.rs:55:            if bankSlots ~= 0 or full ~= false then
+tests/mists_bank_storage_panel.rs:56:                error("bank slot state=" .. tostring(bankSlots) .. "/" .. tostring(full))
+tests/mists_bank_storage_panel.rs:64:            bankSlots, full = GetNumBankSlots()
+tests/mists_bank_storage_panel.rs:65:            if bankSlots ~= 1 or full ~= false then
+tests/mists_bank_storage_panel.rs:66:                error("bank slot state after purchase=" .. tostring(bankSlots) .. "/" .. tostring(full))

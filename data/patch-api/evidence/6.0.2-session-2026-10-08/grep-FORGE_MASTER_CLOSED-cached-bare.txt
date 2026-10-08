@@ -1,0 +1,1 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_Game/Cata/EventRouting.lua:5:	["FORGE_MASTER_CLOSED"] = function(...) GameEvent.HandleForgeMasterClosed(...) end,

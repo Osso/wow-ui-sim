@@ -1,0 +1,22 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "publication_sweep"
+  ],
+  "revision": "c0f58dad85ae20d75713136e5d80bd15fa2a6e53",
+  "scope": "p602-all-sweeps",
+  "cwd": ".",
+  "target": "dedicated p602-page target (external to repository)",
+  "environment": {
+    "PATCH_SWEEP_OUT_DIR": "/home/osso/.worktrees/wow-ui-sim-p602-page/data/patch-api/evidence/6.0.2-session-2026-10-08"
+  },
+  "exit": 0,
+  "log": "p602-all-sweeps.txt",
+  "log_sha256": "b9be53a8a4e24ef9b001000b2469b19e325f31eca0bcc12abeddbca782ea6bf3",
+  "seconds": 107.44042891699792,
+  "invalidated": false
+}

@@ -1,0 +1,16 @@
+src/c_api/patch_retired_members.rs:163:    ("C_ItemUpgrade", &["GetItemLevelIncrement"]),
+src/lua_api/globals/stubs/global_stubs.rs:198:    // GetNumGuildMembers is SimState-backed in guild_probes.rs, not a stub.
+src/lua_api/globals/guild_probes.rs:30://! - `GetNumGuildMembers()`   -> `world.guild_members.len()`
+src/lua_api/globals/guild_probes.rs:243:/// `GetNumGuildMembers()` — retail returns (total, online, onlineAndMobile).
+src/lua_api/globals/guild_probes.rs:414:    LuaApiMut::register_function(lua, "GetNumGuildMembers", get_num_guild_members)?;
+src/mists/compat_bootstrap.lua:1253:if rawget(_G, "GetTalentInfoByID") == nil then
+src/mists/compat_bootstrap.lua:1254:  function GetTalentInfoByID(talentID, _talentGroup)
+tests/patch_9_1_5_classic_surfaces.rs:11:    {'C_ItemUpgrade', 'GetItemLevelIncrement'},
+tests/mists_talents_glyphs_panel.rs:112:            local _, _, _, clickedSelected, _, _, _, _, _, clickedKnown = GetTalentInfoByID(talentID)
+tests/blizzard_deprecated_item_script_loads.rs:137:                and type(GetItemCreationContext) == 'function' \
+tests/patch_9_1_5_publication_fixes.rs:8:    {'C_ItemUpgrade', 'GetItemLevelIncrement'},
+tests/guild_probes.rs:149:// ── GetNumGuildMembers / GetGuildRosterSize ───────────────────────────────────
+tests/guild_probes.rs:156:        env.eval("return GetNumGuildMembers()").unwrap();
+tests/guild_probes.rs:182:        env.eval("return GetNumGuildMembers()").unwrap();
+tests/guild_probes.rs:194:            local total, online = GetNumGuildMembers()
+tests/data/patch_9_1_0_sweep_known_gaps.json:17:  "wt-global-api-C_ItemUpgrade.GetItemUpgradeEffect-43",

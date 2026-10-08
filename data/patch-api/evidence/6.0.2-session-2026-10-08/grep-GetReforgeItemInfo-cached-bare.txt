@@ -1,0 +1,2 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ReforgingUI/Classic/Blizzard_ReforgingUI.lua:59:		local reforged = C_Reforge.GetReforgeItemInfo();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ReforgingUI/Classic/Blizzard_ReforgingUI.lua:90:	local currentReforge, itemID, name, quality, bound, cost = C_Reforge.GetReforgeItemInfo();

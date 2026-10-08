@@ -1,0 +1,2 @@
+src/wrath/compat_bootstrap.lua:96:if GetExistingLocales == nil then
+src/wrath/compat_bootstrap.lua:97:  function GetExistingLocales()

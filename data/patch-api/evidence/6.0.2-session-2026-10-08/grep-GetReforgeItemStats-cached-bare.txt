@@ -1,0 +1,2 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ReforgingUI/Classic/Blizzard_ReforgingUI.lua:106:		local stats = C_Reforge.GetReforgeItemStats();
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ReforgingUI/Classic/Blizzard_ReforgingUI.lua:367:	local stats = C_Reforge.GetReforgeItemStats();

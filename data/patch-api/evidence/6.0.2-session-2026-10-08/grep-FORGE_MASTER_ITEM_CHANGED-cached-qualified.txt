@@ -1,0 +1,2 @@
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ReforgingUI/Classic/Blizzard_ReforgingUI.lua:22:	self:RegisterEvent("FORGE_MASTER_ITEM_CHANGED");
+/home/osso/.cache/wow-ui-sim/blizzard-ui/retail/AddOns/Blizzard_ReforgingUI/Classic/Blizzard_ReforgingUI.lua:56:	elseif event == "FORGE_MASTER_ITEM_CHANGED" then

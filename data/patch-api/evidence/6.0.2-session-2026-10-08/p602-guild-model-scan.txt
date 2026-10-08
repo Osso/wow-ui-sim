@@ -1,0 +1,8 @@
+src/lua_api/workarounds/temporary/inert_global_defaults.rs:225:if GetNumGuildPerks == nil then
+src/lua_api/workarounds/temporary/inert_global_defaults.rs:226:    function GetNumGuildPerks()
+src/lua_api/workarounds/temporary/inert_global_defaults.rs:396:                if GetNumGuildPerks() ~= 0 then return "bad_guild_perks_default" end
+tests/startup_targeted_regressions.rs:240:                    || record.message.contains("GetNumGuildPerks")
+tests/startup_targeted_regressions.rs:282:                    GetNumGuildPerks() == 0,
+tests/startup_targeted_regressions.rs:310:            guild_perks_ok,
+tests/startup_targeted_regressions.rs:327:                && guild_perks_ok
+tests/runtime_bootstrap_boundaries.rs:537:        "GetNumGuildPerks",

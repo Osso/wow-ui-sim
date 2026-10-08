@@ -1,0 +1,22 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_6_0_2"
+  ],
+  "revision": "7304843311a67584ab3506cc634f12f9401fd1cd",
+  "scope": "p602-expanded-discovery",
+  "cwd": ".",
+  "target": "dedicated p602-page target (external to repository)",
+  "environment": {
+    "P602_SWEEP_OUT": "/home/osso/.worktrees/wow-ui-sim-p602-page/data/patch-api/evidence/6.0.2-session-2026-10-08/p602-expanded-discovery-results.json"
+  },
+  "exit": 1,
+  "log": "p602-expanded-discovery.txt",
+  "log_sha256": "b50e780240837be3bee1290aa65f2df4e304f6f642468dade27c3d029316c076",
+  "seconds": 369.1312825920031,
+  "invalidated": false
+}
