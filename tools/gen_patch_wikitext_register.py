@@ -617,6 +617,28 @@ def parse_colon_api_bullets(text):
     return entries
 
 
+def parse_combat_restriction_bullets(text):
+    """Retain 5.4.8 Breaking changes identities, never infer removal."""
+    entries = []
+    in_breaking = False
+    for number, line in enumerate(text.splitlines(), 1):
+        heading = re.fullmatch(r'==\s*([^=]+?)\s*==', line)
+        if heading:
+            in_breaking = heading[1] == 'Breaking changes'
+            continue
+        if not in_breaking or not line.startswith('*'):
+            continue
+        for match in re.finditer(r'\[\[CVar ([^|\]]+)(?:\|[^\]]+)?\]\]', line):
+            entry = make_entry('cvars', 'changed', number, '{{api|' + match[1] + '}}')
+            entry['annotation'] = line
+            entries.append(entry)
+        for match in TEMPLATE.finditer(line):
+            entry = make_entry('global-api', 'changed', number, match[0])
+            entry['annotation'] = line
+            entries.append(entry)
+    return entries
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("patch", "path", "revid", "out"):
@@ -669,6 +691,8 @@ def main():
     parser.add_argument('--warlords-prepatch', action='store_true',
                         help='Retain compact Warlords summary references and canonical widget owners; opt-in')
     parser.add_argument('--warlords-diff', help='Separately pinned Warlords transcluded inventory; opt-in')
+    parser.add_argument('--combat-restriction-bullets', action='store_true',
+                        help='Retain changed CVar/API identities in Breaking changes; opt-in')
     args = parser.parse_args()
     patch, path, revid, out = args.patch, args.path, args.revid, args.out
     raw = Path(path).read_bytes()
@@ -725,6 +749,8 @@ def main():
         diff_entries, diff_counts = parse_warlords_diff(Path(args.warlords_diff).read_text())
         entries.extend(diff_entries)
         counts.extend(diff_counts)
+    if args.combat_restriction_bullets:
+        entries.extend(parse_combat_restriction_bullets(raw.decode('utf-8')))
     if args.inventory_only:
         for entry in entries:
             for key in ("kind", "page_default", "test_inline"):

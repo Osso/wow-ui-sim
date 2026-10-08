@@ -1,0 +1,9 @@
+{
+  "pageid": 123196,
+  "revid": 6611068,
+  "toc": 50400,
+  "release": "2014-05-20",
+  "client_line": "2014 retail Mists of Pandaria",
+  "fetch_sha256": "5fe667b215985d8b10e5d9c132fbcbbde8e1986bea6875235331fded9151373a",
+  "note": "API page has no literal TOC; linked parent patch page Patchbox states toc=50400. API navigation next=6.0.1, not Classic 5.5.x."
+}

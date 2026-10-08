@@ -5,6 +5,21 @@ from gen_patch_wikitext_register import parse_section, split_sections
 
 
 class InventoryTests(unittest.TestCase):
+    def test_combat_restriction_bullets_keep_changed_cvars_and_api(self):
+        import gen_patch_wikitext_register as generator
+        raw = ('==Breaking changes==\nRestricted in combat:\n'
+               '*[[CVar uiScale|uiScale]]\n'
+               '*[[CVar nameplateShowEnemies|nameplateShowEnemies]]\n'
+               'Other changes:\n*{{api|SetUIVisibility}}(false) is protected.\n'
+               '==Unrelated==\n*[[CVar IgnoreMe|IgnoreMe]]\n')
+        rows = generator.parse_combat_restriction_bullets(raw)
+        self.assertEqual([(r['section'], r['symbol'], r['direction'], r['wikitext_line'])
+                          for r in rows], [
+            ('cvars', 'uiScale', 'changed', 3),
+            ('cvars', 'nameplateShowEnemies', 'changed', 4),
+            ('global-api', 'SetUIVisibility', 'changed', 6)])
+        self.assertTrue(all(r['annotation'] for r in rows))
+
     def test_indented_api_lists_keep_renames_and_cvar_removal(self):
         import gen_patch_wikitext_register as generator
         raw = ('==New==\n {{api|BNGetGameAccountInfo}}\n'
