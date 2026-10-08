@@ -9,7 +9,7 @@ fn patch_8_0_1_world_position_requires_a_real_projection() {
     assert_eq!(count, 0);
 }
 
-//! Explicit world-rectangle fixtures, not native map geography parity.
+// Explicit world-rectangle fixtures, not native map geography parity.
 
 #[test]
 fn patch_8_0_1_world_position_projects_into_explicit_map_rectangles() {
