@@ -20,7 +20,7 @@ Opt-in `--bfa-prepatch` handles top-level New namespaces, nested member bullets,
 
 Initial discovery found **20 failures**. One closes through the new world-rectangle model. `C_ChatInfo.ReportPlayer` closes through the **merged 8.1.5 removal**, not new reporting behavior. Merged 8.1.0 removal also closes C_Map.GetBountySetIDForMap. Remaining **17 inventory failures**: eight chat members, four map metadata members, two glyph identities repeated twice, and SPELL_TEXT_UPDATE (superseded by the 11.0.0 removal but still registered).
 
-[Per-ID review](../../../data/patch-api/evidence/8.0.1-session-2026-10-08/p801-gap-review.json) retains literal statements, observations, expectations and individual reasons. Chat gaps require report eligibility, indexed roster snapshots, a prefix-interest registry with current result/security/capacity policy, channel classification and retail sender/logged-delivery semantics. Existing outbound-intent senders are explicitly Forever-only; their profile gate is not bypassed. Map gaps require bounty associations, art-help placement, display metadata, point-highlight visuals and dungeon floor catalogs, not guesses from hierarchy/art pixels. [Caller scout](../../../data/patch-api/evidence/8.0.1-session-2026-10-08/p801-gap-caller-scout.json) retains complete src/tests and cached hits.
+[Per-ID review](../../../data/patch-api/evidence/8.0.1-session-2026-10-08/p801-gap-review.json) retains literal statements, observations, expectations and individual reasons. Chat gaps require report eligibility, indexed roster snapshots, a prefix-interest registry with current result/security/capacity policy, channel classification and retail sender/logged-delivery semantics. Existing outbound-intent senders are explicitly Forever-only; their profile gate is not bypassed. Map gaps require art-help placement, display metadata, point-highlight visuals and dungeon floor catalogs, not guesses from hierarchy/art pixels. [Caller scout](../../../data/patch-api/evidence/8.0.1-session-2026-10-08/p801-gap-caller-scout.json) retains complete src/tests and cached hits.
 
 Pending prose: full chat migration; combat-log no-loadout/current-event timing; power event producer/payload; twenty joined-channel capacity; Vignettes namespace replacement; unnamed “all map API” removals; current-map/WorldMapFrame transition; party-member map positions; encounter-journal instance composition; aggregate glyph removal. Publication-only credit does not resolve these contracts.
 
@@ -50,6 +50,7 @@ Cargo target: `/home/osso/.cache/wow-ui-sim-targets/p801-page`. All commands exe
 | `python3 -B tools/test_extract_patch_non_inventory.py` | 33/33 |
 | `python3 -B tools/test_gen_patch_wikitext_register.py` | 24/24 |
 | `python3 -B tools/test_patch_audit_validation.py` | 8/8 |
+| Every retained `evidence/*/validate.py` | 18/18 exit 0; full commands/output in `p801-integration-validator-matrix.json` |
 | Per-source register regeneration | 41/41 byte-identical |
 | Per-source extract `--text-only --check` | 38/41; inherited 12.0.5, 12.0.7, 12.1.0 failures unchanged |
 | `cargo check --no-default-features --features sound,gui,casc,client-mists --tests` | Exit 0; zero non-vendor warnings |
