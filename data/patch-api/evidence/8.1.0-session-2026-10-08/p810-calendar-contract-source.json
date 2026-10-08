@@ -1,0 +1,5 @@
+{
+  "url": "https://raw.githubusercontent.com/Gethe/wow-ui-source/live/Interface/AddOns/Blizzard_APIDocumentationGenerated/DateAndTimeDocumentation.lua",
+  "sha256": "6ba57a3bfb8e989f9347aa13e167af4d5fed43dc2828a749047db962b8db1746",
+  "note": "Primary Blizzard API documentation contract, retained; compare sign follows documented rhs vs lhs ordering. Full native malformed-input and secret-value parity not inferred."
+}
