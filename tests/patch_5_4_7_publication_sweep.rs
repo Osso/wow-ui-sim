@@ -17,8 +17,8 @@ fn patch_5_4_7_publication_sweep(env: &WowLuaEnv) {
         register_env: "P547_SWEEP_REGISTER",
         out_env: "P547_SWEEP_OUT",
         later_registers: &[
-            // 5.4.8 pending integration (p548-page).
-            // 6.0.1 pending integration (p601-page; redirect-only).
+            include_str!("../data/patch-api/sources/5.4.8-wikitext-register.json"),
+            include_str!("../data/patch-api/sources/6.0.1-wikitext-register.json"),
             include_str!("../data/patch-api/sources/6.0.2-wikitext-register.json"),
             include_str!("../data/patch-api/sources/6.1.0-wikitext-register.json"),
             include_str!("../data/patch-api/sources/6.2.0-wikitext-register.json"),
