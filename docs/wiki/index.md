@@ -6,6 +6,10 @@
 
 [Audit](investigations/patch-7-1-0-api-audit.md): revision 3742660; 31 IDs, zero publication gaps after later supersession, five pending prose contracts. Existing clipping/item/display models bounded; custom intrinsic failure retained. All 45 sweeps plus factory, scoped tests, fixtures, format/Mists and 22 validators pass. 45 registers/42 extracts reproduce with three inherited failures. No runtime retirements or shims.
 
+## [2026-10-08] investigation | Patch 7.0.3 API audit
+
+[Audit](investigations/patch-7-0-3-api-audit.md): pinned revision 5295335, 134 inventory identities; modeled recipe-name search and two consumer-free mount retirements. Discovery/accounting and targeted proof remain in progress.
+
 ## [2026-10-08] investigation | Patch 7.3.0 API audit
 
 [Audit](investigations/patch-7-3-0-api-audit.md): revision 5335723; merged 7.3.2 register, three table publications, eleven IDs, zero publication gaps and one pending slash/consent row. Integrated 44 sweeps, sound/menu/popup/panel tests, fixtures and Mists/format checks pass. Branch/master startup both []; 43 registers / 40 extracts reproduce with three inherited failures. All 20 validators pass; historical/integrated scopes fixed, original artifacts unchanged.

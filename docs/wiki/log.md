@@ -388,3 +388,7 @@ Second temporary clone: all nineteen validators pass from the original cwd. Futu
 - 2026-10-08: [7.1.0 integration](investigations/patch-7-1-0-api-audit.md) uses merged 7.2.0 after rebasing onto aa57dd8f8; separate integrated scope retains all historical artifacts. 46 registers / 43 extracts reproduce; own ten observations unchanged. Archived custom-intrinsic failure persists after the shared probe-factory change. Remaining command queue runs asynchronously.
 
 - 2026-10-08: Final [7.1.0 integrated proof](investigations/patch-7-1-0-api-audit.md): 47/47 sweep/factory cases versus exact master 46/46; all 45 existing pages unchanged, zero own gaps. Prefork 3, screen/item/known-intrinsic 9/100/1, fixtures 30/34/8, format/Mists and 27/27 validators pass. Bare own integration selects zero cases, no coverage credited. Corrected negative control changes exactly one row 0 → 1; initial wrong-env attempt explicitly invalidated. All 127 historical artifacts remain unchanged; custom intrinsic failure persists.
+
+## [2026-10-08] ingest | Patch 7.0.3 API audit
+
+Pinned Legion page; opt-in parsers, modeled recipe-name filtering and two scoped mount retirements. [Audit](investigations/patch-7-0-3-api-audit.md) records discovery and pending final verification.

@@ -54,6 +54,7 @@ const PROFESSION_INVENTORY_SLOTS: &[i32] = &[20, 21, 22, 23, 24, 25, 26, 27, 28]
 
 pub(super) fn register_profession_surface(state: &mut LuaState) -> LuaResult<()> {
     register_trade_skill_namespace(state)?;
+    crate::c_api::c_trade_skill_filter::register(state)?;
     register_crafting_order_namespace(state)?;
     table_set_rust_fn_static(
         state,
@@ -264,13 +265,6 @@ fn c_trade_skill_ui_get_categories(state: &mut LuaState) -> LuaResult<u32> {
     Ok(category_ids.len() as u32)
 }
 
-fn c_trade_skill_ui_get_filtered_recipe_ids(state: &mut LuaState) -> LuaResult<u32> {
-    let recipe_ids = profession_data::get_filtered_recipe_ids();
-    let table = recipe_id_table(state, &recipe_ids);
-    state.push(table);
-    Ok(1)
-}
-
 fn c_trade_skill_ui_get_profession_info_by_recipe_id(state: &mut LuaState) -> LuaResult<u32> {
     let recipe_id = i32::from_stack(state, 1)?;
     let profession = profession_for_recipe(recipe_id);
@@ -477,12 +471,6 @@ fn c_trade_skill_ui_get_recipe_item_link(state: &mut LuaState) -> LuaResult<u32>
     let link = profession_data::get_recipe(recipe_id)
         .and_then(|recipe| item_link_value(state, recipe.output_item_id));
     state.push(link.unwrap_or(Val::Nil));
-    Ok(1)
-}
-
-fn c_trade_skill_ui_get_recipe_item_name_filter(state: &mut LuaState) -> LuaResult<u32> {
-    let filter = create_string(state, "");
-    state.push(filter);
     Ok(1)
 }
 

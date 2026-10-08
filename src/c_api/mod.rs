@@ -185,6 +185,7 @@ pub(crate) mod c_tooltip_info_outfit;
 #[cfg(feature = "retail-12-0-5")]
 pub(crate) mod c_tooltip_info_spell_mount;
 #[cfg(feature = "retail-12-0-0")]
+pub(crate) mod c_trade_skill_filter;
 pub mod c_trade_skill_quality;
 #[cfg(feature = "retail-12-0-0")]
 pub(crate) mod c_transmog_collection;

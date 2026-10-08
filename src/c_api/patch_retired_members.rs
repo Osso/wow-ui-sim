@@ -1,4 +1,4 @@
-//! Namespace members (and whole namespaces) the Patch 8.1.0 / 8.1.5 / 8.2.0 / 8.2.5 / 8.3.0 / 9.0.1 / 9.0.2 / 9.0.5 / 9.1.0 / 9.1.5 / 9.2.0 / 9.2.5 / 10.0.2 / 10.0.5 / 10.0.7 / 10.1.0 / 10.1.5 / 10.2.0 / 10.2.6 / 11.0.0 / 11.0.2 / 11.0.5 / 11.0.7 / 11.1.0 / 11.1.5 / 11.1.7 / 11.2.0 / 11.2.7 / 12.0.0 / 12.0.1 / 12.0.5 / 12.0.7
+//! Namespace members (and whole namespaces) the Patch 7.0.3 / 8.1.0 / 8.1.5 / 8.2.0 / 8.2.5 / 8.3.0 / 9.0.1 / 9.0.2 / 9.0.5 / 9.1.0 / 9.1.5 / 9.2.0 / 9.2.5 / 10.0.2 / 10.0.5 / 10.0.7 / 10.1.0 / 10.1.5 / 10.2.0 / 10.2.6 / 11.0.0 / 11.0.2 / 11.0.5 / 11.0.7 / 11.1.0 / 11.1.5 / 11.1.7 / 11.2.0 / 11.2.7 / 12.0.0 / 12.0.1 / 12.0.5 / 12.0.7
 //! consolidated API tables list as removed that no other module retires.
 //! Marking keeps the namespace `__index` autostub from fabricating them on
 //! ordinary lookup.
@@ -24,6 +24,12 @@ use rilua::vm::state::LuaState;
 // Mists product-choice defaults remain outside this retail-only module.
 // No qualified, bare-name cached retail consumers or simulator callers; grep
 // evidence retained in the 8.2.0 audit. Classic profiles never load this module.
+// 7.0.3: qualified/bare cached retail and complete src/tests grep scans
+// find no consumers; no later master/p710-page register re-adds these names.
+// Keep Summon: its current simulator callers still use the legacy member.
+const RETIRED_7_0_3_MEMBERS: &[(&str, &[&str])] =
+    &[("C_MountJournal", &["GetMountInfo", "GetMountInfoExtra"])];
+
 const RETIRED_8_2_0_MEMBERS: &[(&str, &[&str])] = &[(
     "C_UIWidgetManager",
     &["GetTextureWithStateVisualizationInfo"],
@@ -552,6 +558,7 @@ pub(crate) fn mark_retired_members(state: &mut LuaState) -> LuaResult<()> {
     mark_members(state, RETIRED_8_1_5_MEMBERS)?;
     mark_members(state, RETIRED_8_2_0_MEMBERS)?;
     mark_members(state, RETIRED_8_2_5_MEMBERS)?;
+    mark_members(state, RETIRED_7_0_3_MEMBERS)?;
     mark_members(state, RETIRED_8_3_0_MEMBERS)?;
     mark_members(state, RETIRED_9_0_1_MEMBERS)?;
     mark_members(state, RETIRED_9_0_5_MEMBERS)?;
