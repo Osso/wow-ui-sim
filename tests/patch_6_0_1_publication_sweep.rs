@@ -15,9 +15,9 @@ fn patch_6_0_1_publication_sweep(env: &WowLuaEnv) {
         register_env: "P601_SWEEP_REGISTER",
         out_env: "P601_SWEEP_OUT",
         later_registers: &[
-            // 6.0.2: queued p602-page register; integrate when merged.
-            // 6.1.0: queued p610-page register; integrate when merged.
-            // 6.2.0: queued p620-page register; integrate when merged.
+            include_str!("../data/patch-api/sources/6.0.2-wikitext-register.json"),
+            include_str!("../data/patch-api/sources/6.1.0-wikitext-register.json"),
+            include_str!("../data/patch-api/sources/6.2.0-wikitext-register.json"),
             include_str!("../data/patch-api/sources/6.2.2-wikitext-register.json"),
             include_str!("../data/patch-api/sources/6.2.4-wikitext-register.json"),
             include_str!("../data/patch-api/sources/7.0.1-wikitext-register.json"),
