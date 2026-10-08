@@ -85,3 +85,5 @@ Every command explicitly used `/home/osso/.worktrees/wow-ui-sim-p83x-page` cwd a
 ## See Also
 
 - [[patch-9-0-2-api-audit]] — occurrence accounting and chronological publication expectations.
+
+**Integration (2026-10-08):** the 9.0.1 register was prepended after p901-page merged; the single exact gap (`GetAreaText`) is unchanged. Validation receipts were extended to cover 9.0.1 (byte-identical register regeneration, sweep results and summary) and the validator passes.

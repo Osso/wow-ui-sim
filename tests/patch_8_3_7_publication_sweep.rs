@@ -15,7 +15,7 @@ fn patch_8_3_7_publication_sweep(env: &WowLuaEnv) {
         register_env: "P837_SWEEP_REGISTER",
         out_env: "P837_SWEEP_OUT",
         later_registers: &[
-            // Integration: prepend 9.0.1 register when p901-page merges.
+            include_str!("../data/patch-api/sources/9.0.1-wikitext-register.json"),
             include_str!("../data/patch-api/sources/9.0.2-wikitext-register.json"),
             include_str!("../data/patch-api/sources/9.0.5-wikitext-register.json"),
             include_str!("../data/patch-api/sources/9.1.0-wikitext-register.json"),
