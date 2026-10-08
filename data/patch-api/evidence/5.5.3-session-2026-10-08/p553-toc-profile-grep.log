@@ -1,0 +1,21 @@
+82:#[cfg(feature = "client-mists")]
+83:pub const ACTIVE_INTERFACE_VERSION: u32 = 50504;
+147:            ClientProfile::Mists => 50504,
+156:    not(feature = "client-mists"),
+168:    not(feature = "client-mists"),
+179:    not(feature = "client-mists"),
+193:    feature = "client-mists",
+202:    not(feature = "client-mists"),
+213:    not(feature = "client-mists"),
+224:    not(feature = "client-mists"),
+233:    all(feature = "profile-retail", feature = "client-mists"),
+238:    all(feature = "client-ptr", feature = "client-mists"),
+241:    all(feature = "client-wrath", feature = "client-mists"),
+244:    all(feature = "client-mists", feature = "client-era"),
+245:    all(feature = "client-mists", feature = "client-anniversary"),
+253:            feature = "client-mists",
+260:    "Exactly one profile marker must be enabled: profile-retail (normally via client-retail), client-ptr, client-wrath, client-mists, client-era, client-anniversary, or client-wowforever"
+267:    feature = "client-mists",
+273:    "Exactly one profile marker must be enabled: profile-retail (normally via client-retail), client-ptr, client-wrath, client-mists, client-era, client-anniversary, or client-wowforever"
+347:#[cfg_attr(not(feature = "client-mists"), allow(unused_imports))]
+410:    #[cfg(feature = "client-mists")]

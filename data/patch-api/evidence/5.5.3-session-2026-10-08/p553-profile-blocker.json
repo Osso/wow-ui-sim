@@ -1,0 +1,23 @@
+{
+  "status": "STOPPED",
+  "source_revision": 6778082,
+  "code_revision": "4d046d99d29f71edcd83e55076fd0b07d8f9ff4f",
+  "source_toc": 50503,
+  "mists_interface_version": 50504,
+  "reason": "Source TOC has no explicit mapping in src/client_profile.rs; user requires stop if TOC does not map. No older-interface compatibility mapping is inferred.",
+  "scan_tool": "/usr/bin/grep -n -w",
+  "scan_log": "p553-toc-profile-grep.log",
+  "completed": [
+    "refetch current source",
+    "pin revision and wikitext",
+    "compare stated TOC to profile code"
+  ],
+  "not_run": [
+    "extract/register generation",
+    "discovery and gap audit",
+    "retirement scans",
+    "targeted verification",
+    "validator portability gate",
+    "wiki/spec completion"
+  ]
+}
