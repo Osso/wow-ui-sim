@@ -1,0 +1,32 @@
+{
+  "scope": "Pre-existing default UI state; not attributable to 7.3.2 session protection",
+  "master_revision": "af7a101e2",
+  "diagnostic_receipt": "p732-integration-slash-diagnostic.proof.json",
+  "observed": {
+    "secure_stack": true,
+    "active_game_mode": 0,
+    "enum_standard": 1,
+    "logout_alias": "/logout",
+    "insecure_logout_callback": null,
+    "secure_logout_command_registered": false
+  },
+  "unchanged_inputs": [
+    {
+      "path": "src/lua_api/globals/game_rules.rs",
+      "master_blob_or_tree": "f103a2e66e8ae0458093526ae0c3b3fbb3a79d9d",
+      "integrated_blob_or_tree": "f103a2e66e8ae0458093526ae0c3b3fbb3a79d9d"
+    },
+    {
+      "path": "src/lua_api/state",
+      "master_blob_or_tree": "42884b439fe4d2c2ade9b9b0796cc1619959e298",
+      "integrated_blob_or_tree": "42884b439fe4d2c2ade9b9b0796cc1619959e298"
+    },
+    {
+      "path": "src/lua_api/globals/enum_data",
+      "master_blob_or_tree": "3ed295a5214db1af1a66dcb2a39ec34dfc4cf549",
+      "integrated_blob_or_tree": "3ed295a5214db1af1a66dcb2a39ec34dfc4cf549"
+    }
+  ],
+  "source_cause": "SlashCommands.lua GetOrCreateCommandsSets indexes COMMANDS_BY_GAME_MODE with GetActiveGameMode; key 0 has no entry. ShouldAddCommand rejects registration before invoking Logout/Quit.",
+  "decision": "Do not change unrelated mode defaults. Remove supplemental slash test with false default-state precondition; retain diagnostic failure. Current cached menu/logout/quit/camp caller acceptance remains required."
+}
