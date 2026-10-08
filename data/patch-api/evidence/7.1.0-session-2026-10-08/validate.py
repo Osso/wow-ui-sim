@@ -199,10 +199,13 @@ def proof(context):
     wiki = read(HERE / 'p710-wiki-integrity.json')
     for row in wiki:
         before = blob(context['base_revision'], row['path']).decode()
+        sealed = blob(context['wiki_revision'], row['path']).decode()
         current = (ROOT / row['path']).read_text()
         assert row['before_lines'] == len(before.splitlines())
-        assert len(current.splitlines()) >= row['after_lines'] >= row['before_lines']
-        assert before in current
+        assert row['after_lines'] == len(sealed.splitlines()) >= row['before_lines']
+        assert hashlib.sha256(sealed.encode()).hexdigest() == row['after_sha256']
+        assert before in sealed
+        assert len(current.splitlines()) >= row['after_lines']
     return {'publication_sweeps': len(tests), 'observations': sum(r['rows'] for r in summaries),
             'negative_control': [control['before'], control['after']], 'prior_validators': len(matrix)}
 
