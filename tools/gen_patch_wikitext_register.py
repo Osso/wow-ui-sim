@@ -73,7 +73,8 @@ def make_entry(section, direction, line_no, text):
     return entry
 
 
-def parse_section(section, lines, *, expand_shared_changes=False, capture_span_defaults=False):
+def parse_section(section, lines, *, expand_shared_changes=False, capture_span_defaults=False,
+                  skip_plain_scripts_label=False):
     """lines: [(line_no, text)] between this heading and the next."""
     entries, headers, columns = [], [], 0
     mode = None
@@ -93,7 +94,8 @@ def parse_section(section, lines, *, expand_shared_changes=False, capture_span_d
             mode = "changed"
         elif section == "cvars" and text.strip() in (": '''Commands'''", ": Commands"):
             inline_commands = True
-        elif section == "widgets" and text.strip() == ": Widget Scripts":
+        elif section == "widgets" and (text.strip() == ": Widget Scripts" or
+                                       (skip_plain_scripts_label and text.strip() == ": Scripts")):
             continue  # Category label, not an API occurrence.
         elif mode in ("added", "removed") and text.startswith(":"):
             entry = make_entry(section, mode, line_no, text)
@@ -166,6 +168,8 @@ def main():
                         help='Exclude unheaded Structures from API annotations; opt-in preserves prior registers')
     parser.add_argument('--capture-span-defaults', action='store_true',
                         help='Retain hidden-span CVar defaults; opt-in preserves prior registers')
+    parser.add_argument('--skip-plain-scripts-label', action='store_true',
+                        help='Skip the plain widget Scripts label; opt-in preserves prior registers')
     args = parser.parse_args()
     patch, path, revid, out = args.patch, args.path, args.revid, args.out
     raw = Path(path).read_bytes()
@@ -177,7 +181,8 @@ def main():
         section_entries, section_counts = parse_section(
             entry_section, buckets.get(section, []),
             expand_shared_changes=args.expand_shared_changes,
-            capture_span_defaults=args.capture_span_defaults)
+            capture_span_defaults=args.capture_span_defaults,
+            skip_plain_scripts_label=args.skip_plain_scripts_label)
         if section == "commands":
             for count in section_counts:
                 count["section"] = "commands"

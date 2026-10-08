@@ -176,6 +176,21 @@ class InventoryTests(unittest.TestCase):
         self.assertEqual([(e['symbol'], e.get('kind')) for e in entries],
                          [('ModelSceneActor OnModelCleared', 'widget-script')])
 
+    def test_plain_scripts_label_is_opt_in_and_preserves_modelscene_handler(self):
+        lines = [
+            (1, '! Added <small>(1)</small>'),
+            (2, '! Removed <small>(0)</small>'),
+            (3, '| valign="top" | <div>'),
+            (4, ': Scripts'),
+            (5, ': [[UIHANDLER OnDressModel|ModelScene OnDressModel]]'),
+        ]
+        with self.assertRaisesRegex(ValueError, 'no symbol reference'):
+            parse_section('widgets', lines)
+        entries, counts = parse_section('widgets', lines, skip_plain_scripts_label=True)
+        self.assertEqual([(e['symbol'], e.get('kind'), e['wikitext_line']) for e in entries],
+                         [('ModelScene OnDressModel', 'widget-script', 5)])
+        self.assertEqual([c['parsed_count'] for c in counts], [1, 0])
+
     def test_widget_script_label_is_not_an_inventory_member(self):
         entries, _ = parse_section('widgets', [
             (1, '| valign="top" | <div>'),

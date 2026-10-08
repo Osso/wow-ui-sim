@@ -1,0 +1,247 @@
+{{apichanges|9.1.0|prev=9.0.5|next=9.1.5}}
+
+==Summary==
+* The client now supports loading a <code>MyAddOn_Mainline.toc</code> file and otherwise fall back to <code>MyAddOn.toc</code>.<sup>[https://github.com/Stanzilla/WoWUIBugs/issues/68#issuecomment-889431675]</sup>
+* The [https://github.com/Stanzilla/WoWUIBugs/wiki/9.1.0-Consolidated-UI-Changes#event-trace-tool event trace] debug tool been rewritten.
+* Transmogrification APIs have been reworked.
+
+==Resources==
+* TOC: <code>90100</code>
+* Diffs: [https://github.com/Gethe/wow-ui-source/compare/0abb9f1e577bdc53f401ad26ff8db18c71dce290...b2d0b0880582d02c996ec816609c0228eb5d8ec9 wow-ui-source], [https://github.com/Ketho/BlizzardInterfaceResources/compare/dd3a6166ac689d098d2326c09750fedb87781e09..b1124e84ad8d7dded85e4b5badfeee32ac96eb97 BlizzardInterfaceResources]
+* Deprecated API: [https://www.townlong-yak.com/framexml/9.1.0/Blizzard_Deprecated/Deprecated_9_1_0.lua Deprecated_9_1_0.lua]
+* Community patch notes: [https://github.com/Stanzilla/WoWUIBugs/wiki/9.1.0-Consolidated-UI-Changes 9.1.0 Consolidated UI Changes]
+<!-- https://github.com/Ketho/WowpediaApiDoc/blob/master/Projects/WikitextDiff/WikitextDiff.lua -->
+
+==Global API==
+{| class="wikitable" style="min-width: 600px"
+|+ 9.0.5 (38134) &rarr; 9.1.0 (40000) Aug 31 2021
+|- class="mw-customtoggle-global-c"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(77)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(43)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-global-c"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|AcknowledgeAADCAlert}}
+: {{api|t=a|C_BarberShop.RandomizeCustomizationChoices}}
+: {{api|t=a|C_ChallengeMode.GetDungeonScoreRarityColor}}
+: {{api|t=a|C_ChallengeMode.GetKeystoneLevelRarityColor}}
+: {{api|t=a|C_ChallengeMode.GetOverallDungeonScore}}
+: {{api|t=a|C_ChallengeMode.GetSpecificDungeonOverallScoreRarityColor}}
+: {{api|t=a|C_ChallengeMode.GetSpecificDungeonScoreRarityColor}}
+: {{api|t=a|C_ChatInfo.GetChannelInfoFromIdentifier}}
+: {{api|t=a|C_ChatInfo.GetChatTypeName}}
+: {{api|t=a|C_ChatInfo.GetNumReservedChatWindows}}
+: {{api|t=a|C_EventToastManager.GetLevelUpDisplayToastsFromLevel}}
+: {{api|t=a|C_EventToastManager.GetNextToastToDisplay}}
+: {{api|t=a|C_EventToastManager.RemoveCurrentToast}}
+: {{api|t=a|C_FrameManager.GetFrameVisibilityState}}
+: {{api|t=a|C_Garrison.GetAutoMissionTargetingInfoForSpell}}
+: {{api|t=a|C_Item.CanItemTransmogAppearance}}
+: {{api|t=a|C_Item.GetAppliedItemTransmogInfo}}
+: {{api|t=a|C_Item.GetBaseItemTransmogInfo}}
+: {{api|t=a|C_Item.IsDressableItemByID}}
+: {{api|t=a|C_ItemUpgrade.GetItemLevelIncrement}}
+: {{api|t=a|C_ItemUpgrade.GetItemUpgradeEffect}}
+: {{api|t=a|C_ItemUpgrade.GetNumItemUpgradeEffects}}
+: {{api|t=a|C_LegendaryCrafting.GetRuneforgePowersByClassSpecAndCovenant}}
+: {{api|t=a|C_LFGInfo.GetDungeonInfo}}
+: {{api|t=a|C_LFGList.GetApplicantDungeonScoreForListing}}
+: {{api|t=a|C_MythicPlus.GetSeasonBestAffixScoreInfoForMap}}
+: {{api|t=a|C_PetJournal.GetPetAbilityListTable}}
+: {{api|t=a|C_PetJournal.GetPetInfoTableByPetID}}
+: {{api|t=a|C_PlayerChoice.GetCurrentPlayerChoiceInfo}}
+: {{api|t=a|C_PlayerChoice.GetNumRerolls}}
+: {{api|t=a|C_PlayerChoice.OnUIClosed}}
+: {{api|t=a|C_PlayerChoice.RequestRerollPlayerChoice}}
+: {{api|t=a|C_PlayerChoice.SendPlayerChoiceResponse}}
+: {{api|t=a|C_PlayerInfo.GetAlternateFormInfo}}
+: {{api|t=a|C_PlayerInfo.GetInstancesUnlockedAtLevel}}
+: {{api|t=a|C_PlayerInfo.GetPlayerMythicPlusRatingSummary}}
+: {{api|t=a|C_QuestLog.GetQuestLogPortraitGiver}}
+: {{api|t=a|C_QuestLog.GetQuestType}}
+: {{api|t=a|C_ScenarioInfo.GetScenarioInfo}}
+: {{api|t=a|C_ScenarioInfo.GetScenarioStepInfo}}
+: {{api|t=a|C_Soulbinds.GetConduitRank}}
+: {{api|t=a|C_Soulbinds.GetSpecsAssignedToSoulbind}}
+: {{api|t=a|C_SpellBook.GetCurrentLevelSpells}}
+: {{api|t=a|C_SpellBook.GetSpellInfo}}
+: {{api|t=a|C_SpellBook.GetSpellLinkFromSpellID}}
+: {{api|t=a|C_Transmog.CanHaveSecondaryAppearanceForSlotID}}
+: {{api|t=a|C_Transmog.CanTransmogItem}}
+: {{api|t=a|C_Transmog.GetApplyCost}}
+: {{api|t=a|C_Transmog.GetPending}}
+: {{api|t=a|C_Transmog.GetSlotEffectiveCategory}}
+: {{api|t=a|C_Transmog.IsAtTransmogNPC}}
+: {{api|t=a|C_Transmog.IsSlotBeingCollapsed}}
+: {{api|t=a|C_TransmogCollection.CanAppearanceHaveIllusion}}
+: {{api|t=a|C_TransmogCollection.GetArtifactAppearanceStrings}}
+: {{api|t=a|C_TransmogCollection.GetFallbackWeaponAppearance}}
+: {{api|t=a|C_TransmogCollection.GetIllusionInfo}}
+: {{api|t=a|C_TransmogCollection.GetIllusionStrings}}
+: {{api|t=a|C_TransmogCollection.GetInspectItemTransmogInfoList}}
+: {{api|t=a|C_TransmogCollection.GetOutfitInfo}}
+: {{api|t=a|C_TransmogCollection.GetOutfitItemTransmogInfoList}}
+: {{api|t=a|C_TransmogCollection.GetPairedArtifactAppearance}}
+: {{api|t=a|C_TransmogCollection.IsAppearanceHiddenVisual}}
+: {{api|t=a|C_TransmogCollection.NewOutfit}}
+: {{api|t=a|C_TransmogCollection.RenameOutfit}}
+: {{api|t=a|C_TransmogSets.GetSetPrimaryAppearances}}
+: {{api|t=a|C_UIWidgetManager.GetSpacerVisualizationInfo}}
+: {{api|t=a|C_UIWidgetManager.GetTextColumnRowVisualizationInfo}}
+: {{api|t=a|C_VoiceChat.ActivateChannelTranscription}}
+: {{api|t=a|C_VoiceChat.DeactivateChannelTranscription}}
+: {{api|t=a|C_VoiceChat.GetRemoteTtsVoices}}
+: {{api|t=a|C_VoiceChat.GetTtsVoices}}
+: {{api|t=a|C_VoiceChat.IsSpeakForMeActive}}
+: {{api|t=a|C_VoiceChat.IsSpeakForMeAllowed}}
+: {{api|t=a|C_VoiceChat.IsTranscriptionAllowed}}
+: {{api|t=a|C_VoiceChat.SpeakRemoteTextSample}}
+: {{api|t=a|C_VoiceChat.SpeakText}}
+: {{api|t=a|C_VoiceChat.StopSpeakingText}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=a|ApplyBarberShopStyle}}
+: {{api|t=a|BarberShopReset}}
+: {{api|t=a|C_BarberShop.OldBarberShopLoaded}}
+: {{api|t=a|C_LegendaryCrafting.GetRuneforgePowersByClassAndSpec}}
+: {{api|t=a|C_PetJournal.GetNumMaxPets}}
+: {{api|t=a|C_PlayerChoice.GetPlayerChoiceInfo}}
+: {{api|t=a|C_PlayerChoice.GetPlayerChoiceOptionInfo}}
+: {{api|t=a|C_PlayerChoice.GetPlayerChoiceRewardInfo}}
+: {{api|t=a|C_Soulbinds.GetConduitRankFromCollection}}
+: {{api|t=a|C_Transmog.GetCost}}
+: {{api|t=a|C_Transmog.GetItemInfo}}
+: {{api|t=a|C_Transmog.LoadSources}}
+: {{api|t=a|C_Transmog.ValidateAllPending}}
+: {{api|t=a|C_TransmogCollection.CanSetFavoriteInCategory}}
+: {{api|t=a|C_TransmogCollection.GetIllusionFallbackWeaponSource}}
+: {{api|t=a|C_TransmogCollection.GetIllusionSourceInfo}}
+: {{api|t=a|C_TransmogCollection.GetInspectSources}}
+: {{api|t=a|C_TransmogCollection.GetOutfitName}}
+: {{api|t=a|C_TransmogCollection.GetOutfitSources}}
+: {{api|t=a|C_TransmogCollection.GetShowMissingSourceInItemTooltips}}
+: {{api|t=a|C_TransmogCollection.SaveOutfit}}
+: {{api|t=a|C_TransmogCollection.SetShowMissingSourceInItemTooltips}}
+: {{api|t=a|C_TransmogSets.GetSetSources}}
+: {{api|t=a|C_TransmogSets.IsSetCollected}}
+: {{api|t=a|C_TransmogSets.IsSetUsable}}
+: {{api|t=a|CancelBarberShop}}
+: {{api|t=a|ClosePlayerChoice}}
+: {{api|t=a|GetBarberShopStyleInfo}}
+: {{api|t=a|GetBarberShopTotalCost}}
+: {{api|t=a|GetCurrentLevelSpells}}
+: {{api|t=a|GetCustomizationDetails}}
+: {{api|t=a|GetDungeonInfo}}
+: {{api|t=a|GetItemLevelIncrement}}
+: {{api|t=a|GetItemUpgradeEffect}}
+: {{api|t=a|GetLevelUpInstances}}
+: {{api|t=a|GetNumItemUpgradeEffects}}
+: {{api|t=a|GetQuestLogPortraitGiver}}
+: {{api|t=a|HasAlternateForm}}
+: {{api|t=a|IsBarberShopStyleValid}}
+: {{api|t=a|IsDressableItem}}
+: {{api|t=a|SendPlayerChoiceResponse}}
+: {{api|t=a|SetBarberShopAlternateFormFrame}}
+: {{api|t=a|SetNextBarberShopStyle}}
+</div>
+|}
+
+==Widgets==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-widgets"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(14)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(2)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-widgets"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|Region:ClearPointsOffset}}
+: {{api|t=w|AnimationGroup:RemoveAnimations}}
+: {{api|t=w|Frame:SetFrameBuffer}}
+: {{api|t=w|EditBox:ClearHighlightText}}
+: {{api|t=w|GameTooltip:GetCustomLineSpacing}}
+: {{api|t=w|GameTooltip:SetCustomLineSpacing}}
+: {{api|t=w|GameTooltip:SetEnhancedConduit}}
+: {{api|t=w|DressUpModel:GetItemTransmogInfo}}
+: {{api|t=w|DressUpModel:GetItemTransmogInfoList}}
+: {{api|t=w|DressUpModel:SetItemTransmogInfo}}
+: {{api|t=w|ModelSceneActor:GetItemTransmogInfo}}
+: {{api|t=w|ModelSceneActor:GetItemTransmogInfoList}}
+: {{api|t=w|ModelSceneActor:SetItemTransmogInfo}}
+
+: Scripts
+: [[UIHANDLER OnDressModel|ModelScene OnDressModel]]
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=w|DressUpModel:GetSlotTransmogSources}}
+: {{api|t=w|ModelSceneActor:GetSlotTransmogSources}}
+</div>
+|}
+
+==Events==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-events"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(18)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(1)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-events"
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|CHAT_MSG_VOICE_TEXT}}
+: {{api|t=e|DISPLAY_EVENT_TOAST_LINK}}
+: {{api|t=e|DISPLAY_EVENT_TOASTS}}
+: {{api|t=e|FRAME_MANAGER_UPDATE_ALL}}
+: {{api|t=e|FRAME_MANAGER_UPDATE_FRAME}}
+: {{api|t=e|GARRISON_SPEC_GROUP_UPDATED}}
+: {{api|t=e|GARRISON_SPEC_GROUPS_CLEARED}}
+: {{api|t=e|SCRIPTED_ANIMATIONS_UPDATE}}
+: {{api|t=e|UI_ERROR_POPUP}}
+: {{api|t=e|VOICE_CHAT_CHANNEL_MEMBER_STT_MESSAGE}}
+: {{api|t=e|VOICE_CHAT_CHANNEL_TRANSCRIBING_CHANGED}}
+: {{api|t=e|VOICE_CHAT_SPEAK_FOR_ME_ACTIVE_STATUS_UPDATED}}
+: {{api|t=e|VOICE_CHAT_SPEAK_FOR_ME_FEATURE_STATUS_UPDATED}}
+: {{api|t=e|VOICE_CHAT_TTS_PLAYBACK_FAILED}}
+: {{api|t=e|VOICE_CHAT_TTS_PLAYBACK_FINISHED}}
+: {{api|t=e|VOICE_CHAT_TTS_PLAYBACK_STARTED}}
+: {{api|t=e|VOICE_CHAT_TTS_SPEAK_TEXT_UPDATE}}
+: {{api|t=e|VOICE_CHAT_TTS_VOICES_UPDATE}}
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: {{api|t=e|MYTHIC_PLUS_NEW_SEASON_RECORD}}
+</div>
+|}
+
+==CVars==
+{| class="wikitable" style="min-width: 600px"
+|- class="mw-customtoggle-cvars"
+! style="width: 50%" | <font color="lightgreen">Added</font> <small>(19)</small>
+! style="width: 50%" | <font color="pink">Removed</font> <small>(5)</small>
+|- class="mw-collapsible" id="mw-customcollapsible-cvars"
+| valign="top" | <div style="margin-left:-1.5em">
+: <span class="tttemplatelink">[[CVar GamePadAnalogMovement|GamePadAnalogMovement]]</span><span style="display:none">Default: <code><span class="apitype">1</span></code><br><small>Enable analog movement in any direction, rather than just the 8 cardinal directions</small></span>
+: <span class="tttemplatelink">[[CVar GamePadCursorPushCamera|GamePadCursorPushCamera]]</span><span style="display:none">Default: <code><span class="apitype">1</span></code><br><small>Rate for GamePad controlled cursor to push/turn camera when at edge of window</small></span>
+: <span class="tttemplatelink">[[CVar GamePadTurnWithCamera|GamePadTurnWithCamera]]</span><span style="display:none">Default: <code><span class="apitype">1</span></code><br><small>Turn character to match when camera facing is changed (1=in-combat, 2=always)</small></span>
+: <span class="tttemplatelink">[[CVar graphicsComputeEffects|graphicsComputeEffects]]</span><span style="display:none">Default: <code><span class="apitype">4</span></code></span>
+: <span class="tttemplatelink">[[CVar lastCharacterGuid|lastCharacterGuid]]</span><span style="display:none">Default: <code><span class="apitype">0</span></code><br><small>Last character selected's guid</small></span>
+: <span class="tttemplatelink">[[CVar lodObjectSizeScale|lodObjectSizeScale]]</span><span style="display:none">Default: <code><span class="apitype">1</span></code><br><small>Scales all objects size for culling</small></span>
+: <span class="tttemplatelink">[[CVar questTextContrast|questTextContrast]]</span><span style="display:none">Default: <code><span class="apitype">0</span></code><br><small>Whether to increase text contrast in Quest UIs</small></span>
+: <span class="tttemplatelink">[[CVar raidGraphicsComputeEffects|raidGraphicsComputeEffects]]</span><span style="display:none">Default: <code><span class="apitype">1</span></code></span>
+: <span class="tttemplatelink">[[CVar RAIDVolumeFog|RAIDVolumeFog]]</span><span style="display:none">Default: <code><span class="apitype">1</span></code><br><small>Volume Fog</small></span>
+: <span class="tttemplatelink">[[CVar remoteTextToSpeech|remoteTextToSpeech]]</span><span style="display:none">Default: <code><span class="apitype">0</span></code>, Scope: <span class="apitype">Account</span><br><small>Enables typing into a voice chat window to speak to other players using the text to speech system</small></span>
+: <span class="tttemplatelink">[[CVar remoteTextToSpeechVoice|remoteTextToSpeechVoice]]</span><span style="display:none">Default: <code><span class="apitype">1</span></code>, Scope: <span class="apitype">Account</span><br><small>Voice option used with Speak for Me where you can send text to speech to other players in voice chat</small></span>
+: <span class="tttemplatelink">[[CVar showLoadingScreenTips|showLoadingScreenTips]]</span><span style="display:none">Default: <code><span class="apitype">1</span></code><br><small>Show loading screen tooltips</small></span>
+: <span class="tttemplatelink">[[CVar specular|specular]]</span><span style="display:none">Default: <code><span class="apitype">1</span></code><br><small>Specular lighting multiplier (0-1)</small></span>
+: <span class="tttemplatelink">[[CVar speechToText|speechToText]]</span><span style="display:none">Default: <code><span class="apitype">0</span></code>, Scope: <span class="apitype">Account</span><br><small>Allows enabling transcription on a voice channel in order to see written text based on the words spoken by other players</small></span>
+: <span class="tttemplatelink">[[CVar SpellCooldownDebugger|SpellCooldownDebugger]]</span><span style="display:none">Default: <code><span class="apitype">0</span></code></span>
+: <span class="tttemplatelink">[[CVar textToSpeech|textToSpeech]]</span><span style="display:none">Default: <code><span class="apitype">0</span></code>, Scope: <span class="apitype">Account</span><br><small>Reads chat text out loud using the voice text to speech system based on the selected options</small></span>
+
+: Commands
+: [[CVar D3D11|D3D11]]
+: [[CVar D3D11_LEGACY|D3D11_LEGACY]]
+: [[CVar D3D12|D3D12]]
+</div>
+| valign="top" | <div style="margin-left:-1.5em">
+: [[CVar GamePadSmoothFacing|GamePadSmoothFacing]]
+: [[CVar graphicsSunshafts|graphicsSunshafts]]
+: [[CVar raidGraphicsSunshafts|raidGraphicsSunshafts]]
+: [[CVar spamFilter|spamFilter]]
+: [[CVar transmogShouldersSeparately|transmogShouldersSeparately]]
+</div>
+|}
+
+==References==
