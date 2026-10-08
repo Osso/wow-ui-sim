@@ -163,7 +163,7 @@ def verify_receipts(context):
         content = (HERE / receipt['log']).read_bytes()
         assert digest(content) == receipt['log_sha256'], label
         if 'passed_cases' in policy:
-            passed = set(re.findall(r'^test (\S+) \.\.\. ok$', content.decode(), re.M))
+            passed = set(re.findall(r'^test (\S+) (?:- should panic )?\.\.\. ok$', content.decode(), re.M))
             assert passed == set(policy['passed_cases']), label
             counts = re.findall(r'test result: ok\. (\d+) passed; 0 failed;', content.decode())
             assert counts and int(counts[-1]) == len(passed), label
