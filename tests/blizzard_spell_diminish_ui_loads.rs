@@ -283,9 +283,8 @@ fn appears_in_eager_discovery_on_game_screen_only() {
     }
 }
 
-#[test]
-fn full_game_load_emits_no_addon_specific_lua_errors() {
-    let env = load_full_ui_for(ScreenKind::Game);
+prefork_full_ui_case! {
+fn full_game_load_emits_no_addon_specific_lua_errors(env: &WowLuaEnv) {
 
     let errors = env.state().borrow().lua_errors.clone();
     let needles = [
@@ -309,10 +308,17 @@ fn full_game_load_emits_no_addon_specific_lua_errors() {
         matched
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn is_addon_loaded_reports_true_after_eager_sweep() {
+fn full_game_load_emits_no_addon_specific_lua_errors() {
     let env = load_full_ui_for(ScreenKind::Game);
+    full_game_load_emits_no_addon_specific_lua_errors::run(&env);
+}
+
+prefork_full_ui_case! {
+fn is_addon_loaded_reports_true_after_eager_sweep(env: &WowLuaEnv) {
 
     let loaded: bool = env
         .eval("return C_AddOns.IsAddOnLoaded('Blizzard_SpellDiminishUI')")
@@ -326,10 +332,17 @@ fn is_addon_loaded_reports_true_after_eager_sweep() {
          auto-loaded set"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn publishes_two_mixin_tables_at_global_scope() {
+fn is_addon_loaded_reports_true_after_eager_sweep() {
     let env = load_full_ui_for(ScreenKind::Game);
+    is_addon_loaded_reports_true_after_eager_sweep::run(&env);
+}
+
+prefork_full_ui_case! {
+fn publishes_two_mixin_tables_at_global_scope(env: &WowLuaEnv) {
 
     for mixin in PUBLISHED_MIXINS {
         let kind: String = env
@@ -345,10 +358,17 @@ fn publishes_two_mixin_tables_at_global_scope() {
         );
     }
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn tray_item_mixin_carries_seven_canonical_methods() {
+fn publishes_two_mixin_tables_at_global_scope() {
     let env = load_full_ui_for(ScreenKind::Game);
+    publishes_two_mixin_tables_at_global_scope::run(&env);
+}
+
+prefork_full_ui_case! {
+fn tray_item_mixin_carries_seven_canonical_methods(env: &WowLuaEnv) {
 
     for method in TRAY_ITEM_METHODS {
         let kind: String = env
@@ -372,10 +392,17 @@ fn tray_item_mixin_carries_seven_canonical_methods() {
         );
     }
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn tray_mixin_carries_twenty_five_lifecycle_and_pool_methods() {
+fn tray_item_mixin_carries_seven_canonical_methods() {
     let env = load_full_ui_for(ScreenKind::Game);
+    tray_item_mixin_carries_seven_canonical_methods::run(&env);
+}
+
+prefork_full_ui_case! {
+fn tray_mixin_carries_twenty_five_lifecycle_and_pool_methods(env: &WowLuaEnv) {
 
     for method in TRAY_METHODS {
         let kind: String = env
@@ -406,10 +433,17 @@ fn tray_mixin_carries_twenty_five_lifecycle_and_pool_methods() {
         );
     }
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn tray_item_template_materializes_with_cooldown_and_immunity_children() {
+fn tray_mixin_carries_twenty_five_lifecycle_and_pool_methods() {
     let env = load_full_ui_for(ScreenKind::Game);
+    tray_mixin_carries_twenty_five_lifecycle_and_pool_methods::run(&env);
+}
+
+prefork_full_ui_case! {
+fn tray_item_template_materializes_with_cooldown_and_immunity_children(env: &WowLuaEnv) {
 
     let probe = "local f = CreateFrame('Frame', 'SpellDiminishItemProbe', UIParent, 'SpellDiminishStatusTrayItemTemplate') \
                  if not f then return 'frame nil' end \
@@ -435,10 +469,17 @@ fn tray_item_template_materializes_with_cooldown_and_immunity_children() {
          Report: {report}"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn tray_template_materializes_with_resize_layout_keyvalues() {
+fn tray_item_template_materializes_with_cooldown_and_immunity_children() {
     let env = load_full_ui_for(ScreenKind::Game);
+    tray_item_template_materializes_with_cooldown_and_immunity_children::run(&env);
+}
+
+prefork_full_ui_case! {
+fn tray_template_materializes_with_resize_layout_keyvalues(env: &WowLuaEnv) {
 
     let probe = "local f = CreateFrame('Frame', 'SpellDiminishTrayProbe', UIParent, 'SpellDiminishStatusTrayTemplate') \
                  if not f then return 'frame nil' end \
@@ -461,10 +502,17 @@ fn tray_template_materializes_with_resize_layout_keyvalues() {
          tray-item chain. Report: {report}"
     );
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn xml_registers_both_virtual_templates() {
+fn tray_template_materializes_with_resize_layout_keyvalues() {
     let env = load_full_ui_for(ScreenKind::Game);
+    tray_template_materializes_with_resize_layout_keyvalues::run(&env);
+}
+
+prefork_full_ui_case! {
+fn xml_registers_both_virtual_templates(env: &WowLuaEnv) {
 
     for template in VIRTUAL_TEMPLATES {
         let probe = format!(
@@ -487,10 +535,17 @@ fn xml_registers_both_virtual_templates() {
         );
     }
 }
+}
 
+#[cfg(not(feature = "client-retail"))]
 #[test]
-fn tray_template_inherits_resize_layout_frame() {
+fn xml_registers_both_virtual_templates() {
     let env = load_full_ui_for(ScreenKind::Game);
+    xml_registers_both_virtual_templates::run(&env);
+}
+
+prefork_full_ui_case! {
+fn tray_template_inherits_resize_layout_frame(env: &WowLuaEnv) {
 
     let probe = "local f = CreateFrame('Frame', 'SpellDiminishTrayResizeProbe', UIParent, 'SpellDiminishStatusTrayTemplate') \
                  if not f then return false end \
@@ -511,4 +566,12 @@ fn tray_template_inherits_resize_layout_frame() {
          inheritance chain to the SharedXML-provided ResizeLayoutFrame \
          template"
     );
+}
+}
+
+#[cfg(not(feature = "client-retail"))]
+#[test]
+fn tray_template_inherits_resize_layout_frame() {
+    let env = load_full_ui_for(ScreenKind::Game);
+    tray_template_inherits_resize_layout_frame::run(&env);
 }
