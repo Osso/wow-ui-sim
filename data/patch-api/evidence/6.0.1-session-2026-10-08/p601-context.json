@@ -2,7 +2,7 @@
   "base_revision": "8dd11c1b90fb1f5ca925de62054a671179652f15",
   "source_revision": "4b6c582c7eb749564fafe3e514310d85a91401c1",
   "documentation_revision": "72d554110ec60f457c426e7916d4f56bd88b6de7",
-  "seal_revision": "72d554110ec60f457c426e7916d4f56bd88b6de7",
+  "seal_revision": "4634c9d3de2d3989d1f8b06361b1c5519e7cda35",
   "proof_scope": [
     "tests/patch_6_0_1_publication_sweep.rs",
     "tests/data/patch_6_0_1_sweep_known_gaps.json",
@@ -32,6 +32,16 @@
         "Cargo.lock",
         "build.rs",
         "data/patch-api/sources"
+      ],
+      "proof_scope": [
+        "tests/patch_6_0_1_publication_sweep.rs",
+        "tests/data/patch_6_0_1_sweep_known_gaps.json",
+        "tests/common/publication_sweep.rs",
+        "tools/gen_patch_wikitext_register.py",
+        "tools/extract_patch_non_inventory.py",
+        "Cargo.toml",
+        "Cargo.lock",
+        "build.rs"
       ]
     },
     "p601-all-sweeps": {
@@ -52,6 +62,16 @@
         "Cargo.lock",
         "build.rs",
         "data/patch-api/sources"
+      ],
+      "proof_scope": [
+        "tests/patch_6_0_1_publication_sweep.rs",
+        "tests/data/patch_6_0_1_sweep_known_gaps.json",
+        "tests/common/publication_sweep.rs",
+        "tools/gen_patch_wikitext_register.py",
+        "tools/extract_patch_non_inventory.py",
+        "Cargo.toml",
+        "Cargo.lock",
+        "build.rs"
       ]
     },
     "p601-mists-check": {
@@ -72,6 +92,16 @@
         "Cargo.lock",
         "build.rs",
         "data/patch-api/sources"
+      ],
+      "proof_scope": [
+        "tests/patch_6_0_1_publication_sweep.rs",
+        "tests/data/patch_6_0_1_sweep_known_gaps.json",
+        "tests/common/publication_sweep.rs",
+        "tools/gen_patch_wikitext_register.py",
+        "tools/extract_patch_non_inventory.py",
+        "Cargo.toml",
+        "Cargo.lock",
+        "build.rs"
       ]
     },
     "p601-format-check": {
@@ -87,6 +117,15 @@
         "Cargo.toml",
         "Cargo.lock",
         "build.rs"
+      ],
+      "proof_scope": [
+        "tests/patch_6_0_1_publication_sweep.rs",
+        "tests/common/publication_sweep.rs",
+        "tools/gen_patch_wikitext_register.py",
+        "tools/extract_patch_non_inventory.py",
+        "Cargo.toml",
+        "Cargo.lock",
+        "build.rs"
       ]
     },
     "p601-reproduction": {
@@ -99,6 +138,15 @@
       "paths": [
         "tools",
         "data/patch-api/sources"
+      ],
+      "proof_scope": [
+        "tests/patch_6_0_1_publication_sweep.rs",
+        "tests/common/publication_sweep.rs",
+        "tools/gen_patch_wikitext_register.py",
+        "tools/extract_patch_non_inventory.py",
+        "Cargo.toml",
+        "Cargo.lock",
+        "build.rs"
       ]
     },
     "p601-test_check_patch_validators": {
@@ -110,6 +158,15 @@
       "exit": 0,
       "paths": [
         "tools"
+      ],
+      "proof_scope": [
+        "tests/patch_6_0_1_publication_sweep.rs",
+        "tests/common/publication_sweep.rs",
+        "tools/gen_patch_wikitext_register.py",
+        "tools/extract_patch_non_inventory.py",
+        "Cargo.toml",
+        "Cargo.lock",
+        "build.rs"
       ]
     },
     "p601-test_extract_patch_non_inventory": {
@@ -121,6 +178,15 @@
       "exit": 0,
       "paths": [
         "tools"
+      ],
+      "proof_scope": [
+        "tests/patch_6_0_1_publication_sweep.rs",
+        "tests/common/publication_sweep.rs",
+        "tools/gen_patch_wikitext_register.py",
+        "tools/extract_patch_non_inventory.py",
+        "Cargo.toml",
+        "Cargo.lock",
+        "build.rs"
       ]
     },
     "p601-test_gen_patch_wikitext_register": {
@@ -132,6 +198,15 @@
       "exit": 0,
       "paths": [
         "tools"
+      ],
+      "proof_scope": [
+        "tests/patch_6_0_1_publication_sweep.rs",
+        "tests/common/publication_sweep.rs",
+        "tools/gen_patch_wikitext_register.py",
+        "tools/extract_patch_non_inventory.py",
+        "Cargo.toml",
+        "Cargo.lock",
+        "build.rs"
       ]
     },
     "p601-test_patch_audit_validation": {
@@ -143,6 +218,15 @@
       "exit": 0,
       "paths": [
         "tools"
+      ],
+      "proof_scope": [
+        "tests/patch_6_0_1_publication_sweep.rs",
+        "tests/common/publication_sweep.rs",
+        "tools/gen_patch_wikitext_register.py",
+        "tools/extract_patch_non_inventory.py",
+        "Cargo.toml",
+        "Cargo.lock",
+        "build.rs"
       ]
     }
   },
@@ -275,7 +359,10 @@
     "recheck_sweeps.py": "479efb0ec3e509ab730a3fe5d2f6ece14dab94e40605aa84a27dda76828ed3f7",
     "reproduce_sources.py": "585bc2618c0f1f539f82d778f4deff900c87db156af3b607597f92326c9ac63e",
     "run_checks.py": "02bff7fb52f4db574141609fa10f29904c2531d1815c6f5dcb4d7142c9b75c58",
-    "run_proof.py": "f8e760f0582db9412c055b0572f1c9d5e5c54eb894713ff95d6c534fca261eff",
-    "validate.py": "46cc7a850b207acf6a48cdb12d9c012de672c2415bc028135a2bbf630ed129cd"
+    "run_proof.py": "453da36da652caa60ec8066eebe0606cc1572c87187c9aec71523b0f74f6944b",
+    "validate.py": "166cb601248f14201dcceb8dd3872bc6500b65cd782d672d87411c5342480981",
+    "p601-receipt-scope-note.md": "dcbe2a6850525e69fd7ccdda9b9f06e4c1f42a914134001e21e8e7f66c4fc5d5",
+    "initial-failure/p601-own-validator.log": "cd502b84b85c915c0babd6a6890f8dfe3eb5bb25ad32be4f803dbeb2018da6b1",
+    "initial-failure/p601-own-validator.proof.json": "85215133619005c7d2c5f2cc0314e6e346de8c5370d31fe492709bef5d5df626"
   }
 }
