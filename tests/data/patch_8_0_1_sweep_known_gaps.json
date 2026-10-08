@@ -10,7 +10,6 @@
   "wt-global-api-C_ChatInfo.IsAddonMessagePrefixRegistered-9",
   "wt-global-api-C_ChatInfo.IsPartyChannelType-10",
   "wt-global-api-C_ChatInfo.RegisterAddonMessagePrefix-14",
-  "wt-global-api-C_ChatInfo.ReportPlayer-15",
   "wt-global-api-C_ChatInfo.SendAddonMessage-16",
   "wt-global-api-C_ChatInfo.SendAddonMessageLogged-17",
   "wt-global-api-C_Map.GetBountySetIDForMap-21",
