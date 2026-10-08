@@ -46,7 +46,7 @@
       "-B",
       "/home/osso/.worktrees/wow-ui-sim-p710-page/data/patch-api/evidence/7.1.0-session-2026-10-08/validate.py"
     ],
-    "revision": "65b4e93761e1d221e949da33c50f53c2f695e1bf",
+    "revision": "e173bf7ae2fe3e738ea00eccacdbcc4ec83361c6",
     "exit": 0,
     "log": "validators/7.1.0-session-2026-10-08-validate.py.txt",
     "log_sha256": "95c9fc261fe87a29d885b3f7fa12689038b791abdb85eaf9ef499982a383fc16"
