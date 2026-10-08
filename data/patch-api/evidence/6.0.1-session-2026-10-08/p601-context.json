@@ -1,0 +1,281 @@
+{
+  "base_revision": "8dd11c1b90fb1f5ca925de62054a671179652f15",
+  "source_revision": "4b6c582c7eb749564fafe3e514310d85a91401c1",
+  "documentation_revision": "72d554110ec60f457c426e7916d4f56bd88b6de7",
+  "seal_revision": "72d554110ec60f457c426e7916d4f56bd88b6de7",
+  "proof_scope": [
+    "tests/patch_6_0_1_publication_sweep.rs",
+    "tests/data/patch_6_0_1_sweep_known_gaps.json",
+    "tests/common/publication_sweep.rs",
+    "tools/gen_patch_wikitext_register.py",
+    "tools/extract_patch_non_inventory.py",
+    "Cargo.toml",
+    "Cargo.lock",
+    "build.rs"
+  ],
+  "proofs": {
+    "p601-discovery": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_6_0_1"
+      ],
+      "exit": 0,
+      "paths": [
+        "src",
+        "tests",
+        "tools",
+        "Cargo.toml",
+        "Cargo.lock",
+        "build.rs",
+        "data/patch-api/sources"
+      ]
+    },
+    "p601-all-sweeps": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "publication_sweep"
+      ],
+      "exit": 0,
+      "paths": [
+        "src",
+        "tests",
+        "tools",
+        "Cargo.toml",
+        "Cargo.lock",
+        "build.rs",
+        "data/patch-api/sources"
+      ]
+    },
+    "p601-mists-check": {
+      "command": [
+        "cargo",
+        "check",
+        "--no-default-features",
+        "--features",
+        "sound,gui,casc,client-mists",
+        "--tests"
+      ],
+      "exit": 0,
+      "paths": [
+        "src",
+        "tests",
+        "tools",
+        "Cargo.toml",
+        "Cargo.lock",
+        "build.rs",
+        "data/patch-api/sources"
+      ]
+    },
+    "p601-format-check": {
+      "command": [
+        "cargo",
+        "fmt",
+        "--check"
+      ],
+      "exit": 0,
+      "paths": [
+        "src",
+        ":(glob)tests/**/*.rs",
+        "Cargo.toml",
+        "Cargo.lock",
+        "build.rs"
+      ]
+    },
+    "p601-reproduction": {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p601-page/data/patch-api/evidence/6.0.1-session-2026-10-08/reproduce_sources.py"
+      ],
+      "exit": 0,
+      "paths": [
+        "tools",
+        "data/patch-api/sources"
+      ]
+    },
+    "p601-test_check_patch_validators": {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p601-page/tools/test_check_patch_validators.py"
+      ],
+      "exit": 0,
+      "paths": [
+        "tools"
+      ]
+    },
+    "p601-test_extract_patch_non_inventory": {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p601-page/tools/test_extract_patch_non_inventory.py"
+      ],
+      "exit": 0,
+      "paths": [
+        "tools"
+      ]
+    },
+    "p601-test_gen_patch_wikitext_register": {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p601-page/tools/test_gen_patch_wikitext_register.py"
+      ],
+      "exit": 0,
+      "paths": [
+        "tools"
+      ]
+    },
+    "p601-test_patch_audit_validation": {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p601-page/tools/test_patch_audit_validation.py"
+      ],
+      "exit": 0,
+      "paths": [
+        "tools"
+      ]
+    }
+  },
+  "prior_validators": [
+    "data/patch-api/evidence/10.0.0-session-2026-10-07/validate.py",
+    "data/patch-api/evidence/10.0.2-session-2026-10-07/validate.py",
+    "data/patch-api/evidence/10.0.5-session-2026-10-07/validate.py",
+    "data/patch-api/evidence/6.2.2-session-2026-10-08/validate.py",
+    "data/patch-api/evidence/6.2.4-session-2026-10-08/integrated/validate.py",
+    "data/patch-api/evidence/6.2.4-session-2026-10-08/validate.py",
+    "data/patch-api/evidence/7.0.1-session-2026-10-08/validate.py",
+    "data/patch-api/evidence/7.0.3-session-2026-10-08/integrated/validate.py",
+    "data/patch-api/evidence/7.0.3-session-2026-10-08/validate.py",
+    "data/patch-api/evidence/7.1.0-session-2026-10-08/validate.py",
+    "data/patch-api/evidence/7.2.0-session-2026-10-08/validate.py",
+    "data/patch-api/evidence/7.2.5-session-2026-10-08/validate.py",
+    "data/patch-api/evidence/7.3.0-session-2026-10-08/validate.py",
+    "data/patch-api/evidence/7.3.2-session-2026-10-08/validate.py",
+    "data/patch-api/evidence/8.0.1-session-2026-10-08/validate.py",
+    "data/patch-api/evidence/8.1.0-session-2026-10-08/validate.py",
+    "data/patch-api/evidence/8.1.5-session-2026-10-08/validate.py",
+    "data/patch-api/evidence/8.2.0-session-2026-10-08/validate.py",
+    "data/patch-api/evidence/8.2.5-session-2026-10-08/validate.py",
+    "data/patch-api/evidence/8.3.0-session-2026-10-08/validate.py",
+    "data/patch-api/evidence/8.3.7-session-2026-10-08/validate.py",
+    "data/patch-api/evidence/9.0.1-session-2026-10-08/validate.py",
+    "data/patch-api/evidence/9.0.2-session-2026-10-08/validate.py",
+    "data/patch-api/evidence/9.0.5-session-2026-10-08/validate.py",
+    "data/patch-api/evidence/9.1.0-session-2026-10-07/validate.py",
+    "data/patch-api/evidence/9.1.5-session-2026-10-07/validate.py",
+    "data/patch-api/evidence/9.2.0-session-2026-10-07/validate.py",
+    "data/patch-api/evidence/9.2.5-session-2026-10-07/validate.py",
+    "data/patch-api/evidence/9.2.7-session-2026-10-07/validate.py"
+  ],
+  "session_sha256": {
+    "initial-failure/p601-all-sweeps.log": "c0bc4a40f23c6519d4ce632f0072d3d83784d22fc1f3a984c7863d3c26999cfd",
+    "initial-failure/p601-all-sweeps.proof.json": "af9f9fefaea7637ba9ed5c8b653c8ddd61fae7f4c9fb7b574613e19fc3eb7a6a",
+    "initial-failure/p601-discovery.log": "804cd6b6886bfc5cd5cbbf59ecc364e27a5b3de20e136a49a457477a524db425",
+    "initial-failure/p601-discovery.proof.json": "8d890e3ef5c61c4dabd9219d87d2e25948c48c548c74b0c7876c1f58942c4251",
+    "p601-accounting-summary.json": "2ef69e063f0d046852f913c855259069bacba028b91b81557f711a3d79d11e5f",
+    "p601-all-sweeps-results.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "p601-all-sweeps.log": "66212dc1643f521fa8182ded3946860e81ed9907e03008fabc437c821ca826bf",
+    "p601-all-sweeps.proof.json": "79364b9619b4a0166f3794ff84e3f70cc5f203a1c2029ef156633ba7f8d3f9a0",
+    "p601-checks.log": "3b0ee2824043a1fbadea3243586b7b39dd06a276688538f9cef32c120f0124c5",
+    "p601-checks.proof.json": "6b1dba65f9bbcee13af753ded2ed7342113ff90a731f72f53ed3040f7e70216e",
+    "p601-command-ledger.md": "97f09345c4bf2fc6193e4f5e1cec3ba5e38cfb020d6a41cceedf566e103af185",
+    "p601-discovery-results.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "p601-discovery.log": "9fd178ef474817bcaa8801fff4586045a59ef6fe1f409dfff72915b5ad087ba2",
+    "p601-discovery.proof.json": "0e0babfed9af0f17212a3dd289ab60490dd2e69812aca39364cdfee8c4737f63",
+    "p601-fetch.json": "be76becc0b82af1a5bbc647d687b3e602120e81b40089b495a34fc9a5435f2e5",
+    "p601-format-check.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "p601-format-check.proof.json": "2033eebd1b9e3c5fa18acf6ae12245095c8397fb341f5888861277edfe1d736c",
+    "p601-gap-review.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "p601-master-register-tree.txt": "4697e42ef06b4ef30bb2f9586db27f1f8ddf5f81e3bbdde07438fa380d20199d",
+    "p601-mists-check.log": "490a4f59b553e1f8fc62c883fc36b87f796aa781cdca7f40573566ee568b70c2",
+    "p601-mists-check.proof.json": "cb9da6ef9cae6b2478e5cbc4739824e29cf1e076ecb584df0506e45c4454d94b",
+    "p601-p602-page-register-tree.txt": "37fc8f9c77e9e40b34bba3b1ff17f3c0da15829bf941998ae2090d0fc633f47d",
+    "p601-p610-page-register-tree.txt": "c2ab1dab20b32eb2bb606dafa5bd469352895dd26fb413b1f69484f1ad80f0f6",
+    "p601-p620-page-register-tree.txt": "1a28fdc90f2cc61cfeb8e84407930d7220c1ee4620760767e19b85f4de5ff8c8",
+    "p601-problematic-contracts.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "p601-recheck.log": "15740c51195219e55bdf139e577fa36e1c13b6d7aa2b79f29f8e6c931ec38177",
+    "p601-recheck.proof.json": "ddf6bc5f9e7af0dba7df61c3c58c2cc1d6dc90162b9833c543b0d720b54797dd",
+    "p601-register-reproduction.json": "87e112bd3e267e76fda798b6f873457e89c6ee1e01e17bd91cb694be8dc21021",
+    "p601-reproduction.log": "5ed07f963829f5128412b7976412c321aa2c9bbedcf4e78eae83b192c711c9da",
+    "p601-reproduction.proof.json": "ee5ac931955cccae0c3b3e87386a8f97c741c2f7a3244ca242bb19ba7a70a203",
+    "p601-retirement-decisions.json": "58180a0db05b4fd1ac87dcb58f2f510972a8cbf92ea93eb12c62b2c59cbe6c38",
+    "p601-retirement-marker-grep.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "p601-review.md": "ab85116646d8e8da6c883c89aaacd171ded6d46a0a39a308afff311876ca86ba",
+    "p601-saved-extract-reproduction.json": "0085c146f7481583657c50f5c9c576b57f0e1d83a8149b34abecb452d70dff0b",
+    "p601-test_check_patch_validators.log": "eca694caa756f4acdd16c1a74180847ae5ccd4e86277ec65f7b078daaea2da3f",
+    "p601-test_check_patch_validators.proof.json": "3160c7038e60343211644b758a529b7371636c277d3e1a8a331edca3b1ed9863",
+    "p601-test_extract_patch_non_inventory.log": "89ca58b296d9868916ccda25250eba5f1d80fca5f72e6396ab35144ae1333e05",
+    "p601-test_extract_patch_non_inventory.proof.json": "71176e2d39ce7dc9e8a58bb20ca67182342f78fa5d1a7b8c6a9e11f815bbf460",
+    "p601-test_gen_patch_wikitext_register.log": "c8915683650f2fa4dee526b38a5b0820e4a36b801288e67dfe93e7d4f42ce707",
+    "p601-test_gen_patch_wikitext_register.proof.json": "bd1f28ef9220444d80f712bd169d90bf811b1719efda169be59b5033f56854c8",
+    "p601-test_patch_audit_validation.log": "48362aa7a7a003acb743d7bb61c1c6002287913e3656efdd36bcc2241a579362",
+    "p601-test_patch_audit_validation.proof.json": "0ca97848b66bbb8540e6b513b85c3aa4e5d9f8febfcfa6f69beebefffa6efd80",
+    "p601-verification-summary.json": "32bb292ec2c2f95ba50be1ded6f909dad48d989e051f0227e3f82bc848038cb7",
+    "p601-wiki-baseline.json": "6dd6b595703c7fbdc31e9f7d861efa4c1960036366dd30bef0bd53d283f66aed",
+    "patch_10_0_0_publication_sweep-results.json": "bd4532b7b4b2181e0a522e63bc2e90133e3efb639d231069fdc99570b0a0207c",
+    "patch_10_0_2_publication_sweep-results.json": "d2ede209933cfa895e526f94443b34f598e5ca15326c26d9ee0512b8b6fee549",
+    "patch_10_0_5_publication_sweep-results.json": "013a487fe4b954e932c414e8b7b281a9244928833c41cf4aff46ee9430df3926",
+    "patch_10_0_7_publication_sweep-results.json": "84a026467f32d12f076db9d33a70b2ab52f1af9dc774ce825e88467e7720c4de",
+    "patch_10_1_0_publication_sweep-results.json": "866aab81972645eda6daec742735bc20ada2f8ceadd501691223b88c347c76ce",
+    "patch_10_1_5_publication_sweep-results.json": "8066560a252584d6248d96a6fdab7833055913c47e0f6eb604f95cc31e931f9f",
+    "patch_10_1_7_publication_sweep-results.json": "91535c49b96baf0ea4c4b7dfb54da27934b3703c747361c54807d31d00ebf61b",
+    "patch_10_2_0_publication_sweep-results.json": "abe59f329772a79e70648101705e776fefb23a75f858a7a4c436b050457e8bf1",
+    "patch_10_2_5_publication_sweep-results.json": "1949aa22afe6263687cc4482b6e7cca1c7252f2829b2f1668babcd837d09cd8f",
+    "patch_10_2_6_publication_sweep-results.json": "6f929eae9c1da576a1a8a178b62eff260d59489f887dffe1b70efdbdfc15319c",
+    "patch_10_2_7_publication_sweep-results.json": "0a20fab185090eb9cc06e9ae6fed6a7af6e145b5bfd7e8dad036e2720e7d8579",
+    "patch_11_0_0_publication_sweep-results.json": "6cd74d7f43021732984af2ef56a7e021fd82c9100d722f1cc29b4592c943d67c",
+    "patch_11_0_2_publication_sweep-results.json": "782a377432c7c80deee9e7852abc929fd5343691a84563ed1438cf230f8b7eb6",
+    "patch_11_0_5_publication_sweep-results.json": "d9cdb7f0d38652addd93d9fff753ce0bbc5b52e623979bc462c48ff1b389990b",
+    "patch_11_0_7_publication_sweep-results.json": "667d25546aad70937bb5bf7e8b7eaf347c73d7b3af8723dd8cfbfeaaa9e1d985",
+    "patch_11_1_0_publication_sweep-results.json": "c94c288d384ca8eddc13c8b91b1e493b011b56d8871455b0eb2d503750b9ec76",
+    "patch_11_1_5_publication_sweep-results.json": "db288c9eb96cae842416094485e58eeea84ce40371cfcaa07ad8c93ebd32e2d9",
+    "patch_11_1_7_publication_sweep-results.json": "48435e99e299b2a13110e0f7a27d47688d128f2774540f070cb0594728a1d20d",
+    "patch_11_2_0_publication_sweep-results.json": "a4e1847a8ce3357fc25ff040dbd75c0e78fbda5a18763fa57931933e9af05eae",
+    "patch_11_2_5_publication_sweep-results.json": "33bb90179c363e0b734f1df6d3c3950f8bba0be4a22e62248b7148004a6d998b",
+    "patch_11_2_7_publication_sweep-results.json": "a5108e0ec2710b9e632d2e296a946dc140d0db2f7a3162b94729d0f4dc4bc5b6",
+    "patch_12_0_0_publication_sweep-results.json": "6ac21c4a27738d4bba700115182d63414e772cddb92e135ea4748ba6a35934ea",
+    "patch_12_0_1_publication_sweep-results.json": "65da561aeecdf24065c6368cbf0db0227bd87ad6c9b0370939595836334c0dd6",
+    "patch_12_0_5_publication_sweep-results.json": "cac702f3f8daf845c58348d125950df7362739dadcdd90ffdb450416cb3e77d8",
+    "patch_12_0_7_publication_sweep-results.json": "2dfa4c6469ecafd9704c8d4810aa670594545650382b9307502c1d5790f6ea46",
+    "patch_12_1_0_publication_sweep-results.json": "bc45dc419a0c30481ff9e949515f6a0e2ab684ee5bbcc401a1ce7df383d1361f",
+    "patch_6_2_2_publication_sweep-results.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "patch_6_2_4_publication_sweep-results.json": "cd3e13a1f2eeda0c430dfd2f3cc913b9deaaa09047c18bfc724437a140ec5dec",
+    "patch_7_0_1_publication_sweep-results.json": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "patch_7_0_3_publication_sweep-results.json": "60e4c82bab56711e7d32002cb4a196d0b251742c5f41d95a12828cca9d1b8e75",
+    "patch_7_1_0_publication_sweep-results.json": "8b8784994ded3aebe0f4035fb7d6063bf9bacd0337bff92dca04fec9222fa6f1",
+    "patch_7_2_0_publication_sweep-results.json": "0826c386337600a5a45df547b9b9a98985efb3e745d87359805d8d4cc58c4974",
+    "patch_7_2_5_publication_sweep-results.json": "62c2c2385c6cd65f2f8051a24dc71e40eeda3b345e20acd9be7c49c6dcb54640",
+    "patch_7_3_0_publication_sweep-results.json": "df47af7ac78df8419abe44d4e74f9c0f816b0ae046541b4c4fffb6ac22ed0074",
+    "patch_7_3_2_publication_sweep-results.json": "7fc5f374c2a41df9a8a84d3fd31b8e9e92a40f9532630081b501edab54bda92c",
+    "patch_8_0_1_publication_sweep-results.json": "5e5aa3658950d0b6c3ff6b315aa590079b2d2effdb7e734b966c45647ad9398e",
+    "patch_8_1_0_publication_sweep-results.json": "51e18245da557e76770dc9607d0318e177bfbe3a8e7bd56972847ab06d2eff95",
+    "patch_8_1_5_publication_sweep-results.json": "dab5c4be04451e47f36b067c2f7b360ae2019880bff681e0bf6afb9f54e5de14",
+    "patch_8_2_0_publication_sweep-results.json": "4d3c6245a07b32960f3a9140e8015a1f39ba0444f3bcf194e084f9aa0364cd89",
+    "patch_8_2_5_publication_sweep-results.json": "e51ecb8bf85b5afdee84e23d3ef55cb54471b500ad7ecef709edf6939219ca4b",
+    "patch_8_3_0_publication_sweep-results.json": "3fecaeaf491d4fccd7a5d2dc2c22c9822c0c22ab415d0712906004cba0e1c075",
+    "patch_8_3_7_publication_sweep-results.json": "d6f173835936181f7b7455002a7b18e8e9e48ae987b6197630a8868e36b5cbb4",
+    "patch_9_0_1_publication_sweep-results.json": "8bacb4be7b84d0ea9ec5210b46b41da0e7757b42dd11e810a0de568ddcfb71b5",
+    "patch_9_0_2_publication_sweep-results.json": "9b4f9badc099ee52711b462d77a906b293aa4d75f452cacc2a57559e85bbcc70",
+    "patch_9_0_5_publication_sweep-results.json": "4d5a6e3bf1917adde86c66fecad5ef3539b8487b2c78fa1566ea2627f43af444",
+    "patch_9_1_0_publication_sweep-results.json": "d85b2de60a7bab39c8f50aaead29bfdd021abbe249eed22e92056509a46c97c9",
+    "patch_9_1_5_publication_sweep-results.json": "10c289379ca8afa49c5d7652857fdef4350cbddf30ad1ffac0076c11622176c7",
+    "patch_9_2_0_publication_sweep-results.json": "cd6f83542c536542599fd78326ed42ac81567d8c93563b0d5e7fb0f715355c03",
+    "patch_9_2_5_publication_sweep-results.json": "961c0b44ffecad59e032fe345f5012b00aae419ff714e2b56661b9e2ce34109b",
+    "patch_9_2_7_publication_sweep-results.json": "75ee0c42a0ee28e36913384c4f8ce534bbbf4fc7cf90cc3ba5f8c9fee12c0fad",
+    "recheck_sweeps.py": "479efb0ec3e509ab730a3fe5d2f6ece14dab94e40605aa84a27dda76828ed3f7",
+    "reproduce_sources.py": "585bc2618c0f1f539f82d778f4deff900c87db156af3b607597f92326c9ac63e",
+    "run_checks.py": "02bff7fb52f4db574141609fa10f29904c2531d1815c6f5dcb4d7142c9b75c58",
+    "run_proof.py": "f8e760f0582db9412c055b0572f1c9d5e5c54eb894713ff95d6c534fca261eff",
+    "validate.py": "46cc7a850b207acf6a48cdb12d9c012de672c2415bc028135a2bbf630ed129cd"
+  }
+}
