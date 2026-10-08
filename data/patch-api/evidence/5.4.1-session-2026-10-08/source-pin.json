@@ -1,0 +1,18 @@
+{
+  "pageid": 221650,
+  "revision": 2150406,
+  "timestamp": "2018-11-26T23:10:07Z",
+  "parent_revision": 6428967,
+  "client": "2013 retail Mists",
+  "build": 17538,
+  "toc": 50400,
+  "release": "2013-10-29",
+  "parser_origin": "p542-page --mists-automated-diff; byte-identical additive hunks",
+  "generator_flags": [
+    "--mists-automated-diff"
+  ],
+  "extractor_flags": [
+    "--mists-automated-diff",
+    "--lowercase-reflist"
+  ]
+}

@@ -1,0 +1,29 @@
+{{Patchbox
+|Patchname = 
+|Image = 
+|Caption = 
+|Release = October 29, 2013
+|Version = 17538
+|toc = 50400
+|api = 1
+|Highlights = 
+* Built-in [[Recruit-A-Friend]] features
+|Related = 
+|Prev = 5.4.0
+|Current = 5.4.1
+|Next = 5.4.2
+}}{{tocright}}
+
+'''Patch 5.4.1''' is the first patch after [[patch 5.4.0]].
+
+''Last patch notes update: 2013-10-29''
+
+==General==
+*There were a number of bug fixes and data added for use at a later date.<ref name="official541">{{ref web|work=World of Warcraft Official Game Site (US)|url=http://us.battle.net/wow/en/blog/10788364/54_Patch_Notes_Siege_of_Orgrimmar_-9_9_2013|title=5.4 Patch Notes: Siege of Orgrimmar|author={{blizz}} [[Rygarius]]|date=9-Sep-2013 6:00 PM PDT|quote=Updated October 29}}</ref>
+
+==References==
+{{Reflist}}
+
+{{Patches}}
+
+[[Category:World of Warcraft patches|5.4.1]]

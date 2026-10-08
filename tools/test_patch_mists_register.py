@@ -38,5 +38,25 @@ class MistsDiffTests(unittest.TestCase):
         self.assertIn(': LE_AUTOCOMPLETE_PRIORITY (new)\n:: _OTHER = 1\n:: _FRIEND = 5', rendered)
 
 
+class MistsRegister541Tests(unittest.TestCase):
+    def test_5_4_1_caption_inventory_and_bare_removal(self):
+        raw = ('=== Global API ===\n{|\n|+ Global API (17359 &rarr; 17538)\n'
+               '! | 1 new functions\n! | 1 removed functions\n'
+               '| valign="top"\n: {{api|C_Test.Add}}\n</div>\n'
+               '| valign="top"\n: Gone\n</div>\n|}\n')
+        rows, counts = generator.parse_mists_automated_diff(raw)
+        self.assertEqual([(r['symbol'], r['direction'], r['wikitext_line']) for r in rows],
+                         [('C_Test.Add', 'added', 7), ('Gone', 'removed', 10)])
+        self.assertTrue(all(r['header_count'] == r['parsed_count'] for r in counts))
+        self.assertNotIn('C_Test.Add', extractor.extract_text(raw, mists_automated_diff=True))
+
+    def test_lowercase_reflist_requires_opt_in(self):
+        raw = '==References==\n{{reflist}}\n'
+        with self.assertRaises(ValueError):
+            extractor.extract_text(raw)
+        self.assertEqual(extractor.extract_text(raw, lowercase_reflist=True),
+                         '== References ==\n[References list; not expanded]\n')
+
+
 if __name__ == '__main__':
     unittest.main()
