@@ -1,0 +1,2 @@
+src/lua_api/frame/methods/widgets/tooltip/content.rs:473:    let _ = populate_tooltip_from_method(state, tooltip_id, "GetHyperlink", &[link_val], None)?;
+src/lua_api/globals/missing_surface/tooltip_info/mod.rs:265:            ("GetHyperlink", c_tooltip_get_hyperlink),

@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p620-page/data/patch-api/evidence/6.2.0-session-2026-10-08/run_targeted.py"
+  ],
+  "revision": "da30fc360e7bc0e5074b2cc0cb3ddf38bb5a9bdf",
+  "exit": 0,
+  "log": "p620-targeted-driver.txt",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "invalidated": false
+}

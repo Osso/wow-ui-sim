@@ -1,0 +1,187 @@
+{
+  "base_revision": "846a30663",
+  "runtime_revision": "da30fc360",
+  "source_revision": "114659452",
+  "master_revision": "846a30663a0f5d5fd0aaecaec46937cd858ae95a",
+  "runtime_src_tree": "9dd60bab10042f35bb08102bdc323861ad61b37c",
+  "runtime_tests_tree": "5612d259408f10fb87181f66887201dc51e2c2f8",
+  "receipts": {
+    "p620-green": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "patch_6_2_0"
+      ],
+      "revision": "da30fc360e7bc0e5074b2cc0cb3ddf38bb5a9bdf",
+      "log_sha256": "cb7f23f7a3c89902c26008b0b969e1889d877e945bd5ec39a8ff17a3c7edc531"
+    },
+    "p620-all-sweeps": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "prefork_full_ui",
+        "--",
+        "publication_sweep"
+      ],
+      "revision": "da30fc360e7bc0e5074b2cc0cb3ddf38bb5a9bdf",
+      "log_sha256": "8dbf8473beb9030942953f2a3855ba3ae93640f386827c70c2d0a001fd471d42"
+    },
+    "p620-bare": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "patch_6_2_0",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "da30fc360e7bc0e5074b2cc0cb3ddf38bb5a9bdf",
+      "log_sha256": "4dd1f54fbc6fc19c870e73d2f4d3d6dd6da86c33178fecf3e39885c6930e7f20"
+    },
+    "p620-tooltip-item-spell": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "tooltip_item_spell::",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "da30fc360e7bc0e5074b2cc0cb3ddf38bb5a9bdf",
+      "log_sha256": "26b30555bbf098553e23bda526873fe679dc8ef6e92bd7cf56ca4c4c327861fd"
+    },
+    "p620-tooltip-basic": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "tooltip_basic::",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "da30fc360e7bc0e5074b2cc0cb3ddf38bb5a9bdf",
+      "log_sha256": "bcf9ad0996b0c3eb789daa7e0587db362c9c2ff0aa6560b695295361a1a7362e"
+    },
+    "p620-tooltip-identifiers": {
+      "command": [
+        "cargo",
+        "test",
+        "--test",
+        "integration",
+        "tooltip_spell_mount_identifiers::",
+        "--",
+        "--nocapture"
+      ],
+      "revision": "da30fc360e7bc0e5074b2cc0cb3ddf38bb5a9bdf",
+      "log_sha256": "7c98523aee0571ad8cb77b46889988bb75a7c3c6880cb0108f6a48ff737bd37b"
+    },
+    "p620-branch-build": {
+      "command": [
+        "cargo",
+        "build",
+        "--bin",
+        "wow-sim"
+      ],
+      "revision": "da30fc360e7bc0e5074b2cc0cb3ddf38bb5a9bdf",
+      "log_sha256": "5e70774b23465eca4330283c96cd74498d444bfdbf5c6dbd20bfc5ee75f166d6"
+    },
+    "p620-branch-startup": {
+      "command": [
+        "timeout",
+        "90",
+        "/home/osso/.cache/wow-ui-sim-targets/p620-page/debug/wow-sim",
+        "--no-saved-vars",
+        "lua-errors"
+      ],
+      "revision": "da30fc360e7bc0e5074b2cc0cb3ddf38bb5a9bdf",
+      "log_sha256": "b5ad8eabc09d98febfd977cddf5496fc95b6037ca11dfd6c5888665c804551e1"
+    },
+    "p620-mists-check": {
+      "command": [
+        "cargo",
+        "check",
+        "--no-default-features",
+        "--features",
+        "sound,gui,casc,client-mists",
+        "--tests"
+      ],
+      "revision": "b3cf1e92356de37fdbd01757c4b0105e820a500c",
+      "log_sha256": "6f9f4c725ace49f5ad6c5c4a0c0472482f5669c5670f7b7cb0fd4debf880828c"
+    },
+    "p620-format": {
+      "command": [
+        "cargo",
+        "fmt",
+        "--check"
+      ],
+      "revision": "b3cf1e92356de37fdbd01757c4b0105e820a500c",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "p620-master-build": {
+      "command": [
+        "cargo",
+        "build",
+        "--manifest-path",
+        "/home/osso/.cache/wow-ui-sim-targets/p620-page/master-source/Cargo.toml",
+        "--bin",
+        "wow-sim"
+      ],
+      "revision": "b3cf1e92356de37fdbd01757c4b0105e820a500c",
+      "log_sha256": "87826113661a376ebb2ca219298d40c51ca60520aebe839d591523e87567462c"
+    },
+    "p620-master-startup": {
+      "command": [
+        "timeout",
+        "90",
+        "/home/osso/.cache/wow-ui-sim-targets/p620-page/debug/wow-sim",
+        "--no-saved-vars",
+        "lua-errors"
+      ],
+      "revision": "2342e6c6fefd21dcaa3f6b80efbdea14048797a1",
+      "log_sha256": "adbc524eb4ee6ea8abd90cd91bcfca0d7c705f172680d9e424c43d73174c19d0"
+    },
+    "p620-targeted-driver": {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p620-page/data/patch-api/evidence/6.2.0-session-2026-10-08/run_targeted.py"
+      ],
+      "revision": "da30fc360e7bc0e5074b2cc0cb3ddf38bb5a9bdf",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "p620-fixtures-extractor-final": {
+      "command": [
+        "python3",
+        "-B",
+        "tools/test_extract_patch_non_inventory.py"
+      ],
+      "revision": "da30fc360e7bc0e5074b2cc0cb3ddf38bb5a9bdf",
+      "log_sha256": "2623e640d65bd9d5e64693a9ad4448bc7369774158d3cbda933373ab97fc6f8f"
+    },
+    "p620-test_gen_patch_wikitext_register": {
+      "command": [
+        "python3",
+        "-B",
+        "tools/test_gen_patch_wikitext_register.py"
+      ],
+      "revision": "114659452afcb21e6ef926317b72e1a3f1b8decf",
+      "log_sha256": "aa9de8e6336c91276985e8b7edfd74ee4053e151c065e21365799c14cea15e97"
+    },
+    "p620-test_patch_audit_validation": {
+      "command": [
+        "python3",
+        "-B",
+        "tools/test_patch_audit_validation.py"
+      ],
+      "revision": "114659452afcb21e6ef926317b72e1a3f1b8decf",
+      "log_sha256": "97d7b9900e89e8010fa2c94f8978194d2596f2ae820e0e4824c01599053ebd00"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "tooltip_item_spell::",
+    "--",
+    "--nocapture"
+  ],
+  "revision": "da30fc360e7bc0e5074b2cc0cb3ddf38bb5a9bdf",
+  "exit": 0,
+  "log": "p620-tooltip-item-spell.txt",
+  "log_sha256": "26b30555bbf098553e23bda526873fe679dc8ef6e92bd7cf56ca4c4c327861fd",
+  "invalidated": false
+}

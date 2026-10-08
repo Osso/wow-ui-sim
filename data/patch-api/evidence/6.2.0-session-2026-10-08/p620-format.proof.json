@@ -1,0 +1,12 @@
+{
+  "command": [
+    "cargo",
+    "fmt",
+    "--check"
+  ],
+  "revision": "b3cf1e92356de37fdbd01757c4b0105e820a500c",
+  "exit": 0,
+  "log": "p620-format.txt",
+  "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "invalidated": false
+}

@@ -8,5 +8,6 @@
   "exit": 1,
   "log": "p620-test_extract_patch_non_inventory.txt",
   "log_sha256": "a6cf6525a1733e60306055e6d93376c33cf3048107c2ab780ce6c0ef3a081a17",
-  "invalidated": false
+  "invalidated": true,
+  "invalidation_reason": "Imported 6.2.4 fixture expected an unnormalized heading; corrected with byte-identical c79de9881 hunk. Successful replacement is p620-fixtures-extractor-final."
 }

@@ -1,0 +1,16 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "tooltip_spell_mount_identifiers::",
+    "--",
+    "--nocapture"
+  ],
+  "revision": "da30fc360e7bc0e5074b2cc0cb3ddf38bb5a9bdf",
+  "exit": 0,
+  "log": "p620-tooltip-identifiers.txt",
+  "log_sha256": "7c98523aee0571ad8cb77b46889988bb75a7c3c6880cb0108f6a48ff737bd37b",
+  "invalidated": false
+}

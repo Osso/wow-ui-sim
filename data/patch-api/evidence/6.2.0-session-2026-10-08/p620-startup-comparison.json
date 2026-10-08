@@ -1,0 +1,10 @@
+{
+  "master_revision": "846a30663a0f5d5fd0aaecaec46937cd858ae95a",
+  "branch_runtime_revision": "da30fc360",
+  "addons_enabled": true,
+  "master_errors": [],
+  "branch_errors": [],
+  "equal": true,
+  "master_log_sha256": "adbc524eb4ee6ea8abd90cd91bcfca0d7c705f172680d9e424c43d73174c19d0",
+  "branch_log_sha256": "b5ad8eabc09d98febfd977cddf5496fc95b6037ca11dfd6c5888665c804551e1"
+}

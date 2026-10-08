@@ -1,0 +1,22 @@
+src/lua_api/workarounds/temporary/adventure_journal_fallbacks.rs:75:    function AdventureGuideUtil.OpenHyperLink(_tag, journalType, id, difficultyID)
+src/lua_api/workarounds/temporary/adventure_journal_fallbacks.rs:82:            tonumber(difficultyID)
+src/lua_api/workarounds/temporary/difficulty_pvp_util_defaults.rs:59:    function DifficultyUtil.GetDifficultyName(difficultyID)
+src/lua_api/workarounds/temporary/difficulty_pvp_util_defaults.rs:60:        return difficultyNames[difficultyID]
+src/lua_api/workarounds/temporary/difficulty_pvp_util_defaults.rs:71:    function DifficultyUtil.IsPrimaryRaid(difficultyID)
+src/lua_api/workarounds/temporary/difficulty_pvp_util_defaults.rs:72:        return primaryRaids[difficultyID] or false
+src/lua_api/workarounds/temporary/difficulty_pvp_util_defaults.rs:89:    function DifficultyUtil.GetMaxPlayers(difficultyID)
+src/lua_api/workarounds/temporary/difficulty_pvp_util_defaults.rs:90:        return maxPlayers[difficultyID]
+src/lua_api/workarounds/temporary/difficulty_pvp_util_defaults.rs:144:    function GetDifficultyInfo(difficultyID)
+src/lua_api/workarounds/temporary/difficulty_pvp_util_defaults.rs:145:        return DifficultyUtil.GetDifficultyName(difficultyID) or PLAYER_DIFFICULTY1 or "Normal",
+src/lua_api/workarounds/temporary/difficulty_pvp_util_defaults.rs:156:    function GetBaseDifficultyID(difficultyID)
+src/lua_api/workarounds/temporary/difficulty_pvp_util_defaults.rs:157:        if type(difficultyID) ~= "number" then
+src/lua_api/workarounds/temporary/difficulty_pvp_util_defaults.rs:158:            error("GetBaseDifficultyID: difficultyID must be a number", 2)
+src/lua_api/workarounds/temporary/difficulty_pvp_util_defaults.rs:160:        return difficultyID
+src/lua_api/globals/real/spell_confirmation_prompts.rs:44:            difficulty_id: read_number(state, record, "difficultyID")?,
+src/lua_api/globals/real/spell_confirmation_prompts.rs:58:            ("difficultyID", self.difficulty_id),
+tests/p1207_gap_closures.rs:74:        assert(not ok and tostring(err):find('difficultyID'), tostring(err))
+tests/missing_apis.rs:219:        local name, instanceType, difficultyID, difficultyName, maxPlayers,
+tests/spell_confirmation_prompts.rs:10:        difficultyID = 16, displayItemID = 220081,
+tests/spell_confirmation_prompts.rs:16:        difficultyID = 8, displayItemID = 220092,
+tests/spell_confirmation_prompts.rs:21:        "difficultyID", "displayItemID", "itemContext", "treasureContextLevel",
+tests/spell_confirmation_prompts.rs:168:            difficultyID = 15, displayItemID = 220103,

@@ -1,0 +1,13 @@
+{
+  "command": [
+    "cargo",
+    "build",
+    "--bin",
+    "wow-sim"
+  ],
+  "revision": "da30fc360e7bc0e5074b2cc0cb3ddf38bb5a9bdf",
+  "exit": 0,
+  "log": "p620-branch-build.txt",
+  "log_sha256": "5e70774b23465eca4330283c96cd74498d444bfdbf5c6dbd20bfc5ee75f166d6",
+  "invalidated": false
+}

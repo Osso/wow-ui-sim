@@ -1,0 +1,14 @@
+{
+  "command": [
+    "timeout",
+    "90",
+    "/home/osso/.cache/wow-ui-sim-targets/p620-page/debug/wow-sim",
+    "--no-saved-vars",
+    "lua-errors"
+  ],
+  "revision": "da30fc360e7bc0e5074b2cc0cb3ddf38bb5a9bdf",
+  "exit": 0,
+  "log": "p620-branch-startup.txt",
+  "log_sha256": "b5ad8eabc09d98febfd977cddf5496fc95b6037ca11dfd6c5888665c804551e1",
+  "invalidated": false
+}

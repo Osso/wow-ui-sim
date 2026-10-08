@@ -1,0 +1,15 @@
+{
+  "command": [
+    "cargo",
+    "build",
+    "--manifest-path",
+    "/home/osso/.cache/wow-ui-sim-targets/p620-page/master-source/Cargo.toml",
+    "--bin",
+    "wow-sim"
+  ],
+  "revision": "b3cf1e92356de37fdbd01757c4b0105e820a500c",
+  "exit": 0,
+  "log": "p620-master-build.txt",
+  "log_sha256": "87826113661a376ebb2ca219298d40c51ca60520aebe839d591523e87567462c",
+  "invalidated": false
+}

@@ -1,0 +1,15 @@
+{
+  "command": [
+    "cargo",
+    "check",
+    "--no-default-features",
+    "--features",
+    "sound,gui,casc,client-mists",
+    "--tests"
+  ],
+  "revision": "b3cf1e92356de37fdbd01757c4b0105e820a500c",
+  "exit": 0,
+  "log": "p620-mists-check.txt",
+  "log_sha256": "6f9f4c725ace49f5ad6c5c4a0c0472482f5669c5670f7b7cb0fd4debf880828c",
+  "invalidated": false
+}

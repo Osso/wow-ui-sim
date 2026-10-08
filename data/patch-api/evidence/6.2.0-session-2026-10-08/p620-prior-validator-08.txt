@@ -1,0 +1,2 @@
+{"addon_errors": 0, "cases": 45, "extracts": 41, "gaps": 3, "negative_gaps": 4, "observations": 8869, "pages": 44, "registers": 44, "status": "pass"}
+{"extract": 12, "extract_modes": 92, "extracts_reproduced": 40, "gaps": 3, "inventory": 16, "ledger": 28, "negative_control": [3, 4], "preserved_inputs": 219, "publication_sweeps": 43, "registers": 43, "status": "pass", "statuses": {"audit-pending": 7, "bounded-coverage": 17, "metadata-only": 4}}

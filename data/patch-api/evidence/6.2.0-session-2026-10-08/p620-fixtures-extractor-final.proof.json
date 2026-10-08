@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "tools/test_extract_patch_non_inventory.py"
+  ],
+  "revision": "da30fc360e7bc0e5074b2cc0cb3ddf38bb5a9bdf",
+  "exit": 0,
+  "log": "p620-fixtures-extractor-final.txt",
+  "log_sha256": "2623e640d65bd9d5e64693a9ad4448bc7369774158d3cbda933373ab97fc6f8f",
+  "invalidated": false
+}

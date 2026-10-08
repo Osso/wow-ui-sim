@@ -1,0 +1,15 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_6_2_0"
+  ],
+  "revision": "da30fc360e7bc0e5074b2cc0cb3ddf38bb5a9bdf",
+  "exit": 0,
+  "log": "p620-green.txt",
+  "log_sha256": "cb7f23f7a3c89902c26008b0b969e1889d877e945bd5ec39a8ff17a3c7edc531",
+  "invalidated": false
+}

@@ -1,0 +1,16 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "patch_6_2_0",
+    "--",
+    "--nocapture"
+  ],
+  "revision": "da30fc360e7bc0e5074b2cc0cb3ddf38bb5a9bdf",
+  "exit": 0,
+  "log": "p620-bare.txt",
+  "log_sha256": "4dd1f54fbc6fc19c870e73d2f4d3d6dd6da86c33178fecf3e39885c6930e7f20",
+  "invalidated": false
+}

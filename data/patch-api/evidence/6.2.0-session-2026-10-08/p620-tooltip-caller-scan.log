@@ -1,0 +1,47 @@
+src/lua_api/frame/methods/widgets/tooltip.rs:46:    ("SetSpellByID", set_spell_by_id),
+src/lua_api/frame/methods/widgets/tooltip.rs:56:    ("SetHyperlink", set_hyperlink),
+src/lua_api/tooltip.rs:47:    /// Spell ID set by `SetSpellByID`, returned by `GetSpell`.
+tests/tooltip_basic.rs:471:            GameTooltip:SetSpellByID(19750)
+tests/tooltip_basic.rs:535:            GameTooltip:SetSpellByID(19750)
+tests/tooltip_basic.rs:580:        GameTooltip:SetSpellByID(19750)
+tests/tooltip_basic.rs:597:        GameTooltip:SetSpellByID(19750)
+tests/tooltip_basic.rs:658:        GameTooltip:SetSpellByID(19750)
+tests/tooltip_item_spell.rs:94:        r#"GameTooltip:SetHyperlink("|Hitem:229181:0:0:0:0:0:0:0:0:0|h[Ordained Forge Maul]|h")"#,
+tests/tooltip_item_spell.rs:99:    assert!(num_lines > 0, "SetHyperlink should populate tooltip lines");
+tests/tooltip_item_spell.rs:111:    env.exec(r#"GameTooltip:SetHyperlink("item:229181")"#)
+tests/tooltip_item_spell.rs:117:        "SetHyperlink with short format should populate lines"
+tests/tooltip_item_spell.rs:125:    env.exec(r#"GameTooltip:SetHyperlink(GetSpellLink(19750))"#)
+tests/tooltip_item_spell.rs:131:        "SetHyperlink with a spell link should populate spell tooltip lines"
+tests/tooltip_item_spell.rs:391:    env.exec("GameTooltip:SetSpellByID(19750)").unwrap();
+tests/tooltip_item_spell.rs:396:        "SetSpellByID should populate tooltip lines, got {num_lines}"
+tests/tooltip_item_spell.rs:410:    env.exec("GameTooltip:SetSpellByID(375576)").unwrap();
+tests/tooltip_item_spell.rs:428:    env.exec("GameTooltip:SetSpellByID(19750)").unwrap();
+tests/tooltip_item_spell.rs:466:    env.exec("GameTooltip:SetSpellByID(642)").unwrap();
+tests/tooltip_item_spell.rs:512:    env.exec("GameTooltip:SetSpellByID(19750)").unwrap();
+tests/tooltip_item_spell.rs:526:    env.exec("GameTooltip:SetSpellByID(35395)").unwrap();
+tests/tooltip_item_spell.rs:540:    env.exec("GameTooltip:SetSpellByID(31935)").unwrap();
+tests/tooltip_item_spell.rs:553:        "SetSpellByID should replace spell damage placeholders with AP-scaled values, got: {:?}",
+tests/tooltip_item_spell.rs:561:        "SetSpellByID should not leave raw parameter placeholders in tooltip text, got: {:?}",
+tests/tooltip_item_spell.rs:574:    env.exec("GameTooltip:SetSpellByID(184662)").unwrap();
+tests/tooltip_item_spell.rs:587:        "SetSpellByID should calculate shield values from player health, got: {:?}",
+tests/tooltip_item_spell.rs:595:        "SetSpellByID should not leave raw parameter placeholders in shield text, got: {:?}",
+tests/tooltip_item_spell.rs:610:    env.exec("GameTooltip:SetSpellByID(53600)").unwrap();
+tests/tooltip_item_spell.rs:620:        "SetSpellByID should calculate Shield of the Righteous armor from 160% primary stat, got: {:?}",
+tests/tooltip_item_spell.rs:630:        "SetSpellByID should resolve Shield of the Righteous armor duration from spell 132403, got: {:?}",
+tests/tooltip_spell_mount_identifiers.rs:728:            "SetSpellByID",
+tests/tooltip_spell_mount_identifiers.rs:768:    env.exec("GameTooltip:SetSpellByID(19750)").unwrap();
+tests/tooltip_spell_mount_identifiers.rs:776:                for _, method in ipairs({'SetSpellByID', 'SetMountBySpellID'}) do
+tests/tooltip_item_spell/spell_lines.rs:7:    env.exec("GameTooltip:SetSpellByID(53600)").unwrap();
+tests/tooltip_item_spell/spell_lines.rs:48:    env.exec("GameTooltip:SetSpellByID(53600)").unwrap();
+tests/tooltip_item_spell/spell_lines.rs:162:    env.exec("GameTooltip:SetSpellByID(5143)").unwrap();
+tests/tooltip_item_spell/spell_lines.rs:208:    env.exec("GameTooltip:SetSpellByID(448287)").unwrap();
+tests/tooltip_item_spell/spell_lines.rs:244:    env.exec("GameTooltip:SetSpellByID(1223268)").unwrap();
+tests/tooltip_item_spell/spell_lines.rs:283:    env.exec("GameTooltip:SetSpellByID(19750)").unwrap();
+tests/tooltip_item_spell/spell_lines.rs:286:    assert!(visible, "SetSpellByID should make tooltip visible");
+tests/tooltip_item_spell/spell_lines.rs:299:        GameTooltip:SetSpellByID(19750)
+tests/tooltip_item_spell/spell_lines.rs:312:    env.exec("GameTooltip:SetSpellByID(19750)").unwrap();
+tests/tooltip_item_spell/spell_lines.rs:344:        GameTooltip:SetSpellByID(19750)
+tests/tooltip_item_spell/spell_lines.rs:360:    env.exec("GameTooltip:SetSpellByID(999999999)").unwrap();
+tests/blizzard_tiered_entrance_traits_loads.rs:352:             — OnEnter sets GameTooltip:SetSpellByID(self.spellID); \
+tests/data/patch_10_0_2_sweep_known_gaps.json:129:  "wt-widgets-GameTooltip:SetHyperlink-462",
+tests/data/patch_10_0_2_sweep_known_gaps.json:139:  "wt-widgets-GameTooltip:SetSpellByID-503",

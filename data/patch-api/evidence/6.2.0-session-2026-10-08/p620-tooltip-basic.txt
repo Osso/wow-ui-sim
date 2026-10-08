@@ -1,0 +1,802 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.16s
+     Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p620-page/debug/deps/integration-1db16289b0998b2a)
+
+running 62 tests
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 1.95ms
+[  0.002s] [Startup] SimState::default complete in 1.95ms
+[  0.002s] [Startup] SimState::default complete in 1.95ms
+[  0.002s] [Startup] rilua VM created in 124.55µs
+[  0.002s] [Startup] rilua VM created in 114.04µs
+[  0.002s] [Startup] SimState::default complete in 2.18ms
+[  0.002s] [Startup] rilua VM created in 83.92µs
+[  0.002s] [Startup] builtin frames initialized in 92.33µs
+[  0.002s] [Startup] SimState::default complete in 2.10ms
+[  0.002s] [Startup] SimState::default complete in 2.14ms
+[  0.002s] [Startup] SimState::default complete in 2.08ms
+[  0.002s] [Startup] template registry cleared in 10.11µs
+[  0.002s] [Startup] intrinsic templates registered in 5.61µs
+[  0.002s] [Startup] initial app_data lua handle installed in 1.02µs
+[  0.002s] [Startup] SimState::default complete in 2.16ms
+[  0.002s] [Startup] SimState::default complete in 2.18ms
+[  0.002s] [Startup] builtin frames initialized in 110.36µs
+[  0.002s] [Startup] template registry cleared in 3.57µs
+[  0.002s] [Startup] intrinsic templates registered in 5.05µs
+[  0.002s] [Startup] builtin frames initialized in 231.24µs
+[  0.002s] [Startup] initial app_data lua handle installed in 521.00ns
+[  0.002s] [Startup] template registry cleared in 1.93µs
+[  0.002s] [Startup] rilua VM created in 131.60µs
+[  0.002s] [Startup] intrinsic templates registered in 4.01µs
+[  0.002s] [Startup] initial app_data lua handle installed in 201.00ns
+[  0.002s] [Startup] rilua VM created in 141.17µs
+[  0.002s] [Startup] rilua VM created in 144.82µs
+[  0.002s] [Startup] rilua VM created in 153.80µs
+[  0.002s] [Startup] SimState::default complete in 2.37ms
+[  0.002s] [Startup] SimState::default complete in 2.32ms
+[  0.002s] [Startup] rilua VM created in 146.95µs
+[  0.002s] [Startup] builtin frames initialized in 91.12µs
+[  0.002s] [Startup] template registry cleared in 1.97µs
+[  0.002s] [Startup] rilua VM created in 146.49µs
+[  0.002s] [Startup] intrinsic templates registered in 3.59µs
+[  0.002s] [Startup] initial app_data lua handle installed in 150.00ns
+[  0.002s] [Startup] builtin frames initialized in 88.59µs
+[  0.003s] [Startup] template registry cleared in 1.49µs
+[  0.003s] [Startup] intrinsic templates registered in 3.18µs
+[  0.003s] [Startup] initial app_data lua handle installed in 150.00ns
+[  0.003s] [Startup] builtin frames initialized in 105.79µs
+[  0.003s] [Startup] template registry cleared in 1.16µs
+[  0.003s] [Startup] intrinsic templates registered in 2.82µs
+[  0.003s] [Startup] initial app_data lua handle installed in 130.00ns
+[  0.003s] [Startup] builtin frames initialized in 133.07µs
+[  0.003s] [Startup] template registry cleared in 1.45µs
+[  0.003s] [Startup] intrinsic templates registered in 3.36µs
+[  0.003s] [Startup] initial app_data lua handle installed in 131.00ns
+[  0.003s] [Startup] builtin frames initialized in 87.69µs
+[  0.003s] [Startup] template registry cleared in 1.59µs
+[  0.003s] [Startup] intrinsic templates registered in 3.12µs
+[  0.003s] [Startup] initial app_data lua handle installed in 150.00ns
+[  0.003s] [Startup] builtin frames initialized in 82.55µs
+[  0.003s] [Startup] template registry cleared in 1.54µs
+[  0.003s] [Startup] intrinsic templates registered in 3.13µs
+[  0.003s] [Startup] rilua VM created in 150.85µs
+[  0.003s] [Startup] initial app_data lua handle installed in 141.00ns
+[  0.003s] [Startup] rilua VM created in 159.78µs
+[  0.003s] [Startup] builtin frames initialized in 84.02µs
+[  0.003s] [Startup] template registry cleared in 1.89µs
+[  0.003s] [Startup] intrinsic templates registered in 3.34µs
+[  0.003s] [Startup] initial app_data lua handle installed in 151.00ns
+[  0.003s] [Startup] builtin frames initialized in 92.04µs
+[  0.003s] [Startup] template registry cleared in 1.41µs
+[  0.003s] [Startup] intrinsic templates registered in 3.17µs
+[  0.003s] [Startup] initial app_data lua handle installed in 130.00ns
+[  0.003s] [Startup] SimState::default complete in 2.64ms
+[  0.003s] [Startup] rilua VM created in 169.90µs
+[  0.003s] [Startup] builtin frames initialized in 77.66µs
+[  0.003s] [Startup] template registry cleared in 1.55µs
+[  0.003s] [Startup] intrinsic templates registered in 3.35µs
+[  0.003s] [Startup] initial app_data lua handle installed in 120.00ns
+[  0.163s] [Startup] init_lua_state complete in 159.75ms
+[  0.163s] [Startup] final app_data lua handle installed in 1.26µs
+[  0.163s] [Startup] initial screen globals installed in 162.20µs
+[  0.163s] [Startup] WowLuaEnv::new complete
+[  0.164s] [Startup] init_lua_state complete in 161.10ms
+[  0.164s] [Startup] final app_data lua handle installed in 371.00ns
+[  0.164s] [Startup] initial screen globals installed in 134.27µs
+[  0.164s] [Startup] WowLuaEnv::new complete
+[  0.165s] [Startup] init_lua_state complete in 162.54ms
+[  0.165s] [Startup] final app_data lua handle installed in 441.00ns
+[  0.165s] [Startup] init_lua_state complete in 162.60ms
+[  0.165s] [Startup] final app_data lua handle installed in 191.00ns
+[  0.165s] [Startup] initial screen globals installed in 133.07µs
+[  0.165s] [Startup] WowLuaEnv::new complete
+[  0.165s] [Startup] initial screen globals installed in 122.23µs
+[  0.165s] [Startup] WowLuaEnv::new complete
+[  0.165s] [Startup] init_lua_state complete in 162.78ms
+[  0.165s] [Startup] final app_data lua handle installed in 261.00ns
+[  0.166s] [Startup] initial screen globals installed in 143.21µs
+[  0.166s] [Startup] WowLuaEnv::new complete
+[  0.166s] [Startup] init_lua_state complete in 163.46ms
+[  0.166s] [Startup] final app_data lua handle installed in 250.00ns
+[  0.166s] [Startup] initial screen globals installed in 122.12µs
+[  0.166s] [Startup] WowLuaEnv::new complete
+[  0.166s] [Startup] init_lua_state complete in 163.84ms
+[  0.166s] [Startup] final app_data lua handle installed in 170.00ns
+[  0.166s] [Startup] init_lua_state complete in 163.60ms
+[  0.166s] [Startup] final app_data lua handle installed in 170.00ns
+[  0.166s] [Startup] initial screen globals installed in 138.37µs
+[  0.166s] [Startup] WowLuaEnv::new complete
+[  0.166s] [Startup] initial screen globals installed in 118.43µs
+[  0.166s] [Startup] WowLuaEnv::new complete
+[  0.167s] [Startup] init_lua_state complete in 164.53ms
+[  0.167s] [Startup] final app_data lua handle installed in 191.00ns
+[  0.167s] [Startup] initial screen globals installed in 113.76µs
+[  0.167s] [Startup] WowLuaEnv::new complete
+[  0.168s] [Startup] init_lua_state complete in 165.44ms
+[  0.168s] [Startup] final app_data lua handle installed in 170.00ns
+[  0.168s] [Startup] initial screen globals installed in 116.97µs
+[  0.168s] [Startup] WowLuaEnv::new complete
+[  0.168s] [Startup] init_lua_state complete in 165.27ms
+[  0.168s] [Startup] final app_data lua handle installed in 170.00ns
+[  0.168s] [Startup] initial screen globals installed in 128.72µs
+[  0.168s] [Startup] WowLuaEnv::new complete
+[  0.168s] [Startup] init_lua_state complete in 165.59ms
+[  0.168s] [Startup] final app_data lua handle installed in 320.00ns
+[  0.168s] [Startup] initial screen globals installed in 130.48µs
+[  0.168s] [Startup] WowLuaEnv::new complete
+test tooltip::tooltip_basic::test_createframe_gametooltip_type ... ok
+[  0.173s] [Startup] WowLuaEnv::new begin
+[  0.175s] [Startup] SimState::default complete in 1.70ms
+[  0.175s] [Startup] rilua VM created in 91.45µs
+[  0.175s] [Startup] builtin frames initialized in 61.98µs
+[  0.175s] [Startup] template registry cleared in 6.52µs
+[  0.175s] [Startup] intrinsic templates registered in 10.19µs
+[  0.175s] [Startup] initial app_data lua handle installed in 891.00ns
+test tooltip::tooltip_basic::test_gametooltip_strata_is_tooltip ... ok
+[  0.175s] [Startup] WowLuaEnv::new begin
+[  0.177s] [Startup] SimState::default complete in 1.27ms
+[  0.177s] [Startup] rilua VM created in 92.63µs
+[  0.177s] [Startup] builtin frames initialized in 105.40µs
+[  0.177s] [Startup] template registry cleared in 6.26µs
+[  0.177s] [Startup] intrinsic templates registered in 10.40µs
+[  0.177s] [Startup] initial app_data lua handle installed in 641.00ns
+test tooltip::tooltip_basic::test_isobjecttype_frame_returns_true_for_gametooltip ... ok
+test tooltip::tooltip_basic::test_appendtext ... ok
+[  0.177s] [Startup] WowLuaEnv::new begin
+[  0.177s] [Startup] WowLuaEnv::new begin
+test tooltip::tooltip_basic::test_adddoubleline_and_numlines ... ok
+[  0.178s] [Startup] WowLuaEnv::new begin
+[  0.179s] [Startup] SimState::default complete in 1.21ms
+[  0.179s] [Startup] SimState::default complete in 1.23ms
+[  0.179s] [Startup] rilua VM created in 80.41µs
+[  0.179s] [Startup] rilua VM created in 72.68µs
+[  0.179s] [Startup] builtin frames initialized in 81.12µs
+[  0.179s] [Startup] template registry cleared in 3.71µs
+[  0.179s] [Startup] intrinsic templates registered in 5.38µs
+[  0.179s] [Startup] initial app_data lua handle installed in 180.00ns
+[  0.179s] [Startup] builtin frames initialized in 73.61µs
+[  0.179s] [Startup] template registry cleared in 1.50µs
+[  0.179s] [Startup] intrinsic templates registered in 3.28µs
+[  0.179s] [Startup] initial app_data lua handle installed in 150.00ns
+test tooltip::tooltip_basic::test_isobjecttype_for_other_types ... ok
+[  0.179s] [Startup] SimState::default complete in 1.16ms
+[  0.179s] [Startup] WowLuaEnv::new begin
+[  0.179s] [Startup] rilua VM created in 79.81µs
+[  0.179s] [Startup] builtin frames initialized in 84.06µs
+[  0.179s] [Startup] template registry cleared in 1.47µs
+[  0.179s] [Startup] intrinsic templates registered in 3.10µs
+[  0.179s] [Startup] initial app_data lua handle installed in 120.00ns
+test tooltip::tooltip_basic::test_clearlines_resets_count ... ok
+test tooltip::tooltip_basic::test_gametooltip_exists_and_has_correct_type ... ok
+test tooltip::tooltip_basic::test_fadeout_hides_and_clears_owner ... ok
+test tooltip::tooltip_basic::test_addline_and_numlines ... ok
+[  0.180s] [Startup] WowLuaEnv::new begin
+[  0.180s] [Startup] WowLuaEnv::new begin
+[  0.180s] [Startup] WowLuaEnv::new begin
+[  0.180s] [Startup] WowLuaEnv::new begin
+test tooltip::tooltip_basic::test_copy_tooltip_copies_lines_and_spell_data_without_reowning ... ok
+[  0.181s] [Startup] WowLuaEnv::new begin
+[  0.181s] [Startup] SimState::default complete in 1.82ms
+[  0.181s] [Startup] rilua VM created in 73.54µs
+[  0.181s] [Startup] builtin frames initialized in 56.87µs
+[  0.181s] [Startup] template registry cleared in 4.51µs
+[  0.181s] [Startup] intrinsic templates registered in 7.84µs
+[  0.181s] [Startup] initial app_data lua handle installed in 291.00ns
+[  0.181s] [Startup] SimState::default complete in 1.19ms
+[  0.181s] [Startup] SimState::default complete in 1.22ms
+[  0.181s] [Startup] SimState::default complete in 1.20ms
+[  0.181s] [Startup] SimState::default complete in 1.24ms
+[  0.181s] [Startup] rilua VM created in 82.72µs
+[  0.181s] [Startup] rilua VM created in 86.02µs
+[  0.181s] [Startup] rilua VM created in 85.86µs
+[  0.181s] [Startup] rilua VM created in 87.21µs
+[  0.181s] [Startup] builtin frames initialized in 72.43µs
+[  0.181s] [Startup] builtin frames initialized in 82.23µs
+[  0.181s] [Startup] template registry cleared in 3.19µs
+[  0.181s] [Startup] template registry cleared in 1.58µs
+[  0.181s] [Startup] builtin frames initialized in 72.23µs
+[  0.181s] [Startup] intrinsic templates registered in 3.19µs
+[  0.181s] [Startup] template registry cleared in 1.51µs
+[  0.181s] [Startup] builtin frames initialized in 76.23µs
+[  0.181s] [Startup] template registry cleared in 1.37µs
+[  0.181s] [Startup] intrinsic templates registered in 3.08µs
+[  0.181s] [Startup] initial app_data lua handle installed in 120.00ns
+[  0.181s] [Startup] intrinsic templates registered in 3.26µs
+[  0.181s] [Startup] intrinsic templates registered in 5.08µs
+[  0.181s] [Startup] initial app_data lua handle installed in 181.00ns
+[  0.182s] [Startup] SimState::default complete in 1.16ms
+[  0.181s] [Startup] initial app_data lua handle installed in 130.00ns
+[  0.181s] [Startup] initial app_data lua handle installed in 130.00ns
+[  0.182s] [Startup] rilua VM created in 80.98µs
+[  0.182s] [Startup] builtin frames initialized in 111.12µs
+[  0.182s] [Startup] template registry cleared in 2.47µs
+[  0.182s] [Startup] intrinsic templates registered in 2.90µs
+[  0.182s] [Startup] initial app_data lua handle installed in 120.00ns
+test tooltip::tooltip_basic::test_getanchortype_after_setowner ... ok
+[  0.183s] [Startup] WowLuaEnv::new begin
+[  0.184s] [Startup] SimState::default complete in 1.23ms
+[  0.184s] [Startup] rilua VM created in 60.88µs
+[  0.184s] [Startup] builtin frames initialized in 55.79µs
+[  0.184s] [Startup] template registry cleared in 1.27µs
+[  0.184s] [Startup] intrinsic templates registered in 2.22µs
+[  0.184s] [Startup] initial app_data lua handle installed in 50.00ns
+[  0.276s] [Startup] init_lua_state complete in 99.48ms
+[  0.276s] [Startup] final app_data lua handle installed in 992.00ns
+[  0.277s] [Startup] initial screen globals installed in 115.92µs
+[  0.277s] [Startup] WowLuaEnv::new complete
+[  0.279s] [Startup] init_lua_state complete in 103.78ms
+[  0.279s] [Startup] final app_data lua handle installed in 251.00ns
+[  0.279s] [Startup] init_lua_state complete in 100.30ms
+[  0.279s] [Startup] final app_data lua handle installed in 271.00ns
+[  0.279s] [Startup] initial screen globals installed in 126.46µs
+[  0.279s] [Startup] WowLuaEnv::new complete
+[  0.279s] [Startup] initial screen globals installed in 87.93µs
+[  0.279s] [Startup] WowLuaEnv::new complete
+[  0.280s] [Startup] init_lua_state complete in 98.17ms
+[  0.280s] [Startup] final app_data lua handle installed in 170.00ns
+[  0.280s] [Startup] initial screen globals installed in 85.19µs
+[  0.280s] [Startup] WowLuaEnv::new complete
+[  0.280s] [Startup] init_lua_state complete in 98.49ms
+[  0.280s] [Startup] final app_data lua handle installed in 270.00ns
+[  0.280s] [Startup] initial screen globals installed in 96.21µs
+[  0.280s] [Startup] WowLuaEnv::new complete
+[  0.282s] [Startup] init_lua_state complete in 100.39ms
+[  0.282s] [Startup] final app_data lua handle installed in 250.00ns
+[  0.282s] [Startup] initial screen globals installed in 89.69µs
+[  0.282s] [Startup] WowLuaEnv::new complete
+[  0.282s] [Startup] init_lua_state complete in 100.52ms
+[  0.282s] [Startup] final app_data lua handle installed in 631.00ns
+[  0.283s] [Startup] initial screen globals installed in 98.43µs
+[  0.283s] [Startup] WowLuaEnv::new complete
+[  0.283s] [Startup] init_lua_state complete in 104.51ms
+[  0.283s] [Startup] final app_data lua handle installed in 281.00ns
+[  0.283s] [Startup] initial screen globals installed in 104.82µs
+[  0.283s] [Startup] WowLuaEnv::new complete
+test tooltip::tooltip_basic::test_on_tooltip_cleared_fires_on_setowner ... ok
+[  0.285s] [Startup] WowLuaEnv::new begin
+[  0.286s] [Startup] init_lua_state complete in 106.90ms
+[  0.286s] [Startup] final app_data lua handle installed in 691.00ns
+[  0.286s] [Startup] SimState::default complete in 1.59ms
+[  0.286s] [Startup] initial screen globals installed in 118.60µs
+[  0.286s] [Startup] WowLuaEnv::new complete
+[  0.286s] [Startup] rilua VM created in 102.93µs
+[  0.286s] [Startup] builtin frames initialized in 91.72µs
+[  0.286s] [Startup] template registry cleared in 6.70µs
+[  0.286s] [Startup] intrinsic templates registered in 9.07µs
+[  0.286s] [Startup] initial app_data lua handle installed in 140.00ns
+test tooltip::tooltip_basic::test_repeated_identical_tooltip_refresh_keeps_cached_strata_buckets ... ok
+test tooltip::tooltip_basic::test_settext_clears_and_sets_first_line ... ok
+[  0.288s] [Startup] WowLuaEnv::new begin
+[  0.288s] [Startup] WowLuaEnv::new begin
+test tooltip::tooltip_basic::test_setpadding_and_getpadding ... ok
+[  0.288s] [Startup] WowLuaEnv::new begin
+[  0.289s] [Startup] init_lua_state complete in 106.40ms
+[  0.289s] [Startup] final app_data lua handle installed in 391.00ns
+[  0.289s] [Startup] initial screen globals installed in 102.65µs
+[  0.289s] [Startup] WowLuaEnv::new complete
+test tooltip::tooltip_basic::test_on_tooltip_cleared_fires_on_clearlines ... ok
+[  0.289s] [Startup] WowLuaEnv::new begin
+[  0.290s] [Startup] SimState::default complete in 1.42ms
+[  0.290s] [Startup] SimState::default complete in 1.24ms
+[  0.290s] [Startup] rilua VM created in 87.74µs
+[  0.290s] [Startup] rilua VM created in 80.96µs
+[  0.290s] [Startup] builtin frames initialized in 81.30µs
+[  0.290s] [Startup] builtin frames initialized in 84.96µs
+[  0.290s] [Startup] template registry cleared in 4.08µs
+[  0.290s] [Startup] template registry cleared in 6.58µs
+[  0.290s] [Startup] intrinsic templates registered in 6.30µs
+[  0.290s] [Startup] intrinsic templates registered in 7.28µs
+[  0.290s] [Startup] initial app_data lua handle installed in 141.00ns
+[  0.290s] [Startup] initial app_data lua handle installed in 130.00ns
+[  0.290s] [Startup] SimState::default complete in 1.80ms
+[  0.290s] [Startup] SimState::default complete in 1.26ms
+[  0.290s] [Startup] rilua VM created in 90.27µs
+[  0.290s] [Startup] rilua VM created in 64.12µs
+[  0.290s] [Startup] builtin frames initialized in 84.27µs
+[  0.290s] [Startup] builtin frames initialized in 33.75µs
+[  0.290s] [Startup] template registry cleared in 1.31µs
+[  0.290s] [Startup] template registry cleared in 6.88µs
+[  0.290s] [Startup] intrinsic templates registered in 3.23µs
+[  0.290s] [Startup] initial app_data lua handle installed in 140.00ns
+[  0.290s] [Startup] intrinsic templates registered in 5.96µs
+[  0.290s] [Startup] initial app_data lua handle installed in 100.00ns
+test tooltip::tooltip_basic::test_setowner_and_isowned_and_getowner ... ok
+[  0.291s] [Startup] WowLuaEnv::new begin
+test tooltip::tooltip_basic::test_setminimumwidth_and_getminimumwidth ... ok
+[  0.292s] [Startup] WowLuaEnv::new begin
+[  0.292s] [Startup] SimState::default complete in 1.12ms
+[  0.292s] [Startup] rilua VM created in 78.73µs
+test tooltip::tooltip_basic::test_other_tooltip_frames_exist ... ok
+[  0.293s] [Startup] init_lua_state complete in 108.28ms
+[  0.293s] [Startup] final app_data lua handle installed in 361.00ns
+[  0.293s] [Startup] builtin frames initialized in 79.35µs
+[  0.293s] [Startup] template registry cleared in 1.52µs
+[  0.293s] [Startup] intrinsic templates registered in 3.25µs
+[  0.293s] [Startup] initial app_data lua handle installed in 131.00ns
+[  0.293s] [Startup] WowLuaEnv::new begin
+[  0.293s] [Startup] initial screen globals installed in 120.36µs
+[  0.293s] [Startup] WowLuaEnv::new complete
+[  0.293s] [Startup] SimState::default complete in 1.24ms
+[  0.293s] [Startup] rilua VM created in 168.62µs
+[  0.293s] [Startup] builtin frames initialized in 105.89µs
+[  0.293s] [Startup] template registry cleared in 2.56µs
+[  0.293s] [Startup] intrinsic templates registered in 2.74µs
+[  0.293s] [Startup] initial app_data lua handle installed in 100.00ns
+[  0.294s] [Startup] SimState::default complete in 1.75ms
+[  0.295s] [Startup] rilua VM created in 109.79µs
+[  0.295s] [Startup] builtin frames initialized in 67.90µs
+[  0.295s] [Startup] template registry cleared in 4.92µs
+[  0.295s] [Startup] intrinsic templates registered in 11.00µs
+[  0.295s] [Startup] initial app_data lua handle installed in 120.00ns
+test tooltip::tooltip_basic::test_set_frame_stack_populates_lines_returns_frame_and_fires_script ... ok
+[  0.296s] [Startup] WowLuaEnv::new begin
+[  0.298s] [Startup] SimState::default complete in 1.69ms
+[  0.298s] [Startup] rilua VM created in 103.63µs
+[  0.298s] [Startup] builtin frames initialized in 80.61µs
+[  0.298s] [Startup] template registry cleared in 4.63µs
+[  0.298s] [Startup] intrinsic templates registered in 5.38µs
+[  0.298s] [Startup] initial app_data lua handle installed in 441.00ns
+test tooltip::tooltip_basic::tooltip_content_lifecycle_appends_remain_hidden_until_show ... ok
+[  0.301s] [Startup] WowLuaEnv::new begin
+[  0.302s] [Startup] SimState::default complete in 1.66ms
+[  0.302s] [Startup] rilua VM created in 104.10µs
+[  0.302s] [Startup] builtin frames initialized in 83.00µs
+[  0.302s] [Startup] template registry cleared in 6.00µs
+[  0.302s] [Startup] intrinsic templates registered in 8.64µs
+[  0.302s] [Startup] initial app_data lua handle installed in 451.00ns
+[  0.303s] [Startup] WowLuaEnv::new begin
+[  0.305s] [Startup] init_lua_state complete in 123.82ms
+[  0.305s] [Startup] final app_data lua handle installed in 621.00ns
+[  0.305s] [Startup] SimState::default complete in 1.65ms
+[  0.305s] [Startup] initial screen globals installed in 107.07µs
+[  0.305s] [Startup] WowLuaEnv::new complete
+[  0.305s] [Startup] rilua VM created in 76.32µs
+[  0.305s] [Startup] builtin frames initialized in 39.60µs
+[  0.305s] [Startup] template registry cleared in 8.21µs
+[  0.305s] [Startup] intrinsic templates registered in 4.89µs
+[  0.305s] [Startup] initial app_data lua handle installed in 120.00ns
+test tooltip::tooltip_basic::test_set_shapeshift_populates_spell_tooltip ... ok
+[  0.314s] [Startup] WowLuaEnv::new begin
+[  0.316s] [Startup] SimState::default complete in 1.89ms
+[  0.317s] [Startup] rilua VM created in 79.22µs
+[  0.317s] [Startup] builtin frames initialized in 50.40µs
+[  0.317s] [Startup] template registry cleared in 6.10µs
+[  0.317s] [Startup] intrinsic templates registered in 8.85µs
+[  0.317s] [Startup] initial app_data lua handle installed in 241.00ns
+[  0.384s] [Startup] init_lua_state complete in 90.34ms
+[  0.384s] [Startup] final app_data lua handle installed in 281.00ns
+[  0.384s] [Startup] initial screen globals installed in 87.42µs
+[  0.384s] [Startup] WowLuaEnv::new complete
+[  0.386s] [Startup] init_lua_state complete in 96.42ms
+[  0.386s] [Startup] final app_data lua handle installed in 190.00ns
+[  0.386s] [Startup] initial screen globals installed in 90.67µs
+[  0.386s] [Startup] WowLuaEnv::new complete
+test tooltip::tooltip_basic::tooltip_owner_set_shown_false_releases_owner ... ok
+[  0.391s] [Startup] WowLuaEnv::new begin
+[  0.393s] [Startup] SimState::default complete in 1.57ms
+[  0.393s] [Startup] rilua VM created in 100.02µs
+[  0.393s] [Startup] builtin frames initialized in 102.83µs
+[  0.393s] [Startup] template registry cleared in 8.71µs
+[  0.393s] [Startup] intrinsic templates registered in 13.64µs
+[  0.393s] [Startup] initial app_data lua handle installed in 561.00ns
+test tooltip::tooltip_basic::tooltip_owner_clear_lines_retains_owner ... ok
+[  0.394s] [Startup] WowLuaEnv::new begin
+[  0.395s] [Startup] SimState::default complete in 1.35ms
+[  0.395s] [Startup] rilua VM created in 86.11µs
+[  0.395s] [Startup] builtin frames initialized in 73.19µs
+[  0.395s] [Startup] template registry cleared in 4.49µs
+[  0.395s] [Startup] intrinsic templates registered in 7.03µs
+[  0.395s] [Startup] initial app_data lua handle installed in 281.00ns
+[  0.396s] [Startup] init_lua_state complete in 109.81ms
+[  0.396s] [Startup] final app_data lua handle installed in 450.00ns
+[  0.396s] [Startup] initial screen globals installed in 111.88µs
+[  0.396s] [Startup] WowLuaEnv::new complete
+[  0.396s] [Startup] init_lua_state complete in 106.57ms
+[  0.396s] [Startup] final app_data lua handle installed in 632.00ns
+[  0.396s] [Startup] initial screen globals installed in 86.71µs
+[  0.396s] [Startup] WowLuaEnv::new complete
+[  0.399s] [Startup] init_lua_state complete in 109.35ms
+[  0.400s] [Startup] final app_data lua handle installed in 261.00ns
+[  0.400s] [Startup] initial screen globals installed in 94.32µs
+[  0.400s] [Startup] WowLuaEnv::new complete
+[  0.403s] [Startup] init_lua_state complete in 98.18ms
+[  0.403s] [Startup] final app_data lua handle installed in 1.08µs
+[  0.404s] [Startup] initial screen globals installed in 187.10µs
+[  0.404s] [Startup] WowLuaEnv::new complete
+[  0.404s] [Startup] init_lua_state complete in 109.80ms
+[  0.404s] [Startup] final app_data lua handle installed in 461.00ns
+[  0.405s] [Startup] initial screen globals installed in 99.99µs
+[  0.405s] [Startup] WowLuaEnv::new complete
+test tooltip::tooltip_basic::tooltip_content_lifecycle_setowner_hides_clears_and_retains_new_owner ... ok
+[  0.405s] [Startup] WowLuaEnv::new begin
+test tooltip::tooltip_basic::tooltip_content_lifecycle_spell_payload_still_shows_after_setowner ... ok
+[  0.405s] [Startup] WowLuaEnv::new begin
+[  0.406s] [Startup] init_lua_state complete in 112.99ms
+[  0.406s] [Startup] final app_data lua handle installed in 1.39µs
+[  0.406s] [Startup] initial screen globals installed in 117.32µs
+[  0.406s] [Startup] WowLuaEnv::new complete
+[  0.406s] [Startup] SimState::default complete in 1.43ms
+[  0.407s] [Startup] SimState::default complete in 1.54ms
+[  0.407s] [Startup] rilua VM created in 92.44µs
+[  0.407s] [Startup] rilua VM created in 64.97µs
+[  0.407s] [Startup] builtin frames initialized in 32.04µs
+[  0.407s] [Startup] template registry cleared in 4.68µs
+[  0.407s] [Startup] builtin frames initialized in 75.49µs
+[  0.407s] [Startup] template registry cleared in 1.54µs
+[  0.407s] [Startup] intrinsic templates registered in 7.46µs
+[  0.407s] [Startup] intrinsic templates registered in 3.46µs
+[  0.407s] [Startup] initial app_data lua handle installed in 331.00ns
+[  0.407s] [Startup] initial app_data lua handle installed in 140.00ns
+test tooltip::tooltip_basic::tooltip_content_lifecycle_settext_shows_owned_populated_tooltip ... ok
+[  0.409s] [Startup] WowLuaEnv::new begin
+[  0.410s] [Startup] SimState::default complete in 1.26ms
+[  0.410s] [Startup] rilua VM created in 75.70µs
+[  0.410s] [Startup] builtin frames initialized in 86.44µs
+[  0.410s] [Startup] template registry cleared in 1.98µs
+[  0.410s] [Startup] intrinsic templates registered in 3.63µs
+[  0.410s] [Startup] initial app_data lua handle installed in 181.00ns
+[  0.411s] [Startup] init_lua_state complete in 108.14ms
+[  0.411s] [Startup] final app_data lua handle installed in 280.00ns
+[  0.411s] [Startup] initial screen globals installed in 134.97µs
+[  0.411s] [Startup] WowLuaEnv::new complete
+[  0.412s] [Startup] init_lua_state complete in 113.64ms
+[  0.412s] [Startup] final app_data lua handle installed in 451.00ns
+[  0.412s] [Startup] initial screen globals installed in 145.01µs
+[  0.412s] [Startup] WowLuaEnv::new complete
+[  0.412s] [Startup] WowLuaEnv::new begin
+[  0.413s] [Startup] init_lua_state complete in 122.56ms
+[  0.413s] [Startup] final app_data lua handle installed in 191.00ns
+[  0.413s] [Startup] initial screen globals installed in 121.86µs
+[  0.413s] [Startup] WowLuaEnv::new complete
+[  0.414s] [Startup] SimState::default complete in 1.63ms
+[  0.414s] [Startup] rilua VM created in 76.59µs
+[  0.414s] [Startup] builtin frames initialized in 43.73µs
+[  0.414s] [Startup] template registry cleared in 9.95µs
+[  0.414s] [Startup] intrinsic templates registered in 7.64µs
+[  0.414s] [Startup] initial app_data lua handle installed in 110.00ns
+test tooltip_basic::test_adddoubleline_and_numlines ... ok
+[  0.414s] [Startup] WowLuaEnv::new begin
+[  0.415s] [Startup] init_lua_state complete in 98.17ms
+[  0.415s] [Startup] final app_data lua handle installed in 270.00ns
+[  0.415s] [Startup] initial screen globals installed in 97.74µs
+[  0.415s] [Startup] WowLuaEnv::new complete
+test tooltip::tooltip_basic::tooltip_owner_normal_frame_hide_does_not_change_tooltip_owner ... ok
+[  0.416s] [Startup] WowLuaEnv::new begin
+[  0.416s] [Startup] SimState::default complete in 1.80ms
+[  0.416s] [Startup] rilua VM created in 95.46µs
+[  0.416s] [Startup] builtin frames initialized in 87.13µs
+[  0.416s] [Startup] template registry cleared in 4.37µs
+[  0.416s] [Startup] intrinsic templates registered in 5.98µs
+[  0.416s] [Startup] initial app_data lua handle installed in 441.00ns
+[  0.417s] [Startup] SimState::default complete in 1.36ms
+[  0.418s] [Startup] rilua VM created in 92.27µs
+[  0.418s] [Startup] builtin frames initialized in 73.32µs
+[  0.418s] [Startup] template registry cleared in 4.00µs
+[  0.418s] [Startup] intrinsic templates registered in 5.60µs
+[  0.418s] [Startup] initial app_data lua handle installed in 531.00ns
+test tooltip_basic::test_clearlines_resets_count ... ok
+[  0.429s] [Startup] WowLuaEnv::new begin
+test tooltip_basic::test_appendtext ... ok
+[  0.430s] [Startup] WowLuaEnv::new begin
+test tooltip_basic::test_addline_and_numlines ... ok
+[  0.431s] [Startup] WowLuaEnv::new begin
+[  0.431s] [Startup] SimState::default complete in 1.60ms
+[  0.431s] [Startup] rilua VM created in 99.31µs
+[  0.431s] [Startup] SimState::default complete in 2.11ms
+[  0.432s] [Startup] rilua VM created in 79.32µs
+[  0.432s] [Startup] builtin frames initialized in 115.17µs
+[  0.432s] [Startup] template registry cleared in 6.73µs
+[  0.432s] [Startup] intrinsic templates registered in 7.84µs
+[  0.432s] [Startup] initial app_data lua handle installed in 1.34µs
+[  0.432s] [Startup] builtin frames initialized in 37.23µs
+[  0.432s] [Startup] template registry cleared in 1.92µs
+[  0.432s] [Startup] intrinsic templates registered in 4.73µs
+[  0.432s] [Startup] initial app_data lua handle installed in 180.00ns
+[  0.433s] [Startup] SimState::default complete in 1.24ms
+[  0.433s] [Startup] rilua VM created in 71.58µs
+[  0.433s] [Startup] builtin frames initialized in 119.08µs
+[  0.433s] [Startup] template registry cleared in 1.31µs
+[  0.433s] [Startup] intrinsic templates registered in 3.24µs
+[  0.433s] [Startup] initial app_data lua handle installed in 120.00ns
+test tooltip::tooltip_basic::tooltip_owner_hide_releases_owner_without_clearing_lines ... ok
+[  0.435s] [Startup] WowLuaEnv::new begin
+[  0.437s] [Startup] SimState::default complete in 1.42ms
+[  0.437s] [Startup] rilua VM created in 102.42µs
+[  0.437s] [Startup] builtin frames initialized in 70.92µs
+[  0.437s] [Startup] template registry cleared in 3.69µs
+[  0.437s] [Startup] intrinsic templates registered in 6.29µs
+[  0.437s] [Startup] initial app_data lua handle installed in 200.00ns
+[  0.499s] [Startup] init_lua_state complete in 103.49ms
+[  0.499s] [Startup] final app_data lua handle installed in 210.00ns
+[  0.499s] [Startup] initial screen globals installed in 80.89µs
+[  0.499s] [Startup] WowLuaEnv::new complete
+[  0.501s] [Startup] init_lua_state complete in 94.78ms
+[  0.501s] [Startup] final app_data lua handle installed in 270.00ns
+[  0.501s] [Startup] init_lua_state complete in 108.30ms
+[  0.501s] [Startup] final app_data lua handle installed in 281.00ns
+[  0.502s] [Startup] initial screen globals installed in 79.46µs
+[  0.502s] [Startup] WowLuaEnv::new complete
+[  0.502s] [Startup] initial screen globals installed in 81.06µs
+[  0.502s] [Startup] WowLuaEnv::new complete
+test tooltip_basic::test_createframe_gametooltip_type ... ok
+[  0.506s] [Startup] WowLuaEnv::new begin
+[  0.507s] [Startup] SimState::default complete in 1.43ms
+[  0.507s] [Startup] rilua VM created in 95.16µs
+[  0.507s] [Startup] builtin frames initialized in 78.48µs
+[  0.507s] [Startup] template registry cleared in 4.89µs
+[  0.507s] [Startup] intrinsic templates registered in 7.10µs
+[  0.507s] [Startup] initial app_data lua handle installed in 491.00ns
+test tooltip_basic::test_gametooltip_exists_and_has_correct_type ... ok
+[  0.508s] [Startup] WowLuaEnv::new begin
+test tooltip_basic::test_copy_tooltip_copies_lines_and_spell_data_without_reowning ... ok
+[  0.509s] [Startup] WowLuaEnv::new begin
+[  0.510s] [Startup] SimState::default complete in 1.60ms
+[  0.510s] [Startup] rilua VM created in 94.62µs
+[  0.510s] [Startup] builtin frames initialized in 88.88µs
+[  0.510s] [Startup] template registry cleared in 5.93µs
+[  0.510s] [Startup] intrinsic templates registered in 6.77µs
+[  0.510s] [Startup] initial app_data lua handle installed in 541.00ns
+[  0.510s] [Startup] SimState::default complete in 1.23ms
+[  0.510s] [Startup] init_lua_state complete in 93.93ms
+[  0.510s] [Startup] final app_data lua handle installed in 361.00ns
+[  0.510s] [Startup] rilua VM created in 69.51µs
+[  0.510s] [Startup] builtin frames initialized in 31.79µs
+[  0.510s] [Startup] template registry cleared in 2.25µs
+[  0.510s] [Startup] intrinsic templates registered in 4.49µs
+[  0.510s] [Startup] initial app_data lua handle installed in 140.00ns
+[  0.510s] [Startup] initial screen globals installed in 106.80µs
+[  0.510s] [Startup] WowLuaEnv::new complete
+test tooltip_basic::test_getanchortype_after_setowner ... ok
+[  0.519s] [Startup] init_lua_state complete in 112.37ms
+[  0.519s] [Startup] final app_data lua handle installed in 441.00ns
+[  0.519s] [Startup] initial screen globals installed in 104.24µs
+[  0.519s] [Startup] WowLuaEnv::new complete
+[  0.528s] [Startup] WowLuaEnv::new begin
+[  0.530s] [Startup] SimState::default complete in 1.53ms
+[  0.530s] [Startup] rilua VM created in 90.01µs
+[  0.530s] [Startup] builtin frames initialized in 81.93µs
+[  0.530s] [Startup] template registry cleared in 6.83µs
+[  0.530s] [Startup] intrinsic templates registered in 7.20µs
+[  0.530s] [Startup] initial app_data lua handle installed in 4.89µs
+[  0.531s] [Startup] init_lua_state complete in 113.04ms
+[  0.531s] [Startup] final app_data lua handle installed in 471.00ns
+[  0.531s] [Startup] initial screen globals installed in 145.24µs
+[  0.531s] [Startup] WowLuaEnv::new complete
+[  0.531s] [Startup] init_lua_state complete in 98.63ms
+[  0.531s] [Startup] final app_data lua handle installed in 271.00ns
+[  0.532s] [Startup] initial screen globals installed in 124.66µs
+[  0.532s] [Startup] WowLuaEnv::new complete
+[  0.533s] [Startup] init_lua_state complete in 123.30ms
+[  0.534s] [Startup] final app_data lua handle installed in 320.00ns
+[  0.534s] [Startup] initial screen globals installed in 120.43µs
+[  0.534s] [Startup] WowLuaEnv::new complete
+[  0.534s] [Startup] init_lua_state complete in 102.63ms
+[  0.534s] [Startup] final app_data lua handle installed in 321.00ns
+[  0.534s] [Startup] initial screen globals installed in 105.54µs
+[  0.534s] [Startup] WowLuaEnv::new complete
+[  0.535s] [Startup] init_lua_state complete in 120.87ms
+[  0.535s] [Startup] final app_data lua handle installed in 271.00ns
+[  0.535s] [Startup] initial screen globals installed in 125.25µs
+[  0.535s] [Startup] WowLuaEnv::new complete
+[  0.535s] [Startup] init_lua_state complete in 103.87ms
+[  0.535s] [Startup] final app_data lua handle installed in 201.00ns
+[  0.536s] [Startup] initial screen globals installed in 105.26µs
+[  0.536s] [Startup] WowLuaEnv::new complete
+test tooltip_basic::test_fadeout_hides_and_clears_owner ... ok
+[  0.537s] [Startup] WowLuaEnv::new begin
+[  0.538s] [Startup] SimState::default complete in 1.50ms
+[  0.538s] [Startup] rilua VM created in 90.44µs
+[  0.538s] [Startup] builtin frames initialized in 80.60µs
+[  0.538s] [Startup] template registry cleared in 8.98µs
+[  0.538s] [Startup] intrinsic templates registered in 11.41µs
+[  0.538s] [Startup] initial app_data lua handle installed in 130.00ns
+test tooltip_basic::test_on_tooltip_cleared_fires_on_setowner ... ok
+test tooltip_basic::test_isobjecttype_for_other_types ... ok
+[  0.540s] [Startup] WowLuaEnv::new begin
+[  0.540s] [Startup] WowLuaEnv::new begin
+[  0.541s] [Startup] init_lua_state complete in 103.88ms
+[  0.541s] [Startup] final app_data lua handle installed in 371.00ns
+[  0.541s] [Startup] initial screen globals installed in 133.64µs
+[  0.541s] [Startup] WowLuaEnv::new complete
+[  0.542s] [Startup] SimState::default complete in 1.80ms
+[  0.542s] [Startup] SimState::default complete in 1.84ms
+[  0.542s] [Startup] rilua VM created in 114.70µs
+[  0.542s] [Startup] rilua VM created in 103.09µs
+[  0.542s] [Startup] builtin frames initialized in 86.02µs
+[  0.542s] [Startup] builtin frames initialized in 86.60µs
+[  0.542s] [Startup] template registry cleared in 7.39µs
+[  0.542s] [Startup] template registry cleared in 5.76µs
+[  0.542s] [Startup] intrinsic templates registered in 6.92µs
+[  0.542s] [Startup] intrinsic templates registered in 6.02µs
+[  0.542s] [Startup] initial app_data lua handle installed in 180.00ns
+[  0.542s] [Startup] initial app_data lua handle installed in 411.00ns
+test tooltip_basic::test_gametooltip_strata_is_tooltip ... ok
+[  0.543s] [Startup] WowLuaEnv::new begin
+[  0.544s] [Startup] SimState::default complete in 1.49ms
+[  0.544s] [Startup] rilua VM created in 85.50µs
+[  0.544s] [Startup] builtin frames initialized in 96.82µs
+[  0.544s] [Startup] template registry cleared in 4.91µs
+[  0.544s] [Startup] intrinsic templates registered in 6.71µs
+[  0.544s] [Startup] initial app_data lua handle installed in 171.00ns
+test tooltip::tooltip_basic::tooltip_content_lifecycle_explicit_hide_releases_owner_when_already_hidden ... ok
+test tooltip_basic::test_isobjecttype_frame_returns_true_for_gametooltip ... ok
+test tooltip_basic::test_on_tooltip_cleared_fires_on_clearlines ... ok
+[  0.545s] [Startup] WowLuaEnv::new begin
+[  0.545s] [Startup] WowLuaEnv::new begin
+[  0.545s] [Startup] WowLuaEnv::new begin
+[  0.547s] [Startup] SimState::default complete in 1.69ms
+[  0.547s] [Startup] SimState::default complete in 1.68ms
+[  0.547s] [Startup] rilua VM created in 82.07µs
+[  0.547s] [Startup] rilua VM created in 87.98µs
+[  0.547s] [Startup] SimState::default complete in 1.79ms
+[  0.547s] [Startup] builtin frames initialized in 73.07µs
+[  0.547s] [Startup] template registry cleared in 4.07µs
+[  0.547s] [Startup] builtin frames initialized in 86.52µs
+[  0.547s] [Startup] template registry cleared in 1.61µs
+[  0.547s] [Startup] intrinsic templates registered in 6.52µs
+[  0.547s] [Startup] initial app_data lua handle installed in 291.00ns
+[  0.547s] [Startup] intrinsic templates registered in 3.10µs
+[  0.547s] [Startup] initial app_data lua handle installed in 120.00ns
+[  0.547s] [Startup] rilua VM created in 76.71µs
+[  0.547s] [Startup] builtin frames initialized in 36.64µs
+[  0.547s] [Startup] template registry cleared in 2.67µs
+[  0.547s] [Startup] intrinsic templates registered in 6.03µs
+[  0.547s] [Startup] initial app_data lua handle installed in 181.00ns
+test tooltip_basic::test_other_tooltip_frames_exist ... ok
+[  0.553s] [Startup] WowLuaEnv::new begin
+[  0.554s] [Startup] SimState::default complete in 1.64ms
+[  0.554s] [Startup] rilua VM created in 92.82µs
+[  0.554s] [Startup] builtin frames initialized in 104.83µs
+[  0.554s] [Startup] template registry cleared in 13.94µs
+[  0.555s] [Startup] intrinsic templates registered in 11.79µs
+[  0.555s] [Startup] initial app_data lua handle installed in 822.00ns
+[  0.618s] [Startup] init_lua_state complete in 107.46ms
+[  0.618s] [Startup] final app_data lua handle installed in 381.00ns
+[  0.618s] [Startup] initial screen globals installed in 87.31µs
+[  0.618s] [Startup] WowLuaEnv::new complete
+[  0.634s] [Startup] init_lua_state complete in 123.33ms
+[  0.634s] [Startup] final app_data lua handle installed in 411.00ns
+[  0.634s] [Startup] initial screen globals installed in 101.00µs
+[  0.634s] [Startup] WowLuaEnv::new complete
+[  0.634s] [Startup] init_lua_state complete in 126.82ms
+[  0.634s] [Startup] final app_data lua handle installed in 531.00ns
+[  0.634s] [Startup] initial screen globals installed in 91.28µs
+[  0.634s] [Startup] WowLuaEnv::new complete
+test tooltip_basic::test_set_frame_stack_populates_lines_returns_frame_and_fires_script ... ok
+[  0.635s] [Startup] WowLuaEnv::new begin
+[  0.637s] [Startup] SimState::default complete in 1.79ms
+[  0.637s] [Startup] rilua VM created in 98.15µs
+[  0.637s] [Startup] builtin frames initialized in 122.96µs
+[  0.637s] [Startup] template registry cleared in 6.34µs
+[  0.637s] [Startup] intrinsic templates registered in 9.65µs
+[  0.637s] [Startup] initial app_data lua handle installed in 250.00ns
+[  0.639s] [Startup] init_lua_state complete in 96.83ms
+[  0.639s] [Startup] final app_data lua handle installed in 441.00ns
+[  0.639s] [Startup] initial screen globals installed in 98.37µs
+[  0.639s] [Startup] WowLuaEnv::new complete
+[  0.641s] [Startup] init_lua_state complete in 110.34ms
+[  0.641s] [Startup] final app_data lua handle installed in 441.00ns
+[  0.641s] [Startup] initial screen globals installed in 162.27µs
+[  0.641s] [Startup] WowLuaEnv::new complete
+[  0.644s] [Startup] init_lua_state complete in 101.54ms
+[  0.644s] [Startup] final app_data lua handle installed in 1.13µs
+[  0.644s] [Startup] initial screen globals installed in 142.25µs
+[  0.644s] [Startup] WowLuaEnv::new complete
+test tooltip_basic::test_repeated_identical_tooltip_refresh_keeps_cached_strata_buckets ... ok
+[  0.644s] [Startup] WowLuaEnv::new begin
+test tooltip_basic::test_set_shapeshift_populates_spell_tooltip ... ok
+[  0.645s] [Startup] WowLuaEnv::new begin
+[  0.646s] [Startup] SimState::default complete in 1.85ms
+[  0.646s] [Startup] rilua VM created in 97.91µs
+[  0.646s] [Startup] init_lua_state complete in 99.50ms
+[  0.646s] [Startup] final app_data lua handle installed in 662.00ns
+[  0.646s] [Startup] builtin frames initialized in 97.92µs
+[  0.646s] [Startup] template registry cleared in 7.48µs
+[  0.646s] [Startup] SimState::default complete in 1.31ms
+[  0.646s] [Startup] intrinsic templates registered in 7.44µs
+[  0.646s] [Startup] initial app_data lua handle installed in 311.00ns
+[  0.646s] [Startup] initial screen globals installed in 120.75µs
+[  0.646s] [Startup] WowLuaEnv::new complete
+[  0.646s] [Startup] rilua VM created in 94.72µs
+[  0.646s] [Startup] builtin frames initialized in 66.26µs
+[  0.646s] [Startup] template registry cleared in 1.97µs
+[  0.647s] [Startup] intrinsic templates registered in 4.08µs
+[  0.647s] [Startup] initial app_data lua handle installed in 150.00ns
+test tooltip_basic::test_setpadding_and_getpadding ... [  0.649s]ok [Startup] init_lua_state complete in 104.72ms
+
+[  0.649s] [Startup] final app_data lua handle installed in 110.00ns
+[  0.649s] [Startup] WowLuaEnv::new begin
+[  0.649s] [Startup] initial screen globals installed in 192.13µs
+[  0.649s] [Startup] WowLuaEnv::new complete
+[  0.649s] [Startup] init_lua_state complete in 102.52ms
+[  0.649s] [Startup] final app_data lua handle installed in 511.00ns
+[  0.649s] [Startup] initial screen globals installed in 100.37µs
+[  0.649s] [Startup] WowLuaEnv::new complete
+test tooltip_basic::test_setminimumwidth_and_getminimumwidth ... ok
+[  0.651s] [Startup] SimState::default complete in 1.41ms
+[  0.651s] [Startup] rilua VM created in 100.43µs
+[  0.651s] [Startup] builtin frames initialized in 74.58µs
+[  0.651s] [Startup] template registry cleared in 3.25µs
+[  0.651s] [Startup] intrinsic templates registered in 4.47µs
+[  0.651s] [Startup] initial app_data lua handle installed in 131.00ns
+[  0.651s] [Startup] init_lua_state complete in 112.46ms
+[  0.651s] [Startup] final app_data lua handle installed in 461.00ns
+[  0.651s] [Startup] initial screen globals installed in 117.97µs
+[  0.651s] [Startup] WowLuaEnv::new complete
+test tooltip_basic::test_settext_clears_and_sets_first_line ... ok
+[  0.655s] [Startup] WowLuaEnv::new begin
+[  0.657s] [Startup] SimState::default complete in 1.57ms
+[  0.657s] [Startup] rilua VM created in 88.40µs
+[  0.657s] [Startup] builtin frames initialized in 44.22µs
+[  0.657s] [Startup] template registry cleared in 6.60µs
+[  0.657s] [Startup] intrinsic templates registered in 5.67µs
+[  0.657s] [Startup] initial app_data lua handle installed in 341.00ns
+test tooltip_basic::tooltip_content_lifecycle_appends_remain_hidden_until_show ... ok
+test tooltip_basic::tooltip_content_lifecycle_setowner_hides_clears_and_retains_new_owner ... ok
+test tooltip_basic::test_setowner_and_isowned_and_getowner ... ok
+[  0.661s] [Startup] init_lua_state complete in 114.50ms
+[  0.661s] [Startup] final app_data lua handle installed in 411.00ns
+[  0.661s] [Startup] initial screen globals installed in 104.88µs
+[  0.661s] [Startup] WowLuaEnv::new complete
+[  0.663s] [Startup] init_lua_state complete in 108.14ms
+[  0.663s] [Startup] final app_data lua handle installed in 191.00ns
+[  0.663s] [Startup] initial screen globals installed in 75.86µs
+[  0.663s] [Startup] WowLuaEnv::new complete
+test tooltip_basic::tooltip_content_lifecycle_spell_payload_still_shows_after_setowner ... ok
+test tooltip_basic::tooltip_content_lifecycle_settext_shows_owned_populated_tooltip ... ok
+[  0.714s] [Startup] init_lua_state complete in 67.62ms
+[  0.714s] [Startup] final app_data lua handle installed in 220.00ns
+[  0.714s] [Startup] initial screen globals installed in 66.65µs
+[  0.714s] [Startup] WowLuaEnv::new complete
+test tooltip_basic::tooltip_owner_hide_releases_owner_without_clearing_lines ... ok
+[  0.731s] [Startup] init_lua_state complete in 84.45ms
+[  0.731s] [Startup] final app_data lua handle installed in 300.00ns
+[  0.731s] [Startup] initial screen globals installed in 95.59µs
+[  0.731s] [Startup] WowLuaEnv::new complete
+[  0.732s] [Startup] init_lua_state complete in 81.16ms
+[  0.732s] [Startup] final app_data lua handle installed in 210.00ns
+[  0.732s] [Startup] initial screen globals installed in 85.05µs
+[  0.732s] [Startup] WowLuaEnv::new complete
+[  0.734s] [Startup] init_lua_state complete in 96.41ms
+[  0.734s] [Startup] final app_data lua handle installed in 230.00ns
+[  0.734s] [Startup] initial screen globals installed in 76.50µs
+[  0.734s] [Startup] WowLuaEnv::new complete
+test tooltip_basic::tooltip_owner_normal_frame_hide_does_not_change_tooltip_owner ... ok
+test tooltip_basic::tooltip_owner_set_shown_false_releases_owner ... ok
+test tooltip_basic::tooltip_owner_clear_lines_retains_owner ... ok
+[  0.740s] [Startup] init_lua_state complete in 83.10ms
+[  0.740s] [Startup] final app_data lua handle installed in 370.00ns
+[  0.740s] [Startup] initial screen globals installed in 99.72µs
+[  0.740s] [Startup] WowLuaEnv::new complete
+[  0.745s] [Startup] WowLuaEnv::new begin
+[  0.746s] [Startup] SimState::default complete in 1.29ms
+[  0.746s] [Startup] rilua VM created in 73.21µs
+[  0.746s] [Startup] builtin frames initialized in 30.80µs
+[  0.746s] [Startup] template registry cleared in 4.86µs
+[  0.746s] [Startup] intrinsic templates registered in 4.45µs
+[  0.746s] [Startup] initial app_data lua handle installed in 581.00ns
+[  0.806s] [Startup] init_lua_state complete in 59.37ms
+[  0.806s] [Startup] final app_data lua handle installed in 170.00ns
+[  0.806s] [Startup] initial screen globals installed in 60.04µs
+[  0.806s] [Startup] WowLuaEnv::new complete
+test tooltip_basic::tooltip_content_lifecycle_explicit_hide_releases_owner_when_already_hidden ... ok
+
+test result: ok. 62 passed; 0 failed; 0 ignored; 0 measured; 10612 filtered out; finished in 0.81s
+

@@ -1,0 +1,16 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "integration",
+    "tooltip_basic::",
+    "--",
+    "--nocapture"
+  ],
+  "revision": "da30fc360e7bc0e5074b2cc0cb3ddf38bb5a9bdf",
+  "exit": 0,
+  "log": "p620-tooltip-basic.txt",
+  "log_sha256": "bcf9ad0996b0c3eb789daa7e0587db362c9c2ff0aa6560b695295361a1a7362e",
+  "invalidated": false
+}
