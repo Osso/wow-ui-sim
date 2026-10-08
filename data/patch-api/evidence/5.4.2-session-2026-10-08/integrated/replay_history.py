@@ -98,6 +98,12 @@ def main():
                      historical_helpers=mapped_helpers)
     namespace['historical_registers'] = lambda root, pin: [root / name for name in historical_names(pin, 'data/patch-api/sources') if name.endswith('-wikitext-register.json')]
     namespace['historical_sweep_tests'] = lambda root, pin: [root / name for name in historical_names(pin, 'tests') if name.endswith('_publication_sweep.rs')]
+    def preserved_seals(context):
+        for name, expected in context['session_sha256'].items():
+            path = HERE / 'historical-validator.py.txt' if name == 'validate.py' else HISTORY / name
+            assert path.is_file() and digest(path.read_bytes()) == expected, name
+            git('ls-files', '--error-unmatch', path.relative_to(ROOT).as_posix())
+    namespace['check_seals'] = preserved_seals
     namespace['main']()
 
 
