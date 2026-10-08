@@ -7,7 +7,7 @@
     "--",
     "patch_8_1_5"
   ],
-  "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+  "revision": "8c8d4fbada43ed24654ab2427e95c8cc9534059a",
   "scope": "p815-bare-final",
   "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
   "target": "/home/osso/.cache/wow-ui-sim-targets/p815-page",
@@ -17,7 +17,7 @@
   "exit": 0,
   "expected_exit": 0,
   "log": "p815-bare-final.txt",
-  "log_sha256": "2304d0082bf296fe9b82b71fcff26b568f6a1c9f3f9663ed38b3defde22be1ae",
+  "log_sha256": "a6d895ad1c23983ba5599aaf85a00159cec789ffa344d68cbbd66b9e6507181e",
   "invalidated": false,
-  "seconds": 9.305593392000446
+  "seconds": 94.56098211500284
 }

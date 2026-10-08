@@ -173,7 +173,7 @@ def check_reproduction():
 
 
 def check_proof():
-    required = ['p815-all-sweeps', 'p815-bare-final', 'p815-retirement-cached-final',
+    required = ['p815-all-sweeps', 'p815-bare-final', 'p815-integration-combined', 'p815-retirement-cached-final',
                 'p815-mists-check', 'p815-mists-behavior', 'p815-default-check', 'p815-format',
                 'p815-extract_patch_non_inventory-fixtures', 'p815-gen_patch_wikitext_register-fixtures',
                 'p815-source-reproduction', 'p815-extract-cli-check', 'p815-negative',

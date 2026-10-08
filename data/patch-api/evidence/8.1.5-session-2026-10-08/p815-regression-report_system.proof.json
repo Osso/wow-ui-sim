@@ -7,7 +7,7 @@
     "--",
     "report_system"
   ],
-  "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+  "revision": "ca6ea29b2a5183c4ef8bb693d05fc71762fb378e",
   "scope": "p815-regression-report_system",
   "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
   "target": "/home/osso/.cache/wow-ui-sim-targets/p815-page",
@@ -17,7 +17,7 @@
   "exit": 0,
   "expected_exit": 0,
   "log": "p815-regression-report_system.txt",
-  "log_sha256": "9e972a40cf72578ce89e30926cd9face644b321850d1d8892158ca68cc6f1edd",
+  "log_sha256": "066e84f1825c4119c12eee0e4334461e7960f7572dba2f3ae92e33d08d284fb7",
   "invalidated": false,
-  "seconds": 0.2843355490003887
+  "seconds": 1.0715585850011848
 }

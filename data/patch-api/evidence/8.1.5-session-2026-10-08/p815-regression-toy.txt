@@ -1,37 +1,3 @@
-
-running 29 tests
-test c_collection_api::test_toy_box_get_num_filtered_toys ... ok
-test c_collection_api::test_toy_box_get_toy_link ... ok
-test c_collection_api::test_toy_box_get_toy_from_index_out_of_range ... ok
-test c_collection_api::test_toy_box_has_favorites ... ok
-test c_collection_api::test_toy_box_get_toy_from_index ... ok
-test c_collection_api::test_toy_box_get_toy_link_nil ... ok
-test c_collection_api::test_toy_box_filter_stubs ... ok
-test c_collection_api::test_toy_box_get_set_is_favorite ... ok
-test c_collection_api::test_toy_box_get_toy_info ... ok
-test c_collection_api::test_player_has_toy_reads_collected_toy_state ... ok
-test c_collection_api::test_toy_box_get_num_toys ... ok
-test c_collection_api::test_toy_box_force_toy_refilter ... ok
-test c_collections_filter_defaults_probes::toybox_and_heirloom_filter_defaults_are_registered ... ok
-test c_collection_api::test_toy_box_info_filter_helpers_exist ... ok
-test c_collection_api::test_toy_box_is_toy_usable_uncollected ... ok
-test c_collection_api::test_toy_box_is_toy_usable_unknown ... ok
-test c_collection_api::test_toy_box_is_toy_usable_collected ... ok
-test test_collections::admin_collect_uncollect_toy ... ok
-test test_collections::toy_box_num_learned_displayed ... ok
-test test_collections::toy_box_get_toy_info ... ok
-test patch_8_1_5_toy_fanfare::patch_8_1_5_toy_fanfare_tracks_collection_transitions ... ok
-test test_collections::toy_box_get_toy_from_index ... ok
-test test_collections::toy_box_num_total_displayed ... ok
-test tooltip_toy::c_tooltip_info_toy_by_item_id_uses_seeded_toy_state ... ok
-test tooltip_toy::game_tooltip_set_toy_by_item_id_populates_item_lines ... ok
-test tooltip_item_sources::tooltip_item_and_toy_payloads_retain_modeled_identity ... ok
-test test_sim_commands::builtin_add_toy_registered ... ok
-test tooltip_gc_rooting::toy_parent_survives_color_collection ... ok
-test test_showuipanel_toggles::toggle_collections_journal_opens_mounts_pets_and_toys_tabs_and_accepts_search_text ... ok
-
-test result: ok. 29 passed; 0 failed; 0 ignored; 0 measured; 10654 filtered out; finished in 1.88s
-
 warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
 warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
 warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
@@ -39,5 +5,39 @@ warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-metho
 warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
 warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
 warning: `iced_wgpu` (manifest) generated 6 warnings
-    Finished `test` profile [optimized + debuginfo] target(s) in 0.13s
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.27s
      Running tests/integration.rs (/home/osso/.cache/wow-ui-sim-targets/p815-page/debug/deps/integration-1db16289b0998b2a)
+
+running 29 tests
+test c_collection_api::test_toy_box_filter_stubs ... ok
+test c_collection_api::test_toy_box_get_num_toys ... ok
+test c_collection_api::test_toy_box_get_toy_from_index_out_of_range ... ok
+test c_collection_api::test_toy_box_get_set_is_favorite ... ok
+test c_collection_api::test_toy_box_has_favorites ... ok
+test c_collection_api::test_toy_box_get_toy_link ... ok
+test c_collection_api::test_toy_box_get_num_filtered_toys ... ok
+test c_collection_api::test_toy_box_get_toy_from_index ... ok
+test c_collection_api::test_toy_box_force_toy_refilter ... ok
+test c_collection_api::test_player_has_toy_reads_collected_toy_state ... ok
+test c_collection_api::test_toy_box_get_toy_info ... ok
+test c_collection_api::test_toy_box_get_toy_link_nil ... ok
+test c_collection_api::test_toy_box_is_toy_usable_collected ... ok
+test test_collections::toy_box_num_total_displayed ... ok
+test patch_8_1_5_toy_fanfare::patch_8_1_5_toy_fanfare_tracks_collection_transitions ... ok
+test test_collections::toy_box_num_learned_displayed ... ok
+test test_collections::toy_box_get_toy_from_index ... ok
+test c_collection_api::test_toy_box_is_toy_usable_unknown ... ok
+test test_collections::toy_box_get_toy_info ... ok
+test test_collections::admin_collect_uncollect_toy ... ok
+test c_collection_api::test_toy_box_is_toy_usable_uncollected ... ok
+test c_collections_filter_defaults_probes::toybox_and_heirloom_filter_defaults_are_registered ... ok
+test c_collection_api::test_toy_box_info_filter_helpers_exist ... ok
+test test_sim_commands::builtin_add_toy_registered ... ok
+test tooltip_toy::c_tooltip_info_toy_by_item_id_uses_seeded_toy_state ... ok
+test tooltip_toy::game_tooltip_set_toy_by_item_id_populates_item_lines ... ok
+test tooltip_item_sources::tooltip_item_and_toy_payloads_retain_modeled_identity ... ok
+test tooltip_gc_rooting::toy_parent_survives_color_collection ... ok
+test test_showuipanel_toggles::toggle_collections_journal_opens_mounts_pets_and_toys_tabs_and_accepts_search_text ... ok
+
+test result: ok. 29 passed; 0 failed; 0 ignored; 0 measured; 10632 filtered out; finished in 4.95s
+

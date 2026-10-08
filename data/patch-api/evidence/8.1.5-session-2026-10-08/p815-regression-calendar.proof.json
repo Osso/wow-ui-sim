@@ -7,7 +7,7 @@
     "--",
     "calendar"
   ],
-  "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+  "revision": "ca6ea29b2a5183c4ef8bb693d05fc71762fb378e",
   "scope": "p815-regression-calendar",
   "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
   "target": "/home/osso/.cache/wow-ui-sim-targets/p815-page",
@@ -17,7 +17,7 @@
   "exit": 0,
   "expected_exit": 0,
   "log": "p815-regression-calendar.txt",
-  "log_sha256": "7a4e0eeb1566ab0e1d9bc08275c0f2bd4650d68255189796ca15c9219d03e385",
+  "log_sha256": "48713904f127c593bb8f46d0cc123ad3abd0af9790483c7a2a3dd35a83df0128",
   "invalidated": false,
-  "seconds": 0.37680254699807847
+  "seconds": 1.5011898470002052
 }

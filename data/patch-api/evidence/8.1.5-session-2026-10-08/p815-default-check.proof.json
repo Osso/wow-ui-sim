@@ -3,7 +3,7 @@
     "cargo",
     "check"
   ],
-  "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+  "revision": "ca6ea29b2a5183c4ef8bb693d05fc71762fb378e",
   "scope": "p815-default-check",
   "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
   "target": "/home/osso/.cache/wow-ui-sim-targets/p815-page",
@@ -13,7 +13,7 @@
   "exit": 0,
   "expected_exit": 0,
   "log": "p815-default-check.txt",
-  "log_sha256": "d59ffb508c8d317f336649da1ab777fde7d9b04b214e7da44491bd0ef3b2aea6",
+  "log_sha256": "cae3f8b18df72ae12db476d2f48463f4310e9e9f81817066f0e07c07438a8be2",
   "invalidated": false,
-  "seconds": 26.77447794299951
+  "seconds": 29.14456991300176
 }

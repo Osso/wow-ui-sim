@@ -7,7 +7,7 @@
     "--",
     "patch_8_1_5_cached"
   ],
-  "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+  "revision": "ca6ea29b2a5183c4ef8bb693d05fc71762fb378e",
   "scope": "p815-retirement-cached-final",
   "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
   "target": "/home/osso/.cache/wow-ui-sim-targets/p815-page",
@@ -17,7 +17,7 @@
   "exit": 0,
   "expected_exit": 0,
   "log": "p815-retirement-cached-final.txt",
-  "log_sha256": "058b13196d8b0a13f6e8f250d39eb7f26568b49c79cbccca5b5bbf70d6795ac8",
+  "log_sha256": "68db9b64761b5561a16dd23ad77d7596ba1900762eb50646d931ae0056112300",
   "invalidated": false,
-  "seconds": 5.2251042850002705
+  "seconds": 10.300020252998365
 }

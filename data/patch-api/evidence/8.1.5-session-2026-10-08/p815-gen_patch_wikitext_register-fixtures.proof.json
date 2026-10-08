@@ -3,7 +3,7 @@
     "python3",
     "tools/test_gen_patch_wikitext_register.py"
   ],
-  "revision": "6e3a1d16c8340ae7a9aa4099488b0cbeea24d516",
+  "revision": "ca6ea29b2a5183c4ef8bb693d05fc71762fb378e",
   "scope": "p815-gen_patch_wikitext_register-fixtures",
   "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
   "target": "/home/osso/.cache/wow-ui-sim-targets/p815-page",
@@ -13,7 +13,7 @@
   "exit": 0,
   "expected_exit": 0,
   "log": "p815-gen_patch_wikitext_register-fixtures.txt",
-  "log_sha256": "019c207248dfaa0d4063950f473727c3427d8dff699f131c6c2f328a87234cfd",
+  "log_sha256": "dd67151a2a679395d9219a596c8dfa34bcf243f94ff5e46ec273ac7235fcf9e2",
   "invalidated": false,
-  "seconds": 0.04078846300035366
+  "seconds": 0.07315100600317237
 }

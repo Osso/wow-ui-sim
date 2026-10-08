@@ -3,7 +3,7 @@
     "python3",
     "tools/test_extract_patch_non_inventory.py"
   ],
-  "revision": "6e3a1d16c8340ae7a9aa4099488b0cbeea24d516",
+  "revision": "ca6ea29b2a5183c4ef8bb693d05fc71762fb378e",
   "scope": "p815-extract_patch_non_inventory-fixtures",
   "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
   "target": "/home/osso/.cache/wow-ui-sim-targets/p815-page",
@@ -13,7 +13,7 @@
   "exit": 0,
   "expected_exit": 0,
   "log": "p815-extract_patch_non_inventory-fixtures.txt",
-  "log_sha256": "574ddc2929eb9da4b7fd54002bc274120c55b5d823d4228fde8872095b91a03f",
+  "log_sha256": "a7323a0345078c8613806a81013696b0d4bd9867e9c2e26bb14e8bc923a78ea1",
   "invalidated": false,
-  "seconds": 0.0829519690014422
+  "seconds": 0.1092620370000077
 }

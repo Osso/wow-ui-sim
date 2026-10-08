@@ -3,12 +3,17 @@
     "cargo",
     "test",
     "--test",
-    "prefork_full_ui",
+    "integration",
     "--",
-    "blizzard_communities_loads"
+    "patch_8_1_5",
+    "toy",
+    "c_social_probes",
+    "c_club_probes",
+    "calendar",
+    "pvp_info"
   ],
   "revision": "ca6ea29b2a5183c4ef8bb693d05fc71762fb378e",
-  "scope": "p815-regression-communities",
+  "scope": "p815-integration-combined",
   "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
   "target": "/home/osso/.cache/wow-ui-sim-targets/p815-page",
   "environment": {
@@ -16,8 +21,8 @@
   },
   "exit": 0,
   "expected_exit": 0,
-  "log": "p815-regression-communities.txt",
-  "log_sha256": "b7c07b945a8214d17e0bc878382ee4821c64660b6fda66b44e6b3dab1e06b43d",
+  "log": "p815-integration-combined.txt",
+  "log_sha256": "00a7c2ba387a01c50de0a909a0bab8e550e42161112f034f09055947b6db0c1b",
   "invalidated": false,
-  "seconds": 13.223880525001732
+  "seconds": 28.092214795000473
 }

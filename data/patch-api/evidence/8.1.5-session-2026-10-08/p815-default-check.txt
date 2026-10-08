@@ -6,4 +6,4 @@ warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref`
 warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
 warning: `iced_wgpu` (manifest) generated 6 warnings
     Checking wow-ui-sim v0.1.0 (/home/osso/.worktrees/wow-ui-sim-p815-page)
-    Finished `dev` profile [optimized + debuginfo] target(s) in 26.69s
+    Finished `dev` profile [optimized + debuginfo] target(s) in 29.01s

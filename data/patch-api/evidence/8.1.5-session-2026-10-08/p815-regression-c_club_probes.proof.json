@@ -7,7 +7,7 @@
     "--",
     "c_club_probes"
   ],
-  "revision": "9d3639c1b177944b2654f8b354683b76256396a8",
+  "revision": "ca6ea29b2a5183c4ef8bb693d05fc71762fb378e",
   "scope": "p815-regression-c_club_probes",
   "cwd": "/home/osso/.worktrees/wow-ui-sim-p815-page",
   "target": "/home/osso/.cache/wow-ui-sim-targets/p815-page",
@@ -17,7 +17,7 @@
   "exit": 0,
   "expected_exit": 0,
   "log": "p815-regression-c_club_probes.txt",
-  "log_sha256": "e96126168865be3d431c03c443b9d0787dbcd5c3f45ec76098998189e640b80a",
+  "log_sha256": "eb186c4a52fab5ec0f577d730f7824f533f46776255f9c04f0dccb5850bd181f",
   "invalidated": false,
-  "seconds": 0.4352830190000532
+  "seconds": 1.717962961000012
 }
