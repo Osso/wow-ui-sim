@@ -30,8 +30,14 @@ def proof(name):
 
 def result(name):
     text = read(name + '.txt')
+    panics = []
+    for case, location, message in re.findall(r"thread '([^']+)' \([^\n]+\) panicked at ([^\n]+):\n(.*?)(?=\n\n|\Z)", text, re.S):
+        location = re.sub(r'^.*?/(tests|src)/', r'\1/', location)
+        message = message.split('\nnote: run with ')[0].split('\nLua error ')[0]
+        panics.append({'case': case, 'location': location, 'message': message})
     return {'receipt': name + '.proof.json', 'exit': proof(name)['exit'],
-            'summaries': re.findall(r'^test result: .+$', text, re.M), 'failures': failures(name)}
+            'summaries': re.findall(r'^test result: .+$', text, re.M), 'failures': failures(name),
+            'panics': sorted(panics, key=lambda row: (row['case'], row['location']))}
 
 
 if __name__ == '__main__':
@@ -48,14 +54,14 @@ if __name__ == '__main__':
         if target == 'integration':
             branch = result(target + '-regressions')
             master = result('master-' + target + '-regressions')
-            assert branch['failures'] == master['failures']
+            assert branch['failures'] == master['failures'] and branch['panics'] == master['panics']
             rows.append({'target': target, 'selectors': selectors, 'branch': branch, 'master': master})
         else:
             checks = []
             for selector in SELECTORS:
                 branch = result('prefork-' + selector)
                 master = result('master-prefork-' + selector)
-                assert branch['failures'] == master['failures'], selector
+                assert branch['failures'] == master['failures'] and branch['panics'] == master['panics'], selector
                 checks.append({'selector': selector, 'branch': branch, 'master': master})
             rows.append({'target': target, 'selectors': selectors, 'checks': checks})
     for target in ['integration', 'prefork_full_ui']:
@@ -65,16 +71,17 @@ if __name__ == '__main__':
         if target == 'integration':
             branch = result('mists-' + target + '-regressions')
             master = result('master-mists-' + target + '-regressions')
-            assert branch['failures'] == master['failures']
+            assert branch['failures'] == master['failures'] and branch['panics'] == master['panics']
             rows.append({'profile': 'mists', 'target': target, 'selectors': matched, 'branch': branch, 'master': master})
         else:
             checks = []
             for selector in selectors:
                 branch = result('mists-prefork-' + selector)
                 master = result('master-mists-prefork-' + selector)
-                assert branch['failures'] == master['failures'], selector
+                assert branch['failures'] == master['failures'] and branch['panics'] == master['panics'], selector
                 checks.append({'selector': selector, 'branch': branch, 'master': master})
-            rows.append({'profile': 'mists', 'target': target, 'selectors': matched, 'checks': checks})
+            rows.append({'profile': 'mists', 'target': target, 'selectors': matched, 'supported': False,
+                         'reason': 'Cargo target requires client-retail; no Mists prefork tests exist', 'checks': checks})
     dump('regression-comparison.json', rows)
     startup = {}
     for label in ['branch-startup', 'master-startup']:

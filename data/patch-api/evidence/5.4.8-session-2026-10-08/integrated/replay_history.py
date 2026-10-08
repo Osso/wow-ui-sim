@@ -83,7 +83,12 @@ def main():
             changed = sorted(path for path in set(before) | set(after) if before.get(path) != after.get(path))
             return ('\n'.join(changed) + ('\n' if changed else '')).encode()
         return native_git(*args)
-    namespace.update(git=mapped_git, blob=historical_blob, paths=historical_names,
+    class HistoricalDirectory:
+        def __truediv__(self, name):
+            # The public validator is now a replay wrapper. Preserve the original
+            # self-seal against its tracked, byte-identical relocated source.
+            return HERE / 'historical-validator.py.txt' if name == 'validate.py' else HISTORY / name
+    namespace.update(HERE=HistoricalDirectory(), git=mapped_git, blob=historical_blob, paths=historical_names,
                      historical_registers=lambda rev: [p for p in historical_names(rev, 'data/patch-api/sources') if p.endswith('-wikitext-register.json')])
     namespace['main']()
 

@@ -1,0 +1,47 @@
+{
+  "branch": [
+    {
+      "case": "c_api_surface::chat_info_no_state_defaults_are_not_c_api_temporary_shims",
+      "location": "tests/c_api_surface.rs:602:5",
+      "message": "C_ChatInfo no-state defaults should not be wired through c_api registration\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "case": "edit_mode_api::enums::unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size",
+      "location": "tests/edit_mode_api/enums.rs:44:5",
+      "message": "assertion `left == right` failed\n  left: 22\n right: 21"
+    },
+    {
+      "case": "test_keybindings_targeting::target_frame_portrait_corners_match_background_when_replaced_with_class_icon",
+      "location": "tests/test_keybindings_targeting.rs:308:9",
+      "message": "hiding the portrait should materially change the portrait center: visible=[63, 63, 80, 255] hidden=[63, 63, 80, 255]\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\nLua error suppressed 1 additional times: ...rface/AddOns/Blizzard_UnitFrame/Mainline/TargetFrame.lua:88: attempt to call method 'SetGUIDMatch' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__wow_original_securecall'\n\t(string):13: in function 'securecall'\n\tgenerated/loader-exec-no-global-slots/3432fb4cf412e1b5:21: in function <generated/loader-exec-no-global-slots/3432fb4cf412e1b5:19>\n\t[C]: in function 'pcall'\n\t(string):16: in main chunk\nLua error suppressed 26 additional times: ...ard_UIParentPanelManager/Shared/UIParentPanelManager.lua:765: attempt to call a nil value\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function 'GetBottomManagedFrameContainer'\n\t...ard_UIParentPanelManager/Shared/UIParentPanelManager.lua:765: in function 'ManageBottomFrameContainer'\n\t...tPanelManager/Mainline/UIParentPanelManagerOverrides.lua:22: in function 'ManageFramePositions'\n\t...ard_UIParentPanelManager/Shared/UIParentPanelManager.lua:137: in function 'handler'\n\t(string):3: in main chunk\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?\n\t[C]: in function 'SetAttribute'\n\t...ard_UIParentPanelManager/Shared/UIParentPanelManager.lua:792: in function 'ManageFramePositions'\n\t...rface/AddOns/Blizzard_UnitFrame/Mainline/TargetFrame.lua:1087: in function 'UpdateSize'\n\t...rface/AddOns/Blizzard_UnitFrame/Mainline/TargetFrame.lua:1016: in function <...rface/AddOns/Blizzard_UnitFrame/Mainline/TargetFrame.lua:1015>\n\t(tail call): ?\n\t[C]: in function 'pcall'\n\t(string):9: in main chunk"
+    },
+    {
+      "case": "test_keybindings_targeting::target_frame_portrait_corners_match_background_when_replaced_with_class_icon",
+      "location": "tests/common/timeout_reexec.rs:181:9",
+      "message": "timeout child for `test_keybindings_targeting::target_frame_portrait_corners_match_background_when_replaced_with_class_icon` failed (exit code 101)"
+    }
+  ],
+  "master": [
+    {
+      "case": "c_api_surface::chat_info_no_state_defaults_are_not_c_api_temporary_shims",
+      "location": "tests/c_api_surface.rs:602:5",
+      "message": "C_ChatInfo no-state defaults should not be wired through c_api registration\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace"
+    },
+    {
+      "case": "edit_mode_api::enums::unit_frame_edit_mode_setting_meta_includes_big_defensive_icon_size",
+      "location": "tests/edit_mode_api/enums.rs:44:5",
+      "message": "assertion `left == right` failed\n  left: 22\n right: 21"
+    },
+    {
+      "case": "test_keybindings_targeting::target_frame_portrait_corners_match_background_when_replaced_with_class_icon",
+      "location": "tests/test_keybindings_targeting.rs:308:9",
+      "message": "hiding the portrait should materially change the portrait center: visible=[63, 63, 80, 255] hidden=[63, 63, 80, 255]\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\nLua error suppressed 1 additional times: ...rface/AddOns/Blizzard_UnitFrame/Mainline/TargetFrame.lua:88: attempt to call method 'SetGUIDMatch' (a nil value)\nstack traceback:\n\t(string):1: in main chunk\n\t[C]: in function '__wow_original_securecall'\n\t(string):13: in function 'securecall'\n\tgenerated/loader-exec-no-global-slots/3432fb4cf412e1b5:21: in function <generated/loader-exec-no-global-slots/3432fb4cf412e1b5:19>\n\t[C]: in function 'pcall'\n\t(string):16: in main chunk\nLua error suppressed 26 additional times: ...ard_UIParentPanelManager/Shared/UIParentPanelManager.lua:765: attempt to call a nil value\nstack traceback:\n\t(string):12: in function <(string):12>\n\t[C]: in function 'native_xpcall'\n\t(string):11: in function 'GetBottomManagedFrameContainer'\n\t...ard_UIParentPanelManager/Shared/UIParentPanelManager.lua:765: in function 'ManageBottomFrameContainer'\n\t...tPanelManager/Mainline/UIParentPanelManagerOverrides.lua:22: in function 'ManageFramePositions'\n\t...ard_UIParentPanelManager/Shared/UIParentPanelManager.lua:137: in function 'handler'\n\t(string):3: in main chunk\n\t(tail call): ?\n\t(tail call): ?\n\t[C]: in function 'native_xpcall'\n\t(string):8: in function <(string):5>\n\t(tail call): ?\n\t[C]: in function 'SetAttribute'\n\t...ard_UIParentPanelManager/Shared/UIParentPanelManager.lua:792: in function 'ManageFramePositions'\n\t...rface/AddOns/Blizzard_UnitFrame/Mainline/TargetFrame.lua:1087: in function 'UpdateSize'\n\t...rface/AddOns/Blizzard_UnitFrame/Mainline/TargetFrame.lua:1016: in function <...rface/AddOns/Blizzard_UnitFrame/Mainline/TargetFrame.lua:1015>\n\t(tail call): ?\n\t[C]: in function 'pcall'\n\t(string):9: in main chunk"
+    },
+    {
+      "case": "test_keybindings_targeting::target_frame_portrait_corners_match_background_when_replaced_with_class_icon",
+      "location": "tests/common/timeout_reexec.rs:181:9",
+      "message": "timeout child for `test_keybindings_targeting::target_frame_portrait_corners_match_background_when_replaced_with_class_icon` failed (exit code 101)"
+    }
+  ],
+  "identical_assertion_messages": true
+}

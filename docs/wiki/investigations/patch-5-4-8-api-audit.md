@@ -32,7 +32,9 @@ Real 6.0.1/6.0.2 supersession registers leave all 28 own observations and seven 
 
 Nine original/rebased audit commits and one external queued-register revision have explicit patch IDs, trees and blob mappings. All 226 historical artifacts remain preserved, including the original validator; its complete original invariants replay successfully through the pinned mapping. Source-directory comparisons use preserved original blob identities, not rebased trees that include unrelated 6.0.x runtime changes.
 
-Untruncated caller and protected-name scans, cache input digests, and concrete combat-fixture review are retained in [integrated caller review](../../../data/patch-api/evidence/5.4.8-session-2026-10-08/integrated/caller-scan-summary.md). Regression/master and portability checks are recorded below when complete.
+Untruncated caller and protected-name scans, cache input digests, and concrete combat-fixture review are retained in [integrated caller review](../../../data/patch-api/evidence/5.4.8-session-2026-10-08/integrated/caller-scan-summary.md). Retail integration selectors run 1,076 passing cases on branch versus 1,075 on master (the extra bare combat contract). Three failures are identical on both, including exact normalized panic locations, assertion values and messages: existing C_ChatInfo placement, EditMode defensive-icon enum (22 versus 21), and TargetFrame portrait pixel (unchanged `[63, 63, 80, 255]`). These remain out of scope. Format, all 85 Python fixtures, warning-clean non-vendor Mists check, and all 36 pinned prior validators pass. Remaining profile/prefork/startup and portability results are recorded below when complete.
+
+Prefork supports only one positional filter; rejected batched invocations have no behavior coverage and are superseded by individual selector receipts. Its Cargo target requires `client-retail`, so no Mists prefork cases exist; Mists uses the integration target rather than adding a compatibility path.
 
 ## Historical proof status
 
