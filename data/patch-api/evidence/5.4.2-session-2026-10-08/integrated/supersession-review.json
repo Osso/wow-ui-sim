@@ -1,0 +1,11 @@
+{
+  "integrated_registers": [
+    "5.4.7",
+    "5.4.8"
+  ],
+  "before_gaps": 39,
+  "after_gaps": 39,
+  "observation_changes": {},
+  "replacements": [],
+  "reason": "5.4.2 has no SetCVar or SetUIVisibility inventory rows. Later 5.4.8 modeling closes neither the 37 glue events nor fastrandom or IsOnGlueScreen publication collisions."
+}
