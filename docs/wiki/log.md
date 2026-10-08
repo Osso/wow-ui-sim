@@ -441,3 +441,7 @@ Final integration proof: spell-line modules 190/190, prefork tooltip cases 34/34
 - 2026-10-08 integration: [[patch-6-0-2-api-audit]] — real 6.1.0/6.2.x registers, unchanged 275 own gaps and all 52 other pages, 54/53 branch/master sweep cases, 53/50 reproduced registers/extracts, 84 Python fixtures and scoped scenario/tracker/vignette proof. Broader scenario source assertion fails identically on master; preserved without weakening. Historical receipts/invariants and 12-commit rebase identities retained.
 
 - 2026-10-08 verification: [[patch-6-0-2-api-audit]] — both addons-enabled startups [], negative control 275 → 276, sealed gate 076a89d78 PASS clean 35/35 and unrelated later-audit 36/36; historical/integrated tamper checks reject mutations and restore exact bytes. No push, merge, agents, vendor changes or broad suite.
+
+## [2026-10-08] investigation | Patch 6.0.1 redirect audit
+
+Pinned pageid 3058 revision 31159 without following redirect to 6.0.2; empty register and one metadata-only context ID. Added prefork sweep, preserved queued-page order and recorded zero retirement candidates. [Audit](investigations/patch-6-0-1-api-audit.md).

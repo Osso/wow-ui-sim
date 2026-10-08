@@ -10,6 +10,10 @@
 
 [Audit](investigations/patch-6-2-0-api-audit.md): integrated on master 8dd11c1b9 with real 6.2.2/6.2.4 registers. Own zero gaps and two pending item-link contracts unchanged. Branch 52/52 sweep cases; every observation on all 50 other pages equals pinned master. 51 registers/48 extracts reproduce with three inherited failures; explicit rebase mapping and historical records preserved. Spell-line integration 190/190 and prefork tooltip 34/34 pass; extended layout failure matches master. Portability gate PASS: clean 31/31, unrelated later audit 32/32.
 
+## [2026-10-08] investigation | Patch 6.0.1 redirect audit
+
+[Audit](investigations/patch-6-0-1-api-audit.md): pageid 3058 revision 31159 redirects to 6.0.2. Zero API entries, one metadata-only context ID, no models or retirements. Queued 6.0.2/6.1.0/6.2.0 placeholders retained; targeted proof pending.
+
 ## [2026-10-08] integration | Patch 6.2.4 API audit
 
 [Audit](investigations/patch-6-2-4-api-audit.md): merged 7.0.1/7.0.3 registers integrated on master 846a30663; own zero gaps and seven pending historical contracts unchanged. All 50 sweep/factory cases pass; all 48 other pages match exact master observations. 49 registers / 46 extracts reproduce, three inherited failures retained. Negative 0 → 1, identity/BN regressions, 32/36/8 fixtures and format/Mists checks pass; 32 historical/integrated validators pass. Historical artifacts preserved. Rebase onto 15b417367 supersedes the four-file 7.0.3 allowlist; durable ten-commit mapping and 30 pinned-master validators pass. Fresh sweeps 50/50 and 1/1, fixtures 32/36/8 and format pass.
