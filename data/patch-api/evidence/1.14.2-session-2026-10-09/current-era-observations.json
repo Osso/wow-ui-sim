@@ -1,0 +1,42 @@
+{
+  "revision": "02df0b0e0",
+  "profile": "client-era",
+  "configured_interface": 11507,
+  "source_interface": 11402,
+  "scope": "current bare headless getter state only; no register/set calls, startup UI, physical effects or native parity",
+  "result": "1/1 passed",
+  "rows": [
+    {
+      "symbol": "GamePadFactionColor",
+      "page_default": "1",
+      "current": "1",
+      "default": "1"
+    },
+    {
+      "symbol": "GamePadVibrationStrength",
+      "page_default": "1",
+      "current": "1",
+      "default": "1"
+    },
+    {
+      "symbol": "telemetryTargetPackage",
+      "page_default": "Blizzard.Telemetry.Wow_Mainline",
+      "current": null,
+      "default": null
+    },
+    {
+      "symbol": "P1142_UNKNOWN_CVAR_CONTROL",
+      "page_default": null,
+      "current": null,
+      "default": null
+    }
+  ],
+  "bounded_comparisons": 2,
+  "missing_page_defaults": 1,
+  "unknown_control": "nil/nil",
+  "warnings": {
+    "library": 6,
+    "binary": 1
+  },
+  "log": "current-era-getters-final.log"
+}
