@@ -9,7 +9,7 @@ Account for the pinned historical retail page without inventing missing signatur
 - [x] Reproduce all 65 inventory IDs and both source counts using recorded existing flags.
 - [x] Account for the sole navigation metadata row and zero prose/signatures.
 - [x] Probe every inventory occurrence; require the exact retained gap set.
-- [x] Apply actual available later retail registers, with explicit pending 4.3.0/4.3.4 placeholders; exclude Classic histories.
+- [x] Apply actual later retail registers including 4.3.0/4.3.4; exclude Classic histories.
 
 ## How it works
 
@@ -30,7 +30,8 @@ Own prefork filter `patch_4_2_0_publication_sweep`; `tools/test_patch_4_2_0_acco
 
 ## Known gaps (current cycle)
 
-- [ ] Reconcile pending 4.3.0/4.3.4 successor registers; 31 exact retained publication gaps remain.
+- [x] Reconcile 4.3.0/4.3.4 successors; `EJ_SetDifficultyByMask` removal resolves one publication gap without modeling historical behavior.
+- [ ] 30 exact current publication gaps remain; immutable historical development evidence retains 31.
 
 ## Out of scope
 
