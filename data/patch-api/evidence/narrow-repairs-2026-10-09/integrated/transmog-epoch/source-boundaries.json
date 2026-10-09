@@ -1,0 +1,46 @@
+{
+  "/home/osso/Projects/wow/wow-ui-sim/src/loader/mod.rs": {
+    "sha256": "9adc6ef887929101f8631552a558a5075517a49844d99b47423c18b211c3e934",
+    "excerpts": [
+      {
+        "line": 861,
+        "text": "}\n\n#[cfg(test)]\nmod tests;"
+      }
+    ]
+  },
+  "/home/osso/Projects/wow/wow-ui-sim/src/loader/tests/mod.rs": {
+    "sha256": "013303522329e192a556a181e0d9afd23b81109391af5a7baa00ee949b4f9c97",
+    "excerpts": [
+      {
+        "line": 706,
+        "text": "mod on_update_dispatch_pass;\nmod same_value_render_dirty;\nmod wow_api;\nmod wow_api_globals;\nmod wow_api_item;\nmod wow_api_tooltip;"
+      }
+    ]
+  },
+  "/home/osso/Projects/wow/wow-ui-sim/src/loader/tests/wow_api_globals/mod.rs": {
+    "sha256": "16f22f837df3ded30ed7b42589aaa74cf8dfcef0fe1dc24851ccf2f3f8930791",
+    "excerpts": [
+      {
+        "line": 264,
+        "text": "mod startup_globals;\nmod startup_namespaces;\nmod transmog_outfit_enums;\nmod transmog_situation;"
+      }
+    ]
+  },
+  "/home/osso/Projects/wow/wow-ui-sim/src/iced_app/frame_collect.rs": {
+    "sha256": "872a5e2af72c5db6e26fc6c7187aab80d7ecdd194f736a1d0112b967e7fc6f96",
+    "excerpts": [
+      {
+        "line": 241,
+        "text": "}\n\n#[cfg(test)]\nmod tests {\n    use super::{collect_subtree_ids, intra_strata_sort_key};\n    use crate::widget::{AnchorPoint, Frame, WidgetRegistry, WidgetType};\n"
+      },
+      {
+        "line": 360,
+        "text": "    }\n\n    #[test]\n    fn hittable_order_follows_render_buckets_not_raw_child_strata() {\n        use crate::widget::FrameStrata;\n\n        let mut registry = WidgetRegistry::new();"
+      }
+    ]
+  },
+  "/home/osso/Projects/wow/wow-ui-sim/tests/integration.rs": {
+    "sha256": "b85b734b56914dffc909ff95ba3c7b24f9ba4c175fcf10b8c5b680fd4159d981",
+    "excerpts": []
+  }
+}

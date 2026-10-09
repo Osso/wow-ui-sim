@@ -1,0 +1,30 @@
+{
+  "/home/osso/Projects/wow/wow-ui-sim/src/iced_app/frame_collect.rs": {
+    "base_revision": "f2eebd359",
+    "git_show_exit": 0,
+    "base_sha256": "872a5e2af72c5db6e26fc6c7187aab80d7ecdd194f736a1d0112b967e7fc6f96",
+    "current_sha256": "872a5e2af72c5db6e26fc6c7187aab80d7ecdd194f736a1d0112b967e7fc6f96",
+    "unchanged": true
+  },
+  "/home/osso/Projects/wow/wow-ui-sim/src/iced_app/mod.rs": {
+    "base_revision": "f2eebd359",
+    "git_show_exit": 0,
+    "base_sha256": "15c926fe7325c8234dc5fcc9bab82138ac6318eb114b3268b2f3c663ccd3333e",
+    "current_sha256": "15c926fe7325c8234dc5fcc9bab82138ac6318eb114b3268b2f3c663ccd3333e",
+    "unchanged": true
+  },
+  "/home/osso/Projects/wow/wow-ui-sim/Cargo.lock": {
+    "base_revision": "f2eebd359",
+    "git_show_exit": 0,
+    "base_sha256": "859f258fa21eb92f7f0c83c77d526ea0ce3e7535b0970df2e39c459023c0b9cf",
+    "current_sha256": "859f258fa21eb92f7f0c83c77d526ea0ce3e7535b0970df2e39c459023c0b9cf",
+    "unchanged": true
+  },
+  "/home/osso/Projects/wow/wow-ui-sim/tests/patch_12_0_5_enum_additions.rs": {
+    "base_revision": "f2eebd359",
+    "git_show_exit": 0,
+    "base_sha256": "2b4bb44101c0734df9e68e13906b1ec596dfde2b5657a5f63eace25f7a0e383e",
+    "current_sha256": "2b4bb44101c0734df9e68e13906b1ec596dfde2b5657a5f63eace25f7a0e383e",
+    "unchanged": true
+  }
+}

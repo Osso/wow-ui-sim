@@ -375,15 +375,18 @@ mod tests {
         let collected = super::collect_hittable_frames(&registry, &buckets);
         let ids: Vec<_> = collected.hittable.iter().map(|entry| entry.0).collect();
         assert_eq!(ids, [low, child, panel, independent]);
-        let rects = crate::iced_app::strata_emit::build_hittable_rects(&collected, &registry);
-        let grid = crate::iced_app::hit_grid::HitGrid::new(rects, 100.0, 100.0);
-        let point = iced::Point::new(5.0, 5.0);
-        assert_eq!(grid.topmost_matching_at(point, |_| true), Some(independent));
-        assert_eq!(
-            grid.topmost_matching_at(point, |id| id != independent),
-            Some(panel),
-            "transparent MEDIUM panel must win over its lower group's HIGH child",
-        );
+        #[cfg(feature = "gui")]
+        {
+            let rects = crate::iced_app::strata_emit::build_hittable_rects(&collected, &registry);
+            let grid = crate::iced_app::hit_grid::HitGrid::new(rects, 100.0, 100.0);
+            let point = iced::Point::new(5.0, 5.0);
+            assert_eq!(grid.topmost_matching_at(point, |_| true), Some(independent));
+            assert_eq!(
+                grid.topmost_matching_at(point, |id| id != independent),
+                Some(panel),
+                "transparent MEDIUM panel must win over its lower group's HIGH child",
+            );
+        }
     }
 
     #[test]

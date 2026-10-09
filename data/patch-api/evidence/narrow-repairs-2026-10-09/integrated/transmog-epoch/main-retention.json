@@ -1,0 +1,298 @@
+{
+  "retained_at": "2026-10-09T19:06:15.121262+00:00",
+  "scope": "Selected top-level independent partial proof, byte-identical. Two unrelated process-list streams excluded. Historical lib compile101 on GUI references, historicalruntimeNOTRUN; defaultcompile/omission/currentintegrationPASS remain scoped distinct. Key-onlyenvironment, credential patterns inspected; original epochs unchanged.",
+  "excluded": [
+    "process-inspection.stdout",
+    "process-inspection-2.stdout"
+  ],
+  "files": [
+    {
+      "source": "/tmp/transmog-epoch-independent/artifact-manifest.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/artifact-manifest.json",
+      "sha256": "93f11ac1832590185c59e72ee86df041760a1456c7a53209b16fd22a7888c19f",
+      "bytes": 8163
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/base-cargo.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/base-cargo.json",
+      "sha256": "c2268e9ca16cd8dc307bcc9dca79919e552be5fa660c58d66a97f7dd3aae3e52",
+      "bytes": 947159
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/base-cargo.stderr",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/base-cargo.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/base-cargo.stdout",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/base-cargo.stdout",
+      "sha256": "b1fd7660e2562019c74a063fe82b2d3ba15937b36636c828277b33f8f38a8f7b",
+      "bytes": 12112
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/baseline-error-source.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/baseline-error-source.json",
+      "sha256": "2a3dcc95b89e7e92fea2e0bf68efa2c8b20d85d432522656a50182210addb72b",
+      "bytes": 1316
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/correction.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/correction.json",
+      "sha256": "67be3587b4780101cf08eb4b70589d1a456c3bb88dbef85ae326238e8cf7e316",
+      "bytes": 5662
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/current-integration.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/current-integration.json",
+      "sha256": "172d366ba869e6257b97ae6fe5e71eb436f31c0dd2c720f11f52434edc09a4b7",
+      "bytes": 947403
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/current-integration.stderr",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/current-integration.stderr",
+      "sha256": "fe4ae13b2178b35ce735df2c742b42bc8058b9d4f3925f88b4a224f206754ddb",
+      "bytes": 636
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/current-integration.stdout",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/current-integration.stdout",
+      "sha256": "edbcb553d38dc6703f18c26a83c267c48bddcbc47a0326afab890f2fe95a7ceb",
+      "bytes": 213
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/default-artifacts.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/default-artifacts.json",
+      "sha256": "9c16105d524bbd02b077dea7fbc45e03640700be08f55ca9c2887e71c01eca73",
+      "bytes": 1393
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/default-binary-hash.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/default-binary-hash.json",
+      "sha256": "ac65bd6f708844742170164a756299956304e07dc8fd3cd027c94190588829b5",
+      "bytes": 1672
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/default-compile-diagnostics.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/default-compile-diagnostics.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/default-compile-inspection.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/default-compile-inspection.json",
+      "sha256": "8536686aff77bbee79ce92bbcc4590cb4ad8742ed23d4637e4ab04aaa10975da",
+      "bytes": 1456
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/default-compile.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/default-compile.json",
+      "sha256": "4a0a531d9efa667c3f8f935b5e28400bdb12632c3126feec1ed34d1e347e8704",
+      "bytes": 947212
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/default-compile.stderr",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/default-compile.stderr",
+      "sha256": "c880a6b793d37c47c72a6bc75a5b4411383862d43976fa700e533bfb7c6f2f16",
+      "bytes": 1275
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/default-compile.stdout",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/default-compile.stdout",
+      "sha256": "966cc5fa9acb7427f0859d7f864cd5ea4c34e9356c6ad3ecc2826df0fccf918f",
+      "bytes": 565216
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/default-historical-list.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/default-historical-list.json",
+      "sha256": "3b63654234efbfb562eed237ad2c32020eb3941cd9239ed8be2b08613f6c8788",
+      "bytes": 947377
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/default-historical-list.stderr",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/default-historical-list.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/default-historical-list.stdout",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/default-historical-list.stdout",
+      "sha256": "414c144fa67f1df75f7b14a69af5641637772e81c4c3fa0a171e3228adbb922e",
+      "bytes": 22
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/final-status.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/final-status.json",
+      "sha256": "cdab861cce762383f47dfede973417d7fe64df015941d1dd61136ad2f93093f0",
+      "bytes": 947140
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/final-status.stderr",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/final-status.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/final-status.stdout",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/final-status.stdout",
+      "sha256": "afbbaa89fd2dd18e916d24c76db7f59cecba0e0cefc23e3b9745ec5bed252acb",
+      "bytes": 18
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/fmt.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/fmt.json",
+      "sha256": "ccc6a2ab0dcff00f3f0dcb97206eaba381db4644c25526042aaeeb0a313b35d2",
+      "bytes": 947098
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/fmt.stderr",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/fmt.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/fmt.stdout",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/fmt.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/head.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/head.json",
+      "sha256": "e3181159639d4fccc9c3a51ed646b0a621fcbeadce27f1beb0408dfceee5c005",
+      "bytes": 238
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/helper.py",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/helper.py",
+      "sha256": "f93b2cb834977b7e29de39ae77efca3f7a4ef672b89670329cebecd9ebaefb21",
+      "bytes": 1989
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/historical-artifacts.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/historical-artifacts.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/historical-compile-diagnostics.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/historical-compile-diagnostics.json",
+      "sha256": "e08819e3434a19a4ca18354c7b6f87b2256e6843186ab893223922778eae4244",
+      "bytes": 24834
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/historical-compile-inspection.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/historical-compile-inspection.json",
+      "sha256": "366eddab431cdd276bbbb83a21e21d16b368eb983c7b6cca3b1a5b6efeb026d4",
+      "bytes": 9486
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/historical-compile.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/historical-compile.json",
+      "sha256": "80aa7d946b99b8d3f0716f87d9972c30d757e2763d378721bf428307fb391e0e",
+      "bytes": 947428
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/historical-compile.stderr",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/historical-compile.stderr",
+      "sha256": "23f4dbbba6ee1c128ec54d0a214e3aaa2a4c0f40ee90b1212c7db26ccee37ca6",
+      "bytes": 6666
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/historical-compile.stdout",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/historical-compile.stdout",
+      "sha256": "0f1394f481100c4b2314399a24cfbdd9731f107661c6a9e2f3b5a2b600c162ec",
+      "bytes": 319331
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/integration-binary-hashes.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/integration-binary-hashes.json",
+      "sha256": "584080cc63fca471f19e181953f167a67b3b41ec716cf51b58651958bccf5834",
+      "bytes": 256
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/integration-scope-diff.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/integration-scope-diff.json",
+      "sha256": "93bf97943d6a44cc0be2a8a0c14005382951c94d1d1985ffdf7da77cf88e2793",
+      "bytes": 947323
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/integration-scope-diff.stderr",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/integration-scope-diff.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/integration-scope-diff.stdout",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/integration-scope-diff.stdout",
+      "sha256": "1e72382812fff1bf175cd747486cdd164438e1a26ae54f23ce45fb2a219cf6db",
+      "bytes": 988
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/interruption.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/interruption.json",
+      "sha256": "f311baa64934ec67efa0cb5262a9eee87b8ba077121fc3a17fc87e462fdf00c7",
+      "bytes": 357
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/manual-readability.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/manual-readability.json",
+      "sha256": "e7c030108efc16c45afc0bbec08edbc9fd79d196496129f6d68bc886f092c399",
+      "bytes": 661
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/proof-ledger.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/proof-ledger.json",
+      "sha256": "355cf0f3c8557d910de913fadc3501cc2515c872f73c3e5ad02db958b0d49d71",
+      "bytes": 8700877
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/report.md",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/report.md",
+      "sha256": "5edc88448a77a60752ebea7b69e04fcb1720c79256375bd196bbf68879c408be",
+      "bytes": 8995
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/resume-source-diff.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/resume-source-diff.json",
+      "sha256": "8abb0d2ab8e987a202bd0749b475a3e513ba4e4a3f422dffb0e419a48439a156",
+      "bytes": 947170
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/resume-source-diff.stderr",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/resume-source-diff.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/resume-source-diff.stdout",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/resume-source-diff.stdout",
+      "sha256": "1e98bf416095fb70985035d96a140758999f0ea748e4c067b1ccaf5ed35554c1",
+      "bytes": 2917
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/reuse-scope.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/reuse-scope.json",
+      "sha256": "868f9e3d9694216870eb2d85bb4773d58a0b16d588a3d221f004355bf50ef336",
+      "bytes": 1490
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/scope-diff.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/scope-diff.json",
+      "sha256": "ed329bf3d2d3266d26c7c6fa40126c1d2e24d86b059827657feee8c6389c2551",
+      "bytes": 27740
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/source-boundaries.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/source-boundaries.json",
+      "sha256": "b6b5e4da6372e48ab6de7b3890bf8a517397eea29fce549d972d656dcdb5e14d",
+      "bytes": 1791
+    },
+    {
+      "source": "/tmp/transmog-epoch-independent/status.json",
+      "retained": "data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/status.json",
+      "sha256": "ef39fc6a4c91e8f81f9f6695362c2fe2c7d308c2309491c2ef32f0bd8130cf54",
+      "bytes": 219
+    }
+  ]
+}

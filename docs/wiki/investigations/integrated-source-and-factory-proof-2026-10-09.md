@@ -18,9 +18,13 @@ The 1.13.2 target insertion accidentally left `patch_1_13_3_npc_health` without 
 
 ## Historical TransmogSituation fixture — exact epoch, proof pending
 
-`src/loader/tests/wow_api_globals/transmog_situation.rs` asserts the explicitly named 12.0.0 register: 22 members and metadata through 21. Its former cumulative feature gate also ran it under current 12.1.0, where later sourced additions extend metadata through 31. The gate now selects 12.0.0 without 12.0.5; every historical assertion is unchanged, and existing current weather/time-category publication coverage remains untouched. No runtime enum values or snapshots changed. An independent memo discussed a different integration additions test instead of this exact failing library identity; that target attribution was rejected. Historical/current scoped execution is pending.
+`src/loader/tests/wow_api_globals/transmog_situation.rs` asserts the explicitly named 12.0.0 register: 22 members and metadata through 21. Its former cumulative feature gate also ran it under current 12.1.0, where later sourced additions extend metadata through 31. The gate now selects 12.0.0 without 12.0.5; every historical assertion is unchanged, and existing current weather/time-category publication coverage remains untouched. No runtime enum values or snapshots changed. An independent memo discussed a different integration additions test instead of this exact failing library identity; that target attribution was rejected. [Independent epoch report](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/transmog-epoch/report.md) records formatting/default compilation and exact default omission, plus hash-verified existing current integration **1/1**. Historical compilation failed on three GUI-only references in an unrelated hittable-order test; no historical runtime pass. This partial epoch remains separate from the headless repair below.
 
 The separate BigDefensiveIconSize proposal is not accepted: explicit 12.0.0 initialization removes that member, so merely moving its existing value-21 assertion into 12.0.0 would be wrong. No correction was made without proper source-epoch attribution.
+
+## Headless hittable-order fixture — dependency repair, proof pending
+
+The historical headless library compile exposed three E0433 errors in `iced_app::frame_collect::tests::hittable_order_follows_render_buckets_not_raw_child_strata`: its hit-grid block references GUI-only `strata_emit`, `hit_grid` and optional `iced::Point`. Only that existing GUI block is feature-gated now. Shared registry setup and collection-order assertion remain active under headless; all GUI assertions remain when GUI is enabled. No production rendering/layout behavior, assertion values or host services changed. Targeted historical/headless and default-GUI proof is pending; enabling GUI was not used to conceal headless compile errors.
 
 ## Retail TOC fixtures — bounded PASS at `41f1abbeb`
 

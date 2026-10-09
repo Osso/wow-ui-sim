@@ -1,0 +1,198 @@
+{
+  "/tmp/transmog-epoch-independent/base-cargo.json": {
+    "bytes": 947159,
+    "sha256": "c2268e9ca16cd8dc307bcc9dca79919e552be5fa660c58d66a97f7dd3aae3e52"
+  },
+  "/tmp/transmog-epoch-independent/base-cargo.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "/tmp/transmog-epoch-independent/base-cargo.stdout": {
+    "bytes": 12112,
+    "sha256": "b1fd7660e2562019c74a063fe82b2d3ba15937b36636c828277b33f8f38a8f7b"
+  },
+  "/tmp/transmog-epoch-independent/baseline-error-source.json": {
+    "bytes": 1316,
+    "sha256": "2a3dcc95b89e7e92fea2e0bf68efa2c8b20d85d432522656a50182210addb72b"
+  },
+  "/tmp/transmog-epoch-independent/correction.json": {
+    "bytes": 5662,
+    "sha256": "67be3587b4780101cf08eb4b70589d1a456c3bb88dbef85ae326238e8cf7e316"
+  },
+  "/tmp/transmog-epoch-independent/current-integration.json": {
+    "bytes": 947403,
+    "sha256": "172d366ba869e6257b97ae6fe5e71eb436f31c0dd2c720f11f52434edc09a4b7"
+  },
+  "/tmp/transmog-epoch-independent/current-integration.stderr": {
+    "bytes": 636,
+    "sha256": "fe4ae13b2178b35ce735df2c742b42bc8058b9d4f3925f88b4a224f206754ddb"
+  },
+  "/tmp/transmog-epoch-independent/current-integration.stdout": {
+    "bytes": 213,
+    "sha256": "edbcb553d38dc6703f18c26a83c267c48bddcbc47a0326afab890f2fe95a7ceb"
+  },
+  "/tmp/transmog-epoch-independent/default-artifacts.json": {
+    "bytes": 1393,
+    "sha256": "9c16105d524bbd02b077dea7fbc45e03640700be08f55ca9c2887e71c01eca73"
+  },
+  "/tmp/transmog-epoch-independent/default-binary-hash.json": {
+    "bytes": 1672,
+    "sha256": "ac65bd6f708844742170164a756299956304e07dc8fd3cd027c94190588829b5"
+  },
+  "/tmp/transmog-epoch-independent/default-compile-diagnostics.json": {
+    "bytes": 2,
+    "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "/tmp/transmog-epoch-independent/default-compile-inspection.json": {
+    "bytes": 1456,
+    "sha256": "8536686aff77bbee79ce92bbcc4590cb4ad8742ed23d4637e4ab04aaa10975da"
+  },
+  "/tmp/transmog-epoch-independent/default-compile.json": {
+    "bytes": 947212,
+    "sha256": "4a0a531d9efa667c3f8f935b5e28400bdb12632c3126feec1ed34d1e347e8704"
+  },
+  "/tmp/transmog-epoch-independent/default-compile.stderr": {
+    "bytes": 1275,
+    "sha256": "c880a6b793d37c47c72a6bc75a5b4411383862d43976fa700e533bfb7c6f2f16"
+  },
+  "/tmp/transmog-epoch-independent/default-compile.stdout": {
+    "bytes": 565216,
+    "sha256": "966cc5fa9acb7427f0859d7f864cd5ea4c34e9356c6ad3ecc2826df0fccf918f"
+  },
+  "/tmp/transmog-epoch-independent/default-historical-list.json": {
+    "bytes": 947377,
+    "sha256": "3b63654234efbfb562eed237ad2c32020eb3941cd9239ed8be2b08613f6c8788"
+  },
+  "/tmp/transmog-epoch-independent/default-historical-list.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "/tmp/transmog-epoch-independent/default-historical-list.stdout": {
+    "bytes": 22,
+    "sha256": "414c144fa67f1df75f7b14a69af5641637772e81c4c3fa0a171e3228adbb922e"
+  },
+  "/tmp/transmog-epoch-independent/final-status.json": {
+    "bytes": 947140,
+    "sha256": "cdab861cce762383f47dfede973417d7fe64df015941d1dd61136ad2f93093f0"
+  },
+  "/tmp/transmog-epoch-independent/final-status.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "/tmp/transmog-epoch-independent/final-status.stdout": {
+    "bytes": 18,
+    "sha256": "afbbaa89fd2dd18e916d24c76db7f59cecba0e0cefc23e3b9745ec5bed252acb"
+  },
+  "/tmp/transmog-epoch-independent/fmt.json": {
+    "bytes": 947098,
+    "sha256": "ccc6a2ab0dcff00f3f0dcb97206eaba381db4644c25526042aaeeb0a313b35d2"
+  },
+  "/tmp/transmog-epoch-independent/fmt.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "/tmp/transmog-epoch-independent/fmt.stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "/tmp/transmog-epoch-independent/head.json": {
+    "bytes": 238,
+    "sha256": "e3181159639d4fccc9c3a51ed646b0a621fcbeadce27f1beb0408dfceee5c005"
+  },
+  "/tmp/transmog-epoch-independent/helper.py": {
+    "bytes": 1989,
+    "sha256": "f93b2cb834977b7e29de39ae77efca3f7a4ef672b89670329cebecd9ebaefb21"
+  },
+  "/tmp/transmog-epoch-independent/historical-artifacts.json": {
+    "bytes": 2,
+    "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "/tmp/transmog-epoch-independent/historical-compile-diagnostics.json": {
+    "bytes": 24834,
+    "sha256": "e08819e3434a19a4ca18354c7b6f87b2256e6843186ab893223922778eae4244"
+  },
+  "/tmp/transmog-epoch-independent/historical-compile-inspection.json": {
+    "bytes": 9486,
+    "sha256": "366eddab431cdd276bbbb83a21e21d16b368eb983c7b6cca3b1a5b6efeb026d4"
+  },
+  "/tmp/transmog-epoch-independent/historical-compile.json": {
+    "bytes": 947428,
+    "sha256": "80aa7d946b99b8d3f0716f87d9972c30d757e2763d378721bf428307fb391e0e"
+  },
+  "/tmp/transmog-epoch-independent/historical-compile.stderr": {
+    "bytes": 6666,
+    "sha256": "23f4dbbba6ee1c128ec54d0a214e3aaa2a4c0f40ee90b1212c7db26ccee37ca6"
+  },
+  "/tmp/transmog-epoch-independent/historical-compile.stdout": {
+    "bytes": 319331,
+    "sha256": "0f1394f481100c4b2314399a24cfbdd9731f107661c6a9e2f3b5a2b600c162ec"
+  },
+  "/tmp/transmog-epoch-independent/integration-binary-hashes.json": {
+    "bytes": 256,
+    "sha256": "584080cc63fca471f19e181953f167a67b3b41ec716cf51b58651958bccf5834"
+  },
+  "/tmp/transmog-epoch-independent/integration-scope-diff.json": {
+    "bytes": 947323,
+    "sha256": "93bf97943d6a44cc0be2a8a0c14005382951c94d1d1985ffdf7da77cf88e2793"
+  },
+  "/tmp/transmog-epoch-independent/integration-scope-diff.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "/tmp/transmog-epoch-independent/integration-scope-diff.stdout": {
+    "bytes": 988,
+    "sha256": "1e72382812fff1bf175cd747486cdd164438e1a26ae54f23ce45fb2a219cf6db"
+  },
+  "/tmp/transmog-epoch-independent/interruption.json": {
+    "bytes": 357,
+    "sha256": "f311baa64934ec67efa0cb5262a9eee87b8ba077121fc3a17fc87e462fdf00c7"
+  },
+  "/tmp/transmog-epoch-independent/manual-readability.json": {
+    "bytes": 661,
+    "sha256": "e7c030108efc16c45afc0bbec08edbc9fd79d196496129f6d68bc886f092c399"
+  },
+  "/tmp/transmog-epoch-independent/process-inspection-2.stdout": {
+    "bytes": 56340,
+    "sha256": "a5393f6006135631997d14e6dedb81fb5337e26b658a0b4b514ede3743da351d"
+  },
+  "/tmp/transmog-epoch-independent/process-inspection.stdout": {
+    "bytes": 44960,
+    "sha256": "f0b8726cce51af7b64d481a823ed828b3fd6932312b2d9141aa22493eae0cda8"
+  },
+  "/tmp/transmog-epoch-independent/proof-ledger.json": {
+    "bytes": 8700877,
+    "sha256": "355cf0f3c8557d910de913fadc3501cc2515c872f73c3e5ad02db958b0d49d71"
+  },
+  "/tmp/transmog-epoch-independent/report.md": {
+    "bytes": 8995,
+    "sha256": "5edc88448a77a60752ebea7b69e04fcb1720c79256375bd196bbf68879c408be"
+  },
+  "/tmp/transmog-epoch-independent/resume-source-diff.json": {
+    "bytes": 947170,
+    "sha256": "8abb0d2ab8e987a202bd0749b475a3e513ba4e4a3f422dffb0e419a48439a156"
+  },
+  "/tmp/transmog-epoch-independent/resume-source-diff.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "/tmp/transmog-epoch-independent/resume-source-diff.stdout": {
+    "bytes": 2917,
+    "sha256": "1e98bf416095fb70985035d96a140758999f0ea748e4c067b1ccaf5ed35554c1"
+  },
+  "/tmp/transmog-epoch-independent/reuse-scope.json": {
+    "bytes": 1490,
+    "sha256": "868f9e3d9694216870eb2d85bb4773d58a0b16d588a3d221f004355bf50ef336"
+  },
+  "/tmp/transmog-epoch-independent/scope-diff.json": {
+    "bytes": 27740,
+    "sha256": "ed329bf3d2d3266d26c7c6fa40126c1d2e24d86b059827657feee8c6389c2551"
+  },
+  "/tmp/transmog-epoch-independent/source-boundaries.json": {
+    "bytes": 1791,
+    "sha256": "b6b5e4da6372e48ab6de7b3890bf8a517397eea29fce549d972d656dcdb5e14d"
+  },
+  "/tmp/transmog-epoch-independent/status.json": {
+    "bytes": 219,
+    "sha256": "ef39fc6a4c91e8f81f9f6695362c2fe2c7d308c2309491c2ef32f0bd8130cf54"
+  }
+}

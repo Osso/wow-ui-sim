@@ -1,0 +1,14 @@
+{
+  "file": "/home/osso/Projects/wow/wow-ui-sim/src/loader/tests/wow_api_globals/transmog_situation.rs",
+  "method": "manual changed-line and surrounding-function audit; no broad readability command",
+  "introduced_violations": [],
+  "notes": [
+    "one explicit lower/upper cumulative epoch cfg and causal comment; no added function, nesting, mutable state, duplicate behavior or warning suppression",
+    "22 literal member entries and historical metadata assertions unchanged by byte comparison of complete body",
+    "no measured cognitive-complexity claim"
+  ],
+  "tools_available": {
+    "rust-code-analysis-cli": null,
+    "readability-audit": null
+  }
+}

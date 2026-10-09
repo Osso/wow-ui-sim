@@ -1,0 +1,11 @@
+{
+  "event": "prior evaluation aborted after successful fmt; historical compile result absent",
+  "evidence": [
+    "process-inspection-2.stdout",
+    "fmt.json"
+  ],
+  "historical_streams_present": false,
+  "historical_executable_present": false,
+  "active_historical_compile": false,
+  "action": "recover missing compile proof, not repeat a valid build"
+}

@@ -1,0 +1,38 @@
+{
+  "base_revision": "41f1abbeb83d508b323f51d1f371a3bc506b63b5",
+  "current_revision": "a9d2433b6b113aca7ab3e2505c5548a59b4f0445",
+  "binary": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/integration-1db16289b0998b2a",
+  "expected_sha256": "3395a9d9307b65f28b7cb51f423e7d4a315c3793ecbd3e0ac214497780f8356b",
+  "actual_sha256": "3395a9d9307b65f28b7cb51f423e7d4a315c3793ecbd3e0ac214497780f8356b",
+  "historical_assertion_body_unchanged": true,
+  "compile_input_diff_artifact": "integration-scope-diff.stdout",
+  "manifest_non_test_tables_identical": true,
+  "integration_target_identical": true,
+  "standalone_test_changes": {
+    "added": [
+      {
+        "name": "patch_1_13_2_cvar_state",
+        "path": "patch-tests/patch_1_13_2_cvar_state.rs",
+        "required-features": [
+          "client-era"
+        ]
+      }
+    ],
+    "modified": [
+      {
+        "before": {
+          "name": "patch_1_13_3_npc_health",
+          "path": "patch-tests/patch_1_13_3_npc_health.rs",
+          "required-features": [
+            "client-era"
+          ]
+        },
+        "after": {
+          "name": "patch_1_13_3_npc_health",
+          "path": "patch-tests/patch_1_13_3_npc_health.rs"
+        }
+      }
+    ]
+  },
+  "reuse_decision": "reuse: all non-test manifest config and integration target identical; only standalone-target metadata plus cfg(test)-only module gate changed; current integration source and production inputs unchanged; exact binary hash matches retained receipt"
+}

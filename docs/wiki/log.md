@@ -2,6 +2,10 @@
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#exact-startup-fixtures-retained-redgreen-epoch) links selected static preservation receipts and lost check-result evidence. No Mists type/runtime gate closed; no old process remained before one terminal capture retry. Process-list streams excluded from publication.
 
+## [2026-10-09] fix | Keep headless collection test independent of GUI
+
+[Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#headless-hittable-order-fixture--dependency-repair-proof-pending) records optional-dependency errors and GUI-only block gating. Common headless order assertion retained; no rendering/runtime or assertion-value changes. Historical and enabled-GUI proof pending.
+
 ## [2026-10-09] fix | Restore adjacent Era target feature gate
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#era-standalone-target-gate--restoration) records the displaced NPC target guard and one-line restoration. New CVar guard and both test bodies unchanged; no original seals/proof epochs rewritten.

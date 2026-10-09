@@ -1,0 +1,708 @@
+[
+  {
+    "reason": "compiler-message",
+    "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+    "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+    "target": {
+      "kind": [
+        "lib"
+      ],
+      "crate_types": [
+        "lib"
+      ],
+      "name": "wow_ui_sim",
+      "src_path": "/home/osso/Projects/wow/wow-ui-sim/src/lib.rs",
+      "edition": "2024",
+      "doc": true,
+      "doctest": true,
+      "test": true
+    },
+    "message": {
+      "rendered": "error[E0433]: cannot find `strata_emit` in `iced_app`\n   --> src/iced_app/frame_collect.rs:378:38\n    |\n378 |         let rects = crate::iced_app::strata_emit::build_hittable_rects(&collected, &registry);\n    |                                      ^^^^^^^^^^^ could not find `strata_emit` in `iced_app`\n    |\nnote: found an item that was configured out\n   --> src/iced_app/mod.rs:56:5\n    |\n 55 | #[cfg(feature = \"gui\")]\n    |       --------------- the item is gated behind the `gui` feature\n 56 | mod strata_emit;\n    |     ^^^^^^^^^^^\n\n",
+      "$message_type": "diagnostic",
+      "children": [
+        {
+          "children": [],
+          "code": null,
+          "level": "note",
+          "message": "found an item that was configured out",
+          "rendered": null,
+          "spans": [
+            {
+              "byte_end": 1361,
+              "byte_start": 1346,
+              "column_end": 22,
+              "column_start": 7,
+              "expansion": null,
+              "file_name": "src/iced_app/mod.rs",
+              "is_primary": false,
+              "label": "the item is gated behind the `gui` feature",
+              "line_end": 55,
+              "line_start": 55,
+              "suggested_replacement": null,
+              "suggestion_applicability": null,
+              "text": [
+                {
+                  "highlight_end": 22,
+                  "highlight_start": 7,
+                  "text": "#[cfg(feature = \"gui\")]"
+                }
+              ]
+            },
+            {
+              "byte_end": 1379,
+              "byte_start": 1368,
+              "column_end": 16,
+              "column_start": 5,
+              "expansion": null,
+              "file_name": "src/iced_app/mod.rs",
+              "is_primary": true,
+              "label": null,
+              "line_end": 56,
+              "line_start": 56,
+              "suggested_replacement": null,
+              "suggestion_applicability": null,
+              "text": [
+                {
+                  "highlight_end": 16,
+                  "highlight_start": 5,
+                  "text": "mod strata_emit;"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "level": "error",
+      "message": "cannot find `strata_emit` in `iced_app`",
+      "spans": [
+        {
+          "byte_end": 13239,
+          "byte_start": 13228,
+          "column_end": 49,
+          "column_start": 38,
+          "expansion": null,
+          "file_name": "src/iced_app/frame_collect.rs",
+          "is_primary": true,
+          "label": "could not find `strata_emit` in `iced_app`",
+          "line_end": 378,
+          "line_start": 378,
+          "suggested_replacement": null,
+          "suggestion_applicability": null,
+          "text": [
+            {
+              "highlight_end": 49,
+              "highlight_start": 38,
+              "text": "        let rects = crate::iced_app::strata_emit::build_hittable_rects(&collected, &registry);"
+            }
+          ]
+        }
+      ],
+      "code": {
+        "code": "E0433",
+        "explanation": "An undeclared crate, module, or type was used.\n\nErroneous code example:\n\n```compile_fail,E0433\nlet map = HashMap::new();\n// error: failed to resolve: use of undeclared type `HashMap`\n```\n\nPlease verify you didn't misspell the type/module's name or that you didn't\nforget to import it:\n\n```\nuse std::collections::HashMap; // HashMap has been imported.\nlet map: HashMap<u32, u32> = HashMap::new(); // So it can be used!\n```\n\nIf you've expected to use a crate name:\n\n```compile_fail\nuse ferris_wheel::BigO;\n// error: failed to resolve: use of undeclared module or unlinked crate\n```\n\nMake sure the crate has been added as a dependency in `Cargo.toml`.\n\nTo use a module from your current crate, add the `crate::` prefix to the path.\n"
+      }
+    }
+  },
+  {
+    "reason": "compiler-message",
+    "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+    "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+    "target": {
+      "kind": [
+        "lib"
+      ],
+      "crate_types": [
+        "lib"
+      ],
+      "name": "wow_ui_sim",
+      "src_path": "/home/osso/Projects/wow/wow-ui-sim/src/lib.rs",
+      "edition": "2024",
+      "doc": true,
+      "doctest": true,
+      "test": true
+    },
+    "message": {
+      "rendered": "error[E0433]: cannot find `hit_grid` in `iced_app`\n   --> src/iced_app/frame_collect.rs:379:37\n    |\n379 |         let grid = crate::iced_app::hit_grid::HitGrid::new(rects, 100.0, 100.0);\n    |                                     ^^^^^^^^ could not find `hit_grid` in `iced_app`\n    |\nnote: found an item that was configured out\n   --> src/iced_app/mod.rs:28:5\n    |\n 27 | #[cfg(feature = \"gui\")]\n    |       --------------- the item is gated behind the `gui` feature\n 28 | mod hit_grid;\n    |     ^^^^^^^^\n\n",
+      "$message_type": "diagnostic",
+      "children": [
+        {
+          "children": [],
+          "code": null,
+          "level": "note",
+          "message": "found an item that was configured out",
+          "rendered": null,
+          "spans": [
+            {
+              "byte_end": 800,
+              "byte_start": 785,
+              "column_end": 22,
+              "column_start": 7,
+              "expansion": null,
+              "file_name": "src/iced_app/mod.rs",
+              "is_primary": false,
+              "label": "the item is gated behind the `gui` feature",
+              "line_end": 27,
+              "line_start": 27,
+              "suggested_replacement": null,
+              "suggestion_applicability": null,
+              "text": [
+                {
+                  "highlight_end": 22,
+                  "highlight_start": 7,
+                  "text": "#[cfg(feature = \"gui\")]"
+                }
+              ]
+            },
+            {
+              "byte_end": 815,
+              "byte_start": 807,
+              "column_end": 13,
+              "column_start": 5,
+              "expansion": null,
+              "file_name": "src/iced_app/mod.rs",
+              "is_primary": true,
+              "label": null,
+              "line_end": 28,
+              "line_start": 28,
+              "suggested_replacement": null,
+              "suggestion_applicability": null,
+              "text": [
+                {
+                  "highlight_end": 13,
+                  "highlight_start": 5,
+                  "text": "mod hit_grid;"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "level": "error",
+      "message": "cannot find `hit_grid` in `iced_app`",
+      "spans": [
+        {
+          "byte_end": 13330,
+          "byte_start": 13322,
+          "column_end": 45,
+          "column_start": 37,
+          "expansion": null,
+          "file_name": "src/iced_app/frame_collect.rs",
+          "is_primary": true,
+          "label": "could not find `hit_grid` in `iced_app`",
+          "line_end": 379,
+          "line_start": 379,
+          "suggested_replacement": null,
+          "suggestion_applicability": null,
+          "text": [
+            {
+              "highlight_end": 45,
+              "highlight_start": 37,
+              "text": "        let grid = crate::iced_app::hit_grid::HitGrid::new(rects, 100.0, 100.0);"
+            }
+          ]
+        }
+      ],
+      "code": {
+        "code": "E0433",
+        "explanation": "An undeclared crate, module, or type was used.\n\nErroneous code example:\n\n```compile_fail,E0433\nlet map = HashMap::new();\n// error: failed to resolve: use of undeclared type `HashMap`\n```\n\nPlease verify you didn't misspell the type/module's name or that you didn't\nforget to import it:\n\n```\nuse std::collections::HashMap; // HashMap has been imported.\nlet map: HashMap<u32, u32> = HashMap::new(); // So it can be used!\n```\n\nIf you've expected to use a crate name:\n\n```compile_fail\nuse ferris_wheel::BigO;\n// error: failed to resolve: use of undeclared module or unlinked crate\n```\n\nMake sure the crate has been added as a dependency in `Cargo.toml`.\n\nTo use a module from your current crate, add the `crate::` prefix to the path.\n"
+      }
+    }
+  },
+  {
+    "reason": "compiler-message",
+    "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+    "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+    "target": {
+      "kind": [
+        "lib"
+      ],
+      "crate_types": [
+        "lib"
+      ],
+      "name": "wow_ui_sim",
+      "src_path": "/home/osso/Projects/wow/wow-ui-sim/src/lib.rs",
+      "edition": "2024",
+      "doc": true,
+      "doctest": true,
+      "test": true
+    },
+    "message": {
+      "rendered": "error[E0433]: cannot find module or crate `iced` in this scope\n   --> src/iced_app/frame_collect.rs:380:21\n    |\n380 |         let point = iced::Point::new(5.0, 5.0);\n    |                     ^^^^ use of unresolved module or unlinked crate `iced`\n    |\n    = help: if you wanted to use a crate named `iced`, use `cargo add iced` to add it to your `Cargo.toml`\n\n",
+      "$message_type": "diagnostic",
+      "children": [
+        {
+          "children": [],
+          "code": null,
+          "level": "help",
+          "message": "if you wanted to use a crate named `iced`, use `cargo add iced` to add it to your `Cargo.toml`",
+          "rendered": null,
+          "spans": []
+        }
+      ],
+      "level": "error",
+      "message": "cannot find module or crate `iced` in this scope",
+      "spans": [
+        {
+          "byte_end": 13391,
+          "byte_start": 13387,
+          "column_end": 25,
+          "column_start": 21,
+          "expansion": null,
+          "file_name": "src/iced_app/frame_collect.rs",
+          "is_primary": true,
+          "label": "use of unresolved module or unlinked crate `iced`",
+          "line_end": 380,
+          "line_start": 380,
+          "suggested_replacement": null,
+          "suggestion_applicability": null,
+          "text": [
+            {
+              "highlight_end": 25,
+              "highlight_start": 21,
+              "text": "        let point = iced::Point::new(5.0, 5.0);"
+            }
+          ]
+        }
+      ],
+      "code": {
+        "code": "E0433",
+        "explanation": "An undeclared crate, module, or type was used.\n\nErroneous code example:\n\n```compile_fail,E0433\nlet map = HashMap::new();\n// error: failed to resolve: use of undeclared type `HashMap`\n```\n\nPlease verify you didn't misspell the type/module's name or that you didn't\nforget to import it:\n\n```\nuse std::collections::HashMap; // HashMap has been imported.\nlet map: HashMap<u32, u32> = HashMap::new(); // So it can be used!\n```\n\nIf you've expected to use a crate name:\n\n```compile_fail\nuse ferris_wheel::BigO;\n// error: failed to resolve: use of undeclared module or unlinked crate\n```\n\nMake sure the crate has been added as a dependency in `Cargo.toml`.\n\nTo use a module from your current crate, add the `crate::` prefix to the path.\n"
+      }
+    }
+  },
+  {
+    "reason": "compiler-message",
+    "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+    "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+    "target": {
+      "kind": [
+        "lib"
+      ],
+      "crate_types": [
+        "lib"
+      ],
+      "name": "wow_ui_sim",
+      "src_path": "/home/osso/Projects/wow/wow-ui-sim/src/lib.rs",
+      "edition": "2024",
+      "doc": true,
+      "doctest": true,
+      "test": true
+    },
+    "message": {
+      "rendered": "warning: unused import: `std::cell::RefCell`\n --> src/blizzard_ui_sync/tests.rs:5:5\n  |\n5 | use std::cell::RefCell;\n  |     ^^^^^^^^^^^^^^^^^^\n  |\n  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default\n\n",
+      "$message_type": "diagnostic",
+      "children": [
+        {
+          "children": [],
+          "code": null,
+          "level": "note",
+          "message": "`#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default",
+          "rendered": null,
+          "spans": []
+        },
+        {
+          "children": [],
+          "code": null,
+          "level": "help",
+          "message": "remove the whole `use` item",
+          "rendered": null,
+          "spans": [
+            {
+              "byte_end": 183,
+              "byte_start": 159,
+              "column_end": 1,
+              "column_start": 1,
+              "expansion": null,
+              "file_name": "src/blizzard_ui_sync/tests.rs",
+              "is_primary": true,
+              "label": null,
+              "line_end": 6,
+              "line_start": 5,
+              "suggested_replacement": "",
+              "suggestion_applicability": "MachineApplicable",
+              "text": [
+                {
+                  "highlight_end": 24,
+                  "highlight_start": 1,
+                  "text": "use std::cell::RefCell;"
+                },
+                {
+                  "highlight_end": 1,
+                  "highlight_start": 1,
+                  "text": "use std::path::PathBuf;"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "level": "warning",
+      "message": "unused import: `std::cell::RefCell`",
+      "spans": [
+        {
+          "byte_end": 181,
+          "byte_start": 163,
+          "column_end": 23,
+          "column_start": 5,
+          "expansion": null,
+          "file_name": "src/blizzard_ui_sync/tests.rs",
+          "is_primary": true,
+          "label": null,
+          "line_end": 5,
+          "line_start": 5,
+          "suggested_replacement": null,
+          "suggestion_applicability": null,
+          "text": [
+            {
+              "highlight_end": 23,
+              "highlight_start": 5,
+              "text": "use std::cell::RefCell;"
+            }
+          ]
+        }
+      ],
+      "code": {
+        "code": "unused_imports",
+        "explanation": null
+      }
+    }
+  },
+  {
+    "reason": "compiler-message",
+    "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+    "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+    "target": {
+      "kind": [
+        "lib"
+      ],
+      "crate_types": [
+        "lib"
+      ],
+      "name": "wow_ui_sim",
+      "src_path": "/home/osso/Projects/wow/wow-ui-sim/src/lib.rs",
+      "edition": "2024",
+      "doc": true,
+      "doctest": true,
+      "test": true
+    },
+    "message": {
+      "rendered": "warning: unused import: `c_item::location_item`\n  --> src/c_api/item_spell/mod.rs:20:16\n   |\n20 | pub(crate) use c_item::location_item;\n   |                ^^^^^^^^^^^^^^^^^^^^^\n\n",
+      "$message_type": "diagnostic",
+      "children": [
+        {
+          "children": [],
+          "code": null,
+          "level": "help",
+          "message": "remove the whole `use` item",
+          "rendered": null,
+          "spans": [
+            {
+              "byte_end": 593,
+              "byte_start": 521,
+              "column_end": 1,
+              "column_start": 1,
+              "expansion": null,
+              "file_name": "src/c_api/item_spell/mod.rs",
+              "is_primary": true,
+              "label": null,
+              "line_end": 21,
+              "line_start": 19,
+              "suggested_replacement": "",
+              "suggestion_applicability": "MachineApplicable",
+              "text": [
+                {
+                  "highlight_end": 34,
+                  "highlight_start": 1,
+                  "text": "#[cfg(feature = \"retail-12-0-0\")]"
+                },
+                {
+                  "highlight_end": 38,
+                  "highlight_start": 1,
+                  "text": "pub(crate) use c_item::location_item;"
+                },
+                {
+                  "highlight_end": 1,
+                  "highlight_start": 1,
+                  "text": "pub(crate) use c_item::{"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "level": "warning",
+      "message": "unused import: `c_item::location_item`",
+      "spans": [
+        {
+          "byte_end": 591,
+          "byte_start": 570,
+          "column_end": 37,
+          "column_start": 16,
+          "expansion": null,
+          "file_name": "src/c_api/item_spell/mod.rs",
+          "is_primary": true,
+          "label": null,
+          "line_end": 20,
+          "line_start": 20,
+          "suggested_replacement": null,
+          "suggestion_applicability": null,
+          "text": [
+            {
+              "highlight_end": 37,
+              "highlight_start": 16,
+              "text": "pub(crate) use c_item::location_item;"
+            }
+          ]
+        }
+      ],
+      "code": {
+        "code": "unused_imports",
+        "explanation": null
+      }
+    }
+  },
+  {
+    "reason": "compiler-message",
+    "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+    "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+    "target": {
+      "kind": [
+        "lib"
+      ],
+      "crate_types": [
+        "lib"
+      ],
+      "name": "wow_ui_sim",
+      "src_path": "/home/osso/Projects/wow/wow-ui-sim/src/lib.rs",
+      "edition": "2024",
+      "doc": true,
+      "doctest": true,
+      "test": true
+    },
+    "message": {
+      "rendered": "warning: unused import: `collect_subtree_ids`\n   --> src/iced_app/frame_collect.rs:242:17\n    |\n242 |     use super::{collect_subtree_ids, intra_strata_sort_key};\n    |                 ^^^^^^^^^^^^^^^^^^^\n\n",
+      "$message_type": "diagnostic",
+      "children": [
+        {
+          "children": [],
+          "code": null,
+          "level": "help",
+          "message": "remove the unused import",
+          "rendered": null,
+          "spans": [
+            {
+              "byte_end": 7798,
+              "byte_start": 7777,
+              "column_end": 38,
+              "column_start": 17,
+              "expansion": null,
+              "file_name": "src/iced_app/frame_collect.rs",
+              "is_primary": true,
+              "label": null,
+              "line_end": 242,
+              "line_start": 242,
+              "suggested_replacement": "",
+              "suggestion_applicability": "MachineApplicable",
+              "text": [
+                {
+                  "highlight_end": 38,
+                  "highlight_start": 17,
+                  "text": "    use super::{collect_subtree_ids, intra_strata_sort_key};"
+                }
+              ]
+            },
+            {
+              "byte_end": 7777,
+              "byte_start": 7776,
+              "column_end": 17,
+              "column_start": 16,
+              "expansion": null,
+              "file_name": "src/iced_app/frame_collect.rs",
+              "is_primary": true,
+              "label": null,
+              "line_end": 242,
+              "line_start": 242,
+              "suggested_replacement": "",
+              "suggestion_applicability": "MachineApplicable",
+              "text": [
+                {
+                  "highlight_end": 17,
+                  "highlight_start": 16,
+                  "text": "    use super::{collect_subtree_ids, intra_strata_sort_key};"
+                }
+              ]
+            },
+            {
+              "byte_end": 7820,
+              "byte_start": 7819,
+              "column_end": 60,
+              "column_start": 59,
+              "expansion": null,
+              "file_name": "src/iced_app/frame_collect.rs",
+              "is_primary": true,
+              "label": null,
+              "line_end": 242,
+              "line_start": 242,
+              "suggested_replacement": "",
+              "suggestion_applicability": "MachineApplicable",
+              "text": [
+                {
+                  "highlight_end": 60,
+                  "highlight_start": 59,
+                  "text": "    use super::{collect_subtree_ids, intra_strata_sort_key};"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "level": "warning",
+      "message": "unused import: `collect_subtree_ids`",
+      "spans": [
+        {
+          "byte_end": 7796,
+          "byte_start": 7777,
+          "column_end": 36,
+          "column_start": 17,
+          "expansion": null,
+          "file_name": "src/iced_app/frame_collect.rs",
+          "is_primary": true,
+          "label": null,
+          "line_end": 242,
+          "line_start": 242,
+          "suggested_replacement": null,
+          "suggestion_applicability": null,
+          "text": [
+            {
+              "highlight_end": 36,
+              "highlight_start": 17,
+              "text": "    use super::{collect_subtree_ids, intra_strata_sort_key};"
+            }
+          ]
+        }
+      ],
+      "code": {
+        "code": "unused_imports",
+        "explanation": null
+      }
+    }
+  },
+  {
+    "reason": "compiler-message",
+    "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+    "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+    "target": {
+      "kind": [
+        "lib"
+      ],
+      "crate_types": [
+        "lib"
+      ],
+      "name": "wow_ui_sim",
+      "src_path": "/home/osso/Projects/wow/wow-ui-sim/src/lib.rs",
+      "edition": "2024",
+      "doc": true,
+      "doctest": true,
+      "test": true
+    },
+    "message": {
+      "rendered": "warning: unused import: `self::preload::should_preload_talent_atlas_key`\n --> src/texture/tests.rs:1:5\n  |\n1 | use self::preload::should_preload_talent_atlas_key;\n  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n\n",
+      "$message_type": "diagnostic",
+      "children": [
+        {
+          "children": [],
+          "code": null,
+          "level": "help",
+          "message": "remove the whole `use` item",
+          "rendered": null,
+          "spans": [
+            {
+              "byte_end": 52,
+              "byte_start": 0,
+              "column_end": 1,
+              "column_start": 1,
+              "expansion": null,
+              "file_name": "src/texture/tests.rs",
+              "is_primary": true,
+              "label": null,
+              "line_end": 2,
+              "line_start": 1,
+              "suggested_replacement": "",
+              "suggestion_applicability": "MachineApplicable",
+              "text": [
+                {
+                  "highlight_end": 52,
+                  "highlight_start": 1,
+                  "text": "use self::preload::should_preload_talent_atlas_key;"
+                },
+                {
+                  "highlight_end": 1,
+                  "highlight_start": 1,
+                  "text": "use super::*;"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "level": "warning",
+      "message": "unused import: `self::preload::should_preload_talent_atlas_key`",
+      "spans": [
+        {
+          "byte_end": 50,
+          "byte_start": 4,
+          "column_end": 51,
+          "column_start": 5,
+          "expansion": null,
+          "file_name": "src/texture/tests.rs",
+          "is_primary": true,
+          "label": null,
+          "line_end": 1,
+          "line_start": 1,
+          "suggested_replacement": null,
+          "suggestion_applicability": null,
+          "text": [
+            {
+              "highlight_end": 51,
+              "highlight_start": 5,
+              "text": "use self::preload::should_preload_talent_atlas_key;"
+            }
+          ]
+        }
+      ],
+      "code": {
+        "code": "unused_imports",
+        "explanation": null
+      }
+    }
+  },
+  {
+    "reason": "compiler-message",
+    "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+    "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+    "target": {
+      "kind": [
+        "lib"
+      ],
+      "crate_types": [
+        "lib"
+      ],
+      "name": "wow_ui_sim",
+      "src_path": "/home/osso/Projects/wow/wow-ui-sim/src/lib.rs",
+      "edition": "2024",
+      "doc": true,
+      "doctest": true,
+      "test": true
+    },
+    "message": {
+      "rendered": "For more information about this error, try `rustc --explain E0433`.\n",
+      "$message_type": "diagnostic",
+      "children": [],
+      "level": "failure-note",
+      "message": "For more information about this error, try `rustc --explain E0433`.",
+      "spans": [],
+      "code": null
+    }
+  }
+]

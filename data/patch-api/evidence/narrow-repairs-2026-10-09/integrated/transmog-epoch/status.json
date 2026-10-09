@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "git",
+    "status",
+    "--porcelain"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "time": "2026-10-09T17:53:16.602288+00:00",
+  "exit": 0,
+  "stdout": "?? .code-index.db\n",
+  "stderr": ""
+}
