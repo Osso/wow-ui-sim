@@ -7,10 +7,10 @@ Frozen 279373/6767102, timestamp 2026-07-09T22:15:03Z, checked against exact cac
 | Source | Accounting | Proof limit |
 |---|---|---|
 | Full raw/default rendering | 176 lines, 150 nonblank; 19 named headers, no numerical inventory headers | Raw text authoritative: default renderer strips `<name>` command placeholders and navigation attribution; neither omission loses raw evidence |
-| Named occurrences | Labeled APIs/widgets, observed links, named CVars, template relations, macro/raid commands and event-order references | Publication claims distinguished from contextual references; no inferred API membership or runtime availability |
-| Signatures | All call-like spans plus each callable/command inventory boundary | Literal returns retained where explicitly labeled; observed names stay unspecified; examples and wildcard family removal are not full signatures |
+| Named occurrences | 92: 56 globals, six widgets, eight template references, two CVars, 18 command occurrences, two event-order references; 55 added/29 changed/eight removed | Publication claims distinguished from contextual references; no inferred API membership or runtime availability |
+| Signatures | 124 records: 44 literal call-like spans + 80 callable/command boundaries; 31 have a matching span, 49 have none | Literal returns retained where explicitly labeled; observed names stay unspecified; examples and wildcard family removal are not full signatures |
 | Source prose | Every substantive raw row UNPROVEN | No shortcut from callable presence or existing generic model to behavior |
-| Seals/replay | Pending own historical implementation | Targeted development proof only; main owns integration/native/final gates |
+| Seals/replay | 18 original seals, 101 archived snapshots; 350,913-byte compressed archive, all files below 5 MB | Targeted copied-process GREEN pending; main owns integration/native/final gates |
 
 Duplicate `IsFeignDeath` removals at lines 46/85 retained independently; `likely` rename/replacement qualifications remain literal. `GameTooltip:Set*CompareItem(...)` is one wildcard family, never expanded to guessed methods. `SetId`, `timeused`, `throtting`, `effciently`, `aucion`, malformed quote/parenthesis text and literal escaped name quotes are not corrected. Repeated `/equip` references and source attribution/comment survive. `unit/name` is not slash command `/name`.
 
@@ -29,6 +29,14 @@ Zero model closures, runtime observations, new models, retirements, shims or fal
 ## Development history
 
 Fixtures committed before RED at `0af6dc600`: expected missing opt-in/validator failures plus a fixture-path error for the separate 3.4.0 template. Corrected template path/header count at `d33481554`: RED 4 tests, two expected failures, two controls pass. The original failing log is retained honestly; it is not called a clean feature RED. No Python formatter installed; own Python formatting manual before commit. No Rust changes or check/lint/readability/coverage/broad/startup/final gates.
+
+## Original sealed boundary
+
+[Historical manifest](../../../data/patch-api/evidence/2.1.0-session-2026-10-09/historical-inputs.json) seals exact raw/response/pin/provenance, original ledger/gaps/register/extract/counts, both default controls, command ledger and four physical RED/GREEN logs. Compressed snapshots retain full manifest and 101-page handoff registry ending 1.0.0, selected tools/tests, current static profile source, template recorded flags/outputs and actual/queued successor inputs. Manifest SHA-256 anchored in [validator](../../../data/patch-api/evidence/2.1.0-session-2026-10-09/validate.py); integrity controls are not externally authenticated signatures.
+
+Actual 74 ordered retail registers (3.1.0/3.2.0/3.3.0 then retained 3.3.3 onward) contain 18 exact same-symbol occurrences; these are source comparisons, not automatic semantic closures or native retirements. Seven ordered main-owned placeholders: 2.2.0, 2.3.0, 2.4.0, 2.4.2, 3.0.2, 3.0.3, 3.0.8. Their raw inputs remain archived; no guessed membership or queued supersession. Classic 2.5/3.4/4.4/5.5 never supersedes retail. `PLAYER_LOGIN` timing stays literal in raw line 44, separate from the two event-order inventory references; no inferred new-event publication. All raw UI attributes and contextual methods also remain literal, not new publication inventory.
+
+Parser/default/template GREEN 3/3 at `3f32a7629`; source accounting and portable replay GREEN pending. Original command receipts include expected portable missing-validator RED at `322cac662`. No rerun of already-proven parser controls is required for validator-only changes. Later receipts remain outside original seals.
 
 ## Sources
 

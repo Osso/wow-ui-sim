@@ -2911,4 +2911,4 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 
 ## [2026-10-09] investigation | Historical retail Patch 2.1.0 SOURCE audit
 
-[Audit](investigations/patch-2-1-0-api-audit.md): frozen 279373/6767102; 150 nonblank raw rows, 92 literal inventory/context occurrences, 19 headings, 125 signature-limit/span records. All behavioral contracts UNPROVEN; no runtime/native/model credit. Own opt-in parser preserves defaults; historical sealing and targeted proof pending.
+[Audit](investigations/patch-2-1-0-api-audit.md): frozen 279373/6767102; 150 nonblank raw rows, 92 literal inventory/context occurrences, 19 headings, 124 signature-limit/span records. All behavioral contracts UNPROVEN; no runtime/native/model credit. Own parser/default/template GREEN 3/3. Original 18 seals/101 snapshots, copied replay/accounting GREEN pending.

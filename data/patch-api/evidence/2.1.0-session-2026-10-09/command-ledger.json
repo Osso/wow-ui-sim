@@ -46,5 +46,20 @@
     "log_sha256": "89d79feb3f9f4d5bed17f078329c6f6a7f786ac18d354f60aad23051c243b39e",
     "scope": "Owned literal parser and bounded recorded/default template bytes; no runtime/native/final gate",
     "later_changes_invalidate": "Only relevant parser/test/source or recorded template byte changes; documentation does not invalidate."
+  },
+  {
+    "revision": "322cac662",
+    "argv": [
+      "python3",
+      "-B",
+      "tools/test_patch_2_1_0_validator.py"
+    ],
+    "cwd": "/home/osso/.worktrees/wow-ui-sim-p210-source",
+    "phase": "copied-replay-RED",
+    "exit_code": 1,
+    "log": "validator-red.log",
+    "log_sha256": "83a01238cac09d1c078ddafcf4d384cb464a7dac45d3eed4465d0c991bddce51",
+    "scope": "Owned copied historical fixture, expected missing validator; no runtime/native/final gate",
+    "later_changes_invalidate": "RED is immutable original development evidence; GREEN appended separately."
   }
 ]
