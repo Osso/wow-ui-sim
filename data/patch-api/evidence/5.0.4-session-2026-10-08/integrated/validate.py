@@ -148,7 +148,7 @@ def check_proofs(context):
         assert 'Finished `dev` profile' in text
         warnings = re.findall(r'^warning: (.*)$', text, re.M)
         assert all(value.startswith(('iced-wgpu-patched/', '`iced_wgpu` (manifest)')) for value in warnings), warnings
-    for name in ('pet-battles-integration', 'lib-namespace', 'lib-pet-battle', 'retail-line-controls'):
+    for name in ('pet-battles-integration', 'pet-battle-prefork', 'lib-namespace', 'lib-pet-battle', 'retail-line-controls'):
         pattern = r'test (\S+) \.\.\. (ok|FAILED)'
         assert sorted(re.findall(pattern, (HERE / (name + '.txt')).read_text())) == sorted(re.findall(pattern, (HERE / ('master-' + name + '.txt')).read_text()))
 

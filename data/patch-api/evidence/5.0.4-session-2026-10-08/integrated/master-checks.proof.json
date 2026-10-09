@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.cache/wow-ui-sim-targets/p504-page/master-runner/master_checks.py"
+  ],
+  "revision": "1c9984d2e8a5e672c5109d2234197303e6190317",
+  "scope": "master-checks",
+  "cwd": ".",
+  "target": "worktree-local target",
+  "environment": {},
+  "exit": 0,
+  "log": "master-checks.txt",
+  "log_sha256": "0f741e5ab5159aca4f03a91755f69597c5c2959c583d39531b7aae6d970f2cd3",
+  "seconds": 548.1617055069946,
+  "invalidated": false
+}

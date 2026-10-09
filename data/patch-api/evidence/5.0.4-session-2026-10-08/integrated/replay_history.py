@@ -16,7 +16,16 @@ HERE = Path(__file__).resolve().parent
 HISTORY = HERE.parent
 
 
+def restore_historical_objects():
+    metadata = json.loads((HERE / 'historical-pack.json').read_text())
+    packed = (HERE / 'historical-objects.pack').read_bytes()
+    assert len(packed) == metadata['pack_bytes']
+    assert hashlib.sha256(packed).hexdigest() == metadata['pack_sha256'], 'historical object pack drift'
+    subprocess.check_output(['git', 'unpack-objects'], cwd=ROOT, input=packed)
+
+
 def main():
+    restore_historical_objects()
     preservation = json.loads((HERE / 'historical-preservation.json').read_text())
     source = (HERE / 'historical-validator.py.txt').read_bytes()
     assert hashlib.sha256(source).hexdigest() == preservation['validate.py']
