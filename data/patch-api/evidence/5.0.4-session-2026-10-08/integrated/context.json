@@ -1,6 +1,6 @@
 {
   "master_revision": "1c9984d2e8a5e672c5109d2234197303e6190317",
-  "runtime_revision": "dbdb0455fdfd9c34c130a994d7c3d13cda4aa481",
+  "runtime_revision": "1ccccf68af0185c25d84c167d1f30df6229ca149",
   "dispatcher_sha256": "7ccf53672acae1a14c93b502aba376924f828cf82a921cf25ef5ba835a6d6063",
   "directory_trees": {
     "src": "338c07704ad0a2405547d560f976f1070dc6f2ea",
@@ -91,6 +91,7 @@
     "historical-replay": 0,
     "initial-all-sweeps": 1,
     "initial-own-prefork": 1,
+    "integrated-validation": 0,
     "lib-namespace": 0,
     "lib-pet-battle": 0,
     "master-all-sweeps": 0,
@@ -217,7 +218,7 @@
     "checks.launcher.txt": "6095ca8b54ef93a508b9493e19e6ebc881873cc7e5d787df3ccc0bdb2d158d85",
     "checks.proof.json": "afc80e50af277869a500e7074038590f87e141f459b63eb03a4c4795d649a408",
     "checks.txt": "d12e7555f5fa250725befa4a00ad989ebe6bd10ac6616d19460be666826ef018",
-    "command-ledger.md": "ce99d1a989ed6fa799445bb80940f24f3fc5d2552689ebb58c04cfd117f04d69",
+    "command-ledger.md": "444f0fa7a0b7a64bcdc8f08df14cede8acd629e2743359da22f7e8d934b75c78",
     "default-check.proof.json": "2385b384f029620e1c800ec4bf69977cfa7c79faaa9debbabd24060e68baca34",
     "default-check.txt": "555f932fc6b79549f5a1dda4434c7891fd49c7fbf0fca75a3ffd7ac3a9c41bc0",
     "format.proof.json": "624467f9e27d47897a987c68cdd8716a6ef0d52ff7a8a40e1b835a1d8c48e79e",
@@ -241,6 +242,8 @@
     "initial-all-sweeps.txt": "7638e5c48123be2d0c943e10bdafd1ed33f08394d5d883b80e14db5df891c5ad",
     "initial-own-prefork.proof.json": "06b076bdbea284bcbbb6f46a480fff6f236b55031f17a1dc0d0055932384bd6d",
     "initial-own-prefork.txt": "9ef0a5eff4cad50f3dff00f9fecb0c999b4fbac96eafe88f21feca6350b12041",
+    "integrated-validation.proof.json": "926e8c69a2c16058ce5a4df2380e279921b24b47997e3407d4fb020debb92cf5",
+    "integrated-validation.txt": "eeaf7ae75d9660f27fc495bf03bda4cdd9999fbe389b5d48f549438dfd4caadc",
     "lib-namespace.proof.json": "7fef6560138da8c67e7d3b1ac025cca1db9979deb545df482f67604d9f3bf3ee",
     "lib-namespace.txt": "8fd77c933ac84f8c1d48a7ff0adbae0f3928424b2d2ddedc524719404f14c695",
     "lib-pet-battle.proof.json": "5d9a24dcfe69ec748f8458e70d527cd7770b55587e6b50e20acd0723cd6eeada",
