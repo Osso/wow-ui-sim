@@ -57,6 +57,14 @@ fn exact_current_era_publication_gaps() {
     assert!(std::path::Path::new(&output).is_absolute());
     std::fs::write(output, serde_json::to_vec_pretty(&observed).unwrap())
         .expect("write separate current observations");
+    let reviewed: Value = serde_json::from_str(include_str!(
+        "../data/patch-api/evidence/1.13.6-session-2026-10-09/current-reviewed-observations.json"
+    ))
+    .expect("reviewed concrete current getter observations");
+    assert_eq!(
+        observed, reviewed,
+        "exact current getter values and identity"
+    );
     gaps.sort();
     let expected: Vec<String> = serde_json::from_str(KNOWN_GAPS).expect("reviewed current gaps");
     assert_eq!(
