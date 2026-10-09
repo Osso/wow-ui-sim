@@ -1,0 +1,140 @@
+{
+  "scope": "copied historical SOURCE; no runtime/model/native credit",
+  "runs": [
+    {
+      "test": "__main__.PortableSource.test_copied_source_and_default_register",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/.scratch/tmpesfxnufc/validator.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/.scratch/tmpesfxnufc",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "{\n  \"original_seals\": 112,\n  \"source_totals\": {\n    \"physical_lines\": 63,\n    \"source_rows\": 57,\n    \"extracted_rows\": 10,\n    \"inventory\": 23,\n    \"signatures\": 23,\n    \"headers\": 6,\n    \"inventory_headers\": 3,\n    \"captions\": 1,\n    \"prose\": 2,\n    \"links\": 5,\n    \"templates\": 26,\n    \"references\": 0,\n    \"contracts\": 30,\n    \"configured_profiles\": 2,\n    \"successors\": 18,\n    \"model_review\": 6,\n    \"source_statuses\": {\n      \"metadata-only\": 30,\n      \"UNPROVEN\": 27\n    },\n    \"inventory_by_section\": {\n      \"global-api\": 17,\n      \"events\": 5,\n      \"cvars\": 1\n    },\n    \"contract_statuses\": {\n      \"UNPROVEN\": 30\n    },\n    \"count_conflicts\": 0,\n    \"declared_signatures\": 0,\n    \"defaults\": 0,\n    \"examples\": 0,\n    \"registry_pages\": 101,\n    \"omission_controls\": 212\n  },\n  \"successor_totals\": {\n    \"actual_registers\": 18,\n    \"source_inventory\": 23,\n    \"overlap_occurrences\": 1,\n    \"source_occurrences_with_overlap\": 1,\n    \"meaningful_historical_closures\": 0,\n    \"native_closures\": 0\n  },\n  \"source_tests\": 8,\n  \"successor_tests\": 3,\n  \"current_era_tests\": 1,\n  \"native_historical_closures\": 0,\n  \"scope\": \"Historical copied inputs/receipts only; no rerun of current Era or final gates.\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "test": "__main__.PortableSource.test_copied_source_and_default_register",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/.scratch/tmpesfxnufc/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/.scratch/tmpesfxnufc",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_each_omission_and_invented_contract_rejected (__main__.SourceAccounting.test_each_omission_and_invented_contract_rejected) ... ok\ntest_headers_counts_caption_and_navigation (__main__.SourceAccounting.test_headers_counts_caption_and_navigation) ... ok\ntest_identity_and_response (__main__.SourceAccounting.test_identity_and_response) ... ok\ntest_inventory_and_unspecified_signatures_defaults (__main__.SourceAccounting.test_inventory_and_unspecified_signatures_defaults) ... ok\ntest_lossless_raw_and_default_extract (__main__.SourceAccounting.test_lossless_raw_and_default_extract) ... ok\ntest_model_and_history_credit_separate (__main__.SourceAccounting.test_model_and_history_credit_separate) ... ok\ntest_prose_links_templates_and_client_limits (__main__.SourceAccounting.test_prose_links_templates_and_client_limits) ... ok\ntest_source_tamper_rejected (__main__.SourceAccounting.test_source_tamper_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 8 tests in 2.741s\n\nOK\n"
+    },
+    {
+      "test": "__main__.PortableSource.test_copied_source_and_default_register",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/.scratch/tmpesfxnufc/test_successors.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/.scratch/tmpesfxnufc",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_frozen_queue_and_source_ledger_unchanged (__main__.SuccessorAccounting.test_frozen_queue_and_source_ledger_unchanged) ... ok\ntest_omission_reordering_and_foreign_credit_rejected (__main__.SuccessorAccounting.test_omission_reordering_and_foreign_credit_rejected) ... ok\ntest_serialized_exact_precedence (__main__.SuccessorAccounting.test_serialized_exact_precedence) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 1.085s\n\nOK\n"
+    },
+    {
+      "test": "__main__.PortableSource.test_copied_source_and_default_register",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/.scratch/tmpesfxnufc/historical-tools/gen_patch_wikitext_register.py",
+        "1.13.4",
+        "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/.scratch/tmpesfxnufc/source.wikitext",
+        "3216451",
+        "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/.scratch/tmpesfxnufc/reproduced-register.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/.scratch/tmpesfxnufc",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "test": "__main__.PortableSource.test_copied_source_and_default_register",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/.scratch/tmpesfxnufc/audit.py",
+        "default-extract"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/.scratch/tmpesfxnufc",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "Patch 1.13.4 API changes\n\n== Diffs ==\n1.13.3 (32790) to 1.13.4 (33491)\n* FrameXML: https://github.com/Gethe/wow-ui-source/commit/1977612d0fd23d01a80d44b504bee70039df1782\n* API resources: https://github.com/Ketho/BlizzardInterfaceResources/commit/30ee4c00d5620733b5b7f2ff4f743cefc998c558\n\n== Changes ==\n* TOC version: 11304\n* Reinstated Totem API\n* Supports WoW Tokens in China\n\n== References ==\n",
+      "stderr": ""
+    },
+    {
+      "test": "__main__.PortableSource.test_serialized_ledger_omission_rejected_and_restored",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/.scratch/tmptlrojesz/validator.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/.scratch/tmptlrojesz",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/.scratch/tmptlrojesz/validator.py\", line 44, in <module>\n    print(json.dumps(validate(), indent=2))\n                     ~~~~~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/.scratch/tmptlrojesz/validator.py\", line 28, in validate\n    seals = audit.check_seals()\n  File \"/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/.scratch/tmptlrojesz/audit.py\", line 134, in check_seals\n    assert digest((E / name).read_bytes()) == expected, f'seal: {name}'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: ledger.json\n"
+    },
+    {
+      "test": "__main__.PortableSource.test_serialized_ledger_omission_rejected_and_restored",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/.scratch/tmptlrojesz/validator.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/.scratch/tmptlrojesz",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "{\n  \"original_seals\": 112,\n  \"source_totals\": {\n    \"physical_lines\": 63,\n    \"source_rows\": 57,\n    \"extracted_rows\": 10,\n    \"inventory\": 23,\n    \"signatures\": 23,\n    \"headers\": 6,\n    \"inventory_headers\": 3,\n    \"captions\": 1,\n    \"prose\": 2,\n    \"links\": 5,\n    \"templates\": 26,\n    \"references\": 0,\n    \"contracts\": 30,\n    \"configured_profiles\": 2,\n    \"successors\": 18,\n    \"model_review\": 6,\n    \"source_statuses\": {\n      \"metadata-only\": 30,\n      \"UNPROVEN\": 27\n    },\n    \"inventory_by_section\": {\n      \"global-api\": 17,\n      \"events\": 5,\n      \"cvars\": 1\n    },\n    \"contract_statuses\": {\n      \"UNPROVEN\": 30\n    },\n    \"count_conflicts\": 0,\n    \"declared_signatures\": 0,\n    \"defaults\": 0,\n    \"examples\": 0,\n    \"registry_pages\": 101,\n    \"omission_controls\": 212\n  },\n  \"successor_totals\": {\n    \"actual_registers\": 18,\n    \"source_inventory\": 23,\n    \"overlap_occurrences\": 1,\n    \"source_occurrences_with_overlap\": 1,\n    \"meaningful_historical_closures\": 0,\n    \"native_closures\": 0\n  },\n  \"source_tests\": 8,\n  \"successor_tests\": 3,\n  \"current_era_tests\": 1,\n  \"native_historical_closures\": 0,\n  \"scope\": \"Historical copied inputs/receipts only; no rerun of current Era or final gates.\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "restored": "ledger.json",
+      "sha256": "7cf2ddbf813c1eb45e10f241e627bef00ecb24812071be98ac827e399ab0785d",
+      "all_original_seals": 112
+    },
+    {
+      "test": "__main__.PortableSource.test_serialized_log_fabrication_rejected_and_restored",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/.scratch/tmpcah0xduf/validator.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/.scratch/tmpcah0xduf",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/.scratch/tmpcah0xduf/validator.py\", line 44, in <module>\n    print(json.dumps(validate(), indent=2))\n                     ~~~~~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/.scratch/tmpcah0xduf/validator.py\", line 28, in validate\n    seals = audit.check_seals()\n  File \"/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/.scratch/tmpcah0xduf/audit.py\", line 134, in check_seals\n    assert digest((E / name).read_bytes()) == expected, f'seal: {name}'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: source-green.log\n"
+    },
+    {
+      "test": "__main__.PortableSource.test_serialized_log_fabrication_rejected_and_restored",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/.scratch/tmpcah0xduf/validator.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/.scratch/tmpcah0xduf",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "{\n  \"original_seals\": 112,\n  \"source_totals\": {\n    \"physical_lines\": 63,\n    \"source_rows\": 57,\n    \"extracted_rows\": 10,\n    \"inventory\": 23,\n    \"signatures\": 23,\n    \"headers\": 6,\n    \"inventory_headers\": 3,\n    \"captions\": 1,\n    \"prose\": 2,\n    \"links\": 5,\n    \"templates\": 26,\n    \"references\": 0,\n    \"contracts\": 30,\n    \"configured_profiles\": 2,\n    \"successors\": 18,\n    \"model_review\": 6,\n    \"source_statuses\": {\n      \"metadata-only\": 30,\n      \"UNPROVEN\": 27\n    },\n    \"inventory_by_section\": {\n      \"global-api\": 17,\n      \"events\": 5,\n      \"cvars\": 1\n    },\n    \"contract_statuses\": {\n      \"UNPROVEN\": 30\n    },\n    \"count_conflicts\": 0,\n    \"declared_signatures\": 0,\n    \"defaults\": 0,\n    \"examples\": 0,\n    \"registry_pages\": 101,\n    \"omission_controls\": 212\n  },\n  \"successor_totals\": {\n    \"actual_registers\": 18,\n    \"source_inventory\": 23,\n    \"overlap_occurrences\": 1,\n    \"source_occurrences_with_overlap\": 1,\n    \"meaningful_historical_closures\": 0,\n    \"native_closures\": 0\n  },\n  \"source_tests\": 8,\n  \"successor_tests\": 3,\n  \"current_era_tests\": 1,\n  \"native_historical_closures\": 0,\n  \"scope\": \"Historical copied inputs/receipts only; no rerun of current Era or final gates.\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "restored": "source-green.log",
+      "sha256": "95cb0368fe062ff93eecbb6137628eba70d9be0972db7ae26919e5908e0c8558",
+      "all_original_seals": 112
+    }
+  ],
+  "tests_run": 3,
+  "failures": 0,
+  "errors": 0
+}

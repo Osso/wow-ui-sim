@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/validator.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1134-page",
+  "start_epoch": 1791564319.191108,
+  "end_epoch": 1791564319.2728686,
+  "revision": "bec06a7a2",
+  "exit_code": 0,
+  "scope": "targeted historical copied SOURCE/defaults/successor development proof; no native/final gates"
+}

@@ -1,0 +1,11 @@
+{
+  "portable-proof.json": "bd30b60546b49d0020aeef4530de34a4aa8225a883c58b2b9da9a55acd5717ee",
+  "portable-green.log": "ed3ab01f3d9dd6d1400aa3af3020e5b3b0b00cdd11381d3ab164d05df98af8b2",
+  "portable-green-proof.json": "a85489f6d600d8117897b8dcd6f09da4e40b0325fee55bfee95fba6829c46619",
+  "historical-validator.log": "669c524aaa8abee6b549e58c47044635adf48b28dcc2219d4c875f578a089c7c",
+  "historical-validator-proof.json": "b418aeb710029ca268b0d7ce758814bd2717b73a5ab2849dd1519522d58cc4e7",
+  "current-proof-ledger.json": "66f9c266c3375e75ddc2dc1ad2de37a332966a21157c5f3bcf809389ae5c25a3",
+  "originals.tar.gz": "9b5d84929c3e8801e206b33cc99fa20c4de40bc235eda605050e7610a92eea23",
+  "seals.json": "543edf3bd874f54ae190e2df92254db6f808a986728512098a8ad8620171f66f",
+  "HANDOFF.md": "e3d4d88b3c94520ed2d767ba3cc4ae0bbf6c78390f99e2336fdd0e6e36dac662"
+}

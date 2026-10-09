@@ -998,3 +998,7 @@ SOURCE GREEN8/8 at0b39afb17,77 omission controls; portable GREEN3/3 at7fe5edac1 
 ## 2026-10-09 — Patch1.13.4 frozen source accounting
 
 Ingested [audit](investigations/patch-1-13-4-api-audit.md): literal SOURCE boundaries and existing current Era totem lifecycle kept separate. SOURCE/portable development proof pending; no native/final acceptance.
+
+## 2026-10-09 — Patch1.13.4 bounded development proof
+
+[Audit](investigations/patch-1-13-4-api-audit.md): SOURCE8/8, Era existing totem lifecycle1/1, separate same-Era successor3/3, portable3/3;112 immutable originals and two exact serialized restorations.18 actual successor ledgers, only1.14.0 commentator removal overlaps; no new runtime or historical/native closure. Main integrates1.13.4 before1.13.3.

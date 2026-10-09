@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/test_portable.py",
+    "--archive",
+    "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/originals.tar.gz",
+    "--scratch",
+    "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/.scratch",
+    "--receipts",
+    "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/portable-proof.json"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1134-page",
+  "start_epoch": 1791564314.7840827,
+  "end_epoch": 1791564319.1907156,
+  "revision": "bec06a7a2",
+  "exit_code": 0,
+  "scope": "targeted historical copied SOURCE/defaults/successor development proof; no native/final gates"
+}
