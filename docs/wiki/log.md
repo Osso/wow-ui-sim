@@ -1018,3 +1018,7 @@ Ingested [audit](investigations/patch-1-13-4-api-audit.md): literal SOURCE bound
 ## 2026-10-09 — Patch1.13.4 bounded development proof
 
 [Audit](investigations/patch-1-13-4-api-audit.md): SOURCE8/8, Era existing totem lifecycle1/1, separate same-Era successor3/3, portable3/3;112 immutable originals and two exact serialized restorations.18 actual successor ledgers, only1.14.0 commentator removal overlaps; no new runtime or historical/native closure. Main integrates1.13.4 before1.13.3.
+
+## [2026-10-09] investigation | Historical Retail 1.12.0 frozen redirect
+
+[Audit](investigations/patch-1-12-0-api-audit.md): exact frozen redirect, registry101, SOURCE RED5/GREEN5 and unchanged historical tool default bytes; one UNPROVEN target contract, no meaningful model/native credit. Original Retail successors separate from Classic/Forever; queued1.13.2 integration order only.

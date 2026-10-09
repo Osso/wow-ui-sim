@@ -1,3 +1,7 @@
+## [2026-10-09] investigation | Historical Retail 1.12.0 frozen redirect
+
+[Audit](investigations/patch-1-12-0-api-audit.md): frozen326189/3145618,45 exact bytes; one metadata redirect/one UNPROVEN linked contract, zero local API/signature/default/prose/header/template declarations. SOURCE RED5/GREEN5 preserves registry101 and historical default bytes. No grounded model/native subset; original Retail2.0.1+ references separate from Classic/Forever, queued1.13.2 order only. Main owns integration/native/final gates.
+
 ## [2026-10-09] investigation | Patch 1.13.4 frozen Era audit
 
 [Audit](investigations/patch-1-13-4-api-audit.md): frozen333398/3216451,2146 bytes,57 raw/23 inventory/23 unspecified signatures/30 UNPROVEN contracts. Exact SOURCE RED8 retained; current Era totem-slot lifecycle GREEN1/1 at ce0c5c59a, no native historical signature/default credit. SOURCE GREEN8/8 at c9c0262e3; successor3/3 at acddd6ef6, portable3/3 at bec06a7a2.112 original seals unchanged; copied no-Git/target/current-tools default-byte replay and both serialized tamper restorations pass.18 actual same-Era ledgers separately applied, one1.14.0 commentator removal overlap; all30 historical contracts UNPROVEN. Frozen queue immutable. Main integrates1.13.4 before1.13.3.
