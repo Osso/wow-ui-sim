@@ -1150,3 +1150,7 @@ Added [audit](investigations/patch-1-3-0-api-audit.md) and [spec](../specs/patch
 ## [2026-10-09] integrated proof | Seven Retail redirect slices
 
 [SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md): actuale20c472ca copiedSOURCE38/38,portable21/21,validators7/7;231original+70separate seals and238archive members intact. Fourteen serialized tamper rejection/restoration controls;249 retained artifacts. No runtime/model/native/parent closure.
+
+## [2026-10-09] integrated proof | Final literal Retail pages
+
+[SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md):1.4/1.3/1.1/1.0SOURCE30/30,portable12/12,currentcategory3/3,validators4/4. Actuale20c472ca/1b505c7c1epochs;182original+69receipt+3extensionseals intact,8tamper rejection/restoration pairs.54artifacts retained; fullmerged streams, separate channelsunproven. Registryendpoint notbehavior/native/parentclosure.

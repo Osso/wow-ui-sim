@@ -1,0 +1,13 @@
+test_every_boundary_omission_and_count_mutation_rejected (__main__.SourceAccounting.test_every_boundary_omission_and_count_mutation_rejected) ... ok
+test_exact_identity_and_literal_rows (__main__.SourceAccounting.test_exact_identity_and_literal_rows) ... ok
+test_historical_default_bytes_and_errors (__main__.SourceAccounting.test_historical_default_bytes_and_errors) ... ok
+test_identity_source_response_and_manifest_registry_mutations (__main__.SourceAccounting.test_identity_source_response_and_manifest_registry_mutations) ... ok
+test_invention_expansion_and_credit_rejected (__main__.SourceAccounting.test_invention_expansion_and_credit_rejected) ... ok
+test_precise_contract_limits_no_alias_or_default (__main__.SourceAccounting.test_precise_contract_limits_no_alias_or_default) ... ok
+test_separate_unapplied_histories (__main__.SourceAccounting.test_separate_unapplied_histories) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.182s
+
+OK
+{"omission_and_count_controls": 197}

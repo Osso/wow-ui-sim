@@ -1,0 +1,13 @@
+test_all_literal_declarations_and_old_rename_identity (__main__.FrozenPage.test_all_literal_declarations_and_old_rename_identity) ... ok
+test_each_omission_and_count_mutation_rejected (__main__.FrozenPage.test_each_omission_and_count_mutation_rejected) ... ok
+test_every_row_header_link_template_prose_and_default_limit (__main__.FrozenPage.test_every_row_header_link_template_prose_and_default_limit) ... ok
+test_exact_frozen_body_response_identity_mutations_rejected (__main__.FrozenPage.test_exact_frozen_body_response_identity_mutations_rejected) ... ok
+test_invented_alias_default_expansion_or_native_credit_rejected (__main__.FrozenPage.test_invented_alias_default_expansion_or_native_credit_rejected) ... ok
+test_manifest_registry_identity_mutations_rejected (__main__.FrozenPage.test_manifest_registry_identity_mutations_rejected) ... ok
+test_own_base_default_bytes_and_error_replay (__main__.FrozenPage.test_own_base_default_bytes_and_error_replay) ... ok
+test_queued_successors_separate_and_foreign_histories_not_applied (__main__.FrozenPage.test_queued_successors_separate_and_foreign_histories_not_applied) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.225s
+
+OK

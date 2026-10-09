@@ -1,0 +1,14 @@
+test_all_literal_rows_and_names_remain_occurrences (__main__.FrozenSource.test_all_literal_rows_and_names_remain_occurrences) ... ok
+test_every_occurrence_and_count_is_required (__main__.FrozenSource.test_every_occurrence_and_count_is_required) ... ok
+test_exact_identity_and_manifest_linked_registry_endpoint (__main__.FrozenSource.test_exact_identity_and_manifest_linked_registry_endpoint) ... ok
+test_historical_default_bytes_and_errors_replay (__main__.FrozenSource.test_historical_default_bytes_and_errors_replay) ... ok
+test_invented_aliases_defaults_credit_and_mutations_rejected (__main__.FrozenSource.test_invented_aliases_defaults_credit_and_mutations_rejected) ... ok
+test_prose_headers_links_templates_are_unexpanded (__main__.FrozenSource.test_prose_headers_links_templates_are_unexpanded) ... ok
+test_queued_and_foreign_histories_never_apply (__main__.FrozenSource.test_queued_and_foreign_histories_never_apply) ... ok
+test_unspecified_signatures_defaults_and_contracts (__main__.FrozenSource.test_unspecified_signatures_defaults_and_contracts) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.307s
+
+OK
+omission controls: 4287

@@ -1,0 +1,468 @@
+{
+  "retained": [
+    {
+      "path": "1.0.0/audit.py.combined.log",
+      "bytes": 473,
+      "sha256": "fbe706a0c75b87ae6e11da726c63f8d8b7e1dfc3987e9eb916d108fa628e3eb9"
+    },
+    {
+      "path": "1.0.0/audit.py.returned-stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "1.0.0/audit.py.returned-stdout",
+      "bytes": 473,
+      "sha256": "fbe706a0c75b87ae6e11da726c63f8d8b7e1dfc3987e9eb916d108fa628e3eb9"
+    },
+    {
+      "path": "1.0.0/portable-controls.json",
+      "bytes": 1915,
+      "sha256": "15ac434efd692a89000b0ce959eb03f60f1dbc205b795f6b3ea578d676cf7438"
+    },
+    {
+      "path": "1.0.0/postflight.json",
+      "bytes": 5913,
+      "sha256": "5b6b3c915df876b190088134c74479c241b93ee1ad3cb583bad002c67fb3d407"
+    },
+    {
+      "path": "1.0.0/preflight.json",
+      "bytes": 7100,
+      "sha256": "7982377ef539c7d3edb238a487153002013fa7b0072c732f53cc38d2afd7415e"
+    },
+    {
+      "path": "1.0.0/test_portable.py.combined.log",
+      "bytes": 457,
+      "sha256": "4ac896903812081e452e10824479bbf520afbd3607eda4dbac52381c88624aa2"
+    },
+    {
+      "path": "1.0.0/test_portable.py.returned-stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "1.0.0/test_portable.py.returned-stdout",
+      "bytes": 457,
+      "sha256": "4ac896903812081e452e10824479bbf520afbd3607eda4dbac52381c88624aa2"
+    },
+    {
+      "path": "1.0.0/test_source_accounting.py.combined.log",
+      "bytes": 1188,
+      "sha256": "a709858f7f93026d9bb7d77c5f2bc66fc56c34ec1ff9af7006f2bed2f5dfd05d"
+    },
+    {
+      "path": "1.0.0/test_source_accounting.py.returned-stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "1.0.0/test_source_accounting.py.returned-stdout",
+      "bytes": 1188,
+      "sha256": "a709858f7f93026d9bb7d77c5f2bc66fc56c34ec1ff9af7006f2bed2f5dfd05d"
+    },
+    {
+      "path": "1.1.0/audit.py.combined.log",
+      "bytes": 398,
+      "sha256": "f409a91aaca5bad6ffdf62254607deef095e6c3e1b1544e162117607eb487810"
+    },
+    {
+      "path": "1.1.0/audit.py.returned-stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "1.1.0/audit.py.returned-stdout",
+      "bytes": 398,
+      "sha256": "f409a91aaca5bad6ffdf62254607deef095e6c3e1b1544e162117607eb487810"
+    },
+    {
+      "path": "1.1.0/portable-controls.json",
+      "bytes": 1842,
+      "sha256": "9112c3e4706e5ddfe4ee861ff829cf0b7c0ffead3e262952d47cea404bde2f7c"
+    },
+    {
+      "path": "1.1.0/postflight.json",
+      "bytes": 6587,
+      "sha256": "93a1880690d8c9232f23f2da6ffe6781dcdc2d59c22c6eb74277021bed3c9846"
+    },
+    {
+      "path": "1.1.0/preflight.json",
+      "bytes": 12284,
+      "sha256": "df2270ec2c1c584b7cc7914724111a642eee094052822ee3dfe43453884eb85b"
+    },
+    {
+      "path": "1.1.0/test_portable.py.combined.log",
+      "bytes": 457,
+      "sha256": "ef92f874c6aeeea2c9c7624def26f5b5d5d69a65c5299de1c39c607fbdaa748d"
+    },
+    {
+      "path": "1.1.0/test_portable.py.returned-stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "1.1.0/test_portable.py.returned-stdout",
+      "bytes": 457,
+      "sha256": "ef92f874c6aeeea2c9c7624def26f5b5d5d69a65c5299de1c39c607fbdaa748d"
+    },
+    {
+      "path": "1.1.0/test_source_accounting.py.combined.log",
+      "bytes": 963,
+      "sha256": "d0e56f22be562751cb6a7c4bbcc0765780f122486bd83abef702b89509c8ed57"
+    },
+    {
+      "path": "1.1.0/test_source_accounting.py.returned-stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "1.1.0/test_source_accounting.py.returned-stdout",
+      "bytes": 963,
+      "sha256": "d0e56f22be562751cb6a7c4bbcc0765780f122486bd83abef702b89509c8ed57"
+    },
+    {
+      "path": "1.3.0/audit.py.combined.log",
+      "bytes": 380,
+      "sha256": "dffbf0aaa75651b1d639c2656dc45345d0bb12033f1a72aba74e54d66cfeb0f9"
+    },
+    {
+      "path": "1.3.0/audit.py.returned-stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "1.3.0/audit.py.returned-stdout",
+      "bytes": 380,
+      "sha256": "dffbf0aaa75651b1d639c2656dc45345d0bb12033f1a72aba74e54d66cfeb0f9"
+    },
+    {
+      "path": "1.3.0/portable-controls.json",
+      "bytes": 1804,
+      "sha256": "e481f3f4cba733178c07f6990024dec3d63f955cbc4704dbe1f545f0d7b36330"
+    },
+    {
+      "path": "1.3.0/postflight.json",
+      "bytes": 6440,
+      "sha256": "9866e4aa97da1d0b709d68a8a9849bfbc4f460f2db7c7f85b63d0b5e605d8f99"
+    },
+    {
+      "path": "1.3.0/preflight.json",
+      "bytes": 7284,
+      "sha256": "bdee7eb55d8d7203fe2640bee5948703e4931bd17dad4549cb6550e630dcec46"
+    },
+    {
+      "path": "1.3.0/test_portable.py.combined.log",
+      "bytes": 457,
+      "sha256": "d072aa2966202e9c49a1891c6b04494bfbc9d360e4051854b9ad9ee596c18fcb"
+    },
+    {
+      "path": "1.3.0/test_portable.py.returned-stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "1.3.0/test_portable.py.returned-stdout",
+      "bytes": 457,
+      "sha256": "d072aa2966202e9c49a1891c6b04494bfbc9d360e4051854b9ad9ee596c18fcb"
+    },
+    {
+      "path": "1.3.0/test_source_accounting.py.combined.log",
+      "bytes": 1224,
+      "sha256": "a6bac544e5039135064181ced1284f0c86da604906bf437de3394f6a361067c1"
+    },
+    {
+      "path": "1.3.0/test_source_accounting.py.returned-stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "1.3.0/test_source_accounting.py.returned-stdout",
+      "bytes": 1224,
+      "sha256": "a6bac544e5039135064181ced1284f0c86da604906bf437de3394f6a361067c1"
+    },
+    {
+      "path": "1.4.0/audit.py.combined.log",
+      "bytes": 414,
+      "sha256": "09593efcec7eb4712ae8966e5fd48181d9b1c446f44b44494a3925153d39f018"
+    },
+    {
+      "path": "1.4.0/audit.py.returned-stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "1.4.0/audit.py.returned-stdout",
+      "bytes": 414,
+      "sha256": "09593efcec7eb4712ae8966e5fd48181d9b1c446f44b44494a3925153d39f018"
+    },
+    {
+      "path": "1.4.0/portable-controls.json",
+      "bytes": 1864,
+      "sha256": "4dac300d4e540bd619ba6f3c3570440d86da4c7bbc5881076ef4447fcc60c08a"
+    },
+    {
+      "path": "1.4.0/postflight.json",
+      "bytes": 7218,
+      "sha256": "437f88758195346abd2c533c8ee179035b638fb94c06588e7a26e335dce4733f"
+    },
+    {
+      "path": "1.4.0/preflight.json",
+      "bytes": 8110,
+      "sha256": "64b36a5703d4fed21cd761ebc60ce5ede60b34148f5d34c6768f8ff1475d2ecc"
+    },
+    {
+      "path": "1.4.0/test_current_accounting.py.combined.log",
+      "bytes": 531,
+      "sha256": "9b53dd93783f87b9ec1289487e672b6804e121f205a9213e8b54af5de5804621"
+    },
+    {
+      "path": "1.4.0/test_current_accounting.py.returned-stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "1.4.0/test_current_accounting.py.returned-stdout",
+      "bytes": 531,
+      "sha256": "9b53dd93783f87b9ec1289487e672b6804e121f205a9213e8b54af5de5804621"
+    },
+    {
+      "path": "1.4.0/test_portable.py.combined.log",
+      "bytes": 457,
+      "sha256": "7b0c0461323012dc2665fb37642a31df164a1856918b780a133fb9f4993bb273"
+    },
+    {
+      "path": "1.4.0/test_portable.py.returned-stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "1.4.0/test_portable.py.returned-stdout",
+      "bytes": 457,
+      "sha256": "7b0c0461323012dc2665fb37642a31df164a1856918b780a133fb9f4993bb273"
+    },
+    {
+      "path": "1.4.0/test_source_accounting.py.combined.log",
+      "bytes": 1030,
+      "sha256": "a04d1327e8e7e4b3af0fd37e7704fdabd7451bcf53c4e63bfe91035e7b497d64"
+    },
+    {
+      "path": "1.4.0/test_source_accounting.py.returned-stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "1.4.0/test_source_accounting.py.returned-stdout",
+      "bytes": 1030,
+      "sha256": "a04d1327e8e7e4b3af0fd37e7704fdabd7451bcf53c4e63bfe91035e7b497d64"
+    },
+    {
+      "path": "REPORT.md",
+      "bytes": 4301,
+      "sha256": "ebca44647b91a70e24a69a8c570d1f23456dfde37e76b44fa255e128b4cecd28"
+    },
+    {
+      "path": "SUMMARY.md",
+      "bytes": 4443,
+      "sha256": "e96fee00cdf25d3ab643807f93598bf4ee0388f117f0bf7f1098dbfb8b2af5e8"
+    },
+    {
+      "path": "executions.json",
+      "bytes": 248662,
+      "sha256": "8697e53d7ad2870fa5f8a2b3b5d990ede1919a832cc3ccac93fd1977d743dcec"
+    }
+  ],
+  "excluded": [
+    "1.0.0/copy/.gitignore",
+    "1.0.0/copy/audit.py",
+    "1.0.0/copy/capture.log",
+    "1.0.0/copy/capture.stderr",
+    "1.0.0/copy/capture.stdout",
+    "1.0.0/copy/capture_defaults.py",
+    "1.0.0/copy/default-capture.log",
+    "1.0.0/copy/default-capture.stderr",
+    "1.0.0/copy/default-capture.stdout",
+    "1.0.0/copy/default-errors.json",
+    "1.0.0/copy/default-extract.txt",
+    "1.0.0/copy/default-generator.log",
+    "1.0.0/copy/default-generator.stderr",
+    "1.0.0/copy/default-generator.stdout",
+    "1.0.0/copy/default-register.json",
+    "1.0.0/copy/frozen-manifest.json",
+    "1.0.0/copy/frozen-registry.json",
+    "1.0.0/copy/green.log",
+    "1.0.0/copy/green.stderr",
+    "1.0.0/copy/green.stdout",
+    "1.0.0/copy/historical-tools/extract_patch_non_inventory.py",
+    "1.0.0/copy/historical-tools/gen_patch_wikitext_register.py",
+    "1.0.0/copy/ledger.json",
+    "1.0.0/copy/original-docs/HANDOFF.md",
+    "1.0.0/copy/original-docs/REPLAY.md",
+    "1.0.0/copy/original-docs/spec.md",
+    "1.0.0/copy/original-docs/wiki.md",
+    "1.0.0/copy/portable-red.log",
+    "1.0.0/copy/portable-red.stderr",
+    "1.0.0/copy/portable-red.stdout",
+    "1.0.0/copy/proof-ledger.json",
+    "1.0.0/copy/red-scaffold.py",
+    "1.0.0/copy/red-test_source_accounting.py",
+    "1.0.0/copy/red.log",
+    "1.0.0/copy/red.stderr",
+    "1.0.0/copy/red.stdout",
+    "1.0.0/copy/retention-review.json",
+    "1.0.0/copy/seals.json",
+    "1.0.0/copy/source-pin.json",
+    "1.0.0/copy/source-response.json",
+    "1.0.0/copy/source.wikitext",
+    "1.0.0/copy/test_portable.py",
+    "1.0.0/copy/test_source_accounting.py",
+    "1.1.0/copy/.gitignore",
+    "1.1.0/copy/REPLAY.md",
+    "1.1.0/copy/audit.py",
+    "1.1.0/copy/capture.log",
+    "1.1.0/copy/capture.stderr",
+    "1.1.0/copy/capture.stdout",
+    "1.1.0/copy/capture_defaults.py",
+    "1.1.0/copy/default-capture.log",
+    "1.1.0/copy/default-capture.stderr",
+    "1.1.0/copy/default-capture.stdout",
+    "1.1.0/copy/default-errors.json",
+    "1.1.0/copy/default-extract.txt",
+    "1.1.0/copy/default-extractor.log",
+    "1.1.0/copy/default-extractor.stderr",
+    "1.1.0/copy/default-extractor.stdout",
+    "1.1.0/copy/default-generator.log",
+    "1.1.0/copy/default-generator.stderr",
+    "1.1.0/copy/default-generator.stdout",
+    "1.1.0/copy/default-register.json",
+    "1.1.0/copy/environment-keys.json",
+    "1.1.0/copy/frozen-manifest.json",
+    "1.1.0/copy/frozen-registry.json",
+    "1.1.0/copy/green.log",
+    "1.1.0/copy/green.stderr",
+    "1.1.0/copy/green.stdout",
+    "1.1.0/copy/historical-tools/extract_patch_non_inventory.py",
+    "1.1.0/copy/historical-tools/gen_patch_wikitext_register.py",
+    "1.1.0/copy/ledger.json",
+    "1.1.0/copy/local-candidates.json",
+    "1.1.0/copy/model-candidate-review.json",
+    "1.1.0/copy/original-docs/HANDOFF.md",
+    "1.1.0/copy/original-docs/spec.md",
+    "1.1.0/copy/original-docs/wiki.md",
+    "1.1.0/copy/portable-red.log",
+    "1.1.0/copy/portable-red.stderr",
+    "1.1.0/copy/portable-red.stdout",
+    "1.1.0/copy/proof-ledger.json",
+    "1.1.0/copy/red-scaffold.py",
+    "1.1.0/copy/red-test_source_accounting.py",
+    "1.1.0/copy/red.log",
+    "1.1.0/copy/red.stderr",
+    "1.1.0/copy/red.stdout",
+    "1.1.0/copy/seals.json",
+    "1.1.0/copy/source-green.log",
+    "1.1.0/copy/source-green.stderr",
+    "1.1.0/copy/source-green.stdout",
+    "1.1.0/copy/source-pin.json",
+    "1.1.0/copy/source-response.json",
+    "1.1.0/copy/source.wikitext",
+    "1.1.0/copy/test_portable.py",
+    "1.1.0/copy/test_source_accounting.py",
+    "1.3.0/copy/.gitignore",
+    "1.3.0/copy/audit.py",
+    "1.3.0/copy/capture_defaults.py",
+    "1.3.0/copy/default-capture.log",
+    "1.3.0/copy/default-capture.stderr",
+    "1.3.0/copy/default-capture.stdout",
+    "1.3.0/copy/default-errors.json",
+    "1.3.0/copy/default-extract.txt",
+    "1.3.0/copy/default-generator.log",
+    "1.3.0/copy/default-generator.stderr",
+    "1.3.0/copy/default-generator.stdout",
+    "1.3.0/copy/default-register.json",
+    "1.3.0/copy/frozen-manifest.json",
+    "1.3.0/copy/frozen-registry.json",
+    "1.3.0/copy/green.log",
+    "1.3.0/copy/green.stderr",
+    "1.3.0/copy/green.stdout",
+    "1.3.0/copy/historical-tools/extract_patch_non_inventory.py",
+    "1.3.0/copy/historical-tools/gen_patch_wikitext_register.py",
+    "1.3.0/copy/ledger-capture-fixed.log",
+    "1.3.0/copy/ledger-capture-fixed.stderr",
+    "1.3.0/copy/ledger-capture-fixed.stdout",
+    "1.3.0/copy/ledger-capture.log",
+    "1.3.0/copy/ledger-capture.stderr",
+    "1.3.0/copy/ledger-capture.stdout",
+    "1.3.0/copy/ledger.json",
+    "1.3.0/copy/original-docs/HANDOFF.md",
+    "1.3.0/copy/original-docs/REPLAY.md",
+    "1.3.0/copy/original-docs/spec.md",
+    "1.3.0/copy/original-docs/wiki.md",
+    "1.3.0/copy/portable-red.log",
+    "1.3.0/copy/portable-red.stderr",
+    "1.3.0/copy/portable-red.stdout",
+    "1.3.0/copy/proof-ledger.json",
+    "1.3.0/copy/red-scaffold.py",
+    "1.3.0/copy/red-test_source_accounting.py",
+    "1.3.0/copy/red.log",
+    "1.3.0/copy/red.stderr",
+    "1.3.0/copy/red.stdout",
+    "1.3.0/copy/reference-provenance.json",
+    "1.3.0/copy/retention-review.json",
+    "1.3.0/copy/seals.json",
+    "1.3.0/copy/source-pin.json",
+    "1.3.0/copy/source-response.json",
+    "1.3.0/copy/source.wikitext",
+    "1.3.0/copy/test_portable.py",
+    "1.3.0/copy/test_source_accounting.py",
+    "1.4.0/copy/.gitignore",
+    "1.4.0/copy/audit.py",
+    "1.4.0/copy/capture_defaults.py",
+    "1.4.0/copy/current-extension-seals.json",
+    "1.4.0/copy/current-ledger.json",
+    "1.4.0/copy/current_accounting.py",
+    "1.4.0/copy/default-capture.log",
+    "1.4.0/copy/default-errors.json",
+    "1.4.0/copy/default-extract.txt",
+    "1.4.0/copy/default-generator.log",
+    "1.4.0/copy/default-register.json",
+    "1.4.0/copy/failed-green-test_source_accounting.py",
+    "1.4.0/copy/format.log",
+    "1.4.0/copy/frozen-manifest.json",
+    "1.4.0/copy/frozen-registry.json",
+    "1.4.0/copy/green.log",
+    "1.4.0/copy/historical-tools/extract_patch_non_inventory.py",
+    "1.4.0/copy/historical-tools/gen_patch_wikitext_register.py",
+    "1.4.0/copy/identity-verification.json",
+    "1.4.0/copy/ledger-capture.log",
+    "1.4.0/copy/ledger.json",
+    "1.4.0/copy/model-candidate.json",
+    "1.4.0/copy/original-docs/patch-1-4-0-api-audit.md",
+    "1.4.0/copy/original-docs/patch-1-4-0-source-accounting.md",
+    "1.4.0/copy/portable-red.log",
+    "1.4.0/copy/preformat/audit.py",
+    "1.4.0/copy/preformat/capture_defaults.py",
+    "1.4.0/copy/preformat/session_receipts.py",
+    "1.4.0/copy/preformat/test_portable.py",
+    "1.4.0/copy/preformat/test_source_accounting.py",
+    "1.4.0/copy/proof-ledger.json",
+    "1.4.0/copy/proof-scope-index.json",
+    "1.4.0/copy/red-audit.py",
+    "1.4.0/copy/red-corrected-test_source_accounting.py",
+    "1.4.0/copy/red-test_portable.py",
+    "1.4.0/copy/red-test_source_accounting.py",
+    "1.4.0/copy/reference-provenance.json",
+    "1.4.0/copy/retention-review.json",
+    "1.4.0/copy/seals.json",
+    "1.4.0/copy/session_receipts.py",
+    "1.4.0/copy/source-corrected-red.log",
+    "1.4.0/copy/source-green.log",
+    "1.4.0/copy/source-pin.json",
+    "1.4.0/copy/source-red.log",
+    "1.4.0/copy/source-response.json",
+    "1.4.0/copy/source.wikitext",
+    "1.4.0/copy/test_current_accounting.py",
+    "1.4.0/copy/test_portable.py",
+    "1.4.0/copy/test_source_accounting.py"
+  ],
+  "privacy": "Scoped credential/private-key/Bearer pattern scan before copy, no matches; no process/environment-value evidence. Not exhaustive. Byte-identical selected artifacts, copied archive inputs excluded; /tmp originals untouched.",
+  "scope": "Actual e20c472ca and1b505c7c1 proof epochs; channel provenance unproven, retained returned-stderr emptiness not separate childstderr proof. No rerun/behavior/parentclosure."
+}

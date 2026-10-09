@@ -1,0 +1,20 @@
+{
+  "scope": "SOURCE-only historical replay",
+  "seals": 50,
+  "totals": {
+    "physical_lines": 17,
+    "nonblank_rows": 15,
+    "inventory": 11,
+    "references": 12,
+    "signatures": 11,
+    "contracts": 13,
+    "headers": 2,
+    "prose": 1,
+    "templates": 1,
+    "defaults": 0,
+    "count_claims": 0,
+    "metadata_rows": 3,
+    "unproven_source_rows": 1,
+    "unproven_contracts": 13
+  }
+}

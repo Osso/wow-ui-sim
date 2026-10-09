@@ -52,6 +52,14 @@ Python proof ran at `f8da74e31`; Cargo ran from `43d9ce02` through `f2eebd359` i
 
 [Retention manifest](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/main-retention.json) preserves 191 root/command artifacts byte-for-byte; build targets, copied inputs, scratch and TMPDIR excluded. No proof commands rerun for retention. This does not cover later 1.10.1/1.10.0/1.9/1.8 audits or close the parent.
 
+## Final literal Retail pages — integrated SOURCE PASS only
+
+[Independent summary](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/final-literal-pages/SUMMARY.md): 1.4/1.3/1.1/1.0 copied SOURCE **30/30**, portable **12/12**, separate 1.4 current-category **3/3**; 13 commands exit0, four validators. **182 original +69 receipt entries +3 extension seals** intact; eight serialized tamper rejections/restorations. Actual `e20c472ca` covers 1.4/1.3; actual `1b505c7c1` covers 1.1/1.0, without rerunning earlier scopes. Full merged streams retained; separate child-channel attribution remains unproven.
+
+These pages are not redirects: literal inventory **27/31/11/854**, substantive historical contracts **32/76/13/859**, all UNPROVEN. 1.4 category correction remains a separately sealed extension, not rewritten original credit. 1.1 current CVar candidate is unexecuted in this SOURCE gate; level-based ranged approximation receives no meaningful-model credit. 1.0 names, including literal misspellings, imply no signatures/defaults/aliases. Frozen registry endpoint1.0.0 is not meaningful-behavior or parent closure.
+
+[Retention](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/final-literal-pages/main-retention.json) preserves 54 artifacts byte-identically, excludes copied archive inputs, and retains actual epochs/channel limits. No Cargo/runtime/native proof or broad rerun.
+
 ## Seven remaining Retail redirects — integrated SOURCE PASS only
 
 [Independent report](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/remaining-retail-redirects/report.md) at actual `e20c472ca`: 1.10.1/1.10.0/1.9.0/1.8.0/1.7.0/1.6.0/1.5.0 copied SOURCE **38/38**, portable **21/21**, seven validators exit0. **231 original +70 separate seals**, 238 archive members intact; 14 serialized tamper rejections and exact restorations. All 21 proof commands ran once; evidence-scope hashes unchanged, requested-to-actual evidence diff empty. Each exact redirect keeps one UNPROVEN target contract and zero local declarations/model/runtime/native credit.

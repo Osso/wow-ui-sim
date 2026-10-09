@@ -1,0 +1,9 @@
+test_current_serialized_ledger_originals_unchanged (__main__.CategoryAccounting.test_current_serialized_ledger_originals_unchanged) ... ok
+test_new_categories_and_changed_no_category (__main__.CategoryAccounting.test_new_categories_and_changed_no_category) ... ok
+test_wrong_category_or_omitted_row_rejected (__main__.CategoryAccounting.test_wrong_category_or_omitted_row_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.064s
+
+OK
+{"current_group_and_omission_controls": 55}

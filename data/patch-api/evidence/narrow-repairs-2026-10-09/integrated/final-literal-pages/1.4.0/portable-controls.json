@@ -1,0 +1,55 @@
+{
+  "scope": "portable SOURCE development controls",
+  "success": true,
+  "tests": 3,
+  "receipts": [
+    {
+      "control": "copied-historical-replay",
+      "result": {
+        "seals": 44,
+        "totals": {
+          "source_rows": 34,
+          "inventory": 27,
+          "signatures": 25,
+          "defaults": 0,
+          "prose": 25,
+          "headers": 6,
+          "count_claims": 0,
+          "templates": 28,
+          "references": 3,
+          "navigation": 2,
+          "contracts": 32,
+          "physical_lines": 42,
+          "nonblank_rows": 34,
+          "metadata_rows": 7,
+          "unproven_source_rows": 27
+        }
+      },
+      "original_seals_sha256": "71f8d83560898a8e2e73fcf360746e083c18c17d7e280421ae064297ea8536d4"
+    },
+    {
+      "control": "serialized-tamper-rejected",
+      "file": "ledger.json",
+      "original_sha256": "e43b220e714a8da720f42c37d885355c3a99aaff504837ed2a554d16d3255547",
+      "tampered_sha256": "f56d2407e2170b5951ec0017ddc82612799e6e1f69270c40d9dc4c5a0f72e9f9"
+    },
+    {
+      "control": "exact-restoration",
+      "file": "ledger.json",
+      "restored_sha256": "e43b220e714a8da720f42c37d885355c3a99aaff504837ed2a554d16d3255547",
+      "original_seals_sha256": "71f8d83560898a8e2e73fcf360746e083c18c17d7e280421ae064297ea8536d4"
+    },
+    {
+      "control": "serialized-tamper-rejected",
+      "file": "source-green.log",
+      "original_sha256": "3715b00acd75aed014af30b5b780edcdb7153278bd7147c969ee63f93c4563bb",
+      "tampered_sha256": "c47b4e2d190b73e361fe453c0f88e5f7adeb5b51572a49484b576b20df1bd71b"
+    },
+    {
+      "control": "exact-restoration",
+      "file": "source-green.log",
+      "restored_sha256": "3715b00acd75aed014af30b5b780edcdb7153278bd7147c969ee63f93c4563bb",
+      "original_seals_sha256": "71f8d83560898a8e2e73fcf360746e083c18c17d7e280421ae064297ea8536d4"
+    }
+  ]
+}
