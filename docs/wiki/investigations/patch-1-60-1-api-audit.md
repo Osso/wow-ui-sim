@@ -43,11 +43,11 @@ All original behavioral rows are **UNPROVEN**, capabilities empty. Exact row-lev
 | Headers | 32 | 22 ordinary/template headings and 10 numeric column headers |
 | Signature ledger | 1,712 | 1,704 identity-only/unspecified signatures; eight literal call occurrences from prose/examples |
 | Prose limits | 211 | 87 other substantive rows plus 124 literal CVar descriptions; identity proof cannot close described effects |
-| Linked reference boundaries | 15 | Local reference markup retained, linked bodies unexpanded and UNPROVEN |
+| Linked reference boundaries | 15 | Nine external links / six wiki links; linked bodies unexpanded and UNPROVEN. Zero explicit transclusions in this frozen page; synthetic transclusion fixture also stays unexpanded |
 
 Numeric headers: global added **176 versus 175** literal rows; events added **24 versus 25** rows. Other eight headers reconcile (10, 471, 1,041, 7, 0, 2, 138, 7). Do not invent a missing API or drop an event to fix counts. All CVar named fields, including absent defaults, scopes, categories, formatting and descriptions, remain literal strings. Examples: `CameraFollowPitchOffset` default `15.000000`/Account; `ClientSettings_LOW_LATENCY_CBS_BY_API_MASK` has no default; `winePlatformTTS` describes a crash risk, not permission to enable it.
 
-Misspellings such as `PaperDollItemSlotButton_OnModifableClick`, `GarrisonMissonListTab_SetSelected`, and `GarrisonMonuntmentFrame_*` are preserved. A concrete duplicate/malformed fixture retains both `C_Example.Read` occurrences and `C_Example.Mispelled`; no guessed alias is added.
+No duplicate section/symbol/direction inventory identities occur in the frozen inventory. Repeated headings and repeated literal UnitName citation occurrences remain separate. Misspellings such as `PaperDollItemSlotButton_OnModifableClick`, `GarrisonMissonListTab_SetSelected`, and `GarrisonMonuntmentFrame_*` are preserved. A concrete duplicate/malformed fixture retains both `C_Example.Read` occurrences and `C_Example.Mispelled`; no guessed alias is added.
 
 ## Literal signature and prose boundaries
 
@@ -68,9 +68,11 @@ If this test reveals a runtime defect, stop before production changes and report
 | `python3 -B …/test_source.py` before accounting/validator existed | Base 66a5c1659 plus fixture | RED: 8/8 missing-validator failures; retained original/red.log |
 | Default shared generator, frozen page, no flags | Base 66a5c1659 | Discovery: 1,876 rows; exact original/register.json bytes; no runtime credit |
 | `rustfmt --edition 2024 patch-tests/patch_1_60_1_source_model.rs` | New test only | Exit 0; no check/lint/readability gate |
-| Own SOURCE GREEN / portable replay / model target | Pending committed step | No success claimed yet |
+| `python3 -B …/test_source.py`: own SOURCE fixtures | `88ce7032563b32bc0b8ccac8fe0097124abe4d37` | GREEN 8/8, 0.592 s; 5,916 per-row omission controls; copied fresh process with empty PATH/no Git/target/current tools passes; disk ledger/red-log tampering rejects and exact bytes restore |
+| Owned model target preparation (`cp -a --reflink=always` dependency snapshot) | Same revision | BLOCKED before Cargo execution: /tmp is cross-device; bounded same-device retry reports Operation not supported. Original caches untouched; no expensive full copy or original-cache fallback |
+| Intended `cargo test --offline --locked --no-default-features --features client-wowforever --test patch_1_60_1_source_model -- --nocapture` | Test committed at `291cc22c8`; receipt at `88ce70325` | **NOT EXECUTED**. Zero meaningful model closures; local observed compiler 1.99.0, unlike documented 1.98.1 |
 
-Original source-only ledger and gaps are immutable; later receipts/model credit are separate under `current/`. No whole-project/check/lint/readability/coverage/startup/final gate is run. Main owns actual successors, integration and native acceptance.
+Original source-only ledger and gaps are immutable: **19 original seals**, largest original file 3,326,475 bytes. Later proof/attempt receipts and empty closure claims live separately under `current/` with **eight separate seals**. Both full preparation logs are losslessly gzip-compressed (627,865 / 633,544 bytes); uncompressed hashes are recorded, every retained file is below 5 MB. No original seal or behavioral status changed. Current source proof remains applicable: later changes are receipts/docs only, so no redundant source-suite rerun. No whole-project/check/lint/readability/coverage/startup/final gate is run. Main owns actual successors, integration and native acceptance.
 
 ## Sources
 

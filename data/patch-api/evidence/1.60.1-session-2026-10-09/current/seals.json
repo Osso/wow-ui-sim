@@ -1,0 +1,10 @@
+{
+  "claims.json": "3bd9c54971312dc6bbcfd8c9f3abf4b6bfe3d97a9f1b447ed0a15eb1498a28e7",
+  "model-attempt-receipt.json": "4d95b66f14d8914c648da59dce3be833ba870368916e267159d8d612a22e8aff",
+  "model-attempt.log.gz": "826073bf16393eb314e8a11c8fac4ed515f3ee3f60961082b58654a5cdb0e41b",
+  "model-target-receipt.json": "6115f9c5805c7cdb33c861ccc01dfcb82ca4587cf0300d14534a30e765b5f5ba",
+  "model-target.log.gz": "94d4df9cb657e92f155b076149447a320e561b01bf6ed1d0d15d88b0e30023f0",
+  "proof-ledger.json": "2ea7cf4df6a5c2454fdada320aef096821df7a5a391eb5a91166e0ff85a98669",
+  "source-green-receipt.json": "ef797fee8f294ca88ea92cb1bc9f1e969a6507c2697ab7e691e4787584f7962d",
+  "source-green.log": "d411e17716e0db7f32d1847bf410b50505869f593c26af10a79e3481e5b27e2d"
+}

@@ -826,3 +826,9 @@ Patch 2.5.4 copied historical replay at `ae9cb498a`: 27 original seals/28 copied
 - Frozen 707613/6902509 byte pins and 101-page registry endpoint retained offline; no shared generator default/flag changes.
 - Full row/signature/prose/header/reference ledger, two literal count mismatches and configured/source/native identity separation added in [audit](investigations/patch-1-60-1-api-audit.md).
 - Owned SOURCE RED 8 failures retained; narrow existing-model player-name probe added, no production runtime change or native credit.
+
+## 2026-10-09 — 1.60.1 bounded SOURCE proof
+
+- Own source fixtures GREEN 8/8 at `88ce70325`, 5,916 omission controls; copied empty-PATH/no-Git/target/current-tools replay and disk ledger/red-log rejection/exact restoration pass.
+- Original 19 seals remain immutable (largest 3,326,475 bytes); eight independent current receipts/claims seals retained. Full preparation logs compressed losslessly below 5 MB.
+- Existing configured UnitName player-state target is unexecuted: cheap isolated Cargo dependency CoW snapshot failed cross-device, then unsupported on the same filesystem. No original cache/production runtime changes or model/native credit. Scope remains SOURCE only; no broad/final gates.

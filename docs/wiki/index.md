@@ -1,6 +1,6 @@
 ## [2026-10-09] investigation | Forever Patch 1.60.1 literal SOURCE accounting
 
-[Audit](investigations/patch-1-60-1-api-audit.md): frozen 707613/6902509; source Forever/Camelot16001, configured `client-wowforever`16001/build69977 distinct from source70205. 1,876 inventory, 2,070 nonblank rows, 1,712 signatures, 211 prose limits, 32 headers/two literal count conflicts and 15 unexpanded reference boundaries. SOURCE RED 8/8 retained; complete original UNPROVEN ledgers and compact portable seals committed before bounded GREEN/model proof. No runtime edits, native/security/loaded-UI or foreign-history credit; main owns successors/integration/native gates.
+[Audit](investigations/patch-1-60-1-api-audit.md): frozen 707613/6902509; source Forever/Camelot16001, configured `client-wowforever`16001/build69977 distinct from source70205. 1,876 inventory, 2,070 nonblank rows, 1,712 signatures, 211 prose limits, 32 headers/two literal count conflicts and 15 unexpanded reference boundaries. SOURCE RED retained, GREEN 8/8 at `88ce70325`: 5,916 omission controls, fresh copied no-Git/target/current-tools replay, ledger/log tamper rejection and exact restoration. Original 19 seals unchanged; eight separate current receipt seals. UnitName state probe retained but unexecuted (isolated CoW snapshot unsupported), zero model credit. No runtime edits, native/security/loaded-UI or foreign-history credit; main owns successors/integration/native gates.
 
 ## [2026-10-09] investigation | Historical retail Patch 3.0.8 source audit
 

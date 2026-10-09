@@ -3,10 +3,10 @@
 Frozen page 707613/revision 6902509 (`2026-10-07T05:30:51Z`) lives in `data/patch-api/source-cache/legacy-2026-10-09`. The literal page identifies Forever/Camelot and TOC 16001, not an epoch inferred from the version number. [Audit/proof matrix](../wiki/investigations/patch-1-60-1-api-audit.md).
 
 ## What it must do
-- [ ] Validate exact response/body bytes and manifest membership against the 101-page registry ending at 1.0.0, entirely offline.
-- [ ] Retain every nonblank row, inventory occurrence, signature/unspecified signature, prose description, reference boundary and heading/count. Preserve literal duplicates, misspellings and count disagreements without inferred aliases or repairs.
-- [ ] Reproduce the shared generator's unchanged default bytes with no flags; keep the literal non-inventory mirror explicitly unexpanded, not rendered MediaWiki evidence.
-- [ ] Preserve immutable source-only seals below 5 MB per file; reject missing/altered ledger rows, false/foreign proof, disk ledger/log tampering and replay copied without Git/target/current tools.
+- [x] Validate exact response/body bytes and manifest membership against the 101-page registry ending at 1.0.0, entirely offline.
+- [x] Retain every nonblank row, inventory occurrence, signature/unspecified signature, prose description, reference boundary and heading/count. Preserve literal duplicates, misspellings and count disagreements without inferred aliases or repairs.
+- [x] Reproduce the shared generator's unchanged default bytes with no flags; keep the literal non-inventory mirror explicitly unexpanded, not rendered MediaWiki evidence.
+- [x] Preserve immutable source-only seals below 5 MB per file; reject missing/altered ledger rows, false/foreign proof, disk ledger/log tampering and replay copied without Git/target/current tools.
 - [ ] Separately measure the existing configured player-name read before login under `client-wowforever`, if the offline bounded target can run. Do not infer corrected return tuples or token aliases.
 
 ## How it works
@@ -26,6 +26,7 @@ Frozen page 707613/revision 6902509 (`2026-10-07T05:30:51Z`) lives in `data/patc
 
 ## Known gaps (current cycle)
 - [ ] All 1,876 inventory occurrences, 1,712 signature occurrences and 211 prose limits are behaviorally UNPROVEN in original source accounting.
+- [ ] Owned player-name target remains unexecuted: cheap isolated package-home CoW failed (cross-device, then unsupported on the same filesystem). No original caches mutated; test retained without model credit. Observed local compiler is 1.99.0, not the documented 1.98.1.
 - [ ] Native/historical/security and loaded-UI parity are not proved by source publication or matching interface values. Source build 70205 differs from configured compatibility build 69977.
 - [ ] Main owns actual same-line successors, integration and native/final acceptance. Literal `next=1.60.2` is navigation only; no successor expansion or wholesale Retail/Era/TBC supersession.
 

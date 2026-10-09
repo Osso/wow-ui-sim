@@ -1,0 +1,28 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--offline",
+    "--locked",
+    "--no-default-features",
+    "--features",
+    "client-wowforever",
+    "--test",
+    "patch_1_60_1_source_model",
+    "--",
+    "--nocapture"
+  ],
+  "code_revision": "88ce7032563b32bc0b8ccac8fe0097124abe4d37",
+  "cargo_executed": false,
+  "status": "BLOCKED: same-filesystem CoW snapshot unavailable",
+  "exit_code": 1,
+  "scope": "Only configured player-name read; no publication/native/security/loaded-UI proof",
+  "meaningful_credit": false,
+  "log_storage": "model-target.log.gz",
+  "log_sha256": "cf068423bed9427d7296f05b13393726071e2f8093a8087fa041748fea6f4d33",
+  "uncompressed_bytes": 19885067,
+  "compressed_bytes": 633544,
+  "compiler_observed": "rustc 1.99.0 (b940084d7 2026-09-28), Arch 1:1.99.0-1",
+  "runtime_changes": [],
+  "retry_reason": "First snapshot failed cross-device (/tmp device 36 vs Cargo/worktree 66306). Same-device retry rejected CoW as Operation not supported; no Cargo execution or original-cache writes."
+}
