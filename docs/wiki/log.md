@@ -656,3 +656,7 @@ Own sweep 1/1; ledger 34 bounded/31 gaps/one metadata. Local friend-index 2/2; s
 ## 2026-10-09 — Patch 4.2.0 development receipts
 
 Source/accounting fixtures 6/6 at `a0db0fa0d`; compact per-command scope/revision ledger and SHA seals retained. Runtime proof remains 2/2 model and 1/1 own sweep; no redundant reruns or final-gate claim. [Audit](investigations/patch-4-2-0-api-audit.md).
+
+## [2026-10-09] source audit | Retail Patch 4.1.0
+
+[Audit](investigations/patch-4-1-0-api-audit.md): local pinned revision 4094671; opt-in Cataclysm bullet parser, complete default extraction. Accounting/development tests pending; no runtime/native proof.

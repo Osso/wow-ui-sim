@@ -2827,3 +2827,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-09] investigation | Patch 4.2.0 API audit
 
 [Audit](investigations/patch-4-2-0-api-audit.md): pinned revision 3045158; 65 global inventory IDs, one navigation metadata row, no prose/signatures. Own targeted development probe passes 1/1: 34 bounded publication rows, 31 retained gaps. Retail friend-index model tests pass 2/2; source/accounting fixtures 6/6 and negative 31 → 32 rejected. Actual 4.3.0/4.3.4 successors now give 35 matches/30 gaps via later removal, not model closure. [Integrated proof status](investigations/patch-4-2-0-api-audit.md#integrated-proof-status--2026-10-09) separates current receipts and archived replay from immutable historical proof; portability/verifier pending, no final/CI/full-suite or native parity claim.
+
+## [2026-10-09] source audit | Retail Patch 4.1.0
+
+[Audit](investigations/patch-4-1-0-api-audit.md): local pinned revision 4094671; opt-in Cataclysm bullet parser, complete default extraction. Accounting/development tests pending; no runtime/native proof.

@@ -240,6 +240,36 @@ def parse_simple_api_list(text):
     return entries
 
 
+def parse_cataclysm_change_bullets(text):
+    """Retain 4.1-style NEW/REMOVED groups and explicit changed event identities."""
+    entries = []
+    section, direction = None, None
+    for number, line in enumerate(text.splitlines(), 1):
+        heading = re.fullmatch(r'==\s*([^=]+?)\s*==', line)
+        if heading:
+            section, direction = heading[1], None
+            continue
+        if section not in ('Breaking changes', 'API changes', 'Event changes'):
+            continue
+        if not line.startswith('*'):
+            continue
+        if line.startswith('* '):
+            marker = re.match(r'\* (NEW|REMOVED)\b', line)
+            direction = {'NEW': 'added', 'REMOVED': 'removed'}.get(
+                marker[1] if marker else '', 'changed')
+        if section == 'Event changes' or 'COMBAT_LOG_EVENT' in line:
+            category = 'events'
+            names = re.findall(r'\b[A-Z][A-Z_]+\b', line)
+            symbols = list(dict.fromkeys(name for name in names if name not in ('NEW', 'REMOVED', 'API')))
+        else:
+            category = 'global-api'
+            symbols = [match[2].split('|')[0].strip() for match in TEMPLATE.finditer(line)]
+        for symbol in symbols:
+            entry = make_entry(category, direction, number, '{{api|' + symbol + '}}')
+            entries.append(dict(entry, annotation=line))
+    return entries
+
+
 def parse_legacy_api_bullets(text):
     """Retain New/Removals API bullets and unqualified event additions (8.1.5)."""
     entries = []
@@ -804,6 +834,8 @@ def main():
                         help='Retain prose counts and singular CVar/Command labels; opt-in preserves prior registers')
     parser.add_argument('--legacy-api-tables', action='store_true',
                         help='Parse older unheaded/repeated caption inventories independently')
+    parser.add_argument('--cataclysm-change-bullets', action='store_true',
+                        help='Retain NEW/REMOVED API groups and changed events in Cataclysm summaries; opt-in')
     parser.add_argument('--legacy-api-bullets', action='store_true',
                         help='Retain API New/Removals and event bullet inventories; opt-in')
     parser.add_argument('--legacy-api-renames', action='store_true',
@@ -873,6 +905,8 @@ def main():
         counts += section_counts
     if args.legacy_api_tables:
         entries, counts = parse_legacy_caption_tables(raw.decode('utf-8'))
+    if args.cataclysm_change_bullets:
+        entries.extend(parse_cataclysm_change_bullets(raw.decode('utf-8')))
     if args.legacy_api_bullets:
         entries.extend(parse_legacy_api_bullets(raw.decode('utf-8')))
     if args.legacy_api_renames:
