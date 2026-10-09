@@ -4,10 +4,10 @@ Audit the pinned retail 2013 API page and its separately pinned diff. [Audit](..
 
 ## What it must do
 
-- [ ] Probe every inventory occurrence, with reviewed non-ok IDs exactly matching the known-gap fixture.
-- [ ] Apply only later retail registers; retain queued 5.4.0, 5.4.1 and 5.4.2 placeholders in that order.
-- [ ] Prove existing PvP role reads follow stored selection transitions in bare and cached environments.
-- [ ] Verify the two historical removal names remain absent, without adding retirement gates.
+- [x] Probe every inventory occurrence, with reviewed non-ok IDs exactly matching the known-gap fixture.
+- [x] Apply only later retail registers; retain queued 5.4.0, 5.4.1 and 5.4.2 placeholders in that order.
+- [x] Prove existing PvP role reads follow stored selection transitions in bare and cached environments.
+- [x] Verify the two historical removal names remain absent, without adding retirement gates.
 - [x] Reproduce every saved register and preserve inherited extract failures exactly.
 
 ## How it works
@@ -32,7 +32,7 @@ Audit the pinned retail 2013 API page and its separately pinned diff. [Audit](..
 
 - [ ] Fifteen historical publication gaps remain explicitly reviewed in the known-gap fixture.
 - [ ] Six prose contracts remain pending: loot award policy, stable pages, support browsing, Browser domain, trade-link encoding and historical InterfaceOptions ordering.
-- [ ] Targeted Rust/Mists acceptance and the own portable gate are running.
+- [ ] Own historical validator portability gate awaits completion. Targeted Rust/Mists acceptance passed.
 
 ## Out of scope
 

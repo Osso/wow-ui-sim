@@ -1,0 +1,17 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p530-page/data/patch-api/evidence/5.3.0-session-2026-10-08/verify_targeted.py"
+  ],
+  "revision": "3021009068a441114d17a425db441b936b59499e",
+  "scope": "p530-targeted-driver",
+  "cwd": ".",
+  "target": "dedicated p530-page target (external to repository)",
+  "environment": {},
+  "exit": 0,
+  "log": "p530-targeted-driver.txt",
+  "log_sha256": "93575c1dd919b0f0444def54c73aebb54633207ba3b5c3995c23038f50cedcc8",
+  "seconds": 668.6783460259976,
+  "invalidated": false
+}

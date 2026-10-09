@@ -1,0 +1,7 @@
+p530-all-sweeps 0
+p530-own-behavior 0
+p530-bare-behavior 0
+p530-pvp-lib 0
+p530-mists 0
+p530-format 0
+p530-negative 1

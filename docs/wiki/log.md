@@ -533,4 +533,4 @@ Retail page and transcluded diff pinned; all 159 IDs accounted. [Audit](investig
 
 ## [2026-10-08] investigation | Retail Patch 5.3.0 API audit
 
-Pinned retail 2013 page and diff; 44 source occurrences, opt-in parser reuse, bounded existing PvP role backing tests and consumer-free prior absence scans. [Audit](investigations/patch-5-3-0-api-audit.md). Verification still running.
+Pinned retail 2013 page and diff; 44 source occurrences, opt-in parser reuse, bounded existing PvP role backing tests and consumer-free prior absence scans. [Audit](investigations/patch-5-3-0-api-audit.md). Targeted acceptance passes; 15 publication and six prose gaps retained. Own portability gate pending.

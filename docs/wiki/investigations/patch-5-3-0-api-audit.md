@@ -14,11 +14,11 @@ Queued retail placeholders start `later_registers` in order: 5.4.0, 5.4.1, 5.4.2
 
 | Contract | Proof level | Limit |
 |---|---|---|
-| Every inventory identity | Register/header reproduction; cached discovery in progress | Publication is not historical output/security parity |
+| Every inventory identity | Register/header reproduction; all publication cases pass | Publication is not historical output/security parity |
 | GetPVPRoles / SetPVPRoles | New bare/cached tests assert stored tank/dps, healer-only and all-false transitions | Existing shared lfg_roles backing; not historical role-update event production |
-| PrepVoidStorageForTransmogrify / UNIT_DYNAMIC_FLAGS | Whole-word consumer/caller scans; bare/cached absence assertions pending | Already absent; no runtime retirement added |
+| PrepVoidStorageForTransmogrify / UNIT_DYNAMIC_FLAGS | Whole-word consumer/caller scans; bare/cached absence assertions pass | Already absent; no runtime retirement added |
 | Browser engine, support ticket/survey and history | Problematic native-service domain | Generic frame methods/inert navigation cannot establish a browser engine |
-| Loot award policy, legacy upgrades/tracking/battleground metadata | Discovery/accounting in progress | No fabricated default values or aliases introduced |
+| Loot award policy, legacy upgrades/tracking/battleground metadata | Exact publication gaps reviewed; prose contracts pending | No fabricated default values or aliases introduced |
 | Stable pages, trade-link field migration, historical InterfaceOptions bug | Pending source contracts | No historical fixtures; current client Settings is not the 2013 panel list |
 
 No runtime source changed. No Blizzard/vendor/Wowless/WowlessData modifications or monkey-patches. Existing temporary defaults are labeled publication-only, never credited as modeled domain behavior.
@@ -45,7 +45,7 @@ GNU `/usr/bin/grep -RInwF` scans retain untruncated qualified and bare-name resu
 
 ## Verification
 
-Source reproduction: 59 registers byte-identical; 56 extracts match, with the exact inherited 12.0.5/12.0.7/12.1.0 failures preserved. All six `tools/test_*.py` scripts pass. Rust discovery, targeted acceptance, Mists and portable validator gates are running; this page does not yet claim completion.
+Source reproduction: 59 registers byte-identical; 56 extracts match, with the exact inherited 12.0.5/12.0.7/12.1.0 failures preserved. All six `tools/test_*.py` scripts pass (89 fixtures). Targeted acceptance passes: 58 publication cases, one cached and one bare behavior case, one existing PvP startup unit test, warning-clean non-vendor Mists check and format. Negative control changes only GetPVPRoles to a missing name and raises the non-ok set from 15 to 16; every other observation is identical. Own fresh-checkout/later-audit validator gate is the remaining audit gate. Master baseline gate passed 43/43 clean and 44/44 later (including its synthetic audit).
 
 The initial cold-target launch lacked an output path and preceded the first commit, so it is diagnostic only. Committed-input discovery retains every result. Long commands stream to logs and run asynchronously; no full integration suite is run.
 

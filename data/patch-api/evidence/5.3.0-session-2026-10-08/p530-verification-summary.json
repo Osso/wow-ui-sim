@@ -1,0 +1,16 @@
+{
+  "publication_cases": 58,
+  "own_inventory": 44,
+  "publication_gaps": 15,
+  "negative_gaps": 16,
+  "python_fixtures": 89,
+  "cached_behavior": 1,
+  "bare_behavior": 1,
+  "pvp_lib": 1,
+  "registers": 59,
+  "extracts_matching": 56,
+  "non_vendor_mists_warnings": 0,
+  "format": "PASS",
+  "runtime_changes": [],
+  "conditional_master_lib_and_addons_startup_comparison": "Not triggered: no src runtime changes; pinned Git diff proves source equality."
+}
