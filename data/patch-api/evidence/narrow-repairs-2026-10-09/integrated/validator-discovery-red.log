@@ -1,0 +1,31 @@
+FF
+======================================================================
+FAIL: test_template_inputs_are_not_executed_but_nested_current_proofs_run (__main__.CheckPatchValidatorsTests.test_template_inputs_are_not_executed_but_nested_current_proofs_run)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/Projects/wow/wow-ui-sim/tools/test_check_patch_validators.py", line 98, in test_template_inputs_are_not_executed_but_nested_current_proofs_run
+    self.assertEqual(result.returncode, 0, result.stderr)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : 
+
+======================================================================
+FAIL: test_missing_seal_in_real_current_proof_is_not_hidden (__main__.CheckPatchValidatorsTests.test_missing_seal_in_real_current_proof_is_not_hidden)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/Projects/wow/wow-ui-sim/tools/test_check_patch_validators.py", line 113, in test_missing_seal_in_real_current_proof_is_not_hidden
+    self.assertEqual(report['summary'], {'clean': {'passed': 1, 'failed': 1},
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                                         'later_audit': {'passed': 2, 'failed': 1}})
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'clean': {'failed': 2, 'passed': 1}, 'later_audit': {'failed': 2, 'passed': 2}} != {'clean': {'passed': 1, 'failed': 1}, 'later_audit': {'passed': 2, 'failed': 1}}
+- {'clean': {'failed': 2, 'passed': 1}, 'later_audit': {'failed': 2, 'passed': 2}}
+?                      ^                                          ^
+
++ {'clean': {'failed': 1, 'passed': 1}, 'later_audit': {'failed': 1, 'passed': 2}}
+?                      ^                                          ^
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.250s
+
+FAILED (failures=2)
