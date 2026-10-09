@@ -1,0 +1,20 @@
+{
+  "revision": "7c2a251e8",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1143-page",
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p1143-page/data/patch-api/evidence/1.14.3-session-2026-10-09/test_portable.py",
+    "--archive",
+    "/home/osso/.worktrees/wow-ui-sim-p1143-page/data/patch-api/evidence/1.14.3-session-2026-10-09/replay.tar.gz",
+    "--scratch",
+    "/home/osso/.worktrees/wow-ui-sim-p1143-page/build/p1143-portable",
+    "--receipts",
+    "/home/osso/.worktrees/wow-ui-sim-p1143-page/data/patch-api/evidence/1.14.3-session-2026-10-09/portable-controls.json"
+  ],
+  "result": "GREEN3/3",
+  "original_seals": 54,
+  "original_map_sha256": "38e6b6bb6c85b33b0edf903ac5abf37b71bee80801803f9aecf6bd1962be754a",
+  "current_receipts_separate": true,
+  "proof_scope": "copied SOURCE/default bytes/disk tamper reject and exact restore; not runtime/model/native"
+}

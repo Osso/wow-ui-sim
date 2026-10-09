@@ -18,7 +18,7 @@ Caption is literally1.14.2(42214) →1.14.3(43639), May10 2022. SourceTOC11403 r
 
 ## Existing-model boundary
 
-No source callable declaration supplies arguments, results, input validation or state transitions. Event names supply no payload or producer behavior. CVar descriptions name camera/motion/AA/notch/voice/gamepad effects but do not supply a bounded existing modeled-state transition contract. Widget name alone cannot authorize inferred setter signatures or security rules. Priority remains meaningful existing behavior when literal concrete contracts support it; none established here. No production fixes, new defaults or aliases proposed. Bare factory measurement remains pending, separate from SOURCE ledger.
+No source callable declaration supplies arguments, results, input validation or state transitions. Event names supply no payload or producer behavior. Exact source/test search for GamePadEmulateTapWindowMs/calendarShowHolidays/speechToText/CameraKeepCharacterCentered/NotchedDisplayMode has zero hits. Existing C_GamePad model covers mapped sticks and hover/free-look policy, not modifier-button tap timing. Literal tap-on-release/window/default350 grounds a possible button-emulation model proposal, not a signature or existing model proof; main must own any expanded input-model work. Calendar/camera/AA/notch/voice effects similarly lack demonstrated existing backing models. Widget name alone cannot authorize inferred setter signatures or security rules. No production fixes, new defaults or aliases added. Bare factory target retained unexecuted, separate from SOURCE ledger.
 
 ## Successors
 
@@ -26,7 +26,13 @@ Frozen1.14.4 is in flight. Own base contains audited1.15.0–9 source documents;
 
 ## Development proof
 
-SOURCE RED8 assertion failures against retained empty scaffold, commitc1b8f094b. Portable RED3 absent-archive failures retained. Own accounting/GREEN and copied historical receipts pending. No broad/final gates.
+SOURCE RED8 assertion failures against retained empty scaffold, commitc1b8f094b. SOURCE GREEN8/8 at1ce4359e9:1,135 per-occurrence omission controls plus fabricated-credit/history/signature rejection. Default generator flags[] and default extractor preserve historical bytes; shared tools unchanged. Portable RED3 absent-archive failures retained; GREEN3/3 at7c2a251e8: fresh copied no-Git/target/current-tools archive, empty PATH, copied SOURCE8/default-register-byte replay, serialized ledger/log rejection and exact restoration.54 original seals/55-member archive202845bytes remain unchanged; later receipts sealed separately. No broad/final gates.
+
+## Current factory execution boundary
+
+`patch-tests/patch_1_14_3_factory.rs` uses existing shared classifier on all412 own inventory rows, current Era11507, no later registers, no CASC or Blizzard loading. It records compatibility GetBuildInfo separately, current value/default and classifier raw/lookup details; nonsense namespace/member rejects generic fallback credit, nonsense event records Classic name nondiscrimination. It invokes no named source API beyond publication/default/factory probes. Test output would be separate current observations, never mutate original SOURCE credit.
+
+Runtime target is **unexecuted**. Cheap CoW isolation probe from existing Cargo registry into owned `build/p1143-cargo-home` failed `Operation not supported`; receipt retained. No shared cache mutations, target copying, alternative cache path or native/runtime/model credit. Main owns package-home decision/execution; no compile-warning-free or factory GREEN claim. Compiler observed cargo1.99.0 differs from documented1.98.1.
 
 ## Sources
 
@@ -34,6 +40,8 @@ SOURCE RED8 assertion failures against retained empty scaffold, commitc1b8f094b.
 - [Literal ledger](../../../data/patch-api/evidence/1.14.3-session-2026-10-09/original/ledger.json) — full occurrence accounting.
 - [Identity before derivation](../../../data/patch-api/evidence/1.14.3-session-2026-10-09/identity-before-derivation.json).
 - [SOURCE fixtures](../../../data/patch-api/evidence/1.14.3-session-2026-10-09/test_source.py), [portable fixtures](../../../data/patch-api/evidence/1.14.3-session-2026-10-09/test_portable.py).
+- [Immutable original proof](../../../data/patch-api/evidence/1.14.3-session-2026-10-09/proof-ledger.json), [portable proof](../../../data/patch-api/evidence/1.14.3-session-2026-10-09/portable-proof.json), [isolation failure](../../../data/patch-api/evidence/1.14.3-session-2026-10-09/cargo-isolation-probe.json).
+- [Handoff](../../../data/patch-api/evidence/1.14.3-session-2026-10-09/HANDOFF.md) — exact execution constraints and remaining main-owned gates.
 
 ## See Also
 
