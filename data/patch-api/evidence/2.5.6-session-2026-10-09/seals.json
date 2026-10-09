@@ -23,5 +23,7 @@
   "data/patch-api/evidence/2.5.6-session-2026-10-09/validate.py": "42c010057ec8a03fb54083ddca5d7381aa59a7098414da2426562af26e397d5b",
   "data/patch-api/sources/2.5.6-api-changes.txt": "d962df6c23ecfb75b8905ad7274b33db28f025b7edfaf5d8c41e4661dd0ef4d0",
   "data/patch-api/sources/2.5.6-api-changes.wikitext": "9ea30f11808982a5c3f0a051b5a41bd8f7472ec7450c8e3576cdb515a4f9978a",
-  "data/patch-api/sources/2.5.6-page-coverage.json": "86981595adcc1f2cf04a797812bf9c8f11814c9e76c700d443fc55f323f73387"
+  "data/patch-api/sources/2.5.6-page-coverage.json": "86981595adcc1f2cf04a797812bf9c8f11814c9e76c700d443fc55f323f73387",
+  "data/patch-api/evidence/2.5.6-session-2026-10-09/.gitignore": "32dae3052f331ee34d628ef535709b301259a45df7c7522c4d35dcf49873f00b",
+  "data/patch-api/evidence/2.5.6-session-2026-10-09/red-validator.txt": "8daa285400ce42d55438f036cc3b03e41a40fdd50848a5ec769c9b0ab1209c6c"
 }
