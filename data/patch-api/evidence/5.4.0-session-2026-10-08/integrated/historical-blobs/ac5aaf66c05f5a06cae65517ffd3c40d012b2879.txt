@@ -1,0 +1,36 @@
+"""2013 Mists summary and separately pinned diff contracts."""
+import unittest
+import gen_patch_wikitext_register as generator
+
+
+class MistsTests(unittest.TestCase):
+    def test_caption_inventory_keeps_bare_removal_and_counts(self):
+        raw = ('{| class="wikitable"\n|+ Global API (5.3 to 5.4)\n'
+               '! style="width:50%"| 1 new functions\n'
+               '! style="width:50%"| 1 removed functions\n'
+               '| valign="top" | <div>\n: {{api|C_NewItems.ClearAll}}\n</div>\n'
+               '| valign="top" | <div>\n: AcceptArenaTeam\n</div>\n|}\n')
+        rows, counts = generator.parse_mists_automated_diff(raw)
+        self.assertEqual([(r['symbol'], r['direction'], r['wikitext_line']) for r in rows],
+                         [('C_NewItems.ClearAll', 'added', 6), ('AcceptArenaTeam', 'removed', 9)])
+        self.assertEqual([(r['header_count'], r['parsed_count']) for r in counts], [(1, 1), (1, 1)])
+
+    def test_summary_preserves_occurrences_and_reference_kinds(self):
+        raw = ('==Breaking changes==\n* {{api|GetAuctionItemInfo}} returns changed\n'
+               '==Modified API==\n* {{api|GetInstanceInfo}}()\n'
+               '==Bugs==\n* {{api|t=w|Slider:SetValueStep|valueStep}} ignored\n'
+               '==New features==\n* {{api|UnitRealmRelationship}}\n'
+               '* {{api|t=e|SAVED_VARIABLES_TOO_LARGE}}\n'
+               '==Automated diff==\n{{:Patch 5.4.0/API changes/diff}}\n')
+        rows = generator.parse_mists_summary(raw)
+        self.assertEqual([(r['section'], r['symbol'], r['direction']) for r in rows], [
+            ('global-api', 'GetAuctionItemInfo', 'changed'),
+            ('global-api', 'GetInstanceInfo', 'changed'),
+            ('widgets', 'Slider:SetValueStep', 'changed'),
+            ('global-api', 'UnitRealmRelationship', 'added'),
+            ('events', 'SAVED_VARIABLES_TOO_LARGE', 'added')])
+        self.assertTrue(all(r['annotation'] for r in rows))
+
+
+if __name__ == '__main__':
+    unittest.main()

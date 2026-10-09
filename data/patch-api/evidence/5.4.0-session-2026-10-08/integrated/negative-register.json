@@ -1,0 +1,959 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "5.4.0",
+  "source": {
+    "path": "data/patch-api/sources/5.4.0-api-changes.wikitext",
+    "revid": 6200158,
+    "sha256": "0ece64098024279814fdec4b6aa6ea40dbae1d58c97ffb3d8a9af56eae742fa8"
+  },
+  "header_counts": [
+    {
+      "section": "global-api",
+      "direction": "added",
+      "header_count": 34,
+      "parsed_count": 34
+    },
+    {
+      "section": "global-api",
+      "direction": "removed",
+      "header_count": 31,
+      "parsed_count": 31
+    },
+    {
+      "section": "framexml",
+      "direction": "added",
+      "header_count": 6,
+      "parsed_count": 6
+    },
+    {
+      "section": "events",
+      "direction": "added",
+      "header_count": 18,
+      "parsed_count": 18
+    },
+    {
+      "section": "widgets",
+      "direction": "added",
+      "header_count": 8,
+      "parsed_count": 8
+    }
+  ],
+  "entries": [
+    {
+      "id": "p540-intentional-missing",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "P540DefinitelyMissingPublication",
+      "annotation": "Negative control, not an API claim",
+      "wikitext_line": 0
+    },
+    {
+      "id": "wt-global-api-GetLFGRoleUpdate-6",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetLFGRoleUpdate",
+      "annotation": "*  One new return (bgQueue pushed from #4 to #5) have been added to {{api|GetLFGRoleUpdate}}.",
+      "wikitext_line": 6
+    },
+    {
+      "id": "wt-global-api-StartWarGame-8",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "StartWarGame",
+      "annotation": "* {{api|StartWarGame}}(\"target\"[, area]) \"target\" unitid was unitName previously",
+      "wikitext_line": 8
+    },
+    {
+      "id": "wt-global-api-GetUnitName-11",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetUnitName",
+      "annotation": "* {{api|GetUnitName}}(unitid[,showServer]) returns 'name-realm' instead of 'name - realm' (spaces removed) and most commands that accept a unitname now, work with 'name-server' format (/invite, /ginvite, /trade etc",
+      "wikitext_line": 11
+    },
+    {
+      "id": "wt-global-api-UnitIsSameServer-12",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "UnitIsSameServer",
+      "annotation": "* {{api|UnitIsSameServer}}(\"otherUnit\")",
+      "wikitext_line": 12
+    },
+    {
+      "id": "wt-global-api-GetInstanceInfo-13",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetInstanceInfo",
+      "annotation": "* {{api|GetInstanceInfo}}()",
+      "wikitext_line": 13
+    },
+    {
+      "id": "wt-global-api-GetLFGDungeonInfo-14",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetLFGDungeonInfo",
+      "annotation": "* {{api|GetLFGDungeonInfo}}(dungeonID)",
+      "wikitext_line": 14
+    },
+    {
+      "id": "wt-global-api-GetLFGMode-15",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetLFGMode",
+      "annotation": "* {{api|GetLFGMode}}(category, lfgID)",
+      "wikitext_line": 15
+    },
+    {
+      "id": "wt-global-api-GetLFGQueueStats-16",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetLFGQueueStats",
+      "annotation": "* {{api|GetLFGQueueStats}}(category[, activeID])",
+      "wikitext_line": 16
+    },
+    {
+      "id": "wt-global-api-GetPVPRewards-17",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetPVPRewards",
+      "annotation": "* {{api|GetPVPRewards}}()",
+      "wikitext_line": 17
+    },
+    {
+      "id": "wt-global-api-GetWorldElapsedTime-18",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetWorldElapsedTime",
+      "annotation": "* {{api|GetWorldElapsedTime}}(timerID)",
+      "wikitext_line": 18
+    },
+    {
+      "id": "wt-global-api-GetSmoothProgressChange-19",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetSmoothProgressChange",
+      "annotation": "* {{api|GetSmoothProgressChange}}(value, displayedValue, range, elapsed, minPerSecond, maxPerSecond)",
+      "wikitext_line": 19
+    },
+    {
+      "id": "wt-global-api-GetInstanceInfo-20",
+      "section": "global-api",
+      "direction": "changed",
+      "symbol": "GetInstanceInfo",
+      "annotation": "* A new return has been added to {{api|GetInstanceInfo}} - instanceGroupSize at #9 which gives the number of players that the raid's difficulty is tuned for (either the max players for normal raids, or the current number of players for flex raids)",
+      "wikitext_line": 20
+    },
+    {
+      "id": "wt-widgets-Slider:SetValueStep-23",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "Slider:SetValueStep",
+      "annotation": "* [[Widget API#Slider|Slider]] widgets ignore the {{api|t=w|Slider:SetValueStep|valueStep}} property when {{api|t=w|Slider:SetStepsPerPage|stepsPerPage}} is not set.",
+      "wikitext_line": 23
+    },
+    {
+      "id": "wt-widgets-Slider:SetStepsPerPage-23",
+      "section": "widgets",
+      "direction": "changed",
+      "symbol": "Slider:SetStepsPerPage",
+      "annotation": "* [[Widget API#Slider|Slider]] widgets ignore the {{api|t=w|Slider:SetValueStep|valueStep}} property when {{api|t=w|Slider:SetStepsPerPage|stepsPerPage}} is not set.",
+      "wikitext_line": 23
+    },
+    {
+      "id": "wt-global-api-UnitRealmRelationship-26",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitRealmRelationship",
+      "annotation": "* Players from [[Connected Realms]] (5.4 feature) can be interacted with in more ways (e.g. trading) than players from [[Coalesced Realms]] (old cross-realm zone functionality). {{api|UnitRealmRelationship}} returns information about another player's realm.",
+      "wikitext_line": 26
+    },
+    {
+      "id": "wt-events-SAVED_VARIABLES_TOO_LARGE-27",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SAVED_VARIABLES_TOO_LARGE",
+      "annotation": "* A new error condition event, {{api|t=e|SAVED_VARIABLES_TOO_LARGE}}, was added which indicates that some, or all, of an AddOn's SavedVariables were not loaded due to the player's machine being out-of-memory. <ref name=\"blizz-SAVED_VARIABLES_TOO_LARGE\">http://us.battle.net/wow/en/forum/topic/9362996672</ref>",
+      "wikitext_line": 27
+    },
+    {
+      "id": "diff-wt-global-api-BNIsFriendConversationValid-10",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "BNIsFriendConversationValid",
+      "annotation": "",
+      "wikitext_line": 10
+    },
+    {
+      "id": "diff-wt-global-api-C_NewItems.ClearAll-11",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_NewItems.ClearAll",
+      "annotation": "",
+      "wikitext_line": 11
+    },
+    {
+      "id": "diff-wt-global-api-C_NewItems.IsNewItem-12",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_NewItems.IsNewItem",
+      "annotation": "",
+      "wikitext_line": 12
+    },
+    {
+      "id": "diff-wt-global-api-C_NewItems.RemoveNewItem-13",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_NewItems.RemoveNewItem",
+      "annotation": "",
+      "wikitext_line": 13
+    },
+    {
+      "id": "diff-wt-global-api-C_Scenario.GetProvingGroundsInfo-14",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Scenario.GetProvingGroundsInfo",
+      "annotation": "",
+      "wikitext_line": 14
+    },
+    {
+      "id": "diff-wt-global-api-C_StorePublic.IsEnabled-15",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_StorePublic.IsEnabled",
+      "annotation": "",
+      "wikitext_line": 15
+    },
+    {
+      "id": "diff-wt-global-api-C_Vignettes.GetNumVignettes-16",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Vignettes.GetNumVignettes",
+      "annotation": "",
+      "wikitext_line": 16
+    },
+    {
+      "id": "diff-wt-global-api-C_Vignettes.GetVignetteInfoFromInstanceID-17",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Vignettes.GetVignetteInfoFromInstanceID",
+      "annotation": "",
+      "wikitext_line": 17
+    },
+    {
+      "id": "diff-wt-global-api-C_Vignettes.GetVignetteInstanceID-18",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Vignettes.GetVignetteInstanceID",
+      "annotation": "",
+      "wikitext_line": 18
+    },
+    {
+      "id": "diff-wt-global-api-CanScanResearchSite-19",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CanScanResearchSite",
+      "annotation": "",
+      "wikitext_line": 19
+    },
+    {
+      "id": "diff-wt-global-api-GetArchaeologyRaceInfoByID-20",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetArchaeologyRaceInfoByID",
+      "annotation": "",
+      "wikitext_line": 20
+    },
+    {
+      "id": "diff-wt-global-api-GetAutoCompleteRealms-21",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetAutoCompleteRealms",
+      "annotation": "",
+      "wikitext_line": 21
+    },
+    {
+      "id": "diff-wt-global-api-GetBestFlexRaidChoice-22",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetBestFlexRaidChoice",
+      "annotation": "",
+      "wikitext_line": 22
+    },
+    {
+      "id": "diff-wt-global-api-GetFlexRaidDungeonInfo-23",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetFlexRaidDungeonInfo",
+      "annotation": "",
+      "wikitext_line": 23
+    },
+    {
+      "id": "diff-wt-global-api-GetInspectArenaData-24",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetInspectArenaData",
+      "annotation": "",
+      "wikitext_line": 24
+    },
+    {
+      "id": "diff-wt-global-api-GetItemSpecInfo-25",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetItemSpecInfo",
+      "annotation": "",
+      "wikitext_line": 25
+    },
+    {
+      "id": "diff-wt-global-api-GetLFGSuspendedPlayers-26",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetLFGSuspendedPlayers",
+      "annotation": "",
+      "wikitext_line": 26
+    },
+    {
+      "id": "diff-wt-global-api-GetNumFlexRaidDungeons-27",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumFlexRaidDungeons",
+      "annotation": "",
+      "wikitext_line": 27
+    },
+    {
+      "id": "diff-wt-global-api-GetNumSavedWorldBosses-28",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumSavedWorldBosses",
+      "annotation": "",
+      "wikitext_line": 28
+    },
+    {
+      "id": "diff-wt-global-api-GetObjectIconTextureCoords-29",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetObjectIconTextureCoords",
+      "annotation": "",
+      "wikitext_line": 29
+    },
+    {
+      "id": "diff-wt-global-api-GetPersonalRatedInfo-30",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetPersonalRatedInfo",
+      "annotation": "",
+      "wikitext_line": 30
+    },
+    {
+      "id": "diff-wt-global-api-GetSavedWorldBossInfo-31",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetSavedWorldBossInfo",
+      "annotation": "",
+      "wikitext_line": 31
+    },
+    {
+      "id": "diff-wt-global-api-HasBoundGemProposed-32",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "HasBoundGemProposed",
+      "annotation": "",
+      "wikitext_line": 32
+    },
+    {
+      "id": "diff-wt-global-api-IsBattlePayItem-33",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsBattlePayItem",
+      "annotation": "",
+      "wikitext_line": 33
+    },
+    {
+      "id": "diff-wt-global-api-IsTrackingBattlePets-34",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsTrackingBattlePets",
+      "annotation": "",
+      "wikitext_line": 34
+    },
+    {
+      "id": "diff-wt-global-api-IsWargame-35",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsWargame",
+      "annotation": "",
+      "wikitext_line": 35
+    },
+    {
+      "id": "diff-wt-global-api-JoinSingleLFG-36",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "JoinSingleLFG",
+      "annotation": "",
+      "wikitext_line": 36
+    },
+    {
+      "id": "diff-wt-global-api-LeaveSingleLFG-37",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "LeaveSingleLFG",
+      "annotation": "",
+      "wikitext_line": 37
+    },
+    {
+      "id": "diff-wt-global-api-RequestRatedInfo-38",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "RequestRatedInfo",
+      "annotation": "",
+      "wikitext_line": 38
+    },
+    {
+      "id": "diff-wt-global-api-TimeoutResurrect-39",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "TimeoutResurrect",
+      "annotation": "",
+      "wikitext_line": 39
+    },
+    {
+      "id": "diff-wt-global-api-UnitGetTotalHealAbsorbs-40",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitGetTotalHealAbsorbs",
+      "annotation": "",
+      "wikitext_line": 40
+    },
+    {
+      "id": "diff-wt-global-api-UnitIsUnconscious-41",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitIsUnconscious",
+      "annotation": "",
+      "wikitext_line": 41
+    },
+    {
+      "id": "diff-wt-global-api-UnitRealmRelationship-42",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitRealmRelationship",
+      "annotation": "",
+      "wikitext_line": 42
+    },
+    {
+      "id": "diff-wt-global-api-securerandom-43",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "securerandom",
+      "annotation": "",
+      "wikitext_line": 43
+    },
+    {
+      "id": "diff-wt-global-api-AcceptArenaTeam-46",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "AcceptArenaTeam",
+      "annotation": "",
+      "wikitext_line": 46
+    },
+    {
+      "id": "diff-wt-global-api-ArenaTeamDisband-47",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ArenaTeamDisband",
+      "annotation": "",
+      "wikitext_line": 47
+    },
+    {
+      "id": "diff-wt-global-api-ArenaTeamInviteByName-48",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ArenaTeamInviteByName",
+      "annotation": "",
+      "wikitext_line": 48
+    },
+    {
+      "id": "diff-wt-global-api-ArenaTeamLeave-49",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ArenaTeamLeave",
+      "annotation": "",
+      "wikitext_line": 49
+    },
+    {
+      "id": "diff-wt-global-api-ArenaTeamRoster-50",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ArenaTeamRoster",
+      "annotation": "",
+      "wikitext_line": 50
+    },
+    {
+      "id": "diff-wt-global-api-ArenaTeamSetLeaderByName-51",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ArenaTeamSetLeaderByName",
+      "annotation": "",
+      "wikitext_line": 51
+    },
+    {
+      "id": "diff-wt-global-api-ArenaTeamUninviteByName-52",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ArenaTeamUninviteByName",
+      "annotation": "",
+      "wikitext_line": 52
+    },
+    {
+      "id": "diff-wt-global-api-CalendarMassInviteArenaTeam-53",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CalendarMassInviteArenaTeam",
+      "annotation": "",
+      "wikitext_line": 53
+    },
+    {
+      "id": "diff-wt-global-api-CloseArenaTeamRoster-54",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "CloseArenaTeamRoster",
+      "annotation": "",
+      "wikitext_line": 54
+    },
+    {
+      "id": "diff-wt-global-api-DeclineArenaTeam-55",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "DeclineArenaTeam",
+      "annotation": "",
+      "wikitext_line": 55
+    },
+    {
+      "id": "diff-wt-global-api-GetArenaTeam-56",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetArenaTeam",
+      "annotation": "",
+      "wikitext_line": 56
+    },
+    {
+      "id": "diff-wt-global-api-GetArenaTeamGdfInfo-57",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetArenaTeamGdfInfo",
+      "annotation": "",
+      "wikitext_line": 57
+    },
+    {
+      "id": "diff-wt-global-api-GetArenaTeamIndexBySize-58",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetArenaTeamIndexBySize",
+      "annotation": "",
+      "wikitext_line": 58
+    },
+    {
+      "id": "diff-wt-global-api-GetArenaTeamRosterInfo-59",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetArenaTeamRosterInfo",
+      "annotation": "",
+      "wikitext_line": 59
+    },
+    {
+      "id": "diff-wt-global-api-GetArenaTeamRosterSelection-60",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetArenaTeamRosterSelection",
+      "annotation": "",
+      "wikitext_line": 60
+    },
+    {
+      "id": "diff-wt-global-api-GetArenaTeamRosterShowOffline-61",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetArenaTeamRosterShowOffline",
+      "annotation": "",
+      "wikitext_line": 61
+    },
+    {
+      "id": "diff-wt-global-api-GetInspectArenaTeamData-62",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetInspectArenaTeamData",
+      "annotation": "",
+      "wikitext_line": 62
+    },
+    {
+      "id": "diff-wt-global-api-GetNumArenaTeamMembers-63",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetNumArenaTeamMembers",
+      "annotation": "",
+      "wikitext_line": 63
+    },
+    {
+      "id": "diff-wt-global-api-GetPVPRankInfo-64",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetPVPRankInfo",
+      "annotation": "",
+      "wikitext_line": 64
+    },
+    {
+      "id": "diff-wt-global-api-GetPVPRankProgress-65",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetPVPRankProgress",
+      "annotation": "",
+      "wikitext_line": 65
+    },
+    {
+      "id": "diff-wt-global-api-GetPersonalRatedArenaInfo-66",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetPersonalRatedArenaInfo",
+      "annotation": "",
+      "wikitext_line": 66
+    },
+    {
+      "id": "diff-wt-global-api-GetPersonalRatedBGInfo-67",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GetPersonalRatedBGInfo",
+      "annotation": "",
+      "wikitext_line": 67
+    },
+    {
+      "id": "diff-wt-global-api-GuildUIEnabled-68",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "GuildUIEnabled",
+      "annotation": "",
+      "wikitext_line": 68
+    },
+    {
+      "id": "diff-wt-global-api-RegisterForSave-69",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "RegisterForSave",
+      "annotation": "",
+      "wikitext_line": 69
+    },
+    {
+      "id": "diff-wt-global-api-RegisterForSavePerCharacter-70",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "RegisterForSavePerCharacter",
+      "annotation": "",
+      "wikitext_line": 70
+    },
+    {
+      "id": "diff-wt-global-api-RequestRatedArenaInfo-71",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "RequestRatedArenaInfo",
+      "annotation": "",
+      "wikitext_line": 71
+    },
+    {
+      "id": "diff-wt-global-api-RequestRatedBattlegroundInfo-72",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "RequestRatedBattlegroundInfo",
+      "annotation": "",
+      "wikitext_line": 72
+    },
+    {
+      "id": "diff-wt-global-api-SetArenaTeamRosterSelection-73",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetArenaTeamRosterSelection",
+      "annotation": "",
+      "wikitext_line": 73
+    },
+    {
+      "id": "diff-wt-global-api-SetArenaTeamRosterShowOffline-74",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetArenaTeamRosterShowOffline",
+      "annotation": "",
+      "wikitext_line": 74
+    },
+    {
+      "id": "diff-wt-global-api-SortArenaTeamRoster-75",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SortArenaTeamRoster",
+      "annotation": "",
+      "wikitext_line": 75
+    },
+    {
+      "id": "diff-wt-global-api-UnitPVPRank-76",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "UnitPVPRank",
+      "annotation": "",
+      "wikitext_line": 76
+    },
+    {
+      "id": "diff-wt-framexml-IsInProvingGround-86",
+      "section": "framexml",
+      "direction": "added",
+      "symbol": "IsInProvingGround",
+      "annotation": "",
+      "wikitext_line": 86
+    },
+    {
+      "id": "diff-wt-framexml-SecureCapsuleGet-87",
+      "section": "framexml",
+      "direction": "added",
+      "symbol": "SecureCapsuleGet",
+      "annotation": "",
+      "wikitext_line": 87
+    },
+    {
+      "id": "diff-wt-framexml-ToggleStoreUI-88",
+      "section": "framexml",
+      "direction": "added",
+      "symbol": "ToggleStoreUI",
+      "annotation": "",
+      "wikitext_line": 88
+    },
+    {
+      "id": "diff-wt-framexml-UpdateNewItemList-89",
+      "section": "framexml",
+      "direction": "added",
+      "symbol": "UpdateNewItemList",
+      "annotation": "",
+      "wikitext_line": 89
+    },
+    {
+      "id": "diff-wt-framexml-escapePatternSymbols-90",
+      "section": "framexml",
+      "direction": "added",
+      "symbol": "escapePatternSymbols",
+      "annotation": "",
+      "wikitext_line": 90
+    },
+    {
+      "id": "diff-wt-framexml-isRaidFinderDungeonDisplayable-91",
+      "section": "framexml",
+      "direction": "added",
+      "symbol": "isRaidFinderDungeonDisplayable",
+      "annotation": "",
+      "wikitext_line": 91
+    },
+    {
+      "id": "diff-wt-events-ARCHAEOLOGY_FIND_COMPLETE-101",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ARCHAEOLOGY_FIND_COMPLETE",
+      "annotation": "",
+      "wikitext_line": 101
+    },
+    {
+      "id": "diff-wt-events-ARCHAEOLOGY_SURVEY_CAST-102",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ARCHAEOLOGY_SURVEY_CAST",
+      "annotation": "",
+      "wikitext_line": 102
+    },
+    {
+      "id": "diff-wt-events-ARTIFACT_DIGSITE_COMPLETE-103",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ARTIFACT_DIGSITE_COMPLETE",
+      "annotation": "",
+      "wikitext_line": 103
+    },
+    {
+      "id": "diff-wt-events-CHAT_COMBAT_MSG_ARENA_POINTS_GAIN-104",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CHAT_COMBAT_MSG_ARENA_POINTS_GAIN",
+      "annotation": "",
+      "wikitext_line": 104
+    },
+    {
+      "id": "diff-wt-events-INSTANCE_GROUP_SIZE_CHANGED-105",
+      "section": "events",
+      "direction": "added",
+      "symbol": "INSTANCE_GROUP_SIZE_CHANGED",
+      "annotation": "",
+      "wikitext_line": 105
+    },
+    {
+      "id": "diff-wt-events-PET_BATTLE_PET_TYPE_CHANGED-106",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PET_BATTLE_PET_TYPE_CHANGED",
+      "annotation": "",
+      "wikitext_line": 106
+    },
+    {
+      "id": "diff-wt-events-PROVING_GROUNDS_SCORE_UPDATE-107",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PROVING_GROUNDS_SCORE_UPDATE",
+      "annotation": "",
+      "wikitext_line": 107
+    },
+    {
+      "id": "diff-wt-events-SAVED_VARIABLES_TOO_LARGE-108",
+      "section": "events",
+      "direction": "added",
+      "symbol": "SAVED_VARIABLES_TOO_LARGE",
+      "annotation": "",
+      "wikitext_line": 108
+    },
+    {
+      "id": "diff-wt-events-STORE_CONFIRM_PURCHASE-109",
+      "section": "events",
+      "direction": "added",
+      "symbol": "STORE_CONFIRM_PURCHASE",
+      "annotation": "",
+      "wikitext_line": 109
+    },
+    {
+      "id": "diff-wt-events-STORE_ORDER_INITIATION_FAILED-110",
+      "section": "events",
+      "direction": "added",
+      "symbol": "STORE_ORDER_INITIATION_FAILED",
+      "annotation": "",
+      "wikitext_line": 110
+    },
+    {
+      "id": "diff-wt-events-STORE_PRODUCTS_UPDATED-111",
+      "section": "events",
+      "direction": "added",
+      "symbol": "STORE_PRODUCTS_UPDATED",
+      "annotation": "",
+      "wikitext_line": 111
+    },
+    {
+      "id": "diff-wt-events-STORE_PRODUCT_DELIVERED-112",
+      "section": "events",
+      "direction": "added",
+      "symbol": "STORE_PRODUCT_DELIVERED",
+      "annotation": "",
+      "wikitext_line": 112
+    },
+    {
+      "id": "diff-wt-events-STORE_PURCHASE_ERROR-113",
+      "section": "events",
+      "direction": "added",
+      "symbol": "STORE_PURCHASE_ERROR",
+      "annotation": "",
+      "wikitext_line": 113
+    },
+    {
+      "id": "diff-wt-events-STORE_PURCHASE_LIST_UPDATED-114",
+      "section": "events",
+      "direction": "added",
+      "symbol": "STORE_PURCHASE_LIST_UPDATED",
+      "annotation": "",
+      "wikitext_line": 114
+    },
+    {
+      "id": "diff-wt-events-STORE_STATUS_CHANGED-115",
+      "section": "events",
+      "direction": "added",
+      "symbol": "STORE_STATUS_CHANGED",
+      "annotation": "",
+      "wikitext_line": 115
+    },
+    {
+      "id": "diff-wt-events-UNIT_HEAL_ABSORB_AMOUNT_CHANGED-116",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UNIT_HEAL_ABSORB_AMOUNT_CHANGED",
+      "annotation": "",
+      "wikitext_line": 116
+    },
+    {
+      "id": "diff-wt-events-VIGNETTE_ADDED-117",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VIGNETTE_ADDED",
+      "annotation": "",
+      "wikitext_line": 117
+    },
+    {
+      "id": "diff-wt-events-VIGNETTE_REMOVED-118",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VIGNETTE_REMOVED",
+      "annotation": "",
+      "wikitext_line": 118
+    },
+    {
+      "id": "diff-wt-widgets-Animation:IsForbidden-128",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Animation:IsForbidden",
+      "annotation": "",
+      "wikitext_line": 128
+    },
+    {
+      "id": "diff-wt-widgets-AnimationGroup:IsForbidden-129",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "AnimationGroup:IsForbidden",
+      "annotation": "",
+      "wikitext_line": 129
+    },
+    {
+      "id": "diff-wt-widgets-FontString:IsForbidden-130",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "FontString:IsForbidden",
+      "annotation": "",
+      "wikitext_line": 130
+    },
+    {
+      "id": "diff-wt-widgets-Frame:IsForbidden-131",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Frame:IsForbidden",
+      "annotation": "",
+      "wikitext_line": 131
+    },
+    {
+      "id": "diff-wt-widgets-GameTooltip:SetUnitConsolidatedBuff-132",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "GameTooltip:SetUnitConsolidatedBuff",
+      "annotation": "",
+      "wikitext_line": 132
+    },
+    {
+      "id": "diff-wt-widgets-Slider:GetStepsPerPage-133",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Slider:GetStepsPerPage",
+      "annotation": "",
+      "wikitext_line": 133
+    },
+    {
+      "id": "diff-wt-widgets-Slider:SetStepsPerPage-134",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Slider:SetStepsPerPage",
+      "annotation": "",
+      "wikitext_line": 134
+    },
+    {
+      "id": "diff-wt-widgets-Texture:IsForbidden-135",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Texture:IsForbidden",
+      "annotation": "",
+      "wikitext_line": 135
+    }
+  ],
+  "negative_control": {
+    "replaced_passing_source_id": "wt-global-api-GetAuctionItemInfo-4",
+    "reason": "Shared sweep fixes row count; replace one passing occurrence, do not append."
+  }
+}

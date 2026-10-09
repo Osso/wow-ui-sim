@@ -27,7 +27,7 @@ No simulator runtime code, Blizzard Lua, vendor/Wowless/WowlessData, or Classic 
 
 [Scans](../../../data/patch-api/evidence/5.4.0-session-2026-10-08/p540-retirement-scans.json) retain untruncated `/usr/bin/grep -RInw -F` output for each of 31 bare global names. This includes `pcall(Name, ...)` and `and Name then`; none of this page's removals is a namespaced member. Cached scans exclude only *Documentation* files/directories. GetPVPRankInfo and UnitPVPRank have cached Vanilla consumers; source/test callers also exist for three other identities. No new gate retires these names. All retail absences predate this audit.
 
-[Later-register checks](../../../data/patch-api/evidence/5.4.0-session-2026-10-08/p540-later-register-check.json) pin master bebcc5830 and queued p547/p542/p541 tips with git ls-tree-derived complete source sets. No later register re-adds these removals. The sweep begins with placeholders for 5.4.1, 5.4.2 and 5.4.7, followed by 5.4.8, 6.0.1 and the remaining retail chain; no Classic 5.5.x input.
+[Later-register checks](../../../data/patch-api/evidence/5.4.0-session-2026-10-08/p540-later-register-check.json) pin master bebcc5830 and queued p547/p542/p541 tips with git ls-tree-derived complete source sets. No later register re-adds these removals. The historical sweep began with placeholders for 5.4.1, 5.4.2 and 5.4.7, followed by 5.4.8, 6.0.1 and the remaining retail chain; no Classic 5.5.x input.
 
 ## Reproduction and proof
 
@@ -48,3 +48,9 @@ Final targeted proof passes: 57 publication/factory cases, 2 prefork and 2 stand
 
 - [[patch-5-4-8-api-audit]] — template and next merged retail register.
 - [[patch-audit-validator-portability]] — fixed historical scope and later-audit gate.
+
+## Integration on master 3c60ac0ea — 2026-10-08
+
+Historical receipts remain untouched; [integrated evidence](../../../data/patch-api/evidence/5.4.0-session-2026-10-08/integrated/) preserves 211 artifacts, 14 own and three external rebase mappings with patch IDs and historical blobs. The copied parser was dropped: parse_mists_automated_diff and strip_mists_automated_inventories now come from merged 5.4.2 on master. Only 5.4.0 summary/separate-diff/source-markup opt-ins remain new. All 63 registers and 60 main extracts reproduce; three inherited failures remain exact, and the separately pinned diff reproduces with its recorded flags.
+
+RED sweep identifies exactly one attributable replacement: 5.4.2 removal wt-global-api-securerandom-28 supersedes diff-wt-global-api-securerandom-43. Current raw/lookup nil is the expected absence, not historical RNG behavior. Exact gaps change 22 → 21; no new runtime model, retirement, or source edit. No src/ runtime changes versus master; conditional runtime/lib/startup comparisons do not apply. Fresh all-sweeps, negative, Classic parity, warning and portability receipts pending.

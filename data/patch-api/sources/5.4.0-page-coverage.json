@@ -13,7 +13,7 @@
       "sha256": "d01c7b4c11d9c1d1c7b9f8fab6e9a1ebf435ae91f7f8f44a8a8eb7affa39ee2f"
     }
   ],
-  "proof_policy": "All main-page and separately pinned transclusion occurrences accounted. Publication/absence is not behavioral credit. Current instance return #9 and forbidden-frame flag transitions have bounded fixture proof. Classic 5.5.x excluded; queued retail 5.4.1/5.4.2/5.4.7 placeholders remain. No runtime changes or new retirements.",
+  "proof_policy": "All main-page and separately pinned transclusion occurrences accounted. Publication/absence is not behavioral credit. Current instance return #9 and forbidden-frame flag transitions have bounded fixture proof. Classic 5.5.x excluded; merged retail 5.4.1/5.4.2/5.4.7 registers replace placeholders; only the exact 5.4.2 securerandom removal changes the retained gap set. No runtime changes or new retirements.",
   "source_rows": [
     {
       "source_id": "wt-global-api-GetAuctionItemInfo-4",
@@ -383,9 +383,11 @@
     },
     {
       "source_id": "diff-wt-global-api-securerandom-43",
-      "status": "audit-pending",
-      "capabilities": [],
-      "note": "Page gives no RNG bounds, errors or security contract; no math.random alias or speculative taint policy."
+      "status": "bounded-coverage",
+      "capabilities": [
+        "current-retail-absence"
+      ],
+      "note": "Current retail absence superseded by 5.4.2 removal wt-global-api-securerandom-28. Historical RNG bounds/errors/security remain unproved; no runtime alias or retirement added."
     },
     {
       "source_id": "diff-wt-global-api-AcceptArenaTeam-46",

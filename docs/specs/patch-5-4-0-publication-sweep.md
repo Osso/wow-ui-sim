@@ -5,7 +5,7 @@ Audit the pinned 2013 retail Mists API page and separately pinned automated diff
 ## What it must do
 
 - [x] Probe every register occurrence under the retail prefork fixture and compare the exact retained gap set.
-- [x] Apply later retail registers in chronological order; retain queued 5.4.1, 5.4.2 and 5.4.7 placeholders before 5.4.8.
+- [x] Apply later retail registers in chronological order; use merged 5.4.1, 5.4.2 and 5.4.7 registers before 5.4.8.
 - [x] Reproduce pinned sources without changing older extracts/registers.
 - [x] Preserve all removal consumer scans and account for every prose/enum occurrence without claiming publication proves semantics.
 
@@ -23,7 +23,7 @@ Audit the pinned 2013 retail Mists API page and separately pinned automated diff
 - `tests/patch_5_4_0_behavior.rs`: shared assertions executed by prefork markers and standalone test wrappers.
 - `tests/data/patch_5_4_0_sweep_known_gaps.json`: exact known gap identities.
 - `tools/gen_patch_wikitext_register.py`: opt-in reused Mists inventory parser and summary/diff flags.
-- `tools/extract_patch_non_inventory.py`: opt-in source markup and copied Mists inventory stripping.
+- `tools/extract_patch_non_inventory.py`: opt-in source markup and master-owned Mists inventory stripping.
 
 ## Tests asserting this spec
 
@@ -32,8 +32,8 @@ Audit the pinned 2013 retail Mists API page and separately pinned automated diff
 
 ## Known gaps (current cycle)
 
-- [ ] 22 publication gaps and 27 substantive extract contracts retained with precise reasons in the audit ledger.
-- [ ] Queued 5.4.1/5.4.2/5.4.7 integration remains future main-thread work.
+- [ ] 21 publication gaps and 27 substantive extract contracts retained with precise reasons in the audit ledger.
+- [x] Integrated 5.4.1/5.4.2/5.4.7; 5.4.2 removes securerandom, replacing exactly one historical gap with current absence.
 
 ## Out of scope
 

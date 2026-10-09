@@ -1,0 +1,1 @@
+{"status": "PASS", "inventory": 114, "extract_rows": 45, "retained_gaps": 22, "registers_reproduced": 56, "extracts_reproduced": 53, "removal_scans": 31}
