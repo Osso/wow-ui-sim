@@ -89,7 +89,9 @@ def preserve(extractor, revision):
         assert before == after, path
         rows.append({'path': path, 'before_sha256': digest(before), 'after_sha256': digest(after)})
         if path.endswith('-api-changes.wikitext'):
-            provenance = read(ROOT / path.replace('-api-changes.wikitext', '-api-changes.provenance.json'))
+            provenance_path = ROOT / path.replace('-api-changes.wikitext', '-api-changes.provenance.json')
+            # Source-only Classic pages have no generator/extractor provenance.
+            provenance = read(provenance_path) if provenance_path.exists() else {}
             flags = {(), ('--preserve-examples',), tuple(provenance.get('extractor_flags', []))}
             for mode in sorted(flags):
                 previous = outcome(namespace['extract_text'], before.decode(), mode)
