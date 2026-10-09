@@ -1,0 +1,31 @@
+{
+  "scope": "targeted SOURCE development only",
+  "runs": [
+    {
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1143-page/data/patch-api/evidence/1.14.3-session-2026-10-09/test_source.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1143-page",
+      "revision": "1ce4359e9",
+      "result": "GREEN8/8",
+      "omission_controls": 1135,
+      "later_invalidation": "none; docs/portable receipts do not change original SOURCE scope"
+    },
+    {
+      "revision": "c1b8f094b",
+      "result": "RED8 assertion failures",
+      "artifact": "red.log"
+    },
+    {
+      "result": "portable RED3 absent-archive failures",
+      "artifact": "portable-red.log"
+    }
+  ],
+  "measurements": {
+    "runtime": 0,
+    "model": 0,
+    "native": 0
+  }
+}
