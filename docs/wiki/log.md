@@ -596,3 +596,7 @@ Rebased onto 7c3bbbfd3, retaining both parser behaviors and wiki histories. Real
 ## [2026-10-08] ingest | Patch 5.0.1 retail redirect audit
 
 [Audit](investigations/patch-5-0-1-api-audit.md): pinned revision 5344081 redirects literally to 5.0.4; zero inventory, one metadata-only context ID. Separate p504-page owns destination. No runtime or retirement changes; verification pending.
+
+## [2026-10-08] verification | Patch 5.0.1 redirect boundary
+
+[Audit](investigations/patch-5-0-1-api-audit.md): own 1/1 and retail publication/factory 64/64 pass; fabricated-entry 1 → 0 rejection. Both own outputs `{}` are harness evidence only. Python 119/119, 68 registers/65 extracts plus supplemental diff, format and zero-non-vendor-warning Mists pass; three inherited extraction failures unchanged. Historical sealing and clean/later gates pending.

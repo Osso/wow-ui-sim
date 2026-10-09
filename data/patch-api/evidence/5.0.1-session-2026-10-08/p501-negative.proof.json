@@ -1,0 +1,24 @@
+{
+  "command": [
+    "cargo",
+    "test",
+    "--test",
+    "prefork_full_ui",
+    "--",
+    "patch_5_0_1",
+    "--nocapture"
+  ],
+  "revision": "59140d35dc3a63ea2e9cb771029c5f49641e4e5b",
+  "identities": {
+    "src": "f696a92562e3023ba0abec6d7fd14ea7c79455db",
+    "tests": "05d874bbace15fcb11cb8a9a978f5b547e1b411a",
+    "tools": "d9207917bcd0f6de544e87829eed6d57ffdf1bfa",
+    "Cargo.toml": "ad3ade576a4d4f822a8a56b9aeee919a4b3e468d",
+    "Cargo.lock": "715e005a0b34809d12002530ae2ed689fcd070c7",
+    "build.rs": "af69ee82c00f65702dd691a97bd6b47d5ba39148",
+    "data/patch-api/sources": "0be7b481e7d3e3f2326255d83705dfef09ae9791"
+  },
+  "exit": 1,
+  "log": "p501-negative.log",
+  "log_sha256": "39c04e45611b138b06cb0760b9bd255d4a682cadc63cdbcf1721bd7c03628fae"
+}

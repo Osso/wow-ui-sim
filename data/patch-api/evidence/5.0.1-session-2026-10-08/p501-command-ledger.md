@@ -9,9 +9,15 @@ Scope: literal historical retail redirect, not destination APIs. Base/source rec
 - Eleven root `tools/test_*.py` programs: PASS, 112 fixtures. Extra `tools/tests/test_gen_patch_12_0_0_register.py`: initial system Python failure (PyYAML absent) retained; `uv run --no-project --with PyYAML python3 -B …` passes 7/7, no code changes. Total 119 passing fixtures.
 - `cargo check --no-default-features --features sound,gui,casc,client-mists --tests`: async completed; retained log/receipt. No vendor edits or warning suppression.
 
-## Pending
+## Runtime harness proofs
 
-Own prefork, fabricated-entry control, all retail publication sweeps, seal tamper control and clean/later validator gate. Full suite remains coordinator-only.
+- At `f86fe61eb`, `cargo test --test prefork_full_ui -- patch_5_0_1 --nocapture`: PASS 1/1; output exactly `{}`. Build completed asynchronously, no timeout or log-recovery rerun.
+- At `59140d35d`, same own selector with `P501_SWEEP_REGISTER` pointing to the committed dedicated fabricated register: expected cargo exit 101, 0 passed/1 failed, exact row-count rejection 1 → 0. No positive observation file is written; production inventory stays empty.
+- At `59140d35d`, `cargo test --test prefork_full_ui -- publication_sweep --nocapture`: PASS 64/64 including factory; own output exactly `{}`, all 63 retail page result ID/gap sets checked against committed registers and expected gaps.
+
+## Pending sealing gate
+
+Own historical validator, seal tamper control and clean/later validator gate. Full suite remains coordinator-only.
 
 ## Invalidation
 

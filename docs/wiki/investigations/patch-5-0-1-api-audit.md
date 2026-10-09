@@ -20,7 +20,9 @@ The retail sweep starts with one queued 5.0.4 empty placeholder, followed by act
 
 ## Verification
 
-Pending committed proofs: own zero-row prefork case, all publication sweeps, fabricated-entry rejection, Python fixtures, saved-source reproduction, formatting, non-vendor-warning-clean Mists check, historical validator and clean/later gate. No full-suite, startup, native-client or modeled behavior claim.
+Own zero-row prefork **1/1** and all retail publication/factory cases **64/64** pass. Both own observations are exactly `{}`: harness execution only, not positive API proof. Dedicated fabricated entry fails at the exact **1 → 0** row-count boundary before API observation; no runtime or inventory edits. Eleven root Python programs pass **112/112** fixtures; supplemental 12.0.0 generator tests pass **7/7** with PyYAML supplied by `uv` after a retained missing-dependency failure. Total **119/119**. All **68 registers/65 extracts** and the supplemental 5.4.0 diff extract reproduce; exactly three inherited extraction failures (12.0.5/12.0.7 byte mismatches, 12.1.0 unsupported template) remain. Formatting and Mists `cargo check --no-default-features --features sound,gui,casc,client-mists --tests` pass with **zero non-vendor warnings**; six inherited iced manifest warnings and summary remain unsuppressed.
+
+[Command ledger](../../../data/patch-api/evidence/5.0.1-session-2026-10-08/p501-command-ledger.md) and compact tree-ID receipts pin exact command revisions and scopes. Historical validator and clean/later gate pending sealing. No full-suite, startup, native-client or modeled behavior claim.
 
 ## Sources
 

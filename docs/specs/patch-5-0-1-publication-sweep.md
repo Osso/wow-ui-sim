@@ -7,8 +7,8 @@ Audit historical retail pageid 554410, revision 5344081, as the literal `#REDIRE
 - [x] Preserve the supplied response and literal redirect without following it.
 - [x] Generate empty inventory/header counts and the sole metadata-only context ID using existing default tools.
 - [x] Define a zero-row retail prefork sweep and empty expected-gap list; queued 5.0.4 placeholder first, actual 5.1.0 and newer retail registers afterward.
-- [ ] Reject a fabricated entry; retain empty `{}` observations as harness execution, not API proof.
-- [ ] Reproduce all saved sources, preserving exactly the three inherited extraction failures; pass Python fixtures, own/publication sweeps, format and non-vendor-warning-clean Mists check.
+- [x] Reject a fabricated entry; retain empty `{}` observations as harness execution, not API proof.
+- [x] Reproduce all saved sources, preserving exactly the three inherited extraction failures; pass Python fixtures, own/publication sweeps, format and non-vendor-warning-clean Mists check.
 - [ ] Seal historical inputs and pass clean/synthetic-later validator gates.
 
 ## How it works
