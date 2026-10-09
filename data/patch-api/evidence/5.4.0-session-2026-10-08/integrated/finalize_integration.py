@@ -93,6 +93,10 @@ def main():
     assert count == 1
     validator.write_text(contents)
     commit('Pin portable integrated 5.4.0 context and evidence seals')
+    return finish_gates(observations, fixtures)
+
+
+def finish_gates(observations, fixtures):
     if run_proof('integrated-validator', [sys.executable, '-B', str(HERE.parent / 'validate.py')]):
         return 1
     if run_proof('own-seal-controls', [sys.executable, '-B', str(HERE / 'test_own_seals.py')]):

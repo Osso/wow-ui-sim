@@ -8,7 +8,7 @@ import sys
 sys.dont_write_bytecode = True
 ROOT = Path(__file__).resolve().parents[5]
 HERE = Path(__file__).resolve().parent
-MASTER = '3c60ac0ea'
+MASTER = '3c60ac0ea839d9be4e864d82eb6c53ee3b3d7702'
 REQUIRED = ['own-sweep', 'all-sweeps', 'prefork-patch_5_4_0', 'integration-patch_5_4_0',
             'negative', 'reproduction', 'prior-validators', 'checks', 'master-all-sweeps',
             'format', 'mists-check', 'test_check_patch_validators', 'test_extract_patch_non_inventory',
