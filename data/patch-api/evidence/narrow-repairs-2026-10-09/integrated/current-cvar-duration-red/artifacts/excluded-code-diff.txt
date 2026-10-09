@@ -1,0 +1,61 @@
+diff --git a/Cargo.toml b/Cargo.toml
+index fff42ec5b..cf02c2562 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -186,6 +186,11 @@ name = "patch_1_13_3_npc_health"
+ path = "patch-tests/patch_1_13_3_npc_health.rs"
+ required-features = ["client-era"]
+ 
++[[test]]
++name = "patch_1_13_2_cvar_state"
++path = "patch-tests/patch_1_13_2_cvar_state.rs"
++required-features = ["client-era"]
++
+ [[test]]
+ name = "patch_1_13_6_factory"
+ path = "patch-tests/patch_1_13_6_factory.rs"
+diff --git a/src/iced_app/frame_collect.rs b/src/iced_app/frame_collect.rs
+index 02b0f7554..0c1b3a9b0 100644
+--- a/src/iced_app/frame_collect.rs
++++ b/src/iced_app/frame_collect.rs
+@@ -375,15 +375,18 @@ mod tests {
+         let collected = super::collect_hittable_frames(&registry, &buckets);
+         let ids: Vec<_> = collected.hittable.iter().map(|entry| entry.0).collect();
+         assert_eq!(ids, [low, child, panel, independent]);
+-        let rects = crate::iced_app::strata_emit::build_hittable_rects(&collected, &registry);
+-        let grid = crate::iced_app::hit_grid::HitGrid::new(rects, 100.0, 100.0);
+-        let point = iced::Point::new(5.0, 5.0);
+-        assert_eq!(grid.topmost_matching_at(point, |_| true), Some(independent));
+-        assert_eq!(
+-            grid.topmost_matching_at(point, |id| id != independent),
+-            Some(panel),
+-            "transparent MEDIUM panel must win over its lower group's HIGH child",
+-        );
++        #[cfg(feature = "gui")]
++        {
++            let rects = crate::iced_app::strata_emit::build_hittable_rects(&collected, &registry);
++            let grid = crate::iced_app::hit_grid::HitGrid::new(rects, 100.0, 100.0);
++            let point = iced::Point::new(5.0, 5.0);
++            assert_eq!(grid.topmost_matching_at(point, |_| true), Some(independent));
++            assert_eq!(
++                grid.topmost_matching_at(point, |id| id != independent),
++                Some(panel),
++                "transparent MEDIUM panel must win over its lower group's HIGH child",
++            );
++        }
+     }
+ 
+     #[test]
+diff --git a/src/loader/tests/wow_api_globals/transmog_situation.rs b/src/loader/tests/wow_api_globals/transmog_situation.rs
+index f872027c6..da7745076 100644
+--- a/src/loader/tests/wow_api_globals/transmog_situation.rs
++++ b/src/loader/tests/wow_api_globals/transmog_situation.rs
+@@ -1,6 +1,7 @@
+ //! Startup publication and values for the 12.0.0 TransmogSituation enum.
+ 
+-#![cfg(feature = "retail-12-0-0")]
++// Later cumulative epochs publish additional members and different metadata.
++#![cfg(all(feature = "retail-12-0-0", not(feature = "retail-12-0-5")))]
+ 
+ use super::super::*;
+ 

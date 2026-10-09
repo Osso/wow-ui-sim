@@ -26,7 +26,7 @@ The model keeps owned Rust rule/component data sorted by threshold. Lookup uses 
 
 ## Tests asserting this spec
 
-`tests/numeric_rule_formatter.rs`: seven focused cases cover countdown formatting, non-tie rounding, thresholds/clamps, components, independent configuration/copies, transactional validation, duration binding, and Ellesmere AuraKit's exact duration breakpoint table. The shared `tests/fixtures/ellesmere_duration_formatter.lua` asserts `10`, `1m`, `2m`, hours and days. At 59.9 seconds the existing model returns `60`: threshold selection precedes rounding. This boundary preserves the modeled contract; native parity at that boundary has not been measured.
+`tests/numeric_rule_formatter.rs`: seven focused cases cover countdown formatting, non-tie rounding, thresholds/clamps, components, independent configuration/copies, transactional validation, duration binding, and Ellesmere AuraKit's exact duration breakpoint table. The duration-binding consumer supplies real duration objects on an explicit zero-time manual clock; custom table `.Format` receives that object and reads `GetRemainingDuration()`. Visible strings remain `2`, `9`, `8`, and `custom:8.2`; this tests modeled callback behavior, not native parity. The shared `tests/fixtures/ellesmere_duration_formatter.lua` asserts `10`, `1m`, `2m`, hours and days. At 59.9 seconds the existing model returns `60`: threshold selection precedes rounding. This boundary preserves the modeled contract; native parity at that boundary has not been measured.
 
 ## Known gaps (current cycle)
 

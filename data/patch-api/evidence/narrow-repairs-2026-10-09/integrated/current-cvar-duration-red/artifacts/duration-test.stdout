@@ -1,0 +1,11 @@
+
+running 1 test
+test numeric_rule_formatter::numeric_rule_formatter_updates_duration_binding_text ... FAILED
+
+failures:
+
+failures:
+    numeric_rule_formatter::numeric_rule_formatter_updates_duration_binding_text
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10697 filtered out; finished in 0.17s
+

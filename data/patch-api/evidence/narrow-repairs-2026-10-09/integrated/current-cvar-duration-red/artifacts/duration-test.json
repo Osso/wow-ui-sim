@@ -1,0 +1,23 @@
+{
+  "argv": [
+    "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/integration-1db16289b0998b2a",
+    "numeric_rule_formatter::numeric_rule_formatter_updates_duration_binding_text",
+    "--exact",
+    "--nocapture"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "start_utc": "2026-10-09T19:46:24.479988+00:00",
+  "end_utc": "2026-10-09T19:46:24.695037+00:00",
+  "seconds": 0.21504705199913587,
+  "exit_code": 101,
+  "timeout_seconds": 90,
+  "invocations": 1,
+  "compiled_epoch": "41f1abbeb83d508b323f51d1f371a3bc506b63b5",
+  "binary_sha256_before": "3395a9d9307b65f28b7cb51f423e7d4a315c3793ecbd3e0ac214497780f8356b",
+  "binary_sha256_after": "3395a9d9307b65f28b7cb51f423e7d4a315c3793ecbd3e0ac214497780f8356b",
+  "stdout": "duration-test.stdout",
+  "stderr": "duration-test.stderr",
+  "stdout_sha256": "b948417b31dffbe085640a946dfa2a9fc63083bf7105983f59316d821b61c055",
+  "stderr_sha256": "327cebd0d95dab2977091f8cb6ede6491f9495676bf9e0f4076cd65dc29dc6fa",
+  "explicit_environment_overrides": {}
+}

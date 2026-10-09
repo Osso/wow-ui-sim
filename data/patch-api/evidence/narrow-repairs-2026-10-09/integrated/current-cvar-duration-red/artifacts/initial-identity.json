@@ -1,0 +1,9 @@
+{
+  "head": "1b505c7c12e4a359cb8ab01eb8bee24adf9ac031",
+  "status": "?? .code-index.db\n",
+  "epoch": "41f1abbeb83d508b323f51d1f371a3bc506b63b5",
+  "target": "1b505c7c12e4a359cb8ab01eb8bee24adf9ac031",
+  "binary": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/integration-1db16289b0998b2a",
+  "sha256": "3395a9d9307b65f28b7cb51f423e7d4a315c3793ecbd3e0ac214497780f8356b",
+  "recorded_sha256": "3395a9d9307b65f28b7cb51f423e7d4a315c3793ecbd3e0ac214497780f8356b"
+}

@@ -1,0 +1,116 @@
+{
+  "retained": [
+    {
+      "path": "artifacts/concurrent-head-diff.txt",
+      "bytes": 30730,
+      "sha256": "677002712524265567dc9ff01f5fc4d0b9bc61050856e080b5b7dd8b21c1d4f3"
+    },
+    {
+      "path": "artifacts/duration-list.json",
+      "bytes": 532,
+      "sha256": "778306e930bd0e4b63145492d127b6f75fec436e4dc301ff59b32a571607b4a6"
+    },
+    {
+      "path": "artifacts/duration-list.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/duration-list.stdout",
+      "bytes": 105,
+      "sha256": "71898a4edf238be68f834ec68bb73d523a61dfee4189cbf9bc38cc4097431f61"
+    },
+    {
+      "path": "artifacts/duration-test.json",
+      "bytes": 1008,
+      "sha256": "43b467f056aeb0eb48471aa905ee816e1542ce71d70a11c0ea205763b3a94599"
+    },
+    {
+      "path": "artifacts/duration-test.stderr",
+      "bytes": 1064,
+      "sha256": "327cebd0d95dab2977091f8cb6ede6491f9495676bf9e0f4076cd65dc29dc6fa"
+    },
+    {
+      "path": "artifacts/duration-test.stdout",
+      "bytes": 316,
+      "sha256": "b948417b31dffbe085640a946dfa2a9fc63083bf7105983f59316d821b61c055"
+    },
+    {
+      "path": "artifacts/epoch-current-name-status.txt",
+      "bytes": 105404,
+      "sha256": "01013f6651d2db7cf4794be53ae2c100fe276130ce4338b9e9bcef5d5605d1d4"
+    },
+    {
+      "path": "artifacts/excluded-code-diff.txt",
+      "bytes": 2649,
+      "sha256": "7024ae3e76369f5dc419117c19aa88cf1dc41341b16299fdb6e988b772b796d5"
+    },
+    {
+      "path": "artifacts/final-state.json",
+      "bytes": 306,
+      "sha256": "85424a2d58d104ff90b5e2581a644e6a21984cdf64350da2d03c8094232ea8e5"
+    },
+    {
+      "path": "artifacts/initial-identity.json",
+      "bytes": 468,
+      "sha256": "e91193772ce1feb57703c6be2f0f92e5e3ed0ee4917b3b2d727f8d669d105b52"
+    },
+    {
+      "path": "artifacts/list.json",
+      "bytes": 601,
+      "sha256": "00ecfecd60e284a48cdbc6e4982580616c1b4293a11edcfeafb460a34eca86ca"
+    },
+    {
+      "path": "artifacts/list.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/list.stdout",
+      "bytes": 121,
+      "sha256": "d9a2a8d3d7c6a854d220105147756547a44701f1a0087be42e97d9b016600c2b"
+    },
+    {
+      "path": "artifacts/manifest.json",
+      "bytes": 2135,
+      "sha256": "3edf987e5f6e40117c6fcc1ae6192771d3e96c63713f346b49c2ae5ebca3679c"
+    },
+    {
+      "path": "artifacts/retained-binary-artifact.json",
+      "bytes": 1502,
+      "sha256": "72e3c9e727fb24e1a8aee54d0a9fe1fb4a4310a1d9e69fea31d47edba58737dd"
+    },
+    {
+      "path": "artifacts/retained-command-ledger.json",
+      "bytes": 8292,
+      "sha256": "8845f92f362ea4b9ff46822323de89d725cae8814f4ca55157745fa46af4e361"
+    },
+    {
+      "path": "artifacts/source-equivalence.json",
+      "bytes": 1093765,
+      "sha256": "2f87a94fb156b311cc6300653a9f5d5a3a3064abbaaea8f9a063010ff00b0def"
+    },
+    {
+      "path": "artifacts/test.json",
+      "bytes": 1744,
+      "sha256": "59f66e54ae2f4c8dfb65bef39409d3577395b2d5ef5d2ef55f4a8f445162f1a5"
+    },
+    {
+      "path": "artifacts/test.stderr",
+      "bytes": 641,
+      "sha256": "4c15b2ed5f7fbcebf8cae1e59b8c3a9fd335f7ed0c3c27bc248197f7d12c4453"
+    },
+    {
+      "path": "artifacts/test.stdout",
+      "bytes": 221,
+      "sha256": "d07da801b1e113dc081403bb8788599051ee74abeef406c626d1778f525c937b"
+    },
+    {
+      "path": "report.md",
+      "bytes": 6916,
+      "sha256": "d4041aeb1d77ddf5e508daef7a430be35135f027be95c9998684899e7e5a9989"
+    }
+  ],
+  "privacy": "Scoped token/private-key/Bearer pattern scan before copy no matches. No process/value snapshots; environment key names only. Heuristic not exhaustive. Byte-identical originals unchanged.",
+  "scope": "Existing41f1abbeb integration artifact; exactCVarPASSanddurationREDbeforelaterfixtureedit, never relabeledcurrentSHAcompilation."
+}

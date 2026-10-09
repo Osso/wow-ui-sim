@@ -1154,3 +1154,7 @@ Added [audit](investigations/patch-1-3-0-api-audit.md) and [spec](../specs/patch
 ## [2026-10-09] integrated proof | Final literal Retail pages
 
 [SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md):1.4/1.3/1.1/1.0SOURCE30/30,portable12/12,currentcategory3/3,validators4/4. Actuale20c472ca/1b505c7c1epochs;182original+69receipt+3extensionseals intact,8tamper rejection/restoration pairs.54artifacts retained; fullmerged streams, separate channelsunproven. Registryendpoint notbehavior/native/parentclosure.
+
+## [2026-10-09] fixture correction | Typed deterministic duration binding
+
+[SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md): retained source-equivalent41f1abbebartifactCVar1/1 and scalar-durationRED0/1. Duration consumer now supplies real objects on explicitmanualclock0 and customcallback readsremainingduration; allvisible strings unchanged. No runtimechange; correctedexecutionpending serializedcompile.22proofartifacts retained.

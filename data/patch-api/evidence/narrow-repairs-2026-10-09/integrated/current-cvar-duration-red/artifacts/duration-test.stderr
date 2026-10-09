@@ -1,0 +1,15 @@
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 2.04ms
+[  0.002s] [Startup] rilua VM created in 105.43µs
+[  0.002s] [Startup] builtin frames initialized in 60.52µs
+[  0.002s] [Startup] template registry cleared in 4.72µs
+[  0.002s] [Startup] intrinsic templates registered in 6.11µs
+[  0.002s] [Startup] initial app_data lua handle installed in 521.00ns
+[  0.163s] [Startup] init_lua_state complete in 160.84ms
+[  0.163s] [Startup] final app_data lua handle installed in 340.00ns
+[  0.163s] [Startup] initial screen globals installed in 110.84µs
+[  0.163s] [Startup] WowLuaEnv::new complete
+
+thread 'numeric_rule_formatter::numeric_rule_formatter_updates_duration_binding_text' (4058343) panicked at /home/osso/Projects/wow/wow-ui-sim/tests/numeric_rule_formatter.rs:181:6:
+native formatter feeds the duration binding consumer: Lua(Runtime(RuntimeError { message: "expected LuaDurationObject at argument 1", level: 0, traceback: [] }))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace

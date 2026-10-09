@@ -52,6 +52,14 @@ Python proof ran at `f8da74e31`; Cargo ran from `43d9ce02` through `f2eebd359` i
 
 [Retention manifest](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/era1132-retail-redirects/main-retention.json) preserves 191 root/command artifacts byte-for-byte; build targets, copied inputs, scratch and TMPDIR excluded. No proof commands rerun for retention. This does not cover later 1.10.1/1.10.0/1.9/1.8 audits or close the parent.
 
+## Current CVar lifecycle PASS / duration consumer RED — separate modeled proof
+
+[Independent report](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/current-cvar-duration-red/report.md) reused the hash-matching `41f1abbeb` integration artifact, with 3,882/3,885 relevant source/build hashes equal and three unrelated deltas explicitly excluded. Exactly selected current CVar registration lifecycle **1/1**, exit0: global and namespace registration preserve override `1.25` and first default `0` after re-registration `6`. Getters are global only. This is genuine bounded current modeled behavior, not historical 1.1/native/persistence/namespace-getter parity. No rebuild or CVar rerun.
+
+Exact numeric duration consumer **0/1**, exit101, reproduces `expected LuaDurationObject at argument 1`; scalar fixture input fails before any visible-string assertion. Subsequent fixture correction uses real duration objects, zero-time manual clock and callback `GetRemainingDuration()`, preserving all expected strings. Production API and dirty-phase behavior unchanged. Corrected execution remains pending; original RED epoch is not rewritten.
+
+[Retention](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/current-cvar-duration-red/main-retention.json) preserves 22 artifacts byte-identically, including full streams/provenance/exclusions. No full-suite or parent closure.
+
 ## Final literal Retail pages — integrated SOURCE PASS only
 
 [Independent summary](../../../data/patch-api/evidence/narrow-repairs-2026-10-09/integrated/final-literal-pages/SUMMARY.md): 1.4/1.3/1.1/1.0 copied SOURCE **30/30**, portable **12/12**, separate 1.4 current-category **3/3**; 13 commands exit0, four validators. **182 original +69 receipt entries +3 extension seals** intact; eight serialized tamper rejections/restorations. Actual `e20c472ca` covers 1.4/1.3; actual `1b505c7c1` covers 1.1/1.0, without rerunning earlier scopes. Full merged streams retained; separate child-channel attribution remains unproven.

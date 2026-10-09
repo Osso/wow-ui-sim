@@ -1,0 +1,3 @@
+set_cvar_global::register_cvar_numeric_default_preserves_existing_override_and_first_default: test
+
+1 test, 0 benchmarks
