@@ -1134,3 +1134,7 @@ Own SOURCE6/6 at231bc7d2e; immutable31-seal/32-member53,739-byte archive ata4f4d
 ## [2026-10-09] retained proof | Historical/headless, GUI, Mists and target discovery
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md): historical Transmog/headless order1/1 each at4163299fa; GUI order/hit-grid1/1 atb02b9f544, compile success output with missing exit disclosed. Mists typecheck exit0, interrupted integration compile and wrappers0/3 executed. Historical target index HTML only, no revision source/behavior closure. Privacy exclusions and byte-identical retention manifests recorded; no broad reruns or parent completion.
+
+## 2026-10-09: Patch 1.3.0 frozen literal SOURCE accounting
+
+Added [audit](investigations/patch-1-3-0-api-audit.md) and [spec](../specs/patch-1-3-0-source-accounting.md). Verified350208/3376287 frozen source/registry101; own RED8/portable RED3 retained; SOURCE GREEN8/8 atbe25624b1, copied SOURCE8/portable3 at3ea5b20ba;46 original seals/47-member62573byte archive immutable, separate later receipts. SOURCE only; no runtime/native acceptance.

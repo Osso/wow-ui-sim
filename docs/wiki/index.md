@@ -3115,3 +3115,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-09] investigation | Patch 1.6.0 frozen redirect SOURCE audit
 
 [Audit](investigations/patch-1-6-0-api-audit.md): frozen310843/2998524;45-byte redirect, one row/link/UNPROVEN contract, registry101. Own SOURCE RED5/GREEN5 at61fa2a1fa (25 ledger controls); copied SOURCE5/portable3/validator at a0e7ba901.30 original seals/31-member53,161-byte archive unchanged; both serialized tamper rejections/exact restorations. Seven separate later receipt seals; no runtime/model/native credit or parent acceptance. No local declarations or grounded model/native subset; target unexpanded, queued1.7.0 and1.8.0 behind1.9.0 separately unapplied. Main owns integration/acceptance.
+
+## [2026-10-09] investigation | Patch 1.3.0 frozen literal SOURCE audit
+
+[Audit](investigations/patch-1-3-0-api-audit.md): frozen350208/3376287,1364bytes;31 declarations,44 raw rows,76 UNPROVEN contracts. Own SOURCE RED8/portable RED3 retained; SOURCE GREEN8/8 atbe25624b1, copied SOURCE8/portable3 at3ea5b20ba;46 original seals/47-member62573byte archive immutable, separate later receipts. Zero model/runtime/native credit;1.4/1.5 separate/unapplied. Main owns integration/acceptance.

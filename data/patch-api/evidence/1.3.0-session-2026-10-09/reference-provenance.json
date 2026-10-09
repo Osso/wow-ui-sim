@@ -1,0 +1,18 @@
+{
+  "methodology_only": [
+    "1.6.0",
+    "1.7.0",
+    "1.8.0"
+  ],
+  "own_base_revision": "b02b9f544ada14ee5d229b74f4f819c6ab4d7f5f",
+  "own_base_tool_sha256": {
+    "gen_patch_wikitext_register.py": "65e9c786c9382e52c8a6d725e16bbe2c37f033f550e3ef51ef4b428f0d1eedc6",
+    "extract_patch_non_inventory.py": "fb53f8c267e388a7e1650ff3fbeec8dbfd663fd3cc70787e283ef1a7697f5532"
+  },
+  "proof_inherited": false,
+  "queued_successors": {
+    "1.4.0": "active p140-page per task; separate/unapplied",
+    "1.5.0": "queued p150-page per task; separate/unapplied"
+  },
+  "branch_status_inspection": false
+}
