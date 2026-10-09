@@ -185,6 +185,20 @@ def verify_sweeps(context):
     assert replacement['ok'] and replacement['expected']['publication'] == 'absent'
     assert replacement['expected']['superseded_by'] == 'wt-global-api-securerandom-28'
     assert replacement['observed']['detail'] == 'raw=nil; lookup=nil'
+    known_path = 'tests/data/patch_5_4_0_sweep_known_gaps.json'
+    old_known = pinned('589116f71', known_path)
+    assert pinned(revision, known_path) == [key for key in old_known if key != 'diff-wt-global-api-securerandom-43']
+    ledger_path = 'data/patch-api/sources/5.4.0-page-coverage.json'
+    before_ledger = pinned('589116f71', ledger_path)
+    after_ledger = pinned(revision, ledger_path)
+    before_rows = {row['source_id']: row for row in before_ledger['source_rows']}
+    after_rows = {row['source_id']: row for row in after_ledger['source_rows']}
+    assert len(after_rows) == 159 and set(before_rows) == set(after_rows)
+    assert {key for key in after_rows if before_rows[key] != after_rows[key]} == {'diff-wt-global-api-securerandom-43'}
+    assert after_rows['diff-wt-global-api-securerandom-43']['status'] == 'bounded-coverage'
+    assert after_rows['diff-wt-global-api-securerandom-43']['capabilities'] == ['current-retail-absence']
+    assert 'wt-global-api-securerandom-28' in after_rows['diff-wt-global-api-securerandom-43']['note']
+    assert {key for key, row in after_rows.items() if key in positive and row['status'] == 'audit-pending'} == set(pinned(revision, known_path))
     for label, pin in [('all-sweeps', revision), ('master-all-sweeps', context['master_revision']), ('mists-all-sweeps', revision), ('master-mists-all-sweeps', context['master_revision'])]:
         passed = set(re.findall(r'^test (\S+) \.\.\. ok$', (HERE / (label + '.txt')).read_text(), re.M))
         for path in names(pin, 'tests'):
