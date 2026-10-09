@@ -217,6 +217,10 @@ mod tests {
     #[test]
     fn installs_debug_environment_defaults() {
         let env = WowLuaEnv::new().expect("lua env should initialize");
+        crate::lua_api::env_init::trace_debug_getter_values(
+            &mut env.lua.borrow_mut(),
+            "installs_debug_environment_defaults_before_probe",
+        );
 
         let result: String = env
             .eval(

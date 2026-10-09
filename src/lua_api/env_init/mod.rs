@@ -36,11 +36,26 @@ pub(crate) use bootstrap::init_runtime_surface_bootstrap;
 pub(crate) use bootstrap::init_shared_bootstrap;
 pub(crate) use enums::init_enum_globals;
 
+/// Opt-in direct global reads only: never invoke getters or inspect/mutate metatables.
+pub(crate) fn trace_debug_getter_values(lua: &mut rilua::Lua, phase: &str) {
+    if std::env::var("WOW_SIM_TRACE_DEBUG_GETTERS").as_deref() != Ok("1") {
+        return;
+    }
+    for name in ["GetCallstackHeight", "GetErrorCallstackHeight"] {
+        let value = LuaApiMut::get_global_val(lua, name);
+        eprintln!(
+            "[DebugGetterTrace] phase={phase} global={name} type={} value={value:?}",
+            value.type_name()
+        );
+    }
+}
+
 /// Initialize the primary rilua state: seed registries, globals, frame methods, and taint.
 pub(super) fn init_lua_state(
     lua: &mut rilua::Lua,
     state: Rc<RefCell<SimState>>,
 ) -> crate::Result<()> {
+    trace_debug_getter_values(lua, "init_entry");
     registry::init_registry_tables(lua, &state)?;
     bootstrap::init_shared_bootstrap(lua)?;
     enums::init_enum_globals(lua)?;
@@ -48,14 +63,22 @@ pub(super) fn init_lua_state(
     // register_globals calls gc_stop at its entry; finalize_bootstrap_gc
     // below restores the collector once bootstrap is complete. Between
     // those two points the mark phase is paused.
+    trace_debug_getter_values(lua, "before_globals_register");
     super::globals::register_globals(lua, state.clone())?;
+    trace_debug_getter_values(lua, "after_globals_register");
+    trace_debug_getter_values(lua, "before_runtime_bootstrap");
     bootstrap::init_runtime_surface_bootstrap(lua)?;
+    trace_debug_getter_values(lua, "after_runtime_bootstrap");
     #[cfg(feature = "retail-12-1-0")]
     super::globals::security::register_retail_secret_values(lua)?;
+    trace_debug_getter_values(lua, "before_permanent_bootstrap");
     crate::lua_api::workarounds::apply_permanent_bootstrap(lua)?;
+    trace_debug_getter_values(lua, "after_permanent_bootstrap");
     #[cfg(feature = "retail-12-0-7")]
     super::globals::real::performance_inputs::register(lua)?;
+    trace_debug_getter_values(lua, "before_temporary_bootstrap");
     crate::lua_api::workarounds::apply_temporary_bootstrap(lua)?;
+    trace_debug_getter_values(lua, "after_temporary_bootstrap");
     super::globals::real::heal_prediction::register(lua)?;
     super::globals::real::totems::register(lua)?;
     crate::c_api::c_click_bindings::register(lua)?;
@@ -64,6 +87,7 @@ pub(super) fn init_lua_state(
     crate::c_api::c_curve_util::register(lua)?;
     crate::c_api::seconds_formatter::register(lua)?;
     crate::c_api::duration_text_binding::register(lua)?;
+    trace_debug_getter_values(lua, "before_profile_bootstrap");
     #[cfg(feature = "client-wrath")]
     {
         crate::wrath::compat_bootstrap::init(lua)?;
@@ -81,6 +105,7 @@ pub(super) fn init_lua_state(
         crate::loader::addon_modules::initialize(lua.state_mut())?;
         rilua::table_security::register_table_security(lua)?;
     }
+    trace_debug_getter_values(lua, "after_profile_bootstrap");
     // secureenv is shallow-copied from `_G` here. It keeps its copy of
     // the dangerous globals (dofile / loadfile / require / string.dump /
     // math.randomseed) so secure chunks — which Blizzard trusts —
@@ -93,7 +118,9 @@ pub(super) fn init_lua_state(
     crate::loader::precompiled::init(lua)?;
     remove_sandbox_globals(lua)?;
     frames::init_frame_metatable(lua)?;
+    trace_debug_getter_values(lua, "before_final_gc");
     finalize_bootstrap_gc(lua)?;
+    trace_debug_getter_values(lua, "after_final_gc");
     // Opt-in until the "overwrite stable global" audit is complete.
     // Blizzard's SharedXMLBase utility files (Mixin / TableUtil /
     // EnumUtil / FunctionUtil / Compat) overwrite existing `_G`

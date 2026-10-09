@@ -133,6 +133,12 @@ Baseline comparison is master **base `16682b415`**, not subsequently advanced li
 
 Readability review: changed root scopes have explicit balanced restoration and shallow control flow; no warning suppression or generalized rooting abstraction added. Existing broad helpers retain their prior structure.
 
+## Debug getter diagnostic follow-up (2026-10-09)
+
+The saved `96e88494a6844833b79a574d37a2115dc03b44eb` probe is byte-identical to the pre-diagnostic test. Its Lua `(string):7` maps to `GetCallstackHeight()`, **not** `GetErrorCallstackHeight()` (line 8). Prior attribution to the latter is corrected; the value producer and any GC involvement remain unproven.
+
+Set `WOW_SIM_TRACE_DEBUG_GETTERS=1` for `[DebugGetterTrace]` stderr records of both globals' direct rilua `Val` Debug representation and `type_name()`: initialization entry; before/after globals registration, runtime bootstrap, permanent bootstrap, temporary bootstrap, profile bootstrap, and final GC; then immediately before the isolated `installs_debug_environment_defaults` probe. Implementation: [initialization helper](../../../src/lua_api/env_init/mod.rs) and [test boundary](../../../src/lua_api/workarounds/temporary/debug_environment_defaults.rs). Reads use existing `get_global_val`; no getter invocation, value writes, referent/metatable inspection, or repair. No build/test/check was run for this diagnostic addition; the main session owns the exact lib-test run and durable proof.
+
 ## Sources
 
 - Commit `16682b415` — established stack/parent rooting idiom.
