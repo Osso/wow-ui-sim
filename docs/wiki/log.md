@@ -1,6 +1,6 @@
 ## [2026-10-09] investigation | Patch 1.4.0 frozen literal SOURCE accounting
 
-[Audit](investigations/patch-1-4-0-api-audit.md): frozen316397/3052898,2670bytes;34 literal rows/27 inventory/25 signatures/25 prose/6 headers/3 links/2 navigation/28 templates/32UNPROVEN contracts. Not a redirect; optional-unit/default/native limits explicit. Own SOURCE RED7/portableRED3 and default-byte/error captures retained; implementation precedes GREEN. Static single-argument AcceptBattlefieldPort candidate reported; no runtime/model/native credit. Queued1.5.0 separately unapplied, main owns integration/independent acceptance.
+[Audit](investigations/patch-1-4-0-api-audit.md): frozen316397/3052898,2670bytes;34 literal rows/27 inventory/25 signatures/25 prose/6 headers/3 links/2 navigation/28 templates/32UNPROVEN contracts. Not a redirect; optional-unit/default/native limits explicit. Own SOURCE RED7/portableRED3 and default-byte/error captures retained; SOURCE GREEN7/7 at5c4bde798 with197 omission/count controls. Static single-argument AcceptBattlefieldPort candidate reported; no runtime/model/native credit. Queued1.5.0 separately unapplied, main owns integration/independent acceptance.
 
 ## [2026-10-09] investigation | Patch 1.9.0 frozen redirect SOURCE audit
 
