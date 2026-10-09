@@ -18,7 +18,11 @@ fn patch_3_1_0_publication_sweep(env: &WowLuaEnv) {
         register_env: "P310_SWEEP_REGISTER",
         out_env: "P310_SWEEP_OUT",
         later_registers: &[
-            // 3.2.0, 3.3.0, 3.3.3, 3.3.5, 4.0.1 queued; main adds actual retail registers in order.
+            include_str!("../data/patch-api/sources/3.2.0-wikitext-register.json"),
+            include_str!("../data/patch-api/sources/3.3.0-wikitext-register.json"),
+            include_str!("../data/patch-api/sources/3.3.3-wikitext-register.json"),
+            include_str!("../data/patch-api/sources/3.3.5-wikitext-register.json"),
+            include_str!("../data/patch-api/sources/4.0.1-wikitext-register.json"),
             include_str!("../data/patch-api/sources/4.1.0-wikitext-register.json"),
             include_str!("../data/patch-api/sources/4.2.0-wikitext-register.json"),
             include_str!("../data/patch-api/sources/4.3.0-wikitext-register.json"),

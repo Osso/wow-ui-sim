@@ -50,6 +50,10 @@ Only actual retail 4.1.0+ registers applied in this slice. Main adds queued reta
 
 Bounded independent slice only. Main owns affected-callers/all-publication/cross-profile/native startup/full-suite/CI/integration/final gates. No vendor/cache writes, shims, retirements, rebase, delegation, push, merge or deployment.
 
+## Main successor integration — 2026-10-09
+
+Actual retail 3.2.0, 3.3.0, 3.3.3, 3.3.5 and 4.0.1 registers now replace the queued placeholder. The 4.0.1 removal of `IsPlayerResolutionAvailable` changes its expected publication to absent; the reviewed current gap list excludes that row. Current publication/model, affected-caller and profile gates remain pending. Original historical and implementer-current receipts stay unchanged; new integration observations belong in a separate `integrated/` directory. No native behavior credit from removal.
+
 ## Sources
 
 - [Spec](../../specs/patch-3-1-0-publication-sweep.md).
