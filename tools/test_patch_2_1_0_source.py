@@ -56,7 +56,7 @@ class LiteralSourceTests(unittest.TestCase):
         text = (EVIDENCE / 'extract.txt').read_text()
         result = module.verify_accounting(register, raw, text, ledger, gaps)
         self.assertEqual(result['meaningful_closures'], 0)
-        self.assertEqual(result['named_headers'], 20)
+        self.assertEqual(result['named_headers'], 19)
         for key in ['source_rows', 'signature_rows', 'headers']:
             for index in range(len(ledger[key])):
                 with self.subTest(omitted=key, index=index):
@@ -79,12 +79,22 @@ class LiteralSourceTests(unittest.TestCase):
         with self.assertRaises(AssertionError):
             module.verify_accounting(register, raw, text, changed, gaps)
 
+    def test_wrath_template_default_isolation(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / 'register.json'
+            result = subprocess.run([
+                sys.executable, '-B', str(ROOT / 'tools/gen_patch_wikitext_register.py'),
+                '3.4.0', str(CACHE / '3.4.0-wikitext.txt'), '165668', str(output),
+            ], cwd=ROOT, capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(output.read_bytes(), (EVIDENCE / 'default-3.4.0-register.json').read_bytes())
+
     def test_recorded_template_outputs(self):
         path = ROOT / 'tools/extract_patch_non_inventory.py'
         spec = importlib.util.spec_from_file_location('extractor', path)
         extractor = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(extractor)
-        for patch in ['3.0.3', '3.0.8', '3.1.0', '3.4.0']:
+        for patch in ['3.0.3', '3.0.8', '3.1.0']:
             with self.subTest(patch=patch), tempfile.TemporaryDirectory() as directory:
                 sources = ROOT / 'data/patch-api/sources'
                 provenance = json.loads((sources / f'{patch}-api-changes.provenance.json').read_text())

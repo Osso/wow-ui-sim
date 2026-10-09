@@ -1,0 +1,2728 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "3.4.0",
+  "source": {
+    "path": "data/patch-api/source-cache/legacy-2026-10-09/3.4.0-wikitext.txt",
+    "revid": 165668,
+    "sha256": "080a68a5f4f24e10962f4a63f3db6cb025038729c83ddb9c081735943b6a6ac2"
+  },
+  "header_counts": [
+    {
+      "section": "global-api",
+      "direction": "added",
+      "header_count": 228,
+      "parsed_count": 228
+    },
+    {
+      "section": "global-api",
+      "direction": "removed",
+      "header_count": 27,
+      "parsed_count": 27
+    },
+    {
+      "section": "widgets",
+      "direction": "added",
+      "header_count": 10,
+      "parsed_count": 10
+    },
+    {
+      "section": "widgets",
+      "direction": "removed",
+      "header_count": 0,
+      "parsed_count": 0
+    },
+    {
+      "section": "events",
+      "direction": "added",
+      "header_count": 43,
+      "parsed_count": 43
+    },
+    {
+      "section": "events",
+      "direction": "removed",
+      "header_count": 3,
+      "parsed_count": 3
+    },
+    {
+      "section": "cvars",
+      "direction": "added",
+      "header_count": 19,
+      "parsed_count": 19
+    },
+    {
+      "section": "cvars",
+      "direction": "removed",
+      "header_count": 1,
+      "parsed_count": 1
+    }
+  ],
+  "entries": [
+    {
+      "id": "wt-global-api-AddPreviewTalentPoints-21",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "AddPreviewTalentPoints",
+      "annotation": "",
+      "wikitext_line": 21
+    },
+    {
+      "id": "wt-global-api-AddTrackedAchievement-22",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "AddTrackedAchievement",
+      "annotation": "",
+      "wikitext_line": 22
+    },
+    {
+      "id": "wt-global-api-C_ActionBar.ShouldOverrideBarShowHealthBar-23",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ActionBar.ShouldOverrideBarShowHealthBar",
+      "annotation": "",
+      "wikitext_line": 23
+    },
+    {
+      "id": "wt-global-api-C_ActionBar.ShouldOverrideBarShowManaBar-24",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ActionBar.ShouldOverrideBarShowManaBar",
+      "annotation": "",
+      "wikitext_line": 24
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.ApplyCustomizationChoices-25",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BarberShop.ApplyCustomizationChoices",
+      "annotation": "",
+      "wikitext_line": 25
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.Cancel-26",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BarberShop.Cancel",
+      "annotation": "",
+      "wikitext_line": 26
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.ClearPreviewChoices-27",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BarberShop.ClearPreviewChoices",
+      "annotation": "",
+      "wikitext_line": 27
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.CycleCharCustomization-28",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BarberShop.CycleCharCustomization",
+      "annotation": "",
+      "wikitext_line": 28
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.GetAvailableCustomizations-29",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BarberShop.GetAvailableCustomizations",
+      "annotation": "",
+      "wikitext_line": 29
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.GetBarbersChoiceCost-30",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BarberShop.GetBarbersChoiceCost",
+      "annotation": "",
+      "wikitext_line": 30
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.GetCurrentCameraZoom-31",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BarberShop.GetCurrentCameraZoom",
+      "annotation": "",
+      "wikitext_line": 31
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.GetCurrentCharacterData-32",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BarberShop.GetCurrentCharacterData",
+      "annotation": "",
+      "wikitext_line": 32
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.GetCurrentCost-33",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BarberShop.GetCurrentCost",
+      "annotation": "",
+      "wikitext_line": 33
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.GetCustomizationTypeInfo-34",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BarberShop.GetCustomizationTypeInfo",
+      "annotation": "",
+      "wikitext_line": 34
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.HasAnyChanges-35",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BarberShop.HasAnyChanges",
+      "annotation": "",
+      "wikitext_line": 35
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.IsValidCustomizationType-36",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BarberShop.IsValidCustomizationType",
+      "annotation": "",
+      "wikitext_line": 36
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.IsViewingAlteredForm-37",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BarberShop.IsViewingAlteredForm",
+      "annotation": "",
+      "wikitext_line": 37
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.IsViewingNativeSex-38",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BarberShop.IsViewingNativeSex",
+      "annotation": "",
+      "wikitext_line": 38
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.IsViewingVisibleSex-39",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BarberShop.IsViewingVisibleSex",
+      "annotation": "",
+      "wikitext_line": 39
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.PreviewCustomizationChoice-40",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BarberShop.PreviewCustomizationChoice",
+      "annotation": "",
+      "wikitext_line": 40
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.RandomizeCustomizationChoices-41",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BarberShop.RandomizeCustomizationChoices",
+      "annotation": "",
+      "wikitext_line": 41
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.ResetCameraRotation-42",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BarberShop.ResetCameraRotation",
+      "annotation": "",
+      "wikitext_line": 42
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.ResetCustomizationChoices-43",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BarberShop.ResetCustomizationChoices",
+      "annotation": "",
+      "wikitext_line": 43
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.RotateCamera-44",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BarberShop.RotateCamera",
+      "annotation": "",
+      "wikitext_line": 44
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.SetCameraDistanceOffset-45",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BarberShop.SetCameraDistanceOffset",
+      "annotation": "",
+      "wikitext_line": 45
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.SetCameraZoomLevel-46",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BarberShop.SetCameraZoomLevel",
+      "annotation": "",
+      "wikitext_line": 46
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.SetCustomizationChoice-47",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BarberShop.SetCustomizationChoice",
+      "annotation": "",
+      "wikitext_line": 47
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.SetModelDressState-48",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BarberShop.SetModelDressState",
+      "annotation": "",
+      "wikitext_line": 48
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.SetSelectedSex-49",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BarberShop.SetSelectedSex",
+      "annotation": "",
+      "wikitext_line": 49
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.SetViewingAlteredForm-50",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BarberShop.SetViewingAlteredForm",
+      "annotation": "",
+      "wikitext_line": 50
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.SetViewingShapeshiftForm-51",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BarberShop.SetViewingShapeshiftForm",
+      "annotation": "",
+      "wikitext_line": 51
+    },
+    {
+      "id": "wt-global-api-C_BarberShop.ZoomCamera-52",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BarberShop.ZoomCamera",
+      "annotation": "",
+      "wikitext_line": 52
+    },
+    {
+      "id": "wt-global-api-C_BattleNet.GetAccountInfoByGUID-53",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BattleNet.GetAccountInfoByGUID",
+      "annotation": "",
+      "wikitext_line": 53
+    },
+    {
+      "id": "wt-global-api-C_BattleNet.GetAccountInfoByID-54",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BattleNet.GetAccountInfoByID",
+      "annotation": "",
+      "wikitext_line": 54
+    },
+    {
+      "id": "wt-global-api-C_BattleNet.GetFriendAccountInfo-55",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BattleNet.GetFriendAccountInfo",
+      "annotation": "",
+      "wikitext_line": 55
+    },
+    {
+      "id": "wt-global-api-C_BattleNet.GetFriendGameAccountInfo-56",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BattleNet.GetFriendGameAccountInfo",
+      "annotation": "",
+      "wikitext_line": 56
+    },
+    {
+      "id": "wt-global-api-C_BattleNet.GetFriendNumGameAccounts-57",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BattleNet.GetFriendNumGameAccounts",
+      "annotation": "",
+      "wikitext_line": 57
+    },
+    {
+      "id": "wt-global-api-C_BattleNet.GetGameAccountInfoByGUID-58",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BattleNet.GetGameAccountInfoByGUID",
+      "annotation": "",
+      "wikitext_line": 58
+    },
+    {
+      "id": "wt-global-api-C_BattleNet.GetGameAccountInfoByID-59",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_BattleNet.GetGameAccountInfoByID",
+      "annotation": "",
+      "wikitext_line": 59
+    },
+    {
+      "id": "wt-global-api-C_CurrencyInfo.GetBasicCurrencyInfo-60",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CurrencyInfo.GetBasicCurrencyInfo",
+      "annotation": "",
+      "wikitext_line": 60
+    },
+    {
+      "id": "wt-global-api-C_CurrencyInfo.GetCurrencyContainerInfo-61",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_CurrencyInfo.GetCurrencyContainerInfo",
+      "annotation": "",
+      "wikitext_line": 61
+    },
+    {
+      "id": "wt-global-api-C_FriendList.IsOnIgnoredList-62",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_FriendList.IsOnIgnoredList",
+      "annotation": "",
+      "wikitext_line": 62
+    },
+    {
+      "id": "wt-global-api-C_GamePad.GetPowerLevel-63",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_GamePad.GetPowerLevel",
+      "annotation": "",
+      "wikitext_line": 63
+    },
+    {
+      "id": "wt-global-api-C_LFGList.GetActivityInfoTable-64",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_LFGList.GetActivityInfoTable",
+      "annotation": "",
+      "wikitext_line": 64
+    },
+    {
+      "id": "wt-global-api-C_LFGList.GetRoles-65",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_LFGList.GetRoles",
+      "annotation": "",
+      "wikitext_line": 65
+    },
+    {
+      "id": "wt-global-api-C_LFGList.IsPlayerAuthenticatedForLFG-66",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_LFGList.IsPlayerAuthenticatedForLFG",
+      "annotation": "",
+      "wikitext_line": 66
+    },
+    {
+      "id": "wt-global-api-C_LFGList.RequestInvite-67",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_LFGList.RequestInvite",
+      "annotation": "",
+      "wikitext_line": 67
+    },
+    {
+      "id": "wt-global-api-C_LFGList.SetRoles-68",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_LFGList.SetRoles",
+      "annotation": "",
+      "wikitext_line": 68
+    },
+    {
+      "id": "wt-global-api-C_Macro.GetNumIcons-69",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Macro.GetNumIcons",
+      "annotation": "",
+      "wikitext_line": 69
+    },
+    {
+      "id": "wt-global-api-C_PartyInfo.IsPartyFull-70",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PartyInfo.IsPartyFull",
+      "annotation": "",
+      "wikitext_line": 70
+    },
+    {
+      "id": "wt-global-api-C_PlayerInfo.GetAlternateFormInfo-71",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PlayerInfo.GetAlternateFormInfo",
+      "annotation": "",
+      "wikitext_line": 71
+    },
+    {
+      "id": "wt-global-api-C_PlayerInfo.IsXPUserDisabled-72",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PlayerInfo.IsXPUserDisabled",
+      "annotation": "",
+      "wikitext_line": 72
+    },
+    {
+      "id": "wt-global-api-C_PvP.GetRandomBGLossRewards-73",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PvP.GetRandomBGLossRewards",
+      "annotation": "",
+      "wikitext_line": 73
+    },
+    {
+      "id": "wt-global-api-C_PvP.GetRandomBGRewards-74",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_PvP.GetRandomBGRewards",
+      "annotation": "",
+      "wikitext_line": 74
+    },
+    {
+      "id": "wt-global-api-C_ReportSystem.GetMajorCategoriesForReportType-75",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ReportSystem.GetMajorCategoriesForReportType",
+      "annotation": "",
+      "wikitext_line": 75
+    },
+    {
+      "id": "wt-global-api-C_ReportSystem.GetMajorCategoryString-76",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ReportSystem.GetMajorCategoryString",
+      "annotation": "",
+      "wikitext_line": 76
+    },
+    {
+      "id": "wt-global-api-C_ReportSystem.GetMinorCategoriesForReportTypeAndMajorCategory-77",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ReportSystem.GetMinorCategoriesForReportTypeAndMajorCategory",
+      "annotation": "",
+      "wikitext_line": 77
+    },
+    {
+      "id": "wt-global-api-C_ReportSystem.GetMinorCategoryString-78",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ReportSystem.GetMinorCategoryString",
+      "annotation": "",
+      "wikitext_line": 78
+    },
+    {
+      "id": "wt-global-api-C_ReportSystem.SendReport-79",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_ReportSystem.SendReport",
+      "annotation": "",
+      "wikitext_line": 79
+    },
+    {
+      "id": "wt-global-api-CallCompanion-80",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CallCompanion",
+      "annotation": "",
+      "wikitext_line": 80
+    },
+    {
+      "id": "wt-global-api-CanChangePlayerDifficulty-81",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CanChangePlayerDifficulty",
+      "annotation": "",
+      "wikitext_line": 81
+    },
+    {
+      "id": "wt-global-api-CanEditGuildEvent-82",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CanEditGuildEvent",
+      "annotation": "",
+      "wikitext_line": 82
+    },
+    {
+      "id": "wt-global-api-CanExitVehicle-83",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CanExitVehicle",
+      "annotation": "",
+      "wikitext_line": 83
+    },
+    {
+      "id": "wt-global-api-CanShowAchievementUI-84",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CanShowAchievementUI",
+      "annotation": "",
+      "wikitext_line": 84
+    },
+    {
+      "id": "wt-global-api-CanSwitchVehicleSeats-85",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CanSwitchVehicleSeats",
+      "annotation": "",
+      "wikitext_line": 85
+    },
+    {
+      "id": "wt-global-api-ClearAchievementComparisonUnit-86",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ClearAchievementComparisonUnit",
+      "annotation": "",
+      "wikitext_line": 86
+    },
+    {
+      "id": "wt-global-api-CompleteLFGReadyCheck-87",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CompleteLFGReadyCheck",
+      "annotation": "",
+      "wikitext_line": 87
+    },
+    {
+      "id": "wt-global-api-ConfirmBarbersChoice-88",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ConfirmBarbersChoice",
+      "annotation": "",
+      "wikitext_line": 88
+    },
+    {
+      "id": "wt-global-api-DismissCompanion-89",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "DismissCompanion",
+      "annotation": "",
+      "wikitext_line": 89
+    },
+    {
+      "id": "wt-global-api-ExpandCurrencyList-90",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ExpandCurrencyList",
+      "annotation": "",
+      "wikitext_line": 90
+    },
+    {
+      "id": "wt-global-api-GetAchievementCategory-91",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetAchievementCategory",
+      "annotation": "",
+      "wikitext_line": 91
+    },
+    {
+      "id": "wt-global-api-GetAchievementComparisonInfo-92",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetAchievementComparisonInfo",
+      "annotation": "",
+      "wikitext_line": 92
+    },
+    {
+      "id": "wt-global-api-GetAchievementCriteriaInfoByID-93",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetAchievementCriteriaInfoByID",
+      "annotation": "",
+      "wikitext_line": 93
+    },
+    {
+      "id": "wt-global-api-GetAchievementCriteriaInfo-94",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetAchievementCriteriaInfo",
+      "annotation": "",
+      "wikitext_line": 94
+    },
+    {
+      "id": "wt-global-api-GetAchievementInfo-95",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetAchievementInfo",
+      "annotation": "",
+      "wikitext_line": 95
+    },
+    {
+      "id": "wt-global-api-GetAchievementLink-96",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetAchievementLink",
+      "annotation": "",
+      "wikitext_line": 96
+    },
+    {
+      "id": "wt-global-api-GetAchievementNumCriteria-97",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetAchievementNumCriteria",
+      "annotation": "",
+      "wikitext_line": 97
+    },
+    {
+      "id": "wt-global-api-GetAchievementNumRewards-98",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetAchievementNumRewards",
+      "annotation": "",
+      "wikitext_line": 98
+    },
+    {
+      "id": "wt-global-api-GetAchievementReward-99",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetAchievementReward",
+      "annotation": "",
+      "wikitext_line": 99
+    },
+    {
+      "id": "wt-global-api-GetActiveTalentGroup-100",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetActiveTalentGroup",
+      "annotation": "",
+      "wikitext_line": 100
+    },
+    {
+      "id": "wt-global-api-GetBackpackCurrencyInfo-101",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetBackpackCurrencyInfo",
+      "annotation": "",
+      "wikitext_line": 101
+    },
+    {
+      "id": "wt-global-api-GetCategoryAchievementPoints-102",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCategoryAchievementPoints",
+      "annotation": "",
+      "wikitext_line": 102
+    },
+    {
+      "id": "wt-global-api-GetCategoryInfo-103",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCategoryInfo",
+      "annotation": "",
+      "wikitext_line": 103
+    },
+    {
+      "id": "wt-global-api-GetCategoryList-104",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCategoryList",
+      "annotation": "",
+      "wikitext_line": 104
+    },
+    {
+      "id": "wt-global-api-GetCategoryNumAchievements-105",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCategoryNumAchievements",
+      "annotation": "",
+      "wikitext_line": 105
+    },
+    {
+      "id": "wt-global-api-GetCompanionCooldown-106",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCompanionCooldown",
+      "annotation": "",
+      "wikitext_line": 106
+    },
+    {
+      "id": "wt-global-api-GetCompanionInfo-107",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCompanionInfo",
+      "annotation": "",
+      "wikitext_line": 107
+    },
+    {
+      "id": "wt-global-api-GetComparisonAchievementPoints-108",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetComparisonAchievementPoints",
+      "annotation": "",
+      "wikitext_line": 108
+    },
+    {
+      "id": "wt-global-api-GetComparisonCategoryNumAchievements-109",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetComparisonCategoryNumAchievements",
+      "annotation": "",
+      "wikitext_line": 109
+    },
+    {
+      "id": "wt-global-api-GetComparisonStatistic-110",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetComparisonStatistic",
+      "annotation": "",
+      "wikitext_line": 110
+    },
+    {
+      "id": "wt-global-api-GetContainerItemGems-111",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetContainerItemGems",
+      "annotation": "",
+      "wikitext_line": 111
+    },
+    {
+      "id": "wt-global-api-GetContainerItemQuestInfo-112",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetContainerItemQuestInfo",
+      "annotation": "",
+      "wikitext_line": 112
+    },
+    {
+      "id": "wt-global-api-GetCurrencyInfo-113",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCurrencyInfo",
+      "annotation": "",
+      "wikitext_line": 113
+    },
+    {
+      "id": "wt-global-api-GetCurrencyLink-114",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCurrencyLink",
+      "annotation": "",
+      "wikitext_line": 114
+    },
+    {
+      "id": "wt-global-api-GetCurrencyListInfo-115",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCurrencyListInfo",
+      "annotation": "",
+      "wikitext_line": 115
+    },
+    {
+      "id": "wt-global-api-GetCurrencyListLink-116",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCurrencyListLink",
+      "annotation": "",
+      "wikitext_line": 116
+    },
+    {
+      "id": "wt-global-api-GetCurrencyListSize-117",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCurrencyListSize",
+      "annotation": "",
+      "wikitext_line": 117
+    },
+    {
+      "id": "wt-global-api-GetCurrentArenaSeasonUsesTeams-118",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetCurrentArenaSeasonUsesTeams",
+      "annotation": "",
+      "wikitext_line": 118
+    },
+    {
+      "id": "wt-global-api-GetGlyphLink-119",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetGlyphLink",
+      "annotation": "",
+      "wikitext_line": 119
+    },
+    {
+      "id": "wt-global-api-GetGlyphSocketInfo-120",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetGlyphSocketInfo",
+      "annotation": "",
+      "wikitext_line": 120
+    },
+    {
+      "id": "wt-global-api-GetGroupPreviewTalentPointsSpent-121",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetGroupPreviewTalentPointsSpent",
+      "annotation": "",
+      "wikitext_line": 121
+    },
+    {
+      "id": "wt-global-api-GetGuildEventInfo-122",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetGuildEventInfo",
+      "annotation": "",
+      "wikitext_line": 122
+    },
+    {
+      "id": "wt-global-api-GetInspectArenaData-123",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetInspectArenaData",
+      "annotation": "",
+      "wikitext_line": 123
+    },
+    {
+      "id": "wt-global-api-GetInventoryItemGems-124",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetInventoryItemGems",
+      "annotation": "",
+      "wikitext_line": 124
+    },
+    {
+      "id": "wt-global-api-GetLatestCompletedAchievements-125",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetLatestCompletedAchievements",
+      "annotation": "",
+      "wikitext_line": 125
+    },
+    {
+      "id": "wt-global-api-GetLatestCompletedComparisonAchievements-126",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetLatestCompletedComparisonAchievements",
+      "annotation": "",
+      "wikitext_line": 126
+    },
+    {
+      "id": "wt-global-api-GetLatestUpdatedComparisonStats-127",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetLatestUpdatedComparisonStats",
+      "annotation": "",
+      "wikitext_line": 127
+    },
+    {
+      "id": "wt-global-api-GetLatestUpdatedStats-128",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetLatestUpdatedStats",
+      "annotation": "",
+      "wikitext_line": 128
+    },
+    {
+      "id": "wt-global-api-GetMaxCombatRatingBonus-129",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetMaxCombatRatingBonus",
+      "annotation": "",
+      "wikitext_line": 129
+    },
+    {
+      "id": "wt-global-api-GetMaxRewardCurrencies-130",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetMaxRewardCurrencies",
+      "annotation": "",
+      "wikitext_line": 130
+    },
+    {
+      "id": "wt-global-api-GetMultiCastTotemSpells-131",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetMultiCastTotemSpells",
+      "annotation": "",
+      "wikitext_line": 131
+    },
+    {
+      "id": "wt-global-api-GetNextAchievement-132",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNextAchievement",
+      "annotation": "",
+      "wikitext_line": 132
+    },
+    {
+      "id": "wt-global-api-GetNumBattlegroundTypes-133",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumBattlegroundTypes",
+      "annotation": "",
+      "wikitext_line": 133
+    },
+    {
+      "id": "wt-global-api-GetNumCompanions-134",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumCompanions",
+      "annotation": "",
+      "wikitext_line": 134
+    },
+    {
+      "id": "wt-global-api-GetNumComparisonCompletedAchievements-135",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumComparisonCompletedAchievements",
+      "annotation": "",
+      "wikitext_line": 135
+    },
+    {
+      "id": "wt-global-api-GetNumCompletedAchievements-136",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumCompletedAchievements",
+      "annotation": "",
+      "wikitext_line": 136
+    },
+    {
+      "id": "wt-global-api-GetNumGlyphSockets-137",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumGlyphSockets",
+      "annotation": "",
+      "wikitext_line": 137
+    },
+    {
+      "id": "wt-global-api-GetNumGuildEvents-138",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumGuildEvents",
+      "annotation": "",
+      "wikitext_line": 138
+    },
+    {
+      "id": "wt-global-api-GetNumQuestCurrencies-139",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumQuestCurrencies",
+      "annotation": "",
+      "wikitext_line": 139
+    },
+    {
+      "id": "wt-global-api-GetNumQuestLogRewardCurrencies-140",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumQuestLogRewardCurrencies",
+      "annotation": "",
+      "wikitext_line": 140
+    },
+    {
+      "id": "wt-global-api-GetNumRewardCurrencies-141",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumRewardCurrencies",
+      "annotation": "",
+      "wikitext_line": 141
+    },
+    {
+      "id": "wt-global-api-GetNumTalentGroups-142",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumTalentGroups",
+      "annotation": "",
+      "wikitext_line": 142
+    },
+    {
+      "id": "wt-global-api-GetNumTrackedAchievements-143",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetNumTrackedAchievements",
+      "annotation": "",
+      "wikitext_line": 143
+    },
+    {
+      "id": "wt-global-api-GetOverrideBarIndex-144",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetOverrideBarIndex",
+      "annotation": "",
+      "wikitext_line": 144
+    },
+    {
+      "id": "wt-global-api-GetOverrideBarSkin-145",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetOverrideBarSkin",
+      "annotation": "",
+      "wikitext_line": 145
+    },
+    {
+      "id": "wt-global-api-GetPendingGlyphInfo-146",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetPendingGlyphInfo",
+      "annotation": "",
+      "wikitext_line": 146
+    },
+    {
+      "id": "wt-global-api-GetPersonalRatedInfo-147",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetPersonalRatedInfo",
+      "annotation": "",
+      "wikitext_line": 147
+    },
+    {
+      "id": "wt-global-api-GetPetTalentTree-148",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetPetTalentTree",
+      "annotation": "",
+      "wikitext_line": 148
+    },
+    {
+      "id": "wt-global-api-GetPreviewTalentPointsSpent-149",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetPreviewTalentPointsSpent",
+      "annotation": "",
+      "wikitext_line": 149
+    },
+    {
+      "id": "wt-global-api-GetPreviousAchievement-150",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetPreviousAchievement",
+      "annotation": "",
+      "wikitext_line": 150
+    },
+    {
+      "id": "wt-global-api-GetPreviousArenaSeasonUsesTeams-151",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetPreviousArenaSeasonUsesTeams",
+      "annotation": "",
+      "wikitext_line": 151
+    },
+    {
+      "id": "wt-global-api-GetQuestCurrencyID-152",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetQuestCurrencyID",
+      "annotation": "",
+      "wikitext_line": 152
+    },
+    {
+      "id": "wt-global-api-GetQuestCurrencyInfo-153",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetQuestCurrencyInfo",
+      "annotation": "",
+      "wikitext_line": 153
+    },
+    {
+      "id": "wt-global-api-GetQuestLink-154",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetQuestLink",
+      "annotation": "",
+      "wikitext_line": 154
+    },
+    {
+      "id": "wt-global-api-GetQuestLogCompletionText-155",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetQuestLogCompletionText",
+      "annotation": "",
+      "wikitext_line": 155
+    },
+    {
+      "id": "wt-global-api-GetQuestLogRewardArenaPoints-156",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetQuestLogRewardArenaPoints",
+      "annotation": "",
+      "wikitext_line": 156
+    },
+    {
+      "id": "wt-global-api-GetQuestLogRewardCurrencyInfo-157",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetQuestLogRewardCurrencyInfo",
+      "annotation": "",
+      "wikitext_line": 157
+    },
+    {
+      "id": "wt-global-api-GetQuestLogRewardTalents-158",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetQuestLogRewardTalents",
+      "annotation": "",
+      "wikitext_line": 158
+    },
+    {
+      "id": "wt-global-api-GetQuestLogRewardXP-159",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetQuestLogRewardXP",
+      "annotation": "",
+      "wikitext_line": 159
+    },
+    {
+      "id": "wt-global-api-GetQuestLogSpecialItemCooldown-160",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetQuestLogSpecialItemCooldown",
+      "annotation": "",
+      "wikitext_line": 160
+    },
+    {
+      "id": "wt-global-api-GetQuestLogSpecialItemInfo-161",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetQuestLogSpecialItemInfo",
+      "annotation": "",
+      "wikitext_line": 161
+    },
+    {
+      "id": "wt-global-api-GetQuestSortIndex-162",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetQuestSortIndex",
+      "annotation": "",
+      "wikitext_line": 162
+    },
+    {
+      "id": "wt-global-api-GetQuestUiMapID-163",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetQuestUiMapID",
+      "annotation": "",
+      "wikitext_line": 163
+    },
+    {
+      "id": "wt-global-api-GetRewardArenaPoints-164",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetRewardArenaPoints",
+      "annotation": "",
+      "wikitext_line": 164
+    },
+    {
+      "id": "wt-global-api-GetRewardTalentPoints-165",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetRewardTalentPoints",
+      "annotation": "",
+      "wikitext_line": 165
+    },
+    {
+      "id": "wt-global-api-GetRuneCooldown-166",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetRuneCooldown",
+      "annotation": "",
+      "wikitext_line": 166
+    },
+    {
+      "id": "wt-global-api-GetRuneType-167",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetRuneType",
+      "annotation": "",
+      "wikitext_line": 167
+    },
+    {
+      "id": "wt-global-api-GetStatisticsCategoryList-168",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetStatisticsCategoryList",
+      "annotation": "",
+      "wikitext_line": 168
+    },
+    {
+      "id": "wt-global-api-GetStatistic-169",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetStatistic",
+      "annotation": "",
+      "wikitext_line": 169
+    },
+    {
+      "id": "wt-global-api-GetTalentGroupRole-170",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetTalentGroupRole",
+      "annotation": "",
+      "wikitext_line": 170
+    },
+    {
+      "id": "wt-global-api-GetThreatStatusColor-171",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetThreatStatusColor",
+      "annotation": "",
+      "wikitext_line": 171
+    },
+    {
+      "id": "wt-global-api-GetTotalAchievementPoints-172",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetTotalAchievementPoints",
+      "annotation": "",
+      "wikitext_line": 172
+    },
+    {
+      "id": "wt-global-api-GetTrackedAchievements-173",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetTrackedAchievements",
+      "annotation": "",
+      "wikitext_line": 173
+    },
+    {
+      "id": "wt-global-api-GetTradeSkillDescription-174",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetTradeSkillDescription",
+      "annotation": "",
+      "wikitext_line": 174
+    },
+    {
+      "id": "wt-global-api-GetTradeSkillListLink-175",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetTradeSkillListLink",
+      "annotation": "",
+      "wikitext_line": 175
+    },
+    {
+      "id": "wt-global-api-GetUnspentTalentPoints-176",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetUnspentTalentPoints",
+      "annotation": "",
+      "wikitext_line": 176
+    },
+    {
+      "id": "wt-global-api-GetVehicleBarIndex-177",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetVehicleBarIndex",
+      "annotation": "",
+      "wikitext_line": 177
+    },
+    {
+      "id": "wt-global-api-GetWorldPVPQueueMapName-178",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetWorldPVPQueueMapName",
+      "annotation": "",
+      "wikitext_line": 178
+    },
+    {
+      "id": "wt-global-api-GetWorldPVPQueueStatus-179",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetWorldPVPQueueStatus",
+      "annotation": "",
+      "wikitext_line": 179
+    },
+    {
+      "id": "wt-global-api-GlyphMatchesSocket-180",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GlyphMatchesSocket",
+      "annotation": "",
+      "wikitext_line": 180
+    },
+    {
+      "id": "wt-global-api-HasCompletedAnyAchievement-181",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "HasCompletedAnyAchievement",
+      "annotation": "",
+      "wikitext_line": 181
+    },
+    {
+      "id": "wt-global-api-HasOverrideActionBar-182",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "HasOverrideActionBar",
+      "annotation": "",
+      "wikitext_line": 182
+    },
+    {
+      "id": "wt-global-api-HasVehicleActionBar-183",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "HasVehicleActionBar",
+      "annotation": "",
+      "wikitext_line": 183
+    },
+    {
+      "id": "wt-global-api-InitiateRolePoll-184",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "InitiateRolePoll",
+      "annotation": "",
+      "wikitext_line": 184
+    },
+    {
+      "id": "wt-global-api-IsAchievementEligible-185",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsAchievementEligible",
+      "annotation": "",
+      "wikitext_line": 185
+    },
+    {
+      "id": "wt-global-api-IsAtStableMaster-186",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsAtStableMaster",
+      "annotation": "",
+      "wikitext_line": 186
+    },
+    {
+      "id": "wt-global-api-IsInActiveWorldPVP-187",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsInActiveWorldPVP",
+      "annotation": "",
+      "wikitext_line": 187
+    },
+    {
+      "id": "wt-global-api-IsPlayerInGuildFromGUID-188",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsPlayerInGuildFromGUID",
+      "annotation": "",
+      "wikitext_line": 188
+    },
+    {
+      "id": "wt-global-api-IsPossessBarVisible-189",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsPossessBarVisible",
+      "annotation": "",
+      "wikitext_line": 189
+    },
+    {
+      "id": "wt-global-api-IsQuestLogSpecialItemInRange-190",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsQuestLogSpecialItemInRange",
+      "annotation": "",
+      "wikitext_line": 190
+    },
+    {
+      "id": "wt-global-api-IsThreatWarningEnabled-191",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsThreatWarningEnabled",
+      "annotation": "",
+      "wikitext_line": 191
+    },
+    {
+      "id": "wt-global-api-IsTrackedAchievement-192",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsTrackedAchievement",
+      "annotation": "",
+      "wikitext_line": 192
+    },
+    {
+      "id": "wt-global-api-IsTradeSkillLinked-193",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsTradeSkillLinked",
+      "annotation": "",
+      "wikitext_line": 193
+    },
+    {
+      "id": "wt-global-api-IsUsingVehicleControls-194",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsUsingVehicleControls",
+      "annotation": "",
+      "wikitext_line": 194
+    },
+    {
+      "id": "wt-global-api-IsVehicleAimAngleAdjustable-195",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsVehicleAimAngleAdjustable",
+      "annotation": "",
+      "wikitext_line": 195
+    },
+    {
+      "id": "wt-global-api-IsVehicleAimPowerAdjustable-196",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsVehicleAimPowerAdjustable",
+      "annotation": "",
+      "wikitext_line": 196
+    },
+    {
+      "id": "wt-global-api-IsXPUserDisabled-197",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsXPUserDisabled",
+      "annotation": "",
+      "wikitext_line": 197
+    },
+    {
+      "id": "wt-global-api-JoinWorldPVPQueue-198",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "JoinWorldPVPQueue",
+      "annotation": "",
+      "wikitext_line": 198
+    },
+    {
+      "id": "wt-global-api-LearnPreviewTalents-199",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "LearnPreviewTalents",
+      "annotation": "",
+      "wikitext_line": 199
+    },
+    {
+      "id": "wt-global-api-PickupCompanion-200",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "PickupCompanion",
+      "annotation": "",
+      "wikitext_line": 200
+    },
+    {
+      "id": "wt-global-api-PickupCurrency-201",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "PickupCurrency",
+      "annotation": "",
+      "wikitext_line": 201
+    },
+    {
+      "id": "wt-global-api-PlaceGlyphInSocket-202",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "PlaceGlyphInSocket",
+      "annotation": "",
+      "wikitext_line": 202
+    },
+    {
+      "id": "wt-global-api-QueryGuildEventLog-203",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "QueryGuildEventLog",
+      "annotation": "",
+      "wikitext_line": 203
+    },
+    {
+      "id": "wt-global-api-RemoveGlyphFromSocket-204",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "RemoveGlyphFromSocket",
+      "annotation": "",
+      "wikitext_line": 204
+    },
+    {
+      "id": "wt-global-api-RemoveTrackedAchievement-205",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "RemoveTrackedAchievement",
+      "annotation": "",
+      "wikitext_line": 205
+    },
+    {
+      "id": "wt-global-api-RequestInviteFromUnit-206",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "RequestInviteFromUnit",
+      "annotation": "",
+      "wikitext_line": 206
+    },
+    {
+      "id": "wt-global-api-RequestPVPRewards-207",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "RequestPVPRewards",
+      "annotation": "",
+      "wikitext_line": 207
+    },
+    {
+      "id": "wt-global-api-RequestRatedInfo-208",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "RequestRatedInfo",
+      "annotation": "",
+      "wikitext_line": 208
+    },
+    {
+      "id": "wt-global-api-ResetGroupPreviewTalentPoints-209",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ResetGroupPreviewTalentPoints",
+      "annotation": "",
+      "wikitext_line": 209
+    },
+    {
+      "id": "wt-global-api-ResetPreviewTalentPoints-210",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ResetPreviewTalentPoints",
+      "annotation": "",
+      "wikitext_line": 210
+    },
+    {
+      "id": "wt-global-api-SetAchievementComparisonUnit-211",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetAchievementComparisonUnit",
+      "annotation": "",
+      "wikitext_line": 211
+    },
+    {
+      "id": "wt-global-api-SetActiveTalentGroup-212",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetActiveTalentGroup",
+      "annotation": "",
+      "wikitext_line": 212
+    },
+    {
+      "id": "wt-global-api-SetCurrencyBackpack-213",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetCurrencyBackpack",
+      "annotation": "",
+      "wikitext_line": 213
+    },
+    {
+      "id": "wt-global-api-SetCurrencyUnused-214",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetCurrencyUnused",
+      "annotation": "",
+      "wikitext_line": 214
+    },
+    {
+      "id": "wt-global-api-SetMultiCastSpell-215",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetMultiCastSpell",
+      "annotation": "",
+      "wikitext_line": 215
+    },
+    {
+      "id": "wt-global-api-SetTalentGroupRole-216",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SetTalentGroupRole",
+      "annotation": "",
+      "wikitext_line": 216
+    },
+    {
+      "id": "wt-global-api-ShiftQuestWatches-217",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "ShiftQuestWatches",
+      "annotation": "",
+      "wikitext_line": 217
+    },
+    {
+      "id": "wt-global-api-SortBGList-218",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "SortBGList",
+      "annotation": "",
+      "wikitext_line": 218
+    },
+    {
+      "id": "wt-global-api-StopTradeSkillRepeat-219",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "StopTradeSkillRepeat",
+      "annotation": "",
+      "wikitext_line": 219
+    },
+    {
+      "id": "wt-global-api-UnitControllingVehicle-220",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitControllingVehicle",
+      "annotation": "",
+      "wikitext_line": 220
+    },
+    {
+      "id": "wt-global-api-UnitGetAvailableRoles-221",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitGetAvailableRoles",
+      "annotation": "",
+      "wikitext_line": 221
+    },
+    {
+      "id": "wt-global-api-UnitHasVehiclePlayerFrameUI-222",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitHasVehiclePlayerFrameUI",
+      "annotation": "",
+      "wikitext_line": 222
+    },
+    {
+      "id": "wt-global-api-UnitHasVehicleUI-223",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitHasVehicleUI",
+      "annotation": "",
+      "wikitext_line": 223
+    },
+    {
+      "id": "wt-global-api-UnitInVehicleControlSeat-224",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitInVehicleControlSeat",
+      "annotation": "",
+      "wikitext_line": 224
+    },
+    {
+      "id": "wt-global-api-UnitInVehicleHidesPetFrame-225",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitInVehicleHidesPetFrame",
+      "annotation": "",
+      "wikitext_line": 225
+    },
+    {
+      "id": "wt-global-api-UnitInVehicle-226",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitInVehicle",
+      "annotation": "",
+      "wikitext_line": 226
+    },
+    {
+      "id": "wt-global-api-UnitTargetsVehicleInRaidUI-227",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitTargetsVehicleInRaidUI",
+      "annotation": "",
+      "wikitext_line": 227
+    },
+    {
+      "id": "wt-global-api-UnitUsingVehicle-228",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitUsingVehicle",
+      "annotation": "",
+      "wikitext_line": 228
+    },
+    {
+      "id": "wt-global-api-UnitVehicleSkinType-229",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitVehicleSkinType",
+      "annotation": "",
+      "wikitext_line": 229
+    },
+    {
+      "id": "wt-global-api-UnitVehicleSkin-230",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UnitVehicleSkin",
+      "annotation": "",
+      "wikitext_line": 230
+    },
+    {
+      "id": "wt-global-api-UseQuestLogSpecialItem-231",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "UseQuestLogSpecialItem",
+      "annotation": "",
+      "wikitext_line": 231
+    },
+    {
+      "id": "wt-global-api-VehicleAimDecrement-232",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehicleAimDecrement",
+      "annotation": "",
+      "wikitext_line": 232
+    },
+    {
+      "id": "wt-global-api-VehicleAimDownStart-233",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehicleAimDownStart",
+      "annotation": "",
+      "wikitext_line": 233
+    },
+    {
+      "id": "wt-global-api-VehicleAimDownStop-234",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehicleAimDownStop",
+      "annotation": "",
+      "wikitext_line": 234
+    },
+    {
+      "id": "wt-global-api-VehicleAimGetAngle-235",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehicleAimGetAngle",
+      "annotation": "",
+      "wikitext_line": 235
+    },
+    {
+      "id": "wt-global-api-VehicleAimGetNormAngle-236",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehicleAimGetNormAngle",
+      "annotation": "",
+      "wikitext_line": 236
+    },
+    {
+      "id": "wt-global-api-VehicleAimGetNormPower-237",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehicleAimGetNormPower",
+      "annotation": "",
+      "wikitext_line": 237
+    },
+    {
+      "id": "wt-global-api-VehicleAimIncrement-238",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehicleAimIncrement",
+      "annotation": "",
+      "wikitext_line": 238
+    },
+    {
+      "id": "wt-global-api-VehicleAimRequestAngle-239",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehicleAimRequestAngle",
+      "annotation": "",
+      "wikitext_line": 239
+    },
+    {
+      "id": "wt-global-api-VehicleAimRequestNormAngle-240",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehicleAimRequestNormAngle",
+      "annotation": "",
+      "wikitext_line": 240
+    },
+    {
+      "id": "wt-global-api-VehicleAimSetNormPower-241",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehicleAimSetNormPower",
+      "annotation": "",
+      "wikitext_line": 241
+    },
+    {
+      "id": "wt-global-api-VehicleAimUpStart-242",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehicleAimUpStart",
+      "annotation": "",
+      "wikitext_line": 242
+    },
+    {
+      "id": "wt-global-api-VehicleAimUpStop-243",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehicleAimUpStop",
+      "annotation": "",
+      "wikitext_line": 243
+    },
+    {
+      "id": "wt-global-api-VehicleCameraZoomIn-244",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehicleCameraZoomIn",
+      "annotation": "",
+      "wikitext_line": 244
+    },
+    {
+      "id": "wt-global-api-VehicleCameraZoomOut-245",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehicleCameraZoomOut",
+      "annotation": "",
+      "wikitext_line": 245
+    },
+    {
+      "id": "wt-global-api-VehicleExit-246",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehicleExit",
+      "annotation": "",
+      "wikitext_line": 246
+    },
+    {
+      "id": "wt-global-api-VehicleNextSeat-247",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehicleNextSeat",
+      "annotation": "",
+      "wikitext_line": 247
+    },
+    {
+      "id": "wt-global-api-VehiclePrevSeat-248",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "VehiclePrevSeat",
+      "annotation": "",
+      "wikitext_line": 248
+    },
+    {
+      "id": "wt-global-api-BattlefieldSetPendingReportTarget-251",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "BattlefieldSetPendingReportTarget",
+      "annotation": "",
+      "wikitext_line": 251
+    },
+    {
+      "id": "wt-global-api-C_Calendar.ContextMenuEventComplain-252",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Calendar.ContextMenuEventComplain",
+      "annotation": "",
+      "wikitext_line": 252
+    },
+    {
+      "id": "wt-global-api-C_ChatInfo.ReportPlayer-253",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_ChatInfo.ReportPlayer",
+      "annotation": "",
+      "wikitext_line": 253
+    },
+    {
+      "id": "wt-global-api-C_Cursor.DropCursorCommunitiesStream-254",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Cursor.DropCursorCommunitiesStream",
+      "annotation": "",
+      "wikitext_line": 254
+    },
+    {
+      "id": "wt-global-api-C_Cursor.GetCursorCommunitiesStream-255",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Cursor.GetCursorCommunitiesStream",
+      "annotation": "",
+      "wikitext_line": 255
+    },
+    {
+      "id": "wt-global-api-C_Cursor.SetCursorCommunitiesStream-256",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_Cursor.SetCursorCommunitiesStream",
+      "annotation": "",
+      "wikitext_line": 256
+    },
+    {
+      "id": "wt-global-api-C_LFGInfo.CanPlayerUseGroupFinder-257",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_LFGInfo.CanPlayerUseGroupFinder",
+      "annotation": "",
+      "wikitext_line": 257
+    },
+    {
+      "id": "wt-global-api-C_LFGInfo.CanPlayerUseLFD-258",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_LFGInfo.CanPlayerUseLFD",
+      "annotation": "",
+      "wikitext_line": 258
+    },
+    {
+      "id": "wt-global-api-C_LFGInfo.CanPlayerUseLFR-259",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_LFGInfo.CanPlayerUseLFR",
+      "annotation": "",
+      "wikitext_line": 259
+    },
+    {
+      "id": "wt-global-api-C_LFGInfo.CanPlayerUsePremadeGroup-260",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_LFGInfo.CanPlayerUsePremadeGroup",
+      "annotation": "",
+      "wikitext_line": 260
+    },
+    {
+      "id": "wt-global-api-C_LFGInfo.CanPlayerUsePVP-261",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_LFGInfo.CanPlayerUsePVP",
+      "annotation": "",
+      "wikitext_line": 261
+    },
+    {
+      "id": "wt-global-api-C_LFGInfo.ConfirmLfgExpandSearch-262",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_LFGInfo.ConfirmLfgExpandSearch",
+      "annotation": "",
+      "wikitext_line": 262
+    },
+    {
+      "id": "wt-global-api-C_LFGInfo.GetAllEntriesForCategory-263",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_LFGInfo.GetAllEntriesForCategory",
+      "annotation": "",
+      "wikitext_line": 263
+    },
+    {
+      "id": "wt-global-api-C_LFGInfo.GetLFDLockStates-264",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_LFGInfo.GetLFDLockStates",
+      "annotation": "",
+      "wikitext_line": 264
+    },
+    {
+      "id": "wt-global-api-C_LFGInfo.GetRoleCheckDifficultyDetails-265",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_LFGInfo.GetRoleCheckDifficultyDetails",
+      "annotation": "",
+      "wikitext_line": 265
+    },
+    {
+      "id": "wt-global-api-C_LFGInfo.HideNameFromUI-266",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_LFGInfo.HideNameFromUI",
+      "annotation": "",
+      "wikitext_line": 266
+    },
+    {
+      "id": "wt-global-api-C_LFGList.GetActivityInfo-267",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_LFGList.GetActivityInfo",
+      "annotation": "",
+      "wikitext_line": 267
+    },
+    {
+      "id": "wt-global-api-C_LFGList.ReportSearchResult-268",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_LFGList.ReportSearchResult",
+      "annotation": "",
+      "wikitext_line": 268
+    },
+    {
+      "id": "wt-global-api-C_ReportSystem.InitiateReportPlayer-269",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_ReportSystem.InitiateReportPlayer",
+      "annotation": "",
+      "wikitext_line": 269
+    },
+    {
+      "id": "wt-global-api-C_ReportSystem.OpenReportPlayerDialog-270",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_ReportSystem.OpenReportPlayerDialog",
+      "annotation": "",
+      "wikitext_line": 270
+    },
+    {
+      "id": "wt-global-api-C_ReportSystem.SendReportPlayer-271",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_ReportSystem.SendReportPlayer",
+      "annotation": "",
+      "wikitext_line": 271
+    },
+    {
+      "id": "wt-global-api-C_ReportSystem.SetPendingReportPetTarget-272",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_ReportSystem.SetPendingReportPetTarget",
+      "annotation": "",
+      "wikitext_line": 272
+    },
+    {
+      "id": "wt-global-api-C_ReportSystem.SetPendingReportTargetByGuid-273",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_ReportSystem.SetPendingReportTargetByGuid",
+      "annotation": "",
+      "wikitext_line": 273
+    },
+    {
+      "id": "wt-global-api-C_ReportSystem.SetPendingReportTarget-274",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "C_ReportSystem.SetPendingReportTarget",
+      "annotation": "",
+      "wikitext_line": 274
+    },
+    {
+      "id": "wt-global-api-ComplainInboxItem-275",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "ComplainInboxItem",
+      "annotation": "",
+      "wikitext_line": 275
+    },
+    {
+      "id": "wt-global-api-SetPendingReportPetTarget-276",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetPendingReportPetTarget",
+      "annotation": "",
+      "wikitext_line": 276
+    },
+    {
+      "id": "wt-global-api-SetPendingReportTarget-277",
+      "section": "global-api",
+      "direction": "removed",
+      "symbol": "SetPendingReportTarget",
+      "annotation": "",
+      "wikitext_line": 277
+    },
+    {
+      "id": "wt-widgets-Region:GetSourceLocation-288",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "Region:GetSourceLocation",
+      "annotation": "",
+      "wikitext_line": 288
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetBackpackToken-289",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "GameTooltip:SetBackpackToken",
+      "annotation": "",
+      "wikitext_line": 289
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetCurrencyToken-290",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "GameTooltip:SetCurrencyToken",
+      "annotation": "",
+      "wikitext_line": 290
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetCurrencyTokenByID-291",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "GameTooltip:SetCurrencyTokenByID",
+      "annotation": "",
+      "wikitext_line": 291
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetEquipmentSet-292",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "GameTooltip:SetEquipmentSet",
+      "annotation": "",
+      "wikitext_line": 292
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetGlyph-293",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "GameTooltip:SetGlyph",
+      "annotation": "",
+      "wikitext_line": 293
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetLootCurrency-294",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "GameTooltip:SetLootCurrency",
+      "annotation": "",
+      "wikitext_line": 294
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetQuestCurrency-295",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "GameTooltip:SetQuestCurrency",
+      "annotation": "",
+      "wikitext_line": 295
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetQuestLogCurrency-296",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "GameTooltip:SetQuestLogCurrency",
+      "annotation": "",
+      "wikitext_line": 296
+    },
+    {
+      "id": "wt-widgets-GameTooltip:SetQuestLogSpecialItem-297",
+      "section": "widgets",
+      "direction": "added",
+      "symbol": "GameTooltip:SetQuestLogSpecialItem",
+      "annotation": "",
+      "wikitext_line": 297
+    },
+    {
+      "id": "wt-events-ACTIVE_TALENT_GROUP_CHANGED-310",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ACTIVE_TALENT_GROUP_CHANGED",
+      "annotation": "",
+      "wikitext_line": 310
+    },
+    {
+      "id": "wt-events-AUCTION_HOUSE_POST_ERROR-311",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AUCTION_HOUSE_POST_ERROR",
+      "annotation": "",
+      "wikitext_line": 311
+    },
+    {
+      "id": "wt-events-AUCTION_HOUSE_POST_WARNING-312",
+      "section": "events",
+      "direction": "added",
+      "symbol": "AUCTION_HOUSE_POST_WARNING",
+      "annotation": "",
+      "wikitext_line": 312
+    },
+    {
+      "id": "wt-events-BARBER_SHOP_APPEARANCE_APPLIED-313",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BARBER_SHOP_APPEARANCE_APPLIED",
+      "annotation": "",
+      "wikitext_line": 313
+    },
+    {
+      "id": "wt-events-BARBER_SHOP_CAMERA_VALUES_UPDATED-314",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BARBER_SHOP_CAMERA_VALUES_UPDATED",
+      "annotation": "",
+      "wikitext_line": 314
+    },
+    {
+      "id": "wt-events-BARBER_SHOP_CLOSE-315",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BARBER_SHOP_CLOSE",
+      "annotation": "",
+      "wikitext_line": 315
+    },
+    {
+      "id": "wt-events-BARBER_SHOP_COST_UPDATE-316",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BARBER_SHOP_COST_UPDATE",
+      "annotation": "",
+      "wikitext_line": 316
+    },
+    {
+      "id": "wt-events-BARBER_SHOP_FORCE_CUSTOMIZATIONS_UPDATE-317",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BARBER_SHOP_FORCE_CUSTOMIZATIONS_UPDATE",
+      "annotation": "",
+      "wikitext_line": 317
+    },
+    {
+      "id": "wt-events-BARBER_SHOP_OPEN-318",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BARBER_SHOP_OPEN",
+      "annotation": "",
+      "wikitext_line": 318
+    },
+    {
+      "id": "wt-events-BARBER_SHOP_RESULT-319",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BARBER_SHOP_RESULT",
+      "annotation": "",
+      "wikitext_line": 319
+    },
+    {
+      "id": "wt-events-BATTLEFIELD_AUTO_QUEUE_EJECT-320",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BATTLEFIELD_AUTO_QUEUE_EJECT",
+      "annotation": "",
+      "wikitext_line": 320
+    },
+    {
+      "id": "wt-events-BATTLEFIELD_AUTO_QUEUE-321",
+      "section": "events",
+      "direction": "added",
+      "symbol": "BATTLEFIELD_AUTO_QUEUE",
+      "annotation": "",
+      "wikitext_line": 321
+    },
+    {
+      "id": "wt-events-CLIENT_SCENE_CLOSED-322",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLIENT_SCENE_CLOSED",
+      "annotation": "",
+      "wikitext_line": 322
+    },
+    {
+      "id": "wt-events-CLIENT_SCENE_OPENED-323",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CLIENT_SCENE_OPENED",
+      "annotation": "",
+      "wikitext_line": 323
+    },
+    {
+      "id": "wt-events-COMPANION_LEARNED-324",
+      "section": "events",
+      "direction": "added",
+      "symbol": "COMPANION_LEARNED",
+      "annotation": "",
+      "wikitext_line": 324
+    },
+    {
+      "id": "wt-events-COMPANION_UNLEARNED-325",
+      "section": "events",
+      "direction": "added",
+      "symbol": "COMPANION_UNLEARNED",
+      "annotation": "",
+      "wikitext_line": 325
+    },
+    {
+      "id": "wt-events-COMPANION_UPDATE-326",
+      "section": "events",
+      "direction": "added",
+      "symbol": "COMPANION_UPDATE",
+      "annotation": "",
+      "wikitext_line": 326
+    },
+    {
+      "id": "wt-events-CONFIRM_BARBERS_CHOICE-327",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CONFIRM_BARBERS_CHOICE",
+      "annotation": "",
+      "wikitext_line": 327
+    },
+    {
+      "id": "wt-events-CURSOR_CHANGED-328",
+      "section": "events",
+      "direction": "added",
+      "symbol": "CURSOR_CHANGED",
+      "annotation": "",
+      "wikitext_line": 328
+    },
+    {
+      "id": "wt-events-GAME_PAD_POWER_CHANGED-329",
+      "section": "events",
+      "direction": "added",
+      "symbol": "GAME_PAD_POWER_CHANGED",
+      "annotation": "",
+      "wikitext_line": 329
+    },
+    {
+      "id": "wt-events-GLYPH_ADDED-330",
+      "section": "events",
+      "direction": "added",
+      "symbol": "GLYPH_ADDED",
+      "annotation": "",
+      "wikitext_line": 330
+    },
+    {
+      "id": "wt-events-GLYPH_REMOVED-331",
+      "section": "events",
+      "direction": "added",
+      "symbol": "GLYPH_REMOVED",
+      "annotation": "",
+      "wikitext_line": 331
+    },
+    {
+      "id": "wt-events-GLYPH_UPDATED-332",
+      "section": "events",
+      "direction": "added",
+      "symbol": "GLYPH_UPDATED",
+      "annotation": "",
+      "wikitext_line": 332
+    },
+    {
+      "id": "wt-events-GUILD_EVENT_LOG_UPDATE-333",
+      "section": "events",
+      "direction": "added",
+      "symbol": "GUILD_EVENT_LOG_UPDATE",
+      "annotation": "",
+      "wikitext_line": 333
+    },
+    {
+      "id": "wt-events-LFG_LIST_ROLE_UPDATE-334",
+      "section": "events",
+      "direction": "added",
+      "symbol": "LFG_LIST_ROLE_UPDATE",
+      "annotation": "",
+      "wikitext_line": 334
+    },
+    {
+      "id": "wt-events-PET_TALENT_UPDATE-335",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PET_TALENT_UPDATE",
+      "annotation": "",
+      "wikitext_line": 335
+    },
+    {
+      "id": "wt-events-PLAYER_DIFFICULTY_CHANGED-336",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PLAYER_DIFFICULTY_CHANGED",
+      "annotation": "",
+      "wikitext_line": 336
+    },
+    {
+      "id": "wt-events-PLAYER_TALENT_UPDATE-337",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PLAYER_TALENT_UPDATE",
+      "annotation": "",
+      "wikitext_line": 337
+    },
+    {
+      "id": "wt-events-PREVIEW_PET_TALENT_POINTS_CHANGED-338",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PREVIEW_PET_TALENT_POINTS_CHANGED",
+      "annotation": "",
+      "wikitext_line": 338
+    },
+    {
+      "id": "wt-events-PREVIEW_TALENT_POINTS_CHANGED-339",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PREVIEW_TALENT_POINTS_CHANGED",
+      "annotation": "",
+      "wikitext_line": 339
+    },
+    {
+      "id": "wt-events-PVP_RATED_STATS_UPDATE-340",
+      "section": "events",
+      "direction": "added",
+      "symbol": "PVP_RATED_STATS_UPDATE",
+      "annotation": "",
+      "wikitext_line": 340
+    },
+    {
+      "id": "wt-events-RAISED_AS_GHOUL-341",
+      "section": "events",
+      "direction": "added",
+      "symbol": "RAISED_AS_GHOUL",
+      "annotation": "",
+      "wikitext_line": 341
+    },
+    {
+      "id": "wt-events-ROLE_POLL_BEGIN-342",
+      "section": "events",
+      "direction": "added",
+      "symbol": "ROLE_POLL_BEGIN",
+      "annotation": "",
+      "wikitext_line": 342
+    },
+    {
+      "id": "wt-events-RUNE_POWER_UPDATE-343",
+      "section": "events",
+      "direction": "added",
+      "symbol": "RUNE_POWER_UPDATE",
+      "annotation": "",
+      "wikitext_line": 343
+    },
+    {
+      "id": "wt-events-RUNE_TYPE_UPDATE-344",
+      "section": "events",
+      "direction": "added",
+      "symbol": "RUNE_TYPE_UPDATE",
+      "annotation": "",
+      "wikitext_line": 344
+    },
+    {
+      "id": "wt-events-TALENT_GROUP_ROLE_CHANGED-345",
+      "section": "events",
+      "direction": "added",
+      "symbol": "TALENT_GROUP_ROLE_CHANGED",
+      "annotation": "",
+      "wikitext_line": 345
+    },
+    {
+      "id": "wt-events-TRADE_SKILL_FILTER_UPDATE-346",
+      "section": "events",
+      "direction": "added",
+      "symbol": "TRADE_SKILL_FILTER_UPDATE",
+      "annotation": "",
+      "wikitext_line": 346
+    },
+    {
+      "id": "wt-events-UPDATE_MULTI_CAST_ACTIONBAR-347",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UPDATE_MULTI_CAST_ACTIONBAR",
+      "annotation": "",
+      "wikitext_line": 347
+    },
+    {
+      "id": "wt-events-UPDATE_OVERRIDE_ACTIONBAR-348",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UPDATE_OVERRIDE_ACTIONBAR",
+      "annotation": "",
+      "wikitext_line": 348
+    },
+    {
+      "id": "wt-events-UPDATE_POSSESS_BAR-349",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UPDATE_POSSESS_BAR",
+      "annotation": "",
+      "wikitext_line": 349
+    },
+    {
+      "id": "wt-events-UPDATE_VEHICLE_ACTIONBAR-350",
+      "section": "events",
+      "direction": "added",
+      "symbol": "UPDATE_VEHICLE_ACTIONBAR",
+      "annotation": "",
+      "wikitext_line": 350
+    },
+    {
+      "id": "wt-events-VEHICLE_ANGLE_UPDATE-351",
+      "section": "events",
+      "direction": "added",
+      "symbol": "VEHICLE_ANGLE_UPDATE",
+      "annotation": "",
+      "wikitext_line": 351
+    },
+    {
+      "id": "wt-events-WORLD_PVP_QUEUE-352",
+      "section": "events",
+      "direction": "added",
+      "symbol": "WORLD_PVP_QUEUE",
+      "annotation": "",
+      "wikitext_line": 352
+    },
+    {
+      "id": "wt-events-COMMUNITIES_STREAM_CURSOR_CLEAR-355",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "COMMUNITIES_STREAM_CURSOR_CLEAR",
+      "annotation": "",
+      "wikitext_line": 355
+    },
+    {
+      "id": "wt-events-CURSOR_UPDATE-356",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "CURSOR_UPDATE",
+      "annotation": "",
+      "wikitext_line": 356
+    },
+    {
+      "id": "wt-events-OPEN_REPORT_PLAYER-357",
+      "section": "events",
+      "direction": "removed",
+      "symbol": "OPEN_REPORT_PLAYER",
+      "annotation": "",
+      "wikitext_line": 357
+    },
+    {
+      "id": "wt-cvars-calendarShowResets-368",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "calendarShowResets",
+      "annotation": "",
+      "wikitext_line": 368,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-cameraFov-369",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "cameraFov",
+      "annotation": "",
+      "wikitext_line": 369,
+      "page_default": "90"
+    },
+    {
+      "id": "wt-cvars-consolidateBuffs-370",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "consolidateBuffs",
+      "annotation": "",
+      "wikitext_line": 370,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-enableSourceLocationLookup-371",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "enableSourceLocationLookup",
+      "annotation": "",
+      "wikitext_line": 371,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-equipmentManager-372",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "equipmentManager",
+      "annotation": "",
+      "wikitext_line": 372,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-fstack_showhighlight-373",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "fstack_showhighlight",
+      "annotation": "",
+      "wikitext_line": 373,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-lfgNewPlayerFriendly-374",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "lfgNewPlayerFriendly",
+      "annotation": "",
+      "wikitext_line": 374,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-previewTalents-375",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "previewTalents",
+      "annotation": "",
+      "wikitext_line": 375,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-ShowAllSpellRanks-376",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "ShowAllSpellRanks",
+      "annotation": "",
+      "wikitext_line": 376,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-Sound_EnableDSPEffects-377",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "Sound_EnableDSPEffects",
+      "annotation": "",
+      "wikitext_line": 377,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-textureErrorColors-378",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "textureErrorColors",
+      "annotation": "",
+      "wikitext_line": 378,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-threatPlaySounds-379",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "threatPlaySounds",
+      "annotation": "",
+      "wikitext_line": 379,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-threatShowNumeric-380",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "threatShowNumeric",
+      "annotation": "",
+      "wikitext_line": 380,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-threatWarning-381",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "threatWarning",
+      "annotation": "",
+      "wikitext_line": 381,
+      "page_default": "3"
+    },
+    {
+      "id": "wt-cvars-threatWorldText-382",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "threatWorldText",
+      "annotation": "",
+      "wikitext_line": 382,
+      "page_default": "1"
+    },
+    {
+      "id": "wt-cvars-trackerFilter-383",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "trackerFilter",
+      "annotation": "",
+      "wikitext_line": 383,
+      "page_default": "7"
+    },
+    {
+      "id": "wt-cvars-trackerSorting-384",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "trackerSorting",
+      "annotation": "",
+      "wikitext_line": 384,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-watchFrameWidth-385",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "watchFrameWidth",
+      "annotation": "",
+      "wikitext_line": 385,
+      "page_default": "0"
+    },
+    {
+      "id": "wt-cvars-SetRaidDifficulty-387",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "SetRaidDifficulty",
+      "annotation": "",
+      "wikitext_line": 387,
+      "kind": "command"
+    },
+    {
+      "id": "wt-cvars-TTSUseCharacterSettings-390",
+      "section": "cvars",
+      "direction": "removed",
+      "symbol": "TTSUseCharacterSettings",
+      "annotation": "",
+      "wikitext_line": 390
+    }
+  ]
+}
