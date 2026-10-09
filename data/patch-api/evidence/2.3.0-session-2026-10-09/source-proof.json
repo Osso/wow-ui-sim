@@ -1,0 +1,43 @@
+{
+  "base_revision": "614402d56f726ec34cedea2f28a9609cdd653462",
+  "scope": "Owned SOURCE-only development fixtures; no runtime/native/model/final proof",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p230-source",
+  "development_red": [
+    {
+      "log": "red.log",
+      "exit_code": 1,
+      "failures": 5,
+      "limit": "Empty-ledger stub; historical RED code not archived for replay."
+    },
+    {
+      "log": "parenthetical-red.log",
+      "exit_code": 1,
+      "failures": 1
+    },
+    {
+      "log": "notes-red.log",
+      "exit_code": 1,
+      "failures": 1
+    }
+  ],
+  "green": {
+    "argv": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p230-source/data/patch-api/evidence/2.3.0-session-2026-10-09/test_source_accounting.py"
+    ],
+    "exit_code": 0,
+    "tests": 6,
+    "omission_controls": 593,
+    "log": "green.log",
+    "working_scope_sha256": {
+      "data/patch-api/evidence/2.3.0-session-2026-10-09/accounting.py": "1b6d1d5765d3acbd86f0027275b6177bf4333eb7adf6cea02d8ccf61671d249e",
+      "data/patch-api/evidence/2.3.0-session-2026-10-09/test_source_accounting.py": "34126a4e8606a22c9de37ff15ccebff4ee45d0d54a5b7ede9fed272c93c94cae",
+      "data/patch-api/evidence/2.3.0-session-2026-10-09/historical-extract_patch_non_inventory.py": "a8db3187a691118b7e1a66db8e0e9262bfdb3d2de1fb4775abfb10f9026c9d11",
+      "data/patch-api/sources/2.3.0-api-changes.wikitext": "2d87459c71de044511f67565c26c981385f01477d8a4195eca593cf20b4cf283"
+    },
+    "revision_at_execution": "614402d56f726ec34cedea2f28a9609cdd653462 plus recorded working-scope bytes"
+  },
+  "default_tool_bytes_unchanged": true,
+  "invalidated_by_later_relevant_change": false
+}

@@ -35,6 +35,9 @@
 ## [2026-10-09] investigation | Historical Retail 2.4.0 source audit
 
 [Audit](investigations/patch-2-4-0-api-audit.md): pinned page 73272/revision 6471380; 50 inventory occurrences, 99 literal rows, 46 signature boundaries, 195 ledger IDs (169 pending/26 metadata). Zero meaningful closures or runtime/native publication credit. Opt-in lossless source parsing; 156 defaults byte/error-equal to base, all inherited recorded-route nonmatches unchanged. Source GREEN 2/2; copied Git-free replay GREEN 3/3 with nine serialized tamper/reject/restore controls. Separate 432 original/three zero-closure seals; 101-page older registry through 1.0.0. Actual 73 Retail successors only; five queued placeholders require main integration. No broad/final gates or operations.
+## [2026-10-09] investigation | Historical retail Patch 2.3.0 SOURCE audit
+
+[Audit](investigations/patch-2-3-0-api-audit.md): frozen page 44655/revision 6055877; 163 nonblank rows, 132 inventory occurrences, 137 literal signature/command limits, 68 prose rows, 11 headings and 82 unexpanded links. Own source fixtures 6/6, 593 omission controls; zero runtime/native/model credit. Original/copied Git-free/no-target/no-cache replay exit 0 at `ffda99b11`: 22 seals, 727040-byte archive; ledger/log tampering reject and bytes restore. Source commit `766a7343c`; actual retail successors and native/final gates main-owned.
 
 ## [2026-10-09] investigation | Patch 3.4.2 Wrath Classic source audit
 

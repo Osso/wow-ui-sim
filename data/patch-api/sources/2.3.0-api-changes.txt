@@ -1,0 +1,179 @@
+Patch 2.3.0 API changes
+== Important Changes ==
+* The spell casting mechanism will be improved to remove the need for /stopcasting workarounds on high-latency connections or 'fallthrough' instant cast macros.
+
+== Macro Commands ==
+* NEW - /petautocasttoggle
+* NEW - /targetlastenemy, /targetlastfriend
+* NEW - /targetexact
+* UPDATED - /cancelform will be recognized instantly (as /dismount is currently)
+* Added the following macro conditional abbreviations; modifier -> mod, button -> btn, actionbar -> bar, equipped -> worn , stance -> form(e.g. [mod:SELFCAST])
+
+== Frame methods ==
+* You should no longer need to call ScrollFrame:UpdateScrollChildRect(). If a child frame, texture or fontstring has changed, the scroll parent will automatically recalculate it's scroll rect and dispatch events appropriately. Of course, please test this out on the test realm when it goes live, and report any bugs.
+
+* NEW - registered = Frame:IsEventRegistered("event")
+* NEW - FontString:SetFormattedText(format, ...) -- Like setting the text to be the result of a string.format call, but without the garbage overhead of creating a temporary lua string for the result.
+* NEW - Button:SetFormattedText(format, ...)
+* NEW - height = FontString:GetStringHeight()
+* UPDATED - width = FontString:GetWidth([explicitOnly]) -- Added new optional parameter which, if provided and true, returns 0 if the width has not been explicitly set rather than returning the effective width. Defaults to false.
+* UPDATED - height = FontString:GetHeight([explicitOnly]) -- as above, but for height
+* NEW - EditBox:SetCursorPosition(position)
+* NEW position = EditBox:GetCursorPosition()
+* RENAMED - GameTooltip:SetTrackingSpell() = GameTooltip:SetTracking()
+
+== Frame Support ==
+* NEW - frame1, frame2, ... = GetFramesRegisteredForEvent("event")
+
+== API Methods ==
+* Explicit calls to message(string) will show the window even if lua errors are turned off in the UI options.
+
+* NEW - PickupItem(itemID or "item")
+* UPDATED - count = GetItemCount(item, includeBank,[ includeUses]) -- new includeUses flag that returns the same value that GetActionCount() would for that item
+* NEW - count = GetSpellCount("name" or slot [,book]) -- Returns the same value that GetActionCount() would return for that spell
+* NEW - selected = IsSelectedSpell(slot) -- Replaces IsCurrentCast()
+* REMOVED - IsCurrentCast(slot) -- Replaced with IsSelectedSpell
+* NEW - current = IsCurrentSpell("name" or slot [,book]) -- Consistent with IsCurrentAction
+* NEW - isConsumable = IsConsumableSpell("name" or slot [,book]) -- Consistent with IsConsumableAction
+* NEW - helpful = IsHelpfulItem(item) - Contains a right click ability that targets friendly units (Note that a few spells are neither helpful nor harmful and can be cast on anyone.)
+* NEW - harmful = IsHarmfulItem(item) - Contains a right click ability that targets enemy units (See note above)
+* NEW - helpful = IsHelpfulSpell("name" or slot,"book") - The spell targets friendly units (See note above)
+* NEW - harmful = IsHarmfulSpell("name" or slot,"book") - The spell targets enemy units (See note above)
+* NEW - item, link = GetMacroItem(macro)
+* NEW - spell, rank = GetMacroSpell(macro)
+
+== Garbage Collection ==
+* in 2.3 the game will be performing extra garbage collection outside of combat to keep memory use down.
+
+As always, the game will perform better if you don't generate any garbage, and here are some tips to do that:
+* If you're composing a formatted string to display in a button or font string, use the new FontString:SetFormattedText(fmt, ...) API
+* If you write a function that returns many values, consider returning them directly instead of creating a table and returning that table.
+* If returning a table from a function really is most convenient, have the caller of that function pass in the table to be filled out instead of creating a new table inside the function so that the caller can re-cycle that table later.
+
+== Auction API ==
+* UPDATED - QueryAuctionItems([getAll]) -- Added a new boolean argument, setting it to true will retrieve all auction house data (not just 50 items). This can only be used once every 15 minutes. This is intended to reduce our load from add-ons such as auctioneer that are going to download the entire auction house anyways.
+* UPDATED - canQuery, canQueryAll = CanSendAuctionQuery() -- Now returns two results. First (bool) is if you can send a regular query, second (bool) is if you can ask for all auction house data.
+* UPDATED - isReversed, isReversedUsed = IsAuctionSortReversed() -- Now returns two results. First (bool) is true if the sort is reversed, second (bool) is true if the current sort supports reversal
+* NEW - sort, reversed = GetAuctionSort(type, index) -- Enumerates what sorts are being currently used on the table and in what order.
+** 'type' – string – which table to retrieve the sort for (ie. “owner”, “bidder” or “list”).
+** 'index' - number – the index of the sort to retrieve (1 for the first sort, 2 for the second sort, etc).
+** 'sort' – string - the sort being used (nil if there isn’t a sort at this index)
+** 'reversed' – bool – true if the sort is reversed
+* NEW - SortAuctionClearSort(type) -- Clears all sorts on a specific table.
+* NEW - SortAuctionSetSort(type, sort, reverse) -- Prepends a new sort to an auction table pushing all other sorts down (the new sort is not applied automatically).
+** 'type' – string – which table to clear the sorts on (ie. “owner”, “bidder”, or “list”).
+** 'sort' – string – the sort to add (ie. “quality”, “level”, “duration”, “status”, “bid”, “name”, “buyout”, “seller”, “buyoutthenbid”, “quantity”).
+** 'reverse' – bool – true if this sort should be applied in reverse order.
+* NEW - SortAuctionApplySort(type) - Applies the sort that has been configured for a specific table.
+
+NOTE: There is a new sort type “quantity”, which allows sorts by the number of items.
+
+== Mail API ==
+When composing mail, there are now “slots”, that you can drag items into (1 is the first slot, 2 is the second slot, etc). Once the mail arrives, you use an “index” to refer to each attachment.
+
+* UPDATED - ClickSendMailItemButton(attachSlot) -- Added a numeric “attachSlot” argument to this existing function specifying which slot was clicked on.
+* UPDATED - GetSendMailItem(attachSlot) -- Added the new attachSlot argument
+* UPDATED - GetSendMailItemLink(attachSlot) -- Added th new attachSlot argument
+* NOTE - GetSendMailPrice() -- The price of mail depends on how many items are attached
+* UPDATED - GetInboxItem(messageIndex, attachIndex) -- Added the new attachSlot argument
+* UPDATED - GetInboxItemLink(messageIndex, attachIndex) -- Added the new attachSlot argument
+* UPDATED - TakeInboxItem(messageIndex, attachIndex) -- Added the new attachSlot argument
+* NOTE - GetInboxHeaderInfo(index) -- Returns number of attachments in hasItem
+
+== Talent API ==
+The Talent Query API has been updated to allow inspection.
+
+* UDPATED - GetNumTalentTabs ([inspect]) -- Added an optional "inspect" argument. The function returns information for the currently inspected unit if "inspect" evaluates to true.
+* UPDATED - GetTalentTabInfo (tab[, inspect]) -- Added an optional "inspect" argument.
+* UPDATED - GetNumTalents (tab[, inspect]) -- Added an optional "inspect" argument.
+* UPDATED - GetTalentInfo (tab, index[, inspect]) -- Added an optional "inspect" argument.
+* UDPATED - GetTalentPrereqs (tab, index[, inspect]) -- Added an optional "inspect" argument.
+* ADDED - Event INSPECT_TALENT_READY -- Sent when the talent of the inspected units are available/updated.
+
+== Bug Fixes ==
+* The accidental change in handling of UnitName on non-existing units has been fixed.
+
+== 2.3.0 consolidated API changes ==
+<!-- compared Special:Diff/4997529 to wow.exe v2.2.0 strings dump -->
+: AutoStoreGuildBankItem
+: BuyGuildBankTab
+: CanWithdrawGuildBankMoney
+: ClickSpellByName
+: CloseGuildBankFrame
+: DepositGuildBankMoney
+: GetAuctionSort
+: GetContainerItemDurability
+: GetCurrentArenaSeason
+: GetCurrentGuildBankTab
+: GetExpertise
+: GetExpertisePercent
+: GetFramesRegisteredForEvent
+: GetGuildBankItemInfo
+: GetGuildBankItemLink
+: GetGuildBankMoney
+: GetGuildBankMoneyTransaction
+: GetGuildBankTabCost
+: GetGuildBankTabInfo
+: GetGuildBankTabPermissions
+: GetGuildBankTransaction
+: GetGuildBankWithdrawLimit
+: GetGuildBankWithdrawMoney
+: GetGuildEventInfo
+: GetGuildTabardFileNames
+: GetInventoryItemDurability
+: GetLatestThreeSenders
+: GetMacroItem
+: GetMacroItemIconInfo
+: GetMacroSpell
+: GetNumGossipActiveQuests
+: GetNumGossipAvailableQuests
+: GetNumGossipOptions
+: GetNumGuildBankMoneyTransactions
+: GetNumGuildBankTabs
+: GetNumGuildBankTransactions
+: GetNumGuildEvents
+: GetNumMacroItemIcons
+: GetNumTrackingTypes
+: GetNumVoiceSessionMembersBySessionID
+: GetPossessInfo
+: GetQuestLogRewardHonor
+: GetRewardHonor
+: GetShieldBlock
+: GetSpellCount
+: GetTrackingInfo
+: GetVoiceSessionMemberInfoBySessionID
+: IsActiveQuestTrivial
+: IsAvailableQuestTrivial
+: IsConsumableSpell
+: IsCurrentSpell
+: IsFalling
+: IsHarmfulItem
+: IsHarmfulSpell
+: IsHelpfulItem
+: IsHelpfulSpell
+: IsOutOfBounds
+: IsPossessBarVisible
+: IsSelectedSpell
+: PickupGuildBankItem
+: PickupGuildBankMoney
+: PickupItem
+: QueryGuildBankLog
+: QueryGuildBankTab
+: QueryGuildEventLog
+: SetBagPortraitTexture
+: SetCurrentGuildBankTab
+: SetGuildBankTabInfo
+: SetGuildBankTabPermissions
+: SetGuildBankTabWithdraw
+: SetGuildBankWithdrawLimit
+: SetInventoryPortraitTexture
+: SetSendMailShowing
+: SetTracking
+: SetUIVisibility
+: SortAuctionApplySort
+: SortAuctionClearSort
+: SortAuctionSetSort
+: SplitGuildBankItem
+: TargetLastFriend
+: UnitInBattleground
+: WithdrawGuildBankMoney

@@ -1,0 +1,6 @@
+{
+  "source_commit": "766a7343c05f90692ce66be5ab996f08ba7d749f",
+  "scope": "Final 6/6 SOURCE fixture bytes match committed source; no fixture rerun merely for commit. Historical validator/controls only next.",
+  "source_proof_sha256": "ef4d9cbf011e42d5d58ed6e281c73017d4943c23a4ea173e5e6ebe9448f8746a",
+  "expected_seals_limit": "Trusted mapping captures owned artifacts; replacing mapping plus validator is outside tamper claim."
+}
