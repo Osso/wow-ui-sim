@@ -1,0 +1,15 @@
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 1.98ms
+[  0.002s] [Startup] rilua VM created in 103.18µs
+[  0.002s] [Startup] builtin frames initialized in 68.60µs
+[  0.002s] [Startup] template registry cleared in 7.92µs
+[  0.002s] [Startup] intrinsic templates registered in 5.11µs
+[  0.002s] [Startup] initial app_data lua handle installed in 260.00ns
+[  0.093s] [Startup] init_lua_state complete in 91.16ms
+[  0.093s] [Startup] final app_data lua handle installed in 181.00ns
+[  0.093s] [Startup] initial screen globals installed in 51.29µs
+[  0.093s] [Startup] WowLuaEnv::new complete
+
+thread 'lua_api::workarounds_editmode::tests::apply_system_anchors::unit_frames::apply_system_anchors_batches_compact_unit_frame_startup_refreshes' (4074960) panicked at src/lua_api/workarounds_editmode_tests/apply_system_anchors/unit_frames.rs:437:10:
+apply compact unit frame batched settings: Lua(Runtime(RuntimeError { message: "(string):8: attempt to call method 'InitSystemAnchors' (a nil value)", level: 0, traceback: [] }))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace

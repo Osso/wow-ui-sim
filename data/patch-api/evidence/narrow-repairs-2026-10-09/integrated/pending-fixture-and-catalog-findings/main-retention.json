@@ -1,0 +1,29 @@
+{
+  "retained": [
+    {
+      "path": "editmode-decision.md",
+      "source": "/tmp/editmode-init-minimal-decision.md",
+      "sha256": "245ea6b8a9345b381f3b9d0fff870b21a7f8122e9556e295c33b58e76aa53e7a",
+      "bytes": 8180
+    },
+    {
+      "path": "aura-decision.md",
+      "source": "/tmp/aura-phase-fixture-decision.md",
+      "sha256": "f65865d1e7d9491b0169eebab2f0d9877f8acc05da646dee4b37373e525dbf0b",
+      "bytes": 6612
+    },
+    {
+      "path": "garrison-earlier-bounded-locations.md",
+      "source": "/tmp/garrison-catalog-local-data.md",
+      "sha256": "67024f537bbaa609185ddfa2a2ba65045af99e007d7b4319a3a98032ff188d24",
+      "bytes": 3774
+    },
+    {
+      "path": "garrison-actual-dependency.md",
+      "source": "/tmp/garrison-dependency-catalog-data.md",
+      "sha256": "fecc6af3bdfdc30f0f99353898d105ea6a14a5e12e517a0302679181417460c3",
+      "bytes": 4677
+    }
+  ],
+  "scope": "Read-onlyfindings/hypotheses notacceptedautomaticfixes. Actualdependencycheckoutcorrectsearlierlimitedlocationnegative; catalogrowsstill0verified. Aura/EditModecorrectedpostconditionsremainunproved. No trackedruntime/vendorchanges."
+}

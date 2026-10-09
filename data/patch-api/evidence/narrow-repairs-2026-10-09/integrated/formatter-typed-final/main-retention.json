@@ -1,0 +1,106 @@
+{
+  "retained": [
+    {
+      "path": "artifact.json",
+      "sha256": "edc0c6cbd0fd8cb37bae3593e29eec3c63f1862bdebd9ea52158ae87be035bee",
+      "bytes": 1379
+    },
+    {
+      "path": "aura-list.json",
+      "sha256": "3b8f2a56e6013ed9fd25c635b1966a6f645b90d11844d99d34d011aca4278fbb",
+      "bytes": 330
+    },
+    {
+      "path": "aura-list.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "aura-list.stdout",
+      "sha256": "27cb44c35298a022cdded6c3572a8982752c9219d4f5d2874953f814a8a3dd58",
+      "bytes": 102
+    },
+    {
+      "path": "aura-red.json",
+      "sha256": "9c6ceb2803dfb0558b74b6b0151789a32806593c5e986501be9692a3329f949a",
+      "bytes": 1039601
+    },
+    {
+      "path": "aura-red.stderr",
+      "sha256": "ca3c836e57a8ec0cd86b8b36659391b3b9ee6f272b3a8cea52cb1d49577d37e2",
+      "bytes": 1875
+    },
+    {
+      "path": "aura-red.stdout",
+      "sha256": "bcf988761fe46b324c664769fbea9dc38697f944e84f8081ca43c693ed87e21c",
+      "bytes": 310
+    },
+    {
+      "path": "compile.json",
+      "sha256": "d2eddb9a23cdc8d2c8c1bf24254f8c8517bd545ba05e47d238b33b81afd18e51",
+      "bytes": 1664752
+    },
+    {
+      "path": "compile.stderr",
+      "sha256": "b42ebda3dafe950afeacf002922412f7d2a2a890eaff6b5936a20fbe97fb9a30",
+      "bytes": 1348
+    },
+    {
+      "path": "compile.stdout",
+      "sha256": "daf7be3aa2b13685ef36042553bb7c3be1af1da82a2ae20b6994717e3986cdaa",
+      "bytes": 572411
+    },
+    {
+      "path": "format-reused.json",
+      "sha256": "1587807273bcbbace5c2a00035b642eaac46b9d062b230a198d664d24c2992e2",
+      "bytes": 758
+    },
+    {
+      "path": "formatter-batch.json",
+      "sha256": "af737f8635a5c3bbfd2c555dded532eecbfc13d17c75501a94704b39b3d3e100",
+      "bytes": 1039535
+    },
+    {
+      "path": "formatter-batch.stderr",
+      "sha256": "888a9e8afe8865a35e8a547c792a74662d063f4f08cb52a9d2daa828e22840cf",
+      "bytes": 4520
+    },
+    {
+      "path": "formatter-batch.stdout",
+      "sha256": "518922eb30153ad60bc24622a08f780a21b44485888e5e0384a2b8913911fa8c",
+      "bytes": 862
+    },
+    {
+      "path": "formatter-list.json",
+      "sha256": "37398242d05cf3453d5915bb6f41314fed5709b880e556655dfd8ff9ee5100b8",
+      "bytes": 355
+    },
+    {
+      "path": "formatter-list.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "formatter-list.stdout",
+      "sha256": "f736b3960a650dd19ea57ae04a1465e025eb49a0079085cc21fdac1d3540ca98",
+      "bytes": 726
+    },
+    {
+      "path": "ledger.json",
+      "sha256": "1304f506722f2d0ec907eb900efdef573a78e417e6d3027523d85c7a36657272",
+      "bytes": 3497
+    },
+    {
+      "path": "report.md",
+      "sha256": "86c27ab6577258ca05e740695178a5f91152ad6fc2fc18eacfb80e965d6c10c4",
+      "bytes": 5928
+    },
+    {
+      "path": "semantic-readability.json",
+      "sha256": "fc4ed473b65579f038731780d2e1430d7c5221702e2323fa2f6d0bd20ae60ac4",
+      "bytes": 1256
+    }
+  ],
+  "privacy": "Scopedcredential/private-key/Bearer scan beforecopy0matches, no process/envvalue snapshots. Heuristicnotexhaustive. Allselectedbytesidenticaloriginalsuntouched.",
+  "scope": "Actual941140fd6lockedcompile0,formatter7/7, separateAuraRED0/1exit101. Formatproofreusedonce; no broad/native/parentclosure."
+}

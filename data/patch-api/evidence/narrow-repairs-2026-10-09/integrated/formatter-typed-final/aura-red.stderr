@@ -1,0 +1,29 @@
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 1.88ms
+[  0.002s] [Startup] rilua VM created in 119.38µs
+[  0.002s] [Startup] builtin frames initialized in 69.24µs
+[  0.002s] [Startup] template registry cleared in 12.57µs
+[  0.002s] [Startup] intrinsic templates registered in 6.14µs
+[  0.002s] [Startup] initial app_data lua handle installed in 491.00ns
+[  0.134s] [Startup] init_lua_state complete in 131.45ms
+[  0.134s] [Startup] final app_data lua handle installed in 200.00ns
+[  0.134s] [Startup] initial screen globals installed in 92.56µs
+[  0.134s] [Startup] WowLuaEnv::new complete
+Lua error: Lua Error: Dirty flags were not fully cleared during update pass (remaining flags: 18)
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:59: in function 'GetErrorData'
+[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:72: in function <[Interface/AddOns/Blizzard_ScriptErrors/Blizzard_ScriptErrors.lua]:71>
+[Interface/AddOns/Blizzard_SharedXMLBase/ErrorUtil.lua]:19: in function 'assertsafe'
+[Interface/AddOns/Blizzard_SharedXML/MixinUtil.lua]:433: in function 'ProcessDirtyFlags'
+[Interface/AddOns/Blizzard_AuraContainer/Blizzard_ManagedAuraContainer.lua]:91: in function <[Interface/AddOns/Blizzard_AuraContainer/Blizzard_ManagedAuraContainer.lua]:90>
+=(tail call): ?
+=(tail call): ?
+=(tail call): ?
+=(tail call): ?
+=[C]:: in function 'native_xpcall'
+=(string):8: in function <=(string):5>
+=(tail call): ?
+
+
+thread 'on_update_modes::on_update_modes_process_actual_managed_aura_dirty_phases' (4094842) panicked at /home/osso/Projects/wow/wow-ui-sim/tests/on_update_modes.rs:186:6:
+called `Result::unwrap()` on an `Err` value: Lua(Runtime(RuntimeError { message: "assertion failed!", level: 0, traceback: [] }))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace

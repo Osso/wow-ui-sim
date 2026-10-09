@@ -1,0 +1,11 @@
+
+running 1 test
+test lua_api::workarounds_editmode::tests::apply_system_anchors::singletons::apply_system_anchors_falls_back_to_minus_one_for_nil_singletons ... FAILED
+
+failures:
+
+failures:
+    lua_api::workarounds_editmode::tests::apply_system_anchors::singletons::apply_system_anchors_falls_back_to_minus_one_for_nil_singletons
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1977 filtered out; finished in 0.10s
+

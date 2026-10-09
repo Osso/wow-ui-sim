@@ -1,0 +1,15 @@
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.002s] [Startup] SimState::default complete in 2.18ms
+[  0.002s] [Startup] rilua VM created in 101.32µs
+[  0.002s] [Startup] builtin frames initialized in 70.62µs
+[  0.002s] [Startup] template registry cleared in 8.71µs
+[  0.002s] [Startup] intrinsic templates registered in 4.73µs
+[  0.002s] [Startup] initial app_data lua handle installed in 361.00ns
+[  0.093s] [Startup] init_lua_state complete in 90.52ms
+[  0.093s] [Startup] final app_data lua handle installed in 170.00ns
+[  0.093s] [Startup] initial screen globals installed in 53.03µs
+[  0.093s] [Startup] WowLuaEnv::new complete
+
+thread 'lua_api::workarounds_editmode::tests::apply_system_anchors::singletons::apply_system_anchors_falls_back_to_minus_one_for_nil_singletons' (4074950) panicked at src/lua_api/workarounds_editmode_tests/apply_system_anchors/singletons.rs:193:10:
+apply nil-index fallback singleton anchors: Lua(Runtime(RuntimeError { message: "(string):8: attempt to call method 'InitSystemAnchors' (a nil value)", level: 0, traceback: [] }))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace

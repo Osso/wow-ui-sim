@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "git",
+    "log",
+    "-5",
+    "--format=%H %s"
+  ],
+  "stdout": "4142f3d416ff0fa9d5505926e85e5d48ac662f7c Use typed deterministic duration inputs in formatter fixture\n14de98048841372e7c447eb6dbb729c9aa7e3d5c Retain independent source proof through patch 1.0.0\nf2e1a7b4f8ac72c97e9d4630f238f1d27c40474c Retain integrated proof for seven historical redirects\n1b505c7c12e4a359cb8ab01eb8bee24adf9ac031 Merge patch 1.0.0 literal source audit\n5234c13eed33926124c2daed9f0a0697c25931f1 Merge patch 1.1.0 literal source audit\n",
+  "stderr": "",
+  "exit": 0
+}

@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "cargo",
+    "fmt",
+    "--check"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "head": "941140fd6fa52133966a8f28a022f49d3538df50",
+  "start": "2026-10-09T19:59:07.210262+00:00",
+  "end": "2026-10-09T19:59:17.355548+00:00",
+  "exit": 0,
+  "stdout": "",
+  "stderr": "",
+  "changed_file_hash_before": "116a874100f2a69b733ecebb4dad7d1928bff3b25164e17db2efe0529aa0e139",
+  "changed_file_hash_after": "116a874100f2a69b733ecebb4dad7d1928bff3b25164e17db2efe0529aa0e139",
+  "manual_readability": "Changed typed-rejection assertion readable; no new Rust branches, nesting, opaque state, warnings or suppressions. Numeric helper already audited; typed-invalid formatter leaves observable numeric output8. Not automated complexity metrics."
+}

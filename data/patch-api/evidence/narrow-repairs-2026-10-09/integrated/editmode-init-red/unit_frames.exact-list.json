@@ -1,0 +1,18 @@
+{
+  "argv": [
+    "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/wow_ui_sim-bcad23723a7b3b0d",
+    "lua_api::workarounds_editmode::tests::apply_system_anchors::unit_frames::apply_system_anchors_batches_compact_unit_frame_startup_refreshes",
+    "--exact",
+    "--list"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "started_utc": "2026-10-09T19:54:58.284286+00:00",
+  "ended_utc": "2026-10-09T19:54:58.299961+00:00",
+  "elapsed_seconds": 0.015670788998249918,
+  "timeout_seconds": 90,
+  "exit_code": 0,
+  "binary_sha256": "97f8c673c65a614ad4d8188935a631f770bc58f987e6f02f4ab8bbc1bee8b994",
+  "source_scope_sha256": "8d7bc0ada0361f7192b3b3e5f9cc4e1fa08b9b258d0411a9f5ae46a736cc89ea",
+  "stdout": "lua_api::workarounds_editmode::tests::apply_system_anchors::unit_frames::apply_system_anchors_batches_compact_unit_frame_startup_refreshes: test\n\n1 test, 0 benchmarks\n",
+  "stderr": ""
+}

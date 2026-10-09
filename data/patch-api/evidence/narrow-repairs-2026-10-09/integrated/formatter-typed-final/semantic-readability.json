@@ -1,0 +1,18 @@
+{
+  "revision": "941140fd6fa52133966a8f28a022f49d3538df50",
+  "pinned_api_sha256": "4c3f6bb476f6f2d4e05f4f15dfb107a25f49e3dfa9be2d75e9425902ab832e17",
+  "pinned_api_setter": "SetFormatter argument formatter: NumericFormatter, Nilable=false",
+  "fixture": "tests/numeric_rule_formatter.rs:154-189; real duration objects + shared manual clock0; 2/9/8 assertions; rejected custom table preserves8",
+  "runtime": "src/c_api/duration_text_binding.rs:280-310 validates before original setter; :339-353 passes modern flags; legacy callback branches do not authorize custom inputs to modern setter",
+  "specs": [
+    "docs/specs/numeric-rule-formatter.md",
+    "docs/specs/duration-text-binding.md"
+  ],
+  "manual_readability": "All changed Rust lines in HEAD read (embedded Lua fixture only); no readability violations found. No automated complexity command. Fixture explicit local custom, protected setter rejection, and observable post-rejection8; no new branching/state/suppressions. Format evidence reused, not rerun.",
+  "limitations": [
+    "No native runtime parity",
+    "No older-profile/Forever validation",
+    "No broad/parent closure",
+    "Aura cause not established by failing execution; prior fixture-registration diagnosis remains separate"
+  ]
+}

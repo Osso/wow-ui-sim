@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/integration-1db16289b0998b2a",
+    "on_update_modes::on_update_modes_process_actual_managed_aura_dirty_phases",
+    "--exact",
+    "--list"
+  ],
+  "start_utc": "2026-10-09T20:03:20.228569+00:00",
+  "end_utc": "2026-10-09T20:03:20.237502+00:00",
+  "exit": 0
+}

@@ -1,0 +1,21 @@
+{
+  "argv": [
+    "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/wow_ui_sim-bcad23723a7b3b0d",
+    "lua_api::workarounds_editmode::tests::apply_system_anchors::unit_frames::apply_system_anchors_batches_compact_unit_frame_startup_refreshes",
+    "--exact",
+    "--nocapture"
+  ],
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "started_utc": "2026-10-09T19:55:09.254278+00:00",
+  "ended_utc": "2026-10-09T19:55:09.368451+00:00",
+  "elapsed_seconds": 0.11414970000623725,
+  "timeout_seconds": 90,
+  "exit_code": 101,
+  "observed_head_before": "4142f3d416ff0fa9d5505926e85e5d48ac662f7c",
+  "observed_head_after": "4142f3d416ff0fa9d5505926e85e5d48ac662f7c",
+  "binary_sha256_before": "97f8c673c65a614ad4d8188935a631f770bc58f987e6f02f4ab8bbc1bee8b994",
+  "binary_sha256_after": "97f8c673c65a614ad4d8188935a631f770bc58f987e6f02f4ab8bbc1bee8b994",
+  "source_scope_sha256": "8d7bc0ada0361f7192b3b3e5f9cc4e1fa08b9b258d0411a9f5ae46a736cc89ea",
+  "stdout": "\nrunning 1 test\ntest lua_api::workarounds_editmode::tests::apply_system_anchors::unit_frames::apply_system_anchors_batches_compact_unit_frame_startup_refreshes ... FAILED\n\nfailures:\n\nfailures:\n    lua_api::workarounds_editmode::tests::apply_system_anchors::unit_frames::apply_system_anchors_batches_compact_unit_frame_startup_refreshes\n\ntest result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1977 filtered out; finished in 0.10s\n\n",
+  "stderr": "[  0.000s] [Startup] WowLuaEnv::new begin\n[  0.002s] [Startup] SimState::default complete in 1.98ms\n[  0.002s] [Startup] rilua VM created in 103.18\u00b5s\n[  0.002s] [Startup] builtin frames initialized in 68.60\u00b5s\n[  0.002s] [Startup] template registry cleared in 7.92\u00b5s\n[  0.002s] [Startup] intrinsic templates registered in 5.11\u00b5s\n[  0.002s] [Startup] initial app_data lua handle installed in 260.00ns\n[  0.093s] [Startup] init_lua_state complete in 91.16ms\n[  0.093s] [Startup] final app_data lua handle installed in 181.00ns\n[  0.093s] [Startup] initial screen globals installed in 51.29\u00b5s\n[  0.093s] [Startup] WowLuaEnv::new complete\n\nthread 'lua_api::workarounds_editmode::tests::apply_system_anchors::unit_frames::apply_system_anchors_batches_compact_unit_frame_startup_refreshes' (4074960) panicked at src/lua_api/workarounds_editmode_tests/apply_system_anchors/unit_frames.rs:437:10:\napply compact unit frame batched settings: Lua(Runtime(RuntimeError { message: \"(string):8: attempt to call method 'InitSystemAnchors' (a nil value)\", level: 0, traceback: [] }))\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n"
+}

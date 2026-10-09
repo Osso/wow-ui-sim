@@ -1162,3 +1162,7 @@ Added [audit](investigations/patch-1-3-0-api-audit.md) and [spec](../specs/patch
 ## [2026-10-09] formatter policy | Modern typed setter versus stale callback fixture
 
 [SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md):4142f3d41compileexit0,batch6/7failure atcustomtableSetFormatter. PinnedAPIrequiresNumericFormatter; modernvalidatorpreventslegacycallback. Fixture/spec nowtesttypedrejectionandretainnumericoutput8; no runtimepatch/nativeparity. EarlierRED/static/compiledreceipts retainedseparately. ExactSHA CI success iscompilecoverage: actualretailtests/Mistssmoke/parity/releaseproof disabled/skipped; fullparentstillopen.
+
+## [2026-10-09] bounded proof | Typed formatter7/7, other failures preserved
+
+[SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md):941140fd6lockedcompileexit0,formatter7/7 withdocumentedNumericFormattertyping andrealDurationObjects. SeparateManagedAura0/1 flags18; threeEditModeinitializerREDs0/3 beforepostconditions. Original scalarRED and6/7epoch preserved; Garrison actualdependencycheckout foundbutcatalogrowsunproved. Sixmanifestdeprecations/fullparentgates remain; no broad rerun.

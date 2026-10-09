@@ -1,0 +1,15 @@
+[  0.000s] [Startup] WowLuaEnv::new begin
+[  0.003s] [Startup] SimState::default complete in 2.47ms
+[  0.003s] [Startup] rilua VM created in 106.99µs
+[  0.003s] [Startup] builtin frames initialized in 69.46µs
+[  0.003s] [Startup] template registry cleared in 6.93µs
+[  0.003s] [Startup] intrinsic templates registered in 4.55µs
+[  0.003s] [Startup] initial app_data lua handle installed in 430.00ns
+[  0.093s] [Startup] init_lua_state complete in 90.41ms
+[  0.093s] [Startup] final app_data lua handle installed in 170.00ns
+[  0.093s] [Startup] initial screen globals installed in 56.19µs
+[  0.093s] [Startup] WowLuaEnv::new complete
+
+thread 'lua_api::workarounds_editmode::tests::apply_system_anchors::cast_and_player::apply_system_anchors_replays_player_frame_size_without_cast_bar_side_effect' (4074940) panicked at src/lua_api/workarounds_editmode_tests/apply_system_anchors/cast_and_player.rs:380:10:
+apply system anchors should avoid player-frame cast-bar side effects: Lua(Runtime(RuntimeError { message: "(string):8: attempt to call method 'InitSystemAnchors' (a nil value)", level: 0, traceback: [] }))
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace

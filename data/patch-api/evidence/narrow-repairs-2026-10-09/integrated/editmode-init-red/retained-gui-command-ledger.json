@@ -1,0 +1,97 @@
+{
+  "goal": "Default GUI lib compile and exact GUI hit-order test only; no source edits or other verification",
+  "cwd": "/home/osso/Projects/wow/wow-ui-sim",
+  "compile_argv": [
+    "cargo",
+    "test",
+    "--offline",
+    "--locked",
+    "--jobs",
+    "4",
+    "--lib",
+    "--no-run",
+    "--message-format=json"
+  ],
+  "stream_format": "stdout and stderr combined in arrival order; Cargo JSON lines mixed with non-JSON stderr",
+  "before": {
+    "time": "2026-10-09T19:27:49.761901+00:00",
+    "head": "b02b9f544ada14ee5d229b74f4f819c6ab4d7f5f",
+    "status": "?? .code-index.db\n",
+    "source_sha256": "b50f1dc966712d779a9a458d989b3353627975552155d5976c3d329b7c752160"
+  },
+  "compile_started": "2026-10-09T19:27:49.761946+00:00",
+  "compile_exit": null,
+  "compile_exit_note": "combined_to_file executed terminally and returned CommandResult; appended .run() raised before assignment. Exit not retained; Cargo build-finished success=true and Finished line retained. Compile invoked once, not rerun.",
+  "compile_finished_observed": "2026-10-09T19:28:12.189310+00:00",
+  "artifact": {
+    "reason": "compiler-artifact",
+    "package_id": "path+file:///home/osso/Projects/wow/wow-ui-sim#0.1.0",
+    "manifest_path": "/home/osso/Projects/wow/wow-ui-sim/Cargo.toml",
+    "target": {
+      "kind": [
+        "lib"
+      ],
+      "crate_types": [
+        "lib"
+      ],
+      "name": "wow_ui_sim",
+      "src_path": "/home/osso/Projects/wow/wow-ui-sim/src/lib.rs",
+      "edition": "2024",
+      "doc": true,
+      "doctest": true,
+      "test": true
+    },
+    "profile": {
+      "opt_level": "1",
+      "debuginfo": "line-tables-only",
+      "debug_assertions": true,
+      "overflow_checks": true,
+      "test": true
+    },
+    "features": [
+      "aura-containers",
+      "aura-instance-enumeration",
+      "aura-xml-widgets",
+      "base-spell-relationships",
+      "casc",
+      "client-retail",
+      "default",
+      "forbidden-aspects",
+      "gui",
+      "native-duration-formatting",
+      "numeric-rule-formatters",
+      "on-update-modes",
+      "player-cast-durations",
+      "profile-retail",
+      "retail-12-0-0",
+      "retail-12-0-5",
+      "retail-12-0-7",
+      "retail-12-1-0",
+      "rodio",
+      "sound"
+    ],
+    "filenames": [
+      "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/wow_ui_sim-bcad23723a7b3b0d"
+    ],
+    "executable": "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/wow_ui_sim-bcad23723a7b3b0d",
+    "fresh": true
+  },
+  "binary_sha256": "97f8c673c65a614ad4d8188935a631f770bc58f987e6f02f4ab8bbc1bee8b994",
+  "test_argv": [
+    "/home/osso/Projects/wow/wow-ui-sim/target/debug/deps/wow_ui_sim-bcad23723a7b3b0d",
+    "iced_app::frame_collect::tests::hittable_order_follows_render_buckets_not_raw_child_strata",
+    "--exact",
+    "--nocapture"
+  ],
+  "test_timeout_seconds": 120,
+  "test_started": "2026-10-09T19:28:12.357788+00:00",
+  "test_exit": 0,
+  "test_exit_evidence": "CommandResult.exit_code=0 observed in Pyrun test invocation output",
+  "test_finished_observed": "2026-10-09T19:28:46.578649+00:00",
+  "after": {
+    "time": "2026-10-09T19:28:46.578657+00:00",
+    "head": "b02b9f544ada14ee5d229b74f4f819c6ab4d7f5f",
+    "status": "?? .code-index.db\n",
+    "source_sha256": "b50f1dc966712d779a9a458d989b3353627975552155d5976c3d329b7c752160"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "argv": [
+    "git",
+    "status",
+    "--porcelain=v1"
+  ],
+  "stdout": "?? .code-index.db\n",
+  "stderr": "",
+  "exit": 0
+}
