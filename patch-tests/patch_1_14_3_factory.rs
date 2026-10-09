@@ -1,10 +1,10 @@
 //! Current Era bare-factory observations only, not historical/native compatibility.
 //! No Blizzard UI, CASC, event producers or SOURCE-ledger mutation.
 
-#[path = "../tests/common/publication_sweep.rs"]
-mod publication_sweep;
+#[path = "../tests/common/publication_probe.rs"]
+mod publication_probe;
 
-use publication_sweep::{Entry, probe_entry};
+use publication_probe::{Entry, probe_entry};
 use serde::Deserialize;
 use serde_json::{Value, json};
 use std::collections::BTreeMap;
