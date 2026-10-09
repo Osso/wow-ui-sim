@@ -1,0 +1,42 @@
+{
+  "id": "factory-discovery-red",
+  "revision": "2f8f3596d6833f8cca693811e2eafe86e79c2cfa",
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p303-factory",
+  "argv": [
+    "cargo",
+    "test",
+    "--offline",
+    "--locked",
+    "--no-default-features",
+    "--features",
+    "client-retail",
+    "--test",
+    "patch_3_0_3_factory",
+    "--",
+    "--nocapture",
+    "--test-threads=1"
+  ],
+  "environment_overrides": {
+    "CARGO_TARGET_DIR": "/home/osso/.worktrees/wow-ui-sim-p303-factory/target/p303-factory",
+    "CARGO_NET_OFFLINE": "true",
+    "WOW_SIM_P303_FACTORY_OUT": "/home/osso/.worktrees/wow-ui-sim-p303-factory/data/patch-api/evidence/3.0.3-factory-2026-10-09/discovery-observations.json"
+  },
+  "inherited_environment": {
+    "HOME": "/home/osso",
+    "PATH": "/home/osso/.local/bin:/home/osso/.cargo/bin:/home/osso/.local/bin:/home/osso/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/bin"
+  },
+  "started_utc": "2026-10-09T13:15:32.705743+00:00",
+  "scope": "Standalone bare retail factory discovery and fabricated unknown CVar; no full-UI/native proof",
+  "exit_code": 101,
+  "finished_utc": "2026-10-09T13:17:21.765336+00:00",
+  "streams": {
+    "discovery.stdout.log": {
+      "sha256": "094d342e5ab1830a0c7fecd8952dc8055d1bfc97deb46f0903213157188a3cd7",
+      "bytes": 298
+    },
+    "discovery.stderr.log": {
+      "sha256": "eaacea06c27f0d15213824f7e6ebb548e5b608bb620fce6e5916f0a94cbd57b6",
+      "bytes": 15693
+    }
+  }
+}

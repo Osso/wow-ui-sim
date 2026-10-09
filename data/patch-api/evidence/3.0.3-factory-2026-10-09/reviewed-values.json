@@ -1,0 +1,29 @@
+[
+  {
+    "id": "wt-cvars-syncronizeConfig-4",
+    "symbol": "syncronizeConfig",
+    "kind": "cvar",
+    "detail": "value/default queried",
+    "published": false,
+    "value": null,
+    "default": null
+  },
+  {
+    "id": "wt-cvars-synchronizeBindings-5",
+    "symbol": "synchronizeBindings",
+    "kind": "cvar",
+    "detail": "value/default queried",
+    "published": true,
+    "value": "1",
+    "default": "1"
+  },
+  {
+    "id": "wt-cvars-synchronizeMacros-6",
+    "symbol": "synchronizeMacros",
+    "kind": "cvar",
+    "detail": "value/default queried",
+    "published": false,
+    "value": null,
+    "default": null
+  }
+]

@@ -27,14 +27,20 @@ Bounded audit of frozen page 560990/revision 5407654 (2010-03-28T14:26:47Z), fro
 ## Separate supported retail factory measurement
 
 - [x] Add standalone `tests/patch_3_0_3_factory.rs`, retail-only target, exact own three-name inventory and fabricated unknown-CVar boundary using the shared classifier. No spelling correction or aliases.
-- [ ] Discover with empty known gaps, then retain reviewed concrete publication/value/default results or exact compile blocker in [fresh evidence](../../data/patch-api/evidence/3.0.3-factory-2026-10-09/).
-- [ ] Run only targeted offline `--no-default-features --features client-retail` development RED/GREEN; no loaded UI/cache or native acceptance.
+- [x] Discover with empty known gaps: RED at `2f8f3596d` observes one match/two gaps; fabricated unknown nil/nil control passes. [Fresh measurement ledger](../../data/patch-api/evidence/3.0.3-factory-2026-10-09/measurement-ledger.json) preserves exact results.
+- [ ] Targeted reviewed GREEN pending after exact-result assertions are committed; only offline `--no-default-features --features client-retail`, no loaded UI/cache or native acceptance.
+
+| Exact source name | Bare retail published | Observed value / default | Source default |
+|---|---|---|---|
+| `syncronizeConfig` | No | nil / nil | Unspecified |
+| `synchronizeBindings` | Yes | `"1"` / `"1"` | Unspecified |
+| `synchronizeMacros` | No | nil / nil | Unspecified |
 
 Original 16 seals and eight ledger IDs remain historical source accounting. Separate current factory results cannot prove 0/1 synchronization, server/native/persistence effects or source defaults; arbitrary local CVar assignment is not synchronization.
 
 ## Known gaps (current cycle)
 
-- [ ] Three publication observations UNPROVEN: source accounting is not runtime measurement.
+- [ ] Historical/native publication remains UNPROVEN; separate supported retail factory observes one published/two absent, not historical parity.
 - [ ] Three flag-synchronization effects UNPROVEN: UI settings, bindings and macros. No default, endpoint, trigger, scope, conflict resolution, persistence or event contract specified.
 
 ## Development proof

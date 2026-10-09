@@ -806,3 +806,7 @@ Initial checkpoint: [audit](investigations/patch-3-0-3-api-audit.md), frozen pag
 ## [2026-10-09] measurement | Retail 3.0.3 bare factory discovery
 
 [Separate measurement](investigations/patch-3-0-3-api-audit.md#separate-supported-retail-factory-measurement--2026-10-09): standalone retail factory target, exact three source CVars and unknown negative control; discovery pending. Fresh proof directory, no runtime edits or inherited native/full-UI proof. Original seals/IDs preserved.
+
+## [2026-10-09] measurement | Retail 3.0.3 factory discovery results
+
+[Separate measurement](investigations/patch-3-0-3-api-audit.md#separate-supported-retail-factory-measurement--2026-10-09): empty-gap discovery at `2f8f3596d` exit 101, 1/2 tests; exactly one match/two gaps. Bindings value/default `"1"`, exact misspelled config/macros nil/nil. Unknown control passes; reviewed exact-result regression added, GREEN pending commit. Fresh ledger/full streams/hashes; original 16 seals/eight historical IDs preserved. No runtime changes, sync/native/full-UI proof or warning suppression.

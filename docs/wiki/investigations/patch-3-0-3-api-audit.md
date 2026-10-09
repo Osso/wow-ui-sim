@@ -32,7 +32,17 @@ Rebased source slice retains both 3.0.8 labeled-summary and 3.0.3 CVar-definitio
 
 ## Separate supported retail factory measurement — 2026-10-09
 
-Standalone retail-only factory target and exact copied three-name inventory added in `p303-factory`, base `1ba5b6673`. Discovery starts with empty gaps; result pending. Shared factory classifier skips cached publishers/deprecation aliases. Fabricated unknown-CVar control requires absent value/default. Fresh evidence lives in [3.0.3-factory-2026-10-09](../../../data/patch-api/evidence/3.0.3-factory-2026-10-09/), separate from original 16 seals/eight historical IDs. No runtime changes, source spelling correction, guessed default, model semantics or loaded-UI/native/server/persistence credit. Main owns integration/native acceptance.
+Standalone retail-only `tests/patch_3_0_3_factory.rs` in `p303-factory`, base `1ba5b6673`, reuses the shared classifier without cached publishers/deprecation aliases. Exact copied own inventory has no aliases/defaults/successors. Empty-gap discovery at `2f8f3596d` compiles and exits 101: sweep fails with exactly two new gaps, fabricated unknown control passes (1/2 tests). Full stdout/stderr, revision/cwd/environment/argv and hashes are retained in the [fresh development ledger](../../../data/patch-api/evidence/3.0.3-factory-2026-10-09/development-proof-ledger.json).
+
+| Exact name | Publication classifier | Observed value | Observed default | Semantic proof |
+|---|---|---|---|---|
+| `syncronizeConfig` | Gap | nil | nil | UNPROVEN |
+| `synchronizeBindings` | Match | `"1"` | `"1"` | UNPROVEN |
+| `synchronizeMacros` | Gap | nil | nil | UNPROVEN |
+
+[Fresh measurement ledger](../../../data/patch-api/evidence/3.0.3-factory-2026-10-09/measurement-ledger.json) assigns separate measurement IDs linked to the original three inventory IDs. Exact three-result regression and reviewed two-gap set added; targeted GREEN pending commit. Source policy 0/1 disables/enables synchronization but specifies no default; current string `"1"` is observation, not a historical default claim. `P303_FABRICATED_UNKNOWN_CVAR` yields `(cvar, value/default queried, false, nil, nil)`.
+
+Original 16 seals, historical manifest bytes and all eight source ledger IDs verified unchanged in [preservation receipt](../../../data/patch-api/evidence/3.0.3-factory-2026-10-09/preserved-inputs.json). Historical UNPROVEN statuses remain unchanged. No arbitrary SetCVar experiment: arbitrary local storage would not establish synchronization. No runtime/model/shim/vendor/cache edits, spelling correction or loaded-UI/native/server/persistence credit. Headless full-prefork GUI errors are a different harness, not this measurement. Six inherited iced manifest warnings, five pre-existing library dead-code warnings, one pre-existing binary unused import and six unused cached-sweep helper warnings appear in discovery; none suppressed or patched. Main owns integration/native acceptance.
 
 ## Sources
 

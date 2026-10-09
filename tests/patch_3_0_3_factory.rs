@@ -4,6 +4,7 @@
 mod publication_sweep;
 
 use publication_sweep::{Entry, SweepSpec, probe_entry, run_factory_publication_sweep};
+use serde_json::{Value, json};
 use std::collections::BTreeMap;
 use wow_ui_sim::lua_api::WowLuaEnv;
 
@@ -22,6 +23,27 @@ const SPEC: SweepSpec = SweepSpec {
 fn patch_3_0_3_exact_factory_publication_gaps() {
     let env = WowLuaEnv::new().expect("bare retail Lua environment");
     run_factory_publication_sweep(&env, &SPEC);
+}
+
+#[test]
+fn exact_three_factory_values_and_defaults() {
+    let env = WowLuaEnv::new().expect("bare retail Lua environment");
+    let inventory: Value = serde_json::from_str(INVENTORY).unwrap();
+    let entries: Vec<Entry> = serde_json::from_value(inventory["entries"].clone()).unwrap();
+    let mut observed = Vec::new();
+    for entry in entries {
+        let (kind, detail, published, value, default) =
+            probe_entry(&env, &entry, false, &BTreeMap::new());
+        observed.push(json!({"id": entry.id, "symbol": entry.symbol,
+            "kind": kind, "detail": detail, "published": published,
+            "value": value, "default": default}));
+    }
+    let expected: Value = serde_json::from_str(include_str!(
+        "../data/patch-api/evidence/3.0.3-factory-2026-10-09/reviewed-values.json"
+    ))
+    .unwrap();
+    eprintln!("exact three factory values/defaults: {}", json!(observed));
+    assert_eq!(json!(observed), expected);
 }
 
 #[test]

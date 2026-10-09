@@ -1,0 +1,69 @@
+{
+  "schema": "patch-api-factory-measurement/v1",
+  "patch": "3.0.3",
+  "client_line": "retail",
+  "harness": "WowLuaEnv::new; shared run_factory_publication_sweep; no loaded Blizzard addons or cache publishers",
+  "discovery_revision": "2f8f3596d6833f8cca693811e2eafe86e79c2cfa",
+  "counts": {
+    "observations": 3,
+    "classifier_matches": 1,
+    "publication_gaps": 2
+  },
+  "rows": [
+    {
+      "measurement_id": "factory-2026-10-09-wt-cvars-syncronizeConfig-4",
+      "source_inventory_id": "wt-cvars-syncronizeConfig-4",
+      "observation": {
+        "id": "wt-cvars-syncronizeConfig-4",
+        "symbol": "syncronizeConfig",
+        "kind": "cvar",
+        "detail": "value/default queried",
+        "published": false,
+        "value": null,
+        "default": null
+      },
+      "source_policy": "Flag - 0/1 to disable/enable synchronization of UI settings.",
+      "source_default": null,
+      "semantic_status": "UNPROVEN"
+    },
+    {
+      "measurement_id": "factory-2026-10-09-wt-cvars-synchronizeBindings-5",
+      "source_inventory_id": "wt-cvars-synchronizeBindings-5",
+      "observation": {
+        "id": "wt-cvars-synchronizeBindings-5",
+        "symbol": "synchronizeBindings",
+        "kind": "cvar",
+        "detail": "value/default queried",
+        "published": true,
+        "value": "1",
+        "default": "1"
+      },
+      "source_policy": "Flag - 0/1 to disable/enable synchronization of key bindings.",
+      "source_default": null,
+      "semantic_status": "UNPROVEN"
+    },
+    {
+      "measurement_id": "factory-2026-10-09-wt-cvars-synchronizeMacros-6",
+      "source_inventory_id": "wt-cvars-synchronizeMacros-6",
+      "observation": {
+        "id": "wt-cvars-synchronizeMacros-6",
+        "symbol": "synchronizeMacros",
+        "kind": "cvar",
+        "detail": "value/default queried",
+        "published": false,
+        "value": null,
+        "default": null
+      },
+      "source_policy": "Flag - 0/1 to disable/enable synchronization of macros.",
+      "source_default": null,
+      "semantic_status": "UNPROVEN"
+    }
+  ],
+  "limits": [
+    "Source 0/1 disable/enable policy specifies no default; observed retail string 1 is not a historical default contract.",
+    "No corrected spelling, aliases or successor inference.",
+    "Arbitrary local CVar assignment does not prove synchronization.",
+    "No model semantics, native/server/persistence effects or loaded-UI integration measured.",
+    "Original 16 historical seals and eight ledger IDs remain unchanged."
+  ]
+}
