@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/test_source_accounting.py"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1134-page",
+  "start_epoch": 1791563998.5832474,
+  "end_epoch": 1791564005.1683917,
+  "exit_code": 0,
+  "revision": "c9c0262e371aef82a8a04f9edf1181f0b6a9ca41",
+  "scope": "SOURCE 8 tests and occurrence controls, no final/native acceptance"
+}

@@ -1,0 +1,94 @@
+{
+  "scope": "complete owned src rs/lua exact/bare name scan; static observations not invocation or native proof",
+  "symbols": [
+    "C_Commentator.GetUnitTeamIndex",
+    "C_StorePublic.HasPurchaseableProducts",
+    "C_SummonInfo.ConfirmSummon",
+    "CanInitiateWarGame",
+    "GetInstanceLockTimeRemaining",
+    "GetInstanceLockTimeRemainingEncounter",
+    "GetTotemInfo",
+    "GetTotemTimeLeft",
+    "GetWarGameQueueStatus",
+    "IsUsingFixedTimeStep",
+    "IsWargame",
+    "RespondInstanceLock",
+    "StartSpectatorWarGame",
+    "StartWarGame",
+    "StartWarGameByName",
+    "TargetTotem",
+    "WarGameRespond",
+    "COMMENTATOR_IMMEDIATE_FOV_UPDATE",
+    "INSTANCE_LOCK_START",
+    "INSTANCE_LOCK_STOP",
+    "INSTANCE_LOCK_WARNING",
+    "WARGAME_REQUESTED",
+    "ColorNameplateNameBySelection"
+  ],
+  "matches": [
+    {
+      "path": "src/c_api/secrets_queries.rs",
+      "line": 257,
+      "literal": "    // Empty GetTotemInfo is the only current totem surface. Active totem slots,",
+      "symbols": [
+        "GetTotemInfo"
+      ]
+    },
+    {
+      "path": "src/event/valid_events_c.rs",
+      "line": 548,
+      "literal": "    \"WARGAME_REQUESTED\",",
+      "symbols": [
+        "WARGAME_REQUESTED"
+      ]
+    },
+    {
+      "path": "src/event/valid_events_b.rs",
+      "line": 123,
+      "literal": "    \"INSTANCE_LOCK_START\",",
+      "symbols": [
+        "INSTANCE_LOCK_START"
+      ]
+    },
+    {
+      "path": "src/event/valid_events_b.rs",
+      "line": 124,
+      "literal": "    \"INSTANCE_LOCK_STOP\",",
+      "symbols": [
+        "INSTANCE_LOCK_STOP"
+      ]
+    },
+    {
+      "path": "src/event/valid_events_b.rs",
+      "line": 125,
+      "literal": "    \"INSTANCE_LOCK_WARNING\",",
+      "symbols": [
+        "INSTANCE_LOCK_WARNING"
+      ]
+    },
+    {
+      "path": "src/event/valid_events_a.rs",
+      "line": 455,
+      "literal": "    \"COMMENTATOR_IMMEDIATE_FOV_UPDATE\",",
+      "symbols": [
+        "COMMENTATOR_IMMEDIATE_FOV_UPDATE"
+      ]
+    },
+    {
+      "path": "src/lua_api/globals/real/totems.rs",
+      "line": 17,
+      "literal": "    LuaApiMut::register_function(lua, \"GetTotemInfo\", get_totem_info)?;",
+      "symbols": [
+        "GetTotemInfo"
+      ]
+    },
+    {
+      "path": "src/lua_api/globals/stubs/global_stubs.rs",
+      "line": 223,
+      "literal": "    \"GetSummonConfirmSummoner\",",
+      "symbols": [
+        "C_SummonInfo.ConfirmSummon"
+      ]
+    }
+  ]
+}

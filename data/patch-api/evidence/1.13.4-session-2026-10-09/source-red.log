@@ -1,0 +1,118 @@
+test_each_omission_and_invented_contract_rejected (__main__.SourceAccounting.test_each_omission_and_invented_contract_rejected) ... FAIL
+test_headers_counts_caption_and_navigation (__main__.SourceAccounting.test_headers_counts_caption_and_navigation) ... FAIL
+test_identity_and_response (__main__.SourceAccounting.test_identity_and_response) ... FAIL
+test_inventory_and_unspecified_signatures_defaults (__main__.SourceAccounting.test_inventory_and_unspecified_signatures_defaults) ... FAIL
+test_lossless_raw_and_default_extract (__main__.SourceAccounting.test_lossless_raw_and_default_extract) ... FAIL
+test_model_and_history_credit_separate (__main__.SourceAccounting.test_model_and_history_credit_separate) ... FAIL
+test_prose_links_templates_and_client_limits (__main__.SourceAccounting.test_prose_links_templates_and_client_limits) ... FAIL
+test_source_tamper_rejected (__main__.SourceAccounting.test_source_tamper_rejected) ... FAIL
+
+======================================================================
+FAIL: test_each_omission_and_invented_contract_rejected (__main__.SourceAccounting.test_each_omission_and_invented_contract_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/test_source_accounting.py", line 64, in test_each_omission_and_invented_contract_rejected
+    self.assertIn('contracts',original)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'contracts' not found in {}
+
+======================================================================
+FAIL: test_headers_counts_caption_and_navigation (__main__.SourceAccounting.test_headers_counts_caption_and_navigation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/test_source_accounting.py", line 36, in test_headers_counts_caption_and_navigation
+    self.assertEqual([h['label'] for h in ledger.get('headers', [])], ['Diffs','Changes','Global API','Events','CVars','References'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['Diffs', 'Changes', 'Global API', 'Events', 'CVars', 'References']
+
+Second list contains 6 additional elements.
+First extra element 0:
+'Diffs'
+
+- []
++ ['Diffs', 'Changes', 'Global API', 'Events', 'CVars', 'References']
+
+======================================================================
+FAIL: test_identity_and_response (__main__.SourceAccounting.test_identity_and_response)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/test_source_accounting.py", line 14, in test_identity_and_response
+    self.assertEqual((source.get('pageid'), source.get('revid'), source.get('timestamp')), (333398, 3216451, '2021-05-06T13:21:20Z'))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Tuples differ: (None, None, None) != (333398, 3216451, '2021-05-06T13:21:20Z')
+
+First differing element 0:
+None
+333398
+
+- (None, None, None)
++ (333398, 3216451, '2021-05-06T13:21:20Z')
+
+======================================================================
+FAIL: test_inventory_and_unspecified_signatures_defaults (__main__.SourceAccounting.test_inventory_and_unspecified_signatures_defaults)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/test_source_accounting.py", line 28, in test_inventory_and_unspecified_signatures_defaults
+    self.assertEqual([i['symbol'] for i in ledger.get('inventory', [])], GLOBALS + EVENTS + ['ColorNameplateNameBySelection'])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['C_Commentator.GetUnitTeamIndex', 'C_Stor[530 chars]ion']
+
+Second list contains 23 additional elements.
+First extra element 0:
+'C_Commentator.GetUnitTeamIndex'
+
+Diff is 651 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_lossless_raw_and_default_extract (__main__.SourceAccounting.test_lossless_raw_and_default_extract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/test_source_accounting.py", line 21, in test_lossless_raw_and_default_extract
+    self.assertEqual([(r['line'], r['literal']) for r in ledger.get('source_rows', [])], expected)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != [(1, '{{apichanges|1.13.4|prev=1.13.3|next[2600 chars]==')]
+
+Second list contains 57 additional elements.
+First extra element 0:
+(1, '{{apichanges|1.13.4|prev=1.13.3|next=1.13.5}}')
+
+Diff is 2849 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_model_and_history_credit_separate (__main__.SourceAccounting.test_model_and_history_credit_separate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/test_source_accounting.py", line 55, in test_model_and_history_credit_separate
+    self.assertEqual(ledger.get('measurements'),dict(runtime=0,model=0,native=0))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None != {'runtime': 0, 'model': 0, 'native': 0}
+
+======================================================================
+FAIL: test_prose_links_templates_and_client_limits (__main__.SourceAccounting.test_prose_links_templates_and_client_limits)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/test_source_accounting.py", line 44, in test_prose_links_templates_and_client_limits
+    self.assertEqual([(p['line'],p['claim']) for p in ledger.get('prose', [])], [(10,'Totem API reinstated'),(11,'WoW Token support in China')])
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != [(10, 'Totem API reinstated'), (11, 'WoW Token support in China')]
+
+Second list contains 2 additional elements.
+First extra element 0:
+(10, 'Totem API reinstated')
+
+- []
++ [(10, 'Totem API reinstated'), (11, 'WoW Token support in China')]
+
+======================================================================
+FAIL: test_source_tamper_rejected (__main__.SourceAccounting.test_source_tamper_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/test_source_accounting.py", line 77, in test_source_tamper_rejected
+    self.assertIn('source',audit.build())
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'source' not found in {}
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.002s
+
+FAILED (failures=8)

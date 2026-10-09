@@ -1,0 +1,52 @@
+{
+  "original_seals": 112,
+  "source_totals": {
+    "physical_lines": 63,
+    "source_rows": 57,
+    "extracted_rows": 10,
+    "inventory": 23,
+    "signatures": 23,
+    "headers": 6,
+    "inventory_headers": 3,
+    "captions": 1,
+    "prose": 2,
+    "links": 5,
+    "templates": 26,
+    "references": 0,
+    "contracts": 30,
+    "configured_profiles": 2,
+    "successors": 18,
+    "model_review": 6,
+    "source_statuses": {
+      "metadata-only": 30,
+      "UNPROVEN": 27
+    },
+    "inventory_by_section": {
+      "global-api": 17,
+      "events": 5,
+      "cvars": 1
+    },
+    "contract_statuses": {
+      "UNPROVEN": 30
+    },
+    "count_conflicts": 0,
+    "declared_signatures": 0,
+    "defaults": 0,
+    "examples": 0,
+    "registry_pages": 101,
+    "omission_controls": 212
+  },
+  "successor_totals": {
+    "actual_registers": 18,
+    "source_inventory": 23,
+    "overlap_occurrences": 1,
+    "source_occurrences_with_overlap": 1,
+    "meaningful_historical_closures": 0,
+    "native_closures": 0
+  },
+  "source_tests": 8,
+  "successor_tests": 3,
+  "current_era_tests": 1,
+  "native_historical_closures": 0,
+  "scope": "Historical copied inputs/receipts only; no rerun of current Era or final gates."
+}

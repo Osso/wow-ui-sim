@@ -1006,3 +1006,11 @@ SOURCE GREEN8/8 at0b39afb17,77 omission controls; portable GREEN3/3 at7fe5edac1 
 ## [2026-10-09] ingest | Older Era independent SOURCE epoch
 
 [Proof SSOT](investigations/integrated-source-and-factory-proof-2026-10-09.md#era1144-and-113765-retained-independent-source-epoch): 1.14.4/1.13.7/6/5 SOURCE34/34 canonical and copied, portable12/12,280+42 seals unchanged; bare Era factory2/2 at actual `bf8598e1d`, requested `3de874658`. Historical1.14.0 `textureErrorColors` removal differs from current presence; no successor application/native/model credit. Retained70 original files/765,499bytes,70/70 hash matches plus separate manifest; environment key-name review found no actual secret fields. Scratch trees excluded, thirteen diagnostics retained, no fresh execution or parent completion.
+
+## 2026-10-09 — Patch1.13.4 frozen source accounting
+
+Ingested [audit](investigations/patch-1-13-4-api-audit.md): literal SOURCE boundaries and existing current Era totem lifecycle kept separate. SOURCE/portable development proof pending; no native/final acceptance.
+
+## 2026-10-09 — Patch1.13.4 bounded development proof
+
+[Audit](investigations/patch-1-13-4-api-audit.md): SOURCE8/8, Era existing totem lifecycle1/1, separate same-Era successor3/3, portable3/3;112 immutable originals and two exact serialized restorations.18 actual successor ledgers, only1.14.0 commentator removal overlaps; no new runtime or historical/native closure. Main integrates1.13.4 before1.13.3.

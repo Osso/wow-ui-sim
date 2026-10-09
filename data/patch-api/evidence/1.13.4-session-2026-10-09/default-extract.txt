@@ -1,0 +1,13 @@
+Patch 1.13.4 API changes
+
+== Diffs ==
+1.13.3 (32790) to 1.13.4 (33491)
+* FrameXML: https://github.com/Gethe/wow-ui-source/commit/1977612d0fd23d01a80d44b504bee70039df1782
+* API resources: https://github.com/Ketho/BlizzardInterfaceResources/commit/30ee4c00d5620733b5b7f2ff4f743cefc998c558
+
+== Changes ==
+* TOC version: 11304
+* Reinstated Totem API
+* Supports WoW Tokens in China
+
+== References ==

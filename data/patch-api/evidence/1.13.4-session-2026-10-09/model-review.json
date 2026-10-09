@@ -1,0 +1,55 @@
+[
+  {
+    "area": "Totem reinstatement / GetTotemInfo",
+    "status": "UNPROVEN",
+    "evidence": [
+      "state-inputs/src/lua_api/globals/real/totems.rs:17-56",
+      "state-inputs/src/lua_api/state/sim_state.rs:381"
+    ],
+    "cause": "Actual host-supplied slots and time expiry exist; stale security comment is not model evidence. Current Era lifecycle measured separately. Page declares no historical signature/default/targeting or time-left contract; GetTotemTimeLeft and TargetTotem lack exact-name owned source matches. No invented wrappers."
+  },
+  {
+    "area": "China WoW Token / StorePublic",
+    "status": "UNPROVEN",
+    "evidence": [
+      "state-inputs/src/c_api/c_wow_token_public.rs",
+      "state-inputs/src/c_api/c_wowtoken_secure.rs",
+      "state-inputs/src/lua_api/workarounds/temporary/store_public_defaults.rs"
+    ],
+    "cause": "Existing generic token commerce state and store workaround are not China regional activation/payment/native behavior. HasPurchaseableProducts is not DoesGroupHavePurchaseableProducts; no alias/foreign member credit. Page specifies no purchase policy/default/signature."
+  },
+  {
+    "area": "C_SummonInfo.ConfirmSummon",
+    "status": "UNPROVEN",
+    "evidence": [
+      "state-inputs/src/c_api/c_summon_info.rs:16-35"
+    ],
+    "cause": "Existing summon_request readers do not register ConfirmSummon. Page lacks arguments, accept/decline state transitions and event effects; no fabricated confirmation lifecycle."
+  },
+  {
+    "area": "Commentator / war games / fixed timestep / instance lock",
+    "status": "UNPROVEN",
+    "evidence": [
+      "state-scan.json"
+    ],
+    "cause": "Exact/bare current source scan finds no callable implementations for these page names. No participants/team selection, lock encounter timer, request/response lifecycle or fixed-timestep query contract in literal page. Factory presence would not prove models."
+  },
+  {
+    "area": "Five events",
+    "status": "UNPROVEN",
+    "evidence": [
+      "state-inputs/src/event/valid_events_a.rs:455",
+      "state-inputs/src/event/valid_events_b.rs:123-125",
+      "state-inputs/src/event/valid_events_c.rs:548"
+    ],
+    "cause": "Names appear in event catalog; permissive Classic registration is nondiscriminating. Producer, payload, delivery order and state transitions unspecified by page; no synthetic dispatch credit."
+  },
+  {
+    "area": "ColorNameplateNameBySelection",
+    "status": "UNPROVEN",
+    "evidence": [
+      "state-scan.json"
+    ],
+    "cause": "No exact-name owned src match. Literal source gives no default, scope, selection/color mapping or update contract. Unrelated CVar roundtrip/default is not nameplate color model proof."
+  }
+]

@@ -1,0 +1,109 @@
+{
+  "scope": "later development GREEN receipts only, original seals/ledger/queue unchanged",
+  "entries": [
+    {
+      "file": "portable-green-proof.json",
+      "argv": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/test_portable.py",
+        "--archive",
+        "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/originals.tar.gz",
+        "--scratch",
+        "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/.scratch",
+        "--receipts",
+        "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/portable-proof.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1134-page",
+      "start_epoch": 1791564314.7840827,
+      "end_epoch": 1791564319.1907156,
+      "revision": "bec06a7a2",
+      "exit_code": 0,
+      "scope": "targeted historical copied SOURCE/defaults/successor development proof; no native/final gates"
+    },
+    {
+      "file": "historical-validator-proof.json",
+      "argv": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1134-page/data/patch-api/evidence/1.13.4-session-2026-10-09/validator.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1134-page",
+      "start_epoch": 1791564319.191108,
+      "end_epoch": 1791564319.2728686,
+      "revision": "bec06a7a2",
+      "exit_code": 0,
+      "scope": "targeted historical copied SOURCE/defaults/successor development proof; no native/final gates"
+    }
+  ],
+  "original_map_sha256": "543edf3bd874f54ae190e2df92254db6f808a986728512098a8ad8620171f66f",
+  "original_seals": 112,
+  "original_bytes": 3122928,
+  "archive_bytes": 390803,
+  "archive_members": 113,
+  "worker_process_runs": 9,
+  "exact_restorations": [
+    {
+      "restored": "ledger.json",
+      "sha256": "7cf2ddbf813c1eb45e10f241e627bef00ecb24812071be98ac827e399ab0785d",
+      "all_original_seals": 112
+    },
+    {
+      "restored": "source-green.log",
+      "sha256": "95cb0368fe062ff93eecbb6137628eba70d9be0972db7ae26919e5908e0c8558",
+      "all_original_seals": 112
+    }
+  ],
+  "source_totals": {
+    "physical_lines": 63,
+    "source_rows": 57,
+    "extracted_rows": 10,
+    "inventory": 23,
+    "signatures": 23,
+    "headers": 6,
+    "inventory_headers": 3,
+    "captions": 1,
+    "prose": 2,
+    "links": 5,
+    "templates": 26,
+    "references": 0,
+    "contracts": 30,
+    "configured_profiles": 2,
+    "successors": 18,
+    "model_review": 6,
+    "source_statuses": {
+      "metadata-only": 30,
+      "UNPROVEN": 27
+    },
+    "inventory_by_section": {
+      "global-api": 17,
+      "events": 5,
+      "cvars": 1
+    },
+    "contract_statuses": {
+      "UNPROVEN": 30
+    },
+    "count_conflicts": 0,
+    "declared_signatures": 0,
+    "defaults": 0,
+    "examples": 0,
+    "registry_pages": 101,
+    "omission_controls": 212
+  },
+  "successor_totals": {
+    "actual_registers": 18,
+    "source_inventory": 23,
+    "overlap_occurrences": 1,
+    "source_occurrences_with_overlap": 1,
+    "meaningful_historical_closures": 0,
+    "native_closures": 0
+  },
+  "declared_signatures_derived": 0,
+  "source_contracts_unproven": 30,
+  "meaningful_historical_closures": 0,
+  "new_runtime_implementations": 0,
+  "current_existing_model_cases": [
+    "Era GetTotemInfo active/replacement/removal/expiry/out-of-range"
+  ],
+  "proof_scope_unchanged_by_later_documentation": true
+}

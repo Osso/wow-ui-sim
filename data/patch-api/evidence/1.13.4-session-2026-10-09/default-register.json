@@ -1,0 +1,196 @@
+{
+  "schema": "patch-api-wikitext-register/v1",
+  "patch": "1.13.4",
+  "source": {
+    "path": "source.wikitext",
+    "revid": 3216451,
+    "sha256": "a8cbcc1f62bb90e33a40334dece4f943b3f44648c34d50fbbb0a55160b8e00f5"
+  },
+  "header_counts": [],
+  "entries": [
+    {
+      "id": "wt-global-api-C_Commentator.GetUnitTeamIndex-19",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_Commentator.GetUnitTeamIndex",
+      "annotation": "",
+      "wikitext_line": 19
+    },
+    {
+      "id": "wt-global-api-C_StorePublic.HasPurchaseableProducts-20",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_StorePublic.HasPurchaseableProducts",
+      "annotation": "",
+      "wikitext_line": 20
+    },
+    {
+      "id": "wt-global-api-C_SummonInfo.ConfirmSummon-21",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "C_SummonInfo.ConfirmSummon",
+      "annotation": "",
+      "wikitext_line": 21
+    },
+    {
+      "id": "wt-global-api-CanInitiateWarGame-22",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "CanInitiateWarGame",
+      "annotation": "",
+      "wikitext_line": 22
+    },
+    {
+      "id": "wt-global-api-GetInstanceLockTimeRemaining-23",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetInstanceLockTimeRemaining",
+      "annotation": "",
+      "wikitext_line": 23
+    },
+    {
+      "id": "wt-global-api-GetInstanceLockTimeRemainingEncounter-24",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetInstanceLockTimeRemainingEncounter",
+      "annotation": "",
+      "wikitext_line": 24
+    },
+    {
+      "id": "wt-global-api-GetTotemInfo-25",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetTotemInfo",
+      "annotation": "",
+      "wikitext_line": 25
+    },
+    {
+      "id": "wt-global-api-GetTotemTimeLeft-26",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetTotemTimeLeft",
+      "annotation": "",
+      "wikitext_line": 26
+    },
+    {
+      "id": "wt-global-api-GetWarGameQueueStatus-27",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "GetWarGameQueueStatus",
+      "annotation": "",
+      "wikitext_line": 27
+    },
+    {
+      "id": "wt-global-api-IsUsingFixedTimeStep-28",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsUsingFixedTimeStep",
+      "annotation": "",
+      "wikitext_line": 28
+    },
+    {
+      "id": "wt-global-api-IsWargame-29",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "IsWargame",
+      "annotation": "",
+      "wikitext_line": 29
+    },
+    {
+      "id": "wt-global-api-RespondInstanceLock-30",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "RespondInstanceLock",
+      "annotation": "",
+      "wikitext_line": 30
+    },
+    {
+      "id": "wt-global-api-StartSpectatorWarGame-31",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "StartSpectatorWarGame",
+      "annotation": "",
+      "wikitext_line": 31
+    },
+    {
+      "id": "wt-global-api-StartWarGame-32",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "StartWarGame",
+      "annotation": "",
+      "wikitext_line": 32
+    },
+    {
+      "id": "wt-global-api-StartWarGameByName-33",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "StartWarGameByName",
+      "annotation": "",
+      "wikitext_line": 33
+    },
+    {
+      "id": "wt-global-api-TargetTotem-34",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "TargetTotem",
+      "annotation": "",
+      "wikitext_line": 34
+    },
+    {
+      "id": "wt-global-api-WarGameRespond-35",
+      "section": "global-api",
+      "direction": "added",
+      "symbol": "WarGameRespond",
+      "annotation": "",
+      "wikitext_line": 35
+    },
+    {
+      "id": "wt-events-COMMENTATOR_IMMEDIATE_FOV_UPDATE-45",
+      "section": "events",
+      "direction": "added",
+      "symbol": "COMMENTATOR_IMMEDIATE_FOV_UPDATE",
+      "annotation": "",
+      "wikitext_line": 45
+    },
+    {
+      "id": "wt-events-INSTANCE_LOCK_START-46",
+      "section": "events",
+      "direction": "added",
+      "symbol": "INSTANCE_LOCK_START",
+      "annotation": "",
+      "wikitext_line": 46
+    },
+    {
+      "id": "wt-events-INSTANCE_LOCK_STOP-47",
+      "section": "events",
+      "direction": "added",
+      "symbol": "INSTANCE_LOCK_STOP",
+      "annotation": "",
+      "wikitext_line": 47
+    },
+    {
+      "id": "wt-events-INSTANCE_LOCK_WARNING-48",
+      "section": "events",
+      "direction": "added",
+      "symbol": "INSTANCE_LOCK_WARNING",
+      "annotation": "",
+      "wikitext_line": 48
+    },
+    {
+      "id": "wt-events-WARGAME_REQUESTED-49",
+      "section": "events",
+      "direction": "added",
+      "symbol": "WARGAME_REQUESTED",
+      "annotation": "",
+      "wikitext_line": 49
+    },
+    {
+      "id": "wt-cvars-ColorNameplateNameBySelection-59",
+      "section": "cvars",
+      "direction": "added",
+      "symbol": "ColorNameplateNameBySelection",
+      "annotation": "",
+      "wikitext_line": 59
+    }
+  ]
+}
