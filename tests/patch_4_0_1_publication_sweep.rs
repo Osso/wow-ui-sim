@@ -17,10 +17,10 @@ fn patch_4_0_1_publication_sweep(env: &WowLuaEnv) {
         register_env: "P401_SWEEP_REGISTER",
         out_env: "P401_SWEEP_OUT",
         later_registers: &[
-            r#"{"entries":[]}"#, // PENDING 4.1.0: main replaces on integration.
-            r#"{"entries":[]}"#, // PENDING 4.2.0: main replaces on integration.
-            r#"{"entries":[]}"#, // PENDING 4.3.0: main replaces on integration.
-            r#"{"entries":[]}"#, // PENDING 4.3.4: main replaces on integration.
+            include_str!("../data/patch-api/sources/4.1.0-wikitext-register.json"),
+            include_str!("../data/patch-api/sources/4.2.0-wikitext-register.json"),
+            include_str!("../data/patch-api/sources/4.3.0-wikitext-register.json"),
+            include_str!("../data/patch-api/sources/4.3.4-wikitext-register.json"),
             include_str!("../data/patch-api/sources/5.0.1-wikitext-register.json"),
             include_str!("../data/patch-api/sources/5.0.4-wikitext-register.json"),
             include_str!("../data/patch-api/sources/5.1.0-wikitext-register.json"),
