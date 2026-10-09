@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "revision": "1abffe22473b501b1fceed6c5d38fd5988cb76e4",
+  "summary": {
+    "clean": {
+      "failed": 0,
+      "passed": 48
+    },
+    "later_audit": {
+      "failed": 0,
+      "passed": 49
+    }
+  },
+  "gap_changes": {
+    "integrated_registers": [
+      "5.4.2",
+      "5.4.7",
+      "5.4.8"
+    ],
+    "before_gaps": 2,
+    "after_gaps": 2,
+    "observation_changes": {},
+    "replacements": [],
+    "reason": "No 5.4.1 symbol occurs in the three newly integrated later registers; neither existing backing-state gap is resolved. Historical gap fixtures and ledger remain unchanged."
+  },
+  "other_pages_unchanged": 60,
+  "other_observations_unchanged": 9817,
+  "python_fixtures": 91,
+  "unfinished": "Two publication and two prose backing-state contracts remain explicitly pending; no new gap."
+}
