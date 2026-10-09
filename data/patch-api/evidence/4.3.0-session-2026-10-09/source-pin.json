@@ -1,0 +1,12 @@
+{
+  "title": "Patch 4.3.0/API changes",
+  "version": "4.3.0",
+  "pageid": 167555,
+  "revid": 1639407,
+  "timestamp": "2021-08-22T03:08:50Z",
+  "request_url": "https://warcraft.wiki.gg/api.php?action=query&prop=revisions&rvprop=ids%7Ctimestamp%7Ccontent&rvslots=main&revids=1639407&format=json",
+  "retrieved": "2026-10-09T08:41:58.986546+00:00",
+  "response_sha256": "a73966efe0272342bcfdb7e285c0ff516665ef629e014420d72b6b17572685dd",
+  "wikitext_sha256": "574755049e8851045711fc99cfb2b66db9b5f4818c01ce3ee0c1d3c8478be8a2",
+  "wikitext_bytes": 3413
+}
