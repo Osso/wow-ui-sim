@@ -1,0 +1,59 @@
+{
+  "revision": "106630826",
+  "argv": [
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "tools.test_patch_3_2_accounting",
+    "-v"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p320-source",
+  "exit": 0,
+  "passed": 3,
+  "artifact": "accounting-green.log",
+  "artifact_seal": {
+    "sha256": "ee8d278d886cab38158d5060a9955c0acbf10f9924b8332ab7f1ed69b46a26bb",
+    "bytes": 635
+  },
+  "historical_manifest_seal": {
+    "sha256": "376ad0f879b991d68e0dc29541bb15050e9841935d2684da5195d8388e80a4c8",
+    "bytes": 17284
+  },
+  "validator_seal": {
+    "sha256": "2a9dd92842d9c4f0d4d3659b1c37c1d7d19700d54d2793ebc67be91c2751bfe0",
+    "bytes": 13097
+  },
+  "test_source_seal": {
+    "sha256": "c801d2abff0caddd6e42d76da00463463f0c644311f47bb0080cda4c1e73f9c4",
+    "bytes": 7009
+  },
+  "scope": "Targeted development, not independent/final acceptance. Three fixtures: literal source/extract; ledger/negative boundary; fresh-process no-Git/PATH-empty original replay, future current closure ignored, four serialized tamper controls rejected at exact seals then byte-identical restoration and clean replay.",
+  "counts": {
+    "publication_rows": 43,
+    "publication_ok": 30,
+    "publication_gaps": 13,
+    "negative_gaps": 14,
+    "signature_rows": 24,
+    "slash_command_rows": 4,
+    "ledger_rows": 145,
+    "ledger_statuses": {
+      "bounded-coverage": 30,
+      "audit-pending": 88,
+      "metadata-only": 27
+    }
+  },
+  "controls": [
+    "source-response.json",
+    "own-sweep-green.log",
+    "historical-page-coverage.json",
+    "historical-known-gaps.json"
+  ],
+  "meaningful_model_closures": [],
+  "limits": [
+    "No native 2009 client proof",
+    "No full-suite/CI/profile/startup/final acceptance",
+    "Four queued retail successors absent from current probe; main must integrate in order",
+    "No all-prior-registers reproduction claim; prior 4.1.0 bounded old-output control only"
+  ]
+}

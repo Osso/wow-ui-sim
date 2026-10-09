@@ -2888,3 +2888,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-09] development | Historical retail 3.2.0 accounting and receipts
 
 [Audit](investigations/patch-3-2-0-api-audit.md): 43 API/event/array occurrences, 74 full-extract rows, 24 signatures and four slash-tool claims; 145 IDs (30 bounded/88 pending/27 metadata). Own prefork GREEN 1/1, negative 13 → 14 rejected; no model closures or runtime/Classic/vendor changes. Literal typo and uncertain removal retained. Original ledger/gaps/parsers/logs sealed independently of future closures; 81-blob archive, 22 external seals. Fresh-process validator GREEN remains pending; main owns integration/final gates.
+
+## [2026-10-09] development | Retail 3.2.0 portable original replay
+
+[Audit](investigations/patch-3-2-0-api-audit.md#original-receipt-replay): accounting fixtures 3/3 at 106630826, fresh-process clean replay without Git/target/tools or PATH executables. Current future-closure files ignored; serialized source/own-log/ledger/gap tampering rejected at exact seals, bytes restored and clean replay repeated. Original 145-ID/30-match/13-gap history and archive remain frozen. No new models, runtime mutation or independent/final acceptance claim; main owns ordered successor integration.

@@ -1,0 +1,8 @@
+test_fresh_process_archive_ignores_future_closure_rejects_tampering (tools.test_patch_3_2_accounting.SourceAccountingTests.test_fresh_process_archive_ignores_future_closure_rejects_tampering) ... ok
+test_literal_inventory_and_full_extract_reproduce (tools.test_patch_3_2_accounting.SourceAccountingTests.test_literal_inventory_and_full_extract_reproduce) ... ok
+test_original_ledger_exact_id_set_and_negative_boundary (tools.test_patch_3_2_accounting.SourceAccountingTests.test_original_ledger_exact_id_set_and_negative_boundary) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.806s
+
+OK
