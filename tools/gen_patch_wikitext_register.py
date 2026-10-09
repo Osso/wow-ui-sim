@@ -1019,7 +1019,10 @@ def parse_legacy_labeled_summaries(text):
                 params = dict(p.split('=', 1) for p in parts if '=' in p)
                 positional = [p for p in parts if '=' not in p]
                 literal = positional[0]
-                symbol = re.sub(r'\(.*', '', positional[-1]).strip()
+                identity = positional[-1]
+                if params.get('t') == 'w' and ':' not in identity:
+                    identity = positional[0]
+                symbol = re.sub(r'\(.*', '', identity).strip()
             else:
                 symbol = candidate
                 literal = body.split(' - ', 1)[0].strip().strip('[]')
