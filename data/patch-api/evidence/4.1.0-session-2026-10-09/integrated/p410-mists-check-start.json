@@ -1,0 +1,13 @@
+{
+  "revision": "fa89afcaa5cf8b86a4a2faee204bf778c2f63f1f",
+  "argv": [
+    "cargo",
+    "check",
+    "--no-default-features",
+    "--features",
+    "sound,gui,casc,client-mists",
+    "--tests"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p410-source",
+  "env": {}
+}
