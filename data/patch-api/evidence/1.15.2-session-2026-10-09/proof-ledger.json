@@ -1,0 +1,37 @@
+{
+  "scope": "1.15.2 SOURCE only",
+  "runs": [
+    {
+      "phase": "RED",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1152-page/data/patch-api/evidence/1.15.2-session-2026-10-09/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1152-page",
+      "revision": "7ad66791e64f01dd6dc61d29d3aa48faccdce3b8 + own fixtures/scaffold",
+      "exit_code": 1,
+      "log": "red.log",
+      "invalidated_by": "implementation/archive; retained negative control only"
+    },
+    {
+      "phase": "portable-RED",
+      "command": [
+        "python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1152-page/data/patch-api/evidence/1.15.2-session-2026-10-09/test_portable.py",
+        "--archive",
+        "/home/osso/.worktrees/wow-ui-sim-p1152-page/data/patch-api/evidence/1.15.2-session-2026-10-09/replay-archive.tar.gz",
+        "--scratch",
+        "/home/osso/.worktrees/wow-ui-sim-p1152-page/target/p1152-source-replay",
+        "--receipts",
+        "/home/osso/.worktrees/wow-ui-sim-p1152-page/data/patch-api/evidence/1.15.2-session-2026-10-09/portable-red-controls.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1152-page",
+      "revision": "7ad66791e64f01dd6dc61d29d3aa48faccdce3b8 + own fixtures/scaffold",
+      "exit_code": 1,
+      "log": "portable-red.log",
+      "invalidated_by": "implementation/archive; retained negative control only"
+    }
+  ]
+}

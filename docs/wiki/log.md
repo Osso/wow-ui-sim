@@ -909,3 +909,7 @@ Patch 2.5.4 copied historical replay at `ae9cb498a`: 27 original seals/28 copied
 ## [2026-10-09] proof | Patch 1.15.6 frozen SOURCE replay
 
 [Audit](investigations/patch-1-15-6-api-audit.md): SOURCE8/8 at `910fefc68`; portable3/3 at `d01aae433`, fresh copied SOURCE8/8 and default register byte replay. Serialized ledger/log seal controls reject and restore exactly. Original34 seals/map unchanged; 35-member/101,120-byte archive and six separately sealed later artifacts/map. Four rows/two UNPROVEN links, no runtime/model/native/final credit. Pending same-Era1.15.7 inflight/1.15.8/1.15.9 remain unapplied; main integration/gates separate.
+
+## [2026-10-09] source audit | Patch 1.15.2 literal SOURCE
+
+[Audit](investigations/patch-1-15-2-api-audit.md): frozen583919/6061806 identity/hashes verified; six nonblank rows, four UNPROVEN summary/link contracts, two headers and navigation. Dragonflight10.2.6 subset unexpanded; no explicit APIs/signatures or runtime/model/native credit. Own RED9/portable RED3 retained; GREEN/copied seals pending. Main owns Era integration/native/final gates.
