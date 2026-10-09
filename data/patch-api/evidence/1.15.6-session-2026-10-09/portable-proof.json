@@ -1,0 +1,29 @@
+{
+  "scope": "1.15.6 historical SOURCE only; no native/final acceptance",
+  "revision": "d01aae433e8287b303caef5190bf121dfed58688",
+  "command": [
+    "python3",
+    "-B",
+    "/home/osso/.worktrees/wow-ui-sim-p1156-page/data/patch-api/evidence/1.15.6-session-2026-10-09/test_portable.py",
+    "--archive",
+    "/home/osso/.worktrees/wow-ui-sim-p1156-page/data/patch-api/evidence/1.15.6-session-2026-10-09/replay-archive.tar.gz",
+    "--scratch",
+    "/home/osso/.worktrees/wow-ui-sim-p1156-page/build/patch-1.15.6-portable",
+    "--receipts",
+    "/home/osso/.worktrees/wow-ui-sim-p1156-page/data/patch-api/evidence/1.15.6-session-2026-10-09/portable-controls.json"
+  ],
+  "cwd": "/home/osso/.worktrees/wow-ui-sim-p1156-page",
+  "tests": 3,
+  "exit_code": 0,
+  "original_seals": 34,
+  "original_seal_map_sha256": "eb8b3be2d4944c3da03180e72b602d59e7b96647b9e71afbd881890c5350405a",
+  "originals_unchanged": true,
+  "archive_members": 35,
+  "archive_bytes": 101120,
+  "archive_sha256": "b11ef94a1f23e120b1cde778c13637a1d380cf1519665e32c2f690d3413ca502",
+  "details": "portable-controls.json",
+  "log": "portable-controls.log",
+  "source_GREEN_revision": "910fefc68a7bdb308ca05adfe197abaa112d6aac",
+  "source_GREEN_invalidated": false,
+  "historical_generator_flags": []
+}

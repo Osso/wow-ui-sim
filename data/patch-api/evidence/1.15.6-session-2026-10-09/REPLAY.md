@@ -1,0 +1,11 @@
+# Frozen 1.15.6 SOURCE replay
+
+Original `seals.json` pins34 inputs, never rewrite it or original logs/ledger. `receipt-seals.json` independently pins later receipts/archive and the original seal map. `portable-proof.json` identifies exact code revision, command, archive/member hashes and proof boundaries; `portable-controls.json` preserves subprocess outputs and restoration hashes.
+
+Extract `replay-archive.tar.gz` into a fresh directory under this worktree's own `build/`. Its35 members contain original sealed inputs and seal map only; no Git, target, current tools, simulator, cache or network required. Invoke absolute copied `audit.py` and `test_source_accounting.py` with `python3 -B`. Under this task, command cwd stays `/home/osso/.worktrees/wow-ui-sim-p1156-page`; copied audit resolves dependencies from its own `__file__`, not cwd. SOURCE8/8 is not runtime/native/integration/final proof.
+
+Run absolute copied `historical-tools/gen_patch_wikitext_register.py` using `python3 -B` with positional argv `1.15.6`, absolute copied `source.wikitext`, `6281951`, new output JSON path. Optional generator flags `[]`; compare bytes to copied `default-register.json`. Empty inventory does not prove empty linked diffs or compatibility. Frozen extractor retained unchanged, not executed or expanded.
+
+Own reusable controls: `python3 -B` followed by absolute original `test_portable.py`, `--archive` absolute archive path, `--scratch` a directory under this worktree's `build/`, `--receipts` a NEW absolute receipt path under that scratch directory. Run from this worktree. Driver refuses receipt overwrites, uses fresh extracted copies and empty subprocess PATH, proves validator/SOURCE/default-generator replay, rejects serialized ledger omission/log fabrication, restores exact bytes/hashes and validates restoration. Original sealed files never mutated. Already-retained3/3 receipts are immutable; new reruns must use separate receipts, never regenerate historical evidence.
+
+Literal TOC11506/navigation/resources only; client name absent. Era/Anniversary11507 configuration and pending same-Era1.15.7 inflight/1.15.8/1.15.9 are separate context, not applied supersession or native proof. Zero runtime/model/native credit. Main owns integration and final/native gates.

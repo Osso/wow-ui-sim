@@ -2974,3 +2974,11 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-09] investigation | Historical retail Patch 2.0.1 SOURCE audit
 
 [Audit](investigations/patch-2-0-1-api-audit.md): frozen 324401/3129557; exact response/body and 101-page registry verified. Current 316 rows, 35 headers, 295 literal occurrences, 206 signature fragments, 280 UNPROVEN prose rows, 12 unexpanded references, 793 gaps; zero CVars/runtime/native/model credit. SOURCE 6/6; original/current copied replay 2/2 and 1/1 with 1,655/1,657 omission controls and 19/10 seal rejection-restorations. Original 18 seals/114 snapshots unchanged; nine current seals separate. Main owns queued successors, publication/native/integration.
+
+## [2026-10-09] investigation | Patch 1.15.6 literal SOURCE accounting
+
+[Audit](investigations/patch-1-15-6-api-audit.md): frozen619994/6281951, TOC11506. Four nonblank rows/three metadata/one UNPROVEN, two unexpanded linked diffs, one navigation template/header; zero explicit APIs/prose/signatures. Configured Era/Anniversary11507 is not native proof. Pending same-Era1.15.7 inflight/1.15.8/1.15.9, no foreign supersession or runtime/model/native credit. Own RED eight expected failures; main integration/native/final gates separate.
+
+## [2026-10-09] proof | Patch 1.15.6 frozen SOURCE replay
+
+[Audit](investigations/patch-1-15-6-api-audit.md): SOURCE8/8 at `910fefc68`; portable3/3 at `d01aae433`, fresh copied SOURCE8/8 and default register byte replay. Serialized ledger/log seal controls reject and restore exactly. Original34 seals/map unchanged; 35-member/101,120-byte archive and six separately sealed later artifacts/map. Four rows/two UNPROVEN links, no runtime/model/native/final credit. Pending same-Era1.15.7 inflight/1.15.8/1.15.9 remain unapplied; main integration/gates separate.
