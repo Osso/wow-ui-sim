@@ -2993,3 +2993,7 @@ The three retail 12.0.0 changed globals `LE_GAME_ERR_HOUSING_RESULT_MISSING_EXPA
 ## [2026-10-09] source audit | Patch 1.15.2 literal SOURCE
 
 [Audit](investigations/patch-1-15-2-api-audit.md): frozen583919/6061806 identity/hashes verified; six nonblank rows, four UNPROVEN summary/link contracts, two headers and navigation. Dragonflight10.2.6 subset unexpanded; no explicit APIs/signatures or runtime/model/native credit. Own RED9/portable RED3 retained; GREEN/copied seals pending. Main owns Era integration/native/final gates.
+
+## [2026-10-09] development proof | Era 1.15.2 SOURCE
+
+[Audit](investigations/patch-1-15-2-api-audit.md): own SOURCE GREEN9/9 at24f83c282;21 omissions rejected; historical default register empty, not API compatibility proof. Original54 seals/55-member archive retained; copied GREEN pending. Four contracts UNPROVEN; no runtime/model/native or integration credit.

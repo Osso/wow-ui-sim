@@ -19,7 +19,7 @@ Account frozen Warcraft Wiki page583919/revision6061806/timestamp `2024-06-12T18
 
 ## Tests asserting this spec
 
-Own `test_source_accounting.py` and `test_portable.py`. RED9/9 and portable RED3/3 expected assertion failures retained. GREEN receipts pending implementation commit.
+Own `test_source_accounting.py` and `test_portable.py`. RED9/9 and portable RED3/3 expected assertion failures retained. SOURCE GREEN9/9 at `24f83c282`;21 omission controls. Original54 seals and55-member archive immutable; copied GREEN/tamper receipts pending.
 
 ## Known gaps (current cycle)
 
