@@ -1,0 +1,14 @@
+[
+  {
+    "revision": "33039957951bbdfc751b83b1333fe9c5d901dcb6",
+    "command": [
+      "python3",
+      "-B",
+      "tools/test_patch_2_4_source.py"
+    ],
+    "exit": 1,
+    "scope": "new opt-in literal inventory and full extract",
+    "result": "RED: two intended missing-feature assertions",
+    "invalidated_by": null
+  }
+]

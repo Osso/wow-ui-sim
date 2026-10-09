@@ -47,11 +47,12 @@ class SourceTests(unittest.TestCase):
 
     def test_complete_extract_preserves_literal_texture_and_events(self):
         import extract_patch_non_inventory as extractor
-        self.assertIn('retail_240_summary', extractor.extract_text.__kwdefaults__,
-                      'missing opt-in full historical extract')
         raw = RAW.read_text()
         default = extractor.extract_text(raw)
-        text = extractor.extract_text(raw, retail_240_summary=True)
+        try:
+            text = extractor.extract_text(raw, retail_240_summary=True)
+        except TypeError:
+            self.fail('missing opt-in full historical extract')
         self.assertEqual(sum(bool(l.strip()) for l in text.splitlines()), 99)
         for literal in ('PARTY_MEMBER_ENABLE', 'PARTY_MEMBER_DISABLE',
                         '|T<path>:<width>[:<height>:<xOffset>:<yOffset>]|t',

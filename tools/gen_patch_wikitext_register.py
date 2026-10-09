@@ -940,6 +940,33 @@ def normalize_mists_code_removals(text):
                   r': {{api|\1}}', text, flags=re.M)
 
 
+def parse_retail_240_summary(text):
+    """Keep each literal 2008 Retail reference; contextual repeats are not additions."""
+    references = re.compile(r'\[\[(API [^]|]+|SetGuildBankText)(?:\|([^]]+))?\]\]|'
+                            r'\{\{api\|([^{}]+)\}\}')
+    entries = []
+    for number, line in enumerate(text.splitlines(), 1):
+        for occurrence, match in enumerate(references.finditer(line), 1):
+            if match[3]:
+                parts = match[3].split('|')
+                symbol = next(part for part in parts if '=' not in part)
+                section = 'events' if 't=e' in parts else 'global-api'
+            else:
+                symbol = match[2] or match[1].removeprefix('API ')
+                section = 'widgets' if ':' in symbol else 'global-api'
+            direction = 'added' if line.startswith('* NEW - ') and occurrence == 1 else 'changed'
+            entries.append({'id': f'wt-{section}-{symbol}-{number}-{occurrence}',
+                            'section': section, 'direction': direction, 'symbol': symbol,
+                            'annotation': line, 'wikitext_line': number})
+        if 'new cVar unitHighlights;' in line:
+            for section, symbol, direction in (('cvars', 'unitHighlights', 'added'),
+                                               ('commands', '/console', 'changed')):
+                entries.append({'id': f'wt-{section}-{symbol}-{number}',
+                                'section': section, 'direction': direction, 'symbol': symbol,
+                                'annotation': line, 'wikitext_line': number})
+    return entries
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("patch", "path", "revid", "out"):
@@ -1021,6 +1048,8 @@ def main():
                         help='Normalize 2012 code-wrapped removals in the pinned diff; opt-in')
     parser.add_argument('--wrath-retail-summary', action='store_true',
                         help='Retain 2009 bare-call/method/event summary identities; opt-in')
+    parser.add_argument('--retail-240-summary', action='store_true',
+                        help='Retain 2008 Retail literal references including contextual repeats; opt-in')
     args = parser.parse_args()
     patch, path, revid, out = args.patch, args.path, args.revid, args.out
     raw = Path(path).read_bytes()
@@ -1051,6 +1080,8 @@ def main():
         entries.extend(parse_cataclysm_change_bullets(raw.decode('utf-8')))
     if args.wrath_retail_summary:
         entries.extend(parse_wrath_retail_summary(raw.decode('utf-8')))
+    if args.retail_240_summary:
+        entries.extend(parse_retail_240_summary(raw.decode('utf-8')))
     if args.wrath_retail_change_bullets:
         entries.extend(parse_wrath_retail_change_bullets(raw.decode('utf-8')))
     if args.legacy_api_bullets:

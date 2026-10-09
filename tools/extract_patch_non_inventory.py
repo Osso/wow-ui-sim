@@ -149,7 +149,12 @@ def extract_text(raw, *, preserve_examples=False, normalize_inventory_headings=F
                  retain_patch_diff_reference=False, canonical_patch_navigation=False,
                  mists_automated_diff=False, lowercase_reflist=False,
                  mists_source_markup=False, cataclysm_labeled_inventory=False,
-                 wrath_summary_markup=False, numbered_reflist=False):
+                 wrath_summary_markup=False, numbered_reflist=False,
+                 retail_240_summary=False):
+    if retail_240_summary:
+        # This page mixes contracts and inventory on the same lines. Preserve
+        # literal markup, including inline texture grammar and citation fields.
+        return raw
     if cataclysm_labeled_inventory:
         raw = '\n'.join(line for line in raw.splitlines()
                         if not re.fullmatch(r': (NEW|REMOVED) \{\{api\|[^{}]+\}\}', line)) + '\n'
@@ -406,6 +411,8 @@ def main():
                         help='Keep 2009 summary attribution and inline Button XML; opt-in')
     parser.add_argument('--numbered-reflist', action='store_true',
                         help='Retain numbered Reflist markers without expanding citations; opt-in')
+    parser.add_argument('--retail-240-summary', action='store_true',
+                        help='Keep full mixed 2008 Retail source literally, without linked expansion; opt-in')
     args = parser.parse_args()
     if args.self_test:
         check_examples()
@@ -430,7 +437,8 @@ def main():
                         mists_source_markup=args.mists_source_markup,
                         cataclysm_labeled_inventory=args.cataclysm_labeled_inventory,
                         wrath_summary_markup=args.wrath_summary_markup,
-                        numbered_reflist=args.numbered_reflist)
+                        numbered_reflist=args.numbered_reflist,
+                        retail_240_summary=args.retail_240_summary)
     rows = seed_rows(text, args.patch)
     if args.text_only:
         if args.check:
