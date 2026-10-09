@@ -803,3 +803,7 @@ Initial checkpoint: [audit](investigations/patch-3-0-3-api-audit.md), frozen pag
 ## 2026-10-09 — historical retail 2.1.0 source ingest
 
 [Audit](investigations/patch-2-1-0-api-audit.md) and [spec](../specs/patch-2-1-0-source-accounting.md): full raw/default-rendered accounting; profiling/secure/template/macro/layout/fix boundaries preserved; no linked expansion or runtime/native observations. Source-only targeted proof pending.
+
+## 2026-10-09 — historical retail 2.1.0 bounded development proof
+
+[Audit](investigations/patch-2-1-0-api-audit.md): 92 occurrences/150 raw rows/19 headers/124 signature records, 344 source gaps. Four distinct source fixtures and copied-process fixture GREEN; 971 omissions, one overclaim and 19 serialized seal/manifest tamper-restorations pass. Original 18 seals/101 snapshots unchanged; later receipts separate. Zero runtime/native/model credit; main publication/native/integration gates remain unowned by this source slice.

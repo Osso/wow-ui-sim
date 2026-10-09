@@ -1,0 +1,19 @@
+{
+  "schema": "patch-current-receipts/v1",
+  "originals_immutable": true,
+  "original_manifest_sha256": "5cad83b824fe801c48079998bb96e9d142f3eba76e13a7053ef2a9d27ad4f640",
+  "separate_current_receipts": {
+    "accounting-green.log": {
+      "sha256": "892a8bb3448948580ca0247dab7a65ca7bd59ea172c16232651d41b64560a533",
+      "bytes": 98
+    },
+    "validator-green.log": {
+      "sha256": "820c9dd6d972e5b128bec076464f9a9b20d4eee08ea34580a865b4b02856e20f",
+      "bytes": 1062
+    },
+    "development-proof-ledger.json": {
+      "sha256": "440376f580cc4aba4116285448a735a55fab7d49e66b776ce5ab9db6fc1bd625",
+      "bytes": 6193
+    }
+  }
+}
