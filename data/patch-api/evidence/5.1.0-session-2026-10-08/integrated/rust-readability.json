@@ -1,0 +1,9 @@
+{
+  "scope": [
+    "tests/patch_5_1_0_publication_sweep.rs",
+    "src/c_api/patch_retired_members.rs"
+  ],
+  "revision": "fbe897f8306c1c176877c04ad9b4b6a807c0a4e3",
+  "findings": [],
+  "method": "Read changed lines and existing registration boundary: explicit chronological includes, constant retirement marker, no new function, nested control flow, warning suppression or vendor override."
+}

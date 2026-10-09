@@ -1,0 +1,27 @@
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.large-enum-variant` is deprecated in favor of `lints.clippy.large_enum_variant` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.map-entry` is deprecated in favor of `lints.clippy.map_entry` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.match-wildcard-for-single-variants` is deprecated in favor of `lints.clippy.match_wildcard_for_single_variants` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.redundant-closure-for-method-calls` is deprecated in favor of `lints.clippy.redundant_closure_for_method_calls` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.trivially-copy-pass-by-ref` is deprecated in favor of `lints.clippy.trivially_copy_pass_by_ref` and will not work in a future edition
+warning: iced-wgpu-patched/Cargo.toml: `lints.clippy.type-complexity` is deprecated in favor of `lints.clippy.type_complexity` and will not work in a future edition
+warning: `iced_wgpu` (manifest) generated 6 warnings
+    Finished `test` profile [optimized + debuginfo] target(s) in 0.17s
+     Running tests/integration.rs (target/debug/deps/integration-1db16289b0998b2a)
+
+running 13 tests
+test c_pet_battles_probes::get_pet_stats_mutation_reflects ... ok
+test c_pet_battles_probes::get_pet_stats_returns_seeded_values ... ok
+test pet_stats::get_pet_experience_defaults_zero ... ok
+test pet_stats::get_pet_experience_reads_pet_state ... ok
+test pet_stats::get_pet_loyalty_nil_when_label_empty ... ok
+test pet_stats::get_pet_loyalty_reads_pet_state ... ok
+test pet_stats::get_pet_happiness_reads_pet_state ... ok
+test pet_stats::get_pet_happiness_defaults_zero ... ok
+test pet_stats::pet_stats_globals_live_under_real_globals_boundary ... ok
+test pet_stats::get_pet_spell_bonus_damage_defaults_zero ... ok
+test pet_stats::get_pet_time_in_combat_defaults_zero ... ok
+test pet_stats::get_pet_time_in_combat_reads_pet_state ... ok
+test test_collections::pet_journal_get_pet_stats_reports_collected_pets_alive ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 10672 filtered out; finished in 0.28s
+

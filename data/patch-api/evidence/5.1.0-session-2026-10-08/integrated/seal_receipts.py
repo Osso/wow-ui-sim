@@ -50,6 +50,7 @@ def main():
         assert receipt['exit'] in (1, 101) if name == 'negative' else receipt['exit'] == 0
     dump('context.json', {
         'master_revision': MASTER, 'runtime_revision': revision, 'wiki_revision': revision,
+        'historical_dispatcher_sha256': hashlib.sha256((HERE.parent / 'validate.py').read_bytes()).hexdigest(),
         'directory_trees': {path: git('rev-parse', revision + ':' + path)
                             for path in ['src', 'tests', 'tools', 'data/patch-api/sources']},
         'negative_id': 'wt-global-api-HasVehicleActionBar-11', 'proofs': proofs,

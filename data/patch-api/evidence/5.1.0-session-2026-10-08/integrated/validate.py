@@ -161,9 +161,18 @@ def check_proofs(context):
         allowed = {'src/c_api/patch_retired_members.rs', 'tests/patch_5_1_0_behavior.rs',
                    'tests/patch_5_1_0_publication_sweep.rs', 'tests/data/patch_5_1_0_sweep_known_gaps.json'}
         assert set(changed) <= (allowed if name.startswith('master-') else set()), (name, changed)
-        if name.startswith(('all-sweeps', 'master-', 'prefork-', 'integration-', 'lib-', 'mists-all')):
+        if name != 'master-checks' and name.startswith(('all-sweeps', 'master-', 'prefork-', 'integration-', 'lib-', 'mists-all')):
             match = re.search(r'test result: ok\. (\d+) passed', (HERE / receipt['log']).read_text())
             assert match and int(match[1]) > 0, ('empty acceptance', name)
+    for name in ('integration-pet-info', 'integration-pet-stats', 'integration-namespace', 'lib-namespace'):
+        pattern = r'test (\S+) \.\.\. (ok|FAILED)'
+        branch = re.findall(pattern, (HERE / (name + '.txt')).read_text())
+        master = re.findall(pattern, (HERE / ('master-' + name + '.txt')).read_text())
+        assert branch and sorted(branch) == sorted(master), ('caller cases differ', name)
+    pattern = r'test (\S+) \.\.\. ok'
+    branch = set(re.findall(pattern, (HERE / 'prefork-pet.txt').read_text()))
+    master = set(re.findall(pattern, (HERE / 'master-prefork-pet.txt').read_text()))
+    assert master < branch and all('patch_5_1_0_loaded_pet_id_absence' in name for name in branch - master)
     warnings = [line for line in (HERE / 'mists-check.txt').read_text().splitlines() if line.startswith('warning:')]
     assert all(line.startswith('warning: iced-wgpu-patched/Cargo.toml:') or
                line == 'warning: `iced_wgpu` (manifest) generated 6 warnings' for line in warnings), warnings
@@ -182,6 +191,12 @@ def main():
         assert digest((HERE / name).read_bytes()) == expected, ('integrated artifact drift', name)
     for directory, expected in context['directory_trees'].items():
         assert git('rev-parse', context['runtime_revision'] + ':' + directory).decode().strip() == expected
+    assert digest((HISTORY / 'validate.py').read_bytes()) == context['historical_dispatcher_sha256']
+    changed = git('diff', '--name-only', context['master_revision'], context['runtime_revision'],
+                  '--', 'src', 'Interface').decode().splitlines()
+    assert changed == ['src/c_api/patch_retired_members.rs'], changed
+    for path in ('docs/wiki/index.md', 'docs/wiki/log.md'):
+        assert len(blob(context['wiki_revision'], path).decode().splitlines()) >= len(blob(context['master_revision'], path).decode().splitlines())
     check_history(context)
     registers, extracts = check_reproduction(context)
     sweeps, gaps = check_accounting(context)

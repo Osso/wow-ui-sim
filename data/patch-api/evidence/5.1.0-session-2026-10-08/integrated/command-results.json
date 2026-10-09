@@ -1,0 +1,597 @@
+[
+  {
+    "receipt": "all-sweeps",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "publication_sweep"
+    ],
+    "revision": "0801851248847212771a23816f3ce11a04c5ec2d",
+    "exit": 0,
+    "result": "63 passed/0 failed (ok)",
+    "log": "all-sweeps.txt",
+    "log_sha256": "73ad742e70cc82e4b0851c15799c7020a17e2cd4281d154a9cf74816eb6e556d",
+    "invalidated": false
+  },
+  {
+    "receipt": "checks",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p510-page/data/patch-api/evidence/5.1.0-session-2026-10-08/integrated/run_checks.py"
+    ],
+    "revision": "0801851248847212771a23816f3ce11a04c5ec2d",
+    "exit": 0,
+    "result": "see sealed log",
+    "log": "checks.txt",
+    "log_sha256": "e0634cb4ab9d851f26c7bac6dc9d4e3c344b3cc37c5074c3fbb891bfd9fe7164",
+    "invalidated": false
+  },
+  {
+    "receipt": "diagnostic-own-sweep",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "patch_5_1_0_publication_sweep"
+    ],
+    "revision": "ee9bd455a373b799bad971bb4e32b8177519ebe3",
+    "exit": 0,
+    "result": "1 passed/0 failed (ok)",
+    "log": "diagnostic-own-sweep.txt",
+    "log_sha256": "653d1f46659a29fb4a850c2d7a9309881e026e5906187c2c64e81f3b57f9fe09",
+    "invalidated": false
+  },
+  {
+    "receipt": "format",
+    "command": [
+      "cargo",
+      "fmt",
+      "--check"
+    ],
+    "revision": "0801851248847212771a23816f3ce11a04c5ec2d",
+    "exit": 0,
+    "result": "see sealed log",
+    "log": "format.txt",
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "invalidated": false
+  },
+  {
+    "receipt": "historical-replay",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p510-page/data/patch-api/evidence/5.1.0-session-2026-10-08/validate.py"
+    ],
+    "revision": "341799ec6a113ad742d6e82da7cd4e70b67b6dc6",
+    "exit": 0,
+    "result": "see sealed log",
+    "log": "historical-replay.txt",
+    "log_sha256": "8b8383a1a6790b3cf3154c6850c549823fa82b069cddeb1757ba2046ad3875ac",
+    "invalidated": false
+  },
+  {
+    "receipt": "integration-namespace",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "namespace_stubs_patched",
+      "--",
+      "--test-threads=4"
+    ],
+    "revision": "0801851248847212771a23816f3ce11a04c5ec2d",
+    "exit": 0,
+    "result": "2 passed/0 failed (ok)",
+    "log": "integration-namespace.txt",
+    "log_sha256": "ab07263029f1a2a4cecd381a966cc24babbd9e5a04638c19b29fb8e2439070ab",
+    "invalidated": false
+  },
+  {
+    "receipt": "integration-patch_5_1_0",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "--",
+      "patch_5_1_0"
+    ],
+    "revision": "0801851248847212771a23816f3ce11a04c5ec2d",
+    "exit": 0,
+    "result": "1 passed/0 failed (ok)",
+    "log": "integration-patch_5_1_0.txt",
+    "log_sha256": "4c0b40713b59f5133163d06210bb6400e0a6fe538f69f00801a108f60ca4a897",
+    "invalidated": false
+  },
+  {
+    "receipt": "integration-pet-info",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "pet_info",
+      "--",
+      "--test-threads=4"
+    ],
+    "revision": "0801851248847212771a23816f3ce11a04c5ec2d",
+    "exit": 0,
+    "result": "19 passed/0 failed (ok)",
+    "log": "integration-pet-info.txt",
+    "log_sha256": "4bc80a77a2740515d424fb62a560e75b28795f05d78575b31ce5cd65a453a702",
+    "invalidated": false
+  },
+  {
+    "receipt": "integration-pet-stats",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "pet_stats",
+      "--",
+      "--test-threads=4"
+    ],
+    "revision": "0801851248847212771a23816f3ce11a04c5ec2d",
+    "exit": 0,
+    "result": "13 passed/0 failed (ok)",
+    "log": "integration-pet-stats.txt",
+    "log_sha256": "a878a5b212d9bbfa051398d9069fd8f55a525255268d5f526560ae47830adbd4",
+    "invalidated": false
+  },
+  {
+    "receipt": "lib-namespace",
+    "command": [
+      "cargo",
+      "test",
+      "--lib",
+      "namespace",
+      "--",
+      "--test-threads=4"
+    ],
+    "revision": "0801851248847212771a23816f3ce11a04c5ec2d",
+    "exit": 0,
+    "result": "24 passed/0 failed (ok)",
+    "log": "lib-namespace.txt",
+    "log_sha256": "37448844b38cf190a59dd107313af85df87a09a0ed59f95897cf0fb7b580e643",
+    "invalidated": false
+  },
+  {
+    "receipt": "master-all-sweeps",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "publication_sweep"
+    ],
+    "revision": "7c3bbbfd311dffc2f2c069ce676f0a8ff8afb87a",
+    "exit": 0,
+    "result": "62 passed/0 failed (ok)",
+    "log": "master-all-sweeps.txt",
+    "log_sha256": "14a1e82f53a006bba27afc6a93cb2aeaed1dd47d19f615e34943c3e28a427733",
+    "invalidated": false
+  },
+  {
+    "receipt": "master-checks",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p510-page/target/p510-refresh/master-runner/master_checks.py"
+    ],
+    "revision": "7c3bbbfd311dffc2f2c069ce676f0a8ff8afb87a",
+    "exit": 0,
+    "result": "see sealed log",
+    "log": "master-checks.txt",
+    "log_sha256": "51e50015ab99f3ea630d63d12968833377546ecbbfc60ddff9147f841268f8ce",
+    "invalidated": false
+  },
+  {
+    "receipt": "master-integration-namespace",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "namespace_stubs_patched",
+      "--",
+      "--test-threads=4"
+    ],
+    "revision": "7c3bbbfd311dffc2f2c069ce676f0a8ff8afb87a",
+    "exit": 0,
+    "result": "2 passed/0 failed (ok)",
+    "log": "master-integration-namespace.txt",
+    "log_sha256": "574e5e40cff683d3562d8633d9105521f123a39b34d437f1c0e5853fda882be4",
+    "invalidated": false
+  },
+  {
+    "receipt": "master-integration-pet-info",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "pet_info",
+      "--",
+      "--test-threads=4"
+    ],
+    "revision": "7c3bbbfd311dffc2f2c069ce676f0a8ff8afb87a",
+    "exit": 0,
+    "result": "19 passed/0 failed (ok)",
+    "log": "master-integration-pet-info.txt",
+    "log_sha256": "30d5c9aef94f85214681e1233cd48bde60348281cddc94c89e6b31901f04f714",
+    "invalidated": false
+  },
+  {
+    "receipt": "master-integration-pet-stats",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "integration",
+      "pet_stats",
+      "--",
+      "--test-threads=4"
+    ],
+    "revision": "7c3bbbfd311dffc2f2c069ce676f0a8ff8afb87a",
+    "exit": 0,
+    "result": "13 passed/0 failed (ok)",
+    "log": "master-integration-pet-stats.txt",
+    "log_sha256": "aa07df4870ae56bf5beadc27ebddea37a89019322faf705849e498cce95e1195",
+    "invalidated": false
+  },
+  {
+    "receipt": "master-lib-namespace",
+    "command": [
+      "cargo",
+      "test",
+      "--lib",
+      "namespace",
+      "--",
+      "--test-threads=4"
+    ],
+    "revision": "7c3bbbfd311dffc2f2c069ce676f0a8ff8afb87a",
+    "exit": 0,
+    "result": "24 passed/0 failed (ok)",
+    "log": "master-lib-namespace.txt",
+    "log_sha256": "65e0458ef950bb71f93024a87fa53476e16fc659008da6a98956c5a3b6be65af",
+    "invalidated": false
+  },
+  {
+    "receipt": "master-mists-all-sweeps",
+    "command": [
+      "cargo",
+      "test",
+      "--no-default-features",
+      "--features",
+      "sound,gui,casc,client-mists",
+      "--test",
+      "integration",
+      "--",
+      "publication_sweep"
+    ],
+    "revision": "7c3bbbfd311dffc2f2c069ce676f0a8ff8afb87a",
+    "exit": 0,
+    "result": "6 passed/0 failed (ok)",
+    "log": "master-mists-all-sweeps.txt",
+    "log_sha256": "609975c230ccaf1c907985e365a0f9dba3882e9ae05d9a8d74c0bc9020f4651d",
+    "invalidated": false
+  },
+  {
+    "receipt": "master-prefork-pet",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "pet"
+    ],
+    "revision": "7c3bbbfd311dffc2f2c069ce676f0a8ff8afb87a",
+    "exit": 0,
+    "result": "21 passed/0 failed (ok)",
+    "log": "master-prefork-pet.txt",
+    "log_sha256": "ca91563e338afaf6fa0a4aa06429a0a9ce6cb7ad59485fceb2e6c6a2f22a4f04",
+    "invalidated": false
+  },
+  {
+    "receipt": "mists-all-sweeps",
+    "command": [
+      "cargo",
+      "test",
+      "--no-default-features",
+      "--features",
+      "sound,gui,casc,client-mists",
+      "--test",
+      "integration",
+      "--",
+      "publication_sweep"
+    ],
+    "revision": "0801851248847212771a23816f3ce11a04c5ec2d",
+    "exit": 0,
+    "result": "6 passed/0 failed (ok)",
+    "log": "mists-all-sweeps.txt",
+    "log_sha256": "95b3a78818f42d2c38873b5d7f8b25e4fb7cdf1ec41e385172add99f24690604",
+    "invalidated": false
+  },
+  {
+    "receipt": "mists-check",
+    "command": [
+      "cargo",
+      "check",
+      "--no-default-features",
+      "--features",
+      "sound,gui,casc,client-mists",
+      "--tests"
+    ],
+    "revision": "0801851248847212771a23816f3ce11a04c5ec2d",
+    "exit": 0,
+    "result": "see sealed log",
+    "log": "mists-check.txt",
+    "log_sha256": "7e537f2d7bda19ae537072a3f059025393a98517ff76802a2c14dec3f4a31ac5",
+    "invalidated": false
+  },
+  {
+    "receipt": "negative",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "patch_5_1_0_publication_sweep"
+    ],
+    "revision": "0801851248847212771a23816f3ce11a04c5ec2d",
+    "exit": 1,
+    "result": "0 passed/1 failed (FAILED)",
+    "log": "negative.txt",
+    "log_sha256": "08065b3572c84ffb3434e959b5a9f28c16477958dbd832e99338ff2b42ee5317",
+    "invalidated": false
+  },
+  {
+    "receipt": "original-pin-independence",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p510-page/data/patch-api/evidence/5.1.0-session-2026-10-08/integrated/check_original_pin_independence.py"
+    ],
+    "revision": "1b2b601cedc20fd96894fd907533174ec7ebba7d",
+    "exit": 0,
+    "result": "see sealed log",
+    "log": "original-pin-independence.txt",
+    "log_sha256": "9afc80c552f6421b65aecc314e482f0f0ab4da63d005502dd9176402021e0f88",
+    "invalidated": false
+  },
+  {
+    "receipt": "own-sweep",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "patch_5_1_0_publication_sweep"
+    ],
+    "revision": "ee9bd455a373b799bad971bb4e32b8177519ebe3",
+    "exit": 0,
+    "result": "1 passed/0 failed (ok)",
+    "log": "own-sweep.txt",
+    "log_sha256": "653d1f46659a29fb4a850c2d7a9309881e026e5906187c2c64e81f3b57f9fe09",
+    "invalidated": false
+  },
+  {
+    "receipt": "prefork-patch_5_1_0",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "patch_5_1_0"
+    ],
+    "revision": "0801851248847212771a23816f3ce11a04c5ec2d",
+    "exit": 0,
+    "result": "3 passed/0 failed (ok)",
+    "log": "prefork-patch_5_1_0.txt",
+    "log_sha256": "e0a0280ac6a13a00ff3c9715c5bbcdf202c4b46b4350e195c13347bb205e8ff7",
+    "invalidated": false
+  },
+  {
+    "receipt": "prefork-pet",
+    "command": [
+      "cargo",
+      "test",
+      "--test",
+      "prefork_full_ui",
+      "--",
+      "pet"
+    ],
+    "revision": "0801851248847212771a23816f3ce11a04c5ec2d",
+    "exit": 0,
+    "result": "22 passed/0 failed (ok)",
+    "log": "prefork-pet.txt",
+    "log_sha256": "87a54b037dd9878561a8e879a3e7c3d5ef53417669a745fcbf1041613ffdab35",
+    "invalidated": false
+  },
+  {
+    "receipt": "reproduction",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p510-page/data/patch-api/evidence/5.1.0-session-2026-10-08/integrated/reproduce_sources.py"
+    ],
+    "revision": "ee9bd455a373b799bad971bb4e32b8177519ebe3",
+    "exit": 0,
+    "result": "see sealed log",
+    "log": "reproduction.txt",
+    "log_sha256": "85c68eb356a0ce1479b30fd8ca153e547485c6162c8e5770736976c2bbeee652",
+    "invalidated": false
+  },
+  {
+    "receipt": "scan-tool-build",
+    "command": [
+      "cargo",
+      "install",
+      "ripgrep",
+      "--locked",
+      "--root",
+      "/home/osso/.worktrees/wow-ui-sim-p510-page/target/ripgrep",
+      "--target-dir",
+      "/home/osso/.worktrees/wow-ui-sim-p510-page/target/ripgrep-build"
+    ],
+    "revision": "ee9bd455a373b799bad971bb4e32b8177519ebe3",
+    "exit": 0,
+    "result": "see sealed log",
+    "log": "scan-tool-build.txt",
+    "log_sha256": "0d2238d3388c31da034ce89a18f248118bc32830b7189181e4370165e22afbeb",
+    "invalidated": false
+  },
+  {
+    "receipt": "test_check_patch_validators",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p510-page/tools/test_check_patch_validators.py"
+    ],
+    "revision": "0801851248847212771a23816f3ce11a04c5ec2d",
+    "exit": 0,
+    "result": "4 Python fixtures",
+    "log": "test_check_patch_validators.txt",
+    "log_sha256": "38a2fa7c5e63715d377d54375c07c6ff4b1e4fb3bc3f0f2c9562caee741764ba",
+    "invalidated": false
+  },
+  {
+    "receipt": "test_extract_patch_non_inventory",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p510-page/tools/test_extract_patch_non_inventory.py"
+    ],
+    "revision": "0801851248847212771a23816f3ce11a04c5ec2d",
+    "exit": 0,
+    "result": "37 Python fixtures",
+    "log": "test_extract_patch_non_inventory.txt",
+    "log_sha256": "27b74799ef4ec4ff07c31e56cdc0ec55c9b57cea28747de896593115e39d3adf",
+    "invalidated": false
+  },
+  {
+    "receipt": "test_gen_patch_wikitext_register",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p510-page/tools/test_gen_patch_wikitext_register.py"
+    ],
+    "revision": "0801851248847212771a23816f3ce11a04c5ec2d",
+    "exit": 0,
+    "result": "35 Python fixtures",
+    "log": "test_gen_patch_wikitext_register.txt",
+    "log_sha256": "14bb5bf7781199ba51ce4a737ef557ecae9e1cd0a50e07affa98e4a3216dbf19",
+    "invalidated": false
+  },
+  {
+    "receipt": "test_patch_5_1_register",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p510-page/tools/test_patch_5_1_register.py"
+    ],
+    "revision": "0801851248847212771a23816f3ce11a04c5ec2d",
+    "exit": 0,
+    "result": "3 Python fixtures",
+    "log": "test_patch_5_1_register.txt",
+    "log_sha256": "921b60a7fd52e978fbb551cacd29df2d6708879400278e1fcc70fceeb0c6f8e0",
+    "invalidated": false
+  },
+  {
+    "receipt": "test_patch_audit_validation",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p510-page/tools/test_patch_audit_validation.py"
+    ],
+    "revision": "0801851248847212771a23816f3ce11a04c5ec2d",
+    "exit": 0,
+    "result": "8 Python fixtures",
+    "log": "test_patch_audit_validation.txt",
+    "log_sha256": "c8dc8416a87706a9b08580582295edea7d6a0e6cd1a6b80d9eff1fd7205cb102",
+    "invalidated": false
+  },
+  {
+    "receipt": "test_patch_mists_520_register",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p510-page/tools/test_patch_mists_520_register.py"
+    ],
+    "revision": "0801851248847212771a23816f3ce11a04c5ec2d",
+    "exit": 0,
+    "result": "2 Python fixtures",
+    "log": "test_patch_mists_520_register.txt",
+    "log_sha256": "fe008aab760eb03ccac7578e2b84665b1b50b0d7f855b17a0c7a8d039435b658",
+    "invalidated": false
+  },
+  {
+    "receipt": "test_patch_mists_extract",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p510-page/tools/test_patch_mists_extract.py"
+    ],
+    "revision": "0801851248847212771a23816f3ce11a04c5ec2d",
+    "exit": 0,
+    "result": "1 Python fixtures",
+    "log": "test_patch_mists_extract.txt",
+    "log_sha256": "d10ffbd9f0faa72cd6837063279524e199b59fbc3d035051302a1e8dbc4b36ad",
+    "invalidated": false
+  },
+  {
+    "receipt": "test_patch_mists_register",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p510-page/tools/test_patch_mists_register.py"
+    ],
+    "revision": "0801851248847212771a23816f3ce11a04c5ec2d",
+    "exit": 0,
+    "result": "6 Python fixtures",
+    "log": "test_patch_mists_register.txt",
+    "log_sha256": "c6b9b1f09add0403cc07e90bfdf272129b1ddfa2f8f7675ea8218862f2516371",
+    "invalidated": false
+  },
+  {
+    "receipt": "test_patch_mists_transclusion",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p510-page/tools/test_patch_mists_transclusion.py"
+    ],
+    "revision": "0801851248847212771a23816f3ce11a04c5ec2d",
+    "exit": 0,
+    "result": "2 Python fixtures",
+    "log": "test_patch_mists_transclusion.txt",
+    "log_sha256": "a6707d4eff38012da33ddc34bc6dc076a3b17151cfc9aef223c8790cbe64c3da",
+    "invalidated": false
+  },
+  {
+    "receipt": "test_patch_warlords_register",
+    "command": [
+      "python3",
+      "-B",
+      "/home/osso/.worktrees/wow-ui-sim-p510-page/tools/test_patch_warlords_register.py"
+    ],
+    "revision": "0801851248847212771a23816f3ce11a04c5ec2d",
+    "exit": 0,
+    "result": "3 Python fixtures",
+    "log": "test_patch_warlords_register.txt",
+    "log_sha256": "921b60a7fd52e978fbb551cacd29df2d6708879400278e1fcc70fceeb0c6f8e0",
+    "invalidated": false
+  }
+]

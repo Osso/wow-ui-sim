@@ -1,0 +1,8 @@
+master-all-sweeps 0
+master-integration-pet-info 0
+master-integration-pet-stats 0
+master-integration-namespace 0
+master-prefork-pet 0
+master-lib-namespace 0
+master-mists-all-sweeps 0
+{'failures': []}
