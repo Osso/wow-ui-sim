@@ -330,6 +330,20 @@ fn apply_system_anchors_batches_compact_unit_frame_startup_refreshes() {
                 self.settingMapUpdated = updateDirtySettings
             end
 
+            function frame:ClearAllPoints()
+                self.currentAnchorInfo = nil
+            end
+
+            function frame:SetPoint(point, relativeTo, relativePoint, offsetX, offsetY)
+                self.currentAnchorInfo = {
+                    point = point,
+                    relativeTo = relativeTo,
+                    relativePoint = relativePoint,
+                    offsetX = offsetX,
+                    offsetY = offsetY,
+                }
+            end
+
             function frame:ApplySystemAnchor()
                 self.anchorApplied = true
             end
@@ -401,6 +415,16 @@ fn apply_system_anchors_batches_compact_unit_frame_startup_refreshes() {
             },
             raidContainerFlowUpdates = 0,
         }
+
+        function EditModeManagerFrame:InitSystemAnchors()
+            for _, systemFrame in ipairs(self.registeredSystemFrames) do
+                if not ((systemFrame.isBottomManagedFrame or systemFrame.isRightManagedFrame)
+                    and systemFrame:IsInDefaultPosition()) then
+                    systemFrame:ClearAllPoints()
+                    systemFrame:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 0, 0)
+                end
+            end
+        end
 
         function EditModeManagerFrame:GetActiveLayoutSystemInfo(system, systemIndex)
             return {

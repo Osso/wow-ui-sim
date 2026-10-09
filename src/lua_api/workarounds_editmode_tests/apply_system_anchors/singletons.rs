@@ -146,6 +146,18 @@ fn apply_system_anchors_falls_back_to_minus_one_for_nil_singletons() {
         function frame:GetName() return self.name end
         function frame:SetHasActiveChanges(value) self.hasActiveChanges = value end
         function frame:UpdateSettingMap() self.settingMapUpdated = true end
+        function frame:ClearAllPoints()
+            self.currentAnchorInfo = nil
+        end
+        function frame:SetPoint(point, relativeTo, relativePoint, offsetX, offsetY)
+            self.currentAnchorInfo = {
+                point = point,
+                relativeTo = relativeTo,
+                relativePoint = relativePoint,
+                offsetX = offsetX,
+                offsetY = offsetY,
+            }
+        end
         function frame:ApplySystemAnchor() end
         function frame:UpdateSystemSetting(setting, entireSystemUpdate)
             table.insert(self.updatedSettings, {
@@ -159,6 +171,16 @@ fn apply_system_anchors_falls_back_to_minus_one_for_nil_singletons() {
             registeredSystemFrames = { frame },
             requestedSystemIndices = {},
         }
+
+        function EditModeManagerFrame:InitSystemAnchors()
+            for _, systemFrame in ipairs(self.registeredSystemFrames) do
+                if not ((systemFrame.isBottomManagedFrame or systemFrame.isRightManagedFrame)
+                    and systemFrame:IsInDefaultPosition()) then
+                    systemFrame:ClearAllPoints()
+                    systemFrame:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 0, 0)
+                end
+            end
+        end
 
         function EditModeManagerFrame:GetActiveLayoutSystemInfo(_system, systemIndex)
             table.insert(self.requestedSystemIndices, tostring(systemIndex))

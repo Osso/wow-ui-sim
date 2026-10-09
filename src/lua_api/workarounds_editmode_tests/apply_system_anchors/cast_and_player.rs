@@ -343,6 +343,18 @@ fn apply_system_anchors_replays_player_frame_size_without_cast_bar_side_effect()
             if value <= 0 then error("player frame received non-positive scale") end
             self.scale = value
         end
+        function frame:ClearAllPoints()
+            self.currentAnchorInfo = nil
+        end
+        function frame:SetPoint(point, relativeTo, relativePoint, offsetX, offsetY)
+            self.currentAnchorInfo = {
+                point = point,
+                relativeTo = relativeTo,
+                relativePoint = relativePoint,
+                offsetX = offsetX,
+                offsetY = offsetY,
+            }
+        end
         function frame:ClearAllPointsBase()
             self.clearedPoints = true
         end
@@ -372,6 +384,15 @@ fn apply_system_anchors_replays_player_frame_size_without_cast_bar_side_effect()
             registeredSystemFrames = { frame },
             GetActiveLayoutSystemInfo = function() return frame.systemInfo end,
         }
+        function EditModeManagerFrame:InitSystemAnchors()
+            for _, systemFrame in ipairs(self.registeredSystemFrames) do
+                if not ((systemFrame.isBottomManagedFrame or systemFrame.isRightManagedFrame)
+                    and systemFrame:IsInDefaultPosition()) then
+                    systemFrame:ClearAllPoints()
+                    systemFrame:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 0, 0)
+                end
+            end
+        end
         "#,
     )
     .expect("install player frame replay stubs");
