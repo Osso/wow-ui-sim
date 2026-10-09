@@ -1,3 +1,7 @@
+## [2026-10-09] investigation | Patch 1.15.0 literal SOURCE audit
+
+[Audit](investigations/patch-1-15-0-api-audit.md): frozen564510/5950848,915 bytes; ten rows, eleven UNPROVEN prose/link boundaries, explicit C_Engraving namespace/functions unspecified. Wrath3.4.3 all-inclusion claim distinct from Dragonflight10.1.7..10.2.0 subset, neither expanded. Own SOURCE RED10/portable RED3 retained; SOURCE GREEN10/10 atba551827d, portable GREEN3/3 ate6bf4be1c: copied SOURCE/default-byte replay and ledger/log tamper rejection/exact restoration. Original64 seals unchanged; five separate receipts,65-member archive. No seasonal-rune/native/model credit; main owns successor/integration/final gates.
+
 ## [2026-10-09] investigation | Patch 1.15.4 literal subset SOURCE audit
 
 [Audit](investigations/patch-1-15-4-api-audit.md): frozen600355/6172581, TOC11504; six literal rows/five UNPROVEN contracts/two headers, unspecified War Within11.0.0/11.0.2 subset and two diffs. Explicit retail attribution does not import contracts or replace Era successors. Own SOURCE RED9/portable RED3 retained; SOURCE GREEN9/9 at8bb569247; portable GREEN3/3 atb6edd861e, copied SOURCE9/default-byte replay and both serialized seal rejections/exact restorations.44 original +6 current receipt seals,45-member archive. Zero runtime/model/native credit; main owns integration/final gates.

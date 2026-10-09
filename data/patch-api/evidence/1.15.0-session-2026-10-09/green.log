@@ -1,0 +1,15 @@
+test_configuration_and_successors (__main__.SourceAccounting.test_configuration_and_successors) ... ok
+test_distinct_inclusion_claims (__main__.SourceAccounting.test_distinct_inclusion_claims) ... ok
+test_each_omission_rejected (__main__.SourceAccounting.test_each_omission_rejected) ... ok
+test_exact_rows (__main__.SourceAccounting.test_exact_rows) ... ok
+test_fabricated_credit_and_history_collapse_rejected (__main__.SourceAccounting.test_fabricated_credit_and_history_collapse_rejected) ... ok
+test_full_counts (__main__.SourceAccounting.test_full_counts) ... ok
+test_identity_and_content_tamper (__main__.SourceAccounting.test_identity_and_content_tamper) ... ok
+test_inventory_headers_and_navigation (__main__.SourceAccounting.test_inventory_headers_and_navigation) ... ok
+test_links_exact_unexpanded (__main__.SourceAccounting.test_links_exact_unexpanded) ... ok
+test_namespace_not_callable_or_modeled (__main__.SourceAccounting.test_namespace_not_callable_or_modeled) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.129s
+
+OK

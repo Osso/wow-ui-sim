@@ -1,0 +1,113 @@
+{
+  "scope": "copied historical SOURCE; no runtime/model/native credit",
+  "runs": [
+    {
+      "test": "__main__.PortableSource.test_copied_source_and_default_register",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1150-page/target/p1150-source-replay/tmpeinvlaek/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1150-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "{\n  \"historical_seals\": 64,\n  \"totals\": {\n    \"physical_lines\": 12,\n    \"nonblank_rows\": 10,\n    \"metadata_rows\": 4,\n    \"unproven_rows\": 6,\n    \"contracts\": 11,\n    \"headers\": 2,\n    \"numerical_inventory_headers\": 0,\n    \"api_occurrences\": 1,\n    \"namespace_occurrences\": 1,\n    \"callable_occurrences\": 0,\n    \"event_occurrences\": 0,\n    \"cvar_occurrences\": 0,\n    \"widget_method_occurrences\": 0,\n    \"command_occurrences\": 0,\n    \"signature_declarations\": 0,\n    \"unspecified_signature_records\": 1,\n    \"prose_contracts\": 4,\n    \"unexpanded_linked_contracts\": 7,\n    \"unexpanded_transclusions\": 1\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "test": "__main__.PortableSource.test_copied_source_and_default_register",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1150-page/target/p1150-source-replay/tmpeinvlaek/test_source_accounting.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1150-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "test_configuration_and_successors (__main__.SourceAccounting.test_configuration_and_successors) ... ok\ntest_distinct_inclusion_claims (__main__.SourceAccounting.test_distinct_inclusion_claims) ... ok\ntest_each_omission_rejected (__main__.SourceAccounting.test_each_omission_rejected) ... ok\ntest_exact_rows (__main__.SourceAccounting.test_exact_rows) ... ok\ntest_fabricated_credit_and_history_collapse_rejected (__main__.SourceAccounting.test_fabricated_credit_and_history_collapse_rejected) ... ok\ntest_full_counts (__main__.SourceAccounting.test_full_counts) ... ok\ntest_identity_and_content_tamper (__main__.SourceAccounting.test_identity_and_content_tamper) ... ok\ntest_inventory_headers_and_navigation (__main__.SourceAccounting.test_inventory_headers_and_navigation) ... ok\ntest_links_exact_unexpanded (__main__.SourceAccounting.test_links_exact_unexpanded) ... ok\ntest_namespace_not_callable_or_modeled (__main__.SourceAccounting.test_namespace_not_callable_or_modeled) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 0.129s\n\nOK\n"
+    },
+    {
+      "test": "__main__.PortableSource.test_copied_source_and_default_register",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1150-page/target/p1150-source-replay/tmpeinvlaek/historical-tools/gen_patch_wikitext_register.py",
+        "1.15.0",
+        "/home/osso/.worktrees/wow-ui-sim-p1150-page/target/p1150-source-replay/tmpeinvlaek/source.wikitext",
+        "5950848",
+        "/home/osso/.worktrees/wow-ui-sim-p1150-page/target/p1150-source-replay/tmpeinvlaek/reproduced-register.json"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1150-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "test": "__main__.PortableSource.test_serialized_ledger_omission_rejected_and_restored",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1150-page/target/p1150-source-replay/tmpgb91f1zp/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1150-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1150-page/target/p1150-source-replay/tmpgb91f1zp/audit.py\", line 135, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p1150-page/target/p1150-source-replay/tmpgb91f1zp/audit.py\", line 131, in main\n    count = check_seals()\n  File \"/home/osso/.worktrees/wow-ui-sim-p1150-page/target/p1150-source-replay/tmpgb91f1zp/audit.py\", line 123, in check_seals\n    assert digest((EVIDENCE / name).read_bytes()) == expected, f'seal: {name}'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: ledger.json\n"
+    },
+    {
+      "test": "__main__.PortableSource.test_serialized_ledger_omission_rejected_and_restored",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1150-page/target/p1150-source-replay/tmpgb91f1zp/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1150-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "{\n  \"historical_seals\": 64,\n  \"totals\": {\n    \"physical_lines\": 12,\n    \"nonblank_rows\": 10,\n    \"metadata_rows\": 4,\n    \"unproven_rows\": 6,\n    \"contracts\": 11,\n    \"headers\": 2,\n    \"numerical_inventory_headers\": 0,\n    \"api_occurrences\": 1,\n    \"namespace_occurrences\": 1,\n    \"callable_occurrences\": 0,\n    \"event_occurrences\": 0,\n    \"cvar_occurrences\": 0,\n    \"widget_method_occurrences\": 0,\n    \"command_occurrences\": 0,\n    \"signature_declarations\": 0,\n    \"unspecified_signature_records\": 1,\n    \"prose_contracts\": 4,\n    \"unexpanded_linked_contracts\": 7,\n    \"unexpanded_transclusions\": 1\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "restored": "ledger.json",
+      "sha256": "ac2d227ce84c5e1ec013808236037b28a2ce1070529159620f31c7668ff3c6eb",
+      "all_original_seals": 64
+    },
+    {
+      "test": "__main__.PortableSource.test_serialized_log_fabrication_rejected_and_restored",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1150-page/target/p1150-source-replay/tmp1u0qyv5s/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1150-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/home/osso/.worktrees/wow-ui-sim-p1150-page/target/p1150-source-replay/tmp1u0qyv5s/audit.py\", line 135, in <module>\n    main()\n    ~~~~^^\n  File \"/home/osso/.worktrees/wow-ui-sim-p1150-page/target/p1150-source-replay/tmp1u0qyv5s/audit.py\", line 131, in main\n    count = check_seals()\n  File \"/home/osso/.worktrees/wow-ui-sim-p1150-page/target/p1150-source-replay/tmp1u0qyv5s/audit.py\", line 123, in check_seals\n    assert digest((EVIDENCE / name).read_bytes()) == expected, f'seal: {name}'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: seal: green.log\n"
+    },
+    {
+      "test": "__main__.PortableSource.test_serialized_log_fabrication_rejected_and_restored",
+      "command": [
+        "/usr/bin/python3",
+        "-B",
+        "/home/osso/.worktrees/wow-ui-sim-p1150-page/target/p1150-source-replay/tmp1u0qyv5s/audit.py"
+      ],
+      "cwd": "/home/osso/.worktrees/wow-ui-sim-p1150-page",
+      "path": "empty; Git/current commands unavailable",
+      "exit_code": 0,
+      "stdout": "{\n  \"historical_seals\": 64,\n  \"totals\": {\n    \"physical_lines\": 12,\n    \"nonblank_rows\": 10,\n    \"metadata_rows\": 4,\n    \"unproven_rows\": 6,\n    \"contracts\": 11,\n    \"headers\": 2,\n    \"numerical_inventory_headers\": 0,\n    \"api_occurrences\": 1,\n    \"namespace_occurrences\": 1,\n    \"callable_occurrences\": 0,\n    \"event_occurrences\": 0,\n    \"cvar_occurrences\": 0,\n    \"widget_method_occurrences\": 0,\n    \"command_occurrences\": 0,\n    \"signature_declarations\": 0,\n    \"unspecified_signature_records\": 1,\n    \"prose_contracts\": 4,\n    \"unexpanded_linked_contracts\": 7,\n    \"unexpanded_transclusions\": 1\n  }\n}\n",
+      "stderr": ""
+    },
+    {
+      "restored": "green.log",
+      "sha256": "89477888be46182e913f0b5bd2d80d0c841f3504b293f4b5944f4f1a7837684b",
+      "all_original_seals": 64
+    }
+  ],
+  "tests_run": 3,
+  "failures": 0,
+  "errors": 0
+}

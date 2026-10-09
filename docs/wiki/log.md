@@ -1,3 +1,7 @@
+## [2026-10-09] investigation | Patch 1.15.0 literal SOURCE accounting
+
+[Audit](investigations/patch-1-15-0-api-audit.md): exact source verified before derivation; own inputs and RED fixtures retained. Seasonal-rune namespace addition and distinct Wrath/Dragonflight claims fully accounted without linked/native/runtime proof. Own SOURCE GREEN10/10 atba551827d; portable GREEN3/3 ate6bf4be1c includes copied SOURCE/default-byte replay and serialized ledger/log rejection/exact restoration. Original64 seals unchanged, five separate current receipt seals and65-member archive. No runtime edits or final gates.
+
 ## [2026-10-09] investigation | Patch 1.15.4 literal subset SOURCE accounting
 
 [Audit](investigations/patch-1-15-4-api-audit.md): pinned600355/6172581,439 bytes. Six literal rows/five UNPROVEN contracts/two headers, explicit unspecified retail subset attribution separate from Era successor chain. Own SOURCE RED9/portable RED3 retained; SOURCE GREEN9/9 at8bb569247. Portable GREEN3/3 atb6edd861e: copied SOURCE9/validator/default-byte replay; ledger/log seal tamper rejection and exact restoration. Original44 seals/701134 bytes/map/logs unchanged, six separate receipt seals and45-member archive. No runtime/model/native credit or shared-tool changes; main gates pending.
